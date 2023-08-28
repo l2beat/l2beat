@@ -1,7 +1,7 @@
 import React from 'react'
 
+import { TvlBreakdownViewProps } from '../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
 import { PercentChange } from '../PercentChange'
-import { TvlBreakdownViewProps } from '../../pages/scaling-projects-tvl-breakdown/view/TvlBreakdownView'
 
 export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],

@@ -9,12 +9,12 @@ import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDetailedTvlApi } from './api/fetchDetailedTvlApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
+import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 import { getVerificationStatus } from './api/getVerificationStatus'
 import { printActivityInfo, printApiInfo } from './api/printApiInfo'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
-import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new detailed TVL API and flaky connection times

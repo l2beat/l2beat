@@ -1,8 +1,8 @@
 import {
   DetailedTvlApiResponse,
+  ProjectAssetsBreakdownApiResponse,
   ProjectId,
   TvlApiResponse,
-  ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
 
 export function getIncludedProjectsTvlBreakdown<
@@ -10,7 +10,7 @@ export function getIncludedProjectsTvlBreakdown<
 >(
   projects: T[],
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-  tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined,
+  tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
   buildAllProjectPages = false,
 ) {
   if (buildAllProjectPages) {
@@ -22,7 +22,8 @@ export function getIncludedProjectsTvlBreakdown<
     .filter(
       (x) =>
         !!tvlApiResponse.projects[x.id.toString()] &&
-        !!tvlBreakdownApiResponse?.breakdowns[x.id.toString()],
+        // eslint-disable-next-line
+        !!tvlBreakdownApiResponse.breakdowns[x.id.toString()],
     )
 
   if (projects.every((x) => x.type === 'layer2')) {

@@ -1,26 +1,7 @@
 import React from 'react'
-import { TvlBreakdownSummaryBox } from '../../../components/tvl-breakdown/TvlBreakdownSummaryBox'
 
-export interface TvlBreakdownViewProps {
-  tvlBreakdownSummary: {
-    tvl: {
-      value: string
-      change: string
-    }
-    canonical: {
-      value: string
-      change: string
-    }
-    external: {
-      value: string
-      change: string
-    }
-    native: {
-      value: string
-      change: string
-    }
-  }
-}
+import { TvlBreakdownSummaryBox } from '../../../components/tvl-breakdown/TvlBreakdownSummaryBox'
+import { TvlBreakdownViewProps } from '../props/getTvlBreakdownView'
 
 export function TvlBreakdownView(props: TvlBreakdownViewProps) {
   return (

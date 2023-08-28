@@ -1,15 +1,24 @@
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  ProjectAssetsBreakdownApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 import React from 'react'
 
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
-import { PagesData } from '../Page'
+import { getIncludedProjectsTvlBreakdown } from '../../utils/getIncludedProjectsTvlBreakdown'
 import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
-import { getIncludedProjectsTvlBreakdown } from '../../utils/getIncludedProjectsTvlBreakdown'
 
 export function getProjectTvlBreakdownPages(
   config: Config,
-  pagesData: PagesData,
+  pagesData: {
+    tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse
+    activityApiResponse: ActivityApiResponse
+    tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse
+  },
 ) {
   const included = getIncludedProjectsTvlBreakdown(
     config.layer2s,

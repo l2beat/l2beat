@@ -1,9 +1,15 @@
 import { Layer2 } from '@l2beat/config'
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  ProjectAssetsBreakdownApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getHeader } from '../../../utils/project/getHeader'
-import { PagesData, Wrapped } from '../../Page'
+import { Wrapped } from '../../Page'
 import { TvlBreakdownPageProps } from '../view/ProjectPage'
 import { getPageMetadata } from './getPageMetadata'
 import { getTvlBreakdownHeader } from './getTvlBreakdownHeader'
@@ -12,7 +18,11 @@ import { getTvlBreakdownView } from './getTvlBreakdownView'
 export function getProps(
   project: Layer2,
   config: Config,
-  pagesData: PagesData,
+  pagesData: {
+    tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse
+    activityApiResponse: ActivityApiResponse
+    tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse
+  },
 ): Wrapped<TvlBreakdownPageProps> {
   const { tvlApiResponse, activityApiResponse, tvlBreakdownApiResponse } =
     pagesData

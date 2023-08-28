@@ -1,21 +1,39 @@
 import { Layer2 } from '@l2beat/config'
-import { TvlBreakdownHeaderProps } from '../view/TvlBreakdownHeader'
 import {
   DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
-import {
-  getDetailedTvlWithChange,
-  getTvlWithChange,
-} from '../../../utils/tvl/getTvlWitchChange'
-import { TvlBreakdownViewProps } from '../view/TvlBreakdownView'
+
+import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
+
+export interface TvlBreakdownViewProps {
+  tvlBreakdownSummary: {
+    tvl: {
+      value: string
+      change: string
+    }
+    canonical: {
+      value: string
+      change: string
+    }
+    external: {
+      value: string
+      change: string
+    }
+    native: {
+      value: string
+      change: string
+    }
+  }
+  tvlBreakdowns: ProjectAssetsBreakdownApiResponse['breakdowns']
+}
 
 export function getTvlBreakdownView(
   project: Layer2,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-  tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined,
+  tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
 ): TvlBreakdownViewProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
   const charts = apiProject?.charts
@@ -40,5 +58,6 @@ export function getTvlBreakdownView(
         change: partsWeeklyChange.native,
       },
     },
+    tvlBreakdowns: tvlBreakdownApiResponse.breakdowns,
   }
 }
