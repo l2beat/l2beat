@@ -73,13 +73,13 @@ export function continueOperations(
   }
 
   if (options.updateFailed) {
-    assert(!state.updateBlocked, 'Update should be blocked')
+    assert(!state.updateBlocked, 'Update should not be blocked')
     state = { ...state, updateBlocked: true }
     effects.push({ type: 'ScheduleRetryUpdate' })
   }
 
   if (options.invalidateFailed) {
-    assert(!state.invalidateBlocked, 'Invalidate should be blocked')
+    assert(!state.invalidateBlocked, 'Invalidate should not be blocked')
     state = { ...state, invalidateBlocked: true, forceInvalidate: true }
     effects.push({ type: 'ScheduleRetryInvalidate' })
   }

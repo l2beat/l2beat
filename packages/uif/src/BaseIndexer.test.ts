@@ -15,7 +15,7 @@ describe(BaseIndexer.name, () => {
       await parent.start()
       await child.start()
 
-      await child.finishInvalidate()
+      await child.finishInvalidate(0)
       await parent.doTick(1)
       await parent.finishTick(1)
 
@@ -33,7 +33,7 @@ describe(BaseIndexer.name, () => {
 
       await parent.doTick(1)
       await parent.finishTick(1)
-      await child.finishInvalidate()
+      await child.finishInvalidate(0)
 
       await child.finishUpdate(1)
 
@@ -55,8 +55,8 @@ describe(BaseIndexer.name, () => {
       await middle.start()
       await child.start()
 
-      await middle.finishInvalidate()
-      await child.finishInvalidate()
+      await middle.finishInvalidate(0)
+      await child.finishInvalidate(0)
 
       await parent.doTick(10)
       await parent.finishTick(10)
@@ -93,7 +93,7 @@ describe(BaseIndexer.name, () => {
       await parent.start()
       await child.start()
 
-      await child.finishInvalidate()
+      await child.finishInvalidate(0)
 
       await parent.doTick(1)
       await parent.finishTick(1)
@@ -104,7 +104,7 @@ describe(BaseIndexer.name, () => {
       expect(shouldRetry).toHaveBeenCalledTimes(1)
       expect(markAttempt).toHaveBeenCalledTimes(1)
 
-      await child.finishInvalidate()
+      await child.finishInvalidate(0)
       expect(child.getState().status).toEqual('idle')
 
       await clock.tickAsync(1000)
@@ -147,7 +147,7 @@ describe(BaseIndexer.name, () => {
       await parent.start()
       await child.start()
 
-      await child.finishInvalidate()
+      await child.finishInvalidate(0)
       expect(invalidateClear).toHaveBeenCalledTimes(1)
 
       await parent.doTick(1)
@@ -167,7 +167,7 @@ describe(BaseIndexer.name, () => {
       expect(child.getState().status).toEqual('invalidating')
       expect(child.invalidating).toBeTruthy()
 
-      await child.finishInvalidate()
+      await child.finishInvalidate(0)
       expect(invalidateClear).toHaveBeenCalledTimes(2)
       expect(child.getState().status).toEqual('updating')
       expect(child.updating).toBeTruthy()
@@ -287,7 +287,7 @@ class TestRootIndexer extends RootIndexer {
 class TestChildIndexer extends ChildIndexer {
   public resolveUpdate: (height: number) => void = () => {}
   public rejectUpdate: (error: unknown) => void = () => {}
-  public resolveInvalidate: () => void = () => {}
+  public resolveInvalidate: (to: number) => void = () => {}
   public rejectInvalidate: (error: unknown) => void = () => {}
 
   public updating = false
@@ -307,11 +307,11 @@ class TestChildIndexer extends ChildIndexer {
     await waitUntil(() => this.dispatchCounter > counter)
   }
 
-  async finishInvalidate(result?: Error): Promise<void> {
+  async finishInvalidate(result: number | Error): Promise<void> {
     await waitUntil(() => this.invalidating)
     const counter = this.dispatchCounter
-    if (!result) {
-      this.resolveInvalidate()
+    if (typeof result === 'number') {
+      this.resolveInvalidate(result)
     } else {
       this.rejectInvalidate(result)
     }
@@ -360,10 +360,10 @@ class TestChildIndexer extends ChildIndexer {
     })
   }
 
-  override async invalidate(to: number): Promise<void> {
+  override async invalidate(to: number): Promise<number> {
     this.invalidating = true
     this.invalidateTo = to
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this.resolveInvalidate = resolve
       this.rejectInvalidate = reject
     }).finally(() => {
