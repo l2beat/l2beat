@@ -31,7 +31,7 @@ export const metis: Layer2 = {
       request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
     purpose: 'Universal',
     provider: 'OVM',
-    category: 'Optimistic Chain',
+    category: 'Optimium',
     links: {
       websites: ['https://www.metis.io'],
       apps: [],

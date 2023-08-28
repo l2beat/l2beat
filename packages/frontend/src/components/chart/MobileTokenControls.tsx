@@ -39,22 +39,25 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
               closeButtonText="Close tokens"
             >
               <div className="flex w-full flex-col gap-6">
-                {parts.map((p, i) => (
-                  <div key={i}>
-                    <div className={`text-sm font-bold ${p.titleColor}`}>
-                      {p.title}
-                    </div>
-                    <HorizontalSeparator className="mb-4 dark:border-gray-650" />
-                    <div
-                      className="flex flex-col gap-y-3 gap-x-6"
-                      data-role="chart-token-controls"
-                    >
-                      {p.tokens.map((token, j) => (
-                        <TokenCell token={token} key={j} />
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                {parts.map(
+                  (p, i) =>
+                    p.tokens.length > 0 && (
+                      <div key={i}>
+                        <div className={`text-sm font-bold ${p.titleColor}`}>
+                          {p.title}
+                        </div>
+                        <HorizontalSeparator className="mb-4 dark:border-gray-650" />
+                        <div
+                          className="flex flex-col gap-y-3 gap-x-6"
+                          data-role="chart-token-controls"
+                        >
+                          {p.tokens.map((token, j) => (
+                            <TokenCell token={token} key={j} />
+                          ))}
+                        </div>
+                      </div>
+                    ),
+                )}
               </div>
             </SlideCard>
           </div>

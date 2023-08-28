@@ -35,7 +35,9 @@ export function getProjectHeader(
   const getDetailed = (
     chart: TvlApiCharts | DetailedTvlApiCharts | undefined,
   ) => {
-    assert(chart?.hourly.types.length === 9)
+    if (chart) {
+      assert(chart.hourly.types.length === 9)
+    }
     const { parts, partsWeeklyChange } = getDetailedTvlWithChange(chart)
     return {
       tvl: parts.tvl,
@@ -47,7 +49,9 @@ export function getProjectHeader(
   }
 
   const getBasic = (chart: TvlApiCharts | DetailedTvlApiCharts | undefined) => {
-    assert(chart?.hourly.types.length === 3)
+    if (chart) {
+      assert(chart.hourly.types.length === 3)
+    }
     const { tvl, tvlWeeklyChange } = getTvlWithChange(chart)
     return {
       tvl,
