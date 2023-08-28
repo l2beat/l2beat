@@ -33,8 +33,6 @@ describe(generateTvlApiResponse.name, () => {
       [ProjectId('arbitrum'), ProjectId('optimism'), ProjectId('avalanche')],
     )
 
-    console.dir({ result }, { depth: null })
-
     expect(result).toEqual({
       layers2s: charts(reports, ProjectId.LAYER2S),
       bridges: charts(reports, ProjectId.BRIDGES),
