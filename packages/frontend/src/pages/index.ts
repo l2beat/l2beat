@@ -18,7 +18,12 @@ import { getTvlPage } from './scaling-tvl'
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
 
-  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
+  const {
+    tvlApiResponse,
+    activityApiResponse,
+    verificationStatus,
+    tvlBreakdownApiResponse,
+  } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
   pages.push(getTvlPage(config, pagesData))
@@ -48,7 +53,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(getDetailedTvlPage(config, pagesData))
   }
 
-  if (config.features.tvlBreakdown) {
+  if (config.features.tvlBreakdown && tvlBreakdownApiResponse) {
     pages.push(...getProjectTvlBreakdownPages(config, pagesData))
   }
 

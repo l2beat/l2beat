@@ -2,18 +2,19 @@ import React from 'react'
 
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
-import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { PagesData } from '../Page'
 import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
+import { getIncludedProjectsTvlBreakdown } from '../../utils/getIncludedProjectsTvlBreakdown'
 
 export function getProjectTvlBreakdownPages(
   config: Config,
   pagesData: PagesData,
 ) {
-  const included = getIncludedProjects(
+  const included = getIncludedProjectsTvlBreakdown(
     config.layer2s,
     pagesData.tvlApiResponse,
+    pagesData.tvlBreakdownApiResponse,
     config.features.buildAllProjectPages,
   )
 
