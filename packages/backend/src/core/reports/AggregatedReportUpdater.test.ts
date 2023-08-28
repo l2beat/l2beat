@@ -70,10 +70,18 @@ describe(AggregatedReportUpdater.name, () => {
       )
       expect(
         aggregatedReportRepository.addOrUpdateMany,
-      ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP)
+      ).toHaveBeenNthCalledWith(
+        1,
+        MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP.filter(
+          (r) => r.usdValue > 0,
+        ),
+      )
       expect(
         aggregatedReportRepository.addOrUpdateMany,
-      ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)
+      ).toHaveBeenNthCalledWith(
+        2,
+        MOCK.AGGREGATED_REPORTS.filter((r) => r.usdValue > 0),
+      )
     })
 
     it('calls only updaters with proper minTimestamp', async () => {
@@ -197,11 +205,16 @@ describe(AggregatedReportUpdater.name, () => {
           aggregatedReportRepository.addOrUpdateMany,
         ).toHaveBeenNthCalledWith(
           1,
-          MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP,
+          MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP.filter(
+            (r) => r.usdValue > 0,
+          ),
         )
         expect(
           aggregatedReportRepository.addOrUpdateMany,
-        ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)
+        ).toHaveBeenNthCalledWith(
+          2,
+          MOCK.AGGREGATED_REPORTS.filter((r) => r.usdValue > 0),
+        )
       })
     })
   })

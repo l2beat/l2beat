@@ -62,6 +62,7 @@ export class AggregatedReportUpdater {
           .map((updater) => updater.getReportsWhenReady(timestamp)),
       )
     ).flat()
+
     this.logger.debug('Reports ready')
 
     const aggregatedReports = aggregateReports(
@@ -70,7 +71,9 @@ export class AggregatedReportUpdater {
       timestamp,
     )
 
-    await this.aggregatedReportRepository.addOrUpdateMany(aggregatedReports)
+    const nonZeroReports = aggregatedReports.filter((x) => x.usdValue > 0n)
+
+    await this.aggregatedReportRepository.addOrUpdateMany(nonZeroReports)
 
     await this.aggregatedReportStatusRepository.add({
       configHash: this.configHash,
