@@ -14,6 +14,7 @@ const chainConfig = [
   {
     chainId: ChainId.OPTIMISM,
     // ~ Timestamp of block number 0 on Optimism
+    // https://optimistic.etherscan.io/block/0
     minTimestamp: UnixTime.fromDate(new Date('2021-01-14T15:51:40Z')),
   },
 ]

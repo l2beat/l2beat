@@ -312,13 +312,13 @@ describe(DetailedTvlController.name, () => {
         const secondEscrow = EthereumAddress.random()
 
         const eth: Token = { ...ETH, bucket: 'CBV', chainId: ChainId.ETHEREUM }
+        const dai: Token = { ...DAI, bucket: 'EBV', chainId: ChainId.ARBITRUM }
+        const op: Token = { ...OP, bucket: 'NMV', chainId: ChainId.ARBITRUM }
         const usdc: Token = {
           ...USDC,
           bucket: 'CBV',
           chainId: ChainId.ETHEREUM,
         }
-        const dai: Token = { ...DAI, bucket: 'EBV', chainId: ChainId.ARBITRUM }
-        const op: Token = { ...OP, bucket: 'NMV', chainId: ChainId.ARBITRUM }
 
         const projects: ReportProject[] = [
           {
