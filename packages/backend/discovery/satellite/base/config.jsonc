@@ -22,13 +22,16 @@
           "method": "admins",
           "length": "{{ adminEpoch }}",
           "startIndex": 1
+        },
+        "tokens": {
+          "type": "stateFromEvent",
+          "event": "TokenDeployed",
+          "returnParams": ["symbol", "tokenAddresses"],
+          "groupBy": "symbol",
+          "onlyValue": true,
+          "multipleInGroup": true,
+          "ignoreRelative": true
         }
-        // gets ArrayRangeTooWide error :(
-        //"tokens": {
-        //  "type": "arrayFromOneEvent",
-        //  "event": "TokenDeployed",
-        //  "valueKey": "symbol"
-        // }
       }
     },
     "AxelarAuthWeighted": {
