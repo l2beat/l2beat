@@ -21,8 +21,8 @@ export class CoingeckoCirculatingSupplyProvider
     totalSupplyQueries: CirculatingSupplyQuery[],
     timestamp: UnixTime,
   ): Promise<CirculatingSupplyRecord[]> {
-    const from = timestamp.add(-1, 'days')
-    const to = timestamp.add(1, 'days')
+    const from = timestamp.add(-2, 'days')
+    const to = timestamp.add(2, 'days')
 
     const responses = await promiseAllPlus(
       totalSupplyQueries.map((q) => async () => {
