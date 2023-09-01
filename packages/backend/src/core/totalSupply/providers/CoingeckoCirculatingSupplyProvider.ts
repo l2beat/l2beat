@@ -21,6 +21,14 @@ export class CoingeckoCirculatingSupplyProvider
     totalSupplyQueries: CirculatingSupplyQuery[],
     timestamp: UnixTime,
   ): Promise<CirculatingSupplyRecord[]> {
+    // NOTE(radomski): Sometimes Coingecko has holes in its
+    // data. For example, in Hydranet token they have data at 07.07.2023 and
+    // there's nothing for the next four days up until 11.07.2023. You can
+    // even see this discrepency on their website, so it's not only the API
+    // that's wrong. In such a scenario, count the closest circluating supply
+    // as the correct one.
+    //
+    // https://www.coingecko.com/en/coins/hydranet
     const from = timestamp.add(-2, 'days')
     const to = timestamp.add(2, 'days')
 
