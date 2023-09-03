@@ -21,6 +21,9 @@ export class CoingeckoCirculatingSupplyProvider
     totalSupplyQueries: CirculatingSupplyQuery[],
     timestamp: UnixTime,
   ): Promise<CirculatingSupplyRecord[]> {
+    if (totalSupplyQueries.length === 0) {
+      return []
+    }
     // NOTE(radomski): Sometimes Coingecko has holes in its
     // data. For example, in Hydranet token they have data at 07.07.2023 and
     // there's nothing for the next four days up until 11.07.2023. You can

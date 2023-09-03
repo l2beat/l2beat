@@ -6,7 +6,7 @@ import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
 import { BalancePerProject, createReport } from './createReport'
 
-export function createTotalSupplyFormulaReports(
+export function createSuppliedFormulaReports(
   prices: PriceRecord[],
   totalSupplies: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],

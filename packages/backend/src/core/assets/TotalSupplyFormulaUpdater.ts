@@ -17,13 +17,11 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createTotalSupplyFormulaReports } from '../reports/createTotalSupplyFormulaReports'
+import { createSuppliedFormulaReports } from '../reports/createTotalSupplyFormulaReports'
 import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
-// TODO: Make this class more generic
-// ProjectId, ChainId should be passed in the constructor
 export class TotalSupplyFormulaUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -107,7 +105,7 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
     ])
     this.logger.debug('Prices, balances and supplies ready')
 
-    const reports = createTotalSupplyFormulaReports(
+    const reports = createSuppliedFormulaReports(
       prices,
       totalSupplies,
       this.tokens,

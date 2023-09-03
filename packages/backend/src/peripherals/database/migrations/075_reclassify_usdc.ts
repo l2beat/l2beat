@@ -17,21 +17,17 @@ import { Knex } from 'knex'
 const ASSET_ID = 'arbitrum:usdc-usd-coin'
 
 export async function up(knex: Knex) {
-  await knex('reports')
-    .update({ report_type: 'NMV' })
-    .where({
-      chain_id: +ChainId.ARBITRUM,
-      report_type: 'EBV',
-      asset_id: ASSET_ID,
-    })
+  await knex('reports').update({ report_type: 'NMV' }).where({
+    chain_id: +ChainId.ARBITRUM,
+    report_type: 'EBV',
+    asset_id: ASSET_ID,
+  })
 }
 
 export async function down(knex: Knex) {
-  await knex('reports')
-    .update({ report_type: 'EBV' })
-    .where({
-      chain_id: +ChainId.ARBITRUM,
-      report_type: 'NMV',
-      asset_id: ASSET_ID,
-    })
+  await knex('reports').update({ report_type: 'EBV' }).where({
+    chain_id: +ChainId.ARBITRUM,
+    report_type: 'NMV',
+    asset_id: ASSET_ID,
+  })
 }
