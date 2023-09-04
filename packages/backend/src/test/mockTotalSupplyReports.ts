@@ -8,12 +8,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { createEBVReports } from '../core/reports/createEBVReports'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
 import { TotalSupplyRecord } from '../peripherals/database/TotalSupplyRepository'
 import { REPORTS_MOCK as BASE_MOCK } from './mockReports'
+import { createSuppliedFormulaReports } from '../core/reports/createTotalSupplyFormulaReports'
 
 const ARBITRUM_ESCROW_ONE = EthereumAddress.random()
 const ARBITRUM_ESCROW_TWO = EthereumAddress.random()
@@ -80,24 +80,22 @@ const TOKENS: Token[] = [
     address: EthereumAddress.random(),
     sinceTimestamp: BASE_MOCK.NOW,
     decimals: 6,
-    premintHolderAddresses: [],
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    type: 'EBV',
+    bucket: 'EBV',
+    formula: 'totalSupply',
   },
 ]
 
-const REPORTS = createEBVReports(
+const REPORTS = createSuppliedFormulaReports(
   PRICES,
-  BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
   ProjectId.ARBITRUM,
   ChainId.ARBITRUM,
 )
-const FUTURE_REPORTS = createEBVReports(
+const FUTURE_REPORTS = createSuppliedFormulaReports(
   FUTURE_PRICES,
-  FUTURE_BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
   ProjectId.ARBITRUM,
@@ -135,7 +133,8 @@ function fakeTokenInfo(token: Partial<Token>): Token {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    type: 'EBV',
+    bucket: 'EBV',
+    formula: 'totalSupply',
     ...token,
   }
 }
