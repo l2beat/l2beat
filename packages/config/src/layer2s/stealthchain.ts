@@ -15,9 +15,9 @@ export const stealthchain: Layer2 = {
     purpose: 'Degen,Launchpad',
     category: 'OP Stack',
     links: {
-      websites: ['https://steathchain.org'],
+      websites: ['https://stealthchain.org'],
       apps: ['https://bridge.test.steathchain.org'],
-      documentation: ['https://docs.steathchain.org'],
+      documentation: ['https://docs.stealthchain.org'],
       explorers: [
         'https://test.stealthscan.xyz/',
         'https://stealthpad.instatus.com/',
