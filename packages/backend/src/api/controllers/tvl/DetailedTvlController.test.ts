@@ -38,7 +38,7 @@ describe(DetailedTvlController.name, () => {
   const START = UnixTime.fromDate(new Date('2022-05-31'))
   const MINIMUM_TIMESTAMP = START.add(-1, 'hours')
 
-  const USDC = tokenList.find((x) => x.symbol === 'USDC' && x.bucket === 'CBV')!
+  const USDC = tokenList.find((x) => x.symbol === 'USDC' && x.type === 'CBV')!
 
   const ARBITRUM: ReportProject = {
     projectId: ProjectId('arbitrum'),
@@ -272,19 +272,17 @@ describe(DetailedTvlController.name, () => {
     () => {
       it('produces assets breakdown per project', async () => {
         const USDC = tokenList.find(
-          (x) => x.symbol === 'USDC' && x.bucket === 'CBV',
+          (x) => x.symbol === 'USDC' && x.type === 'CBV',
         )!
 
-        const OP = tokenList.find(
-          (x) => x.symbol === 'OP' && x.bucket === 'NMV',
-        )!
+        const OP = tokenList.find((x) => x.symbol === 'OP' && x.type === 'NMV')!
 
         const DAI = tokenList.find(
-          (x) => x.symbol === 'DAI' && x.bucket === 'CBV',
+          (x) => x.symbol === 'DAI' && x.type === 'CBV',
         )!
 
         const ETH = tokenList.find(
-          (x) => x.symbol === 'ETH' && x.bucket === 'CBV',
+          (x) => x.symbol === 'ETH' && x.type === 'CBV',
         )!
 
         const latestConfigHash = Hash256.random()
@@ -293,14 +291,14 @@ describe(DetailedTvlController.name, () => {
         const firstEscrow = EthereumAddress.random()
         const secondEscrow = EthereumAddress.random()
 
-        const eth: Token = { ...ETH, bucket: 'CBV', chainId: ChainId.ETHEREUM }
+        const eth: Token = { ...ETH, type: 'CBV', chainId: ChainId.ETHEREUM }
         const usdc: Token = {
           ...USDC,
-          bucket: 'CBV',
+          type: 'CBV',
           chainId: ChainId.ETHEREUM,
         }
-        const dai: Token = { ...DAI, bucket: 'EBV', chainId: ChainId.ARBITRUM }
-        const op: Token = { ...OP, bucket: 'NMV', chainId: ChainId.ARBITRUM }
+        const dai: Token = { ...DAI, type: 'EBV', chainId: ChainId.ARBITRUM }
+        const op: Token = { ...OP, type: 'NMV', chainId: ChainId.ARBITRUM }
 
         const projects: ReportProject[] = [
           {
@@ -333,7 +331,7 @@ describe(DetailedTvlController.name, () => {
             projectId: ProjectId('arbitrum'),
             asset: dai.id,
             chainId: dai.chainId,
-            reportType: dai.bucket,
+            reportType: dai.type,
             amount: 10_000_000_000_000n,
             usdValue: 10_000_000_000_000n,
             ethValue: 10_000n,
@@ -343,7 +341,7 @@ describe(DetailedTvlController.name, () => {
             projectId: ProjectId('arbitrum'),
             asset: usdc.id,
             chainId: usdc.chainId,
-            reportType: usdc.bucket,
+            reportType: usdc.type,
             amount: 20_000_000_000_000n,
             usdValue: 20_000_000_000_000n,
             ethValue: 20_000n,
@@ -353,7 +351,7 @@ describe(DetailedTvlController.name, () => {
             projectId: ProjectId('arbitrum'),
             asset: op.id,
             chainId: op.chainId,
-            reportType: op.bucket,
+            reportType: op.type,
             amount: 30_000_000_000_000n,
             usdValue: 45_000_000_000_000n,
             ethValue: 45_000n,

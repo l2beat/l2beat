@@ -376,7 +376,7 @@ describe(PriceUpdater.name, () => {
       address: EthereumAddress.random(),
       category: 'ether', // irrelevant
       chainId: ChainId.ETHEREUM, // irrelevant
-      bucket: 'CBV', // irrelevant
+      type: 'CBV', // irrelevant
       formula: 'locked', // irrelevant
       name: 'Fake', // irrelevant
       sinceTimestamp: new UnixTime(0), // irrelevant

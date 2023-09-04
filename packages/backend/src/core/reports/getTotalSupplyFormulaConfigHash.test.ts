@@ -65,6 +65,6 @@ function fakeExternalToken(assetId: AssetId, sinceTimestamp: UnixTime): Token {
     id: assetId,
     sinceTimestamp,
     chainId: ChainId.ARBITRUM,
-    bucket: 'EBV',
+    type: 'EBV',
   }
 }

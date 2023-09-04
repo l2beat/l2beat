@@ -43,7 +43,7 @@ export function getCanonicalTokens(): Token[] {
     .map((t) => ({
       ...t,
       chainId: ChainId.ETHEREUM,
-      bucket: 'CBV',
+      type: 'CBV',
       formula: 'locked',
     }))
 }

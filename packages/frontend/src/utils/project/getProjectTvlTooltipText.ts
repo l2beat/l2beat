@@ -6,10 +6,10 @@ import { languageJoin } from '../utils'
 export function getProjectTvlTooltipText(config: Layer2['config']) {
   const hasCanonical = config.escrows.length > 0
   const hasExternal = config.tokenList?.some(
-    (token) => token.bucket === AssetType('EBV'),
+    (token) => token.type === AssetType('EBV'),
   )
   const hasNative = config.tokenList?.some(
-    (token) => token.bucket === AssetType('NMV'),
+    (token) => token.type === AssetType('NMV'),
   )
 
   if (!hasExternal && !hasNative) {

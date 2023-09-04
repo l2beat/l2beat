@@ -91,7 +91,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     coingeckoId: CoingeckoId('arbitrum'),
     sinceTimestamp: new UnixTime(1630233600),
     category: 'other',
-    bucket: 'NMV',
+    type: 'NMV',
     formula: 'circulatingSupply',
   },
   {
@@ -105,7 +105,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     coingeckoId: CoingeckoId('usd-coin'),
     sinceTimestamp: new UnixTime(1667250000),
     category: 'stablecoin',
-    bucket: 'NMV',
+    type: 'NMV',
     formula: 'totalSupply',
   },
 ]

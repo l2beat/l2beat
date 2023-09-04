@@ -41,7 +41,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     decimals: 18,
     sinceTimestamp: new UnixTime(1654039974),
     category: 'other',
-    bucket: 'NMV',
+    type: 'NMV',
     formula: 'circulatingSupply',
   },
 ]

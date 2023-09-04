@@ -19,7 +19,7 @@ export interface Token {
 
   sinceTimestamp: UnixTime
 
-  bucket: AssetType
+  type: AssetType
   formula: 'totalSupply' | 'locked' | 'circulatingSupply'
 
   /** @deprecated */

@@ -311,7 +311,7 @@ describe(BalanceUpdater.name, () => {
       address: EthereumAddress.random(),
       category: 'other',
       chainId: ChainId.ETHEREUM,
-      bucket: 'CBV',
+      type: 'CBV',
       formula: 'locked',
     }
   }

@@ -102,7 +102,7 @@ export function getNonCanonicalAssetsBreakdown(
   reportType: ReportType,
 ) {
   return tokens
-    .filter((token) => token.bucket === reportType)
+    .filter((token) => token.type === reportType)
     .map((token) => {
       const assetId = token.id
 

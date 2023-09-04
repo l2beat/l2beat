@@ -180,7 +180,7 @@ function fakeToken(id: string, timestamp: number): Token {
     id: AssetId(id),
     sinceTimestamp: new UnixTime(timestamp),
     chainId: ChainId.ETHEREUM,
-    bucket: 'CBV',
+    type: 'CBV',
     formula: 'locked',
   }
 }
