@@ -13,6 +13,7 @@ function extractTokens(tokens: Token[]) {
       tokenAddress: t.address?.toString() ?? '',
       sinceTimestamp: t.sinceTimestamp.toNumber(),
       decimals: t.decimals,
+      formula: t.formula,
     }
   })
 }
