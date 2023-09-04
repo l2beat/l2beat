@@ -115,7 +115,7 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
         description: 'StarkGate bridge for ETH.',
-        upgradableBy: ['StarkGate ETH owner'],
+        upgradableBy: ['StarkGate ETH owner', 'BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -129,14 +129,14 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
         description: 'StarkGate bridge for WBTC.',
-        upgradableBy: ['StarkGate WBTC owner'],
+        upgradableBy: ['StarkGate WBTC owner', 'BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowWBTCDelaySeconds),
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
-        upgradableBy: ['StarkGate USDC owner'],
+        upgradableBy: ['StarkGate USDC owner', 'BridgeMultisig'],
         description: 'StarkGate bridge for USDC.',
       }),
       discovery.getEscrowDetails({
@@ -144,7 +144,7 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
         description: 'StarkGate bridge for USDT.',
-        upgradableBy: ['StarkGate USDT owner'],
+        upgradableBy: ['StarkGate USDT owner', 'BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -368,6 +368,10 @@ export const starknet: Layer2 = {
         'Can upgrade implementation of the rETH escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowRETHDelaySeconds),
     },
+    ...discovery.getMultisigPermission(
+      'BridgeMultisig',
+      'Can upgrade the following bridges: WBTC, ETH, USDT, USDC.',
+    ),
   ],
   milestones: [
     {

@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 17990745,
-  "configHash": "0x3c04da87132c5e7178027b81628427ec0795b136a75a997e5586ea0522a5eb07",
+  "blockNumber": 18061371,
+  "configHash": "0x21e795680ad59a6e324d91877bca33f4593fef8994286113ac0c969fe9745d64",
   "version": 2,
   "contracts": [
     {
@@ -44,13 +44,14 @@
         "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
         "getChainId": 1,
         "getOwners": [
+          "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
           "0x3d7dF98257E5CEe5f032fd06a0aA510F89A19A2e",
           "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
           "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
         ],
         "getThreshold": 3,
-        "nonce": 27,
+        "nonce": 42,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -352,12 +353,12 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 8063,
+        "nonce": 8565,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
-        "relayerFeeVault": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "relayerFeeVault": "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378",
         "RELAYERS": [
           "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
           "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
@@ -476,19 +477,42 @@
           1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786
         ],
         "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
-        "getPendingInboundRootsCount": 0,
-        "lastPropagatedRoot": "0x9c88d011ccde0bf62acdd978b932042f8a97636bd1b99226f1da81df6619dac1",
+        "getPendingInboundRootsCount": 6,
+        "lastPropagatedRoot": "0xa22b4f9e6c3d8c669deea9ceb7b79d213853c7700a4fa45c0c77d5cf86d68f8b",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [34340, 34339],
+        "pendingInboundRoots": [35136, 35141],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6"
       },
       "derivedName": "RootManager"
+    },
+    {
+      "name": "Connext Multisig 2",
+      "address": "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xa721cba4d2f32af7fbfd7a202a7c61a16ec27fc0140de338b2f91560251fd997",
+        "getChainId": 1,
+        "getOwners": [
+          "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
+          "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
+          "0x3d7dF98257E5CEe5f032fd06a0aA510F89A19A2e",
+          "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
+          "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
+        ],
+        "getThreshold": 1,
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "MainnetSpokeConnector",
@@ -502,12 +526,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 17990219,
+        "lastSentBlock": 18061028,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xe8c094266dba9aa76336186291c11a64a668c2c64fc5b021e400a3a77b38e886",
+        "outboundRoot": "0x3ab025b4785deea3a95d79dfcca2c0e688231fb3b3d6b46502d94bc14ae2c7f4",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -541,6 +565,7 @@
     "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598",
     "0x76CF58cE587bC928fcc5aD895555fd040E06C61a",
     "0x7ce49752fFA7055622f444df3c69598748cb2E5f",
+    "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
     "0x8cb19CE8EEDF740389D428879a876A3B030B9170",
     "0x9435Ba7C661a0Fd477deED640491de8c100325A7",
     "0x9584Eb0356a380b25D7ED2C14c54De58a25f2581",
@@ -1385,6 +1410,9 @@
       "function setupAssetWithDeployedRepresentation(tuple(uint32 domain, bytes32 id) _canonical, address _representation, address _adoptedAssetId, address _stableSwapPool) returns (address)",
       "function updateDetails(tuple(uint32 domain, bytes32 id) _canonical, string _name, string _symbol)",
       "function updateLiquidityCap(tuple(uint32 domain, bytes32 id) _canonical, uint256 _updated)"
+    ],
+    "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": [
+      "constructor(address _singleton)"
     ],
     "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _processGas, uint256 _reserveGas, uint256 _delayBlocks, address _merkle, address _watcherManager)",
