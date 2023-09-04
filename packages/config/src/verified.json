@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-08-25T09:55:42.811Z",
+  "updatedAt": "2023-09-04T13:29:04.780Z",
   "projects": {
     "across-v2": true,
     "allbridge": false,
@@ -15,6 +15,7 @@
     "bobanetwork": true,
     "brine": true,
     "canvasconnect": true,
+    "capx": true,
     "cartesi-honeypot": true,
     "cbridge": true,
     "connext": true,
@@ -52,6 +53,7 @@
     "optimism": true,
     "orbit": false,
     "orbiter": true,
+    "palm": true,
     "pNetwork": true,
     "polygon-miden": true,
     "polygon-plasma": false,
