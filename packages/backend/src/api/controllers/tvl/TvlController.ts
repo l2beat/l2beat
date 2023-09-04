@@ -1,79 +1,92 @@
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
-  ChainId,
+  Hash256,
   ProjectId,
   Token,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
-  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
+import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
 
+interface TvlControllerOptions {
+  errorOnUnsyncedTvl: boolean
+}
+
+type TvlResult =
+  | {
+      result: 'success'
+      data: TvlApiResponse
+    }
+  | {
+      result: 'error'
+      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+    }
+
+type AssetTvlResult =
+  | {
+      result: 'success'
+      data: TvlApiCharts
+    }
+  | {
+      result: 'error'
+      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
+    }
 export class TvlController {
   constructor(
-    private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
-    private readonly isArbitrumEnabled = false,
+    private readonly aggregatedConfigHash: Hash256,
+    private readonly options: TvlControllerOptions,
   ) {
     this.logger = this.logger.for(this)
   }
 
-  async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
-    const timestamps: (UnixTime | undefined)[] = []
+  async getTvlApiResponse(): Promise<TvlResult> {
+    const dataTimings = await this.getDataTimings()
 
-    timestamps.push(
-      await this.reportStatusRepository.findLatestTimestamp(
-        ChainId.ETHEREUM,
-        'CBV',
-      ),
-    )
-    if (this.isArbitrumEnabled) {
-      timestamps.push(
-        await this.reportStatusRepository.findLatestTimestamp(
-          ChainId.ARBITRUM,
-          'EBV',
-        ),
-      )
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
     }
 
-    if (timestamps.some((x) => x === undefined)) {
-      return undefined
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
     }
-
-    const timestamp = timestamps
-      .filter(notUndefined)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
 
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregatedReportRepository.getHourly(
-          getHourlyMinTimestamp(timestamp),
+          getHourlyMinTimestamp(dataTimings.latestTimestamp),
           'TVL',
         ),
         this.aggregatedReportRepository.getSixHourly(
-          getSixHourlyMinTimestamp(timestamp),
+          getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
           'TVL',
         ),
         this.aggregatedReportRepository.getDaily('TVL'),
-        this.reportRepository.getByTimestamp(timestamp),
+        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
       ])
 
     const tvlApiResponse = generateTvlApiResponse(
@@ -83,59 +96,52 @@ export class TvlController {
       reduceDuplicatedReports(latestReports),
       this.projects.map((x) => x.projectId),
     )
-    return tvlApiResponse
+
+    return {
+      result: 'success',
+      data: tvlApiResponse,
+    }
   }
 
   async getProjectAssetChart(
     projectId: ProjectId,
     assetId: AssetId,
-  ): Promise<TvlApiCharts | undefined> {
-    const project = this.projects.find((p) => p.projectId === projectId)
+  ): Promise<AssetTvlResult> {
     const asset = this.tokens.find((t) => t.id === assetId)
-    if (!project || !asset) {
-      return undefined
+    const project = this.projects.find((p) => p.projectId === projectId)
+
+    if (!asset || !project) {
+      return {
+        result: 'error',
+        error: 'INVALID_PROJECT_OR_ASSET',
+      }
     }
 
-    const timestamps: (UnixTime | undefined)[] = []
+    const dataTimings = await this.getDataTimings()
 
-    timestamps.push(
-      await this.reportStatusRepository.findLatestTimestamp(
-        ChainId.ETHEREUM,
-        'CBV',
-      ),
-    )
-    if (
-      this.isArbitrumEnabled &&
-      projectId === ProjectId.ARBITRUM &&
-      assetId === AssetId.USDC
-    ) {
-      timestamps.push(
-        await this.reportStatusRepository.findLatestTimestamp(
-          ChainId.ARBITRUM,
-          'EBV',
-        ),
-      )
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
     }
 
-    if (timestamps.some((x) => x === undefined)) {
-      return undefined
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
     }
-
-    const timestamp = timestamps
-      .filter(notUndefined)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
-
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.reportRepository.getHourlyByProjectAndAsset(
         projectId,
         assetId,
-        getHourlyMinTimestamp(timestamp),
+        getHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
       this.reportRepository.getSixHourlyByProjectAndAsset(
         projectId,
         assetId,
-        getSixHourlyMinTimestamp(timestamp),
+        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
       this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
     ])
@@ -144,32 +150,46 @@ export class TvlController {
       asset.symbol.toLowerCase(),
       'usd',
     ]
+
     return {
-      hourly: {
-        types,
-        data: getProjectAssetChartData(
-          reduceDuplicatedReports(hourlyReports),
-          asset.decimals,
-          1,
-        ),
-      },
-      sixHourly: {
-        types,
-        data: getProjectAssetChartData(
-          reduceDuplicatedReports(sixHourlyReports),
-          asset.decimals,
-          6,
-        ),
-      },
-      daily: {
-        types,
-        data: getProjectAssetChartData(
-          reduceDuplicatedReports(dailyReports),
-          asset.decimals,
-          24,
-        ),
+      result: 'success',
+      data: {
+        hourly: {
+          types,
+          data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
+        },
+        sixHourly: {
+          types,
+          data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
+        },
+        daily: {
+          types,
+          data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+        },
       },
     }
+  }
+
+  // TODO: Move this function to a separate file and reuse it in controllers
+  private async getDataTimings() {
+    const { matching: syncedReportsAmount, different: unsyncedReportsAmount } =
+      await this.aggregatedReportStatusRepository.findCountsForHash(
+        this.aggregatedConfigHash,
+      )
+
+    const latestTimestamp =
+      await this.aggregatedReportStatusRepository.findLatestTimestamp()
+
+    const isSynced = unsyncedReportsAmount === 0
+
+    const result = {
+      syncedReportsAmount,
+      unsyncedReportsAmount,
+      isSynced,
+      latestTimestamp,
+    }
+
+    return result
   }
 }
 
@@ -200,8 +220,4 @@ export function reduceDuplicatedReports(
   }
 
   return result
-}
-
-function notUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
 }

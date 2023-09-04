@@ -257,7 +257,6 @@ describe(DetailedTvlController.name, () => {
 
         expect(reportStatusRepository.findLatestTimestamp).toHaveBeenCalledWith(
           chainId,
-          type,
         )
 
         expect(reportRepository.getHourlyForDetailed).toHaveBeenCalledWith(

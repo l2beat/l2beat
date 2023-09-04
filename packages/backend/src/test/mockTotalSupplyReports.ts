@@ -8,12 +8,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { createSuppliedFormulaReports } from '../core/reports/createTotalSupplyFormulaReports'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
 import { TotalSupplyRecord } from '../peripherals/database/TotalSupplyRepository'
 import { REPORTS_MOCK as BASE_MOCK } from './mockReports'
-import { createSuppliedFormulaReports } from '../core/reports/createTotalSupplyFormulaReports'
 
 const ARBITRUM_ESCROW_ONE = EthereumAddress.random()
 const ARBITRUM_ESCROW_TWO = EthereumAddress.random()

@@ -86,7 +86,7 @@ describe(TvlController.name, () => {
       )
       const types: TvlApiChart['types'] = ['timestamp', 'usd', 'eth']
       const charts = await controller.getTvlApiResponse()
-      expect(charts?.projects.arbitrum).toEqual({
+      expect(charts.projects.arbitrum).toEqual({
         charts: {
           hourly: {
             types,
