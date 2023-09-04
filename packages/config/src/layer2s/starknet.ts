@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatLargeNumberShared,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -75,6 +80,58 @@ const minDelay = Math.min(
   escrowRETHDelaySeconds,
 )
 
+function formatMaxTotalBalanceString(
+  ticker: string,
+  maxTotalBalance: number,
+  decimals: number,
+) {
+  return `The current bridge cap is ${formatLargeNumberShared(
+    maxTotalBalance / 10 ** decimals,
+  )} ${ticker}.`
+}
+
+const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'ETH',
+  discovery.getContractValue<number>('ETH Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowWBTCMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'WBTC',
+  discovery.getContractValue<number>('WBTC Bridge', 'maxTotalBalance'),
+  8,
+)
+
+const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'USDC',
+  discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance'),
+  6,
+)
+
+const escrowUSDTMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'USDT',
+  discovery.getContractValue<number>('USDT Bridge', 'maxTotalBalance'),
+  6,
+)
+
+const escrowWSTETHMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'wstETH',
+  discovery.getContractValue<number>('wstETH Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowRETHMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'rETH',
+  discovery.getContractValue<number>('rETH Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'DAI',
+  discovery.getContractValue<number>('L1DaiGateway', 'ceiling'),
+  18,
+)
+
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -114,7 +171,8 @@ export const starknet: Layer2 = {
         address: EthereumAddress(ESCROW_ETH_ADDRESS),
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
-        description: 'StarkGate bridge for ETH.',
+        description:
+          'StarkGate bridge for ETH.' + ' ' + escrowETHMaxTotalBalanceString,
         upgradableBy: ['StarkGate ETH owner', 'BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowETHDelaySeconds),
       }),
@@ -122,13 +180,17 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
-        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+        description:
+          'DAI Vault for custom DAI Gateway managed by MakerDAO.' +
+          ' ' +
+          escrowDAIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_WBTC_ADDRESS),
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
-        description: 'StarkGate bridge for WBTC.',
+        description:
+          'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
         upgradableBy: ['StarkGate WBTC owner', 'BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowWBTCDelaySeconds),
       }),
@@ -137,13 +199,15 @@ export const starknet: Layer2 = {
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
         upgradableBy: ['StarkGate USDC owner', 'BridgeMultisig'],
-        description: 'StarkGate bridge for USDC.',
+        description:
+          'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_USDT_ADDRESS),
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
-        description: 'StarkGate bridge for USDT.',
+        description:
+          'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
         upgradableBy: ['StarkGate USDT owner', 'BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
       }),
@@ -151,7 +215,10 @@ export const starknet: Layer2 = {
         address: EthereumAddress(ESCROW_WSTETH_ADDRESS),
         sinceTimestamp: new UnixTime(1657137623),
         tokens: ['wstETH'],
-        description: 'StarkGate bridge for wstETH.',
+        description:
+          'StarkGate bridge for wstETH.' +
+          ' ' +
+          escrowWSTETHMaxTotalBalanceString,
         upgradableBy: ['StarkGate wstETH owner'],
         upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
@@ -159,7 +226,8 @@ export const starknet: Layer2 = {
         address: EthereumAddress(ESCROW_RETH_ADDRESS),
         sinceTimestamp: new UnixTime(1657137623),
         tokens: ['rETH'],
-        description: 'StarkGate bridge for rETH.',
+        description:
+          'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
         upgradableBy: ['StarkGate rETH owner'],
         upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
       }),
