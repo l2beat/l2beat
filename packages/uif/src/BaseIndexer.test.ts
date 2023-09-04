@@ -214,7 +214,7 @@ describe(BaseIndexer.name, () => {
   })
 })
 
-async function waitUntil(predicate: () => boolean): Promise<void> {
+export async function waitUntil(predicate: () => boolean): Promise<void> {
   return new Promise<void>((resolve) => {
     const interval = setInterval(() => {
       if (predicate()) {
@@ -225,7 +225,7 @@ async function waitUntil(predicate: () => boolean): Promise<void> {
   })
 }
 
-class TestRootIndexer extends RootIndexer {
+export class TestRootIndexer extends RootIndexer {
   public resolveTick: (height: number) => void = () => {}
   public rejectTick: (error: unknown) => void = () => {}
 
