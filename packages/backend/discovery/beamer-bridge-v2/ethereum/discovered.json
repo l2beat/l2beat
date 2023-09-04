@@ -1,7 +1,7 @@
 {
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
-  "blockNumber": 17991008,
+  "blockNumber": 18061473,
   "configHash": "0x18d13869837793143c9fbab3364790146e0ecbc24282da9590daeb2c80ba5059",
   "version": 2,
   "contracts": [
@@ -97,7 +97,7 @@
         "claimPeriod": 86400,
         "claimRequestExtension": 86400,
         "claimStake": "10000000000000000",
-        "currentNonce": 264,
+        "currentNonce": 273,
         "lpFeePPM": 3000,
         "MAX_VALIDITY_PERIOD": 172800,
         "MIN_VALIDITY_PERIOD": 1800,
@@ -127,13 +127,7 @@
       },
       "values": {
         "l1Resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD",
-        "liquidityProviders": [
-          "0x0F536e54cE49f2dBdD8ae5E86F7b41f09a2e2818",
-          "0xa1151b7F265AA2e546382D8deF6c2A2613798F88",
-          "0xdC256EC77E97448d29D88118e55C82067150b768",
-          "0xDD3307A939c131981315Bd4C51Abea37048B7177",
-          "0x3E98374E46fD46894Bd28C27b95f9bc75Bb6e096"
-        ],
+        "liquidityProviders": ["0xdC256EC77E97448d29D88118e55C82067150b768"],
         "messenger": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
