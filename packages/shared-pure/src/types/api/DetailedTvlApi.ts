@@ -7,6 +7,7 @@ import { ChainId } from '../ChainId'
 import { EthereumAddress } from '../EthereumAddress'
 import { UnixTime } from '../UnixTime'
 
+// TODO: update the types
 const DetailedTvlApiChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
   z.number(),

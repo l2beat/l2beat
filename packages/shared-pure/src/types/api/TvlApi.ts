@@ -4,6 +4,7 @@ import { AssetId } from '../AssetId'
 import { branded } from '../branded'
 import { UnixTime } from '../UnixTime'
 
+// TODO: update the types
 const TvlApiChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
   z.number(),
