@@ -12,10 +12,7 @@ import {
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
-import {
-  ReportRecord,
-  ReportRepository,
-} from '../../../peripherals/database/ReportRepository'
+import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
@@ -46,14 +43,14 @@ type AssetTvlResult =
     }
 export class TvlController {
   constructor(
-    private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
-    private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
+    private readonly aggregatedReportRepository: AggregatedReportRepository,
+    private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
-    private readonly logger: Logger,
     private readonly aggregatedConfigHash: Hash256,
     private readonly options: TvlControllerOptions,
+    private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -93,7 +90,7 @@ export class TvlController {
       hourlyReports,
       sixHourlyReports,
       dailyReports,
-      reduceDuplicatedReports(latestReports),
+      latestReports,
       this.projects.map((x) => x.projectId),
     )
 
@@ -191,33 +188,4 @@ export class TvlController {
 
     return result
   }
-}
-
-export function reduceDuplicatedReports(
-  reports: ReportRecord[],
-): ReportRecord[] {
-  const result: ReportRecord[] = []
-
-  for (const report of reports) {
-    const existingIndex = result.findIndex(
-      (r) =>
-        r.projectId === report.projectId &&
-        r.asset === report.asset &&
-        r.timestamp.equals(report.timestamp),
-    )
-    if (existingIndex !== -1) {
-      const existing = result[existingIndex]
-
-      result[existingIndex] = {
-        ...existing,
-        amount: existing.amount + report.amount,
-        usdValue: existing.usdValue + report.usdValue,
-        ethValue: existing.ethValue + report.ethValue,
-      }
-    } else {
-      result.push(report)
-    }
-  }
-
-  return result
 }
