@@ -23,7 +23,6 @@ import { TvlController } from './TvlController'
 
 const START = UnixTime.fromDate(new Date('2022-05-31'))
 const DAI = tokenList.find((x) => x.symbol === 'DAI')!
-const USDC = tokenList.find((x) => x.symbol === 'USDC' && x.bucket === 'CBV')!
 
 const OPTIMISM: ReportProject = {
   projectId: ProjectId('optimism'),
@@ -33,18 +32,6 @@ const OPTIMISM: ReportProject = {
       address: EthereumAddress.random(),
       sinceTimestamp: new UnixTime(0),
       tokens: [DAI],
-    },
-  ],
-}
-
-const ARBITRUM: ReportProject = {
-  projectId: ProjectId('arbitrum'),
-  type: 'layer2',
-  escrows: [
-    {
-      address: EthereumAddress.random(),
-      sinceTimestamp: new UnixTime(0),
-      tokens: [USDC],
     },
   ],
 }
