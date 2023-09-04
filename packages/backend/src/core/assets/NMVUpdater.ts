@@ -66,7 +66,6 @@ export class NMVUpdater implements AssetUpdater {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
       this.getChainId(),
-      'NMV',
     )
 
     for (const timestamp of known) {
@@ -105,7 +104,6 @@ export class NMVUpdater implements AssetUpdater {
       configHash: this.configHash,
       timestamp,
       chainId: this.getChainId(),
-      reportType: 'NMV',
     })
 
     this.knownSet.add(timestamp.toNumber())
