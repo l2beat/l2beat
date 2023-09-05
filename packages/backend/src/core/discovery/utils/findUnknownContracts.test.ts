@@ -1,9 +1,6 @@
 import { ConfigReader } from '@l2beat/discovery'
-import {
-  ChainId,
-  ContractParameters,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import type { ContractParameters } from '@l2beat/discovery-types'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { findUnknownContracts } from './findUnknownContracts'

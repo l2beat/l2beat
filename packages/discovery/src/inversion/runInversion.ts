@@ -1,4 +1,5 @@
-import { ChainId, ContractValue, EthereumAddress } from '@l2beat/shared-pure'
+import { ContractValue } from '@l2beat/discovery-types'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { constants, utils } from 'ethers'

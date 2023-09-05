@@ -22,13 +22,20 @@ export function createTvlRouter(
   const router = new Router()
 
   router.get('/api/tvl', async (ctx) => {
-    const data = await tvlController.getTvlApiResponse()
-    if (!data) {
-      ctx.status = 404
+    const tvlResponse = await tvlController.getTvlApiResponse()
+    if (tvlResponse.result === 'error') {
+      if (tvlResponse.error === 'DATA_NOT_FULLY_SYNCED') {
+        ctx.status = 422
+      }
+
+      if (tvlResponse.error === 'NO_DATA') {
+        ctx.status = 404
+      }
+
       return
     }
 
-    ctx.body = data
+    ctx.body = tvlResponse.data
   })
 
   router.get(
@@ -42,15 +49,22 @@ export function createTvlRouter(
       }),
       async (ctx) => {
         const { projectId, assetId } = ctx.params
-        const chart = await tvlController.getProjectAssetChart(
+        const chartResponse = await tvlController.getProjectAssetChart(
           projectId,
           assetId,
         )
-        if (!chart) {
-          ctx.status = 404
+        if (chartResponse.result === 'error') {
+          if (chartResponse.error === 'NO_DATA') {
+            ctx.status = 404
+          }
+
+          if (chartResponse.error === 'INVALID_PROJECT_OR_ASSET') {
+            ctx.status = 400
+          }
+
           return
         }
-        ctx.body = chart
+        ctx.body = chartResponse.data
       },
     ),
   )

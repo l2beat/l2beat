@@ -31,7 +31,6 @@ import {
   ReportRecord,
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getProjectAssetChartData } from './charts'
 import { DetailedTvlController } from './DetailedTvlController'
 
@@ -101,14 +100,6 @@ describe(DetailedTvlController.name, () => {
           },
         ]
 
-        const reportStatusRepository = mockObject<ReportStatusRepository>({
-          findLatestTimestampOfType: async (type) =>
-            type === 'CBV'
-              ? START
-              : type === 'EBV'
-              ? START.add(-15, 'minutes')
-              : START.add(-30, 'minutes'), // NMV
-        })
         const aggregatedReportStatusRepository =
           mockObject<AggregatedReportStatusRepository>({
             findLatestTimestamp: async () => MINIMUM_TIMESTAMP,
@@ -131,7 +122,6 @@ describe(DetailedTvlController.name, () => {
             getSixHourlyWithAnyType: async () => baseAggregatedReport,
           })
         const controller = new DetailedTvlController(
-          reportStatusRepository,
           aggregatedReportRepository,
           reportRepository,
           aggregatedReportStatusRepository,
@@ -183,10 +173,6 @@ describe(DetailedTvlController.name, () => {
 
         const fakeReports = fakeReportSeries(projectId, chainId, asset, type)
 
-        const reportStatusRepository = mockObject<ReportStatusRepository>({
-          findLatestTimestamp: async () => fakeReports.to,
-        })
-
         const reportRepository = mockObject<ReportRepository>({
           getHourlyForDetailed: async () => fakeReports.hourlyReports,
           getSixHourlyForDetailed: async () => fakeReports.sixHourlyReports,
@@ -201,10 +187,10 @@ describe(DetailedTvlController.name, () => {
               matching: 100, // doesn't matter
               different: 0,
             }),
+            findLatestTimestamp: async () => fakeReports.to,
           })
 
         const controller = new DetailedTvlController(
-          reportStatusRepository,
           mockObject<AggregatedReportRepository>(),
           reportRepository,
           aggregatedReportStatusRepository,
@@ -254,11 +240,6 @@ describe(DetailedTvlController.name, () => {
             1,
           ),
         })
-
-        expect(reportStatusRepository.findLatestTimestamp).toHaveBeenCalledWith(
-          chainId,
-          type,
-        )
 
         expect(reportRepository.getHourlyForDetailed).toHaveBeenCalledWith(
           projectId,
@@ -311,7 +292,11 @@ describe(DetailedTvlController.name, () => {
         const secondEscrow = EthereumAddress.random()
 
         const eth: Token = { ...ETH, type: 'CBV', chainId: ChainId.ETHEREUM }
-        const usdc: Token = { ...USDC, type: 'CBV', chainId: ChainId.ETHEREUM }
+        const usdc: Token = {
+          ...USDC,
+          type: 'CBV',
+          chainId: ChainId.ETHEREUM,
+        }
         const dai: Token = { ...DAI, type: 'EBV', chainId: ChainId.ARBITRUM }
         const op: Token = { ...OP, type: 'NMV', chainId: ChainId.ARBITRUM }
 
@@ -432,7 +417,6 @@ describe(DetailedTvlController.name, () => {
         })
 
         const controller = new DetailedTvlController(
-          mockObject<ReportStatusRepository>(),
           mockObject<AggregatedReportRepository>(),
           reportRepository,
           aggregatedReportStatusRepository,

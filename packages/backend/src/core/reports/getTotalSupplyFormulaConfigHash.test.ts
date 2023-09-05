@@ -1,16 +1,10 @@
-import {
-  AssetId,
-  ChainId,
-  EthereumAddress,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getMockToken } from '../../test/token'
-import { getEBVConfigHash } from './getEBVConfigHash'
+import { getTotalSupplyFormulaConfigHash } from './getTotalSupplyFormulaConfigHash'
 
-describe(getEBVConfigHash.name, () => {
+describe(getTotalSupplyFormulaConfigHash.name, () => {
   it('hash changes if tokens added', () => {
     const tokenConfigBefore: Token[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
@@ -21,8 +15,8 @@ describe(getEBVConfigHash.name, () => {
       fakeExternalToken(AssetId.USDC, new UnixTime(2000)),
     ]
 
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -33,8 +27,8 @@ describe(getEBVConfigHash.name, () => {
     ]
     const tokenConfigAfter: Token[] = [tokenConfigBefore[0]]
 
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -48,25 +42,9 @@ describe(getEBVConfigHash.name, () => {
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
     expect(hashBefore).toEqual(hashAfter)
-  })
-
-  it('hash changes if premint addresses changes', () => {
-    const tokenConfigBefore: Token[] = [
-      fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
-    ]
-    const tokenConfigAfter: Token[] = [
-      {
-        ...tokenConfigBefore[0],
-        premintHolderAddresses: [EthereumAddress.random()],
-      },
-    ]
-
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
-    expect(hashBefore).not.toEqual(hashAfter)
   })
 
   it('hash stays the same if only escrow changes', () => {
@@ -75,8 +53,8 @@ describe(getEBVConfigHash.name, () => {
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const hashBefore = getEBVConfigHash(tokenConfig)
-    const hashAfter = getEBVConfigHash(tokenConfig)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfig)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfig)
     expect(hashBefore).toEqual(hashAfter)
   })
 })
@@ -86,7 +64,6 @@ function fakeExternalToken(assetId: AssetId, sinceTimestamp: UnixTime): Token {
     ...getMockToken(),
     id: assetId,
     sinceTimestamp,
-    premintHolderAddresses: [],
     chainId: ChainId.ARBITRUM,
     type: 'EBV',
   }

@@ -1,8 +1,5 @@
-import {
-  EthereumAddress,
-  ManualProxyType,
-  ProxyDetails,
-} from '@l2beat/shared-pure'
+import { ManualProxyType, ProxyDetails } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
