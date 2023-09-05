@@ -130,7 +130,6 @@ describe(TvlController.name, () => {
         reportType: 'CBV',
       }
 
-      // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
       const reportRepository = mockObject<ReportRepository>({
         getByTimestamp: async () => [
           { ...usdcReport, timestamp: START },
