@@ -1,0 +1,11 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "aevo",
+  "initialAddresses": [
+    "0x4082C9647c098a6493fb499EaE63b5ce3259c574"
+  ],
+  "names": {
+    "0x4082C9647c098a6493fb499EaE63b5ce3259c574": "L1StandardBridge"
+  }
+}
