@@ -19,6 +19,7 @@ import { immutablezkevm } from './immutablezkevm'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { mantapacific } from './mantapacific'
 import { linea } from './linea'
 import { loopring } from './loopring'
 import { mantle } from './mantle'
@@ -70,6 +71,7 @@ export const layer2s: Layer2[] = [
   kroma,
   layer2finance,
   layer2financezk,
+  mantapacific,
   linea,
   loopring,
   mantle,
