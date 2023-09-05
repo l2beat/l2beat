@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18069779,
-  "configHash": "0x4fde696ac310cb1e7d9327e5dbfc9171edb4158ee5fd70dc48f068f5cd7cefce",
+  "blockNumber": 18070336,
+  "configHash": "0xa526fef34bebcde7557a226f8f628f1c3e4985ac57aa4f8ee0f28e68b16ff23b",
   "version": 2,
   "contracts": [
     {
@@ -28,9 +28,7 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.4.1"
       },
-      "errors": {
-        "xDomainMessageSender": "Execution reverted"
-      }
+      "derivedName": "L1CrossDomainMessenger"
     },
     {
       "name": "ProxyAdmin",
@@ -42,7 +40,8 @@
         "addressManager": "0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1",
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1StandardBridge",
@@ -82,14 +81,15 @@
       }
     },
     {
-      "name": "",
+      "name": "OptimismPortal",
       "address": "0x787A0ACaB02437c60Aafb1a29167A3609801e320",
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3",
         "admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "AddressManager",

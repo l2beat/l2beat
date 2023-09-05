@@ -2,10 +2,16 @@
   "$schema": "../../config.schema.json",
   "chain": "ethereum",
   "name": "aevo",
-  "initialAddresses": [
-    "0x4082C9647c098a6493fb499EaE63b5ce3259c574"
-  ],
+  "initialAddresses": ["0x4082C9647c098a6493fb499EaE63b5ce3259c574"],
   "names": {
-    "0x4082C9647c098a6493fb499EaE63b5ce3259c574": "L1StandardBridge"
+    "0x4082C9647c098a6493fb499EaE63b5ce3259c574": "L1StandardBridge",
+    "0x787A0ACaB02437c60Aafb1a29167A3609801e320": "OptimismPortal",
+    "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019": "ProxyAdmin",
+    "0x11dd2d9B5ec142dbAFBEFEA82a75985Eae4e12b0": "L1CrossDomainMessenger"
+  },
+  "overrides": {
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    }
   }
 }
