@@ -1,9 +1,9 @@
 import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { ArbitrumEBVUpdater } from '../../core/assets/ArbitrumEBVUpdater'
+import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
@@ -30,10 +30,6 @@ export function createArbitrumTvlSubmodule(
   }
 
   // #region peripherals
-  const arbitrumEBVTokens = config.tokens.filter(
-    (t) => t.chainId === ChainId.ARBITRUM && t.type === 'EBV',
-  )
-
   const arbitrumProvider = new providers.JsonRpcProvider(
     config.tvl.arbitrum.providerUrl,
     'arbitrum',
@@ -84,30 +80,33 @@ export function createArbitrumTvlSubmodule(
     config.tvl.arbitrum.minBlockTimestamp,
   )
 
+  const totalSupplyTokens = config.tokens.filter(
+    (t) => t.chainId === ChainId.ARBITRUM && t.formula === 'totalSupply',
+  )
   const totalSupplyUpdater = new TotalSupplyUpdater(
     totalSupplyProvider,
     arbiscanBlockNumberUpdater,
     db.totalSupplyRepository,
     db.totalSupplyStatusRepository,
     clock,
-    arbitrumEBVTokens,
+    totalSupplyTokens,
     logger,
     ChainId.ARBITRUM,
     config.tvl.arbitrum.minBlockTimestamp,
   )
 
-  const ebvUpdater = new ArbitrumEBVUpdater(
+  const totalSupplyFormulaUpdater = new TotalSupplyFormulaUpdater(
     priceUpdater,
-    arbitrumBalanceUpdater,
     totalSupplyUpdater,
     db.reportRepository,
     db.reportStatusRepository,
+    ProjectId.ARBITRUM,
+    ChainId.ARBITRUM,
     clock,
-    arbitrumEBVTokens,
+    totalSupplyTokens,
     logger,
     config.tvl.arbitrum.minBlockTimestamp,
   )
-
   // #endregion
 
   const start = async () => {
@@ -117,13 +116,13 @@ export function createArbitrumTvlSubmodule(
     await arbiscanBlockNumberUpdater.start()
     await arbitrumBalanceUpdater.start()
     await totalSupplyUpdater.start()
-    await ebvUpdater.start()
+    await totalSupplyFormulaUpdater.start()
 
     logger.info('Started')
   }
 
   return {
-    updaters: [ebvUpdater],
+    updaters: [totalSupplyFormulaUpdater],
     start,
   }
 }

@@ -116,8 +116,6 @@ export interface Layer2ExternalAssets {
     sinceTimestamp: UnixTime
     /** How fine grained the asset is */
     decimals: number
-    /** List of L2 addresses which hold the premint asset */
-    premintHolderAddresses: string[]
   }[]
 }
 
