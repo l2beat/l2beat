@@ -1,9 +1,5 @@
-import {
-  ChainId,
-  EthereumAddress,
-  ManualProxyType,
-  stringAs,
-} from '@l2beat/shared-pure'
+import { ManualProxyType } from '@l2beat/discovery-types'
+import { ChainId, EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
