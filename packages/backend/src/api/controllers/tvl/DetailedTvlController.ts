@@ -191,16 +191,16 @@ export class DetailedTvlController {
       }
     }
 
-    const dataTimings = await this.getDataTimings()
+    const { latestTimestamp, isSynced } = await this.getDataTimings()
 
-    if (!dataTimings.latestTimestamp) {
+    if (!latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
       }
     }
 
-    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+    if (!isSynced && this.options.errorOnUnsyncedDetailedTvl) {
       return {
         result: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
@@ -213,14 +213,14 @@ export class DetailedTvlController {
         chainId,
         assetId,
         assetType,
-        getHourlyMinTimestamp(dataTimings.latestTimestamp),
+        getHourlyMinTimestamp(latestTimestamp),
       ),
       this.reportRepository.getSixHourlyForDetailed(
         projectId,
         chainId,
         assetId,
         assetType,
-        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+        getSixHourlyMinTimestamp(latestTimestamp),
       ),
       this.reportRepository.getDailyForDetailed(
         projectId,
@@ -242,7 +242,7 @@ export class DetailedTvlController {
           sixHourly: sixHourlyReports,
           daily: dailyReports,
         },
-        timestampCandidate,
+        latestTimestamp,
       )
 
     return {
@@ -268,16 +268,16 @@ export class DetailedTvlController {
   }
 
   async getProjectTokenBreakdownApiResponse(): Promise<ProjectAssetBreakdownResult> {
-    const dataTimings = await this.getDataTimings()
+    const { latestTimestamp, isSynced } = await this.getDataTimings()
 
-    if (!dataTimings.latestTimestamp) {
+    if (!latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
       }
     }
 
-    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+    if (!isSynced && this.options.errorOnUnsyncedDetailedTvl) {
       return {
         result: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
@@ -285,9 +285,9 @@ export class DetailedTvlController {
     }
 
     const [latestReports, balances, prices] = await Promise.all([
-      this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
-      this.balanceRepository.getByTimestamp(dataTimings.latestTimestamp),
-      this.priceRepository.getByTimestamp(dataTimings.latestTimestamp),
+      this.reportRepository.getByTimestamp(latestTimestamp),
+      this.balanceRepository.getByTimestamp(latestTimestamp),
+      this.priceRepository.getByTimestamp(latestTimestamp),
     ])
 
     const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(
@@ -317,7 +317,7 @@ export class DetailedTvlController {
     return {
       result: 'success',
       data: {
-        dataTimestamp: dataTimings.latestTimestamp,
+        dataTimestamp: latestTimestamp,
         breakdowns,
       },
     }

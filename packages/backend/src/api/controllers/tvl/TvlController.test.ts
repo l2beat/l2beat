@@ -110,7 +110,7 @@ describe(TvlController.name, () => {
 
   describe(TvlController.prototype.getTvlApiResponse.name, () => {
     it('return full chart data', async () => {
-      const baseReport: Omit<ReportRecord, 'timestamp'> = {
+      const usdcReport: Omit<ReportRecord, 'timestamp'> = {
         usdValue: 1234_56n,
         ethValue: 1_111111n,
         amount: 111_1111n * 10n ** (6n - 4n),
@@ -120,11 +120,21 @@ describe(TvlController.name, () => {
         reportType: 'CBV',
       }
 
+      const daiReport: Omit<ReportRecord, 'timestamp'> = {
+        usdValue: 1234_56n,
+        ethValue: 1_111111n,
+        amount: 111_1111n * 10n ** (6n - 4n),
+        asset: AssetId.DAI,
+        chainId: ChainId.ETHEREUM,
+        projectId: ARBITRUM.projectId,
+        reportType: 'CBV',
+      }
+
       // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
       const reportRepository = mockObject<ReportRepository>({
         getByTimestamp: async () => [
-          { ...baseReport, timestamp: START },
-          { ...baseReport, timestamp: START.add(1, 'hours') },
+          { ...usdcReport, timestamp: START },
+          { ...daiReport, timestamp: START },
         ],
       })
       const aggregateRepository = mockObject<AggregatedReportRepository>({
@@ -163,8 +173,12 @@ describe(TvlController.name, () => {
 
       expect(charts.data.projects.arbitrum?.tokens).toEqual([
         {
-          assetId: AssetId('usdc-usd-coin'),
-          tvl: 2469.12,
+          assetId: AssetId.USDC,
+          tvl: 1234.56,
+        },
+        {
+          assetId: AssetId.DAI,
+          tvl: 1234.56,
         },
       ])
 
