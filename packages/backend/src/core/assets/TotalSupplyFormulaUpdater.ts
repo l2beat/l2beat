@@ -4,7 +4,6 @@ import {
   ChainId,
   Hash256,
   ProjectId,
-  ReportType,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -15,28 +14,26 @@ import {
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createEBVReports } from '../reports/createEBVReports'
-import { getEBVConfigHash } from '../reports/getEBVConfigHash'
+import { createSuppliedFormulaReports } from '../reports/createTotalSupplyFormulaReports'
+import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
-// TODO: Make this class more generic
-// ProjectId, ChainId should be passed in the constructor
-export class ArbitrumEBVUpdater implements AssetUpdater {
+export class TotalSupplyFormulaUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
-    private readonly balanceUpdater: BalanceUpdater,
     private readonly totalSupplyUpdater: TotalSupplyUpdater,
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly projectId: ProjectId,
+    private readonly chainId: ChainId,
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly logger: Logger,
@@ -45,29 +42,24 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     assert(
       tokens.every(
         (token) =>
-          token.chainId === this.getChainId() &&
-          token.type === this.getReportType(),
+          token.chainId === this.chainId && token.formula === 'totalSupply',
       ),
-      'Programmer error: tokens must be of type EBV and on the same chain as the arbitrumEBVUpdater',
+      'Programmer error: all tokens must be using totalSupply formula have the same chainId',
     )
     this.logger = this.logger.for(this)
-    this.configHash = getEBVConfigHash(this.tokens)
+    this.configHash = getTotalSupplyFormulaConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: ArbitrumEBVUpdater.name,
+        metricsId: TotalSupplyFormulaUpdater.name,
       },
     )
   }
 
-  getProjectId() {
-    return ProjectId.ARBITRUM
-  }
-
   getChainId() {
-    return ChainId.ARBITRUM
+    return this.chainId
   }
 
   getConfigHash() {
@@ -78,15 +70,10 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     return this.minTimestamp
   }
 
-  getReportType(): ReportType {
-    return 'EBV'
-  }
-
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.getConfigHash(),
-      this.getChainId(),
-      this.getReportType(),
+      this.chainId,
     )
 
     for (const timestamp of known) {
@@ -111,28 +98,26 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const [prices, balances, totalSupplies] = await Promise.all([
+
+    const [prices, totalSupplies] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
-      this.balanceUpdater.getBalancesWhenReady(timestamp),
       this.totalSupplyUpdater.getTotalSuppliesWhenReady(timestamp),
     ])
     this.logger.debug('Prices, balances and supplies ready')
 
-    const reports = createEBVReports(
+    const reports = createSuppliedFormulaReports(
       prices,
-      balances,
       totalSupplies,
       this.tokens,
-      this.getProjectId(),
-      this.getChainId(),
+      this.projectId,
+      this.chainId,
     )
     await this.reportRepository.addOrUpdateMany(reports)
 
     await this.reportStatusRepository.add({
       configHash: this.getConfigHash(),
       timestamp,
-      chainId: this.getChainId(),
-      reportType: this.getReportType(),
+      chainId: this.chainId,
     })
 
     this.knownSet.add(timestamp.toNumber())
@@ -154,10 +139,26 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       })
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestampAndPreciseAsset(
+
+    const canonical = await this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      this.getReportType(),
+      'CBV',
     )
+
+    const external = await this.reportRepository.getByTimestampAndPreciseAsset(
+      timestamp,
+      this.getChainId(),
+      'EBV',
+    )
+
+    const native = await this.reportRepository.getByTimestampAndPreciseAsset(
+      timestamp,
+      this.getChainId(),
+      'NMV',
+    )
+
+    const all = canonical.concat(external).concat(native)
+    return all.filter((t) => this.tokens.some((m) => m.id === t.asset))
   }
 }
