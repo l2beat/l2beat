@@ -8,7 +8,8 @@ Implementation address is resolved by calling the libAddressManager.getAddress(i
 It does not have an owner
 
 */
-import { Bytes, EthereumAddress, ProxyDetails } from '@l2beat/shared-pure'
+import { ProxyDetails } from '@l2beat/discovery-types'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
