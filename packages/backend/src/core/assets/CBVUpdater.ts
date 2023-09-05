@@ -66,7 +66,6 @@ export class CBVUpdater implements AssetUpdater {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
       this.getChainId(),
-      'CBV',
     )
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
@@ -111,7 +110,6 @@ export class CBVUpdater implements AssetUpdater {
       configHash: this.configHash,
       timestamp,
       chainId: this.getChainId(),
-      reportType: 'CBV',
     })
 
     this.knownSet.add(timestamp.toNumber())

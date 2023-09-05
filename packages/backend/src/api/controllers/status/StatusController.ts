@@ -11,7 +11,6 @@ import {
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
-import { getEBVConfigHash } from '../../../core/reports/getEBVConfigHash'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
 import { Project } from '../../../model'
@@ -36,6 +35,7 @@ import { renderAggregatedPage } from './view/AggregatedReportsPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderStatusPage } from './view/StatusPage'
 
+// TODO: make it work correctly after "formula" refactor
 export class StatusController {
   constructor(
     private readonly priceRepository: PriceRepository,
@@ -155,7 +155,7 @@ export class StatusController {
     )
     const config: Token[] = []
     const tokens = tokenList.filter(
-      (t) => t.type === 'EBV' && t.chainId === chainId,
+      (t) => t.formula === 'totalSupply' && t.chainId === chainId,
     )
     config.push(...tokens)
     const configHash = getTotalSupplyConfigHash(config)
@@ -185,7 +185,6 @@ export class StatusController {
       firstHour,
       lastHour,
       chainId,
-      reportType,
     )
     const configHash = getConfigHashForReports(chainId, this.projects)
 
@@ -261,9 +260,9 @@ function getConfigHashForReports(chainId: ChainId, projects: Project[]) {
     case ChainId.ETHEREUM:
       return getReportConfigHash(projects)
     case ChainId.ARBITRUM:
-      return getEBVConfigHash(
+      return getTotalSupplyConfigHash(
         tokenList.filter(
-          (t) => t.chainId === ChainId.ARBITRUM && t.type === 'EBV',
+          (t) => t.chainId === ChainId.ARBITRUM && t.formula === 'totalSupply',
         ),
       )
     default:

@@ -377,6 +377,7 @@ describe(PriceUpdater.name, () => {
       category: 'ether', // irrelevant
       chainId: ChainId.ETHEREUM, // irrelevant
       type: 'CBV', // irrelevant
+      formula: 'locked', // irrelevant
       name: 'Fake', // irrelevant
       sinceTimestamp: new UnixTime(0), // irrelevant
     }
