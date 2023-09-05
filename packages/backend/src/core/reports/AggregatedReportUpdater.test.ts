@@ -82,7 +82,7 @@ describe(AggregatedReportUpdater.name, () => {
       ).toHaveBeenNthCalledWith(
         2,
         MOCK.AGGREGATED_REPORTS.filter((r) => r.usdValue > 0),
-        { timestamp: MOCK.NOW.add(1, 'hours') },
+        { timestamp: MOCK.NOW },
       )
     })
 
