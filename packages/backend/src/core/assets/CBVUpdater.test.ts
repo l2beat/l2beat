@@ -56,13 +56,11 @@ describe(CBVUpdater.name, () => {
         configHash,
         timestamp: MOCK.NOW.add(1, 'hours'),
         chainId: ChainId.ETHEREUM,
-        reportType: 'CBV',
       })
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
         configHash,
         timestamp: MOCK.NOW,
         chainId: ChainId.ETHEREUM,
-        reportType: 'CBV',
       })
 
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
@@ -167,13 +165,11 @@ describe(CBVUpdater.name, () => {
           configHash,
           timestamp: MOCK.NOW.add(1, 'hours'),
           chainId: ChainId.ETHEREUM,
-          reportType: 'CBV',
         })
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
           configHash,
           timestamp: MOCK.NOW,
           chainId: ChainId.ETHEREUM,
-          reportType: 'CBV',
         })
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)

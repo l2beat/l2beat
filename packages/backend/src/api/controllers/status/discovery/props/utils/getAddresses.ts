@@ -1,5 +1,5 @@
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
-  ContractParameters,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
 } from '@l2beat/shared-pure'

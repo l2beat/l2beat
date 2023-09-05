@@ -1,5 +1,5 @@
 import { DiscoveryConfig } from '@l2beat/discovery'
-import { ContractParameters } from '@l2beat/shared-pure'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import { ethers } from 'ethers'
 
 import { DashboardContractField } from '../utils/getValues'
