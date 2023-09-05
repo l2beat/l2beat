@@ -1,4 +1,5 @@
-import { assert, ContractValue, EthereumAddress } from '@l2beat/shared-pure'
+import { ContractValue } from '@l2beat/discovery-types'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { pick, reduce } from 'lodash'
 import * as z from 'zod'

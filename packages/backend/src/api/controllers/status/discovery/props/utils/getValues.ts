@@ -1,8 +1,8 @@
-import {
+import type {
   ContractParameters,
   ContractValue,
   DiscoveryOutput,
-} from '@l2beat/shared-pure'
+} from '@l2beat/discovery-types'
 import { isArray } from 'lodash'
 
 import { getDiscoveryChild } from './getDiscoveryChild'
