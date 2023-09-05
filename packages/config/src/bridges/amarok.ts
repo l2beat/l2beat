@@ -144,6 +144,10 @@ export const amarok: Bridge = {
       'Connext Multisig',
       'Owner of the main Connext Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
     ),
+    ...discovery.getMultisigPermission(
+      'Connext Multisig 2',
+      'Collects fees from the bridge.',
+    ),
     {
       name: 'Watchers',
       description:
