@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/shared'
 import {
   assert,
   AssetId,
-  AssetType,
   ChainId,
   Hash256,
   Token,
@@ -41,7 +40,7 @@ export class TotalSupplyUpdater {
       tokens.every(
         (token) =>
           token.chainId === this.getChainId() &&
-          token.type === this.getAssetType(),
+          token.formula === this.getAssetType(),
       ),
       'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
     )
@@ -69,8 +68,8 @@ export class TotalSupplyUpdater {
     return this.chainId
   }
 
-  getAssetType(): AssetType {
-    return 'EBV'
+  getAssetType() {
+    return 'totalSupply'
   }
 
   async getTotalSuppliesWhenReady(

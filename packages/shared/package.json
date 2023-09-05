@@ -22,7 +22,7 @@
     "ethers": "^5.7.2",
     "mkdirp": "^1.0.4",
     "node-fetch": "^2.6.7",
-    "zod": "^3.20.2"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "prom-client": "^14.1.0"
