@@ -6,14 +6,24 @@ import { Bridge } from './types'
 export const wormholeV1: Bridge = {
   type: 'bridge',
   id: ProjectId('wormholeV1'),
-  isArchived: true,
+  isArchived: false,
   display: {
     name: 'Wormhole',
     slug: 'wormhole',
     links: {
       websites: ['https://wormhole.com/'],
+      apps: ['https://www.portalbridge.com/#/transfer'],
+      documentation: ['https://docs.wormhole.com/wormhole/'],
+      explorers:['https://wormholescan.io'],
+      socialMedia: [ 
+        'https://twitter.com/wormholecrypto',
+        'https://discord.gg/ZVSU2yYH'
     },
     category: 'Token Bridge',' Messaging bridge'
+  },
+  description:
+      'This simple message passing protocol enables developers and users of cross chain applications',
+    category: 'Messaging Bridge',
   },
   config: {
     escrows: [
