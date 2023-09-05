@@ -2,6 +2,7 @@ import { EthereumAddress,SolanaAddress, ProjectId, UnixTime } from '@l2beat/shar
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+import { NUGGETS } from '../layer2s'
 
 export const wormholeV1: Bridge = {
   type: 'bridge',
@@ -29,14 +30,12 @@ export const wormholeV1: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0xf92cD566Ea4864356C5491c177A430C222d7e678'),
-        address: SolanaAddress('worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth')
         sinceTimestamp: new UnixTime(1611084766),
         tokens: [
           //'USDC',
           'WormholeETH',
           'USDCnet',
-          'USDTnet'
-          'Bonk',
+          'USDTnet',
           'BUSD',
           'HBTC',
           'HUSD',
@@ -64,4 +63,14 @@ export const wormholeV1: Bridge = {
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.WRAPPED,
   },
+  knowledgeNuggets: [
+    {
+      title: 'Wormhole core architecture',
+      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0001_generic_message_passing.md',
+    },
+    {
+      title: 'Hw Wormhole Guardians work',
+      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0009_guardian_key.md',
+    },
+  ],
 }
