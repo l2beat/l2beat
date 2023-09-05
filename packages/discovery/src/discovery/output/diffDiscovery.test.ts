@@ -1,8 +1,5 @@
-import {
-  ChainId,
-  ContractParameters,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { ContractParameters } from '@l2beat/discovery-types'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { DiscoveryConfig } from '../config/DiscoveryConfig'

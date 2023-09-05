@@ -1,4 +1,5 @@
-import { EthereumAddress, UpgradeabilityParameters } from '@l2beat/shared-pure'
+import type { UpgradeabilityParameters } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ProjectReference } from './ProjectReference'
 import { ProjectRisk } from './ProjectRisk'

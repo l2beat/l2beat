@@ -48,7 +48,14 @@ export function getTokens(
   return compatibleTokenList
     .map(({ assetId, usdValue, assetType, chainId }) => {
       const token = safeGetTokenByAssetId(assetId)
-      const symbol = token?.symbol
+      let symbol = token?.symbol
+      if (
+        projectId.toString() === 'arbitrum' &&
+        symbol === 'USDC' &&
+        assetType === 'CBV'
+      ) {
+        symbol = 'USDC.e'
+      }
       const name = token?.name
       const address = token?.address
       const iconUrl = token?.iconUrl ?? ''

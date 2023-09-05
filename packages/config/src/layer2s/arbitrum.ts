@@ -83,25 +83,30 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
   {
     id: AssetId('arb-arbitrum'),
     name: 'Arbitrum',
-    coingeckoId: CoingeckoId('arbitrum'),
-    address: EthereumAddress('0xb50721bcf8d664c30412cfbc6cf7a15145234ad1'),
     symbol: 'ARB',
     decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1680097630',
+    address: EthereumAddress('0xb50721bcf8d664c30412cfbc6cf7a15145234ad1'),
+    coingeckoId: CoingeckoId('arbitrum'),
     sinceTimestamp: new UnixTime(1630233600),
     category: 'other',
     type: 'NMV',
+    formula: 'circulatingSupply',
   },
   {
     id: AssetId('arbitrum:usdc-usd-coin'),
     name: 'USD Coin',
-    coingeckoId: CoingeckoId('usd-coin'),
     symbol: 'USDC',
-    address: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
-    sinceTimestamp: new UnixTime(1667250000),
     decimals: 6,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
+    address: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
+    coingeckoId: CoingeckoId('usd-coin'),
+    sinceTimestamp: new UnixTime(1667250000),
     category: 'stablecoin',
-    premintHolderAddresses: [],
-    type: 'EBV',
+    type: 'NMV',
+    formula: 'totalSupply',
   },
 ]
 
