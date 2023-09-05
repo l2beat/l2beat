@@ -95,17 +95,21 @@ export class CBVUpdater implements AssetUpdater {
     ])
     this.logger.debug('Prices and balances ready')
 
-    let reports = createReports(
+    const reports = createReports(
       prices,
       balances,
       this.projects,
       this.getChainId(),
     )
     // TODO(radomski): This really needs to be refactored
-    reports = filterOutNVMReports(reports)
+    const reportsWithNoNmv = filterOutNVMReports(reports)
 
     await this.reportRepository.addOrUpdateMany(
-      reports.filter((r) => r.amount > 0),
+      reportsWithNoNmv.filter((r) => r.amount > 0),
+      {
+        timestamp,
+        chainId: this.getChainId(),
+      },
     )
 
     await this.reportStatusRepository.add({

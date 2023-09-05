@@ -57,8 +57,15 @@ describe(NMVUpdater.name, () => {
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         1,
         MOCK.FUTURE_OP_REPORT,
+        {
+          timestamp: MOCK.NOW.add(1, 'hours'),
+          chainId: ChainId.NMV,
+        },
       )
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(2, [])
+      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(2, [], {
+        timestamp: MOCK.NOW,
+        chainId: ChainId.NMV,
+      })
 
       const reports = await nmvUpdater.getReportsWhenReady(
         MOCK.NOW.add(1, 'hours'),
@@ -147,8 +154,19 @@ describe(NMVUpdater.name, () => {
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           1,
           MOCK.FUTURE_OP_REPORT,
+          {
+            timestamp: MOCK.NOW.add(1, 'hours'),
+            chainId: ChainId.NMV,
+          },
         )
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(2, [])
+        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+          2,
+          [],
+          {
+            timestamp: MOCK.NOW,
+            chainId: ChainId.NMV,
+          },
+        )
       })
     })
   })

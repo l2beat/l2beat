@@ -115,6 +115,10 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
 
     await this.reportRepository.addOrUpdateMany(
       reports.filter((r) => r.amount > 0),
+      {
+        timestamp,
+        chainId: this.chainId,
+      },
     )
 
     await this.reportStatusRepository.add({

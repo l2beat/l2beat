@@ -63,25 +63,29 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(reports: ReportRecord[]) {
+  async addOrUpdateMany(
+    reports: ReportRecord[],
+    where: { timestamp: UnixTime; chainId: ChainId },
+  ) {
+    if (reports.length === 0) {
+      return 0
+    }
+
     const rows = reports.map(toRow)
     const knex = await this.knex()
+
     const timestampsMatch = reports.every((r) =>
-      r.timestamp.equals(reports[0].timestamp),
+      r.timestamp.equals(where.timestamp),
     )
-    const reportTypeMatch = reports.every(
-      (r) => r.reportType === reports[0].reportType,
-    )
-    const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
+    const chainIdsMatch = reports.every((r) => r.chainId === where.chainId)
+
     assert(timestampsMatch, 'Timestamps must match')
-    assert(reportTypeMatch, 'Report types must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
     await knex.transaction(async (trx) => {
       await trx('reports')
-        .where('unix_timestamp', rows[0].unix_timestamp)
-        .andWhere('report_type', rows[0].report_type)
-        .andWhere('chain_id', rows[0].chain_id)
+        .where('unix_timestamp', where.timestamp.toDate())
+        .andWhere('chain_id', where.chainId.valueOf())
         .delete()
       await trx('reports')
         .insert(rows)
@@ -94,6 +98,7 @@ export class ReportRepository extends BaseRepository {
         ])
         .merge()
     })
+
     return rows.length
   }
 

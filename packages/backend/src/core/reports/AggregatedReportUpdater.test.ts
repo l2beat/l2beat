@@ -75,12 +75,14 @@ describe(AggregatedReportUpdater.name, () => {
         MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP.filter(
           (r) => r.usdValue > 0,
         ),
+        { timestamp: MOCK.NOW.add(1, 'hours') },
       )
       expect(
         aggregatedReportRepository.addOrUpdateMany,
       ).toHaveBeenNthCalledWith(
         2,
         MOCK.AGGREGATED_REPORTS.filter((r) => r.usdValue > 0),
+        { timestamp: MOCK.NOW.add(1, 'hours') },
       )
     })
 
@@ -208,12 +210,14 @@ describe(AggregatedReportUpdater.name, () => {
           MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP.filter(
             (r) => r.usdValue > 0,
           ),
+          { timestamp: MOCK.NOW.add(1, 'hours') },
         )
         expect(
           aggregatedReportRepository.addOrUpdateMany,
         ).toHaveBeenNthCalledWith(
           2,
           MOCK.AGGREGATED_REPORTS.filter((r) => r.usdValue > 0),
+          { timestamp: MOCK.NOW },
         )
       })
     })

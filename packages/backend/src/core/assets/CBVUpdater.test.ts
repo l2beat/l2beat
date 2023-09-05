@@ -67,10 +67,18 @@ describe(CBVUpdater.name, () => {
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         1,
         MOCK.FUTURE_REPORTS,
+        {
+          timestamp: MOCK.NOW.add(1, 'hours'),
+          chainId: ChainId.ETHEREUM,
+        },
       )
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         2,
         MOCK.REPORTS,
+        {
+          timestamp: MOCK.NOW,
+          chainId: ChainId.ETHEREUM,
+        },
       )
 
       const reports = await cbvUpdater.getReportsWhenReady(
@@ -176,10 +184,18 @@ describe(CBVUpdater.name, () => {
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           1,
           MOCK.FUTURE_REPORTS,
+          {
+            timestamp: MOCK.NOW.add(1, 'hours'),
+            chainId: ChainId.ETHEREUM,
+          },
         )
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           2,
           MOCK.REPORTS,
+          {
+            timestamp: MOCK.NOW,
+            chainId: ChainId.ETHEREUM,
+          },
         )
       })
     })

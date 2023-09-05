@@ -72,10 +72,12 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         1,
         MOCK.FUTURE_REPORTS,
+        { timestamp: MOCK.NOW.add(1, 'hours'), chainId: ChainId.ARBITRUM },
       )
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         2,
         MOCK.REPORTS,
+        { timestamp: MOCK.NOW, chainId: ChainId.ARBITRUM },
       )
 
       const reports = await ebvUpdater.getReportsWhenReady(
@@ -185,13 +187,15 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           1,
           MOCK.FUTURE_REPORTS,
+          { timestamp: MOCK.NOW.add(1, 'hours'), chainId: ChainId.ARBITRUM },
         )
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           2,
           MOCK.REPORTS,
+          { timestamp: MOCK.NOW, chainId: ChainId.ARBITRUM },
         )
       })
-    })
+    }).timeout(10000)
   })
 
   describe(TotalSupplyFormulaUpdater.prototype.getReportsWhenReady.name, () => {

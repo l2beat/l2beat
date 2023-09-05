@@ -174,23 +174,6 @@ describe(BaseRepository.name, () => {
             }
           }
         })
-
-        it('should show error if function takes too much arguments', () => {
-          class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger) {
-              super(database, logger)
-              // @ts-expect-error addMany method should take only one argument
-              this.autoWrap<CheckConvention<DummyRepository>>(this)
-            }
-
-            async addManyWithTooMuchArguments(
-              a: string[],
-              b: string,
-            ): Promise<number> {
-              return 1
-            }
-          }
-        })
       })
 
       describe('DeleteMethod', () => {

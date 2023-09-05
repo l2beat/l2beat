@@ -32,7 +32,10 @@ describe(ReportRepository.name, () => {
           amount: 1n,
         }),
       ]
-      await repository.addOrUpdateMany(REPORTS_1)
+      await repository.addOrUpdateMany(REPORTS_1, {
+        timestamp: TIME_1,
+        chainId: ChainId.ETHEREUM,
+      })
       expect(await repository.getAll()).toEqual(REPORTS_1)
       const REPORTS_2 = [
         fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, amount: 2n }),
@@ -43,21 +46,32 @@ describe(ReportRepository.name, () => {
           amount: 2n,
         }),
       ]
-      await repository.addOrUpdateMany(REPORTS_2)
+      await repository.addOrUpdateMany(REPORTS_2, {
+        timestamp: TIME_1,
+        chainId: ChainId.ETHEREUM,
+      })
       expect(await repository.getAll()).toEqual(REPORTS_2)
     })
 
     it('handles empty array', async () => {
-      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+      await expect(
+        repository.addOrUpdateMany([], {
+          timestamp: TIME_1,
+          chainId: ChainId.ETHEREUM,
+        }),
+      ).not.toBeRejected()
     })
 
     it('throws if timestamps do not match', async () => {
       await expect(
-        repository.addOrUpdateMany([
-          fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
-          fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
-          fakeReport({ projectId: PROJECT_C, timestamp: TIME_1 }),
-        ]),
+        repository.addOrUpdateMany(
+          [
+            fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
+            fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
+            fakeReport({ projectId: PROJECT_C, timestamp: TIME_1 }),
+          ],
+          { timestamp: TIME_1, chainId: ChainId.ETHEREUM },
+        ),
       ).toBeRejectedWith('Assertion Error: Timestamps must match')
     })
   })
@@ -68,7 +82,10 @@ describe(ReportRepository.name, () => {
         fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
         fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
       ]
-      await repository.addOrUpdateMany(reports)
+      await repository.addOrUpdateMany(reports, {
+        timestamp: TIME_0,
+        chainId: ChainId.ETHEREUM,
+      })
       const results = await repository.getAll()
       expect(results).toEqual(reports)
     })
@@ -80,7 +97,10 @@ describe(ReportRepository.name, () => {
         fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
         fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
       ]
-      await repository.addOrUpdateMany(reports)
+      await repository.addOrUpdateMany(reports, {
+        timestamp: TIME_0,
+        chainId: ChainId.ETHEREUM,
+      })
       await repository.deleteAll()
       const results = await repository.getAll()
       expect(results).toEqual([])
@@ -95,14 +115,17 @@ describe(ReportRepository.name, () => {
         asset,
         timestamp: TIME_0,
       })
-      await repository.addOrUpdateMany([
-        report,
-        fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
-      ])
-      await repository.addOrUpdateMany([
-        fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
-        fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
-      ])
+      await repository.addOrUpdateMany(
+        [report, fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 })],
+        { timestamp: TIME_0, chainId: ChainId.ETHEREUM },
+      )
+      await repository.addOrUpdateMany(
+        [
+          fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
+          fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
+        ],
+        { timestamp: TIME_1, chainId: ChainId.ETHEREUM },
+      )
       const result = await repository.getDailyByProjectAndAsset(
         PROJECT_A,
         asset,
@@ -121,26 +144,41 @@ describe(ReportRepository.name, () => {
           asset,
           timestamp: TIME_0.add(6, 'hours'),
         })
-        await repository.addOrUpdateMany([
-          report,
-          fakeReport({
-            projectId: PROJECT_B,
-            timestamp: TIME_0.add(6, 'hours'),
-          }),
-        ])
-        await repository.addOrUpdateMany([
-          fakeReport({
-            projectId: PROJECT_A,
-            timestamp: TIME_0.add(16, 'hours'),
-          }),
-          fakeReport({
-            projectId: PROJECT_B,
-            timestamp: TIME_0.add(16, 'hours'),
-          }),
-        ])
-        await repository.addOrUpdateMany([
-          { ...report, timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes') },
-        ])
+        await repository.addOrUpdateMany(
+          [
+            report,
+            fakeReport({
+              projectId: PROJECT_B,
+              timestamp: TIME_0.add(6, 'hours'),
+            }),
+          ],
+          { timestamp: TIME_0.add(6, 'hours'), chainId: ChainId.ETHEREUM },
+        )
+        await repository.addOrUpdateMany(
+          [
+            fakeReport({
+              projectId: PROJECT_A,
+              timestamp: TIME_0.add(16, 'hours'),
+            }),
+            fakeReport({
+              projectId: PROJECT_B,
+              timestamp: TIME_0.add(16, 'hours'),
+            }),
+          ],
+          { timestamp: TIME_0.add(16, 'hours'), chainId: ChainId.ETHEREUM },
+        )
+        await repository.addOrUpdateMany(
+          [
+            {
+              ...report,
+              timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes'),
+            },
+          ],
+          {
+            timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes'),
+            chainId: ChainId.ETHEREUM,
+          },
+        )
         const result = await repository.getSixHourlyByProjectAndAsset(
           PROJECT_A,
           asset,
@@ -159,26 +197,36 @@ describe(ReportRepository.name, () => {
         asset,
         timestamp: TIME_0.add(1, 'hours'),
       })
-      await repository.addOrUpdateMany([
-        report,
-        fakeReport({
-          projectId: PROJECT_B,
-          timestamp: TIME_0.add(1, 'hours'),
-        }),
-      ])
-      await repository.addOrUpdateMany([
-        fakeReport({
-          projectId: PROJECT_A,
-          timestamp: TIME_0.add(3, 'hours'),
-        }),
-        fakeReport({
-          projectId: PROJECT_B,
-          timestamp: TIME_0.add(3, 'hours'),
-        }),
-      ])
-      await repository.addOrUpdateMany([
-        { ...report, timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes') },
-      ])
+      await repository.addOrUpdateMany(
+        [
+          report,
+          fakeReport({
+            projectId: PROJECT_B,
+            timestamp: TIME_0.add(1, 'hours'),
+          }),
+        ],
+        { timestamp: TIME_0.add(1, 'hours'), chainId: ChainId.ETHEREUM },
+      )
+      await repository.addOrUpdateMany(
+        [
+          fakeReport({
+            projectId: PROJECT_A,
+            timestamp: TIME_0.add(3, 'hours'),
+          }),
+          fakeReport({
+            projectId: PROJECT_B,
+            timestamp: TIME_0.add(3, 'hours'),
+          }),
+        ],
+        { timestamp: TIME_0.add(3, 'hours'), chainId: ChainId.ETHEREUM },
+      )
+      await repository.addOrUpdateMany(
+        [{ ...report, timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes') }],
+        {
+          timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes'),
+          chainId: ChainId.ETHEREUM,
+        },
+      )
       const result = await repository.getHourlyByProjectAndAsset(
         PROJECT_A,
         asset,

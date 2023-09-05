@@ -99,6 +99,10 @@ export class NMVUpdater implements AssetUpdater {
 
     await this.reportRepository.addOrUpdateMany(
       reports.filter((r) => r.amount > 0),
+      {
+        timestamp,
+        chainId: this.getChainId(),
+      },
     )
 
     // TODO(radomski): chainId should correctly represent OP/ARB
