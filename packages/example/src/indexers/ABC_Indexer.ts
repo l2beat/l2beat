@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { SliceIndexer, SliceState, SliceUpdate } from '@l2beat/uif'
+
 import { ABC_Repository } from '../repositories/ABC_Repository'
 import { BlockNumberIndexer } from './BlockNumberIndexer'
 
@@ -7,8 +8,8 @@ export class ABC_Indexer extends SliceIndexer {
   constructor(
     logger: Logger,
     blockNumberIndexer: BlockNumberIndexer,
-    private abc_repository: ABC_Repository,
-    private tokens = ['A', 'B', 'C'],
+    private readonly abc_repository: ABC_Repository,
+    private readonly tokens = ['A', 'B', 'C'],
   ) {
     super(logger, [blockNumberIndexer])
   }

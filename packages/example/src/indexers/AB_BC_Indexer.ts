@@ -1,18 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
 import { SliceIndexer, SliceState, SliceUpdate } from '@l2beat/uif'
-import { ABC_Repository } from '../repositories/ABC_Repository'
+
 import { AB_BC_Repository } from '../repositories/AB_BC_Repository'
+import { ABC_Repository } from '../repositories/ABC_Repository'
 import { ABC_Indexer } from './ABC_Indexer'
 
 export class AB_BC_Indexer extends SliceIndexer {
-  private slices = new Map<string, string[]>()
+  private readonly slices = new Map<string, string[]>()
 
   constructor(
     logger: Logger,
     abc_indexer: ABC_Indexer,
-    private ab_bc_repository: AB_BC_Repository,
-    private abc_repository: ABC_Repository,
-    private sums = [
+    private readonly ab_bc_repository: AB_BC_Repository,
+    private readonly abc_repository: ABC_Repository,
+    private readonly sums = [
       ['A', 'B'],
       ['B', 'C'],
     ],

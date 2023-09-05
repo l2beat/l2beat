@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChildIndexer } from '@l2beat/uif'
 import { setTimeout } from 'timers/promises'
+
 import { TvlRepository } from '../repositories/TvlRepository'
 import { BalanceIndexer } from './BalanceIndexer'
 
@@ -15,7 +16,7 @@ export class TvlIndexer extends ChildIndexer {
     super(logger, [balanceIndexer])
   }
 
-  override async update(from: number, to: number) {
+  override async update(from: number, to: number): Promise<number> {
     await setTimeout(500)
     to = Math.min(from + 10, to)
     this.height = to
@@ -28,7 +29,7 @@ export class TvlIndexer extends ChildIndexer {
     return await Promise.resolve(newHeight)
   }
 
-  override async getSafeHeight() {
+  override async getSafeHeight(): Promise<number> {
     const height = await this.tvlRepository.getLastSynced()
     return height ?? 0
   }

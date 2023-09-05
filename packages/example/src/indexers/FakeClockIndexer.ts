@@ -1,12 +1,7 @@
 import { RootIndexer } from '@l2beat/uif'
-import { Logger } from '@l2beat/backend-tools'
 
 export class FakeClockIndexer extends RootIndexer {
   private height = 100
-
-  constructor(logger: Logger) {
-    super(logger)
-  }
 
   override async start(): Promise<void> {
     await super.start()
@@ -20,6 +15,6 @@ export class FakeClockIndexer extends RootIndexer {
     } else {
       this.height += 10
     }
-    return this.height
+    return Promise.resolve(this.height)
   }
 }

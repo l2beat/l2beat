@@ -1,35 +1,38 @@
+type SliceHeights = Map<string, number>
+type SliceData = Map<number, number>
+
 export class AB_BC_Repository {
-  private sliceHeights = new Map<string, number>()
-  private sliceData = new Map<string, Map<number, number>>()
+  private readonly sliceHeights = new Map<string, number>()
+  private readonly slicesData = new Map<string, Map<number, number>>()
   private safeHeight = 0
 
-  async getSliceHeights() {
+  getSliceHeights(): Promise<SliceHeights> {
     return Promise.resolve(this.sliceHeights)
   }
-  async getSliceData(hash: string) {
-    const sliceData = this.sliceData.get(hash) ?? new Map<number, number>()
+  getSliceData(hash: string): Promise<SliceData> {
+    const sliceData = this.slicesData.get(hash) ?? new Map<number, number>()
     return Promise.resolve(sliceData)
   }
-  async removeSlices(hashes: string[]) {
-    Promise.resolve()
+  async removeSlices(hashes: string[]): Promise<void> {
+    await Promise.resolve()
     for (const hash of hashes) {
       this.sliceHeights.delete(hash)
-      this.sliceData.delete(hash)
+      this.slicesData.delete(hash)
     }
   }
-  async setSliceHeight(hash: string, height: number) {
-    Promise.resolve()
+  async setSliceHeight(hash: string, height: number): Promise<void> {
+    await Promise.resolve()
     this.sliceHeights.set(hash, height)
   }
-  async setSliceData(hash: string, data: Map<number, number>) {
-    Promise.resolve()
-    this.sliceData.set(hash, data)
+  async setSliceData(hash: string, data: Map<number, number>): Promise<void> {
+    await Promise.resolve()
+    this.slicesData.set(hash, data)
   }
-  async getSafeHeight() {
+  getSafeHeight(): Promise<number> {
     return Promise.resolve(this.safeHeight)
   }
-  async setSafeHeight(height: number) {
-    Promise.resolve()
+  async setSafeHeight(height: number): Promise<void> {
+    await Promise.resolve()
     this.safeHeight = height
   }
 }

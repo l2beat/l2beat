@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChildIndexer, Retries } from '@l2beat/uif'
-
 import { setTimeout } from 'timers/promises'
+
 import { BlockNumberRepository } from '../repositories/BlockNumberRepository'
 import { FakeClockIndexer } from './FakeClockIndexer'
 

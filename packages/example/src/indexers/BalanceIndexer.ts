@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChildIndexer } from '@l2beat/uif'
-
 import { setTimeout } from 'timers/promises'
 
 import { BalanceRepository } from '../repositories/BalanceRepository'

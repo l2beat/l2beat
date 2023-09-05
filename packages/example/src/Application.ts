@@ -1,18 +1,22 @@
 import { Logger } from '@l2beat/backend-tools'
-
 import { BaseIndexer, Retries } from '@l2beat/uif'
+
 import { Config } from './Config'
-import { ABC_Indexer } from './indexers/ABC_Indexer'
 import { AB_BC_Indexer } from './indexers/AB_BC_Indexer'
+import { ABC_Indexer } from './indexers/ABC_Indexer'
 import { BalanceIndexer } from './indexers/BalanceIndexer'
 import { BlockNumberIndexer } from './indexers/BlockNumberIndexer'
 import { FakeClockIndexer } from './indexers/FakeClockIndexer'
 import { TvlIndexer } from './indexers/TvlIndexer'
-import { ABC_Repository } from './repositories/ABC_Repository'
 import { AB_BC_Repository } from './repositories/AB_BC_Repository'
+import { ABC_Repository } from './repositories/ABC_Repository'
 import { BalanceRepository } from './repositories/BalanceRepository'
 import { BlockNumberRepository } from './repositories/BlockNumberRepository'
 import { TvlRepository } from './repositories/TvlRepository'
+
+interface Module {
+  start: () => Promise<void>
+}
 
 export class Application {
   start: () => Promise<void>
@@ -32,12 +36,12 @@ export class Application {
 
     this.start = async (): Promise<void> => {
       console.log(`Application started: ${config.name}`)
-      await Promise.all(modules.map((module) => module && module.start()))
+      await Promise.all(modules.map((module) => module?.start()))
     }
   }
 }
 
-function createABCModule(config: Config, logger: Logger) {
+function createABCModule(config: Config, logger: Logger): Module | undefined {
   if (!config.modules.abc) {
     return undefined
   }
@@ -78,7 +82,7 @@ function createABCModule(config: Config, logger: Logger) {
   }
 }
 
-function createMainModule(config: Config, logger: Logger) {
+function createMainModule(config: Config, logger: Logger): Module | undefined {
   if (!config.modules.main) {
     return undefined
   }
