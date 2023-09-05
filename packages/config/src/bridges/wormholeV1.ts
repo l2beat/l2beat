@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress,SolanaAddres, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -13,36 +13,42 @@ export const wormholeV1: Bridge = {
     links: {
       websites: ['https://wormhole.com/'],
     },
-    category: 'Token Bridge',
+    category: 'Token Bridge','Messaging bridge'
   },
   config: {
     escrows: [
       {
-        address: EthereumAddress('0xf92cD566Ea4864356C5491c177A430C222d7e678'), // Escrow to Solana ?
+        address: EthereumAddress('0xf92cD566Ea4864356C5491c177A430C222d7e678'),
+        address: SolanaAddress('worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth')
         sinceTimestamp: new UnixTime(1611084766),
         tokens: [
-          //'FTT',
+          //'USDC',
+          'WormholeETH',
+          'USDCnet',
+          'USDTnet'
+          'Bonk',
           'BUSD',
           'HBTC',
           'HUSD',
           'DAI',
-          'SRM',
           'WETH',
           'FRAX',
           'WBTC',
+          'tBTC'
         ],
       },
     ],
   },
   technology: {
-    destination: ['Various'], // TODO: list the chains
+    destination: ['Solana','Binance Smart Chain','Terra and Terra Classic','Polygon','Avalanche','Algorand','Fantom','Karura','Celo,'Acala','Aptos','Arbitrum'
+], 
     canonical: true,
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
+      value: 'Network of permissioned Nodes',
       description:
-        'Transfers need to be signed offchain by a set of 2/3 of Guardians and then in a permissionless way relayed to the destination chain.',
+        'Transfers need to be signed offchain by a set of 2/3n +1 of Guardians and then relayed to the destination chain with the relayers, as of now there are no open public relayers but anyone spin up their own.',
       sentiment: 'bad',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
