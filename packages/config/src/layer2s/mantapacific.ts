@@ -11,7 +11,7 @@ export const mantapacific: Layer2 = {
     name: 'Manta Pacific',
     slug: 'mantapacific',
     description:
-      'Manta Network is the modular blockchain for zero-knowledge (ZK) applications. Manta Pacific is a Layer 2 ecosystem empowering EVM-native ZK applications and general dapps with a scalable, cost-effective environment to deploy simply using Solidity. Manta Pacific leverages Celestia for data availability to lower gas costs for users across all applications in its ecosystem.',
+      'Manta Network is the modular blockchain for zero-knowledge (ZK) applications. Manta Pacific is an Optimium empowering EVM-native ZK applications and general dapps with a scalable, cost-effective environment to deploy simply using Solidity. Manta Pacific leverages Celestia for data availability to lower gas costs for users across all applications in its ecosystem.',
     purpose: 'Universal',
     category: 'Optimium',
     provider: 'OP Stack',
