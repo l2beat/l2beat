@@ -1,8 +1,10 @@
-import {
-  assert,
+import type {
   ContractParameters,
   ContractValue,
   DiscoveryOutput,
+} from '@l2beat/discovery-types'
+import {
+  assert,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,

@@ -1890,6 +1890,13 @@
     methods "^1.1.2"
     path-to-regexp "^6.2.1"
 
+"@l2beat/discovery-types@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.1.0.tgz#80dd68f0b27c927a13d01ce7d53dd96d26dd2783"
+  integrity sha512-c7G8JowA2iJM56QWjXqwllkeWU3IibK53GcHYP8BBC0d1NyGAlLrDSN7H9oGZT0YFISioKPvEUdCYFA6Zwk6rA==
+  dependencies:
+    zod "^3.22.2"
+
 "@mdx-js/react@^2.1.5":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-2.3.0.tgz#4208bd6d70f0d0831def28ef28c26149b03180b3"
@@ -12352,7 +12359,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@^3.20.2:
-  version "3.20.2"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.20.2.tgz#068606642c8f51b3333981f91c0a8ab37dfc2807"
-  integrity sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==
+zod@^3.22.2:
+  version "3.22.2"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.2.tgz#3add8c682b7077c05ac6f979fea6998b573e157b"
+  integrity sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==
