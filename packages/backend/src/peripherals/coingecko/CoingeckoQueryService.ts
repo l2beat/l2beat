@@ -1,5 +1,4 @@
-import { CoingeckoClient } from '@l2beat/shared'
-import { CoinMarketChartRangeData } from '@l2beat/shared/build/services/coingecko/model'
+import { CoingeckoClient, CoinMarketChartRangeData } from '@l2beat/shared'
 import {
   assert,
   CoingeckoId,
@@ -236,13 +235,10 @@ export function approximateCirculatingSupply(marketCap: number, price: number) {
     circulatingSupplyRaw >= 1,
     'Circulating supply cannot be less than one',
   )
-  if (marketCap === price) {
-    return 1
-  }
 
   // reduce variation in the result by disregarding least significant parts
   const log = Math.floor(Math.log10(circulatingSupplyRaw))
-  const digitsToClear = log - 4
+  const digitsToClear = Math.max(log - 4, 0)
   const precision = 10 ** digitsToClear
   const value = Math.round(circulatingSupplyRaw / precision) * precision
 

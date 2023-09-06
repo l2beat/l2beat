@@ -595,7 +595,7 @@ describe(approximateCirculatingSupply.name, () => {
     {
       price: 100,
       marketCap: 101,
-      expected: 1.01,
+      expected: 1,
     },
     {
       price: 1.01,
