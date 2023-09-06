@@ -2,11 +2,11 @@ import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
-import { createSuppliedFormulaReports } from './createTotalSupplyFormulaReports'
+import { createFormulaReports } from './createFormulaReports'
 
-describe(createSuppliedFormulaReports.name, () => {
+describe(createFormulaReports.name, () => {
   it('valid data', () => {
-    const result = createSuppliedFormulaReports(
+    const result = createFormulaReports(
       MOCK.PRICES,
       MOCK.TOTAL_SUPPLIES,
       MOCK.TOKENS,
@@ -30,7 +30,7 @@ describe(createSuppliedFormulaReports.name, () => {
 
   it('chainId mismatch in total supplies', () => {
     expect(() =>
-      createSuppliedFormulaReports(
+      createFormulaReports(
         MOCK.PRICES,
         [{ ...MOCK.TOTAL_SUPPLIES[0], chainId: ChainId.ETHEREUM }],
         MOCK.TOKENS,

@@ -6,7 +6,7 @@ import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
 import { BalancePerProject, createReport } from './createReport'
 
-export function createSuppliedFormulaReports(
+export function createFormulaReports(
   prices: PriceRecord[],
   totalSupplies: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
@@ -65,7 +65,7 @@ function transformBalances(
         'totalSupply' in s
           ? s.totalSupply
           : 'circulatingSupply' in s
-          ? BigInt(s.circulatingSupply)
+          ? BigInt(s.circulatingSupply) * 10n ** BigInt(decimals)
           : 0n,
       )
       .reduce((acc, totalSupply) => acc + totalSupply, 0n)

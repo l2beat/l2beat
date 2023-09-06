@@ -17,7 +17,7 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createSuppliedFormulaReports } from '../reports/createTotalSupplyFormulaReports'
+import { createFormulaReports } from '../reports/createFormulaReports'
 import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
@@ -105,7 +105,7 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
     ])
     this.logger.debug('Prices, balances and supplies ready')
 
-    const reports = createSuppliedFormulaReports(
+    const reports = createFormulaReports(
       prices,
       totalSupplies,
       this.tokens,

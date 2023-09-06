@@ -8,7 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { createSuppliedFormulaReports } from '../core/reports/createTotalSupplyFormulaReports'
+import { createFormulaReports } from '../core/reports/createFormulaReports'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { CirculatingSupplyRecord } from '../peripherals/database/CirculatingSupplyRepository'
@@ -87,14 +87,14 @@ const TOKENS: Token[] = [
   },
 ]
 
-const REPORTS = createSuppliedFormulaReports(
+const REPORTS = createFormulaReports(
   PRICES,
   TOTAL_SUPPLIES,
   TOKENS,
   ProjectId.ARBITRUM,
   ChainId.ARBITRUM,
 )
-const FUTURE_REPORTS = createSuppliedFormulaReports(
+const FUTURE_REPORTS = createFormulaReports(
   FUTURE_PRICES,
   TOTAL_SUPPLIES,
   TOKENS,
