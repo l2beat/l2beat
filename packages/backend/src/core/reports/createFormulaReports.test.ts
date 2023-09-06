@@ -1,10 +1,10 @@
 import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
-import { createFormulaReports, transformBalances } from './createFormulaReports'
 import { CirculatingSupplyRecord } from '../../peripherals/database/CirculatingSupplyRepository'
 import { fakeToken } from '../../test/mockReports'
+import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
+import { createFormulaReports, transformBalances } from './createFormulaReports'
 
 describe(createFormulaReports.name, () => {
   it('valid data', () => {
