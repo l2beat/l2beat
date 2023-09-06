@@ -594,13 +594,18 @@ describe(approximateCirculatingSupply.name, () => {
     },
     {
       price: 100,
-      marketCap: 1,
-      expected: 0.01,
+      marketCap: 101,
+      expected: 1.01,
     },
     {
       price: 1.01,
       marketCap: 123456789,
       expected: 122230000,
+    },
+    {
+      price: 0.978234,
+      marketCap: 1_275_234_567,
+      expected: 1303600000,
     },
   ]
 
@@ -611,6 +616,12 @@ describe(approximateCirculatingSupply.name, () => {
       ).toEqual(testCase.expected)
     })
   }
+
+  it('throws if below 1', () => {
+    expect(() => approximateCirculatingSupply(100, 101)).toThrow(
+      'Assertion Error: Circulating supply cannot be less than one',
+    )
+  })
 })
 
 describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
