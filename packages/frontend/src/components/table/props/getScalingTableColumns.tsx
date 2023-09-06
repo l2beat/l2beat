@@ -76,7 +76,7 @@ export function getActiveScalingTvlColumns(
       : []),
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
+      tooltip: 'Functionality supported by this offchain system.',
       getValue: (project) => project.purpose,
     },
     {
@@ -230,7 +230,7 @@ export function getUpcomingScalingTvlColumns() {
     },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
+      tooltip: 'Functionality supported by this offchain system.',
       getValue: (project) => project.purpose,
     },
   ]
@@ -272,7 +272,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
+      tooltip: 'Functionality supported by this offchain system.',
       getValue: (project) => project.purpose,
     },
     {
@@ -337,13 +337,13 @@ export function getScalingRiskColumns() {
     {
       name: 'Sequencer failure',
       tooltip:
-        "Sequencer is an entity responsible for constructing L2 blocks and deciding on the ordering of user's L2 transactions. What happens if it is offline or censors individual user?",
+        "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
       name: 'Proposer failure',
       tooltip:
-        'Proposer is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
+        'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.proposerFailure} />,
     },
   ]
