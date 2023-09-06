@@ -122,7 +122,7 @@ export class CirculatingSupplyUpdater {
       }
     }
     if (hours > 0) {
-      this.logger.debug('Updated prices', {
+      this.logger.debug('Updated circulating supplies', {
         coingeckoId: assetId.toString(),
         hours,
       })
