@@ -18,7 +18,7 @@ describe(AggregatedReportUpdater.name, () => {
     it('calculates and saves reports', async () => {
       const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
         {
-          addOrUpdateMany: async () => 0,
+          replaceAggregatedReports: async () => 0,
         },
       )
 
@@ -65,11 +65,11 @@ describe(AggregatedReportUpdater.name, () => {
         timestamp: MOCK.NOW,
       })
 
-      expect(aggregatedReportRepository.addOrUpdateMany).toHaveBeenCalledTimes(
-        2,
-      )
       expect(
-        aggregatedReportRepository.addOrUpdateMany,
+        aggregatedReportRepository.replaceAggregatedReports,
+      ).toHaveBeenCalledTimes(2)
+      expect(
+        aggregatedReportRepository.replaceAggregatedReports,
       ).toHaveBeenNthCalledWith(
         1,
         MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP.filter(
@@ -78,7 +78,7 @@ describe(AggregatedReportUpdater.name, () => {
         { timestamp: MOCK.NOW.add(1, 'hours') },
       )
       expect(
-        aggregatedReportRepository.addOrUpdateMany,
+        aggregatedReportRepository.replaceAggregatedReports,
       ).toHaveBeenNthCalledWith(
         2,
         MOCK.AGGREGATED_REPORTS.filter((r) => r.usdValue > 0),
@@ -105,7 +105,7 @@ describe(AggregatedReportUpdater.name, () => {
 
       const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
         {
-          addOrUpdateMany: async () => 0,
+          replaceAggregatedReports: async () => 0,
         },
       )
 
@@ -135,7 +135,7 @@ describe(AggregatedReportUpdater.name, () => {
     it('skips known timestamps', async () => {
       const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
         {
-          addOrUpdateMany: async () => 0,
+          replaceAggregatedReports: async () => 0,
         },
       )
       const aggregatedReportStatusRepository =
@@ -201,10 +201,10 @@ describe(AggregatedReportUpdater.name, () => {
           },
         )
         expect(
-          aggregatedReportRepository.addOrUpdateMany,
+          aggregatedReportRepository.replaceAggregatedReports,
         ).toHaveBeenCalledTimes(2)
         expect(
-          aggregatedReportRepository.addOrUpdateMany,
+          aggregatedReportRepository.replaceAggregatedReports,
         ).toHaveBeenNthCalledWith(
           1,
           MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP.filter(
@@ -213,7 +213,7 @@ describe(AggregatedReportUpdater.name, () => {
           { timestamp: MOCK.NOW.add(1, 'hours') },
         )
         expect(
-          aggregatedReportRepository.addOrUpdateMany,
+          aggregatedReportRepository.replaceAggregatedReports,
         ).toHaveBeenNthCalledWith(
           2,
           MOCK.AGGREGATED_REPORTS.filter((r) => r.usdValue > 0),
