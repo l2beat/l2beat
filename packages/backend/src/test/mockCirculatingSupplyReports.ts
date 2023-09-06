@@ -21,7 +21,7 @@ const ARBITRUM_ESCROW_TWO = EthereumAddress.random()
 const TOTAL_SUPPLIES: CirculatingSupplyRecord[] = [
   {
     assetId: AssetId.USDC,
-    circulatingSupply: 1000n * 10n ** 6n,
+    circulatingSupply: 1000 * 10 ** 6,
     chainId: ChainId.ARBITRUM,
     timestamp: BASE_MOCK.NOW,
   },
