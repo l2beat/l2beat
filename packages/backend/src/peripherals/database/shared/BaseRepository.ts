@@ -10,10 +10,7 @@ type IdType = number | string | String | Number
 
 type AnyMethod = (...args: any[]) => Promise<any>
 type AddMethod = (record: any) => Promise<IdType>
-type AddManyMethod = (
-  records: any[],
-  ...args: any[]
-) => Promise<IdType[] | number>
+type AddManyMethod = (records: any[]) => Promise<IdType[] | number>
 type GetMethod = (...args: any[]) => Promise<{}[]>
 type FindMethod = (...args: any[]) => Promise<{} | undefined>
 type DeleteMethod = (...args: any[]) => Promise<number>
