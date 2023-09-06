@@ -195,7 +195,7 @@ describe(TotalSupplyFormulaUpdater.name, () => {
           { timestamp: MOCK.NOW, chainId: ChainId.ARBITRUM },
         )
       })
-    }).timeout(10000)
+    })
   })
 
   describe(TotalSupplyFormulaUpdater.prototype.getReportsWhenReady.name, () => {
