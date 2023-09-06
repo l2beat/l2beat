@@ -3,7 +3,8 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import { ChainId } from '@l2beat/shared-pure'
 
 import { UpdateMonitorRepository } from '../../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 

@@ -5,12 +5,13 @@ import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
+  ChartType,
   TokenTvlResponse,
 } from './state/State'
 
 export interface InitMessage {
   type: 'Init'
-  initialView: 'tvl' | 'detailedTvl' | 'activity'
+  initialView: ChartType
   pagePathname: string
   days: number
   currency: 'usd' | 'eth'
@@ -27,7 +28,7 @@ export interface InitMessage {
 
 export interface ViewChangedMessage {
   type: 'ViewChanged'
-  view: 'tvl' | 'detailedTvl' | 'activity'
+  view: ChartType
 }
 
 export interface DaysChangedMessage {

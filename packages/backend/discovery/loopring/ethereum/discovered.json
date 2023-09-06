@@ -8,7 +8,6 @@
     {
       "name": "ExchangeV3",
       "address": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
-      "code": "https://etherscan.deth.net/address/0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4,0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
       "upgradeability": {
         "type": "ZeppelinOS proxy",
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
@@ -52,7 +51,6 @@
     {
       "name": "LoopringIOExchangeOwner",
       "address": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
-      "code": "https://etherscan.deth.net/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
       "upgradeability": {
         "type": "immutable"
       },
@@ -83,7 +81,6 @@
     {
       "name": "AgentRegistry",
       "address": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
-      "code": "https://etherscan.deth.net/address/0x39B9bf169a7e225ba037C443A40460c77438ea14",
       "upgradeability": {
         "type": "immutable"
       },
@@ -96,7 +93,6 @@
     {
       "name": "ProtocolFeeVault",
       "address": "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
-      "code": "https://etherscan.deth.net/address/0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
       "upgradeability": {
         "type": "immutable"
       },
@@ -124,7 +120,6 @@
     {
       "name": "BlockVerifier",
       "address": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
-      "code": "https://etherscan.deth.net/address/0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
       "upgradeability": {
         "type": "immutable"
       },
@@ -136,7 +131,6 @@
     {
       "name": "DefaultDepositContract",
       "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
-      "code": "https://etherscan.deth.net/address/0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
       "upgradeability": {
         "type": "immutable"
       },
@@ -150,7 +144,6 @@
     {
       "name": "LRC_v2",
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
-      "code": "https://etherscan.deth.net/address/0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -165,7 +158,6 @@
     {
       "name": "ProxyOwner",
       "address": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
-      "code": "https://etherscan.deth.net/address/0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -191,7 +183,6 @@
     {
       "name": "LoopringV3",
       "address": "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
-      "code": "https://etherscan.deth.net/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
       "upgradeability": {
         "type": "immutable"
       },
@@ -213,7 +204,6 @@
     {
       "name": "UserStakingPool",
       "address": "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b",
-      "code": "https://etherscan.deth.net/address/0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b",
       "upgradeability": {
         "type": "immutable"
       },

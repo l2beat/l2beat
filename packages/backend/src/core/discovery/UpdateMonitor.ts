@@ -4,8 +4,9 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { Logger } from '@l2beat/shared'
-import { assert, ChainId, DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'

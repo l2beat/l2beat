@@ -7,7 +7,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-      "code": "https://etherscan.deth.net/address/0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
       "upgradeability": {
         "type": "immutable"
       },
@@ -19,7 +18,6 @@
     {
       "name": "AdminMultisig",
       "address": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-      "code": "https://etherscan.deth.net/address/0x242daE44F5d8fb54B198D03a94dA45B5a4413e21,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -40,7 +38,6 @@
     {
       "name": "Bridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-      "code": "https://etherscan.deth.net/address/0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe,0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C",
@@ -57,7 +54,6 @@
     {
       "name": "SecurityCouncil",
       "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
-      "code": "https://etherscan.deth.net/address/0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -83,7 +79,6 @@
     {
       "name": "FflonkVerifier",
       "address": "0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
-      "code": "https://etherscan.deth.net/address/0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
       "upgradeability": {
         "type": "immutable"
       },
@@ -92,7 +87,6 @@
     {
       "name": "PolygonZkEvm",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-      "code": "https://etherscan.deth.net/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2,0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF",
@@ -125,7 +119,6 @@
     {
       "name": "GlobalExitRoot",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-      "code": "https://etherscan.deth.net/address/0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb,0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3",
@@ -140,7 +133,6 @@
     {
       "name": "Timelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-      "code": "https://etherscan.deth.net/address/0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
       "upgradeability": {
         "type": "immutable"
       },

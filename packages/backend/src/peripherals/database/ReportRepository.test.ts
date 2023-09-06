@@ -1,11 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import {
-  AssetId,
-  ChainId,
-  ProjectId,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -200,7 +194,7 @@ function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
     timestamp: UnixTime.now(),
     projectId: ProjectId('fake-project'),
     asset: AssetId('fake-asset'),
-    type: ValueType.CBV,
+    reportType: 'CBV',
     chainId: ChainId.ETHEREUM,
     amount: 1234n,
     usdValue: 1234n,

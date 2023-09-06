@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
+import { configureRollupsOnlyFilter } from '../../../scripts/configureRollupsOnlyFilter'
+import { configureTableIndexRerender } from '../../../scripts/configureTableIndexRerender'
 import { configureTabs } from '../../../scripts/configureTabs'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { click } from '../../../utils/storybook/click'
@@ -16,7 +18,7 @@ const meta = {
       {
         name: 'Base',
         slug: 'base',
-        provider: 'Optimism',
+        provider: 'OP Stack',
         riskValues: {
           dataAvailability: {
             value: '',
@@ -63,7 +65,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'Optimistic Rollup',
+        category: 'Optimistic Rollup',
         stage: undefined,
       },
       {
@@ -116,7 +118,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -169,7 +171,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'Optimistic Chain',
+        category: 'Optimium',
         stage: undefined,
       },
       {
@@ -222,7 +224,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -275,7 +277,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -335,7 +337,7 @@ const meta = {
         sevenDayChange: '-6.69%',
         marketShare: '0.02%',
         purpose: 'Payments, AMM',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -394,7 +396,7 @@ const meta = {
         sevenDayChange: '-2.40%',
         marketShare: '0.00%',
         purpose: 'Payments',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -448,14 +450,14 @@ const meta = {
           label:
             'ZKS – 44.65%<br>Ether – 24.77%<br>Stablecoins – 30.06%<br>Other – 0.52%',
           warning:
-            'The ZKS token associated with ZKSwap 2.0 accounts for 44.65% of the TVL!',
+            'The ZKS token associated with ZKSwap 2.0 accounts for 44.65% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.67%',
         sevenDayChange: '-4.12%',
         marketShare: '0.00%',
         purpose: 'Payments, AMM',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -508,14 +510,14 @@ const meta = {
           other: 0,
           label: 'L2 – 50.28%<br>Ether – 15.79%<br>Stablecoins – 33.92%',
           warning:
-            'The L2 token associated with Gluon accounts for 50.28% of the TVL!',
+            'The L2 token associated with Gluon accounts for 50.28% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '+27.17%',
         sevenDayChange: '-32.13%',
         marketShare: '0.00%',
         purpose: 'Exchange',
-        technology: 'Plasma',
+        category: 'Plasma',
         stage: undefined,
       },
       {
@@ -574,7 +576,7 @@ const meta = {
         sevenDayChange: '-7.42%',
         marketShare: '0.00%',
         purpose: 'Payments',
-        technology: 'Plasma',
+        category: 'Plasma',
         stage: undefined,
       },
       {
@@ -633,7 +635,7 @@ const meta = {
         sevenDayChange: '-2.76%',
         marketShare: '0.00%',
         purpose: 'DeFi protocols',
-        technology: 'Validium',
+        category: 'Validium',
         stage: undefined,
       },
       {
@@ -687,14 +689,14 @@ const meta = {
           label:
             'ARB – 25.00%<br>Ether – 33.75%<br>Stablecoins – 34.18%<br>Other – 7.06%',
           warning:
-            'The ARB token associated with Arbitrum One accounts for 25.00% of the TVL!',
+            'The ARB token associated with Arbitrum One accounts for 25.00% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.44%',
         sevenDayChange: '-7.73%',
         marketShare: '66.75%',
         purpose: 'Universal',
-        technology: 'Optimistic Rollup',
+        category: 'Optimistic Rollup',
         stage: {
           stage: 'Stage 0',
           missing: {
@@ -718,7 +720,7 @@ const meta = {
       {
         name: 'Optimism',
         slug: 'optimism',
-        provider: 'Optimism',
+        provider: 'OP Stack',
         riskValues: {
           dataAvailability: {
             value: 'On chain',
@@ -766,14 +768,14 @@ const meta = {
           label:
             'OP – 20.06%<br>Ether – 31.00%<br>Stablecoins – 31.27%<br>Other – 17.67%',
           warning:
-            'The OP token associated with Optimism accounts for 20.06% of the TVL!',
+            'The OP token associated with Optimism accounts for 20.06% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-3.42%',
         sevenDayChange: '-10.76%',
         marketShare: '19.46%',
         purpose: 'Universal',
-        technology: 'Optimistic Rollup',
+        category: 'Optimistic Rollup',
         stage: undefined,
       },
       {
@@ -831,7 +833,7 @@ const meta = {
         sevenDayChange: '+3.96%',
         marketShare: '4.08%',
         purpose: 'Exchange',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -890,13 +892,13 @@ const meta = {
         sevenDayChange: '-8.56%',
         marketShare: '2.77%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
         name: 'Metis Andromeda',
         slug: 'metis',
-        provider: 'Optimism',
+        provider: 'OVM',
         riskValues: {
           dataAvailability: {
             value: 'Optimistic (MEMO)',
@@ -944,14 +946,14 @@ const meta = {
           label:
             'Metis – 53.97%<br>Ether – 5.18%<br>Stablecoins – 40.45%<br>Other – 0.40%',
           warning:
-            'The Metis token associated with Metis Andromeda accounts for 53.97% of the TVL!',
+            'The Metis token associated with Metis Andromeda accounts for 53.97% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-3.15%',
         sevenDayChange: '-10.62%',
         marketShare: '1.27%',
         purpose: 'Universal',
-        technology: 'Optimistic Chain',
+        category: 'Optimium',
         stage: undefined,
       },
       {
@@ -1004,14 +1006,14 @@ const meta = {
           label:
             'LRC – 54.95%<br>Ether – 26.99%<br>Stablecoins – 13.78%<br>Other – 4.27%',
           warning:
-            'The LRC token associated with Loopring accounts for 54.95% of the TVL!',
+            'The LRC token associated with Loopring accounts for 54.95% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.30%',
         sevenDayChange: '-10.45%',
         marketShare: '1.25%',
         purpose: 'Tokens, NFTs, AMM',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -1064,14 +1066,14 @@ const meta = {
           label:
             'IMX – 69.97%<br>Ether – 14.10%<br>Stablecoins – 1.18%<br>Other – 14.75%',
           warning:
-            'The IMX token associated with Immutable X accounts for 69.97% of the TVL!',
+            'The IMX token associated with Immutable X accounts for 69.97% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-0.37%',
         sevenDayChange: '-13.36%',
         marketShare: '1.12%',
         purpose: 'NFT, Exchange',
-        technology: 'Validium',
+        category: 'Validium',
         stage: undefined,
       },
     ],
@@ -1098,7 +1100,25 @@ export const Active: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#active')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const ActiveWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#active')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },
@@ -1111,7 +1131,25 @@ export const Upcoming: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#upcoming')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const UpcomingWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#upcoming')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },
@@ -1124,7 +1162,25 @@ export const Archived: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#archived')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const ArchivedWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#archived')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },

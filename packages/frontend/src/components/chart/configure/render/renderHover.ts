@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server'
 
 import { formatTps } from '../../../../utils/formatTps'
 import { formatUSD } from '../../../../utils/utils'
+import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../../icons'
 import { Link } from '../../../Link'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
@@ -31,13 +32,9 @@ export function renderHover(
   }
 
   const isActivity = state.view.chart.type === 'ActivityChart'
-  const isDetailedTvl = state.view.chart.type === 'AggregateDetailedTvlChart'
   const showEthereum = state.controls.showEthereum
-  elements.hover.purpleCircle?.classList.toggle('hidden', !isDetailedTvl)
-  elements.hover.yellowTriangle?.classList.toggle('hidden', !isDetailedTvl)
-  elements.hover.pinkSquare?.classList.toggle('hidden', !isDetailedTvl)
 
-  elements.hover.circle?.classList.toggle('hidden', isActivity || isDetailedTvl)
+  elements.hover.circle?.classList.toggle('hidden', isActivity)
   elements.hover.redCircle?.classList.toggle('hidden', !isActivity)
   elements.hover.blueSquare?.classList.toggle(
     'hidden',
@@ -57,19 +54,6 @@ export function renderHover(
   const bottom2 =
     'y2' in point && state.controls.showEthereum
       ? Math.max(0, point.y2 * (rect.height - 20))
-      : bottom1
-
-  const cbvBottom =
-    'parts' in point
-      ? Math.max(0, point.parts.cbv * (rect.height - 20))
-      : bottom1
-  const ebvBottom =
-    'parts' in point
-      ? Math.max(0, point.parts.ebv * (rect.height - 20))
-      : bottom1
-  const nmvBottom =
-    'parts' in point
-      ? Math.max(0, point.parts.nmv * (rect.height - 20))
       : bottom1
 
   if (elements.hover.line) {
@@ -105,21 +89,6 @@ export function renderHover(
   if (elements.hover.greenSquare) {
     elements.hover.greenSquare.style.left = `${left - 4}px`
     elements.hover.greenSquare.style.bottom = `${bottom1 - 4}px`
-  }
-
-  if (
-    elements.hover.purpleCircle &&
-    elements.hover.yellowTriangle &&
-    elements.hover.pinkSquare
-  ) {
-    elements.hover.purpleCircle.style.left = `${left - 4}px`
-    elements.hover.purpleCircle.style.bottom = `${cbvBottom - 4}px`
-
-    elements.hover.yellowTriangle.style.left = `${left - 6}px`
-    elements.hover.yellowTriangle.style.bottom = `${ebvBottom - 4}px`
-
-    elements.hover.pinkSquare.style.left = `${left - 4}px`
-    elements.hover.pinkSquare.style.bottom = `${nmvBottom - 4}px`
   }
 
   if (elements.hover.contents) {
@@ -219,25 +188,28 @@ function renderTVLRow(tvl: string) {
   return `<div class="flex w-full justify-between"><div><span class="text-gray-50">Total TVL</span></div><div><span class="font-bold">${tvl}</span></div></div>`
 }
 
-const CBVIcon =
-  '<svg class="w-2 h-2 stroke-black dark:stroke-white" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF"/></svg>'
-
-const EBVIcon =
-  '<svg class="w-2 h-2 stroke-black dark:stroke-white" xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1.16987 8.5L5.5 1L9.83013 8.5H1.16987Z" fill="#EF8F00"/></svg>'
-
-const NMVIcon =
-  '<svg class="w-2 h-2 stroke-black dark:stroke-white" width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke-width="2" /></svg>'
-
 function renderCBVRow(ebv: number) {
-  return renderDetailedRow(ebv, 'Canonically Bridged', CBVIcon)
+  return renderDetailedRow(
+    ebv,
+    'Canonically Bridged',
+    renderToString(CanonicalIcon({})),
+  )
 }
 
 function renderEBVRow(cbv: number) {
-  return renderDetailedRow(cbv, 'Externally Bridged', EBVIcon)
+  return renderDetailedRow(
+    cbv,
+    'Externally Bridged',
+    renderToString(ExternalIcon({})),
+  )
 }
 
 function renderNMVRow(nmv: number) {
-  return renderDetailedRow(nmv, 'Natively Minted', NMVIcon)
+  return renderDetailedRow(
+    nmv,
+    'Natively Minted',
+    renderToString(NativeIcon({})),
+  )
 }
 
 function renderDetailedRow(value: number, caption: string, iconSvg: string) {
@@ -255,12 +227,16 @@ function renderCurrencyRowWithMarker(
   ticker: string,
   assetType: AssetType,
 ) {
-  const iconSvg =
-    assetType === 'EBV' ? EBVIcon : assetType === 'CBV' ? CBVIcon : NMVIcon
-  return `<div class="inline-flex items-center gap-1"> ${iconSvg} ${renderCurrencyRow(
-    value,
-    ticker,
-  )} </div>`
+  const iconElement =
+    assetType === 'EBV'
+      ? ExternalIcon
+      : assetType === 'CBV'
+      ? CanonicalIcon
+      : NativeIcon
+
+  return `<div class="inline-flex items-center gap-1"> ${renderToString(
+    iconElement({}),
+  )} ${renderCurrencyRow(value, ticker)} </div>`
 }
 
 function renderCurrencyRowWithMarkerGap(value: number, ticker: string) {

@@ -58,7 +58,7 @@ export async function saveDiscoveryResult(
  *
  * If there are more it returns '/proxy', '/implementation-1', '/implementation-2', etc.
  */
-function getSourceName(i: number, length: number) {
+export function getSourceName(i: number, length: number) {
   let name = ''
   if (length > 1) {
     name = i === 0 ? 'proxy' : 'implementation'

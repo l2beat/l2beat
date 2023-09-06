@@ -103,20 +103,22 @@ export function createTvlModule(
   // #region api
   const blocksController = new BlocksController(db.blockNumberRepository)
   const tvlController = new TvlController(
-    db.reportStatusRepository,
-    db.aggregatedReportRepository,
     db.reportRepository,
+    db.aggregatedReportRepository,
+    db.aggregatedReportStatusRepository,
     config.projects,
     config.tokens,
+    aggregatedReportUpdater.getConfigHash(),
+    { errorOnUnsyncedTvl: false },
     logger,
-    config.tvl.arbitrum ? true : false,
   )
 
   const detailedTvlController = new DetailedTvlController(
-    db.reportStatusRepository,
     db.aggregatedReportRepository,
     db.reportRepository,
     db.aggregatedReportStatusRepository,
+    db.balanceRepository,
+    db.priceRepository,
     config.projects,
     config.tokens,
     logger,

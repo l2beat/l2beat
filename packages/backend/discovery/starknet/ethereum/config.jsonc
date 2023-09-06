@@ -25,7 +25,8 @@
     "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "Implementation Multisig",
     "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DaiGateway",
     "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": "wstETH Bridge",
-    "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "rETH Bridge"
+    "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "rETH Bridge",
+    "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "BridgeMultisig"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "l2beat-starkware"
@@ -139,6 +140,9 @@
     },
     "L1DaiGateway": {
       "ignoreRelatives": ["dai"]
+    },
+    "BridgeMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

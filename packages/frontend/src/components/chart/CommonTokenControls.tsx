@@ -1,13 +1,13 @@
-import { ValueType } from '@l2beat/shared-pure'
+import { AssetType } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { CloseIcon } from '../icons/CloseIcon'
 
 export interface TokenControl {
-  address: string
+  iconUrl: string
   symbol: string
   name: string
-  assetType: ValueType
+  assetType: AssetType
   tvlEndpoint: string
 }
 
@@ -23,10 +23,7 @@ export function TokenCell({ token }: { token: TokenControl }) {
         data-tvl-endpoint={token.tvlEndpoint}
         data-asset-type={token.assetType}
       />
-      <img
-        src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`}
-        className="h-4 w-4 rounded-full"
-      />
+      <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
       <p className="text-sm" key={token.symbol}>
         <span className={'font-bold'}>{token.name}</span> ({token.symbol})
       </p>
@@ -40,11 +37,7 @@ export function SelectedTokenButton() {
       className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md bg-white px-2 text-base transition-all dark:bg-black"
       data-role="chart-token-chosen"
     >
-      <input
-        type="checkbox"
-        autoComplete="off"
-        className="Dropdown-Button peer hidden"
-      />
+      <input type="checkbox" autoComplete="off" className="peer hidden" />
       <p>NO TOKEN</p>
       <CloseIcon className="h-3 w-3 fill-gray-550 dark:fill-gray-50" />
     </label>
@@ -68,7 +61,7 @@ export function getParts(tokens: TokenControl[]) {
         .slice(0, 15),
     },
     {
-      title: 'Canonically Bridged Tokens',
+      title: 'Canonically Bridged Tokens (Top 15)',
       titleColor: 'text-[#D98EFF]',
       tokens: tokens
         .filter((t) => t.assetType.toString() === 'CBV')

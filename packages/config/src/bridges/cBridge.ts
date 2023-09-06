@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { unionBy } from 'lodash'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
@@ -190,6 +191,10 @@ export const cBridge: Bridge = {
         'TransferAgent',
         'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
       ),
+      discovery.getContractDetails(
+        'Sentinel',
+        'Contract storing additional governors and pausers.',
+      ),
     ],
     references: [],
     risks: [],
@@ -213,18 +218,35 @@ export const cBridge: Bridge = {
       name: 'Governors',
       description:
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: discovery.getPermissionedAccounts(
-        'Liquidity Network',
-        'governors',
+      accounts: unionBy(
+        discovery.getPermissionedAccounts('Liquidity Network', 'governors'),
+        discovery.getPermissionedAccounts('Sentinel', 'governors'),
+        JSON.stringify,
       ),
     },
     {
-      name: 'Pausers',
+      name: 'Full pausers',
       description: 'Can pause and unpause the system.',
-      accounts: discovery.getPermissionedAccounts(
-        'Liquidity Network',
-        'pausers',
+      accounts: unionBy(
+        discovery.getPermissionedAccounts('Liquidity Network', 'pausers'),
+        discovery.getPermissionedAccounts('Sentinel', 'pausersFull'),
+        JSON.stringify,
       ),
+    },
+    {
+      name: 'Partial pausers',
+      description: 'Can pause the system.',
+      accounts: discovery.getPermissionedAccounts(
+        'Sentinel',
+        'pausersPauseOnly',
+      ),
+    },
+    {
+      name: 'Sentinel Admin',
+      description: 'Can add and remove governors and pausers from the system.',
+      accounts: [
+        discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner'),
+      ],
     },
   ],
   knowledgeNuggets: [

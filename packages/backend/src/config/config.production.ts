@@ -3,6 +3,7 @@ import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
+import { getChainMinTimestamp } from './chains'
 import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -34,7 +35,7 @@ export function getProductionConfig(): Config {
       throttleTimeInMs: 20000,
     },
     clock: {
-      minBlockTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
+      minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
@@ -67,14 +68,14 @@ export function getProductionConfig(): Config {
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
-        alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-        minBlockTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
+        minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
-        minBlockTimestamp: ChainId.getMinTimestamp(ChainId.ARBITRUM),
+        minBlockTimestamp: getChainMinTimestamp(ChainId.ARBITRUM),
       },
     },
     activity: {
@@ -129,6 +130,7 @@ export function getProductionConfig(): Config {
         token: getEnv('DISCORD_TOKEN'),
         publicChannelId: getEnv('PUBLIC_DISCORD_CHANNEL_ID'),
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
+        callsPerMinute: 3000,
       },
       chains: [
         {
@@ -136,7 +138,7 @@ export function getProductionConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
+          minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },

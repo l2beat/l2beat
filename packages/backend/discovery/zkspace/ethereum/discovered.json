@@ -8,7 +8,6 @@
     {
       "name": "VerifierExit",
       "address": "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
-      "code": "https://etherscan.deth.net/address/0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81,0x41455808B3109AD0f79672C44D75933D3529FEaE",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x41455808B3109AD0f79672C44D75933D3529FEaE",
@@ -22,7 +21,6 @@
     {
       "name": "ZkSync",
       "address": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
-      "code": "https://etherscan.deth.net/address/0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8,0x467a2B91f231D930F5eeB6B982C7666E81DA8626,0x899A605a3B7A11eA5D928958b77014e763c53426,0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db,0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7",
       "upgradeability": {
         "type": "zkSpace proxy",
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -66,7 +64,6 @@
     {
       "name": "Governance",
       "address": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
-      "code": "https://etherscan.deth.net/address/0x83Cb1531Ec8447366501aE440478da245EcffB89,0x6659174CdB0c445B897aEd25181f293E468941a5",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x6659174CdB0c445B897aEd25181f293E468941a5",
@@ -86,7 +83,6 @@
     {
       "name": "ZkSwapListing",
       "address": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
-      "code": "https://etherscan.deth.net/address/0x8aA2C56dca9d59F4317c2fad632c192b18127709",
       "upgradeability": {
         "type": "immutable"
       },
@@ -106,7 +102,6 @@
     {
       "name": "UpgradeGatekeeper",
       "address": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-      "code": "https://etherscan.deth.net/address/0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
       "upgradeability": {
         "type": "immutable"
       },
@@ -130,7 +125,6 @@
     {
       "name": "Verifier",
       "address": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
-      "code": "https://etherscan.deth.net/address/0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af,0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
@@ -144,7 +138,6 @@
     {
       "name": "UniswapV2Factory",
       "address": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-      "code": "https://etherscan.deth.net/address/0xc07f850b60E0EEd49a09E455b01a869C25963735,0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
@@ -161,7 +154,6 @@
     {
       "name": "ZkSeaNFT",
       "address": "0xc632347cc96A4400653E3514eA148630455295b5",
-      "code": "https://etherscan.deth.net/address/0xc632347cc96A4400653E3514eA148630455295b5,0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
@@ -186,7 +178,6 @@
     {
       "name": "ZksToken",
       "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
-      "code": "https://etherscan.deth.net/address/0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
       "upgradeability": {
         "type": "immutable"
       },

@@ -4,7 +4,6 @@ import {
   DetailedTvlApiToken,
   TvlApiProject,
   TvlApiToken,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { getPercentageChange } from '../utils'
@@ -21,7 +20,7 @@ export function getTvlStats(
   const tvl = aggregate.at(-1)?.[1] ?? 0
   const tvlOneDayAgo = aggregate.at(-25)?.[1] ?? 0
   // This assumes that hourly data spans exactly 7 days
-  const tvlSevenDaysAgo = aggregate[0][1]
+  const tvlSevenDaysAgo = aggregate.at(0)?.[1] ?? 0
 
   return {
     tvl,
@@ -52,7 +51,7 @@ export function unifyTokensResponse(
       assetId: token.assetId,
       chainId: ChainId.ETHEREUM,
       usdValue: token.tvl,
-      valueType: ValueType.CBV,
+      assetType: 'CBV',
     }))
   }
 
@@ -61,7 +60,7 @@ export function unifyTokensResponse(
     .map((token) => ({
       assetId: token.assetId,
       chainId: token.chainId,
-      valueType: token.valueType,
+      assetType: token.assetType,
       usdValue: token.usdValue,
     }))
 }

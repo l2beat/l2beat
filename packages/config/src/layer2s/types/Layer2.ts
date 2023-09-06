@@ -74,7 +74,7 @@ export interface Layer2Display {
   /** Technology provider */
   provider?:
     | 'StarkEx'
-    | 'Optimism'
+    | 'OP Stack'
     | 'zkSync'
     | 'loopring'
     | 'Arbitrum'
@@ -116,14 +116,12 @@ export interface Layer2ExternalAssets {
     sinceTimestamp: UnixTime
     /** How fine grained the asset is */
     decimals: number
-    /** List of L2 addresses which hold the premint asset */
-    premintHolderAddresses: string[]
   }[]
 }
 
 export type Layer2Category =
   | 'Optimistic Rollup'
-  | 'Optimistic Chain'
+  | 'Optimium'
   | 'Plasma'
   | 'State Pools'
   | 'Validium'

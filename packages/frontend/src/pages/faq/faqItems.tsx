@@ -24,36 +24,37 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Why do you need L2BEAT if you have DeFi Pulse, DefiLlama, etc.?',
     answer:
-      'While the above-mentioned sites are great, they focus primarily at tracking TVL (Total Value Locked) in DeFi projects on various chain. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just TVL but various metrics related to the liveness and security of these projects.',
+      'While the above-mentioned sites are great, they focus primarily at tracking Value Locked in DeFi projects on various chain. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just Value Locked but various metrics related to the liveness and security of these projects.',
   },
   {
     question:
-      'Why does the Total Value Locked (TVL) on L2BEAT differ from the one on DefiLlama?',
+      'Why does the Value Locked on L2BEAT differ from the one on DefiLlama?',
     answer: (
       <div>
         <p className="mt-4">
-          L2BEAT and DefiLlama use different methodologies for calculating TVL.
-          L2BEAT accounts for all assets locked in Ethereum contracts, including
-          L2-native governance tokens (ARB, OP), while DefiLlama focuses on
-          assets actively engaged in dApps on specific networks.
+          L2BEAT and DefiLlama use different methodologies for calculating Value
+          Locked. L2BEAT accounts for all assets locked in Ethereum contracts,
+          including L2-native governance tokens (ARB, OP), while DefiLlama
+          focuses on assets actively engaged in dApps on specific networks.
         </p>
         <p className="mt-4">
-          Let's assume L2BEAT reports a TVL of 2.5 billion, while DefiLlama
-          reports a TVL of 1 billion for the same Layer 2 network (e.g.,
-          Arbitrum). This suggests that 1.5 billion worth of assets have been
-          bridged to Arbitrum from Layer 1 (Ethereum), but are not yet being
-          used in any dApps listed by DefiLlama. For instance, if you deposit 1
-          ETH to Optimism, L2BEAT would include it in their TVL calculation, but
-          DefiLlama would not. However, if you use that 1 ETH on Optimism to
-          provide liquidity on Uniswap, DefiLlama would then include it in their
-          TVL calculation. Also, at L2BEAT, the value of L2-native governance
-          tokens is included, which adds to the discrepancy.
+          Let's assume L2BEAT reports a Value Locked of 2.5 billion, while
+          DefiLlama reports a Value Locked of 1 billion for the same Layer 2
+          network (e.g., Arbitrum). This suggests that 1.5 billion worth of
+          assets have been bridged to Arbitrum from Layer 1 (Ethereum), but are
+          not yet being used in any dApps listed by DefiLlama. For instance, if
+          you deposit 1 ETH to Optimism, L2BEAT would include it in their Value
+          Locked calculation, but DefiLlama would not. However, if you use that
+          1 ETH on Optimism to provide liquidity on Uniswap, DefiLlama would
+          then include it in their Value Locked calculation. Also, at L2BEAT,
+          the value of L2-native governance tokens is included, which adds to
+          the discrepancy.
         </p>
         <p className="mt-4">
-          The discrepancy in reported TVL between L2BEAT and DefiLlama is due to
-          different interpretations of "Total Value Locked." L2BEAT considers
-          the entire Ethereum ecosystem, while DefiLlama emphasizes assets used
-          in dApps on individual blockchain networks.
+          The discrepancy in reported Value Locked between L2BEAT and DefiLlama
+          is due to different interpretations of "Value Locked." L2BEAT
+          considers the entire Ethereum ecosystem, while DefiLlama emphasizes
+          assets used in dApps on individual blockchain networks.
         </p>
       </div>
     ),
@@ -133,8 +134,17 @@ export const faqItems: FaqItem[] = [
   },
   {
     question: 'What if L2 validators submit a fraudulent state commit to L1?',
-    answer:
-      'A state root from L2 is typically used to check coin ownership on L2 that user wants to withdraw to L1. If the fraudulent state root is submitted, it may attest that all coins belong to a dishonest L2 validator rather than legitimate users. These coins can be then withdrawn to L1 from L2&mdash;effectively stealing them. This is why it is not enough to simply commit state roots of L2 to L1, we need to be sure that this state root is valid.',
+    answer: (
+      <>
+        A state root from L2 is typically used to check coin ownership on L2
+        that user wants to withdraw to L1. If the fraudulent state root is
+        submitted, it may attest that all coins belong to a dishonest L2
+        validator rather than legitimate users. These coins can be then
+        withdrawn to L1 from L2&mdash;effectively stealing them. This is why it
+        is not enough to simply commit state roots of L2 to L1, we need to be
+        sure that this state root is valid.
+      </>
+    ),
   },
   {
     question: "Are there any other ways L2 validators can steal user's coins?",
@@ -231,7 +241,7 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    question: 'How exactly do you calculate metrics like TVL?',
+    question: 'How exactly do you calculate metrics like Value Locked?',
     answer: (
       <div>
         <p className="mt-4">
@@ -251,9 +261,9 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    question: 'Apart from TVL, what is L2BEAT aiming to track?',
+    question: 'Apart from Value Locked, what is L2BEAT aiming to track?',
     answer:
-      "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try highlight main risks related to their implementation that may affect user's funds security.",
+      "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (Value Locked, frequency of state root commits, number of transactions, gas cost, etc...) but we will try highlight main risks related to their implementation that may affect user's funds security.",
   },
   {
     question: 'Is L2BEAT performing a security audit for each L2?',
@@ -280,8 +290,8 @@ export const faqItems: FaqItem[] = [
         </p>
         <p className="mt-4">
           Nahmii was actually listed on L2BEAT for a time, but was removed for
-          the reason stated above. If you want to check TVL for Nahmii you can
-          do that{' '}
+          the reason stated above. If you want to check Value Locked for Nahmii
+          you can do that{' '}
           <Link href="https://etherscan.io/address/0xCc8D82f6ba952966E63001c7B320EEF2Ae729099">
             on etherscan
           </Link>

@@ -18,6 +18,10 @@ export function getChart(
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
+    type:
+      config?.features.detailedTvl && project.type === 'layer2'
+        ? 'detailedTvl'
+        : 'tvl',
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
     activityEndpoint: `/api/activity/${project.display.slug}.json`,
@@ -35,7 +39,7 @@ export function getChart(
   }
 }
 
-function getTokens(
+export function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   hasDetailedTVL: boolean,
@@ -45,21 +49,31 @@ function getTokens(
   const compatibleTokenList = unifyTokensResponse(tokens)
 
   return compatibleTokenList
-    .map(({ assetId, usdValue, valueType, chainId }) => {
+    .map(({ assetId, usdValue, assetType, chainId }) => {
       const token = safeGetTokenByAssetId(assetId)
-      const symbol = token?.symbol
+      let symbol = token?.symbol
+      if (
+        projectId.toString() === 'arbitrum' &&
+        symbol === 'USDC' &&
+        assetType === 'CBV'
+      ) {
+        symbol = 'USDC.e'
+      }
       const name = token?.name
       const address = token?.address
-      if (symbol && name && address) {
+      const iconUrl = token?.iconUrl ?? ''
+
+      if (symbol && name) {
         const tvlEndpoint = hasDetailedTVL
-          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType.toString()}`
+          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${assetType}`
           : `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`
 
         return {
-          address: address.toString(),
+          address: address?.toString(),
+          iconUrl,
           symbol,
           name,
-          assetType: valueType,
+          assetType,
           tvlEndpoint,
           tvl: usdValue,
         }

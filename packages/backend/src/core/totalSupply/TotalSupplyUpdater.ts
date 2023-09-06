@@ -6,7 +6,6 @@ import {
   Hash256,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -41,7 +40,7 @@ export class TotalSupplyUpdater {
       tokens.every(
         (token) =>
           token.chainId === this.getChainId() &&
-          token.type === this.getValueType(),
+          token.formula === this.getAssetType(),
       ),
       'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
     )
@@ -69,8 +68,8 @@ export class TotalSupplyUpdater {
     return this.chainId
   }
 
-  getValueType() {
-    return ValueType.EBV
+  getAssetType() {
+    return 'totalSupply'
   }
 
   async getTotalSuppliesWhenReady(

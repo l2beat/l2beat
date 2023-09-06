@@ -61,7 +61,7 @@ export interface TvlConfig {
 }
 
 export interface EthereumTvlConfig {
-  readonly alchemyApiKey: string
+  readonly providerUrl: string
   readonly etherscanApiKey: string
   readonly minBlockTimestamp: UnixTime
 }
@@ -94,13 +94,14 @@ export interface MetricsAuthConfig {
 export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
   readonly chains: UpdateMonitorChainConfig[]
-  readonly discord:
-    | {
-        readonly token: string
-        readonly publicChannelId?: string
-        readonly internalChannelId: string
-      }
-    | false
+  readonly discord: DiscordConfig | false
+}
+
+export interface DiscordConfig {
+  readonly token: string
+  readonly publicChannelId?: string
+  readonly internalChannelId: string
+  readonly callsPerMinute: number
 }
 
 export interface UpdateMonitorChainConfig {

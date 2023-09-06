@@ -4,6 +4,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
 import { bridgeToProject, layer2ToProject } from '../model'
+import { getChainMinTimestamp } from './chains'
 import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -61,7 +62,7 @@ export function getLocalConfig(): Config {
       errorOnUnsyncedDetailedTvl,
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
       ethereum: ethereumTvlEnabled && {
-        alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
@@ -135,8 +136,9 @@ export function getLocalConfig(): Config {
       runOnStart: getEnv.boolean('UPDATE_MONITOR_RUN_ON_START', true),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
-        publicChannelId: process.env.PUBLIC_DISCORD_CHANNEL_ID,
+        publicChannelId: getEnv.optional('PUBLIC_DISCORD_CHANNEL_ID'),
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
+        callsPerMinute: 3000,
       },
       chains: [
         {
@@ -144,7 +146,7 @@ export function getLocalConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
+          minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },

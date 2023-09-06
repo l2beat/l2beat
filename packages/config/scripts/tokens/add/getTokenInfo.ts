@@ -5,7 +5,6 @@ import {
   EthereumAddress,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
@@ -13,17 +12,19 @@ import { getEnv } from '../../checkVerifiedContracts/utils'
 
 export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
+  coingeckoClient: CoingeckoClient,
   address: EthereumAddress,
   category: 'ether' | 'stablecoin' | 'other',
 ): Promise<Token> {
-  const [name, coingeckoId, symbol, decimals, sinceTimestamp] =
-    await Promise.all([
-      getName(provider, address),
-      getCoingeckoId(address),
-      getSymbol(provider, address),
-      getDecimals(provider, address),
-      getSinceTimestamp(provider, address),
-    ])
+  const coingeckoId = await getCoingeckoId(coingeckoClient, address)
+
+  const [name, symbol, decimals, iconUrl, sinceTimestamp] = await Promise.all([
+    getName(provider, address),
+    getSymbol(provider, address),
+    getDecimals(provider, address),
+    coingeckoClient.getImageUrl(coingeckoId),
+    getSinceTimestamp(provider, address),
+  ])
 
   const tokenInfo: Token = {
     id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
@@ -36,7 +37,9 @@ export async function getTokenInfo(
     category,
     // TODO: make it configurable
     chainId: ChainId.ETHEREUM,
-    type: ValueType.CBV,
+    iconUrl,
+    type: 'CBV',
+    formula: 'locked',
   }
 
   return tokenInfo
@@ -61,7 +64,8 @@ async function getName(
   if (nameResult === '0x') {
     throw new Error('Could not find name for token')
   }
-  return CODER.decodeFunctionResult('name', nameResult)[0] as string
+  const name = CODER.decodeFunctionResult('name', nameResult)[0] as string
+  return name.replaceAll(' ', '-')
 }
 
 async function getSymbol(
@@ -75,7 +79,8 @@ async function getSymbol(
   if (symbolResult === '0x') {
     throw new Error('Could not find symbol for token')
   }
-  return CODER.decodeFunctionResult('symbol', symbolResult)[0] as string
+  const symbol = CODER.decodeFunctionResult('symbol', symbolResult)[0] as string
+  return symbol.replaceAll(' ', '-')
 }
 
 async function getDecimals(
@@ -94,10 +99,10 @@ async function getDecimals(
   )
 }
 
-async function getCoingeckoId(address: EthereumAddress) {
-  const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, undefined)
-
+async function getCoingeckoId(
+  coingeckoClient: CoingeckoClient,
+  address: EthereumAddress,
+) {
   const coinList = await coingeckoClient.getCoinList({
     includePlatform: true,
   })

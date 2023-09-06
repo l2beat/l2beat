@@ -21,8 +21,8 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
   ]
   if (props.showDetailedTvl) {
     pages.push({
-      fullTitle: 'Detailed TVL',
-      shortTitle: 'Detailed',
+      fullTitle: 'Value Locked',
+      shortTitle: 'Value',
       icon: <TvlIcon />,
       link: '/scaling/detailedTvl',
       selected: props.selected === 'detailed',

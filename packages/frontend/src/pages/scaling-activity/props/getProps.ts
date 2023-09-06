@@ -4,9 +4,9 @@ import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getScalingFactor } from '../../../utils/activity/getScalingFactor'
 import { Wrapped } from '../../Page'
-import { ActivityPageProps } from '../view/ActivityPage'
-import { getActivityView } from './getActivityView'
+import { ActivityPageProps } from '../view/ScalingActivityPage'
 import { getPageMetadata } from './getPageMetadata'
+import { getScalingActivityView } from './getScalingActivityView'
 
 export function getProps(
   config: Config,
@@ -24,7 +24,7 @@ export function getProps(
       navbar: getNavbarProps(config, 'scaling'),
       scalingFactor,
       apiEndpoint: '/api/activity/combined.json',
-      activityView: getActivityView(
+      activityView: getScalingActivityView(
         config.layer2s,
         activityApiResponse,
         verificationStatus,

@@ -6,6 +6,7 @@ import { base } from './base'
 import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canvasconnect } from './canvasconnect'
+import { capx } from './capx'
 import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
@@ -20,6 +21,7 @@ import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { linea } from './linea'
 import { loopring } from './loopring'
+import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metis } from './metis'
 import { myria } from './myria'
@@ -27,6 +29,7 @@ import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { palm } from './palm'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -55,6 +58,7 @@ export const layer2s: Layer2[] = [
   base,
   bobanetwork,
   brine,
+  capx,
   canvasconnect,
   cartesiHoneypot,
   degate,
@@ -69,6 +73,7 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   linea,
   loopring,
+  mantapacific,
   mantle,
   metis,
   myria,
@@ -76,6 +81,7 @@ export const layer2s: Layer2[] = [
   obscuro,
   omgnetwork,
   optimism,
+  palm,
   polygonmiden,
   polygonzkevm,
   polygonpos2,

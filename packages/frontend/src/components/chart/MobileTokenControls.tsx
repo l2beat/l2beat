@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
+import { ArrowRightIcon } from '../icons'
 import { ExpandIcon } from '../icons/Expand'
 import { SlideCard } from '../SlideCard'
 import {
@@ -22,9 +23,9 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
   const parts = getParts(tokens)
 
   return (
-    <div className="md:hidden">
+    <div className="md:hidden" data-role="chart-token-mobile-element">
       <div className="flex items-center gap-x-4">
-        <span>View other tokens</span>
+        <span>View tokens</span>
 
         <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
           <div data-role="chart-token-toggle">
@@ -35,26 +36,42 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
                   <ExpandIcon />
                 </div>
               }
-              title="Chose a token"
+              title="Choose a token"
               closeButtonText="Close tokens"
             >
               <div className="flex w-full flex-col gap-6">
-                {parts.map((p, i) => (
-                  <div key={i}>
-                    <div className={`text-sm font-bold ${p.titleColor}`}>
-                      {p.title}
-                    </div>
-                    <HorizontalSeparator className="mb-4 dark:border-gray-650" />
-                    <div
-                      className="flex flex-col gap-y-3 gap-x-6"
-                      data-role="chart-token-controls"
-                    >
-                      {p.tokens.map((token, j) => (
-                        <TokenCell token={token} key={j} />
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                {parts.map(
+                  (p, i) =>
+                    p.tokens.length > 0 && (
+                      <div key={i}>
+                        <div className={`text-sm font-bold ${p.titleColor}`}>
+                          {p.title}
+                        </div>
+                        <HorizontalSeparator className="mb-4 dark:border-gray-650" />
+                        <div
+                          className="flex flex-col gap-y-3 gap-x-6"
+                          data-role="chart-token-controls"
+                        >
+                          {p.tokens.map((token, j) => (
+                            <TokenCell token={token} key={j} />
+                          ))}
+                        </div>
+                      </div>
+                    ),
+                )}
+              </div>
+              <div className="mt-6 flex items-center justify-center gap-1">
+                <p className="text-sm font-medium text-black dark:text-white/80">
+                  Can't find a token?
+                </p>
+                <a
+                  href="https://forms.gle/fQFsC5g1LgG5z12T7"
+                  target="_blank"
+                  className="flex flex-wrap items-center gap-1 text-sm font-bold text-blue-700 underline dark:text-blue-500"
+                >
+                  Request it here
+                  <ArrowRightIcon className="fill-current" />
+                </a>
               </div>
             </SlideCard>
           </div>

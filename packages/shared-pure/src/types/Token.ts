@@ -1,20 +1,27 @@
 import { AssetId } from './AssetId'
+import { AssetType } from './AssetType'
 import { ChainId } from './ChainId'
 import { CoingeckoId } from './CoingeckoId'
 import { EthereumAddress } from './EthereumAddress'
 import { UnixTime } from './UnixTime'
-import { ValueType } from './ValueType'
 
 export interface Token {
-  name: string
   id: AssetId
-  coingeckoId: CoingeckoId
-  address?: EthereumAddress
+
+  name: string
   symbol: string
   decimals: number
-  sinceTimestamp: UnixTime
-  category: 'ether' | 'stablecoin' | 'other'
+  iconUrl?: string
+
   chainId: ChainId
-  type: ValueType
-  premintHolderAddresses?: EthereumAddress[]
+  address?: EthereumAddress
+  coingeckoId: CoingeckoId
+
+  sinceTimestamp: UnixTime
+
+  type: AssetType
+  formula: 'totalSupply' | 'locked' | 'circulatingSupply'
+
+  /** @deprecated */
+  category: 'ether' | 'stablecoin' | 'other'
 }

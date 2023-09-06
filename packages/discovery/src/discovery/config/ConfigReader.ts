@@ -1,4 +1,5 @@
-import { assert, ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
+import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { assert, ChainId } from '@l2beat/shared-pure'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
@@ -41,7 +42,7 @@ export class ConfigReader {
     const discovery = parsed as DiscoveryOutput
 
     assert(
-      ChainId.getId(discovery.chain) === chain,
+      ChainId.fromName(discovery.chain) === chain,
       'Chain ID mismatch in discovered.json',
     )
 

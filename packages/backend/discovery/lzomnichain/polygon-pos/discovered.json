@@ -8,7 +8,6 @@
     {
       "name": "Endpoint",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
-      "code": "https://polygonscan.deth.net/address/0x3c2269811836af69497E5F486A85D7316753cf62",
       "upgradeability": {
         "type": "immutable"
       },
@@ -31,7 +30,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "code": "https://polygonscan.deth.net/address/0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -55,7 +53,6 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "code": "https://polygonscan.deth.net/address/0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
       "upgradeability": {
         "type": "immutable"
       },
@@ -66,7 +63,6 @@
     {
       "name": "TreasuryV2",
       "address": "0x5f3481F45A3926A136D3dEE078e14D5353C13f2D",
-      "code": "https://polygonscan.deth.net/address/0x5f3481F45A3926A136D3dEE078e14D5353C13f2D",
       "upgradeability": {
         "type": "immutable"
       },
@@ -82,7 +78,6 @@
     {
       "name": "GnosisSafeL2",
       "address": "0xF1a5F92F5F89e8b539136276f827BF1648375312",
-      "code": "https://polygonscan.deth.net/address/0xF1a5F92F5F89e8b539136276f827BF1648375312,0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"

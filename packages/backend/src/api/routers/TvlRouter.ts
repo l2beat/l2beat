@@ -1,10 +1,10 @@
 import Router from '@koa/router'
 import {
   AssetId,
+  AssetType,
   branded,
   ChainId,
   ProjectId,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
@@ -22,13 +22,20 @@ export function createTvlRouter(
   const router = new Router()
 
   router.get('/api/tvl', async (ctx) => {
-    const data = await tvlController.getTvlApiResponse()
-    if (!data) {
-      ctx.status = 404
+    const tvlResponse = await tvlController.getTvlApiResponse()
+    if (tvlResponse.result === 'error') {
+      if (tvlResponse.error === 'DATA_NOT_FULLY_SYNCED') {
+        ctx.status = 422
+      }
+
+      if (tvlResponse.error === 'NO_DATA') {
+        ctx.status = 404
+      }
+
       return
     }
 
-    ctx.body = data
+    ctx.body = tvlResponse.data
   })
 
   router.get(
@@ -42,15 +49,22 @@ export function createTvlRouter(
       }),
       async (ctx) => {
         const { projectId, assetId } = ctx.params
-        const chart = await tvlController.getProjectAssetChart(
+        const chartResponse = await tvlController.getProjectAssetChart(
           projectId,
           assetId,
         )
-        if (!chart) {
-          ctx.status = 404
+        if (chartResponse.result === 'error') {
+          if (chartResponse.error === 'NO_DATA') {
+            ctx.status = 404
+          }
+
+          if (chartResponse.error === 'INVALID_PROJECT_OR_ASSET') {
+            ctx.status = 400
+          }
+
           return
         }
-        ctx.body = chart
+        ctx.body = chartResponse.data
       },
     ),
   )
@@ -84,7 +98,7 @@ export function createTvlRouter(
             chainId: z.string(),
             projectId: branded(z.string(), ProjectId),
             assetId: branded(z.string(), AssetId),
-            assetType: branded(z.string(), ValueType),
+            assetType: branded(z.string(), AssetType),
           }),
         }),
         async (ctx) => {
@@ -114,6 +128,25 @@ export function createTvlRouter(
         },
       ),
     )
+
+    router.get('/api/project-assets-breakdown', async (ctx) => {
+      const projectAssetsBreakdown =
+        await detailedTvlController.getProjectTokenBreakdownApiResponse()
+
+      if (projectAssetsBreakdown.result === 'error') {
+        if (projectAssetsBreakdown.error === 'NO_DATA') {
+          ctx.status = 404
+        }
+
+        if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
+          ctx.status = 422
+        }
+
+        return
+      }
+
+      ctx.body = projectAssetsBreakdown.data
+    })
   }
 
   return router

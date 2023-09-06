@@ -1,14 +1,13 @@
 {
-  "chain": "ethereum",
   "name": "beamer-bridge-v2",
-  "blockNumber": 17761285,
+  "chain": "ethereum",
+  "blockNumber": 18061473,
   "configHash": "0x18d13869837793143c9fbab3364790146e0ecbc24282da9590daeb2c80ba5059",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "EthereumL1Messenger",
       "address": "0x12B8489913E2afBCed131d52c345C380BBB65baf",
-      "code": "https://etherscan.deth.net/address/0x12B8489913E2afBCed131d52c345C380BBB65baf",
       "upgradeability": {
         "type": "immutable"
       },
@@ -20,7 +19,6 @@
     {
       "name": "EthereumL2Messenger",
       "address": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
-      "code": "https://etherscan.deth.net/address/0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
       "upgradeability": {
         "type": "immutable"
       },
@@ -33,7 +31,6 @@
     {
       "name": "OptimismL1Messenger",
       "address": "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
-      "code": "https://etherscan.deth.net/address/0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
       "upgradeability": {
         "type": "immutable"
       },
@@ -46,7 +43,6 @@
     {
       "name": "ArbitrumL1Messenger",
       "address": "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
-      "code": "https://etherscan.deth.net/address/0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
       "upgradeability": {
         "type": "immutable"
       },
@@ -60,7 +56,6 @@
     {
       "name": "EthereumRequestManager",
       "address": "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
-      "code": "https://etherscan.deth.net/address/0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
       "upgradeability": {
         "type": "immutable"
       },
@@ -69,26 +64,32 @@
           "1": {
             "chainId": 1,
             "finalityPeriod": 1,
-            "transferCost": "10383174973712516",
-            "targetWeightPPM": 308819
+            "transferCost": 7585098244874649,
+            "targetWeightPPM": 285180
           },
           "10": {
             "chainId": 10,
             "finalityPeriod": 604800,
-            "transferCost": 260804179006945,
-            "targetWeightPPM": 431334
+            "transferCost": 232163216204169,
+            "targetWeightPPM": 483793
           },
           "1101": {
             "chainId": 1101,
             "finalityPeriod": 3600,
-            "transferCost": 500000000000000,
-            "targetWeightPPM": 500000
+            "transferCost": 1014461390000000,
+            "targetWeightPPM": 292426
+          },
+          "8453": {
+            "chainId": 8453,
+            "finalityPeriod": 604800,
+            "transferCost": 262966764014000,
+            "targetWeightPPM": 402806
           },
           "42161": {
             "chainId": 42161,
             "finalityPeriod": 691200,
-            "transferCost": 208780096857165,
-            "targetWeightPPM": 464024
+            "transferCost": 173566246000000,
+            "targetWeightPPM": 460481
           }
         },
         "challengePeriodExtension": 86400,
@@ -96,13 +97,13 @@
         "claimPeriod": 86400,
         "claimRequestExtension": 86400,
         "claimStake": "10000000000000000",
-        "currentNonce": 192,
+        "currentNonce": 273,
         "lpFeePPM": 3000,
         "MAX_VALIDITY_PERIOD": 172800,
         "MIN_VALIDITY_PERIOD": 1800,
         "minFeePPM": 100000,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
-        "paused": false,
+        "paused": true,
         "protocolFeePPM": 0
       },
       "derivedName": "RequestManager"
@@ -110,7 +111,6 @@
     {
       "name": "Resolver",
       "address": "0xCb60516819a28431233195A8b7E0227C288B61AD",
-      "code": "https://etherscan.deth.net/address/0xCb60516819a28431233195A8b7E0227C288B61AD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -122,21 +122,12 @@
     {
       "name": "EthereumFillManager",
       "address": "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
-      "code": "https://etherscan.deth.net/address/0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
         "l1Resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD",
-        "liquidityProviders": [
-          "0x79b68B3d5533EfBF08c383eCCd47966d8EF181FC",
-          "0x0F536e54cE49f2dBdD8ae5E86F7b41f09a2e2818",
-          "0xa1151b7F265AA2e546382D8deF6c2A2613798F88",
-          "0xa48B6821024ff16884763A21CE149d3412a933E2",
-          "0xdC256EC77E97448d29D88118e55C82067150b768",
-          "0xDD3307A939c131981315Bd4C51Abea37048B7177",
-          "0xd065B1B3BD137476CF276351Cf71F44fDE9747eF"
-        ],
+        "liquidityProviders": ["0xdC256EC77E97448d29D88118e55C82067150b768"],
         "messenger": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },

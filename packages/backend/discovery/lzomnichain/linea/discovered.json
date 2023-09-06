@@ -8,7 +8,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-      "code": "https://lineascan.deth.net/address/0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "upgradeability": {
         "type": "immutable"
       },
@@ -32,7 +31,6 @@
     {
       "name": "NonceContract",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-      "code": "https://lineascan.deth.net/address/0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "upgradeability": {
         "type": "immutable"
       },
@@ -43,7 +41,6 @@
     {
       "name": "TreasuryV2",
       "address": "0x980205D352F198748B626f6f7C38A8a5663Ec981",
-      "code": "https://lineascan.deth.net/address/0x980205D352F198748B626f6f7C38A8a5663Ec981",
       "upgradeability": {
         "type": "immutable"
       },
@@ -59,7 +56,6 @@
     {
       "name": "Endpoint",
       "address": "0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
-      "code": "https://lineascan.deth.net/address/0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
       "upgradeability": {
         "type": "immutable"
       },

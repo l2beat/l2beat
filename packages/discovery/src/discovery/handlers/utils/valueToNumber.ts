@@ -1,4 +1,5 @@
-import { Bytes, ContractValue } from '@l2beat/shared-pure'
+import { ContractValue } from '@l2beat/discovery-types'
+import { Bytes } from '@l2beat/shared-pure'
 
 import { valueToBigInt } from './valueToBigInt'
 
