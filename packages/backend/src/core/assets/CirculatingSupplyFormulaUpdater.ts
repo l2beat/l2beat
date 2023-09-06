@@ -22,8 +22,6 @@ import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormul
 import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
-// TODO: Make this class more generic
-// ProjectId, ChainId should be passed in the constructor
 export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
