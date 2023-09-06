@@ -31,7 +31,7 @@ export const SIX_HOURS = UnixTime.HOUR * 6
 export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
-    this.wrapAny(this.replaceReports.bind(this))
+    this.replaceReports = this.wrapAny(this.replaceReports.bind(this))
     this.autoWrap<CheckConvention<ReportRepository>>(this)
   }
 
