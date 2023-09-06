@@ -5,14 +5,11 @@ import {
   getTimestamps,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { CoinMarketChartRangeData } from '@l2beat/shared/build/services/coingecko/model'
 
 type Granularity = 'daily' | 'hourly'
-interface Price {
-  date: Date
-  price: number
-}
 
-export interface PriceHistoryPoint {
+export interface QueryResultPoint {
   value: number
   timestamp: UnixTime
   deltaMs: number
@@ -29,16 +26,18 @@ export class CoingeckoQueryService {
     to: UnixTime,
     granularity: Granularity,
     address?: EthereumAddress,
-  ): Promise<PriceHistoryPoint[]> {
+  ): Promise<QueryResultPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
 
-    const prices = await this.queryPrices(
-      coingeckoId,
-      start,
-      end,
-      granularity,
-      address,
-    )
+    const prices = (
+      await this.queryCoinMarketChartRange(
+        coingeckoId,
+        start,
+        end,
+        granularity,
+        address,
+      )
+    ).prices
 
     const sortedPrices = prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime(),
@@ -46,16 +45,62 @@ export class CoingeckoQueryService {
 
     const timestamps = getTimestamps(from, to, granularity)
 
-    return pickPrices(sortedPrices, timestamps)
+    return pickPoints(sortedPrices, timestamps)
   }
 
-  async queryPrices(
+  async getCirculatingSupplies(
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
     granularity: Granularity,
     address?: EthereumAddress,
-  ): Promise<Price[]> {
+  ): Promise<QueryResultPoint[]> {
+    const [start, end] = adjustAndOffset(from, to, granularity)
+    const timestamps = getTimestamps(from, to, granularity)
+
+    const queryResult = await this.queryCoinMarketChartRange(
+      coingeckoId,
+      start,
+      end,
+      granularity,
+      address,
+    )
+
+    const sortedPrices = queryResult.prices.sort(
+      (a, b) => a.date.getTime() - b.date.getTime(),
+    )
+    const sortedMarketCaps = queryResult.marketCaps.sort(
+      (a, b) => a.date.getTime() - b.date.getTime(),
+    )
+
+    const pickedPrices = pickPoints(sortedPrices, timestamps)
+    const pickedMarketCaps = pickPoints(sortedMarketCaps, timestamps)
+
+    const result: QueryResultPoint[] = []
+
+    for (let i = 0; i < timestamps.length; i++) {
+      const price = pickedPrices[i].value
+      const marketCap = pickedMarketCaps[i].value
+
+      const value = approximateCirculatingSupply(marketCap, price)
+
+      result.push({
+        value,
+        timestamp: timestamps[i],
+        deltaMs: pickedPrices[i].deltaMs,
+      })
+    }
+
+    return result
+  }
+
+  async queryCoinMarketChartRange(
+    coingeckoId: CoingeckoId,
+    from: UnixTime,
+    to: UnixTime,
+    granularity: Granularity,
+    address?: EthereumAddress,
+  ): Promise<CoinMarketChartRangeData> {
     if (granularity === 'daily') {
       const data = await this.coingeckoClient.getCoinMarketChartRange(
         coingeckoId,
@@ -64,7 +109,7 @@ export class CoingeckoQueryService {
         to,
         address,
       )
-      return data.prices
+      return data
     } else {
       const results = await Promise.allSettled(
         generateRangesToCallHourly(from, to).map((range) =>
@@ -78,16 +123,22 @@ export class CoingeckoQueryService {
         ),
       )
 
-      const prices: Price[] = []
+      const marketChartRangeData: CoinMarketChartRangeData = {
+        prices: [],
+        marketCaps: [],
+        totalVolumes: [],
+      }
       for (const result of results) {
         if (result.status === 'fulfilled') {
-          prices.push(...result.value.prices)
+          marketChartRangeData.prices.push(...result.value.prices)
+          marketChartRangeData.marketCaps.push(...result.value.marketCaps)
+          marketChartRangeData.totalVolumes.push(...result.value.totalVolumes)
         } else {
           throw result.reason
         }
       }
 
-      return prices
+      return marketChartRangeData
     }
   }
 
@@ -107,19 +158,19 @@ export class CoingeckoQueryService {
   }
 }
 
-export function pickPrices(
-  prices: { price: number; date: Date }[],
+export function pickPoints(
+  points: { value: number; date: Date }[],
   timestamps: UnixTime[],
-): PriceHistoryPoint[] {
+): QueryResultPoint[] {
   //TODO: Handle this case properly
-  if (prices.length === 0) return []
-  const result: PriceHistoryPoint[] = []
+  if (points.length === 0) return []
+  const result: QueryResultPoint[] = []
 
   const getDelta = (i: number, j: number) =>
-    prices[j].date.getTime() - timestamps[i].toNumber() * 1000
+    points[j].date.getTime() - timestamps[i].toNumber() * 1000
 
   const nextIsCloser = (i: number, j: number) =>
-    j + 1 < prices.length &&
+    j + 1 < points.length &&
     Math.abs(getDelta(i, j)) >= Math.abs(getDelta(i, j + 1))
 
   let j = 0
@@ -128,7 +179,7 @@ export function pickPrices(
       j++
     }
     result.push({
-      value: prices[j].price,
+      value: points[j].value,
       timestamp: timestamps[i],
       deltaMs: getDelta(i, j),
     })
@@ -170,4 +221,14 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
     ranges.push({ start: start, end: end.gt(to) ? to : end })
   }
   return ranges
+}
+
+export function approximateCirculatingSupply(marketCap: number, price: number) {
+  const circulatingSupplyRaw = marketCap / price
+
+  // reduce variation in the result by disregarding least significant parts
+  const log = Math.floor(Math.log10(circulatingSupplyRaw))
+  const precision = 10 ** (log - 4)
+  const value = Math.round(circulatingSupplyRaw / precision) * precision
+  return value
 }
