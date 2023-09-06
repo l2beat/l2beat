@@ -8,7 +8,7 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
+import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { TotalSupplyFormulaUpdater } from './TotalSupplyFormulaUpdater'
 
@@ -54,7 +54,7 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       await ebvUpdater.update(MOCK.NOW.add(1, 'hours'))
       await ebvUpdater.update(MOCK.NOW)
 
-      const configHash = getTotalSupplyFormulaConfigHash(MOCK.TOKENS)
+      const configHash = getTokensConfigHash(MOCK.TOKENS)
 
       expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
@@ -167,7 +167,7 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       await ebvUpdater.start()
 
       await waitForExpect(() => {
-        const configHash = getTotalSupplyFormulaConfigHash(MOCK.TOKENS)
+        const configHash = getTokensConfigHash(MOCK.TOKENS)
 
         expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {

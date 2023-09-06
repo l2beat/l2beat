@@ -18,7 +18,7 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createFormulaReports } from '../reports/createFormulaReports'
-import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
+import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
@@ -48,7 +48,7 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
     this.logger = this.logger.for(this)
-    this.configHash = getTotalSupplyFormulaConfigHash(this.tokens)
+    this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),

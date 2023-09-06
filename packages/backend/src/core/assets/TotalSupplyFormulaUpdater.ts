@@ -18,7 +18,7 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createFormulaReports } from '../reports/createFormulaReports'
-import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
+import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
@@ -47,7 +47,7 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
       'Programmer error: all tokens must be using totalSupply formula have the same chainId',
     )
     this.logger = this.logger.for(this)
-    this.configHash = getTotalSupplyFormulaConfigHash(this.tokens)
+    this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
