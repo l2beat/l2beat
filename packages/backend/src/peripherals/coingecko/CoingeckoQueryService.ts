@@ -229,6 +229,9 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
   return ranges
 }
 
+// This function is a neat helper to make circulating supply values more "round"
+// Calculates the amount of digits in the number, and then "zeroes out" the last four of them
+// e.g. 123456789 -> 123450000
 export function approximateCirculatingSupply(marketCap: number, price: number) {
   const circulatingSupplyRaw = marketCap / price
   assert(
