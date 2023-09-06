@@ -82,7 +82,7 @@ const TOKENS: Token[] = [
     decimals: 6,
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    bucket: 'EBV',
+    type: 'EBV',
     formula: 'circulatingSupply',
   },
 ]
@@ -126,7 +126,7 @@ function fakeTokenInfo(token: Partial<Token>): Token {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    bucket: 'EBV',
+    type: 'EBV',
     formula: 'circulatingSupply',
     ...token,
   }
