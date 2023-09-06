@@ -1,7 +1,7 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18070336,
+  "blockNumber": 18076121,
   "configHash": "0xa526fef34bebcde7557a226f8f628f1c3e4985ac57aa4f8ee0f28e68b16ff23b",
   "version": 2,
   "contracts": [
@@ -16,7 +16,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622843",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622850",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
