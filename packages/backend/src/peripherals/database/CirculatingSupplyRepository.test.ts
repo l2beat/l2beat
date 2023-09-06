@@ -29,10 +29,10 @@ describe(CirculatingSupplyRepository.name, () => {
 
   const ASSET_1 = AssetId('dai-dai-stablecoin')
   const ASSET_2 = AssetId('asset-2')
-  const TOTAL_SUPPLY = 1000000000000000000
+  const C_SUPPLY = 1000000000000000000
   const DATA: CirculatingSupplyRecord[] = [
-    mockCirculatingSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
-    mockCirculatingSupply(TOTAL_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
+    mockCirculatingSupply(C_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
+    mockCirculatingSupply(C_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
   ]
 
   beforeEach(async () => {
@@ -44,19 +44,19 @@ describe(CirculatingSupplyRepository.name, () => {
     it('returns matching data for given timestamp', async () => {
       const additionalData = [
         mockCirculatingSupply(
-          TOTAL_SUPPLY,
+          C_SUPPLY,
           0,
           AssetId('asset-a'),
           ChainId.ETHEREUM,
         ),
         mockCirculatingSupply(
-          TOTAL_SUPPLY,
+          C_SUPPLY,
           0,
           AssetId('asset-b'),
           ChainId.ETHEREUM,
         ),
         mockCirculatingSupply(
-          TOTAL_SUPPLY,
+          C_SUPPLY,
           0,
           AssetId('asset-c'),
           ChainId.ETHEREUM,
@@ -80,9 +80,9 @@ describe(CirculatingSupplyRepository.name, () => {
     it('one project one asset', async () => {
       await repository.deleteAll()
       const data = [
-        mockCirculatingSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
-        mockCirculatingSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
-        mockCirculatingSupply(TOTAL_SUPPLY, 2, ASSET_1, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 2, ASSET_1, ChainId.ETHEREUM),
       ]
 
       await repository.addOrUpdateMany(data)
@@ -90,7 +90,7 @@ describe(CirculatingSupplyRepository.name, () => {
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqual([
         {
-          circulatingSupply: TOTAL_SUPPLY,
+          circulatingSupply: C_SUPPLY,
           timestamp: START,
           assetId: ASSET_1,
           chainId: ChainId.ETHEREUM,
@@ -101,13 +101,13 @@ describe(CirculatingSupplyRepository.name, () => {
     it('many projects many assets', async () => {
       await repository.deleteAll()
       const data = [
-        mockCirculatingSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
-        mockCirculatingSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
-        mockCirculatingSupply(TOTAL_SUPPLY, 2, ASSET_1, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 2, ASSET_1, ChainId.ETHEREUM),
 
-        mockCirculatingSupply(TOTAL_SUPPLY, 0, ASSET_2, ChainId.ETHEREUM),
-        mockCirculatingSupply(TOTAL_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
-        mockCirculatingSupply(TOTAL_SUPPLY, 2, ASSET_2, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 0, ASSET_2, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
+        mockCirculatingSupply(C_SUPPLY, 2, ASSET_2, ChainId.ETHEREUM),
       ]
 
       await repository.addOrUpdateMany(data)
@@ -115,13 +115,13 @@ describe(CirculatingSupplyRepository.name, () => {
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqualUnsorted([
         {
-          circulatingSupply: TOTAL_SUPPLY,
+          circulatingSupply: C_SUPPLY,
           timestamp: START,
           assetId: ASSET_1,
           chainId: ChainId.ETHEREUM,
         },
         {
-          circulatingSupply: TOTAL_SUPPLY,
+          circulatingSupply: C_SUPPLY,
           timestamp: START,
           assetId: ASSET_2,
           chainId: ChainId.ETHEREUM,
@@ -141,8 +141,45 @@ describe(CirculatingSupplyRepository.name, () => {
   describe(
     CirculatingSupplyRepository.prototype.findDataBoundaries.name,
     () => {
-      it('write tests for this method', async () => {
-        expect(true).toEqual(false)
+      it('boundary of single and multi row data', async () => {
+        await repository.deleteAll()
+
+        const DATA: CirculatingSupplyRecord[] = [
+          mockCirculatingSupply(C_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
+          mockCirculatingSupply(C_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
+          mockCirculatingSupply(C_SUPPLY, 0, ASSET_2, ChainId.ETHEREUM),
+          mockCirculatingSupply(C_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
+        ]
+
+        await repository.addOrUpdateMany(DATA)
+        const result = await repository.findDataBoundaries()
+
+        expect(result).toEqual(
+          new Map([
+            [
+              ASSET_1,
+              {
+                earliest: START.add(0, 'hours'),
+                latest: START.add(1, 'hours'),
+              },
+            ],
+            [
+              ASSET_2,
+              {
+                earliest: START.add(0, 'hours'),
+                latest: START.add(1, 'hours'),
+              },
+            ],
+          ]),
+        )
+      })
+
+      it('works with empty database', async () => {
+        await repository.deleteAll()
+
+        const result = await repository.findDataBoundaries()
+
+        expect(result).toEqual(new Map())
       })
     },
   )
@@ -151,13 +188,13 @@ describe(CirculatingSupplyRepository.name, () => {
     it('new rows only', async () => {
       const newRows: CirculatingSupplyRecord[] = [
         {
-          circulatingSupply: TOTAL_SUPPLY,
+          circulatingSupply: C_SUPPLY,
           timestamp: START.add(2, 'hours'),
           assetId: AssetId('dai-dai-stablecoin'),
           chainId: ChainId.ETHEREUM,
         },
         {
-          circulatingSupply: TOTAL_SUPPLY,
+          circulatingSupply: C_SUPPLY,
           timestamp: START.add(3, 'hours'),
           assetId: AssetId('dai-dai-stablecoin'),
           chainId: ChainId.ETHEREUM,
@@ -200,7 +237,7 @@ describe(CirculatingSupplyRepository.name, () => {
         },
         {
           timestamp: START.add(2, 'hours'),
-          circulatingSupply: TOTAL_SUPPLY,
+          circulatingSupply: C_SUPPLY,
           assetId: AssetId('dai-dai-stablecoin'),
           chainId: ChainId.ETHEREUM,
         },
