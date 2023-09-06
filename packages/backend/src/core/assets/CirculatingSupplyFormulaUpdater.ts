@@ -47,7 +47,7 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
           token.chainId === this.chainId &&
           token.formula === 'circulatingSupply',
       ),
-      'Programmer error: all tokens must be using circulatingSupply formula have the same chainId',
+      'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
     this.logger = this.logger.for(this)
     this.configHash = getTotalSupplyFormulaConfigHash(this.tokens)
