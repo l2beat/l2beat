@@ -8,7 +8,7 @@ import { BalancePerProject, createReport } from './createReport'
 
 export function createFormulaReports(
   prices: PriceRecord[],
-  totalSupplies: (TotalSupplyRecord | CirculatingSupplyRecord)[],
+  records: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   projectId: ProjectId,
   chainId: ChainId,
@@ -22,7 +22,7 @@ export function createFormulaReports(
 
   const balancesPerProject = transformBalances(
     projectId,
-    totalSupplies,
+    records,
     tokens,
     chainId,
   )
@@ -39,16 +39,16 @@ export function createFormulaReports(
   return reports
 }
 
-function transformBalances(
+export function transformBalances(
   projectId: ProjectId,
-  totalSupplies: (TotalSupplyRecord | CirculatingSupplyRecord)[],
+  records: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   chainId: ChainId,
 ): BalancePerProject[] {
   const result: BalancePerProject[] = []
 
   for (const { id, sinceTimestamp, decimals, type } of tokens) {
-    const assetSupplies = totalSupplies.filter(
+    const assetSupplies = records.filter(
       (s) => s.assetId === id && s.timestamp.gte(sinceTimestamp),
     )
 

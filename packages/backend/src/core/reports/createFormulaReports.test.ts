@@ -2,7 +2,9 @@ import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
-import { createFormulaReports } from './createFormulaReports'
+import { createFormulaReports, transformBalances } from './createFormulaReports'
+import { CirculatingSupplyRecord } from '../../peripherals/database/CirculatingSupplyRepository'
+import { fakeToken } from '../../test/mockReports'
 
 describe(createFormulaReports.name, () => {
   it('valid data', () => {
@@ -28,6 +30,8 @@ describe(createFormulaReports.name, () => {
     ])
   })
 
+  it('')
+
   it('chainId mismatch in total supplies', () => {
     expect(() =>
       createFormulaReports(
@@ -38,5 +42,45 @@ describe(createFormulaReports.name, () => {
         ChainId.ARBITRUM,
       ),
     ).toThrow('ChainIds do not match')
+  })
+})
+
+describe(transformBalances.name, () => {
+  it('multiplies circulating supply by 10 ** decimals', () => {
+    const C_SUPPLY = 1000
+    const DECIMALS = 6
+
+    const records: CirculatingSupplyRecord[] = [
+      {
+        assetId: AssetId.USDC,
+        circulatingSupply: C_SUPPLY,
+        chainId: ChainId.ARBITRUM,
+        timestamp: MOCK.NOW,
+      },
+    ]
+
+    const tokens = [
+      {
+        ...fakeToken({ id: AssetId.USDC, decimals: DECIMALS }),
+      },
+    ]
+
+    const result = transformBalances(
+      ProjectId.ARBITRUM,
+      records,
+      tokens,
+      ChainId.ARBITRUM,
+    )
+
+    expect(result).toEqual([
+      {
+        projectId: ProjectId.ARBITRUM,
+        chainId: ChainId.ARBITRUM,
+        balance: BigInt(C_SUPPLY * 10 ** DECIMALS),
+        assetId: AssetId.USDC,
+        type: 'CBV', //irrelevant
+        decimals: DECIMALS,
+      },
+    ])
   })
 })
