@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
+import { ArrowRightIcon } from '../icons'
 import { ExpandIcon } from '../icons/Expand'
 import { SlideCard } from '../SlideCard'
 import {
@@ -58,6 +59,19 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
                       </div>
                     ),
                 )}
+              </div>
+              <div className="mt-6 flex items-center justify-center gap-1">
+                <p className="text-sm font-medium text-black dark:text-white/80">
+                  Can't find a token?
+                </p>
+                <a
+                  href="https://forms.gle/fQFsC5g1LgG5z12T7"
+                  target="_blank"
+                  className="flex flex-wrap items-center gap-1 text-sm font-bold text-blue-700 underline dark:text-blue-500"
+                >
+                  Request it here
+                  <ArrowRightIcon className="fill-current" />
+                </a>
               </div>
             </SlideCard>
           </div>

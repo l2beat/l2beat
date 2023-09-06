@@ -1,8 +1,10 @@
+import { LocalStorage } from '../../scripts/local-storage/LocalStorage'
+
 const callbacks: ((isDarkMode: boolean) => void)[] = []
 
 export function configureDarkThemeToggle() {
   let prefersDark: boolean | undefined
-  const saved = localStorage.getItem('l2beat-theme')
+  const saved = LocalStorage.getItem('theme')
 
   if (document.documentElement.classList.contains('light')) {
     prefersDark = false
@@ -21,7 +23,7 @@ export function configureDarkThemeToggle() {
   function toggleDarkMode() {
     const isDark = !document.documentElement.classList.contains('dark')
     updateTheme(isDark)
-    localStorage.setItem('l2beat-theme', isDark ? 'dark' : 'light')
+    LocalStorage.setItem('theme', isDark ? 'dark' : 'light')
     for (const callback of callbacks) {
       callback(isDark)
     }
