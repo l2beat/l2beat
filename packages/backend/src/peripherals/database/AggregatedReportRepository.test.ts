@@ -28,7 +28,7 @@ describe(AggregatedReportRepository.name, () => {
       const REPORT = fakeAggregateReport({ timestamp: TIME_0 })
       await repository.replaceAggregatedReports([REPORT], { timestamp: TIME_0 })
       await repository.replaceAggregatedReports(
-        [fakeAggregateReport({ timestamp: TIME_1 })],
+        [fakeAggregateReport({ timestamp: TIME_0 })],
         { timestamp: TIME_0 },
       )
       const result = await repository.getDaily('TVL')
