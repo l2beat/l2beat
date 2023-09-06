@@ -21,6 +21,7 @@ export interface AggregatedReportRecord {
 export class AggregatedReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
+    this.wrapAny(this.replaceAggregatedReports.bind(this))
     this.autoWrap<CheckConvention<AggregatedReportRepository>>(this)
   }
 
