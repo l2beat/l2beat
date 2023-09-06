@@ -1,6 +1,9 @@
 import React, { ReactNode } from 'react'
 
 import { Link } from '../../components/Link'
+import { AnalyzedContract } from '../../../../discovery/build/discovery/analysis/AddressAnalyzer';
+import { toBatches } from '../../../../shared-pure/src/utils/toBatches';
+import { children } from 'cheerio/lib/api/traversing';
 
 export interface FaqItem {
   question: string
@@ -200,6 +203,47 @@ export const faqItems: FaqItem[] = [
             Incomplete guide to Rollups
           </Link>
           by Vitalik Buterin.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: 'Why does the main table contain projects than are not fully L2s yet?',
+    answer: (
+      <div>
+        <p className="mt-4">
+          We want to track the progress of the projects that are credibly committed
+          towards becoming trust minimized L2s. Our goal is to provide the community
+          with the most up-to-date information about the state of these projects and
+          to provide insights and guidance for them to become fully trust minimized.
+        </p>
+      </div>
+    ),
+  },
+  {
+    question: 'Are Validiums and Optimiums L2s?',
+    answer: (
+      <div>
+        <p className="mt-4">
+          Validiums and Optimiums are not L2s: by not publishing data on L1 they
+          introduce additional trust assumptions on top of it. If the data to
+          reconstruct the state is not made available by the operators of the offchain
+          DA solution, funds are at risk.
+        </p>
+        </div>
+    ),
+  },
+  {
+    question: 'If Validiums and Optimiums are not L2s, why are they included?',
+    answer: (
+      <div>
+        <p className="mt-4">
+          We include Validiums and Optimiums along with L2s mainly for historical reasons.
+          We introduced them when the L2 space was still in its infancy and we wanted
+          to provide a comprehensive overview of the space. We will continue to track
+          these projects to provide the community with a broader perspective on the
+          state of the space and to provide tools to evaluate the different tradeoffs
+          between the various solutions.
         </p>
       </div>
     ),
