@@ -1,5 +1,6 @@
 import { CoingeckoClient } from '@l2beat/shared'
 import {
+  assert,
   CoingeckoId,
   EthereumAddress,
   getTimestamps,
@@ -109,6 +110,7 @@ export class CoingeckoQueryService {
         to,
         address,
       )
+      assert(data.prices.length > 0, "Can't get data from Coingecko")
       return data
     } else {
       const results = await Promise.allSettled(
@@ -130,6 +132,11 @@ export class CoingeckoQueryService {
       }
       for (const result of results) {
         if (result.status === 'fulfilled') {
+          assert(
+            result.value.prices.length > 0,
+            "Can't get data from Coingecko",
+          )
+
           marketChartRangeData.prices.push(...result.value.prices)
           marketChartRangeData.marketCaps.push(...result.value.marketCaps)
           marketChartRangeData.totalVolumes.push(...result.value.totalVolumes)
@@ -225,10 +232,16 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
 
 export function approximateCirculatingSupply(marketCap: number, price: number) {
   const circulatingSupplyRaw = marketCap / price
+  assert(
+    circulatingSupplyRaw >= 1,
+    'Circulating supply cannot be less than one',
+  )
 
   // reduce variation in the result by disregarding least significant parts
   const log = Math.floor(Math.log10(circulatingSupplyRaw))
-  const precision = 10 ** (log - 4)
+  const digitsToClear = log - 4
+  const precision = 10 ** digitsToClear
   const value = Math.round(circulatingSupplyRaw / precision) * precision
+
   return value
 }
