@@ -16,28 +16,14 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('circulating_supplies', function (table) {
     table.dateTime('unix_timestamp').notNullable()
-    table.decimal('circulating_supply', 80, 0).notNullable()
+    table.bigInteger('circulating_supply').notNullable()
     table.string('asset_id').notNullable()
     table.integer('chain_id').notNullable()
 
     table.primary(['chain_id', 'unix_timestamp', 'asset_id'])
   })
-
-  await knex.schema.createTable(
-    'circulating_supplies_status',
-    function (table) {
-      table.string('config_hash').notNullable()
-      table.dateTime('unix_timestamp').notNullable()
-      table.integer('chain_id').notNullable()
-
-      table.index(['chain_id', 'config_hash'])
-
-      table.primary(['chain_id', 'unix_timestamp'])
-    },
-  )
 }
 
 export async function down(knex: Knex) {
   await knex.schema.dropTable('circulating_supplies')
-  await knex.schema.dropTable('circulating_supplies_status')
 }
