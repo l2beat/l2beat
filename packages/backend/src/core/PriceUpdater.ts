@@ -62,9 +62,10 @@ export class PriceUpdater {
     const boundaries = await this.priceRepository.findDataBoundaries()
 
     const results = await Promise.allSettled(
-      this.tokens.map(({ id: assetId, address }) => {
+      this.tokens.map(({ id: assetId, address, sinceTimestamp }) => {
         const boundary = boundaries.get(assetId)
-        return this.updateToken(assetId, boundary, from, to, address)
+        const adjustedFrom = sinceTimestamp.gt(from) ? sinceTimestamp : from
+        return this.updateToken(assetId, boundary, adjustedFrom, to, address)
       }),
     )
     const error = results.find((x) => x.status === 'rejected')
