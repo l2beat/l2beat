@@ -44,7 +44,7 @@ export class CirculatingSupplyUpdater {
           token.chainId === this.chainId &&
           token.formula === 'circulatingSupply',
       ),
-      'Programmer error: all tokens must be using circulatingSupply formula have the same chainId',
+      'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
   }
 
