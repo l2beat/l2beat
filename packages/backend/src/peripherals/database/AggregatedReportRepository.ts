@@ -112,14 +112,10 @@ export class AggregatedReportRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async addOrUpdateMany(
+  async replaceAggregatedReports(
     reports: AggregatedReportRecord[],
     where: { timestamp: UnixTime },
   ) {
-    if (reports.length === 0) {
-      return 0
-    }
-
     const rows = reports.map(toRow)
     const knex = await this.knex()
 

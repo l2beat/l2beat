@@ -26,7 +26,7 @@ describe(TotalSupplyFormulaUpdater.name, () => {
           .returnsOnce(MOCK.TOTAL_SUPPLIES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
         getByTimestampAndPreciseAsset: mockFn()
           .returnsOnce([])
           .returnsOnce(MOCK.FUTURE_REPORTS)
@@ -68,13 +68,13 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         chainId: ChainId.ARBITRUM,
       })
 
-      expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+      expect(reportRepository.replaceReports).toHaveBeenCalledTimes(2)
+      expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
         1,
         MOCK.FUTURE_REPORTS,
         { timestamp: MOCK.NOW.add(1, 'hours'), chainId: ChainId.ARBITRUM },
       )
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+      expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
         2,
         MOCK.REPORTS,
         { timestamp: MOCK.NOW, chainId: ChainId.ARBITRUM },
@@ -132,7 +132,7 @@ describe(TotalSupplyFormulaUpdater.name, () => {
           .returnsOnce(MOCK.TOTAL_SUPPLIES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -183,13 +183,13 @@ describe(TotalSupplyFormulaUpdater.name, () => {
           chainId: ChainId.ARBITRUM,
         })
 
-        expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        expect(reportRepository.replaceReports).toHaveBeenCalledTimes(2)
+        expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
           1,
           MOCK.FUTURE_REPORTS,
           { timestamp: MOCK.NOW.add(1, 'hours'), chainId: ChainId.ARBITRUM },
         )
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
           2,
           MOCK.REPORTS,
           { timestamp: MOCK.NOW, chainId: ChainId.ARBITRUM },
@@ -211,7 +211,7 @@ describe(TotalSupplyFormulaUpdater.name, () => {
           .returnsOnce(MOCK.TOTAL_SUPPLIES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
         getByTimestampAndPreciseAsset: mockFn()
           .returnsOnce([])
           .returnsOnce(MOCK.REPORTS)

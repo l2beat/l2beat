@@ -20,7 +20,7 @@ describe(NMVUpdater.name, () => {
           .returnsOnce(MOCK.PRICES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
         getByTimestampAndPreciseAsset: async () => MOCK.FUTURE_REPORTS,
       })
 
@@ -53,8 +53,8 @@ describe(NMVUpdater.name, () => {
         chainId: ChainId.NMV,
       })
 
-      expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+      expect(reportRepository.replaceReports).toHaveBeenCalledTimes(2)
+      expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
         1,
         MOCK.FUTURE_OP_REPORT,
         {
@@ -62,7 +62,7 @@ describe(NMVUpdater.name, () => {
           chainId: ChainId.NMV,
         },
       )
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(2, [], {
+      expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(2, [], {
         timestamp: MOCK.NOW,
         chainId: ChainId.NMV,
       })
@@ -105,7 +105,7 @@ describe(NMVUpdater.name, () => {
           .returnsOnce(MOCK.PRICES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -150,8 +150,8 @@ describe(NMVUpdater.name, () => {
           chainId: ChainId.NMV,
         })
 
-        expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        expect(reportRepository.replaceReports).toHaveBeenCalledTimes(2)
+        expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
           1,
           MOCK.FUTURE_OP_REPORT,
           {
@@ -159,14 +159,10 @@ describe(NMVUpdater.name, () => {
             chainId: ChainId.NMV,
           },
         )
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
-          2,
-          [],
-          {
-            timestamp: MOCK.NOW,
-            chainId: ChainId.NMV,
-          },
-        )
+        expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(2, [], {
+          timestamp: MOCK.NOW,
+          chainId: ChainId.NMV,
+        })
       })
     })
   })
@@ -179,7 +175,7 @@ describe(NMVUpdater.name, () => {
           .returnsOnce(MOCK.PRICES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
         getByTimestampAndPreciseAsset: async () => MOCK.REPORTS,
       })
 

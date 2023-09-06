@@ -97,7 +97,7 @@ export class NMVUpdater implements AssetUpdater {
     reports.push(...genOpTokenReport(prices, timestamp))
     reports.push(...genArbTokenReport(prices, timestamp))
 
-    await this.reportRepository.addOrUpdateMany(
+    await this.reportRepository.replaceReports(
       reports.filter((r) => r.amount > 0),
       {
         timestamp,

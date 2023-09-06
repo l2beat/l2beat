@@ -73,9 +73,12 @@ export class AggregatedReportUpdater {
 
     const nonZeroReports = aggregatedReports.filter((x) => x.usdValue > 0n)
 
-    await this.aggregatedReportRepository.addOrUpdateMany(nonZeroReports, {
-      timestamp,
-    })
+    await this.aggregatedReportRepository.replaceAggregatedReports(
+      nonZeroReports,
+      {
+        timestamp,
+      },
+    )
 
     await this.aggregatedReportStatusRepository.add({
       configHash: this.configHash,

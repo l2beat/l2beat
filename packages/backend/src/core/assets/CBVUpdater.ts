@@ -104,7 +104,7 @@ export class CBVUpdater implements AssetUpdater {
     // TODO(radomski): This really needs to be refactored
     const reportsWithNoNmv = filterOutNVMReports(reports)
 
-    await this.reportRepository.addOrUpdateMany(
+    await this.reportRepository.replaceReports(
       reportsWithNoNmv.filter((r) => r.amount > 0),
       {
         timestamp,

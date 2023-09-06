@@ -26,7 +26,7 @@ describe(CBVUpdater.name, () => {
           .returnsOnce(MOCK.BALANCES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
         getByTimestampAndPreciseAsset: async () => MOCK.FUTURE_REPORTS,
       })
 
@@ -63,8 +63,8 @@ describe(CBVUpdater.name, () => {
         chainId: ChainId.ETHEREUM,
       })
 
-      expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+      expect(reportRepository.replaceReports).toHaveBeenCalledTimes(2)
+      expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
         1,
         MOCK.FUTURE_REPORTS,
         {
@@ -72,7 +72,7 @@ describe(CBVUpdater.name, () => {
           chainId: ChainId.ETHEREUM,
         },
       )
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+      expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
         2,
         MOCK.REPORTS,
         {
@@ -131,7 +131,7 @@ describe(CBVUpdater.name, () => {
           .returnsOnce(MOCK.BALANCES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -180,8 +180,8 @@ describe(CBVUpdater.name, () => {
           chainId: ChainId.ETHEREUM,
         })
 
-        expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        expect(reportRepository.replaceReports).toHaveBeenCalledTimes(2)
+        expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
           1,
           MOCK.FUTURE_REPORTS,
           {
@@ -189,7 +189,7 @@ describe(CBVUpdater.name, () => {
             chainId: ChainId.ETHEREUM,
           },
         )
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        expect(reportRepository.replaceReports).toHaveBeenNthCalledWith(
           2,
           MOCK.REPORTS,
           {
@@ -214,7 +214,7 @@ describe(CBVUpdater.name, () => {
           .returnsOnce(MOCK.BALANCES),
       })
       const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
+        replaceReports: async () => 0,
         getByTimestampAndPreciseAsset: async () => MOCK.REPORTS,
       })
 

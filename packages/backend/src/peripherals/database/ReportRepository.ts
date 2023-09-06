@@ -32,6 +32,7 @@ export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<ReportRepository>>(this)
+    this.wrapAny(this.replaceReports.bind(this))
   }
 
   // TODO: phase out this method
@@ -63,14 +64,10 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(
+  async replaceReports(
     reports: ReportRecord[],
     where: { timestamp: UnixTime; chainId: ChainId },
   ) {
-    if (reports.length === 0) {
-      return 0
-    }
-
     const rows = reports.map(toRow)
     const knex = await this.knex()
 

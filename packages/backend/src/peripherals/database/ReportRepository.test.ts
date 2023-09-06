@@ -20,7 +20,7 @@ describe(ReportRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
+  describe(ReportRepository.prototype.replaceReports.name, () => {
     it('replaces existing records', async () => {
       const REPORTS_1 = [
         fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, amount: 1n }),
@@ -32,7 +32,7 @@ describe(ReportRepository.name, () => {
           amount: 1n,
         }),
       ]
-      await repository.addOrUpdateMany(REPORTS_1, {
+      await repository.replaceReports(REPORTS_1, {
         timestamp: TIME_1,
         chainId: ChainId.ETHEREUM,
       })
@@ -46,7 +46,7 @@ describe(ReportRepository.name, () => {
           amount: 2n,
         }),
       ]
-      await repository.addOrUpdateMany(REPORTS_2, {
+      await repository.replaceReports(REPORTS_2, {
         timestamp: TIME_1,
         chainId: ChainId.ETHEREUM,
       })
@@ -55,7 +55,7 @@ describe(ReportRepository.name, () => {
 
     it('handles empty array', async () => {
       await expect(
-        repository.addOrUpdateMany([], {
+        repository.replaceReports([], {
           timestamp: TIME_1,
           chainId: ChainId.ETHEREUM,
         }),
@@ -64,7 +64,7 @@ describe(ReportRepository.name, () => {
 
     it('throws if timestamps do not match', async () => {
       await expect(
-        repository.addOrUpdateMany(
+        repository.replaceReports(
           [
             fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
             fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
@@ -82,7 +82,7 @@ describe(ReportRepository.name, () => {
         fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
         fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
       ]
-      await repository.addOrUpdateMany(reports, {
+      await repository.replaceReports(reports, {
         timestamp: TIME_0,
         chainId: ChainId.ETHEREUM,
       })
@@ -97,7 +97,7 @@ describe(ReportRepository.name, () => {
         fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
         fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
       ]
-      await repository.addOrUpdateMany(reports, {
+      await repository.replaceReports(reports, {
         timestamp: TIME_0,
         chainId: ChainId.ETHEREUM,
       })
@@ -115,11 +115,11 @@ describe(ReportRepository.name, () => {
         asset,
         timestamp: TIME_0,
       })
-      await repository.addOrUpdateMany(
+      await repository.replaceReports(
         [report, fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 })],
         { timestamp: TIME_0, chainId: ChainId.ETHEREUM },
       )
-      await repository.addOrUpdateMany(
+      await repository.replaceReports(
         [
           fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
           fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
@@ -144,7 +144,7 @@ describe(ReportRepository.name, () => {
           asset,
           timestamp: TIME_0.add(6, 'hours'),
         })
-        await repository.addOrUpdateMany(
+        await repository.replaceReports(
           [
             report,
             fakeReport({
@@ -154,7 +154,7 @@ describe(ReportRepository.name, () => {
           ],
           { timestamp: TIME_0.add(6, 'hours'), chainId: ChainId.ETHEREUM },
         )
-        await repository.addOrUpdateMany(
+        await repository.replaceReports(
           [
             fakeReport({
               projectId: PROJECT_A,
@@ -167,7 +167,7 @@ describe(ReportRepository.name, () => {
           ],
           { timestamp: TIME_0.add(16, 'hours'), chainId: ChainId.ETHEREUM },
         )
-        await repository.addOrUpdateMany(
+        await repository.replaceReports(
           [
             {
               ...report,
@@ -197,7 +197,7 @@ describe(ReportRepository.name, () => {
         asset,
         timestamp: TIME_0.add(1, 'hours'),
       })
-      await repository.addOrUpdateMany(
+      await repository.replaceReports(
         [
           report,
           fakeReport({
@@ -207,7 +207,7 @@ describe(ReportRepository.name, () => {
         ],
         { timestamp: TIME_0.add(1, 'hours'), chainId: ChainId.ETHEREUM },
       )
-      await repository.addOrUpdateMany(
+      await repository.replaceReports(
         [
           fakeReport({
             projectId: PROJECT_A,
@@ -220,7 +220,7 @@ describe(ReportRepository.name, () => {
         ],
         { timestamp: TIME_0.add(3, 'hours'), chainId: ChainId.ETHEREUM },
       )
-      await repository.addOrUpdateMany(
+      await repository.replaceReports(
         [{ ...report, timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes') }],
         {
           timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes'),
