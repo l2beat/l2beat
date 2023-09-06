@@ -1,4 +1,5 @@
 import { CoingeckoClient } from '@l2beat/shared'
+import { CoinMarketChartRangeData } from '@l2beat/shared/build/services/coingecko/model'
 import {
   assert,
   CoingeckoId,
@@ -6,7 +7,6 @@ import {
   getTimestamps,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CoinMarketChartRangeData } from '@l2beat/shared/build/services/coingecko/model'
 
 type Granularity = 'daily' | 'hourly'
 

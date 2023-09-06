@@ -7,9 +7,14 @@ import { Database } from './shared/Database'
 
 export interface CirculatingSupplyRecord {
   timestamp: UnixTime
-  circulatingSupply: bigint
+  circulatingSupply: number
   assetId: AssetId
   chainId: ChainId
+}
+
+export interface DataBoundary {
+  earliest: UnixTime
+  latest: UnixTime
 }
 
 export class CirculatingSupplyRepository extends BaseRepository {
@@ -46,6 +51,25 @@ export class CirculatingSupplyRepository extends BaseRepository {
     return rows.length
   }
 
+  async findDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {
+    const knex = await this.knex()
+    const rows = await knex('circulating_supplies')
+      .min('unix_timestamp')
+      .max('unix_timestamp')
+      .select('asset_id')
+      .groupBy('asset_id')
+
+    return new Map(
+      rows.map((row) => [
+        AssetId(row.asset_id),
+        {
+          earliest: UnixTime.fromDate(row.min),
+          latest: UnixTime.fromDate(row.max),
+        },
+      ]),
+    )
+  }
+
   async getAll(): Promise<CirculatingSupplyRecord[]> {
     const knex = await this.knex()
     const rows = await knex('circulating_supplies')
@@ -62,7 +86,7 @@ function toRecord(row: CirculatingSupplyRow): CirculatingSupplyRecord {
   return {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     assetId: AssetId(row.asset_id),
-    circulatingSupply: BigInt(row.circulating_supply),
+    circulatingSupply: +row.circulating_supply,
     chainId: ChainId(row.chain_id),
   }
 }

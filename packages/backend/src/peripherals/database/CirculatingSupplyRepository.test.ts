@@ -10,7 +10,7 @@ import {
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const mockCirculatingSupply = (
-  circulatingSupply: bigint,
+  circulatingSupply: number,
   offset: number,
   assetId: AssetId,
   chainId: ChainId,
@@ -29,7 +29,7 @@ describe(CirculatingSupplyRepository.name, () => {
 
   const ASSET_1 = AssetId('dai-dai-stablecoin')
   const ASSET_2 = AssetId('asset-2')
-  const TOTAL_SUPPLY = 1000000000000000000n
+  const TOTAL_SUPPLY = 1000000000000000000
   const DATA: CirculatingSupplyRecord[] = [
     mockCirculatingSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
     mockCirculatingSupply(TOTAL_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
@@ -137,6 +137,15 @@ describe(CirculatingSupplyRepository.name, () => {
       expect(resultArb).toEqual([])
     })
   })
+
+  describe(
+    CirculatingSupplyRepository.prototype.findDataBoundaries.name,
+    () => {
+      it('write tests for this method', async () => {
+        expect(true).toEqual(false)
+      })
+    },
+  )
 
   describe(CirculatingSupplyRepository.prototype.addOrUpdateMany.name, () => {
     it('new rows only', async () => {

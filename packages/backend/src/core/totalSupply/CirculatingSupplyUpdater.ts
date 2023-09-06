@@ -2,94 +2,57 @@ import { Logger } from '@l2beat/shared'
 import {
   assert,
   AssetId,
-  AssetType,
   ChainId,
-  Hash256,
+  EthereumAddress,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
+  DataBoundary,
 } from '../../peripherals/database/CirculatingSupplyRepository'
-import { CirculatingSupplyStatusRepository } from '../../peripherals/database/CirculatingSupplyStatusRepository'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
-import {
-  CirculatingSupplyProvider,
-  CirculatingSupplyQuery,
-} from './CirculatingSupplyProvider'
-import { getCirculatingSupplyConfigHash } from './getTotalSupplyConfigHash'
 
 export class CirculatingSupplyUpdater {
-  private readonly configHash: Hash256
   private readonly knownSet = new Set<number>()
-  private readonly taskQueue: TaskQueue<UnixTime>
+  private readonly taskQueue: TaskQueue<void>
 
   constructor(
-    private readonly circulatingSupplyProvider: CirculatingSupplyProvider,
+    private readonly coingeckoQueryService: CoingeckoQueryService,
     private readonly circulatingSupplyRepository: CirculatingSupplyRepository,
-    private readonly circulatingSupplyStatusRepository: CirculatingSupplyStatusRepository,
     private readonly clock: Clock,
     private readonly tokens: Token[],
-    private readonly logger: Logger,
     private readonly chainId: ChainId,
-    private readonly minTimestamp: UnixTime,
+    private readonly logger: Logger,
   ) {
-    assert(
-      tokens.every(
-        (token) =>
-          token.chainId === this.getChainId() &&
-          token.formula === 'circulatingSupply',
-      ),
-      'Programmer error: tokens must be of circulatingSupply formula and on the same chain as the circulatingSupplyUpdater',
-    )
     this.logger = this.logger.for(this)
-    this.configHash = getCirculatingSupplyConfigHash(tokens)
     this.taskQueue = new TaskQueue(
-      (timestamp) => this.update(timestamp),
+      () => this.update(),
       this.logger.for('taskQueue'),
       {
         metricsId: CirculatingSupplyUpdater.name,
       },
     )
-
     assert(
-      this.circulatingSupplyProvider.getChainId() === this.chainId,
-      'ChainId mismatch between circulatingSupplyProvider and circulatingSupplyUpdater',
+      tokens.every(
+        (token) =>
+          token.chainId === this.chainId &&
+          token.formula === 'circulatingSupply',
+      ),
+      'Programmer error: all tokens must be using circulatingSupply formula have the same chainId',
     )
-  }
-
-  getMinTimestamp() {
-    return this.minTimestamp
-  }
-
-  getChainId() {
-    return this.chainId
-  }
-
-  getAssetType(): AssetType {
-    return 'EBV'
   }
 
   async getCirculatingSuppliesWhenReady(
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
   ) {
-    assert(
-      timestamp.gte(this.minTimestamp),
-      'Programmer error: requested timestamp does not exist',
-    )
-
     while (!this.knownSet.has(timestamp.toNumber())) {
-      this.logger.debug(
-        'Something is waiting for getCirculatingSuppliesWhenReady',
-        {
-          timestamp: timestamp.toString(),
-        },
-      )
       await setTimeout(refreshIntervalMs)
     }
     return this.circulatingSupplyRepository.getByTimestamp(
@@ -98,114 +61,107 @@ export class CirculatingSupplyUpdater {
     )
   }
 
-  async start() {
-    const known = await this.circulatingSupplyStatusRepository.getByConfigHash(
-      this.chainId,
-      this.configHash,
-    )
-
-    for (const timestamp of known) {
-      this.knownSet.add(timestamp.toNumber())
-    }
-
+  start() {
+    this.taskQueue.addToFront()
     this.logger.info('Started')
-    return this.clock.onEveryHour((timestamp) => {
-      if (!this.knownSet.has(timestamp.toNumber())) {
-        if (timestamp.gte(this.minTimestamp)) {
-          // we add to front to sync from newest to oldest
-          this.taskQueue.addToFront(timestamp)
-        }
-      }
+    return this.clock.onNewHour(() => {
+      this.taskQueue.addToFront()
     })
   }
 
-  async update(timestamp: UnixTime) {
-    assert(
-      timestamp.gte(this.minTimestamp),
-      'Timestamp cannot be smaller than minTimestamp',
+  async update() {
+    const from = this.clock.getFirstHour()
+    const to = this.clock.getLastHour()
+
+    this.logger.info('Update started', { timestamp: to.toNumber() })
+
+    const boundaries =
+      await this.circulatingSupplyRepository.findDataBoundaries()
+
+    const results = await Promise.allSettled(
+      this.tokens.map(({ id: assetId, address, sinceTimestamp }) => {
+        const boundary = boundaries.get(assetId)
+        const adjustedFrom = sinceTimestamp.gt(from) ? sinceTimestamp : from
+        return this.updateToken(assetId, boundary, adjustedFrom, to, address)
+      }),
     )
+    const error = results.find((x) => x.status === 'rejected')
+    if (error && error.status === 'rejected') {
+      throw error.reason
+    }
 
-    this.logger.debug('Update started', {
-      timestamp: timestamp.toNumber(),
-      chainId: this.chainId.toString(),
-    })
-    const known = await this.circulatingSupplyRepository.getByTimestamp(
-      this.chainId,
-      timestamp,
-    )
+    for (let t = from; t.lte(to); t = t.add(1, 'hours')) {
+      this.knownSet.add(t.toNumber())
+    }
+    this.logger.info('Update completed', { timestamp: to.toNumber() })
+  }
 
-    const missingCirculatingSupplies = getMissingCirculatingSupplies(
-      timestamp,
-      known,
-      this.tokens,
-    )
-
-    if (missingCirculatingSupplies.length > 0) {
-      const circulatingSupplies =
-        await this.circulatingSupplyProvider.getCirculatingSupplies(
-          missingCirculatingSupplies,
-          timestamp,
-        )
-
-      await this.circulatingSupplyRepository.addOrUpdateMany(
-        circulatingSupplies,
-      )
-      this.logger.debug('Updated circulating supplies', {
-        timestamp: timestamp.toNumber(),
-        chainId: this.chainId.toString(),
-      })
+  async updateToken(
+    assetId: AssetId,
+    boundary: DataBoundary | undefined,
+    from: UnixTime,
+    to: UnixTime,
+    address?: EthereumAddress,
+  ) {
+    let hours = 0
+    const hourDiff = (from: UnixTime, to: UnixTime) =>
+      Math.floor((to.toNumber() - from.toNumber()) / 3_600) + 1
+    if (boundary === undefined) {
+      await this.fetchAndSave(assetId, from, to, address)
+      hours += hourDiff(from, to)
     } else {
-      this.logger.debug('Skipped updating circulating supplies', {
-        timestamp: timestamp.toNumber(),
-        chainId: this.chainId.toString(),
+      if (from.lt(boundary.earliest)) {
+        const lastUnknown = boundary.earliest.add(-1, 'hours')
+        await this.fetchAndSave(assetId, from, lastUnknown, address)
+        hours += hourDiff(from, lastUnknown)
+      }
+      if (to.gt(boundary.latest)) {
+        const firstUnknown = boundary.latest.add(1, 'hours')
+        await this.fetchAndSave(assetId, firstUnknown, to, address)
+        hours += hourDiff(firstUnknown, to)
+      }
+    }
+    if (hours > 0) {
+      this.logger.debug('Updated prices', {
+        coingeckoId: assetId.toString(),
+        hours,
       })
     }
-    this.knownSet.add(timestamp.toNumber())
-    await this.circulatingSupplyStatusRepository.add({
-      chainId: this.chainId,
-      configHash: this.configHash,
-      timestamp,
-    })
-    this.logger.info('Update completed', { timestamp: timestamp.toNumber() })
   }
-}
+  private getCoingeckoId(assetId: AssetId) {
+    const coingeckoId = this.tokens.find(
+      (token) => token.id === assetId,
+    )?.coingeckoId
+    assert(coingeckoId, 'Incorrect asset ID')
 
-export function getMissingCirculatingSupplies(
-  timestamp: UnixTime,
-  known: CirculatingSupplyRecord[],
-  tokens: Token[],
-): CirculatingSupplyQuery[] {
-  function makeKey(assetId: AssetId) {
-    return `${assetId.toString()}`
+    return coingeckoId
   }
 
-  const knownCirculatingSupplies = new Set(
-    known.map(({ assetId }) => makeKey(assetId)),
-  )
+  async fetchAndSave(
+    assetId: AssetId,
+    from: UnixTime,
+    to: UnixTime,
+    address?: EthereumAddress,
+  ) {
+    const coingeckoId = this.getCoingeckoId(assetId)
+    const circulatingSupplies =
+      await this.coingeckoQueryService.getCirculatingSupplies(
+        coingeckoId,
+        // Make sure that we have enough old data to fill holes
+        from.add(-7, 'days'),
+        to,
+        'hourly',
+        address,
+      )
+    const records: CirculatingSupplyRecord[] = circulatingSupplies
+      .filter((x) => x.timestamp.gte(from))
+      .map((circulatingSupply) => ({
+        assetId,
+        timestamp: circulatingSupply.timestamp,
+        circulatingSupply: circulatingSupply.value,
+        chainId: this.chainId,
+      }))
 
-  const tokensToQuery: CirculatingSupplyQuery[] = []
-
-  for (const token of tokens) {
-    if (token.sinceTimestamp.gt(timestamp)) {
-      continue
-    }
-
-    assert(
-      token.address !== undefined,
-      'Token address should not be undefined there',
-    )
-
-    const queryCandidate: CirculatingSupplyQuery = {
-      assetId: token.id,
-      decimals: token.decimals,
-      address: token.address,
-      coingeckoId: token.coingeckoId,
-    }
-
-    if (!knownCirculatingSupplies.has(makeKey(queryCandidate.assetId))) {
-      tokensToQuery.push(queryCandidate)
-    }
+    await this.circulatingSupplyRepository.addOrUpdateMany(records)
   }
-
-  return tokensToQuery
 }
