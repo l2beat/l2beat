@@ -84,16 +84,19 @@ export class ReportRepository extends BaseRepository {
         .where('unix_timestamp', where.timestamp.toDate())
         .andWhere('chain_id', where.chainId.valueOf())
         .delete()
-      await trx('reports')
-        .insert(rows)
-        .onConflict([
-          'unix_timestamp',
-          'project_id',
-          'asset_id',
-          'chain_id',
-          'report_type',
-        ])
-        .merge()
+
+      if (rows.length > 0) {
+        await trx('reports')
+          .insert(rows)
+          .onConflict([
+            'unix_timestamp',
+            'project_id',
+            'asset_id',
+            'chain_id',
+            'report_type',
+          ])
+          .merge()
+      }
     })
 
     return rows.length

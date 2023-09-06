@@ -134,10 +134,13 @@ export class AggregatedReportRepository extends BaseRepository {
       await trx('aggregated_reports')
         .where('unix_timestamp', where.timestamp.toDate())
         .delete()
-      await trx('aggregated_reports')
-        .insert(rows)
-        .onConflict(['unix_timestamp', 'project_id', 'report_type'])
-        .merge()
+
+      if (rows.length > 0) {
+        await trx('aggregated_reports')
+          .insert(rows)
+          .onConflict(['unix_timestamp', 'project_id', 'report_type'])
+          .merge()
+      }
     })
 
     return rows.length
