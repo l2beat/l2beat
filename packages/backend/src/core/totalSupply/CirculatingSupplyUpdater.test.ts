@@ -44,6 +44,7 @@ describe(CirculatingSupplyUpdater.name, () => {
         [],
         ChainId.ETHEREUM,
         Logger.SILENT,
+        new UnixTime(0),
       )
       const update =
         mockFn<typeof circulatingSupplyUpdater.update>().resolvesTo(undefined)
@@ -88,6 +89,7 @@ describe(CirculatingSupplyUpdater.name, () => {
           tokens,
           ChainId.ETHEREUM,
           Logger.SILENT,
+          new UnixTime(0),
         )
         await circulatingSupplyUpdater.update()
         const result =
@@ -125,6 +127,7 @@ describe(CirculatingSupplyUpdater.name, () => {
           tokens,
           ChainId.ETHEREUM,
           Logger.SILENT,
+          new UnixTime(0),
         )
 
         let result: unknown = undefined
@@ -181,6 +184,7 @@ describe(CirculatingSupplyUpdater.name, () => {
         tokens,
         ChainId.ETHEREUM,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await circulatingSupplyUpdater.update()
@@ -256,6 +260,7 @@ describe(CirculatingSupplyUpdater.name, () => {
         tokens,
         ChainId.ETHEREUM,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await circulatingSupplyUpdater.update()
@@ -298,6 +303,7 @@ describe(CirculatingSupplyUpdater.name, () => {
         [fakeToken(TOKEN_ID, TOKEN_COINGECKO_ID)],
         ChainId.ETHEREUM,
         Logger.SILENT,
+        new UnixTime(0),
       )
     })
 
@@ -452,6 +458,7 @@ describe(CirculatingSupplyUpdater.name, () => {
         tokens,
         ChainId.ETHEREUM,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await circulatingSupplyUpdater.fetchAndSave(

@@ -17,6 +17,9 @@ export interface Token {
   address?: EthereumAddress
   coingeckoId: CoingeckoId
 
+  // When adding a new token make sure that this value is correct
+  // for locked & totalSupply check the deployment tx date
+  // for circulatingSupply check the coingecko MAX range chart and find oldest date
   sinceTimestamp: UnixTime
 
   type: AssetType
