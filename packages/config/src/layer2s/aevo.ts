@@ -243,7 +243,7 @@ export const aevo: Layer2 = {
     ),
     {
       name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('L2OutputOracle', 'admin')],
+      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
       description:
         'Admin of the OptimismPortal, L2OutputOracle, SystemConfig, L1StandardBridge, AddressManager proxies. It’s controlled by the PGNMultiSig.',
     },

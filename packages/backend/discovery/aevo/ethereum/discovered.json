@@ -2,7 +2,7 @@
   "name": "aevo",
   "chain": "ethereum",
   "blockNumber": 18084681,
-  "configHash": "0x9cf5479ca73cc3d2c88abc323aafa5a617fb33fddb829fbb9c3e6285dc715534",
+  "configHash": "0xc6c636d426b98d20c441cfacb625828192aa72f7e90dcf6aa1666f89e5d4375c",
   "version": 2,
   "contracts": [
     {
@@ -141,7 +141,7 @@
         "admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
       },
       "values": {
-        "batcherHash": "0x000000000000000000000000889e21d7ba3d6dd62e75d4980a4ad1349c61599d",
+        "batcherHash": "0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "overhead": 2100,
@@ -159,7 +159,8 @@
         "unsafeBlockSigner": "0xE3e57f917E788F3921528CAABf76EEaF781d3326",
         "version": "1.3.1",
         "VERSION": 0
-      }
+      },
+      "derivedName": "SystemConfig"
     }
   ],
   "eoas": [
@@ -168,6 +169,7 @@
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
     "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
     "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
+    "0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d",
     "0xE3e57f917E788F3921528CAABf76EEaF781d3326",
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
   ],
