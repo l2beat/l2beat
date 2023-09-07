@@ -38,6 +38,7 @@ export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
             </>
           }
           role="chart-token-modal"
+          centered={true}
         >
           <TokenList tokens={tokens} />
           <div className="mt-6 flex items-center justify-center gap-1">
@@ -90,7 +91,7 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
               </div>
               <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
-                className="flex w-full max-w-4xl flex-wrap gap-2"
+                className="grid grid-cols-3 gap-y-3 gap-x-6"
                 data-role="chart-token-controls"
               >
                 {p.tokens.map((token, j) => (
