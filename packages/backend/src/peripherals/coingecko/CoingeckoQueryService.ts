@@ -79,6 +79,9 @@ export class CoingeckoQueryService {
     const result: QueryResultPoint[] = []
 
     for (let i = 0; i < timestamps.length; i++) {
+      if (timestamps[i].lt(from)) {
+        continue
+      }
       const price = pickedPrices[i].value
       const marketCap = pickedMarketCaps[i].value
 
@@ -109,10 +112,7 @@ export class CoingeckoQueryService {
         to,
         address,
       )
-      assert(
-        data.prices.length > 0,
-        `Can't get data from Coingecko for ${coingeckoId.toString()} from ${from.toNumber()} to ${to.toNumber()}`,
-      )
+      assert(data.prices.length > 0, "Can't get data from Coingecko")
       return data
     } else {
       const results = await Promise.allSettled(
@@ -136,7 +136,7 @@ export class CoingeckoQueryService {
         if (result.status === 'fulfilled') {
           assert(
             result.value.prices.length > 0,
-            `Can't get data from Coingecko for ${coingeckoId.toString()} from ${from.toNumber()} to ${to.toNumber()} (one of batches)`,
+            "Can't get data from Coingecko",
           )
 
           marketChartRangeData.prices.push(...result.value.prices)
@@ -237,10 +237,6 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
 // e.g. 123456789 -> 123450000
 export function approximateCirculatingSupply(marketCap: number, price: number) {
   const circulatingSupplyRaw = marketCap / price
-  assert(
-    circulatingSupplyRaw >= 1,
-    'Circulating supply cannot be less than one',
-  )
 
   // reduce variation in the result by disregarding least significant parts
   const log = Math.floor(Math.log10(circulatingSupplyRaw))
