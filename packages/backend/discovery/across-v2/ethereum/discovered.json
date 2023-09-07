@@ -1,9 +1,9 @@
 {
   "name": "across-v2",
   "chain": "ethereum",
-  "blockNumber": 17975843,
+  "blockNumber": 18083353,
   "configHash": "0x9040ca6f07db0de5456cb6af23949d3ba0df1ef997ea4427d832c4513dbdedc5",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "VotingToken",
@@ -16,7 +16,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "115080499011178895231196353",
+        "totalSupply": "115217794697669819112909340",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -98,7 +98,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1692774791,
+        "getCurrentTime": 1694075171,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -124,10 +124,10 @@
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1692774791,
+        "getCurrentTime": 1694075171,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1019214,
+        "numberOfDeposits": 1023179,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -146,13 +146,13 @@
       },
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1692774791,
+        "getCurrentTime": 1694075171,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 196
+        "numProposals": 197
       },
       "derivedName": "GovernorV2"
     },
@@ -179,7 +179,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 452,
+        "nonce": 459,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -193,7 +193,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1692774791,
+        "getCurrentTime": 1694075171,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -234,10 +234,10 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
           "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
           "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
-          "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
+          "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
         ],
         "getThreshold": 3,
-        "nonce": 160,
+        "nonce": 164,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -305,13 +305,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x669e20a7c6824c7695def285c4db75b7d5add12624956171b16236afce10bda5",
-          "0x5bd0b8264d3ac748af635d4be58c21c50d92ad873d39bf8643e04e730c4f24ad",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          31,
-          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          "0x2fd2c2399058e4661188435fbdbb7fe36d05791c4fdac9830f944274d12552e8",
+          "0x4f57f117cb257b476fd87d80739e2c64298d9bb5466d13315e502448cdcdeb34",
+          "0x9e4a033e84775d0365a4a1bf93b4c2a86372dc7782c84167ba6cba887ee38a27",
           0,
-          1692774203
+          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          5,
+          1694077451
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -339,10 +339,10 @@
   "eoas": [
     "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
     "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-    "0x1f11D8B72fc1B534448436BA60B4B371276DAb33",
     "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
     "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
     "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
+    "0x868CF19464e17F76D6419ACC802B122c22D2FD34",
     "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
     "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
     "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
