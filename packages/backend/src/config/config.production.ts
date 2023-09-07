@@ -9,6 +9,7 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
+  const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
   const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
@@ -76,6 +77,9 @@ export function getProductionConfig(): Config {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
         minBlockTimestamp: getChainMinTimestamp(ChainId.ARBITRUM),
+      },
+      optimism: optimismTvlEnabled && {
+        minBlockTimestamp: getChainMinTimestamp(ChainId.OPTIMISM),
       },
     },
     activity: {
