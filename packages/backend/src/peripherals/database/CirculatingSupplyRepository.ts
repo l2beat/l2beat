@@ -36,8 +36,8 @@ export class CirculatingSupplyRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(circulatingSupplies: CirculatingSupplyRecord[]) {
-    this.logger.info('addOrUpdateMany', {
+  async addMany(circulatingSupplies: CirculatingSupplyRecord[]) {
+    this.logger.info('addMany', {
       chainId: circulatingSupplies[0].chainId.toString(),
       rows: circulatingSupplies.length,
     })

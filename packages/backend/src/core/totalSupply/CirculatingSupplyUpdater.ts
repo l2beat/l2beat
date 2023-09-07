@@ -165,6 +165,6 @@ export class CirculatingSupplyUpdater {
         chainId: this.chainId,
       }))
 
-    await this.circulatingSupplyRepository.addOrUpdateMany(records)
+    await this.circulatingSupplyRepository.addMany(records)
   }
 }

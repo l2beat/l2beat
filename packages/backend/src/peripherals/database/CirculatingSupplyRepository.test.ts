@@ -37,7 +37,7 @@ describe(CirculatingSupplyRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
+    await repository.addMany(DATA)
   })
 
   describe(CirculatingSupplyRepository.prototype.getByTimestamp.name, () => {
@@ -62,7 +62,7 @@ describe(CirculatingSupplyRepository.name, () => {
           ChainId.ETHEREUM,
         ),
       ]
-      await repository.addOrUpdateMany(additionalData)
+      await repository.addMany(additionalData)
 
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
 
@@ -85,7 +85,7 @@ describe(CirculatingSupplyRepository.name, () => {
         mockCirculatingSupply(C_SUPPLY, 2, ASSET_1, ChainId.ETHEREUM),
       ]
 
-      await repository.addOrUpdateMany(data)
+      await repository.addMany(data)
 
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqual([
@@ -110,7 +110,7 @@ describe(CirculatingSupplyRepository.name, () => {
         mockCirculatingSupply(C_SUPPLY, 2, ASSET_2, ChainId.ETHEREUM),
       ]
 
-      await repository.addOrUpdateMany(data)
+      await repository.addMany(data)
 
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqualUnsorted([
@@ -151,7 +151,7 @@ describe(CirculatingSupplyRepository.name, () => {
           mockCirculatingSupply(C_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
         ]
 
-        await repository.addOrUpdateMany(DATA)
+        await repository.addMany(DATA)
         const result = await repository.findDataBoundaries()
 
         expect(result).toEqual(
@@ -184,7 +184,7 @@ describe(CirculatingSupplyRepository.name, () => {
     },
   )
 
-  describe(CirculatingSupplyRepository.prototype.addOrUpdateMany.name, () => {
+  describe(CirculatingSupplyRepository.prototype.addMany.name, () => {
     it('new rows only', async () => {
       const newRows: CirculatingSupplyRecord[] = [
         {
@@ -200,14 +200,14 @@ describe(CirculatingSupplyRepository.name, () => {
           chainId: ChainId.ETHEREUM,
         },
       ]
-      await repository.addOrUpdateMany(newRows)
+      await repository.addMany(newRows)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted([...DATA, ...newRows])
     })
 
     it('skips empty row modification', async () => {
-      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+      await expect(repository.addMany([])).not.toBeRejected()
     })
   })
 
