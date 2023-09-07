@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18076121,
-  "configHash": "0xa526fef34bebcde7557a226f8f628f1c3e4985ac57aa4f8ee0f28e68b16ff23b",
+  "blockNumber": 18084382,
+  "configHash": "0x042e482e1abbe9671cca9230654a9530d1a30c48c988450375f50772e0fc0b15",
   "version": 2,
   "contracts": [
     {
@@ -16,7 +16,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622850",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622878",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -61,7 +61,7 @@
       "derivedName": "L1StandardBridge"
     },
     {
-      "name": "GnosisSafe",
+      "name": "AevoMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
@@ -78,7 +78,8 @@
         "getThreshold": 2,
         "nonce": 6,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OptimismPortal",
@@ -99,7 +100,8 @@
       },
       "values": {
         "owner": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
-      }
+      },
+      "derivedName": "AddressManager"
     }
   ],
   "eoas": [

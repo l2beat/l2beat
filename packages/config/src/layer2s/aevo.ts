@@ -56,6 +56,18 @@ export const aevo: Layer2 = {
   },
   riskView: UNDER_REVIEW_RISK_VIEW,
   technology: TECHNOLOGY.UNDER_REVIEW,
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'AevoMultisig',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    ),
+    {
+      name: 'ProxyAdmin',
+      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
+      description:
+        'Admin of the OptimismPortal, OptimismMintableERC20Factory, L1StandardBridge, AddressManager proxies. It’s controlled by the AevoMultisig.',
+    },
+  ],
   contracts: {
     addresses: [
       discovery.getContractDetails('OptimismPortal', {
