@@ -1,8 +1,8 @@
 {
   "name": "symbiosis",
   "chain": "ethereum",
-  "blockNumber": 18083501,
-  "configHash": "0x9ddde12e67a419065628db5c77334f495163405dad96129c109785be8463e2c6",
+  "blockNumber": 18083572,
+  "configHash": "0x531d27af4f5179bd7fc8fee683e587407a9533354b61975e145879783a37e3e5",
   "version": 2,
   "contracts": [
     {
@@ -75,7 +75,8 @@
         "newMPCEffectiveTime": 1694009171,
         "oldMPC": "0x725E8FEF3A9f20AfCB1393996b1c1B760BCa72f5",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
-      }
+      },
+      "derivedName": "BridgeV2"
     },
     {
       "name": "Portal",
