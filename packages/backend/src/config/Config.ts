@@ -58,6 +58,7 @@ export interface TvlConfig {
   readonly coingeckoApiKey: string | undefined
   readonly ethereum: EthereumTvlConfig | false
   readonly arbitrum: ArbitrumTvlConfig | false
+  readonly optimism: OptimismTvlConfig | false
 }
 
 export interface EthereumTvlConfig {
@@ -69,6 +70,10 @@ export interface EthereumTvlConfig {
 export interface ArbitrumTvlConfig {
   readonly providerUrl: string
   readonly arbiscanApiKey: string
+  readonly minBlockTimestamp: UnixTime
+}
+
+export interface OptimismTvlConfig {
   readonly minBlockTimestamp: UnixTime
 }
 

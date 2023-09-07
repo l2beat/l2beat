@@ -69,31 +69,21 @@ export class ReportRepository extends BaseRepository {
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
-    const reportTypeMatch = reports.every(
-      (r) => r.reportType === reports[0].reportType,
-    )
     const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
     assert(timestampsMatch, 'Timestamps must match')
-    assert(reportTypeMatch, 'Report types must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
-    await knex.transaction(async (trx) => {
-      await trx('reports')
-        .where('unix_timestamp', rows[0].unix_timestamp)
-        .andWhere('report_type', rows[0].report_type)
-        .andWhere('chain_id', rows[0].chain_id)
-        .delete()
-      await trx('reports')
-        .insert(rows)
-        .onConflict([
-          'unix_timestamp',
-          'project_id',
-          'asset_id',
-          'chain_id',
-          'report_type',
-        ])
-        .merge()
-    })
+    await knex('reports')
+      .insert(rows)
+      .onConflict([
+        'unix_timestamp',
+        'project_id',
+        'asset_id',
+        'chain_id',
+        'report_type',
+      ])
+      .merge()
+
     return rows.length
   }
 
@@ -113,7 +103,9 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      // this is a workaround to ensure that an index will be used
+      // TODO: setup new index and get rid of those two lines
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -131,7 +123,9 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      // this is a workaround to ensure that an index will be used
+      // TODO: setup new index and get rid of those two lines
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -150,7 +144,9 @@ export class ReportRepository extends BaseRepository {
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      // this is a workaround to ensure that an index will be used
+      // TODO: setup new index and get rid of those two lines\d a
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
