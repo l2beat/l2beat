@@ -2,30 +2,32 @@ import { Logger } from '@l2beat/shared'
 import {
   assert,
   AssetId,
+  ChainId,
   EthereumAddress,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
+import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import {
+  CirculatingSupplyRecord,
+  CirculatingSupplyRepository,
   DataBoundary,
-  PriceRecord,
-  PriceRepository,
-} from '../peripherals/database/PriceRepository'
-import { Clock } from './Clock'
-import { TaskQueue } from './queue/TaskQueue'
+} from '../../peripherals/database/CirculatingSupplyRepository'
+import { Clock } from '../Clock'
+import { TaskQueue } from '../queue/TaskQueue'
 
-export class PriceUpdater {
+export class CirculatingSupplyUpdater {
   private readonly knownSet = new Set<number>()
   private readonly taskQueue: TaskQueue<void>
 
   constructor(
     private readonly coingeckoQueryService: CoingeckoQueryService,
-    private readonly priceRepository: PriceRepository,
+    private readonly circulatingSupplyRepository: CirculatingSupplyRepository,
     private readonly clock: Clock,
     private readonly tokens: Token[],
+    private readonly chainId: ChainId,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -33,16 +35,30 @@ export class PriceUpdater {
       () => this.update(),
       this.logger.for('taskQueue'),
       {
-        metricsId: PriceUpdater.name,
+        metricsId: CirculatingSupplyUpdater.name,
       },
+    )
+    assert(
+      tokens.every(
+        (token) =>
+          token.chainId === this.chainId &&
+          token.formula === 'circulatingSupply',
+      ),
+      'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
   }
 
-  async getPricesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
+  async getCirculatingSuppliesWhenReady(
+    timestamp: UnixTime,
+    refreshIntervalMs = 1000,
+  ) {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-    return this.priceRepository.getByTimestamp(timestamp)
+    return this.circulatingSupplyRepository.getByTimestamp(
+      this.chainId,
+      timestamp,
+    )
   }
 
   start() {
@@ -59,7 +75,8 @@ export class PriceUpdater {
 
     this.logger.info('Update started', { timestamp: to.toNumber() })
 
-    const boundaries = await this.priceRepository.findDataBoundaries()
+    const boundaries =
+      await this.circulatingSupplyRepository.findDataBoundaries()
 
     const results = await Promise.allSettled(
       this.tokens.map(({ id: assetId, address, sinceTimestamp }) => {
@@ -105,7 +122,7 @@ export class PriceUpdater {
       }
     }
     if (hours > 0) {
-      this.logger.debug('Updated prices', {
+      this.logger.debug('Updated circulating supplies', {
         coingeckoId: assetId.toString(),
         hours,
       })
@@ -127,22 +144,24 @@ export class PriceUpdater {
     address?: EthereumAddress,
   ) {
     const coingeckoId = this.getCoingeckoId(assetId)
-    const prices = await this.coingeckoQueryService.getUsdPriceHistory(
-      coingeckoId,
-      // Make sure that we have enough old data to fill holes
-      from.add(-7, 'days'),
-      to,
-      'hourly',
-      address,
-    )
-    const priceRecords: PriceRecord[] = prices
+    const circulatingSupplies =
+      await this.coingeckoQueryService.getCirculatingSupplies(
+        coingeckoId,
+        // Make sure that we have enough old data to fill holes
+        from.add(-7, 'days'),
+        to,
+        'hourly',
+        address,
+      )
+    const records: CirculatingSupplyRecord[] = circulatingSupplies
       .filter((x) => x.timestamp.gte(from))
-      .map((price) => ({
+      .map((circulatingSupply) => ({
         assetId,
-        timestamp: price.timestamp,
-        priceUsd: price.value,
+        timestamp: circulatingSupply.timestamp,
+        circulatingSupply: circulatingSupply.value,
+        chainId: this.chainId,
       }))
 
-    await this.priceRepository.addMany(priceRecords)
+    await this.circulatingSupplyRepository.addOrUpdateMany(records)
   }
 }

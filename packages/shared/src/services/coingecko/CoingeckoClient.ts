@@ -102,16 +102,16 @@ export class CoingeckoClient {
     return {
       prices: parsedData.prices.map(([timestamp, price]) => ({
         date: new Date(timestamp),
-        price,
+        value: price,
       })),
       marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
         date: new Date(timestamp),
-        marketCap,
+        value: marketCap,
       })),
       totalVolumes: parsedData.total_volumes.map(
         ([timestamp, totalVolume]) => ({
           date: new Date(timestamp),
-          totalVolume,
+          value: totalVolume,
         }),
       ),
     }

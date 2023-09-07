@@ -2,9 +2,9 @@ import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getMockToken } from '../../test/token'
-import { getTotalSupplyFormulaConfigHash } from './getTotalSupplyFormulaConfigHash'
+import { getTokensConfigHash } from './getTokensConfigHash'
 
-describe(getTotalSupplyFormulaConfigHash.name, () => {
+describe(getTokensConfigHash.name, () => {
   it('hash changes if tokens added', () => {
     const tokenConfigBefore: Token[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
@@ -15,8 +15,8 @@ describe(getTotalSupplyFormulaConfigHash.name, () => {
       fakeExternalToken(AssetId.USDC, new UnixTime(2000)),
     ]
 
-    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
-    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
+    const hashBefore = getTokensConfigHash(tokenConfigBefore)
+    const hashAfter = getTokensConfigHash(tokenConfigAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -27,8 +27,8 @@ describe(getTotalSupplyFormulaConfigHash.name, () => {
     ]
     const tokenConfigAfter: Token[] = [tokenConfigBefore[0]]
 
-    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
-    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
+    const hashBefore = getTokensConfigHash(tokenConfigBefore)
+    const hashAfter = getTokensConfigHash(tokenConfigAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -42,8 +42,8 @@ describe(getTotalSupplyFormulaConfigHash.name, () => {
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
-    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
+    const hashBefore = getTokensConfigHash(tokenConfigBefore)
+    const hashAfter = getTokensConfigHash(tokenConfigAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
 
@@ -53,8 +53,8 @@ describe(getTotalSupplyFormulaConfigHash.name, () => {
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfig)
-    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfig)
+    const hashBefore = getTokensConfigHash(tokenConfig)
+    const hashAfter = getTokensConfigHash(tokenConfig)
     expect(hashBefore).toEqual(hashAfter)
   })
 })
