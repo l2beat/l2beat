@@ -8,11 +8,12 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 
 import {
+  approximateCirculatingSupply,
   COINGECKO_HOURLY_MAX_SPAN_IN_DAYS,
   CoingeckoQueryService,
   generateRangesToCallHourly,
-  pickPrices,
-  PriceHistoryPoint,
+  pickPoints,
+  QueryResultPoint,
 } from './CoingeckoQueryService'
 
 describe(CoingeckoQueryService.name, () => {
@@ -25,7 +26,7 @@ describe(CoingeckoQueryService.name, () => {
           prices: [
             {
               date: new Date(),
-              price: 1234567,
+              value: 1234567,
             },
           ],
         }),
@@ -52,9 +53,9 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.toDate(), price: 1200 },
-            { date: START.add(1, 'days').toDate(), price: 1000 },
-            { date: START.add(2, 'days').toDate(), price: 1100 },
+            { date: START.toDate(), value: 1200 },
+            { date: START.add(1, 'days').toDate(), value: 1000 },
+            { date: START.add(2, 'days').toDate(), value: 1100 },
           ],
           marketCaps: [],
           totalVolumes: [],
@@ -81,29 +82,29 @@ describe(CoingeckoQueryService.name, () => {
         getCoinMarketChartRange: mockFn()
           .returnsOnce({
             prices: [
-              { date: START.toDate(), price: 1200 },
-              { date: START.add(30, 'days').toDate(), price: 1000 },
-              { date: START.add(60, 'days').toDate(), price: 1400 },
-              { date: START.add(80, 'days').toDate(), price: 1800 },
+              { date: START.toDate(), value: 1200 },
+              { date: START.add(30, 'days').toDate(), value: 1000 },
+              { date: START.add(60, 'days').toDate(), value: 1400 },
+              { date: START.add(80, 'days').toDate(), value: 1800 },
             ],
             marketCaps: [],
             totalVolumes: [],
           })
           .returnsOnce({
             prices: [
-              { date: START.add(80, 'days').toDate(), price: 1800 },
-              { date: START.add(90, 'days').toDate(), price: 1700 },
-              { date: START.add(120, 'days').toDate(), price: 1900 },
-              { date: START.add(150, 'days').toDate(), price: 2000 },
-              { date: START.add(160, 'days').toDate(), price: 2400 },
+              { date: START.add(80, 'days').toDate(), value: 1800 },
+              { date: START.add(90, 'days').toDate(), value: 1700 },
+              { date: START.add(120, 'days').toDate(), value: 1900 },
+              { date: START.add(150, 'days').toDate(), value: 2000 },
+              { date: START.add(160, 'days').toDate(), value: 2400 },
             ],
             marketCaps: [],
             totalVolumes: [],
           })
           .returnsOnce({
             prices: [
-              { date: START.add(160, 'days').toDate(), price: 2400 },
-              { date: START.add(180, 'days').toDate(), price: 2600 },
+              { date: START.add(160, 'days').toDate(), value: 2400 },
+              { date: START.add(180, 'days').toDate(), value: 2600 },
             ],
             marketCaps: [],
             totalVolumes: [],
@@ -119,18 +120,18 @@ describe(CoingeckoQueryService.name, () => {
 
       const timestamps = getTimestamps(START, START.add(180, 'days'), 'hourly')
       const constPrices = [
-        { date: START.toDate(), price: 1200 },
-        { date: START.add(30, 'days').toDate(), price: 1000 },
-        { date: START.add(60, 'days').toDate(), price: 1400 },
-        { date: START.add(80, 'days').toDate(), price: 1800 },
-        { date: START.add(90, 'days').toDate(), price: 1700 },
-        { date: START.add(120, 'days').toDate(), price: 1900 },
-        { date: START.add(150, 'days').toDate(), price: 2000 },
-        { date: START.add(160, 'days').toDate(), price: 2400 },
-        { date: START.add(180, 'days').toDate(), price: 2600 },
+        { date: START.toDate(), value: 1200 },
+        { date: START.add(30, 'days').toDate(), value: 1000 },
+        { date: START.add(60, 'days').toDate(), value: 1400 },
+        { date: START.add(80, 'days').toDate(), value: 1800 },
+        { date: START.add(90, 'days').toDate(), value: 1700 },
+        { date: START.add(120, 'days').toDate(), value: 1900 },
+        { date: START.add(150, 'days').toDate(), value: 2000 },
+        { date: START.add(160, 'days').toDate(), value: 2400 },
+        { date: START.add(180, 'days').toDate(), value: 2600 },
       ]
 
-      expect(prices).toEqual(pickPrices(constPrices, timestamps))
+      expect(prices).toEqual(pickPoints(constPrices, timestamps))
     })
 
     it('handles duplicates in data returned from API', async () => {
@@ -139,13 +140,13 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.toDate(), price: 1200 },
-            { date: START.toDate(), price: 1200 },
-            { date: START.add(1, 'days').toDate(), price: 1000 },
-            { date: START.add(1, 'days').toDate(), price: 1000 },
-            { date: START.add(1, 'days').toDate(), price: 1000 },
-            { date: START.add(2, 'days').toDate(), price: 1100 },
-            { date: START.add(2, 'days').toDate(), price: 1100 },
+            { date: START.toDate(), value: 1200 },
+            { date: START.toDate(), value: 1200 },
+            { date: START.add(1, 'days').toDate(), value: 1000 },
+            { date: START.add(1, 'days').toDate(), value: 1000 },
+            { date: START.add(1, 'days').toDate(), value: 1000 },
+            { date: START.add(2, 'days').toDate(), value: 1100 },
+            { date: START.add(2, 'days').toDate(), value: 1100 },
           ],
           marketCaps: [],
           totalVolumes: [],
@@ -171,11 +172,11 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.add(-2, 'hours').toDate(), price: 1200 },
-            { date: START.add(1, 'days').toDate(), price: 1000 },
+            { date: START.add(-2, 'hours').toDate(), value: 1200 },
+            { date: START.add(1, 'days').toDate(), value: 1000 },
             {
               date: START.add(2, 'days').add(2, 'hours').toDate(),
-              price: 1100,
+              value: 1100,
             },
           ],
           marketCaps: [],
@@ -206,11 +207,11 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.add(1, 'days').toDate(), price: 1000 },
-            { date: START.toDate(), price: 1200 },
+            { date: START.add(1, 'days').toDate(), value: 1000 },
+            { date: START.toDate(), value: 1200 },
             {
               date: START.add(2, 'days').add(2, 'hours').toDate(),
-              price: 1100,
+              value: 1100,
             },
           ],
           marketCaps: [],
@@ -232,6 +233,40 @@ describe(CoingeckoQueryService.name, () => {
           value: 1100,
           deltaMs: 2 * 60 * 60 * 1000,
         },
+      ])
+    })
+  })
+
+  describe(CoingeckoQueryService.prototype.getCirculatingSupplies.name, () => {
+    it('returns circulating supplies', async () => {
+      const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+
+      const coingeckoClient = mockObject<CoingeckoClient>({
+        getCoinMarketChartRange: mockFn().returns({
+          prices: [
+            { date: START.toDate(), value: 101.2 },
+            { date: START.add(1, 'days').toDate(), value: 110.3 },
+            { date: START.add(2, 'days').toDate(), value: 120.4 },
+          ],
+          marketCaps: [
+            { date: START.toDate(), value: 123456789 },
+            { date: START.add(1, 'days').toDate(), value: 234567891 },
+            { date: START.add(2, 'days').toDate(), value: 345678912 },
+          ],
+          totalVolumes: [],
+        }),
+      })
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const prices = await coingeckoQueryService.getCirculatingSupplies(
+        CoingeckoId('weth'),
+        START,
+        START.add(2, 'days'),
+        'daily',
+      )
+      expect(prices).toEqual([
+        { timestamp: START, value: 1219900, deltaMs: 0 },
+        { timestamp: START.add(1, 'days'), value: 2126600, deltaMs: 0 },
+        { timestamp: START.add(2, 'days'), value: 2871100, deltaMs: 0 },
       ])
     })
   })
@@ -344,18 +379,18 @@ describe(CoingeckoQueryService.name, () => {
   })
 })
 
-describe(pickPrices.name, () => {
+describe(pickPoints.name, () => {
   const START = new UnixTime(1517961600)
 
   it('works for days', () => {
     const prices = [
-      { price: 1000, date: START.toDate() },
-      { price: 1100, date: START.add(1, 'days').toDate() },
-      { price: 1200, date: START.add(2, 'days').toDate() },
+      { value: 1000, date: START.toDate() },
+      { value: 1100, date: START.add(1, 'days').toDate() },
+      { value: 1200, date: START.add(2, 'days').toDate() },
     ]
     const timestamps = getTimestamps(START, START.add(2, 'days'), 'daily')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
       { value: 1100, timestamp: START.add(1, 'days'), deltaMs: 0 },
       { value: 1200, timestamp: START.add(2, 'days'), deltaMs: 0 },
@@ -364,13 +399,13 @@ describe(pickPrices.name, () => {
 
   it('works for hours', () => {
     const prices = [
-      { price: 1000, date: START.toDate() },
-      { price: 1100, date: START.add(1, 'hours').toDate() },
-      { price: 1200, date: START.add(2, 'hours').toDate() },
+      { value: 1000, date: START.toDate() },
+      { value: 1100, date: START.add(1, 'hours').toDate() },
+      { value: 1200, date: START.add(2, 'hours').toDate() },
     ]
     const timestamps = getTimestamps(START, START.add(2, 'hours'), 'hourly')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
       { value: 1100, timestamp: START.add(1, 'hours'), deltaMs: 0 },
       { value: 1200, timestamp: START.add(2, 'hours'), deltaMs: 0 },
@@ -379,13 +414,13 @@ describe(pickPrices.name, () => {
 
   it('adjusts dates for slightly off timestamps', () => {
     const prices = [
-      { price: 1000, date: START.add(2, 'minutes').toDate() },
-      { price: 1100, date: START.add(1, 'days').add(1, 'minutes').toDate() },
-      { price: 1200, date: START.add(2, 'days').add(3, 'minutes').toDate() },
+      { value: 1000, date: START.add(2, 'minutes').toDate() },
+      { value: 1100, date: START.add(1, 'days').add(1, 'minutes').toDate() },
+      { value: 1200, date: START.add(2, 'days').add(3, 'minutes').toDate() },
     ]
     const timestamps = getTimestamps(START, START.add(2, 'days'), 'daily')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 2 * 60 * 1000 },
       {
         value: 1100,
@@ -402,13 +437,13 @@ describe(pickPrices.name, () => {
 
   it('adjusts dates before the first timestamp', () => {
     const prices = [
-      { price: 1000, date: START.add(-2, 'minutes').toDate() },
-      { price: 1100, date: START.add(1, 'days').toDate() },
-      { price: 1200, date: START.add(2, 'days').toDate() },
+      { value: 1000, date: START.add(-2, 'minutes').toDate() },
+      { value: 1100, date: START.add(1, 'days').toDate() },
+      { value: 1200, date: START.add(2, 'days').toDate() },
     ]
     const timestamps = getTimestamps(START, START.add(2, 'days'), 'daily')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: -2 * 60 * 1000 },
       {
         value: 1100,
@@ -421,16 +456,16 @@ describe(pickPrices.name, () => {
 
   it('discards unnecessary data', () => {
     const prices = [
-      { price: 1100, date: START.add(-2, 'minutes').toDate() },
-      { price: 1200, date: START.add(1, 'minutes').toDate() },
-      { price: 1300, date: START.add(1, 'days').toDate() },
-      { price: 1400, date: START.add(1, 'days').add(2, 'minutes').toDate() },
-      { price: 1500, date: START.add(2, 'days').add(-1, 'minutes').toDate() },
-      { price: 1600, date: START.add(2, 'days').add(2, 'minutes').toDate() },
+      { value: 1100, date: START.add(-2, 'minutes').toDate() },
+      { value: 1200, date: START.add(1, 'minutes').toDate() },
+      { value: 1300, date: START.add(1, 'days').toDate() },
+      { value: 1400, date: START.add(1, 'days').add(2, 'minutes').toDate() },
+      { value: 1500, date: START.add(2, 'days').add(-1, 'minutes').toDate() },
+      { value: 1600, date: START.add(2, 'days').add(2, 'minutes').toDate() },
     ]
     const timestamps = getTimestamps(START, START.add(2, 'days'), 'daily')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1200, timestamp: START, deltaMs: 1 * 60 * 1000 },
       { value: 1300, timestamp: START.add(1, 'days'), deltaMs: 0 },
       {
@@ -443,12 +478,12 @@ describe(pickPrices.name, () => {
 
   it('manufactures single missing datapoint', () => {
     const prices = [
-      { price: 1000, date: START.toDate() },
-      { price: 1200, date: START.add(2, 'days').add(-1, 'minutes').toDate() },
+      { value: 1000, date: START.toDate() },
+      { value: 1200, date: START.add(2, 'days').add(-1, 'minutes').toDate() },
     ]
     const timestamps = getTimestamps(START, START.add(2, 'days'), 'daily')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
       {
         value: 1200,
@@ -461,12 +496,12 @@ describe(pickPrices.name, () => {
 
   it('manufactures multiple missing datapoints', () => {
     const prices = [
-      { price: 1000, date: START.toDate() },
-      { price: 1400, date: START.add(4, 'days').toDate() },
+      { value: 1000, date: START.toDate() },
+      { value: 1400, date: START.add(4, 'days').toDate() },
     ]
     const timestamps = getTimestamps(START, START.add(4, 'days'), 'daily')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
       {
         value: 1000,
@@ -488,10 +523,10 @@ describe(pickPrices.name, () => {
   })
 
   it('manufactures start and end datapoints', () => {
-    const prices = [{ price: 1100, date: START.add(1, 'days').toDate() }]
+    const prices = [{ value: 1100, date: START.add(1, 'days').toDate() }]
     const timestamps = getTimestamps(START, START.add(2, 'days'), 'daily')
 
-    expect(pickPrices(prices, timestamps)).toEqual([
+    expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1100, timestamp: START, deltaMs: 24 * 60 * 60 * 1000 },
       { value: 1100, timestamp: START.add(1, 'days'), deltaMs: 0 },
       {
@@ -547,6 +582,45 @@ describe(generateRangesToCallHourly.name, () => {
         end: start.add(180, 'days'),
       },
     ])
+  })
+})
+
+describe(approximateCirculatingSupply.name, () => {
+  const testCases = [
+    {
+      price: 100,
+      marketCap: 100,
+      expected: 1,
+    },
+    {
+      price: 100,
+      marketCap: 101,
+      expected: 1,
+    },
+    {
+      price: 1.01,
+      marketCap: 123456789,
+      expected: 122230000,
+    },
+    {
+      price: 0.978234,
+      marketCap: 1_275_234_567,
+      expected: 1303600000,
+    },
+  ]
+
+  for (const testCase of testCases) {
+    it(`marketCap = ${testCase.marketCap}, price = ${testCase.price}`, () => {
+      expect(
+        approximateCirculatingSupply(testCase.marketCap, testCase.price),
+      ).toEqual(testCase.expected)
+    })
+  }
+
+  it('throws if below 1', () => {
+    expect(() => approximateCirculatingSupply(100, 101)).toThrow(
+      'Assertion Error: Circulating supply cannot be less than one',
+    )
   })
 })
 
@@ -608,7 +682,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
     console.log('Standard deviation [min] = ', deviation / 1000 / 60)
   })
 
-  const getFaultRatio = (data: PriceHistoryPoint[]) => {
+  const getFaultRatio = (data: QueryResultPoint[]) => {
     const faultyData = data
       .map((i) => i.deltaMs / 1000 / 60)
       .filter((i) => i > MAX_TRESHOLD_MINUTES)

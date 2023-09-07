@@ -1,13 +1,14 @@
 import { assert, AssetId, ChainId, ProjectId, Token } from '@l2beat/shared-pure'
 
+import { CirculatingSupplyRecord } from '../../peripherals/database/CirculatingSupplyRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
 import { BalancePerProject, createReport } from './createReport'
 
-export function createSuppliedFormulaReports(
+export function createFormulaReports(
   prices: PriceRecord[],
-  totalSupplies: TotalSupplyRecord[],
+  records: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   projectId: ProjectId,
   chainId: ChainId,
@@ -21,7 +22,7 @@ export function createSuppliedFormulaReports(
 
   const balancesPerProject = transformBalances(
     projectId,
-    totalSupplies,
+    records,
     tokens,
     chainId,
   )
@@ -38,16 +39,16 @@ export function createSuppliedFormulaReports(
   return reports
 }
 
-function transformBalances(
+export function transformBalances(
   projectId: ProjectId,
-  totalSupplies: TotalSupplyRecord[],
+  records: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   chainId: ChainId,
 ): BalancePerProject[] {
   const result: BalancePerProject[] = []
 
   for (const { id, sinceTimestamp, decimals, type } of tokens) {
-    const assetSupplies = totalSupplies.filter(
+    const assetSupplies = records.filter(
       (s) => s.assetId === id && s.timestamp.gte(sinceTimestamp),
     )
 
@@ -60,7 +61,13 @@ function transformBalances(
     assert(chainIdsMatch, 'ChainIds do not match for a given asset balance')
 
     const totalBalance = assetSupplies
-      .map((s) => s.totalSupply)
+      .map((s) =>
+        'totalSupply' in s
+          ? s.totalSupply
+          : 'circulatingSupply' in s
+          ? BigInt(s.circulatingSupply) * 10n ** BigInt(decimals)
+          : 0n,
+      )
       .reduce((acc, totalSupply) => acc + totalSupply, 0n)
 
     result.push({
@@ -68,7 +75,7 @@ function transformBalances(
       chainId,
       balance: totalBalance,
       assetId: id,
-      type: type,
+      type,
       decimals: decimals,
     })
   }

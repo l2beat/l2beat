@@ -19,17 +19,17 @@ import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createFormulaReports } from '../reports/createFormulaReports'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'
-import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
+import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
-export class TotalSupplyFormulaUpdater implements AssetUpdater {
+export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
-    private readonly totalSupplyUpdater: TotalSupplyUpdater,
+    private readonly circulatingSupplyUpdater: CirculatingSupplyUpdater,
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly projectId: ProjectId,
@@ -42,9 +42,10 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
     assert(
       tokens.every(
         (token) =>
-          token.chainId === this.chainId && token.formula === 'totalSupply',
+          token.chainId === this.chainId &&
+          token.formula === 'circulatingSupply',
       ),
-      'Programmer error: all tokens must be using totalSupply formula have the same chainId',
+      'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
     this.logger = this.logger.for(this)
     this.configHash = getTokensConfigHash(this.tokens)
@@ -53,7 +54,7 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: TotalSupplyFormulaUpdater.name,
+        metricsId: CirculatingSupplyFormulaUpdater.name,
       },
     )
   }
@@ -99,15 +100,14 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
 
-    const [prices, totalSupplies] = await Promise.all([
+    const [prices, circulatingSupplies] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
-      this.totalSupplyUpdater.getTotalSuppliesWhenReady(timestamp),
+      this.circulatingSupplyUpdater.getCirculatingSuppliesWhenReady(timestamp),
     ])
-    this.logger.debug('Prices, balances and supplies ready')
-
+    this.logger.debug('Prices and supplies ready')
     const reports = createFormulaReports(
       prices,
-      totalSupplies,
+      circulatingSupplies,
       this.tokens,
       this.projectId,
       this.chainId,

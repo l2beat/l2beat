@@ -5,6 +5,13 @@ import { sortBy } from 'lodash'
 // recalculate total supplies
 const TOTAL_SUPPLY_LOGIC_VERSION = 0
 
+// TODO(radomski): Nicer refactor
+export function getCirculatingSupplyConfigHash(
+  circulatingSupplyTokensConfig: Token[],
+) {
+  return getTotalSupplyConfigHash(circulatingSupplyTokensConfig)
+}
+
 export function getTotalSupplyConfigHash(totalSupplyTokensConfig: Token[]) {
   return hashJson([
     getEntries(totalSupplyTokensConfig),
