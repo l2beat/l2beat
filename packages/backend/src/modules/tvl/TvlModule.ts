@@ -26,7 +26,6 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
-import { createNativeTvlSubmodule } from './NativeTvl'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -85,7 +84,6 @@ export function createTvlModule(
 
   const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
     createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
