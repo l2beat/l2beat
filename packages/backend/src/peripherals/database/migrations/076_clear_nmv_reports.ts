@@ -19,4 +19,6 @@ export async function up(knex: Knex) {
   })
 }
 
-export async function down(knex: Knex) {}
+export async function down(_knex: Knex) {
+  // Nothing to do
+}

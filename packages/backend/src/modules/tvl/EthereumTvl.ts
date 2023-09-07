@@ -33,7 +33,7 @@ export function createEthereumTvlSubmodule(
     config.tvl.ethereum.providerUrl,
     'mainnet',
   )
-  const ethereumClient = new EthereumClient(ethereumProvider, logger, 6000)
+  const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
   const multicall = new MulticallClient(ethereumClient)
 
   const etherscanClient = new EtherscanClient(
