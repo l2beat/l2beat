@@ -46,7 +46,7 @@ export const aevo: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x4082C9647c098a6493fb499EaE63b5ce3259c574'),
-        sinceTimestamp: new UnixTime(1679193119),
+        sinceTimestamp: new UnixTime(1679193071),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 token that do not require custom gateway.',
@@ -58,14 +58,44 @@ export const aevo: Layer2 = {
   technology: TECHNOLOGY.UNDER_REVIEW,
   permissions: [
     ...discovery.getMultisigPermission(
-      'AevoMultisig',
+      'PGNMultiSig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     {
       name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
+      accounts: [discovery.getPermissionedAccount('L2OutputOracle', 'admin')],
       description:
-        'Admin of the OptimismPortal, OptimismMintableERC20Factory, L1StandardBridge, AddressManager proxies. It’s controlled by the AevoMultisig.',
+        'Admin of the OptimismPortal, L2OutputOracle, SystemConfig, L1StandardBridge, AddressManager proxies. It’s controlled by the PGNMultiSig.',
+    },
+    {
+      name: 'Sequencer',
+      accounts: [
+        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
+      ],
+      description: 'Central actor allowed to commit L2 transactions to L1',
+    },
+    {
+      name: 'Proposer',
+      accounts: [
+        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
+      ],
+      description: 'Central actor allowed to post new L2 state roots to L1',
+    },
+    {
+      name: 'Challenger',
+      accounts: [
+        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
+      ],
+      description:
+        'Central actor allowed to delete L2 state roots proposed by a Proposer. Currently Challenger is PGNMultiSig',
+    },
+    {
+      name: 'Guardian',
+      accounts: [
+        discovery.getPermissionedAccount('OptimismPortal', 'GUARDIAN'),
+      ],
+      description:
+        'Central actor allowed to pause deposits and withdrawals. Currently Guardian is PGNMultiSig',
     },
   ],
   contracts: {
