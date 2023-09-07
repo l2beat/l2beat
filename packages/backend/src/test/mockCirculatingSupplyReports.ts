@@ -11,17 +11,17 @@ import {
 import { createFormulaReports } from '../core/reports/createFormulaReports'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
+import { CirculatingSupplyRecord } from '../peripherals/database/CirculatingSupplyRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
-import { TotalSupplyRecord } from '../peripherals/database/TotalSupplyRepository'
 import { REPORTS_MOCK as BASE_MOCK } from './mockReports'
 
 const ARBITRUM_ESCROW_ONE = EthereumAddress.random()
 const ARBITRUM_ESCROW_TWO = EthereumAddress.random()
 
-const TOTAL_SUPPLIES: TotalSupplyRecord[] = [
+const TOTAL_SUPPLIES: CirculatingSupplyRecord[] = [
   {
     assetId: AssetId.USDC,
-    totalSupply: 1000n * 10n ** 6n,
+    circulatingSupply: 1000 * 10 ** 6,
     chainId: ChainId.ARBITRUM,
     timestamp: BASE_MOCK.NOW,
   },
@@ -83,7 +83,7 @@ const TOKENS: Token[] = [
     category: 'other',
     chainId: ChainId.ARBITRUM,
     type: 'EBV',
-    formula: 'totalSupply',
+    formula: 'circulatingSupply',
   },
 ]
 
@@ -101,13 +101,6 @@ const FUTURE_REPORTS = createFormulaReports(
   ProjectId.ARBITRUM,
   ChainId.ARBITRUM,
 )
-
-// const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
-// const FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP = aggregateReports(
-//   FUTURE_REPORTS_WITH_OP,
-//   PROJECTS,
-//   NOW.add(1, 'hours'),
-// )
 
 export const REPORTS_MOCK = {
   ...BASE_MOCK,
@@ -134,7 +127,7 @@ function fakeTokenInfo(token: Partial<Token>): Token {
     category: 'other',
     chainId: ChainId.ARBITRUM,
     type: 'EBV',
-    formula: 'totalSupply',
+    formula: 'circulatingSupply',
     ...token,
   }
 }

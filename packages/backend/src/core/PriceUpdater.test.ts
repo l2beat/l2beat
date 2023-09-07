@@ -190,6 +190,45 @@ describe(PriceUpdater.name, () => {
         tokens[0].address,
       )
     })
+
+    it('adjusts from based on token.sinceTimestamp', async () => {
+      const tokens: Token[] = [
+        { ...fakeToken(AssetId.ETH), sinceTimestamp: HOUR_10 },
+      ]
+
+      const priceRepository = mockObject<PriceRepository>({
+        findDataBoundaries: mockFn().returns(new Map([])),
+        addMany: mockFn().returns([]),
+      })
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getUsdPriceHistory: mockFn().returns([]),
+      })
+
+      const clock = mockObject<Clock>({
+        getFirstHour: () => HOUR_09,
+        getLastHour: () => HOUR_13,
+      })
+
+      const priceUpdater = new PriceUpdater(
+        coingeckoQueryService,
+        priceRepository,
+        clock,
+        tokens,
+        Logger.SILENT,
+      )
+
+      await priceUpdater.update()
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenCalledTimes(1)
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
+        1,
+        tokens[0].coingeckoId,
+        HOUR_10.add(-7, 'days'),
+        HOUR_13,
+        'hourly',
+        tokens[0].address,
+      )
+    })
   })
 
   describe(PriceUpdater.prototype.updateToken.name, () => {
