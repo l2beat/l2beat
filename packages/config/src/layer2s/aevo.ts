@@ -72,7 +72,7 @@ export const aevo: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8FEcC650BA4A#code#F1#L434', //TODO: change address and check if true when contract is verified
+            'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8FEcC650BA4A#code#F1#L376',
           ],
         },
       ],
@@ -98,7 +98,7 @@ export const aevo: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8FEcC650BA4A#code#F1#L434', //TODO: change address and check if true when contract is verified
+            'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L434', //TODO: change address and check if true when contract is verified
           ],
         },
       ],
@@ -169,7 +169,7 @@ export const aevo: Layer2 = {
         },
         {
           text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8fecc650ba4a#code#F1#L434', //TODO: change address and check if true when contract is verified
+          href: 'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L376',
         },
       ],
     },
@@ -194,12 +194,8 @@ export const aevo: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
       references: [
         {
-          text: 'Sequencing Window - OP Stack specs',
-          href: 'https://github.com/ourzora/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window', //TODO: change address and check if true when contract is verified
-        },
-        {
           text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8fecc650ba4a#code#F1#L434', //TODO: change address and check if true when contract is verified
+          href: 'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L376',
         },
       ],
     },
@@ -209,11 +205,11 @@ export const aevo: Layer2 = {
         references: [
           {
             text: 'OptimismPortal.sol#L242 - Etherscan source code, proveWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8fecc650ba4a#code#F1#L242', //TODO: change address and check if true when contract is verified
+            href: 'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L190',
           },
           {
             text: 'OptimismPortal.sol#325 - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8fecc650ba4a#code#F1#L325', //TODO: change address and check if true when contract is verified
+            href: 'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L270',
           },
           {
             text: 'L2OutputOracle.sol#L185 - Etherscan source code, PROPOSER check',
