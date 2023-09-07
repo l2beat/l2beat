@@ -4,7 +4,9 @@
   "name": "kroma",
   "initialAddresses": [
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
-    "0x827962404D7104202C5aaa6b929115C8211d9596"
+    "0x827962404D7104202C5aaa6b929115C8211d9596",
+    "0x46d07221dfC313afe1BF104F4bB1f185301D65B9",
+    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
   ],
   "names": {
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de": "KromaPortal",
@@ -13,7 +15,10 @@
     "0x3de211088dF516da72efe68D386b561BEE256Ec4": "SecurityCouncil",
     "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746": "L1CrossDomainMessenger",
     "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a": "Colosseum",
-    "0xFdFF462845953D90719A78Fd12a2d103541d2103": "ValidatorPool"
+    "0xFdFF462845953D90719A78Fd12a2d103541d2103": "ValidatorPool",
+    "0x46d07221dfC313afe1BF104F4bB1f185301D65B9": "L1ERC721Bridge",
+    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537": "UpgradeGovernor",
+    "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c": "SecurityCouncilToken"
   },
   "overrides": {
     "L2OutputOracle": {
@@ -54,6 +59,21 @@
     },
     "ValidatorPool": {
       "ignoreMethods": ["getBond"]
+    },
+    "UpgradeGovernor": {
+      "ignoreMethods": [
+        "proposalDeadline",
+        "proposalEta",
+        "proposalProposer",
+        "proposalSnapshot",
+        "proposalVotes",
+        "quorum"
+      ]
+    },
+    "SecurityCouncilToken": {
+      "ignoreMethods": [
+        "getPastTotalSupply"
+      ]
     }
   }
 }
