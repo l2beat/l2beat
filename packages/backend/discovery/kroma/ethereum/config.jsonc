@@ -17,53 +17,43 @@
   },
   "overrides": {
     "L2OutputOracle": {
-        "ignoreMethods": [
-            "computeL2Timestamp",
-            "finalizedAt",
-            "getL2Output",
-            "getL2OutputAfter",
-            "getL2OutputIndexAfter",
-            "getSubmitter",
-            "isFinalized"
-        ],
-        "ignoreInWatchMode": [
-            "latestBlockNumber",
-            "latestOutputIndex",
-            "nextBlockNumber",
-            "nextOutputIndex"
-        ]
+      "ignoreMethods": [
+        "computeL2Timestamp",
+        "finalizedAt",
+        "getL2Output",
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getSubmitter",
+        "isFinalized"
+      ],
+      "ignoreInWatchMode": [
+        "latestBlockNumber",
+        "latestOutputIndex",
+        "nextBlockNumber",
+        "nextOutputIndex"
+      ]
     },
     "KromaPortal": {
-        "ignoreMethods": [
-            "isOutputFinalized"
-        ],
-        "ignoreInWatchMode": [
-            "params"
-        ]
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
     },
     "SecurityCouncil": {
-        "ignoreMethods": [
-            "getConfirmationCount",
-            "getConfirmations",
-            "isConfirmed",
-            "outputsDeleteRequested",
-            "transactions"
-        ]
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "outputsDeleteRequested",
+        "transactions"
+      ]
     },
     "L1CrossDomainMessenger": {
-        "ignoreMethods": [
-            "xDomainMessageSender"
-        ]
+      "ignoreMethods": ["xDomainMessageSender"]
     },
     "Colosseum": {
-        "ignoreMethods": [
-            "isInCreationPeriod"
-        ]
+      "ignoreMethods": ["isInCreationPeriod"]
     },
     "ValidatorPool": {
-        "ignoreMethods": [
-            "getBond"
-        ]
+      "ignoreMethods": ["getBond"]
     }
   }
 }
