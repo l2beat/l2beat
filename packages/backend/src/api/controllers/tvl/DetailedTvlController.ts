@@ -18,7 +18,6 @@ import { AggregatedReportStatusRepository } from '../../../peripherals/database/
 import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
@@ -62,12 +61,11 @@ type DetailedAssetTvlResult =
     }
   | {
       result: 'error'
-      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA'
+      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
     }
 
 export class DetailedTvlController {
   constructor(
-    private readonly reportStatusRepository: ReportStatusRepository,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
@@ -167,13 +165,19 @@ export class DetailedTvlController {
       }
     }
 
-    const timestampCandidate =
-      await this.reportStatusRepository.findLatestTimestamp(chainId, assetType)
+    const dataTimings = await this.getDataTimings()
 
-    if (!timestampCandidate) {
+    if (!dataTimings.latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
       }
     }
 
@@ -183,14 +187,14 @@ export class DetailedTvlController {
         chainId,
         assetId,
         assetType,
-        getHourlyMinTimestamp(timestampCandidate),
+        getHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
       this.reportRepository.getSixHourlyForDetailed(
         projectId,
         chainId,
         assetId,
         assetType,
-        getSixHourlyMinTimestamp(timestampCandidate),
+        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
       this.reportRepository.getDailyForDetailed(
         projectId,

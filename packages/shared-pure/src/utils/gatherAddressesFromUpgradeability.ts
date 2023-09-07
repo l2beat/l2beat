@@ -1,7 +1,9 @@
 // TODO: Move to shared
 
+import type { UpgradeabilityParameters } from '@l2beat/discovery-types'
+
 import { assertUnreachable } from '../tools'
-import { EthereumAddress, UpgradeabilityParameters } from '../types'
+import { EthereumAddress } from '../types'
 
 export function gatherAddressesFromUpgradeability(
   item: UpgradeabilityParameters,

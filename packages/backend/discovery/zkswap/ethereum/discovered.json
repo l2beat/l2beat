@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "zkswap",
-  "blockNumber": 16154924,
+  "chain": "ethereum",
+  "blockNumber": 18062315,
   "configHash": "0x71d3998c2972afe832c73d5d0e6220a819e62bf324488c065af37d80bfc79c95",
+  "version": 2,
   "contracts": [
     {
       "name": "Governance",
@@ -114,7 +115,7 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 37159,
+        "firstPendingWithdrawalIndex": 37160,
         "firstPriorityRequestId": 22929,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
@@ -122,7 +123,7 @@
         "numberOfPendingWithdrawals": 1,
         "pairManager": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
         "totalBlocksCommitted": 130724,
-        "totalBlocksVerified": 130723,
+        "totalBlocksVerified": 130724,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 108,

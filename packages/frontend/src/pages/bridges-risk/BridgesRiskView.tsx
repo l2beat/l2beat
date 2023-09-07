@@ -34,7 +34,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 items={items.filter((item) => !item.isArchived)}
                 columns={columns}
                 rows={rows}
-                rerenderIndexesOn="combined-bridges-checkbox"
+                rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
             icon: <ActiveIcon />,
@@ -48,7 +48,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 items={items.filter((item) => item.isArchived)}
                 columns={columns}
                 rows={rows}
-                rerenderIndexesOn="combined-bridges-checkbox"
+                rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
             icon: <ArchivedIcon />,
