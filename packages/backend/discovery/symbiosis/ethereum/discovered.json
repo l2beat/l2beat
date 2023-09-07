@@ -1,9 +1,9 @@
 {
   "name": "symbiosis",
   "chain": "ethereum",
-  "blockNumber": 17832758,
-  "configHash": "0x9ddde12e67a419065628db5c77334f495163405dad96129c109785be8463e2c6",
-  "version": 1,
+  "blockNumber": 18083572,
+  "configHash": "0x531d27af4f5179bd7fc8fee683e587407a9533354b61975e145879783a37e3e5",
+  "version": 2,
   "contracts": [
     {
       "name": "ProxyAdminBridgeV2",
@@ -55,7 +55,7 @@
           "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971"
         ],
         "getThreshold": 3,
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -70,12 +70,13 @@
       },
       "values": {
         "currentChainId": 1,
-        "mpc": "0xF604dAb41244EB741d8d380713d1ab67209c24DA",
-        "newMPC": "0xF604dAb41244EB741d8d380713d1ab67209c24DA",
-        "newMPCEffectiveTime": 1690874051,
-        "oldMPC": "0x28774891e1c690cb292A905f6288958C974f7EFf",
+        "mpc": "0xbC4671Aefe4228caAa0Eca1aA588843039e6b14A",
+        "newMPC": "0xbC4671Aefe4228caAa0Eca1aA588843039e6b14A",
+        "newMPCEffectiveTime": 1694009171,
+        "oldMPC": "0x725E8FEF3A9f20AfCB1393996b1c1B760BCa72f5",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
-      }
+      },
+      "derivedName": "BridgeV2"
     },
     {
       "name": "Portal",
@@ -90,7 +91,7 @@
         "metaRouter": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 2698,
+        "requestCount": 3662,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -120,13 +121,13 @@
   ],
   "eoas": [
     "0x0ee552336134B6f8F0a72927b6124f8A81865928",
-    "0x28774891e1c690cb292A905f6288958C974f7EFf",
     "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9",
     "0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F",
+    "0x725E8FEF3A9f20AfCB1393996b1c1B760BCa72f5",
     "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9",
     "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971",
-    "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e",
-    "0xF604dAb41244EB741d8d380713d1ab67209c24DA"
+    "0xbC4671Aefe4228caAa0Eca1aA588843039e6b14A",
+    "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e"
   ],
   "abis": {
     "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": [
