@@ -113,7 +113,9 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      // this is a workaround to ensure that an index will be used
+      // TODO: setup new index and get rid of those two lines
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -131,7 +133,9 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      // this is a workaround to ensure that an index will be used
+      // TODO: setup new index and get rid of those two lines
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -150,7 +154,9 @@ export class ReportRepository extends BaseRepository {
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      // this is a workaround to ensure that an index will be used
+      // TODO: setup new index and get rid of those two lines\d a
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)

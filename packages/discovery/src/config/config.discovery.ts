@@ -118,8 +118,6 @@ function getChainConfig(chainId: ChainId) {
         etherscanApiKey: getEnv('DISCOVERY_GNOSIS_ETHERSCAN_API_KEY'),
         etherscanUrl: 'https://api.gnosisscan.io/api',
       }
-    case ChainId.NMV:
-      throw new Error('NMV is not supported')
     default:
       throw new Error(`No config for chain: ${ChainId.getName(chainId)}`)
   }
