@@ -13,7 +13,6 @@ const upgradesProxy = {
 }
 
 export const aevo: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('aevo'),
   display: {
@@ -57,5 +56,14 @@ export const aevo: Layer2 = {
   },
   riskView: UNDER_REVIEW_RISK_VIEW,
   technology: TECHNOLOGY.UNDER_REVIEW,
-  contracts: CONTRACTS.UNDER_REVIEW,
+  contracts: {
+    addresses: [
+      discovery.getContractDetails('OptimismPortal', {
+        description:
+          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
+        ...upgradesProxy,
+      }),
+    ],
+    risks: []
+  } 
 }
