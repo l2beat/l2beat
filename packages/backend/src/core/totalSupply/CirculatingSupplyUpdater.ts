@@ -29,6 +29,7 @@ export class CirculatingSupplyUpdater {
     private readonly tokens: Token[],
     private readonly chainId: ChainId,
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -70,7 +71,9 @@ export class CirculatingSupplyUpdater {
   }
 
   async update() {
-    const from = this.clock.getFirstHour()
+    const from = this.clock.getFirstHour().gt(this.minTimestamp)
+      ? this.clock.getFirstHour()
+      : this.minTimestamp
     const to = this.clock.getLastHour()
 
     this.logger.info('Update started', { timestamp: to.toNumber() })
