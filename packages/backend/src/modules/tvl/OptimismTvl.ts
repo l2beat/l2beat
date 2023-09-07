@@ -41,6 +41,7 @@ export function createOptimismTvlSubmodule(
     circulatingSupplyTokens,
     ChainId.OPTIMISM,
     logger,
+    config.tvl.optimism.minBlockTimestamp,
   )
 
   const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(

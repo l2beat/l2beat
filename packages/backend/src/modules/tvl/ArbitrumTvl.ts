@@ -130,6 +130,7 @@ export function createArbitrumTvlSubmodule(
     circulatingSupplyTokens,
     ChainId.ARBITRUM,
     logger,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(
