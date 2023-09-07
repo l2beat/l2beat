@@ -1,7 +1,8 @@
 {
-  "updatedAt": "2023-09-04T13:29:04.780Z",
+  "updatedAt": "2023-09-07T12:01:31.471Z",
   "projects": {
     "across-v2": true,
+    "aevo": false,
     "allbridge": false,
     "amarok": true,
     "apex": true,
@@ -38,6 +39,7 @@
     "linea": true,
     "loopring": true,
     "lzomnichain": false,
+    "mantapacific": true,
     "mantle": true,
     "metis": true,
     "multichain": true,
@@ -103,6 +105,7 @@
     "0x07B6Eb9D3BE334098e5Af77185344BB3a34E0017": true,
     "0x081D1101855bD523bA69A9794e0217F0DB6323ff": true,
     "0x0876dFe4AcAe0e1c0a43302716483f5752298b71": true,
+    "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3": false,
     "0x09b276F9EcB83Fb6a37970e655863B04143Dc431": true,
     "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79": true,
     "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": true,
@@ -396,6 +399,7 @@
     "0x76983dfED43C7ae7ebB592A92Be2BE972cAE4348": true,
     "0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7": false,
     "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b": true,
+    "0x787A0ACaB02437c60Aafb1a29167A3609801e320": true,
     "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": true,
     "0x797161BCC625155D2302251404ccB93c2632658e": true,
     "0x79E559AC5b499A5676e28f0074e29763F6c2A27e": true,

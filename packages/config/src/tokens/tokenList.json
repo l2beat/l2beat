@@ -613,19 +613,6 @@
       "type": "CBV"
     },
     {
-      "id": "cusdt-compound-usdt",
-      "name": "Compound USDT",
-      "coingeckoId": "compound-usdt",
-      "address": "0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9",
-      "symbol": "cUSDT",
-      "decimals": 8,
-      "sinceTimestamp": 1586985186,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/11621/large/cUSDT.png?1592113270",
-      "chainId": 1,
-      "type": "CBV"
-    },
-    {
       "id": "cwbtc-compound-wrapped-btc",
       "name": "Compound Wrapped BTC",
       "coingeckoId": "compound-wrapped-btc",

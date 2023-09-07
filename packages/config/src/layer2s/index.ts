@@ -1,3 +1,4 @@
+import { aevo } from './aevo'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
@@ -51,6 +52,7 @@ export * from './common'
 export * from './types'
 
 export const layer2s: Layer2[] = [
+  aevo,
   apex,
   arbitrum,
   aztec,
