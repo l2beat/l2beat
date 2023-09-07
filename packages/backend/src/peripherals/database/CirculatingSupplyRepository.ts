@@ -44,10 +44,7 @@ export class CirculatingSupplyRepository extends BaseRepository {
 
     const rows = circulatingSupplies.map(toRow)
     const knex = await this.knex()
-    await knex('circulating_supplies')
-      .insert(rows)
-      .onConflict(['chain_id', 'unix_timestamp', 'asset_id'])
-      .merge()
+    await knex.batchInsert('circulating_supplies', rows, 10_000)
     return rows.length
   }
 
