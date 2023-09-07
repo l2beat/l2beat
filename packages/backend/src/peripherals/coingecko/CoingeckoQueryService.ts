@@ -109,7 +109,10 @@ export class CoingeckoQueryService {
         to,
         address,
       )
-      assert(data.prices.length > 0, "Can't get data from Coingecko")
+      assert(
+        data.prices.length > 0,
+        `Can't get data from Coingecko for ${coingeckoId.toString()} from ${from.toNumber()} to ${to.toNumber()}`,
+      )
       return data
     } else {
       const results = await Promise.allSettled(
@@ -133,7 +136,7 @@ export class CoingeckoQueryService {
         if (result.status === 'fulfilled') {
           assert(
             result.value.prices.length > 0,
-            "Can't get data from Coingecko",
+            `Can't get data from Coingecko for ${coingeckoId.toString()} from ${from.toNumber()} to ${to.toNumber()} (one of batches)`,
           )
 
           marketChartRangeData.prices.push(...result.value.prices)
