@@ -26,8 +26,9 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
-import { TvlDatabase } from './types'
 import { createOptimismTvlSubmodule } from './OptimismTvl'
+import { TvlDatabase } from './types'
+import { CirculatingSupplyRepository } from '../../peripherals/database/CirculatingSupplyRepository'
 
 export function createTvlModule(
   config: Config,
@@ -59,6 +60,10 @@ export function createTvlModule(
     balanceStatusRepository: new BalanceStatusRepository(database, logger),
     totalSupplyRepository: new TotalSupplyRepository(database, logger),
     totalSupplyStatusRepository: new TotalSupplyStatusRepository(
+      database,
+      logger,
+    ),
+    circulatingSupplyRepository: new CirculatingSupplyRepository(
       database,
       logger,
     ),

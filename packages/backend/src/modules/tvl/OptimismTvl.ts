@@ -6,9 +6,9 @@ import { CirculatingSupplyFormulaUpdater } from '../../core/assets/CirculatingSu
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupplyUpdater'
+import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 
 export function createOptimismTvlSubmodule(
   db: TvlDatabase,
