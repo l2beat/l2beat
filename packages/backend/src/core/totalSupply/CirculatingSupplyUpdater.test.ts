@@ -165,7 +165,7 @@ describe(CirculatingSupplyUpdater.name, () => {
               [tokens[1].id, { earliest: HOUR_09, latest: HOUR_12 }],
             ]),
           ),
-          addOrUpdateMany: mockFn().returns([]),
+          addMany: mockFn().returns([]),
         })
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
@@ -241,7 +241,7 @@ describe(CirculatingSupplyUpdater.name, () => {
       const CirculatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
           findDataBoundaries: mockFn().returns(new Map([])),
-          addOrUpdateMany: mockFn().returns([]),
+          addMany: mockFn().returns([]),
         })
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
@@ -291,7 +291,7 @@ describe(CirculatingSupplyUpdater.name, () => {
       const CirculatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
           findDataBoundaries: mockFn().returns(new Map()),
-          addOrUpdateMany: mockFn().returns([]),
+          addMany: mockFn().returns([]),
         })
       coingeckoQueryService = mockObject<CoingeckoQueryService>({
         getCirculatingSupplies: mockFn().returns([]),
@@ -447,7 +447,7 @@ describe(CirculatingSupplyUpdater.name, () => {
 
       const circulatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
-          addOrUpdateMany: mockFn().returns([]),
+          addMany: mockFn().returns([]),
         })
       const tokens = [fakeToken(AssetId('uni-uniswap'))]
 
@@ -477,9 +477,7 @@ describe(CirculatingSupplyUpdater.name, () => {
         undefined,
       )
 
-      expect(
-        circulatingSupplyRepository.addOrUpdateMany,
-      ).toHaveBeenOnlyCalledWith([
+      expect(circulatingSupplyRepository.addMany).toHaveBeenOnlyCalledWith([
         {
           assetId: tokens[0].id,
           circulatingSupply: 100,
