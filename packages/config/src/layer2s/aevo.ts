@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, TECHNOLOGY } from './common'
+import { TECHNOLOGY } from './common'
 import { UNDER_REVIEW_RISK_VIEW } from './common/riskView'
 import { Layer2 } from './types'
 
@@ -64,6 +64,6 @@ export const aevo: Layer2 = {
         ...upgradesProxy,
       }),
     ],
-    risks: []
-  } 
+    risks: [],
+  },
 }
