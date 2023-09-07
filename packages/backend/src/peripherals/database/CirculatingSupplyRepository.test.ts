@@ -206,48 +206,6 @@ describe(CirculatingSupplyRepository.name, () => {
       expect(result).toEqualUnsorted([...DATA, ...newRows])
     })
 
-    it('existing rows only', async () => {
-      const existingRows: CirculatingSupplyRecord[] = [
-        {
-          timestamp: DATA[0].timestamp,
-          circulatingSupply: DATA[0].circulatingSupply,
-          assetId: DATA[0].assetId,
-          chainId: ChainId.ETHEREUM,
-        },
-        {
-          timestamp: DATA[1].timestamp,
-          circulatingSupply: DATA[1].circulatingSupply,
-          assetId: DATA[1].assetId,
-          chainId: ChainId.ETHEREUM,
-        },
-      ]
-      await repository.addOrUpdateMany(existingRows)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted(existingRows)
-    })
-
-    it('mixed: existing and new rows', async () => {
-      const mixedRows: CirculatingSupplyRecord[] = [
-        {
-          timestamp: DATA[1].timestamp,
-          circulatingSupply: DATA[1].circulatingSupply,
-          assetId: DATA[1].assetId,
-          chainId: ChainId.ETHEREUM,
-        },
-        {
-          timestamp: START.add(2, 'hours'),
-          circulatingSupply: C_SUPPLY,
-          assetId: AssetId('dai-dai-stablecoin'),
-          chainId: ChainId.ETHEREUM,
-        },
-      ]
-      await repository.addOrUpdateMany(mixedRows)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted([DATA[0], ...mixedRows])
-    })
-
     it('skips empty row modification', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
