@@ -14,6 +14,7 @@ function extractTokens(tokens: Token[]) {
       sinceTimestamp: t.sinceTimestamp.toNumber(),
       decimals: t.decimals,
       formula: t.formula,
+      type: t.type,
     }
   })
 }
