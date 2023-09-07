@@ -6,9 +6,9 @@ import { CirculatingSupplyFormulaUpdater } from '../../core/assets/CirculatingSu
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupplyUpdater'
-import { CoingeckoCirculatingSupplyProvider } from '../../core/totalSupply/providers/CoingeckoCirculatingSupplyProvider'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
+import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 
 export function createOptimismTvlSubmodule(
   db: TvlDatabase,
@@ -25,6 +25,7 @@ export function createOptimismTvlSubmodule(
 
   // #region peripherals
   const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
+  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
   // #endregion
 
   // #region updaters
@@ -33,18 +34,13 @@ export function createOptimismTvlSubmodule(
     (t) => t.chainId === ChainId.OPTIMISM && t.formula === 'circulatingSupply',
   )
 
-  const coingeckoCirculatingSupplyProvider =
-    new CoingeckoCirculatingSupplyProvider(coingeckoClient, ChainId.OPTIMISM)
-
   const circulatingSupplyUpdater = new CirculatingSupplyUpdater(
-    coingeckoCirculatingSupplyProvider,
+    coingeckoQueryService,
     db.circulatingSupplyRepository,
-    db.circulatingSupplyStatusRepository,
     clock,
     circulatingSupplyTokens,
-    logger,
     ChainId.OPTIMISM,
-    config.tvl.optimism.minBlockTimestamp,
+    logger,
   )
 
   const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(
@@ -66,7 +62,7 @@ export function createOptimismTvlSubmodule(
     logger = logger.for('OptimismTvlModule')
     logger.info('Starting')
 
-    await circulatingSupplyUpdater.start()
+    circulatingSupplyUpdater.start()
     await circulatingSupplyFormulaUpdater.start()
 
     logger.info('Started')
