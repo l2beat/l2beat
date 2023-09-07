@@ -73,23 +73,17 @@ export class ReportRepository extends BaseRepository {
     assert(timestampsMatch, 'Timestamps must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
-    await knex.transaction(async (trx) => {
-      await trx('reports')
-        .where('unix_timestamp', rows[0].unix_timestamp)
-        .andWhere('report_type', rows[0].report_type)
-        .andWhere('chain_id', rows[0].chain_id)
-        .delete()
-      await trx('reports')
-        .insert(rows)
-        .onConflict([
-          'unix_timestamp',
-          'project_id',
-          'asset_id',
-          'chain_id',
-          'report_type',
-        ])
-        .merge()
-    })
+    await knex('reports')
+      .insert(rows)
+      .onConflict([
+        'unix_timestamp',
+        'project_id',
+        'asset_id',
+        'chain_id',
+        'report_type',
+      ])
+      .merge()
+
     return rows.length
   }
 
