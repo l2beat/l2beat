@@ -3,7 +3,8 @@ import {
   assert,
   ChainId,
   Hash256,
-  hashJson,
+  ProjectId,
+  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
@@ -16,42 +17,50 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { genArbTokenReport } from '../reports/custom/arbitrum'
-import { genOpTokenReport } from '../reports/custom/optimism'
+import { createFormulaReports } from '../reports/createFormulaReports'
+import { getTokensConfigHash } from '../reports/getTokensConfigHash'
+import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
-// Last updated because: updated OP token balance
-const LOGIC_VERSION = 1
-export const NATIVE_ASSET_CONFIG_HASH = hashJson(LOGIC_VERSION)
-
-export class NMVUpdater implements AssetUpdater {
+export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
+    private readonly circulatingSupplyUpdater: CirculatingSupplyUpdater,
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly projectId: ProjectId,
+    private readonly chainId: ChainId,
     private readonly clock: Clock,
+    private readonly tokens: Token[],
     private readonly logger: Logger,
     private readonly minTimestamp: UnixTime,
   ) {
+    assert(
+      tokens.every(
+        (token) =>
+          token.chainId === this.chainId &&
+          token.formula === 'circulatingSupply',
+      ),
+      'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
+    )
     this.logger = this.logger.for(this)
-
-    this.configHash = NATIVE_ASSET_CONFIG_HASH
+    this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: NMVUpdater.name,
+        metricsId: CirculatingSupplyFormulaUpdater.name,
       },
     )
   }
 
   getChainId() {
-    return ChainId.NMV
+    return this.chainId
   }
 
   getConfigHash() {
@@ -64,9 +73,8 @@ export class NMVUpdater implements AssetUpdater {
 
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
-      this.configHash,
-      this.getChainId(),
-      'NMV',
+      this.getConfigHash(),
+      this.chainId,
     )
 
     for (const timestamp of known) {
@@ -91,25 +99,29 @@ export class NMVUpdater implements AssetUpdater {
     )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const prices = await this.priceUpdater.getPricesWhenReady(timestamp)
-    this.logger.debug('Prices ready')
 
-    const reports: ReportRecord[] = []
-    reports.push(...genOpTokenReport(prices, timestamp))
-    reports.push(...genArbTokenReport(prices, timestamp))
-
+    const [prices, circulatingSupplies] = await Promise.all([
+      this.priceUpdater.getPricesWhenReady(timestamp),
+      this.circulatingSupplyUpdater.getCirculatingSuppliesWhenReady(timestamp),
+    ])
+    this.logger.debug('Prices and supplies ready')
+    const reports = createFormulaReports(
+      prices,
+      circulatingSupplies,
+      this.tokens,
+      this.projectId,
+      this.chainId,
+    )
     await this.reportRepository.addOrUpdateMany(reports)
 
-    // TODO(radomski): chainId should correctly represent OP/ARB
     await this.reportStatusRepository.add({
-      configHash: this.configHash,
+      configHash: this.getConfigHash(),
       timestamp,
-      chainId: this.getChainId(),
-      reportType: 'NMV',
+      chainId: this.chainId,
     })
 
     this.knownSet.add(timestamp.toNumber())
-    this.logger.info('Asset updated', { timestamp: timestamp.toNumber() })
+    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
   }
 
   async getReportsWhenReady(
@@ -127,10 +139,26 @@ export class NMVUpdater implements AssetUpdater {
       })
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestampAndPreciseAsset(
+
+    const canonical = await this.reportRepository.getByTimestampAndPreciseAsset(
+      timestamp,
+      this.getChainId(),
+      'CBV',
+    )
+
+    const external = await this.reportRepository.getByTimestampAndPreciseAsset(
+      timestamp,
+      this.getChainId(),
+      'EBV',
+    )
+
+    const native = await this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
       'NMV',
     )
+
+    const all = canonical.concat(external).concat(native)
+    return all.filter((t) => this.tokens.some((m) => m.id === t.asset))
   }
 }

@@ -1,9 +1,9 @@
 import { DiscoveryConfig } from '@l2beat/discovery'
-import {
+import type {
   ContractParameters,
   DiscoveryOutput,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+} from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { abiToArray } from './dashboardContracts/abiToArray'

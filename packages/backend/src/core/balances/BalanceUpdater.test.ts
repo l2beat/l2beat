@@ -312,6 +312,7 @@ describe(BalanceUpdater.name, () => {
       category: 'other',
       chainId: ChainId.ETHEREUM,
       type: 'CBV',
+      formula: 'locked',
     }
   }
 })

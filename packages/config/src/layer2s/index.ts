@@ -1,3 +1,4 @@
+import { aevo } from './aevo'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
@@ -21,6 +22,7 @@ import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { linea } from './linea'
 import { loopring } from './loopring'
+import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metis } from './metis'
 import { myria } from './myria'
@@ -50,6 +52,7 @@ export * from './common'
 export * from './types'
 
 export const layer2s: Layer2[] = [
+  aevo,
   apex,
   arbitrum,
   aztec,
@@ -72,6 +75,7 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   linea,
   loopring,
+  mantapacific,
   mantle,
   metis,
   myria,

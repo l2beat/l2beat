@@ -21,32 +21,6 @@ describe(ReportRepository.name, () => {
   })
 
   describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
-    it('replaces existing records', async () => {
-      const REPORTS_1 = [
-        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, amount: 1n }),
-        fakeReport({ asset: AssetId.ETH, timestamp: TIME_1, amount: 1n }),
-        fakeReport({
-          projectId: ProjectId('arbitrum'),
-          asset: AssetId.ETH,
-          timestamp: TIME_1,
-          amount: 1n,
-        }),
-      ]
-      await repository.addOrUpdateMany(REPORTS_1)
-      expect(await repository.getAll()).toEqual(REPORTS_1)
-      const REPORTS_2 = [
-        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, amount: 2n }),
-        fakeReport({
-          projectId: ProjectId('dydx'),
-          asset: AssetId.ETH,
-          timestamp: TIME_1,
-          amount: 2n,
-        }),
-      ]
-      await repository.addOrUpdateMany(REPORTS_2)
-      expect(await repository.getAll()).toEqual(REPORTS_2)
-    })
-
     it('handles empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })

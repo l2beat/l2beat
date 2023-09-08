@@ -1,9 +1,9 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 17825487,
+  "blockNumber": 17990763,
   "configHash": "0x6bb2f6515f379bd9f658e5b42d44ee08d430d26deee0c258699a59d81ffd4731",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "BridgeGovernance",
@@ -19,7 +19,7 @@
           "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
           "0xb8173f558f75EE263013fd6294177bf75279a21e",
           "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
-          "0x262d23a2d916f6CF08e0235315aA51E22d142d0b",
+          "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E",
           "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c",
           "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9",
           "0x0101016044726994aFd16f4A99f0d960090D35e7",
@@ -34,7 +34,7 @@
           "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
         ],
         "getThreshold": 8,
-        "nonce": 76,
+        "nonce": 78,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -55,7 +55,7 @@
           "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0"
         ],
         "getThreshold": 1,
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -207,7 +207,6 @@
     "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9",
     "0x2408F8a0475D3823A1F4A4bfD86B2a4B80E6eDB6",
     "0x258667E543C913264388B33328337257aF208a8f",
-    "0x262d23a2d916f6CF08e0235315aA51E22d142d0b",
     "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0",
     "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6",
     "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
@@ -220,6 +219,7 @@
     "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
     "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
     "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c",
+    "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E",
     "0xb8173f558f75EE263013fd6294177bf75279a21e",
     "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
     "0xBF3d6f830CE263CAE987193982192Cd990442B53",

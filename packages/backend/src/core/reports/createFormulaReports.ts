@@ -1,15 +1,14 @@
 import { assert, AssetId, ChainId, ProjectId, Token } from '@l2beat/shared-pure'
 
-import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
+import { CirculatingSupplyRecord } from '../../peripherals/database/CirculatingSupplyRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
 import { BalancePerProject, createReport } from './createReport'
 
-export function createEBVReports(
+export function createFormulaReports(
   prices: PriceRecord[],
-  balances: BalanceRecord[],
-  totalSupplies: TotalSupplyRecord[],
+  records: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   projectId: ProjectId,
   chainId: ChainId,
@@ -23,8 +22,7 @@ export function createEBVReports(
 
   const balancesPerProject = transformBalances(
     projectId,
-    balances,
-    totalSupplies,
+    records,
     tokens,
     chainId,
   )
@@ -41,20 +39,16 @@ export function createEBVReports(
   return reports
 }
 
-function transformBalances(
+export function transformBalances(
   projectId: ProjectId,
-  balances: BalanceRecord[],
-  totalSupplies: TotalSupplyRecord[],
+  records: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   chainId: ChainId,
 ): BalancePerProject[] {
   const result: BalancePerProject[] = []
 
-  for (const { id, sinceTimestamp, decimals } of tokens) {
-    const assetBalances = balances.filter(
-      (b) => b.assetId === id && b.timestamp.gte(sinceTimestamp),
-    )
-    const assetSupplies = totalSupplies.filter(
+  for (const { id, sinceTimestamp, decimals, type } of tokens) {
+    const assetSupplies = records.filter(
       (s) => s.assetId === id && s.timestamp.gte(sinceTimestamp),
     )
 
@@ -63,31 +57,25 @@ function transformBalances(
       'Expected only one supply asset, delete this if you are adding a new one',
     )
 
-    const chainIdsMatch =
-      assetBalances.every((b) => b.chainId === chainId) &&
-      assetSupplies.every((b) => b.chainId === chainId)
+    const chainIdsMatch = assetSupplies.every((b) => b.chainId === chainId)
     assert(chainIdsMatch, 'ChainIds do not match for a given asset balance')
 
-    const totalBalance = assetSupplies.reduce(
-      (acc, { totalSupply }) => acc + totalSupply,
-      0n,
-    )
-    const premintBalance = assetBalances.reduce(
-      (acc, { balance }) => acc + balance,
-      0n,
-    )
-
-    assert(
-      totalBalance >= premintBalance,
-      'Total supply has to be bigger than premint balance',
-    )
+    const totalBalance = assetSupplies
+      .map((s) =>
+        'totalSupply' in s
+          ? s.totalSupply
+          : 'circulatingSupply' in s
+          ? BigInt(s.circulatingSupply) * 10n ** BigInt(decimals)
+          : 0n,
+      )
+      .reduce((acc, totalSupply) => acc + totalSupply, 0n)
 
     result.push({
       projectId,
       chainId,
-      balance: totalBalance - premintBalance,
+      balance: totalBalance,
       assetId: id,
-      type: 'EBV',
+      type,
       decimals: decimals,
     })
   }

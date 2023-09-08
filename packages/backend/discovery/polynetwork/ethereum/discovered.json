@@ -1,9 +1,9 @@
 {
   "name": "polynetwork",
   "chain": "ethereum",
-  "blockNumber": 17968844,
-  "configHash": "0x6054c524ccccad7afaf57d6f0bb19e8a3784f0813f0d685eb0632ae1fff4d803",
-  "version": 1,
+  "blockNumber": 17990915,
+  "configHash": "0xb4ebc7a036e1e73ccda66a209d0cd9ed093e26866e1fd84957422a1674e6cb24",
+  "version": 2,
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -45,6 +45,19 @@
         "owner": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
       },
       "derivedName": ""
+    },
+    {
+      "name": "Lock Proxy 7",
+      "address": "0x51ba447DaD1de30b91286471BcB570F69ECE968D",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "isOwner": false,
+        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
+      },
+      "derivedName": "LockProxy"
     },
     {
       "name": "Lock Proxy 4",
@@ -106,7 +119,7 @@
         "chainId": 2,
         "feeCollector": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "isOwner": false,
-        "maxLockProxyIndex": 6,
+        "maxLockProxyIndex": 7,
         "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "paused": false,
         "lockProxyIndexMap": [
@@ -115,7 +128,8 @@
           "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
           "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
           "0xf6378141BC900020a438F3914e4C3ceA29907b27",
-          "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC"
+          "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
+          "0x51ba447DaD1de30b91286471BcB570F69ECE968D"
         ]
       },
       "derivedName": "PolyWrapper"
@@ -127,8 +141,8 @@
         "type": "immutable"
       },
       "values": {
-        "EthToPolyTxHashIndex": 70232,
-        "getEthTxHashIndex": 70232,
+        "EthToPolyTxHashIndex": 70252,
+        "getEthTxHashIndex": 70252,
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "paused": false
@@ -192,6 +206,27 @@
       "function whiteLister() view returns (address)"
     ],
     "0x250e76987d838a75310c34bf422ea9f1AC4Cc906": [
+      "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
+      "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
+      "event LockEvent(address fromAssetHash, address fromAddress, uint64 toChainId, bytes toAssetHash, bytes toAddress, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetManagerProxyEvent(address manager)",
+      "event UnlockEvent(address toAssetHash, address toAddress, uint256 amount)",
+      "function assetHashMap(address, uint64) view returns (bytes)",
+      "function bindAssetHash(address fromAssetHash, uint64 toChainId, bytes toAssetHash) returns (bool)",
+      "function bindProxyHash(uint64 toChainId, bytes targetProxyHash) returns (bool)",
+      "function getBalanceFor(address fromAssetHash) view returns (uint256)",
+      "function isOwner() view returns (bool)",
+      "function lock(address fromAssetHash, uint64 toChainId, bytes toAddress, uint256 amount) payable returns (bool)",
+      "function managerProxyContract() view returns (address)",
+      "function owner() view returns (address)",
+      "function proxyHashMap(uint64) view returns (bytes)",
+      "function renounceOwnership()",
+      "function setManagerProxy(address ethCCMProxyAddr)",
+      "function transferOwnership(address newOwner)",
+      "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
+    ],
+    "0x51ba447DaD1de30b91286471BcB570F69ECE968D": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
       "event LockEvent(address fromAssetHash, address fromAddress, uint64 toChainId, bytes toAssetHash, bytes toAddress, uint256 amount)",

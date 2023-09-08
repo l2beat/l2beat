@@ -1,3 +1,5 @@
+import { LocalStorage } from './local-storage/LocalStorage'
+
 export function configureCanonicalBridgesFilter() {
   const L2s = Array.from(
     document.querySelectorAll<HTMLElement>('[data-layer2]'),
@@ -12,16 +14,29 @@ export function configureCanonicalBridgesFilter() {
   const combinedCheckbox = document.querySelector<HTMLInputElement>(
     '#combined-bridges-checkbox',
   )
+  if (!combinedCheckbox) {
+    return
+  }
 
-  combinedCheckbox?.addEventListener('change', () => {
+  const manageTableRowsVisibility = (isCheckboxChecked: boolean) => {
     bridgesOnlyCells.forEach((x) =>
-      x.classList.toggle('hidden', combinedCheckbox.checked),
+      x.classList.toggle('hidden', isCheckboxChecked),
     )
     combinedOnlyCells.forEach((x) =>
-      x.classList.toggle('hidden', !combinedCheckbox.checked),
+      x.classList.toggle('hidden', !isCheckboxChecked),
     )
     L2s.forEach((x) => {
-      x.classList.toggle('hidden', !combinedCheckbox.checked)
+      x.classList.toggle('hidden', !isCheckboxChecked)
     })
+  }
+
+  const isChecked = !!LocalStorage.getItem('combined-bridges-checked')
+  combinedCheckbox.checked = isChecked
+  combinedCheckbox.dispatchEvent(new Event('change'))
+  manageTableRowsVisibility(isChecked)
+
+  combinedCheckbox.addEventListener('change', () => {
+    LocalStorage.setItem('combined-bridges-checked', combinedCheckbox.checked)
+    manageTableRowsVisibility(combinedCheckbox.checked)
   })
 }

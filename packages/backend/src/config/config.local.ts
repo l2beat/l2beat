@@ -19,6 +19,7 @@ export function getLocalConfig(): Config {
   )
   const ethereumTvlEnabled = getEnv.boolean('ETHEREUM_TVL_ENABLED', true)
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
+  const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
@@ -69,6 +70,9 @@ export function getLocalConfig(): Config {
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+      optimism: optimismTvlEnabled && {
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },

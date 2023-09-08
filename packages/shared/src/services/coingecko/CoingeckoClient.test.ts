@@ -156,19 +156,19 @@ describe(CoingeckoClient.name, () => {
     }
     const MOCK_TRANSFORMED_DATA: CoinMarketChartRangeData = {
       prices: [
-        { date: new Date(1592611200000), price: 228.9592128032193 },
-        { date: new Date(1592697600000), price: 228.8691487972198 },
-        { date: new Date(1592784000000), price: 227.79190590968685 },
+        { date: new Date(1592611200000), value: 228.9592128032193 },
+        { date: new Date(1592697600000), value: 228.8691487972198 },
+        { date: new Date(1592784000000), value: 227.79190590968685 },
       ],
       marketCaps: [
-        { date: new Date(1592611200000), marketCap: 25534271650.26011 },
-        { date: new Date(1592697600000), marketCap: 25501270877.342506 },
-        { date: new Date(1592784000000), marketCap: 25381090910.620564 },
+        { date: new Date(1592611200000), value: 25534271650.26011 },
+        { date: new Date(1592697600000), value: 25501270877.342506 },
+        { date: new Date(1592784000000), value: 25381090910.620564 },
       ],
       totalVolumes: [
-        { date: new Date(1592611200000), totalVolume: 6840801770.229276 },
-        { date: new Date(1592697600000), totalVolume: 5400222130.457475 },
-        { date: new Date(1592784000000), totalVolume: 4995955268.45639 },
+        { date: new Date(1592611200000), value: 6840801770.229276 },
+        { date: new Date(1592697600000), value: 5400222130.457475 },
+        { date: new Date(1592784000000), value: 4995955268.45639 },
       ],
     }
 

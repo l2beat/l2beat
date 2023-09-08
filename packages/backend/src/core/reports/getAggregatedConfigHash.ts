@@ -3,7 +3,8 @@ import { sortBy } from 'lodash'
 
 import { AssetUpdater } from '../assets'
 
-const AGGREGATED_REPORT_LOGIC_VERSION = 1
+// removed the OP & ARB hardcoded reports
+const AGGREGATED_REPORT_LOGIC_VERSION = 3
 
 export function getAggregatedConfigHash(updaters: AssetUpdater[]) {
   const chainIds = sortBy(updaters.map((x) => x.getChainId()))

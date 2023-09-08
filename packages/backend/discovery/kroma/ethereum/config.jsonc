@@ -1,0 +1,59 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "kroma",
+  "initialAddresses": [
+    "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
+    "0x827962404D7104202C5aaa6b929115C8211d9596"
+  ],
+  "names": {
+    "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de": "KromaPortal",
+    "0x827962404D7104202C5aaa6b929115C8211d9596": "L1StandardBridge",
+    "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6": "L2OutputOracle",
+    "0x3de211088dF516da72efe68D386b561BEE256Ec4": "SecurityCouncil",
+    "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746": "L1CrossDomainMessenger",
+    "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a": "Colosseum",
+    "0xFdFF462845953D90719A78Fd12a2d103541d2103": "ValidatorPool"
+  },
+  "overrides": {
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "computeL2Timestamp",
+        "finalizedAt",
+        "getL2Output",
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getSubmitter",
+        "isFinalized"
+      ],
+      "ignoreInWatchMode": [
+        "latestBlockNumber",
+        "latestOutputIndex",
+        "nextBlockNumber",
+        "nextOutputIndex"
+      ]
+    },
+    "KromaPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "SecurityCouncil": {
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "outputsDeleteRequested",
+        "transactions"
+      ]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "Colosseum": {
+      "ignoreMethods": ["isInCreationPeriod"]
+    },
+    "ValidatorPool": {
+      "ignoreMethods": ["getBond"]
+    }
+  }
+}
