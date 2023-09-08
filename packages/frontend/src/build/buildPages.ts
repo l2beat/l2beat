@@ -42,7 +42,7 @@ async function main() {
   if (config.features.activity) {
     activityApiResponse = await fetchActivityApi(config.backend, http)
     printActivityInfo(activityApiResponse)
-    // activitySanityCheck(activityApiResponse)
+    activitySanityCheck(activityApiResponse)
   }
 
   createApi(config, tvlApiResponse, activityApiResponse)
