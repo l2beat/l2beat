@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18090206,
-  "configHash": "0x6734423f80126ab029bf01f148b3dddc762ae84fc24345c92c27a12242c56dcf",
+  "blockNumber": 18092408,
+  "configHash": "0x15416412b322113990c2cb6bae513e96dfe007828772bf6a9bd1aeb9f52611cd",
   "version": 2,
   "contracts": [
     {
@@ -16,7 +16,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622889",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622898",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -84,7 +84,6 @@
     {
       "name": "OptimismPortal",
       "address": "0x787A0ACaB02437c60Aafb1a29167A3609801e320",
-      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3",
@@ -93,9 +92,13 @@
       "values": {
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
-        "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca"
+        "l2Sender": "0x000000000000000000000000000000000000dEaD",
+        "params": [1000000000, 694997, 18092090],
+        "paused": false,
+        "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
+        "version": "1.7.2"
       },
-      "derivedName": ""
+      "derivedName": "OptimismPortal"
     },
     {
       "name": "AddressManager",
@@ -120,10 +123,10 @@
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 1495800,
-        "latestOutputIndex": 2492,
-        "nextBlockNumber": 1496400,
-        "nextOutputIndex": 2493,
+        "latestBlockNumber": 1498800,
+        "latestOutputIndex": 2497,
+        "nextBlockNumber": 1499400,
+        "nextOutputIndex": 2498,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -164,6 +167,7 @@
     }
   ],
   "eoas": [
+    "0x000000000000000000000000000000000000dEaD",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -174,6 +178,33 @@
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
   ],
   "abis": {
+    "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3": [
+      "constructor(address _l2Oracle, address _guardian, bool _paused, address _config)",
+      "event Initialized(uint8 version)",
+      "event Paused(address account)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event Unpaused(address account)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "function GUARDIAN() view returns (address)",
+      "function L2_ORACLE() view returns (address)",
+      "function SYSTEM_CONFIG() view returns (address)",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function initialize(bool _paused)",
+      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function unpause()",
+      "function version() view returns (string)"
+    ],
     "0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f": [
       "constructor(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
       "event Initialized(uint8 version)",
