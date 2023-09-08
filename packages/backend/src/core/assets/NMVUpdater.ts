@@ -3,7 +3,7 @@ import {
   assert,
   ChainId,
   Hash256,
-  ProjectId,
+  hashJson,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
@@ -13,45 +13,45 @@ import {
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createReports } from '../reports/createReports'
-import { ARB_TOKEN_ID } from '../reports/custom/arbitrum'
-import { OP_TOKEN_ID } from '../reports/custom/optimism'
-import { getReportConfigHash } from '../reports/getReportConfigHash'
-import { ReportProject } from '../reports/ReportProject'
+import { genArbTokenReport } from '../reports/custom/arbitrum'
+import { genOpTokenReport } from '../reports/custom/optimism'
 import { AssetUpdater } from './AssetUpdater'
 
-export class CBVUpdater implements AssetUpdater {
+// Last updated because: updated OP token balance
+const LOGIC_VERSION = 1
+export const NATIVE_ASSET_CONFIG_HASH = hashJson(LOGIC_VERSION)
+
+export class NMVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
-    private readonly balanceUpdater: BalanceUpdater,
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
-    private readonly projects: ReportProject[],
     private readonly logger: Logger,
     private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
-    // TODO(radomski): This config hash should be generated from only CBV projects
-    this.configHash = getReportConfigHash(projects)
+
+    this.configHash = NATIVE_ASSET_CONFIG_HASH
+
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: CBVUpdater.name,
+        metricsId: NMVUpdater.name,
       },
     )
   }
+
   getChainId() {
-    return ChainId.ETHEREUM
+    return ChainId.NMV
   }
 
   getConfigHash() {
@@ -67,6 +67,7 @@ export class CBVUpdater implements AssetUpdater {
       this.configHash,
       this.getChainId(),
     )
+
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
     }
@@ -89,23 +90,16 @@ export class CBVUpdater implements AssetUpdater {
     )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const [prices, balances] = await Promise.all([
-      this.priceUpdater.getPricesWhenReady(timestamp),
-      this.balanceUpdater.getBalancesWhenReady(timestamp),
-    ])
-    this.logger.debug('Prices and balances ready')
+    const prices = await this.priceUpdater.getPricesWhenReady(timestamp)
+    this.logger.debug('Prices ready')
 
-    let reports = createReports(
-      prices,
-      balances,
-      this.projects,
-      this.getChainId(),
-    )
-    // TODO(radomski): This really needs to be refactored
-    reports = filterOutNVMReports(reports)
+    const reports: ReportRecord[] = []
+    reports.push(...genOpTokenReport(prices, timestamp))
+    reports.push(...genArbTokenReport(prices, timestamp))
 
     await this.reportRepository.addOrUpdateMany(reports)
 
+    // TODO(radomski): chainId should correctly represent OP/ARB
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
@@ -113,7 +107,7 @@ export class CBVUpdater implements AssetUpdater {
     })
 
     this.knownSet.add(timestamp.toNumber())
-    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+    this.logger.info('Asset updated', { timestamp: timestamp.toNumber() })
   }
 
   async getReportsWhenReady(
@@ -134,17 +128,7 @@ export class CBVUpdater implements AssetUpdater {
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      'CBV',
+      'NMV',
     )
   }
-}
-
-function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
-  return reports.filter((r) => {
-    const isOpNative =
-      r.asset === OP_TOKEN_ID && r.projectId === ProjectId.OPTIMISM
-    const isArbNative =
-      r.asset === ARB_TOKEN_ID && r.projectId === ProjectId.ARBITRUM
-    return !isOpNative && !isArbNative
-  })
 }

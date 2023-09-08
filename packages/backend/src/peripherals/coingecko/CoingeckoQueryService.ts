@@ -79,9 +79,6 @@ export class CoingeckoQueryService {
     const result: QueryResultPoint[] = []
 
     for (let i = 0; i < timestamps.length; i++) {
-      if (timestamps[i].lt(from)) {
-        continue
-      }
       const price = pickedPrices[i].value
       const marketCap = pickedMarketCaps[i].value
 
@@ -240,7 +237,6 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
 // e.g. 123456789 -> 123450000
 export function approximateCirculatingSupply(marketCap: number, price: number) {
   const circulatingSupplyRaw = marketCap / price
-
   assert(
     circulatingSupplyRaw >= 1,
     'Circulating supply cannot be less than one',
