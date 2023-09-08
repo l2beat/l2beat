@@ -59,6 +59,7 @@ const CHAIN_IDS = {
   8453: 'base',
   1101: 'polygon-zkevm',
   100: 'gnosis',
+  '-1': 'native',
 } as const
 
 ChainId.ETHEREUM = chainIdFromName('ethereum')
@@ -72,3 +73,4 @@ ChainId.LINEA = chainIdFromName('linea')
 ChainId.BASE = chainIdFromName('base')
 ChainId.POLYGON_ZKEVM = chainIdFromName('polygon-zkevm')
 ChainId.GNOSIS = chainIdFromName('gnosis')
+ChainId.NMV = chainIdFromName('native')
