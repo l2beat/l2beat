@@ -40,7 +40,7 @@ export const kroma: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   stage: {
-      stage: 'UnderReview'
+    stage: 'UnderReview',
   },
   config: {
     escrows: [

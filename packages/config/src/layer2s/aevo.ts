@@ -36,7 +36,7 @@ export const aevo: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   stage: {
-      stage: 'UnderReview'
+    stage: 'UnderReview',
   },
   config: {
     escrows: [

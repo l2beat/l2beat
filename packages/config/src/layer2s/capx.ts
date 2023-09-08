@@ -29,7 +29,7 @@ export const capx: Layer2 = {
     },
   },
   stage: {
-      stage: 'NotApplicable'
+    stage: 'NotApplicable',
   },
   config: {
     escrows: [],

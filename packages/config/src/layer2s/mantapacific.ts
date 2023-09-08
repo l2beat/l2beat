@@ -32,7 +32,7 @@ export const mantapacific: Layer2 = {
     },
   },
   stage: {
-      stage: 'NotApplicable'
+    stage: 'NotApplicable',
   },
   config: {
     escrows: [],

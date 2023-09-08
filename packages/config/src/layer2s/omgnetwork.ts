@@ -40,7 +40,7 @@ export const omgnetwork: Layer2 = {
     },
   },
   stage: {
-      stage: 'NotApplicable'
+    stage: 'NotApplicable',
   },
   config: {
     associatedTokens: ['OMG'],

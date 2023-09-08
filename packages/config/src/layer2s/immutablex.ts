@@ -65,7 +65,7 @@ export const immutablex: Layer2 = {
     activityDataSource: 'Closed API',
   },
   stage: {
-      stage: 'NotApplicable'
+    stage: 'NotApplicable',
   },
   config: {
     associatedTokens: ['IMX'],

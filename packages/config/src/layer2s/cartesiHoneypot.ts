@@ -31,7 +31,7 @@ export const cartesiHoneypot: Layer2 = {
     },
   },
   stage: {
-      stage: 'NotApplicable'
+    stage: 'NotApplicable',
   },
   config: {
     escrows: [],

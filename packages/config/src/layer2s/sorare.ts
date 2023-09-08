@@ -66,7 +66,7 @@ export const sorare: Layer2 = {
     activityDataSource: 'Closed API',
   },
   stage: {
-      stage: 'NotApplicable'
+    stage: 'NotApplicable',
   },
   config: {
     escrows: [

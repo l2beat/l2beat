@@ -47,7 +47,7 @@ export const zkswap: Layer2 = {
     },
   },
   stage: {
-      stage: 'NotApplicable'
+    stage: 'NotApplicable',
   },
   config: {
     associatedTokens: ['ZKS'],
