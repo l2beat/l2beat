@@ -38,7 +38,8 @@ export interface MissingStageRequirements {
   requirements: string[]
 }
 
-export type StageConfig = StageUnderReview | StageConfigured
+export type StageConfig = StageNotApplicable | StageUnderReview | StageConfigured
+export type UsableStageConfig = StageUnderReview | StageConfigured
 
 export interface StageConfigured {
   stage: Stage
@@ -48,4 +49,8 @@ export interface StageConfigured {
 
 interface StageUnderReview {
   stage: 'UnderReview'
+}
+
+interface StageNotApplicable {
+  stage: 'NotApplicable'
 }
