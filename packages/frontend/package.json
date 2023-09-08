@@ -16,7 +16,7 @@
     "start": "yarn start:staging",
     "start:local": "DEPLOYMENT_ENV=local gulp watch",
     "start:staging": "DEPLOYMENT_ENV=staging gulp watch",
-    "start:production": "gulp watch",
+    "start:production": "DEPLOYMENT_ENV=production gulp watch",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
