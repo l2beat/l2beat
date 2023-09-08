@@ -72,7 +72,7 @@ export const aevo: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8FEcC650BA4A#code#F1#L376',
+            'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L376',
           ],
         },
       ],
@@ -83,7 +83,7 @@ export const aevo: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x1a0ad011913A150f69f6A19DF447A0CfD9551054',
+            'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3',
           ],
         },
       ],
