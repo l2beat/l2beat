@@ -5,23 +5,23 @@ import waitForExpect from 'wait-for-expect'
 
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
+import { REPORTS_MOCK as MOCK } from '../../test/mockCirculatingSupplyReports'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'
-import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
-import { TotalSupplyFormulaUpdater } from './TotalSupplyFormulaUpdater'
+import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
+import { CirculatingSupplyFormulaUpdater } from './CirculatingSupplyFormulaUpdater'
 
-describe(TotalSupplyFormulaUpdater.name, () => {
-  describe(TotalSupplyFormulaUpdater.prototype.update.name, () => {
+describe(CirculatingSupplyFormulaUpdater.name, () => {
+  describe(CirculatingSupplyFormulaUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
       })
-      const totalSupplyUpdater = mockObject<TotalSupplyUpdater>({
-        getTotalSuppliesWhenReady: mockFn()
+      const circulatingSupplyUpdater = mockObject<CirculatingSupplyUpdater>({
+        getCirculatingSuppliesWhenReady: mockFn()
           .returnsOnce(MOCK.TOTAL_SUPPLIES)
           .returnsOnce(MOCK.TOTAL_SUPPLIES),
       })
@@ -38,9 +38,9 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const ebvUpdater = new TotalSupplyFormulaUpdater(
+      const ebvUpdater = new CirculatingSupplyFormulaUpdater(
         priceUpdater,
-        totalSupplyUpdater,
+        circulatingSupplyUpdater,
         reportRepository,
         reportStatusRepository,
         ProjectId.ARBITRUM,
@@ -89,13 +89,13 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn(),
       })
-      const suppliesUpdater = mockObject<TotalSupplyUpdater>({
-        getTotalSuppliesWhenReady: mockFn(),
+      const suppliesUpdater = mockObject<CirculatingSupplyUpdater>({
+        getCirculatingSuppliesWhenReady: mockFn(),
       })
       const status = mockObject<ReportStatusRepository>({
         add: async () => Hash256.random(),
       })
-      const updater = new TotalSupplyFormulaUpdater(
+      const updater = new CirculatingSupplyFormulaUpdater(
         priceUpdater,
         suppliesUpdater,
         mockObject<ReportRepository>(),
@@ -113,19 +113,21 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       ).toBeRejectedWith('Timestamp cannot be smaller than minTimestamp')
 
       expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
-      expect(suppliesUpdater.getTotalSuppliesWhenReady).not.toHaveBeenCalled()
+      expect(
+        suppliesUpdater.getCirculatingSuppliesWhenReady,
+      ).not.toHaveBeenCalled()
     })
   })
 
-  describe(TotalSupplyFormulaUpdater.prototype.start.name, () => {
+  describe(CirculatingSupplyFormulaUpdater.prototype.start.name, () => {
     it('skips known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
       })
-      const totalSupplyUpdater = mockObject<TotalSupplyUpdater>({
-        getTotalSuppliesWhenReady: mockFn()
+      const circulatingSupplyUpdater = mockObject<CirculatingSupplyUpdater>({
+        getCirculatingSuppliesWhenReady: mockFn()
           .returnsOnce(MOCK.TOTAL_SUPPLIES)
           .returnsOnce(MOCK.TOTAL_SUPPLIES),
       })
@@ -151,9 +153,9 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         },
       })
 
-      const ebvUpdater = new TotalSupplyFormulaUpdater(
+      const ebvUpdater = new CirculatingSupplyFormulaUpdater(
         priceUpdater,
-        totalSupplyUpdater,
+        circulatingSupplyUpdater,
         reportRepository,
         reportStatusRepository,
         ProjectId.ARBITRUM,
@@ -194,64 +196,67 @@ describe(TotalSupplyFormulaUpdater.name, () => {
     })
   })
 
-  describe(TotalSupplyFormulaUpdater.prototype.getReportsWhenReady.name, () => {
-    it('returns known timestamps', async () => {
-      const priceUpdater = mockObject<PriceUpdater>({
-        getPricesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_PRICES)
-          .returnsOnce(MOCK.PRICES),
-      })
-      const totalSupplyUpdater = mockObject<TotalSupplyUpdater>({
-        getTotalSuppliesWhenReady: mockFn()
-          .returnsOnce(MOCK.TOTAL_SUPPLIES)
-          .returnsOnce(MOCK.TOTAL_SUPPLIES),
-      })
-      const reportRepository = mockObject<ReportRepository>({
-        addOrUpdateMany: async () => 0,
-        getByTimestampAndPreciseAsset: mockFn()
-          .returnsOnce([])
-          .returnsOnce(MOCK.REPORTS)
-          .returnsOnce([]),
-      })
+  describe(
+    CirculatingSupplyFormulaUpdater.prototype.getReportsWhenReady.name,
+    () => {
+      it('returns known timestamps', async () => {
+        const priceUpdater = mockObject<PriceUpdater>({
+          getPricesWhenReady: mockFn()
+            .returnsOnce(MOCK.FUTURE_PRICES)
+            .returnsOnce(MOCK.PRICES),
+        })
+        const circulatingSupplyUpdater = mockObject<CirculatingSupplyUpdater>({
+          getCirculatingSuppliesWhenReady: mockFn()
+            .returnsOnce(MOCK.TOTAL_SUPPLIES)
+            .returnsOnce(MOCK.TOTAL_SUPPLIES),
+        })
+        const reportRepository = mockObject<ReportRepository>({
+          addOrUpdateMany: async () => 0,
+          getByTimestampAndPreciseAsset: mockFn()
+            .returnsOnce([])
+            .returnsOnce(MOCK.REPORTS)
+            .returnsOnce([]),
+        })
 
-      const reportStatusRepository = mockObject<ReportStatusRepository>({
-        getByConfigHash: async () => [
+        const reportStatusRepository = mockObject<ReportStatusRepository>({
+          getByConfigHash: async () => [
+            MOCK.NOW.add(-1, 'hours'),
+            MOCK.NOW.add(2, 'hours'),
+          ],
+          add: async ({ configHash }) => configHash,
+        })
+
+        const clock = mockObject<Clock>({
+          onEveryHour: (callback) => {
+            callback(MOCK.NOW.add(-1, 'hours'))
+            callback(MOCK.NOW)
+            callback(MOCK.NOW.add(1, 'hours'))
+            callback(MOCK.NOW.add(2, 'hours'))
+            return () => {}
+          },
+        })
+
+        const ebvUpdater = new CirculatingSupplyFormulaUpdater(
+          priceUpdater,
+          circulatingSupplyUpdater,
+          reportRepository,
+          reportStatusRepository,
+          ProjectId.ARBITRUM,
+          ChainId.ARBITRUM,
+          clock,
+          MOCK.TOKENS,
+          Logger.SILENT,
+          new UnixTime(0),
+        )
+
+        await ebvUpdater.start()
+
+        const reports = await ebvUpdater.getReportsWhenReady(
           MOCK.NOW.add(-1, 'hours'),
-          MOCK.NOW.add(2, 'hours'),
-        ],
-        add: async ({ configHash }) => configHash,
+        )
+
+        expect(reports).toEqual(MOCK.REPORTS)
       })
-
-      const clock = mockObject<Clock>({
-        onEveryHour: (callback) => {
-          callback(MOCK.NOW.add(-1, 'hours'))
-          callback(MOCK.NOW)
-          callback(MOCK.NOW.add(1, 'hours'))
-          callback(MOCK.NOW.add(2, 'hours'))
-          return () => {}
-        },
-      })
-
-      const ebvUpdater = new TotalSupplyFormulaUpdater(
-        priceUpdater,
-        totalSupplyUpdater,
-        reportRepository,
-        reportStatusRepository,
-        ProjectId.ARBITRUM,
-        ChainId.ARBITRUM,
-        clock,
-        MOCK.TOKENS,
-        Logger.SILENT,
-        new UnixTime(0),
-      )
-
-      await ebvUpdater.start()
-
-      const reports = await ebvUpdater.getReportsWhenReady(
-        MOCK.NOW.add(-1, 'hours'),
-      )
-
-      expect(reports).toEqual(MOCK.REPORTS)
-    })
-  })
+    },
+  )
 })
