@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
+import { getNavbarProps } from '../../../components'
 import { getHeader } from '../../../utils/project/getHeader'
 import { Wrapped } from '../../Page'
 import { TvlBreakdownPageProps } from '../view/ProjectTvlBreakdownPage'
@@ -40,7 +40,6 @@ export function getProps(
         tvlApiResponse,
         tvlBreakdownApiResponse,
       ),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: getPageMetadata(project),
