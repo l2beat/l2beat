@@ -26,6 +26,7 @@ export interface Config {
   }
   backend: {
     apiUrl: string
+    mock?: boolean
     skipCache: boolean
   }
   layer2s: Layer2[]

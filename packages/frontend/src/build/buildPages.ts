@@ -24,7 +24,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const env = process.env.DEPLOYMENT_ENV ?? 'production'
+  const env = process.env.DEPLOYMENT_ENV ?? 'ci'
   console.log(`Using config for ${env}`)
   const config = getConfig(env)
 
@@ -33,14 +33,14 @@ async function main() {
   const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
   const tvlApiResponse = config.features.detailedTvl
-    ? await fetchDetailedTvlApi(config.backend.apiUrl, http)
-    : await fetchTvlApi(config.backend.apiUrl, http)
+    ? await fetchDetailedTvlApi(config.backend, http)
+    : await fetchTvlApi(config.backend, http)
   printApiInfo(tvlApiResponse)
   tvlSanityCheck(tvlApiResponse)
 
   let activityApiResponse: ActivityApiResponse | undefined = undefined
   if (config.features.activity) {
-    activityApiResponse = await fetchActivityApi(config.backend.apiUrl, http)
+    activityApiResponse = await fetchActivityApi(config.backend, http)
     printActivityInfo(activityApiResponse)
     activitySanityCheck(activityApiResponse)
   }
