@@ -320,8 +320,3 @@ export const zksyncera: Layer2 = {
     },
   ],
 }
-
-// -          "0x5349E94435Cc9Cab9FfB40A492DA46935052733A",
-// -          "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b",
-// +          "0x62aA95ac4740A367746A664C4C69034d52E968EF",
-// +          "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b",
