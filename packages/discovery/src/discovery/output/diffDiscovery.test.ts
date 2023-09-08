@@ -10,6 +10,7 @@ describe(diffDiscovery.name, () => {
   const ADDRESS_B = EthereumAddress.random()
   const ADDRESS_C = EthereumAddress.random()
   const ADDRESS_D = EthereumAddress.random()
+  const ADDRESS_E = EthereumAddress.random()
 
   const ADMIN = EthereumAddress.random()
   const IMPLEMENTATION = EthereumAddress.random()
@@ -45,6 +46,17 @@ describe(diffDiscovery.name, () => {
       {
         name: 'D',
         address: ADDRESS_D,
+        upgradeability: {
+          type: 'EIP1967 proxy',
+          admin: ADMIN,
+          implementation: IMPLEMENTATION,
+        },
+        values: {},
+      },
+      {
+        name: 'E',
+        address: ADDRESS_E,
+        unverified: true,
         upgradeability: {
           type: 'EIP1967 proxy',
           admin: ADMIN,
@@ -88,6 +100,16 @@ describe(diffDiscovery.name, () => {
         },
         values: {},
       },
+      {
+        name: 'E',
+        address: ADDRESS_E,
+        upgradeability: {
+          type: 'EIP1967 proxy',
+          admin: ADMIN,
+          implementation: IMPLEMENTATION,
+        },
+        values: {},
+      },
     ]
     const config = new DiscoveryConfig({
       name: '',
@@ -99,8 +121,14 @@ describe(diffDiscovery.name, () => {
         },
       },
     })
+    const unverifiedContracts = ['E']
 
-    const result = diffDiscovery(committed, discovered, config)
+    const result = diffDiscovery(
+      committed,
+      discovered,
+      config,
+      unverifiedContracts,
+    )
 
     expect(result).toEqual([
       {
