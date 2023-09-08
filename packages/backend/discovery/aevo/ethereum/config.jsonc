@@ -15,7 +15,8 @@
   },
   "overrides": {
     "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"]
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
     },
     "L2OutputOracle": {
       "ignoreMethods": [
@@ -32,23 +33,8 @@
       ]
     },
     "OptimismPortal": {
-      "fields": {
-        "GUARDIAN": {
-          "type": "call",
-          "method": "function GUARDIAN() view returns (address)",
-          "args": []
-        },
-        "L2_ORACLE": {
-          "type": "call",
-          "method": "function L2_ORACLE() view returns (address)",
-          "args": []
-        },
-        "SYSTEM_CONFIG": {
-          "type": "call",
-          "method": "function SYSTEM_CONFIG() view returns (address)",
-          "args": []
-        }
-      }
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
     },
     "SystemConfig": {
       "fields": {

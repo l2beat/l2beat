@@ -83,7 +83,7 @@ export const aevo: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x1a0ad011913A150f69f6A19DF447A0CfD9551054', //TODO: change address and check if true when contract is verified
+            'https://etherscan.io/address/0x1a0ad011913A150f69f6A19DF447A0CfD9551054',
           ],
         },
       ],
@@ -98,7 +98,7 @@ export const aevo: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L434', //TODO: change address and check if true when contract is verified
+            'https://etherscan.io/address/0x098927F692C86fA1722115652b9d2d7BE8cBa6D3#code#F1#L376',
           ],
         },
       ],
@@ -161,7 +161,7 @@ export const aevo: Layer2 = {
       references: [
         {
           text: 'Derivation: Batch submission - OP Stack specs',
-          href: 'https://github.com/ourzora/optimism/blob/develop/specs/derivation.md#batch-submission',
+          href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
         },
         {
           text: 'BatchInbox - Etherscan address',

@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18084681,
-  "configHash": "0xc6c636d426b98d20c441cfacb625828192aa72f7e90dcf6aa1666f89e5d4375c",
+  "blockNumber": 18090206,
+  "configHash": "0x6734423f80126ab029bf01f148b3dddc762ae84fc24345c92c27a12242c56dcf",
   "version": 2,
   "contracts": [
     {
@@ -16,7 +16,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622880",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622889",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -120,10 +120,10 @@
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 1489200,
-        "latestOutputIndex": 2481,
-        "nextBlockNumber": 1489800,
-        "nextOutputIndex": 2482,
+        "latestBlockNumber": 1495800,
+        "latestOutputIndex": 2492,
+        "nextBlockNumber": 1496400,
+        "nextOutputIndex": 2493,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
