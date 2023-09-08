@@ -36,15 +36,18 @@ export class CirculatingSupplyRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(circulatingSupplies: CirculatingSupplyRecord[]) {
-    this.logger.info('addMany', {
+  async addOrUpdateMany(circulatingSupplies: CirculatingSupplyRecord[]) {
+    this.logger.info('addOrUpdateMany', {
       chainId: circulatingSupplies[0].chainId.toString(),
       rows: circulatingSupplies.length,
     })
 
     const rows = circulatingSupplies.map(toRow)
     const knex = await this.knex()
-    await knex.batchInsert('circulating_supplies', rows, 10_000)
+    await knex('circulating_supplies')
+      .insert(rows)
+      .onConflict(['chain_id', 'unix_timestamp', 'asset_id'])
+      .merge()
     return rows.length
   }
 

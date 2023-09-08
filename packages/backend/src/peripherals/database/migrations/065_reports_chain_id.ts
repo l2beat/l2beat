@@ -28,7 +28,9 @@ export async function up(knex: Knex) {
     ])
   })
 
-  await knex('reports').where('asset_type', 'NMV').update({ chain_id: -1 })
+  await knex('reports')
+    .where('asset_type', 'NMV')
+    .update({ chain_id: ChainId.NMV.valueOf() })
 }
 
 export async function down(knex: Knex) {
