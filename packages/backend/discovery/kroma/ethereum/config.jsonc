@@ -18,7 +18,9 @@
     "0xFdFF462845953D90719A78Fd12a2d103541d2103": "ValidatorPool",
     "0x46d07221dfC313afe1BF104F4bB1f185301D65B9": "L1ERC721Bridge",
     "0xb3c415c2Aad428D5570208e1772cb68e7D06a537": "UpgradeGovernor",
-    "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c": "SecurityCouncilToken"
+    "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c": "SecurityCouncilToken",
+    "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd": "ProxyAdmin",
+    "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Timelock"
   },
   "overrides": {
     "L2OutputOracle": {
@@ -74,6 +76,13 @@
       "ignoreMethods": [
         "getPastTotalSupply"
       ]
+    },
+    "Timelock": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
     }
   }
 }
