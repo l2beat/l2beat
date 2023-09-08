@@ -68,3 +68,31 @@ export function formatDate(date: string) {
   const [year, month, day] = date.split('-')
   return toNiceDate(day, month, year)
 }
+
+export function formatTimestampToDateWithHour(timestamp: number) {
+  const { year, month, day, time } = parseTimestamp(timestamp)
+
+  const monthAbbr = MONTHS[month]
+  const numericDay = +day
+
+  const daySuffix =
+    numericDay >= 11 && numericDay <= 13
+      ? 'th'
+      : numericDay % 10 === 1
+      ? 'st'
+      : numericDay % 10 === 2
+      ? 'nd'
+      : numericDay % 10 === 3
+      ? 'rd'
+      : 'th'
+
+  const numericHour = +time.slice(0, 2)
+
+  const hour = numericHour % 12 || 12
+  const ampm = numericHour >= 12 ? 'PM' : 'AM'
+  const minute = String(time.slice(3, 5)).padStart(2, '0')
+
+  const formattedDate = `${hour}:${minute} ${ampm}, ${monthAbbr} ${day}${daySuffix} ${year}`
+
+  return formattedDate
+}

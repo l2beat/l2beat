@@ -1,12 +1,6 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  HeaderProps,
-  Navbar,
-  NavbarProps,
-} from '../../../components'
+import { HeaderProps, Navbar, NavbarProps } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
 import { TvlBreakdownViewProps } from '../props/getTvlBreakdownView'
 import {
@@ -20,10 +14,9 @@ export interface TvlBreakdownPageProps {
   header: HeaderProps
   tvlBreakdownHeader: TvlBreakdownHeaderProps
   tvlBreakdownView: TvlBreakdownViewProps
-  footer: FooterProps
 }
 
-export function ProjectPage(props: TvlBreakdownPageProps) {
+export function ProjectTvlBreakdownPage(props: TvlBreakdownPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -31,7 +24,6 @@ export function ProjectPage(props: TvlBreakdownPageProps) {
         <TvlBreakdownHeader {...props.tvlBreakdownHeader} />
         <TvlBreakdownView {...props.tvlBreakdownView} />
       </PageContent>
-      <Footer narrow {...props.footer} />
     </>
   )
 }

@@ -23,8 +23,14 @@ export function TvlBreakdownHeader(props: TvlBreakdownHeaderProps) {
           <span className="mx-1 text-gray-550">/</span>TVL Breakdown
         </h1>
       </div>
-      <div className="mt-[38px] mb-8 text-3xl font-bold">
-        {props.title} breakdown for {props.tvlBreakdownDate}
+      <div className="mt-[38px] mb-4 flex items-center justify-between">
+        <h2 className="text-3xl font-bold">TVL breakdown</h2>
+        <div className="text-xs font-medium text-gray-550">
+          Timestamp:&nbsp;
+          <span className="text-base font-semibold text-white">
+            {props.tvlBreakdownDate} (UTC)
+          </span>
+        </div>
       </div>
     </div>
   )

@@ -10,7 +10,7 @@ import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getIncludedProjectsTvlBreakdown } from '../../utils/getIncludedProjectsTvlBreakdown'
 import { getProps } from './props'
-import { ProjectPage } from './view/ProjectPage'
+import { ProjectTvlBreakdownPage } from './view/ProjectTvlBreakdownPage'
 
 export function getProjectTvlBreakdownPages(
   config: Config,
@@ -33,7 +33,7 @@ export function getProjectTvlBreakdownPages(
       slug: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
       page: (
         <PageWrapper {...wrapper}>
-          <ProjectPage {...props} />
+          <ProjectTvlBreakdownPage {...props} />
         </PageWrapper>
       ),
     }

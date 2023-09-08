@@ -24,7 +24,7 @@ export function TvlBreakdownSummaryBox(
         change={props.external.change}
       />
       <StatsItem
-        title="Native Tokens Minted"
+        title="Natively Minted"
         value={props.native.value}
         change={props.native.change}
       />
