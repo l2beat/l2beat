@@ -14,7 +14,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const env = process.env.DEPLOYMENT_ENV ?? 'production'
+  const env = process.env.DEPLOYMENT_ENV ?? 'ci'
   console.log(`Using config for ${env}`)
   const config = getConfig(env)
 
