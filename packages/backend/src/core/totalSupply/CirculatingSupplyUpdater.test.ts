@@ -44,7 +44,6 @@ describe(CirculatingSupplyUpdater.name, () => {
         [],
         ChainId.ETHEREUM,
         Logger.SILENT,
-        new UnixTime(0),
       )
       const update =
         mockFn<typeof circulatingSupplyUpdater.update>().resolvesTo(undefined)
@@ -89,7 +88,6 @@ describe(CirculatingSupplyUpdater.name, () => {
           tokens,
           ChainId.ETHEREUM,
           Logger.SILENT,
-          new UnixTime(0),
         )
         await circulatingSupplyUpdater.update()
         const result =
@@ -127,7 +125,6 @@ describe(CirculatingSupplyUpdater.name, () => {
           tokens,
           ChainId.ETHEREUM,
           Logger.SILENT,
-          new UnixTime(0),
         )
 
         let result: unknown = undefined
@@ -165,7 +162,7 @@ describe(CirculatingSupplyUpdater.name, () => {
               [tokens[1].id, { earliest: HOUR_09, latest: HOUR_12 }],
             ]),
           ),
-          addMany: mockFn().returns([]),
+          addOrUpdateMany: mockFn().returns([]),
         })
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
@@ -184,7 +181,6 @@ describe(CirculatingSupplyUpdater.name, () => {
         tokens,
         ChainId.ETHEREUM,
         Logger.SILENT,
-        new UnixTime(0),
       )
 
       await circulatingSupplyUpdater.update()
@@ -241,7 +237,7 @@ describe(CirculatingSupplyUpdater.name, () => {
       const CirculatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
           findDataBoundaries: mockFn().returns(new Map([])),
-          addMany: mockFn().returns([]),
+          addOrUpdateMany: mockFn().returns([]),
         })
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
@@ -260,7 +256,6 @@ describe(CirculatingSupplyUpdater.name, () => {
         tokens,
         ChainId.ETHEREUM,
         Logger.SILENT,
-        new UnixTime(0),
       )
 
       await circulatingSupplyUpdater.update()
@@ -291,7 +286,7 @@ describe(CirculatingSupplyUpdater.name, () => {
       const CirculatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
           findDataBoundaries: mockFn().returns(new Map()),
-          addMany: mockFn().returns([]),
+          addOrUpdateMany: mockFn().returns([]),
         })
       coingeckoQueryService = mockObject<CoingeckoQueryService>({
         getCirculatingSupplies: mockFn().returns([]),
@@ -303,7 +298,6 @@ describe(CirculatingSupplyUpdater.name, () => {
         [fakeToken(TOKEN_ID, TOKEN_COINGECKO_ID)],
         ChainId.ETHEREUM,
         Logger.SILENT,
-        new UnixTime(0),
       )
     })
 
@@ -447,7 +441,7 @@ describe(CirculatingSupplyUpdater.name, () => {
 
       const circulatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
-          addMany: mockFn().returns([]),
+          addOrUpdateMany: mockFn().returns([]),
         })
       const tokens = [fakeToken(AssetId('uni-uniswap'))]
 
@@ -458,7 +452,6 @@ describe(CirculatingSupplyUpdater.name, () => {
         tokens,
         ChainId.ETHEREUM,
         Logger.SILENT,
-        new UnixTime(0),
       )
 
       await circulatingSupplyUpdater.fetchAndSave(
@@ -477,7 +470,9 @@ describe(CirculatingSupplyUpdater.name, () => {
         undefined,
       )
 
-      expect(circulatingSupplyRepository.addMany).toHaveBeenOnlyCalledWith([
+      expect(
+        circulatingSupplyRepository.addOrUpdateMany,
+      ).toHaveBeenOnlyCalledWith([
         {
           assetId: tokens[0].id,
           circulatingSupply: 100,

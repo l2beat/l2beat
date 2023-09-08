@@ -11,12 +11,6 @@ const chainConfig = [
     // ~ Timestamp of block number 0 on Arbitrum
     minTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
   },
-  {
-    chainId: ChainId.OPTIMISM,
-    // ~ Timestamp of block number 0 on Optimism
-    // https://optimistic.etherscan.io/block/0
-    minTimestamp: UnixTime.fromDate(new Date('2021-01-14T15:51:40Z')),
-  },
 ]
 
 export function getChainMinTimestamp(chainId: ChainId): UnixTime {
