@@ -16,7 +16,7 @@ export const stealthchain: Layer2 = {
     category: 'OP Stack',
     links: {
       websites: ['https://stealthchain.org'],
-      apps: ['https://bridge.test.steathchain.org'],
+      apps: ['https://bridge.steathchain.org'],
       documentation: ['https://docs.stealthchain.org'],
       explorers: [
         'https://test.stealthscan.xyz/',
