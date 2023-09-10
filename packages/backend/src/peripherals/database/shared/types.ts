@@ -117,6 +117,19 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  interface CirculatingSupplyRow {
+    unix_timestamp: Date
+    asset_id: string
+    circulating_supply: string
+    chain_id: number
+  }
+
+  interface CirculatingSupplyStatusRow {
+    chain_id: number
+    config_hash: string
+    unix_timestamp: Date
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -135,6 +148,8 @@ declare module 'knex/types/tables' {
     update_notifier: UpdateNotifierRow
     total_supplies: TotalSupplyRow
     total_supplies_status: TotalSupplyStatusRow
+    circulating_supplies: CirculatingSupplyRow
+    circulating_supplies_status: CirculatingSupplyStatusRow
   }
 }
 

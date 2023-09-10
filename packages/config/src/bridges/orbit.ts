@@ -53,11 +53,6 @@ export const orbit: Bridge = {
         ],
       },
       {
-        address: EthereumAddress('0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9'),
-        sinceTimestamp: new UnixTime(1603950507),
-        tokens: ['cUSDT'],
-      },
-      {
         address: EthereumAddress('0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cDAI'],
