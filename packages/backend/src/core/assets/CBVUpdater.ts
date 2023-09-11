@@ -131,11 +131,30 @@ export class CBVUpdater implements AssetUpdater {
       })
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestampAndPreciseAsset(
+    const reports = await this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
       'CBV',
     )
+
+    return reports.filter((r) => {
+      const project = this.projects.find((p) => p.projectId === r.projectId)
+
+      const token = project?.escrows
+        .flatMap((x) => x.tokens)
+        .find((x) => x.id === r.asset)
+
+      if (token === undefined) {
+        this.logger.debug('There is an outdated report', {
+          timestamp: timestamp.toString(),
+          asset: r.asset.toString(),
+          projectId: r.projectId.toString(),
+        })
+        return false
+      }
+
+      return true
+    })
   }
 }
 
