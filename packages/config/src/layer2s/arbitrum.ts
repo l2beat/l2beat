@@ -108,6 +108,21 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'totalSupply',
   },
+  {
+    id: AssetId('gns-gains-network'),
+    name: 'Gains Network',
+    symbol: 'GNS',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203',
+    address: EthereumAddress('0x18c11FD286C5EC11c3b683Caa813B77f5163A122'),
+    coingeckoId: CoingeckoId('gains-network'),
+    //TODO
+    sinceTimestamp: new UnixTime(0),
+    category: 'other',
+    type: 'NMV',
+    formula: 'totalSupply',
+  },
 ]
 
 export const arbitrum: Layer2 = {
