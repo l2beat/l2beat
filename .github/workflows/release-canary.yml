@@ -37,6 +37,20 @@ jobs:
           npm pkg set version=$(cat package.json | jq .version -r)-canary.$(date +'%Y%m%dT%H%M%S')
           echo "Version changed: $(npm pkg get version)"
 
+      - name: Set discovery-types version
+        run: |
+          yarn changeset version
+          cd packages/discovery-types
+          npm pkg set version=$(cat package.json | jq .version -r)-canary.$(date +'%Y%m%dT%H%M%S')
+          echo "Version changed: $(npm pkg get version)"
+
+      - name: Set discovery version
+        run: |
+          yarn changeset version
+          cd packages/discovery
+          npm pkg set version=$(cat package.json | jq .version -r)-canary.$(date +'%Y%m%dT%H%M%S')
+          echo "Version changed: $(npm pkg get version)"
+
       - name: Publish backend-tools to npm
         uses: JS-DevTools/npm-publish@v1
         with:
@@ -50,6 +64,24 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           package: packages/uif/package.json
+          token: ${{ secrets.NPM_TOKEN }}
+          dry-run: false
+          tag: canary
+          access: public
+
+      - name: Publish discovery-types to npm
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: packages/discovery-types/package.json
+          token: ${{ secrets.NPM_TOKEN }}
+          dry-run: false
+          tag: canary
+          access: public
+
+      - name: Publish discovery to npm
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: packages/discovery/package.json
           token: ${{ secrets.NPM_TOKEN }}
           dry-run: false
           tag: canary
