@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/shared-pure'
+
 const MONTHS: Record<string, string> = {
   '01': 'Jan',
   '02': 'Feb',
@@ -69,8 +71,8 @@ export function formatDate(date: string) {
   return toNiceDate(day, month, year)
 }
 
-export function formatTimestampToDateWithHour(timestamp: number) {
-  const { year, month, day, time } = parseTimestamp(timestamp)
+export function formatTimestampToDateWithHour(timestamp: UnixTime) {
+  const { year, month, day, time } = parseTimestamp(timestamp.toNumber())
 
   const monthAbbr = MONTHS[month]
   const numericDay = +day

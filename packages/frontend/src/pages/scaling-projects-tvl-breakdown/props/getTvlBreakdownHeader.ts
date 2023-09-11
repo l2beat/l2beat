@@ -13,7 +13,7 @@ export function getTvlBreakdownHeader(
     slug: project.display.slug,
     title: project.display.name,
     tvlBreakdownDate: formatTimestampToDateWithHour(
-      tvlBreakdownApiResponse.dataTimestamp.toNumber(),
+      tvlBreakdownApiResponse.dataTimestamp,
     ),
   }
 }
