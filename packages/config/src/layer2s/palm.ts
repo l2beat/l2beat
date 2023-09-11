@@ -24,6 +24,9 @@ export const palm: Layer2 = {
       socialMedia: ['https://twitter.com/palmnetwork3'],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [],
   },

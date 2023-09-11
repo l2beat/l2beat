@@ -62,6 +62,9 @@ export const brine: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

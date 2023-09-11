@@ -63,6 +63,9 @@ export const mantle: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     associatedTokens: ['MNT'],
     escrows: [

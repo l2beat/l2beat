@@ -38,6 +38,9 @@ export const scroll: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [],
   },

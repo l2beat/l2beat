@@ -34,7 +34,7 @@ export interface ProjectHeaderProps {
   links: ProjectLink[]
   stagesEnabled?: boolean
   detailedTvlEnabled?: boolean
-  stage?: StageConfig
+  stage: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
@@ -71,7 +71,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.stagesEnabled && props.stage
+    ...(props.stagesEnabled && props.stage.stage !== 'NotApplicable'
       ? [
           {
             title: 'Stage',
