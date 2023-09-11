@@ -45,9 +45,6 @@ export const aevo: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
-  stage: {
-    stage: 'UnderReview',
-  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
