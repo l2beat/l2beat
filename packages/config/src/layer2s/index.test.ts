@@ -358,8 +358,8 @@ describe('layer2s', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
         if (
-          layer2.stage === undefined ||
-          layer2.stage.stage === 'UnderReview'
+          layer2.stage.stage === 'UnderReview' ||
+          layer2.stage.stage === 'NotApplicable'
         ) {
           continue
         }

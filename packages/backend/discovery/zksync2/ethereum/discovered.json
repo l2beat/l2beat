@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 18083532,
+  "blockNumber": 18090837,
   "configHash": "0x627a0258043ca5b596fa864a6d69bdf9d0aa5e4517f11743cfaa5ea98d9e9b64",
   "version": 2,
   "contracts": [
@@ -11,24 +11,24 @@
       "upgradeability": {
         "type": "EIP2535 diamond proxy",
         "facets": [
-          "0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0",
+          "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4",
           "0x7444DE636699F080cA1C033528D2bB3705B391Ce",
-          "0x5349E94435Cc9Cab9FfB40A492DA46935052733A",
-          "0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A",
+          "0x62aA95ac4740A367746A664C4C69034d52E968EF",
+          "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b",
           "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
         ]
       },
       "values": {
         "facetAddresses": [
-          "0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0",
+          "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4",
           "0x7444DE636699F080cA1C033528D2bB3705B391Ce",
-          "0x5349E94435Cc9Cab9FfB40A492DA46935052733A",
-          "0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A",
+          "0x62aA95ac4740A367746A664C4C69034d52E968EF",
+          "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b",
           "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
         ],
         "facets": [
           [
-            "0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0",
+            "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4",
             [
               "0x73fb9297",
               "0x36d4eb84",
@@ -81,7 +81,7 @@
             ]
           ],
           [
-            "0x5349E94435Cc9Cab9FfB40A492DA46935052733A",
+            "0x62aA95ac4740A367746A664C4C69034d52E968EF",
             [
               "0x6c0960f9",
               "0xb473318e",
@@ -92,7 +92,7 @@
             ]
           ],
           [
-            "0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A",
+            "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b",
             ["0x0c4dd810", "0xce9dcf16", "0x7739cbe7", "0xa9a2d18a"]
           ],
           [
@@ -107,24 +107,24 @@
           ]
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
-        "getCurrentProposalId": 6,
-        "getFirstUnprocessedPriorityTx": 2101556,
+        "getCurrentProposalId": 7,
+        "getFirstUnprocessedPriorityTx": 2111871,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-        "getL2BootloaderBytecodeHash": "0x010007af2271352ac99f97670a7d6999ae63b53f4e9480a957091d8848a46c61",
-        "getL2DefaultAccountBytecodeHash": "0x0100067d592a040e8914eda295f3521561d64b1a4c1b9e6dbd2933093102febf",
+        "getL2BootloaderBytecodeHash": "0x0100089b8a2f2e6a20ba28f02c9e0ed0c13d702932364561a0ea61621f65f0a8",
+        "getL2DefaultAccountBytecodeHash": "0x0100067d16a5485875b4249040bf421f53e869337fe118ec747cf40a4c777e5f",
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8496,
+        "getPriorityQueueSize": 9108,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
-        "getProtocolVersion": 12,
+        "getProtocolVersion": 14,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 199215,
-        "getTotalBlocksExecuted": 197816,
-        "getTotalBlocksVerified": 198609,
-        "getTotalPriorityTxs": 2110052,
+        "getTotalBlocksCommitted": 201038,
+        "getTotalBlocksExecuted": 199526,
+        "getTotalBlocksVerified": 200372,
+        "getTotalPriorityTxs": 2120979,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x3F04F86f14aB74953fDAEde8175e0714eB8e798e",
         "getVerifierParams": [
@@ -135,8 +135,8 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0xae4243c9ac5f6b2b8c15ae192057c9a299b7217967250ba860c424c9962c8554",
-          1693997807,
+          "0xbe3e83e7c4560855455fc356d0764dcd811d2f6261ced7b1aa25b700befba045",
+          1694086883,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
@@ -306,7 +306,7 @@
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
         "getThreshold": 4,
-        "nonce": 65,
+        "nonce": 67,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -350,17 +350,6 @@
     "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F"
   ],
   "abis": {
-    "0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A": [
-      "event BlockCommit(uint256 indexed blockNumber, bytes32 indexed blockHash, bytes32 indexed commitment)",
-      "event BlockExecution(uint256 indexed blockNumber, bytes32 indexed blockHash, bytes32 indexed commitment)",
-      "event BlocksRevert(uint256 totalBlocksCommitted, uint256 totalBlocksVerified, uint256 totalBlocksExecuted)",
-      "event BlocksVerification(uint256 indexed previousLastVerifiedBlock, uint256 indexed currentLastVerifiedBlock)",
-      "function commitBlocks(tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBlockData, tuple(uint64 blockNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 l2LogsTreeRoot, bytes32 priorityOperationsHash, bytes initialStorageChanges, bytes repeatedStorageChanges, bytes l2Logs, bytes[] l2ArbitraryLengthMessages, bytes[] factoryDeps)[] _newBlocksData)",
-      "function executeBlocks(tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _blocksData)",
-      "function getName() view returns (string)",
-      "function proveBlocks(tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBlock, tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBlocks, tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)",
-      "function revertBlocks(uint256 _newLastBlock)"
-    ],
     "0x2E64926BE35412f7710A3E097Ba076740bF97CC0": [
       "event IsPorterAvailableStatusUpdate(bool isPorterAvailable)",
       "event NewGovernor(address indexed oldGovernor, address indexed newGovernor)",
@@ -413,17 +402,6 @@
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": [
       "constructor(address _singleton)"
     ],
-    "0x5349E94435Cc9Cab9FfB40A492DA46935052733A": [
-      "event EthWithdrawalFinalized(address indexed to, uint256 amount)",
-      "event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)",
-      "function finalizeEthWithdrawal(uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes _message, bytes32[] _merkleProof)",
-      "function getName() view returns (string)",
-      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) pure returns (uint256)",
-      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
-      "function proveL2LogInclusion(uint256 _blockNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBlock, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
-      "function proveL2MessageInclusion(uint256 _blockNumber, uint256 _index, tuple(uint16 txNumberInBlock, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
-      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)"
-    ],
     "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -434,6 +412,17 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x62aA95ac4740A367746A664C4C69034d52E968EF": [
+      "event EthWithdrawalFinalized(address indexed to, uint256 amount)",
+      "event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)",
+      "function finalizeEthWithdrawal(uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes _message, bytes32[] _merkleProof)",
+      "function getName() view returns (string)",
+      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) pure returns (uint256)",
+      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
+      "function proveL2LogInclusion(uint256 _blockNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBlock, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
+      "function proveL2MessageInclusion(uint256 _blockNumber, uint256 _index, tuple(uint16 txNumberInBlock, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
+      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)"
     ],
     "0x7444DE636699F080cA1C033528D2bB3705B391Ce": [
       "function facetAddress(bytes4 _selector) view returns (address)",
@@ -472,6 +461,17 @@
       "function l2LogsRootHash(uint256 _blockNumber) view returns (bytes32)",
       "function priorityQueueFrontOperation() view returns (tuple(bytes32 canonicalTxHash, uint64 expirationTimestamp, uint192 layer2Tip))",
       "function storedBlockHash(uint256 _blockNumber) view returns (bytes32)"
+    ],
+    "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b": [
+      "event BlockCommit(uint256 indexed blockNumber, bytes32 indexed blockHash, bytes32 indexed commitment)",
+      "event BlockExecution(uint256 indexed blockNumber, bytes32 indexed blockHash, bytes32 indexed commitment)",
+      "event BlocksRevert(uint256 totalBlocksCommitted, uint256 totalBlocksVerified, uint256 totalBlocksExecuted)",
+      "event BlocksVerification(uint256 indexed previousLastVerifiedBlock, uint256 indexed currentLastVerifiedBlock)",
+      "function commitBlocks(tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBlockData, tuple(uint64 blockNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 l2LogsTreeRoot, bytes32 priorityOperationsHash, bytes initialStorageChanges, bytes repeatedStorageChanges, bytes l2Logs, bytes[] l2ArbitraryLengthMessages, bytes[] factoryDeps)[] _newBlocksData)",
+      "function executeBlocks(tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _blocksData)",
+      "function getName() view returns (string)",
+      "function proveBlocks(tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBlock, tuple(uint64 blockNumber, bytes32 blockHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBlocks, tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)",
+      "function revertBlocks(uint256 _newLastBlock)"
     ],
     "0x7FB17101A744e156e63d5fF6A4775fb48756577c": [
       "constructor(address _zkSync, address _allowList)",
@@ -513,24 +513,6 @@
       "function setPermissionToCall(address _caller, address _target, bytes4 _functionSig, bool _enable)",
       "function tokenDeposit(address) view returns (bool depositLimitation, uint256 depositCap)",
       "function transferOwnership(address newOwner)"
-    ],
-    "0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0": [
-      "event CancelUpgradeProposal(uint256 indexed proposalId, bytes32 indexed proposalHash)",
-      "event ExecuteUpgrade(uint256 indexed proposalId, bytes32 indexed proposalHash, bytes32 proposalSalt)",
-      "event Freeze()",
-      "event ProposeShadowUpgrade(uint256 indexed proposalId, bytes32 indexed proposalHash)",
-      "event ProposeTransparentUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut, uint256 indexed proposalId, bytes32 proposalSalt)",
-      "event SecurityCouncilUpgradeApprove(uint256 indexed proposalId, bytes32 indexed proposalHash)",
-      "event Unfreeze()",
-      "function cancelUpgradeProposal(bytes32 _proposedUpgradeHash)",
-      "function executeUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut, bytes32 _proposalSalt)",
-      "function freezeDiamond()",
-      "function getName() view returns (string)",
-      "function proposeShadowUpgrade(bytes32 _proposalHash, uint40 _proposalId)",
-      "function proposeTransparentUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut, uint40 _proposalId)",
-      "function securityCouncilUpgradeApprove(bytes32 _upgradeProposalHash)",
-      "function unfreezeDiamond()",
-      "function upgradeProposalHash(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut, uint256 _proposalId, bytes32 _salt) pure returns (bytes32)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -580,6 +562,24 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4": [
+      "event CancelUpgradeProposal(uint256 indexed proposalId, bytes32 indexed proposalHash)",
+      "event ExecuteUpgrade(uint256 indexed proposalId, bytes32 indexed proposalHash, bytes32 proposalSalt)",
+      "event Freeze()",
+      "event ProposeShadowUpgrade(uint256 indexed proposalId, bytes32 indexed proposalHash)",
+      "event ProposeTransparentUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut, uint256 indexed proposalId, bytes32 proposalSalt)",
+      "event SecurityCouncilUpgradeApprove(uint256 indexed proposalId, bytes32 indexed proposalHash)",
+      "event Unfreeze()",
+      "function cancelUpgradeProposal(bytes32 _proposedUpgradeHash)",
+      "function executeUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut, bytes32 _proposalSalt)",
+      "function freezeDiamond()",
+      "function getName() view returns (string)",
+      "function proposeShadowUpgrade(bytes32 _proposalHash, uint40 _proposalId)",
+      "function proposeTransparentUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut, uint40 _proposalId)",
+      "function securityCouncilUpgradeApprove(bytes32 _upgradeProposalHash)",
+      "function unfreezeDiamond()",
+      "function upgradeProposalHash(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut, uint256 _proposalId, bytes32 _salt) pure returns (bytes32)"
     ]
   }
 }

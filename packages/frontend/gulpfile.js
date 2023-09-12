@@ -74,15 +74,22 @@ function serve() {
   app.get('/', (req, res) => {
     res.redirect('/scaling/summary')
   })
+
+  const deploymentEnvironment = process.env.DEPLOYMENT_ENV || 'ci'
+  const apiUrl = {
+    ci: 'https://api.l2beat.com',
+    production: 'https://api.l2beat.com',
+    staging: 'https://staging.l2beat.com',
+    local: 'http://localhost:3000',
+  }[deploymentEnvironment]
+  if (!apiUrl) {
+    throw new Error('Unknown environment: ' + deploymentEnvironment)
+  }
+
   app.use(
     '/api/projects',
     createProxyMiddleware({
-      target:
-        process.env.DEPLOYMENT_ENV === 'local'
-          ? 'http://localhost:3000'
-          : process.env.DEPLOYMENT_ENV === 'staging'
-          ? 'https://staging.l2beat.com'
-          : 'https://api.l2beat.com',
+      target: apiUrl,
       changeOrigin: true,
     }),
   )
