@@ -5,6 +5,8 @@ import { formatSeconds } from '../../utils/formatSeconds'
 import { roundSeconds } from '../../utils/roundSeconds'
 import { Layer2RiskView } from '../types'
 import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
+import { delay } from 'lodash'
+import { number } from 'zod'
 
 export function makeBridgeCompatible(
   entry: Omit<Layer2RiskView, 'sourceUpgradeability'>,
@@ -42,6 +44,13 @@ export const STATE_FP_INT: ProjectRiskViewEntry = {
   value: 'Fraud proofs (INT)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+  sentiment: 'good',
+}
+
+export const STATE_FP_INT_ZK: ProjectRiskViewEntry = {
+  value: 'Fraud proofs (INT, ZK)',
+  description:
+    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step.',
   sentiment: 'good',
 }
 
@@ -418,6 +427,7 @@ export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
   STATE_FP_INT,
+  STATE_FP_INT_ZK,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
   STATE_EXITS_ONLY,

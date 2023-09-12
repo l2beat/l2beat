@@ -27,6 +27,10 @@ export const HARDCODED = {
     // https://github.com/ethereum-optimism/optimism/pull/6261/files
     SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
   },
+  KROMA: {
+    // https://github.com/kroma-network/kroma/blob/dev/packages/contracts/deploy-config/mainnet.json#L9C30-L9C30
+    SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
+  },
   ZKSYNC_2: {
     FACETS: [
       '0x7444DE636699F080cA1C033528D2bB3705B391Ce',
