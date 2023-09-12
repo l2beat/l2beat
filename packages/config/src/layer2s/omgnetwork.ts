@@ -39,6 +39,9 @@ export const omgnetwork: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     associatedTokens: ['OMG'],
     escrows: [

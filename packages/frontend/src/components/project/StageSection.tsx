@@ -1,4 +1,4 @@
-import { StageConfig } from '@l2beat/config'
+import { UsableStageConfig } from '@l2beat/config'
 import React from 'react'
 
 import {
@@ -20,7 +20,7 @@ export interface StageSectionProps {
   icon: string
   name: string
   type: string
-  stage: StageConfig
+  stage: UsableStageConfig
   isUnderReview?: boolean
 }
 

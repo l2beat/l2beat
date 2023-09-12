@@ -27,6 +27,9 @@ export const layer2aWithDups: Layer2 = {
       socialMedia: [],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [],
   },

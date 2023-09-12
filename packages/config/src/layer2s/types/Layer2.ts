@@ -36,7 +36,7 @@ export interface Layer2 {
   /** Risk view values for this layer2 */
   riskView: Layer2RiskView
   /** Rollup stage */
-  stage?: StageConfig
+  stage: StageConfig
   /** Deep dive into layer2 technology */
   technology: Layer2Technology
   /** List of smart contracts used in the layer2 */
