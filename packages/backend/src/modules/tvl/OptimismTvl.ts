@@ -1,0 +1,128 @@
+import { HttpClient, Logger, OptiscanClient } from '@l2beat/shared'
+import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { providers } from 'ethers'
+
+import { Config } from '../../config'
+import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
+import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
+import { OptimismBalanceProvider } from '../../core/balances/providers/OptimismBalanceProvider'
+import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
+import { Clock } from '../../core/Clock'
+import { PriceUpdater } from '../../core/PriceUpdater'
+import { OptimismTotalSupplyProvider } from '../../core/totalSupply/providers/OptimismTotalSupplyProvider'
+import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
+import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { OptimismMulticallClient } from '../../peripherals/optimism/multicall/OptimismMulticall'
+import { TvlSubmodule } from '../ApplicationModule'
+import { TvlDatabase } from './types'
+
+export function createOptimismTvlSubmodule(
+  db: TvlDatabase,
+  priceUpdater: PriceUpdater,
+  config: Config,
+  logger: Logger,
+  http: HttpClient,
+  clock: Clock,
+): TvlSubmodule | undefined {
+  if (!config.tvl.optimism) {
+    logger.info('Optimism TVL module disabled')
+    return
+  }
+
+  // #region peripherals
+  const optimismProvider = new providers.JsonRpcProvider(
+    config.tvl.optimism.providerUrl,
+    'optimism',
+  )
+
+  const optiscanClient = new OptiscanClient(
+    http,
+    config.tvl.optimism.optiscanApiKey,
+    config.tvl.optimism.minBlockTimestamp,
+    logger,
+  )
+
+  const optimismClient = new EthereumClient(optimismProvider, logger, 25)
+
+  const optimismMulticall = OptimismMulticallClient.forMainnet(optimismClient)
+
+  const totalSupplyProvider = new OptimismTotalSupplyProvider(
+    optimismClient,
+    optimismMulticall,
+  )
+
+  const optimismBalanceProvider = new OptimismBalanceProvider(
+    optimismClient,
+    optimismMulticall,
+  )
+
+  // #endregion
+  // #region updaters
+
+  const optiscanBlockNumberUpdater = new BlockNumberUpdater(
+    optiscanClient,
+    db.blockNumberRepository,
+    clock,
+    logger,
+    ChainId.OPTIMISM,
+    config.tvl.optimism.minBlockTimestamp,
+  )
+
+  const optimismBalanceUpdater = new BalanceUpdater(
+    optimismBalanceProvider,
+    optiscanBlockNumberUpdater,
+    db.balanceRepository,
+    db.balanceStatusRepository,
+    clock,
+    [],
+    logger,
+    ChainId.OPTIMISM,
+    config.tvl.optimism.minBlockTimestamp,
+  )
+
+  const totalSupplyTokens = config.tokens.filter(
+    (t) => t.chainId === ChainId.OPTIMISM && t.formula === 'totalSupply',
+  )
+  const totalSupplyUpdater = new TotalSupplyUpdater(
+    totalSupplyProvider,
+    optiscanBlockNumberUpdater,
+    db.totalSupplyRepository,
+    db.totalSupplyStatusRepository,
+    clock,
+    totalSupplyTokens,
+    logger,
+    ChainId.OPTIMISM,
+    config.tvl.optimism.minBlockTimestamp,
+  )
+
+  const totalSupplyFormulaUpdater = new TotalSupplyFormulaUpdater(
+    priceUpdater,
+    totalSupplyUpdater,
+    db.reportRepository,
+    db.reportStatusRepository,
+    ProjectId.OPTIMISM,
+    ChainId.OPTIMISM,
+    clock,
+    totalSupplyTokens,
+    logger,
+    config.tvl.optimism.minBlockTimestamp,
+  )
+  // #endregion
+
+  const start = async () => {
+    logger = logger.for('OptimismTvlModule')
+    logger.info('Starting')
+
+    await optiscanBlockNumberUpdater.start()
+    await optimismBalanceUpdater.start()
+    await totalSupplyUpdater.start()
+    await totalSupplyFormulaUpdater.start()
+
+    logger.info('Started')
+  }
+
+  return {
+    updaters: [totalSupplyFormulaUpdater],
+    start,
+  }
+}
