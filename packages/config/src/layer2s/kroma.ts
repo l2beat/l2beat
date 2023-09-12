@@ -28,6 +28,13 @@ const proposerRoundDurationSeconds = discovery.getContractValue<number>(
   'ROUND_DURATION',
 )
 
+const rootsSubmissionIntervalBlocks = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'SUBMISSION_INTERVAL',
+)
+
+const rootsSubmissionIntervalSeconds = rootsSubmissionIntervalBlocks * 2 // L2 block time
+
 const timelockDefaultDelay = discovery.getContractValue<number>(
   'Timelock',
   'getMinDelay',
@@ -301,8 +308,9 @@ export const kroma: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool.',
+        description: `The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every ${formatSeconds(
+          rootsSubmissionIntervalSeconds,
+        )}.`,
         ...upgradesProxy,
       }),
       discovery.getContractDetails('KromaPortal', {
@@ -349,9 +357,9 @@ export const kroma: Layer2 = {
         ...upgradesProxy,
       }),
       discovery.getContractDetails('ValidatorPool', {
-        description: `Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation using a random selection. A new proposer is selected every ${formatSeconds(
+        description: `Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within ${formatSeconds(
           proposerRoundDurationSeconds,
-        )}.`,
+        )}, then the submission becomes open to everyone.`,
         ...upgradesProxy,
       }),
       discovery.getContractDetails('ZKMerkleTrie', {
