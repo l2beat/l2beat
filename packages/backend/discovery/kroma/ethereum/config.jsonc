@@ -23,7 +23,8 @@
     "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Timelock",
     "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081": "SecurityCouncilOperator",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator",
-    "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "SystemConfig"
+    "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "SystemConfig",
+    "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2"
   },
   "overrides": {
     "L2OutputOracle": {
@@ -66,6 +67,14 @@
     "ValidatorPool": {
       "ignoreMethods": ["getBond"],
       "ignoreInWatchMode": ["nextValidator"]
+      /*
+      "fields": {
+        "validators": {
+          "type": "array", //TODO: it's internal! find way to read it
+          "method": "validators"
+        }
+      }
+      */
     },
     "UpgradeGovernor": {
       "ignoreMethods": [
