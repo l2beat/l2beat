@@ -9,14 +9,13 @@ import {
 import { optimismMulticallEncoder } from './MulticallEncoder'
 
 // TODO: Investigate if max batch size can be tweaked
-// ! CHECK THOSE VALUES
 /**
- * @see https://arbiscan.io/address/0x842eC2c7D803033Edf55E478F461FC547Bc54EB2
+ * @see https://optimistic.etherscan.io/address/0xe295ad71242373c37c5fda7b57f26f9ea1088afe
  */
 export const OPTIMISM_MULTICALL_BATCH_SIZE = 150
-export const OPTIMISM_MULTICALL_BLOCK = 821923
+export const OPTIMISM_MULTICALL_BLOCK = 0
 export const OPTIMISM_MULTICALL_ADDRESS = EthereumAddress(
-  '0x842eC2c7D803033Edf55E478F461FC547Bc54EB2',
+  '0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe',
 )
 
 export class OptimismMulticallClient {

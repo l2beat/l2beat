@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import { MulticallEncoder, MulticallResponse } from './interfaces'
 
 export const optimismMulticallInterface = new utils.Interface([
-  'function tryAggregate(bool requireSuccess, tuple(address target, bytes callData)[] calls) public returns (tuple(bool success, bytes returnData)[] returnData)',
+  'function multicall(tuple(address, bytes)[] memory calls) public returns (bytes[] memory results)',
 ])
 
 type OptimismMulticallResult = [success: boolean, data: string][]
@@ -12,9 +12,8 @@ type OptimismMulticallResult = [success: boolean, data: string][]
 export const optimismMulticallEncoder: MulticallEncoder = {
   encode: (requests) => {
     const hexCalldata = optimismMulticallInterface.encodeFunctionData(
-      'tryAggregate',
+      'multicall',
       [
-        false,
         requests.map((request) => [
           request.address.toString(),
           request.data.toString(),
@@ -27,7 +26,7 @@ export const optimismMulticallEncoder: MulticallEncoder = {
 
   decode: (response) => {
     const decodedResponse = optimismMulticallInterface.decodeFunctionResult(
-      'tryAggregate',
+      'multicall',
       response.toString(),
     )
 
