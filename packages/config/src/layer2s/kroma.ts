@@ -34,7 +34,6 @@ const timelockDefaultDelay = discovery.getContractValue<number>(
 )
 
 export const kroma: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('kroma'),
   display: {
