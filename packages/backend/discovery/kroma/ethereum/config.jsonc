@@ -78,9 +78,7 @@
       "ignoreInWatchMode": ["clock"]
     },
     "SecurityCouncilToken": {
-      "ignoreMethods": [
-        "getPastTotalSupply"
-      ],
+      "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["clock"]
     },
     "Timelock": {

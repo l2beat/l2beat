@@ -1,16 +1,16 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import {
   CONTRACTS,
   makeBridgeCompatible,
   subtractOne,
   TECHNOLOGY,
-  UNDER_REVIEW_RISK_VIEW,
 } from './common'
+import { RISK_VIEW } from './common/riskView'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { STATE_FP, STATE_FP_INT_ZK, DATA_ON_CHAIN, RISK_VIEW } from './common/riskView';
-import { HARDCODED } from '../discovery/values/hardcoded';
 
 const discovery = new ProjectDiscovery('kroma')
 
@@ -31,7 +31,10 @@ export const kroma: Layer2 = {
     links: {
       websites: ['https://kroma.network/'],
       apps: ['https://kroma.network/bridge/'],
-      documentation: ['https://docs.kroma.network/','https://github.com/kroma-network/kroma/tree/dev/specs'],
+      documentation: [
+        'https://docs.kroma.network/',
+        'https://github.com/kroma-network/kroma/tree/dev/specs',
+      ],
       explorers: ['https://blockscout.kroma.network/'],
       repositories: ['https://github.com/kroma-network/'],
       socialMedia: [
@@ -41,9 +44,6 @@ export const kroma: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
-  },
-  stage: {
-    stage: 'UnderReview',
   },
   config: {
     escrows: [
@@ -77,10 +77,10 @@ export const kroma: Layer2 = {
         {
           contract: 'KromaPortal',
           references: [
-            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430'
-          ]
-        }
-      ]
+            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430',
+          ],
+        },
+      ],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
@@ -88,16 +88,16 @@ export const kroma: Layer2 = {
         {
           contract: 'KromaPortal',
           references: [
-            'https://etherscan.io/address/0x31F648572b67e60Ec6eb8E197E1848CC5F5558de'
-          ]
+            'https://etherscan.io/address/0x31F648572b67e60Ec6eb8E197E1848CC5F5558de',
+          ],
         },
         {
           contract: 'UpgradeGovernor',
           references: [
-            'https://etherscan.io/address/0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030#code#F1#95'
-          ]
-        }
-      ]
+            'https://etherscan.io/address/0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030#code#F1#95',
+          ],
+        },
+      ],
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
@@ -107,10 +107,10 @@ export const kroma: Layer2 = {
         {
           contract: 'KromaPortal',
           references: [
-            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430'
-          ]
-        }
-      ]
+            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430',
+          ],
+        },
+      ],
     },
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
@@ -118,13 +118,33 @@ export const kroma: Layer2 = {
         {
           contract: 'L2OutputOracle',
           references: [
-            'https://etherscan.io/address/0x14126FFa3889a026A79F0f99FaE80B3dc9E38095#code#F1#L197'
-          ]
-        }
-      ]
+            'https://etherscan.io/address/0x14126FFa3889a026A79F0f99FaE80B3dc9E38095#code#F1#L197',
+          ],
+        },
+      ],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: 'UnderReview',
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: false,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: true,
+      delayWith30DExitWindow: false,
+    },
   }),
   technology: TECHNOLOGY.UNDER_REVIEW,
   contracts: CONTRACTS.UNDER_REVIEW,

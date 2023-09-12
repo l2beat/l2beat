@@ -5,8 +5,6 @@ import { formatSeconds } from '../../utils/formatSeconds'
 import { roundSeconds } from '../../utils/roundSeconds'
 import { Layer2RiskView } from '../types'
 import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
-import { delay } from 'lodash'
-import { number } from 'zod'
 
 export function makeBridgeCompatible(
   entry: Omit<Layer2RiskView, 'sourceUpgradeability'>,
