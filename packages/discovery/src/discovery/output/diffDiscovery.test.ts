@@ -11,6 +11,7 @@ describe(diffDiscovery.name, () => {
   const ADDRESS_B = EthereumAddress.random()
   const ADDRESS_C = EthereumAddress.random()
   const ADDRESS_D = EthereumAddress.random()
+  const ADDRESS_E = EthereumAddress.random()
 
   const ADMIN = EthereumAddress.random()
   const IMPLEMENTATION = EthereumAddress.random()
@@ -53,6 +54,17 @@ describe(diffDiscovery.name, () => {
         },
         values: {},
       },
+      {
+        name: 'E',
+        address: ADDRESS_E,
+        unverified: true,
+        upgradeability: {
+          type: 'EIP1967 proxy',
+          admin: ADMIN,
+          implementation: IMPLEMENTATION,
+        },
+        values: {},
+      },
     ]
     const discovered: ContractParameters[] = [
       {
@@ -82,6 +94,17 @@ describe(diffDiscovery.name, () => {
       {
         name: 'D',
         address: ADDRESS_D,
+        upgradeability: {
+          type: 'EIP1967 proxy',
+          admin: ADMIN,
+          implementation: IMPLEMENTATION,
+        },
+        values: {},
+      },
+      {
+        name: 'E',
+        address: ADDRESS_E,
+        unverified: true,
         upgradeability: {
           type: 'EIP1967 proxy',
           admin: ADMIN,

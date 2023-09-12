@@ -16,6 +16,7 @@ export function diffDiscovery(
   previous: ContractParameters[],
   current: ContractParameters[],
   config: DiscoveryConfig,
+  unverifiedContracts?: string[],
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
@@ -29,6 +30,13 @@ export function diffDiscovery(
         address: previousContract.address,
         type: 'deleted',
       })
+      continue
+    }
+
+    if (
+      unverifiedContracts?.includes(currentContract.name) &&
+      !currentContract.unverified
+    ) {
       continue
     }
 
