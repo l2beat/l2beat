@@ -27,7 +27,7 @@ export interface TvlBreakdownViewProps {
       change: string
     }
   }
-  tvlBreakdowns: ProjectAssetsBreakdownApiResponse['breakdowns']
+  tvlBreakdowns: ProjectAssetsBreakdownApiResponse['breakdowns'][string]
 }
 
 export function getTvlBreakdownView(
@@ -58,6 +58,6 @@ export function getTvlBreakdownView(
         change: partsWeeklyChange.native,
       },
     },
-    tvlBreakdowns: tvlBreakdownApiResponse.breakdowns,
+    tvlBreakdowns: tvlBreakdownApiResponse.breakdowns[project.id.toString()],
   }
 }
