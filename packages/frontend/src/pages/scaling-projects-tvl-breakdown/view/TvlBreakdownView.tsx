@@ -8,7 +8,10 @@ export function TvlBreakdownView(props: TvlBreakdownViewProps) {
   return (
     <div>
       <TvlBreakdownSummaryBox {...props.tvlBreakdownSummary} />
-      <NativelyMintedTable tokens={props.tvlBreakdowns.native} />
+      <NativelyMintedTable
+        tokens={props.tvlBreakdowns.native}
+        explorer={props.explorer}
+      />
     </div>
   )
 }
