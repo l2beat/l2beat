@@ -53,6 +53,7 @@ async function main() {
     undefined
   if (config.features.tvlBreakdown) {
     tvlBreakdownApiResponse = await fetchTvlBreakdownApi(
+      config.backend,
       config.backend.apiUrl,
       http,
     )
