@@ -62,7 +62,15 @@
       "ignoreInWatchMode": ["messageNonce"]
     },
     "Colosseum": {
-      "ignoreMethods": ["isInCreationPeriod"]
+      "ignoreMethods": ["isInCreationPeriod"],
+      "fields": {
+        "challengedRoots": {
+          "type": "arrayFromOneEvent",
+          "event": "ChallengeCreated",
+          "valueKey": "outputIndex",
+          "ignoreRelative": true
+        }
+      }
     },
     "ValidatorPool": {
       "ignoreMethods": ["getBond"],
