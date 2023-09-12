@@ -22,7 +22,8 @@
     "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd": "ProxyAdmin",
     "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Timelock",
     "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081": "SecurityCouncilOperator",
-    "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator"
+    "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator",
+    "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "SystemConfig"
   },
   "overrides": {
     "L2OutputOracle": {
@@ -85,6 +86,16 @@
       "fields": {
         "accessControl": {
           "type": "accessControl"
+        }
+      }
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
         }
       }
     }

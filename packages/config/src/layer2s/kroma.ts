@@ -4,7 +4,11 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import {
   CONTRACTS,
+  DATA_AVAILABILITY,
+  EXITS,
+  FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  OPERATOR,
   subtractOne,
   TECHNOLOGY,
 } from './common'
@@ -146,6 +150,98 @@ export const kroma: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
-  technology: TECHNOLOGY.UNDER_REVIEW,
+  technology: {
+    stateCorrectness: {
+      name: 'Fraud Proofs ensure state correctness',
+      description: 'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then zk proven. The zkEVM used is based on Scroll.',
+      references: [
+        {
+          text: 'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
+          href: 'https://etherscan.io/address/0x7526F997ea040B3949415c3a44e708273863AA2b#code#F1#L300'
+        },
+        {
+          text: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
+          href: 'https://etherscan.io/address/0x7526F997ea040B3949415c3a44e708273863AA2b#code#F1#L378'
+        },
+        {
+          text: 'Colosseum.sol#L434 - Etherscan source code, proveFault function',
+          href: 'https://etherscan.io/address/0x7526F997ea040B3949415c3a44e708273863AA2b#code#F1#L434'
+        }
+      ],
+      risks: [
+        {
+          category: 'Withdrawals can be delayed if',
+          text: 'the fraud proof system is under a delay attack.',
+        }
+      ]
+    },
+    dataAvailability: {
+      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      references: [
+        {
+          text: 'Derivation: Batch Submission - Kroma specs',
+          href: 'https://github.com/kroma-network/kroma/blob/dev/specs/derivation.md#batch-submission'
+        },
+        {
+          text: 'BatchInbox - Etherscan address',
+          href: 'https://etherscan.io/address/0xff00000000000000000000000000000000000255'
+        },
+        {
+          text: 'KromaPortal.sol#L430 - Etherscan source code, depositTransaction function',
+          href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430'
+        }
+      ]
+    },
+    operator: {
+      ...OPERATOR.CENTRALIZED_SEQUENCER,
+      references: [
+        {
+          text: 'SystemConfig - batcher address',
+          href: 'https://etherscan.io/address/0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35#readProxyContract#F3'
+        }
+      ]
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      references: [
+        {
+          text: 'Sequencing Window - Kroma specs',
+          href: 'https://github.com/kroma-network/kroma/blob/dev/specs/glossary.md#proposing-window'
+        },
+        {
+          text: 'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
+          href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430'
+        }
+      ]
+    },
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        references: [
+          {
+            text: 'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
+            href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L241'
+          },
+          {
+            text: 'KromaPortal.sol#L324 - Etherscan source code, finalizeWithdrawalTransaction function',
+            href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L324'
+          },
+        ]
+      }
+    ],
+    smartContracts: {
+      name: 'EVM compatible smart contracts are supported',
+      description:
+        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+      risks: [],
+      references: [
+        {
+          text: 'Introducing EVM Equivalence',
+          href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+        },
+      ],
+    },
+  },
+  permissions: [],
   contracts: CONTRACTS.UNDER_REVIEW,
 }

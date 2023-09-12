@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 18118496,
-  "configHash": "0x5c1337a56b872f8d3f6939c188c1bf1082869dc8a62b3087c3427a7dd45b1678",
+  "configHash": "0x48fd76e1de9d12ebe1e36b02083e1b2900d1fef474e86507dff5bb698a7560b9",
   "version": 2,
   "contracts": [
     {
@@ -113,7 +113,7 @@
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
       "values": {
-        "batcherHash": "0x00000000000000000000000041b8cd6791de4d8f9e0eaf7861ac506822adce12",
+        "batcherHash": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "overhead": 188,
@@ -132,7 +132,8 @@
         "validatorRewardScalar": 10000,
         "version": "1.0.0",
         "VERSION": 0
-      }
+      },
+      "derivedName": "SystemConfig"
     },
     {
       "name": "SecurityCouncil",
@@ -363,6 +364,7 @@
     "0x000000000000000000000000000000000000dEaD",
     "0x0125adEE89dE396b586959190e931b83120359AB",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+    "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
     "0x4200000000000000000000000000000000000004",
     "0x4200000000000000000000000000000000000009",
     "0x420000000000000000000000000000000000000A",
