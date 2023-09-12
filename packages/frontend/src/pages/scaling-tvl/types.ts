@@ -21,5 +21,5 @@ export interface ScalingTvlViewEntry {
   sevenDayChange?: string
   marketShare?: string
   purpose: string
-  stage?: StageConfig
+  stage: StageConfig
 }

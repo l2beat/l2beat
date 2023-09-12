@@ -3,7 +3,7 @@ import cx from 'classnames'
 import React from 'react'
 
 export interface StageBadgeProps {
-  stage: Stage | 'UnderReview' | undefined
+  stage: Stage | 'UnderReview' | 'NotApplicable'
   oneSize?: boolean
   big?: boolean
   className?: string
@@ -15,7 +15,12 @@ export function StageBadge({
   big,
   className,
 }: StageBadgeProps) {
-  const value = stage === 'UnderReview' ? 'In review' : stage
+  const value =
+    stage === 'UnderReview'
+      ? 'In review'
+      : stage === 'NotApplicable'
+      ? undefined
+      : stage
   return (
     <span
       className={cx(
@@ -32,7 +37,9 @@ export function StageBadge({
   )
 }
 
-function getColorClassName(stage: Stage | 'UnderReview' | undefined): string {
+function getColorClassName(
+  stage: Stage | 'UnderReview' | 'NotApplicable',
+): string {
   switch (stage) {
     case 'Stage 2':
       return 'bg-green-800 text-white'
@@ -42,7 +49,7 @@ function getColorClassName(stage: Stage | 'UnderReview' | undefined): string {
       return 'bg-orange-400 text-black'
     case 'UnderReview':
       return 'bg-gray-750 text-yellow-200'
-    case undefined:
+    case 'NotApplicable':
       return 'bg-gray-200 dark:bg-gray-750 text-gray-500 dark:text-gray-400 !font-normal'
     default:
       return ''

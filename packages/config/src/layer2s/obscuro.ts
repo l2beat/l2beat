@@ -36,6 +36,9 @@ export const obscuro: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [],
   },
