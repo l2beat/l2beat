@@ -126,3 +126,4 @@ export type Layer2Category =
   | 'State Pools'
   | 'Validium'
   | 'ZK Rollup'
+  | 'Optimistic ZK Rollup'
