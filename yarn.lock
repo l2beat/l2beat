@@ -1906,10 +1906,10 @@
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.1.0.tgz#22cc6f12e83b7c8b0f45b095a38750192463d191"
-  integrity sha512-Lo5p9wviJT+ULlVnETp7PfCgqLzYOh5Vnv/7wlsp5cpEMK6aP5hWGvIa6+9IrACs3WHZEHT4Ewk+kXXdNVZRcA==
+"@l2beat/discovery@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.2.0.tgz#0e3ff3b50c6e611e79c411f15bd87344b5e0f4f5"
+  integrity sha512-aPy447G2hnvrlU2WNS0JMXanwqZImoMR/iuT7hpP5h/MW5WyXBr2CbfTckD8eaVJwyEtkjqNZXAcrgLZJdIovQ==
   dependencies:
     "@l2beat/backend-tools" "^0.3.0"
     "@l2beat/discovery-types" "^0.1.0"
