@@ -5,7 +5,10 @@ import { providers } from 'ethers'
 import { Config } from '../../config'
 import { CBVUpdater } from '../../core/assets/'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
-import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
+import {
+  BalanceProvider,
+  ETHEREUM_BALANCE_ENCODING,
+} from '../../core/balances/providers/BalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
@@ -42,7 +45,12 @@ export function createEthereumTvlSubmodule(
     config.tvl.ethereum.minBlockTimestamp,
     logger,
   )
-  const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
+  const balanceProvider = new BalanceProvider(
+    ethereumClient,
+    multicall,
+    ChainId.ETHEREUM,
+    ETHEREUM_BALANCE_ENCODING,
+  )
 
   // #endregion
   // #region updaters
@@ -57,7 +65,7 @@ export function createEthereumTvlSubmodule(
   )
 
   const balanceUpdater = new BalanceUpdater(
-    ethereumBalanceProvider,
+    balanceProvider,
     ethereumBlockNumberUpdater,
     db.balanceRepository,
     db.balanceStatusRepository,

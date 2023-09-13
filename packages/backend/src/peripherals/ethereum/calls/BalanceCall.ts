@@ -2,7 +2,7 @@ import { getTokenByAssetId } from '@l2beat/config'
 import { AssetId, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
-import { MULTICALL_V1_ADDRESS } from '../MulticallConfig'
+import { ETHEREUM_MULTICALL_V1_ADDRESS } from '../MulticallConfig'
 import { MulticallRequest, MulticallResponse } from '../types'
 
 const coder = new utils.Interface([
@@ -15,7 +15,7 @@ export const BalanceCall = {
     //TODO discuss ether constant AssetId.ETHER
     if (asset === AssetId.ETH) {
       return {
-        address: MULTICALL_V1_ADDRESS,
+        address: ETHEREUM_MULTICALL_V1_ADDRESS,
         data: Bytes.fromHex(
           coder.encodeFunctionData('getEthBalance', [holder.toString()]),
         ),

@@ -25,14 +25,14 @@ describe(MulticallClient.name, () => {
   const BATCH_SIZE = 3
   const TEST_MULTICALL_CONFIG: MulticallConfigEntry[] = [
     {
-      blockNumber: MULTICALL_V2_BLOCK,
+      sinceBlock: MULTICALL_V2_BLOCK,
       batchSize: BATCH_SIZE,
       address: ADDRESS_V2,
       encodeBatch: encodeMulticallV2,
       decodeBatch: decodeMulticallV2,
     },
     {
-      blockNumber: MULTICALL_V1_BLOCK,
+      sinceBlock: MULTICALL_V1_BLOCK,
       batchSize: BATCH_SIZE,
       address: ADDRESS_V1,
       encodeBatch: encodeMulticallV1,

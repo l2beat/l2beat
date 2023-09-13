@@ -28,7 +28,7 @@ export class MulticallClient {
   }
 
   async multicall(requests: MulticallRequest[], blockNumber: number) {
-    const config = this.config.find((x) => blockNumber >= x.blockNumber)
+    const config = this.config.find((x) => blockNumber >= x.sinceBlock)
     try {
       if (!config) {
         return this.executeIndividual(requests, blockNumber)

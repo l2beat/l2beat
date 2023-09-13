@@ -3,7 +3,7 @@ import { AssetId, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 
-import { MULTICALL_V1_ADDRESS } from '../MulticallConfig'
+import { ETHEREUM_MULTICALL_V1_ADDRESS } from '../MulticallConfig'
 import { BalanceCall } from './BalanceCall'
 
 describe('BalanceCall', () => {
@@ -22,7 +22,7 @@ describe('BalanceCall', () => {
       const encoded = BalanceCall.encode(MOCK_HOLDER, ether)
 
       expect(encoded).toEqual({
-        address: MULTICALL_V1_ADDRESS,
+        address: ETHEREUM_MULTICALL_V1_ADDRESS,
         data: Bytes.fromHex(
           coder.encodeFunctionData('getEthBalance', [MOCK_HOLDER.toString()]),
         ),

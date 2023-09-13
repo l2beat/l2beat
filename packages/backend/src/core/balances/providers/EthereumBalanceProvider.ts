@@ -3,9 +3,9 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
 import { BalanceCall } from '../../../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../../peripherals/ethereum/MulticallClient'
-import { BalanceProvider, BalanceQuery } from '../BalanceProvider'
+import { BalanceQuery, IBalanceProvider } from './BalanceProvider'
 
-export class EthereumBalanceProvider implements BalanceProvider {
+export class EthereumBalanceProvider implements IBalanceProvider {
   private readonly chainId = ChainId.ETHEREUM
 
   constructor(private readonly multiCallClient: MulticallClient) {}

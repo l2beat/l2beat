@@ -9,7 +9,7 @@ import {
 
 export const OPTIMISM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   {
-    blockNumber: 0,
+    sinceBlock: 0,
     batchSize: 150,
     address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
     encodeBatch: encodeOptimismMulticall,

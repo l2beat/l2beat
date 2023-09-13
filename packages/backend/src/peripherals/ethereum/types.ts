@@ -12,7 +12,7 @@ export interface CallParameters {
 }
 
 export interface MulticallConfigEntry {
-  blockNumber: number
+  sinceBlock: number
   batchSize: number
   address: EthereumAddress
   encodeBatch: (requests: MulticallRequest[]) => Bytes

@@ -5,7 +5,7 @@ import { providers } from 'ethers'
 import { Config } from '../../config'
 import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
-import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumBalanceProvider'
+import { BalanceProvider } from '../../core/balances/providers/BalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
@@ -13,6 +13,8 @@ import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/Ar
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { ArbitrumMulticallClient } from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { ARBITRUM_MULTICALL_CONFIG } from '../../peripherals/ethereum/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -45,15 +47,20 @@ export function createArbitrumTvlSubmodule(
   const arbitrumClient = new EthereumClient(arbitrumProvider, logger, 25)
 
   const arbitrumMulticall = ArbitrumMulticallClient.forMainnet(arbitrumClient)
+  const multicallClient = new MulticallClient(
+    arbitrumClient,
+    ARBITRUM_MULTICALL_CONFIG,
+  )
 
   const totalSupplyProvider = new ArbitrumTotalSupplyProvider(
     arbitrumClient,
     arbitrumMulticall,
   )
 
-  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
+  const arbitrumBalanceProvider = new BalanceProvider(
     arbitrumClient,
-    arbitrumMulticall,
+    multicallClient,
+    ChainId.ARBITRUM,
   )
 
   // #endregion

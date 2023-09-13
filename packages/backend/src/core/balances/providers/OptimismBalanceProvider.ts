@@ -16,7 +16,7 @@ import {
   MulticallResponse,
 } from '../../../peripherals/ethereum/types'
 import { OptimismMulticallClient } from '../../../peripherals/optimism/multicall/OptimismMulticall'
-import { BalanceProvider, BalanceQuery } from '../BalanceProvider'
+import { BalanceQuery, IBalanceProvider } from './BalanceProvider'
 
 const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
@@ -26,7 +26,7 @@ const multicallInterface = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',
 ])
 
-export class OptimismBalanceProvider implements BalanceProvider {
+export class OptimismBalanceProvider implements IBalanceProvider {
   private readonly chainId = ChainId.OPTIMISM
 
   constructor(
