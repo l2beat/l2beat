@@ -251,75 +251,40 @@ describe(CBVUpdater.name, () => {
       expect(reports).toEqual(MOCK.REPORTS)
     })
 
-    it.only('filters assets that are not in the config', async () => {
+    it('filters assets that are not in the config', async () => {
       // create a project with one escrow & tokens DAI
-      const APEX_ESCROW_ONE = EthereumAddress.random()
       const project: ReportProject = {
         projectId: ProjectId('apex'),
         type: 'layer2',
         escrows: [
           {
-            address: APEX_ESCROW_ONE,
+            address: EthereumAddress.random(),
             sinceTimestamp: new UnixTime(0),
             tokens: [fakeToken({ id: AssetId.DAI, decimals: 18 })],
           },
         ],
       }
-      // create reports for this projects for assets ETH DAI USDC
+      // create reports for this projects for assets DAI ETH
       const reports: ReportRecord[] = [
-        {
-          timestamp: new UnixTime(0),
-          asset: AssetId.DAI,
-          chainId: ChainId.ETHEREUM,
-          reportType: 'CBV',
-          amount: 100n,
-          ethValue: 100n,
-          usdValue: 100n,
-          projectId: project.projectId,
-        },
-        {
-          timestamp: new UnixTime(0),
-          asset: AssetId.ETH,
-          chainId: ChainId.ETHEREUM,
-          reportType: 'CBV',
-          amount: 100n,
-          ethValue: 100n,
-          usdValue: 100n,
-          projectId: project.projectId,
-        },
+        mockReport(project, AssetId.DAI),
+        mockReport(project, AssetId.ETH),
       ]
       // mock DB to return the records
       const repository = mockObject<ReportRepository>({
         getByTimestampAndPreciseAsset: async () => reports,
       })
 
-      const priceUpdater = mockObject<PriceUpdater>({
-        getPricesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_PRICES)
-          .returnsOnce(MOCK.PRICES),
-      })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_BALANCES)
-          .returnsOnce(MOCK.BALANCES),
-      })
-
       const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [new UnixTime(0)],
-        add: async ({ configHash }) => configHash,
       })
+
       // initialize cbv updater
       const cbvUpdater = new CBVUpdater(
-        priceUpdater,
-        balanceUpdater,
+        mockObject<PriceUpdater>(),
+        mockObject<BalanceUpdater>(),
         repository,
         reportStatusRepository,
-        mockObject<Clock>({
-          onEveryHour: (callback) => {
-            callback(MOCK.NOW.add(-1, 'hours'))
-            return () => {}
-          },
-        }),
+        getEmptyClock(),
         [project],
         Logger.SILENT,
         new UnixTime(0),
@@ -334,3 +299,22 @@ describe(CBVUpdater.name, () => {
     })
   })
 })
+
+function mockReport(project: ReportProject, asset: AssetId): ReportRecord {
+  return {
+    timestamp: new UnixTime(0),
+    asset,
+    chainId: ChainId.ETHEREUM,
+    reportType: 'CBV',
+    amount: 100n,
+    ethValue: 100n,
+    usdValue: 100n,
+    projectId: project.projectId,
+  }
+}
+
+function getEmptyClock() {
+  return mockObject<Clock>({
+    onEveryHour: () => () => {},
+  })
+}
