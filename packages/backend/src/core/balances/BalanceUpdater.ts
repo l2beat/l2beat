@@ -11,7 +11,7 @@ import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { BalanceProject } from './BalanceProject'
-import { BalanceQuery, IBalanceProvider } from './BalanceProvider'
+import { BalanceQuery, BalanceProvider } from './BalanceProvider'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
 
 export class BalanceUpdater {
@@ -20,7 +20,7 @@ export class BalanceUpdater {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
-    private readonly balanceProvider: IBalanceProvider,
+    private readonly balanceProvider: BalanceProvider,
     private readonly blockNumberUpdater: BlockNumberUpdater,
     private readonly balanceRepository: BalanceRepository,
     private readonly balanceStatusRepository: BalanceStatusRepository,

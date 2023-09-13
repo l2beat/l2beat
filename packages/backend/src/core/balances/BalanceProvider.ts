@@ -37,15 +37,6 @@ export interface BalanceQuery {
   assetId: AssetId
 }
 
-export interface IBalanceProvider {
-  fetchBalances: (
-    missingAssets: BalanceQuery[],
-    timestamp: UnixTime,
-    blockNumber: number,
-  ) => Promise<BalanceRecord[]>
-  getChainId: () => ChainId
-}
-
 export interface NativeBalanceEncoding {
   sinceBlock: number
   address: EthereumAddress
@@ -67,7 +58,7 @@ export const ARBITRUM_BALANCE_ENCODING: NativeBalanceEncoding = {
   decode: decodeGetEthBalance,
 }
 
-export class BalanceProvider implements IBalanceProvider {
+export class BalanceProvider {
   constructor(
     private readonly ethereumClient: EthereumClient,
     private readonly multicallClient: MulticallClient,
