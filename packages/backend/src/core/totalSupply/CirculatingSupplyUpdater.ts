@@ -55,6 +55,12 @@ export class CirculatingSupplyUpdater {
     refreshIntervalMs = 1000,
   ) {
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug(
+        'Something is waiting for getCirculatingSuppliesWhenReady',
+        {
+          timestamp: timestamp.toString(),
+        },
+      )
       await setTimeout(refreshIntervalMs)
     }
     return this.circulatingSupplyRepository.getByTimestamp(

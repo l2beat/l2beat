@@ -40,6 +40,9 @@ export class PriceUpdater {
 
   async getPricesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getPricesWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.priceRepository.getByTimestamp(timestamp)
