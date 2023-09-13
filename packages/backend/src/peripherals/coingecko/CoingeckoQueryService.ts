@@ -96,6 +96,53 @@ export class CoingeckoQueryService {
     return result
   }
 
+  async getCirculatingSuppliesAll(
+    coingeckoId: CoingeckoId,
+    to: UnixTime,
+    address?: EthereumAddress,
+  ): Promise<QueryResultPoint[]> {
+    const queryResult = await this.queryCoinMarketChartRangeWhole(
+      coingeckoId,
+      to.add(30, 'minutes'),
+      address,
+    )
+
+    assert(queryResult, getAssertMessage(coingeckoId, UnixTime.now(), to))
+
+    const sortedPrices = queryResult.prices.sort(
+      (a, b) => a.date.getTime() - b.date.getTime(),
+    )
+    const sortedMarketCaps = queryResult.marketCaps.sort(
+      (a, b) => a.date.getTime() - b.date.getTime(),
+    )
+
+    const timestamps = getTimestamps(
+      UnixTime.fromDate(sortedPrices[0].date),
+      to,
+      'hourly',
+    )
+
+    const pickedPrices = pickPoints(sortedPrices, timestamps)
+    const pickedMarketCaps = pickPoints(sortedMarketCaps, timestamps)
+
+    const result: QueryResultPoint[] = []
+
+    for (let i = 0; i < timestamps.length; i++) {
+      const price = pickedPrices[i].value
+      const marketCap = pickedMarketCaps[i].value
+
+      const value = approximateCirculatingSupply(marketCap, price)
+
+      result.push({
+        value,
+        timestamp: timestamps[i],
+        deltaMs: pickedPrices[i].deltaMs,
+      })
+    }
+
+    return result
+  }
+
   async queryCoinMarketChartRange(
     coingeckoId: CoingeckoId,
     from: UnixTime,
@@ -274,10 +321,6 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
 // e.g. 123456789 -> 123450000
 export function approximateCirculatingSupply(marketCap: number, price: number) {
   const circulatingSupplyRaw = marketCap / price
-  assert(
-    circulatingSupplyRaw >= 1,
-    'Circulating supply cannot be less than one',
-  )
 
   // reduce variation in the result by disregarding least significant parts
   const log = Math.floor(Math.log10(circulatingSupplyRaw))
