@@ -83,6 +83,8 @@ export class CirculatingSupplyUpdater {
 
     this.logger.info('Update started', { timestamp: to.toNumber() })
 
+    // this data will be needed to determine from which timestamp to sync
+    // if the boundary is undefined, we sync all the possible data from Coingecko
     const boundaries =
       await this.circulatingSupplyRepository.findDataBoundaries()
 
@@ -110,16 +112,12 @@ export class CirculatingSupplyUpdater {
     address?: EthereumAddress,
   ) {
     if (boundary === undefined) {
+      // pass undefined which means "sync as much as possible"
       await this.fetchAndSave(assetId, undefined, to, address)
     } else {
       if (to.gt(boundary.latest)) {
         const firstUnknown = boundary.latest.add(1, 'hours')
         await this.fetchAndSave(assetId, firstUnknown, to, address)
-      } else {
-        this.logger.info('Already up to date', {
-          asset: assetId.toString(),
-          latest: boundary.latest.toDate().toISOString(),
-        })
       }
     }
   }
@@ -138,10 +136,8 @@ export class CirculatingSupplyUpdater {
     to: UnixTime,
     address?: EthereumAddress,
   ) {
-    this.logger.info('Fetching...', {
-      asset: assetId.toString(),
-    })
     const coingeckoId = this.getCoingeckoId(assetId)
+
     const circulatingSupplies =
       from === undefined
         ? await this.coingeckoQueryService.getCirculatingSuppliesAll(
@@ -172,7 +168,7 @@ export class CirculatingSupplyUpdater {
 
     await this.circulatingSupplyRepository.addMany(records)
 
-    this.logger.info('Saved to DB', {
+    this.logger.info('Fetched & Saved', {
       asset: assetId.toString(),
       records: circulatingSupplies.length,
     })
