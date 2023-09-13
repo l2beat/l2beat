@@ -27,7 +27,6 @@ import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
 import { createNativeTvlSubmodule } from './NativeTvl'
-import { createOptimismTvlSubmodule } from './OptimismTvl'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -88,7 +87,6 @@ export function createTvlModule(
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
     createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
     createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createOptimismTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
   // #endregion
