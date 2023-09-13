@@ -82,7 +82,7 @@ export async function dryRunDiscovery(
   )
 
   if (diff.length > 0) {
-    console.log(JSON.stringify(diff))
+    console.log(JSON.stringify(diff, null, 2))
   } else {
     console.log('No changes!')
   }
