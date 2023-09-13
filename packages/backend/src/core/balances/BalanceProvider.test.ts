@@ -7,13 +7,13 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { MulticallClient } from '../../../peripherals/ethereum/MulticallClient'
-import { EthereumBalanceProvider } from './EthereumBalanceProvider'
+import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { BalanceProvider } from './BalanceProvider'
 
-describe(EthereumBalanceProvider.name, () => {
-  describe(EthereumBalanceProvider.prototype.fetchBalances.name, () => {
+describe(BalanceProvider.name, () => {
+  describe(BalanceProvider.prototype.fetchBalances.name, () => {
     it('performs a multicall for missing data', async () => {
-      const blockNumber = 1234
       const multicallClient = mockObject<MulticallClient>({
         multicall: async () => [
           { success: true, data: Bytes.fromNumber(69).padStart(32) },
@@ -21,20 +21,23 @@ describe(EthereumBalanceProvider.name, () => {
         ],
       })
 
-      const ethereumBalanceProvider = new EthereumBalanceProvider(
+      const balanceProvider = new BalanceProvider(
+        mockObject<EthereumClient>(),
         multicallClient,
+        ChainId.ETHEREUM,
+        undefined,
       )
 
       const timestamp = UnixTime.now()
       const holderA = EthereumAddress.random()
       const holderB = EthereumAddress.random()
-      const results = await ethereumBalanceProvider.fetchBalances(
+      const results = await balanceProvider.fetchBalances(
         [
           { assetId: AssetId.DAI, holder: holderA },
-          { assetId: AssetId.ETH, holder: holderB },
+          { assetId: AssetId.USDC, holder: holderB },
         ],
         timestamp,
-        blockNumber,
+        1234,
       )
       expect(results).toEqual([
         {
@@ -45,7 +48,7 @@ describe(EthereumBalanceProvider.name, () => {
           chainId: ChainId.ETHEREUM,
         },
         {
-          assetId: AssetId.ETH,
+          assetId: AssetId.USDC,
           holderAddress: holderB,
           balance: 420n,
           timestamp,
@@ -53,5 +56,8 @@ describe(EthereumBalanceProvider.name, () => {
         },
       ])
     })
+
+    it.skip('handles native assets with multicall')
+    it.skip('handles native assets without multicall')
   })
 })

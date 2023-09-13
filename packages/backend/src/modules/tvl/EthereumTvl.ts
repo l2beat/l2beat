@@ -4,11 +4,11 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { CBVUpdater } from '../../core/assets/'
-import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import {
   BalanceProvider,
   ETHEREUM_BALANCE_ENCODING,
-} from '../../core/balances/providers/BalanceProvider'
+} from '../../core/balances/BalanceProvider'
+import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'

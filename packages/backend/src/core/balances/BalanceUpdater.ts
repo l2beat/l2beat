@@ -11,8 +11,8 @@ import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { BalanceProject } from './BalanceProject'
+import { BalanceQuery, IBalanceProvider } from './BalanceProvider'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
-import { BalanceQuery, IBalanceProvider } from './providers/BalanceProvider'
 
 export class BalanceUpdater {
   private readonly configHash: Hash256
