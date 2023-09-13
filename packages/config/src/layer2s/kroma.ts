@@ -156,11 +156,11 @@ export const kroma: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: 'UnderReview',
+      fraudProofSystemAtLeast5Outsiders: true,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: false,
@@ -194,6 +194,10 @@ export const kroma: Layer2 = {
         {
           category: 'Withdrawals can be delayed if',
           text: 'the fraud proof system is under a delay attack.',
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'the cryptography is broken or implemented incorrectly.',
         },
       ],
     },
