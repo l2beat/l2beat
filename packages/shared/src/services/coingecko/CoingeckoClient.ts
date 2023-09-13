@@ -70,7 +70,7 @@ export class CoingeckoClient {
     from: UnixTime,
     to: UnixTime,
     address?: EthereumAddress,
-  ): Promise<CoinMarketChartRangeData> {
+  ): Promise<CoinMarketChartRangeData | null> {
     try {
       const id = this.newIds.get(address?.toString() ?? '') ?? coinId
       return await this.callMarketChartRange(id, vs_currency, from, to)
@@ -88,7 +88,7 @@ export class CoingeckoClient {
     vs_currency: string,
     from: UnixTime,
     to: UnixTime,
-  ) {
+  ): Promise<CoinMarketChartRangeData | null> {
     const data = await this.query(
       `/coins/${coinId.toString()}/market_chart/range`,
       {
@@ -99,6 +99,15 @@ export class CoingeckoClient {
     )
 
     const parsedData = CoinMarketChartRangeResult.parse(data)
+
+    if (
+      parsedData.prices.length === 0 &&
+      parsedData.market_caps.length === 0 &&
+      parsedData.total_volumes.length === 0
+    ) {
+      return null
+    }
+
     return {
       prices: parsedData.prices.map(([timestamp, price]) => ({
         date: new Date(timestamp),
