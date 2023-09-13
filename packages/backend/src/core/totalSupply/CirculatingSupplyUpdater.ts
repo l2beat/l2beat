@@ -79,10 +79,9 @@ export class CirculatingSupplyUpdater {
       await this.circulatingSupplyRepository.findDataBoundaries()
 
     const results = await Promise.allSettled(
-      this.tokens.map(({ id: assetId, address, sinceTimestamp }) => {
+      this.tokens.map(({ id: assetId, address }) => {
         const boundary = boundaries.get(assetId)
-        const adjustedFrom = sinceTimestamp.gt(from) ? sinceTimestamp : from
-        return this.updateToken(assetId, boundary, adjustedFrom, to, address)
+        return this.updateToken(assetId, boundary, to, address)
       }),
     )
     const error = results.find((x) => x.status === 'rejected')
@@ -99,34 +98,25 @@ export class CirculatingSupplyUpdater {
   async updateToken(
     assetId: AssetId,
     boundary: DataBoundary | undefined,
-    from: UnixTime,
     to: UnixTime,
     address?: EthereumAddress,
   ) {
-    let hours = 0
-    const hourDiff = (from: UnixTime, to: UnixTime) =>
-      Math.floor((to.toNumber() - from.toNumber()) / 3_600) + 1
+    this.logger.info('Update started', {
+      asset: assetId.toString(),
+    })
+
     if (boundary === undefined) {
-      await this.fetchAndSave(assetId, from, to, address)
-      hours += hourDiff(from, to)
+      await this.fetchAndSave(assetId, undefined, to, address)
     } else {
-      if (from.lt(boundary.earliest)) {
-        const lastUnknown = boundary.earliest.add(-1, 'hours')
-        await this.fetchAndSave(assetId, from, lastUnknown, address)
-        hours += hourDiff(from, lastUnknown)
-      }
       if (to.gt(boundary.latest)) {
         const firstUnknown = boundary.latest.add(1, 'hours')
         await this.fetchAndSave(assetId, firstUnknown, to, address)
-        hours += hourDiff(firstUnknown, to)
       }
     }
-    if (hours > 0) {
-      this.logger.debug('Updated circulating supplies', {
-        coingeckoId: assetId.toString(),
-        hours,
-      })
-    }
+    this.logger.info('Update completed', {
+      asset: assetId.toString(),
+      to: to.toDate().toISOString(),
+    })
   }
   private getCoingeckoId(assetId: AssetId) {
     const coingeckoId = this.tokens.find(
@@ -139,29 +129,57 @@ export class CirculatingSupplyUpdater {
 
   async fetchAndSave(
     assetId: AssetId,
-    from: UnixTime,
+    from: UnixTime | undefined,
     to: UnixTime,
     address?: EthereumAddress,
   ) {
     const coingeckoId = this.getCoingeckoId(assetId)
     const circulatingSupplies =
-      await this.coingeckoQueryService.getCirculatingSupplies(
-        coingeckoId,
-        // Make sure that we have enough old data to fill holes
-        from.add(-7, 'days'),
-        to,
-        'hourly',
-        address,
-      )
-    const records: CirculatingSupplyRecord[] = circulatingSupplies
-      .filter((x) => x.timestamp.gte(from))
-      .map((circulatingSupply) => ({
+      from === undefined
+        ? await this.coingeckoQueryService.getCirculatingSuppliesAll(
+            coingeckoId,
+            to,
+            address,
+          )
+        : await this.coingeckoQueryService.getCirculatingSupplies(
+            coingeckoId,
+            // Make sure that we have enough old data to fill holes
+            from.add(-7, 'days'),
+            to,
+            'hourly',
+            address,
+          )
+
+    assert(
+      circulatingSupplies.length > 0,
+      this.getAssertMessage(assetId, from, to),
+    )
+
+    const records: CirculatingSupplyRecord[] = circulatingSupplies.map(
+      (circulatingSupply) => ({
         assetId,
         timestamp: circulatingSupply.timestamp,
         circulatingSupply: circulatingSupply.value,
         chainId: this.chainId,
-      }))
+      }),
+    )
 
-    await this.circulatingSupplyRepository.addOrUpdateMany(records)
+    await this.circulatingSupplyRepository.addMany(records)
+
+    this.logger.debug('Fetched & saved circulating supplies', {
+      asset: assetId.toString(),
+      chain: this.chainId.toString(),
+      count: circulatingSupplies.length,
+    })
+  }
+
+  private getAssertMessage(
+    assetId: AssetId,
+    from: UnixTime | undefined,
+    to: UnixTime,
+  ): string | undefined {
+    return `Programmer error: Circulating supplies should not be empty there. 
+    Asset: ${assetId.toString()}, chain: ${this.chainId.toString()}, 
+    ${from ? ` from: ${from.toNumber()},` : ''} to: ${to.toNumber()}`
   }
 }

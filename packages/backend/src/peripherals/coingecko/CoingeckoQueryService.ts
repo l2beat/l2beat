@@ -93,7 +93,7 @@ export class CoingeckoQueryService {
       })
     }
 
-    return result
+    return result.filter((x) => x.timestamp.gte(from))
   }
 
   async getCirculatingSuppliesAll(
