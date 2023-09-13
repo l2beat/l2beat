@@ -209,6 +209,20 @@ describe(CirculatingSupplyRepository.name, () => {
     it('skips empty row modification', async () => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
+
+    it('batches inserts', async () => {
+      const records: CirculatingSupplyRecord[] = []
+      const now = UnixTime.now()
+      for (let i = 5; i < 15_000; i++) {
+        records.push({
+          circulatingSupply: Math.floor(Math.random() * 1000),
+          chainId: ChainId.ETHEREUM,
+          timestamp: now.add(-i, 'hours'),
+          assetId: AssetId('fake-coin'),
+        })
+      }
+      await expect(repository.addMany(records)).not.toBeRejected()
+    })
   })
 
   it(CirculatingSupplyRepository.prototype.getAll.name, async () => {
