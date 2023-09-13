@@ -73,6 +73,7 @@ export class ReportRepository extends BaseRepository {
     assert(timestampsMatch, 'Timestamps must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
+    // Can't be two or more updaters on the chain because it will break the logic
     await knex.transaction(async (trx) => {
       await trx('reports')
         .where('unix_timestamp', rows[0].unix_timestamp)
