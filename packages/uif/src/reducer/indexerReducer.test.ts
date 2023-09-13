@@ -375,6 +375,21 @@ describe(indexerReducer.name, () => {
           { type: 'Invalidate', targetHeight: 50 },
         ])
       })
+
+      it('if updates to the same height, does nothing', () => {
+        const initState = getAfterInit({
+          safeHeight: 100,
+          childCount: 0,
+          parentHeights: [100],
+        })
+
+        const [state, effects] = reduceWithIndexerReducer(initState, [
+          { type: 'ParentUpdated', index: 0, safeHeight: 100 },
+        ])
+
+        expect(state).toEqual(initState)
+        expect(effects).toEqual([])
+      })
     })
 
     describe('parent waiting', () => {

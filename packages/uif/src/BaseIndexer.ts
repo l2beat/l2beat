@@ -36,7 +36,7 @@ export abstract class BaseIndexer implements Indexer {
    * pessimistic value and the indexer is expected to actually operate at a
    * higher height in runtime.
    */
-  abstract setSafeHeight(height: number): Promise<void>
+  protected abstract setSafeHeight(height: number): Promise<void>
 
   /**
    * To be used in ChildIndexer.
@@ -44,18 +44,19 @@ export abstract class BaseIndexer implements Indexer {
    * @param from - current height of the indexer, exclusive
    * @param to - inclusive
    */
-  abstract update(from: number, to: number): Promise<number>
+  // TODO: do we need to pass the current height?
+  protected abstract update(from: number, to: number): Promise<number>
 
   /**
    * Only to be used in RootIndexer. It provides a way to start the height
    * update process.
    */
-  abstract tick(): Promise<number>
+  protected abstract tick(): Promise<number>
 
   /**
    * @param targetHeight - every value > `targetHeight` is invalid, but `targetHeight` itself is valid
    */
-  abstract invalidate(targetHeight: number): Promise<number>
+  protected abstract invalidate(targetHeight: number): Promise<number>
 
   private state: IndexerState
   private started = false

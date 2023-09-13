@@ -57,7 +57,7 @@ export class ConfigurableIndexer extends ChildIndexer {
 
   override async getSafeHeight(): Promise<number> {
     const height = await this.stateRepository.getSafeHeight()
-    return height ?? 0
+    return height
   }
 
   override async setSafeHeight(height: number): Promise<void> {
