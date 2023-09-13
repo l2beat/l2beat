@@ -30,7 +30,9 @@ export class CirculatingSupplyUpdater {
     private readonly chainId: ChainId,
     private readonly logger: Logger,
   ) {
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `CirculatingSupplyUpdater.${ChainId.getName(chainId)}`,
+    )
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),
@@ -101,22 +103,19 @@ export class CirculatingSupplyUpdater {
     to: UnixTime,
     address?: EthereumAddress,
   ) {
-    this.logger.info('Update started', {
-      asset: assetId.toString(),
-    })
-
     if (boundary === undefined) {
       await this.fetchAndSave(assetId, undefined, to, address)
     } else {
       if (to.gt(boundary.latest)) {
         const firstUnknown = boundary.latest.add(1, 'hours')
         await this.fetchAndSave(assetId, firstUnknown, to, address)
+      } else {
+        this.logger.info('Already up to date', {
+          asset: assetId.toString(),
+          latest: boundary.latest.toDate().toISOString(),
+        })
       }
     }
-    this.logger.info('Update completed', {
-      asset: assetId.toString(),
-      to: to.toDate().toISOString(),
-    })
   }
   private getCoingeckoId(assetId: AssetId) {
     const coingeckoId = this.tokens.find(
@@ -133,6 +132,9 @@ export class CirculatingSupplyUpdater {
     to: UnixTime,
     address?: EthereumAddress,
   ) {
+    this.logger.info('Fetching...', {
+      asset: assetId.toString(),
+    })
     const coingeckoId = this.getCoingeckoId(assetId)
     const circulatingSupplies =
       from === undefined
@@ -143,8 +145,7 @@ export class CirculatingSupplyUpdater {
           )
         : await this.coingeckoQueryService.getCirculatingSupplies(
             coingeckoId,
-            // Make sure that we have enough old data to fill holes
-            from.add(-7, 'days'),
+            from,
             to,
             'hourly',
             address,
@@ -166,10 +167,9 @@ export class CirculatingSupplyUpdater {
 
     await this.circulatingSupplyRepository.addMany(records)
 
-    this.logger.debug('Fetched & saved circulating supplies', {
+    this.logger.info('Saved to DB', {
       asset: assetId.toString(),
-      chain: this.chainId.toString(),
-      count: circulatingSupplies.length,
+      records: circulatingSupplies.length,
     })
   }
 
