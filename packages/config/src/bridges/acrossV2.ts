@@ -158,7 +158,7 @@ export const acrossV2: Bridge = {
     {
       name: 'BondToken transfer proposers',
       accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
-      description: 'Allowed to propose Bond Token transfers',
+      description: 'Allowed to propose BondToken transfers',
     },
   ],
   knowledgeNuggets: [
