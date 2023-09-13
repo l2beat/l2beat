@@ -30,14 +30,13 @@ export const optimismMulticallEncoder: MulticallEncoder = {
       response.toString(),
     )
 
-    const values = decodedResponse[0] as OptimismMulticallResult
+    const values = decodedResponse[0] as string[]
 
-    return values.map(([success, data]): MulticallResponse => {
-      const bytes = Bytes.fromHex(data)
-      return {
-        success: success && bytes.length !== 0,
-        data: bytes,
-      }
-    })
+    return values.map(
+      (data): MulticallResponse => ({
+        success: data !== '0x',
+        data: Bytes.fromHex(data),
+      }),
+    )
   },
 }
