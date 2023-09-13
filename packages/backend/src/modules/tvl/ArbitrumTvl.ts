@@ -4,7 +4,10 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
-import { BalanceProvider } from '../../core/balances/BalanceProvider'
+import {
+  ARBITRUM_BALANCE_ENCODING,
+  BalanceProvider,
+} from '../../core/balances/BalanceProvider'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
@@ -59,6 +62,7 @@ export function createArbitrumTvlSubmodule(
     arbitrumClient,
     multicallClient,
     ChainId.ARBITRUM,
+    ARBITRUM_BALANCE_ENCODING,
   )
 
   // #endregion

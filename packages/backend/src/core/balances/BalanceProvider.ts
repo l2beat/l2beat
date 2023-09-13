@@ -63,9 +63,7 @@ export class BalanceProvider {
     private readonly ethereumClient: EthereumClient,
     private readonly multicallClient: MulticallClient,
     private readonly chainId: ChainId,
-    private readonly nativeBalanceEncoding:
-      | NativeBalanceEncoding
-      | undefined = ETHEREUM_BALANCE_ENCODING,
+    private readonly nativeBalanceEncoding: NativeBalanceEncoding | undefined,
   ) {}
 
   public getChainId(): ChainId {
