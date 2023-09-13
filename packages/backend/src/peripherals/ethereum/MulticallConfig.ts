@@ -29,10 +29,10 @@ export const ETHEREUM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   },
 ]
 
-const ARBITRUM_MULTICALL_ADDRESS = EthereumAddress(
+export const ARBITRUM_MULTICALL_ADDRESS = EthereumAddress(
   '0x842eC2c7D803033Edf55E478F461FC547Bc54EB2',
 )
-const ARBITRUM_MULTICALL_BLOCK = 821923
+export const ARBITRUM_MULTICALL_BLOCK = 821923
 export const ARBITRUM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   {
     sinceBlock: ARBITRUM_MULTICALL_BLOCK,

@@ -10,19 +10,19 @@ import {
 import { BigNumber, utils } from 'ethers'
 import { partition } from 'lodash'
 
-import {
-  ARBITRUM_MULTICALL_ADDRESS,
-  ARBITRUM_MULTICALL_BLOCK,
-} from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
-import { MulticallResponse } from '../../peripherals/arbitrum/multicall/interfaces'
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import {
+  ARBITRUM_MULTICALL_ADDRESS,
+  ARBITRUM_MULTICALL_BLOCK,
   ETHEREUM_MULTICALL_V1_ADDRESS,
   ETHEREUM_MULTICALL_V1_BLOCK,
 } from '../../peripherals/ethereum/MulticallConfig'
-import { MulticallRequest } from '../../peripherals/ethereum/types'
+import {
+  MulticallRequest,
+  MulticallResponse,
+} from '../../peripherals/ethereum/types'
 
 const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',

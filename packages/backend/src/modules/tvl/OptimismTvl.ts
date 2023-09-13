@@ -9,12 +9,11 @@ import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { OptimismTotalSupplyProvider } from '../../core/totalSupply/providers/OptimismTotalSupplyProvider'
+import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { OPTIMISM_MULTICALL_CONFIG } from '../../peripherals/ethereum/MulticallConfig'
-import { OptimismMulticallClient } from '../../peripherals/optimism/multicall/OptimismMulticall'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -50,11 +49,10 @@ export function createOptimismTvlSubmodule(
     optimismClient,
     OPTIMISM_MULTICALL_CONFIG,
   )
-  const optimismMulticall = OptimismMulticallClient.forMainnet(optimismClient)
 
-  const totalSupplyProvider = new OptimismTotalSupplyProvider(
-    optimismClient,
-    optimismMulticall,
+  const totalSupplyProvider = new TotalSupplyProvider(
+    multicallClient,
+    ChainId.OPTIMISM,
   )
 
   const optimismBalanceProvider = new BalanceProvider(
