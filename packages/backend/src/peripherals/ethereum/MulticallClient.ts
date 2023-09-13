@@ -3,15 +3,34 @@ import { utils } from 'ethers'
 
 import { EthereumClient } from './EthereumClient'
 
-export const MULTICALL_BATCH_SIZE = 150
-export const MULTICALL_V1_BLOCK = 7929876
+export interface MulticallConfigEntry {
+  blockNumber: number
+  batchSize: number
+  address: EthereumAddress
+  encodeBatch: (requests: MulticallRequest[]) => Bytes
+  decodeBatch: (result: Bytes) => MulticallResponse[]
+}
+
 export const MULTICALL_V1_ADDRESS = EthereumAddress(
   '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441',
 )
-export const MULTICALL_V2_BLOCK = 12336033
-export const MULTICALL_V2_ADDRESS = EthereumAddress(
-  '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
-)
+
+const ETHEREUM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
+  {
+    blockNumber: 12_336_033,
+    batchSize: 150,
+    address: EthereumAddress('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'),
+    encodeBatch: encodeMulticallV2,
+    decodeBatch: decodeMulticallV2,
+  },
+  {
+    blockNumber: 7_929_876,
+    batchSize: 150,
+    address: MULTICALL_V1_ADDRESS,
+    encodeBatch: encodeMulticallV1,
+    decodeBatch: decodeMulticallV1,
+  },
+]
 
 export interface MulticallRequest {
   address: EthereumAddress
@@ -24,7 +43,10 @@ export interface MulticallResponse {
 }
 
 export class MulticallClient {
-  constructor(private readonly ethereumClient: EthereumClient) {}
+  constructor(
+    private readonly ethereumClient: EthereumClient,
+    private readonly config = ETHEREUM_MULTICALL_CONFIG,
+  ) {}
 
   async multicallNamed(
     requests: Record<string, MulticallRequest>,
@@ -42,15 +64,17 @@ export class MulticallClient {
   }
 
   async multicall(requests: MulticallRequest[], blockNumber: number) {
+    const config = this.config.find((x) => blockNumber >= x.blockNumber)
     try {
-      if (blockNumber < MULTICALL_V1_BLOCK) {
+      if (!config) {
         return this.executeIndividual(requests, blockNumber)
+      } else {
+        const batches = toBatches(requests, config.batchSize)
+        const batchedResults = await Promise.all(
+          batches.map((batch) => this.executeBatch(config, batch, blockNumber)),
+        )
+        return batchedResults.flat()
       }
-      const batches = toBatches(requests, MULTICALL_BATCH_SIZE)
-      const batchedResults = await Promise.all(
-        batches.map((batch) => this.executeBatch(batch, blockNumber)),
-      )
-      return batchedResults.flat()
     } catch (e) {
       throw new Error(
         `Ethereum multicall failed for block number:  ${blockNumber}. Call size was ${requests.length}.`,
@@ -82,30 +106,16 @@ export class MulticallClient {
   }
 
   private async executeBatch(
+    config: MulticallConfigEntry,
     requests: MulticallRequest[],
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
-    if (blockNumber < MULTICALL_V2_BLOCK) {
-      const encoded = encodeMulticallV1(requests)
-      const result = await this.ethereumClient.call(
-        {
-          to: MULTICALL_V1_ADDRESS,
-          data: encoded,
-        },
-        blockNumber,
-      )
-      return decodeMulticallV1(result)
-    } else {
-      const encoded = encodeMulticallV2(requests)
-      const result = await this.ethereumClient.call(
-        {
-          to: MULTICALL_V2_ADDRESS,
-          data: encoded,
-        },
-        blockNumber,
-      )
-      return decodeMulticallV2(result)
-    }
+    const encoded = config.encodeBatch(requests)
+    const result = await this.ethereumClient.call(
+      { to: config.address, data: encoded },
+      blockNumber,
+    )
+    return config.decodeBatch(result)
   }
 }
 
