@@ -19,7 +19,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('kroma')
 
 const upgradesProxy = {
-  upgradableBy: ['KromaOperator'],
+  upgradableBy: ['KromaAdmin'],
   upgradeDelay: 'No delay',
 }
 
@@ -47,9 +47,9 @@ export const kroma: Layer2 = {
     name: 'Kroma',
     slug: 'kroma',
     description:
-      'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. \
+      "Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. \
             Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll. \
-            The goal of Kroma is to eventually transition to a ZK Rollup once the generation of ZK proofs becomes more cost-efficient and faster.',
+            Kroma's goal is to eventually transition to a ZK Rollup once the generation of ZK proofs becomes more cost-efficient and faster.",
     purpose: 'Universal',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
@@ -266,7 +266,7 @@ export const kroma: Layer2 = {
   },
   permissions: [
     {
-      name: 'KromaOperator',
+      name: 'KromaAdmin',
       accounts: discovery.getPermissionedAccounts(
         'SecurityCouncilToken',
         'ownerOf',
@@ -275,7 +275,7 @@ export const kroma: Layer2 = {
         'Only member of the Governor, which owns the Timelock and therefore controls the ProxyAdmin. Can instantly upgrade the system.',
     },
     {
-      name: 'SecurityCouncilOperator',
+      name: 'SecurityCouncilAdmin',
       accounts: [
         discovery.getPermissionedAccount('SecurityCouncil', 'GOVERNOR'),
       ],
@@ -336,11 +336,11 @@ export const kroma: Layer2 = {
       discovery.getContractDetails('Timelock', {
         description: `Timelock contract behind which the ProxyAdmin is. There is a ${formatSeconds(
           timelockDefaultDelay,
-        )} delay, but it can be bypassed by the KromaOperator without conditions.`,
+        )} delay, but it can be bypassed by the KromaAdmin without conditions.`,
       }),
       discovery.getContractDetails('SecurityCouncil', {
         description:
-          'Contract designated as a guardian, meaning it can pause withdrawals. Managed by the SecurityCouncilOperator.',
+          'Contract designated as a guardian, meaning it can pause withdrawals. Managed by the SecurityCouncilAdmin.',
         ...upgradesProxy,
       }),
       discovery.getContractDetails('UpgradeGovernor', {
@@ -349,7 +349,7 @@ export const kroma: Layer2 = {
       }),
       discovery.getContractDetails('ProxyAdmin', {
         description:
-          "Admin of the L2OutputOracle, Timelock, KromaPortal, SystemConfig, SecurityCouncil, L1CrossDomainMessenger, L1ERC721Bridge, ZKVerifier, Colosseum, L1StandardBridge, UpgradeGovernor, SecurityCouncilToken, ValidatorPool proxies. It's effectively controlled by the KromaOperator. The proxy is behind a Timelock, but the delay can always be bypassed.",
+          "Admin of the L2OutputOracle, Timelock, KromaPortal, SystemConfig, SecurityCouncil, L1CrossDomainMessenger, L1ERC721Bridge, ZKVerifier, Colosseum, L1StandardBridge, UpgradeGovernor, SecurityCouncilToken, ValidatorPool proxies. It's effectively controlled by the KromaAdmin. The proxy is behind a Timelock, but the delay can always be bypassed.",
       }),
       discovery.getContractDetails('Colosseum', {
         description:
