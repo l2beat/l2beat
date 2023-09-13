@@ -161,7 +161,7 @@ export const aztecconnect: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: 'UnderReview',
+      rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
       stateVerificationOnL1: true,
