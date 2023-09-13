@@ -108,6 +108,62 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'totalSupply',
   },
+  {
+    id: AssetId('gns-gains-network'),
+    name: 'Gains Network',
+    symbol: 'GNS',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203',
+    address: EthereumAddress('0x18c11FD286C5EC11c3b683Caa813B77f5163A122'),
+    coingeckoId: CoingeckoId('gains-network'),
+    sinceTimestamp: new UnixTime(1672175006),
+    category: 'other',
+    type: 'NMV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('btc.b-bitcoin'),
+    name: 'Bitcoin',
+    symbol: 'BTC.b',
+    decimals: 8,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/26115/large/btcb.png?1655921693',
+    address: EthereumAddress('0x2297aEbD383787A160DD0d9F71508148769342E3'),
+    coingeckoId: CoingeckoId('bitcoin-avalanche-bridged-btc-b'),
+    sinceTimestamp: new UnixTime(1668644839),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('joe-joe-token'),
+    name: 'JoeToken',
+    symbol: 'JOE',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/17569/large/traderjoe.png?1685690062',
+    address: EthereumAddress('0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07'),
+    coingeckoId: CoingeckoId('joe'),
+    sinceTimestamp: new UnixTime(1674495392),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('bifi-beefy-finance'),
+    name: 'beefy.finance',
+    symbol: 'BIFI',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/12704/large/token.png?1601876182',
+    address: EthereumAddress('0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE'),
+    coingeckoId: CoingeckoId('beefy-finance'),
+    sinceTimestamp: new UnixTime(1632385561),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
 ]
 
 export const arbitrum: Layer2 = {
