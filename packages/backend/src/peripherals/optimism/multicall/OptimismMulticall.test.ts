@@ -2,11 +2,11 @@ import { Bytes, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { EthereumClient } from '../../ethereum/EthereumClient'
-import { MulticallEncoder, MulticallRequest } from './interfaces'
 import {
   optimismMulticallEncoder,
   optimismMulticallInterface,
-} from './MulticallEncoder'
+} from '../MulticallEncoder'
+import { MulticallEncoder, MulticallRequest } from './interfaces'
 import { OptimismMulticallClient } from './OptimismMulticall'
 
 describe(OptimismMulticallClient.name, () => {

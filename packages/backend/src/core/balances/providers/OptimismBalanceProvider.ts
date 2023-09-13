@@ -14,7 +14,7 @@ import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
 import {
   MulticallRequest,
   MulticallResponse,
-} from '../../../peripherals/ethereum/MulticallClient'
+} from '../../../peripherals/ethereum/types'
 import { OptimismMulticallClient } from '../../../peripherals/optimism/multicall/OptimismMulticall'
 import { BalanceProvider, BalanceQuery } from '../BalanceProvider'
 

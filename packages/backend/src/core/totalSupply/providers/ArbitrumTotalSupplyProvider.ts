@@ -10,7 +10,7 @@ import { BigNumber, utils } from 'ethers'
 import { ArbitrumMulticallClient } from '../../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { TotalSupplyRecord } from '../../../peripherals/database/TotalSupplyRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
-import { MulticallRequest } from '../../../peripherals/ethereum/MulticallClient'
+import { MulticallRequest } from '../../../peripherals/ethereum/types'
 import { TotalSupplyProvider, TotalSupplyQuery } from '../TotalSupplyProvider'
 
 const erc20Interface = new utils.Interface([

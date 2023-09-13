@@ -1,12 +1,12 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 import { EthereumClient } from '../../ethereum/EthereumClient'
+import { optimismMulticallEncoder } from '../MulticallEncoder'
 import {
   MulticallEncoder,
   MulticallRequest,
   MulticallResponse,
 } from './interfaces'
-import { optimismMulticallEncoder } from './MulticallEncoder'
 
 // TODO: Investigate if max batch size can be tweaked
 /**

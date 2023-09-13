@@ -1,7 +1,7 @@
 import { Bytes } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { MulticallEncoder, MulticallResponse } from './interfaces'
+import { MulticallEncoder, MulticallResponse } from './multicall/interfaces'
 
 export const optimismMulticallInterface = new utils.Interface([
   'function multicall(tuple(address, bytes)[] memory calls) public returns (bytes[] memory results)',

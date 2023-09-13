@@ -13,7 +13,7 @@ import { ArbitrumMulticallClient } from '../../../peripherals/arbitrum/multicall
 import { MulticallResponse } from '../../../peripherals/arbitrum/multicall/interfaces'
 import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
-import { MulticallRequest } from '../../../peripherals/ethereum/MulticallClient'
+import { MulticallRequest } from '../../../peripherals/ethereum/types'
 import { BalanceProvider, BalanceQuery } from '../BalanceProvider'
 
 const erc20Interface = new utils.Interface([

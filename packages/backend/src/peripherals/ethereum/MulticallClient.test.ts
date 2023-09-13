@@ -2,16 +2,15 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { EthereumClient } from './EthereumClient'
+import { MulticallClient } from './MulticallClient'
 import {
   decodeMulticallV1,
   decodeMulticallV2,
   encodeMulticallV1,
   encodeMulticallV2,
-  MulticallClient,
-  MulticallConfigEntry,
   multicallInterface,
-} from './MulticallClient'
-import { BlockTag } from './types'
+} from './MulticallConfig'
+import { BlockTag, MulticallConfigEntry } from './types'
 
 describe(MulticallClient.name, () => {
   const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))
@@ -96,7 +95,10 @@ describe(MulticallClient.name, () => {
       },
     })
 
-    const multicallClient = new MulticallClient(ethereumClient)
+    const multicallClient = new MulticallClient(
+      ethereumClient,
+      TEST_MULTICALL_CONFIG,
+    )
     const blockTag = MULTICALL_V1_BLOCK + 1
 
     const result = await multicallClient.multicall(
@@ -143,7 +145,10 @@ describe(MulticallClient.name, () => {
       },
     })
 
-    const multicallClient = new MulticallClient(ethereumClient)
+    const multicallClient = new MulticallClient(
+      ethereumClient,
+      TEST_MULTICALL_CONFIG,
+    )
     const blockTag = MULTICALL_V2_BLOCK + 1
 
     const result = await multicallClient.multicall(
@@ -189,7 +194,10 @@ describe(MulticallClient.name, () => {
       },
     })
 
-    const multicallClient = new MulticallClient(ethereumClient)
+    const multicallClient = new MulticallClient(
+      ethereumClient,
+      TEST_MULTICALL_CONFIG,
+    )
     const blockTag = MULTICALL_V2_BLOCK + 1
 
     const result = await multicallClient.multicall(
@@ -217,7 +225,10 @@ describe(MulticallClient.name, () => {
       },
     })
 
-    const multicallClient = new MulticallClient(ethereumClient)
+    const multicallClient = new MulticallClient(
+      ethereumClient,
+      TEST_MULTICALL_CONFIG,
+    )
     const blockTag = MULTICALL_V2_BLOCK + 1
 
     const result = await multicallClient.multicallNamed(

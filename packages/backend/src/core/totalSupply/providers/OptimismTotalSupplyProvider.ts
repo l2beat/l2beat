@@ -9,7 +9,7 @@ import { BigNumber, utils } from 'ethers'
 
 import { TotalSupplyRecord } from '../../../peripherals/database/TotalSupplyRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
-import { MulticallRequest } from '../../../peripherals/ethereum/MulticallClient'
+import { MulticallRequest } from '../../../peripherals/ethereum/types'
 import { OptimismMulticallClient } from '../../../peripherals/optimism/multicall/OptimismMulticall'
 import { TotalSupplyProvider, TotalSupplyQuery } from '../TotalSupplyProvider'
 
