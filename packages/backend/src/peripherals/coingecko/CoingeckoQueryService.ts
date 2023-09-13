@@ -29,17 +29,17 @@ export class CoingeckoQueryService {
   ): Promise<QueryResultPoint[]> {
     const [start, end] = adjustAndOffset(from, to, granularity)
 
-    const prices = (
-      await this.queryCoinMarketChartRange(
-        coingeckoId,
-        start,
-        end,
-        granularity,
-        address,
-      )
-    ).prices
+    const queryResult = await this.queryCoinMarketChartRange(
+      coingeckoId,
+      start,
+      end,
+      granularity,
+      address,
+    )
 
-    const sortedPrices = prices.sort(
+    assert(queryResult, getAssertMessage(coingeckoId, from, to))
+
+    const sortedPrices = queryResult.prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime(),
     )
 
@@ -65,6 +65,8 @@ export class CoingeckoQueryService {
       granularity,
       address,
     )
+
+    assert(queryResult, getAssertMessage(coingeckoId, from, to))
 
     const sortedPrices = queryResult.prices.sort(
       (a, b) => a.date.getTime() - b.date.getTime(),
@@ -100,7 +102,7 @@ export class CoingeckoQueryService {
     to: UnixTime,
     granularity: Granularity,
     address?: EthereumAddress,
-  ): Promise<CoinMarketChartRangeData> {
+  ): Promise<CoinMarketChartRangeData | null> {
     if (granularity === 'daily') {
       const data = await this.coingeckoClient.getCoinMarketChartRange(
         coingeckoId,
@@ -109,10 +111,8 @@ export class CoingeckoQueryService {
         to,
         address,
       )
-      assert(
-        data.prices.length > 0,
-        `Can't get data from Coingecko for ${coingeckoId.toString()} from ${from.toNumber()} to ${to.toNumber()}`,
-      )
+      assert(data, getAssertMessage(coingeckoId, from, to))
+
       return data
     } else {
       const results = await Promise.allSettled(
@@ -134,10 +134,7 @@ export class CoingeckoQueryService {
       }
       for (const result of results) {
         if (result.status === 'fulfilled') {
-          assert(
-            result.value.prices.length > 0,
-            `Can't get data from Coingecko for ${coingeckoId.toString()} from ${from.toNumber()} to ${to.toNumber()} (one of batches)`,
-          )
+          assert(result.value, getAssertMessage(coingeckoId, from, to))
 
           marketChartRangeData.prices.push(...result.value.prices)
           marketChartRangeData.marketCaps.push(...result.value.marketCaps)
@@ -149,6 +146,46 @@ export class CoingeckoQueryService {
 
       return marketChartRangeData
     }
+  }
+
+  async queryCoinMarketChartRangeWhole(
+    coingeckoId: CoingeckoId,
+    to: UnixTime,
+    address?: EthereumAddress,
+  ): Promise<CoinMarketChartRangeData | null> {
+    const results: CoinMarketChartRangeData[] = []
+
+    let TO = new UnixTime(to.toNumber())
+
+    while (true) {
+      const data = await this.coingeckoClient.getCoinMarketChartRange(
+        coingeckoId,
+        'usd',
+        TO.add(-COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+        TO,
+        address,
+      )
+      if (data === null) break
+
+      TO = TO.add(-COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days')
+
+      results.push(data)
+    }
+
+    const marketChartRangeData: CoinMarketChartRangeData = {
+      prices: [],
+      marketCaps: [],
+      totalVolumes: [],
+    }
+    for (const result of results) {
+      assert(result, getAssertMessage(coingeckoId, new UnixTime(0), to))
+
+      marketChartRangeData.prices.push(...result.prices)
+      marketChartRangeData.marketCaps.push(...result.marketCaps)
+      marketChartRangeData.totalVolumes.push(...result.totalVolumes)
+    }
+
+    return marketChartRangeData
   }
 
   async getCoinIds(): Promise<Map<EthereumAddress, CoingeckoId>> {
@@ -249,4 +286,12 @@ export function approximateCirculatingSupply(marketCap: number, price: number) {
   const value = Math.round(circulatingSupplyRaw / precision) * precision
 
   return value
+}
+
+function getAssertMessage(
+  coingeckoId: CoingeckoId,
+  from: UnixTime,
+  to: UnixTime,
+): string | undefined {
+  return `Market chart query result should not be null. ID: ${coingeckoId.toString()} from ${from.toNumber()} to ${to.toNumber()}`
 }
