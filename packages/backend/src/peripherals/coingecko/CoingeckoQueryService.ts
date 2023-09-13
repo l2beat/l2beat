@@ -7,8 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-type Granularity = 'daily' | 'hourly'
-
 export interface QueryResultPoint {
   value: number
   timestamp: UnixTime
@@ -24,16 +22,14 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    granularity: Granularity,
     address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    const [start, end] = adjustAndOffset(from, to, granularity)
+    const [start, end] = adjustAndOffset(from, to)
 
     const queryResult = await this.queryCoinMarketChartRange(
       coingeckoId,
       start,
       end,
-      granularity,
       address,
     )
 
@@ -43,7 +39,7 @@ export class CoingeckoQueryService {
       (a, b) => a.date.getTime() - b.date.getTime(),
     )
 
-    const timestamps = getTimestamps(from, to, granularity)
+    const timestamps = getTimestamps(from, to)
 
     return pickPoints(sortedPrices, timestamps)
   }
@@ -52,17 +48,15 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    granularity: Granularity,
     address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    const [start, end] = adjustAndOffset(from, to, granularity)
-    const timestamps = getTimestamps(from, to, granularity)
+    const [start, end] = adjustAndOffset(from, to)
+    const timestamps = getTimestamps(from, to)
 
     const queryResult = await this.queryCoinMarketChartRange(
       coingeckoId,
       start,
       end,
-      granularity,
       address,
     )
 
@@ -119,7 +113,6 @@ export class CoingeckoQueryService {
     const timestamps = getTimestamps(
       UnixTime.fromDate(sortedPrices[0].date),
       to,
-      'hourly',
     )
 
     const pickedPrices = pickPoints(sortedPrices, timestamps)
@@ -147,52 +140,38 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
-    granularity: Granularity,
     address?: EthereumAddress,
-  ): Promise<CoinMarketChartRangeData | null> {
-    if (granularity === 'daily') {
-      const data = await this.coingeckoClient.getCoinMarketChartRange(
-        coingeckoId,
-        'usd',
-        from,
-        to,
-        address,
-      )
-      assert(data, getAssertMessage(coingeckoId, from, to))
-
-      return data
-    } else {
-      const results = await Promise.allSettled(
-        generateRangesToCallHourly(from, to).map((range) =>
-          this.coingeckoClient.getCoinMarketChartRange(
-            coingeckoId,
-            'usd',
-            range.start,
-            range.end,
-            address,
-          ),
+  ): Promise<CoinMarketChartRangeData> {
+    const results = await Promise.allSettled(
+      generateRangesToCallHourly(from, to).map((range) =>
+        this.coingeckoClient.getCoinMarketChartRange(
+          coingeckoId,
+          'usd',
+          range.start,
+          range.end,
+          address,
         ),
-      )
+      ),
+    )
 
-      const marketChartRangeData: CoinMarketChartRangeData = {
-        prices: [],
-        marketCaps: [],
-        totalVolumes: [],
-      }
-      for (const result of results) {
-        if (result.status === 'fulfilled') {
-          assert(result.value, getAssertMessage(coingeckoId, from, to))
-
-          marketChartRangeData.prices.push(...result.value.prices)
-          marketChartRangeData.marketCaps.push(...result.value.marketCaps)
-          marketChartRangeData.totalVolumes.push(...result.value.totalVolumes)
-        } else {
-          throw result.reason
-        }
-      }
-
-      return marketChartRangeData
+    const marketChartRangeData: CoinMarketChartRangeData = {
+      prices: [],
+      marketCaps: [],
+      totalVolumes: [],
     }
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        assert(result.value !== null, getAssertMessage(coingeckoId, from, to))
+
+        marketChartRangeData.prices.push(...result.value.prices)
+        marketChartRangeData.marketCaps.push(...result.value.marketCaps)
+        marketChartRangeData.totalVolumes.push(...result.value.totalVolumes)
+      } else {
+        throw result.reason
+      }
+    }
+
+    return marketChartRangeData
   }
 
   async queryCoinMarketChartRangeWhole(
@@ -280,25 +259,17 @@ export function pickPoints(
   return result
 }
 
-function adjust(from: UnixTime, to: UnixTime, granularity: Granularity) {
-  const period = granularity === 'hourly' ? 'hour' : 'day'
+function adjust(from: UnixTime, to: UnixTime) {
+  const period = 'hour'
   return [
     from.isFull(period) ? from : from.toNext(period),
     to.isFull(period) ? to : to.toStartOf(period),
   ]
 }
 
-function adjustAndOffset(
-  from: UnixTime,
-  to: UnixTime,
-  granularity: Granularity,
-) {
-  const [start, end] = adjust(from, to, granularity)
-  if (granularity === 'hourly') {
-    return [start.add(-30, 'minutes'), end.add(30, 'minutes')]
-  } else {
-    return [start.add(-12, 'hours'), end.add(12, 'hours')]
-  }
+function adjustAndOffset(from: UnixTime, to: UnixTime) {
+  const [start, end] = adjust(from, to)
+  return [start.add(-12, 'hours'), end.add(12, 'hours')]
 }
 
 export const COINGECKO_HOURLY_MAX_SPAN_IN_DAYS = 80

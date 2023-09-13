@@ -135,7 +135,6 @@ export class PriceUpdater {
       // Make sure that we have enough old data to fill holes
       from.add(-7, 'days'),
       to,
-      'hourly',
       address,
     )
     const priceRecords: PriceRecord[] = prices

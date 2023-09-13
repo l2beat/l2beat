@@ -153,7 +153,6 @@ export class CirculatingSupplyUpdater {
             coingeckoId,
             from,
             to,
-            'hourly',
             address,
           )
 

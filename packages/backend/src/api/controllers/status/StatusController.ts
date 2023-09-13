@@ -119,7 +119,7 @@ export class StatusController {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
-    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+    const timestamps = getTimestamps(firstHour, lastHour).reverse()
 
     const statuses = await this.balanceStatusRepository.getBetween(
       chainId,
@@ -146,7 +146,7 @@ export class StatusController {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
-    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+    const timestamps = getTimestamps(firstHour, lastHour).reverse()
 
     const statuses = await this.totalSupplyStatusRepository.getBetween(
       chainId,
@@ -179,7 +179,7 @@ export class StatusController {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
-    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+    const timestamps = getTimestamps(firstHour, lastHour).reverse()
 
     const statuses = await this.reportStatusRepository.getBetween(
       firstHour,

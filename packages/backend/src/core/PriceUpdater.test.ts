@@ -162,7 +162,6 @@ describe(PriceUpdater.name, () => {
         tokens[0].coingeckoId,
         HOUR_09.add(-7, 'days'),
         HOUR_09,
-        'hourly',
         tokens[0].address,
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
@@ -170,7 +169,6 @@ describe(PriceUpdater.name, () => {
         tokens[1].coingeckoId,
         HOUR_13.add(-7, 'days'),
         HOUR_13,
-        'hourly',
         tokens[1].address,
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
@@ -178,7 +176,6 @@ describe(PriceUpdater.name, () => {
         tokens[2].coingeckoId,
         HOUR_09.add(-7, 'days'),
         HOUR_13,
-        'hourly',
         tokens[2].address,
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
@@ -186,7 +183,6 @@ describe(PriceUpdater.name, () => {
         tokens[0].coingeckoId,
         HOUR_13.add(-7, 'days'),
         HOUR_13,
-        'hourly',
         tokens[0].address,
       )
     })
@@ -225,7 +221,6 @@ describe(PriceUpdater.name, () => {
         tokens[0].coingeckoId,
         HOUR_10.add(-7, 'days'),
         HOUR_13,
-        'hourly',
         tokens[0].address,
       )
     })
@@ -265,7 +260,6 @@ describe(PriceUpdater.name, () => {
           TOKEN_COINGECKO_ID,
           HOUR_09.add(-7, 'days'),
           HOUR_13,
-          'hourly',
           undefined,
         )
       })
@@ -286,7 +280,6 @@ describe(PriceUpdater.name, () => {
           TOKEN_COINGECKO_ID,
           HOUR_09.add(-7, 'days'),
           HOUR_09,
-          'hourly',
           undefined,
         )
       })
@@ -300,7 +293,6 @@ describe(PriceUpdater.name, () => {
           TOKEN_COINGECKO_ID,
           HOUR_13.add(-7, 'days'),
           HOUR_13,
-          'hourly',
           undefined,
         )
       })
@@ -326,7 +318,6 @@ describe(PriceUpdater.name, () => {
           TOKEN_COINGECKO_ID,
           HOUR_09.add(-7, 'days'),
           HOUR_09,
-          'hourly',
           undefined,
         )
         expect(
@@ -336,7 +327,6 @@ describe(PriceUpdater.name, () => {
           TOKEN_COINGECKO_ID,
           HOUR_13.add(-7, 'days'),
           HOUR_13,
-          'hourly',
           undefined,
         )
       })
@@ -382,7 +372,6 @@ describe(PriceUpdater.name, () => {
         tokens[0].coingeckoId,
         from.add(-7, 'days'),
         from.add(2, 'hours'),
-        'hourly',
         undefined,
       )
 
