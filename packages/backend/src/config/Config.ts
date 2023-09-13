@@ -59,7 +59,6 @@ export interface TvlConfig {
   readonly ethereum: EthereumTvlConfig | false
   readonly arbitrum: ArbitrumTvlConfig | false
   readonly optimism: OptimismTvlConfig | false
-  readonly base: BaseTvlConfig | false
 }
 
 export interface EthereumTvlConfig {

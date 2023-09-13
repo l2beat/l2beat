@@ -9,7 +9,7 @@ export class OptiscanClient
   extends EtherscanLikeClient
   implements BlockNumberProvider
 {
-  static API_URL = 'https://api-optimistic.etherscan.io'
+  static API_URL = 'https://api-optimistic.etherscan.io/api'
 
   constructor(
     httpClient: HttpClient,

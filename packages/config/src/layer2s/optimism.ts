@@ -37,12 +37,28 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     name: 'Optimism',
     coingeckoId: CoingeckoId('optimism'),
     address: EthereumAddress('0x4200000000000000000000000000000000000042'),
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1660904599',
     symbol: 'OP',
     decimals: 18,
     sinceTimestamp: new UnixTime(1654039974),
     category: 'other',
     type: 'NMV',
     formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId.USDC_ON_OPTIMISM,
+    name: 'USD Coin',
+    coingeckoId: CoingeckoId('usd-coin'),
+    address: EthereumAddress('0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85'),
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
+    symbol: 'USDC',
+    decimals: 6,
+    sinceTimestamp: new UnixTime(1668453318),
+    category: 'stablecoin',
+    type: 'NMV',
+    formula: 'totalSupply',
   },
 ]
 
