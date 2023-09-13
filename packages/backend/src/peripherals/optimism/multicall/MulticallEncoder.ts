@@ -7,8 +7,6 @@ export const optimismMulticallInterface = new utils.Interface([
   'function multicall(tuple(address, bytes)[] memory calls) public returns (bytes[] memory results)',
 ])
 
-type OptimismMulticallResult = [success: boolean, data: string][]
-
 export const optimismMulticallEncoder: MulticallEncoder = {
   encode: (requests) => {
     const hexCalldata = optimismMulticallInterface.encodeFunctionData(

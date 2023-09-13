@@ -44,7 +44,7 @@ describe(OptimismMulticallClient.name, () => {
     await expect(async () =>
       multicallClient.multicall(calls, callBlockNumber),
     ).toBeRejectedWith(
-      `Arbitrum multicall is not available for given block number: ${callBlockNumber}`,
+      `Optimism multicall is not available for given block number: ${callBlockNumber}`,
     )
   })
 
@@ -121,7 +121,7 @@ describe(OptimismMulticallClient.name, () => {
       maxBatchSize,
     )
 
-    expect(multicallClient.getChainId()).toEqual(ChainId.ARBITRUM)
+    expect(multicallClient.getChainId()).toEqual(ChainId.OPTIMISM)
   })
 
   it('batches calls in batches of provided amount', async () => {
@@ -132,8 +132,8 @@ describe(OptimismMulticallClient.name, () => {
     const optimismClient = mockObject<EthereumClient>({
       call: mockFn(async () =>
         Bytes.fromHex(
-          optimismMulticallInterface.encodeFunctionResult('tryAggregate', [
-            new Array(maxBatchSize).fill(0).map(() => [true, '0x1234']),
+          optimismMulticallInterface.encodeFunctionResult('multicall', [
+            new Array(maxBatchSize).fill(0).map(() => '0x1234'),
           ]),
         ),
       ),
