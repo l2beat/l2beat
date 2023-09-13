@@ -10,13 +10,13 @@ export const stealthchain: Layer2 = {
   display: {
     name: 'StealthChain',
     slug: 'stealthchain',
-    description:
-      'Degen Stealth Launchpad, Cross Chain Token Bridge & LP Pool',
+    description: 'Degen Stealth Launchpad, Cross Chain Token Bridge & LP Pool.',
     purpose: 'Degen,Launchpad',
-    category: 'OP Stack',
+    category: 'Optimistic Rollup',
+    provider: 'OP Stack',
     links: {
       websites: ['https://stealthchain.org'],
-      apps: ['https://bridge.steathchain.org'],
+      apps: [],
       documentation: ['https://docs.stealthchain.org'],
       explorers: [
         'https://test.stealthscan.xyz/',
