@@ -30,6 +30,9 @@ export const stealthchain: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [],
   },
