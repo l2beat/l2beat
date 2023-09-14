@@ -39,6 +39,9 @@ export const kroma: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
+  stage: {
+    stage: 'UnderReview',
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

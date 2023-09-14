@@ -19,11 +19,11 @@ export const getStage = createGetStage({
         negative:
           'All the data to reconstruct the L2 state is not available on L1.',
       },
-      rollupNodeOpenSource: {
+      rollupNodeSourceAvailable: {
         positive:
-          'An open-source node exists that can recreate the state from L1 data.',
+          'A source-available node exists that can recreate the state from L1 data.',
         negative:
-          'No open-source node exists that can recreate the state from L1 data.',
+          'No source-available node exists that can recreate the state from L1 data.',
       },
     },
   },

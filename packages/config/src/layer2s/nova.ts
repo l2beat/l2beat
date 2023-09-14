@@ -77,6 +77,9 @@ export const nova: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [
       {

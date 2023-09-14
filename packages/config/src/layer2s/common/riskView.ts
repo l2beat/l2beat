@@ -402,7 +402,7 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
 export const PROPOSER_SELF_PROPOSE_ZK: ProjectRiskViewEntry = {
   value: 'Self propose',
   description:
-    'If the Proposer fails, users can leverage the open source prover to submit proofs to the L1 bridge.',
+    'If the Proposer fails, users can leverage the source available prover to submit proofs to the L1 bridge.',
   sentiment: 'good',
 }
 
