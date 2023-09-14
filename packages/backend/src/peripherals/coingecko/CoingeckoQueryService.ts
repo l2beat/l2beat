@@ -113,18 +113,14 @@ export class CoingeckoQueryService {
       ),
     )
 
-    if (results.some((x) => x.status === 'rejected')) {
-      const rejected = results.find((x) => x.status === 'rejected')
-      if (rejected?.status === 'rejected') {
-        throw rejected.reason
-      }
-    }
+    const checked: CoinMarketChartRangeData[] = checkResults(
+      results,
+      coingeckoId,
+      from,
+      to,
+    )
 
-    const rr = results
-      .filter((x) => x.status === 'fulfilled')
-      .map((x) => x.value)
-
-    return transform(rr, coingeckoId, undefined, to)
+    return concatResults(checked)
   }
 
   async queryCoinMarketChartRangeWhole(
@@ -132,10 +128,11 @@ export class CoingeckoQueryService {
     to: UnixTime,
     address?: EthereumAddress,
   ): Promise<CoinMarketChartRangeData | null> {
-    const results: CoinMarketChartRangeData[] = []
+    const results: CoinMarketChartRangeData[] | null = []
 
     let currentTo = new UnixTime(to.toNumber())
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       const data = await this.coingeckoClient.getCoinMarketChartRange(
         coingeckoId,
@@ -151,7 +148,7 @@ export class CoingeckoQueryService {
       results.push(data)
     }
 
-    return transform(results, coingeckoId, undefined, to)
+    return concatResults(results)
   }
 
   async getCoinIds(): Promise<Map<EthereumAddress, CoingeckoId>> {
@@ -168,6 +165,25 @@ export class CoingeckoQueryService {
 
     return result
   }
+}
+
+function checkResults(
+  results: PromiseSettledResult<CoinMarketChartRangeData | null>[],
+  coingeckoId: CoingeckoId,
+  from: UnixTime,
+  to: UnixTime,
+) {
+  const checked: CoinMarketChartRangeData[] | null = []
+
+  for (const result of results) {
+    if (result.status === 'rejected') {
+      throw result.reason
+    }
+    assert(result.value, getAssertMessage(coingeckoId, from, to))
+
+    checked.push(result.value)
+  }
+  return checked
 }
 
 export function pickPoints(
@@ -231,20 +247,13 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
   return ranges
 }
 
-function transform(
-  results: CoinMarketChartRangeData[],
-  coingeckoId: CoingeckoId,
-  from: UnixTime | undefined,
-  to: UnixTime,
-) {
+function concatResults(results: CoinMarketChartRangeData[]) {
   const marketChartRangeData: CoinMarketChartRangeData = {
     prices: [],
     marketCaps: [],
     totalVolumes: [],
   }
   for (const result of results) {
-    assert(result, getAssertMessage(coingeckoId, from, to))
-
     marketChartRangeData.prices.push(...result.prices)
     marketChartRangeData.marketCaps.push(...result.marketCaps)
     marketChartRangeData.totalVolumes.push(...result.totalVolumes)
