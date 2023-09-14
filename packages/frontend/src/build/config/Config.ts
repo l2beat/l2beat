@@ -15,6 +15,7 @@ export interface Config {
     detailedTvl: boolean
     activity: boolean
     banner: boolean
+    tvlBreakdown: boolean
     gitcoinOption: boolean
     hiring: boolean
     hiringBadge: boolean
