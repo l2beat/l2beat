@@ -5,6 +5,10 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0 <2"
+  },
   "scripts": {
     "build": "NODE_ENV=production gulp build",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
@@ -20,8 +24,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
-    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared-pure,config} -recsm build --module es6) && storybook build",
-    "storybook:screenshot": "yarn storycap --serverCmd \"npx http-server ./storybook-static -p 9001\" http://localhost:9001 --captureTimeout 50000 --parallel 8"
+    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared-pure,config} -recsm build --module es6) && storybook build"
   },
   "dependencies": {
     "@l2beat/config": "*",
@@ -67,7 +70,6 @@
     "prettier-plugin-tailwindcss": "^0.2.2",
     "sass": "^1.52.2",
     "storybook": "^7.0.9",
-    "storycap": "^3.1.9",
     "tailwindcss": "^3.1.0",
     "ts-node": "^10.9.1",
     "vite": "^3.0.9"
