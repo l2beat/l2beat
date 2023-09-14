@@ -13,6 +13,7 @@
     "0x245F757d660C3ec65416168690431076d58d6413": "GnosisHubConnector",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
     "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
+    "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": "Connext Multisig Member",
     "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": "Connext Multisig 2",
     "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector"
   },
