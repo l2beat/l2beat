@@ -18,6 +18,8 @@ export interface TvlStats {
 export interface TvlSummaryProps {
   stats?: TvlStats
   detailedTvlEnabled?: boolean
+  tvlBreakdownHref?: string
+  showTvlBreakdown?: boolean
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
@@ -71,7 +73,7 @@ export function TvlSummary(props: TvlSummaryProps) {
     : []
 
   return (
-    <div className="w-full bg-gray-100 p-4 dark:bg-zinc-800 md:flex md:w-[30%] md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-5">
+    <div className="w-full bg-gray-100 p-4 dark:bg-zinc-800 md:flex md:w-[30%] md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
       <div className="flex w-full items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
           Value Locked
@@ -145,6 +147,16 @@ export function TvlSummary(props: TvlSummaryProps) {
             ))}
           </div>
         </>
+      ) : null}
+      {props.showTvlBreakdown ? (
+        <div className="flex justify-center">
+          <a
+            className="text-xs font-medium text-blue-500 underline"
+            href={props.tvlBreakdownHref}
+          >
+            View TVL Breakdown
+          </a>
+        </div>
       ) : null}
     </div>
   )

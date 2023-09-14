@@ -4,15 +4,19 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
+import {
+  ARBITRUM_BALANCE_ENCODING,
+  BalanceProvider,
+} from '../../core/balances/BalanceProvider'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
-import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/ArbitrumTotalSupplyProvider'
+import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
-import { ArbitrumMulticallClient } from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
+import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
+import { ARBITRUM_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -44,16 +48,21 @@ export function createArbitrumTvlSubmodule(
 
   const arbitrumClient = new EthereumClient(arbitrumProvider, logger, 25)
 
-  const arbitrumMulticall = ArbitrumMulticallClient.forMainnet(arbitrumClient)
-
-  const totalSupplyProvider = new ArbitrumTotalSupplyProvider(
+  const multicallClient = new MulticallClient(
     arbitrumClient,
-    arbitrumMulticall,
+    ARBITRUM_MULTICALL_CONFIG,
   )
 
-  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
+  const totalSupplyProvider = new TotalSupplyProvider(
+    multicallClient,
+    ChainId.ARBITRUM,
+  )
+
+  const arbitrumBalanceProvider = new BalanceProvider(
     arbitrumClient,
-    arbitrumMulticall,
+    multicallClient,
+    ChainId.ARBITRUM,
+    ARBITRUM_BALANCE_ENCODING,
   )
 
   // #endregion

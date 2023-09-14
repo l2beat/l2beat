@@ -79,9 +79,7 @@ function TokenGridTooltip({ tokens }: TokenGridTooltipProps) {
         </div>
       ))}
       {tokens.length > 15 && (
-        <span className="text-xs text-gray-550">
-          and {tokens.length - top15.length} more
-        </span>
+        <span className="text-xs text-gray-550">and more</span>
       )}
     </div>
   )

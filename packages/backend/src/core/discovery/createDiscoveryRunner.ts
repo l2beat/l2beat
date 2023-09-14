@@ -4,11 +4,12 @@ import {
   DiscoveryEngine,
   DiscoveryLogger,
   DiscoveryProvider,
+  EtherscanLikeClient,
   HandlerExecutor,
+  HttpClient,
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
-import { EtherscanLikeClient, HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { UpdateMonitorChainConfig } from '../../config/Config'
