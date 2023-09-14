@@ -1,4 +1,7 @@
-import { ActivityApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  ProjectAssetsBreakdownApiResponse,
+} from '@l2beat/shared-pure'
 
 import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
@@ -6,6 +9,7 @@ import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDetailedTvlApi } from './api/fetchDetailedTvlApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
+import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 import { getVerificationStatus } from './api/getVerificationStatus'
 import { printActivityInfo, printApiInfo } from './api/printApiInfo'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
@@ -45,6 +49,17 @@ async function main() {
     activitySanityCheck(activityApiResponse)
   }
 
+  let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
+    undefined
+  if (config.features.tvlBreakdown) {
+    tvlBreakdownApiResponse = await fetchTvlBreakdownApi(
+      config.backend,
+      config.backend.apiUrl,
+      http,
+    )
+    // TODO: (maciekzygmunt) print info & Sanity check?
+  }
+
   createApi(config, tvlApiResponse, activityApiResponse)
 
   const verificationStatus = getVerificationStatus()
@@ -53,6 +68,7 @@ async function main() {
     tvlApiResponse,
     activityApiResponse,
     verificationStatus,
+    tvlBreakdownApiResponse,
   }
 
   await renderPages(config, pagesData)
