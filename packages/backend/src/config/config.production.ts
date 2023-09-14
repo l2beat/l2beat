@@ -70,7 +70,10 @@ export function getProductionConfig(): Config {
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
-        providerCallsPerMinute: 25,
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE ',
+          500,
+        ),
         // TODO: phase out old env variable
         etherscanApiKey:
           process.env.ETHEREUM_ETHERSCAN_API_KEY ?? getEnv('ETHERSCAN_API_KEY'),
@@ -79,14 +82,20 @@ export function getProductionConfig(): Config {
       },
       arbitrum: arbitrumTvlEnabled && {
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
-        providerCallsPerMinute: 25,
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE ',
+          500,
+        ),
         etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.arbiscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.ARBITRUM),
       },
       optimism: optimismTvlEnabled && {
         providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
-        providerCallsPerMinute: 25,
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE ',
+          500,
+        ),
         etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.OPTIMISM),
