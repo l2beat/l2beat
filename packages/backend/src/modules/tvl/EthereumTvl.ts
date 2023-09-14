@@ -4,13 +4,17 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { CBVUpdater } from '../../core/assets/'
+import {
+  BalanceProvider,
+  ETHEREUM_BALANCE_ENCODING,
+} from '../../core/balances/BalanceProvider'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
-import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
+import { ETHEREUM_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -34,7 +38,10 @@ export function createEthereumTvlSubmodule(
     'mainnet',
   )
   const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
-  const multicall = new MulticallClient(ethereumClient)
+  const multicall = new MulticallClient(
+    ethereumClient,
+    ETHEREUM_MULTICALL_CONFIG,
+  )
 
   const etherscanClient = new EtherscanClient(
     http,
@@ -42,7 +49,12 @@ export function createEthereumTvlSubmodule(
     config.tvl.ethereum.minBlockTimestamp,
     logger,
   )
-  const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
+  const balanceProvider = new BalanceProvider(
+    ethereumClient,
+    multicall,
+    ChainId.ETHEREUM,
+    ETHEREUM_BALANCE_ENCODING,
+  )
 
   // #endregion
   // #region updaters
@@ -57,7 +69,7 @@ export function createEthereumTvlSubmodule(
   )
 
   const balanceUpdater = new BalanceUpdater(
-    ethereumBalanceProvider,
+    balanceProvider,
     ethereumBlockNumberUpdater,
     db.balanceRepository,
     db.balanceStatusRepository,
