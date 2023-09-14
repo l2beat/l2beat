@@ -191,7 +191,7 @@ export const optimism: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       stateVerificationOnL1: false,
@@ -385,7 +385,7 @@ export const optimism: Layer2 = {
       link: 'https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs',
       date: '2022-10-17T00:00:00Z',
       description:
-        'OP Stack, modular, open-sourced blueprint o how to build scalable blockchains.',
+        'OP Stack, modular, open-sourced blueprint on how to build scalable blockchains.',
     },
     {
       ...MILESTONES.MAINNET_OPEN,
