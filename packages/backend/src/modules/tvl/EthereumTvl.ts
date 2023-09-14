@@ -14,6 +14,7 @@ import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { ETHEREUM_MULTICALL_CONFIG } from '../../peripherals/ethereum/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -37,7 +38,10 @@ export function createEthereumTvlSubmodule(
     'mainnet',
   )
   const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
-  const multicall = new MulticallClient(ethereumClient)
+  const multicall = new MulticallClient(
+    ethereumClient,
+    ETHEREUM_MULTICALL_CONFIG,
+  )
 
   const etherscanClient = new EtherscanClient(
     http,
