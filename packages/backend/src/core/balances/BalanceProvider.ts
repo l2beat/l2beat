@@ -81,9 +81,8 @@ export class BalanceProvider {
         ? this.nativeBalanceEncoding
         : undefined
 
-    const [native, nonNative] = partition(
-      balanceQueries,
-      (q) => !nativeEncoding && this.isNativeCoin(q.assetId),
+    const [native, nonNative] = partition(balanceQueries, (q) =>
+      this.usesNativeCall(q.assetId, nativeEncoding),
     )
 
     const nonNativeCalls = nonNative.map((balanceQuery) =>
@@ -103,7 +102,7 @@ export class BalanceProvider {
     let nonNativeIndex = 0
     let nativeIndex = 0
     return balanceQueries.map(({ holder, assetId }): BalanceRecord => {
-      if (this.isNativeCoin(assetId)) {
+      if (this.usesNativeCall(assetId, nativeEncoding)) {
         const response = nativeResponses[nativeIndex++]
         return {
           assetId,
@@ -119,7 +118,8 @@ export class BalanceProvider {
           timestamp,
           holderAddress: holder,
           chainId: this.chainId,
-          balance: this.decodeForMulticall(response, assetId) ?? 0n,
+          balance:
+            this.decodeForMulticall(response, assetId, nativeEncoding) ?? 0n,
         }
       }
     })
@@ -127,14 +127,13 @@ export class BalanceProvider {
 
   private encodeForMulticall(
     { assetId, holder }: BalanceQuery,
-    nativeEncoding?: NativeBalanceEncoding,
+    nativeEncoding: NativeBalanceEncoding | undefined,
   ): MulticallRequest {
     if (this.isNativeCoin(assetId)) {
-      if (!nativeEncoding) {
-        throw new Error(
-          `No native balance encoding for asset ${assetId.toString()}`,
-        )
-      }
+      assert(
+        nativeEncoding,
+        `No native balance encoding for asset ${assetId.toString()}`,
+      )
       return {
         address: nativeEncoding.address,
         data: nativeEncoding.encode(holder),
@@ -151,6 +150,13 @@ export class BalanceProvider {
     return encodeErc20BalanceQuery(holder, tokenAddress)
   }
 
+  private usesNativeCall(
+    assetId: AssetId,
+    nativeEncoding: NativeBalanceEncoding | undefined,
+  ): boolean {
+    return this.isNativeCoin(assetId) && nativeEncoding === undefined
+  }
+
   private isNativeCoin(assetId: AssetId): boolean {
     return assetId === AssetId.ETH
   }
@@ -158,21 +164,18 @@ export class BalanceProvider {
   private decodeForMulticall(
     response: MulticallResponse,
     assetId: AssetId,
-    nativeEncoding?: NativeBalanceEncoding,
+    nativeEncoding: NativeBalanceEncoding | undefined,
   ) {
     if (!response.success) {
       return
     }
-
     if (this.isNativeCoin(assetId)) {
-      if (!nativeEncoding) {
-        throw new Error(
-          `No native balance encoding for asset ${assetId.toString()}`,
-        )
-      }
+      assert(
+        nativeEncoding,
+        `No native balance encoding for asset ${assetId.toString()}`,
+      )
       return nativeEncoding.decode(response.data)
     }
-
     return decodeErc20BalanceQuery(response.data)
   }
 }
