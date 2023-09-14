@@ -1890,11 +1890,39 @@
     methods "^1.1.2"
     path-to-regexp "^6.2.1"
 
+"@l2beat/backend-tools@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/backend-tools/-/backend-tools-0.3.0.tgz#549e60b3f8b3163b3e7bc1c6fa79ac1988e1506d"
+  integrity sha512-ebNpHzo4TnVWfmlBof3wmpWlFkMYzoJ5GwsKYQ8+7W7CMHgKDrFNwXFoEpBPTuPMLfUydSLmDK/rqAlhjAusFQ==
+  dependencies:
+    chalk "^4.1.2"
+    dotenv "^16.3.1"
+    error-stack-parser "^2.1.4"
+
 "@l2beat/discovery-types@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.1.0.tgz#80dd68f0b27c927a13d01ce7d53dd96d26dd2783"
   integrity sha512-c7G8JowA2iJM56QWjXqwllkeWU3IibK53GcHYP8BBC0d1NyGAlLrDSN7H9oGZT0YFISioKPvEUdCYFA6Zwk6rA==
   dependencies:
+    zod "^3.22.2"
+
+"@l2beat/discovery@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.2.0.tgz#0e3ff3b50c6e611e79c411f15bd87344b5e0f4f5"
+  integrity sha512-aPy447G2hnvrlU2WNS0JMXanwqZImoMR/iuT7hpP5h/MW5WyXBr2CbfTckD8eaVJwyEtkjqNZXAcrgLZJdIovQ==
+  dependencies:
+    "@l2beat/backend-tools" "^0.3.0"
+    "@l2beat/discovery-types" "^0.1.0"
+    chalk "^4.1.2"
+    deep-diff "^1.0.2"
+    dotenv "^16.0.3"
+    ethers "^5.7.2"
+    jsonc-parser "^3.2.0"
+    lodash "^4.17.21"
+    mkdirp "^3.0.0"
+    node-fetch "^2.6.7"
+    prettier "^3.0.3"
+    rimraf "^5.0.0"
     zod "^3.22.2"
 
 "@mdx-js/react@^2.1.5":
@@ -5333,6 +5361,11 @@ dotenv@^16.0.0, dotenv@^16.0.3:
   version "16.0.3"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
   integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
+
+dotenv@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
+  integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
 
 duplexify@^3.5.0, duplexify@^3.6.0:
   version "3.7.1"
@@ -9845,6 +9878,11 @@ prettier@^2.8.0:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
+
+prettier@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.3.tgz#432a51f7ba422d1469096c0fdc28e235db8f9643"
+  integrity sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==
 
 pretty-hrtime@^1.0.0, pretty-hrtime@^1.0.3:
   version "1.0.3"
