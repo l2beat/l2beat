@@ -35,7 +35,6 @@ export function createEthereumTvlSubmodule(
 
   const ethereumProvider = new providers.JsonRpcProvider(
     config.tvl.ethereum.providerUrl,
-    config.tvl.ethereum.networkName,
   )
 
   const etherscanClient = new EtherscanClient(

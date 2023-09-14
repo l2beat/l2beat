@@ -18,7 +18,6 @@ export function createOptimismTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   return chainTvlSubmodule(
-    'OptimismTvlModule',
     ChainId.OPTIMISM,
     ProjectId.OPTIMISM,
     config.tvl.optimism,

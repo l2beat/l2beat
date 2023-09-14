@@ -16,7 +16,6 @@ import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function chainTvlSubmodule(
-  name: string,
   chainId: ChainId,
   projectId: ProjectId,
   chainTvlConfig: ChainTvlConfig | false,
@@ -28,16 +27,14 @@ export function chainTvlSubmodule(
   clock: Clock,
   logger: Logger,
 ): TvlSubmodule | undefined {
+  const name = `${ChainId.getName(chainId)}TvlModule`
   if (!chainTvlConfig) {
     logger.info(`${name} disabled`)
     return
   }
 
   // #region peripherals
-  const provider = new providers.JsonRpcProvider(
-    chainTvlConfig.providerUrl,
-    chainTvlConfig.networkName,
-  )
+  const provider = new providers.JsonRpcProvider(chainTvlConfig.providerUrl)
 
   const etherscanClient = new UniversalEtherscanClient(
     http,

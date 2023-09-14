@@ -65,7 +65,6 @@ export function getLocalConfig(): Config {
       ethereum: ethereumTvlEnabled && {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         providerCallsPerMinute: 25,
-        networkName: 'mainnet',
         // TODO: phase out old env variable
         etherscanApiKey:
           process.env.ETHEREUM_ETHERSCAN_API_KEY ?? getEnv('ETHERSCAN_API_KEY'),
@@ -75,7 +74,6 @@ export function getLocalConfig(): Config {
       arbitrum: arbitrumTvlEnabled && {
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
         providerCallsPerMinute: 25,
-        networkName: 'arbitrum',
         etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.arbiscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
@@ -83,7 +81,6 @@ export function getLocalConfig(): Config {
       optimism: optimismTvlEnabled && {
         providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
         providerCallsPerMinute: 25,
-        networkName: 'optimism',
         etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),

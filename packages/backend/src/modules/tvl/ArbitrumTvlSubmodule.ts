@@ -18,7 +18,6 @@ export function createArbitrumTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   return chainTvlSubmodule(
-    'ArbitrumTvlModule',
     ChainId.ARBITRUM,
     ProjectId.ARBITRUM,
     config.tvl.arbitrum,
