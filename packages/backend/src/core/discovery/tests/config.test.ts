@@ -1,10 +1,8 @@
 import { bridges, layer2s } from '@l2beat/config'
+import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
-
-import { ConfigReader } from './ConfigReader'
-import { DiscoveryConfig } from './DiscoveryConfig'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -57,7 +55,7 @@ describe('discovery config.jsonc', () => {
     )
   })
 
-  it('fields inside ignoreInWatchMode exist in discovery', async function () {
+  it('fields inside ignoreInWatchMode exist in discovery', async () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
         const discovery = await configReader.readDiscovery(c.name, c.chainId)
