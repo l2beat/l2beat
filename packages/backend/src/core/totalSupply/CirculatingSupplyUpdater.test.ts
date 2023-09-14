@@ -192,8 +192,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
       ).toHaveBeenNthCalledWith(
         1,
         tokens[0].coingeckoId,
-        HOUR_09.add(-7, 'days'),
-        HOUR_09,
+        { from: HOUR_09.add(-7, 'days'), to: HOUR_09 },
         tokens[0].address,
       )
       expect(
@@ -201,8 +200,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
       ).toHaveBeenNthCalledWith(
         2,
         tokens[1].coingeckoId,
-        HOUR_13.add(-7, 'days'),
-        HOUR_13,
+        { from: HOUR_13.add(-7, 'days'), to: HOUR_13 },
         tokens[1].address,
       )
       expect(
@@ -210,8 +208,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
       ).toHaveBeenNthCalledWith(
         3,
         tokens[2].coingeckoId,
-        HOUR_09.add(-7, 'days'),
-        HOUR_13,
+        { from: HOUR_09.add(-7, 'days'), to: HOUR_13 },
         tokens[2].address,
       )
       expect(
@@ -219,8 +216,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
       ).toHaveBeenNthCalledWith(
         4,
         tokens[0].coingeckoId,
-        HOUR_13.add(-7, 'days'),
-        HOUR_13,
+        { from: HOUR_13.add(-7, 'days'), to: HOUR_13 },
         tokens[0].address,
       )
     })
@@ -263,8 +259,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
       ).toHaveBeenNthCalledWith(
         1,
         tokens[0].coingeckoId,
-        HOUR_10.add(-7, 'days'),
-        HOUR_13,
+        { from: HOUR_10.add(-7, 'days'), to: HOUR_13 },
         tokens[0].address,
       )
     })
@@ -304,8 +299,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
           coingeckoQueryService.getCirculatingSupplies,
         ).toHaveBeenOnlyCalledWith(
           TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
-          HOUR_13,
+          { from: HOUR_09.add(-7, 'days'), to: HOUR_13 },
           undefined,
         )
       })
@@ -322,7 +316,10 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
-        ).toHaveBeenOnlyCalledWith(TOKEN_COINGECKO_ID, HOUR_09, HOUR_12)
+        ).toHaveBeenOnlyCalledWith(TOKEN_COINGECKO_ID, {
+          from: HOUR_09,
+          to: HOUR_12,
+        })
       })
 
       it('13:00', async () => {
@@ -332,8 +329,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
           coingeckoQueryService.getCirculatingSupplies,
         ).toHaveBeenOnlyCalledWith(
           TOKEN_COINGECKO_ID,
-          HOUR_13.add(-7, 'days'),
-          HOUR_13,
+          { from: HOUR_13.add(-7, 'days'), to: HOUR_13 },
           undefined,
         )
       })
@@ -357,8 +353,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
         ).toHaveBeenNthCalledWith(
           1,
           TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
-          HOUR_09,
+          { from: HOUR_09.add(-7, 'days'), to: HOUR_09 },
           undefined,
         )
         expect(
@@ -366,8 +361,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
         ).toHaveBeenNthCalledWith(
           2,
           TOKEN_COINGECKO_ID,
-          HOUR_13.add(-7, 'days'),
-          HOUR_13,
+          { from: HOUR_13.add(-7, 'days'), to: HOUR_13 },
           undefined,
         )
       })
@@ -419,8 +413,7 @@ describe.skip(CirculatingSupplyUpdater.name, () => {
         coingeckoQueryService.getCirculatingSupplies,
       ).toHaveBeenOnlyCalledWith(
         tokens[0].coingeckoId,
-        from.add(-7, 'days'),
-        from.add(2, 'hours'),
+        { from: from.add(-7, 'days'), to: from.add(2, 'hours') },
         undefined,
       )
 

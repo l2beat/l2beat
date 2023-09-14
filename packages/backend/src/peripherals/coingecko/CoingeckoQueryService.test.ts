@@ -253,8 +253,7 @@ describe.skip(CoingeckoQueryService.name, () => {
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getCirculatingSupplies(
         CoingeckoId('weth'),
-        START,
-        START.add(2, 'hours'),
+        { from: START, to: START.add(2, 'hours') },
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1219900, deltaMs: 0 },

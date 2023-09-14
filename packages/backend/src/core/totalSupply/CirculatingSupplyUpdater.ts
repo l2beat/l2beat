@@ -139,18 +139,11 @@ export class CirculatingSupplyUpdater {
     const coingeckoId = this.getCoingeckoId(assetId)
 
     const circulatingSupplies =
-      from === undefined
-        ? await this.coingeckoQueryService.getCirculatingSuppliesAll(
-            coingeckoId,
-            to,
-            address,
-          )
-        : await this.coingeckoQueryService.getCirculatingSupplies(
-            coingeckoId,
-            from,
-            to,
-            address,
-          )
+      await this.coingeckoQueryService.getCirculatingSupplies(
+        coingeckoId,
+        { from, to },
+        address,
+      )
 
     assert(
       circulatingSupplies.length > 0,
