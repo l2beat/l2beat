@@ -11,13 +11,19 @@ import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling-activity'
 import { getDetailedTvlPage } from './scaling-detailedTvl'
 import { getProjectPages } from './scaling-projects'
+import { getProjectTvlBreakdownPages } from './scaling-projects-tvl-breakdown'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
 
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
 
-  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
+  const {
+    tvlApiResponse,
+    activityApiResponse,
+    verificationStatus,
+    tvlBreakdownApiResponse,
+  } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
   pages.push(getTvlPage(config, pagesData))
@@ -45,6 +51,20 @@ export async function renderPages(config: Config, pagesData: PagesData) {
 
   if (config.features.detailedTvl) {
     pages.push(getDetailedTvlPage(config, pagesData))
+  }
+
+  if (
+    config.features.tvlBreakdown &&
+    tvlBreakdownApiResponse &&
+    activityApiResponse
+  ) {
+    pages.push(
+      ...getProjectTvlBreakdownPages(config, {
+        activityApiResponse,
+        tvlApiResponse,
+        tvlBreakdownApiResponse,
+      }),
+    )
   }
 
   outputPages(pages)
