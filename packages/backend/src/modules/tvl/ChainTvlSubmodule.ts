@@ -4,11 +4,6 @@ import { providers } from 'ethers'
 
 import { ChainTvlConfig } from '../../config/Config'
 import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
-import {
-  BalanceProvider,
-  NativeBalanceEncoding,
-} from '../../core/balances/BalanceProvider'
-import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
@@ -17,6 +12,7 @@ import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { MulticallConfigEntry } from '../../peripherals/ethereum/types'
+import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function chainTvlSubmodule(
@@ -26,13 +22,12 @@ export function chainTvlSubmodule(
   chainTvlConfig: ChainTvlConfig | false,
   tokens: Token[],
   multicallConfig: MulticallConfigEntry[],
-  balanceEncoding: NativeBalanceEncoding | undefined,
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   http: HttpClient,
   clock: Clock,
   logger: Logger,
-) {
+): TvlSubmodule | undefined {
   if (!chainTvlConfig) {
     logger.info(`${name} disabled`)
     return
@@ -63,13 +58,6 @@ export function chainTvlSubmodule(
 
   const totalSupplyProvider = new TotalSupplyProvider(multicallClient, chainId)
 
-  const arbitrumBalanceProvider = new BalanceProvider(
-    ethereumClient,
-    multicallClient,
-    chainId,
-    balanceEncoding,
-  )
-
   // #endregion
   // #region updaters
 
@@ -77,18 +65,6 @@ export function chainTvlSubmodule(
     etherscanClient,
     db.blockNumberRepository,
     clock,
-    logger,
-    chainId,
-    chainTvlConfig.minBlockTimestamp,
-  )
-
-  const balanceUpdater = new BalanceUpdater(
-    arbitrumBalanceProvider,
-    blockNumberUpdater,
-    db.balanceRepository,
-    db.balanceStatusRepository,
-    clock,
-    [],
     logger,
     chainId,
     chainTvlConfig.minBlockTimestamp,
@@ -128,7 +104,6 @@ export function chainTvlSubmodule(
     logger.info('Starting')
 
     await blockNumberUpdater.start()
-    await balanceUpdater.start()
     await totalSupplyUpdater.start()
     await totalSupplyFormulaUpdater.start()
 
@@ -136,7 +111,7 @@ export function chainTvlSubmodule(
   }
 
   return {
-    updaters: [totalSupplyFormulaUpdater],
+    assetUpdaters: [totalSupplyFormulaUpdater],
     start,
   }
 }

@@ -37,7 +37,7 @@ export function createNativeTvlSubmodule(
   }
 
   return {
-    updaters: [nmvUpdater],
+    assetUpdaters: [nmvUpdater],
     start,
   }
 }
