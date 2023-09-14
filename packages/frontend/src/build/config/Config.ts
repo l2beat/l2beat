@@ -16,13 +16,9 @@ export interface Config {
     activity: boolean
     banner: boolean
     gitcoinOption: boolean
-    milestones: boolean
     hiring: boolean
     hiringBadge: boolean
-    stages: boolean
     buildAllProjectPages: boolean
-    upcomingRollups: boolean
-    multisigReport: boolean
   }
   backend: {
     apiUrl: string

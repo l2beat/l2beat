@@ -12,7 +12,6 @@ import { About } from '../../../components/About'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
-import { ReportBannerWithButton } from '../../../components/report/ReportBannerWithButton'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface TvlPageProps {
@@ -24,7 +23,6 @@ export interface TvlPageProps {
   footer: FooterProps
   showActivity: boolean
   showDetailedTvl: boolean
-  showMultisigReport: boolean
   milestones?: Milestone[]
 }
 
@@ -45,7 +43,6 @@ export function ScalingTvlPage(props: TvlPageProps) {
             milestones={props.milestones}
           />
           <ScalingTvlView {...props.tvlView} />
-          {props.showMultisigReport && <ReportBannerWithButton />}
           <About />
         </main>
       </PageContent>

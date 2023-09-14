@@ -20,10 +20,7 @@ import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
-export function getActiveScalingTvlColumns(
-  stagesEnabled: boolean,
-  detailedTvlEnabled: boolean,
-) {
+export function getActiveScalingTvlColumns(detailedTvlEnabled: boolean) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -61,19 +58,15 @@ export function getActiveScalingTvlColumns(
         </TechnologyCell>
       ),
     },
-    ...(stagesEnabled
-      ? [
-          {
-            name: 'Stage',
-            idHref: 'stage' as const,
-            tooltip: 'Rollup stage based on its features and maturity.',
-            alignCenter: true as const,
-            getValue: (project: ScalingTvlViewEntry) => (
-              <StageCell item={project.stage} />
-            ),
-          },
-        ]
-      : []),
+    {
+      name: 'Stage',
+      idHref: 'stage' as const,
+      tooltip: 'Rollup stage based on its features and maturity.',
+      alignCenter: true as const,
+      getValue: (project: ScalingTvlViewEntry) => (
+        <StageCell item={project.stage} />
+      ),
+    },
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this Layer 2.',
