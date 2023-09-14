@@ -1,7 +1,7 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18092408,
+  "blockNumber": 18128273,
   "configHash": "0x15416412b322113990c2cb6bae513e96dfe007828772bf6a9bd1aeb9f52611cd",
   "version": 2,
   "contracts": [
@@ -16,7 +16,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622898",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622990",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -71,12 +71,14 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+          "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
         ],
-        "getThreshold": 2,
-        "nonce": 6,
+        "getThreshold": 3,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -93,7 +95,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 694997, 18092090],
+        "params": [1000000000, 694997, 18127486],
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "1.7.2"
@@ -123,10 +125,10 @@
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 1498800,
-        "latestOutputIndex": 2497,
-        "nextBlockNumber": 1499400,
-        "nextOutputIndex": 2498,
+        "latestBlockNumber": 1542000,
+        "latestOutputIndex": 2569,
+        "nextBlockNumber": 1542600,
+        "nextOutputIndex": 2570,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -168,12 +170,14 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
+    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
     "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
     "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
     "0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d",
+    "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
     "0xE3e57f917E788F3921528CAABf76EEaF781d3326",
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
   ],
