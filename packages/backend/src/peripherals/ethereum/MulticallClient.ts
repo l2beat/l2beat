@@ -1,5 +1,4 @@
 import { EthereumClient } from './EthereumClient'
-import { ETHEREUM_MULTICALL_CONFIG } from './MulticallConfig'
 import {
   MulticallConfigEntry,
   MulticallRequest,
@@ -9,7 +8,7 @@ import {
 export class MulticallClient {
   constructor(
     private readonly ethereumClient: EthereumClient,
-    private readonly config = ETHEREUM_MULTICALL_CONFIG,
+    private readonly config: MulticallConfigEntry[],
   ) {}
 
   async multicallNamed(

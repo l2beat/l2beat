@@ -67,14 +67,14 @@ export const ARBITRUM_BALANCE_ENCODING: NativeBalanceEncoding = {
   decode: decodeGetEthBalance,
 }
 
+export const OPTIMISM_BALANCE_ENCODING = undefined
+
 export class BalanceProvider implements IBalanceProvider {
   constructor(
     private readonly ethereumClient: EthereumClient,
     private readonly multicallClient: MulticallClient,
     private readonly chainId: ChainId,
-    private readonly nativeBalanceEncoding:
-      | NativeBalanceEncoding
-      | undefined = ETHEREUM_BALANCE_ENCODING,
+    private readonly nativeBalanceEncoding: NativeBalanceEncoding | undefined,
   ) {}
 
   public getChainId(): ChainId {
