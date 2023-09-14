@@ -1,4 +1,12 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -22,6 +30,23 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId.USDC_ON_BASE,
+    name: 'USD Coin',
+    symbol: 'USDC',
+    decimals: 6,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
+    address: EthereumAddress('0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'),
+    coingeckoId: CoingeckoId('usd-coin'),
+    sinceTimestamp: new UnixTime(1692383789),
+    category: 'stablecoin',
+    type: 'NMV',
+    formula: 'totalSupply',
+  },
+]
 
 export const base: Layer2 = {
   type: 'layer2',
@@ -51,6 +76,7 @@ export const base: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.BASE })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x49048044D57e1C92A77f79988d21Fa8fAF74E97e'),
