@@ -42,7 +42,7 @@ export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
           <Chart
             detailedTvlEndpoint={props.detailedTvlEndpoint}
-            type={'detailedTvl'}
+            type="detailedTvl"
           />
           <ScalingDetailedTvlView {...props.detailedTvlView} />
           <OtherSites />
