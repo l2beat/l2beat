@@ -1,4 +1,4 @@
-import { EthereumClient } from './EthereumClient'
+import { EthereumClient } from '../EthereumClient'
 import {
   MulticallConfigEntry,
   MulticallRequest,

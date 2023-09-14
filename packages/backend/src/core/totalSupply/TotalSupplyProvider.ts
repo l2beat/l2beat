@@ -8,8 +8,8 @@ import {
 import { BigNumber, utils } from 'ethers'
 
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
-import { MulticallRequest } from '../../peripherals/ethereum/types'
+import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
+import { MulticallRequest } from '../../peripherals/ethereum/multicall/types'
 
 export interface TotalSupplyQuery {
   assetId: AssetId

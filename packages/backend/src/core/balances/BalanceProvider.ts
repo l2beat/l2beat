@@ -12,17 +12,17 @@ import { partition } from 'lodash'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
 import {
   ARBITRUM_MULTICALL_ADDRESS,
   ARBITRUM_MULTICALL_BLOCK,
   ETHEREUM_MULTICALL_V1_ADDRESS,
   ETHEREUM_MULTICALL_V1_BLOCK,
-} from '../../peripherals/ethereum/MulticallConfig'
+} from '../../peripherals/ethereum/multicall/MulticallConfig'
 import {
   MulticallRequest,
   MulticallResponse,
-} from '../../peripherals/ethereum/types'
+} from '../../peripherals/ethereum/multicall/types'
 
 const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',

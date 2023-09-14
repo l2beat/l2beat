@@ -1,7 +1,8 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { EthereumClient } from './EthereumClient'
+import { EthereumClient } from '../EthereumClient'
+import { BlockTag } from '../types'
 import { MulticallClient } from './MulticallClient'
 import {
   decodeMulticallV1,
@@ -10,7 +11,7 @@ import {
   encodeMulticallV2,
   multicallInterface,
 } from './MulticallConfig'
-import { BlockTag, MulticallConfigEntry } from './types'
+import { MulticallConfigEntry } from './types'
 
 describe(MulticallClient.name, () => {
   const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))

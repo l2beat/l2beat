@@ -9,7 +9,7 @@ import { expect, mockObject } from 'earl'
 import { BigNumber } from 'ethers'
 
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
+import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
 import { BalanceProvider, ETHEREUM_BALANCE_ENCODING } from './BalanceProvider'
 
 describe(BalanceProvider.name, () => {
