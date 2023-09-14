@@ -3,7 +3,7 @@ import { AssetId, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 
-import { ETHEREUM_MULTICALL_V1_ADDRESS } from '../MulticallConfig'
+import { ETHEREUM_MULTICALL_V1_ADDRESS } from '../multicall/MulticallConfig'
 import { BalanceCall } from './BalanceCall'
 
 describe('BalanceCall', () => {

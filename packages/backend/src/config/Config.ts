@@ -63,7 +63,10 @@ export interface TvlConfig {
 
 export interface ChainTvlConfig {
   readonly providerUrl: string
+  readonly providerCallsPerMinute: number
+  readonly networkName: string
   readonly etherscanApiKey: string
+  readonly etherscanApiUrl: string
   readonly minBlockTimestamp: UnixTime
 }
 

@@ -58,6 +58,8 @@ export const ARBITRUM_BALANCE_ENCODING: NativeBalanceEncoding = {
   decode: decodeGetEthBalance,
 }
 
+export const OPTIMISM_BALANCE_ENCODING = undefined
+
 export class BalanceProvider {
   constructor(
     private readonly ethereumClient: EthereumClient,

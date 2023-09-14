@@ -1,12 +1,12 @@
-import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { HttpClient, Logger, UniversalEtherscanClient } from '@l2beat/shared'
+import { ChainId, ProjectId, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { Config } from '../../config'
+import { ChainTvlConfig } from '../../config/Config'
 import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
 import {
-  ARBITRUM_BALANCE_ENCODING,
   BalanceProvider,
+  NativeBalanceEncoding,
 } from '../../core/balances/BalanceProvider'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
@@ -16,92 +16,97 @@ import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
-import { ARBITRUM_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
-import { TvlSubmodule } from '../ApplicationModule'
+import { MulticallConfigEntry } from '../../peripherals/ethereum/multicall/types'
 import { TvlDatabase } from './types'
 
-export function createArbitrumTvlSubmodule(
+export function chainTvlSubmodule(
+  name: string,
+  chainId: ChainId,
+  projectId: ProjectId,
+  chainTvlConfig: ChainTvlConfig | false,
+  tokens: Token[],
+  multicallConfig: MulticallConfigEntry[],
+  balanceEncoding: NativeBalanceEncoding | undefined,
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
-  config: Config,
-  logger: Logger,
   http: HttpClient,
   clock: Clock,
-): TvlSubmodule | undefined {
-  if (!config.tvl.arbitrum) {
-    logger.info('Arbitrum TVL module disabled')
+  logger: Logger,
+) {
+  if (!chainTvlConfig) {
+    logger.info(`${name} disabled`)
     return
   }
 
   // #region peripherals
-  const arbitrumProvider = new providers.JsonRpcProvider(
-    config.tvl.arbitrum.providerUrl,
-    'arbitrum',
+  const provider = new providers.JsonRpcProvider(
+    chainTvlConfig.providerUrl,
+    chainTvlConfig.networkName,
   )
 
-  const arbiscanClient = new ArbiscanClient(
+  const etherscanClient = new UniversalEtherscanClient(
     http,
-    config.tvl.arbitrum.etherscanApiKey,
-    config.tvl.arbitrum.minBlockTimestamp,
+    chainTvlConfig.etherscanApiUrl,
+    chainTvlConfig.etherscanApiKey,
+    chainTvlConfig.minBlockTimestamp,
+    chainId,
     logger,
   )
 
-  const arbitrumClient = new EthereumClient(arbitrumProvider, logger, 25)
-
-  const multicallClient = new MulticallClient(
-    arbitrumClient,
-    ARBITRUM_MULTICALL_CONFIG,
+  const ethereumClient = new EthereumClient(
+    provider,
+    logger,
+    chainTvlConfig.providerCallsPerMinute,
   )
 
-  const totalSupplyProvider = new TotalSupplyProvider(
-    multicallClient,
-    ChainId.ARBITRUM,
-  )
+  const multicallClient = new MulticallClient(ethereumClient, multicallConfig)
+
+  const totalSupplyProvider = new TotalSupplyProvider(multicallClient, chainId)
 
   const arbitrumBalanceProvider = new BalanceProvider(
-    arbitrumClient,
+    ethereumClient,
     multicallClient,
-    ChainId.ARBITRUM,
-    ARBITRUM_BALANCE_ENCODING,
+    chainId,
+    balanceEncoding,
   )
 
   // #endregion
   // #region updaters
 
-  const arbiscanBlockNumberUpdater = new BlockNumberUpdater(
-    arbiscanClient,
+  const blockNumberUpdater = new BlockNumberUpdater(
+    etherscanClient,
     db.blockNumberRepository,
     clock,
     logger,
-    ChainId.ARBITRUM,
-    config.tvl.arbitrum.minBlockTimestamp,
+    chainId,
+    chainTvlConfig.minBlockTimestamp,
   )
 
-  const arbitrumBalanceUpdater = new BalanceUpdater(
+  const balanceUpdater = new BalanceUpdater(
     arbitrumBalanceProvider,
-    arbiscanBlockNumberUpdater,
+    blockNumberUpdater,
     db.balanceRepository,
     db.balanceStatusRepository,
     clock,
     [],
     logger,
-    ChainId.ARBITRUM,
-    config.tvl.arbitrum.minBlockTimestamp,
+    chainId,
+    chainTvlConfig.minBlockTimestamp,
   )
 
-  const totalSupplyTokens = config.tokens.filter(
-    (t) => t.chainId === ChainId.ARBITRUM && t.formula === 'totalSupply',
+  const totalSupplyTokens = tokens.filter(
+    (t) => t.chainId === chainId && t.formula === 'totalSupply',
   )
   const totalSupplyUpdater = new TotalSupplyUpdater(
     totalSupplyProvider,
-    arbiscanBlockNumberUpdater,
+    blockNumberUpdater,
     db.totalSupplyRepository,
     db.totalSupplyStatusRepository,
     clock,
     totalSupplyTokens,
     logger,
-    ChainId.ARBITRUM,
-    config.tvl.arbitrum.minBlockTimestamp,
+    chainId,
+    chainTvlConfig.minBlockTimestamp,
   )
 
   const totalSupplyFormulaUpdater = new TotalSupplyFormulaUpdater(
@@ -109,21 +114,21 @@ export function createArbitrumTvlSubmodule(
     totalSupplyUpdater,
     db.reportRepository,
     db.reportStatusRepository,
-    ProjectId.ARBITRUM,
-    ChainId.ARBITRUM,
+    projectId,
+    chainId,
     clock,
     totalSupplyTokens,
     logger,
-    config.tvl.arbitrum.minBlockTimestamp,
+    chainTvlConfig.minBlockTimestamp,
   )
   // #endregion
 
   const start = async () => {
-    logger = logger.for('ArbitrumTvlModule')
+    logger = logger.for(name)
     logger.info('Starting')
 
-    await arbiscanBlockNumberUpdater.start()
-    await arbitrumBalanceUpdater.start()
+    await blockNumberUpdater.start()
+    await balanceUpdater.start()
     await totalSupplyUpdater.start()
     await totalSupplyFormulaUpdater.start()
 

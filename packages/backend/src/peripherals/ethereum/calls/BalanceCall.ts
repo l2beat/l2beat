@@ -2,8 +2,8 @@ import { getTokenByAssetId } from '@l2beat/config'
 import { AssetId, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
-import { ETHEREUM_MULTICALL_V1_ADDRESS } from '../MulticallConfig'
-import { MulticallRequest, MulticallResponse } from '../types'
+import { ETHEREUM_MULTICALL_V1_ADDRESS } from '../multicall/MulticallConfig'
+import { MulticallRequest, MulticallResponse } from '../multicall/types'
 
 const coder = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',

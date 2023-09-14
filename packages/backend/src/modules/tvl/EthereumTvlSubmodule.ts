@@ -3,7 +3,7 @@ import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { CBVUpdater } from '../../core/assets/'
+import { CBVUpdater } from '../../core/assets'
 import {
   BalanceProvider,
   ETHEREUM_BALANCE_ENCODING,
@@ -37,11 +37,6 @@ export function createEthereumTvlSubmodule(
     config.tvl.ethereum.providerUrl,
     'mainnet',
   )
-  const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
-  const multicall = new MulticallClient(
-    ethereumClient,
-    ETHEREUM_MULTICALL_CONFIG,
-  )
 
   const etherscanClient = new EtherscanClient(
     http,
@@ -49,9 +44,15 @@ export function createEthereumTvlSubmodule(
     config.tvl.ethereum.minBlockTimestamp,
     logger,
   )
+  const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
+  const multicallClient = new MulticallClient(
+    ethereumClient,
+    ETHEREUM_MULTICALL_CONFIG,
+  )
+
   const balanceProvider = new BalanceProvider(
     ethereumClient,
-    multicall,
+    multicallClient,
     ChainId.ETHEREUM,
     ETHEREUM_BALANCE_ENCODING,
   )
