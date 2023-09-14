@@ -52,6 +52,10 @@ export function createGetStage<T extends StageBlueprint>(
       }
     }
 
+    if (lastStage === undefined) {
+      throw new Error('Stage can not be undefined')
+    }
+
     return { stage: lastStage, missing, summary }
   }
 }
