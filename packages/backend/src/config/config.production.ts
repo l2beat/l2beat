@@ -10,6 +10,7 @@ import { getGitCommitHash } from './getGitCommitHash'
 export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
+  const baseTvlEnabled = getEnv.boolean('BASE_TVL_ENABLED', false)
   const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
@@ -93,6 +94,14 @@ export function getProductionConfig(): Config {
         etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.OPTIMISM),
+      },
+      base: baseTvlEnabled && {
+        providerUrl: getEnv('BASE_PROVIDER_URL'),
+        providerCallsPerMinute: 25,
+        networkName: 'base',
+        etherscanApiKey: getEnv('BASE_ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api.basescan.org/api',
+        minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
       },
     },
     activity: {

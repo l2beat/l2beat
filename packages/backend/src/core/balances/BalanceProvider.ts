@@ -14,8 +14,6 @@ import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import {
-  ARBITRUM_MULTICALL_ADDRESS,
-  ARBITRUM_MULTICALL_BLOCK,
   ETHEREUM_MULTICALL_V1_ADDRESS,
   ETHEREUM_MULTICALL_V1_BLOCK,
 } from '../../peripherals/ethereum/MulticallConfig'
@@ -59,15 +57,6 @@ export const ETHEREUM_BALANCE_ENCODING: NativeBalanceEncoding = {
   encode: encodeGetEthBalance,
   decode: decodeGetEthBalance,
 }
-
-export const ARBITRUM_BALANCE_ENCODING: NativeBalanceEncoding = {
-  sinceBlock: ARBITRUM_MULTICALL_BLOCK,
-  address: ARBITRUM_MULTICALL_ADDRESS,
-  encode: encodeGetEthBalance,
-  decode: decodeGetEthBalance,
-}
-
-export const OPTIMISM_BALANCE_ENCODING = undefined
 
 export class BalanceProvider implements IBalanceProvider {
   constructor(
