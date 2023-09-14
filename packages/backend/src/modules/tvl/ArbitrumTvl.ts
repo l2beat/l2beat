@@ -38,7 +38,7 @@ export function createArbitrumTvlSubmodule(
 
   const arbiscanClient = new ArbiscanClient(
     http,
-    config.tvl.arbitrum.arbiscanApiKey,
+    config.tvl.arbitrum.etherscanApiKey,
     config.tvl.arbitrum.minBlockTimestamp,
     logger,
   )

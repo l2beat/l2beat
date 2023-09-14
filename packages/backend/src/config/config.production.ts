@@ -70,17 +70,17 @@ export function getProductionConfig(): Config {
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
-        etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+        etherscanApiKey: getEnv('ETHEREUM_ETHERSCAN_API_KEY'),
         minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
       },
       arbitrum: arbitrumTvlEnabled && {
-        arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
+        etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
         minBlockTimestamp: getChainMinTimestamp(ChainId.ARBITRUM),
       },
       optimism: optimismTvlEnabled && {
-        optiscanApiKey: getEnv('OPTISCAN_API_KEY'),
         providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
+        etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
         minBlockTimestamp: getChainMinTimestamp(ChainId.OPTIMISM),
       },
     },

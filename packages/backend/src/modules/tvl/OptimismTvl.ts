@@ -38,7 +38,7 @@ export function createOptimismTvlSubmodule(
 
   const optiscanClient = new OptiscanClient(
     http,
-    config.tvl.optimism.optiscanApiKey,
+    config.tvl.optimism.etherscanApiKey,
     config.tvl.optimism.minBlockTimestamp,
     logger,
   )
