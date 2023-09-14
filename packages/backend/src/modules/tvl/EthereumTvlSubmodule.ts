@@ -27,7 +27,7 @@ export function createEthereumTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   if (!config.tvl.ethereum) {
-    logger.info('Ethereum TVL module disabled')
+    logger.info('EthereumTvlModule disabled')
     return
   }
 
@@ -35,7 +35,7 @@ export function createEthereumTvlSubmodule(
 
   const ethereumProvider = new providers.JsonRpcProvider(
     config.tvl.ethereum.providerUrl,
-    'mainnet',
+    config.tvl.ethereum.networkName,
   )
 
   const etherscanClient = new EtherscanClient(
@@ -44,7 +44,11 @@ export function createEthereumTvlSubmodule(
     config.tvl.ethereum.minBlockTimestamp,
     logger,
   )
-  const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
+  const ethereumClient = new EthereumClient(
+    ethereumProvider,
+    logger,
+    config.tvl.ethereum.providerCallsPerMinute,
+  )
   const multicallClient = new MulticallClient(
     ethereumClient,
     ETHEREUM_MULTICALL_CONFIG,
@@ -106,7 +110,7 @@ export function createEthereumTvlSubmodule(
   }
 
   return {
-    updaters: [cbvUpdater],
+    assetUpdaters: [cbvUpdater],
     start,
   }
 }

@@ -94,7 +94,7 @@ export function createTvlModule(
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.updaters ?? []),
+    submodules.flatMap((x) => x?.assetUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,

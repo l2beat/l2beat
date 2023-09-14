@@ -2,7 +2,6 @@ import { HttpClient, Logger } from '@l2beat/shared'
 import { ChainId, ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
-import { OPTIMISM_BALANCE_ENCODING } from '../../core/balances/BalanceProvider'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { OPTIMISM_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
@@ -25,7 +24,6 @@ export function createOptimismTvlSubmodule(
     config.tvl.optimism,
     config.tokens,
     OPTIMISM_MULTICALL_CONFIG,
-    OPTIMISM_BALANCE_ENCODING,
     db,
     priceUpdater,
     http,

@@ -2,7 +2,6 @@ import { HttpClient, Logger } from '@l2beat/shared'
 import { ChainId, ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
-import { ARBITRUM_BALANCE_ENCODING } from '../../core/balances/BalanceProvider'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ARBITRUM_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
@@ -25,7 +24,6 @@ export function createArbitrumTvlSubmodule(
     config.tvl.arbitrum,
     config.tokens,
     ARBITRUM_MULTICALL_CONFIG,
-    ARBITRUM_BALANCE_ENCODING,
     db,
     priceUpdater,
     http,
