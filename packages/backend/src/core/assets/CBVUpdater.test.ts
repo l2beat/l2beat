@@ -1,15 +1,26 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  Hash256,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
-import { ReportRepository } from '../../peripherals/database/ReportRepository'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
+import { fakeToken, REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { ReportProject } from '../reports/ReportProject'
 import { CBVUpdater } from './CBVUpdater'
 
 describe(CBVUpdater.name, () => {
@@ -239,5 +250,71 @@ describe(CBVUpdater.name, () => {
 
       expect(reports).toEqual(MOCK.REPORTS)
     })
+
+    it('filters assets that are not in the config', async () => {
+      // create a project with one escrow & tokens DAI
+      const project: ReportProject = {
+        projectId: ProjectId('apex'),
+        type: 'layer2',
+        escrows: [
+          {
+            address: EthereumAddress.random(),
+            sinceTimestamp: new UnixTime(0),
+            tokens: [fakeToken({ id: AssetId.DAI, decimals: 18 })],
+          },
+        ],
+      }
+      // create reports for this projects for assets DAI ETH
+      const reports: ReportRecord[] = [
+        mockReport(project, AssetId.DAI),
+        mockReport(project, AssetId.ETH),
+      ]
+      // mock DB to return the records
+      const repository = mockObject<ReportRepository>({
+        getByTimestampAndPreciseAsset: async () => reports,
+      })
+
+      const reportStatusRepository = mockObject<ReportStatusRepository>({
+        getByConfigHash: async () => [new UnixTime(0)],
+      })
+
+      // initialize cbv updater
+      const cbvUpdater = new CBVUpdater(
+        mockObject<PriceUpdater>(),
+        mockObject<BalanceUpdater>(),
+        repository,
+        reportStatusRepository,
+        getEmptyClock(),
+        [project],
+        Logger.SILENT,
+        new UnixTime(0),
+      )
+
+      await cbvUpdater.start()
+      // call .getReports when ready
+      const result = await cbvUpdater.getReportsWhenReady(new UnixTime(0))
+
+      // expect to get only ETH & DAI reports
+      expect(result).toEqual([reports[0]])
+    })
   })
 })
+
+function mockReport(project: ReportProject, asset: AssetId): ReportRecord {
+  return {
+    timestamp: new UnixTime(0),
+    asset,
+    chainId: ChainId.ETHEREUM,
+    reportType: 'CBV',
+    amount: 100n,
+    ethValue: 100n,
+    usdValue: 100n,
+    projectId: project.projectId,
+  }
+}
+
+function getEmptyClock() {
+  return mockObject<Clock>({
+    onEveryHour: () => () => {},
+  })
+}
