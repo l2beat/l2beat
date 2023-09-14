@@ -20,6 +20,7 @@ export function getLocalConfig(): Config {
   const ethereumTvlEnabled = getEnv.boolean('ETHEREUM_TVL_ENABLED', true)
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
+  const baseTvlEnabled = getEnv.boolean('BASE_TVL_ENABLED', false)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
@@ -92,6 +93,14 @@ export function getLocalConfig(): Config {
         ),
         etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+      base: baseTvlEnabled && {
+        providerUrl: getEnv('BASE_PROVIDER_URL'),
+        providerCallsPerMinute: 25,
+        networkName: 'base',
+        etherscanApiKey: getEnv('BASE_ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },

@@ -59,6 +59,7 @@ export interface TvlConfig {
   readonly ethereum: ChainTvlConfig | false
   readonly arbitrum: ChainTvlConfig | false
   readonly optimism: ChainTvlConfig | false
+  readonly base: ChainTvlConfig | false
 }
 
 export interface ChainTvlConfig {
