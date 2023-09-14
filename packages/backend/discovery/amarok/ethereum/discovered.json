@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 18083422,
-  "configHash": "0x21e795680ad59a6e324d91877bca33f4593fef8994286113ac0c969fe9745d64",
+  "blockNumber": 18128379,
+  "configHash": "0x2917b7a73f5da902ebf3b2ebc94179178a3f9d115f477ada2d17a2f49546a193",
   "version": 2,
   "contracts": [
     {
@@ -27,6 +27,23 @@
       "derivedName": "GnosisHubConnector"
     },
     {
+      "name": "Connext Multisig Member",
+      "address": "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x629aade541ce1b7d73beab1242554404bc43e210de8d86b5a43700596c5cb2b2",
+        "getChainId": 1,
+        "getOwners": ["0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb"],
+        "getThreshold": 1,
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "UpgradeBeaconProxy",
       "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
       "upgradeability": {
@@ -44,6 +61,7 @@
         "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
         "getChainId": 1,
         "getOwners": [
+          "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e",
           "0xc840e73B856f52E5491d6016daf5C7AE5e6beECD",
           "0xaBcC62f573963F0B1aD9334CaEd3f4Acab8d3FEA",
           "0x8D09e20b835009E5320cC11E6a6F00aF451aD669",
@@ -59,8 +77,8 @@
           "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
         ],
-        "getThreshold": 4,
-        "nonce": 45,
+        "getThreshold": 8,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -362,7 +380,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 8702,
+        "nonce": 8879,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -487,13 +505,13 @@
           1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786
         ],
         "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
-        "getPendingInboundRootsCount": 7,
-        "lastPropagatedRoot": "0x81a5174960b26bee95e3dc624ffa44a7305c1eedcfd2ded99518789c1fcf2407",
+        "getPendingInboundRootsCount": 5,
+        "lastPropagatedRoot": "0xb3fc45a47b2fdb3f04e2e8e06a9698b5e0f021fedadf06fdd8c1a67b17f4848a",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [35390, 35396],
+        "pendingInboundRoots": [35854, 35858],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -536,12 +554,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 18083066,
+        "lastSentBlock": 18128275,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xdbd302ad634d7b9128a1dd9f2640b728ccc71de426c4067a94f264b45ae974ac",
+        "outboundRoot": "0xdd800605b8d20c4a0f6d7254688b6f9c4306b22010e974d148d93753ca400f9f",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -595,6 +613,7 @@
     "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
     "0xC832bB8015762B4857459551057EB61c68B93608",
     "0xc840e73B856f52E5491d6016daf5C7AE5e6beECD",
+    "0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb",
     "0xe4d19c67ca0E9E3888158062De24321a0B272e73",
     "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
     "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
@@ -693,6 +712,9 @@
       "function setGasCap(uint256 _gasCap)",
       "function setMirrorConnector(address _mirrorConnector)",
       "function verifySender(address _expected) returns (bool)"
+    ],
+    "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": [
+      "constructor(address _singleton)"
     ],
     "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
