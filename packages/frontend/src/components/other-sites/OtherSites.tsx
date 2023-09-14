@@ -1,51 +1,24 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 
 export function OtherSites() {
   return (
     <div
       className={cx(
-        '-ml-4 mt-8 flex w-screen flex-col items-center justify-between md:-ml-0 md:w-full md:flex-row',
-        'rounded-0 bg-gradient-to-r from-purple-100/40 md:rounded-xl',
-        'via-pink-100/40',
-        'to-red-200/40 px-10',
-        'py-6 md:flex-row',
+        'flex flex-col items-center justify-between gap-4 md:flex-row',
+        '-mx-4 my-10 px-4 py-6 md:my-20 md:px-10',
+        'rounded-0 md:rounded-xl',
+        'bg-gradient-to-r from-purple-100/40 via-pink-100/40 to-red-200/40',
       )}
     >
-      <span
-        className={cx(
-          'flex flex-col text-center font-semibold',
-          'md:hidden md:text-left',
-        )}
-      >
-        <span
-          className={cx(
-            'self-center text-pink-900 dark:text-pink-200',
-            'text-sm font-semibold tracking-wider',
-          )}
-        >
-          ETHEREUM LAYER 1 IS EXPENSIVE
-        </span>
-        <span className="mt-1 text-lg font-bold">
-          How much does it cost to use Layer 2?
-        </span>
+      <span className="text-center text-lg font-semibold md:text-left">
+        Want to learn more about the different approaches to upgradeability?
       </span>
-      <span className="hidden text-lg font-semibold md:block">
-        Ethereum Layer 1 is expensive. How much does it cost to use Layer 2? 💸
-      </span>
-      <OutLink
-        className={cx(
-          'mt-3 ml-0 text-center',
-          'text-lg font-bold',
-          'underline md:mt-0 md:ml-2',
-        )}
-        allowReferrer
-        href="https://l2fees.info/"
-      >
-        Find out on L2 Fees
-      </OutLink>
+      <Link className="text-lg font-bold" type="plain" href="/multisig-report">
+        Check our report
+      </Link>
     </div>
   )
 }

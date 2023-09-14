@@ -10,7 +10,6 @@ import {
 import { About } from '../../../components/About'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
-import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
 import {
   ScalingDetailedTvlView,
@@ -45,7 +44,6 @@ export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
             type="detailedTvl"
           />
           <ScalingDetailedTvlView {...props.detailedTvlView} />
-          <OtherSites />
           <About />
         </main>
       </PageContent>
