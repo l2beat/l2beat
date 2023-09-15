@@ -3,7 +3,7 @@ import {
   assert,
   CoingeckoId,
   EthereumAddress,
-  getTimestamps,
+  getHourlyTimestamps,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -42,7 +42,7 @@ export class CoingeckoQueryService {
 
     const from = range.from ?? queryResult.prices[0].timestamp
 
-    const timestamps = getTimestamps(from, range.to)
+    const timestamps = getHourlyTimestamps(from, range.to)
 
     const result: QueryResultPoint[] = []
 
@@ -84,7 +84,7 @@ export class CoingeckoQueryService {
 
     const from = range.from ?? UnixTime.fromDate(queryResult.prices[0].date)
 
-    const timestamps = getTimestamps(from, range.to)
+    const timestamps = getHourlyTimestamps(from, range.to)
 
     return {
       prices: pickPoints(queryResult.prices, timestamps),

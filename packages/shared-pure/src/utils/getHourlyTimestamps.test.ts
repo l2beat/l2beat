@@ -1,9 +1,9 @@
 import { expect } from 'earl'
 
 import { UnixTime } from '../types'
-import { getTimestamps } from './getTimestamps'
+import { getHourlyTimestamps } from './getHourlyTimestamps'
 
-describe(getTimestamps.name, () => {
+describe(getHourlyTimestamps.name, () => {
   describe('hourly', () => {
     const FROM = UnixTime.fromDate(new Date('2021-09-07T13:00:00Z'))
     const TO = UnixTime.fromDate(new Date('2021-09-07T15:00:00Z'))
@@ -15,18 +15,18 @@ describe(getTimestamps.name, () => {
     ]
 
     it('throws if FROM greater than TO', () => {
-      expect(() => getTimestamps(TO, FROM)).toThrow(
+      expect(() => getHourlyTimestamps(TO, FROM)).toThrow(
         'FROM cannot be greater than TO',
       )
     })
 
     it('13:00 to 15:00', () => {
-      expect(getTimestamps(FROM, TO)).toEqual(RESULT)
+      expect(getHourlyTimestamps(FROM, TO)).toEqual(RESULT)
     })
 
     it('13:01 to 15:01', () => {
       expect(
-        getTimestamps(FROM.add(1, 'minutes'), TO.add(1, 'minutes')),
+        getHourlyTimestamps(FROM.add(1, 'minutes'), TO.add(1, 'minutes')),
       ).toEqual([
         UnixTime.fromDate(new Date('2021-09-07T14:00:00Z')),
         UnixTime.fromDate(new Date('2021-09-07T15:00:00Z')),
@@ -42,7 +42,7 @@ describe(getTimestamps.name, () => {
         to,
       ]
 
-      expect(getTimestamps(from, to)).toEqual(result)
+      expect(getHourlyTimestamps(from, to)).toEqual(result)
     })
   })
 })

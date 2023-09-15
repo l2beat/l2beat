@@ -2,7 +2,7 @@ import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   CoingeckoId,
   EthereumAddress,
-  getTimestamps,
+  getHourlyTimestamps,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -117,7 +117,7 @@ describe(CoingeckoQueryService.name, () => {
         START.add(2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'hours'),
       )
 
-      const timestamps = getTimestamps(
+      const timestamps = getHourlyTimestamps(
         START,
         START.add(2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'hours'),
       )
@@ -436,7 +436,7 @@ describe(pickPoints.name, () => {
       { value: 1100, date: START.add(1, 'hours').toDate() },
       { value: 1200, date: START.add(2, 'hours').toDate() },
     ]
-    const timestamps = getTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
 
     expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
@@ -451,7 +451,7 @@ describe(pickPoints.name, () => {
       { value: 1100, date: START.add(1, 'hours').add(1, 'minutes').toDate() },
       { value: 1200, date: START.add(2, 'hours').add(3, 'minutes').toDate() },
     ]
-    const timestamps = getTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
 
     expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 2 * 60 * 1000 },
@@ -474,7 +474,7 @@ describe(pickPoints.name, () => {
       { value: 1100, date: START.add(1, 'hours').toDate() },
       { value: 1200, date: START.add(2, 'hours').toDate() },
     ]
-    const timestamps = getTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
 
     expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: -2 * 60 * 1000 },
@@ -496,7 +496,7 @@ describe(pickPoints.name, () => {
       { value: 1500, date: START.add(2, 'hours').add(-1, 'minutes').toDate() },
       { value: 1600, date: START.add(2, 'hours').add(2, 'minutes').toDate() },
     ]
-    const timestamps = getTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
 
     expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1200, timestamp: START, deltaMs: 1 * 60 * 1000 },
@@ -514,7 +514,7 @@ describe(pickPoints.name, () => {
       { value: 1000, date: START.toDate() },
       { value: 1200, date: START.add(2, 'hours').add(-1, 'minutes').toDate() },
     ]
-    const timestamps = getTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
 
     expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
@@ -532,7 +532,7 @@ describe(pickPoints.name, () => {
       { value: 1000, date: START.toDate() },
       { value: 1400, date: START.add(4, 'hours').toDate() },
     ]
-    const timestamps = getTimestamps(START, START.add(4, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START.add(4, 'hours'))
 
     expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START, deltaMs: 0 },
@@ -557,7 +557,7 @@ describe(pickPoints.name, () => {
 
   it('manufactures start and end datapoints', () => {
     const prices = [{ value: 1100, date: START.add(1, 'hours').toDate() }]
-    const timestamps = getTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
 
     expect(pickPoints(prices, timestamps)).toEqual([
       { value: 1100, timestamp: START, deltaMs: 1 * 60 * 60 * 1000 },

@@ -148,6 +148,7 @@ export class PriceUpdater {
     await this.priceRepository.addMany(priceRecords)
   }
 }
+
 function getAdjustedFrom(sinceTimestamp: UnixTime, from: UnixTime) {
   const sinceTimestampFullHour = sinceTimestamp.isFull('hour')
     ? sinceTimestamp

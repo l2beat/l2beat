@@ -2,7 +2,7 @@ import { UnixTime } from '../types'
 
 const SECONDS_PER_HOUR = 3600
 
-export function getTimestamps(from: UnixTime, to: UnixTime): UnixTime[] {
+export function getHourlyTimestamps(from: UnixTime, to: UnixTime): UnixTime[] {
   if (from.gt(to)) throw new Error('FROM cannot be greater than TO')
 
   const [start, end] = adjust(from, to)
