@@ -16,7 +16,7 @@ import {
   QueryResultPoint,
 } from './CoingeckoQueryService'
 
-describe.skip(CoingeckoQueryService.name, () => {
+describe(CoingeckoQueryService.name, () => {
   describe(CoingeckoQueryService.prototype.getUsdPriceHistory.name, () => {
     it('is called with correct parameters', async () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
