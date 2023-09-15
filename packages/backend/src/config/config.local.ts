@@ -19,6 +19,7 @@ export function getLocalConfig(): Config {
   )
   const ethereumTvlEnabled = getEnv.boolean('ETHEREUM_TVL_ENABLED', true)
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
+  const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
@@ -63,12 +64,34 @@ export function getLocalConfig(): Config {
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
       ethereum: ethereumTvlEnabled && {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
-        etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE ',
+          25,
+        ),
+        // TODO: phase out old env variable
+        etherscanApiKey:
+          process.env.ETHEREUM_ETHERSCAN_API_KEY ?? getEnv('ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api.etherscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       arbitrum: arbitrumTvlEnabled && {
-        arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE ',
+          25,
+        ),
+        etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api.arbiscan.io/api',
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+      optimism: optimismTvlEnabled && {
+        providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE ',
+          25,
+        ),
+        etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },

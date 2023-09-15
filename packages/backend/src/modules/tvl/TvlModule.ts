@@ -24,9 +24,10 @@ import { Database } from '../../peripherals/database/shared/Database'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
-import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
-import { createEthereumTvlSubmodule } from './EthereumTvl'
-import { createNativeTvlSubmodule } from './NativeTvl'
+import { createArbitrumTvlSubmodule } from './ArbitrumTvlSubmodule'
+import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
+import { createNativeTvlSubmodule } from './NativeTvlSubmodule'
+import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -87,12 +88,13 @@ export function createTvlModule(
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
     createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
     createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+    createOptimismTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.updaters ?? []),
+    submodules.flatMap((x) => x?.assetUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
