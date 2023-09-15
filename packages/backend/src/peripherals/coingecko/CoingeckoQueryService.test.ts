@@ -46,7 +46,7 @@ describe(CoingeckoQueryService.name, () => {
       )
     })
 
-    it('handles regular days range returned from API', async () => {
+    it('handles regular hours range returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
       const coingeckoClient = mockObject<CoingeckoClient>({
@@ -79,30 +79,32 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn()
           .returnsOnce({
+            prices: [{ date: START.toDate(), value: 1200 }],
+            marketCaps: [],
+            totalVolumes: [],
+          })
+          .returnsOnce({
             prices: [
-              { date: START.toDate(), value: 1200 },
-              { date: START.add(30, 'hours').toDate(), value: 1000 },
-              { date: START.add(60, 'hours').toDate(), value: 1400 },
-              { date: START.add(80, 'hours').toDate(), value: 1800 },
+              {
+                date: START.add(
+                  COINGECKO_HOURLY_MAX_SPAN_IN_DAYS,
+                  'days',
+                ).toDate(),
+                value: 1800,
+              },
             ],
             marketCaps: [],
             totalVolumes: [],
           })
           .returnsOnce({
             prices: [
-              { date: START.add(80, 'hours').toDate(), value: 1800 },
-              { date: START.add(90, 'hours').toDate(), value: 1700 },
-              { date: START.add(120, 'hours').toDate(), value: 1900 },
-              { date: START.add(150, 'hours').toDate(), value: 2000 },
-              { date: START.add(160, 'hours').toDate(), value: 2400 },
-            ],
-            marketCaps: [],
-            totalVolumes: [],
-          })
-          .returnsOnce({
-            prices: [
-              { date: START.add(160, 'hours').toDate(), value: 2400 },
-              { date: START.add(180, 'hours').toDate(), value: 2600 },
+              {
+                date: START.add(
+                  2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS,
+                  'days',
+                ).toDate(),
+                value: 2400,
+              },
             ],
             marketCaps: [],
             totalVolumes: [],
@@ -112,20 +114,26 @@ describe(CoingeckoQueryService.name, () => {
       const prices = await coingeckoQueryService.getUsdPriceHistory(
         CoingeckoId('weth'),
         START,
-        START.add(180, 'hours'),
+        START.add(2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'hours'),
       )
 
-      const timestamps = getTimestamps(START, START.add(180, 'hours'))
+      const timestamps = getTimestamps(
+        START,
+        START.add(2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'hours'),
+      )
       const constPrices = [
         { date: START.toDate(), value: 1200 },
-        { date: START.add(30, 'hours').toDate(), value: 1000 },
-        { date: START.add(60, 'hours').toDate(), value: 1400 },
-        { date: START.add(80, 'hours').toDate(), value: 1800 },
-        { date: START.add(90, 'hours').toDate(), value: 1700 },
-        { date: START.add(120, 'hours').toDate(), value: 1900 },
-        { date: START.add(150, 'hours').toDate(), value: 2000 },
-        { date: START.add(160, 'hours').toDate(), value: 2400 },
-        { date: START.add(180, 'hours').toDate(), value: 2600 },
+        {
+          date: START.add(COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days').toDate(),
+          value: 2400,
+        },
+        {
+          date: START.add(
+            2 * COINGECKO_HOURLY_MAX_SPAN_IN_DAYS,
+            'days',
+          ).toDate(),
+          value: 2600,
+        },
       ]
 
       expect(prices).toEqual(pickPoints(constPrices, timestamps))
