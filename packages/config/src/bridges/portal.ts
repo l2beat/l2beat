@@ -139,8 +139,10 @@ export const portal: Bridge = {
   contracts: {
     isIncomplete: true,
     addresses: [
-      discovery.getContractDetails('Wormhole', 'Governance contract storing current Guardian set. Guardians themselves can choose a new Guardian set.'),
-      discovery.getContractDetails('Implementation'),
+      discovery.getContractDetails(
+        'Wormhole',
+        'Governance contract storing current Guardian set. Guardians themselves can choose a new Guardian set.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -150,7 +152,7 @@ export const portal: Bridge = {
       name: 'Guardian Network',
       description:
         'Off-chain actors signing messages (VAA) containing transfer information or governance actions such as upgrade, which are decoded on chain with signatures check.',
-      accounts: [],
+      accounts: discovery.getPermissionedAccounts('Wormhole', 'guardianSet', 0),
     },
   ],
   milestones: [

@@ -19,6 +19,11 @@
           "type": "call",
           "method": "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
           "args": ["{{ getCurrentGuardianSetIndex }}"]
+        },
+        "quorum": {
+          "type": "array",
+          "method": "quorum",
+          "length": 30
         }
       }
     },
