@@ -15,6 +15,8 @@ interface SummaryProps {
   stagesEnabled?: boolean
   detailedTvlEnabled?: boolean
   isUpcoming?: boolean
+  tvlBreakdownHref?: string
+  showTvlBreakdown?: boolean
 }
 
 export interface SummaryStat {
@@ -45,6 +47,8 @@ export function Summary(props: SummaryProps) {
       <TvlSummary
         stats={props.stats.l2Tvl}
         detailedTvlEnabled={props.detailedTvlEnabled}
+        tvlBreakdownHref={props.tvlBreakdownHref}
+        showTvlBreakdown={props.showTvlBreakdown}
       />
       <div
         className={classNames(

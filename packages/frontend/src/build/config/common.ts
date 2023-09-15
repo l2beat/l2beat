@@ -24,6 +24,8 @@ export const common: Omit<Config, 'backend'> = {
     activity: true,
     // TODO(radomski): After L2 Assets are implemented we want to make this be true by default
     detailedTvl: false,
+    // TODO(maciekzygmunt): After TVL Breakdown are implemented we want to make this be true by default
+    tvlBreakdown: false,
     milestones: true,
     stages: true,
     buildAllProjectPages: false,
