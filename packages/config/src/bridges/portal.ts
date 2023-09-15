@@ -139,7 +139,7 @@ export const portal: Bridge = {
   contracts: {
     isIncomplete: true,
     addresses: [
-      discovery.getContractDetails('BridgeImplementation'),
+      discovery.getContractDetails('Wormhole', 'Governance contract storing current Guardian set. Guardians themselves can choose a new Guardian set.'),
       discovery.getContractDetails('Implementation'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -158,6 +158,16 @@ export const portal: Bridge = {
       name: 'Contracts hacked for $326M',
       date: '2022-02-03T00:00:00.00Z',
       link: 'https://rekt.news/wormhole-rekt/',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Wormhole core architecture',
+      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0001_generic_message_passing.md',
+    },
+    {
+      title: 'How Wormhole Guardians work',
+      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0009_guardian_key.md',
     },
   ],
 }
