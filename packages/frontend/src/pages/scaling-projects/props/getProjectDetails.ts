@@ -12,6 +12,7 @@ import { MilestonesSectionProps } from '../../../components/project/MilestonesSe
 import { PermissionsSectionProps } from '../../../components/project/PermissionsSection'
 import { RiskAnalysisProps } from '../../../components/project/RiskAnalysis'
 import { StageSectionProps } from '../../../components/project/StageSection'
+import { StateDerivationSectionProps } from '../../../components/project/StateDerivationSection'
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../components/project/TechnologySection'
 import { getContractSection } from '../../../utils/project/getContractSection'
@@ -114,6 +115,17 @@ export function getProjectDetails(
       }),
     )
 
+    if (project.stateDerivation) {
+      items.push({
+        type: 'StateDerivationSection',
+        props: {
+          id: 'state-derivation',
+          title: 'State Derivation',
+          ...project.stateDerivation,
+        },
+      })
+    }
+
     if (permissionsSection) {
       items.push({
         type: 'PermissionsSection',
@@ -151,6 +163,7 @@ export type ScalingDetailsSection =
   | KnowledgeNuggetsSection
   | RiskAnalysisSection
   | TechnologySection
+  | StateDerivationSection
   | PermissionsSection
   | ContractsSection
   | StageSection
@@ -193,6 +206,11 @@ interface TechnologyIncompleteNote {
 interface TechnologySection {
   type: 'TechnologySection'
   props: TechnologySectionProps
+}
+
+interface StateDerivationSection {
+  type: 'StateDerivationSection'
+  props: StateDerivationSectionProps
 }
 
 interface PermissionsSection {
