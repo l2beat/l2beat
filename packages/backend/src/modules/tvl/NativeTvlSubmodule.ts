@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/shared'
 
 import { Config } from '../../config'
-import { NMVUpdater } from '../../core/assets/'
+import { NMVUpdater } from '../../core/assets'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { TvlSubmodule } from '../ApplicationModule'
@@ -37,7 +37,7 @@ export function createNativeTvlSubmodule(
   }
 
   return {
-    updaters: [nmvUpdater],
+    assetUpdaters: [nmvUpdater],
     start,
   }
 }
