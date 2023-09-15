@@ -280,7 +280,7 @@ export const arbitrum: Layer2 = {
     stateValidation: {
       value: 'Fraud proofs (INT)',
       description:
-        'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+        'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
       sentiment: 'warning',
       sources: [
         {
@@ -345,7 +345,7 @@ export const arbitrum: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect. The challenge protocol can be subject to delay attacks.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -365,6 +365,10 @@ export const arbitrum: Layer2 = {
         {
           text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
           href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L288',
+        },
+        {
+          text: 'Solutions to Delay Attacks on Rollups',
+          href: 'https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a',
         },
       ],
     },
