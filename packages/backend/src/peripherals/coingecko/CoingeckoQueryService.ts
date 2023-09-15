@@ -6,6 +6,9 @@ import {
   getHourlyTimestamps,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { zip } from 'lodash'
+
+export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
 
 export interface QueryResultPoint {
   value: number
@@ -13,8 +16,6 @@ export interface QueryResultPoint {
   deltaMs: number
 }
 
-// TODO: add cache to avoid querying the same data multiple times
-// because right now some tokens will have the same CoingeckoId
 export class CoingeckoQueryService {
   constructor(private readonly coingeckoClient: CoingeckoClient) {}
 
@@ -24,12 +25,11 @@ export class CoingeckoQueryService {
     to: UnixTime,
     address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    const queryResult = await this.pickAndQuery(
+    const queryResult = await this.queryHourlyPricesAndMarketCaps(
       coingeckoId,
       { from, to },
       address,
     )
-
     return queryResult.prices
   }
 
@@ -38,117 +38,92 @@ export class CoingeckoQueryService {
     range: { from: UnixTime | undefined; to: UnixTime },
     address?: EthereumAddress,
   ): Promise<QueryResultPoint[]> {
-    const queryResult = await this.pickAndQuery(coingeckoId, range, address)
+    const queryResult = await this.queryHourlyPricesAndMarketCaps(
+      coingeckoId,
+      range,
+      address,
+    )
+    return zip(queryResult.prices, queryResult.marketCaps).map(
+      ([price, marketCap]) => {
+        assert(price && marketCap && price.timestamp === marketCap.timestamp)
 
-    const from = range.from ?? queryResult.prices[0].timestamp
-
-    const timestamps = getHourlyTimestamps(from, range.to)
-
-    const result: QueryResultPoint[] = []
-
-    for (let i = 0; i < timestamps.length; i++) {
-      const price = queryResult.prices[i].value
-      const marketCap = queryResult.marketCaps[i].value
-
-      const value = approximateCirculatingSupply(marketCap, price)
-
-      result.push({
-        value,
-        timestamp: timestamps[i],
-        deltaMs: queryResult.prices[i].deltaMs,
-      })
-    }
-
-    return result.filter((x) => x.timestamp.gte(from))
+        const value = approximateCirculatingSupply(marketCap.value, price.value)
+        return {
+          value,
+          timestamp: price.timestamp,
+          deltaMs: price.deltaMs,
+        }
+      },
+    )
   }
 
-  async pickAndQuery(
+  async queryHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime | undefined; to: UnixTime },
     address?: EthereumAddress,
   ) {
-    const queryResult = range.from
-      ? await this.queryCoinMarketChartRange(
-          coingeckoId,
-          range.from,
-          range.to,
-          address,
-        )
-      : await this.queryCoinMarketChartRangeWhole(
-          coingeckoId,
-          range.to,
-          address,
-        )
-
-    assert(queryResult, 'Programmer error: It should not be null there')
+    const queryResult = await this.queryRawHourlyPricesAndMarketCaps(
+      coingeckoId,
+      range.from,
+      range.to,
+      address,
+    )
 
     const from = range.from ?? UnixTime.fromDate(queryResult.prices[0].date)
 
     const timestamps = getHourlyTimestamps(from, range.to)
 
     return {
-      prices: pickPoints(queryResult.prices, timestamps),
-      marketCaps: pickPoints(queryResult.marketCaps, timestamps),
-      totalVolumes: pickPoints(queryResult.totalVolumes, timestamps),
+      prices: pickClosestValues(queryResult.prices, timestamps),
+      marketCaps: pickClosestValues(queryResult.marketCaps, timestamps),
+      totalVolumes: pickClosestValues(queryResult.totalVolumes, timestamps),
     }
   }
 
-  async queryCoinMarketChartRange(
+  async queryRawHourlyPricesAndMarketCaps(
     coingeckoId: CoingeckoId,
-    from: UnixTime,
+    from: UnixTime | undefined,
     to: UnixTime,
     address?: EthereumAddress,
   ): Promise<CoinMarketChartRangeData> {
-    const [start, end] = adjustAndOffset(from, to)
+    const [adjustedFrom, adjustedTo] = adjust(from, to)
+    const results: CoinMarketChartRangeData[] = []
 
-    const results = await Promise.allSettled(
-      generateRangesToCallHourly(start, end).map((range) =>
-        this.coingeckoClient.getCoinMarketChartRange(
-          coingeckoId,
-          'usd',
-          range.start,
-          range.end,
-          address,
-        ),
-      ),
-    )
-
-    const checked: CoinMarketChartRangeData[] = checkResults(
-      results,
-      coingeckoId,
-      from,
-      to,
-    )
-
-    return concatResults(checked)
-  }
-
-  async queryCoinMarketChartRangeWhole(
-    coingeckoId: CoingeckoId,
-    to: UnixTime,
-    address?: EthereumAddress,
-  ): Promise<CoinMarketChartRangeData | null> {
-    const results: CoinMarketChartRangeData[] | null = []
-
-    let currentTo = new UnixTime(to.toNumber())
+    let currentTo = adjustedTo
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
+      let currentFrom = currentTo.add(-MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+      if (adjustedFrom && currentFrom.lt(adjustedFrom)) {
+        currentFrom = adjustedFrom
+      }
+
       const data = await this.coingeckoClient.getCoinMarketChartRange(
         coingeckoId,
         'usd',
-        currentTo.add(-COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days'),
+        currentFrom,
         currentTo,
         address,
       )
-      if (data === null) break
 
-      currentTo = currentTo.add(-COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days')
+      const noData = data.prices.length === 0 && data.marketCaps.length === 0
+      if (noData) {
+        assert(
+          !adjustedFrom,
+          `No data received for coin: ${coingeckoId.toString()}`,
+        )
+        break
+      }
 
       results.push(data)
+      if (adjustedFrom && currentFrom.equals(adjustedFrom)) {
+        break
+      }
+
+      currentTo = currentFrom
     }
 
-    return concatResults(results)
+    return combineResults(results)
   }
 
   async getCoinIds(): Promise<Map<EthereumAddress, CoingeckoId>> {
@@ -167,26 +142,7 @@ export class CoingeckoQueryService {
   }
 }
 
-function checkResults(
-  results: PromiseSettledResult<CoinMarketChartRangeData | null>[],
-  coingeckoId: CoingeckoId,
-  from: UnixTime,
-  to: UnixTime,
-) {
-  const checked: CoinMarketChartRangeData[] | null = []
-
-  for (const result of results) {
-    if (result.status === 'rejected') {
-      throw result.reason
-    }
-    assert(result.value, getAssertMessage(coingeckoId, from, to))
-
-    checked.push(result.value)
-  }
-  return checked
-}
-
-export function pickPoints(
+export function pickClosestValues(
   points: { value: number; date: Date }[],
   timestamps: UnixTime[],
 ): QueryResultPoint[] {
@@ -194,15 +150,11 @@ export function pickPoints(
   if (points.length === 0) return []
   const result: QueryResultPoint[] = []
 
-  const sortedPoints = points.sort(
-    (a, b) => a.date.getTime() - b.date.getTime(),
-  )
-
   const getDelta = (i: number, j: number) =>
-    sortedPoints[j].date.getTime() - timestamps[i].toNumber() * 1000
+    points[j].date.getTime() - timestamps[i].toNumber() * 1000
 
   const nextIsCloser = (i: number, j: number) =>
-    j + 1 < sortedPoints.length &&
+    j + 1 < points.length &&
     Math.abs(getDelta(i, j)) >= Math.abs(getDelta(i, j + 1))
 
   let j = 0
@@ -211,7 +163,7 @@ export function pickPoints(
       j++
     }
     result.push({
-      value: sortedPoints[j].value,
+      value: points[j].value,
       timestamp: timestamps[i],
       deltaMs: getDelta(i, j),
     })
@@ -219,47 +171,40 @@ export function pickPoints(
   return result
 }
 
-function adjust(from: UnixTime, to: UnixTime) {
-  const period = 'hour'
-  return [
-    from.isFull(period) ? from : from.toNext(period),
-    to.isFull(period) ? to : to.toStartOf(period),
-  ]
+function adjust(
+  from: UnixTime | undefined,
+  to: UnixTime,
+): [UnixTime | undefined, UnixTime] {
+  const start = from && (from.isFull('hour') ? from : from.toNext('hour'))
+  const end = to.isFull('hour') ? to : to.toStartOf('hour')
+  return [start?.add(-12, 'hours'), end.add(12, 'hours')]
 }
-
-function adjustAndOffset(from: UnixTime, to: UnixTime) {
-  const [start, end] = adjust(from, to)
-  return [start.add(-12, 'hours'), end.add(12, 'hours')]
-}
-
-export const COINGECKO_HOURLY_MAX_SPAN_IN_DAYS = 80
 
 export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
   const ranges = []
   for (
     let start = from;
     start.lt(to);
-    start = start.add(COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days')
+    start = start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
   ) {
-    const end = start.add(COINGECKO_HOURLY_MAX_SPAN_IN_DAYS, 'days')
+    const end = start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
     ranges.push({ start: start, end: end.gt(to) ? to : end })
   }
   return ranges
 }
 
-function concatResults(results: CoinMarketChartRangeData[]) {
-  const marketChartRangeData: CoinMarketChartRangeData = {
-    prices: [],
-    marketCaps: [],
-    totalVolumes: [],
-  }
-  for (const result of results) {
-    marketChartRangeData.prices.push(...result.prices)
-    marketChartRangeData.marketCaps.push(...result.marketCaps)
-    marketChartRangeData.totalVolumes.push(...result.totalVolumes)
+function combineResults(results: CoinMarketChartRangeData[]) {
+  const data: CoinMarketChartRangeData = {
+    prices: results.flatMap((result) => result.prices),
+    marketCaps: results.flatMap((result) => result.marketCaps),
+    totalVolumes: results.flatMap((result) => result.totalVolumes),
   }
 
-  return marketChartRangeData
+  data.prices.sort((a, b) => a.date.getTime() - b.date.getTime())
+  data.marketCaps.sort((a, b) => a.date.getTime() - b.date.getTime())
+  data.totalVolumes.sort((a, b) => a.date.getTime() - b.date.getTime())
+
+  return data
 }
 
 // This function is a neat helper to make circulating supply values more "round"
@@ -275,14 +220,4 @@ export function approximateCirculatingSupply(marketCap: number, price: number) {
   const value = Math.round(circulatingSupplyRaw / precision) * precision
 
   return value
-}
-
-function getAssertMessage(
-  coingeckoId: CoingeckoId,
-  from: UnixTime | undefined,
-  to: UnixTime,
-): string | undefined {
-  return `Market chart query result should not be null. ID: ${coingeckoId.toString()} from: ${
-    from ? from.toNumber() : 'undefined'
-  } to: ${to.toNumber()}`
 }

@@ -384,25 +384,5 @@ describe(CoingeckoClient.name, () => {
         { timeout: 10000 },
       )
     })
-
-    it('return null if response is empty', async () => {
-      const emptyResponse = {
-        prices: [],
-        market_caps: [],
-        total_volumes: [],
-      }
-      const httpClient = mockObject<HttpClient>({
-        fetch: async () => new Response(JSON.stringify(emptyResponse)),
-      })
-      const coingeckoClient = new CoingeckoClient(httpClient, undefined)
-
-      const result = await coingeckoClient.getCoinMarketChartRange(
-        CoingeckoId('ethereum'),
-        'usd',
-        new UnixTime(0),
-        new UnixTime(0),
-      )
-      expect(result).toEqual(null)
-    })
   })
 })
