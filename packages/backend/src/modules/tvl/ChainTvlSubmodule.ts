@@ -1,5 +1,10 @@
 import { HttpClient, Logger, UniversalEtherscanClient } from '@l2beat/shared'
-import { ChainId, ProjectId, Token } from '@l2beat/shared-pure'
+import {
+  capitalizeFirstLetter,
+  ChainId,
+  ProjectId,
+  Token,
+} from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { ChainTvlConfig } from '../../config/Config'
@@ -27,7 +32,7 @@ export function chainTvlSubmodule(
   clock: Clock,
   logger: Logger,
 ): TvlSubmodule | undefined {
-  const name = `${ChainId.getName(chainId)}TvlModule`
+  const name = `${capitalizeFirstLetter(ChainId.getName(chainId))}TvlModule`
   if (!chainTvlConfig) {
     logger.info(`${name} disabled`)
     return
