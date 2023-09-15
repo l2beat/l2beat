@@ -13,7 +13,14 @@
   },
   "overrides": {
     "Wormhole": {
-      "ignoreMethods": ["quorum"]
+      "ignoreMethods": ["quorum"],
+      "fields": {
+        "guardianSet": {
+          "type": "call",
+          "method": "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
+          "args": ["{{ getCurrentGuardianSetIndex }}"]
+        }
+      }
     },
     "TokenBridge": {
       "ignoreInWatchMode": ["totalSupply"]
