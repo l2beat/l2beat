@@ -185,7 +185,8 @@ describe(UpdateMonitor.name, () => {
       // calls repository (and gets undefined)
       expect(repository.findLatest).toHaveBeenCalledTimes(2)
       // reads committed discovery.json, 2 + 2 for findUnresolvedProjects() + 2 for findUnknown contracts()
-      expect(configReader.readDiscovery).toHaveBeenCalledTimes(3 * 2)
+      // and + 2 for finding unverifiedContracts
+      expect(configReader.readDiscovery).toHaveBeenCalledTimes(4 * 2)
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification

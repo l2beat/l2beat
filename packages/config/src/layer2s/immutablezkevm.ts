@@ -23,6 +23,9 @@ export const immutablezkevm: Layer2 = {
       socialMedia: ['https://twitter.com/Immutable'],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [],
   },

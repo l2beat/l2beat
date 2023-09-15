@@ -135,10 +135,19 @@ export class UpdateMonitor {
     })
     this.cachedDiscovery.set(projectConfig.name, discovery)
 
+    const deployedDiscovered = await this.configReader.readDiscovery(
+      projectConfig.name,
+      projectConfig.chainId,
+    )
+    const unverifiedContracts = deployedDiscovered.contracts
+      .filter((c) => c.unverified)
+      .map((c) => c.name)
+
     const diff = diffDiscovery(
       previousDiscovery.contracts,
       discovery.contracts,
       projectConfig,
+      unverifiedContracts,
     )
 
     await this.handleDiff(

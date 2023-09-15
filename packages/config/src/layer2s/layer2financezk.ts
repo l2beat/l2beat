@@ -47,6 +47,9 @@ export const layer2financezk: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [
       {

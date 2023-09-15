@@ -1,4 +1,4 @@
-import { StageConfig } from '@l2beat/config'
+import { StageConfig, UsableStageConfig } from '@l2beat/config'
 import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
@@ -53,7 +53,7 @@ const item: StageConfig = {
     },
   ],
 }
-function Template(stage: StageConfig) {
+function Template(stage: UsableStageConfig) {
   useEffect(() => {
     configureDropdowns()
   }, [])

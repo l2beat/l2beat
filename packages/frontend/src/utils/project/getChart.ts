@@ -18,7 +18,10 @@ export function getChart(
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
-    type: config?.features.detailedTvl ? 'detailedTvl' : 'tvl',
+    type:
+      config?.features.detailedTvl && project.type === 'layer2'
+        ? 'detailedTvl'
+        : 'tvl',
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
     activityEndpoint: `/api/activity/${project.display.slug}.json`,
@@ -49,12 +52,15 @@ export function getTokens(
     .map(({ assetId, usdValue, assetType, chainId }) => {
       const token = safeGetTokenByAssetId(assetId)
       let symbol = token?.symbol
-      if (
-        projectId.toString() === 'arbitrum' &&
-        symbol === 'USDC' &&
-        assetType === 'CBV'
-      ) {
-        symbol = 'USDC.e'
+      if (symbol === 'USDC' && assetType === 'CBV') {
+        if (
+          projectId.toString() === 'arbitrum' ||
+          projectId.toString() === 'optimism'
+        ) {
+          symbol = 'USDC.e'
+        } else if (projectId.toString() === 'base') {
+          symbol = 'USDbC'
+        }
       }
       const name = token?.name
       const address = token?.address

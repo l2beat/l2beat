@@ -30,11 +30,13 @@ export interface ProjectHeaderProps {
   purpose: string
   technology: string
   tvlBreakdown: TVLBreakdownProps | undefined
+  showTvlBreakdown: boolean
+  tvlBreakdownHref: string
   risks: RiskValues
   links: ProjectLink[]
   stagesEnabled?: boolean
   detailedTvlEnabled?: boolean
-  stage?: StageConfig
+  stage: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
@@ -71,7 +73,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.stagesEnabled && props.stage
+    ...(props.stagesEnabled && props.stage.stage !== 'NotApplicable'
       ? [
           {
             title: 'Stage',
@@ -135,6 +137,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isArchived={props.isArchived}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
+      tvlBreakdownHref={props.tvlBreakdownHref}
+      showTvlBreakdown={props.showTvlBreakdown}
     />
   )
 }

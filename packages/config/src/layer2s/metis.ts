@@ -48,6 +48,9 @@ export const metis: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     associatedTokens: ['Metis'],
     escrows: [

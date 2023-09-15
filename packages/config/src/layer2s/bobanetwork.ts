@@ -140,7 +140,7 @@ export const bobanetwork: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       stateVerificationOnL1: false,

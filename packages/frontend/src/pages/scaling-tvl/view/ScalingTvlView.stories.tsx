@@ -66,7 +66,9 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         category: 'Optimistic Rollup',
-        stage: undefined,
+        stage: {
+          stage: 'NotApplicable',
+        },
       },
       {
         name: 'Linea',
@@ -119,7 +121,9 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: {
+          stage: 'NotApplicable',
+        },
       },
       {
         name: 'Mantle',
@@ -172,7 +176,9 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         category: 'Optimium',
-        stage: undefined,
+        stage: {
+          stage: 'NotApplicable',
+        },
       },
       {
         name: 'Scroll',
@@ -225,7 +231,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Taiko',
@@ -278,7 +284,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'ZKSwap 1.0',
@@ -338,7 +344,7 @@ const meta = {
         marketShare: '0.02%',
         purpose: 'Payments, AMM',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Polygon Hermez',
@@ -397,7 +403,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'ZKSwap 2.0',
@@ -458,7 +464,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments, AMM',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Gluon',
@@ -518,7 +524,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Exchange',
         category: 'Plasma',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'OMG Network',
@@ -577,7 +583,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments',
         category: 'Plasma',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'L2.Finance-zk',
@@ -636,7 +642,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'DeFi protocols',
         category: 'Validium',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Arbitrum One',
@@ -776,7 +782,7 @@ const meta = {
         marketShare: '19.46%',
         purpose: 'Universal',
         category: 'Optimistic Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'dYdX',
@@ -834,7 +840,7 @@ const meta = {
         marketShare: '4.08%',
         purpose: 'Exchange',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'zkSync Era',
@@ -893,7 +899,7 @@ const meta = {
         marketShare: '2.77%',
         purpose: 'Universal',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Metis Andromeda',
@@ -954,7 +960,7 @@ const meta = {
         marketShare: '1.27%',
         purpose: 'Universal',
         category: 'Optimium',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Loopring',
@@ -1014,7 +1020,7 @@ const meta = {
         marketShare: '1.25%',
         purpose: 'Tokens, NFTs, AMM',
         category: 'ZK Rollup',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Immutable X',
@@ -1074,7 +1080,7 @@ const meta = {
         marketShare: '1.12%',
         purpose: 'NFT, Exchange',
         category: 'Validium',
-        stage: undefined,
+        stage: { stage: 'NotApplicable' },
       },
     ],
     stagesEnabled: true,

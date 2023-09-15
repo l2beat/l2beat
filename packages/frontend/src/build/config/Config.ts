@@ -15,6 +15,7 @@ export interface Config {
     detailedTvl: boolean
     activity: boolean
     banner: boolean
+    tvlBreakdown: boolean
     gitcoinOption: boolean
     milestones: boolean
     hiring: boolean
@@ -26,6 +27,7 @@ export interface Config {
   }
   backend: {
     apiUrl: string
+    mock?: boolean
     skipCache: boolean
   }
   layer2s: Layer2[]
