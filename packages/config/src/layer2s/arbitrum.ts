@@ -164,6 +164,20 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'EBV',
     formula: 'totalSupply',
   },
+  {
+    id: AssetId('arbitrum:sdex-smardex'),
+    name: 'SmarDex',
+    symbol: 'SDEX',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/29470/large/SDEX_logo_transparent.png?1690430205',
+    address: EthereumAddress('0xabD587f2607542723b17f14d00d99b987C29b074'),
+    coingeckoId: CoingeckoId('smardex'),
+    sinceTimestamp: new UnixTime(1688976153),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
 ]
 
 export const arbitrum: Layer2 = {

@@ -87,7 +87,7 @@ type CanonicalAssetsBreakdown = ReturnType<
   ReturnType<typeof getCanonicalAssetsBreakdown>
 >
 type NonCanonicalAssetsBreakdown = ReturnType<
-  typeof getNonCanonicalAssetsBreakdown
+  ReturnType<typeof getNonCanonicalAssetsBreakdown>
 >
 
 /**
@@ -96,37 +96,49 @@ type NonCanonicalAssetsBreakdown = ReturnType<
  * @param tokens Tokens data to search within and merge with
  * @param type Type of the asset to search & merge for
  */
-export function getNonCanonicalAssetsBreakdown(
-  reports: ReportRecord[],
-  tokens: Token[],
-  reportType: ReportType,
-) {
-  return tokens
-    .filter((token) => token.type === reportType)
-    .map((token) => {
-      const assetId = token.id
+export function getNonCanonicalAssetsBreakdown(logger: Logger) {
+  return function (
+    reports: ReportRecord[],
+    tokens: Token[],
+    reportType: ReportType,
+  ) {
+    return tokens
+      .filter((token) => token.type === reportType)
+      .flatMap((token) => {
+        const assetId = token.id
 
-      const report = reports.find((rp) => rp.asset === assetId)
+        const report = reports.find((rp) => rp.asset === assetId)
 
-      assert(
-        report,
-        'Report should not be undefined within the response preparation',
-      )
+        if (!report) {
+          logger.warn(
+            'Could not find report for token during asset breakdown generations',
+            {
+              tokenId: token.id.toString(),
+              tokenChainId: token.chainId.toString(),
+              tokenFormula: token.formula,
+              tokenName: token.name,
+              tokenBucket: reportType,
+            },
+          )
 
-      const amount = asNumber(report.amount, token.decimals)
-      const usdValue = asNumber(report.usdValue, 2)
-      const usdPrice = usdValue / amount
+          return []
+        }
 
-      return {
-        projectId: report.projectId,
-        assetId: token.id,
-        chainId: report.chainId,
-        amount: amount.toString(),
-        usdValue: usdValue.toString(),
-        usdPrice: usdPrice.toString(),
-        tokenAddress: token.address,
-      }
-    })
+        const amount = asNumber(report.amount, token.decimals)
+        const usdValue = asNumber(report.usdValue, 2)
+        const usdPrice = usdValue / amount
+
+        return {
+          projectId: report.projectId,
+          assetId: token.id,
+          chainId: report.chainId,
+          amount: amount.toString(),
+          usdValue: usdValue.toString(),
+          usdPrice: usdPrice.toString(),
+          tokenAddress: token.address,
+        }
+      })
+  }
 }
 
 /**
