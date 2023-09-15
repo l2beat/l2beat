@@ -249,13 +249,13 @@ export class DetailedTvlController {
       this.priceRepository.getByTimestamp(dataTimings.latestTimestamp),
     ])
 
-    const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(
+    const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(this.logger)(
       latestReports,
       this.tokens,
       'EBV',
     )
 
-    const nativeAssetsBreakdown = getNonCanonicalAssetsBreakdown(
+    const nativeAssetsBreakdown = getNonCanonicalAssetsBreakdown(this.logger)(
       latestReports,
       this.tokens,
       'NMV',
