@@ -35,13 +35,13 @@ describe(CoingeckoQueryService.name, () => {
       await coingeckoQueryService.getUsdPriceHistory(
         CoingeckoId('weth'),
         UnixTime.fromDate(new Date('2021-01-01')).add(-5, 'minutes'),
-        UnixTime.fromDate(new Date('2022-01-01')).add(5, 'minutes'),
+        UnixTime.fromDate(new Date('2021-02-01')).add(5, 'minutes'),
       )
       expect(coingeckoClient.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
         CoingeckoId('weth'),
         'usd',
         UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
-        UnixTime.fromDate(new Date('2022-01-01')).add(12, 'hours'),
+        UnixTime.fromDate(new Date('2021-02-01')).add(12, 'hours'),
         undefined,
       )
     })
@@ -162,16 +162,16 @@ describe(CoingeckoQueryService.name, () => {
       ])
     })
 
-    it('handles irregular days range returned from API', async () => {
+    it('handles irregular data returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.add(-2, 'hours').toDate(), value: 1200 },
+            { date: START.add(-2, 'minutes').toDate(), value: 1200 },
             { date: START.add(1, 'hours').toDate(), value: 1000 },
             {
-              date: START.add(2, 'hours').add(2, 'hours').toDate(),
+              date: START.add(2, 'hours').add(2, 'minutes').toDate(),
               value: 1100,
             },
           ],
@@ -186,17 +186,17 @@ describe(CoingeckoQueryService.name, () => {
         START.add(2, 'hours'),
       )
       expect(prices).toEqual([
-        { timestamp: START, value: 1200, deltaMs: -2 * 60 * 60 * 1000 },
+        { timestamp: START, value: 1200, deltaMs: -2 * 60 * 1000 },
         { timestamp: START.add(1, 'hours'), value: 1000, deltaMs: 0 },
         {
           timestamp: START.add(2, 'hours'),
           value: 1100,
-          deltaMs: 2 * 60 * 60 * 1000,
+          deltaMs: 2 * 60 * 1000,
         },
       ])
     })
 
-    it('handles unsorted days range returned from API', async () => {
+    it('handles unsorted data returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
       const coingeckoClient = mockObject<CoingeckoClient>({
@@ -205,7 +205,7 @@ describe(CoingeckoQueryService.name, () => {
             { date: START.add(1, 'hours').toDate(), value: 1000 },
             { date: START.toDate(), value: 1200 },
             {
-              date: START.add(2, 'hours').add(2, 'hours').toDate(),
+              date: START.add(2, 'hours').toDate(),
               value: 1100,
             },
           ],
@@ -225,7 +225,7 @@ describe(CoingeckoQueryService.name, () => {
         {
           timestamp: START.add(2, 'hours'),
           value: 1100,
-          deltaMs: 2 * 60 * 60 * 1000,
+          deltaMs: 0,
         },
       ])
     })
@@ -373,21 +373,6 @@ describe(CoingeckoQueryService.name, () => {
 
 describe(pickPoints.name, () => {
   const START = new UnixTime(1517961600)
-
-  it('works for days', () => {
-    const prices = [
-      { value: 1000, date: START.toDate() },
-      { value: 1100, date: START.add(1, 'hours').toDate() },
-      { value: 1200, date: START.add(2, 'hours').toDate() },
-    ]
-    const timestamps = getTimestamps(START, START.add(2, 'hours'))
-
-    expect(pickPoints(prices, timestamps)).toEqual([
-      { value: 1000, timestamp: START, deltaMs: 0 },
-      { value: 1100, timestamp: START.add(1, 'hours'), deltaMs: 0 },
-      { value: 1200, timestamp: START.add(2, 'hours'), deltaMs: 0 },
-    ])
-  })
 
   it('works for hours', () => {
     const prices = [
