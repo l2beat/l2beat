@@ -4,7 +4,7 @@ import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { BASE_MULTICALL_CONFIG } from '../../peripherals/ethereum/MulticallConfig'
+import { BASE_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { chainTvlSubmodule } from './ChainTvlSubmodule'
 import { TvlDatabase } from './types'
@@ -18,7 +18,6 @@ export function createBaseTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   return chainTvlSubmodule(
-    'BaseTvlModule',
     ChainId.BASE,
     ProjectId.BASE,
     config.tvl.base,

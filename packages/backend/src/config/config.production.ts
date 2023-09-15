@@ -103,8 +103,10 @@ export function getProductionConfig(): Config {
       },
       base: baseTvlEnabled && {
         providerUrl: getEnv('BASE_PROVIDER_URL'),
-        providerCallsPerMinute: 25,
-        networkName: 'base',
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_BASE_RPC_CALLS_PER_MINUTE ',
+          500,
+        ),
         etherscanApiKey: getEnv('BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
