@@ -141,7 +141,15 @@ export const portal: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'Wormhole',
-        'Governance contract storing current Guardian set. Guardians themselves can choose a new Guardian set.',
+        'Governance contract storing current Guardian set and provides a facility to verify a cross-chain message by verifying Guardians signatures. Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians',
+      ),
+      discovery.getContractDetails(
+        'TokenBridge',
+        'Main bridge contract and an escrow for ETH and ERC20 tokens using Wormhole AMB to bridge tokens to different chains. Can be upgraded by Guardians.',
+      ),
+      discovery.getContractDetails(
+        'TokenImplementation',
+        'A wormhole IOU token.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
