@@ -5,6 +5,7 @@ export type SectionId =
   | 'knowledge-nuggets'
   | 'risk-analysis'
   | 'technology'
+  | 'state-derivation'
   | 'operator'
   | 'withdrawals'
   | 'other-considerations'
