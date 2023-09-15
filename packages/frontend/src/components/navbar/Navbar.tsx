@@ -20,7 +20,6 @@ import { VerticalBar } from './VerticalBar'
 export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
-  showHiring: boolean
   showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -34,7 +33,6 @@ export function getNavbarProps(
   return {
     showBanner: config.features.banner,
     forumLink: config.links.forum,
-    showHiring: config.features.hiring,
     showHiringBadge: config.features.hiringBadge,
     showActivity: config.features.activity,
     socialLinks: getSocialLinksProps(config),
@@ -48,7 +46,6 @@ export function Navbar(props: NavbarProps) {
       <SidebarMenu
         selectedPage={props.selectedPage}
         showActivity={props.showActivity}
-        showHiring={props.showHiring}
         showHiringBadge={props.showHiringBadge}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
@@ -120,17 +117,15 @@ export function Navbar(props: NavbarProps) {
                   FAQ
                 </PageLink>
               </li>
-              {props.showHiring && (
-                <li className="h-full">
-                  <OutLink
-                    className="flex h-full items-center px-2 font-medium"
-                    href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
-                  >
-                    Jobs
-                    {props.showHiringBadge && <HiringBadge className="ml-1" />}
-                  </OutLink>
-                </li>
-              )}
+              <li className="h-full">
+                <OutLink
+                  className="flex h-full items-center px-2 font-medium"
+                  href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+                >
+                  Jobs
+                  {props.showHiringBadge && <HiringBadge className="ml-1" />}
+                </OutLink>
+              </li>
             </ul>
             <VerticalBar />
             <DarkThemeToggle />
