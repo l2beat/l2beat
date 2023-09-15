@@ -1,6 +1,7 @@
 import {
   ActivityApiResponse,
   DetailedTvlApiResponse,
+  ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -33,4 +34,5 @@ export interface PagesData {
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
+  tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
 }
