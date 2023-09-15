@@ -95,7 +95,13 @@ export const kroma: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_FP_INT_ZK,
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT_ZK,
+      description:
+        RISK_VIEW.STATE_FP_INT_ZK.description +
+        ' The challenge protocol can be subject to delay attacks and can fail under certain conditions.',
+      sentiment: 'warning',
+    },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
@@ -159,7 +165,7 @@ export const kroma: Layer2 = {
       rollupNodeSourceAvailable: true,
     },
     stage1: {
-      stateVerificationOnL1: true,
+      stateVerificationOnL1: false,
       fraudProofSystemAtLeast5Outsiders: true,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: true,
@@ -179,7 +185,7 @@ export const kroma: Layer2 = {
         Once the single block of disagreement is found, CHALLENGER is required to present zkProof of the fraud. When the proof is validated, the incorrect\
         state output is deleted. The Security Council can always override the result of the challenge, it can also delete any L2 state root at any time. If\
         the malicious ATTESTER and CHALLENGER collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenge\
-        resulting in lack of finalization of the L2 state root on L1.',
+        resulting in lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
       references: [
         {
           text: 'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
@@ -192,6 +198,10 @@ export const kroma: Layer2 = {
         {
           text: 'Colosseum.sol#L434 - Etherscan source code, proveFault function',
           href: 'https://etherscan.io/address/0x7526F997ea040B3949415c3a44e708273863AA2b#code#F1#L434',
+        },
+        {
+          text: 'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
+          href: 'https://drive.google.com/file/d/13TUxZ9KPyvUXNZGddALcJLin-xmp_Fkj/view',
         },
       ],
       risks: [
