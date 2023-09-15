@@ -141,7 +141,8 @@ export const portal: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'Wormhole',
-        'Governance contract storing current Guardian set and provides a facility to verify a cross-chain message by verifying Guardians signatures. Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians',
+        'Governance contract storing current Guardian set and provides a facility to verify a cross-chain message by verifying Guardians signatures. \
+        Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians.',
       ),
       discovery.getContractDetails(
         'TokenBridge',

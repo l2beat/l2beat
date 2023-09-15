@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-09-13T15:15:32.273Z",
+  "updatedAt": "2023-09-15T14:53:03.262Z",
   "projects": {
     "across-v2": true,
     "aevo": true,
@@ -74,6 +74,7 @@
     "sorare": true,
     "stargate": false,
     "starknet": true,
+    "stealthchain": true,
     "symbiosis": true,
     "synapse": true,
     "taiko": true,
@@ -120,6 +121,7 @@
     "0x0eC393209674090368C592A591B25811e490BF36": true,
     "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62": true,
     "0x0fC25C7931679B838209c484d49Df0Cb9E633C41": true,
+    "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": true,
     "0x101a39eA1143cb252fc8093847399046fc35Db89": true,
     "0x1066CEcC8880948FE55e427E94F1FF221d626591": true,
     "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": true,
