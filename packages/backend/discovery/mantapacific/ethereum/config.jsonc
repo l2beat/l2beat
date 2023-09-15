@@ -1,0 +1,36 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "mantapacific",
+  "initialAddresses": ["0x3B95bC951EE0f553ba487327278cAc44f29715E5"],
+  "names": {
+    "0x3B95bC951EE0f553ba487327278cAc44f29715E5": "L1StandardBridge",
+    "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622": "OptimismPortal",
+    "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D": "L2OutputOracle",
+    "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310": "L1CrossDomainMessenger"
+  },
+  "overrides": {
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    }
+  }
+}
