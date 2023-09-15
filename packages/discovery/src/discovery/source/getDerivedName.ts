@@ -1,5 +1,5 @@
-export function getLegacyDerivedName(names: string[]): string | undefined {
-  return names.length === 2 ? names[1] : names[0]
+export function getLegacyDerivedName(names: string[]): string {
+  return (names.length === 2 ? names[1] : names[0]) ?? ''
 }
 
 export function getDerivedName(names: string[]): string | undefined {

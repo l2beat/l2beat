@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import { zip } from 'lodash'
 
 import { EthereumAddress } from '../../utils/EthereumAddress'
@@ -43,7 +42,6 @@ export class SourceCodeService {
     }
 
     const isVerified = metadata.every((x) => x.isVerified)
-    assert(name)
 
     return { name, isVerified, abi, abis, files }
   }

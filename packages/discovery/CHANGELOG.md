@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.2.1
+
+### Patch Changes
+
+- 9cf579a: Fix assertion error when contract code is not verified
+
 ## 0.2.0
 
 ### Minor Changes
