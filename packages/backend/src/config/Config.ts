@@ -56,19 +56,16 @@ export interface TvlConfig {
   readonly detailedTvlEnabled: boolean
   readonly errorOnUnsyncedDetailedTvl: boolean
   readonly coingeckoApiKey: string | undefined
-  readonly ethereum: EthereumTvlConfig | false
-  readonly arbitrum: ArbitrumTvlConfig | false
+  readonly ethereum: ChainTvlConfig | false
+  readonly arbitrum: ChainTvlConfig | false
+  readonly optimism: ChainTvlConfig | false
 }
 
-export interface EthereumTvlConfig {
+export interface ChainTvlConfig {
   readonly providerUrl: string
+  readonly providerCallsPerMinute: number
   readonly etherscanApiKey: string
-  readonly minBlockTimestamp: UnixTime
-}
-
-export interface ArbitrumTvlConfig {
-  readonly providerUrl: string
-  readonly arbiscanApiKey: string
+  readonly etherscanApiUrl: string
   readonly minBlockTimestamp: UnixTime
 }
 

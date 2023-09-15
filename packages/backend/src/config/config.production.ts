@@ -9,6 +9,7 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
+  const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
   const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
@@ -69,13 +70,35 @@ export function getProductionConfig(): Config {
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
-        etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE ',
+          500,
+        ),
+        // TODO: phase out old env variable
+        etherscanApiKey:
+          process.env.ETHEREUM_ETHERSCAN_API_KEY ?? getEnv('ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api.etherscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
       },
       arbitrum: arbitrumTvlEnabled && {
-        arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE ',
+          500,
+        ),
+        etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api.arbiscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.ARBITRUM),
+      },
+      optimism: optimismTvlEnabled && {
+        providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
+        providerCallsPerMinute: getEnv.integer(
+          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE ',
+          500,
+        ),
+        etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
+        etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
+        minBlockTimestamp: getChainMinTimestamp(ChainId.OPTIMISM),
       },
     },
     activity: {
