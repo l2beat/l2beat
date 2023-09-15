@@ -175,7 +175,11 @@ export const kroma: Layer2 = {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',
       description:
-        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then zk proven. The zkEVM used is based on Scroll.',
+        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then zk proven. The zkEVM used is based on Scroll.\
+        Once the single block of disagreement is found, CHALLENGER is required to present zkProof of the fraud. When the proof is validated, the incorrect\
+        state output is deleted. The Security Council can always override the result of the challenge, it can also delete any L2 state root at any time. If\
+        the malicious ATTESTER and CHALLENGER collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenge\
+        resulting in lack of finalization of the L2 state root on L1.',
       references: [
         {
           text: 'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
@@ -276,7 +280,17 @@ export const kroma: Layer2 = {
         'ownerOf',
       ),
       description:
-        'Only member of the Governor, which owns the Timelock and therefore controls the ProxyAdmin. Can instantly upgrade the system.',
+        'Only member of the UpgradeGovernor, which owns the Timelock and therefore controls the ProxyAdmin. Can instantly upgrade the system.',
+    },
+    {
+      name: 'SecurityCouncil',
+      accounts: discovery.getPermissionedAccounts(
+        'Colosseum',
+        'SECURITY_COUNCIL',
+      ),
+      description:
+        'MultiSig (currently 1/1) that is a guardian of KromaPortal, priviliged Validator that does not need a bond \
+        and priviliged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.',
     },
     {
       name: 'SecurityCouncilAdmin',
@@ -284,7 +298,7 @@ export const kroma: Layer2 = {
         discovery.getPermissionedAccount('SecurityCouncil', 'GOVERNOR'),
       ],
       description:
-        'Can add, remove and replace members of the SecurityCouncil multisig, and can also add addresses to the Governor whitelist.',
+        'Can add, remove and replace members of the SecurityCouncil multisig, and can also add addresses to the Governor whitelist. Currently EOA.',
     },
     {
       name: 'Sequencer',
@@ -306,7 +320,8 @@ export const kroma: Layer2 = {
     {
       name: 'Guardian',
       accounts: [discovery.getPermissionedAccount('KromaPortal', 'GUARDIAN')],
-      description: 'Actor allowed to pause withdrawals.',
+      description:
+        'Actor allowed to pause withdrawals. Currently set to the Security Council.',
     },
   ],
   contracts: {
