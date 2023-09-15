@@ -67,7 +67,7 @@ export class PriceUpdater {
     const results = await Promise.allSettled(
       this.tokens.map(({ id: assetId, address, sinceTimestamp }) => {
         const boundary = boundaries.get(assetId)
-        const adjustedFrom = sinceTimestamp.gt(from) ? sinceTimestamp : from
+        const adjustedFrom = getAdjustedFrom(sinceTimestamp, from)
         return this.updateToken(assetId, boundary, adjustedFrom, to, address)
       }),
     )
@@ -108,7 +108,7 @@ export class PriceUpdater {
       }
     }
     if (hours > 0) {
-      this.logger.debug('Updated prices', {
+      this.logger.info('Updated prices', {
         coingeckoId: assetId.toString(),
         hours,
       })
@@ -147,4 +147,7 @@ export class PriceUpdater {
 
     await this.priceRepository.addMany(priceRecords)
   }
+}
+function getAdjustedFrom(sinceTimestamp: UnixTime, from: UnixTime) {
+  return sinceTimestamp.gt(from) ? sinceTimestamp.toNext('hour') : from
 }
