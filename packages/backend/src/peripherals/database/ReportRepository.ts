@@ -109,7 +109,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -127,7 +127,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -146,7 +146,7 @@ export class ReportRepository extends BaseRepository {
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)

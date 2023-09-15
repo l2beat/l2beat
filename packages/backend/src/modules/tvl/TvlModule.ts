@@ -28,7 +28,6 @@ import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvlSubmodule'
 import { createBaseTvlSubmodule } from './BaseTvlSubmodule'
 import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
-import { createNativeTvlSubmodule } from './NativeTvlSubmodule'
 import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
 import { TvlDatabase } from './types'
 
