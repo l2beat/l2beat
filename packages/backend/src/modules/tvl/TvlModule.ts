@@ -25,6 +25,7 @@ import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRep
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvlSubmodule'
+import { createBaseTvlSubmodule } from './BaseTvlSubmodule'
 import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
 import { createNativeTvlSubmodule } from './NativeTvlSubmodule'
 import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
@@ -89,6 +90,7 @@ export function createTvlModule(
     createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
     createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
     createOptimismTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+    createBaseTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
   // #endregion
