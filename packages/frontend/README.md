@@ -24,7 +24,7 @@ yarn build:frontend
 
 ## Storybook
 
-Production build requires (for some unknown reason) rebuilding dependencies in with ESM. Use `yarn storybook:build` to do exactly that. Run `yarn storybook:screenshot` to automatically screenshot whole storybook (used to enable visual regression).
+Production build requires (for some unknown reason) rebuilding dependencies in with ESM. Use `yarn storybook:build` to do exactly that.
 
 ##### Known issues
 

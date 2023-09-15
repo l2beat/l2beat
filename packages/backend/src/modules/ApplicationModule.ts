@@ -8,6 +8,6 @@ export interface ApplicationModule {
 }
 
 export interface TvlSubmodule {
-  updaters?: AssetUpdater[]
+  assetUpdaters?: AssetUpdater[]
   start?: () => Promise<void> | void
 }
