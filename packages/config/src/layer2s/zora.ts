@@ -220,7 +220,7 @@ export const zora: Layer2 = {
             href: 'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8fecc650ba4a#code#F1#L242',
           },
           {
-            text: 'OptimismPortal.sol#325 - Etherscan source code, finalizeWithdrawalTransaction function',
+            text: 'OptimismPortal.sol#L325 - Etherscan source code, finalizeWithdrawalTransaction function',
             href: 'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8fecc650ba4a#code#F1#L325',
           },
           {
