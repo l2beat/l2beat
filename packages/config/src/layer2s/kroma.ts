@@ -284,10 +284,9 @@ export const kroma: Layer2 = {
     },
     {
       name: 'SecurityCouncil',
-      accounts: discovery.getPermissionedAccounts(
-        'Colosseum',
-        'SECURITY_COUNCIL',
-      ),
+      accounts: [
+        discovery.getPermissionedAccount('Colosseum', 'SECURITY_COUNCIL'),
+      ],
       description:
         'MultiSig (currently 1/1) that is a guardian of KromaPortal, priviliged Validator that does not need a bond \
         and priviliged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.',
