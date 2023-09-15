@@ -149,5 +149,9 @@ export class PriceUpdater {
   }
 }
 function getAdjustedFrom(sinceTimestamp: UnixTime, from: UnixTime) {
-  return sinceTimestamp.gt(from) ? sinceTimestamp.toNext('hour') : from
+  const sinceTimestampFullHour = sinceTimestamp.isFull('hour')
+    ? sinceTimestamp
+    : sinceTimestamp.toNext('hour')
+
+  return sinceTimestampFullHour.gt(from) ? sinceTimestampFullHour : from
 }

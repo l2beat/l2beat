@@ -381,7 +381,7 @@ describe(CoingeckoQueryService.name, () => {
   describe(
     CoingeckoQueryService.prototype.queryCoinMarketChartRangeWhole.name,
     () => {
-      it.only('calls for the data until null', async () => {
+      it('calls for the data until null', async () => {
         const START = UnixTime.now()
 
         const coingeckoClient = mockObject<CoingeckoClient>({
