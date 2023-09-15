@@ -101,6 +101,8 @@ export function getProjectHeader(
     purpose: project.display.purpose,
     technology: project.display.category,
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
+    showTvlBreakdown: config.features.tvlBreakdown,
+    tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     links: getLinks(project.display.links),
     stagesEnabled: config.features.stages,
     detailedTvlEnabled: config.features.detailedTvl,

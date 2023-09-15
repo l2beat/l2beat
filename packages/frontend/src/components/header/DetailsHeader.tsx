@@ -21,6 +21,8 @@ export interface HeaderProps {
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
+  tvlBreakdownHref?: string
+  showTvlBreakdown?: boolean
   showProjectUnderReview?: boolean
   risks?: RiskValues
   links: ProjectLink[]
@@ -90,6 +92,8 @@ export function DetailsHeader(props: HeaderProps) {
             isUpcoming={props.isUpcoming}
             stagesEnabled={props.stagesEnabled}
             detailedTvlEnabled={props.detailedTvlEnabled}
+            tvlBreakdownHref={props.tvlBreakdownHref}
+            showTvlBreakdown={props.showTvlBreakdown}
           />
         </div>
         {props.risks && (

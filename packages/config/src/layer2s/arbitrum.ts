@@ -108,6 +108,76 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'totalSupply',
   },
+  {
+    id: AssetId('gns-gains-network'),
+    name: 'Gains Network',
+    symbol: 'GNS',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203',
+    address: EthereumAddress('0x18c11FD286C5EC11c3b683Caa813B77f5163A122'),
+    coingeckoId: CoingeckoId('gains-network'),
+    sinceTimestamp: new UnixTime(1672175006),
+    category: 'other',
+    type: 'NMV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('btc.b-bitcoin'),
+    name: 'Bitcoin',
+    symbol: 'BTC.b',
+    decimals: 8,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/26115/large/btcb.png?1655921693',
+    address: EthereumAddress('0x2297aEbD383787A160DD0d9F71508148769342E3'),
+    coingeckoId: CoingeckoId('bitcoin-avalanche-bridged-btc-b'),
+    sinceTimestamp: new UnixTime(1668644839),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('joe-joe-token'),
+    name: 'JoeToken',
+    symbol: 'JOE',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/17569/large/traderjoe.png?1685690062',
+    address: EthereumAddress('0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07'),
+    coingeckoId: CoingeckoId('joe'),
+    sinceTimestamp: new UnixTime(1674495392),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('bifi-beefy-finance'),
+    name: 'beefy.finance',
+    symbol: 'BIFI',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/12704/large/token.png?1601876182',
+    address: EthereumAddress('0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE'),
+    coingeckoId: CoingeckoId('beefy-finance'),
+    sinceTimestamp: new UnixTime(1632385561),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('arbitrum:sdex-smardex'),
+    name: 'SmarDex',
+    symbol: 'SDEX',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/29470/large/SDEX_logo_transparent.png?1690430205',
+    address: EthereumAddress('0xabD587f2607542723b17f14d00d99b987C29b074'),
+    coingeckoId: CoingeckoId('smardex'),
+    sinceTimestamp: new UnixTime(1688976153),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+  },
 ]
 
 export const arbitrum: Layer2 = {
@@ -210,7 +280,7 @@ export const arbitrum: Layer2 = {
     stateValidation: {
       value: 'Fraud proofs (INT)',
       description:
-        'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+        'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
       sentiment: 'warning',
       sources: [
         {
@@ -275,7 +345,7 @@ export const arbitrum: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect. The challenge protocol can be subject to delay attacks.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -295,6 +365,10 @@ export const arbitrum: Layer2 = {
         {
           text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
           href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L288',
+        },
+        {
+          text: 'Solutions to Delay Attacks on Rollups',
+          href: 'https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a',
         },
       ],
     },
@@ -514,7 +588,7 @@ export const arbitrum: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       stateVerificationOnL1: true,

@@ -69,18 +69,14 @@ export class ReportRepository extends BaseRepository {
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
-    const reportTypeMatch = reports.every(
-      (r) => r.reportType === reports[0].reportType,
-    )
     const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
     assert(timestampsMatch, 'Timestamps must match')
-    assert(reportTypeMatch, 'Report types must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
+    // Can't be two or more updaters on the chain because it will break the logic
     await knex.transaction(async (trx) => {
       await trx('reports')
         .where('unix_timestamp', rows[0].unix_timestamp)
-        .andWhere('report_type', rows[0].report_type)
         .andWhere('chain_id', rows[0].chain_id)
         .delete()
       await trx('reports')

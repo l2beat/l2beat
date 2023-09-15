@@ -40,6 +40,7 @@ import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
+import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { Layer2 } from './types'
 import { xchain } from './xchain'
@@ -94,6 +95,7 @@ export const layer2s: Layer2[] = [
   scroll,
   sorare,
   starknet,
+  stealthchain,
   taiko,
   xchain,
   zkspace,

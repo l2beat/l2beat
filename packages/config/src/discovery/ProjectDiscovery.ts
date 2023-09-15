@@ -221,10 +221,15 @@ export class ProjectDiscovery {
   getPermissionedAccounts(
     contractIdentifier: string,
     key: string,
+    index?: number,
   ): ProjectPermissionedAccount[] {
-    const value = this.getContractValue(contractIdentifier, key)
-
+    let value = this.getContractValue(contractIdentifier, key)
     assert(isArray(value), `Value of ${key} must be an array`)
+
+    if (index !== undefined) {
+      value = (value as ContractValue[])[index]
+      assert(isArray(value), `Value of ${key}[${index}] must be an array`)
+    }
 
     return value.map(this.formatPermissionedAccount.bind(this))
   }
