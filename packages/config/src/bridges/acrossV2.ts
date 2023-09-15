@@ -120,6 +120,10 @@ export const acrossV2: Bridge = {
         'HubPool',
         'Escrow contract for ERC20 tokens and administration of other contracts.',
       ),
+      discovery.getContractDetails(
+        'BondToken',
+        'Token used to bond the data worker for proposing Relayer refund bundles.',
+      ),
       discovery.getContractDetails('LpTokenFactory'),
       discovery.getContractDetails('Finder'),
       discovery.getContractDetails('GovernorV2'),
@@ -151,6 +155,11 @@ export const acrossV2: Bridge = {
       'HubPool Multisig',
       'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
     ),
+    {
+      name: 'BondToken transfer proposers',
+      accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
+      description: 'Allowed to propose BondToken transfers',
+    },
   ],
   knowledgeNuggets: [
     {
