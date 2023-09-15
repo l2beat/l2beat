@@ -377,6 +377,54 @@ describe(CoingeckoQueryService.name, () => {
       )
     })
   })
+
+  describe(
+    CoingeckoQueryService.prototype.queryCoinMarketChartRangeWhole.name,
+    () => {
+      it.only('calls for the data until null', async () => {
+        const START = UnixTime.now()
+
+        const coingeckoClient = mockObject<CoingeckoClient>({
+          getCoinMarketChartRange: mockFn()
+            .returnsOnce({
+              prices: [{ date: START.add(1, 'hours').toDate(), value: 100 }],
+              marketCaps: [
+                { date: START.add(1, 'hours').toDate(), value: 200 },
+              ],
+              totalVolumes: [
+                { date: START.add(1, 'hours').toDate(), value: 300 },
+              ],
+            })
+            .returnsOnce({
+              prices: [{ date: START.toDate(), value: 100 }],
+              marketCaps: [{ date: START.toDate(), value: 200 }],
+              totalVolumes: [{ date: START.toDate(), value: 300 }],
+            })
+            .returnsOnce(null),
+        })
+        const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+        const queryResult =
+          await coingeckoQueryService.queryCoinMarketChartRangeWhole(
+            CoingeckoId('weth'),
+            START.add(1, 'hours'),
+          )
+        expect(queryResult).toEqual({
+          prices: [
+            { date: START.add(1, 'hours').toDate(), value: 100 },
+            { date: START.toDate(), value: 100 },
+          ],
+          marketCaps: [
+            { date: START.add(1, 'hours').toDate(), value: 200 },
+            { date: START.toDate(), value: 200 },
+          ],
+          totalVolumes: [
+            { date: START.add(1, 'hours').toDate(), value: 300 },
+            { date: START.toDate(), value: 300 },
+          ],
+        })
+      })
+    },
+  )
 })
 
 describe(pickPoints.name, () => {
