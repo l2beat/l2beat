@@ -72,7 +72,7 @@ contract ColosseumTest is Test {
 
     bytes32 dummyOutputRoot = bytes32('0x1234567890');
 
-    function _submitL2OutputRootAsNextProposer() internal {
+    function _submitInvalidL2OutputRootAsNextProposer() internal {
         address nextValidator = validatorPool.nextValidator();
         uint256 nextL2BlockNumber = l2OutputOracle.nextBlockNumber();
         uint256 blockNumber = block.number;
@@ -85,14 +85,14 @@ contract ColosseumTest is Test {
         l2OutputOracle.submitL2Output(dummyOutputRoot, nextL2BlockNumber, blockHash, blockNumber);
     }
 
-    function testSubmitL2OutputRoot() public {
-        _submitL2OutputRootAsNextProposer();
+    function testSubmitInvalidL2OutputRoot() public {
+        _submitInvalidL2OutputRootAsNextProposer();
         assertEq(l2OutputOracle.getL2Output(outputIndex + 1).outputRoot, dummyOutputRoot);
     }
 
     function _waitUntilNextProposer() internal returns (uint256) {
         while(validatorPool.nextValidator() != proposer) {
-            _submitL2OutputRootAsNextProposer();
+            _submitInvalidL2OutputRootAsNextProposer();
         }
         return l2OutputOracle.latestOutputIndex();
     }
@@ -103,10 +103,10 @@ contract ColosseumTest is Test {
         assertEq(validatorPool.nextValidator(), proposer);
     }
 
-    function testJoinAndPropose() public {
+    function testJoinAndProposeInvalidRoot() public {
         _joinAsProposer();
         uint256 currentOutputIndex = _waitUntilNextProposer();
-        _submitL2OutputRootAsNextProposer();
+        _submitInvalidL2OutputRootAsNextProposer();
 
         Types.CheckpointOutput memory currentOutput = l2OutputOracle.getL2Output(currentOutputIndex + 1);
 
