@@ -1,0 +1,3 @@
+[submodule "packages/backend/discovery/kroma/ethereum/lib/forge-std"]
+	path = packages/backend/discovery/kroma/ethereum/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
