@@ -36,7 +36,7 @@ contract ColosseumTest is Test {
         validatorPool.deposit{value: 0.2 ether}();
     }
 
-    function testJoinedAsProposer() public {
+    function testJoinAsProposer() public {
         uint256 prevValidatorCount = validatorPool.validatorCount();
         _joinAsProposer();
         assertTrue(validatorPool.isValidator(proposer));
