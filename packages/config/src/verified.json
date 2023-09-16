@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-09-15T14:53:03.262Z",
+  "updatedAt": "2023-09-16T06:26:45.775Z",
   "projects": {
     "across-v2": true,
     "aevo": true,
@@ -33,7 +33,7 @@
     "hyphen": true,
     "immutablex": true,
     "immutablezkevm": true,
-    "kroma": false,
+    "kroma": true,
     "layer2finance": true,
     "layer2financezk": false,
     "linea": true,
@@ -42,6 +42,7 @@
     "mantapacific": true,
     "mantle": true,
     "metis": true,
+    "morphism": true,
     "multichain": true,
     "myria": true,
     "near": true,
@@ -709,7 +710,7 @@
     "0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04": true,
     "0xfc6E146384b5c65f372d5b20537F3e8727aD3723": true,
     "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4": true,
-    "0xFd234971881a7c72965175fA8E438c97B2Dcd273": false,
+    "0xFd234971881a7c72965175fA8E438c97B2Dcd273": true,
     "0xFdFF462845953D90719A78Fd12a2d103541d2103": true,
     "0xFE1d5439625a9524a80F66670733129E80E0C112": true,
     "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": true,
