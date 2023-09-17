@@ -32,7 +32,7 @@ export function getProps(
       footer: getFooterProps(config),
       showActivity: config.features.activity,
       showDetailedTvl: config.features.detailedTvl,
-      milestones: config.features.milestones ? config.milestones : [],
+      milestones: config.milestones,
     },
     wrapper: {
       metadata: getPageMetadata(),

@@ -34,7 +34,7 @@ export function getChart(
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
     hasDetailedTvl: config?.features.detailedTvl,
-    milestones: config?.features.milestones ? project.milestones : [],
+    milestones: project.milestones,
     isUpcoming: project.isUpcoming ?? project.config.escrows.length === 0,
   }
 }

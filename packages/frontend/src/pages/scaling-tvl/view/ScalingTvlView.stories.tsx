@@ -1083,7 +1083,6 @@ const meta = {
         stage: { stage: 'NotApplicable' },
       },
     ],
-    stagesEnabled: true,
   },
   decorators: [
     (Story) => (
