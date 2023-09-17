@@ -139,8 +139,19 @@ export const portal: Bridge = {
   contracts: {
     isIncomplete: true,
     addresses: [
-      discovery.getContractDetails('BridgeImplementation'),
-      discovery.getContractDetails('Implementation'),
+      discovery.getContractDetails(
+        'Wormhole',
+        'Governance contract storing current Guardian set and provides a facility to verify a cross-chain message by verifying Guardians signatures. \
+        Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians.',
+      ),
+      discovery.getContractDetails(
+        'TokenBridge',
+        'Main bridge contract and an escrow for ETH and ERC20 tokens using Wormhole AMB to bridge tokens to different chains. Can be upgraded by Guardians.',
+      ),
+      discovery.getContractDetails(
+        'TokenImplementation',
+        'A wormhole IOU token.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -150,7 +161,7 @@ export const portal: Bridge = {
       name: 'Guardian Network',
       description:
         'Off-chain actors signing messages (VAA) containing transfer information or governance actions such as upgrade, which are decoded on chain with signatures check.',
-      accounts: [],
+      accounts: discovery.getPermissionedAccounts('Wormhole', 'guardianSet', 0),
     },
   ],
   milestones: [
@@ -158,6 +169,16 @@ export const portal: Bridge = {
       name: 'Contracts hacked for $326M',
       date: '2022-02-03T00:00:00.00Z',
       link: 'https://rekt.news/wormhole-rekt/',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Wormhole core architecture',
+      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0001_generic_message_passing.md',
+    },
+    {
+      title: 'How Wormhole Guardians work',
+      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0009_guardian_key.md',
     },
   ],
 }

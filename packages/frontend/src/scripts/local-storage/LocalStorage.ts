@@ -29,10 +29,10 @@ export const LocalStorage = {
     key: T,
     value: LocalStorageKeyType<T>,
   ) => {
-    localStorage.setItem(
-      `${LOCAL_STORAGE_PREFIX}-${key}`,
-      JSON.stringify(value),
-    )
+    const stringifiedValue =
+      typeof value === 'string' ? value : JSON.stringify(value)
+
+    localStorage.setItem(`${LOCAL_STORAGE_PREFIX}-${key}`, stringifiedValue)
   },
 
   getItem: <T extends LocalStorageKeys>(
