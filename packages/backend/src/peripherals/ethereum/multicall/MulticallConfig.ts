@@ -29,15 +29,11 @@ export const ETHEREUM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   },
 ]
 
-export const ARBITRUM_MULTICALL_ADDRESS = EthereumAddress(
-  '0x842eC2c7D803033Edf55E478F461FC547Bc54EB2',
-)
-export const ARBITRUM_MULTICALL_BLOCK = 821923
 export const ARBITRUM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   {
-    sinceBlock: ARBITRUM_MULTICALL_BLOCK,
+    sinceBlock: 821923,
     batchSize: 150,
-    address: ARBITRUM_MULTICALL_ADDRESS,
+    address: EthereumAddress('0x842eC2c7D803033Edf55E478F461FC547Bc54EB2'),
     encodeBatch: encodeMulticallV2,
     decodeBatch: decodeMulticallV2,
   },
@@ -50,6 +46,16 @@ export const OPTIMISM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
     address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
     encodeBatch: encodeOptimismMulticall,
     decodeBatch: decodeOptimismMulticall,
+  },
+]
+
+export const BASE_MULTICALL_CONFIG: MulticallConfigEntry[] = [
+  {
+    sinceBlock: 5022,
+    batchSize: 150,
+    address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+    encodeBatch: encodeMulticallV2,
+    decodeBatch: decodeMulticallV2,
   },
 ]
 
