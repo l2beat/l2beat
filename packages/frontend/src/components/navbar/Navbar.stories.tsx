@@ -31,7 +31,6 @@ function Template(props: TemplateProps) {
       showBanner={props.showBanner}
       forumLink="#"
       showActivity
-      showHiring
       showHiringBadge
       selectedPage={props.selectedPage}
       socialLinks={{
