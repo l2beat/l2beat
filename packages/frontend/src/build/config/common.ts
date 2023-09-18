@@ -19,18 +19,13 @@ export const common: Omit<Config, 'backend'> = {
   features: {
     banner: new Date() <= GITCOIN_BETA_ROUND_END,
     gitcoinOption: false,
-    hiring: true,
     hiringBadge: false,
     activity: true,
     // TODO(radomski): After L2 Assets are implemented we want to make this be true by default
     detailedTvl: false,
     // TODO(maciekzygmunt): After TVL Breakdown are implemented we want to make this be true by default
     tvlBreakdown: false,
-    milestones: true,
-    stages: true,
     buildAllProjectPages: false,
-    upcomingRollups: true,
-    multisigReport: false,
   },
   layer2s,
   bridges,
