@@ -1,0 +1,38 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "optics1",
+  "initialAddresses": [
+    "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97", //HomeBeaconProxy
+    "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47", //BridgeRouterBeaconProxy
+    "0xcEc158A719d11005Bd9339865965bed938BEafA3" //XAppConnectionManager
+  ],
+  "names": {
+    "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97": "HomeBeaconProxy",
+    "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47": "BridgeRouterBeaconProxy",
+    "0x42303634F37956687fB7ff2c6146AC842481A052": "GovernanceRouterBeaconProxy"
+  },
+  "overrides": {
+    "HomeBeaconProxy": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    "BridgeRouterBeaconProxy": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    "GovernanceRouterBeaconProxy": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    }
+  }
+}
