@@ -47,7 +47,9 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
       ),
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `CirculatingSupplyFormulaUpdater.${ChainId.getName(chainId)}`,
+    )
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
@@ -104,7 +106,6 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
       this.priceUpdater.getPricesWhenReady(timestamp),
       this.circulatingSupplyUpdater.getCirculatingSuppliesWhenReady(timestamp),
     ])
-    this.logger.debug('Prices and supplies ready')
     const reports = createFormulaReports(
       prices,
       circulatingSupplies,
@@ -121,7 +122,7 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
     })
 
     this.knownSet.add(timestamp.toNumber())
-    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+    this.logger.info('Update finished', { timestamp: timestamp.toNumber() })
   }
 
   async getReportsWhenReady(
