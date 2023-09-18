@@ -10,7 +10,7 @@ type LinkProps = React.HTMLProps<HTMLAnchorElement> & {
 
 type LinkType = 'primary' | 'danger' | 'plain'
 
-// Make sure this is compatible with the <Link /> component
+// Make sure this is compatible with markdown.css
 const textClassesByType: Record<LinkType, string> = {
   primary: 'text-blue-700 group-hover:text-blue-550 dark:text-blue-500',
   danger: 'text-red-300 group-hover:text-red-700',
