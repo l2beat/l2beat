@@ -18,6 +18,14 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
+const escapeHatchDelaySeconds = discovery.getContractValue<number>(
+  'RollupProcessorV2',
+  'delayBeforeEscapeHatch',
+)
+
+assert(escapeHatchDelaySeconds === 4294967295) // otherwise change descriptions!!
+const escapeHatchDelayString = '~136 years'
+
 function getAccessControl() {
   const accessControl = discovery.getContractValue<
     Record<string, { adminRole: string; members: string[] } | undefined>
@@ -67,8 +75,7 @@ export const aztecconnect: Layer2 = {
   display: {
     name: 'Aztec Connect',
     slug: 'aztecconnect',
-    warning:
-      'EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024.',
+    warning: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024. The escape hatch delay has been recently increased to ${escapeHatchDelayString}, meaning that users will not be able to exit when the operator will be shut down.`,
     description:
       'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
     purpose: 'Private DeFi',
@@ -143,7 +150,8 @@ export const aztecconnect: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      description: `Only the whitelisted proposers can publish L2 state roots on L1 within ${escapeHatchDelayString} from the last posted root, so in the event of failure the withdrawals are frozen.`,
       sources: [
         {
           contract: 'RollupProcessorV2',
@@ -167,7 +175,7 @@ export const aztecconnect: Layer2 = {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
+      usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: null,
     },
     stage2: {
@@ -206,8 +214,7 @@ export const aztecconnect: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      description:
-        'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
+      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks, but only if the last root was posted more than ${escapeHatchDelayString} prior.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L692 - Etherscan source code',
@@ -219,7 +226,7 @@ export const aztecconnect: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description:
         FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-        ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
+        ` Periodically the rollup opens a special window during which anyone can propose new blocks. This is only possible if the last root was posted more than ${escapeHatchDelayString} prior.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
@@ -228,6 +235,13 @@ export const aztecconnect: Layer2 = {
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
           href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1491',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'the centralized operator censors withdrawal transactions.',
+          isCritical: true,
         },
       ],
     },
@@ -265,8 +279,7 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('RollupProcessorV2', {
-        description:
-          'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof. The escape hatch delay is currently set to ${escapeHatchDelayString})}`,
         pausable: {
           paused: discovery.getContractValue('RollupProcessorV2', 'paused'),
           pausableBy: ['Emergency Multisig'],
