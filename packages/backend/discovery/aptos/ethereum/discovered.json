@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "aptos",
-  "blockNumber": 16154924,
+  "chain": "ethereum",
+  "blockNumber": 18162849,
   "configHash": "0x958973499ce64958db371146958f80fd0cfab57839c701cb633e6272a9483162",
+  "version": 2,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -50,7 +51,7 @@
       "values": {
         "aptosChainId": 108,
         "BP_DENOMINATOR": 10000,
-        "bridgeFeeBP": 0,
+        "bridgeFeeBP": 7,
         "emergencyWithdrawEnabled": false,
         "emergencyWithdrawTime": 0,
         "globalPaused": false,
@@ -110,7 +111,7 @@
           "0x9134Ff6E5F2D42ADf0E8Cb7462616f18A8dEF6DC"
         ],
         "getThreshold": 2,
-        "nonce": 1,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -133,7 +134,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 21,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
