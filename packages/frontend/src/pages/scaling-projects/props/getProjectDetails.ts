@@ -80,7 +80,7 @@ export function getProjectDetails(
       },
     })
 
-    if (config.features.stages && project.stage.stage !== 'NotApplicable') {
+    if (project.stage.stage !== 'NotApplicable') {
       items.push({
         type: 'StageSection',
         props: {

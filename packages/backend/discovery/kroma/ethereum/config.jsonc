@@ -4,7 +4,9 @@
   "name": "kroma",
   "initialAddresses": [
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
-    "0x827962404D7104202C5aaa6b929115C8211d9596"
+    "0x827962404D7104202C5aaa6b929115C8211d9596",
+    "0x46d07221dfC313afe1BF104F4bB1f185301D65B9",
+    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
   ],
   "names": {
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de": "KromaPortal",
@@ -13,7 +15,16 @@
     "0x3de211088dF516da72efe68D386b561BEE256Ec4": "SecurityCouncil",
     "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746": "L1CrossDomainMessenger",
     "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a": "Colosseum",
-    "0xFdFF462845953D90719A78Fd12a2d103541d2103": "ValidatorPool"
+    "0xFdFF462845953D90719A78Fd12a2d103541d2103": "ValidatorPool",
+    "0x46d07221dfC313afe1BF104F4bB1f185301D65B9": "L1ERC721Bridge",
+    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537": "UpgradeGovernor",
+    "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c": "SecurityCouncilToken",
+    "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd": "ProxyAdmin",
+    "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Timelock",
+    "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081": "SecurityCouncilOperator",
+    "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator",
+    "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "SystemConfig",
+    "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2"
   },
   "overrides": {
     "L2OutputOracle": {
@@ -47,13 +58,63 @@
       ]
     },
     "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"]
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
     },
     "Colosseum": {
-      "ignoreMethods": ["isInCreationPeriod"]
+      "ignoreMethods": ["isInCreationPeriod"],
+      "fields": {
+        "challengedRoots": {
+          "type": "arrayFromOneEvent",
+          "event": "ChallengeCreated",
+          "valueKey": "outputIndex",
+          "ignoreRelative": true
+        }
+      }
     },
     "ValidatorPool": {
-      "ignoreMethods": ["getBond"]
+      "ignoreMethods": ["getBond"],
+      "ignoreInWatchMode": ["nextValidator"]
+      /*
+      "fields": {
+        "validators": {
+          "type": "array", //TODO: it's internal! find way to read it
+          "method": "validators"
+        }
+      }
+      */
+    },
+    "UpgradeGovernor": {
+      "ignoreMethods": [
+        "proposalDeadline",
+        "proposalEta",
+        "proposalProposer",
+        "proposalSnapshot",
+        "proposalVotes",
+        "quorum"
+      ],
+      "ignoreInWatchMode": ["clock"]
+    },
+    "SecurityCouncilToken": {
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["clock"]
+    },
+    "Timelock": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        }
+      }
     }
   }
 }

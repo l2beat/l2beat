@@ -25,6 +25,7 @@ import { loopring } from './loopring'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metis } from './metis'
+import { morphism } from './morphism'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
@@ -79,6 +80,7 @@ export const layer2s: Layer2[] = [
   mantapacific,
   mantle,
   metis,
+  morphism,
   myria,
   nova,
   obscuro,
