@@ -1,5 +1,6 @@
+import { LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
+import { EtherscanClient, getEnv } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
@@ -31,7 +32,7 @@ export function getLocalConfig(): Config {
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
-      logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
+      logLevel: getEnv('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       format: 'pretty',
     },
     logThrottler: false,

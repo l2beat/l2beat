@@ -1,4 +1,5 @@
-import { EventTracker, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { EventTracker } from '@l2beat/shared'
 import {
   getErrorMessage,
   getErrorStackTrace,
@@ -136,10 +137,7 @@ export class TaskQueue<T> {
 
     this.executeUnchecked().catch((e) => {
       // this should never happen
-      this.logger.error(
-        { message: '[CRITICAL] Error during executeUnchecked' },
-        e,
-      )
+      this.logger.error('[CRITICAL] Error during executeUnchecked', e)
     })
   }
 
@@ -153,13 +151,10 @@ export class TaskQueue<T> {
     if (!result.retry) {
       this.eventTracker?.record('error')
       if (this.shouldHaltAfterFailedRetries) {
-        this.logger.error(
-          {
-            message: 'Halting queue because of error',
-            job: JSON.stringify(job),
-          },
+        this.logger.error('Halting queue because of error', {
+          job: JSON.stringify(job),
           error,
-        )
+        })
         this.halted = true
       }
       return

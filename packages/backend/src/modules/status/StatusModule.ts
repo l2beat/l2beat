@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 import { ConfigReader } from '@l2beat/discovery'
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 
 import { StatusController } from '../../api/controllers/status/StatusController'
 import { createStatusRouter } from '../../api/routers/StatusRouter'

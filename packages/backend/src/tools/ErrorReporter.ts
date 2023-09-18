@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import * as Sentry from '@sentry/node'
 import { Context } from 'koa'
 
@@ -37,6 +37,6 @@ export async function flushErrors(): Promise<void> {
 export function handleServerError(logger: Logger, error: Error, ctx: Context) {
   Sentry.withScope((scope) => {
     scope.setSDKProcessingMetadata({ request: ctx.request })
-    logger.error({ path: ctx.path }, error) // logging error eventually calls reportError
+    logger.error({ path: ctx.path, error }) // logging error eventually calls reportError
   })
 }

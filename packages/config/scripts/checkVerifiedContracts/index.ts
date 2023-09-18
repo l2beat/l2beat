@@ -1,4 +1,4 @@
-import { Logger, LogLevel } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
@@ -20,7 +20,7 @@ import { getEnv } from './utils'
 export const OUTPUT_FILEPATH = 'src/verified.json'
 
 export async function main() {
-  const logger = new Logger({ logLevel: LogLevel.INFO, format: 'pretty' })
+  const logger = new Logger({ logLevel: 'INFO', format: 'pretty' })
   const envWorkersVar = 'ETHERSCAN_WORKERS'
   const workersCount = parseInt(getEnv(envWorkersVar, '4'))
 

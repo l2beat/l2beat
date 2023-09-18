@@ -1,5 +1,6 @@
+import { LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
+import { EtherscanClient, getEnv } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -28,13 +29,13 @@ export function getProductionConfig(): Config {
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
-      logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
+      logLevel: getEnv('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       format: 'json',
     },
     logThrottler: {
-      threshold: 4,
-      thresholdTimeInMs: 5000,
-      throttleTimeInMs: 20000,
+      callsUntilThrottle: 4,
+      clearIntervalMs: 5000,
+      throttleTimeMs: 20000,
     },
     clock: {
       minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),

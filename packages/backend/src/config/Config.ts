@@ -1,5 +1,5 @@
+import { LoggerOptions } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { LogLevel } from '@l2beat/shared'
 import { ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
@@ -23,14 +23,14 @@ export interface Config {
 }
 
 export interface LoggerConfig {
-  readonly logLevel: LogLevel
-  readonly format: 'pretty' | 'json'
+  readonly logLevel: LoggerOptions['logLevel']
+  readonly format: LoggerOptions['format']
 }
 
 export interface LogThrottlerConfig {
-  readonly threshold: number
-  readonly thresholdTimeInMs: number
-  readonly throttleTimeInMs: number
+  readonly callsUntilThrottle: number
+  readonly clearIntervalMs: number
+  readonly throttleTimeMs: number
 }
 
 export interface ApiConfig {

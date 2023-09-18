@@ -3,7 +3,7 @@ import type {
   ContractParameters,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   ChainId,
   EthereumAddress,

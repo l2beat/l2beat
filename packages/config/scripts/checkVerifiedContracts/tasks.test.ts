@@ -1,4 +1,4 @@
-import { EtherscanClient, Logger } from '@l2beat/shared'
+import { EtherscanClient } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect } from 'earl'

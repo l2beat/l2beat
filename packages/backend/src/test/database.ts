@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 
 import { Database, DatabaseOpts } from '../peripherals/database/shared/Database'
 
