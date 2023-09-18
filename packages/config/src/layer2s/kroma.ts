@@ -400,7 +400,13 @@ export const kroma: Layer2 = {
       }),
       discovery.getContractDetails('Poseidon2', {
         description:
-          'Contract used to compute hashes. It is used by the ZKMerkeTrie.',
+          'Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.',
+        references: [
+          {
+            text: 'poseidon_gencontract.js - circomlibjs source code',
+            href: 'https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js',
+          },
+        ],
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

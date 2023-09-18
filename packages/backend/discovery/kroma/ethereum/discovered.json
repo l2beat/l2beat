@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 18128288,
-  "configHash": "0x5ad247f07e9e3292afa26d46d1c9f7cb0b7c316e88bb8f83312c533d92123ee6",
+  "blockNumber": 18147311,
+  "configHash": "0x248eaf106e123becfceb931040cb955c0cc685de50643c7f6d52677823e4b114",
   "version": 2,
   "contracts": [
     {
@@ -17,10 +17,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 369000,
-        "latestOutputIndex": 205,
-        "nextBlockNumber": 370800,
-        "nextOutputIndex": 206,
+        "latestBlockNumber": 484200,
+        "latestOutputIndex": 269,
+        "nextBlockNumber": 486000,
+        "nextOutputIndex": 270,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -85,7 +85,7 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 18128233],
+        "params": [1000000000, 200000, 18147295],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -164,7 +164,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 0,
-        "messageNonce": 13,
+        "messageNonce": 14,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -266,7 +266,7 @@
       },
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 18128288,
+        "clock": 18147311,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -301,7 +301,7 @@
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
       "values": {
-        "clock": 18128288,
+        "clock": 18147311,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -347,7 +347,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+        "nextValidator": "0x0125adEE89dE396b586959190e931b83120359AB",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -364,6 +364,7 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
+    "0x0125adEE89dE396b586959190e931b83120359AB",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
     "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
     "0x4200000000000000000000000000000000000004",

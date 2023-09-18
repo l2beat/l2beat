@@ -74,7 +74,7 @@
     },
     "ValidatorPool": {
       "ignoreMethods": ["getBond"],
-      "ignoreInWatchMode": ["nextValidator"]
+      "ignoreInWatchMode": ["nextValidator", "validatorCount"]
       /*
       "fields": {
         "validators": {
