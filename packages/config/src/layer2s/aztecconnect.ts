@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { assert } from 'console'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -17,6 +18,11 @@ import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztecconnect')
+
+const escapeHatchDelaySeconds = discovery.getContractValue<number>(
+  'RollupProcessorV2',
+  'delayBeforeEscapeHatch',
+)
 
 function getAccessControl() {
   const accessControl = discovery.getContractValue<
@@ -167,7 +173,7 @@ export const aztecconnect: Layer2 = {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
+      usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: null,
     },
     stage2: {
@@ -206,8 +212,9 @@ export const aztecconnect: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      description:
-        'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
+      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks, but only if the last root was posted more than ${formatSeconds(
+        escapeHatchDelaySeconds,
+      )} ago.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L692 - Etherscan source code',
@@ -219,7 +226,9 @@ export const aztecconnect: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description:
         FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-        ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
+        ` Periodically the rollup opens a special window during which anyone can propose new blocks. This is only possible if the last root was posted more than ${formatSeconds(
+          escapeHatchDelaySeconds,
+        )} ago.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
@@ -228,6 +237,13 @@ export const aztecconnect: Layer2 = {
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
           href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1491',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'the centralized operator censors withdrawal transactions.',
+          isCritical: true,
         },
       ],
     },
@@ -265,8 +281,9 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('RollupProcessorV2', {
-        description:
-          'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof. The escape hatch delay is currently set to ${formatSeconds(
+          escapeHatchDelaySeconds,
+        )}`,
         pausable: {
           paused: discovery.getContractValue('RollupProcessorV2', 'paused'),
           pausableBy: ['Emergency Multisig'],
