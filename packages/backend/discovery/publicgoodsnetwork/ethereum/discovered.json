@@ -1,9 +1,9 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 17821196,
+  "blockNumber": 18128288,
   "configHash": "0xa0894dde8b4387c4b469554af405a6d02e9392326eda54b75a00c649c3a7ae49",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "AddressManager",
@@ -27,13 +27,15 @@
         "domainSeparator": "0xa0c95424e029e9dbcafbbe66805964a70e72f893827f7da4fd8b501d4e245990",
         "getChainId": 1,
         "getOwners": [
+          "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+          "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "0xc2E2B715d9e302947Ec7e312fd2384b5a1296099"
         ],
-        "getThreshold": 2,
-        "nonce": 0,
+        "getThreshold": 3,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -49,12 +51,14 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+          "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
         ],
-        "getThreshold": 2,
-        "nonce": 2,
+        "getThreshold": 3,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -100,7 +104,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621973",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633702",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -126,10 +130,10 @@
         "CHALLENGER": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 898200,
-        "latestOutputIndex": 498,
-        "nextBlockNumber": 900000,
-        "nextOutputIndex": 499,
+        "latestBlockNumber": 2754000,
+        "latestOutputIndex": 1529,
+        "nextBlockNumber": 2755800,
+        "nextOutputIndex": 1530,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -150,7 +154,7 @@
         "GUARDIAN": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "L2_ORACLE": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 17821120],
+        "params": [1000000000, 491822, 18127226],
         "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.6.0"
@@ -189,6 +193,7 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
+    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -196,6 +201,7 @@
     "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
     "0x7916D35b57c2E4AffCaB46C3E5C8d76D3b44d1F7",
     "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
+    "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
     "0xc2E2B715d9e302947Ec7e312fd2384b5a1296099",
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
   ],
