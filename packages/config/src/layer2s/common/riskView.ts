@@ -45,6 +45,13 @@ export const STATE_FP_INT: ProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
+export const STATE_FP_INT_ZK: ProjectRiskViewEntry = {
+  value: 'Fraud proofs (INT, ZK)',
+  description:
+    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step.',
+  sentiment: 'good',
+}
+
 export const STATE_ZKP_SN: ProjectRiskViewEntry = {
   value: 'ZK proofs (SN)',
   description:
@@ -418,6 +425,7 @@ export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
   STATE_FP_INT,
+  STATE_FP_INT_ZK,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
   STATE_EXITS_ONLY,

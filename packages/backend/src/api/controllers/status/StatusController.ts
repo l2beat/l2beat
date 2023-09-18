@@ -2,7 +2,7 @@ import { tokenList } from '@l2beat/config'
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainId,
-  getTimestamps,
+  getHourlyTimestamps,
   Hash256,
   ReportType,
   Token,
@@ -119,7 +119,7 @@ export class StatusController {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
-    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+    const timestamps = getHourlyTimestamps(firstHour, lastHour).reverse()
 
     const statuses = await this.balanceStatusRepository.getBetween(
       chainId,
@@ -146,7 +146,7 @@ export class StatusController {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
-    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+    const timestamps = getHourlyTimestamps(firstHour, lastHour).reverse()
 
     const statuses = await this.totalSupplyStatusRepository.getBetween(
       chainId,
@@ -179,7 +179,7 @@ export class StatusController {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
-    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+    const timestamps = getHourlyTimestamps(firstHour, lastHour).reverse()
 
     const statuses = await this.reportStatusRepository.getBetween(
       firstHour,

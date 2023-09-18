@@ -1,10 +1,7 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { GitcoinTopBar } from '../gitcoin/TopBar'
 import { MenuOpenIcon } from '../icons'
-import { FloatingBanner } from '../l2warsaw/FloatingBanner'
-import { L2WarsawTopBar } from '../l2warsaw/TopBar'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
 import { Banner } from './Banner'
@@ -22,9 +19,7 @@ import { VerticalBar } from './VerticalBar'
 
 export interface NavbarProps {
   showBanner: boolean
-  showMultisigReport: boolean
   showActivity: boolean
-  showHiring: boolean
   showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -37,9 +32,7 @@ export function getNavbarProps(
 ): NavbarProps {
   return {
     showBanner: config.features.banner,
-    showMultisigReport: config.features.multisigReport,
     forumLink: config.links.forum,
-    showHiring: config.features.hiring,
     showHiringBadge: config.features.hiringBadge,
     showActivity: config.features.activity,
     socialLinks: getSocialLinksProps(config),
@@ -53,19 +46,11 @@ export function Navbar(props: NavbarProps) {
       <SidebarMenu
         selectedPage={props.selectedPage}
         showActivity={props.showActivity}
-        showHiring={props.showHiring}
         showHiringBadge={props.showHiringBadge}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
       {props.showBanner && <Banner />}
-      {props.showMultisigReport && (
-        <>
-          <GitcoinTopBar />
-          <L2WarsawTopBar />
-          <FloatingBanner />
-        </>
-      )}
       <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16">
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
           <ul className="flex h-full items-center">
@@ -132,17 +117,15 @@ export function Navbar(props: NavbarProps) {
                   FAQ
                 </PageLink>
               </li>
-              {props.showHiring && (
-                <li className="h-full">
-                  <OutLink
-                    className="flex h-full items-center px-2 font-medium"
-                    href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
-                  >
-                    Jobs
-                    {props.showHiringBadge && <HiringBadge className="ml-1" />}
-                  </OutLink>
-                </li>
-              )}
+              <li className="h-full">
+                <OutLink
+                  className="flex h-full items-center px-2 font-medium"
+                  href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+                >
+                  Jobs
+                  {props.showHiringBadge && <HiringBadge className="ml-1" />}
+                </OutLink>
+              </li>
             </ul>
             <VerticalBar />
             <DarkThemeToggle />
