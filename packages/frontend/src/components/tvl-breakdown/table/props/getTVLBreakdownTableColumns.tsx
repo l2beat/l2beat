@@ -2,6 +2,7 @@ import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatLargeNumberWithCommas } from '../../../../utils'
+import { BridgedUsingCell } from '../BridgedUsingCell'
 import { TokenAddressCell } from '../TokenAddressCell'
 import { TokenNameCell } from '../TokenNameCell'
 import { TokenTypeCell } from '../TokenTypeCell'
@@ -58,7 +59,7 @@ export function getNativelyMintedColumns(explorer: string) {
 }
 
 export function getExternallyMintedColumns(explorer: string) {
-  const columns: ColumnConfig<TVLProjectBreakdown['native'][number]>[] = [
+  const columns: ColumnConfig<TVLProjectBreakdown['external'][number]>[] = [
     {
       name: 'TOKEN',
       minimalWidth: true,
@@ -78,7 +79,7 @@ export function getExternallyMintedColumns(explorer: string) {
       name: 'BRIDGED USING',
       minimalWidth: true,
       headClassName: 'md:pl-4',
-      getValue: (token) => <TokenTypeCell assetId={token.assetId} />,
+      getValue: (token) => <BridgedUsingCell assetId={token.assetId} />,
     },
     {
       name: 'AMOUNT',
