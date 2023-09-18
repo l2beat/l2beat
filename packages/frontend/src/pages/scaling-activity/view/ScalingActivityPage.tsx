@@ -11,6 +11,7 @@ import {
 import { About } from '../../../components/About'
 import { ActivityHeader } from '../../../components/header/ActivityHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
+import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
 import {
   ScalingActivityView,
@@ -41,13 +42,14 @@ export function ActivityPage(props: ActivityPageProps) {
         <main>
           <ActivityHeader scalingFactor={props.scalingFactor} />
           <Chart
-            type={'activity'}
+            type="activity"
             activityEndpoint={props.apiEndpoint}
             hasTvl={false}
             hasActivity
             milestones={props.milestones}
           />
           <ScalingActivityView {...props.activityView} />
+          <OtherSites />
           <About />
         </main>
       </PageContent>

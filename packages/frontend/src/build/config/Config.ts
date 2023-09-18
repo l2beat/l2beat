@@ -17,13 +17,8 @@ export interface Config {
     banner: boolean
     tvlBreakdown: boolean
     gitcoinOption: boolean
-    milestones: boolean
-    hiring: boolean
     hiringBadge: boolean
-    stages: boolean
     buildAllProjectPages: boolean
-    upcomingRollups: boolean
-    multisigReport: boolean
   }
   backend: {
     apiUrl: string

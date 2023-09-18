@@ -12,7 +12,6 @@ import { NavbarPage } from './types'
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
   showActivity: boolean
-  showHiring: boolean
   showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -94,17 +93,15 @@ export function SidebarMenu(props: SidebarMenuProps) {
           <li>
             <a href="/faq">FAQ</a>
           </li>
-          {props.showHiring && (
-            <li>
-              <OutLink
-                className="flex items-center"
-                href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
-              >
-                Jobs
-                {props.showHiringBadge && <HiringBadge className="ml-2" />}
-              </OutLink>
-            </li>
-          )}
+          <li>
+            <OutLink
+              className="flex items-center"
+              href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+            >
+              Jobs
+              {props.showHiringBadge && <HiringBadge className="ml-2" />}
+            </OutLink>
+          </li>
         </ul>
         <hr className="my-6 w-full border-gray-200 dark:border-gray-850" />
         <ul className="mb-12 flex gap-4 px-6">

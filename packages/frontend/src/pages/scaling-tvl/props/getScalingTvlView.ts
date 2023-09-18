@@ -31,8 +31,6 @@ export function getScalingTvlView(
         verificationStatus.projects[project.id.toString()],
       ),
     ),
-    stagesEnabled: config.features.stages,
-    upcomingEnabled: config.features.upcomingRollups,
     detailedTvlEnabled: config.features.detailedTvl,
   }
 }

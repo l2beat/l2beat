@@ -36,9 +36,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(getBridgesRiskPage(config, pagesData))
   pages.push(...getBridgeProjectPages(config, pagesData))
 
-  if (config.features.multisigReport) {
-    pages.push(getMultisigReportDownloadPage(config))
-  }
+  pages.push(getMultisigReportDownloadPage(config))
 
   if (activityApiResponse) {
     pages.push(

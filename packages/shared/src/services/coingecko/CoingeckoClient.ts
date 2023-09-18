@@ -88,7 +88,7 @@ export class CoingeckoClient {
     vs_currency: string,
     from: UnixTime,
     to: UnixTime,
-  ) {
+  ): Promise<CoinMarketChartRangeData> {
     const data = await this.query(
       `/coins/${coinId.toString()}/market_chart/range`,
       {

@@ -5,22 +5,22 @@ import { EtherscanLikeClient } from '../etherscanlike/EtherscanLikeClient'
 import { HttpClient } from '../HttpClient'
 import { BlockNumberProvider } from '../providers/BlockNumberProvider'
 
-export class ArbiscanClient
+export class UniversalEtherscanClient
   extends EtherscanLikeClient
   implements BlockNumberProvider
 {
-  static API_URL = 'https://api.arbiscan.io/api'
-
   constructor(
     httpClient: HttpClient,
+    apiUrl: string,
     apiKey: string,
     minTimestamp: UnixTime,
+    private readonly chainId: ChainId,
     logger = Logger.SILENT,
   ) {
-    super(httpClient, ArbiscanClient.API_URL, apiKey, minTimestamp, logger)
+    super(httpClient, apiUrl, apiKey, minTimestamp, logger)
   }
 
   getChainId(): ChainId {
-    return ChainId.ARBITRUM
+    return this.chainId
   }
 }
