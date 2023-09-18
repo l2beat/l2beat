@@ -74,22 +74,17 @@ export class ReportRepository extends BaseRepository {
     assert(chainIdsMatch, 'Chain Ids must match')
 
     // Can't be two or more updaters on the chain because it will break the logic
-    await knex.transaction(async (trx) => {
-      await trx('reports')
-        .where('unix_timestamp', rows[0].unix_timestamp)
-        .andWhere('chain_id', rows[0].chain_id)
-        .delete()
-      await trx('reports')
-        .insert(rows)
-        .onConflict([
-          'unix_timestamp',
-          'project_id',
-          'asset_id',
-          'chain_id',
-          'report_type',
-        ])
-        .merge()
-    })
+    await knex('reports')
+      .insert(rows)
+      .onConflict([
+        'unix_timestamp',
+        'project_id',
+        'asset_id',
+        'chain_id',
+        'report_type',
+      ])
+      .merge()
+
     return rows.length
   }
 
