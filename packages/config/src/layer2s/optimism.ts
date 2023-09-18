@@ -69,7 +69,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       'https://assets.coingecko.com/coins/images/27409/large/kwenta.png?1668768595',
     address: EthereumAddress('0x920cf626a271321c151d027030d5d08af699456b'),
     coingeckoId: CoingeckoId('kwenta'),
-    sinceTimestamp: new UnixTime(1668027387),
+    sinceTimestamp: new UnixTime(1668733200),
     category: 'other',
     type: 'NMV',
     formula: 'circulatingSupply',
