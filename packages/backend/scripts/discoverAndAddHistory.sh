@@ -2,4 +2,4 @@
 set -e
 
 yarn discover:raw "$@"
-yarn diff-report "$@"
+yarn update-diff-history "$@"

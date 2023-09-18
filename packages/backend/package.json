@@ -8,7 +8,7 @@
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf build",
-    "discover": "./scripts/discoverAddingHistory.sh",
+    "discover": "./scripts/discoverAndAddHistory.sh",
     "discover:raw": "discovery discover",
     "discover:dev": "cd ../discovery && yarn build && cd - && discovery discover --dev",
     "discover:single": "discovery single-discovery",
@@ -20,7 +20,7 @@
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "mocha",
-    "diff-report": "ts-node-dev --transpile-only src/updateDiffHistory.ts"
+    "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
