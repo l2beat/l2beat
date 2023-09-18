@@ -1,11 +1,12 @@
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
-import { formatLargeNumberWithCommas } from '../../../../utils'
 import { BridgedUsingCell } from '../BridgedUsingCell'
 import { TokenAddressCell } from '../TokenAddressCell'
+import { TokenAmountCell } from '../TokenAmountCell'
 import { TokenNameCell } from '../TokenNameCell'
 import { TokenTypeCell } from '../TokenTypeCell'
+import { TokenValueCell } from '../TokenValueCell'
 import { ColumnConfig } from '../TVLBreakdownTableView'
 
 export function getNativelyMintedColumns(explorer: string) {
@@ -37,9 +38,7 @@ export function getNativelyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <div className="text-xs font-medium">
-          {formatLargeNumberWithCommas(Number(token.amount))}
-        </div>
+        <TokenAmountCell amount={token.amount} assetId={token.assetId} />
       ),
     },
     {
@@ -48,9 +47,7 @@ export function getNativelyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <div className="text-xs font-medium">
-          ${formatLargeNumberWithCommas(Number(token.usdValue))}
-        </div>
+        <TokenValueCell assetId={token.assetId} usdValue={token.usdValue} />
       ),
     },
   ]
@@ -87,9 +84,7 @@ export function getExternallyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <div className="text-xs font-medium">
-          {formatLargeNumberWithCommas(Number(token.amount))}
-        </div>
+        <TokenAmountCell amount={token.amount} assetId={token.assetId} />
       ),
     },
     {
@@ -98,9 +93,7 @@ export function getExternallyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <div className="text-xs font-medium">
-          ${formatLargeNumberWithCommas(Number(token.usdValue))}
-        </div>
+        <TokenValueCell assetId={token.assetId} usdValue={token.usdValue} />
       ),
     },
   ]

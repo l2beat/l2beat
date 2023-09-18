@@ -8,7 +8,6 @@ interface BridgedUsingCellProps {
 
 export function BridgedUsingCell(props: BridgedUsingCellProps) {
   const token = safeGetTokenByAssetId(props.assetId)
-  console.log(token)
 
   return (
     <div className="flex items-center justify-start gap-2 ">
