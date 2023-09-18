@@ -150,7 +150,8 @@ export const aztecconnect: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      description: `Only the whitelisted proposers can publish L2 state roots on L1 within ${escapeHatchDelayString}, so in the event of failure the withdrawals are frozen.`,
       sources: [
         {
           contract: 'RollupProcessorV2',
