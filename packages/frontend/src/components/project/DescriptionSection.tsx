@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { Link } from '../Link'
+import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
 import { WarningBar } from './WarningBar'
-import { Markdown } from '../Markdown'
 
 export interface DescriptionSectionProps {
   id: SectionId
@@ -35,10 +35,10 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           className="mt-4"
         />
       )}
-      <Markdown className="mt-4 text-gray-850 dark:text-gray-400">
+      <Markdown className="mt-4 leading-snug text-gray-850 dark:text-gray-400">
         {props.description}
       </Markdown>
-      <p className="mt-4 text-gray-850 dark:text-gray-400">
+      <p className="mt-4 leading-snug text-gray-850 dark:text-gray-400">
         If you find something wrong on this page you can{' '}
         <Link href={props.issueLink}>submit an issue</Link>
         {' or '}

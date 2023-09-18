@@ -1,8 +1,8 @@
-import React from 'react'
-import MarkdownIt from 'markdown-it'
 import cx from 'classnames'
-import { renderToStaticMarkup } from 'react-dom/server'
-import { Link } from './Link'
+import MarkdownIt from 'markdown-it'
+import React from 'react'
+
+import { isOutLink } from './Link'
 
 export interface MarkdownProps {
   children: string
@@ -10,13 +10,24 @@ export interface MarkdownProps {
   className?: string
 }
 
-const LINK_CLOSE = '</span></span></a>'
-const markdown = MarkdownIt({ html: true })
-markdown.renderer.rules.link_open = (tokens, index) => {
-  const href = tokens[index].attrGet('href') ?? undefined
-  return renderToStaticMarkup(<Link href={href} />).slice(0, -LINK_CLOSE.length)
+const markdown = MarkdownIt({ html: true }).use(outLinksPlugin)
+
+function outLinksPlugin(md: MarkdownIt) {
+  const defaultRender =
+    md.renderer.rules.link_open ??
+    function (tokens, idx, options, env, self) {
+      return self.renderToken(tokens, idx, options)
+    }
+
+  md.renderer.rules.link_open = (tokens, index, options, env, self) => {
+    const token = tokens[index]
+    if (isOutLink(token.attrGet('href'))) {
+      token.attrSet('target', '_blank')
+      token.attrSet('rel', 'noreferrer noopener')
+    }
+    return defaultRender(tokens, index, options, env, self)
+  }
 }
-markdown.renderer.rules.link_close = () => LINK_CLOSE
 
 export function Markdown(props: MarkdownProps) {
   if (props.inline) {

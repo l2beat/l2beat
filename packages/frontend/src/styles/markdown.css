@@ -1,0 +1,16 @@
+.mdc p {
+  @apply mt-4;
+}
+
+.mdc > p:first-child {
+  @apply mt-0;
+}
+
+.mdc strong {
+  @apply font-bold text-yellow-700 dark:text-yellow-300;
+}
+
+/* Make sure this is compatible with the <Link /> component */
+.mdc a {
+  @apply font-semibold text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
+}

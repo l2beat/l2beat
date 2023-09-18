@@ -132,7 +132,7 @@ export function StageSection(props: StageSectionProps) {
         Learn more about Rollup stages
       </Link>
       <StageDisclaimer
-        className="mt-6"
+        className="mt-6 leading-snug"
         text="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
       />
     </ProjectDetailsSection>
