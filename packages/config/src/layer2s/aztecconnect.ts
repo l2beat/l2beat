@@ -213,7 +213,7 @@ export const aztecconnect: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks, but only if the last root was posted more than ${escapeHatchDelayString} ago.`,
+      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks, but only if the last root was posted more than ${escapeHatchDelayString} prior.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L692 - Etherscan source code',
@@ -225,7 +225,7 @@ export const aztecconnect: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description:
         FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-        ` Periodically the rollup opens a special window during which anyone can propose new blocks. This is only possible if the last root was posted more than ${escapeHatchDelayString} ago.`,
+        ` Periodically the rollup opens a special window during which anyone can propose new blocks. This is only possible if the last root was posted more than ${escapeHatchDelayString} prior.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
