@@ -10,7 +10,7 @@
     "clean": "rm -rf build",
     "discover": "./scripts/discoverAndAddHistory.sh",
     "discover:raw": "discovery discover",
-    "discover:dev": "cd ../discovery && yarn build && cd - && discovery discover --dev",
+    "discover:dev": "cd ../discovery && yarn build && cd - && yarn discover --dev",
     "discover:single": "discovery single-discovery",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",

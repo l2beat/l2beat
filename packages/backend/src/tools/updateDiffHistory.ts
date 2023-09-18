@@ -113,8 +113,10 @@ function generateDiffHistoryMarkdown(
 
 export async function updateDiffHistoryFile() {
   console.log('Updating diff history file...')
-  const chainName = process.argv[2]
-  const projectName = process.argv[3]
+  const params = process.argv.filter((v) => !v.startsWith('-'))
+  console.log(params)
+  const chainName = params[2]
+  const projectName = params[3]
   if (!chainName || !projectName) {
     console.error('Pass parameters: <chainName> <projectName>')
     process.exit(1)
