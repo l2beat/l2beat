@@ -104,7 +104,6 @@ export function getProjectHeader(
     showTvlBreakdown: config.features.tvlBreakdown,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     links: getLinks(project.display.links),
-    stagesEnabled: config.features.stages,
     detailedTvlEnabled: config.features.detailedTvl,
     stage: project.stage,
     // TODO: will need to be riskValues when rosette has hover
