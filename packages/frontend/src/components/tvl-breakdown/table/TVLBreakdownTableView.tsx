@@ -53,7 +53,7 @@ export function TVLBreakdownTableView<T>({
         ? { 'data-table-rerender-indexes-on': rerenderIndexesOn }
         : {})}
     >
-      <table className="w-full border-collapse text-left">
+      <table className="w-full border-collapse border-b border-b-white/25 text-left">
         <thead>
           <tr className="md:bg-white/10">
             {columns.map((column, i) => {
