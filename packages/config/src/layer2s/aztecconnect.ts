@@ -74,7 +74,7 @@ export const aztecconnect: Layer2 = {
     name: 'Aztec Connect',
     slug: 'aztecconnect',
     warning:
-      'EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024.',
+      'EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024. The escape hatch delay has been recently increased to 136 years, meaning that users will not be able to exit when the operator will be shut down.',
     description:
       'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
     purpose: 'Private DeFi',
