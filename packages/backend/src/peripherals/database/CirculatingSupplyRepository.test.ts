@@ -37,7 +37,7 @@ describe(CirculatingSupplyRepository.name, () => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
+    await repository.addMany(DATA)
   })
 
   describe(CirculatingSupplyRepository.prototype.getByTimestamp.name, () => {
@@ -62,7 +62,7 @@ describe(CirculatingSupplyRepository.name, () => {
           ChainId.ETHEREUM,
         ),
       ]
-      await repository.addOrUpdateMany(additionalData)
+      await repository.addMany(additionalData)
 
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
 
@@ -85,7 +85,7 @@ describe(CirculatingSupplyRepository.name, () => {
         mockCirculatingSupply(C_SUPPLY, 2, ASSET_1, ChainId.ETHEREUM),
       ]
 
-      await repository.addOrUpdateMany(data)
+      await repository.addMany(data)
 
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqual([
@@ -110,7 +110,7 @@ describe(CirculatingSupplyRepository.name, () => {
         mockCirculatingSupply(C_SUPPLY, 2, ASSET_2, ChainId.ETHEREUM),
       ]
 
-      await repository.addOrUpdateMany(data)
+      await repository.addMany(data)
 
       const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqualUnsorted([
@@ -151,7 +151,7 @@ describe(CirculatingSupplyRepository.name, () => {
           mockCirculatingSupply(C_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
         ]
 
-        await repository.addOrUpdateMany(DATA)
+        await repository.addMany(DATA)
         const result = await repository.findDataBoundaries()
 
         expect(result).toEqual(
@@ -184,7 +184,7 @@ describe(CirculatingSupplyRepository.name, () => {
     },
   )
 
-  describe(CirculatingSupplyRepository.prototype.addOrUpdateMany.name, () => {
+  describe(CirculatingSupplyRepository.prototype.addMany.name, () => {
     it('new rows only', async () => {
       const newRows: CirculatingSupplyRecord[] = [
         {
@@ -200,56 +200,28 @@ describe(CirculatingSupplyRepository.name, () => {
           chainId: ChainId.ETHEREUM,
         },
       ]
-      await repository.addOrUpdateMany(newRows)
+      await repository.addMany(newRows)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted([...DATA, ...newRows])
     })
 
-    it('existing rows only', async () => {
-      const existingRows: CirculatingSupplyRecord[] = [
-        {
-          timestamp: DATA[0].timestamp,
-          circulatingSupply: DATA[0].circulatingSupply,
-          assetId: DATA[0].assetId,
-          chainId: ChainId.ETHEREUM,
-        },
-        {
-          timestamp: DATA[1].timestamp,
-          circulatingSupply: DATA[1].circulatingSupply,
-          assetId: DATA[1].assetId,
-          chainId: ChainId.ETHEREUM,
-        },
-      ]
-      await repository.addOrUpdateMany(existingRows)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted(existingRows)
-    })
-
-    it('mixed: existing and new rows', async () => {
-      const mixedRows: CirculatingSupplyRecord[] = [
-        {
-          timestamp: DATA[1].timestamp,
-          circulatingSupply: DATA[1].circulatingSupply,
-          assetId: DATA[1].assetId,
-          chainId: ChainId.ETHEREUM,
-        },
-        {
-          timestamp: START.add(2, 'hours'),
-          circulatingSupply: C_SUPPLY,
-          assetId: AssetId('dai-dai-stablecoin'),
-          chainId: ChainId.ETHEREUM,
-        },
-      ]
-      await repository.addOrUpdateMany(mixedRows)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted([DATA[0], ...mixedRows])
-    })
-
     it('skips empty row modification', async () => {
-      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+      await expect(repository.addMany([])).not.toBeRejected()
+    })
+
+    it('batches inserts', async () => {
+      const records: CirculatingSupplyRecord[] = []
+      const now = UnixTime.now()
+      for (let i = 5; i < 15_000; i++) {
+        records.push({
+          circulatingSupply: Math.floor(Math.random() * 1000),
+          chainId: ChainId.ETHEREUM,
+          timestamp: now.add(-i, 'hours'),
+          assetId: AssetId('fake-coin'),
+        })
+      }
+      await expect(repository.addMany(records)).not.toBeRejected()
     })
   })
 
