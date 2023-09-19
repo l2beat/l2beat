@@ -72,7 +72,7 @@ interface MultipleEscrowsProps {
 function MultipleEscrows(props: MultipleEscrowsProps) {
   return (
     <div
-      className="MultipleEscrows flex cursor-pointer items-center gap-1"
+      className="MultipleEscrows flex cursor-pointer select-none items-center gap-1"
       data-token={props.token}
     >
       <svg

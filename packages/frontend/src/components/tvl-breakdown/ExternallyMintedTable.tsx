@@ -17,7 +17,7 @@ export function ExternallyMintedTable(props: ExternallyMintedTableProps) {
 
   return (
     <div className="flex flex-col px-4">
-      <h2 className="mt-12 ml-1 mb-4 text-2xl font-bold md:ml-2">
+      <h2 className="mt-12 ml-1 mb-4 text-xl font-bold md:ml-2 md:text-2xl">
         Externally Minted Value
       </h2>
       <TVLBreakdownTableView

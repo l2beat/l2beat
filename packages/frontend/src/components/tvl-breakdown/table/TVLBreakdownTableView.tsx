@@ -14,7 +14,6 @@ interface Props<
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
-  rerenderIndexesOn?: string
 }
 
 export interface ColumnConfig<T> {
@@ -44,7 +43,7 @@ export function TVLBreakdownTableView<
     assetId?: AssetId
     escrows?: object[]
   },
->({ items, columns, rows, rerenderIndexesOn }: Props<T>) {
+>({ items, columns, rows }: Props<T>) {
   const highlightedColumnClassNames =
     'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
 
@@ -55,9 +54,6 @@ export function TVLBreakdownTableView<
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
-      {...(rerenderIndexesOn
-        ? { 'data-table-rerender-indexes-on': rerenderIndexesOn }
-        : {})}
     >
       <table className="w-full border-collapse border-b border-b-white/25 text-left">
         <thead>
@@ -68,7 +64,7 @@ export function TVLBreakdownTableView<
                 <th
                   key={i}
                   className={cx(
-                    'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 first:rounded-l last:rounded-r dark:text-gray-50',
+                    'whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r dark:text-gray-50',
                     column.minimalWidth && 'w-0',
                     isLastColumn && 'md:pr-4',
                     column.headClassName,
@@ -134,7 +130,7 @@ export function TVLBreakdownTableView<
                     <td
                       key={j}
                       className={cx(
-                        'h-9 first:rounded-l last:rounded-r md:h-10 md:pl-4',
+                        'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r md:h-10 md:pl-4',
                         column.minimalWidth && 'w-0',
                         column.highlight && highlightedColumnClassNames,
                       )}

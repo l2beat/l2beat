@@ -15,7 +15,7 @@ export function CanonicallyMintedTable(props: CanonicallyMintedTableProps) {
   const { formattedTokens, sum } = formatTokens(props.escrows)
   return (
     <div className="flex flex-col px-4">
-      <h2 className="mt-12 ml-1 mb-4 text-2xl font-bold md:ml-2">
+      <h2 className="mt-12 ml-1 mb-4 text-xl font-bold md:ml-2 md:text-2xl">
         Canonically Minted Value
       </h2>
       <TVLBreakdownTableView
@@ -58,6 +58,7 @@ function formatTokens(escrows: TVLProjectBreakdown['canonical']) {
 
   const formattedTokens = []
   for (const token in tokens) {
+    tokens[token].sort((a, b) => Number(b.usdValue) - Number(a.usdValue))
     const usdPrice = tokens[token][0].usdPrice
     let usdValue = 0
     let amount = 0
