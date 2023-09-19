@@ -99,14 +99,13 @@ function generateDiffHistoryMarkdown(
 
   const now = new Date().toUTCString()
   result.push(`## Diff at ${now}:`)
+  result.push('')
   const { name, email } = getGitUser()
-  result.push(`* author: ${name} (<${email}>)`)
-  result.push(`* comparing to: ${mainBranch}@${mainBranchHash}`)
+  result.push(`- author: ${name} (<${email}>)`)
+  result.push(`- comparing to: ${mainBranch}@${mainBranchHash}`)
   result.push('')
   result.push(discoveryDiffToMarkdown(diffs))
-  result.push(
-    '\n------------------------------------------------------------\n',
-  )
+  result.push('')
 
   return result.join('\n')
 }
@@ -141,11 +140,11 @@ export async function updateDiffHistoryFile() {
   )
 
   if (diff.length > 0) {
-    const report = generateDiffHistoryMarkdown(diff, mainBranchHash)
+    const newHistoryEntry = generateDiffHistoryMarkdown(diff, mainBranchHash)
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
     const { content: historyFileFromMainBranch } =
       getFileVersionOnMainBranch(diffHistoryPath)
-    const diffHistory = report.concat(historyFileFromMainBranch)
+    const diffHistory = newHistoryEntry.concat('\n' + historyFileFromMainBranch)
     writeFileSync(diffHistoryPath, diffHistory)
   } else {
     console.log('No changes found')
