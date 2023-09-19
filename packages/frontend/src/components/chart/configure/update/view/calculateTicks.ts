@@ -9,7 +9,7 @@ export function calculateTicks(
 }
 
 function calculateLinTicks(ticks: number, values: number[]) {
-  const min = Math.min(...values)
+  const min = Math.min(0)
   const max = Math.max(...values)
   if (min === max) {
     if (min === 0) {
