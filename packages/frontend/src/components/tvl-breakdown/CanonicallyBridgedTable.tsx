@@ -2,24 +2,24 @@ import { AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
-import { getCanonicallyMintedColumns } from './table/props/getTVLBreakdownTableColumns'
+import { getCanonicallyBridgedColumns } from './table/props/getTVLBreakdownTableColumns'
 import { TableSum } from './table/TableSum'
 import { TVLBreakdownTableView } from './table/TVLBreakdownTableView'
 
-interface CanonicallyMintedTableProps {
+interface CanonicallyBridgedTableProps {
   escrows: TVLProjectBreakdown['canonical']
   explorer: string
 }
 
-export function CanonicallyMintedTable(props: CanonicallyMintedTableProps) {
+export function CanonicallyBridgedTable(props: CanonicallyBridgedTableProps) {
   const { formattedTokens, sum } = formatTokens(props.escrows)
   return (
     <div className="flex flex-col px-4">
       <h2 className="mt-12 ml-1 mb-4 text-xl font-bold md:ml-2 md:text-2xl">
-        Canonically Minted Value
+        Canonically Bridged Value
       </h2>
       <TVLBreakdownTableView
-        columns={getCanonicallyMintedColumns(props.explorer)}
+        columns={getCanonicallyBridgedColumns(props.explorer)}
         items={formattedTokens}
       />
       <TableSum type="CBV" amount={sum} />

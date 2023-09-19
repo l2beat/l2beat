@@ -58,7 +58,7 @@ export function getNativelyMintedColumns(explorer: string) {
   return columns
 }
 
-export function getExternallyMintedColumns(explorer: string) {
+export function getExternallyBridgedColumns(explorer: string) {
   const columns: ColumnConfig<TVLProjectBreakdown['external'][number]>[] = [
     {
       name: 'TOKEN',
@@ -112,7 +112,7 @@ export function getExternallyMintedColumns(explorer: string) {
   return columns
 }
 
-export function getCanonicallyMintedColumns(explorer: string) {
+export function getCanonicallyBridgedColumns(explorer: string) {
   const columns: ColumnConfig<{
     assetId: AssetId
     escrows: {
