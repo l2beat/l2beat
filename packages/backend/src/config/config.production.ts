@@ -31,6 +31,7 @@ export function getProductionConfig(env: Env): Config {
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       format: 'json',
+      utc: true,
     },
     logThrottler: {
       callsUntilThrottle: 4,

@@ -31,6 +31,7 @@ export function getLocalConfig(env: Env): Config {
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       format: 'pretty',
+      colors: true,
     },
     logThrottler: false,
     clock: {

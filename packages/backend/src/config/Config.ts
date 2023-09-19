@@ -22,10 +22,8 @@ export interface Config {
   readonly statusEnabled: boolean
 }
 
-export interface LoggerConfig {
-  readonly logLevel: LoggerOptions['logLevel']
-  readonly format: LoggerOptions['format']
-}
+export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
+  Partial<LoggerOptions>
 
 export interface LogThrottlerConfig {
   readonly callsUntilThrottle: number
