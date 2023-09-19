@@ -231,7 +231,10 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
+        error: expect.a(Error),
+        job: expect.a(String),
+      })
     })
 
     it('works when processRange throws', async () => {
@@ -259,7 +262,10 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
+        error: expect.a(Error),
+        job: expect.a(String),
+      })
     })
 
     it('does not process anything when already done', async () => {

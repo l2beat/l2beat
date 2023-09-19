@@ -114,27 +114,24 @@ describe(TransactionCountingMonitor.name, () => {
       await monitor.checkIfSynced()
 
       expect(logger.error).toHaveBeenOnlyCalledWith(
+        `${projectIdA.toString()} is lagging behind`,
         {
-          message: `${projectIdA.toString()} is lagging behind`,
-          syncInfo: {
-            counters: [
-              {
-                hasProcessedAll: false,
-                lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
-                projectId: projectIdA,
-                isSynced: false,
-              },
-              {
-                hasProcessedAll: false,
-                lastDayWithData: startOfToday.toYYYYMMDD(),
-                projectId: projectIdB,
-                isSynced: true,
-              },
-            ],
-            today: startOfToday.toYYYYMMDD(),
-          },
+          counters: [
+            {
+              hasProcessedAll: false,
+              lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
+              projectId: projectIdA,
+              isSynced: false,
+            },
+            {
+              hasProcessedAll: false,
+              lastDayWithData: startOfToday.toYYYYMMDD(),
+              projectId: projectIdB,
+              isSynced: true,
+            },
+          ],
+          today: startOfToday.toYYYYMMDD(),
         },
-        new Error('Not all transaction counters are synced'),
       )
 
       expect(logger.info).toHaveBeenCalledTimes(3)
