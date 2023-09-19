@@ -27,13 +27,13 @@ export function StatusXPage({ statuses }: StatusPageProps) {
           <h3>Last 24 hours:</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {s.statuses.slice(0, 24).map((status) => (
-              <Square color={getColor(status)} />
+              <Square status={status} />
             ))}
           </div>
           <h3>Days:</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {s.statuses.map((status) => (
-              <Square color={getColor(status)} />
+              <Square status={status} />
             ))}
           </div>
         </>
@@ -42,16 +42,16 @@ export function StatusXPage({ statuses }: StatusPageProps) {
   )
 }
 
-function Square(props: { color: string }): JSX.Element {
+function Square(props: { status: StatusPoint }): JSX.Element {
   return (
     <div
-      data-tooltip="note"
+      data-tooltip={getTooltip(props.status)}
       style={{
-        // width: '5px',
-        // height: '5px',
-        background: props.color,
-        marginRight: '15px',
-        marginBottom: '15px',
+        width: '10px',
+        height: '10px',
+        background: getColor(props.status),
+        margin: '2px',
+        border: 0,
       }}
     />
   )
@@ -60,12 +60,16 @@ function Square(props: { color: string }): JSX.Element {
 function getColor(status: StatusPoint): string {
   switch (status.status) {
     case 'synced':
-      return 'green'
+      return '#2ECC71'
     case 'notSynced':
-      return 'red'
+      return '#E74C3C'
     case 'notApplicable':
       return 'gray'
   }
+}
+
+function getTooltip(status: StatusPoint): string {
+  return status.timestamp.toDate().toISOString()
 }
 
 export function renderStatusXPage(props: StatusPageProps) {
