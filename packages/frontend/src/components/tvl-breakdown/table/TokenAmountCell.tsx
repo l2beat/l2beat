@@ -14,6 +14,7 @@ interface TokenAmountCellProps {
     usdValue: string
     amount: string
   }[]
+  forExternal?: boolean
 }
 
 export function TokenAmountCell(props: TokenAmountCellProps) {
@@ -26,7 +27,10 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       : ''
 
   return props.forCanonical && props.escrows ? (
-    <div className="flex flex-col items-end gap-2 text-xs font-medium">
+    <div
+      className="Tooltip flex flex-col items-end gap-2 text-xs font-medium"
+      title="Circulating supply"
+    >
       {formatLargeNumberWithCommas(Number(props.amount))}
       {props.escrows.length > 1 &&
         props.escrows.map((escrow) => (
@@ -40,7 +44,10 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
         ))}
     </div>
   ) : (
-    <div className="Tooltip text-xs font-medium" title={formula}>
+    <div
+      className="Tooltip text-xs font-medium"
+      title={props.forExternal ? 'Circulating supply' : formula}
+    >
       {formatLargeNumberWithCommas(Number(props.amount))}
     </div>
   )

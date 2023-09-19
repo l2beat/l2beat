@@ -88,7 +88,10 @@ function MultipleEscrows(props: MultipleEscrowsProps) {
         />
       </svg>
       <span className="text-xs font-medium">Multiple escrows</span>
-      <ChevronDownIcon className="w-[10px]" />
+      <ChevronDownIcon
+        className="MultipleEscrowsArrow w-[10px] transition-transform duration-300 "
+        data-token={props.token}
+      />
     </div>
   )
 }

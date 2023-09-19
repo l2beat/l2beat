@@ -87,7 +87,11 @@ export function getExternallyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <TokenAmountCell amount={token.amount} assetId={token.assetId} />
+        <TokenAmountCell
+          amount={token.amount}
+          assetId={token.assetId}
+          forExternal
+        />
       ),
     },
     {
@@ -96,7 +100,11 @@ export function getExternallyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <TokenValueCell assetId={token.assetId} usdValue={token.usdValue} />
+        <TokenValueCell
+          assetId={token.assetId}
+          usdValue={token.usdValue}
+          forExternal
+        />
       ),
     },
   ]
@@ -139,6 +147,7 @@ export function getCanonicallyMintedColumns(explorer: string) {
       name: 'PRICE',
       minimalWidth: true,
       headClassName: 'md:pl-4',
+      tooltip: 'Prices are fetched from CoinGecko',
       getValue: (token) => (
         <div className="text-xs font-medium">
           ${formatLargeNumberWithCommas(Number(token.usdPrice))}
