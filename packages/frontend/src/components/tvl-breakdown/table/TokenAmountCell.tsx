@@ -7,6 +7,13 @@ import { formatLargeNumberWithCommas } from '../../../utils'
 interface TokenAmountCellProps {
   assetId: AssetId
   amount: string
+  forCanonical?: boolean
+  escrows?: {
+    escrow: string
+    usdPrice: string
+    usdValue: string
+    amount: string
+  }[]
 }
 
 export function TokenAmountCell(props: TokenAmountCellProps) {
@@ -18,7 +25,21 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       ? 'Circulating supply'
       : ''
 
-  return (
+  return props.forCanonical && props.escrows ? (
+    <div className="flex flex-col items-end gap-2 text-xs font-medium">
+      {formatLargeNumberWithCommas(Number(props.amount))}
+      {props.escrows.length > 1 &&
+        props.escrows.map((escrow) => (
+          <div
+            key={escrow.escrow}
+            className="MultipleEscrowsHidden hidden"
+            data-token={props.assetId}
+          >
+            {formatLargeNumberWithCommas(Number(escrow.amount))}
+          </div>
+        ))}
+    </div>
+  ) : (
     <div className="Tooltip text-xs font-medium" title={formula}>
       {formatLargeNumberWithCommas(Number(props.amount))}
     </div>

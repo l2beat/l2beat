@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import cx from 'classnames'
 import React from 'react'
 
 import { formatAddress } from '../../../utils/utils'
@@ -12,6 +13,7 @@ interface EscrowsCellProps {
     amount: string
   }[]
   explorer: string
+  assetId: string
 }
 export function EscrowsCell(props: EscrowsCellProps) {
   return (
@@ -22,7 +24,18 @@ export function EscrowsCell(props: EscrowsCellProps) {
           explorer={props.explorer}
         />
       ) : (
-        <MultipleEscrows />
+        <div className="flex flex-col gap-2">
+          <MultipleEscrows token={props.assetId} />
+          {props.escrows.map((escrow) => (
+            <EscrowLink
+              key={escrow.escrow}
+              escrow={escrow.escrow}
+              explorer={props.explorer}
+              hidden
+              assetId={props.assetId}
+            />
+          ))}
+        </div>
       )}
     </div>
   )
@@ -31,6 +44,8 @@ export function EscrowsCell(props: EscrowsCellProps) {
 interface EscrowLinkProps {
   escrow: string
   explorer: string
+  hidden?: boolean
+  assetId?: string
 }
 
 function EscrowLink(props: EscrowLinkProps) {
@@ -38,7 +53,11 @@ function EscrowLink(props: EscrowLinkProps) {
     <a
       href={`${props.explorer}/address/${props.escrow}`}
       target="_blank"
-      className="flex gap-1 text-xs font-medium text-blue-500 underline"
+      className={cx(
+        'flex gap-1 text-xs font-medium text-blue-500 underline',
+        props.hidden && 'MultipleEscrowsHidden hidden',
+      )}
+      data-token={props.assetId}
     >
       {formatAddress(EthereumAddress(props.escrow))}
       <OutLinkIcon className="fill-blue-500" />
@@ -46,9 +65,16 @@ function EscrowLink(props: EscrowLinkProps) {
   )
 }
 
-function MultipleEscrows() {
+interface MultipleEscrowsProps {
+  token: string
+}
+
+function MultipleEscrows(props: MultipleEscrowsProps) {
   return (
-    <div className="flex cursor-pointer items-center gap-1">
+    <div
+      className="MultipleEscrows flex cursor-pointer items-center gap-1"
+      data-token={props.token}
+    >
       <svg
         width="14"
         height="14"

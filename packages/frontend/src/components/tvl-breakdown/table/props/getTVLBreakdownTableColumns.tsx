@@ -128,7 +128,11 @@ export function getCanonicallyMintedColumns(explorer: string) {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <EscrowsCell escrows={token.escrows} explorer={explorer} />
+        <EscrowsCell
+          assetId={token.assetId.toString()}
+          escrows={token.escrows}
+          explorer={explorer}
+        />
       ),
     },
     {
@@ -147,9 +151,12 @@ export function getCanonicallyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <div className="text-xs font-medium">
-          {formatLargeNumberWithCommas(Number(token.amount))}
-        </div>
+        <TokenAmountCell
+          amount={token.amount}
+          assetId={token.assetId}
+          forCanonical
+          escrows={token.escrows}
+        />
       ),
     },
     {
@@ -158,9 +165,12 @@ export function getCanonicallyMintedColumns(explorer: string) {
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <div className="text-xs font-medium">
-          ${formatLargeNumberWithCommas(Number(token.usdValue))}
-        </div>
+        <TokenValueCell
+          assetId={token.assetId}
+          usdValue={token.usdValue}
+          forCanonical
+          escrows={token.escrows}
+        />
       ),
     },
   ]
