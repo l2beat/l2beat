@@ -49,7 +49,10 @@ async function updateDiffHistoryFile() {
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
     const { content: historyFileFromMainBranch } =
       getFileVersionOnMainBranch(diffHistoryPath)
-    const diffHistory = newHistoryEntry.concat('\n' + historyFileFromMainBranch)
+    const diffHistory =
+      historyFileFromMainBranch === ''
+        ? newHistoryEntry
+        : newHistoryEntry.concat('\n' + historyFileFromMainBranch)
     writeFileSync(diffHistoryPath, diffHistory)
   } else {
     console.log('No changes found')
