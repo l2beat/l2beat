@@ -1906,13 +1906,20 @@
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.2.1.tgz#77de13a741773614c4df620fe8e87d2bd9d50c84"
-  integrity sha512-HR1TG9PkwHkIjXBGPWcCf67QCnpcbnoICoefPOATAMeDqF9Y6KhL+5OybBCDCNBg1KPuGqECyKmYrrIei11yEQ==
+"@l2beat/discovery-types@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.2.0.tgz#b25d4d345097fc4dc773932b35d3504724d0ef80"
+  integrity sha512-8q7g3O6u5t7SyKHT1HBLt58wsLg+7K8aSEYWcdDo0jMEhg8XETQf4X3/JxhcDjneBFq3J0N2RZCxPsms497Qzw==
+  dependencies:
+    zod "^3.22.2"
+
+"@l2beat/discovery@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.3.0.tgz#63e056e85879fb7df04b3287d592807f8ef8eaf4"
+  integrity sha512-28KjVvhq69DesG5ssbPp+HY391JnpDUUjGYKkuw2TIgh7gZaozbbYdy17rCcWvMTpMpbi/pPRp1yYxaePmTT4g==
   dependencies:
     "@l2beat/backend-tools" "^0.3.0"
-    "@l2beat/discovery-types" "^0.1.0"
+    "@l2beat/discovery-types" "^0.2.0"
     chalk "^4.1.2"
     deep-diff "^1.0.2"
     dotenv "^16.0.3"
