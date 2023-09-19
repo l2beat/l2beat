@@ -1,10 +1,16 @@
+import { AssetId } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../../icons'
 import { SectionId } from '../../project/sectionId'
 
-interface Props<T> {
+interface Props<
+  T extends {
+    assetId?: AssetId
+    escrows?: object[]
+  },
+> {
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
@@ -33,12 +39,12 @@ export interface RowConfig<T> {
     Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
-export function TVLBreakdownTableView<T>({
-  items,
-  columns,
-  rows,
-  rerenderIndexesOn,
-}: Props<T>) {
+export function TVLBreakdownTableView<
+  T extends {
+    assetId?: AssetId
+    escrows?: object[]
+  },
+>({ items, columns, rows, rerenderIndexesOn }: Props<T>) {
   const highlightedColumnClassNames =
     'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
 
@@ -100,6 +106,8 @@ export function TVLBreakdownTableView<T>({
           {items.map((item, i) => {
             const { className: rowClassName, ...rest } =
               rows?.getProps(item, i) ?? {}
+            console.log(item)
+
             return (
               <tr
                 key={i}
@@ -108,7 +116,11 @@ export function TVLBreakdownTableView<T>({
                   'group',
                   'hover:bg-black/[0.1] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
+                  item.escrows?.length &&
+                    item.escrows.length > 1 &&
+                    'MultipleEscrowsRow',
                 )}
+                data-token={item.assetId}
               >
                 {columns.map((column, j) => {
                   const isLastColumn = j === columns.length - 1
