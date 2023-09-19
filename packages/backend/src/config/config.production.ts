@@ -72,7 +72,7 @@ export function getProductionConfig(): Config {
       ethereum: {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE ',
+          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           500,
         ),
         // TODO: phase out old env variable
@@ -84,7 +84,7 @@ export function getProductionConfig(): Config {
       arbitrum: arbitrumTvlEnabled && {
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE ',
+          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
           500,
         ),
         etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
@@ -94,7 +94,7 @@ export function getProductionConfig(): Config {
       optimism: optimismTvlEnabled && {
         providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE ',
+          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
           500,
         ),
         etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
@@ -104,7 +104,7 @@ export function getProductionConfig(): Config {
       base: baseTvlEnabled && {
         providerUrl: getEnv('BASE_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_BASE_RPC_CALLS_PER_MINUTE ',
+          'TVL_BASE_RPC_CALLS_PER_MINUTE',
           500,
         ),
         etherscanApiKey: getEnv('BASE_ETHERSCAN_API_KEY'),
