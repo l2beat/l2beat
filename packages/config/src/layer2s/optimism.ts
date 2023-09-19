@@ -41,7 +41,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       'https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1660904599',
     symbol: 'OP',
     decimals: 18,
-    sinceTimestamp: new UnixTime(0), // this is obsolete for circulatingSupply formula
+    sinceTimestamp: new UnixTime(1654039974),
     category: 'other',
     type: 'NMV',
     formula: 'circulatingSupply',
@@ -69,7 +69,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       'https://assets.coingecko.com/coins/images/27409/large/kwenta.png?1668768595',
     address: EthereumAddress('0x920cf626a271321c151d027030d5d08af699456b'),
     coingeckoId: CoingeckoId('kwenta'),
-    sinceTimestamp: new UnixTime(0), // this is obsolete for circulatingSupply formula
+    sinceTimestamp: new UnixTime(1668733200),
     category: 'other',
     type: 'NMV',
     formula: 'circulatingSupply',
@@ -83,7 +83,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       'https://assets.coingecko.com/coins/images/25783/large/velo.png?1653817876',
     address: EthereumAddress('0x9560e827af36c94d2ac33a39bce1fe78631088db'),
     coingeckoId: CoingeckoId('velodrome-finance'),
-    sinceTimestamp: new UnixTime(0), // this is obsolete for circulatingSupply formula
+    sinceTimestamp: new UnixTime(1687392369),
     category: 'other',
     type: 'NMV',
     formula: 'circulatingSupply',
