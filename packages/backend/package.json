@@ -20,6 +20,7 @@
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "mocha",
+    "typecheck": "tsc --noEmit",
     "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
   },
   "dependencies": {
