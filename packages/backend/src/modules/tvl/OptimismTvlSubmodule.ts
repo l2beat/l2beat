@@ -4,6 +4,7 @@ import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { OPTIMISM_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { chainTvlSubmodule } from './ChainTvlSubmodule'
@@ -12,6 +13,7 @@ import { TvlDatabase } from './types'
 export function createOptimismTvlSubmodule(
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
+  coingeckoQueryService: CoingeckoQueryService,
   config: Config,
   logger: Logger,
   http: HttpClient,
@@ -25,6 +27,7 @@ export function createOptimismTvlSubmodule(
     OPTIMISM_MULTICALL_CONFIG,
     db,
     priceUpdater,
+    coingeckoQueryService,
     http,
     clock,
     logger,

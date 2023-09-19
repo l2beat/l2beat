@@ -182,6 +182,48 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     formula: 'totalSupply',
     bridgedUsing: 'Wormhole',
   },
+  {
+    id: AssetId('arbitrum:gmx-gmx'),
+    name: 'GMX',
+    symbol: 'GMX',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/18323/large/arbit.png?1631532468',
+    address: EthereumAddress('0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a'),
+    coingeckoId: CoingeckoId('gmx'),
+    sinceTimestamp: new UnixTime(1626958493),
+    category: 'stablecoin',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId('arbitrum:dmt-dream-machine-token'),
+    name: 'Dream Machine Token',
+    symbol: 'DMT',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/30505/large/dmt.png?1684821418',
+    address: EthereumAddress('0x8b0e6f19ee57089f7649a455d89d7bc6314d04e8'),
+    coingeckoId: CoingeckoId('dream-machine-token'),
+    sinceTimestamp: new UnixTime(1684901612),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId('arbitrum:hdn-hydranet'),
+    name: 'Hydranet',
+    symbol: 'HDN',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/25177/large/HDXdarkblueInv.png?1652694650',
+    address: EthereumAddress('0x3404149e9ee6f17fb41db1ce593ee48fbdcd9506'),
+    coingeckoId: CoingeckoId('hydranet'),
+    sinceTimestamp: new UnixTime(1687566748),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
 ]
 
 export const arbitrum: Layer2 = {
