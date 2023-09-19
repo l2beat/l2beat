@@ -6,7 +6,7 @@ import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
-import { configureRollupsOnlyFilter } from './configureRollupsOnlyFilter'
+import { configureProjectFilters } from './configureProjectFilters'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureSlideCards } from './configureSlideCard'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
@@ -29,7 +29,7 @@ configureProjectNavigation()
 configureExpandableContainer()
 configureTabs()
 configureCanonicalBridgesFilter()
-configureRollupsOnlyFilter()
 configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
+configureProjectFilters()

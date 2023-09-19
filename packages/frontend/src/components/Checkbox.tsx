@@ -7,6 +7,7 @@ export interface IncludeLayer2sCheckboxProps {
   className?: string
   label: ReactNode
   role: string
+  slugs?: string[]
   id: string
   defaultChecked?: boolean
 }
@@ -15,6 +16,7 @@ export function Checkbox({
   className,
   label,
   role,
+  slugs,
   id,
   defaultChecked,
 }: IncludeLayer2sCheckboxProps) {
@@ -28,6 +30,7 @@ export function Checkbox({
     >
       <input
         data-role={role}
+        data-slugs={slugs}
         id={id}
         type="checkbox"
         autoComplete="off"

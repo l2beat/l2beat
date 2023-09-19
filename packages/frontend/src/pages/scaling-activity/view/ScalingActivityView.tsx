@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { RollupsOnlyCheckbox } from '../../../components/table/filters/checkboxes/RollupsOnlyCheckbox'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { getScalingActivityColumns } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
@@ -18,7 +17,6 @@ export function ScalingActivityView({ items }: ScalingActivityViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <RollupsOnlyCheckbox className="mb-4" />
       <TableView
         items={items}
         columns={columns}

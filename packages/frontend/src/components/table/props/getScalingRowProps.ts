@@ -40,6 +40,7 @@ export function getScalingRowProps(
     href,
     'data-role': 'row',
     'data-rollup': isRollup,
+    'data-slug': entry.slug,
   }
 }
 
