@@ -38,6 +38,17 @@ export function getProjectDetails(
     props: { ...chart, id: 'chart', title: 'Chart' },
   })
 
+  if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
+    items.push({
+      type: 'MilestonesSection',
+      props: {
+        milestones: project.milestones,
+        id: 'milestones',
+        title: 'Milestones',
+      },
+    })
+  }
+
   items.push({
     type: 'DescriptionSection',
     props: getDescriptionSection(project, verificationStatus),
@@ -116,13 +127,13 @@ export function getProjectDetails(
       props: getContractSection(project, verificationStatus),
     })
 
-    if (project.milestones && !isEmpty(project.milestones)) {
+    if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
       items.push({
-        type: 'MilestonesSection',
+        type: 'KnowledgeNuggetsSection',
         props: {
-          milestones: project.milestones,
-          id: 'milestones',
-          title: 'Milestones',
+          knowledgeNuggets: project.knowledgeNuggets,
+          id: 'knowledge-nuggets',
+          title: 'Knowledge Nuggets',
         },
       })
     }
