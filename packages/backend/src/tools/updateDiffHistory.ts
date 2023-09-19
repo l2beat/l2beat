@@ -1,5 +1,7 @@
 /*
   This file is a quick prototype and will be refactored if it's proven useful.
+  
+  Do not INCLUDE this file - it immediately runs `updateDiffHistoryFile()`
 */
 
 import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
@@ -10,7 +12,10 @@ import { execSync } from 'child_process'
 import { writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 
-export async function updateDiffHistoryFile() {
+// This is a CLI tool. Run logic immediately.
+void updateDiffHistoryFile()
+
+async function updateDiffHistoryFile() {
   console.log('Updating diff history file...')
   const params = process.argv.filter((v) => !v.startsWith('-'))
   console.log(params)
@@ -150,5 +155,3 @@ function generateDiffHistoryMarkdown(
 
   return result.join('\n')
 }
-
-void updateDiffHistoryFile()
