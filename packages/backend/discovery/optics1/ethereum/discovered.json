@@ -1,12 +1,12 @@
 {
   "name": "optics1",
   "chain": "ethereum",
-  "blockNumber": 18163723,
-  "configHash": "0x8394a513ac9e7cab343c518e2937c1e44a8e96d459b90ed0f04ecc9ff81d12e4",
+  "blockNumber": 18170901,
+  "configHash": "0xd771561a5350f075f76e64b561f09b15d036dbeb0a8b079fd82758e22e65404d",
   "version": 2,
   "contracts": [
     {
-      "name": "GnosisSafe",
+      "name": "RecoveryManager",
       "address": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
       "upgradeability": {
         "type": "gnosis safe",
@@ -27,7 +27,8 @@
         "getThreshold": 4,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "UpdaterManager",
@@ -64,7 +65,7 @@
       "derivedName": "GovernanceRouter"
     },
     {
-      "name": "GnosisSafe",
+      "name": "Governor",
       "address": "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37",
       "upgradeability": {
         "type": "gnosis safe",
@@ -85,7 +86,8 @@
         "getThreshold": 3,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "BridgeRouterBeaconProxy",
@@ -100,11 +102,20 @@
         "owner": "0x42303634F37956687fB7ff2c6146AC842481A052",
         "PRE_FILL_FEE_DENOMINATOR": 10000,
         "PRE_FILL_FEE_NUMERATOR": 9995,
-        "tokenBeacon": "0xc494bFEE14b5E1E118F93CfedF831f40dFA720fA",
         "VERSION": 0,
         "xAppConnectionManager": "0xcEc158A719d11005Bd9339865965bed938BEafA3"
       },
       "derivedName": "BridgeRouter"
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "address": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x42303634F37956687fB7ff2c6146AC842481A052"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -123,26 +134,6 @@
         "getThreshold": 1,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "BridgeToken",
-      "address": "0xc494bFEE14b5E1E118F93CfedF831f40dFA720fA",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xf244eA81F715F343040569398A4E7978De656bf6"
-      },
-      "values": {
-        "_PERMIT_TYPEHASH": "0x000000000000000000000000f244ea81f715f343040569398a4e7978de656bf6",
-        "decimals": 246,
-        "domainSeparator": "0x000000000000000000000000f244ea81f715f343040569398a4e7978de656bf6",
-        "owner": "0xf244eA81F715F343040569398A4E7978De656bf6",
-        "totalSupply": "1383112645712635899064790853414817057724025891830",
-        "VERSION": 246
-      },
-      "errors": {
-        "name": "Execution reverted",
-        "symbol": "Execution reverted"
       }
     },
     {
@@ -260,12 +251,16 @@
     "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
+    "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B": [
+      "event BeaconUpgraded(address indexed beacon, address implementation)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _beacon, address _implementation)"
+    ],
     "0xBcd15f82Ae461335257d0851A18948784cF79E9d": [
       "constructor(address _singleton)"
-    ],
-    "0xc494bFEE14b5E1E118F93CfedF831f40dFA720fA": [
-      "constructor(address _initialImplementation, address _controller) payable",
-      "event Upgrade(address indexed implementation)"
     ],
     "0xcEc158A719d11005Bd9339865965bed938BEafA3": [
       "constructor()",
@@ -366,34 +361,6 @@
       "function transferGovernor(uint32 _newDomain, address _newGovernor)",
       "function transferRecoveryManager(address _newRecoveryManager)",
       "function xAppConnectionManager() view returns (address)"
-    ],
-    "0xf244eA81F715F343040569398A4E7978De656bf6": [
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function VERSION() view returns (uint8)",
-      "function _PERMIT_TYPEHASH() view returns (bytes32)",
-      "function allowance(address _owner, address _spender) view returns (uint256)",
-      "function approve(address _spender, uint256 _amount) returns (bool)",
-      "function balanceOf(address _account) view returns (uint256)",
-      "function burn(address _from, uint256 _amnt)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address _spender, uint256 _subtractedValue) returns (bool)",
-      "function domainSeparator() view returns (bytes32)",
-      "function increaseAllowance(address _spender, uint256 _addedValue) returns (bool)",
-      "function initialize()",
-      "function mint(address _to, uint256 _amnt)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function permit(address _owner, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
-      "function renounceOwnership()",
-      "function setDetails(string _newName, string _newSymbol, uint8 _newDecimals)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address _recipient, uint256 _amount) returns (bool)",
-      "function transferFrom(address _sender, address _recipient, uint256 _amount) returns (bool)",
-      "function transferOwnership(address newOwner)"
     ],
     "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
