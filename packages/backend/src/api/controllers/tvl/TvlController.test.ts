@@ -1,5 +1,5 @@
-import { tokenList } from '@l2beat/config'
 import { Logger } from '@l2beat/backend-tools'
+import { tokenList } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
