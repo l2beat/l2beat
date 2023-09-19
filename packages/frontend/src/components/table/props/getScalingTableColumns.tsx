@@ -32,7 +32,7 @@ export function getActiveScalingTvlColumns(detailedTvlEnabled: boolean) {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Risks',
@@ -50,7 +50,7 @@ export function getActiveScalingTvlColumns(detailedTvlEnabled: boolean) {
     {
       name: 'Technology',
       tooltip:
-        'Type of this offchain system. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
@@ -69,7 +69,7 @@ export function getActiveScalingTvlColumns(detailedTvlEnabled: boolean) {
     },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this offchain system.',
+      tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purpose,
     },
     {
@@ -119,7 +119,7 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Total',
@@ -208,12 +208,12 @@ export function getUpcomingScalingTvlColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Technology',
       tooltip:
-        'Type of this offchain system. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
@@ -223,7 +223,7 @@ export function getUpcomingScalingTvlColumns() {
     },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this offchain system.',
+      tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purpose,
     },
   ]
@@ -243,7 +243,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Risks',
@@ -255,7 +255,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     {
       name: 'Technology',
       tooltip:
-        'Type of this offchain system. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
@@ -265,7 +265,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this offchain system.',
+      tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purpose,
     },
     {
@@ -309,7 +309,7 @@ export function getScalingRiskColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'State validation',
@@ -358,7 +358,7 @@ export function getScalingActivityColumns() {
       minimalWidth: true,
       getValue: (project) =>
         project.slug !== 'ethereum' ? (
-          <ProjectCell type="layer2" project={project} />
+          <ProjectCell project={project} />
         ) : (
           <EthereumCell project={project} />
         ),

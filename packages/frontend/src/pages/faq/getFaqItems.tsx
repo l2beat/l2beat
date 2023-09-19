@@ -63,25 +63,75 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
     {
       question: 'What exactly are L2s and why Polygon is not included?',
       answer: (
-        <span>
-          L2s are chains that can be exited by interacting directly with L1
-          alone, eliminating the need to rely on L2 operators for the security
-          of the funds. In the case of Polygon, an additional layer of trust is
-          introduced: users must trust the majority of Polygon's validators to
-          enable secure withdrawals and prevent fund theft. Note that
-          application-specific logic, like in the case of dYdX forced trade
-          requests, may also require inter-user dependencies to successfully
-          exit the system.
-        </span>
+        <div>
+          <p className="mt-4">
+            Trust-minimized L2s are chains that can be exited by interacting
+            directly with L1 alone, eliminating the need to rely on L2 operators
+            for the security of the funds.
+          </p>
+          <p className="mt-4">
+            In the case of Polygon, an additional layer of trust is introduced:
+            users must trust the majority of Polygon's validators to enable
+            secure withdrawals and prevent fund theft. Note that
+            application-specific logic, like in the case of dYdX forced trade
+            requests, may also require inter-user dependencies to successfully
+            exit the system.
+          </p>
+        </div>
       ),
     },
     {
-      question: 'Right, so how can L1 help with the security of L2?',
+      question:
+        'Why does the main table contain projects than are not trust-minimized L2s yet?',
+      answer: (
+        <div>
+          <p className="mt-4">
+            We want to track the progress of the projects that are credibly
+            committed towards becoming trust-minimized L2s. Our goal is to
+            provide the community with the most up-to-date information about the
+            state of these projects and to provide insights and guidance for
+            them to become fully trust minimized.
+          </p>
+        </div>
+      ),
+    },
+    {
+      question: 'Are Validiums and Optimiums L2s?',
+      answer: (
+        <div>
+          <p className="mt-4">
+            Validiums and Optimiums are not L2s: by not publishing data on L1
+            they introduce additional trust assumptions on top of it. If the
+            data to reconstruct the state is not made available by the operators
+            of the offchain DA solution, funds are at risk.
+          </p>
+        </div>
+      ),
+    },
+    {
+      question:
+        'If Validiums and Optimiums are not L2s, why are they included?',
+      answer: (
+        <div>
+          <p className="mt-4">
+            We include Validiums and Optimiums along with L2s mainly for
+            historical reasons. We introduced them when the L2 space was still
+            in its infancy and we wanted to provide a comprehensive overview of
+            the space. We will continue to track these projects to provide the
+            community with a broader perspective on the state of the space and
+            to provide tools to evaluate the different tradeoffs between the
+            various solutions.
+          </p>
+        </div>
+      ),
+    },
+    {
+      question: 'How do L2s derive their security from L1?',
       answer: (
         <div>
           <p className="mt-4">
             There are two primary (and somewhat independent) mechanisms that L2
-            chains can use.
+            chains use.
           </p>
           <p className="mt-4">
             First, the L2 state can be verified by L1 through either{' '}
@@ -173,7 +223,8 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
       answer: (
         <div>
           <p className="mt-4">
-            The systems that can be exited just by interacting with L1 are:
+            We currently acknowledge the following possible designs of
+            trust-minimized L2s:
             <UnorderedList>
               <li>
                 <Strong>zkRollups</Strong> - they publish data on L1 (Ethereum)
@@ -200,87 +251,26 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
             </UnorderedList>
           </p>
           <p className="mt-4">
+            By introducing more trust assumptions we can also specify the
+            following categories that fall outside of the L2 boundary:
+            <UnorderedList>
+              <li>
+                <Strong>Validiums</Strong> - Those systems rely on validity
+                proofs and data published externally.
+              </li>
+              <li>
+                <Strong>Optimiums</Strong> - historically named Optimistic
+                Chain. Those systems rely on fraud proofs and data published
+                externally.
+              </li>
+            </UnorderedList>
+          </p>
+          <p className="mt-4">
             For more details see the{' '}
             <Link href="https://vitalik.ca/general/2021/01/05/rollup.html">
               Incomplete guide to Rollups
-            </Link>
+            </Link>{' '}
             by Vitalik Buterin.
-          </p>
-          <table className="mx-auto mt-4 border-collapse">
-            <thead>
-              <tr>
-                <td className="border border-b-2 border-r-2 py-1 px-2 md:py-2 md:px-4" />
-                <th className="border border-b-2 py-1 px-2 md:py-2 md:px-4">
-                  Validity Proofs
-                </th>
-                <th className="border border-b-2 py-1 px-2 md:py-2 md:px-4">
-                  Fraud Proofs
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th className="whitespace-pre border border-r-2 py-1 px-2 md:py-2 md:px-4">
-                  Data on-chain
-                </th>
-                <td className="border py-1 px-2 md:py-2 md:px-4">ZK Rollup</td>
-                <td className="border py-1 px-2 md:py-2 md:px-4">
-                  Optimistic Rollup
-                </td>
-              </tr>
-              <tr>
-                <th className="whitespace-pre border border-r-2 py-1 px-2 md:py-2 md:px-4">
-                  Data off-chain
-                </th>
-                <td className="border py-1 px-2 md:py-2 md:px-4">Validium</td>
-                <td className="border py-1 px-2 md:py-2 md:px-4">Plasma</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      ),
-    },
-    {
-      question:
-        'Why does the main table contain projects than are not fully L2s yet?',
-      answer: (
-        <div>
-          <p className="mt-4">
-            We want to track the progress of the projects that are credibly
-            committed towards becoming trust minimized L2s. Our goal is to
-            provide the community with the most up-to-date information about the
-            state of these projects and to provide insights and guidance for
-            them to become fully trust minimized.
-          </p>
-        </div>
-      ),
-    },
-    {
-      question: 'Are Validiums and Optimiums L2s?',
-      answer: (
-        <div>
-          <p className="mt-4">
-            Validiums and Optimiums are not L2s: by not publishing data on L1
-            they introduce additional trust assumptions on top of it. If the
-            data to reconstruct the state is not made available by the operators
-            of the offchain DA solution, funds are at risk.
-          </p>
-        </div>
-      ),
-    },
-    {
-      question:
-        'If Validiums and Optimiums are not L2s, why are they included?',
-      answer: (
-        <div>
-          <p className="mt-4">
-            We include Validiums and Optimiums along with L2s mainly for
-            historical reasons. We introduced them when the L2 space was still
-            in its infancy and we wanted to provide a comprehensive overview of
-            the space. We will continue to track these projects to provide the
-            community with a broader perspective on the state of the space and
-            to provide tools to evaluate the different tradeoffs between the
-            various solutions.
           </p>
         </div>
       ),

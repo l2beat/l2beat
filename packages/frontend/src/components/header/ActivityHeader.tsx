@@ -34,11 +34,11 @@ export function ActivityHeader(props: ActivityHeaderProps) {
           <span
             className="Tooltip inline-block"
             title={
-              'How many more transactions are settled by Ethereum if we take into account offchain systems.' +
+              'How many more transactions are settled by Ethereum if we take into account projects listed below.' +
               '\n' +
               'Exact formula:' +
               '\n' +
-              '(offchain txs/7d + ETH txs/7d) / ETH txs/7d'
+              '(project txs/7d + ETH txs/7d) / ETH txs/7d'
             }
           >
             <InfoIcon />
