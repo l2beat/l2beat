@@ -36,7 +36,7 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
         props.escrows.map((escrow) => (
           <div
             key={escrow.escrow}
-            className="MultipleEscrowsHidden hidden font-normal text-white/80"
+            className="MultipleEscrowsHidden hidden font-normal text-black/80 dark:text-white/80"
             data-token={props.assetId}
           >
             {formatLargeNumberWithCommas(Number(escrow.amount))}

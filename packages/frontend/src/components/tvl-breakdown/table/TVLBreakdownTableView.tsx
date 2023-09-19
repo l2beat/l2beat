@@ -61,7 +61,7 @@ export function TVLBreakdownTableView<
     >
       <table className="w-full border-collapse border-b border-b-white/25 text-left">
         <thead>
-          <tr className="md:bg-white/10">
+          <tr className="md:bg-black/10 dark:md:bg-white/10">
             {columns.map((column, i) => {
               const isLastColumn = i === columns.length - 1
               return (
@@ -106,7 +106,6 @@ export function TVLBreakdownTableView<
           {items.map((item, i) => {
             const { className: rowClassName, ...rest } =
               rows?.getProps(item, i) ?? {}
-            console.log(item)
 
             return (
               <tr
