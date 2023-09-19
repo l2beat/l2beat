@@ -60,13 +60,13 @@ export class Application {
 
       await apiServer.listen()
 
-      await database.assertRequiredServerVersion()
-      if (config.database.freshStart) {
-        await database.rollbackAll()
-      }
-      await database.migrateToLatest()
+      // await database.assertRequiredServerVersion()
+      // if (config.database.freshStart) {
+      //   await database.rollbackAll()
+      // }
+      // await database.migrateToLatest()
 
-      database.enableQueryLogging()
+      // database.enableQueryLogging()
 
       for (const module of modules) {
         await module?.start?.()

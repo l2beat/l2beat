@@ -144,15 +144,15 @@ export function createTvlModule(
     logger = logger.for('TvlModule')
     logger.info('Starting')
 
-    priceUpdater.start()
+    // priceUpdater.start()
 
-    logger.info('Starting submodules...')
+    // logger.info('Starting submodules...')
 
-    for (const submodule of submodules) {
-      await submodule?.start?.()
-    }
+    // for (const submodule of submodules) {
+    //   await submodule?.start?.()
+    // }
 
-    await aggregatedReportUpdater.start()
+    // await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }

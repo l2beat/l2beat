@@ -21,7 +21,7 @@ export function createBlocksRouter(blocksController: BlocksController) {
         {
           updaterName: 'Aggregate',
           statuses: [
-            ...(Array(100).fill({
+            ...(Array(1500).fill({
               timestamp: new UnixTime(0),
               status: 'synced',
             }) as StatusPoint[]),
