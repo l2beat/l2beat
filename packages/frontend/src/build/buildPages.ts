@@ -40,13 +40,13 @@ async function main() {
     ? await fetchDetailedTvlApi(config.backend, http)
     : await fetchTvlApi(config.backend, http)
   printApiInfo(tvlApiResponse)
-  // tvlSanityCheck(tvlApiResponse)
+  tvlSanityCheck(tvlApiResponse)
 
   let activityApiResponse: ActivityApiResponse | undefined = undefined
   if (config.features.activity) {
     activityApiResponse = await fetchActivityApi(config.backend, http)
     printActivityInfo(activityApiResponse)
-    // activitySanityCheck(activityApiResponse)
+    activitySanityCheck(activityApiResponse)
   }
 
   let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
