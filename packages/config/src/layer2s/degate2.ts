@@ -20,7 +20,7 @@ import {
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('degate')
+const discovery = new ProjectDiscovery('degate2')
 
 const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
   'ExchangeV3',
@@ -41,17 +41,16 @@ const maxForcedWithdrawalFee = discovery.getContractValue<(number | string)[]>(
   'ExchangeV3',
   'getConstants',
 )[10]
-
 const maxForcedWithdrawalFeeString = `${utils.formatEther(
   maxForcedWithdrawalFee,
 )} ETH`
 
-export const degate: Layer2 = {
+export const degate2: Layer2 = {
   type: 'layer2',
-  id: ProjectId('degate'),
+  id: ProjectId('degate2'),
   display: {
-    name: 'DeGate V1',
-    slug: 'degate',
+    name: 'DeGate V2',
+    slug: 'degate2',
     description:
       'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
@@ -76,8 +75,8 @@ export const degate: Layer2 = {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA'),
-        sinceTimestamp: new UnixTime(1681991243),
+        address: EthereumAddress('0xF13e21653AEB763595D5E4baA1dC115689Da49b9'),
+        sinceTimestamp: new UnixTime(1693304807),
         tokens: '*',
       }),
     ],
@@ -96,8 +95,8 @@ export const degate: Layer2 = {
         {
           contract: 'ExchangeV3',
           references: [
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F23#L102',
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F35#L162',
+            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F23#L102',
+            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F35#L162',
           ],
         },
       ],
@@ -108,7 +107,7 @@ export const degate: Layer2 = {
         {
           contract: 'ExchangeV3',
           references: [
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L420',
           ],
         },
       ],
@@ -172,11 +171,11 @@ export const degate: Layer2 = {
       references: [
         {
           text: 'ExchangeV3.sol#L341-L348 - DeGate source code',
-          href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L341',
+          href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L341',
         },
         {
           text: 'LoopringIOExchangeOwner.sol#L98-L101 - DeGate source code',
-          href: 'https://etherscan.io/address/0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83#code#F1#L98',
+          href: 'https://etherscan.io/address/0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215#code#F1#L98',
         },
       ],
     },
@@ -208,7 +207,7 @@ export const degate: Layer2 = {
           },
           {
             text: 'ExchangeV3.sol#L392 - DeGate source code, forceWithdraw function',
-            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L392',
+            href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L392',
           },
         ],
       },
@@ -226,7 +225,7 @@ export const degate: Layer2 = {
 
           {
             text: 'ExchangeV3.sol#L420 - DeGate source code, withdrawFromMerkleTree function',
-            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+            href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L420',
           },
         ],
       },
@@ -252,7 +251,7 @@ export const degate: Layer2 = {
         const permissionedAccount = discovery.formatPermissionedAccount(owner1)
 
         // if it was updated, we should add multisig participants
-        assert(permissionedAccount.type === 'Contract', 'DeGate')
+        assert(permissionedAccount.type === 'EOA', 'DeGate')
 
         return [permissionedAccount]
       })(),
@@ -297,11 +296,10 @@ export const degate: Layer2 = {
   },
   milestones: [
     {
-      name: 'DeGate DEX Launches Mainnet Beta',
-      link: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
-      date: '2023-05-03T00:00:00Z',
-      description:
-        'DeGate launches mainnet beta with a deposit cap and a program to recover eventual user losses.',
+      name: 'DeGate Redeploy',
+      link: 'https://medium.com/degate/degate-mainnet-beta-redeployment-update-a0f1a6b7350c',
+      date: '2023-09-14T00:00:00Z',
+      description: 'DeGate redeploys the contracts to fix a bug.',
     },
   ],
 }
