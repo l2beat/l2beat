@@ -1,7 +1,10 @@
+import { AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
+import { formatLargeNumberWithCommas } from '../../../../utils'
 import { BridgedUsingCell } from '../BridgedUsingCell'
+import { EscrowsCell } from '../EscrowsCell'
 import { TokenAddressCell } from '../TokenAddressCell'
 import { TokenAmountCell } from '../TokenAmountCell'
 import { TokenNameCell } from '../TokenNameCell'
@@ -94,6 +97,70 @@ export function getExternallyMintedColumns(explorer: string) {
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenValueCell assetId={token.assetId} usdValue={token.usdValue} />
+      ),
+    },
+  ]
+
+  return columns
+}
+
+export function getCanonicallyMintedColumns(explorer: string) {
+  const columns: ColumnConfig<{
+    assetId: AssetId
+    escrows: {
+      escrow: string
+      usdPrice: string
+      usdValue: string
+      amount: string
+    }[]
+    usdPrice: string
+    usdValue: string
+    amount: string
+  }>[] = [
+    {
+      name: 'TOKEN',
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (token) => <TokenNameCell assetId={token.assetId} />,
+    },
+    {
+      name: 'ESCROW',
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (token) => (
+        <EscrowsCell escrows={token.escrows} explorer={explorer} />
+      ),
+    },
+    {
+      name: 'PRICE',
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (token) => (
+        <div className="text-xs font-medium">
+          ${formatLargeNumberWithCommas(Number(token.usdPrice))}
+        </div>
+      ),
+    },
+    {
+      name: 'AMOUNT',
+      minimalWidth: true,
+      alignRight: true,
+      headClassName: 'md:pl-4',
+      getValue: (token) => (
+        <div className="text-xs font-medium">
+          {formatLargeNumberWithCommas(Number(token.amount))}
+        </div>
+      ),
+    },
+    {
+      name: 'VALUE',
+      minimalWidth: true,
+      alignRight: true,
+      headClassName: 'md:pl-4',
+      getValue: (token) => (
+        <div className="text-xs font-medium">
+          ${formatLargeNumberWithCommas(Number(token.usdValue))}
+        </div>
       ),
     },
   ]

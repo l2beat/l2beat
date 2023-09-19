@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { CanonicallyMintedTable } from '../../../components/tvl-breakdown/CanonicallyMintedTable'
 import { ExternallyMintedTable } from '../../../components/tvl-breakdown/ExternallyMintedTable'
 import { NativelyMintedTable } from '../../../components/tvl-breakdown/NativelyMintedTable'
 import { TvlBreakdownSummaryBox } from '../../../components/tvl-breakdown/TvlBreakdownSummaryBox'
@@ -16,6 +17,10 @@ export function TvlBreakdownView(props: TvlBreakdownViewProps) {
       <ExternallyMintedTable
         tokens={props.tvlBreakdowns.external}
         explorer={props.explorer}
+      />
+      <CanonicallyMintedTable
+        escrows={props.tvlBreakdowns.canonical}
+        explorer="https://etherscan.io"
       />
     </div>
   )
