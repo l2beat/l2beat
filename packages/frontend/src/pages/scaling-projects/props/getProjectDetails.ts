@@ -38,32 +38,6 @@ export function getProjectDetails(
     props: { ...chart, id: 'chart', title: 'Chart' },
   })
 
-  if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
-    items.push({
-      type: 'MilestonesSection',
-      props: {
-        milestones: project.milestones,
-        id: 'milestones',
-        title: 'Milestones',
-      },
-    })
-  }
-
-  if (
-    !isUpcoming &&
-    project.knowledgeNuggets &&
-    !isEmpty(project.knowledgeNuggets)
-  ) {
-    items.push({
-      type: 'KnowledgeNuggetsSection',
-      props: {
-        knowledgeNuggets: project.knowledgeNuggets,
-        id: 'knowledge-nuggets',
-        title: 'Knowledge Nuggets',
-      },
-    })
-  }
-
   items.push({
     type: 'DescriptionSection',
     props: getDescriptionSection(project, verificationStatus),
@@ -141,6 +115,17 @@ export function getProjectDetails(
       type: 'ContractsSection',
       props: getContractSection(project, verificationStatus),
     })
+
+    if (project.milestones && !isEmpty(project.milestones)) {
+      items.push({
+        type: 'MilestonesSection',
+        props: {
+          milestones: project.milestones,
+          id: 'milestones',
+          title: 'Milestones',
+        },
+      })
+    }
   } else {
     items.push({
       type: 'UpcomingDisclaimer',
