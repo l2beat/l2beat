@@ -71,6 +71,7 @@ describe(ProxyDetector.name, () => {
       'zkSpace proxy': async () => undefined,
       'Eternal Storage proxy': async () => undefined,
       'Polygon Extension proxy': async () => undefined,
+      'Optics Beacon proxy': async () => undefined,
     } as Record<ManualProxyType, Detector>)
     const result = await detector.detectProxy(
       EthereumAddress.random(),

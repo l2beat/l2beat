@@ -16,6 +16,7 @@ export const ManualProxyType = z.enum([
   'zkSpace proxy',
   'Eternal Storage proxy',
   'Polygon Extension proxy',
+  'Optics Beacon proxy',
 ])
 
 export type UpgradeabilityParameters =
@@ -36,6 +37,7 @@ export type UpgradeabilityParameters =
   | EternalStorageProxyUpgradeability
   | PolygonExtensionProxyUpgradeability
   | ZkSpaceProxyUpgradeability
+  | OpticsBeaconProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
@@ -146,4 +148,11 @@ export interface ZkSpaceProxyUpgradeability {
   admin: EthereumAddress
   implementation: EthereumAddress
   additional: EthereumAddress[]
+}
+
+export interface OpticsBeaconProxyUpgradeability {
+  type: 'Optics Beacon proxy'
+  upgradeBeacon: EthereumAddress
+  beaconController: EthereumAddress
+  implementation: EthereumAddress
 }

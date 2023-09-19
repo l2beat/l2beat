@@ -91,6 +91,11 @@ export class DiscoveryProvider {
     }
   }
 
+  async getConstructorArgs(address: EthereumAddress): Promise<string> {
+    const result = await this.etherscanLikeClient.getContractSource(address)
+    return result.ConstructorArguments
+  }
+
   async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
     return this.etherscanLikeClient.getContractDeploymentTx(address)
   }

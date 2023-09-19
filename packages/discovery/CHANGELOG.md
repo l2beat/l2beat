@@ -1,5 +1,16 @@
 # @l2beat/discovery
 
+## 0.3.0
+
+### Minor Changes
+
+- Add manual OpticsBeaconProxy
+
+### Patch Changes
+
+- Updated dependencies
+  - @l2beat/discovery-types@0.2.0
+
 ## 0.2.1
 
 ### Patch Changes

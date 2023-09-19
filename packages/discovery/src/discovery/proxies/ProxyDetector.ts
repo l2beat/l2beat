@@ -15,6 +15,7 @@ import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
+import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
@@ -45,6 +46,7 @@ const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'zkSpace proxy': getZkSpaceProxy,
   'Eternal Storage proxy': getEternalStorageProxy,
   'Polygon Extension proxy': getPolygonExtensionProxy,
+  'Optics Beacon proxy': getOpticsBeaconProxy,
 }
 
 export class ProxyDetector {
