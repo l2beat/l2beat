@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "debridge",
-  "blockNumber": 17619637,
+  "chain": "ethereum",
+  "blockNumber": 18168455,
   "configHash": "0x665f7cf5f3311e3ba1c22318c90b05fa543fedc1c4d185febec1d557f591c086",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -29,7 +29,7 @@
         "globalTransferFeeBps": 10,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "lockedClaim": 1,
-        "nonce": 11970,
+        "nonce": 12239,
         "paused": false,
         "signatureVerifier": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -60,7 +60,7 @@
           "0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
         ],
         "getThreshold": 5,
-        "nonce": 37,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -77,8 +77,8 @@
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "deBridgeTokenAdmin": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b",
-        "tokenImplementation": "0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b",
+        "implementation": "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B",
+        "tokenImplementation": "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B",
         "version": 110
       }
     },
@@ -108,7 +108,7 @@
       },
       "values": {
         "confirmationThreshold": 3,
-        "currentBlock": 17619615,
+        "currentBlock": 18166545,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "excessConfirmations": 3,
@@ -171,6 +171,25 @@
       }
     },
     {
+      "name": "DeBridgeToken",
+      "address": "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "decimals": 18,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DOMAIN_SEPARATOR": "0x71bd255e7e19bf7288abced32839ac7a63f38747292d2e97b6813c403f8024fc",
+        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
+        "name": "name",
+        "paused": false,
+        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "symbol": "symbol",
+        "totalSupply": 0
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
       "upgradeability": {
@@ -178,25 +197,6 @@
       },
       "values": {
         "owner": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
-      }
-    },
-    {
-      "name": "DeBridgeToken",
-      "address": "0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0xddb9f829e4c5b922e0a0cab9be2a4e8f1a760c32dbdc2472288cf6c7b3e22142",
-        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "name": "deBridge d",
-        "paused": false,
-        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "symbol": "ded",
-        "totalSupply": 0
       }
     }
   ],
@@ -482,6 +482,50 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B": [
+      "error AdminBadRole()",
+      "error MinterBadRole()",
+      "error PauserBadRole()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event NameUpdated(string oldName, string newName, string oldSymbol, string newSymbol, bytes32 oldDomainSeparator, bytes32 newDomainSeparator)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function MINTER_ROLE() view returns (bytes32)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(string name_, string symbol_, uint8 decimals_, address admin, address[] minters)",
+      "function mint(address _receiver, uint256 _amount)",
+      "function name() view returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function permit(address _owner, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function unpause()",
+      "function updateName(string _newName, string _newSymbol)"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -541,47 +585,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b": [
-      "error MinterBadRole()",
-      "error PauserBadRole()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Paused(address account)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Unpaused(address account)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function PAUSER_ROLE() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 _amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(string name_, string symbol_, uint8 decimals_, address admin, address[] minters)",
-      "function mint(address _receiver, uint256 _amount)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function permit(address _owner, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
-      "function unpause()"
     ],
     "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": [
       "error AdminBadRole()",
