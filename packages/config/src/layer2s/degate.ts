@@ -75,8 +75,8 @@ export const degate: Layer2 = {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA'),
-        sinceTimestamp: new UnixTime(1681991243),
+        address: EthereumAddress('0xF13e21653AEB763595D5E4baA1dC115689Da49b9'),
+        sinceTimestamp: new UnixTime(1693304807),
         tokens: '*',
       }),
     ],
@@ -95,8 +95,8 @@ export const degate: Layer2 = {
         {
           contract: 'ExchangeV3',
           references: [
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F23#L102',
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F35#L162',
+            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F23#L102',
+            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F35#L162',
           ],
         },
       ],
@@ -107,7 +107,7 @@ export const degate: Layer2 = {
         {
           contract: 'ExchangeV3',
           references: [
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L420',
           ],
         },
       ],
@@ -171,11 +171,11 @@ export const degate: Layer2 = {
       references: [
         {
           text: 'ExchangeV3.sol#L341-L348 - DeGate source code',
-          href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L341',
+          href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L341',
         },
         {
           text: 'LoopringIOExchangeOwner.sol#L98-L101 - DeGate source code',
-          href: 'https://etherscan.io/address/0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83#code#F1#L98',
+          href: 'https://etherscan.io/address/0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215#code#F1#L98',
         },
       ],
     },
@@ -207,7 +207,7 @@ export const degate: Layer2 = {
           },
           {
             text: 'ExchangeV3.sol#L392 - DeGate source code, forceWithdraw function',
-            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L392',
+            href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L392',
           },
         ],
       },
@@ -225,7 +225,7 @@ export const degate: Layer2 = {
 
           {
             text: 'ExchangeV3.sol#L420 - DeGate source code, withdrawFromMerkleTree function',
-            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+            href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L420',
           },
         ],
       },
