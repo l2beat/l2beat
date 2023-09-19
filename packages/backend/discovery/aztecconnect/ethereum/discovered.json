@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
   "chain": "ethereum",
-  "blockNumber": 18140683,
+  "blockNumber": 18163333,
   "configHash": "0x1fbc4c99b60324dcfcdd9798955efb7c8dac6d42261720f4c2d433eccdf1f2c5",
   "version": 2,
   "contracts": [
@@ -179,14 +179,14 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 25145344,
+        "getDataSize": 25180160,
         "getDefiInteractionHashesLength": 0,
-        "getEscapeHatchStatus": [false, 677],
+        "getEscapeHatchStatus": [false, 2027],
         "getImplementationVersion": 2,
         "getPendingDefiInteractionHashesLength": 0,
         "getSupportedAssetsLength": 15,
         "getSupportedBridgesLength": 18,
-        "lastRollupTimeStamp": 1694765459,
+        "lastRollupTimeStamp": 1695039047,
         "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "paused": false,
@@ -196,7 +196,7 @@
           "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
           "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
         ],
-        "rollupStateHash": "0xfe6245cd2d0845346478e798ddbacb2f06af388a82d0693096bbdf81d7e68f81",
+        "rollupStateHash": "0x21682a30cdd010b8bb7277a55e31c6240c1f1abf51fb06b3c251ea44b43dd80c",
         "verifier": "0xB656f4219f565b93DF57D531B574E17FE0F25939",
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
