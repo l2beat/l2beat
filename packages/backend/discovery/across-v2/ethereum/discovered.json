@@ -1,8 +1,8 @@
 {
   "name": "across-v2",
   "chain": "ethereum",
-  "blockNumber": 18083353,
-  "configHash": "0x9040ca6f07db0de5456cb6af23949d3ba0df1ef997ea4427d832c4513dbdedc5",
+  "blockNumber": 18128155,
+  "configHash": "0x464a979ad1c5441bd1a1a9b7ee6ea055bc3b9c272403ddb9c0e610587ff3c1d9",
   "version": 2,
   "contracts": [
     {
@@ -16,7 +16,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "115217794697669819112909340",
+        "totalSupply": "115413194065448089914578655",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -98,7 +98,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1694075171,
+        "getCurrentTime": 1694617427,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -124,10 +124,10 @@
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1694075171,
+        "getCurrentTime": 1694617427,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1023179,
+        "numberOfDeposits": 1025215,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -146,13 +146,13 @@
       },
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1694075171,
+        "getCurrentTime": 1694617427,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 197
+        "numProposals": 198
       },
       "derivedName": "GovernorV2"
     },
@@ -179,7 +179,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 459,
+        "nonce": 461,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -193,7 +193,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1694075171,
+        "getCurrentTime": 1694617427,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -237,7 +237,7 @@
           "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
         ],
         "getThreshold": 3,
-        "nonce": 164,
+        "nonce": 168,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -257,7 +257,7 @@
       },
       "values": {
         "bondAmount": "450000000000000000",
-        "bondToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "bondToken": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
         "CrossChainContracts": {
           "1": {
             "l2ChainId": 1,
@@ -305,13 +305,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x2fd2c2399058e4661188435fbdbb7fe36d05791c4fdac9830f944274d12552e8",
-          "0x4f57f117cb257b476fd87d80739e2c64298d9bb5466d13315e502448cdcdeb34",
-          "0x9e4a033e84775d0365a4a1bf93b4c2a86372dc7782c84167ba6cba887ee38a27",
+          "0x8e461d004f5c31c6a49339d4f0f873e02da9402265bbc36e7dadf5c1059b350e",
+          "0xba1a21df111a5c2d19b25b16dc72bf297e32297ae562441fd55ea5266682bc49",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          5,
-          1694077451
+          6,
+          1694621111
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -334,6 +334,23 @@
         "zkSyncEthBridge": "0x32400084C286CF3E17e7B677ea9583e60a000324",
         "zkSyncMessageBridge": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       }
+    },
+    {
+      "name": "BondToken",
+      "address": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "decimals": 18,
+        "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+        "name": "Across Bond Token",
+        "owner": "0xB524735356985D2f267FA010D681f061DfF03715",
+        "proposers": ["0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"],
+        "symbol": "ABT",
+        "totalSupply": "27802902467539846062"
+      },
+      "derivedName": "BondToken"
     }
   ],
   "eoas": [
@@ -752,6 +769,32 @@
       "function zkErc20Bridge() view returns (address)",
       "function zkSyncEthBridge() view returns (address)",
       "function zkSyncMessageBridge() view returns (address)"
+    ],
+    "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": [
+      "constructor(address _hubPool)",
+      "event Approval(address indexed src, address indexed guy, uint256 wad)",
+      "event Deposit(address indexed dst, uint256 wad)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposerModified(address proposer, bool enabled)",
+      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
+      "event Withdrawal(address indexed src, uint256 wad)",
+      "function allowance(address, address) view returns (uint256)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function balanceOf(address) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit() payable",
+      "function hubPool() view returns (address)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function proposers(address) view returns (bool)",
+      "function renounceOwnership()",
+      "function setProposer(address proposer, bool enabled)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function transferFrom(address src, address dst, uint256 amt) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(uint256 wad)"
     ]
   }
 }

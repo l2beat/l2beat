@@ -31,11 +31,7 @@ export function getProps(
       footer: getFooterProps(config),
       tvl: formatUSD(tvl),
       tvlWeeklyChange,
-      detailedTvlView: getScalingDetailedTvlView(
-        tvlApiResponse,
-        config,
-        ordering,
-      ),
+      detailedTvlView: getScalingDetailedTvlView(tvlApiResponse, ordering),
     },
     wrapper: {
       metadata: getPageMetadata(),

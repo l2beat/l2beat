@@ -20,10 +20,7 @@ import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
-export function getActiveScalingTvlColumns(
-  stagesEnabled: boolean,
-  detailedTvlEnabled: boolean,
-) {
+export function getActiveScalingTvlColumns(detailedTvlEnabled: boolean) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -35,7 +32,7 @@ export function getActiveScalingTvlColumns(
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Risks',
@@ -53,7 +50,7 @@ export function getActiveScalingTvlColumns(
     {
       name: 'Technology',
       tooltip:
-        'Type of this Layer 2. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
@@ -61,22 +58,18 @@ export function getActiveScalingTvlColumns(
         </TechnologyCell>
       ),
     },
-    ...(stagesEnabled
-      ? [
-          {
-            name: 'Stage',
-            idHref: 'stage' as const,
-            tooltip: 'Rollup stage based on its features and maturity.',
-            alignCenter: true as const,
-            getValue: (project: ScalingTvlViewEntry) => (
-              <StageCell item={project.stage} />
-            ),
-          },
-        ]
-      : []),
+    {
+      name: 'Stage',
+      idHref: 'stage' as const,
+      tooltip: 'Rollup stage based on its features and maturity.',
+      alignCenter: true as const,
+      getValue: (project: ScalingTvlViewEntry) => (
+        <StageCell item={project.stage} />
+      ),
+    },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
+      tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purpose,
     },
     {
@@ -126,7 +119,7 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Total',
@@ -215,12 +208,12 @@ export function getUpcomingScalingTvlColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Technology',
       tooltip:
-        'Type of this Layer 2. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
@@ -230,7 +223,7 @@ export function getUpcomingScalingTvlColumns() {
     },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
+      tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purpose,
     },
   ]
@@ -250,7 +243,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'Risks',
@@ -262,7 +255,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     {
       name: 'Technology',
       tooltip:
-        'Type of this Layer 2. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
@@ -272,7 +265,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     },
     {
       name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
+      tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purpose,
     },
     {
@@ -316,7 +309,7 @@ export function getScalingRiskColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+      getValue: (project) => <ProjectCell project={project} />,
     },
     {
       name: 'State validation',
@@ -337,13 +330,13 @@ export function getScalingRiskColumns() {
     {
       name: 'Sequencer failure',
       tooltip:
-        "Sequencer is an entity responsible for constructing L2 blocks and deciding on the ordering of user's L2 transactions. What happens if it is offline or censors individual user?",
+        "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
       name: 'Proposer failure',
       tooltip:
-        'Proposer is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
+        'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.proposerFailure} />,
     },
   ]
@@ -365,7 +358,7 @@ export function getScalingActivityColumns() {
       minimalWidth: true,
       getValue: (project) =>
         project.slug !== 'ethereum' ? (
-          <ProjectCell type="layer2" project={project} />
+          <ProjectCell project={project} />
         ) : (
           <EthereumCell project={project} />
         ),

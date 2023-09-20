@@ -122,7 +122,7 @@ export const aevo: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       stateVerificationOnL1: false,
@@ -319,6 +319,15 @@ export const aevo: Layer2 = {
       title: 'Modular Rollup Theory',
       url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
       thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
+  ],
+  milestones: [
+    {
+      name: 'Aevo Open Mainnet Launch',
+      link: 'https://aevo.mirror.xyz/hV7VYkpk7caoYl2DbOFcSaZRRrK-8NeWqKczrgUff6k',
+      date: '2023-06-14T00:00:00.00Z',
+      description:
+        'Aevo removed the whitelist and opened the mainnet to the public.',
     },
   ],
 }

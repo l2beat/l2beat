@@ -17,14 +17,11 @@ import { ScalingTvlViewEntry } from '../types'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
-  stagesEnabled: boolean
-  upcomingEnabled?: boolean
   detailedTvlEnabled: boolean
 }
 
 export function ScalingTvlView({
   items,
-  stagesEnabled,
   detailedTvlEnabled,
 }: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
@@ -46,10 +43,7 @@ export function ScalingTvlView({
                   (item) => !item.isArchived && !item.isUpcoming,
                 )}
                 rows={rows}
-                columns={getActiveScalingTvlColumns(
-                  stagesEnabled,
-                  detailedTvlEnabled,
-                )}
+                columns={getActiveScalingTvlColumns(detailedTvlEnabled)}
                 rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),

@@ -1,5 +1,5 @@
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockFn } from 'earl'
 
 import { AssetUpdater } from '../assets'
 import { getAggregatedConfigHash } from './getAggregatedConfigHash'
@@ -73,5 +73,6 @@ function fakeUpdater(hash: string, chainId: ChainId): AssetUpdater {
     getConfigHash: () => Hash256('0x' + hash + '0'.repeat(64 - hash.length)),
     getReportsWhenReady: async () => [],
     getMinTimestamp: () => new UnixTime(0),
+    getStatus: mockFn(),
   }
 }

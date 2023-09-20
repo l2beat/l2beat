@@ -6,11 +6,11 @@ import { StageBadge } from './StageBadge'
 import { StageDisclaimer } from './StageDisclaimer'
 
 export interface StageTooltipProps {
-  item?: StageConfig
+  item: StageConfig
 }
 
 export function StageTooltip({ item }: StageTooltipProps) {
-  if (!item) return null
+  if (item.stage === 'NotApplicable') return null
 
   return (
     <div className="flex max-w-[300px] flex-col gap-4 py-1">

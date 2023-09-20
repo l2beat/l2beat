@@ -77,6 +77,9 @@ export const nova: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [
       {
@@ -224,7 +227,7 @@ export const nova: Layer2 = {
       ),
       discovery.getContractDetails(
         'UpgradeExecutor',
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock. Can cancel Timelock's proposals.",
       ),
       discovery.getContractDetails(
         'ProxyAdmin 2',

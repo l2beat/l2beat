@@ -1,18 +1,21 @@
 import { Logger } from '@l2beat/shared'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
-import { AssetUpdater } from '../assets/'
+import { AssetUpdater } from '../assets'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
 import { getAggregatedConfigHash } from './getAggregatedConfigHash'
+import { getStatus } from './getStatus'
 import { ReportProject } from './ReportProject'
 
 export class AggregatedReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
+  private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly assetUpdaters: AssetUpdater[],
@@ -33,6 +36,15 @@ export class AggregatedReportUpdater {
     )
   }
 
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+    )
+  }
+
   getConfigHash() {
     return this.configHash
   }
@@ -41,11 +53,13 @@ export class AggregatedReportUpdater {
     const known = await this.aggregatedReportStatusRepository.getByConfigHash(
       this.configHash,
     )
-    const knownSet = new Set(known.map((x) => x.toNumber()))
+    for (const timestamp of known) {
+      this.knownSet.add(timestamp.toNumber())
+    }
 
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
-      if (!knownSet.has(timestamp.toNumber())) {
+      if (!this.knownSet.has(timestamp.toNumber())) {
         // we add to front to sync from newest to oldest
         this.taskQueue.addToFront(timestamp)
       }

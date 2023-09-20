@@ -14,7 +14,7 @@ export function IncludeLayer2sCheckbox({
       className={className}
       role="chart-combined"
       id="combined-bridges-checkbox"
-      label="Include canonical bridges to Layer2s"
+      label="Include canonical bridges"
     />
   )
 }

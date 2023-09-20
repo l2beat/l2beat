@@ -1,7 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 import { DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
-import { Config } from '../../../build/config'
 import { getTokens } from '../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
@@ -12,7 +11,6 @@ import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
 
 export function getScalingDetailedTvlView(
   tvlApiResponse: DetailedTvlApiResponse | TvlApiResponse,
-  config: Config,
   projects: Layer2[],
 ): ScalingDetailedTvlViewProps {
   return {
@@ -22,7 +20,6 @@ export function getScalingDetailedTvlView(
         project,
       ),
     ),
-    upcomingEnabled: config.features.upcomingRollups,
   }
 }
 

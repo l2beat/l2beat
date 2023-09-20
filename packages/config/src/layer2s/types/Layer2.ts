@@ -16,6 +16,7 @@ import {
 } from '../../common'
 import { StageConfig } from '../common/stages/types'
 import { Layer2RiskView } from './Layer2RiskView'
+import { Layer2StateDerivation } from './Layer2StateDerivation'
 import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
@@ -36,9 +37,11 @@ export interface Layer2 {
   /** Risk view values for this layer2 */
   riskView: Layer2RiskView
   /** Rollup stage */
-  stage?: StageConfig
+  stage: StageConfig
   /** Deep dive into layer2 technology */
   technology: Layer2Technology
+  /** Open-source node details */
+  stateDerivation?: Layer2StateDerivation
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses */

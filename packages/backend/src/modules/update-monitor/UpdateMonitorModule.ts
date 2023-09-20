@@ -2,6 +2,7 @@ import {
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
   DiscoveryLogger,
+  HttpClient as DiscoveryHttpClient,
 } from '@l2beat/discovery'
 import { HttpClient, Logger } from '@l2beat/shared'
 
@@ -48,8 +49,16 @@ export function createUpdateMonitorModule(
     logger,
   )
 
+  // TODO: get rid of that once we achive full library separation
+  const discoveryHttpClient = new DiscoveryHttpClient()
+
   const runners = config.updateMonitor.chains.map((chainConfig) =>
-    createDiscoveryRunner(http, configReader, discoveryLogger, chainConfig),
+    createDiscoveryRunner(
+      discoveryHttpClient,
+      configReader,
+      discoveryLogger,
+      chainConfig,
+    ),
   )
 
   const updateMonitor = new UpdateMonitor(
