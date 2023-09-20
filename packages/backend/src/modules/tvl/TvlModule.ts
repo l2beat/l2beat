@@ -1,4 +1,5 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import { ChainId } from '@l2beat/shared-pure'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
@@ -31,7 +32,6 @@ import { createBaseTvlSubmodule } from './BaseTvlSubmodule'
 import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
 import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
 import { TvlDatabase } from './types'
-import { ChainId } from '@l2beat/shared-pure'
 
 export function createTvlModule(
   config: Config,

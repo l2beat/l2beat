@@ -29,21 +29,31 @@ export function TvlStatusPage({
   return (
     <Page title="TVL module status (Last 24 hours)">
       <p>Latest safe timestamp: {latestSafeTimestamp.toDate().toISOString()}</p>
-      {statuses.map((status, id) => (
-        <div key={id}>
-          <h2>{status.groupName}</h2>
-          {status.updaters.map((updater, id) => (
-            <div key={id}>
-              <h4>{updater.updaterName}</h4>
-              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {updater.statuses.slice(0, 24).map((status, index) => (
-                  <Square key={index} status={status} />
-                ))}
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {statuses.map((status, id) => (
+          <div
+            style={{
+              margin: '5px',
+              padding: '5px',
+            }}
+            key={id}
+          >
+            <p style={{ fontWeight: 'bold' }}>
+              {status.groupName.toUpperCase()}
+            </p>
+            {status.updaters.map((updater, id) => (
+              <div key={id} style={{ marginLeft: '2px' }}>
+                <p>{updater.updaterName}</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                  {updater.statuses.slice(0, 24).map((status, index) => (
+                    <Square key={index} status={status} />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ))}
+            ))}
+          </div>
+        ))}
+      </div>
     </Page>
   )
 }

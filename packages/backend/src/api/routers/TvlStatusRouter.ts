@@ -19,20 +19,15 @@ export function createTvlStatusRouter(
 ) {
   const router = new Router()
 
-  const statuses: {
-    groupName: string
-    updaters: UpdaterStatus[]
-  }[] = updaterGroups.map((x) => {
-    return {
-      groupName: x.groupName,
-      updaters: x.updaters.map((updater) => updater.getStatus()),
-    }
-  })
-
   router.get('/status/tvl', (ctx) => {
     ctx.body = renderTvlStatusPage({
       latestSafeTimestamp: clock.getLastHour(),
-      statuses,
+      statuses: updaterGroups.map((x) => {
+        return {
+          groupName: x.groupName,
+          updaters: x.updaters.map((updater) => updater.getStatus()),
+        }
+      }),
     })
   })
 
