@@ -24,12 +24,11 @@ export function TvlStatusPage({
   latestSafeTimestamp,
 }: StatusPageProps) {
   return (
-    <Page title="TVL module status">
+    <Page title="TVL module status (Last 24 hours)">
       <p>Latest safe timestamp: {latestSafeTimestamp.toDate().toISOString()}</p>
       {statuses.map((s, id) => (
         <div key={id}>
-          <h2>{s.updaterName}</h2>
-          <h3>Last 24 hours:</h3>
+          <h4>{s.updaterName}</h4>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {s.statuses.slice(0, 24).map((status, index) => (
               <Square key={index} status={status} />

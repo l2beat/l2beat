@@ -167,6 +167,7 @@ export function createTvlModule(
   const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(clock, [
     aggregatedReportUpdater,
+    ...submodules.flatMap((x) => x?.assetUpdaters ?? []),
   ])
 
   // #endregion

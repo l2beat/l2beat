@@ -7,7 +7,7 @@ import {
 } from '../controllers/status/view/TvlStatusPage'
 
 interface Updater {
-  getStatus(): Promise<UpdaterStatus>
+  getStatus(): UpdaterStatus
 }
 
 export function createTvlStatusRouter(clock: Clock, updaters: Updater[]) {
