@@ -1,12 +1,12 @@
 import { hashJson } from '@l2beat/shared-pure'
 import { sortBy } from 'lodash'
 
-import { AssetUpdater } from '../assets'
+import { ReportUpdater } from '../assets'
 
 // the USDC on Arbitrum changed type from EBV to NMV
 const AGGREGATED_REPORT_LOGIC_VERSION = 2
 
-export function getAggregatedConfigHash(updaters: AssetUpdater[]) {
+export function getAggregatedConfigHash(updaters: ReportUpdater[]) {
   const chainIds = sortBy(updaters.map((x) => x.getChainId()))
   const configHashes = sortBy(updaters.map((x) => x.getConfigHash()))
 

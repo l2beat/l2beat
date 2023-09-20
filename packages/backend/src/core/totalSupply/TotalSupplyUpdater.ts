@@ -19,6 +19,8 @@ import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider, TotalSupplyQuery } from './TotalSupplyProvider'
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
+import { getStatus } from '../reports/getStatus'
 
 export class TotalSupplyUpdater {
   private readonly configHash: Hash256
@@ -72,6 +74,15 @@ export class TotalSupplyUpdater {
 
   getAssetType() {
     return 'totalSupply'
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+    )
   }
 
   async getTotalSuppliesWhenReady(

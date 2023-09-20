@@ -10,13 +10,29 @@ interface Updater {
   getStatus(): UpdaterStatus
 }
 
-export function createTvlStatusRouter(clock: Clock, updaters: Updater[]) {
+export function createTvlStatusRouter(
+  clock: Clock,
+  updaterGroups: {
+    updaters: Updater[]
+    groupName: string
+  }[],
+) {
   const router = new Router()
 
-  router.get('/status/tvl', async (ctx) => {
+  const statuses: {
+    groupName: string
+    updaters: UpdaterStatus[]
+  }[] = updaterGroups.map((x) => {
+    return {
+      groupName: x.groupName,
+      updaters: x.updaters.map((updater) => updater.getStatus()),
+    }
+  })
+
+  router.get('/status/tvl', (ctx) => {
     ctx.body = renderTvlStatusPage({
       latestSafeTimestamp: clock.getLastHour(),
-      statuses: await Promise.all(updaters.map((x) => x.getStatus())),
+      statuses,
     })
   })
 

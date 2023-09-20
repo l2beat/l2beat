@@ -31,6 +31,7 @@ import { createBaseTvlSubmodule } from './BaseTvlSubmodule'
 import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
 import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
 import { TvlDatabase } from './types'
+import { ChainId } from '@l2beat/shared-pure'
 
 export function createTvlModule(
   config: Config,
@@ -124,7 +125,7 @@ export function createTvlModule(
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.assetUpdaters ?? []),
+    submodules.flatMap((x) => x?.reportUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -166,8 +167,19 @@ export function createTvlModule(
   })
   const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(clock, [
-    aggregatedReportUpdater,
-    ...submodules.flatMap((x) => x?.assetUpdaters ?? []),
+    {
+      groupName: 'Shared',
+      updaters: [aggregatedReportUpdater, priceUpdater],
+    },
+    ...submodules.map((x) => {
+      const reports = x?.reportUpdaters ?? []
+      const data = x?.dataUpdaters ?? []
+
+      return {
+        groupName: ChainId.getName(reports[0].getChainId()),
+        updaters: [...reports, ...data],
+      }
+    }),
   ])
 
   // #endregion

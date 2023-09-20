@@ -4,7 +4,7 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
-import { AssetUpdater } from '../assets'
+import { ReportUpdater } from '../assets'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
@@ -18,7 +18,7 @@ export class AggregatedReportUpdater {
   private readonly knownSet = new Set<number>()
 
   constructor(
-    private readonly assetUpdaters: AssetUpdater[],
+    private readonly assetUpdaters: ReportUpdater[],
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly clock: Clock,

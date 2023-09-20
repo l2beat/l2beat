@@ -23,9 +23,9 @@ import { createReports } from '../reports/createReports'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { getStatus } from '../reports/getStatus'
 import { ReportProject } from '../reports/ReportProject'
-import { AssetUpdater } from './AssetUpdater'
+import { ReportUpdater } from './Updater'
 
-export class CBVUpdater implements AssetUpdater {
+export class CBVUpdater implements ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -67,7 +67,7 @@ export class CBVUpdater implements AssetUpdater {
 
   getStatus(): UpdaterStatus {
     return getStatus(
-      ChainId.getName(this.getChainId()) + ': ' + this.constructor.name,
+      this.constructor.name,
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,

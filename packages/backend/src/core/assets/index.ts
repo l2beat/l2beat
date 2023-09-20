@@ -1,2 +1,2 @@
-export * from './AssetUpdater'
+export * from './Updater'
 export * from './CBVUpdater'

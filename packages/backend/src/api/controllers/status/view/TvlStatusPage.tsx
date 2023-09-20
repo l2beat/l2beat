@@ -16,7 +16,10 @@ export interface UpdaterStatus {
 
 interface StatusPageProps {
   latestSafeTimestamp: UnixTime
-  statuses: UpdaterStatus[]
+  statuses: {
+    groupName: string
+    updaters: UpdaterStatus[]
+  }[]
 }
 
 export function TvlStatusPage({
@@ -26,14 +29,19 @@ export function TvlStatusPage({
   return (
     <Page title="TVL module status (Last 24 hours)">
       <p>Latest safe timestamp: {latestSafeTimestamp.toDate().toISOString()}</p>
-      {statuses.map((s, id) => (
+      {statuses.map((status, id) => (
         <div key={id}>
-          <h4>{s.updaterName}</h4>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {s.statuses.slice(0, 24).map((status, index) => (
-              <Square key={index} status={status} />
-            ))}
-          </div>
+          <h2>{status.groupName}</h2>
+          {status.updaters.map((updater, id) => (
+            <div key={id}>
+              <h4>{updater.updaterName}</h4>
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {updater.statuses.slice(0, 24).map((status, index) => (
+                  <Square key={index} status={status} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       ))}
     </Page>
