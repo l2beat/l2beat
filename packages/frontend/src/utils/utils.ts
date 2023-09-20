@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import MarkdownIt from 'markdown-it'
 
 import { formatLargeNumber } from './formatLargeNumber'
@@ -42,4 +43,8 @@ export function languageJoin(items?: string[]) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const last = items.pop()!
   return `${items.join(', ')} and ${last}`
+}
+
+export function formatAddress(address: EthereumAddress) {
+  return `${address.slice(0, 6)}...${address.slice(38, 42)}`
 }

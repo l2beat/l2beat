@@ -135,6 +135,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: 'LayerZero',
   },
   {
     id: AssetId('joe-joe-token'),
@@ -149,6 +150,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: 'LayerZero',
   },
   {
     id: AssetId('bifi-beefy-finance'),
@@ -163,6 +165,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: 'Multichain',
   },
   {
     id: AssetId('arbitrum:sdex-smardex'),
@@ -177,6 +180,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: 'Wormhole',
   },
   {
     id: AssetId('arbitrum:gmx-gmx'),
