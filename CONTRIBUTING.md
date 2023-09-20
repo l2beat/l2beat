@@ -18,7 +18,7 @@ https://github.com/l2beat/l2beat/fork
 
 To do any development work, even simple config changes you probably want to have the project running locally. To install dependencies do the following.
 
-1. Install [node.js](https://nodejs.org/en/) version 16. To easily manage node versions we recommend [fnm](https://github.com/Schniz/fnm)
+1. Install [node.js](https://nodejs.org/en/) version 18. To easily manage node versions we recommend [fnm](https://github.com/Schniz/fnm)
 2. Install [yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable), preferably through `npm i -g yarn`
 3. In the repository root run `yarn` to install project specific dependencies
 

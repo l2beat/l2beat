@@ -74,22 +74,17 @@ export class ReportRepository extends BaseRepository {
     assert(chainIdsMatch, 'Chain Ids must match')
 
     // Can't be two or more updaters on the chain because it will break the logic
-    await knex.transaction(async (trx) => {
-      await trx('reports')
-        .where('unix_timestamp', rows[0].unix_timestamp)
-        .andWhere('chain_id', rows[0].chain_id)
-        .delete()
-      await trx('reports')
-        .insert(rows)
-        .onConflict([
-          'unix_timestamp',
-          'project_id',
-          'asset_id',
-          'chain_id',
-          'report_type',
-        ])
-        .merge()
-    })
+    await knex('reports')
+      .insert(rows)
+      .onConflict([
+        'unix_timestamp',
+        'project_id',
+        'asset_id',
+        'chain_id',
+        'report_type',
+      ])
+      .merge()
+
     return rows.length
   }
 
@@ -109,7 +104,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -127,7 +122,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
@@ -146,7 +141,7 @@ export class ReportRepository extends BaseRepository {
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
+      .whereIn('chain_id', [...ChainId.getAll()])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)

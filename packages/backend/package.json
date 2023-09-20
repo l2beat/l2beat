@@ -8,8 +8,9 @@
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf build",
-    "discover": "discovery discover",
-    "discover:dev": "cd ../discovery && yarn build && cd - && discovery discover --dev",
+    "discover": "./scripts/discoverAndAddHistory.sh",
+    "discover:raw": "discovery discover",
+    "discover:dev": "cd ../discovery && yarn build && cd - && yarn discover --dev",
     "discover:single": "discovery single-discovery",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
@@ -19,7 +20,8 @@
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",

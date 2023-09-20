@@ -5,6 +5,7 @@ import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { BASE_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { chainTvlSubmodule } from './ChainTvlSubmodule'
@@ -13,6 +14,8 @@ import { TvlDatabase } from './types'
 export function createBaseTvlSubmodule(
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
+  coingeckoQueryService: CoingeckoQueryService,
+
   config: Config,
   logger: Logger,
   http: HttpClient,
@@ -26,6 +29,7 @@ export function createBaseTvlSubmodule(
     BASE_MULTICALL_CONFIG,
     db,
     priceUpdater,
+    coingeckoQueryService,
     http,
     clock,
     logger,

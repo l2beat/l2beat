@@ -15,11 +15,9 @@ export interface ProjectCellProps {
     showProjectUnderReview?: boolean
     warning?: string
   }
-  highlightL2?: boolean
-  type: 'layer2' | 'bridge'
 }
 
-export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
+export function ProjectCell({ project }: ProjectCellProps) {
   return (
     <div>
       <span className="relative pl-8 group-hover:underline">
@@ -28,15 +26,6 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
-        {highlightL2 && type === 'layer2' && (
-          <div
-            role="img"
-            aria-label={type}
-            className="absolute -bottom-1 left-2.5 rounded-sm bg-gray-800 px-0.5 text-3xs font-bold text-white dark:bg-gray-200 dark:text-black"
-          >
-            L2
-          </div>
-        )}
         {project.name.length < 15 ? (
           <span className="text-base font-bold md:text-lg">{project.name}</span>
         ) : (
