@@ -29,7 +29,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
   return props.forCanonical && props.escrows ? (
     <div
       className="Tooltip flex flex-col items-end gap-2 text-xs font-bold"
-      title="Calculation formula:<br>Value = Circulating supply * price"
+      title="Calculation formula:<br>Value = circulating supply * price"
     >
       ${formatLargeNumberWithCommas(Number(props.usdValue))}
       {props.escrows.length > 1 &&
@@ -47,7 +47,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
     <div
       className="Tooltip text-xs font-bold"
       title={`Calculation formula:<br>Value = ${
-        props.forExternal ? 'Circulating supply' : formula
+        props.forExternal ? 'circulating supply' : formula
       } * price`}
     >
       ${formatLargeNumberWithCommas(Number(props.usdValue))}

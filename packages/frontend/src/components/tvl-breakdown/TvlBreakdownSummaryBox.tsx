@@ -30,7 +30,7 @@ export function TvlBreakdownSummaryBox(
       />
       <StatsItem
         title="Natively Minted"
-        mobileTitle="Native Tokens Minted"
+        mobileTitle="Natively Minted Tokens"
         value={props.native.value}
         change={props.native.change}
       />

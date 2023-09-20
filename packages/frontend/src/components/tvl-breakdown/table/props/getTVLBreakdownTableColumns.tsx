@@ -149,7 +149,7 @@ export function getCanonicallyBridgedColumns(explorer: string) {
       headClassName: 'md:pl-4',
       tooltip: 'Prices are fetched from CoinGecko',
       getValue: (token) => (
-        <div className="text-xs font-medium">
+        <div className="pr-2 text-xs font-medium">
           ${formatLargeNumberWithCommas(Number(token.usdPrice))}
         </div>
       ),

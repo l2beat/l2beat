@@ -15,7 +15,7 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
     return acc + Number(token.usdValue)
   }, 0)
 
-  return (
+  return props.tokens.length === 0 ? null : (
     <div className="flex flex-col px-4">
       <h2 className="mt-12 ml-1 mb-4 text-xl font-bold md:ml-2 md:text-2xl">
         Natively Minted Value

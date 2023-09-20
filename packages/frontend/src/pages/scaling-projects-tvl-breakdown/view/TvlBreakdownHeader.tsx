@@ -24,7 +24,7 @@ export function TvlBreakdownHeader(props: TvlBreakdownHeaderProps) {
         </h1>
       </div>
       <div className="mt-4 mb-4 flex flex-col items-start justify-between gap-[10px] md:mt-[38px] md:flex-row md:items-center">
-        <h2 className="text-[28px] font-bold md:text-3xl">TVL breakdown</h2>
+        <h2 className="text-[28px] font-bold md:text-3xl">TVL Breakdown</h2>
         <div className="text-xs font-medium text-black dark:text-gray-550">
           Timestamp:&nbsp;
           <span className="text-base font-semibold text-gray-550 dark:text-white">
