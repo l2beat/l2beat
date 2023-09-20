@@ -8,7 +8,7 @@ export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],
 ) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-purple-700 p-6 md:flex-row md:rounded-lg md:border md:border-pink-900">
+    <div className="flex flex-col justify-between gap-2 bg-purple-300 p-6 dark:bg-purple-700 md:flex-row md:rounded-lg md:border md:border-pink-200 md:dark:border-pink-900">
       <StatsItem
         title="Total TVL"
         mobileTitle="Total Value Locked"
@@ -55,7 +55,9 @@ function StatsItem(props: StatsItemProps) {
       <span
         className={classNames(
           'font-medium  md:hidden',
-          props.big ? 'text-lg text-white' : 'text-xs text-gray-600',
+          props.big
+            ? 'text-lg text-black dark:text-white'
+            : 'text-xs text-gray-600',
         )}
       >
         {props.mobileTitle}
@@ -63,7 +65,7 @@ function StatsItem(props: StatsItemProps) {
       <div className="flex items-center gap-1">
         <span
           className={classNames(
-            'font-bold text-white md:text-lg',
+            'font-bold text-black dark:text-white md:text-lg',
             props.big ? 'text-lg' : 'text-base',
           )}
         >

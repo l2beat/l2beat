@@ -55,9 +55,9 @@ export function TVLBreakdownTableView<
       )}
       data-role="table"
     >
-      <table className="w-full border-collapse border-b border-b-white/25 text-left">
+      <table className="w-full border-collapse border-b border-b-black/10 text-left dark:border-b-white/25">
         <thead>
-          <tr className="md:bg-black/10 dark:md:bg-white/10">
+          <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:bg-gray-800">
             {columns.map((column, i) => {
               const isLastColumn = i === columns.length - 1
               return (
@@ -109,7 +109,7 @@ export function TVLBreakdownTableView<
                 {...rest}
                 className={cx(
                   'group',
-                  'hover:bg-black/[0.1] hover:shadow-sm dark:hover:bg-white/[0.1]',
+                  'border-b border-b-black/10 hover:bg-black/[0.1] hover:shadow-sm dark:border-b-gray-800 dark:hover:bg-white/[0.1] md:border-b-0',
                   rowClassName,
                   item.escrows?.length &&
                     item.escrows.length > 1 &&
