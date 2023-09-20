@@ -143,14 +143,14 @@ export function renderHover(
       } else if (state.view.chart.type === 'ActivityChart' && 'tps' in point) {
         if (state.controls.showEthereum) {
           if (point.ethereumTps > point.tps) {
-            rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
-            rows.push(renderTpsRow(point.tps, 'L2'))
+            rows.push(renderTpsRow(point.ethereumTps, 'Ethereum'))
+            rows.push(renderTpsRow(point.tps, 'Projects'))
           } else {
-            rows.push(renderTpsRow(point.tps, 'L2'))
-            rows.push(renderTpsRow(point.ethereumTps, 'ETH'))
+            rows.push(renderTpsRow(point.tps, 'Projects'))
+            rows.push(renderTpsRow(point.ethereumTps, 'Ethereum'))
           }
         } else {
-          rows.push(renderTpsRow(point.tps, 'L2'))
+          rows.push(renderTpsRow(point.tps, 'Projects'))
         }
       }
     }
@@ -251,12 +251,12 @@ function renderCurrencyRow(value: number, ticker: string) {
   return `<div><span class="font-bold">${formatted}</span> <span>${ticker}</span></div>`
 }
 
-function renderTpsRow(value: number, source: 'L2' | 'ETH') {
+function renderTpsRow(value: number, source: 'Projects' | 'Ethereum') {
   const sourceHTML = `<span class="font-bold">${source}</span>`
   const formatted = formatTps(value)
   const formattedHTML = `<span class="font-bold">${formatted}</span>`
   const customStyles =
-    source === 'L2' ? 'bg-red-300 rounded-full' : 'bg-blue-600'
+    source === 'Projects' ? 'bg-red-300 rounded-full' : 'bg-blue-600'
   const circleClass = `inline-block mr-1 w-2 h-2 relative -top-px border-2 border-current ${customStyles}`
   const circleHTML = `<div class="${circleClass}"></div>`
   return `<div>${circleHTML} ${sourceHTML} avg. TPS: ${formattedHTML}</div>`
