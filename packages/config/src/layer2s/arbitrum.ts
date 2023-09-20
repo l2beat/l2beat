@@ -525,7 +525,7 @@ export const arbitrum: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
-      'This contract is an admin of the UpgradeExecutor contract, but is also owned by it.',
+      "This contract is an admin of the UpgradeExecutor contract, but is also owned by it. Can cancel Timelock's proposals.",
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),

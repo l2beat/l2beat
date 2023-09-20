@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "nova",
-  "blockNumber": 17334354,
+  "chain": "ethereum",
+  "blockNumber": 18163843,
   "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",
+  "version": 2,
   "contracts": [
     {
       "name": "OneStepProverMath",
@@ -20,13 +21,13 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 14343,
+        "batchCount": 20392,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 214866
+        "totalDelayedMessagesRead": 250758
       }
     },
     {
@@ -76,35 +77,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x3666a60ff589873ced457a9a8a0aA6F83D708767",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xe7aee79ca5c88cfa7da718e084d199a66001a7d10e0b1be3933b4dacf212dcc3",
-        "getChainId": 1,
-        "getOwners": [
-          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
-          "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
-          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-          "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
-          "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
-          "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
-          "0x88910996671162953E89DdcE5C8137f9077da217",
-          "0x8688515028955734350067695939423222009623",
-          "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-          "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
-          "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
-        ],
-        "getThreshold": 9,
-        "nonce": 13,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "name": "UpgradeExecutor",
       "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
       "upgradeability": {
@@ -126,7 +98,7 @@
             "adminRole": "ADMIN_ROLE",
             "members": [
               "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "0x3666a60ff589873ced457a9a8a0aA6F83D708767"
+              "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
             ]
           }
         },
@@ -285,11 +257,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 214885,
+        "delayedMessageCount": 250759,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 14343,
-        "sequencerReportedSubMessageCount": 9565822
+        "sequencerMessageCount": 20392,
+        "sequencerReportedSubMessageCount": 21345798
       }
     },
     {
@@ -383,7 +355,7 @@
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3666a60ff589873ced457a9a8a0aA6F83D708767"]
+            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
@@ -395,6 +367,35 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
+        "getChainId": 1,
+        "getOwners": [
+          "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
+          "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd",
+          "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
+          "0x8688515028955734350067695939423222009623",
+          "0x88910996671162953E89DdcE5C8137f9077da217",
+          "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
+          "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
+          "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
+          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+          "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
+          "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
+          "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+        ],
+        "getThreshold": 9,
+        "nonce": 2,
+        "VERSION": "1.3.0"
       }
     },
     {
@@ -414,12 +415,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 7633,
+        "firstUnresolvedNode": 10393,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 7632,
-        "latestNodeCreated": 7786,
+        "latestConfirmed": 10392,
+        "latestNodeCreated": 10546,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -597,9 +598,6 @@
       "function initialize(address _bridge)",
       "function rollup() view returns (address)",
       "function rollupInitialized(uint256 chainId)"
-    ],
-    "0x3666a60ff589873ced457a9a8a0aA6F83D708767": [
-      "constructor(address _singleton)"
     ],
     "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1276,6 +1274,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": [
+      "constructor(address _singleton)"
     ],
     "0xFb209827c58283535b744575e11953DCC4bEAD88": [
       "constructor(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)",
