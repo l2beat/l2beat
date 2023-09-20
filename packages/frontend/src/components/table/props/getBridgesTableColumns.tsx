@@ -22,9 +22,7 @@ export function getArchivedBridgesTvlColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (entry) => (
-        <ProjectCell highlightL2 type={entry.type} project={entry} />
-      ),
+      getValue: (entry) => <ProjectCell project={entry} />,
     },
     {
       name: 'Total',
@@ -108,9 +106,7 @@ export function getBridgesRiskColumns() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      getValue: (entry) => (
-        <ProjectCell highlightL2 type={entry.type} project={entry} />
-      ),
+      getValue: (entry) => <ProjectCell project={entry} />,
     },
     {
       name: 'Destination',
