@@ -1899,13 +1899,6 @@
     dotenv "^16.3.1"
     error-stack-parser "^2.1.4"
 
-"@l2beat/discovery-types@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.1.0.tgz#80dd68f0b27c927a13d01ce7d53dd96d26dd2783"
-  integrity sha512-c7G8JowA2iJM56QWjXqwllkeWU3IibK53GcHYP8BBC0d1NyGAlLrDSN7H9oGZT0YFISioKPvEUdCYFA6Zwk6rA==
-  dependencies:
-    zod "^3.22.2"
-
 "@l2beat/discovery-types@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.2.0.tgz#b25d4d345097fc4dc773932b35d3504724d0ef80"

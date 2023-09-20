@@ -30,6 +30,6 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@l2beat/discovery-types": "^0.1.0"
+    "@l2beat/discovery-types": "^0.2.0"
   }
 }
