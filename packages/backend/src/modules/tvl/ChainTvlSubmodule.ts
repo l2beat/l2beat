@@ -8,12 +8,15 @@ import {
 import { providers } from 'ethers'
 
 import { ChainTvlConfig } from '../../config/Config'
+import { CirculatingSupplyFormulaUpdater } from '../../core/assets/CirculatingSupplyFormulaUpdater'
 import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupplyUpdater'
 import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
+import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
 import { MulticallConfigEntry } from '../../peripherals/ethereum/multicall/types'
@@ -28,6 +31,7 @@ export function chainTvlSubmodule(
   multicallConfig: MulticallConfigEntry[],
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
+  coingeckoQueryService: CoingeckoQueryService,
   http: HttpClient,
   clock: Clock,
   logger: Logger,
@@ -99,6 +103,32 @@ export function chainTvlSubmodule(
     logger,
     chainTvlConfig.minBlockTimestamp,
   )
+
+  const circulatingSupplyTokens = tokens.filter(
+    (t) => t.chainId === chainId && t.formula === 'circulatingSupply',
+  )
+
+  const circulatingSupplyUpdater = new CirculatingSupplyUpdater(
+    coingeckoQueryService,
+    db.circulatingSupplyRepository,
+    clock,
+    circulatingSupplyTokens,
+    chainId,
+    logger,
+  )
+
+  const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(
+    priceUpdater,
+    circulatingSupplyUpdater,
+    db.reportRepository,
+    db.reportStatusRepository,
+    projectId,
+    chainId,
+    clock,
+    circulatingSupplyTokens,
+    logger,
+    chainTvlConfig.minBlockTimestamp,
+  )
   // #endregion
 
   const start = async () => {
@@ -108,12 +138,14 @@ export function chainTvlSubmodule(
     await blockNumberUpdater.start()
     await totalSupplyUpdater.start()
     await totalSupplyFormulaUpdater.start()
+    circulatingSupplyUpdater.start()
+    await circulatingSupplyFormulaUpdater.start()
 
     logger.info('Started')
   }
 
   return {
-    assetUpdaters: [totalSupplyFormulaUpdater],
+    assetUpdaters: [totalSupplyFormulaUpdater, circulatingSupplyFormulaUpdater],
     start,
   }
 }

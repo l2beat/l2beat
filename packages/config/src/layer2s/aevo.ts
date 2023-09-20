@@ -321,4 +321,13 @@ export const aevo: Layer2 = {
       thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
+  milestones: [
+    {
+      name: 'Aevo Open Mainnet Launch',
+      link: 'https://aevo.mirror.xyz/hV7VYkpk7caoYl2DbOFcSaZRRrK-8NeWqKczrgUff6k',
+      date: '2023-06-14T00:00:00.00Z',
+      description:
+        'Aevo removed the whitelist and opened the mainnet to the public.',
+    },
+  ],
 }
