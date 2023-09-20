@@ -1,5 +1,4 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
@@ -166,21 +165,12 @@ export function createTvlModule(
     detailedTvlEnabled: config.tvl.detailedTvlEnabled,
   })
   const dydxRouter = createDydxRouter(dydxController)
-  const tvlStatusRouter = createTvlStatusRouter(clock, [
-    {
-      groupName: 'Shared',
-      updaters: [aggregatedReportUpdater, priceUpdater],
-    },
-    ...submodules.map((x) => {
-      const reports = x?.reportUpdaters ?? []
-      const data = x?.dataUpdaters ?? []
-
-      return {
-        groupName: ChainId.getName(reports[0].getChainId()),
-        updaters: [...reports, ...data],
-      }
-    }),
-  ])
+  const tvlStatusRouter = createTvlStatusRouter(
+    clock,
+    priceUpdater,
+    aggregatedReportUpdater,
+    submodules,
+  )
 
   // #endregion
 
