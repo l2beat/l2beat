@@ -1,9 +1,9 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 17968909,
+  "blockNumber": 18163828,
   "configHash": "0x1b184212aa0d5c3fd99aa51935f3e128390b685777201707fc6dec79b09acafa",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -71,7 +71,7 @@
         "type": "immutable"
       },
       "values": {
-        "addseq": 5079,
+        "addseq": 5080,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -92,12 +92,11 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xb4a163d6a807a61c6f9179af88b0cecc49ac1cf971eeb599c8ee054d25ed4649",
-        "triggerTime": 1692534462
+        "ssHash": "0x4830ba2c3e2994baf31ad7fe644c13157ea804d951b2e68edc2ae9dff50d0013",
+        "triggerTime": 1694779181
       },
       "derivedName": "Bridge"
     },
@@ -184,7 +183,6 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
@@ -249,7 +247,7 @@
         ],
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,
-        "nextProposalId": 86,
+        "nextProposalId": 91,
         "THRESHOLD_DECIMAL": 100
       },
       "derivedName": "SimpleGovernance"
