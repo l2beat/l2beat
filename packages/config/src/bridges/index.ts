@@ -9,6 +9,7 @@ import { connext } from './connext'
 import { debridge } from './debridge'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
+import { chainport } from './chainport'
 import { hop } from './hop'
 import { hyphen } from './hyphen'
 import { lzOmnichain } from './lzOmnichain'
@@ -51,6 +52,7 @@ export const bridges: Bridge[] = [
   debridge,
   gravity,
   harmony,
+  chainport,
   hop,
   hyphen,
   lzOmnichain,
