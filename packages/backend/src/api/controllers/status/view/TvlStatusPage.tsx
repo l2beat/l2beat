@@ -19,23 +19,23 @@ interface StatusPageProps {
   statuses: UpdaterStatus[]
 }
 
-export function StatusXPage({
+export function TvlStatusPage({
   statuses,
   latestSafeTimestamp,
 }: StatusPageProps) {
   return (
-    <Page title="StatusX">
+    <Page title="TVL module status">
       <p>Latest safe timestamp: {latestSafeTimestamp.toDate().toISOString()}</p>
-      {statuses.map((s) => (
-        <>
+      {statuses.map((s, id) => (
+        <div key={id}>
           <h2>{s.updaterName}</h2>
           <h3>Last 24 hours:</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {s.statuses.slice(0, 24).map((status) => (
-              <Square status={status} />
+            {s.statuses.slice(0, 24).map((status, index) => (
+              <Square key={index} status={status} />
             ))}
           </div>
-        </>
+        </div>
       ))}
     </Page>
   )
@@ -71,6 +71,6 @@ function getTooltip(status: StatusPoint): string {
   return status.timestamp.toDate().toISOString() + ' (UTC)'
 }
 
-export function renderStatusXPage(props: StatusPageProps) {
-  return reactToHtml(<StatusXPage {...props} />)
+export function renderTvlStatusPage(props: StatusPageProps) {
+  return reactToHtml(<TvlStatusPage {...props} />)
 }

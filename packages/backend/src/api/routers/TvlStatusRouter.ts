@@ -2,9 +2,9 @@ import Router from '@koa/router'
 
 import { Clock } from '../../core/Clock'
 import {
-  renderStatusXPage,
+  renderTvlStatusPage,
   UpdaterStatus,
-} from '../controllers/status/view/StatusXPage'
+} from '../controllers/status/view/TvlStatusPage'
 
 interface Updater {
   getStatus(): Promise<UpdaterStatus>
@@ -13,8 +13,8 @@ interface Updater {
 export function createTvlStatusRouter(clock: Clock, updaters: Updater[]) {
   const router = new Router()
 
-  router.get('/status-x', async (ctx) => {
-    ctx.body = renderStatusXPage({
+  router.get('/status/tvl', async (ctx) => {
+    ctx.body = renderTvlStatusPage({
       latestSafeTimestamp: clock.getLastHour(),
       statuses: await Promise.all(updaters.map((x) => x.getStatus())),
     })

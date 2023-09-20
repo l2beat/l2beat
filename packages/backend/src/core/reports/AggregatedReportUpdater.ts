@@ -4,7 +4,7 @@ import { getHourlyTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
 import {
   StatusPoint,
   UpdaterStatus,
-} from '../../api/controllers/status/view/StatusXPage'
+} from '../../api/controllers/status/view/TvlStatusPage'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { AssetUpdater } from '../assets/'
