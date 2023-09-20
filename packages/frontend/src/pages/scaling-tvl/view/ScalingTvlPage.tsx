@@ -24,7 +24,6 @@ export interface TvlPageProps {
   footer: FooterProps
   showActivity: boolean
   showDetailedTvl: boolean
-  showMultisigReport: boolean
   milestones?: Milestone[]
 }
 

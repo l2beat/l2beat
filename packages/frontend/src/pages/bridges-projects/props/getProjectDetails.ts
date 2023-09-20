@@ -43,17 +43,6 @@ export function getProjectDetails(
     })
   }
 
-  if (bridge.knowledgeNuggets && !isEmpty(bridge.knowledgeNuggets)) {
-    items.push({
-      type: 'KnowledgeNuggetsSection',
-      props: {
-        knowledgeNuggets: bridge.knowledgeNuggets,
-        id: 'knowledge-nuggets',
-        title: 'Knowledge Nuggets',
-      },
-    })
-  }
-
   items.push({
     type: 'DescriptionSection',
     props: getDescriptionSection(bridge, verificationStatus),
@@ -102,6 +91,17 @@ export function getProjectDetails(
       type: 'ContractsSection',
       props: getContractSection(bridge, verificationStatus),
     })
+
+  if (bridge.knowledgeNuggets && !isEmpty(bridge.knowledgeNuggets)) {
+    items.push({
+      type: 'KnowledgeNuggetsSection',
+      props: {
+        knowledgeNuggets: bridge.knowledgeNuggets,
+        id: 'knowledge-nuggets',
+        title: 'Knowledge Nuggets',
+      },
+    })
+  }
 
   return {
     incomplete,

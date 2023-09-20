@@ -40,6 +40,9 @@ export class PriceUpdater {
 
   async getPricesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getPricesWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.priceRepository.getByTimestamp(timestamp)
@@ -64,7 +67,7 @@ export class PriceUpdater {
     const results = await Promise.allSettled(
       this.tokens.map(({ id: assetId, address, sinceTimestamp }) => {
         const boundary = boundaries.get(assetId)
-        const adjustedFrom = sinceTimestamp.gt(from) ? sinceTimestamp : from
+        const adjustedFrom = getAdjustedFrom(sinceTimestamp, from)
         return this.updateToken(assetId, boundary, adjustedFrom, to, address)
       }),
     )
@@ -105,7 +108,7 @@ export class PriceUpdater {
       }
     }
     if (hours > 0) {
-      this.logger.debug('Updated prices', {
+      this.logger.info('Updated prices', {
         coingeckoId: assetId.toString(),
         hours,
       })
@@ -132,7 +135,6 @@ export class PriceUpdater {
       // Make sure that we have enough old data to fill holes
       from.add(-7, 'days'),
       to,
-      'hourly',
       address,
     )
     const priceRecords: PriceRecord[] = prices
@@ -145,4 +147,12 @@ export class PriceUpdater {
 
     await this.priceRepository.addMany(priceRecords)
   }
+}
+
+function getAdjustedFrom(sinceTimestamp: UnixTime, from: UnixTime) {
+  const sinceTimestampFullHour = sinceTimestamp.isFull('hour')
+    ? sinceTimestamp
+    : sinceTimestamp.toNext('hour')
+
+  return sinceTimestampFullHour.gt(from) ? sinceTimestampFullHour : from
 }

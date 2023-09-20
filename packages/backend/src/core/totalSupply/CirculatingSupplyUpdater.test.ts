@@ -148,25 +148,21 @@ describe(CirculatingSupplyUpdater.name, () => {
 
   describe(CirculatingSupplyUpdater.prototype.update.name, () => {
     it('correctly calls updates', async () => {
-      const tokens = [
-        fakeToken(AssetId('uni-uniswap')),
-        fakeToken(AssetId.ETH),
-        fakeToken(AssetId.WETH),
-      ]
+      const ETH = fakeToken(AssetId.ETH)
+      const WETH = fakeToken(AssetId.WETH)
 
       const CirculatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
           findDataBoundaries: mockFn().returns(
-            new Map([
-              [tokens[0].id, { earliest: HOUR_10, latest: HOUR_12 }],
-              [tokens[1].id, { earliest: HOUR_09, latest: HOUR_12 }],
-            ]),
+            new Map([[ETH.id, { earliest: HOUR_09, latest: HOUR_12 }]]),
           ),
-          addOrUpdateMany: mockFn().returns([]),
+          addMany: mockFn().returns([]),
         })
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getCirculatingSupplies: mockFn().returns([]),
+        getCirculatingSupplies: mockFn().returns([
+          { value: 100, timestamp: HOUR_09, deltaMs: 0 },
+        ]),
       })
 
       const clock = mockObject<Clock>({
@@ -178,99 +174,29 @@ describe(CirculatingSupplyUpdater.name, () => {
         coingeckoQueryService,
         CirculatingSupplyRepository,
         clock,
-        tokens,
+        [ETH, WETH],
         ChainId.ETHEREUM,
         Logger.SILENT,
       )
 
       await circulatingSupplyUpdater.update()
-      expect(
-        coingeckoQueryService.getCirculatingSupplies,
-      ).toHaveBeenCalledTimes(4)
+
       expect(
         coingeckoQueryService.getCirculatingSupplies,
       ).toHaveBeenNthCalledWith(
         1,
-        tokens[0].coingeckoId,
-        HOUR_09.add(-7, 'days'),
-        HOUR_09,
-        'hourly',
-        tokens[0].address,
+        ETH.coingeckoId,
+        { from: HOUR_13, to: HOUR_13 },
+        ETH.address,
       )
+      await circulatingSupplyUpdater.update()
       expect(
         coingeckoQueryService.getCirculatingSupplies,
       ).toHaveBeenNthCalledWith(
         2,
-        tokens[1].coingeckoId,
-        HOUR_13.add(-7, 'days'),
-        HOUR_13,
-        'hourly',
-        tokens[1].address,
-      )
-      expect(
-        coingeckoQueryService.getCirculatingSupplies,
-      ).toHaveBeenNthCalledWith(
-        3,
-        tokens[2].coingeckoId,
-        HOUR_09.add(-7, 'days'),
-        HOUR_13,
-        'hourly',
-        tokens[2].address,
-      )
-      expect(
-        coingeckoQueryService.getCirculatingSupplies,
-      ).toHaveBeenNthCalledWith(
-        4,
-        tokens[0].coingeckoId,
-        HOUR_13.add(-7, 'days'),
-        HOUR_13,
-        'hourly',
-        tokens[0].address,
-      )
-    })
-
-    it('correctly calls updates', async () => {
-      const tokens: Token[] = [
-        { ...fakeToken(AssetId.ETH), sinceTimestamp: HOUR_10 },
-      ]
-
-      const CirculatingSupplyRepository =
-        mockObject<CirculatingSupplyRepository>({
-          findDataBoundaries: mockFn().returns(new Map([])),
-          addOrUpdateMany: mockFn().returns([]),
-        })
-
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getCirculatingSupplies: mockFn().returns([]),
-      })
-
-      const clock = mockObject<Clock>({
-        getFirstHour: () => HOUR_09,
-        getLastHour: () => HOUR_13,
-      })
-
-      const circulatingSupplyUpdater = new CirculatingSupplyUpdater(
-        coingeckoQueryService,
-        CirculatingSupplyRepository,
-        clock,
-        tokens,
-        ChainId.ETHEREUM,
-        Logger.SILENT,
-      )
-
-      await circulatingSupplyUpdater.update()
-      expect(
-        coingeckoQueryService.getCirculatingSupplies,
-      ).toHaveBeenCalledTimes(1)
-      expect(
-        coingeckoQueryService.getCirculatingSupplies,
-      ).toHaveBeenNthCalledWith(
-        1,
-        tokens[0].coingeckoId,
-        HOUR_10.add(-7, 'days'),
-        HOUR_13,
-        'hourly',
-        tokens[0].address,
+        WETH.coingeckoId,
+        { from: undefined, to: HOUR_13 },
+        WETH.address,
       )
     })
   })
@@ -286,10 +212,12 @@ describe(CirculatingSupplyUpdater.name, () => {
       const CirculatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
           findDataBoundaries: mockFn().returns(new Map()),
-          addOrUpdateMany: mockFn().returns([]),
+          addMany: mockFn().returns([]),
         })
       coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getCirculatingSupplies: mockFn().returns([]),
+        getCirculatingSupplies: mockFn().returns([
+          { value: 100, timestamp: HOUR_09, deltaMs: 0 },
+        ]),
       })
       circulatingSupplyUpdater = new CirculatingSupplyUpdater(
         coingeckoQueryService,
@@ -303,20 +231,13 @@ describe(CirculatingSupplyUpdater.name, () => {
 
     describe('no data in DB', () => {
       it('whole range query', async () => {
-        await circulatingSupplyUpdater.updateToken(
-          TOKEN_ID,
-          undefined,
-          HOUR_09,
-          HOUR_13,
-        )
+        await circulatingSupplyUpdater.updateToken(TOKEN_ID, undefined, HOUR_13)
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
         ).toHaveBeenOnlyCalledWith(
           TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
-          HOUR_13,
-          'hourly',
+          { from: undefined, to: HOUR_13 },
           undefined,
         )
       })
@@ -329,50 +250,27 @@ describe(CirculatingSupplyUpdater.name, () => {
       }
 
       it('9:00', async () => {
-        await circulatingSupplyUpdater.updateToken(
-          TOKEN_ID,
-          BOUNDARY,
-          HOUR_09,
-          HOUR_09,
-        )
+        await circulatingSupplyUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_09)
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
-        ).toHaveBeenOnlyCalledWith(
-          TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
-          HOUR_09,
-          'hourly',
-          undefined,
-        )
+        ).not.toHaveBeenCalled()
       })
 
       it('13:00', async () => {
-        await circulatingSupplyUpdater.updateToken(
-          TOKEN_ID,
-          BOUNDARY,
-          HOUR_13,
-          HOUR_13,
-        )
+        await circulatingSupplyUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_13)
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
         ).toHaveBeenOnlyCalledWith(
           TOKEN_COINGECKO_ID,
-          HOUR_13.add(-7, 'days'),
-          HOUR_13,
-          'hourly',
+          { from: HOUR_13, to: HOUR_13 },
           undefined,
         )
       })
 
       it('11:00', async () => {
-        await circulatingSupplyUpdater.updateToken(
-          TOKEN_ID,
-          BOUNDARY,
-          HOUR_11,
-          HOUR_11,
-        )
+        await circulatingSupplyUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_11)
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
@@ -380,45 +278,24 @@ describe(CirculatingSupplyUpdater.name, () => {
       })
 
       it('9:00 - 13:00', async () => {
-        await circulatingSupplyUpdater.updateToken(
-          TOKEN_ID,
-          BOUNDARY,
-          HOUR_09,
-          HOUR_13,
-        )
+        await circulatingSupplyUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_13)
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
-        ).toHaveBeenCalledTimes(2)
+        ).toHaveBeenCalledTimes(1)
+
         expect(
           coingeckoQueryService.getCirculatingSupplies,
         ).toHaveBeenNthCalledWith(
           1,
           TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
-          HOUR_09,
-          'hourly',
-          undefined,
-        )
-        expect(
-          coingeckoQueryService.getCirculatingSupplies,
-        ).toHaveBeenNthCalledWith(
-          2,
-          TOKEN_COINGECKO_ID,
-          HOUR_13.add(-7, 'days'),
-          HOUR_13,
-          'hourly',
+          { from: HOUR_13, to: HOUR_13 },
           undefined,
         )
       })
 
       it('10:00 - 12:00', async () => {
-        await circulatingSupplyUpdater.updateToken(
-          TOKEN_ID,
-          BOUNDARY,
-          HOUR_10,
-          HOUR_12,
-        )
+        await circulatingSupplyUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_12)
 
         expect(
           coingeckoQueryService.getCirculatingSupplies,
@@ -441,7 +318,7 @@ describe(CirculatingSupplyUpdater.name, () => {
 
       const circulatingSupplyRepository =
         mockObject<CirculatingSupplyRepository>({
-          addOrUpdateMany: mockFn().returns([]),
+          addMany: mockFn().returns([]),
         })
       const tokens = [fakeToken(AssetId('uni-uniswap'))]
 
@@ -464,15 +341,11 @@ describe(CirculatingSupplyUpdater.name, () => {
         coingeckoQueryService.getCirculatingSupplies,
       ).toHaveBeenOnlyCalledWith(
         tokens[0].coingeckoId,
-        from.add(-7, 'days'),
-        from.add(2, 'hours'),
-        'hourly',
+        { from: from, to: from.add(2, 'hours') },
         undefined,
       )
 
-      expect(
-        circulatingSupplyRepository.addOrUpdateMany,
-      ).toHaveBeenOnlyCalledWith([
+      expect(circulatingSupplyRepository.addMany).toHaveBeenOnlyCalledWith([
         {
           assetId: tokens[0].id,
           circulatingSupply: 100,

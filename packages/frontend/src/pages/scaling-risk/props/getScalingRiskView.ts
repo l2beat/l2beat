@@ -8,13 +8,11 @@ import { ScalingRiskViewEntry } from '../view/types'
 export function getScalingRiskView(
   projects: Layer2[],
   verificationStatus: VerificationStatus,
-  upcomingEnabled: boolean,
 ): ScalingRiskViewProps {
   return {
     items: projects.map((p) =>
       getScalingRiskViewEntry(p, verificationStatus.projects[p.id.toString()]),
     ),
-    upcomingEnabled,
   }
 }
 

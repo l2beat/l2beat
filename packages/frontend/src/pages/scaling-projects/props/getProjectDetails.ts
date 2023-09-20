@@ -49,21 +49,6 @@ export function getProjectDetails(
     })
   }
 
-  if (
-    !isUpcoming &&
-    project.knowledgeNuggets &&
-    !isEmpty(project.knowledgeNuggets)
-  ) {
-    items.push({
-      type: 'KnowledgeNuggetsSection',
-      props: {
-        knowledgeNuggets: project.knowledgeNuggets,
-        id: 'knowledge-nuggets',
-        title: 'Knowledge Nuggets',
-      },
-    })
-  }
-
   items.push({
     type: 'DescriptionSection',
     props: getDescriptionSection(project, verificationStatus),
@@ -80,7 +65,7 @@ export function getProjectDetails(
       },
     })
 
-    if (config.features.stages && project.stage.stage !== 'NotApplicable') {
+    if (project.stage.stage !== 'NotApplicable') {
       items.push({
         type: 'StageSection',
         props: {
@@ -141,6 +126,17 @@ export function getProjectDetails(
       type: 'ContractsSection',
       props: getContractSection(project, verificationStatus),
     })
+
+    if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
+      items.push({
+        type: 'KnowledgeNuggetsSection',
+        props: {
+          knowledgeNuggets: project.knowledgeNuggets,
+          id: 'knowledge-nuggets',
+          title: 'Knowledge Nuggets',
+        },
+      })
+    }
   } else {
     items.push({
       type: 'UpcomingDisclaimer',

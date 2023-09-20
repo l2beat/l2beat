@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
-import { getNavbarProps } from '../../../components'
+import { getFooterProps, getNavbarProps } from '../../../components'
 import { getHeader } from '../../../utils/project/getHeader'
 import { Wrapped } from '../../Page'
 import { TvlBreakdownPageProps } from '../view/ProjectTvlBreakdownPage'
@@ -40,6 +40,7 @@ export function getProps(
         tvlApiResponse,
         tvlBreakdownApiResponse,
       ),
+      footer: getFooterProps(config),
     },
     wrapper: {
       // TODO: (maciekzygmunt) consider preload for tvl breakdown endpoint

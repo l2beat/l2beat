@@ -11,6 +11,7 @@ import { capx } from './capx'
 import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
+import { degate2 } from './degate2'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -66,6 +67,7 @@ export const layer2s: Layer2[] = [
   canvasconnect,
   cartesiHoneypot,
   degate,
+  degate2,
   dydx,
   fuelv1,
   gluon,
