@@ -38,38 +38,16 @@ export class AggregatedReportUpdater {
   }
 
   async getStatus(): Promise<UpdaterStatus> {
-    const from = this.clock.getFirstHour()
-    const to = this.clock.getLastHour()
-
-    const timestamps = getHourlyTimestamps(from, to).sort(
-      (a, b) => b.toNumber() - a.toNumber(),
-    )
-
     const known = await this.aggregatedReportStatusRepository.getByConfigHash(
       this.configHash,
     )
     const knownSet = new Set(known.map((x) => x.toNumber()))
 
-    console.log(knownSet.has(1695193200))
-
-    const statuses: StatusPoint[] = timestamps.map((timestamp) => {
-      if (knownSet.has(timestamp.toNumber())) {
-        return {
-          timestamp,
-          status: 'synced',
-        }
-      } else {
-        return {
-          timestamp,
-          status: 'notSynced',
-        }
-      }
-    })
-
-    return {
-      updaterName: 'Aggregate',
-      statuses: statuses,
-    }
+    return getStatus(
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      knownSet,
+    )
   }
 
   getConfigHash() {
@@ -117,5 +95,30 @@ export class AggregatedReportUpdater {
     })
 
     this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+  }
+}
+
+export function getStatus(from: UnixTime, to: UnixTime, knownSet: Set<number>) {
+  const timestamps = getHourlyTimestamps(from, to).sort(
+    (a, b) => b.toNumber() - a.toNumber(),
+  )
+
+  const statuses: StatusPoint[] = timestamps.map((timestamp) => {
+    if (knownSet.has(timestamp.toNumber())) {
+      return {
+        timestamp,
+        status: 'synced',
+      }
+    } else {
+      return {
+        timestamp,
+        status: 'notSynced',
+      }
+    }
+  })
+
+  return {
+    updaterName: 'Aggregate',
+    statuses: statuses,
   }
 }
