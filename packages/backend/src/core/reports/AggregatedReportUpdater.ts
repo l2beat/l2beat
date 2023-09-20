@@ -1,6 +1,10 @@
 import { Logger } from '@l2beat/shared'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { getHourlyTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
 
+import {
+  StatusPoint,
+  UpdaterStatus,
+} from '../../api/controllers/status/view/StatusXPage'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { AssetUpdater } from '../assets/'
@@ -31,6 +35,41 @@ export class AggregatedReportUpdater {
         metricsId: AggregatedReportUpdater.name,
       },
     )
+  }
+
+  async getStatus(): Promise<UpdaterStatus> {
+    const from = this.clock.getFirstHour()
+    const to = this.clock.getLastHour()
+
+    const timestamps = getHourlyTimestamps(from, to).sort(
+      (a, b) => b.toNumber() - a.toNumber(),
+    )
+
+    const known = await this.aggregatedReportStatusRepository.getByConfigHash(
+      this.configHash,
+    )
+    const knownSet = new Set(known.map((x) => x.toNumber()))
+
+    console.log(knownSet.has(1695193200))
+
+    const statuses: StatusPoint[] = timestamps.map((timestamp) => {
+      if (knownSet.has(timestamp.toNumber())) {
+        return {
+          timestamp,
+          status: 'synced',
+        }
+      } else {
+        return {
+          timestamp,
+          status: 'notSynced',
+        }
+      }
+    })
+
+    return {
+      updaterName: 'Aggregate',
+      statuses: statuses,
+    }
   }
 
   getConfigHash() {

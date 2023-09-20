@@ -7,6 +7,7 @@ import { TvlController } from '../../api/controllers/tvl/TvlController'
 import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
+import { createTvlStatusRouter } from '../../api/routers/TvlStatusRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
@@ -164,6 +165,7 @@ export function createTvlModule(
     detailedTvlEnabled: config.tvl.detailedTvlEnabled,
   })
   const dydxRouter = createDydxRouter(dydxController)
+  const tvlStatusRouter = createTvlStatusRouter(aggregatedReportUpdater)
 
   // #endregion
 
@@ -171,21 +173,21 @@ export function createTvlModule(
     logger = logger.for('TvlModule')
     logger.info('Starting')
 
-    // priceUpdater.start()
+    priceUpdater.start()
 
-    // logger.info('Starting submodules...')
+    logger.info('Starting submodules...')
 
-    // for (const submodule of submodules) {
-    //   await submodule?.start?.()
-    // }
+    for (const submodule of submodules) {
+      await submodule?.start?.()
+    }
 
-    // await aggregatedReportUpdater.start()
+    await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }
 
   return {
-    routers: [blocksRouter, tvlRouter, dydxRouter],
+    routers: [blocksRouter, tvlRouter, dydxRouter, tvlStatusRouter],
     start,
   }
 }

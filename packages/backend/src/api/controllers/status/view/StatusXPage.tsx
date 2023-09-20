@@ -30,12 +30,6 @@ export function StatusXPage({ statuses }: StatusPageProps) {
               <Square status={status} />
             ))}
           </div>
-          <h3>Days:</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {s.statuses.map((status) => (
-              <Square status={status} />
-            ))}
-          </div>
         </>
       ))}
     </Page>
@@ -69,7 +63,7 @@ function getColor(status: StatusPoint): string {
 }
 
 function getTooltip(status: StatusPoint): string {
-  return status.timestamp.toDate().toISOString()
+  return status.timestamp.toDate().toISOString() + ' (UTC)'
 }
 
 export function renderStatusXPage(props: StatusPageProps) {
