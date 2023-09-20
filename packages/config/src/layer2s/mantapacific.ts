@@ -170,7 +170,7 @@ export const mantapacific: Layer2 = {
       references: [
         {
           text: 'Derivation: Batch submission - OP Stack specs',
-          href: 'https://github.com/ourzora/optimism/blob/develop/specs/derivation.md#batch-submission',
+          href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
         },
         {
           text: 'BatchInbox - Etherscan address',
@@ -204,7 +204,7 @@ export const mantapacific: Layer2 = {
       references: [
         {
           text: 'Sequencing Window - OP Stack specs',
-          href: 'https://github.com/ourzora/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+          href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/glossary.md#sequencing-window',
         },
         {
           text: 'OptimismPortal.sol#L376 - Etherscan source code, depositTransaction function',
@@ -303,7 +303,7 @@ export const mantapacific: Layer2 = {
       name: 'Manta Pacific Network Launch',
       link: 'https://mantanetwork.medium.com/manta-pacific-mainnet-alpha-launch-743c6bc2b95e',
       date: '2023-09-12T00:00:00Z',
-      description: 'Zora Network is live on mainnet.',
+      description: 'Manta Pacific is live on mainnet.',
     },
   ],
   knowledgeNuggets: [
