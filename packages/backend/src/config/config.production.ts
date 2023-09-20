@@ -23,6 +23,9 @@ export function getProductionConfig(env: Env): Config {
     !!process.env.DISCORD_TOKEN &&
     !!process.env.PUBLIC_DISCORD_CHANNEL_ID &&
     !!process.env.INTERNAL_DISCORD_CHANNEL_ID
+  const activityProjectsExcludedFromApi = env.optionalString(
+    'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
+  )
 
   return {
     name: 'Backend/Production',
@@ -119,12 +122,9 @@ export function getProductionConfig(env: Env): Config {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
       skipExplicitExclusion: false,
-      //TODO: FIX THIS
-      projectsExcludedFromAPI: [],
-      // env.array(
-      //   'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
-      //   [],
-      // )
+      projectsExcludedFromAPI: activityProjectsExcludedFromApi
+        ? activityProjectsExcludedFromApi.split(' ')
+        : [],
       projects: {
         ethereum: {
           type: 'rpc',

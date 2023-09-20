@@ -23,7 +23,9 @@ export function getLocalConfig(env: Env): Config {
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN && !!process.env.INTERNAL_DISCORD_CHANNEL_ID
-
+  const activityProjectsExcludedFromApi = env.optionalString(
+    'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
+  )
   return {
     name: 'Backend/Local',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
@@ -110,12 +112,10 @@ export function getLocalConfig(env: Env): Config {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
       skipExplicitExclusion: true,
-      //TODD: FIX THIS
-      projectsExcludedFromAPI: [], //
-      //env.array(
-      // 'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
-      // [],
-      // )
+      projectsExcludedFromAPI: activityProjectsExcludedFromApi
+        ? activityProjectsExcludedFromApi.split(' ')
+        : [],
+
       projects: {
         ethereum: {
           type: 'rpc',
