@@ -12,7 +12,6 @@ interface SummaryProps {
   type: 'bridge' | 'layer2'
   stats: FullSummaryStats
   links: ProjectLink[]
-  stagesEnabled?: boolean
   detailedTvlEnabled?: boolean
   isUpcoming?: boolean
   tvlBreakdownHref?: string
@@ -32,11 +31,7 @@ export interface FullSummaryStats {
 }
 
 export function Summary(props: SummaryProps) {
-  const cols =
-    props.type === 'bridge' ||
-    (!props.detailedTvlEnabled && props.stagesEnabled)
-      ? 4
-      : 3
+  const cols = props.type === 'bridge' || !props.detailedTvlEnabled ? 4 : 3
   const groupedStats = chunk(props.stats.summary, cols)
 
   return (
