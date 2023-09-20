@@ -20,12 +20,17 @@ export function getLocalConfig(env: Env): Config {
   const optimismTvlEnabled = env.boolean('OPTIMISM_TVL_ENABLED', false)
   const baseTvlEnabled = env.boolean('BASE_TVL_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
-  const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
-  const discordEnabled =
-    !!process.env.DISCORD_TOKEN && !!process.env.INTERNAL_DISCORD_CHANNEL_ID
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
+
+  const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
+  const discordToken = env.optionalString('DISCORD_TOKEN')
+  const internalDiscordChannelId = env.optionalString(
+    'INTERNAL_DISCORD_CHANNEL_ID',
+  )
+  const discordEnabled = !!discordToken && !!internalDiscordChannelId
+
   return {
     name: 'Backend/Local',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
@@ -63,16 +68,15 @@ export function getLocalConfig(env: Env): Config {
       enabled: tvlEnabled,
       detailedTvlEnabled,
       errorOnUnsyncedDetailedTvl,
-      coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
+      coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
       ethereum: ethereumTvlEnabled && {
         providerUrl: env.string('ETHEREUM_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
           'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        // TODO: phase out old env variable
         etherscanApiKey:
-          process.env.ETHEREUM_ETHERSCAN_API_KEY ??
+          env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
           env.string('ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.etherscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
@@ -177,9 +181,9 @@ export function getLocalConfig(env: Env): Config {
     updateMonitor: updateMonitorEnabled && {
       runOnStart: env.boolean('UPDATE_MONITOR_RUN_ON_START', true),
       discord: discordEnabled && {
-        token: env.string('DISCORD_TOKEN'),
+        token: discordToken,
         publicChannelId: env.optionalString('PUBLIC_DISCORD_CHANNEL_ID'),
-        internalChannelId: env.string('INTERNAL_DISCORD_CHANNEL_ID'),
+        internalChannelId: internalDiscordChannelId,
         callsPerMinute: 3000,
       },
       chains: [

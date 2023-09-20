@@ -1,9 +1,8 @@
-import { Logger } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import * as Sentry from '@sentry/node'
 import { Context } from 'koa'
 
-const sentryDsn = process.env.SENTRY_DSN
-
+const sentryDsn = getEnv().optionalString('SENTRY_DSN')
 if (sentryDsn) {
   Sentry.init({
     dsn: sentryDsn,

@@ -1,6 +1,5 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { config as dotenv } from 'dotenv'
 
 import { bridges, layer2s } from '../../src'
 import {
@@ -55,7 +54,6 @@ export async function main() {
   )
 }
 
-dotenv()
 main().catch((error) => {
   console.error(error)
   process.exit(1)

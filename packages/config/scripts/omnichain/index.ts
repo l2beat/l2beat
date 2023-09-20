@@ -1,5 +1,4 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { config as dotenv } from 'dotenv'
 import { providers } from 'ethers'
 import { writeFileSync } from 'fs'
 
@@ -30,7 +29,6 @@ async function main() {
   )
 }
 
-dotenv()
 main().catch((e) => {
   console.error(e)
 })

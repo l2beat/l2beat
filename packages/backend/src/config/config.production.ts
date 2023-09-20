@@ -17,15 +17,18 @@ export function getProductionConfig(env: Env): Config {
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
   )
-
-  const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
-  const discordEnabled =
-    !!process.env.DISCORD_TOKEN &&
-    !!process.env.PUBLIC_DISCORD_CHANNEL_ID &&
-    !!process.env.INTERNAL_DISCORD_CHANNEL_ID
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
+
+  const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
+  const discordToken = env.optionalString('DISCORD_TOKEN')
+  const publicDiscordChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
+  const internalDiscordChannelId = env.optionalString(
+    'INTERNAL_DISCORD_CHANNEL_ID',
+  )
+  const discordEnabled =
+    !!discordToken && !!publicDiscordChannelId && !!internalDiscordChannelId
 
   return {
     name: 'Backend/Production',
@@ -82,7 +85,7 @@ export function getProductionConfig(env: Env): Config {
         ),
         // TODO: phase out old env variable
         etherscanApiKey:
-          process.env.ETHEREUM_ETHERSCAN_API_KEY ??
+          env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
           env.string('ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.etherscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
@@ -166,9 +169,9 @@ export function getProductionConfig(env: Env): Config {
     statusEnabled: env.boolean('STATUS_ENABLED', true),
     updateMonitor: updateMonitorEnabled && {
       discord: discordEnabled && {
-        token: env.string('DISCORD_TOKEN'),
-        publicChannelId: env.string('PUBLIC_DISCORD_CHANNEL_ID'),
-        internalChannelId: env.string('INTERNAL_DISCORD_CHANNEL_ID'),
+        token: discordToken,
+        publicChannelId: publicDiscordChannelId,
+        internalChannelId: internalDiscordChannelId,
         callsPerMinute: 3000,
       },
       chains: [

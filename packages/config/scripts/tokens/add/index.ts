@@ -3,7 +3,6 @@ import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { EthereumAddress, Token } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { assert } from 'console'
-import { config as dotenv } from 'dotenv'
 import { providers } from 'ethers'
 import { writeFileSync } from 'fs'
 
@@ -18,12 +17,10 @@ async function main() {
   const env = getEnv()
   const alchemyApiKey = env.string('CONFIG_ALCHEMY_API_KEY')
   const etherscanApiKey = env.string('ETHERSCAN_API_KEY')
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
 
   const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(
-    http,
-    process.env.COINGECKO_API_KEY,
-  )
+  const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
   const provider = new providers.AlchemyProvider('homestead', alchemyApiKey)
 
   const token: Token = await getTokenInfo(
@@ -47,7 +44,6 @@ async function main() {
   )
 }
 
-dotenv()
 main().catch((e) => {
   console.error(e)
 })
