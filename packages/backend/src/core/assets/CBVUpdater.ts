@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/shared'
 import {
   assert,
+  AssetId,
   ChainId,
   Hash256,
   ProjectId,
@@ -18,8 +19,6 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from '../reports/createReports'
-import { ARB_TOKEN_ID } from '../reports/custom/arbitrum'
-import { OP_TOKEN_ID } from '../reports/custom/optimism'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { ReportProject } from '../reports/ReportProject'
 import { AssetUpdater } from './AssetUpdater'
@@ -161,9 +160,9 @@ export class CBVUpdater implements AssetUpdater {
 function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
   return reports.filter((r) => {
     const isOpNative =
-      r.asset === OP_TOKEN_ID && r.projectId === ProjectId.OPTIMISM
+      r.asset === AssetId.OP && r.projectId === ProjectId.OPTIMISM
     const isArbNative =
-      r.asset === ARB_TOKEN_ID && r.projectId === ProjectId.ARBITRUM
+      r.asset === AssetId.ARB && r.projectId === ProjectId.ARBITRUM
     return !isOpNative && !isArbNative
   })
 }
