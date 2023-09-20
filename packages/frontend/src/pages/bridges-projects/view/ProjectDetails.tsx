@@ -28,10 +28,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <ChartSection key={item.props.id} {...item.props} />
           case 'MilestonesSection':
             return <MilestonesSection key={item.props.id} {...item.props} />
-          case 'KnowledgeNuggetsSection':
-            return (
-              <KnowledgeNuggetsSection key={item.props.id} {...item.props} />
-            )
           case 'DescriptionSection':
             return <DescriptionSection key={item.props.id} {...item.props} />
           case 'RiskSection':
@@ -49,6 +45,10 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <PermissionsSection key={item.props.id} {...item.props} />
           case 'ContractsSection':
             return <ContractsSection key={item.props.id} {...item.props} />
+          case 'KnowledgeNuggetsSection':
+            return (
+              <KnowledgeNuggetsSection key={item.props.id} {...item.props} />
+            )
           default:
             assertUnreachable(item)
         }
