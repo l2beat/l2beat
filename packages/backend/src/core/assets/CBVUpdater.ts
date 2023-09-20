@@ -40,7 +40,9 @@ export class CBVUpdater implements AssetUpdater {
     private readonly logger: Logger,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(this.getChainId())}`,
+    )
     // TODO(radomski): This config hash should be generated from only CBV projects
     this.configHash = getReportConfigHash(projects)
     this.taskQueue = new TaskQueue(

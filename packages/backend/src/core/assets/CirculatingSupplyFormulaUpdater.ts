@@ -50,7 +50,7 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
     this.logger = this.logger.for(
-      `CirculatingSupplyFormulaUpdater.${ChainId.getName(chainId)}`,
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
     )
     this.configHash = getTokensConfigHash(this.tokens)
 

@@ -31,7 +31,7 @@ export class CirculatingSupplyUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(
-      `CirculatingSupplyUpdater.${ChainId.getName(chainId)}`,
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
     )
     this.taskQueue = new TaskQueue(
       () => this.update(),

@@ -48,7 +48,9 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
       ),
       'Programmer error: all tokens must be using totalSupply formula have the same chainId',
     )
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
+    )
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
