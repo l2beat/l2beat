@@ -15,12 +15,17 @@ export interface UpdaterStatus {
 }
 
 interface StatusPageProps {
+  latestSafeTimestamp: UnixTime
   statuses: UpdaterStatus[]
 }
 
-export function StatusXPage({ statuses }: StatusPageProps) {
+export function StatusXPage({
+  statuses,
+  latestSafeTimestamp,
+}: StatusPageProps) {
   return (
     <Page title="StatusX">
+      <p>Latest safe timestamp: {latestSafeTimestamp.toDate().toISOString()}</p>
       {statuses.map((s) => (
         <>
           <h2>{s.updaterName}</h2>

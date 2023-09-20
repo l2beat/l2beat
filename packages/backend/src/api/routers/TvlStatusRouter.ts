@@ -1,16 +1,22 @@
 import Router from '@koa/router'
 
-import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { renderStatusXPage } from '../controllers/status/view/StatusXPage'
+import { Clock } from '../../core/Clock'
+import {
+  renderStatusXPage,
+  UpdaterStatus,
+} from '../controllers/status/view/StatusXPage'
 
-export function createTvlStatusRouter(aggregate: AggregatedReportUpdater) {
+interface Updater {
+  getStatus(): Promise<UpdaterStatus>
+}
+
+export function createTvlStatusRouter(clock: Clock, updaters: Updater[]) {
   const router = new Router()
 
   router.get('/status-x', async (ctx) => {
-    const s = await aggregate.getStatus()
-    console.log('sss')
     ctx.body = renderStatusXPage({
-      statuses: [s],
+      latestSafeTimestamp: clock.getLastHour(),
+      statuses: await Promise.all(updaters.map((x) => x.getStatus())),
     })
   })
 

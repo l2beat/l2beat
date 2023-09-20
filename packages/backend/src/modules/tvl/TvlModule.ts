@@ -165,7 +165,9 @@ export function createTvlModule(
     detailedTvlEnabled: config.tvl.detailedTvlEnabled,
   })
   const dydxRouter = createDydxRouter(dydxController)
-  const tvlStatusRouter = createTvlStatusRouter(aggregatedReportUpdater)
+  const tvlStatusRouter = createTvlStatusRouter(clock, [
+    aggregatedReportUpdater,
+  ])
 
   // #endregion
 
