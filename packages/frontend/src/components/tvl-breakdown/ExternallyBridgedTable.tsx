@@ -24,7 +24,7 @@ export function ExternallyBridgedTable(props: ExternallyBridgedTableProps) {
         columns={getExternallyBridgedColumns(props.explorer)}
         items={props.tokens}
       />
-      <TableSum type="EBV" amount={sum} />
+      <TableSum amount={sum} />
     </div>
   )
 }

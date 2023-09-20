@@ -24,7 +24,7 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
         columns={getNativelyMintedColumns(props.explorer)}
         items={props.tokens}
       />
-      <TableSum type="NMV" amount={sum} />
+      <TableSum amount={sum} />
     </div>
   )
 }

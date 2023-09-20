@@ -23,7 +23,7 @@ export function CanonicallyBridgedTable(props: CanonicallyBridgedTableProps) {
         columns={getCanonicallyBridgedColumns(props.explorer)}
         items={formattedTokens}
       />
-      <TableSum type="CBV" amount={sum} />
+      <TableSum amount={sum} />
     </div>
   )
 }

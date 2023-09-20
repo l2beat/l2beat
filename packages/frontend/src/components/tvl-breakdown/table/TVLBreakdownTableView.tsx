@@ -59,14 +59,12 @@ export function TVLBreakdownTableView<
         <thead>
           <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:bg-gray-800">
             {columns.map((column, i) => {
-              const isLastColumn = i === columns.length - 1
               return (
                 <th
                   key={i}
                   className={cx(
-                    'whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r dark:text-gray-50',
+                    'whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
                     column.minimalWidth && 'w-0',
-                    isLastColumn && 'md:pr-4',
                     column.headClassName,
                     column.highlight && highlightedColumnClassNames,
                   )}
@@ -118,19 +116,16 @@ export function TVLBreakdownTableView<
                 data-token={item.assetId}
               >
                 {columns.map((column, j) => {
-                  const isLastColumn = j === columns.length - 1
-
                   const childClassName = cx(
                     'h-full w-full items-start pt-2 pb-2',
                     column.alignRight && 'justify-end',
                     column.alignCenter && 'justify-center',
-                    isLastColumn && 'md:pr-4',
                   )
                   return (
                     <td
                       key={j}
                       className={cx(
-                        'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r md:h-10 md:pl-4',
+                        'h-9 pr-2 first:rounded-l first:pl-2  last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
                         column.minimalWidth && 'w-0',
                         column.highlight && highlightedColumnClassNames,
                       )}

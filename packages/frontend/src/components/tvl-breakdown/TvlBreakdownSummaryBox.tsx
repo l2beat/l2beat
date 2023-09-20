@@ -10,7 +10,7 @@ export function TvlBreakdownSummaryBox(
   return (
     <div className="flex flex-col justify-between gap-2 bg-purple-300 p-6 dark:bg-purple-700 md:flex-row md:rounded-lg md:border md:border-pink-200 md:dark:border-pink-900">
       <StatsItem
-        title="Total TVL"
+        title="Total Value Locked"
         mobileTitle="Total Value Locked"
         value={props.tvl.value}
         change={props.tvl.change}
