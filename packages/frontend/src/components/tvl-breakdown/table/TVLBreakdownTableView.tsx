@@ -21,7 +21,6 @@ export interface ColumnConfig<T> {
   shortName?: ReactNode
   alignRight?: true
   alignCenter?: true
-  minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
   idHref?: SectionId
@@ -63,8 +62,7 @@ export function TVLBreakdownTableView<
                 <th
                   key={i}
                   className={cx(
-                    'whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
-                    column.minimalWidth && 'w-0',
+                    'w-[20%] whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
                     column.headClassName,
                     column.highlight && highlightedColumnClassNames,
                   )}
@@ -125,8 +123,7 @@ export function TVLBreakdownTableView<
                     <td
                       key={j}
                       className={cx(
-                        'h-9 pr-2 first:rounded-l first:pl-2  last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
-                        column.minimalWidth && 'w-0',
+                        'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
                         column.highlight && highlightedColumnClassNames,
                       )}
                     >
