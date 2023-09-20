@@ -1,4 +1,4 @@
-import { layer2s as allLayer2s } from '@l2beat/config'
+import { bridges, layer2s as allLayer2s } from '@l2beat/config'
 import {
   AssetId,
   AssetType,
@@ -62,6 +62,23 @@ function getMockDetailedTvlApiResponse(): DetailedTvlApiResponse {
       },
     }
   }
+  for (const project of bridges) {
+    result.projects[project.id.toString()] = {
+      charts: getMockDetailedTvlApiCharts(),
+      tokens: {
+        CBV: [
+          {
+            assetId: AssetId.ETH,
+            chainId: ChainId.ETHEREUM,
+            assetType: AssetType('CBV'),
+            usdValue: 100,
+          },
+        ],
+        EBV: [],
+        NMV: [],
+      },
+    }
+  }
   return result
 }
 
@@ -77,7 +94,7 @@ const DETAILED_LABELS: DetailedTvlApiChart['types'] = [
   'nmvEth',
 ]
 
-const MOCK_VALUES = [50, 30, 20, 10, 5, 3, 2, 1] as const
+const MOCK_VALUES = [60, 30, 20, 10, 5, 3, 2, 1] as const
 
 function getMockDetailedTvlApiCharts(): DetailedTvlApiCharts {
   let now = UnixTime.now().toStartOf('hour')
