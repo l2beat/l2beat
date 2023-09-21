@@ -2,6 +2,7 @@ import { expect, mockObject } from 'earl'
 
 import { Bytes } from '../../utils/Bytes'
 import { EthereumAddress } from '../../utils/EthereumAddress'
+import { UnixTime } from '../../utils/UnixTime'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
@@ -59,6 +60,7 @@ describe(AddressAnalyzer.name, () => {
     const addressAnalyzer = new AddressAnalyzer(
       mockObject<DiscoveryProvider>({
         getCode: async () => Bytes.fromHex('0x1234'),
+        getDeploymentTimestamp: async () => new UnixTime(1234),
       }),
       mockObject<ProxyDetector>({
         detectProxy: async () => ({
@@ -97,6 +99,7 @@ describe(AddressAnalyzer.name, () => {
         name: 'Test',
         derivedName: undefined,
         isVerified: true,
+        deploymentTimestamp: new UnixTime(1234),
         upgradeability: { type: 'EIP1967 proxy', implementation, admin },
         implementations: [implementation],
         values: { owner: owner.toString() },
@@ -127,6 +130,7 @@ describe(AddressAnalyzer.name, () => {
     const addressAnalyzer = new AddressAnalyzer(
       mockObject<DiscoveryProvider>({
         getCode: async () => Bytes.fromHex('0x1234'),
+        getDeploymentTimestamp: async () => new UnixTime(1234),
       }),
       mockObject<ProxyDetector>({
         detectProxy: async () => ({
@@ -165,6 +169,7 @@ describe(AddressAnalyzer.name, () => {
         derivedName: undefined,
         address,
         isVerified: false,
+        deploymentTimestamp: new UnixTime(1234),
         upgradeability: { type: 'EIP1967 proxy', implementation, admin },
         implementations: [implementation],
         values: { owner: owner.toString() },

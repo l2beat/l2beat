@@ -1,9 +1,11 @@
+import { assert } from '@l2beat/backend-tools'
 import { providers } from 'ethers'
 
 import { Bytes } from '../../utils/Bytes'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { Hash256 } from '../../utils/Hash256'
+import { UnixTime } from '../../utils/UnixTime'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 export interface ContractMetadata {
@@ -105,6 +107,18 @@ export class DiscoveryProvider {
     const tx = await this.getTransaction(txHash)
 
     return EthereumAddress(tx.from)
+  }
+
+  async getFirstTxTimestamp(address: EthereumAddress): Promise<UnixTime> {
+    return this.etherscanLikeClient.getFirstTxTimestamp(address)
+  }
+
+  async getDeploymentTimestamp(address: EthereumAddress): Promise<UnixTime> {
+    const txHash = await this.getContractDeploymentTx(address)
+    const tx = await this.provider.getTransaction(txHash.toString())
+    assert(tx.blockNumber, 'Transaction returned without a block number.')
+    const block = await this.provider.getBlock(tx.blockNumber)
+    return new UnixTime(block.timestamp)
   }
 
   async getBlockNumber(): Promise<number> {

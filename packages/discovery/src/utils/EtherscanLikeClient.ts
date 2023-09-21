@@ -99,6 +99,22 @@ export class EtherscanLikeClient {
     return tx.txHash
   }
 
+  async getFirstTxTimestamp(address: EthereumAddress): Promise<UnixTime> {
+    const response = await this.call('account', 'txlist', {
+      address: address.toString(),
+      startblock: '0',
+      endblock: '999999999',
+      page: '1',
+      offset: '1',
+      sort: 'asc',
+    })
+
+    const resp = TransactionListResult.parse(response)[0]
+    assert(resp)
+
+    return new UnixTime(parseInt(resp.timeStamp, 10))
+  }
+
   async call(
     module: string,
     action: string,
@@ -203,3 +219,28 @@ export const ContractCreatorAndCreationTxHash = z.object({
 export const ContractCreatorAndCreationTxHashResult = z
   .array(ContractCreatorAndCreationTxHash)
   .length(1)
+
+export const TransactionListEntry = z.object({
+  blockNumber: z.string(),
+  timeStamp: z.string(),
+  hash: z.string(),
+  nonce: z.string(),
+  blockHash: z.string(),
+  transactionIndex: z.string(),
+  from: z.string(),
+  to: z.string(),
+  value: z.string(),
+  gas: z.string(),
+  gasPrice: z.string(),
+  isError: z.string(),
+  txreceipt_status: z.string(),
+  input: z.string(),
+  contractAddress: z.string(),
+  cumulativeGasUsed: z.string(),
+  gasUsed: z.string(),
+  confirmations: z.string(),
+  methodId: z.string(),
+  functionName: z.string(),
+})
+
+export const TransactionListResult = z.array(TransactionListEntry).length(1)

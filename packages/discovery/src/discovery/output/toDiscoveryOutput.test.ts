@@ -2,6 +2,7 @@ import { UpgradeabilityParameters } from '@l2beat/discovery-types'
 import { expect } from 'earl'
 
 import { EthereumAddress } from '../../utils/EthereumAddress'
+import { UnixTime } from '../../utils/UnixTime'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { processAnalysis } from './toDiscoveryOutput'
 
@@ -12,6 +13,7 @@ describe(processAnalysis.name, () => {
     errors: {},
     values: {},
     isVerified: true,
+    deploymentTimestamp: new UnixTime(1234),
     upgradeability: { type: 'immutable' } as UpgradeabilityParameters,
     implementations: [],
     abis: {},
@@ -102,6 +104,7 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_A,
           name: 'A',
           unverified: true,
+          sinceTimestamp: base.deploymentTimestamp.toNumber(),
           upgradeability: CONTRACT_A.upgradeability,
         },
       ],
@@ -119,6 +122,7 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_B,
           name: 'B',
           derivedName: 'Something not B',
+          sinceTimestamp: base.deploymentTimestamp.toNumber(),
           upgradeability: CONTRACT_B.upgradeability,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
@@ -143,6 +147,7 @@ describe(processAnalysis.name, () => {
         {
           address: ADDRESS_C,
           name: 'C',
+          sinceTimestamp: base.deploymentTimestamp.toNumber(),
           upgradeability: CONTRACT_C.upgradeability,
           values: CONTRACT_C.values,
         },
@@ -170,6 +175,7 @@ describe(processAnalysis.name, () => {
           name: 'A',
           unverified: true,
           upgradeability: CONTRACT_A.upgradeability,
+          sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
         {
           address: ADDRESS_B,
@@ -178,12 +184,14 @@ describe(processAnalysis.name, () => {
           upgradeability: CONTRACT_B.upgradeability,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
+          sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
         {
           address: ADDRESS_C,
           name: 'C',
           upgradeability: CONTRACT_C.upgradeability,
           values: CONTRACT_C.values,
+          sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
       ],
       eoas: [ADDRESS_D],

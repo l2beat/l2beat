@@ -17,6 +17,7 @@ export interface ContractParameters {
   name: string
   derivedName?: string
   unverified?: true
+  sinceTimestamp?: number
   address: EthereumAddress
   upgradeability: UpgradeabilityParameters
   values?: Record<string, ContractValue>

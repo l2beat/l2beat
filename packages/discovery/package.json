@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/discovery",
   "description": "L2Beat discovery - engine & tooling utilized for keeping an eye on L2s",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "^0.3.0",
-    "@l2beat/discovery-types": "^0.2.0",
+    "@l2beat/discovery-types": "^0.3.0",
     "chalk": "^4.1.2",
     "deep-diff": "^1.0.2",
     "dotenv": "^16.0.3",

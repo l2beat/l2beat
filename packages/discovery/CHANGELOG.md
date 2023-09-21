@@ -1,5 +1,16 @@
 # @l2beat/discovery
 
+## 0.4.0
+
+### Minor Changes
+
+- Start tracking the deployment timestamp for contracts
+
+### Patch Changes
+
+- Updated dependencies
+  - @l2beat/discovery-types@0.3.0
+
 ## 0.3.0
 
 ### Minor Changes
