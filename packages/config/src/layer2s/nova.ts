@@ -235,7 +235,7 @@ export const nova: Layer2 = {
       ),
       discovery.getContractDetails(
         'L1ArbitrumTimelock',
-        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the Nova counterpart of this contract can execute the upgrades.',
       ),
       discovery.getContractDetails(
         'ArbitrumProxy',
@@ -247,11 +247,11 @@ export const nova: Layer2 = {
       ),
       discovery.getContractDetails(
         'Inbox',
-        'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
+        'Entry point for users depositing ETH and sending L1 --> Nova messages. Deposited ETH is escrowed in a Bridge contract.',
       ),
       discovery.getContractDetails(
         'Bridge',
-        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+        'Contract managing Inboxes and Outboxes. It escrows ETH sent to Nova.',
       ),
       discovery.getContractDetails('Outbox'),
       discovery.getContractDetails(
@@ -272,15 +272,15 @@ export const nova: Layer2 = {
       ),
       discovery.getContractDetails(
         'L1ERC20Gateway',
-        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on Nova a generic, "wrapped" token will be minted.',
       ),
       discovery.getContractDetails(
         'L1CustomGateway',
-        'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+        'Main entry point for users depositing ERC20 tokens that require minting custom token on Nova.',
       ),
       discovery.getContractDetails(
         'L1DaiGateway',
-        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+        'Custom DAI Gateway, main entry point for users depositing DAI to Nova where "canonical" Nova DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       ),
       discovery.getContractDetails(
         'L1Escrow',

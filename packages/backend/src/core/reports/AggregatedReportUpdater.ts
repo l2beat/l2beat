@@ -90,6 +90,7 @@ export class AggregatedReportUpdater {
       configHash: this.configHash,
       timestamp,
     })
+    this.knownSet.add(timestamp.toNumber())
 
     this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
   }
