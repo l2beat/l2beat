@@ -1,3 +1,12 @@
+/*
+       ====== IMPORTANT NOTICE ======
+
+EDIT THIS FILE ONLY IF YOU KNOW WHAT YOU ARE DOING
+
+To set the minTimestamp for a chain it is not always the case to set the timestamp of the first block.
+For example Optimism had block 0 on January 2021 but the block 1 on November 2021 :D
+
+*/
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 
 const chainConfig = [
@@ -13,9 +22,10 @@ const chainConfig = [
   },
   {
     chainId: ChainId.OPTIMISM,
-    // ~ Timestamp of block number 0 on Optimism
-    // https://optimistic.etherscan.io/block/0
-    minTimestamp: UnixTime.fromDate(new Date('2021-01-14T15:51:40Z')),
+    // ~ Timestamp of block number 138 on Optimism
+    // The first full hour timestamp that will return the block number
+    // https://optimistic.etherscan.io/block/138
+    minTimestamp: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
   },
   {
     chainId: ChainId.BASE,
