@@ -1,6 +1,9 @@
 import { Logger, LogLevel } from '@l2beat/shared'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { branded, EthereumAddress } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
+import { readFile } from 'fs/promises'
+import { parse, ParseError } from 'jsonc-parser'
+import * as z from 'zod'
 
 import { bridges, layer2s } from '../../src'
 import {
@@ -8,7 +11,6 @@ import {
   getUniqueContractsForAllProjects,
 } from './addresses'
 import { getEtherscanClient } from './etherscan'
-import manuallyVerified from './manuallyVerified.json'
 import {
   loadPreviouslyVerifiedContracts,
   saveResult,
@@ -19,10 +21,32 @@ import { getEnv } from './utils'
 
 export const OUTPUT_FILEPATH = 'src/verified.json'
 
+export type ManuallyVerfiedContracts = z.infer<typeof ManuallyVerfiedContracts>
+export const ManuallyVerfiedContracts = z.array(
+  branded(z.string(), EthereumAddress),
+)
+
+async function getManuallyVerified() {
+  const content = await readFile(
+    'scripts/checkVerifiedContracts/manuallyVerified.jsonc',
+    'utf-8',
+  )
+  const errors: ParseError[] = []
+  const parsed: unknown = parse(content, errors, {
+    allowTrailingComma: true,
+  })
+  if (errors.length !== 0) {
+    throw new Error('Cannot parse manuallyVerified.jsonc')
+  }
+
+  return ManuallyVerfiedContracts.parse(parsed)
+}
+
 export async function main() {
   const logger = new Logger({ logLevel: LogLevel.INFO, format: 'pretty' })
   const envWorkersVar = 'ETHERSCAN_WORKERS'
   const workersCount = parseInt(getEnv(envWorkersVar, '4'))
+  const manuallyVerified = await getManuallyVerified()
 
   console.log('Check Verified Contracts.')
   console.log('=========================')
@@ -39,7 +63,7 @@ export async function main() {
   const addressVerificationMap = await verifyContracts(
     addresses,
     previouslyVerified,
-    new Set(manuallyVerified.map(EthereumAddress)),
+    new Set(manuallyVerified),
     etherscanClient,
     workersCount,
     logger,
