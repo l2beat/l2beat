@@ -2,9 +2,11 @@ import { BlockNumberProvider, Logger } from '@l2beat/shared'
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { Clock } from './Clock'
 import { TaskQueue } from './queue/TaskQueue'
+import { getStatus } from './reports/getStatus'
 
 export class BlockNumberUpdater {
   private readonly blocksByTimestamp = new Map<number, number>()
@@ -18,7 +20,9 @@ export class BlockNumberUpdater {
     private readonly chainId: ChainId,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
+    )
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
@@ -35,6 +39,21 @@ export class BlockNumberUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    const knownSet = new Set<number>()
+
+    for (const timestamp of this.blocksByTimestamp.keys()) {
+      knownSet.add(timestamp)
+    }
+
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      knownSet,
+    )
   }
 
   async getBlockNumberWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {

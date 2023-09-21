@@ -34,7 +34,6 @@ export interface ProjectHeaderProps {
   tvlBreakdownHref: string
   risks: RiskValues
   links: ProjectLink[]
-  stagesEnabled?: boolean
   detailedTvlEnabled?: boolean
   stage: StageConfig
   isArchived?: boolean
@@ -73,7 +72,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.stagesEnabled && props.stage.stage !== 'NotApplicable'
+    ...(props.stage.stage !== 'NotApplicable'
       ? [
           {
             title: 'Stage',
@@ -125,7 +124,6 @@ export function ProjectHeader(props: ProjectHeaderProps) {
   return (
     <DetailsHeader
       type="layer2"
-      stagesEnabled={props.stagesEnabled}
       detailedTvlEnabled={props.detailedTvlEnabled}
       title={props.title}
       icon={props.icon}

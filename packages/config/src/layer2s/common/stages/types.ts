@@ -22,8 +22,7 @@ export type ChecklistTemplate<T extends StageBlueprint> = {
   }
 }
 
-// TODO: maybe it shouldn't be undefined
-export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2' | undefined
+export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface StageSummary {
   stage: Stage

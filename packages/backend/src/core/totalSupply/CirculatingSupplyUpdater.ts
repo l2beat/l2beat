@@ -9,6 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import {
   CirculatingSupplyRecord,
@@ -17,6 +18,7 @@ import {
 } from '../../peripherals/database/CirculatingSupplyRepository'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
+import { getStatus } from '../reports/getStatus'
 
 export class CirculatingSupplyUpdater {
   private readonly knownSet = new Set<number>()
@@ -31,7 +33,7 @@ export class CirculatingSupplyUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(
-      `CirculatingSupplyUpdater.${ChainId.getName(chainId)}`,
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
     )
     this.taskQueue = new TaskQueue(
       () => this.update(),
@@ -47,6 +49,15 @@ export class CirculatingSupplyUpdater {
           token.formula === 'circulatingSupply',
       ),
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
+    )
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
     )
   }
 
