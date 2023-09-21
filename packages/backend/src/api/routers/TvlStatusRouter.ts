@@ -6,6 +6,7 @@ import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { TvlSubmodule } from '../../modules/ApplicationModule'
 import { renderTvlStatusPage } from '../controllers/status/view/TvlStatusPage'
+import { renderTvlStatusPageDetailed } from '../controllers/status/view/TvlStatusPageDetailed'
 
 export function createTvlStatusRouter(
   clock: Clock,
@@ -39,6 +40,13 @@ export function createTvlStatusRouter(
           }
         }),
       ],
+    })
+  })
+
+  router.get('/status/tvl/detailed', (ctx) => {
+    ctx.body = renderTvlStatusPageDetailed({
+      latestSafeTimestamp: clock.getLastHour(),
+      updater: aggregatedReportUpdater.getStatus(),
     })
   })
 

@@ -27,7 +27,7 @@ export function TvlStatusPage({
   latestSafeTimestamp,
 }: StatusPageProps) {
   return (
-    <Page title="TVL module status (Last 24 hours)">
+    <Page title="TVL module status (24h)">
       <div className="card hint" style={{ margin: '8px', width: '358px' }}>
         <p>Latest safe timestamp</p>
         <p>
@@ -61,7 +61,7 @@ export function TvlStatusPage({
                 <p>{updater.updaterName}</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                   {updater.statuses.slice(0, 24).map((status, index) => (
-                    <Square key={index} status={status} />
+                    <StatusSquare key={index} status={status} />
                   ))}
                 </div>
               </div>
@@ -73,7 +73,7 @@ export function TvlStatusPage({
   )
 }
 
-function Square(props: { status: StatusPoint }): JSX.Element {
+export function StatusSquare(props: { status: StatusPoint }): JSX.Element {
   return (
     <div
       data-tooltip={getTooltip(props.status)}
