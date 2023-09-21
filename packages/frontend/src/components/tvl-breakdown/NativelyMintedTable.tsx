@@ -17,7 +17,7 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
 
   return props.tokens.length === 0 ? null : (
     <div className="flex flex-col px-4">
-      <h2 className="mt-12 ml-1 mb-4 text-xl font-bold md:ml-2 md:text-2xl">
+      <h2 className="mt-12 ml-1 mb-3 text-xl font-bold md:mb-4 md:ml-2 md:text-2xl">
         Natively Minted Value
       </h2>
       <TVLBreakdownTableView

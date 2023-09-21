@@ -8,7 +8,7 @@ export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],
 ) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-purple-300 p-6 dark:bg-purple-700 md:flex-row md:rounded-lg md:border md:border-pink-200 md:dark:border-pink-900">
+    <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 dark:bg-purple-700 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:p-6 md:dark:border-pink-900">
       <StatsItem
         title="Total Value Locked"
         mobileTitle="Total Value Locked"
@@ -48,7 +48,12 @@ interface StatsItemProps {
 
 function StatsItem(props: StatsItemProps) {
   return (
-    <div className="flex items-center justify-between md:flex-col md:items-start">
+    <div
+      className={classNames(
+        'flex items-center justify-between md:flex-col md:items-start',
+        props.big && 'mb-1',
+      )}
+    >
       <span className="hidden text-xs font-medium text-gray-600 md:inline">
         {props.title}
       </span>
