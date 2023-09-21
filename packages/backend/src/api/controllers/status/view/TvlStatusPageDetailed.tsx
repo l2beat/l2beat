@@ -3,7 +3,11 @@ import React from 'react'
 
 import { Page } from './Page'
 import { reactToHtml } from './reactToHtml'
-import { StatusSquare, UpdaterStatus } from './TvlStatusPage'
+import {
+  getStatusIndicator,
+  StatusSquare,
+  UpdaterStatus,
+} from './TvlStatusPage'
 
 interface StatusPageProps {
   latestSafeTimestamp: UnixTime
@@ -23,7 +27,10 @@ export function TvlStatusPageDetailed({
   return (
     <Page title="Detailed updater status">
       <div className="card hint" style={{ margin: '8px', width: '358px' }}>
-        <p>Latest safe timestamp</p>
+        <p>Overview</p>
+        <p>✅🌕❌ ???</p>
+        <hr />
+        <p style={{ fontWeight: 'bold' }}>Target timestamp:</p>
         <p>
           <span style={{ fontWeight: 'bold' }}>UTC: </span>
           {latestSafeTimestamp
@@ -41,7 +48,10 @@ export function TvlStatusPageDetailed({
         <div className="card info" style={{ margin: '8px', padding: '10px' }}>
           <p style={{ fontWeight: 'bold' }}>{status.groupName.toUpperCase()}</p>
           <p>
-            <p>{status.updater.updaterName}</p>
+            <p>
+              {status.updater.updaterName}{' '}
+              {getStatusIndicator(status.updater.statuses)}
+            </p>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               {status.updater.statuses.map((status, index) => (
                 <StatusSquare key={index} status={status} />

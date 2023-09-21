@@ -29,7 +29,10 @@ export function TvlStatusPage({
   return (
     <Page title="TVL module status (24h)">
       <div className="card hint" style={{ margin: '8px', width: '358px' }}>
-        <p>Latest safe timestamp</p>
+        <p>Overview</p>
+        <p>✅🌕❌ ???</p>
+        <hr />
+        <p style={{ fontWeight: 'bold' }}>Target timestamp:</p>
         <p>
           <span style={{ fontWeight: 'bold' }}>UTC: </span>
           {latestSafeTimestamp
@@ -60,12 +63,14 @@ export function TvlStatusPage({
               <div key={id} style={{ marginLeft: '2px' }}>
                 <a href={`tvl/${status.groupName}/${updater.updaterName}`}>
                   {updater.updaterName}
-                </a>
+                </a>{' '}
+                {getStatusIndicator(updater.statuses)}
                 <div
                   style={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    marginTop: '6px',
+                    marginTop: '8px',
+                    marginBottom: '8px',
                   }}
                 >
                   {updater.statuses.slice(0, 24).map((status, index) => (
@@ -113,4 +118,18 @@ function getTooltip(status: StatusPoint): string {
 
 export function renderTvlStatusPage(props: StatusPageProps) {
   return reactToHtml(<TvlStatusPage {...props} />)
+}
+
+export function getStatusIndicator(statuses: StatusPoint[]): string {
+  if (
+    statuses.every((s) => s.status === 'synced' || s.status === 'notApplicable')
+  ) {
+    return '✅'
+  } else if (statuses.slice(0, 4).some((s) => s.status === 'notSynced')) {
+    return '❌'
+  } else if (statuses.slice(4).some((s) => s.status === 'notSynced')) {
+    return '🌕'
+  }
+
+  return ''
 }
