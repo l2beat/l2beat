@@ -14,17 +14,17 @@ export function getStatus(
   )
 
   const statuses: StatusPoint[] = timestamps.map((timestamp) => {
-    if (knownSet.has(timestamp.toNumber())) {
-      return {
-        timestamp,
-        status: 'synced',
-      }
-    }
-
     if (minTimestamp && timestamp.toNumber() < minTimestamp.toNumber()) {
       return {
         timestamp,
         status: 'notApplicable',
+      }
+    }
+
+    if (knownSet.has(timestamp.toNumber())) {
+      return {
+        timestamp,
+        status: 'synced',
       }
     }
 
