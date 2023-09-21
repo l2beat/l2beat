@@ -1,5 +1,13 @@
 # @l2beat/discovery
 
+## 0.4.1
+
+### Patch Changes
+
+- 69ffa66: Fix faulty release
+- Updated dependencies [69ffa66]
+  - @l2beat/discovery-types@0.3.1
+
 ## 0.4.0
 
 ### Minor Changes
