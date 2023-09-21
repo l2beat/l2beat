@@ -18,6 +18,7 @@ export function gatherAddressesFromUpgradeability(
     case 'call implementation proxy':
     case 'EIP897 proxy':
     case 'Eternal Storage proxy':
+    case 'Optics Beacon proxy':
       result.push(item.implementation)
       break
     case 'StarkWare proxy':
