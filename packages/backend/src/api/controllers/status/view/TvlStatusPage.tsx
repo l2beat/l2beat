@@ -28,15 +28,30 @@ export function TvlStatusPage({
 }: StatusPageProps) {
   return (
     <Page title="TVL module status (Last 24 hours)">
-      <p>Latest safe timestamp: {latestSafeTimestamp.toDate().toISOString()}</p>
+      <div className="card hint" style={{ margin: '8px', width: '358px' }}>
+        <p>Latest safe timestamp</p>
+        <p>
+          <span style={{ fontWeight: 'bold' }}>UTC: </span>
+          {latestSafeTimestamp
+            .toDate()
+            .toLocaleString('en-GB', { timeZone: 'UTC' })}
+        </p>
+        <p>
+          <span style={{ fontWeight: 'bold' }}>CET: </span>
+          {latestSafeTimestamp
+            .toDate()
+            .toLocaleString('en-GB', { timeZone: 'CET' })}
+        </p>
+      </div>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {statuses.map((status, id) => (
           <div
             style={{
-              margin: '5px',
-              padding: '5px',
+              margin: '8px',
+              padding: '10px',
             }}
             key={id}
+            className="card info"
           >
             <p style={{ fontWeight: 'bold' }}>
               {status.groupName.toUpperCase()}
