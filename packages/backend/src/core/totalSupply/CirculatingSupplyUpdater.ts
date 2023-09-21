@@ -10,6 +10,7 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
+import { getChainMinTimestamp } from '../../config/chains'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import {
   CirculatingSupplyRecord,
@@ -58,6 +59,7 @@ export class CirculatingSupplyUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
+      getChainMinTimestamp(this.chainId),
     )
   }
 

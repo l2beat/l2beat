@@ -18,7 +18,7 @@ export function TvlStatusPageDetailed({
   latestSafeTimestamp,
 }: StatusPageProps) {
   if (status.updater === undefined) {
-    return 'Wrong detailed tvl status path'
+    return <p>Wrong path for detailed updater status</p>
   }
   return (
     <Page title="Detailed updater status">
@@ -43,11 +43,9 @@ export function TvlStatusPageDetailed({
           <p>
             <p>{status.updater.updaterName}</p>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {Array(200).fill(
-                status.updater.statuses.map((status, index) => (
-                  <StatusSquare key={index} status={status} />
-                )),
-              )}
+              {status.updater.statuses.map((status, index) => (
+                <StatusSquare key={index} status={status} />
+              ))}
             </div>
           </p>
         </div>

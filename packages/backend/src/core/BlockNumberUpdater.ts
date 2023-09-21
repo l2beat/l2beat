@@ -3,6 +3,7 @@ import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
+import { getChainMinTimestamp } from '../config/chains'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { Clock } from './Clock'
 import { TaskQueue } from './queue/TaskQueue'
@@ -53,6 +54,7 @@ export class BlockNumberUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       knownSet,
+      getChainMinTimestamp(this.chainId),
     )
   }
 
