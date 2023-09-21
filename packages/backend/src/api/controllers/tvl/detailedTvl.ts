@@ -289,48 +289,26 @@ function reshapeCanonicalResponse(
     >
   >,
 ) {
-  const formattedArr: Record<
-    string,
-    {
-      assetId: AssetId
-      usdValue: string
-      amount: string
-      escrows: {
-        amount: string
-        usdValue: string
-        escrowAddress: EthereumAddress
-      }[]
-      usdPrice: string
-    }[]
-  > = {}
-
-  for (const project in breakdowns) {
-    formattedArr[project] = Object.entries(breakdowns[project]).map(
-      ([asset, escrows]) => {
-        escrows.sort((a, b) => Number(b.usdValue) - Number(a.usdValue))
-        const usdValue = escrows.reduce(
-          (total, escrow) => total + Number(escrow.usdValue),
-          0,
-        )
-        const amount = escrows.reduce(
-          (total, escrow) => total + Number(escrow.amount),
-          0,
-        )
-
-        return {
-          assetId: AssetId(asset),
-          usdValue: usdValue.toString(),
-          amount: amount.toString(),
-          escrows: escrows.map((escrow) => ({
-            amount: escrow.amount,
-            usdValue: escrow.usdValue,
-            escrowAddress: escrow.escrowAddress,
-          })),
-          usdPrice: escrows[0].usdPrice,
-        }
-      },
-    )
-  }
-
-  return formattedArr
+  return Object.fromEntries(
+    Object.entries(breakdowns).map(([project, projectBreakdown]) => [
+      project,
+      Object.entries(projectBreakdown).map(([asset, escrows]) => ({
+        assetId: AssetId(asset),
+        usdValue: escrows
+          .reduce((total, e) => total + Number(e.usdValue), 0)
+          .toString(),
+        amount: escrows
+          .reduce((total, e) => total + Number(e.amount), 0)
+          .toString(),
+        escrows: escrows
+          .map((e) => ({
+            amount: e.amount,
+            usdValue: e.usdValue,
+            escrowAddress: e.escrowAddress,
+          }))
+          .sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
+        usdPrice: escrows[0].usdPrice,
+      })),
+    ]),
+  )
 }
