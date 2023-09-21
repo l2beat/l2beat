@@ -7,15 +7,21 @@ import { StatusSquare, UpdaterStatus } from './TvlStatusPage'
 
 interface StatusPageProps {
   latestSafeTimestamp: UnixTime
-  updater: UpdaterStatus
+  status: {
+    groupName: string
+    updater: UpdaterStatus | undefined
+  }
 }
 
 export function TvlStatusPageDetailed({
-  updater,
+  status,
   latestSafeTimestamp,
 }: StatusPageProps) {
+  if (status.updater === undefined) {
+    return 'Wrong detailed tvl status path'
+  }
   return (
-    <Page title="TVL module status (Last 24 hours)">
+    <Page title="Detailed updater status">
       <div className="card hint" style={{ margin: '8px', width: '358px' }}>
         <p>Latest safe timestamp</p>
         <p>
@@ -33,14 +39,17 @@ export function TvlStatusPageDetailed({
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         <div className="card info" style={{ margin: '8px', padding: '10px' }}>
-          <p>{updater.updaterName}</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {Array(200).fill(
-              updater.statuses.map((status, index) => (
-                <StatusSquare key={index} status={status} />
-              )),
-            )}
-          </div>
+          <p style={{ fontWeight: 'bold' }}>{status.groupName.toUpperCase()}</p>
+          <p>
+            <p>{status.updater.updaterName}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {Array(200).fill(
+                status.updater.statuses.map((status, index) => (
+                  <StatusSquare key={index} status={status} />
+                )),
+              )}
+            </div>
+          </p>
         </div>
       </div>
     </Page>
