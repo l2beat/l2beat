@@ -22,9 +22,9 @@ import { createFormulaReports } from '../reports/createFormulaReports'
 import { getStatus } from '../reports/getStatus'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
-import { AssetUpdater } from './AssetUpdater'
+import { ReportUpdater } from './Updater'
 
-export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
+export class CirculatingSupplyFormulaUpdater implements ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -50,7 +50,7 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
     this.logger = this.logger.for(
-      `CirculatingSupplyFormulaUpdater.${ChainId.getName(chainId)}`,
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
     )
     this.configHash = getTokensConfigHash(this.tokens)
 
@@ -77,7 +77,7 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
 
   getStatus(): UpdaterStatus {
     return getStatus(
-      ChainId.getName(this.chainId) + ': ' + this.constructor.name,
+      this.constructor.name,
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
