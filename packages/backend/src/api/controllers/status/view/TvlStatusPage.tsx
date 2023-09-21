@@ -58,8 +58,16 @@ export function TvlStatusPage({
             </p>
             {status.updaters.map((updater, id) => (
               <div key={id} style={{ marginLeft: '2px' }}>
-                <p>{updater.updaterName}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <a href={`tvl/${status.groupName}/${updater.updaterName}`}>
+                  {updater.updaterName}
+                </a>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    marginTop: '6px',
+                  }}
+                >
                   {updater.statuses.slice(0, 24).map((status, index) => (
                     <StatusSquare key={index} status={status} />
                   ))}

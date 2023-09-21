@@ -25,28 +25,26 @@ export function createTvlStatusRouter(
 ) {
   const router = new Router()
 
-  const s = {
-    statuses: [
-      {
-        groupName: 'shared',
-        updaters: [aggregatedReportUpdater, priceUpdater],
-      },
-      ...submodules.filter(notUndefined).map((x) => {
-        const reports = x.reportUpdaters ?? []
-        const data = x.dataUpdaters ?? []
+  const statuses = [
+    {
+      groupName: 'shared',
+      updaters: [aggregatedReportUpdater, priceUpdater],
+    },
+    ...submodules.filter(notUndefined).map((x) => {
+      const reports = x.reportUpdaters ?? []
+      const data = x.dataUpdaters ?? []
 
-        return {
-          groupName: ChainId.getName(reports[0].getChainId()),
-          updaters: [...reports, ...data],
-        }
-      }),
-    ],
-  }
+      return {
+        groupName: ChainId.getName(reports[0].getChainId()),
+        updaters: [...reports, ...data],
+      }
+    }),
+  ]
 
   router.get('/status/tvl', (ctx) => {
     ctx.body = renderTvlStatusPage({
       latestSafeTimestamp: clock.getLastHour(),
-      statuses: s.statuses.map((x) => ({
+      statuses: statuses.map((x) => ({
         groupName: x.groupName,
         updaters: x.updaters.map((x) => ({
           ...x.getStatus(),
@@ -56,14 +54,14 @@ export function createTvlStatusRouter(
   })
 
   router.get(
-    '/status/tvl/detailed/:group/:updater',
+    '/status/tvl/:group/:updater',
     withTypedContext(paramsParser, (ctx) => {
       const { group, updater } = ctx.params
       ctx.body = renderTvlStatusPageDetailed({
         latestSafeTimestamp: clock.getLastHour(),
         status: {
           groupName: group,
-          updater: s.statuses
+          updater: statuses
             .find((x) => x.groupName === group)
             ?.updaters.find((x) => x.getStatus().updaterName === updater)
             ?.getStatus(),
