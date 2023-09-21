@@ -1,5 +1,5 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { AssetId } from '@l2beat/shared-pure'
+import { AssetId, EthereumAddress } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { formatLargeNumberWithCommas } from '../../../utils'
@@ -9,10 +9,9 @@ interface TokenAmountCellProps {
   amount: string
   forCanonical?: boolean
   escrows?: {
-    escrow: string
-    usdPrice: string
     usdValue: string
     amount: string
+    escrowAddress: EthereumAddress
   }[]
   forExternal?: boolean
 }
@@ -35,7 +34,7 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       {props.escrows.length > 1 &&
         props.escrows.map((escrow) => (
           <div
-            key={escrow.escrow}
+            key={escrow.escrowAddress.toString()}
             className="MultipleEscrowsHidden hidden font-normal text-black/80 dark:text-white/80"
             data-token={props.assetId}
           >

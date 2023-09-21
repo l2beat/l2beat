@@ -1,13 +1,16 @@
 import { Logger } from '@l2beat/shared'
 import {
   assert,
+  AssetId,
+  ChainId,
   DetailedTvlApiProject,
+  EthereumAddress,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
   ReportType,
   Token,
 } from '@l2beat/shared-pure'
-import { mapValues } from 'lodash'
+import { Dictionary, mapValues } from 'lodash'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
@@ -234,9 +237,10 @@ export function groupAndMergeBreakdowns(
     'projectId',
   )
 
-  const groupedCanonicalBreakdownEntries = mapValues(
-    groupByAndOmit(breakdowns.canonical, 'projectId'),
-    (breakdowns) => groupByAndOmit(breakdowns, 'escrowAddress'),
+  const groupedCanonicalBreakdownEntries = reshapeCanonicalResponse(
+    mapValues(groupByAndOmit(breakdowns.canonical, 'projectId'), (breakdowns) =>
+      groupByAndOmit(breakdowns, 'assetId'),
+    ),
   )
 
   const base: ProjectAssetsBreakdownApiResponse['breakdowns'] = {}
@@ -249,7 +253,7 @@ export function groupAndMergeBreakdowns(
     /* eslint-disable @typescript-eslint/no-unnecessary-condition */
     const external = groupedExternalBreakdownEntries[projectId] ?? []
     const native = groupedNativeBreakdownEntries[projectId] ?? []
-    const canonical = groupedCanonicalBreakdownEntries[projectId] ?? {}
+    const canonical = groupedCanonicalBreakdownEntries[projectId] ?? []
     /* eslint-enable @typescript-eslint/no-unnecessary-condition */
 
     return {
@@ -261,4 +265,70 @@ export function groupAndMergeBreakdowns(
       },
     }
   }, base)
+}
+
+function reshapeCanonicalResponse(
+  breakdowns: Record<
+    string,
+    Dictionary<
+      Omit<
+        Omit<
+          {
+            projectId: ProjectId
+            assetId: AssetId
+            chainId: ChainId
+            amount: string
+            usdValue: string
+            usdPrice: string
+            escrowAddress: EthereumAddress
+          },
+          'projectId'
+        >,
+        'assetId'
+      >[]
+    >
+  >,
+) {
+  const formattedArr: Record<
+    string,
+    {
+      assetId: AssetId
+      usdValue: string
+      amount: string
+      escrows: {
+        amount: string
+        usdValue: string
+        escrowAddress: EthereumAddress
+      }[]
+      usdPrice: string
+    }[]
+  > = {}
+  for (const project in breakdowns) {
+    const projectBreakdown = breakdowns[project]
+    const formattedBreakdowns = []
+    for (const asset in projectBreakdown) {
+      const escrows = projectBreakdown[asset]
+      const usdValue = escrows.reduce(
+        (total, escrow) => total + Number(escrow.usdValue),
+        0,
+      )
+      const amount = escrows.reduce(
+        (total, escrow) => total + Number(escrow.amount),
+        0,
+      )
+      formattedBreakdowns.push({
+        assetId: AssetId(asset),
+        usdValue: usdValue.toString(),
+        amount: amount.toString(),
+        escrows: escrows.map((escrow) => ({
+          amount: escrow.amount,
+          usdValue: escrow.usdValue,
+          escrowAddress: escrow.escrowAddress,
+        })),
+        usdPrice: escrows[0].usdPrice,
+      })
+      formattedArr[project] = formattedBreakdowns
+    }
+  }
+  return formattedArr
 }

@@ -20,7 +20,7 @@ export function TvlBreakdownView(props: TvlBreakdownViewProps) {
         explorer={props.explorer}
       />
       <CanonicallyBridgedTable
-        escrows={props.tvlBreakdowns.canonical}
+        tokens={props.tvlBreakdowns.canonical}
         explorer="https://etherscan.io"
       />
       <RequestTokenBox />
