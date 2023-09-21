@@ -24,7 +24,6 @@ const upgradesProxy = {
 }
 
 export const mantapacific: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('mantapacific'),
   display: {
