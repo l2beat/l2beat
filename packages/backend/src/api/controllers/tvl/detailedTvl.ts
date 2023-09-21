@@ -303,32 +303,34 @@ function reshapeCanonicalResponse(
       usdPrice: string
     }[]
   > = {}
+
   for (const project in breakdowns) {
-    const projectBreakdown = breakdowns[project]
-    const formattedBreakdowns = []
-    for (const asset in projectBreakdown) {
-      const escrows = projectBreakdown[asset]
-      const usdValue = escrows.reduce(
-        (total, escrow) => total + Number(escrow.usdValue),
-        0,
-      )
-      const amount = escrows.reduce(
-        (total, escrow) => total + Number(escrow.amount),
-        0,
-      )
-      formattedBreakdowns.push({
-        assetId: AssetId(asset),
-        usdValue: usdValue.toString(),
-        amount: amount.toString(),
-        escrows: escrows.map((escrow) => ({
-          amount: escrow.amount,
-          usdValue: escrow.usdValue,
-          escrowAddress: escrow.escrowAddress,
-        })),
-        usdPrice: escrows[0].usdPrice,
-      })
-      formattedArr[project] = formattedBreakdowns
-    }
+    formattedArr[project] = Object.entries(breakdowns[project]).map(
+      ([asset, escrows]) => {
+        escrows.sort((a, b) => Number(b.usdValue) - Number(a.usdValue))
+        const usdValue = escrows.reduce(
+          (total, escrow) => total + Number(escrow.usdValue),
+          0,
+        )
+        const amount = escrows.reduce(
+          (total, escrow) => total + Number(escrow.amount),
+          0,
+        )
+
+        return {
+          assetId: AssetId(asset),
+          usdValue: usdValue.toString(),
+          amount: amount.toString(),
+          escrows: escrows.map((escrow) => ({
+            amount: escrow.amount,
+            usdValue: escrow.usdValue,
+            escrowAddress: escrow.escrowAddress,
+          })),
+          usdPrice: escrows[0].usdPrice,
+        }
+      },
+    )
   }
+
   return formattedArr
 }
