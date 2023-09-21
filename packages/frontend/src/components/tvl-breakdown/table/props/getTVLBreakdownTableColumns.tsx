@@ -12,6 +12,8 @@ import { TokenTypeCell } from '../TokenTypeCell'
 import { TokenValueCell } from '../TokenValueCell'
 import { ColumnConfig } from '../TVLBreakdownTableView'
 
+// ! Now cell width are set to 20% in TVLBreakdownTableView.tsx so adding new columns will break the layout
+
 export function getNativelyMintedColumns(explorer: string) {
   const columns: ColumnConfig<TVLProjectBreakdown['native'][number]>[] = [
     {
