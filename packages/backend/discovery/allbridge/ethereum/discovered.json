@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "allbridge",
+  "chain": "ethereum",
   "blockNumber": 17321271,
   "configHash": "0x93d4ddbdf45c48e50296f6ea9e52c0c535908ed407738973689e4d9f45a7b2ad",
+  "version": 2,
   "contracts": [
     {
       "name": "USDC_POOL",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1669206935,
       "values": {
         "a": 20,
         "accRewardPerShareP": "293881805566878551",
@@ -36,6 +38,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1662595853,
       "values": {
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
@@ -48,6 +51,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636666899,
       "values": {
         "owner": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"
       },
@@ -59,6 +63,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1662596119,
       "values": {
         "allbridgeMessenger": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
         "chainId": 1,
@@ -76,6 +81,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1662596190,
       "values": {
         "a": 20,
         "accRewardPerShareP": "188388856323130911",
@@ -102,6 +108,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636634854,
       "values": {
         "owner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
       },
@@ -113,6 +120,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636635220,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -145,6 +153,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1669207319,
       "values": {
         "a": 20,
         "accRewardPerShareP": "21665218338930481943850442658",
@@ -171,6 +180,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1662998060,
       "values": {
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },

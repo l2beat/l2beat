@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "immutablex",
+  "chain": "ethereum",
   "blockNumber": 17271523,
   "configHash": "0xb1c3e28b03c79d1b3f5f4c08ccf0bb526f2177ffeba21774258a69efb2b8e438",
+  "version": 2,
   "contracts": [
     {
       "name": "Committee",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1616668125,
       "values": {
         "constructorArgs": [
           [
@@ -35,6 +37,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1626352379,
       "values": {
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
@@ -58,6 +61,7 @@
         },
         "proxyGovernance": ["0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91"]
       },
+      "sinceTimestamp": 1615389188,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 259200,
@@ -98,6 +102,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1640107463,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -112,6 +117,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1683124943,
       "values": {
         "domainSeparator": "0x0733691424a2d0bc85b95e6971bb8e89e60325c348f87b405049bcf97a719593",
         "getChainId": 1,

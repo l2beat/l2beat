@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "metis",
+  "chain": "ethereum",
   "blockNumber": 17272120,
   "configHash": "0x1a8c7f109e78f0dcd6581b9313d6f003a8b207a956032357d114b7ef323afca7",
+  "version": 2,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -13,6 +14,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
       },
+      "sinceTimestamp": 1637076488,
       "values": {
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
@@ -25,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
         "getGlobalMetadata": "0x00000000000000000000000000000000000064636c37000056ddb9",
@@ -42,6 +45,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1637047500,
       "values": {
         "DEFAULT_CHAINID": 1088,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
@@ -56,6 +60,7 @@
         "implementation": "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "sinceTimestamp": 1637077208,
       "values": {
         "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
         "DEFAULT_CHAINID": 1088,
@@ -71,6 +76,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1636927409,
       "values": {
         "domainSeparator": "0xfb4b712c4b7702310419a72c040b8486f1f9e8b0b84ae19732273a65d3a840c5",
         "getChainId": 1,
@@ -94,6 +100,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1637070766,
       "values": {
         "batches": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
         "DEFAULT_CHAINID": 1088,
@@ -120,7 +127,8 @@
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1637083067
     },
     {
       "name": "MVM_CanonicalTransaction",
@@ -130,6 +138,7 @@
         "implementation": "0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "sinceTimestamp": 1649638297,
       "values": {
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
         "getStakeBaseCost": "100000000000000000",
@@ -154,6 +163,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1649859244,
       "values": {
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
         "discount": 0,
@@ -169,6 +179,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1637047108,
       "values": {
         "_1088_MVM_FraudVerifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
         "_1088_MVM_Proposer": "0x9cB01d516D930EF49591a05B09e0D33E6286689D",
@@ -195,6 +206,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1607734167,
       "values": {
         "decimals": 18,
         "isOwner": true,
@@ -210,6 +222,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1637047833,
       "values": {
         "DEFAULT_CHAINID": 1088,
         "get": [],
@@ -229,6 +242,7 @@
         "implementation": "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "sinceTimestamp": 1649719906,
       "values": {
         "activeChallenges": 0,
         "challenges": [],
@@ -248,6 +262,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1637071157,
       "values": {
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
@@ -271,6 +286,7 @@
         "implementation": "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "sinceTimestamp": 1637089464,
       "values": {
         "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
@@ -283,6 +299,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1637071895,
       "values": {
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d"
       }
