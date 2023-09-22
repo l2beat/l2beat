@@ -28,7 +28,7 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
 
   return props.forCanonical && props.escrows ? (
     <div
-      className="Tooltip flex flex-col items-end gap-2 pr-2 text-xs font-medium"
+      className="Tooltip flex flex-col items-end gap-2 text-xs font-medium"
       title="Circulating supply"
     >
       {formatLargeNumberWithCommas(Number(props.amount))}
