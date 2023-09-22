@@ -7,7 +7,6 @@ import { TVLBreakdownTableView } from './table/TVLBreakdownTableView'
 
 interface ExternallyBridgedTableProps {
   tokens: TVLProjectBreakdown['external']
-  explorer: string
 }
 
 export function ExternallyBridgedTable(props: ExternallyBridgedTableProps) {
@@ -21,7 +20,7 @@ export function ExternallyBridgedTable(props: ExternallyBridgedTableProps) {
         Externally Bridged Value
       </h2>
       <TVLBreakdownTableView
-        columns={getExternallyBridgedColumns(props.explorer)}
+        columns={getExternallyBridgedColumns()}
         items={props.tokens}
       />
       <TableSum amount={sum} />

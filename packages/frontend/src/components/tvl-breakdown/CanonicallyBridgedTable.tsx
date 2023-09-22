@@ -7,7 +7,6 @@ import { TVLBreakdownTableView } from './table/TVLBreakdownTableView'
 
 interface CanonicallyBridgedTableProps {
   tokens: TVLProjectBreakdown['canonical']
-  explorer: string
 }
 
 export function CanonicallyBridgedTable(props: CanonicallyBridgedTableProps) {
@@ -21,7 +20,7 @@ export function CanonicallyBridgedTable(props: CanonicallyBridgedTableProps) {
         Canonically Bridged Value
       </h2>
       <TVLBreakdownTableView
-        columns={getCanonicallyBridgedColumns(props.explorer)}
+        columns={getCanonicallyBridgedColumns()}
         items={props.tokens}
       />
       <TableSum amount={sum} />

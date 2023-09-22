@@ -287,6 +287,7 @@ function reshapeCanonicalResponse(
       Object.entries(projectBreakdown)
         .map(([asset, escrows]) => ({
           assetId: AssetId(asset),
+          chainId: ChainId.ETHEREUM,
           usdValue: escrows
             .reduce((total, e) => total + Number(e.usdValue), 0)
             .toString(),

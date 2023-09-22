@@ -80,9 +80,7 @@ const BaseAssetBreakdownData = z.object({
 
 type BaseAssetBreakdownData = z.infer<typeof BaseAssetBreakdownData>
 
-export const CanonicalAssetBreakdownData = BaseAssetBreakdownData.omit({
-  chainId: true,
-}).extend({
+export const CanonicalAssetBreakdownData = BaseAssetBreakdownData.extend({
   escrows: z.array(
     z.object({
       amount: z.string(),
