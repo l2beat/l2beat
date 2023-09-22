@@ -1,4 +1,3 @@
-import { AssetId, EthereumAddress } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
@@ -113,17 +112,7 @@ export function getExternallyBridgedColumns(explorer: string) {
 }
 
 export function getCanonicallyBridgedColumns(explorer: string) {
-  const columns: ColumnConfig<{
-    assetId: AssetId
-    usdValue: string
-    amount: string
-    usdPrice: string
-    escrows: {
-      usdValue: string
-      amount: string
-      escrowAddress: EthereumAddress
-    }[]
-  }>[] = [
+  const columns: ColumnConfig<TVLProjectBreakdown['canonical'][number]>[] = [
     {
       name: 'TOKEN',
       minimalWidth: true,

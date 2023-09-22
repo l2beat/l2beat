@@ -1,17 +1,14 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { AssetId, EthereumAddress } from '@l2beat/shared-pure'
+import { AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { TVLProjectBreakdown } from '../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatLargeNumberWithCommas } from '../../../utils'
 
 interface TokenValueCellProps {
   assetId: AssetId
   usdValue: string
-  escrows?: {
-    usdValue: string
-    amount: string
-    escrowAddress: EthereumAddress
-  }[]
+  escrows?: TVLProjectBreakdown['canonical'][number]['escrows']
   forCanonical?: boolean
   forExternal?: boolean
 }

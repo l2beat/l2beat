@@ -271,21 +271,13 @@ function reshapeCanonicalResponse(
   breakdowns: Record<
     string,
     Dictionary<
-      Omit<
-        Omit<
-          {
-            projectId: ProjectId
-            assetId: AssetId
-            chainId: ChainId
-            amount: string
-            usdValue: string
-            usdPrice: string
-            escrowAddress: EthereumAddress
-          },
-          'projectId'
-        >,
-        'assetId'
-      >[]
+      {
+        chainId: ChainId
+        amount: string
+        usdValue: string
+        usdPrice: string
+        escrowAddress: EthereumAddress
+      }[]
     >
   >,
 ) {

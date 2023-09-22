@@ -2,15 +2,12 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
+import { TVLProjectBreakdown } from '../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatAddress } from '../../../utils/utils'
 import { ChevronDownIcon, OutLinkIcon } from '../../icons'
 
 interface EscrowsCellProps {
-  escrows: {
-    usdValue: string
-    amount: string
-    escrowAddress: EthereumAddress
-  }[]
+  escrows: TVLProjectBreakdown['canonical'][number]['escrows']
   explorer: string
   assetId: string
 }
