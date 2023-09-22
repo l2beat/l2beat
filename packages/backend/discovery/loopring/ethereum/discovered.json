@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "loopring",
+  "chain": "ethereum",
   "blockNumber": 17372169,
   "configHash": "0x71c69dca4c3c23fc3f8221dd539a87e439d2df4d316861c926c5424356e7524e",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -13,6 +13,7 @@
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
       },
+      "sinceTimestamp": 1603950102,
       "values": {
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
@@ -54,6 +55,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1616396742,
       "values": {
         "blockSubmitters": [
           "0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46",
@@ -84,6 +86,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603946693,
       "values": {
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -96,6 +99,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1583852946,
       "values": {
         "DAO_PERDENTAGE": 20,
         "daoAddress": "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
@@ -123,6 +127,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603946469,
       "values": {
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -134,6 +139,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603949642,
       "values": {
         "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
@@ -147,6 +153,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1554948637,
       "values": {
         "decimals": 18,
         "name": "LoopringCoin V2",
@@ -162,6 +169,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1606289169,
       "values": {
         "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
         "getChainId": 1,
@@ -186,6 +194,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603955371,
       "values": {
         "blockVerifierAddress": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
         "forcedWithdrawalFee": "20000000000000000",
@@ -207,6 +216,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1574241665,
       "values": {
         "getTotalStaking": "606431271716973870704527",
         "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",

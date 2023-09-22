@@ -18,6 +18,7 @@
           "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
         ]
       },
+      "sinceTimestamp": 1676315375,
       "values": {
         "facetAddresses": [
           "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4",
@@ -149,6 +150,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1679602559,
       "values": {
         "executionDelay": 75600,
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
@@ -164,6 +166,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692018551,
       "values": {
         "get_verification_key": [
           67108864,
@@ -292,6 +295,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1666872275,
       "values": {
         "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
         "getChainId": 1,
@@ -319,6 +323,7 @@
         "implementation": "0x7FB17101A744e156e63d5fF6A4775fb48756577c",
         "admin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       },
+      "sinceTimestamp": 1676370683,
       "values": {
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
@@ -332,6 +337,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1679581139,
       "values": {
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000"

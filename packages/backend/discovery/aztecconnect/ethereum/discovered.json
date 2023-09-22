@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1653687769,
       "values": {
         "domainSeparator": "0xbb4c14311b94437fa30194d9467b3c7f175456bf8c6bc27bf3b2b2770c5dac19",
         "getChainId": 1,
@@ -45,6 +46,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1668605483,
       "values": {
         "domainSeparator": "0x29b99d4dc1bacc29c16bb544f33927846f031d20c47063cabf7042d4912df697",
         "getChainId": 1,
@@ -78,6 +80,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1668604175,
       "values": {
         "domainSeparator": "0xc211ddb07f51d4255fd887fac104189ce72ce524985eb9914e66bb9dc5b058c0",
         "getChainId": 1,
@@ -97,7 +100,8 @@
       "address": "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1654638146
     },
     {
       "name": "Verifier28x32",
@@ -105,6 +109,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1675077215,
       "values": {
         "getVerificationKeyHash": "0x8c16a95cccbb8c49aaf2bf27970df31180f348dfd3bbda93acb7fa800840ce5d"
       }
@@ -115,6 +120,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1654638154,
       "values": {
         "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD"
       }
@@ -126,6 +132,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1610552620,
       "values": {
         "domainSeparator": "0xf37d5181cb1c7c67c7e79d1dd66f78e41f525d498f652270e8f68c486406872b",
         "getChainId": 1,
@@ -147,6 +154,7 @@
         "implementation": "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09",
         "admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
       },
+      "sinceTimestamp": 1654638194,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {

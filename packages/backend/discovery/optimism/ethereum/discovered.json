@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "optimism",
+  "chain": "ethereum",
   "blockNumber": 17718368,
   "configHash": "0xf38079963f297bf5743c96341ff36cdebfa76552c8e09b39f43a9d3f5fc184ef",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "L1DAITokenBridge",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1625675779,
       "values": {
         "escrow": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
         "isOpen": 1,
@@ -29,6 +30,7 @@
         "implementation": "0x5efa852e92800D1C982711761e45c3FE39a2b6D8",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "sinceTimestamp": 1685377403,
       "values": {
         "batcherHash": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
         "gasLimit": 30000000,
@@ -60,6 +62,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"
       },
+      "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639084",
@@ -83,6 +86,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1678243007,
       "values": {
         "domainSeparator": "0xc7edf91fb84ec337ffa25b6f502a8c52c3dd4ea86d452728767d2836fa3819e3",
         "getChainId": 1,
@@ -100,7 +104,8 @@
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1625675683
     },
     {
       "name": "ProxyAdmin",
@@ -108,6 +113,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1685377355,
       "values": {
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "isUpgrading": false,
@@ -120,6 +126,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636654670,
       "values": {
         "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
         "enqueueGasCost": 60000,
@@ -145,6 +152,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1620680982,
       "values": {
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
@@ -156,6 +164,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1624400753,
       "values": {
         "getGlobalMetadata": "0x000000000000000000000000000000000000618d50d100003e24ec",
         "length": 4302,
@@ -172,6 +181,7 @@
         "implementation": "0xBFB731Cd36D26c2a7287716DE857E4380C73A64a",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "sinceTimestamp": 1624401464,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -187,6 +197,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "sinceTimestamp": 1610850364,
       "values": {
         "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
         "getModules": [],
@@ -212,6 +223,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636654521,
       "values": {
         "getGlobalMetadata": "0x000000000000000000000000000000000000647f5a9f000645c276",
         "length": 111420,
@@ -226,6 +238,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636654763,
       "values": {
         "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
         "FRAUD_PROOF_WINDOW": 604800,
@@ -245,6 +258,7 @@
         "implementation": "0x28a55488fef40005309e2DA0040DbE9D300a64AB",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "sinceTimestamp": 1685377379,
       "values": {
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
@@ -262,6 +276,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636654402,
       "values": {
         "getGlobalMetadata": "0x00000000000000000109d84900647f56130000057119000645c276",
         "length": 854468,
@@ -276,6 +291,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1624400033,
       "values": {
         "BondManager": "0x0000000000000000000000000000000000000000",
         "OVM_BondManager": "0x0000000000000000000000000000000000000000",
@@ -308,6 +324,7 @@
         "implementation": "0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "sinceTimestamp": 1685377367,
       "values": {
         "CHALLENGER": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "computeL2Timestamp": [],
@@ -332,6 +349,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1583108804,
       "values": {
         "domainSeparator": "0x812bd2187bbdb6f18e0fde445c3e46e10661c15c4af7f51d5795d4dec4fb4caa",
         "getChainId": 1,
