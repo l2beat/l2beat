@@ -5,6 +5,7 @@ import { Page } from './Page'
 import { reactToHtml } from './reactToHtml'
 import {
   getStatusIndicator,
+  getSyncStatus,
   StatusSquare,
   UpdaterStatus,
 } from './TvlStatusPage'
@@ -24,11 +25,22 @@ export function TvlStatusPageDetailed({
   if (status.updater === undefined) {
     return <p>Wrong path for detailed updater status</p>
   }
+
+  const syncStatus = getSyncStatus(status.updater.statuses)
+
   return (
     <Page title="Detailed updater status">
-      <div className="card hint" style={{ margin: '8px', width: '358px' }}>
+      <div
+        className={`card ${syncStatus === 'not synced' ? 'warn' : 'hint'}`}
+        style={{ margin: '8px', width: '358px' }}
+      >
         <p>Overview</p>
-        <p>✅🌕❌ ???</p>
+        <p>
+          {status.groupName.toLocaleUpperCase()} {status.updater.updaterName}
+        </p>
+        <p>
+          {getStatusIndicator(syncStatus)} {syncStatus}
+        </p>
         <hr />
         <p style={{ fontWeight: 'bold' }}>Target timestamp:</p>
         <p>
@@ -49,8 +61,7 @@ export function TvlStatusPageDetailed({
           <p style={{ fontWeight: 'bold' }}>{status.groupName.toUpperCase()}</p>
           <p>
             <p>
-              {status.updater.updaterName}{' '}
-              {getStatusIndicator(status.updater.statuses)}
+              {status.updater.updaterName} {getStatusIndicator(syncStatus)}
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               {status.updater.statuses.map((status, index) => (
