@@ -1,4 +1,4 @@
-import { AssetId } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
@@ -14,7 +14,7 @@ import { ColumnConfig } from '../TVLBreakdownTableView'
 
 // ! Now cell width are set to 20% in TVLBreakdownTableView.tsx so adding new columns will break the layout
 
-export function getNativelyMintedColumns(explorer: string) {
+export function getNativelyMintedColumns() {
   const columns: ColumnConfig<TVLProjectBreakdown['native'][number]>[] = [
     {
       name: 'TOKEN',
@@ -26,7 +26,10 @@ export function getNativelyMintedColumns(explorer: string) {
       headClassName: 'md:pl-4',
       getValue: (token) =>
         token.tokenAddress && (
-          <TokenAddressCell address={token.tokenAddress} explorer={explorer} />
+          <TokenAddressCell
+            address={token.tokenAddress}
+            explorer={ChainId.getExplorer(token.chainId)}
+          />
         ),
     },
     {
@@ -55,7 +58,7 @@ export function getNativelyMintedColumns(explorer: string) {
   return columns
 }
 
-export function getExternallyBridgedColumns(explorer: string) {
+export function getExternallyBridgedColumns() {
   const columns: ColumnConfig<TVLProjectBreakdown['external'][number]>[] = [
     {
       name: 'TOKEN',
@@ -67,7 +70,10 @@ export function getExternallyBridgedColumns(explorer: string) {
       headClassName: 'md:pl-4',
       getValue: (token) =>
         token.tokenAddress && (
-          <TokenAddressCell address={token.tokenAddress} explorer={explorer} />
+          <TokenAddressCell
+            address={token.tokenAddress}
+            explorer={ChainId.getExplorer(token.chainId)}
+          />
         ),
     },
     {
@@ -104,19 +110,8 @@ export function getExternallyBridgedColumns(explorer: string) {
   return columns
 }
 
-export function getCanonicallyBridgedColumns(explorer: string) {
-  const columns: ColumnConfig<{
-    assetId: AssetId
-    escrows: {
-      escrow: string
-      usdPrice: string
-      usdValue: string
-      amount: string
-    }[]
-    usdPrice: string
-    usdValue: string
-    amount: string
-  }>[] = [
+export function getCanonicallyBridgedColumns() {
+  const columns: ColumnConfig<TVLProjectBreakdown['canonical'][number]>[] = [
     {
       name: 'TOKEN',
       headClassName: 'md:pl-4',
@@ -129,7 +124,7 @@ export function getCanonicallyBridgedColumns(explorer: string) {
         <EscrowsCell
           assetId={token.assetId.toString()}
           escrows={token.escrows}
-          explorer={explorer}
+          explorer={ChainId.getExplorer(token.chainId)}
         />
       ),
     },
