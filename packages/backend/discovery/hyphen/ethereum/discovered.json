@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "hyphen",
+  "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0xdd92ae53409543a6d875508a549aa2f067a636f8d3eccb0ae42b9f5aa434d7c6",
+  "version": 2,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647128852,
       "values": {
         "owner": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7"
       }
@@ -22,6 +24,7 @@
         "implementation": "0x256415A1f9468E5405abdAfD9B76c4f24451d7E7",
         "admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472"
       },
+      "sinceTimestamp": 1647128990,
       "values": {
         "baseGas": 21000,
         "getExecutorManager": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
@@ -37,6 +40,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647128800,
       "values": {
         "getAllExecutors": [
           "0xEEFD474e80B6CAEA43F212D964409c473684E3fe",
@@ -55,6 +59,7 @@
         "implementation": "0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
         "admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472"
       },
+      "sinceTimestamp": 1652360689,
       "values": {
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
@@ -68,6 +73,7 @@
         "implementation": "0x52a592fFE0377b351c8FD99189e5333ec362d66A",
         "admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472"
       },
+      "sinceTimestamp": 1647128942,
       "values": {
         "BASE_DIVISOR": "1000000000000000000",
         "getFeeAccumulatedOnNft": [],

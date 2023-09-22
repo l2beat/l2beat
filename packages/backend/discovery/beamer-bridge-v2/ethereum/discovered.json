@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1680258323,
       "values": {
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
@@ -22,6 +23,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1680258335,
       "values": {
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
         "resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD"
@@ -34,6 +36,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1680258563,
       "values": {
         "nativeMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
@@ -46,6 +49,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1680258503,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
@@ -59,6 +63,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1680258347,
       "values": {
         "chains": {
           "1": {
@@ -114,6 +119,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1680258311,
       "values": {
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
@@ -125,6 +131,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1680258395,
       "values": {
         "l1Resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD",
         "liquidityProviders": ["0xdC256EC77E97448d29D88118e55C82067150b768"],
