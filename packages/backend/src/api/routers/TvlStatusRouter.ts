@@ -61,6 +61,7 @@ export function createTvlStatusRouter(
 
   router.get(
     '/status/tvl/:group/:updater',
+    // @ts-expect-error inner function doest not return Promise
     withTypedContext(paramsParser, (ctx) => {
       const { group, updater } = ctx.params
       ctx.body = renderTvlStatusPageDetailed({
