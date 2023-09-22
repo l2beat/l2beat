@@ -267,6 +267,7 @@ export function groupAndMergeBreakdowns(
   }, base)
 }
 
+// We need to do this because for every asset we receive array of escrows, so we need to sum values from escrows for every asset, and add escrows field for every asset
 function reshapeCanonicalResponse(
   breakdowns: Record<
     string,
