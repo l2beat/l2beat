@@ -25,7 +25,7 @@ export const metis: Layer2 = {
       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
     description:
       'Metis is an EVM-equivalent Scaling Solution originally forked from Optimism. It provides support for multiple, \
-      interconnected L2 chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
+      interconnected chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
       The risk analysis below relates to the default chain with chainId=1088 called Andromeda. Since April 2022 Andromeda \
       uses "optimistic data availability" scheme in which transaction data is kept off-chain in MEMO while Validators can \
       request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
@@ -185,7 +185,7 @@ export const metis: Layer2 = {
           '_1088_MVM_Sequencer_Wrapper',
         ),
       ],
-      description: 'Central actor allowed to commit L2 transactions to L1.',
+      description: 'Central actor allowed to commit transactions to L1.',
     },
     {
       name: 'State Root Proposer',
@@ -195,7 +195,7 @@ export const metis: Layer2 = {
           '_1088_MVM_Proposer',
         ),
       ],
-      description: 'Central actor to post new L2 state roots to L1.',
+      description: 'Central actor to post new state roots to L1.',
     },
     {
       name: 'Data Availability Verifiers',
@@ -234,7 +234,7 @@ export const metis: Layer2 = {
       ),
       discovery.getContractDetails(
         'CanonicalTransactionChain',
-        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.',
       ),
       discovery.getContractDetails(
         'StateCommitmentChain',
@@ -258,11 +258,11 @@ export const metis: Layer2 = {
       ),
       discovery.getContractDetails(
         'L1CrossDomainMessenger',
-        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.",
       ),
       discovery.getContractDetails(
         'MVM_DiscountOracle',
-        'Oracle specifying user fees for sending L1 -> L2 messages and other parameters for cross-chain communication.',
+        'Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.',
       ),
       discovery.getContractDetails(
         'Lib_AddressManager',

@@ -23,7 +23,7 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "BridgeV2": {
-      "ignoreInWatchMode": ["newMPCEffectiveTime"]
+      "ignoreInWatchMode": ["newMPCEffectiveTime", "mpc", "newMPC", "oldMPC"]
     }
   }
 }

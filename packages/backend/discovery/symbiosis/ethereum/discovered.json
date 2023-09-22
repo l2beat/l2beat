@@ -1,8 +1,8 @@
 {
   "name": "symbiosis",
   "chain": "ethereum",
-  "blockNumber": 18168843,
-  "configHash": "0x531d27af4f5179bd7fc8fee683e587407a9533354b61975e145879783a37e3e5",
+  "blockNumber": 18184280,
+  "configHash": "0x5117b8684b4518e6245edbaabc8a7fad4039b0fdbe691096d2935e8383ff58b0",
   "version": 2,
   "contracts": [
     {
@@ -80,10 +80,10 @@
       },
       "values": {
         "currentChainId": 1,
-        "mpc": "0x18605bd33eD33Ec5A8cD899bf56a710D6693A3Bc",
-        "newMPC": "0x18605bd33eD33Ec5A8cD899bf56a710D6693A3Bc",
-        "newMPCEffectiveTime": 1694527619,
-        "oldMPC": "0x0dAb7E5BEb5b6DfC7bc4901e038b53D8b225Ab87",
+        "mpc": "0xf56c3D7F385143f4E478ef5993b8266323B72657",
+        "newMPC": "0xf56c3D7F385143f4E478ef5993b8266323B72657",
+        "newMPCEffectiveTime": 1695208427,
+        "oldMPC": "0xa60344175Ed28BB38e729f58595632EffF02fB33",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
       },
       "derivedName": "BridgeV2"
@@ -101,7 +101,7 @@
         "metaRouter": "0x1DCfbC3fA01b2a86bC3a3f43479cCe9E8D438Adc",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 4084,
+        "requestCount": 4160,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -120,14 +120,14 @@
     }
   ],
   "eoas": [
-    "0x0dAb7E5BEb5b6DfC7bc4901e038b53D8b225Ab87",
     "0x0ee552336134B6f8F0a72927b6124f8A81865928",
-    "0x18605bd33eD33Ec5A8cD899bf56a710D6693A3Bc",
     "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9",
     "0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F",
     "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9",
     "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971",
-    "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e"
+    "0xa60344175Ed28BB38e729f58595632EffF02fB33",
+    "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e",
+    "0xf56c3D7F385143f4E478ef5993b8266323B72657"
   ],
   "abis": {
     "0x086488E659253FF26D0C743325C059FB57Ca7934": [

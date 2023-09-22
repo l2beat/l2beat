@@ -2,7 +2,7 @@
   "name": "mantapacific",
   "chain": "ethereum",
   "blockNumber": 18133790,
-  "configHash": "0x8920f10d9ba0ebf5ab869c47c5ccb78b1261b7e3a4a87433cbf38a3bb32ecb7b",
+  "configHash": "0x212e118281a9f40039d0ac92765e4ba69892c71f263df8d10d628bf07248c58d",
   "version": 2,
   "contracts": [
     {
@@ -90,7 +90,7 @@
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
       "values": {
-        "batcherHash": "0x000000000000000000000000a76e31d8471d569efdd3d95d1b11ce6710f4533f",
+        "batcherHash": "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "overhead": 2100,
@@ -108,7 +108,8 @@
         "unsafeBlockSigner": "0xfeC5478feD709F728566FA6bF4546C83106be95B",
         "version": "1.3.1",
         "VERSION": 0
-      }
+      },
+      "derivedName": "SystemConfig"
     },
     {
       "name": "OptimismPortal",
@@ -148,6 +149,7 @@
     "0x4200000000000000000000000000000000000010",
     "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
     "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
+    "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
     "0xfeC5478feD709F728566FA6bF4546C83106be95B"
   ],
   "abis": {

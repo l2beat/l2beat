@@ -145,7 +145,15 @@ export function chainTvlSubmodule(
   }
 
   return {
-    assetUpdaters: [totalSupplyFormulaUpdater, circulatingSupplyFormulaUpdater],
+    reportUpdaters: [
+      totalSupplyFormulaUpdater,
+      circulatingSupplyFormulaUpdater,
+    ],
+    dataUpdaters: [
+      blockNumberUpdater,
+      totalSupplyUpdater,
+      circulatingSupplyUpdater,
+    ],
     start,
   }
 }
