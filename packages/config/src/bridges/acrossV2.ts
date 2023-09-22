@@ -2,11 +2,17 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
+import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('across-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
+
+const finalizationDelaySeconds = discovery.getContractValue<number>(
+  'HubPool',
+  'liveness',
+)
 
 export const acrossV2: Bridge = {
   type: 'bridge',
@@ -118,7 +124,9 @@ export const acrossV2: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'HubPool',
-        'Escrow contract for ERC20 tokens and administration of other contracts.',
+        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${formatSeconds(
+          finalizationDelaySeconds,
+        )} delay before a bundle proposal is considered finalized.`,
       ),
       discovery.getContractDetails(
         'BondToken',
