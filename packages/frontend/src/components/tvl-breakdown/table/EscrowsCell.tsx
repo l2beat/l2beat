@@ -2,16 +2,12 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
+import { TVLProjectBreakdown } from '../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatAddress } from '../../../utils/utils'
 import { ChevronDownIcon, OutLinkIcon } from '../../icons'
 
 interface EscrowsCellProps {
-  escrows: {
-    escrow: string
-    usdPrice: string
-    usdValue: string
-    amount: string
-  }[]
+  escrows: TVLProjectBreakdown['canonical'][number]['escrows']
   explorer: string
   assetId: string
 }
@@ -20,7 +16,7 @@ export function EscrowsCell(props: EscrowsCellProps) {
     <div>
       {props.escrows.length === 1 ? (
         <EscrowLink
-          escrow={props.escrows[0].escrow}
+          escrowAddress={props.escrows[0].escrowAddress}
           explorer={props.explorer}
         />
       ) : (
@@ -28,8 +24,8 @@ export function EscrowsCell(props: EscrowsCellProps) {
           <MultipleEscrows token={props.assetId} />
           {props.escrows.map((escrow) => (
             <EscrowLink
-              key={escrow.escrow}
-              escrow={escrow.escrow}
+              key={escrow.escrowAddress.toString()}
+              escrowAddress={escrow.escrowAddress}
               explorer={props.explorer}
               hidden
               assetId={props.assetId}
@@ -42,7 +38,7 @@ export function EscrowsCell(props: EscrowsCellProps) {
 }
 
 interface EscrowLinkProps {
-  escrow: string
+  escrowAddress: EthereumAddress
   explorer: string
   hidden?: boolean
   assetId?: string
@@ -51,7 +47,7 @@ interface EscrowLinkProps {
 function EscrowLink(props: EscrowLinkProps) {
   return (
     <a
-      href={`${props.explorer}/address/${props.escrow}`}
+      href={`${props.explorer}/address/${props.escrowAddress.toString()}`}
       target="_blank"
       className={cx(
         'flex gap-1 text-xs font-medium text-blue-700 underline dark:text-blue-500',
@@ -59,7 +55,7 @@ function EscrowLink(props: EscrowLinkProps) {
       )}
       data-token={props.assetId}
     >
-      {formatAddress(EthereumAddress(props.escrow))}
+      {formatAddress(props.escrowAddress)}
       <OutLinkIcon className="fill-blue-500" />
     </a>
   )

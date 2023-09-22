@@ -2,18 +2,14 @@ import { safeGetTokenByAssetId } from '@l2beat/config'
 import { AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { TVLProjectBreakdown } from '../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatLargeNumberWithCommas } from '../../../utils'
 
 interface TokenAmountCellProps {
   assetId: AssetId
   amount: string
   forCanonical?: boolean
-  escrows?: {
-    escrow: string
-    usdPrice: string
-    usdValue: string
-    amount: string
-  }[]
+  escrows?: TVLProjectBreakdown['canonical'][number]['escrows']
   forExternal?: boolean
 }
 
@@ -35,7 +31,7 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       {props.escrows.length > 1 &&
         props.escrows.map((escrow) => (
           <div
-            key={escrow.escrow}
+            key={escrow.escrowAddress.toString()}
             className="MultipleEscrowsHidden hidden font-normal text-black/80 dark:text-white/80"
             data-token={props.assetId}
           >

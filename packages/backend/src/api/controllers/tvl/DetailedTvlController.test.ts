@@ -288,8 +288,12 @@ describe(DetailedTvlController.name, () => {
         const latestConfigHash = Hash256.random()
         const timestamp = UnixTime.now()
 
-        const firstEscrow = EthereumAddress.random()
-        const secondEscrow = EthereumAddress.random()
+        const firstEscrow = EthereumAddress(
+          '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
+        )
+        const secondEscrow = EthereumAddress(
+          '0xFFD6F05E65c9F7C9725f576cFa16c635419DA408',
+        )
 
         const eth: Token = { ...ETH, type: 'CBV', chainId: ChainId.ETHEREUM }
         const usdc: Token = {
@@ -462,38 +466,52 @@ describe(DetailedTvlController.name, () => {
                 ),
               },
             ],
-            canonical: {
-              [firstEscrow.toString()]: [
-                {
-                  assetId: eth.id,
-                  chainId: eth.chainId,
-                  amount: '0.00001',
-                  usdValue: '0.01',
-                  usdPrice: '1000',
-                },
-                {
-                  assetId: usdc.id,
-                  chainId: usdc.chainId,
-                  amount: '10000000',
-                  usdValue: '10000000',
-                  usdPrice: '1',
-                },
-              ],
-              [secondEscrow.toString()]: [
-                {
-                  assetId: usdc.id,
-                  chainId: usdc.chainId,
-                  amount: '10000000',
-                  usdValue: '10000000',
-                  usdPrice: '1',
-                },
-              ],
-            },
+            canonical: [
+              {
+                amount: '20000000',
+                assetId: AssetId('usdc-usd-coin'),
+                chainId: ChainId.ETHEREUM,
+                escrows: [
+                  {
+                    amount: '10000000',
+                    escrowAddress: EthereumAddress(
+                      '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
+                    ),
+                    usdValue: '10000000',
+                  },
+                  {
+                    amount: '10000000',
+                    escrowAddress: EthereumAddress(
+                      '0xFFD6F05E65c9F7C9725f576cFa16c635419DA408',
+                    ),
+                    usdValue: '10000000',
+                  },
+                ],
+                usdPrice: '1',
+                usdValue: '20000000',
+              },
+              {
+                amount: '0.00001',
+                assetId: AssetId('eth-ether'),
+                chainId: ChainId.ETHEREUM,
+                escrows: [
+                  {
+                    amount: '0.00001',
+                    escrowAddress: EthereumAddress(
+                      '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
+                    ),
+                    usdValue: '0.01',
+                  },
+                ],
+                usdPrice: '1000',
+                usdValue: '0.01',
+              },
+            ],
           },
           optimism: {
             external: [],
             native: [],
-            canonical: {},
+            canonical: [],
           },
         })
       })
