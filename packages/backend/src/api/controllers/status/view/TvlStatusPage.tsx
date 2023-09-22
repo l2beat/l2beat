@@ -20,33 +20,71 @@ interface StatusPageProps {
     groupName: string
     updaters: UpdaterStatus[]
   }[]
+  aggregatedStatus: SyncStatus
 }
 
 export function TvlStatusPage({
   statuses,
   latestSafeTimestamp,
+  aggregatedStatus,
 }: StatusPageProps) {
   return (
-    <Page title="TVL module status (Last 24 hours)">
-      <p>Latest safe timestamp: {latestSafeTimestamp.toDate().toISOString()}</p>
+    <Page title="TVL module status (24h)">
+      <div
+        className={`card ${
+          aggregatedStatus === 'not synced' ? 'warn' : 'hint'
+        }`}
+        style={{ margin: '8px', width: '358px' }}
+      >
+        <p>Overview</p>
+        <p>
+          {getStatusIndicator(aggregatedStatus)} {aggregatedStatus}
+        </p>
+        <hr />
+        <p style={{ fontWeight: 'bold' }}>Target timestamp:</p>
+        <p>
+          <span style={{ fontWeight: 'bold' }}>UTC: </span>
+          {latestSafeTimestamp
+            .toDate()
+            .toLocaleString('en-GB', { timeZone: 'UTC' })}
+        </p>
+        <p>
+          <span style={{ fontWeight: 'bold' }}>CET: </span>
+          {latestSafeTimestamp
+            .toDate()
+            .toLocaleString('en-GB', { timeZone: 'CET' })}
+        </p>
+      </div>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {statuses.map((status, id) => (
           <div
             style={{
-              margin: '5px',
-              padding: '5px',
+              margin: '8px',
+              padding: '10px',
+              width: '358px',
             }}
             key={id}
+            className="card info"
           >
             <p style={{ fontWeight: 'bold' }}>
               {status.groupName.toUpperCase()}
             </p>
             {status.updaters.map((updater, id) => (
               <div key={id} style={{ marginLeft: '2px' }}>
-                <p>{updater.updaterName}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <a href={`tvl/${status.groupName}/${updater.updaterName}`}>
+                  {updater.updaterName}
+                </a>{' '}
+                {getStatusIndicator(getSyncStatus(updater.statuses))}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    marginTop: '8px',
+                    marginBottom: '8px',
+                  }}
+                >
                   {updater.statuses.slice(0, 24).map((status, index) => (
-                    <Square key={index} status={status} />
+                    <StatusSquare key={index} status={status} />
                   ))}
                 </div>
               </div>
@@ -58,7 +96,7 @@ export function TvlStatusPage({
   )
 }
 
-function Square(props: { status: StatusPoint }): JSX.Element {
+export function StatusSquare(props: { status: StatusPoint }): JSX.Element {
   return (
     <div
       data-tooltip={getTooltip(props.status)}
@@ -90,4 +128,31 @@ function getTooltip(status: StatusPoint): string {
 
 export function renderTvlStatusPage(props: StatusPageProps) {
   return reactToHtml(<TvlStatusPage {...props} />)
+}
+
+export type SyncStatus = 'synced' | 'not synced' | 'syncing'
+
+export function getSyncStatus(statuses: StatusPoint[]): SyncStatus {
+  if (
+    statuses.every((s) => s.status === 'synced' || s.status === 'notApplicable')
+  ) {
+    return 'synced'
+  } else if (statuses.slice(0, 24).some((s) => s.status === 'notSynced')) {
+    return 'not synced'
+  } else if (statuses.slice(24).some((s) => s.status === 'notSynced')) {
+    return 'syncing'
+  }
+
+  throw new Error('Programmer error: logic should not reach here')
+}
+
+export function getStatusIndicator(status: SyncStatus): string {
+  switch (status) {
+    case 'synced':
+      return '✅'
+    case 'not synced':
+      return '❌'
+    case 'syncing':
+      return '🌕'
+  }
 }
