@@ -56,7 +56,7 @@ export function TVLBreakdownTableView<
     >
       <table className="w-full border-collapse border-b border-b-black/10 text-left dark:border-b-white/25">
         <thead>
-          <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:bg-gray-800">
+          <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:bg-white/10">
             {columns.map((column, i) => {
               return (
                 <th

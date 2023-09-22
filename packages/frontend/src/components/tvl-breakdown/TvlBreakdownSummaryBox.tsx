@@ -54,7 +54,7 @@ function StatsItem(props: StatsItemProps) {
         props.big && 'mb-1',
       )}
     >
-      <span className="hidden text-xs font-medium text-gray-600 md:inline">
+      <span className="hidden text-xs font-medium text-gray-500 dark:text-gray-600 md:inline">
         {props.title}
       </span>
       <span
