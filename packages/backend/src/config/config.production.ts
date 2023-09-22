@@ -11,7 +11,6 @@ export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
   const baseTvlEnabled = getEnv.boolean('BASE_TVL_ENABLED', false)
-  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
@@ -65,7 +64,6 @@ export function getProductionConfig(): Config {
       pass: getEnv('METRICS_AUTH_PASS'),
     },
     tvl: {
-      detailedTvlEnabled,
       errorOnUnsyncedDetailedTvl,
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
