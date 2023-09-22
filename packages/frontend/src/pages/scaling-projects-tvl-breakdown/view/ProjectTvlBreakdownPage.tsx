@@ -20,7 +20,7 @@ export function ProjectTvlBreakdownPage(props: TvlBreakdownPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent mobileFull>
+      <PageContent mobileFull className="max-w-[928px]">
         <TvlBreakdownHeader {...props.tvlBreakdownHeader} />
         <TvlBreakdownView {...props.tvlBreakdownView} />
       </PageContent>
