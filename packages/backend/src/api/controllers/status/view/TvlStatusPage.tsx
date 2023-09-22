@@ -61,6 +61,7 @@ export function TvlStatusPage({
             style={{
               margin: '8px',
               padding: '10px',
+              width: '358px',
             }}
             key={id}
             className="card info"
