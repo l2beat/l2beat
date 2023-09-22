@@ -54,7 +54,7 @@ function EscrowLink(props: EscrowLinkProps) {
       href={`${props.explorer}/address/${props.escrow}`}
       target="_blank"
       className={cx(
-        'flex gap-1 text-xs font-medium text-blue-500 underline',
+        'flex gap-1 text-xs font-medium text-blue-700 underline dark:text-blue-500',
         props.hidden && 'MultipleEscrowsHidden hidden',
       )}
       data-token={props.assetId}
