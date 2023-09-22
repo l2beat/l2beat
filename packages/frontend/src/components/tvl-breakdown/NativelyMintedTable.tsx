@@ -22,7 +22,9 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
       </h2>
       <TVLBreakdownTableView
         columns={getNativelyMintedColumns(props.explorer)}
-        items={props.tokens}
+        items={props.tokens.sort(
+          (a, b) => Number(b.usdValue) - Number(a.usdValue),
+        )}
       />
       <TableSum amount={sum} />
     </div>

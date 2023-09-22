@@ -22,7 +22,9 @@ export function ExternallyBridgedTable(props: ExternallyBridgedTableProps) {
       </h2>
       <TVLBreakdownTableView
         columns={getExternallyBridgedColumns(props.explorer)}
-        items={props.tokens}
+        items={props.tokens.sort(
+          (a, b) => Number(b.usdValue) - Number(a.usdValue),
+        )}
       />
       <TableSum amount={sum} />
     </div>
