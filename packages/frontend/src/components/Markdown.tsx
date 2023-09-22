@@ -10,7 +10,10 @@ export interface MarkdownProps {
   className?: string
 }
 
-const markdown = MarkdownIt({ html: true }).use(outLinksPlugin)
+const markdown = MarkdownIt({
+  html: true,
+  typographer: true,
+}).use(outLinksPlugin)
 
 function outLinksPlugin(md: MarkdownIt) {
   const defaultRender =
