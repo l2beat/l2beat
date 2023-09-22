@@ -468,22 +468,6 @@ describe(DetailedTvlController.name, () => {
             ],
             canonical: [
               {
-                amount: '0.00001',
-                assetId: AssetId('eth-ether'),
-                chainId: ChainId.ETHEREUM,
-                escrows: [
-                  {
-                    amount: '0.00001',
-                    escrowAddress: EthereumAddress(
-                      '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
-                    ),
-                    usdValue: '0.01',
-                  },
-                ],
-                usdPrice: '1000',
-                usdValue: '0.01',
-              },
-              {
                 amount: '20000000',
                 assetId: AssetId('usdc-usd-coin'),
                 chainId: ChainId.ETHEREUM,
@@ -505,6 +489,22 @@ describe(DetailedTvlController.name, () => {
                 ],
                 usdPrice: '1',
                 usdValue: '20000000',
+              },
+              {
+                amount: '0.00001',
+                assetId: AssetId('eth-ether'),
+                chainId: ChainId.ETHEREUM,
+                escrows: [
+                  {
+                    amount: '0.00001',
+                    escrowAddress: EthereumAddress(
+                      '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
+                    ),
+                    usdValue: '0.01',
+                  },
+                ],
+                usdPrice: '1000',
+                usdValue: '0.01',
               },
             ],
           },
