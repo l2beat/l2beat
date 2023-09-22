@@ -43,6 +43,7 @@ function getMockTvlBreakdownApiResponse(): ProjectAssetsBreakdownApiResponse {
       canonical: [
         {
           assetId: AssetId.ETH,
+          chainId: ChainId.ETHEREUM,
           amount: '100',
           escrows: [
             {

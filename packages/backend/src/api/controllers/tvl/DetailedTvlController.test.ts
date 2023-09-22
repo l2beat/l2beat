@@ -470,6 +470,7 @@ describe(DetailedTvlController.name, () => {
               {
                 amount: '0.00001',
                 assetId: AssetId('eth-ether'),
+                chainId: ChainId.ETHEREUM,
                 escrows: [
                   {
                     amount: '0.00001',
@@ -485,6 +486,7 @@ describe(DetailedTvlController.name, () => {
               {
                 amount: '20000000',
                 assetId: AssetId('usdc-usd-coin'),
+                chainId: ChainId.ETHEREUM,
                 escrows: [
                   {
                     amount: '10000000',

@@ -1,3 +1,4 @@
+import { ChainId } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
@@ -13,7 +14,7 @@ import { ColumnConfig } from '../TVLBreakdownTableView'
 
 // ! Now cell width are set to 20% in TVLBreakdownTableView.tsx so adding new columns will break the layout
 
-export function getNativelyMintedColumns(explorer: string) {
+export function getNativelyMintedColumns() {
   const columns: ColumnConfig<TVLProjectBreakdown['native'][number]>[] = [
     {
       name: 'TOKEN',
@@ -25,7 +26,10 @@ export function getNativelyMintedColumns(explorer: string) {
       headClassName: 'md:pl-4',
       getValue: (token) =>
         token.tokenAddress && (
-          <TokenAddressCell address={token.tokenAddress} explorer={explorer} />
+          <TokenAddressCell
+            address={token.tokenAddress}
+            explorer={getChainExplorer(token.chainId)}
+          />
         ),
     },
     {
@@ -54,7 +58,7 @@ export function getNativelyMintedColumns(explorer: string) {
   return columns
 }
 
-export function getExternallyBridgedColumns(explorer: string) {
+export function getExternallyBridgedColumns() {
   const columns: ColumnConfig<TVLProjectBreakdown['external'][number]>[] = [
     {
       name: 'TOKEN',
@@ -66,7 +70,10 @@ export function getExternallyBridgedColumns(explorer: string) {
       headClassName: 'md:pl-4',
       getValue: (token) =>
         token.tokenAddress && (
-          <TokenAddressCell address={token.tokenAddress} explorer={explorer} />
+          <TokenAddressCell
+            address={token.tokenAddress}
+            explorer={getChainExplorer(token.chainId)}
+          />
         ),
     },
     {
@@ -103,7 +110,7 @@ export function getExternallyBridgedColumns(explorer: string) {
   return columns
 }
 
-export function getCanonicallyBridgedColumns(explorer: string) {
+export function getCanonicallyBridgedColumns() {
   const columns: ColumnConfig<TVLProjectBreakdown['canonical'][number]>[] = [
     {
       name: 'TOKEN',
@@ -117,7 +124,7 @@ export function getCanonicallyBridgedColumns(explorer: string) {
         <EscrowsCell
           assetId={token.assetId.toString()}
           escrows={token.escrows}
-          explorer={explorer}
+          explorer={getChainExplorer(token.chainId)}
         />
       ),
     },
@@ -161,4 +168,18 @@ export function getCanonicallyBridgedColumns(explorer: string) {
   ]
 
   return columns
+}
+function getChainExplorer(chainId: ChainId): string {
+  switch (chainId) {
+    case ChainId.ETHEREUM:
+      return 'https://etherscan.io'
+    case ChainId.ARBITRUM:
+      return 'https://arbiscan.io'
+    case ChainId.OPTIMISM:
+      return 'https://optimistic.etherscan.io'
+    case ChainId.BASE:
+      return 'https://basescan.org'
+  }
+
+  throw new Error('Programmer error: Not all chains are handled.')
 }

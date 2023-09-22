@@ -7,7 +7,6 @@ import { TVLBreakdownTableView } from './table/TVLBreakdownTableView'
 
 interface NativelyMintedTableProps {
   tokens: TVLProjectBreakdown['native']
-  explorer: string
 }
 
 export function NativelyMintedTable(props: NativelyMintedTableProps) {
@@ -21,7 +20,7 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
         Natively Minted Value
       </h2>
       <TVLBreakdownTableView
-        columns={getNativelyMintedColumns(props.explorer)}
+        columns={getNativelyMintedColumns()}
         items={props.tokens}
       />
       <TableSum amount={sum} />
