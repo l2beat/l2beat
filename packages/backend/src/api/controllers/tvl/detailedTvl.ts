@@ -228,12 +228,12 @@ export function groupAndMergeBreakdowns(
   },
 ): ProjectAssetsBreakdownApiResponse['breakdowns'] {
   const groupedExternalBreakdownEntries = groupByAndOmit(
-    breakdowns.external,
+    breakdowns.external.sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
     'projectId',
   )
 
   const groupedNativeBreakdownEntries = groupByAndOmit(
-    breakdowns.native,
+    breakdowns.native.sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
     'projectId',
   )
 
@@ -284,23 +284,25 @@ function reshapeCanonicalResponse(
   return Object.fromEntries(
     Object.entries(breakdowns).map(([project, projectBreakdown]) => [
       project,
-      Object.entries(projectBreakdown).map(([asset, escrows]) => ({
-        assetId: AssetId(asset),
-        usdValue: escrows
-          .reduce((total, e) => total + Number(e.usdValue), 0)
-          .toString(),
-        amount: escrows
-          .reduce((total, e) => total + Number(e.amount), 0)
-          .toString(),
-        escrows: escrows
-          .map((e) => ({
-            amount: e.amount,
-            usdValue: e.usdValue,
-            escrowAddress: e.escrowAddress,
-          }))
-          .sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
-        usdPrice: escrows[0].usdPrice,
-      })),
+      Object.entries(projectBreakdown)
+        .map(([asset, escrows]) => ({
+          assetId: AssetId(asset),
+          usdValue: escrows
+            .reduce((total, e) => total + Number(e.usdValue), 0)
+            .toString(),
+          amount: escrows
+            .reduce((total, e) => total + Number(e.amount), 0)
+            .toString(),
+          escrows: escrows
+            .map((e) => ({
+              amount: e.amount,
+              usdValue: e.usdValue,
+              escrowAddress: e.escrowAddress,
+            }))
+            .sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
+          usdPrice: escrows[0].usdPrice,
+        }))
+        .sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
     ]),
   )
 }

@@ -22,9 +22,7 @@ export function CanonicallyBridgedTable(props: CanonicallyBridgedTableProps) {
       </h2>
       <TVLBreakdownTableView
         columns={getCanonicallyBridgedColumns(props.explorer)}
-        items={props.tokens.sort(
-          (a, b) => Number(b.usdValue) - Number(a.usdValue),
-        )}
+        items={props.tokens}
       />
       <TableSum amount={sum} />
     </div>
