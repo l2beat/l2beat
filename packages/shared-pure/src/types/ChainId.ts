@@ -66,7 +66,7 @@ function chainIdFromName(name: ChainIds[keyof ChainIds]['name']): ChainId {
   return ChainId(+entry[0])
 }
 
-const CHAIN_IDS: Record<number, { name: string; explorer?: string }> = {
+const CHAIN_IDS: Record<number, { name: string; explorer: string }> = {
   1: {
     name: 'ethereum',
     explorer: 'https://etherscan.io',
@@ -85,24 +85,31 @@ const CHAIN_IDS: Record<number, { name: string; explorer?: string }> = {
   },
   137: {
     name: 'polygon-pos',
+    explorer: 'https://polygonscan.com',
   },
   56: {
     name: 'bsc',
+    explorer: 'https://bscscan.com',
   },
   43114: {
     name: 'avalanche',
+    explorer: 'https://snowtrace.io',
   },
   42220: {
     name: 'celo',
+    explorer: 'https://celoscan.io',
   },
   59144: {
     name: 'linea',
+    explorer: 'https://lineascan.build',
   },
   1101: {
     name: 'polygon-zkevm',
+    explorer: 'https://zkevm.polygonscan.com',
   },
   100: {
     name: 'gnosis',
+    explorer: 'https://gnosisscan.io',
   },
 } as const
 
