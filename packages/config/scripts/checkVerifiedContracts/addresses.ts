@@ -47,7 +47,6 @@ function gatherAddressesFromUpgradeability(
     case 'call implementation proxy':
     case 'EIP897 proxy':
     case 'Eternal Storage proxy':
-    case 'Optics Beacon proxy':
       result.push(item.implementation)
       break
     case 'StarkWare proxy':
@@ -80,6 +79,11 @@ function gatherAddressesFromUpgradeability(
     case 'zkSpace proxy':
       result.push(item.implementation)
       result.push(...item.additional)
+      break
+    case 'Optics Beacon proxy':
+      result.push(item.upgradeBeacon)
+      result.push(item.beaconController)
+      result.push(item.implementation)
       break
     case 'Reference':
     case 'immutable':
