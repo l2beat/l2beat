@@ -20,17 +20,26 @@ interface StatusPageProps {
     groupName: string
     updaters: UpdaterStatus[]
   }[]
+  aggregatedStatus: 'synced' | 'not synced' | 'syncing'
 }
 
 export function TvlStatusPage({
   statuses,
   latestSafeTimestamp,
+  aggregatedStatus,
 }: StatusPageProps) {
   return (
     <Page title="TVL module status (24h)">
-      <div className="card hint" style={{ margin: '8px', width: '358px' }}>
+      <div
+        className={`card ${
+          aggregatedStatus === 'not synced' ? 'warn' : 'hint'
+        }`}
+        style={{ margin: '8px', width: '358px' }}
+      >
         <p>Overview</p>
-        <p>✅🌕❌ ???</p>
+        <p>
+          {getStatusIndicator(aggregatedStatus)} {aggregatedStatus}
+        </p>
         <hr />
         <p style={{ fontWeight: 'bold' }}>Target timestamp:</p>
         <p>
@@ -64,7 +73,7 @@ export function TvlStatusPage({
                 <a href={`tvl/${status.groupName}/${updater.updaterName}`}>
                   {updater.updaterName}
                 </a>{' '}
-                {getStatusIndicator(updater.statuses)}
+                {getStatusIndicator(getSyncStatus(updater.statuses))}
                 <div
                   style={{
                     display: 'flex',
@@ -120,16 +129,31 @@ export function renderTvlStatusPage(props: StatusPageProps) {
   return reactToHtml(<TvlStatusPage {...props} />)
 }
 
-export function getStatusIndicator(statuses: StatusPoint[]): string {
+export function getSyncStatus(
+  statuses: StatusPoint[],
+): 'synced' | 'not synced' | 'syncing' {
   if (
     statuses.every((s) => s.status === 'synced' || s.status === 'notApplicable')
   ) {
-    return '✅'
-  } else if (statuses.slice(0, 4).some((s) => s.status === 'notSynced')) {
-    return '❌'
-  } else if (statuses.slice(4).some((s) => s.status === 'notSynced')) {
-    return '🌕'
+    return 'synced'
+  } else if (statuses.slice(0, 24).some((s) => s.status === 'notSynced')) {
+    return 'not synced'
+  } else if (statuses.slice(24).some((s) => s.status === 'notSynced')) {
+    return 'syncing'
   }
 
-  return ''
+  throw new Error('Programmer error: logic should not reach here')
+}
+
+export function getStatusIndicator(
+  status: 'synced' | 'not synced' | 'syncing',
+): string {
+  switch (status) {
+    case 'synced':
+      return '✅'
+    case 'not synced':
+      return '❌'
+    case 'syncing':
+      return '🌕'
+  }
 }

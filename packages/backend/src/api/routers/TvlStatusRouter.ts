@@ -6,7 +6,10 @@ import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { TvlSubmodule } from '../../modules/ApplicationModule'
-import { renderTvlStatusPage } from '../controllers/status/view/TvlStatusPage'
+import {
+  getSyncStatus,
+  renderTvlStatusPage,
+} from '../controllers/status/view/TvlStatusPage'
 import { renderTvlStatusPageDetailed } from '../controllers/status/view/TvlStatusPageDetailed'
 import { withTypedContext } from './types'
 
@@ -50,6 +53,9 @@ export function createTvlStatusRouter(
           ...x.getStatus(),
         })),
       })),
+      aggregatedStatus: getSyncStatus(
+        aggregatedReportUpdater.getStatus().statuses,
+      ),
     })
   })
 
