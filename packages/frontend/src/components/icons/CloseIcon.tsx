@@ -10,7 +10,7 @@ export function CloseIcon(props: SVGAttributes<SVGElement>) {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      aria-label="Dropdown arrow icon"
+      aria-label="Close icon"
       fill="none"
       className={classNames('my-auto', className)}
       {...rest}

@@ -16,7 +16,7 @@ export function configureProjectFilters() {
   const checkboxes = projectFilters.querySelectorAll<HTMLInputElement>(
     'input[type="checkbox"]',
   )
-  const selects = projectFilters.querySelectorAll<HTMLInputElement>('select')
+  const selects = projectFilters.querySelectorAll<HTMLSelectElement>('.Select')
 
   checkboxes.forEach((checkbox) =>
     configureCheckbox(checkbox, checkbox.id, allProjectSlugs),
@@ -48,15 +48,14 @@ function configureCheckbox(
 }
 
 function configureSelect(
-  select: HTMLInputElement,
+  select: HTMLSelectElement,
   stateId: string,
   allProjectSlugs: Readonly<string[]>,
 ) {
   select.addEventListener('change', () => {
     const selectedValue = select.value
-    console.log(select.value)
     if (selectedValue) {
-      const slugs = select.value.split(',').filter((i) => i.length > 0)
+      const slugs = select.value.split(',')
       states.set(stateId, slugs)
     } else {
       states.delete(stateId)
@@ -66,7 +65,6 @@ function configureSelect(
 }
 
 function rerenderState(allProjectSlugs: Readonly<string[]>) {
-  console.log(states)
   const stateObj = Object.fromEntries(states)
   const slugsUnion = Object.values(stateObj).reduce<string[]>(
     (acc, curr) => {

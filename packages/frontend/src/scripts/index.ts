@@ -8,6 +8,7 @@ import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureSelects } from './configureSelects'
 import { configureSlideCards } from './configureSlideCard'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
@@ -33,3 +34,4 @@ configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
 configureProjectFilters()
+configureSelects()
