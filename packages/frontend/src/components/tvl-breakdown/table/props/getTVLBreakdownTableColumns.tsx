@@ -28,7 +28,7 @@ export function getNativelyMintedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={getChainExplorer(token.chainId)}
+            explorer={ChainId.getExplorer(token.chainId)}
           />
         ),
     },
@@ -72,7 +72,7 @@ export function getExternallyBridgedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={getChainExplorer(token.chainId)}
+            explorer={ChainId.getExplorer(token.chainId)}
           />
         ),
     },
@@ -124,7 +124,7 @@ export function getCanonicallyBridgedColumns() {
         <EscrowsCell
           assetId={token.assetId.toString()}
           escrows={token.escrows}
-          explorer={getChainExplorer(token.chainId)}
+          explorer={ChainId.getExplorer(token.chainId)}
         />
       ),
     },
@@ -168,18 +168,4 @@ export function getCanonicallyBridgedColumns() {
   ]
 
   return columns
-}
-function getChainExplorer(chainId: ChainId): string {
-  switch (chainId) {
-    case ChainId.ETHEREUM:
-      return 'https://etherscan.io'
-    case ChainId.ARBITRUM:
-      return 'https://arbiscan.io'
-    case ChainId.OPTIMISM:
-      return 'https://optimistic.etherscan.io'
-    case ChainId.BASE:
-      return 'https://basescan.org'
-  }
-
-  throw new Error('Programmer error: Not all chains are handled.')
 }
