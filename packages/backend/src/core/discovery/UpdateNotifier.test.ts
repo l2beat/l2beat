@@ -70,6 +70,67 @@ describe(UpdateNotifier.name, () => {
       })
     })
 
+    it('truncates and sends notifications about the changes', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+        findLatestId: async () => undefined,
+      })
+      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
+      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
+        discordClient,
+        Logger.SILENT,
+      )
+
+      const project = 'project-a'
+      const dependents: string[] = []
+      const address = EthereumAddress.random()
+      const changes: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address,
+          diff: [
+            { key: 'A', before: 'A'.repeat(1000), after: 'B'.repeat(1000) },
+          ],
+        },
+      ]
+
+      await updateNotifier.handleUpdate(project, changes, {
+        dependents,
+        blockNumber: BLOCK,
+        unknownContracts: [],
+        chainId: ChainId.ETHEREUM,
+      })
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
+          address.toString() +
+          '\n\nA\n- 1\n+ 2\n\n```',
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        '***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
+          address.toString() +
+          '\n\nA\n- 1\n+ 2\n\n```',
+        'PUBLIC',
+      )
+      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+        projectName: project,
+        diff: changes,
+        blockNumber: BLOCK,
+      })
+    })
+
     it('sends errors only to internal channel', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
