@@ -13,6 +13,7 @@
         "implementation": "0x43260ee547c3965bb2a0174763bb8FEcC650BA4A",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "sinceTimestamp": 1686694031,
       "values": {
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
@@ -32,6 +33,7 @@
         "implementation": "0xbF6acaF315477b15D638bf4d91eA48FA79b58335",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "sinceTimestamp": 1686693995,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
@@ -49,6 +51,7 @@
         "implementation": "0xDBCdA21518AF39E7feb9748F6718D3db11591461",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "sinceTimestamp": 1686694055,
       "values": {
         "messenger": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
@@ -65,6 +68,7 @@
         "implementation": "0x9eedde6b4D3263b97209Ba860eDF3Fc6a8fB6a44",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "sinceTimestamp": 1686694007,
       "values": {
         "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
         "FINALIZATION_PERIOD_SECONDS": 604800,
@@ -89,6 +93,7 @@
         "implementation": "0x17fb7c8Ce213F1A7691ee41EA880ABf6eBC6fa95",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "sinceTimestamp": 1686694067,
       "values": {
         "batcherHash": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
         "gasLimit": 30000000,
@@ -119,6 +124,7 @@
         "implementation": "0x84ee4b9673598ca2FbDad4Ba4a27A58D6328Ec46",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "sinceTimestamp": 1686694043,
       "values": {
         "BRIDGE": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "version": "1.1.0"
@@ -131,6 +137,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1686592343,
       "values": {
         "domainSeparator": "0x04d8b03931757beb3d5d2234a3218674c5274d5c0532403b2f9d22ee0cecb958",
         "getChainId": 1,
@@ -155,6 +162,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1686592547,
       "values": {
         "domainSeparator": "0xac8a89558305fc00b7a2686ab2bda0fb7e97f96a30b075fcc453b727c8172bda",
         "getChainId": 1,
@@ -178,6 +186,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1686693947,
       "values": {
         "addressManager": "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef",
         "isUpgrading": false,
@@ -193,6 +202,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x363B4B1ADa52E50353f746999bd9E94395190d2C"
       },
+      "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620217",
@@ -215,6 +225,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1686693947,
       "values": {
         "owner": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },

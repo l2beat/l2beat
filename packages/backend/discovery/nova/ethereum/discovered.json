@@ -10,7 +10,8 @@
       "address": "0x1efb116EBC38CE895Eb2E5e009234E0E0836f2F5",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050046
     },
     {
       "name": "SequencerInbox",
@@ -20,6 +21,7 @@
         "implementation": "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "batchCount": 20392,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -38,6 +40,7 @@
         "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "sinceTimestamp": 1656312893,
       "values": {
         "counterpartGateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
@@ -52,6 +55,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050159,
       "values": {
         "NOVA_STAKERS": [
           [
@@ -71,6 +75,7 @@
         "implementation": "0x32642eE509001D02615951090c7c56D6000e22C2",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88"
@@ -84,6 +89,7 @@
         "implementation": "0x86f0cf42Ad673B3D666d103E009EC142D1298a17",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -113,6 +119,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1678968395,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
@@ -124,6 +131,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050166,
       "values": {
         "owner": "0x0000000000000000000000000000000000000000"
       }
@@ -134,6 +142,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
@@ -144,7 +153,8 @@
       "address": "0x7a6C0503107858f82a790E481024134092e19979",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050046
     },
     {
       "name": "OneStepProofEntry",
@@ -152,6 +162,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050046,
       "values": {
         "prover0": "0x8323B58C522690E6aFae94044825F0c79A93d236",
         "proverHostIo": "0x9CBC3F14a57CE6eAD0e770F528E2f1E8b8C37613",
@@ -164,7 +175,8 @@
       "address": "0x8323B58C522690E6aFae94044825F0c79A93d236",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050037
     },
     {
       "name": "L1DaiGateway",
@@ -172,6 +184,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1659620276,
       "values": {
         "counterpartGateway": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
@@ -189,14 +202,16 @@
       "address": "0x9CBC3F14a57CE6eAD0e770F528E2f1E8b8C37613",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050046
     },
     {
       "name": "L1Escrow",
       "address": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1659620187
     },
     {
       "name": "ChallengeManager",
@@ -206,6 +221,7 @@
         "implementation": "0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "osp": "0x7AdcA86896c4220f19B2f7f9746e7A99E57B0Fc5",
@@ -220,6 +236,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656312664,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
@@ -233,6 +250,7 @@
         "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "sinceTimestamp": 1656312805,
       "values": {
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
@@ -250,6 +268,7 @@
         "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
@@ -272,6 +291,7 @@
         "implementation": "0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "allowListEnabled": false,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -287,6 +307,7 @@
         "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "sinceTimestamp": 1656312748,
       "values": {
         "counterpartGateway": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
         "defaultGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
@@ -304,6 +325,7 @@
         "implementation": "0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "l2ToL1BatchNum": 0,
@@ -322,6 +344,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050166,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "template": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"
@@ -335,6 +358,7 @@
         "implementation": "0x962d70fc48F3465404bC77B03f104746B25a1d1b",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -376,6 +400,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1692138791,
       "values": {
         "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
         "getChainId": 1,
@@ -407,6 +432,7 @@
         "adminImplementation": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
         "userImplementation": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "baseStake": "1000000000000000000",
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",

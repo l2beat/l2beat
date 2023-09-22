@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "l2beat-starkware",
+  "chain": "ethereum",
   "blockNumber": 17031968,
   "configHash": "0x80112d572c320dae60a1cc29c37f837881984f02c13575f623751c96992ac434",
+  "version": 2,
   "contracts": [
     {
       "name": "CpuFrilessVerifier",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1674001487,
       "values": {
         "constructorArgs": [
           [
@@ -37,7 +39,8 @@
       "address": "0x0C099caf7a87e4eB28bcd8D0608063f8a69bb434",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673992475
     },
     {
       "name": "CpuFrilessVerifier",
@@ -45,6 +48,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673984999,
       "values": {
         "constructorArgs": [
           [
@@ -76,6 +80,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1678120703,
       "values": {
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
         "getChainId": 1,
@@ -95,21 +100,24 @@
       "address": "0x297951a67D1BF7795500C3802d21a8C846D9C962",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673985335
     },
     {
       "name": "CpuOods",
       "address": "0x3405F644F9390C3478f42Fd205CE6920CcAF3280",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673984999
     },
     {
       "name": "PoseidonPoseidonFullRoundKey0Column",
       "address": "0x37070Fd8051f63E5A6D7E87026e086Cc19db1aBe",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998775
     },
     {
       "name": "FriStatementContract",
@@ -117,6 +125,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673984999,
       "values": {
         "hasRegisteredFact": true
       }
@@ -126,7 +135,8 @@
       "address": "0x43A1C0bBa540e1C98d4b413F876250bdCFd0b9e0",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673992751
     },
     {
       "name": "SHARPVerifierProxy",
@@ -142,6 +152,7 @@
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
         ]
       },
+      "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
@@ -160,42 +171,48 @@
       "address": "0x4bf82e627D57cB3F455E740bcDA25848cDbd2FF7",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673992475
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x4CF5c11321d54b83bDAE84bBbd018c26621d2950",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673985047
     },
     {
       "name": "PoseidonPoseidonPartialRoundKey1Column",
       "address": "0x4d0E80AB34ee2B19295F2CaC3101d03452D874b8",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998775
     },
     {
       "name": "PoseidonPoseidonFullRoundKey2Column",
       "address": "0x4FB05b7CC348C5a72C59a3f307baf66e3CA1F835",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998775
     },
     {
       "name": "PedersenHashPointsYColumn",
       "address": "0x519DA5F74503dA351EbBED889111377d33096002",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673984999
     },
     {
       "name": "CpuOods",
       "address": "0x52314e0b25b024c34480Ac3c75cfE98c2Ed6aa4a",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673985335
     },
     {
       "name": "MerkleStatementContract",
@@ -203,6 +220,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673984999,
       "values": {
         "hasRegisteredFact": true
       }
@@ -212,7 +230,8 @@
       "address": "0x593a71DC43e9B67FE009d7C76B6EfA925FB329B1",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673984999
     },
     {
       "name": "CairoBootloaderProgram",
@@ -220,6 +239,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673984795,
       "values": {
         "getCompiledProgram": [
           "290341444919459839",
@@ -793,6 +813,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673985047,
       "values": {
         "constructorArgs": [
           [
@@ -822,14 +843,16 @@
       "address": "0x68293272FEA2D6e74572BC18ffaD11F21344e090",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998775
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x691ca565B7416B681e4f9Fb56A1283Ae8b34E55e",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673992475
     },
     {
       "name": "SHARPVerifier",
@@ -837,6 +860,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1674001487,
       "values": {
         "constructorArgs": [
           "0x5d07afFAfc8721Ef3dEe4D11A2D1484CBf6A9dDf",
@@ -874,6 +898,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673992751,
       "values": {
         "constructorArgs": [
           [
@@ -903,7 +928,8 @@
       "address": "0x812c2AD2161D099724A99C8114c539b9e5b449cd",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998775
     },
     {
       "name": "CpuFrilessVerifier",
@@ -911,6 +937,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673985335,
       "values": {
         "constructorArgs": [
           [
@@ -940,21 +967,24 @@
       "address": "0x8518F459A698038B4CCED66C042c48C6bB5B17fe",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673985047
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x89B7a7276cBc8Cb35Ec11fAE9da83b20Db3edf20",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998859
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x943248dA0FFd5834Da56c5AD5308E2E2991378EB",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673984795
     },
     {
       "name": "CpuFrilessVerifier",
@@ -962,6 +992,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673985527,
       "values": {
         "constructorArgs": [
           [
@@ -991,21 +1022,24 @@
       "address": "0xb4711a4614368516529d6118C97905aB4B28e267",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998775
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xBE8bd7a41ba7DC7b995a53368e7fFE30Fd2BC447",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673985335
     },
     {
       "name": "PedersenHashPointsXColumn",
       "address": "0xc4f21318937017B8aBe5fDc0D48f58dBc1d18940",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673984795
     },
     {
       "name": "CpuFrilessVerifier",
@@ -1013,6 +1047,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673992475,
       "values": {
         "constructorArgs": [
           [
@@ -1040,21 +1075,24 @@
       "address": "0xc9E067AF5d00eb4aA2E73843ac36AfF83C5CeeD3",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998859
     },
     {
       "name": "EcdsaPointsYColumn",
       "address": "0xcA59f6FD499ffF50c78Ffb420a9bcd0d273abf29",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673984999
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xd0aAdECA2d25AEFde0da214d27b04b6ea20D7418",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673998775
     },
     {
       "name": "CpuFrilessVerifier",
@@ -1062,6 +1100,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673998859,
       "values": {
         "constructorArgs": [
           [
@@ -1096,7 +1135,8 @@
       "address": "0xED219933b58e9c00E66682356588d42C7932EE8E",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1673985335
     },
     {
       "name": "MemoryPageFactRegistry",
@@ -1104,6 +1144,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1673984795,
       "values": {
         "hasRegisteredFact": true
       }

@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1663610147,
       "values": {
         "chainId": 0,
         "decimals": 0,
@@ -40,6 +41,7 @@
         "implementation": "0x299b4F6066d231521d11FAE8331fb1A4fe794F58",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "sinceTimestamp": 1631535967,
       "values": {
         "chainId": 2,
         "evmChainId": 1,
@@ -61,6 +63,7 @@
         "implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "sinceTimestamp": 1628093444,
       "values": {
         "chainId": 2,
         "evmChainId": 1,

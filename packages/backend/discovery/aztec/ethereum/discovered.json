@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "aztec",
+  "chain": "ethereum",
   "blockNumber": 17378164,
   "configHash": "0xe2a93d58ae1c112d7b8332ec0805a1148e3d5f61c498a0ce0198e92c81db0c82",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "AztecFeeDistributor",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1619631231,
       "values": {
         "convertConstant": 3155360,
         "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
@@ -29,6 +30,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1614799636,
       "values": {
         "dataRoot": "0x14c2a9b5b41a31c6926b4bdcf9cec77e72c0559f0f9b0bd9044c0bce0000d406",
         "dataSize": 914176,
@@ -99,7 +101,8 @@
       "address": "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1639321684
     },
     {
       "name": "Aztec Multisig",
@@ -108,6 +111,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1610552620,
       "values": {
         "domainSeparator": "0xf37d5181cb1c7c67c7e79d1dd66f78e41f525d498f652270e8f68c486406872b",
         "getChainId": 1,

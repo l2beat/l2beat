@@ -13,6 +13,7 @@
         "implementation": "0x1E5e634981564fc645dcbC6546aE618d7870B30a",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "sinceTimestamp": 1694224883,
       "values": {
         "CHALLENGER": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "FINALIZATION_PERIOD_SECONDS": 259200,
@@ -35,6 +36,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1694224835,
       "values": {
         "owner": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       }
@@ -47,6 +49,7 @@
         "implementation": "0x62b257A1b1fC81c4e6E5Dc5b47F1E6184341Cd58",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "sinceTimestamp": 1694224907,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310",
@@ -65,6 +68,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f"
       },
+      "sinceTimestamp": 1694224919,
       "values": {
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620262",
@@ -89,6 +93,7 @@
         "implementation": "0xeF01a6aE995791FfFcA3d70bDA7B91E5Fa1aD0aE",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "sinceTimestamp": 1694224895,
       "values": {
         "batcherHash": "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
         "gasLimit": 30000000,
@@ -119,6 +124,7 @@
         "implementation": "0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "sinceTimestamp": 1694224871,
       "values": {
         "GUARDIAN": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "L2_ORACLE": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
@@ -136,6 +142,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1694224847,
       "values": {
         "addressManager": "0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05",
         "isUpgrading": false,
