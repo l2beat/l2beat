@@ -20,7 +20,7 @@ interface StatusPageProps {
     groupName: string
     updaters: UpdaterStatus[]
   }[]
-  aggregatedStatus: 'synced' | 'not synced' | 'syncing'
+  aggregatedStatus: SyncStatus
 }
 
 export function TvlStatusPage({
@@ -130,9 +130,9 @@ export function renderTvlStatusPage(props: StatusPageProps) {
   return reactToHtml(<TvlStatusPage {...props} />)
 }
 
-export function getSyncStatus(
-  statuses: StatusPoint[],
-): 'synced' | 'not synced' | 'syncing' {
+export type SyncStatus = 'synced' | 'not synced' | 'syncing'
+
+export function getSyncStatus(statuses: StatusPoint[]): SyncStatus {
   if (
     statuses.every((s) => s.status === 'synced' || s.status === 'notApplicable')
   ) {
@@ -146,9 +146,7 @@ export function getSyncStatus(
   throw new Error('Programmer error: logic should not reach here')
 }
 
-export function getStatusIndicator(
-  status: 'synced' | 'not synced' | 'syncing',
-): string {
+export function getStatusIndicator(status: SyncStatus): string {
   switch (status) {
     case 'synced':
       return '✅'
