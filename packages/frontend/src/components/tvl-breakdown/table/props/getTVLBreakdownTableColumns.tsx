@@ -11,17 +11,17 @@ import { TokenTypeCell } from '../TokenTypeCell'
 import { TokenValueCell } from '../TokenValueCell'
 import { ColumnConfig } from '../TVLBreakdownTableView'
 
+// ! Now cell width are set to 20% in TVLBreakdownTableView.tsx so adding new columns will break the layout
+
 export function getNativelyMintedColumns(explorer: string) {
   const columns: ColumnConfig<TVLProjectBreakdown['native'][number]>[] = [
     {
       name: 'TOKEN',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) => <TokenNameCell assetId={token.assetId} />,
     },
     {
       name: 'CONTRACT',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) =>
         token.tokenAddress && (
@@ -30,13 +30,11 @@ export function getNativelyMintedColumns(explorer: string) {
     },
     {
       name: 'TYPE',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) => <TokenTypeCell assetId={token.assetId} />,
     },
     {
       name: 'AMOUNT',
-      minimalWidth: true,
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
@@ -45,7 +43,6 @@ export function getNativelyMintedColumns(explorer: string) {
     },
     {
       name: 'VALUE',
-      minimalWidth: true,
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
@@ -61,13 +58,11 @@ export function getExternallyBridgedColumns(explorer: string) {
   const columns: ColumnConfig<TVLProjectBreakdown['external'][number]>[] = [
     {
       name: 'TOKEN',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) => <TokenNameCell assetId={token.assetId} />,
     },
     {
       name: 'CONTRACT',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) =>
         token.tokenAddress && (
@@ -76,13 +71,11 @@ export function getExternallyBridgedColumns(explorer: string) {
     },
     {
       name: 'BRIDGED USING',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) => <BridgedUsingCell assetId={token.assetId} />,
     },
     {
       name: 'AMOUNT',
-      minimalWidth: true,
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
@@ -95,7 +88,6 @@ export function getExternallyBridgedColumns(explorer: string) {
     },
     {
       name: 'VALUE',
-      minimalWidth: true,
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
@@ -115,13 +107,11 @@ export function getCanonicallyBridgedColumns(explorer: string) {
   const columns: ColumnConfig<TVLProjectBreakdown['canonical'][number]>[] = [
     {
       name: 'TOKEN',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) => <TokenNameCell assetId={token.assetId} />,
     },
     {
       name: 'ESCROW',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <EscrowsCell
@@ -133,8 +123,8 @@ export function getCanonicallyBridgedColumns(explorer: string) {
     },
     {
       name: 'PRICE',
-      minimalWidth: true,
       headClassName: 'md:pl-4',
+      alignRight: true,
       tooltip: 'Prices are fetched from CoinGecko',
       getValue: (token) => (
         <div className="pr-2 text-xs font-medium">
@@ -144,7 +134,6 @@ export function getCanonicallyBridgedColumns(explorer: string) {
     },
     {
       name: 'AMOUNT',
-      minimalWidth: true,
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
@@ -158,7 +147,6 @@ export function getCanonicallyBridgedColumns(explorer: string) {
     },
     {
       name: 'VALUE',
-      minimalWidth: true,
       alignRight: true,
       headClassName: 'md:pl-4',
       getValue: (token) => (
