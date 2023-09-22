@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17821210,
   "configHash": "0xb03efc49cd04c082e7001d53a82ab71dc71138acc2d59a1754f4120db954c9ac",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "StarkExchange",
@@ -23,6 +23,7 @@
         },
         "proxyGovernance": ["0x303775491494a08b07365938787274F742a81F63"]
       },
+      "sinceTimestamp": 1657453320,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -72,6 +73,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1678120703,
       "values": {
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
         "getChainId": 1,
@@ -100,6 +102,7 @@
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
         ]
       },
+      "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
@@ -119,6 +122,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1657550175,
       "values": {
         "constructorArgs": [
           [
@@ -142,6 +146,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1657453372,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -155,6 +160,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1674001487,
       "values": {
         "getBootloaderConfig": [
           "2962621603719000361370283216422448934312521782617806945663080079725495842070",
@@ -176,6 +182,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1657453372,
       "values": {
         "hasRegisteredFact": false,
         "identify": "StarkWare_OrderRegistry_2021_1"

@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "omgnetwork",
+  "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0xa4e02f6100911105fdffefc7c17367050ef667ca4c7cd19e397d30aca9217312",
+  "version": 2,
   "contracts": [
     {
       "name": "Erc20Vault",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1584424719,
       "values": {
         "depositVerifiers": [
           "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
@@ -25,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1584424347,
       "values": {
         "authority": "0x22405c1782913fb676bc74Ef54a60727B0e1026F",
         "CHILD_BLOCK_INTERVAL": 1000,
@@ -46,6 +49,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1584424507,
       "values": {
         "depositVerifiers": [
           "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
@@ -62,6 +66,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1584427515,
       "values": {
         "BOND_LOWER_BOUND_DIVISOR": 2,
         "BOND_UPPER_BOUND_MULTIPLIER": 2,
@@ -80,6 +85,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1584424482,
       "derivedName": ""
     },
     {
@@ -89,6 +95,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1584424677,
       "derivedName": ""
     }
   ],

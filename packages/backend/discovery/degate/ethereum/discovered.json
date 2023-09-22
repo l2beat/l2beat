@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "degate",
+  "chain": "ethereum",
   "blockNumber": 17434695,
   "configHash": "0xadf196f9058092e27299c4f7165d10c2012663548dc91fb005ef32fa8beb5e31",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "BlockVerifier",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681985879,
       "values": {
         "owner": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -22,6 +23,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1684401563,
       "values": {
         "getOwners": [
           "0xf5020ADf433645c451A4809eac0d6F680709f11B",
@@ -43,6 +45,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681989995,
       "values": {
         "blockVerifierAddress": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
         "forcedWithdrawalFee": "10000000000000000",
@@ -61,6 +64,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681993655,
       "values": {
         "blockSubmitters": [
           "0x84A00D39C3c95e839202E19F892F17743d6370a0",
@@ -79,6 +83,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1614841682,
       "values": {
         "getOwners": [
           "0xf5020ADf433645c451A4809eac0d6F680709f11B",
@@ -100,6 +105,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681991243,
       "values": {
         "exchange": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
         "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
@@ -112,6 +118,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681991219,
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",

@@ -13,6 +13,7 @@
         "implementation": "0x6ccfD65b0b14F67259C77Ca6267104e058dDB292",
         "admin": "0x5B0bb17755FBa06028530682E2FD5bc373931768"
       },
+      "sinceTimestamp": 1691067875,
       "values": {
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
@@ -31,6 +32,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691067827,
       "values": {
         "_decimals": 0,
         "bridge": "0x0000000000000000000000000000000000000000",
@@ -56,6 +58,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691086259,
       "values": {
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
@@ -69,6 +72,7 @@
         "implementation": "0x0eC393209674090368C592A591B25811e490BF36",
         "admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5"
       },
+      "sinceTimestamp": 1691086271,
       "values": {
         "balance": 7081106509900,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -85,6 +89,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691067863,
       "values": {
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
@@ -97,6 +102,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1689149759,
       "values": {
         "domainSeparator": "0xf720f1fd8bfacb497aa1c16a19a7f17ba6e7bfba9ae23c73812ce40727956e08",
         "getChainId": 1,
@@ -122,6 +128,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691067839,
       "values": {
         "implementation": "0x36f274C1C197F277EA3C57859729398FCc8a3763",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
@@ -133,14 +140,16 @@
       "address": "0xa4F1155202D36348097b7488b0D2365fA91f8CaC",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1689160607
     },
     {
       "name": "PlonkVerifierFull",
       "address": "0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1689158687
     },
     {
       "name": "PlonkVerifierFull2",
@@ -148,6 +157,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691501627,
       "derivedName": "PlonkVerifierFull"
     },
     {
@@ -158,6 +168,7 @@
         "implementation": "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3",
         "admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
       },
+      "sinceTimestamp": 1689159923,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -212,6 +223,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1689150959,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -250,6 +262,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1689158711,
       "values": {
         "owner": "0xd6B95c960779c72B8C6752119849318E5d550574"
       }
