@@ -28,7 +28,7 @@ export function ProjectFilters({ items }: Props) {
     <div
       id="project-filters"
       className="flex gap-4"
-      data-slugs={generateSlugList(items)}
+      data-all-slugs={generateSlugList(items)}
     >
       <RollupsOnlyCheckbox items={items} />
       <Select label="Select stack" items={providers} id="filter-stack-select" />

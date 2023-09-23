@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash'
+
 import { makeQuery } from './query'
 
 const states = new Map<string, string[]>()
@@ -5,7 +7,7 @@ const states = new Map<string, string[]>()
 export function configureProjectFilters() {
   const { $ } = makeQuery(document.body)
   const projectFilters = $.maybe('#project-filters')
-  const allProjectSlugs = projectFilters?.dataset.slugs
+  const allProjectSlugs = projectFilters?.dataset.allSlugs
     ?.split(',')
     .filter((i) => i.length > 0)
 
@@ -13,68 +15,85 @@ export function configureProjectFilters() {
     return
   }
 
+  const configureCheckbox = (filter: HTMLInputElement, stateId: string) => {
+    const slugs = filter.dataset.slugs?.split(',').filter((i) => i.length > 0)
+
+    if (!slugs) {
+      throw new Error(`No slugs for ${stateId}`)
+    }
+
+    filter.addEventListener('change', () => {
+      if (filter.checked) {
+        states.set(stateId, slugs)
+      } else {
+        states.delete(stateId)
+      }
+      rerenderState()
+    })
+  }
+
+  const configureSelect = (select: HTMLSelectElement, stateId: string) => {
+    select.addEventListener('change', () => {
+      const selectedValue = select.value
+      if (selectedValue) {
+        const slugs = select.value.split(',')
+        states.set(stateId, slugs)
+      } else {
+        states.delete(stateId)
+      }
+      rerenderState()
+    })
+  }
+
   const checkboxes = projectFilters.querySelectorAll<HTMLInputElement>(
     'input[type="checkbox"]',
   )
   const selects = projectFilters.querySelectorAll<HTMLSelectElement>('.Select')
 
-  checkboxes.forEach((checkbox) =>
-    configureCheckbox(checkbox, checkbox.id, allProjectSlugs),
-  )
-  selects.forEach((select) =>
-    configureSelect(select, select.id, allProjectSlugs),
-  )
-}
+  const rerenderProjectFilters = (slugs: string[]) => {
+    const selectOptions = Array.from(selects).flatMap((select) =>
+      Array.from(select.querySelectorAll('option')),
+    )
 
-function configureCheckbox(
-  filter: HTMLInputElement,
-  stateId: string,
-  allProjectSlugs: Readonly<string[]>,
-) {
-  const slugs = filter.dataset.slugs?.split(',').filter((i) => i.length > 0)
+    checkboxes.forEach((checkbox) => {
+      const checkboxSlugs = checkbox.dataset.slugs?.split(',')
+      const slugsUnion = checkboxSlugs?.filter((i) => slugs.includes(i))
 
-  if (!slugs) {
-    throw new Error(`No slugs for ${stateId}`)
+      if (isEmpty(slugsUnion)) {
+        checkbox.disabled = true
+      } else {
+        checkbox.disabled = false
+      }
+    })
+
+    selectOptions.forEach((option) => {
+      const optionSlugs = option.value.split(',')
+      const slugsUnion = optionSlugs.filter((i) => slugs.includes(i))
+
+      if (isEmpty(slugsUnion)) {
+        option.disabled = true
+      } else {
+        option.disabled = false
+      }
+    })
   }
 
-  filter.addEventListener('change', () => {
-    if (filter.checked) {
-      states.set(stateId, slugs)
-    } else {
-      states.delete(stateId)
-    }
-    rerenderState(allProjectSlugs)
-  })
-}
+  const rerenderState = () => {
+    const stateObj = Object.fromEntries(states)
+    const slugsToShow = Object.values(stateObj).reduce<string[]>(
+      (acc, curr) => {
+        return acc.filter((i) => curr.includes(i))
+      },
+      [...allProjectSlugs],
+    )
 
-function configureSelect(
-  select: HTMLSelectElement,
-  stateId: string,
-  allProjectSlugs: Readonly<string[]>,
-) {
-  select.addEventListener('change', () => {
-    const selectedValue = select.value
-    if (selectedValue) {
-      const slugs = select.value.split(',')
-      states.set(stateId, slugs)
-    } else {
-      states.delete(stateId)
-    }
-    rerenderState(allProjectSlugs)
-  })
-}
+    rerenderProjectFilters(slugsToShow)
+    manageRowVisibility(slugsToShow)
+    rerenderIndexes()
+  }
 
-function rerenderState(allProjectSlugs: Readonly<string[]>) {
-  const stateObj = Object.fromEntries(states)
-  const slugsUnion = Object.values(stateObj).reduce<string[]>(
-    (acc, curr) => {
-      return acc.filter((i) => curr.includes(i))
-    },
-    [...allProjectSlugs],
-  )
-
-  manageRowVisibility(slugsUnion)
-  rerenderIndexes()
+  checkboxes.forEach((checkbox) => configureCheckbox(checkbox, checkbox.id))
+  selects.forEach((select) => configureSelect(select, select.id))
 }
 
 export function manageRowVisibility(slugs: string[]) {
