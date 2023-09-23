@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "apex",
+  "chain": "ethereum",
   "blockNumber": 17705531,
   "configHash": "0xf318b1d0c2dad0392e1b6e4d71389461b890be5513385cf3cb3cd32804f37186",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "Committee",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671630143,
       "values": {
         "constructorArgs": [
           [
@@ -48,6 +49,7 @@
           "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6"
         ]
       },
+      "sinceTimestamp": 1660252039,
       "values": {
         "configurationDelay": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -97,6 +99,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1660252035,
       "values": {
         "hasRegisteredFact": false,
         "identify": "StarkWare_PerpetualEscapeVerifier_2021_2"
@@ -109,6 +112,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1672216439,
       "values": {
         "domainSeparator": "0x297308a751114e4f0f8a219d1ff2f770e6c333f1f2698b3adf7b531e33f22e03",
         "getChainId": 1,
@@ -128,6 +132,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661254231,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,

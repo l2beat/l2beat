@@ -1,5 +1,4 @@
 import {
-  ActivityApiResponse,
   DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
@@ -16,7 +15,6 @@ export function getProjectTvlBreakdownPages(
   config: Config,
   pagesData: {
     tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse
-    activityApiResponse: ActivityApiResponse
     tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse
   },
 ) {

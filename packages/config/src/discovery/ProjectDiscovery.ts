@@ -99,17 +99,22 @@ export class ProjectDiscovery {
     address: EthereumAddress
     name?: string
     description?: string
-    sinceTimestamp: UnixTime
+    sinceTimestamp?: UnixTime
     tokens: string[] | '*'
     upgradableBy?: string[]
     upgradeDelay?: string
   }): ProjectEscrow {
     const contract = this.getContractByAddress(address.toString())
+    const timestamp = sinceTimestamp?.toNumber() ?? contract.sinceTimestamp
+    assert(
+      timestamp,
+      'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
+    )
 
     return {
       address,
       newVersion: true,
-      sinceTimestamp,
+      sinceTimestamp: new UnixTime(timestamp),
       tokens,
       contract: {
         name: name ?? contract.name,
