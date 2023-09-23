@@ -42,6 +42,14 @@ function configureSelect(select: HTMLSelectElement) {
       select.dispatchEvent(new Event('change'))
     }),
   )
+
+  document.addEventListener('click', (e) => {
+    if (!select.contains(e.target as Node)) {
+      if (select.dataset.state === 'opened') {
+        setState(null)
+      }
+    }
+  })
 }
 
 function getElements(select: HTMLSelectElement) {
