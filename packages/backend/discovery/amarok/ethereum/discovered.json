@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671624563,
       "values": {
         "AMB": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "delay": 604800,
@@ -33,6 +34,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1693742291,
       "values": {
         "domainSeparator": "0x629aade541ce1b7d73beab1242554404bc43e210de8d86b5a43700596c5cb2b2",
         "getChainId": 1,
@@ -48,7 +50,8 @@
       "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1671623183
     },
     {
       "name": "Connext Multisig",
@@ -57,6 +60,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1671651491,
       "values": {
         "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
         "getChainId": 1,
@@ -89,6 +93,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1686151595,
       "values": {
         "AMB": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "delay": 604800,
@@ -110,6 +115,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1688715011,
       "values": {
         "AMB": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
         "delay": 604800,
@@ -132,6 +138,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671619367,
       "values": {
         "delay": 604800,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
@@ -151,7 +158,8 @@
       "address": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1671622727
     },
     {
       "name": "ConnextBridge",
@@ -173,6 +181,7 @@
           "0x3Bcf4185443A339517aD4e580067f178d1B68E1D"
         ]
       },
+      "sinceTimestamp": 1671625595,
       "values": {
         "aavePool": "0x0000000000000000000000000000000000000000",
         "aavePortalFee": 0,
@@ -439,6 +448,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671625079,
       "values": {
         "AMB": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
         "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
@@ -463,6 +473,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671630995,
       "values": {
         "AMB": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "delay": 604800,
@@ -488,6 +499,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671622763,
       "values": {
         "connectors": [
           "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE",
@@ -526,6 +538,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1693608707,
       "values": {
         "domainSeparator": "0xa721cba4d2f32af7fbfd7a202a7c61a16ec27fc0140de338b2f91560251fd997",
         "getChainId": 1,
@@ -548,6 +561,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671623231,
       "values": {
         "AMB": "0x0000000000000000000000000000000000000000",
         "delay": 604800,

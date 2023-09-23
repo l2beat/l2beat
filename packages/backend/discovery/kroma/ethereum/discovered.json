@@ -13,6 +13,7 @@
         "implementation": "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880579,
       "values": {
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
@@ -37,6 +38,7 @@
         "implementation": "0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880651,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -81,6 +83,7 @@
         "implementation": "0x381F53695230BAF83a39D1a08304D233A35730Fa",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880555,
       "values": {
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
@@ -100,6 +103,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693288019,
       "values": {
         "POSEIDON2": "0xFd234971881a7c72965175fA8E438c97B2Dcd273"
       }
@@ -112,6 +116,7 @@
         "implementation": "0x2af8a383C395EBa6551E674EeD02344936fE36f5",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880543,
       "values": {
         "batcherHash": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
         "gasLimit": 30000000,
@@ -143,6 +148,7 @@
         "implementation": "0x2BB1c629c46a4018fBe2538a98da7162F8355583",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880627,
       "values": {
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "getOwners": ["0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"],
@@ -162,6 +168,7 @@
         "implementation": "0x675924D68200F2C967Ba12349d5d510676C7214c",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880591,
       "values": {
         "MESSAGE_VERSION": 0,
         "messageNonce": 14,
@@ -187,6 +194,7 @@
         "implementation": "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693287695,
       "values": {
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x420000000000000000000000000000000000000A",
@@ -200,6 +208,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693287587,
       "values": {
         "owner": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
       },
@@ -213,6 +222,7 @@
         "implementation": "0x7E79726560B140fd6e089547bD049509F5423BFf",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693287719,
       "values": {
         "version": "0.1.4"
       }
@@ -225,6 +235,7 @@
         "implementation": "0x7526F997ea040B3949415c3a44e708273863AA2b",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880615,
       "values": {
         "BISECTION_TIMEOUT": 3600,
         "challengedRoots": [],
@@ -249,6 +260,7 @@
         "implementation": "0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880603,
       "values": {
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000009",
@@ -264,6 +276,7 @@
         "implementation": "0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "clock": 18147311,
@@ -300,6 +313,7 @@
         "implementation": "0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880639,
       "values": {
         "clock": 18147311,
         "CLOCK_MODE": "mode=blocknumber&from=default",
@@ -334,6 +348,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693288007,
       "derivedName": ""
     },
     {
@@ -344,6 +359,7 @@
         "implementation": "0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880567,
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,

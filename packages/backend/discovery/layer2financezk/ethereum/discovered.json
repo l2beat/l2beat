@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "layer2financezk",
+  "chain": "ethereum",
   "blockNumber": 17271618,
   "configHash": "0xcaa1cbc5c03ede6a2281b93df0293fc741b921d5ec4594bef060e7fddcf5817c",
+  "version": 2,
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -11,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1678120703,
       "values": {
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
         "getChainId": 1,
@@ -38,6 +40,7 @@
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
         ]
       },
+      "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
@@ -56,6 +59,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1626352379,
       "values": {
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
@@ -67,6 +71,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1674001487,
       "values": {
         "getBootloaderConfig": [
           "2962621603719000361370283216422448934312521782617806945663080079725495842070",
@@ -87,6 +92,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1640107463,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -112,6 +118,7 @@
         },
         "proxyGovernance": ["0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"]
       },
+      "sinceTimestamp": 1645130774,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -160,6 +167,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1648452641,
       "values": {
         "EXP_TIME": 2000000,
         "nonce": 23,
@@ -175,7 +183,8 @@
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1650870230
     }
   ],
   "eoas": [

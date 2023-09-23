@@ -80,7 +80,15 @@ const BaseAssetBreakdownData = z.object({
 
 type BaseAssetBreakdownData = z.infer<typeof BaseAssetBreakdownData>
 
-export const CanonicalAssetBreakdownData = BaseAssetBreakdownData.extend({})
+export const CanonicalAssetBreakdownData = BaseAssetBreakdownData.extend({
+  escrows: z.array(
+    z.object({
+      amount: z.string(),
+      usdValue: z.string(),
+      escrowAddress: branded(z.string(), EthereumAddress),
+    }),
+  ),
+})
 
 export type CanonicalAssetBreakdownData = z.infer<
   typeof CanonicalAssetBreakdownData
@@ -106,7 +114,7 @@ export const ProjectAssetsBreakdownApiResponse = z.object({
     z.string(), // Project Id
     z.object({
       // escrow -> asset[]
-      canonical: z.record(z.string(), z.array(CanonicalAssetBreakdownData)),
+      canonical: z.array(CanonicalAssetBreakdownData),
       external: z.array(ExternalAssetBreakdownData),
       native: z.array(NativeAssetBreakdownData),
     }),

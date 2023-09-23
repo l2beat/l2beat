@@ -30,7 +30,6 @@ export interface TvlBreakdownViewProps {
     }
   }
   tvlBreakdowns: TVLProjectBreakdown
-  explorer: string
 }
 
 export function getTvlBreakdownView(
@@ -62,6 +61,5 @@ export function getTvlBreakdownView(
       },
     },
     tvlBreakdowns: tvlBreakdownApiResponse.breakdowns[project.id.toString()],
-    explorer: project.display.links.explorers[0],
   }
 }

@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1578581061,
       "values": {
         "decimals": 18,
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
@@ -27,6 +28,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1671752303,
       "values": {
         "l1ERC20GatewayRouter": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "l1Inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
@@ -43,6 +45,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692391799,
       "values": {
         "l1StandardBridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -56,6 +59,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1651747441,
       "values": {
         "l1StandardBridge": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -69,6 +73,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1651578211,
       "values": {
         "depositManager": "0x401F6c983eA34274ec46f84D70b31C151321188b",
         "erc20Predicate": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
@@ -84,6 +89,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1578580941,
       "values": {
         "isOwner": false,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
@@ -95,6 +101,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1677231527,
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
@@ -110,7 +117,8 @@
       "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1651577227
     },
     {
       "name": "Ethereum_SpokePool",
@@ -120,6 +128,7 @@
         "implementation": "0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "sinceTimestamp": 1682355155,
       "values": {
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -144,6 +153,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "getCurrentTime": 1695297923,
@@ -161,7 +171,8 @@
       "address": "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1651576251
     },
     {
       "name": "EmergencyProposalExecutor",
@@ -170,6 +181,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1597806870,
       "values": {
         "domainSeparator": "0xc6747c7ca6899274b3575cd632681f9db9a0788dd1b7c7379382739baa6aa665",
         "getChainId": 1,
@@ -190,6 +202,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1677231923,
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
@@ -208,6 +221,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692392063,
       "values": {
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "daiOptimismBridge": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
@@ -226,6 +240,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1636157803,
       "values": {
         "domainSeparator": "0xbb022dfb1fe065f2a2c6ea647af6240343ff4b980bc3c1183ecd630958c3b59e",
         "getChainId": 1,
@@ -247,7 +262,8 @@
       "address": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1618347170
     },
     {
       "name": "HubPool",
@@ -255,6 +271,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1653167916,
       "values": {
         "bondAmount": "450000000000000000",
         "bondToken": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
@@ -324,6 +341,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691158667,
       "values": {
         "getL1CallValue": 1000000000000000,
         "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
@@ -341,6 +359,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692831647,
       "values": {
         "decimals": 18,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
