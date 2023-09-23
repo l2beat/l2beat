@@ -9,7 +9,7 @@ export interface TvlBreakdownHeaderProps {
 
 export function TvlBreakdownHeader(props: TvlBreakdownHeaderProps) {
   return (
-    <div className="mt-11 flex flex-col">
+    <div className="mt-11 flex flex-col px-4 md:px-0">
       <div className="flex items-center gap-[6px]">
         {props.icon && (
           <img
@@ -23,12 +23,12 @@ export function TvlBreakdownHeader(props: TvlBreakdownHeaderProps) {
           <span className="mx-1 text-gray-550">/</span>TVL Breakdown
         </h1>
       </div>
-      <div className="mt-[38px] mb-4 flex items-center justify-between">
-        <h2 className="text-3xl font-bold">TVL breakdown</h2>
-        <div className="text-xs font-medium text-gray-550">
+      <div className="mt-4 mb-4 flex flex-col items-start justify-between gap-[10px] md:mt-[38px] md:flex-row md:items-center">
+        <h2 className="text-[28px] font-bold md:text-3xl">TVL Breakdown</h2>
+        <div className="text-xs font-medium text-black dark:text-gray-550">
           Timestamp:&nbsp;
-          <span className="text-base font-semibold text-white">
-            {props.tvlBreakdownDate} (UTC)
+          <span className="text-base font-semibold text-gray-550 dark:text-white">
+            {props.tvlBreakdownDate}
           </span>
         </div>
       </div>

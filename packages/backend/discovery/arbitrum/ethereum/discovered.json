@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "arbitrum",
-  "blockNumber": 17356931,
-  "configHash": "0x4c7c54af54289435b70f3655207c68c61a111145ed111b7c9010d930e775e657",
-  "version": 1,
+  "chain": "ethereum",
+  "blockNumber": 18162882,
+  "configHash": "0x32032f43f6710ddef93f20785530ea1f6867df46e1fdb94c6295743032c45aac",
+  "version": 2,
   "contracts": [
     {
       "name": "OutboxV2",
@@ -46,7 +46,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 215762,
+        "batchCount": 344729,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -54,39 +54,9 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 877975
+        "totalDelayedMessagesRead": 1080987
       },
       "derivedName": "SequencerInbox"
-    },
-    {
-      "name": "SecurityCouncil",
-      "address": "0x3666a60ff589873ced457a9a8a0aA6F83D708767",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xe7aee79ca5c88cfa7da718e084d199a66001a7d10e0b1be3933b4dacf212dcc3",
-        "getChainId": 1,
-        "getOwners": [
-          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
-          "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
-          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-          "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
-          "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
-          "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
-          "0x88910996671162953E89DdcE5C8137f9077da217",
-          "0x8688515028955734350067695939423222009623",
-          "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-          "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
-          "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
-        ],
-        "getThreshold": 9,
-        "nonce": 13,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
     },
     {
       "name": "OneStepProofEntry",
@@ -123,7 +93,7 @@
             "adminRole": "ADMIN_ROLE",
             "members": [
               "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "0x3666a60ff589873ced457a9a8a0aA6F83D708767"
+              "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
             ]
           }
         },
@@ -217,12 +187,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 5488,
+        "firstUnresolvedNode": 8189,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 5487,
-        "latestNodeCreated": 5641,
+        "latestConfirmed": 8188,
+        "latestNodeCreated": 8343,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -330,11 +300,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 877986,
+        "delayedMessageCount": 1081013,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 215762,
-        "sequencerReportedSubMessageCount": 73080122
+        "sequencerMessageCount": 344729,
+        "sequencerReportedSubMessageCount": 110010391
       },
       "derivedName": "Bridge"
     },
@@ -524,7 +494,7 @@
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3666a60ff589873ced457a9a8a0aA6F83D708767"]
+            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
@@ -538,6 +508,36 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
       "derivedName": "L1ArbitrumTimelock"
+    },
+    {
+      "name": "SecurityCouncil",
+      "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
+        "getChainId": 1,
+        "getOwners": [
+          "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
+          "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd",
+          "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
+          "0x8688515028955734350067695939423222009623",
+          "0x88910996671162953E89DdcE5C8137f9077da217",
+          "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
+          "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
+          "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
+          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+          "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
+          "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
+          "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+        ],
+        "getThreshold": 9,
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
@@ -729,9 +729,6 @@
       "function processOutgoingMessages(bytes sendsData, uint256[] sendLengths)",
       "function rollup() view returns (address)",
       "function setBridge(address newBridge)"
-    ],
-    "0x3666a60ff589873ced457a9a8a0aA6F83D708767": [
-      "constructor(address _singleton)"
     ],
     "0x3E1f62AA8076000c3218493FE3e0Ae40bcB9A1DF": [
       "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
@@ -1478,6 +1475,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": [
+      "constructor(address _singleton)"
     ]
   }
 }

@@ -9,6 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import {
   ReportRecord,
   ReportRepository,
@@ -18,6 +19,7 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createFormulaReports } from '../reports/createFormulaReports'
+import { getStatus } from '../reports/getStatus'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
@@ -71,6 +73,15 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      ChainId.getName(this.chainId) + ': ' + this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+    )
   }
 
   async start() {

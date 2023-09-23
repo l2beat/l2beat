@@ -9,6 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import {
   ReportRecord,
   ReportRepository,
@@ -20,6 +21,7 @@ import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from '../reports/createReports'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { getStatus } from '../reports/getStatus'
 import { ReportProject } from '../reports/ReportProject'
 import { AssetUpdater } from './AssetUpdater'
 
@@ -59,6 +61,15 @@ export class CBVUpdater implements AssetUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      ChainId.getName(this.getChainId()) + ': ' + this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+    )
   }
 
   async start() {

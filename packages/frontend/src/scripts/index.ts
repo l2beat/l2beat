@@ -6,6 +6,7 @@ import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
+import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureSelects } from './configureSelects'
@@ -35,3 +36,4 @@ configureUpgradeDescriptions()
 configureTopBars()
 configureProjectFilters()
 configureSelects()
+configureMultipleEscrowsButton()
