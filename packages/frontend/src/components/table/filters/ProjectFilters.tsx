@@ -20,7 +20,7 @@ export function ProjectFilters({ items }: Props) {
   const stages = uniq(items.map((i) => i.stage.stage))
     .sort()
     .map((stage) => ({
-      label: stage ?? '',
+      label: stageLabel(stage),
       value: generateSlugList(items, (i) => i.stage.stage === stage),
     }))
 
@@ -48,4 +48,15 @@ function generateSlugList(
   }
 
   return result.map((i) => i.slug).join(',')
+}
+
+function stageLabel(stage: ScalingTvlViewEntry['stage']['stage']) {
+  switch (stage) {
+    case 'NotApplicable':
+      return 'Not applicable'
+    case 'UnderReview':
+      return 'Under review'
+    default:
+      return stage
+  }
 }
