@@ -27,9 +27,9 @@ export function Select(props: Props) {
           {props.label}{' '}
           <ChevronDownIcon className="transition-transform group-data-[state=opened]:-rotate-180" />
         </div>
-        <div className="group hidden items-center gap-1.5 rounded-md bg-black py-1.5 px-2 group-data-[state=selected]:inline-flex">
+        <div className="group hidden items-center gap-1.5 rounded-md bg-white py-1.5 px-2 group-data-[state=selected]:inline-flex dark:bg-black">
           <span className="Select-SelectedText" />
-          <CloseIcon className="h-3 w-3 fill-gray-550 group-hover:fill-gray-650 dark:fill-gray-50 group-hover:dark:fill-gray-200" />
+          <CloseIcon className="h-3 w-3 fill-gray-550 dark:fill-gray-50" />
         </div>
       </div>
       <div className="pointer-events-none absolute z-60 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100">
