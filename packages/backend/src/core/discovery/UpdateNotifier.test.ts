@@ -4,7 +4,10 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
-import { DiscordClient } from '../../peripherals/discord/DiscordClient'
+import {
+  DiscordClient,
+  MAX_MESSAGE_LENGTH,
+} from '../../peripherals/discord/DiscordClient'
 import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
@@ -108,19 +111,30 @@ describe(UpdateNotifier.name, () => {
         chainId: ChainId.ETHEREUM,
       })
 
+      const internalMsg =
+        `> #0000 (block_number=${BLOCK})\n\n` +
+        `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
+        '\n\nWarning: Message has been truncated\nA\n' +
+        `- ${'A'.repeat(1000)}\n` +
+        `+ ${'B'.repeat(800)}...\n\`\`\``
+
+      const publicMsg =
+        `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
+        '\n\nWarning: Message has been truncated\nA\n' +
+        `- ${'A'.repeat(1000)}\n` +
+        `+ ${'B'.repeat(828)}...\n\`\`\``
+
+      expect(internalMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
+      expect(publicMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
-          address.toString() +
-          '\n\nA\n- 1\n+ 2\n\n```',
+        internalMsg,
         'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
-        '***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
-          address.toString() +
-          '\n\nA\n- 1\n+ 2\n\n```',
+        publicMsg,
         'PUBLIC',
       )
       expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
