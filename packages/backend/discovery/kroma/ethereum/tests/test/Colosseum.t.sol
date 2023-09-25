@@ -3,10 +3,10 @@ pragma solidity ^0.8.13;
 
 import { Test } from "forge-std/Test.sol";
 
-import { Colosseum } from "../.code/Colosseum/implementation/contracts/L1/Colosseum.sol";
-import { ValidatorPool } from "../.code/Colosseum/implementation/contracts/L1/ValidatorPool.sol";
-import { L2OutputOracle } from "../.code/Colosseum/implementation/contracts/L1/L2OutputOracle.sol";
-import { Types } from "../.code/Colosseum/implementation/contracts/libraries/Types.sol";
+import { Colosseum } from "@code/contracts/L1/Colosseum.sol";
+import { ValidatorPool } from "@code/contracts/L1/ValidatorPool.sol";
+import { L2OutputOracle } from "@code/contracts/L1/L2OutputOracle.sol";
+import { Types } from "@code/contracts/libraries/Types.sol";
 
 contract ColosseumTest is Test {
 
@@ -16,6 +16,13 @@ contract ColosseumTest is Test {
 
     address proposer;
     uint256 outputIndex = 271;
+    string RPC_URL = vm.envString("RPC_URL");
+
+    function setUp() public {
+        uint256 fork = vm.createSelectFork(RPC_URL);
+        uint256 blockNumber = 18148041;
+        vm.rollFork(fork, blockNumber);
+    }
 
     function checkCorrectAddresses() public {
         address derivedColosseum = l2OutputOracle.COLOSSEUM();
