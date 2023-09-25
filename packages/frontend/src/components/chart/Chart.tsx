@@ -27,7 +27,7 @@ export interface ChartProps {
   detailedTvlEndpoint?: string
   activityEndpoint?: string
   tokens?: TokenControl[]
-  tvlBreakdownHref: string
+  tvlBreakdownHref?: string
   hasActivity?: boolean
   hasTvl?: boolean
   hasDetailedTvl?: boolean
@@ -46,7 +46,7 @@ export function Chart({
   activityEndpoint,
   tokens,
   type = 'tvl',
-  tvlBreakdownHref,
+  tvlBreakdownHref = '/',
   hasActivity,
   hasTvl = true,
   hasDetailedTvl,
