@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { Test } from "forge-std/Test.sol";
+import { Test } from "@harness/Test.sol";
 
 import { Colosseum } from "@code/contracts/L1/Colosseum.sol";
 import { ValidatorPool } from "@code/contracts/L1/ValidatorPool.sol";
