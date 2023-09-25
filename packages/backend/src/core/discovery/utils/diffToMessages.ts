@@ -105,11 +105,12 @@ export function fieldDiffToMessage(
     message += `+ ${diff.after ?? 'undefined'}\n`
   }
 
-  if (message.length + 1 > maxLength) {
+  const NEW_LINE_BIAS = 1
+  if (message.length + NEW_LINE_BIAS > maxLength) {
     const warningMessage = 'Warning: Message has been truncated\n'
     message =
       warningMessage +
-      hideOverflow(message, maxLength - warningMessage.length - 1)
+      hideOverflow(message, maxLength - warningMessage.length - NEW_LINE_BIAS)
   }
 
   message += '\n'
