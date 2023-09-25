@@ -3,6 +3,7 @@ import React from 'react'
 import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { ScalingRiskFilters } from '../../../components/table/filters/ScalingRiskFilters'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { getScalingRiskColumns } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
@@ -21,7 +22,8 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   }
 
   return (
-    <section className="mt-4 sm:mt-8">
+    <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
+      <ScalingRiskFilters items={items} />
       <Tabs
         items={[
           {

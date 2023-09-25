@@ -8,6 +8,7 @@ import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
 import { configureProjectFilters } from './configureProjectFilters'
+import { configureRollupsOnlyFilter } from './configureRollupsOnlyFilter'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureSelects } from './configureSelects'
 import { configureSlideCards } from './configureSlideCard'
@@ -37,3 +38,4 @@ configureTopBars()
 configureProjectFilters()
 configureSelects()
 configureMultipleEscrowsButton()
+configureRollupsOnlyFilter()

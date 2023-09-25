@@ -4,7 +4,7 @@ import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
 import { UpcomingIcon } from '../../../components/icons/symbols/UpcomingIcon'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ProjectFilters } from '../../../components/table/filters/ProjectFilters'
+import { ScalingTvlFilters } from '../../../components/table/filters/ScalingTvlFilters'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import {
   getActiveScalingTvlColumns,
@@ -28,8 +28,8 @@ export function ScalingTvlView({
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
   return (
-    <section className="mt-4 sm:mt-8">
-      <ProjectFilters items={items} />
+    <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
+      <ScalingTvlFilters items={items} />
       <Tabs
         items={[
           {

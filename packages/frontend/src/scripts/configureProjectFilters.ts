@@ -86,7 +86,7 @@ export function configureProjectFilters() {
       },
       [...allProjectSlugs],
     )
-
+    console.log(slugsToShow)
     rerenderProjectFilters(slugsToShow)
     manageRowVisibility(slugsToShow)
     rerenderIndexes()
@@ -102,7 +102,7 @@ export function manageRowVisibility(slugs: string[]) {
   rows.forEach((row) => {
     const slug = row.dataset.slug
     if (!slug) {
-      throw new Error('no slug')
+      throw new Error('No slug found')
     }
 
     if (slugs.includes(slug)) {

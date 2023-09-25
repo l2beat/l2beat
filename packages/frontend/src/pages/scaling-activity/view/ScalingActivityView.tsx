@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { ScalingActivityFilters } from '../../../components/table/filters/ScalingActivityFilters'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { getScalingActivityColumns } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
@@ -16,7 +17,8 @@ export function ScalingActivityView({ items }: ScalingActivityViewProps) {
   }
 
   return (
-    <section className="mt-4 sm:mt-8">
+    <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
+      <ScalingActivityFilters items={items} />
       <TableView
         items={items}
         columns={columns}

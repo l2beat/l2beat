@@ -7,7 +7,7 @@ export interface IncludeLayer2sCheckboxProps {
   className?: string
   label: ReactNode
   role: string
-  slugs?: string[]
+  slugs: string
   id: string
   defaultChecked?: boolean
 }

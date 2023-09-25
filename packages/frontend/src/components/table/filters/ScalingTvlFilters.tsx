@@ -4,12 +4,13 @@ import React from 'react'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { Select } from '../../Select'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
+import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
 interface Props {
   items: ScalingTvlViewEntry[]
 }
 
-export function ProjectFilters({ items }: Props) {
+export function ScalingTvlFilters({ items }: Props) {
   const providers = uniq(items.map((i) => i.provider))
     .sort()
     .map((p) => ({
@@ -25,29 +26,12 @@ export function ProjectFilters({ items }: Props) {
     }))
 
   return (
-    <div
-      id="project-filters"
-      className="flex gap-4"
-      data-all-slugs={generateSlugList(items)}
-    >
+    <FiltersWrapper items={items}>
       <RollupsOnlyCheckbox items={items} />
-      <Select label="Select stack" items={providers} id="filter-stack-select" />
-      <Select label="Select stage" items={stages} id="filter-stage-select" />
-    </div>
+      <Select label="Select stack" items={providers} id="stack-select" />
+      <Select label="Select stage" items={stages} id="stage-select" />
+    </FiltersWrapper>
   )
-}
-
-function generateSlugList(
-  items: ScalingTvlViewEntry[],
-  check?: (item: ScalingTvlViewEntry) => boolean,
-): string {
-  let result = [...items]
-
-  if (check) {
-    result = result.filter(check)
-  }
-
-  return result.map((i) => i.slug).join(',')
 }
 
 function stageLabel(stage: ScalingTvlViewEntry['stage']['stage']) {
