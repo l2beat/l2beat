@@ -1,9 +1,9 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 17962968,
+  "blockNumber": 18163835,
   "configHash": "0x793b1ec31c66d6ecaeef1247cd5d435add6d670a809cd8db79296bd0e33c8eb0",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661529370,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -28,7 +29,8 @@
         "type": "EIP1967 proxy",
         "implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
         "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
-      }
+      },
+      "sinceTimestamp": 1669425971
     },
     {
       "name": "UltraLightNodeV2",
@@ -36,6 +38,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661529280,
       "values": {
         "chainAddressSizeMap": {
           "101": 20,
@@ -77,7 +80,8 @@
           "196": 20,
           "197": 20,
           "198": 20,
-          "199": 20
+          "199": 20,
+          "202": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -245,6 +249,10 @@
           "199": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "202": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
         },
         "defaultAppConfig": {
@@ -285,7 +293,7 @@
           },
           "108": {
             "inboundProofLib": 1,
-            "inboundBlockConfirm": 500000,
+            "inboundBlockConfirm": 260,
             "outboundProofType": 2,
             "outboundBlockConfirm": 15,
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
@@ -541,6 +549,13 @@
             "outboundProofType": 2,
             "outboundBlockConfirm": 15,
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "202": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
           }
         },
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
@@ -704,6 +719,10 @@
           "199": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "202": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ]
         },
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
@@ -752,7 +771,8 @@
           "196": [1, 2],
           "197": [1, 2],
           "198": [1, 2],
-          "199": [1, 2]
+          "199": [1, 2],
+          "202": [1, 2]
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -796,7 +816,8 @@
           "196": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "197": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "198": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "199": "0x0000000000000000000000005b19bd330a84c049b62d5b0fc2ba120217a18c1c"
+          "199": "0x0000000000000000000000005b19bd330a84c049b62d5b0fc2ba120217a18c1c",
+          "202": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "derivedName": "UltraLightNodeV2"
@@ -810,6 +831,7 @@
         "implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
         "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
       },
+      "sinceTimestamp": 1661536020,
       "derivedName": ""
     },
     {
@@ -818,6 +840,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661280206,
       "values": {
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       }
@@ -829,6 +852,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1647498793,
       "values": {
         "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
         "getChainId": 1,
@@ -841,7 +865,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 557,
+        "nonce": 601,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -852,6 +876,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647316591,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 1,
@@ -879,6 +904,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661448939,
       "values": {
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       }
@@ -889,6 +915,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647504559,
       "values": {
         "chainId": 1,
         "decimals": 18,
@@ -908,6 +935,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1648243585,
       "values": {
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,
@@ -919,7 +947,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 42,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

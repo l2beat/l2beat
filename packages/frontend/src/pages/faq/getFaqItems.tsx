@@ -63,45 +63,88 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
     {
       question: 'What exactly are L2s and why Polygon is not included?',
       answer: (
-        <span>
-          We had to draw the line somewhere and&mdash;in the current
-          version&mdash;we define L2 as a chain that fully or partially derives
-          its security from L1 Ethereum so that users do not have to rely on the
-          honesty of L2 validators for the security of their funds. This is in
-          line with the current view of{' '}
-          <Link href="https://ethereum.org">ethereum.org</Link> on what{' '}
-          <Link href="https://ethereum.org/en/developers/docs/scaling/">
-            layer 2 scaling
-          </Link>{' '}
-          is.
-        </span>
+        <div>
+          <p className="mt-4">
+            Trust-minimized L2s are chains that can be exited by interacting
+            directly with L1 alone, eliminating the need to rely on L2 operators
+            for the security of the funds.
+          </p>
+          <p className="mt-4">
+            In the case of Polygon, an additional layer of trust is introduced:
+            users must trust the majority of Polygon's validators to enable
+            secure withdrawals and prevent fund theft. Note that
+            application-specific logic, like in the case of dYdX forced trade
+            requests, may also require inter-user dependencies to successfully
+            exit the system.
+          </p>
+        </div>
       ),
     },
     {
-      question: "But isn't Polygon a Plasma, Rollup and Sidechain all in one?",
-      answer:
-        'No, in its current implementation it is a PoS sidechain with validators solely responsible for validating Polygon transactions. We are only interested in what is implemented and can be independently verified. When their architecture changes, we will be more than happy to include them.',
+      question:
+        'Why does the main table contain projects than are not trust-minimized L2s yet?',
+      answer: (
+        <div>
+          <p className="mt-4">
+            We want to track the progress of the projects that are credibly
+            committed towards becoming trust-minimized L2s. Our goal is to
+            provide the community with the most up-to-date information about the
+            state of these projects and to provide insights and guidance for
+            them to become fully trust minimized.
+          </p>
+        </div>
+      ),
     },
     {
-      question: 'Right, so how can L1 help with the security of L2?',
+      question: 'Are Validiums and Optimiums L2s?',
+      answer: (
+        <div>
+          <p className="mt-4">
+            Validiums and Optimiums are not L2s: by not publishing data on L1
+            they introduce additional trust assumptions on top of it. If the
+            data to reconstruct the state is not made available by the operators
+            of the offchain DA solution, funds are at risk.
+          </p>
+        </div>
+      ),
+    },
+    {
+      question:
+        'If Validiums and Optimiums are not L2s, why are they included?',
+      answer: (
+        <div>
+          <p className="mt-4">
+            We include Validiums and Optimiums along with L2s mainly for
+            historical reasons. We introduced them when the L2 space was still
+            in its infancy and we wanted to provide a comprehensive overview of
+            the space. We will continue to track these projects to provide the
+            community with a broader perspective on the state of the space and
+            to provide tools to evaluate the different tradeoffs between the
+            various solutions.
+          </p>
+        </div>
+      ),
+    },
+    {
+      question: 'How do L2s derive their security from L1?',
       answer: (
         <div>
           <p className="mt-4">
             There are two primary (and somewhat independent) mechanisms that L2
-            chains can use.
+            chains use.
           </p>
           <p className="mt-4">
             First, the L2 state can be verified by L1 through either{' '}
             <Strong>Validity Proofs</Strong> or <Strong>Fraud Proofs</Strong>.
-            This mechanism is most important as it ensures that L2 validators
-            cannot cheat and include invalid transactions in a L2 block, e.g.
+            This mechanism is most important as it ensures that L2 proposers
+            cannot cheat and include invalid transactions in an L2 block, e.g.
             mint coins out of thin air or steal your coins.
           </p>
           <p className="mt-4">
             The second use of L1 is as a <Strong>Data Availability</Strong>{' '}
-            layer for L2 transactions so that, if there is a dispute, users
-            could independently re-create the L2 state and ensure continued
-            system operation or trustlessly exit to L1.
+            layer for L2 transactions so that users can independently re-create
+            the L2 state and ensure continued and safe system operation or
+            trustlessly exit to L1.
           </p>
         </div>
       ),
@@ -117,24 +160,24 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
             ensure that this number corresponds to the actual L2 state.
           </p>
           <p className="mt-4">
-            One way to do so is by providing a zero-knowledge cryptographic{' '}
+            One way to do so is by providing a cryptographic{' '}
             <Strong>Validity Proof</Strong> (zkProof) that will be verified by
             the L1 smart contract. If the verification passes, users can be sure
-            that the state root is a result of executing valid transaction set.
+            that the state root represents the results of valid transaction
+            execution.
           </p>
           <p className="mt-4">
-            The other mechanism is to allow any honest L2 chain observer to
-            raise an alarm if they think that the supplied state root is
-            incorrect and provide a <Strong>Fraud Proof</Strong>. Such a proof
-            allows the L1 contract to trustlessly verify that the state root was
-            incorrect. In such case it will be automatically removed and the
-            chain will roll back.
+            Alternatively, an honest L2 chain observer can challenge roots. They
+            can do this by producing a <Strong>Fraud Proof</Strong>. This proof
+            empowers the L1 contract to autonomously confirm the inaccuracy of
+            the state root and subsequently reject it.
           </p>
         </div>
       ),
     },
     {
-      question: 'What if L2 validators submit a fraudulent state commit to L1?',
+      question:
+        'What if an L2 proposer submit a fraudulent state commit to L1?',
       answer: (
         <>
           A state root from L2 is typically used to check coin ownership on L2
@@ -162,10 +205,7 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
             of the coins to L1 smart contract that holds all the funds. For that
             they need to have access to all L2's transactions or its current
             state. To not introduce any additional trust assumptions, L2
-            transactions can simply be recorded on L1 (as cheap calldata), or
-            they may be stored with some external providers that will guarantee
-            (cryptoeconomically or through some other mechanisms) data
-            availability.
+            transactions can simply be recorded on L1 (as cheap calldata).
           </p>
           <p className="mt-4">
             For more details on data availability and its importance in security
@@ -183,62 +223,55 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
       answer: (
         <div>
           <p className="mt-4">
-            Depending on whether Validity Proofs or Fraud Proofs are used and
-            what is the mechanism for data availability we can broadly
-            categories L2s into the following categories:
+            We currently acknowledge the following possible designs of
+            trust-minimized L2s:
             <UnorderedList>
               <li>
-                <Strong>zkRollups</Strong> - Validity Proofs with data on L1
-                Ethereum,
+                <Strong>zkRollups</Strong> - they publish data on L1 (Ethereum)
+                to inherit data availability and consensus guarantees, and use
+                validity proofs to guarantee state roots correctness.
               </li>
               <li>
-                <Strong>Optimistic Rollups</Strong> - Fraud Proofs with data on
-                L1 Ethereum,
+                <Strong>Optimistic Rollups</Strong> - they publish data on L1 to
+                inherit data availability and consensus guarantees, and use
+                fraud proofs to guarantee state roots correctness.
               </li>
               <li>
-                <Strong>Validium</Strong> - Validity Proofs with data kept
-                off-chain,
+                <Strong>State channels</Strong> - they don’t publish data
+                onchain, but require users to keep their data in order to exit.
+                They’re not general and require users participation.
               </li>
               <li>
-                <Strong>Plasma</Strong> - Fraud Proofs with data kept off-chain.
+                <Strong>Plasma</Strong> - they don’t publish data onchain and
+                use fraud proofs for disputes. Similarly to state channels,
+                users are required to keep their data to correctly exit. They
+                don’t require users participation, but they do not support
+                general computation.
               </li>
             </UnorderedList>
           </p>
           <p className="mt-4">
-            In the future we expect to see hybrid solution using a mix of the
-            above techniques.
+            By introducing more trust assumptions we can also specify the
+            following categories that fall outside of the L2 boundary:
+            <UnorderedList>
+              <li>
+                <Strong>Validiums</Strong> - Those systems rely on validity
+                proofs and data published externally.
+              </li>
+              <li>
+                <Strong>Optimiums</Strong> - historically named Optimistic
+                Chain. Those systems rely on fraud proofs and data published
+                externally.
+              </li>
+            </UnorderedList>
           </p>
-          <table className="mx-auto mt-4 border-collapse">
-            <thead>
-              <tr>
-                <td className="border border-b-2 border-r-2 py-1 px-2 md:py-2 md:px-4" />
-                <th className="border border-b-2 py-1 px-2 md:py-2 md:px-4">
-                  Validity Proofs
-                </th>
-                <th className="border border-b-2 py-1 px-2 md:py-2 md:px-4">
-                  Fraud Proofs
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th className="whitespace-pre border border-r-2 py-1 px-2 md:py-2 md:px-4">
-                  Data on-chain
-                </th>
-                <td className="border py-1 px-2 md:py-2 md:px-4">ZK Rollup</td>
-                <td className="border py-1 px-2 md:py-2 md:px-4">
-                  Optimistic Rollup
-                </td>
-              </tr>
-              <tr>
-                <th className="whitespace-pre border border-r-2 py-1 px-2 md:py-2 md:px-4">
-                  Data off-chain
-                </th>
-                <td className="border py-1 px-2 md:py-2 md:px-4">Validium</td>
-                <td className="border py-1 px-2 md:py-2 md:px-4">Plasma</td>
-              </tr>
-            </tbody>
-          </table>
+          <p className="mt-4">
+            For more details see the{' '}
+            <Link href="https://vitalik.ca/general/2021/01/05/rollup.html">
+              Incomplete guide to Rollups
+            </Link>{' '}
+            by Vitalik Buterin.
+          </p>
         </div>
       ),
     },

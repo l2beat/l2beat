@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17968825,
   "configHash": "0xe6029cfb8a71ff69155d2b2234227629c32dca8b437e49b598a4a5ac21ef21bb",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "ForeignOmnibridge",
@@ -13,6 +13,7 @@
         "admin": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
         "implementation": "0xB7DF1E00ae030e966E635ede273625240546B873"
       },
+      "sinceTimestamp": 1684141499,
       "values": {
         "bridgeContract": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
         "getBridgeInterfacesVersion": [3, 3, 0],
@@ -37,6 +38,7 @@
         "admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "implementation": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
       },
+      "sinceTimestamp": 1684140779,
       "values": {
         "deployedAtBlock": 17264123,
         "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
@@ -67,6 +69,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1684141547,
       "values": {
         "bridge": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
         "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
@@ -79,6 +82,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1684141535,
       "values": {
         "getModuleInterfacesVersion": [1, 0, 0],
         "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
@@ -91,6 +95,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1684141523,
       "values": {
         "bridgeContract": "0x0000000000000000000000000000000000000000",
         "decimals": 0,
@@ -114,6 +119,7 @@
         "admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "implementation": "0xe98699957d3504aCD57ffF861E4b77b57eB02467"
       },
+      "sinceTimestamp": 1684140863,
       "values": {
         "allowReentrantRequests": false,
         "decimalShift": 0,

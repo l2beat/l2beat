@@ -13,7 +13,7 @@ const SHARP_VERIFIER_PROXY = discovery.getContractDetails(
 
 const SHARP_VERIFIER = discovery.getContractDetails(
   'SHARPVerifier',
-  'Starkware SHARP verifier used collectively by Starknet, Sorare, ImmutableX, Apex, Myria, rhino.fi and Canvas Connect. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these Programs including correctly computed L2 state root which is part of the Program Output.',
+  'Starkware SHARP verifier used collectively by Starknet, Sorare, ImmutableX, Apex, Myria, rhino.fi and Canvas Connect. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these Programs including correctly computed state root which is part of the Program Output.',
 )
 
 const MEMORY_FACT_REGISTRY = discovery.getContractDetails(

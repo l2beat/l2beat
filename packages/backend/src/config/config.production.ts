@@ -11,7 +11,6 @@ export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
   const baseTvlEnabled = getEnv.boolean('BASE_TVL_ENABLED', false)
-  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
@@ -65,14 +64,13 @@ export function getProductionConfig(): Config {
       pass: getEnv('METRICS_AUTH_PASS'),
     },
     tvl: {
-      detailedTvlEnabled,
       errorOnUnsyncedDetailedTvl,
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE ',
+          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           500,
         ),
         // TODO: phase out old env variable
@@ -84,7 +82,7 @@ export function getProductionConfig(): Config {
       arbitrum: arbitrumTvlEnabled && {
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE ',
+          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
           500,
         ),
         etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
@@ -94,7 +92,7 @@ export function getProductionConfig(): Config {
       optimism: optimismTvlEnabled && {
         providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE ',
+          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
           500,
         ),
         etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
@@ -104,7 +102,7 @@ export function getProductionConfig(): Config {
       base: baseTvlEnabled && {
         providerUrl: getEnv('BASE_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_BASE_RPC_CALLS_PER_MINUTE ',
+          'TVL_BASE_RPC_CALLS_PER_MINUTE',
           500,
         ),
         etherscanApiKey: getEnv('BASE_ETHERSCAN_API_KEY'),

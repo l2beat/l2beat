@@ -192,9 +192,29 @@ ETHEREUM_ALCHEMY_API_KEY=
 
 ## Maintenance endpoints
 
-The `/status` endpoints were created to see the current progress of the Updaters.
+The `/status` endpoints were created to see the current state of our backend.
 
 ---
+
+#### `/status/discovery`
+
+Discovery dashboard showing current discovered.json & potential diffs for every project
+
+Example
+
+```
+https://api.l2beat.com/status/discovery
+```
+
+#### `/status/tvl`
+
+Endpoint showing the current sync status of our TVL module
+
+Example
+
+```
+https://api.l2beat.com/status/tvl
+```
 
 #### `/status/prices`
 
@@ -240,18 +260,6 @@ Example
 
 ```
 https://api.l2beat.com/status/reports/?chainId=1&type=CBV&from=1687599307&to=1690191307
-```
-
----
-
-#### `/status/discovery`
-
-There are no query parameters.
-
-Example
-
-```
-https://api.l2beat.com/status/discovery
 ```
 
 ---

@@ -8,6 +8,8 @@ import {
 import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 
+export type TVLProjectBreakdown =
+  ProjectAssetsBreakdownApiResponse['breakdowns'][string]
 export interface TvlBreakdownViewProps {
   tvlBreakdownSummary: {
     tvl: {
@@ -27,7 +29,7 @@ export interface TvlBreakdownViewProps {
       change: string
     }
   }
-  tvlBreakdowns: ProjectAssetsBreakdownApiResponse['breakdowns']
+  tvlBreakdowns: TVLProjectBreakdown
 }
 
 export function getTvlBreakdownView(
@@ -58,6 +60,6 @@ export function getTvlBreakdownView(
         change: partsWeeklyChange.native,
       },
     },
-    tvlBreakdowns: tvlBreakdownApiResponse.breakdowns,
+    tvlBreakdowns: tvlBreakdownApiResponse.breakdowns[project.id.toString()],
   }
 }

@@ -12,7 +12,6 @@ export function getLocalConfig(): Config {
   dotenv()
 
   const tvlEnabled = getEnv.boolean('TVL_ENABLED', true)
-  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
@@ -60,13 +59,12 @@ export function getLocalConfig(): Config {
 
     tvl: {
       enabled: tvlEnabled,
-      detailedTvlEnabled,
       errorOnUnsyncedDetailedTvl,
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
       ethereum: ethereumTvlEnabled && {
         providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE ',
+          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
         // TODO: phase out old env variable
@@ -78,7 +76,7 @@ export function getLocalConfig(): Config {
       arbitrum: arbitrumTvlEnabled && {
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE ',
+          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
         etherscanApiKey: getEnv('ARBITRUM_ETHERSCAN_API_KEY'),
@@ -88,7 +86,7 @@ export function getLocalConfig(): Config {
       optimism: optimismTvlEnabled && {
         providerUrl: getEnv('OPTIMISM_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE ',
+          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
           25,
         ),
         etherscanApiKey: getEnv('OPTIMISM_ETHERSCAN_API_KEY'),
@@ -98,7 +96,7 @@ export function getLocalConfig(): Config {
       base: baseTvlEnabled && {
         providerUrl: getEnv('BASE_PROVIDER_URL'),
         providerCallsPerMinute: getEnv.integer(
-          'TVL_BASE_RPC_CALLS_PER_MINUTE ',
+          'TVL_BASE_RPC_CALLS_PER_MINUTE',
           25,
         ),
         etherscanApiKey: getEnv('BASE_ETHERSCAN_API_KEY'),
