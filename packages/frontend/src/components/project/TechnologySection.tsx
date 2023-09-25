@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
@@ -42,9 +43,9 @@ export function TechnologySection({
             <UnderReviewCallout />
           ) : (
             <>
-              <p className="mt-2 text-gray-850 dark:text-gray-400">
+              <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
                 {item.description}
-              </p>
+              </Markdown>
               <RiskList risks={item.risks} />
               <ReferenceList references={item.references} />{' '}
             </>
