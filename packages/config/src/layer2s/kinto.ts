@@ -10,7 +10,8 @@ export const kinto: Layer2 = {
   display: {
     name: 'Kinto',
     slug: 'kinto',
-    description: 'Safe, compliant, and decentralized. Kinto is the first KYCed Layer 2 capable of supporting both modern financial institutions and decentralized protocols.',
+    description:
+      'Kinto is the first KYCed Layer 2 capable of supporting both modern financial institutions and decentralized protocols.',
     purpose: 'Financial applications',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
@@ -18,9 +19,7 @@ export const kinto: Layer2 = {
       websites: ['https://kinto.xyz'],
       apps: [],
       documentation: ['https://docs.kinto.xyz'],
-      explorers: [
-        'https://test-explorer.kinto.xyz/',
-      ],
+      explorers: ['https://test-explorer.kinto.xyz/'],
       repositories: ['https://github.com/kintoxyz'],
       socialMedia: [
         'https://twitter.com/kintoxyz',
