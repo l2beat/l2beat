@@ -1,30 +1,18 @@
 import React from 'react'
 
-import { ActivityViewEntry } from '../../../../pages/scaling-activity/view/types'
-import { ScalingDetailedTvlViewEntry } from '../../../../pages/scaling-detailedTvl/types'
-import { ScalingRiskViewEntry } from '../../../../pages/scaling-risk/view/types'
-import { ScalingTvlViewEntry } from '../../../../pages/scaling-tvl/types'
+import { ScalingEntry } from '../../../../pages/scaling'
 import { Checkbox } from '../../../Checkbox'
 import { generateSlugList } from '../FiltersWrapper'
 
-export interface RollupsOnlyCheckboxProps<
-  T extends
-    | ScalingTvlViewEntry
-    | ScalingRiskViewEntry
-    | ActivityViewEntry
-    | ScalingDetailedTvlViewEntry,
-> {
+export interface RollupsOnlyCheckboxProps<T extends ScalingEntry> {
   items: T[]
   className?: string
 }
 
-export function RollupsOnlyCheckbox<
-  T extends
-    | ScalingTvlViewEntry
-    | ScalingRiskViewEntry
-    | ActivityViewEntry
-    | ScalingDetailedTvlViewEntry,
->({ className, items }: RollupsOnlyCheckboxProps<T>) {
+export function RollupsOnlyCheckbox<T extends ScalingEntry>({
+  className,
+  items,
+}: RollupsOnlyCheckboxProps<T>) {
   return (
     <Checkbox
       className={className}

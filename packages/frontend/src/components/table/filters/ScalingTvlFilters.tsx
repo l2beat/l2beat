@@ -1,7 +1,7 @@
 import { uniq } from 'lodash'
 import React from 'react'
 
-import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
+import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { Select } from '../../Select'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'

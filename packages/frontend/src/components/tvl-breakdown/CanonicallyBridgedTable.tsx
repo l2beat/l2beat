@@ -1,7 +1,7 @@
 import { AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { TVLProjectBreakdown } from '../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
+import { TVLProjectBreakdown } from '../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { getCanonicallyBridgedColumns } from './table/props/getTVLBreakdownTableColumns'
 import { TableSum } from './table/TableSum'
 import { TVLBreakdownTableView } from './table/TVLBreakdownTableView'

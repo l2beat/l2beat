@@ -1,28 +1,16 @@
 import React from 'react'
 
-import { ActivityViewEntry } from '../../../pages/scaling-activity/view/types'
-import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
-import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
-import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
+import { ScalingEntry } from '../../../pages/scaling'
 
-interface ProjectFilters<
-  T extends
-    | ScalingTvlViewEntry
-    | ScalingRiskViewEntry
-    | ActivityViewEntry
-    | ScalingDetailedTvlViewEntry,
-> {
+interface ProjectFilters<T extends ScalingEntry> {
   items: T[]
   children: React.ReactNode
 }
 
-export function FiltersWrapper<
-  T extends
-    | ScalingTvlViewEntry
-    | ScalingRiskViewEntry
-    | ActivityViewEntry
-    | ScalingDetailedTvlViewEntry,
->({ items, children }: ProjectFilters<T>) {
+export function FiltersWrapper<T extends ScalingEntry>({
+  items,
+  children,
+}: ProjectFilters<T>) {
   return (
     <div
       id="project-filters"
@@ -34,13 +22,10 @@ export function FiltersWrapper<
   )
 }
 
-export function generateSlugList<
-  T extends
-    | ScalingTvlViewEntry
-    | ScalingRiskViewEntry
-    | ActivityViewEntry
-    | ScalingDetailedTvlViewEntry,
->(items: T[], check?: (item: T) => boolean): string {
+export function generateSlugList<T extends ScalingEntry>(
+  items: T[],
+  check?: (item: T) => boolean,
+): string {
   let result = [...items]
 
   if (check) {

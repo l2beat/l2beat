@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
+import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper } from './FiltersWrapper'
 
