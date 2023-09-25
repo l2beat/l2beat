@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661529370,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -26,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661529280,
       "values": {
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -48,6 +50,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1666143827,
       "values": {
         "aptosChainId": 108,
         "BP_DENOMINATOR": 10000,
@@ -69,6 +72,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661280206,
       "values": {
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       }
@@ -79,6 +83,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647316591,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 1,
@@ -101,6 +106,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1666154051,
       "values": {
         "domainSeparator": "0x7588aafbe9e42e355ced617c936d778c5e3ff7bfa0974486b6b88f83c6457bce",
         "getChainId": 1,
@@ -123,6 +129,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1648243585,
       "values": {
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,

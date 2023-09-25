@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17968859,
   "configHash": "0xa6a26ac439c39e55635de77dc8b7d61f6879f86db46a10d9a9931ac93a2b3111",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -12,6 +12,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1593189719,
       "derivedName": ""
     },
     {
@@ -20,6 +21,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1628665504,
       "values": {
         "CHAINID": 15001,
         "networkId": "0x3a99"
@@ -31,6 +33,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1590850580,
       "values": {
         "counter": 2751556,
         "isOwner": false,
@@ -57,6 +60,7 @@
         "isUpgradable": true,
         "implementation": "0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de"
       },
+      "sinceTimestamp": 1590850831,
       "values": {
         "exitNft": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
         "exitWindow": 0,
@@ -75,6 +79,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1590849877,
       "values": {
         "erc20Predicate": "0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95",
         "erc721Predicate": "0x54150f44c785D412Ec262fe895Cc3B689c72F49B",
@@ -99,6 +104,7 @@
         "isUpgradable": true,
         "implementation": "0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf"
       },
+      "sinceTimestamp": 1590850640,
       "values": {
         "childChain": "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
         "governance": "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
@@ -120,6 +126,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1628665528,
       "values": {
         "CHAINID": 15001,
         "networkId": "0x3a99"
@@ -134,6 +141,7 @@
         "implementation": "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
         "extension": "0xef49Ea6996073752b6840CDA34773FFA78F78166"
       },
+      "sinceTimestamp": 1593189690,
       "values": {
         "accountStateRoot": "0x85d7a8f1697e2a84910d571af5875abfdb954c6050766f6866a6bb9fc7c660ca",
         "auctionPeriod": 20,
@@ -192,6 +200,7 @@
         "implementation": "0x0672777617CAA1E778083a4f74eBC997262C9EdD",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "sinceTimestamp": 1616774452,
       "values": {
         "implementation": "0x0672777617CAA1E778083a4f74eBC997262C9EdD",
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
@@ -207,6 +216,7 @@
         "isUpgradable": true,
         "implementation": "0x98165b71cdDea047C0A49413350C40571195fd07"
       },
+      "sinceTimestamp": 1590849863,
       "values": {
         "implementation": "0x98165b71cdDea047C0A49413350C40571195fd07",
         "isOwner": false,
@@ -220,6 +230,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1555778052,
       "values": {
         "decimals": 18,
         "name": "Matic Token",
@@ -236,6 +247,7 @@
         "isUpgradable": true,
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
+      "sinceTimestamp": 1590849960,
       "values": {
         "_nextHeaderBlock": 497900000,
         "CHAINID": 137,
@@ -257,6 +269,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1590840981,
       "values": {
         "decimals": 18,
         "name": "Wrapped Ether",
@@ -271,6 +284,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1593189612,
       "values": {
         "getAccountStateRoot": "0x85d7a8f1697e2a84910d571af5875abfdb954c6050766f6866a6bb9fc7c660ca",
         "getStakerDetails": [
@@ -287,7 +301,8 @@
       "address": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1593189596
     },
     {
       "name": "Timelock",
@@ -295,6 +310,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1630059303,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -329,6 +345,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1590839660,
       "derivedName": ""
     },
     {
@@ -337,6 +354,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1590850785,
       "values": {
         "getApproved": [],
         "ownerOf": []
@@ -349,6 +367,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636705816,
       "values": {
         "activeAmount": 0,
         "commissionRate_deprecated": 0,
@@ -380,6 +399,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "sinceTimestamp": 1593593561,
       "values": {
         "domainSeparator": "0x3bc292918071cc597c13d3994268d3c83097b8388d750481c8cbce67a284ed5c",
         "getModules": [],

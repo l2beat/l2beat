@@ -161,9 +161,7 @@ export function createTvlModule(
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController, detailedTvlController, {
-    detailedTvlEnabled: config.tvl.detailedTvlEnabled,
-  })
+  const tvlRouter = createTvlRouter(tvlController, detailedTvlController)
   const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(
     clock,

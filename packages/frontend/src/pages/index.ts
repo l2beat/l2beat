@@ -51,14 +51,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(getDetailedTvlPage(config, pagesData))
   }
 
-  if (
-    config.features.tvlBreakdown &&
-    tvlBreakdownApiResponse &&
-    activityApiResponse
-  ) {
+  if (config.features.tvlBreakdown && tvlBreakdownApiResponse) {
     pages.push(
       ...getProjectTvlBreakdownPages(config, {
-        activityApiResponse,
         tvlApiResponse,
         tvlBreakdownApiResponse,
       }),

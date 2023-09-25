@@ -112,7 +112,7 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L817',
+            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L817',
           ],
         },
       ],
@@ -126,7 +126,7 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L186',
+            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L186',
           ],
         },
       ],
@@ -139,7 +139,7 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L243',
+            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L243',
           ],
         },
       ],
@@ -153,8 +153,8 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L636',
-            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L859',
+            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L636',
+            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L859',
           ],
         },
       ],
@@ -191,7 +191,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L817 - Etherscan source code, _verifyAndRewardBatches function',
-          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L817',
+          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F1#L115',
         },
       ],
     },
@@ -200,7 +200,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L186 - Etherscan source code, sequencedBatches mapping',
-          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L186',
+          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L186',
         },
       ],
     },
@@ -219,7 +219,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L454 - Etherscan source code, onlyTrustedSequencer modifier',
-          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L454',
+          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L454',
         },
       ],
     },
@@ -230,7 +230,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L468 - Etherscan source code, isForceBatchAllowed modifier',
-          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L468',
+          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L468',
         },
       ],
     },
@@ -240,7 +240,7 @@ export const polygonzkevm: Layer2 = {
         references: [
           {
             text: 'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C#code#F1#L311',
+            href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L311',
           },
         ],
       },
@@ -295,7 +295,7 @@ export const polygonzkevm: Layer2 = {
     references: [
       {
         text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L806',
+        href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L806',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],

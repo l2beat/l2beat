@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1634543659,
       "values": {
         "chainId": 2,
         "EthCrossChainDataAddress": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
@@ -26,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1599099893,
       "values": {
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
@@ -40,6 +42,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1651740937,
       "values": {
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
@@ -52,6 +55,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692602387,
       "values": {
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
@@ -65,6 +69,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1666256303,
       "values": {
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
@@ -78,6 +83,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1597302116,
       "values": {
         "getEthCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "isOwner": false,
@@ -93,6 +99,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691038067,
       "derivedName": ""
     },
     {
@@ -101,6 +108,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1643007876,
       "values": {
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
@@ -115,6 +123,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1643008142,
       "values": {
         "chainId": 2,
         "feeCollector": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
@@ -140,6 +149,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1597287911,
       "values": {
         "EthToPolyTxHashIndex": 70252,
         "getEthTxHashIndex": 70252,
@@ -155,6 +165,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1669106303,
       "values": {
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",

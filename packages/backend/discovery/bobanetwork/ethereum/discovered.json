@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "bobanetwork",
+  "chain": "ethereum",
   "blockNumber": 17619337,
   "configHash": "0x33ca51c13c33399a88621568b90684739dd62f2a15c97649de215f4e831197d6",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger_2",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635387044,
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
@@ -25,6 +26,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635385967,
       "values": {
         "getGlobalMetadata": "0x00000000000000000000000000000000000064a3ce1f00000fbd0e",
         "length": 16893,
@@ -39,6 +41,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635385259,
       "values": {
         "getGlobalMetadata": "0x0000000000000000010cd85e0064a3cb660000005f4f00000fbd0e",
         "length": 18688,
@@ -52,7 +55,8 @@
       "address": "0x1A26ef6575B7BBB864d984D9255C069F6c361a14",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1631815326
     },
     {
       "name": "L1MultiMessageRelayerFast",
@@ -60,6 +64,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1643231911,
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
       }
@@ -70,6 +75,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635385547,
       "values": {
         "getGlobalMetadata": "0x000000000000000000000000000000000000000000000000000000",
         "length": 0,
@@ -84,6 +90,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635387559,
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
       }
@@ -94,6 +101,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635386681,
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
       }
@@ -107,6 +115,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820"
       },
+      "sinceTimestamp": 1628792652,
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
@@ -121,6 +130,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1628790631,
       "values": {
         "Boba_GasPriceOracle": "0x5d0763cf905DA3689B072FD19baD8dF823b2c349",
         "BobaBillingContract": "0x4a792F51CCc616b82EF74d2478C732e161c5E6b1",
@@ -147,6 +157,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1688058755,
       "values": {
         "depositL2Gas": 0,
         "l2NFTBridge": "0x0000000000000000000000000000000000000000",
@@ -160,7 +171,8 @@
       "address": "0xC891F466e53f40603250837282eAE4e22aD5b088",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1640044157
     },
     {
       "name": "L1LiquidityPool",
@@ -168,6 +180,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1688058275,
       "values": {
         "currentDepositInfoHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l1CrossDomainMessenger": "0x0000000000000000000000000000000000000000",
@@ -194,6 +207,7 @@
         "implementation": "0xAf41c681143Cb91f218959375f4452A604504833",
         "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
       },
+      "sinceTimestamp": 1628793901,
       "values": {
         "currentDepositInfoHash": "0xc64671bef9775ff63adc5ca2a6431f80c537ba9ef4bc39420856130d54cf78ee",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
@@ -209,6 +223,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635386294,
       "values": {
         "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
         "FRAUD_PROOF_WINDOW": 604800,
@@ -226,6 +241,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635386025,
       "values": {
         "batches": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
         "enqueueGasCost": 60000,
