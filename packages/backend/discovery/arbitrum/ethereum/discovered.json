@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 18190361,
-  "configHash": "0x424b009ef988b2066a7803cff27912e2ce3f7e5c64e34e780b5d7fe4ef0e7a98",
+  "blockNumber": 18218589,
+  "configHash": "0x8d5b06f005e718aca008dc5ea33e68e62a1386b9c95cb3f82da9d03cf9777a87",
   "version": 2,
   "contracts": [
     {
@@ -49,7 +49,7 @@
       },
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 348640,
+        "batchCount": 351988,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -57,7 +57,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1088280
+        "totalDelayedMessagesRead": 1093998
       },
       "derivedName": "SequencerInbox"
     },
@@ -196,15 +196,16 @@
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "chainId": 42161,
         "challengeManager": "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
+        "challenges": [],
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 8282,
+        "firstUnresolvedNode": 8377,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 8281,
-        "latestNodeCreated": 8435,
+        "latestConfirmed": 8376,
+        "latestNodeCreated": 8529,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -316,11 +317,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1088293,
+        "delayedMessageCount": 1094017,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 348640,
-        "sequencerReportedSubMessageCount": 111261826
+        "sequencerMessageCount": 351988,
+        "sequencerReportedSubMessageCount": 112502011
       },
       "derivedName": "Bridge"
     },
@@ -493,7 +494,8 @@
         "resultReceiver": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
         "totalChallengesCreated": 0
-      }
+      },
+      "derivedName": "ChallengeManager"
     },
     {
       "name": "L1ArbitrumTimelock",

@@ -1,3 +1,22 @@
+## Diff at Tue, 26 Sep 2023 13:22:27 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+```diff
+    contract FflonkVerifier (0x21f65deadb3b85082BA99766f323bEA90eb5a3D6) {
+      sinceTimestamp:
++        1693469075
+    }
+```
+
+```diff
+    contract PolygonZkEvm (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+      values.nondeterminsiticPendingState:
++        []
+    }
+```
+
 ## Diff at Fri, 22 Sep 2023 11:25:03 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

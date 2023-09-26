@@ -1,3 +1,35 @@
+## Diff at Tue, 26 Sep 2023 10:27:16 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      values.getProposedUpgradeHash:
+-        "0x7d39289c3d9fd4fd8d86ed97abcdcfe208677042a65de6cccb91dc97e2936be9"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.getProposedUpgradeTimestamp:
+-        1695294167
++        0
+      values.getProtocolVersion:
+-        14
++        15
+      values.getUpgradeProposalState:
+-        1
++        0
+      values.getVerifierParams.2:
+-        "0x0a3657f884af32d3a573c5fdb3440c9ac45271ede8c982faeaae7434d032ab3e"
++        "0x236c97bfbe75ff507e03909fae32a78be3a70d1b468b183f430010810284ed45"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x3dB52cE065f728011Ac6732222270b3F2360d919) {
+      values.revertedBlocks:
++        []
+    }
+```
+
 ## Diff at Thu, 21 Sep 2023 12:39:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
