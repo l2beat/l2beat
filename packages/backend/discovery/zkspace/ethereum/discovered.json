@@ -1,8 +1,8 @@
 {
   "name": "zkspace",
   "chain": "ethereum",
-  "blockNumber": 17442401,
-  "configHash": "0x6fdb3e12ba6696f7e5f76d2b8399a7b189acd85c15ca93fde175459e121fa715",
+  "blockNumber": 18220342,
+  "configHash": "0x1bf79f76eb9cd111b4d19cceabf7272c4ccc06359bf74943b5c2fca2653ab68e",
   "version": 2,
   "contracts": [
     {
@@ -36,17 +36,23 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 490,
-        "firstPriorityRequestId": 1257,
+        "firstPendingWithdrawalIndex": 504,
+        "firstPriorityRequestId": 1269,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "governance": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
         "maxDepositAmount": "38685626227668133590597632",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-        "totalBlocksChecked": 36432,
-        "totalBlocksCommitted": 36458,
-        "totalBlocksVerified": 36458,
+        "revertedBlocks": [
+          {
+            "totalBlocksCommitted": 13463,
+            "totalBlocksVerified": 13461
+          }
+        ],
+        "totalBlocksChecked": 37703,
+        "totalBlocksCommitted": 37718,
+        "totalBlocksVerified": 37718,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 64,
