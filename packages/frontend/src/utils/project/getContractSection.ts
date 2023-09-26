@@ -271,27 +271,6 @@ function makeTechnologyContract(
           })
           break
 
-        case 'Optics Beacon proxy':
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Beacon',
-            href: `https://etherscan.io/address/${item.upgradeability.upgradeBeacon.toString()}#code`,
-            address: item.upgradeability.upgradeBeacon.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Beacon Admin',
-            href: `https://etherscan.io/address/${item.upgradeability.beaconController.toString()}#code`,
-            address: item.upgradeability.beaconController.toString(),
-            isAdmin: true,
-          })
-          break
-
         // Ignore types
         case 'immutable':
         case 'gnosis safe':
