@@ -7,7 +7,7 @@ export function getProps(): Wrapped<undefined> {
       metadata: {
         title: 'L2BEAT – Sponsor deck',
         description: 'L2BEAT – Sponsor deck',
-        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        image: 'https://l2beat.com/images/announcements/l2days.jpg',
         url: 'https://l2beat.com/l2days/',
       },
     },
