@@ -1,6 +1,7 @@
 import { AssetType } from '@l2beat/shared-pure'
 import { renderToString } from 'react-dom/server'
 
+import { formatLargeNumber } from '../../../../utils'
 import { formatTps } from '../../../../utils/formatTps'
 import { formatUSD } from '../../../../utils/utils'
 import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../../icons'
@@ -33,6 +34,7 @@ export function renderHover(
 
   const isActivity = state.view.chart.type === 'ActivityChart'
   const showEthereum = state.controls.showEthereum
+  const selectedCurrency = state.controls.currency
 
   elements.hover.circle?.classList.toggle('hidden', isActivity)
   elements.hover.redCircle?.classList.toggle('hidden', !isActivity)
@@ -119,11 +121,35 @@ export function renderHover(
         'usdParts' in point
       ) {
         rows.push(renderHorizontalSeparator())
-        rows.push(renderTVLRow(formatUSD(point.usd)))
+        rows.push(
+          renderTVLRow(
+            selectedCurrency !== 'eth'
+              ? formatUSD(point.usd)
+              : `${formatLargeNumber(point.eth)} ETH`,
+          ),
+        )
         rows.push(renderHorizontalSeparator())
-        rows.push(renderCBVRow(point.usdParts.cbv))
-        rows.push(renderEBVRow(point.usdParts.ebv))
-        rows.push(renderNMVRow(point.usdParts.nmv))
+        rows.push(
+          renderCBVRow(
+            selectedCurrency === 'usd'
+              ? formatUSD(point.usdParts.cbv)
+              : `${formatLargeNumber(point.ethParts.cbv)} ETH`,
+          ),
+        )
+        rows.push(
+          renderEBVRow(
+            selectedCurrency === 'usd'
+              ? formatUSD(point.usdParts.ebv)
+              : `${formatLargeNumber(point.ethParts.ebv)} ETH`,
+          ),
+        )
+        rows.push(
+          renderNMVRow(
+            selectedCurrency === 'usd'
+              ? formatUSD(point.usdParts.nmv)
+              : `${formatLargeNumber(point.ethParts.nmv)} ETH`,
+          ),
+        )
       } else if (
         state.view.chart.type === 'TokenDetailedTvlChart' &&
         'balance' in point
@@ -188,7 +214,7 @@ function renderTVLRow(tvl: string) {
   return `<div class="flex w-full justify-between"><div><span class="text-gray-50">Total TVL</span></div><div><span class="font-bold">${tvl}</span></div></div>`
 }
 
-function renderCBVRow(ebv: number) {
+function renderCBVRow(ebv: string) {
   return renderDetailedRow(
     ebv,
     'Canonically Bridged',
@@ -196,7 +222,7 @@ function renderCBVRow(ebv: number) {
   )
 }
 
-function renderEBVRow(cbv: number) {
+function renderEBVRow(cbv: string) {
   return renderDetailedRow(
     cbv,
     'Externally Bridged',
@@ -204,7 +230,7 @@ function renderEBVRow(cbv: number) {
   )
 }
 
-function renderNMVRow(nmv: number) {
+function renderNMVRow(nmv: string) {
   return renderDetailedRow(
     nmv,
     'Natively Minted',
@@ -212,13 +238,13 @@ function renderNMVRow(nmv: number) {
   )
 }
 
-function renderDetailedRow(value: number, caption: string, iconSvg: string) {
+function renderDetailedRow(value: string, caption: string, iconSvg: string) {
   return `<div class="flex w-full justify-between items-center gap-2">
     <div class="inline-flex items-center gap-1">
       <div class="flex items-center justify-center w-3 h-3">${iconSvg}</div>
       <span class="text-gray-50 text-sm">${caption}</span>
     </div>
-      <div><span class="font-bold">${formatUSD(value)}</span></div>
+      <div><span class="font-bold">${value}</span></div>
   </div>`
 }
 
