@@ -28,15 +28,6 @@
     "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager"
   },
   "overrides": {
-    "ChallengeManager": {
-      "fields": {
-        "challenges": {
-          "type": "stateFromEvent",
-          "event": "InitiatedChallenge",
-          "returnParams": ["challengeIndex"]
-        }
-      }
-    },
     "ArbitrumOneBridge": {
       "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
       "ignoreInWatchMode": [
@@ -85,6 +76,16 @@
             "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
             // id == 6 is emitted inside setValidator()
             "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
           ]
         }
       }
