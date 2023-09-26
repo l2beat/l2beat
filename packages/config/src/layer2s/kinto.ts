@@ -12,7 +12,7 @@ export const kinto: Layer2 = {
     slug: 'kinto',
     description:
       'Kinto is the first KYCed Layer 2 capable of supporting both modern financial institutions and decentralized protocols.',
-    purpose: 'Financial applications',
+    purpose: 'DeFi',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
