@@ -1,0 +1,125 @@
+=== Classes ===
+
+FilterControls(ChartDataController, TableController)
+
+TableController
+  - setFilteredProjects(ids) - called by FilterControls
+
+ChartControls(ChartDataController, ChartViewController)
+  - constructor: query DOM and (maybe in start method?) listen for events
+
+ChartDataController(ChartViewController)
+  - setFilteredProjects(ids) - called by FilterControls
+  - setChartType(Activity/TVL) - called by ChartControls
+  - setProject(id) - called by ChartControls
+  - setToken(id) - called by ChartControls
+
+ChartViewController(FeaturedValueRenderer, ChartRenderer)
+  - setUSDorETH(USD/ETH) - called by ChartControls
+  - setYAxisScale(LOG/LIN) - called by ChartControls
+  - setTimeScale(7D/30D/180D) - called by ChartControls
+  - showEthTx(show) - called by ChartControls
+  - setData(fullData, chartType) - called by ChartDataController
+  - showLoading() -> called by ChartDataController, passed to Renderer
+
+FeaturedValueRenderer
+  - setFeaturedValue(value) - called by ChartViewController
+
+ChartRenderer
+  - constructor: query DOM and listen for mouse events
+  - showLoading() - called by ChartViewController
+  - render(toDraw: ChartDataToDraw) - called by ChartViewController
+  - (private) onMouseMove - tooltip + milestone
+
+=== Rederer interfaces ===
+
+interface Point<T> {
+  series: number[]
+  data: T
+  milestone?: Milestone
+}
+
+example data : {
+  date: 2023-123123
+  ethereumTps: 123
+  projectTps: 123
+}
+
+interface SeriesStyle {
+  style: 'blue' | 'yellow' | 'pink' | 'signature gradient' | 'blue gradient'
+}
+
+formatYAxisLabel(number)
+renderTooltip(pointData: T)
+
+interface ChartDataToDraw<T> {
+  points: Point<T>[]
+  seriesStyle: SeriesStyle[]
+  formatYAxisLabel
+  renderTooltip<T>
+  yAxisScale: 'LOG' | 'LIN'
+}
+
+=== CHART TYPES ===
+
+Activity Chart
+  - Y Axis: TPS
+  - Graphed values:
+    * Ethereum TPS (Optional) in blue
+    * Project TPS in signature gradient
+  - Featured value:
+    * Scaling factor
+  - Tooltip:
+    * Date (YYYY MMM DD)
+    * Ethereum TPS (Optional)
+    * Project(s) TPS - Ethereum or project first depending on value
+
+Summary TVL Chart
+  - Y Axis: Value in USD/ETH
+  - Graphed values:
+    * Sum of TVL in signature gradient
+  - Featured value (Optional):
+    * Last TVL value in USD/ETH
+    * Change % in USD/ETH over 7 days
+  - Tooltip:
+    * Date (YYYY MMM DD HH:HH (UTC))
+    * Value in USD
+    * Value in ETH
+
+Stacked TVL Chart
+  - Y Axis: Value in USD/ETH
+  - Graphed values:
+    * CBV in blue
+    * EBV in yellow
+    * NMV in pink
+  - Featured value (Optional):
+    * Last TVL value
+    * Change % over 7 days
+  - Tooltip:
+    * Date (YYYY MMM DD HH:HH (UTC))
+    * TVL
+    * [ICON] CBV
+    * [ICON] EBV
+    * [ICON] NMV
+
+Token TVL Chart
+  - Y Axis: Token count
+  - Graphed values:
+    * Token count in blue / yellow / pink
+  - Tooltip:
+    * Date (YYYY MMM DD HH:HH (UTC))
+    * [ICON] Token count
+    * Value in USD
+
+
+=== Nice to have ===
+
+  - Featured value support
+  - USD/ETH toggle changes featured value
+
+=== Bugs ===
+
+  - Activity chart on project page tooltip says "projects" instead of "project"
+  - Token chart displays $/Ξ icon next to token count on Y axis
+  - Stacked chart tooltip doesn't change when ETH is selected
+  - Token TVL tooltip chart icon breaks alignment 

@@ -5,6 +5,7 @@ import React from 'react'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
+import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
 import { TokenControl } from './CommonTokenControls'
@@ -112,6 +113,7 @@ export function Chart({
               data-is-meta={metaChart}
               className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
+            <ChartLabels />
             <div
               data-role="chart-milestones"
               className="absolute bottom-0 w-[100%]"

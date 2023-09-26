@@ -1,7 +1,7 @@
+import { getYAxis } from '../../../../../scripts/charts/renderer/getYAxis'
 import { formatRange, formatTimestamp } from '../../../../../utils'
 import { formatTpsWithUnit } from '../../../../../utils/formatTps'
 import { State } from '../../state/State'
-import { getYAxis } from './getYAxis'
 
 export function calculateActivityView(
   data: State['data'],

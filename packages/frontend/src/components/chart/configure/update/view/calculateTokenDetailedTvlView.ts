@@ -3,7 +3,7 @@ import { getTokenTvlKey } from '../../state/getTokenTvlKey'
 import { State } from '../../state/State'
 import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
-import { getYAxis } from './getYAxis'
+import { getYAxis } from '../../../../../scripts/charts/renderer/getYAxis'
 
 export function calculateTokenDetailedTvlView(
   data: State['data'],

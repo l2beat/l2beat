@@ -2,7 +2,7 @@ import { formatRange, formatTimestamp } from '../../../../../utils'
 import { State } from '../../state/State'
 import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
-import { getYAxis } from './getYAxis'
+import { getYAxis } from '../../../../../scripts/charts/renderer/getYAxis'
 
 export function calculateRegularTvlView(
   data: State['data'],

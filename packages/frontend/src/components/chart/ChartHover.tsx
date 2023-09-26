@@ -10,19 +10,19 @@ export function ChartHover() {
       />
       <div
         data-role="chart-hover-circle"
-        className="absolute z-40 block h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black"
+        className="absolute z-40 hidden h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black"
       />
       <div
         data-role="chart-hover-square-blue"
-        className="absolute z-40 block h-2 w-2 border-2 border-current bg-blue-600"
+        className="absolute z-40 hidden h-2 w-2 border-2 border-current bg-blue-600"
       />
       <div
         data-role="chart-hover-circle-red"
-        className="absolute z-40 block h-2 w-2 rounded-full border-2 border-current bg-red-300"
+        className="absolute z-40 hidden h-2 w-2 rounded-full border-2 border-current bg-red-300"
       />
       <div
         data-role="chart-hover-square-green"
-        className="absolute z-40 block h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500"
+        className="absolute z-40 hidden h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500"
       />
       <div
         data-role="chart-hover-contents"

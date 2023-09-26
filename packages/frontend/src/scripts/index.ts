@@ -1,6 +1,6 @@
-import { configureCharts } from '../components/chart/configure'
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
+import { configureCharts } from './charts/index'
 import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilter'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'

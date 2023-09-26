@@ -1,8 +1,8 @@
+import { getYAxis } from '../../../../../scripts/charts/renderer/getYAxis'
 import { formatRange, formatTimestamp } from '../../../../../utils'
 import { State } from '../../state/State'
 import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
-import { getYAxis } from './getYAxis'
 
 export function calculateRegularDetailedTvlView(
   data: State['data'],
