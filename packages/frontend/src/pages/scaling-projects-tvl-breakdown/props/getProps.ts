@@ -1,14 +1,12 @@
 import { Layer2 } from '@l2beat/config'
 import {
-  ActivityApiResponse,
   DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
-import { getNavbarProps } from '../../../components'
-import { getHeader } from '../../../utils/project/getHeader'
+import { getFooterProps, getNavbarProps } from '../../../components'
 import { Wrapped } from '../../Page'
 import { TvlBreakdownPageProps } from '../view/ProjectTvlBreakdownPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -20,17 +18,14 @@ export function getProps(
   config: Config,
   pagesData: {
     tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse
-    activityApiResponse: ActivityApiResponse
     tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse
   },
 ): Wrapped<TvlBreakdownPageProps> {
-  const { tvlApiResponse, activityApiResponse, tvlBreakdownApiResponse } =
-    pagesData
+  const { tvlApiResponse, tvlBreakdownApiResponse } = pagesData
 
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      header: getHeader(project, tvlApiResponse, activityApiResponse),
       tvlBreakdownHeader: getTvlBreakdownHeader(
         project,
         tvlBreakdownApiResponse,
@@ -40,6 +35,7 @@ export function getProps(
         tvlApiResponse,
         tvlBreakdownApiResponse,
       ),
+      footer: getFooterProps(config),
     },
     wrapper: {
       // TODO: (maciekzygmunt) consider preload for tvl breakdown endpoint

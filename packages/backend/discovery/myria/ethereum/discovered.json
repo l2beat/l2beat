@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "myria",
+  "chain": "ethereum",
   "blockNumber": 17039298,
   "configHash": "0x3a9dc943b43efbe78df09c89e26fd75fd12cff9b3dc9b74adeea7fe25c550c39",
+  "version": 2,
   "contracts": [
     {
       "name": "Committee",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1659542607,
       "values": {
         "constructorArgs": [
           [
@@ -45,6 +47,7 @@
         },
         "proxyGovernance": ["0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"]
       },
+      "sinceTimestamp": 1659542607,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -89,6 +92,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1657453372,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -102,6 +106,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1657453372,
       "values": {
         "hasRegisteredFact": false,
         "identify": "StarkWare_OrderRegistry_2021_1"

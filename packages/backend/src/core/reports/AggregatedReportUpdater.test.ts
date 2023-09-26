@@ -6,8 +6,7 @@ import waitForExpect from 'wait-for-expect'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
-import { AssetUpdater, CBVUpdater } from '../assets'
-import { NATIVE_ASSET_CONFIG_HASH, NMVUpdater } from '../assets/NMVUpdater'
+import { CBVUpdater, ReportUpdater } from '../assets'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
 import { getAggregatedConfigHash } from './getAggregatedConfigHash'
@@ -34,18 +33,11 @@ describe(AggregatedReportUpdater.name, () => {
         getConfigHash: mockFn().returns(getReportConfigHash(MOCK.PROJECTS)),
         getMinTimestamp: () => new UnixTime(0),
       })
-      const nmvUpdater = mockObject<NMVUpdater>({
-        getReportsWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_OP_REPORT)
-          .returnsOnce([]),
-        getChainId: mockFn().returns(ChainId.NMV),
-        getConfigHash: mockFn().returns(NATIVE_ASSET_CONFIG_HASH),
-        getMinTimestamp: () => new UnixTime(0),
-      })
-      const configHash = getAggregatedConfigHash([nmvUpdater, cbvUpdater])
+
+      const configHash = getAggregatedConfigHash([cbvUpdater])
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
-        [cbvUpdater, nmvUpdater],
+        [cbvUpdater],
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         mockObject<Clock>(),
@@ -70,7 +62,7 @@ describe(AggregatedReportUpdater.name, () => {
       )
       expect(
         aggregatedReportRepository.addOrUpdateMany,
-      ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP)
+      ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS)
       expect(
         aggregatedReportRepository.addOrUpdateMany,
       ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)
@@ -79,14 +71,14 @@ describe(AggregatedReportUpdater.name, () => {
     it('calls only updaters with proper minTimestamp', async () => {
       const timestamp = MOCK.NOW
 
-      const firstUpdater = mockObject<AssetUpdater>({
+      const firstUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: mockFn().returns([]),
         getChainId: mockFn().returns(ChainId.ETHEREUM),
         getConfigHash: mockFn().returns(''),
         getMinTimestamp: mockFn().returns(timestamp),
       })
 
-      const secondUpdater = mockObject<AssetUpdater>({
+      const secondUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: mockFn().returns([]),
         getChainId: mockFn().returns(ChainId.ETHEREUM),
         getConfigHash: mockFn().returns(''),
@@ -143,15 +135,8 @@ describe(AggregatedReportUpdater.name, () => {
         getConfigHash: mockFn().returns(getReportConfigHash(MOCK.PROJECTS)),
         getMinTimestamp: () => new UnixTime(0),
       })
-      const nmvUpdater = mockObject<NMVUpdater>({
-        getReportsWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_OP_REPORT)
-          .returnsOnce([]),
-        getChainId: mockFn().returns(ChainId.NMV),
-        getConfigHash: mockFn().returns(NATIVE_ASSET_CONFIG_HASH),
-        getMinTimestamp: () => new UnixTime(0),
-      })
-      const configHash = getAggregatedConfigHash([nmvUpdater, cbvUpdater])
+
+      const configHash = getAggregatedConfigHash([cbvUpdater])
 
       const clock = mockObject<Clock>({
         onEveryHour: (callback) => {
@@ -164,7 +149,7 @@ describe(AggregatedReportUpdater.name, () => {
       })
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
-        [cbvUpdater, nmvUpdater],
+        [cbvUpdater],
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         clock,
@@ -195,10 +180,7 @@ describe(AggregatedReportUpdater.name, () => {
         ).toHaveBeenCalledTimes(2)
         expect(
           aggregatedReportRepository.addOrUpdateMany,
-        ).toHaveBeenNthCalledWith(
-          1,
-          MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP,
-        )
+        ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS)
         expect(
           aggregatedReportRepository.addOrUpdateMany,
         ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)

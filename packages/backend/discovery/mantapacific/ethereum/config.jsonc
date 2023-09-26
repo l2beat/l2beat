@@ -7,7 +7,8 @@
     "0x3B95bC951EE0f553ba487327278cAc44f29715E5": "L1StandardBridge",
     "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622": "OptimismPortal",
     "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D": "L2OutputOracle",
-    "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310": "L1CrossDomainMessenger"
+    "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310": "L1CrossDomainMessenger",
+    "0x895E00269A05848F3c9889EfA677D02fF7351a5D": "SystemConfig"
   },
   "overrides": {
     "OptimismPortal": {
@@ -31,6 +32,16 @@
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
       "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        }
+      }
     }
   }
 }

@@ -94,7 +94,7 @@ export function formatTimestampToDateWithHour(timestamp: UnixTime) {
   const ampm = numericHour >= 12 ? 'PM' : 'AM'
   const minute = String(time.slice(3, 5)).padStart(2, '0')
 
-  const formattedDate = `${hour}:${minute} ${ampm}, ${monthAbbr} ${day}${daySuffix} ${year}`
+  const formattedDate = `${hour}:${minute} ${ampm} UTC, ${monthAbbr} ${day}${daySuffix} ${year}`
 
   return formattedDate
 }

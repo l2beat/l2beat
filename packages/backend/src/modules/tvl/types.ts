@@ -3,6 +3,7 @@ import { AggregatedReportStatusRepository } from '../../peripherals/database/Agg
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
+import { CirculatingSupplyRepository } from '../../peripherals/database/CirculatingSupplyRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
@@ -20,4 +21,5 @@ export interface TvlDatabase {
   readonly balanceStatusRepository: BalanceStatusRepository
   readonly totalSupplyRepository: TotalSupplyRepository
   readonly totalSupplyStatusRepository: TotalSupplyStatusRepository
+  readonly circulatingSupplyRepository: CirculatingSupplyRepository
 }

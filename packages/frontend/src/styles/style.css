@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import './markdown.css';
 @import '../pages/definitions/style.css';
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */

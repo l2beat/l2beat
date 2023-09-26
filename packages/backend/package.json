@@ -8,8 +8,9 @@
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf build",
-    "discover": "discovery discover",
-    "discover:dev": "cd ../discovery && yarn build && cd - && discovery discover --dev",
+    "discover": "./scripts/discoverAndAddHistory.sh",
+    "discover:raw": "discovery discover",
+    "discover:dev": "cd ../discovery && yarn build && cd - && yarn discover --dev",
     "discover:single": "discovery single-discovery",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
@@ -19,12 +20,13 @@
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
     "@l2beat/config": "*",
-    "@l2beat/discovery": "0.3.0",
+    "@l2beat/discovery": "0.4.1",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@sentry/node": "^7.52.1",
@@ -51,7 +53,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@l2beat/discovery-types": "^0.2.0",
+    "@l2beat/discovery-types": "^0.3.1",
     "@types/basic-auth": "^1.1.3",
     "@types/deep-diff": "^1.0.2",
     "@types/koa": "^2.13.5",

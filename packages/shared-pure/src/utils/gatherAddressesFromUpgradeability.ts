@@ -58,9 +58,9 @@ export function gatherAddressesFromUpgradeability(
       result.push(...item.additional)
       break
     case 'Optics Beacon proxy':
-      result.push(item.implementation)
       result.push(item.upgradeBeacon)
       result.push(item.beaconController)
+      result.push(item.implementation)
       break
     case 'immutable':
       // Ignoring types because no (admin/user)implementation included in them

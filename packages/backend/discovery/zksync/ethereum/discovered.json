@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "sinceTimestamp": 1612680486,
       "values": {
         "domainSeparator": "0xb6ece672e8e44cdf87193dcee0001432734caf5c8dd0d2b5ee44e98b5dbbc0f5",
         "getModules": [],
@@ -35,6 +36,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "sinceTimestamp": 1621970023,
       "values": {
         "domainSeparator": "0x0612918ac0a704543b30ac33fe529b71be8e02810fe3dff217f7d9f5448442bc",
         "getModules": [],
@@ -59,6 +61,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1587354416,
       "values": {
         "domainSeparator": "0x8c5e6abcda42210fa2b28fcb8c59671ec835bf9c06954d07036009a0c6646557",
         "getChainId": 1,
@@ -81,6 +84,7 @@
         "implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
+      "sinceTimestamp": 1592218707,
       "values": {
         "defaultFactory": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
@@ -96,6 +100,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1645178700,
       "values": {
         "governance": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
         "listingCap": 64000,
@@ -112,6 +117,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1592218707,
       "values": {
         "getMaster": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "mainContract": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
@@ -135,6 +141,7 @@
         "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
+      "sinceTimestamp": 1592218707,
       "derivedName": "Verifier"
     },
     {
@@ -143,6 +150,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1626171128,
       "values": {
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
@@ -160,6 +168,7 @@
         "implementation": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
         "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
       },
+      "sinceTimestamp": 1592218707,
       "values": {
         "approvedUpgradeNoticePeriod": 1814400,
         "exodusMode": false,
@@ -197,7 +206,8 @@
       "address": "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1557156465
     },
     {
       "name": "ZkSync Multisig",
@@ -206,6 +216,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "sinceTimestamp": 1585581484,
       "values": {
         "domainSeparator": "0xcd86f82218dc46b5501da06e0b96a9cf73cd8f35153e9da3a481f79b6be5ff63",
         "getModules": [],

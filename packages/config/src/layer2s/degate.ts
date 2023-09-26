@@ -40,7 +40,8 @@ const forcedWithdrawalFee = discovery.getContractValue<number>(
 const maxForcedWithdrawalFee = discovery.getContractValue<(number | string)[]>(
   'ExchangeV3',
   'getConstants',
-)[3]
+)[10]
+
 const maxForcedWithdrawalFeeString = `${utils.formatEther(
   maxForcedWithdrawalFee,
 )} ETH`
@@ -49,7 +50,7 @@ export const degate: Layer2 = {
   type: 'layer2',
   id: ProjectId('degate'),
   display: {
-    name: 'DeGate',
+    name: 'DeGate Legacy',
     slug: 'degate',
     description:
       'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
