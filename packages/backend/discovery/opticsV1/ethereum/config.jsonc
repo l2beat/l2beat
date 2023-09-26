@@ -1,7 +1,7 @@
 {
   "$schema": "../../config.schema.json",
   "chain": "ethereum",
-  "name": "optics1",
+  "name": "opticsV1",
   "initialAddresses": [
     "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47", //BridgeRouterBeaconProxy
     "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B" //UpgradableBeaconController - TODO: fix discovery so this is not needed
