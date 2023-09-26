@@ -1,3 +1,15 @@
+## Diff at Tue, 26 Sep 2023 07:41:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+```diff
+    contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58) {
+      derivedName:
++        "ChallengeManager"
+    }
+```
+
 ## Diff at Fri, 22 Sep 2023 09:02:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
