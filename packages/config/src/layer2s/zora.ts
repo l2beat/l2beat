@@ -32,7 +32,7 @@ export const zora: Layer2 = {
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'The Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
+      'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     purpose: 'Universal, NFTs',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
