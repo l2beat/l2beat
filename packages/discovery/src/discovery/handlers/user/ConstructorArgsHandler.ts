@@ -40,16 +40,91 @@ export class ConstructorArgsHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    const txHash = await provider.getContractDeploymentTx(address)
-    const tx = await provider.getTransaction(txHash)
+    try {
+      const decodedConstructorArguments =
+        await this.getWithDeploymentTransaction(provider, address)
 
-    const args = decodeConstructorArgs(this.constructorFragment, tx.data)
+      return {
+        field: 'constructorArgs',
+        value: serializeResult(decodedConstructorArguments),
+      }
+    } catch (error) {
+      this.logger.log(
+        'Could not get constructor arguments with heuristic approach. Trying with block explorer.',
+      )
+      const decodedConstructorArguments = await this.getWithBlockExplorer(
+        provider,
+        address,
+      )
 
-    return {
-      field: 'constructorArgs',
-      value: serializeResult(args),
+      return {
+        field: 'constructorArgs',
+        value: serializeResult(decodedConstructorArguments),
+      }
     }
   }
+
+  async getWithDeploymentTransaction(
+    provider: DiscoveryProvider,
+    address: EthereumAddress,
+  ): Promise<ethers.utils.Result> {
+    const deploymentTxHash = await provider.getContractDeploymentTx(address)
+    const deploymentTx = await provider.getTransaction(deploymentTxHash)
+
+    const decodedConstructorArguments = decodeConstructorArgs(
+      this.constructorFragment,
+      deploymentTx.data,
+    )
+
+    return decodedConstructorArguments
+  }
+
+  async getWithBlockExplorer(
+    provider: DiscoveryProvider,
+    address: EthereumAddress,
+  ): Promise<ethers.utils.Result> {
+    const encodedConstructorArguments =
+      await provider.getConstructorArgs(address)
+
+    const decodedConstructorArguments = ethers.utils.defaultAbiCoder.decode(
+      this.constructorFragment.inputs,
+      '0x' + encodedConstructorArguments,
+    )
+
+    return decodedConstructorArguments
+  }
+}
+
+/** @internal */
+export function serializeResult(result: ethers.utils.Result): ContractValue {
+  if (Array.isArray(result)) {
+    return result.map(serializeResult)
+  }
+
+  if (result instanceof ethers.BigNumber) {
+    return result.toString()
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (result && typeof result === 'object') {
+    return Object.fromEntries(
+      Object.entries(result).map(([key, value]) => [
+        key,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        serializeResult(value),
+      ]),
+    )
+  }
+
+  if (
+    typeof result === 'string' ||
+    typeof result === 'number' ||
+    typeof result === 'boolean'
+  ) {
+    return result
+  }
+
+  throw new Error(`Don't know how to serialize: ${typeof result}`)
 }
 
 /** @internal */
@@ -94,36 +169,4 @@ export function decodeConstructorArgs(
     throw new Error('Could not decode constructor args')
   }
   return longestDecodedArgs
-}
-
-/** @internal */
-export function serializeResult(result: ethers.utils.Result): ContractValue {
-  if (Array.isArray(result)) {
-    return result.map(serializeResult)
-  }
-
-  if (result instanceof ethers.BigNumber) {
-    return result.toString()
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (result && typeof result === 'object') {
-    return Object.fromEntries(
-      Object.entries(result).map(([key, value]) => [
-        key,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        serializeResult(value),
-      ]),
-    )
-  }
-
-  if (
-    typeof result === 'string' ||
-    typeof result === 'number' ||
-    typeof result === 'boolean'
-  ) {
-    return result
-  }
-
-  throw new Error(`Don't know how to serialize: ${typeof result}`)
 }
