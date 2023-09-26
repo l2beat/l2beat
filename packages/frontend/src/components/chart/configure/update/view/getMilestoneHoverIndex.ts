@@ -1,6 +1,6 @@
 import { Milestone } from '@l2beat/config'
 
-import { isMobile } from '../../render/isMobile'
+import { isMobile } from '../../../../../scripts/utils/isMobile'
 
 const ICON_HEIGHT = 25
 const MAX_TRIGGER_PROXIMITY = 0.014

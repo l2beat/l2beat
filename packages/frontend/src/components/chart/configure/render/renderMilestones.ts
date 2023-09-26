@@ -1,5 +1,5 @@
+import { isMobile } from '../../../../scripts/utils/isMobile'
 import { State } from '../state/State'
-import { isMobile } from './isMobile'
 
 export function renderMilestones(state: State, milestones: HTMLElement) {
   const points = state.view.chart?.points

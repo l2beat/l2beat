@@ -1,4 +1,4 @@
-import { isMobile } from '../components/chart/configure/render/isMobile'
+import { isMobile } from './utils/isMobile'
 import { clamp } from '../utils'
 import { makeQuery } from './query'
 

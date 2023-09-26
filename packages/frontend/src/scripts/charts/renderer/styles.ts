@@ -1,9 +1,18 @@
 export interface SeriesStyle {
-  fillStyle?: keyof typeof FILL_STYLES
-  lineStyle?: keyof typeof LINE_STYLES
+  point?: keyof typeof POINT_CLASS_NAMES
+  fill?: keyof typeof FILL_STYLES
+  line?: keyof typeof LINE_STYLES
 }
 
-export const POINTER_STYLE = {}
+export const POINT_CLASS_NAMES = {
+  circle:
+    'absolute z-40 h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
+  blueSquare: 'absolute z-40 h-2 w-2 border-2 border-current bg-blue-600',
+  redCircle:
+    'absolute z-40 h-2 w-2 rounded-full border-2 border-current bg-red-300',
+  milestone:
+    'absolute z-40 h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
+}
 
 export const FILL_STYLES = {
   pink: () => '#FF46C0',
