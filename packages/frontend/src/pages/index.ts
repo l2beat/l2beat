@@ -4,6 +4,7 @@ import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
+import { getL2DaysPage } from './l2days'
 import { getMetaImagePages } from './meta-images'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
@@ -28,6 +29,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(getRiskPage(config, pagesData))
   pages.push(getTvlPage(config, pagesData))
   pages.push(getFaqPage(config))
+  pages.push(getL2DaysPage())
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
