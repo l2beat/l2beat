@@ -78,7 +78,7 @@ export function TvlSummary(props: TvlSummaryProps) {
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
           Value Locked
         </span>
-        <span className="hidden text-lg font-bold text-white text-gray-500 dark:text-gray-600 md:block md:text-xs md:font-normal">
+        <span className="hidden text-lg font-bold text-gray-500 dark:text-gray-600 md:block md:text-xs md:font-normal">
           TVL
         </span>
 
