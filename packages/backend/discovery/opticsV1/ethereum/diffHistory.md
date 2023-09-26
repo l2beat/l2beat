@@ -1,4 +1,4 @@
-## Diff at Tue, 26 Sep 2023 14:05:18 GMT:
+## Diff at Tue, 26 Sep 2023 19:01:42 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - comparing to: master@
@@ -30,6 +30,12 @@
 ```diff
 +   Status: CREATED
     contract BridgeRouterBeaconProxy (0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ReplicaBeaconProxy (0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b) {
     }
 ```
 

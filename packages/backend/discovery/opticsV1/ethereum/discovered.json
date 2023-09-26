@@ -2,7 +2,7 @@
   "name": "opticsV1",
   "chain": "ethereum",
   "blockNumber": 18220428,
-  "configHash": "0x3990e7b50802a93adb4de20eeba924500334b0b2d9de6dd5f42f13baa2cb2351",
+  "configHash": "0xa71916914058291e77c23dba95136502bc0475b40d5ae72c2a0d20597acd1bda",
   "version": 2,
   "contracts": [
     {
@@ -111,6 +111,30 @@
         "xAppConnectionManager": "0xcEc158A719d11005Bd9339865965bed938BEafA3"
       },
       "derivedName": "BridgeRouter"
+    },
+    {
+      "name": "ReplicaBeaconProxy",
+      "address": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b",
+      "upgradeability": {
+        "type": "Optics Beacon proxy",
+        "upgradeBeacon": "0x10a432946e24C49866c243a13BE7205B3EF929ee",
+        "beaconController": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
+        "implementation": "0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04"
+      },
+      "sinceTimestamp": 1631138785,
+      "values": {
+        "committedRoot": "0x1b70c6cd00cbf99ea474273c3a3b9201096ce5d1856c0a0979e1ab38c149b7f8",
+        "homeDomainHash": "0x59173efcb1579737af2864591230a38bbbf3a97113ba8e64761852aa96c4cd34",
+        "localDomain": 6648936,
+        "optimisticSeconds": 10800,
+        "PROCESS_GAS": 850000,
+        "remoteDomain": 1886350457,
+        "RESERVE_GAS": 15000,
+        "state": 1,
+        "updater": "0xDB2091535eb0Ee447Ce170DDC25204FEA822dd81",
+        "VERSION": 0
+      },
+      "derivedName": "Replica"
     },
     {
       "name": "UpgradeBeaconController",
@@ -258,6 +282,9 @@
       "function xAppConnectionManager() view returns (address)"
     ],
     "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
     "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B": [
@@ -410,6 +437,31 @@
       "function update(bytes32 _committedRoot, bytes32 _newRoot, bytes _signature)",
       "function updater() view returns (address)",
       "function updaterManager() view returns (address)"
+    ],
+    "0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04": [
+      "constructor(uint32 _localDomain, uint256 _processGas, uint256 _reserveGas)",
+      "event DoubleUpdate(bytes32 oldRoot, bytes32[2] newRoot, bytes signature, bytes signature2)",
+      "event Process(bytes32 indexed messageHash, bool indexed success, bytes indexed returnData)",
+      "event Update(uint32 indexed homeDomain, bytes32 indexed oldRoot, bytes32 indexed newRoot, bytes signature)",
+      "function PROCESS_GAS() view returns (uint256)",
+      "function RESERVE_GAS() view returns (uint256)",
+      "function VERSION() view returns (uint8)",
+      "function acceptableRoot(bytes32 _root) view returns (bool)",
+      "function committedRoot() view returns (bytes32)",
+      "function confirmAt(bytes32) view returns (uint256)",
+      "function doubleUpdate(bytes32 _oldRoot, bytes32[2] _newRoot, bytes _signature, bytes _signature2)",
+      "function homeDomainHash() view returns (bytes32)",
+      "function initialize(uint32 _remoteDomain, address _updater, bytes32 _committedRoot, uint256 _optimisticSeconds)",
+      "function localDomain() view returns (uint32)",
+      "function messages(bytes32) view returns (uint8)",
+      "function optimisticSeconds() view returns (uint256)",
+      "function process(bytes _message) returns (bool _success)",
+      "function prove(bytes32 _leaf, bytes32[32] _proof, uint256 _index) returns (bool)",
+      "function proveAndProcess(bytes _message, bytes32[32] _proof, uint256 _index)",
+      "function remoteDomain() view returns (uint32)",
+      "function state() view returns (uint8)",
+      "function update(bytes32 _oldRoot, bytes32 _newRoot, bytes _signature)",
+      "function updater() view returns (address)"
     ]
   }
 }

@@ -4,17 +4,22 @@
   "name": "opticsV1",
   "initialAddresses": [
     "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47", //BridgeRouterBeaconProxy
+    "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b", //ReplicaBeaconProxy
     "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B" //UpgradableBeaconController - TODO: fix discovery so this is not needed
   ],
   "names": {
     "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97": "HomeBeaconProxy",
     "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47": "BridgeRouterBeaconProxy",
     "0x42303634F37956687fB7ff2c6146AC842481A052": "GovernanceRouterBeaconProxy",
+    "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b": "ReplicaBeaconProxy",
     "0x2bB2a5A724170357cb691841F40d26A950d8C33D": "RecoveryManager",
     "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37": "Governor"
   },
   "overrides": {
     "HomeBeaconProxy": {
+      "proxyType": "Optics Beacon proxy"
+    },
+    "ReplicaBeaconProxy": {
       "proxyType": "Optics Beacon proxy"
     },
     "BridgeRouterBeaconProxy": {
