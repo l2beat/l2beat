@@ -23,3 +23,5 @@ export async function up(knex: Knex) {
     asset_id: AssetId.OP.toString(),
   })
 }
+
+export async function down() {}
