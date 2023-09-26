@@ -1,7 +1,7 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 18147311,
+  "blockNumber": 18213384,
   "configHash": "0x248eaf106e123becfceb931040cb955c0cc685de50643c7f6d52677823e4b114",
   "version": 2,
   "contracts": [
@@ -18,10 +18,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 484200,
-        "latestOutputIndex": 269,
-        "nextBlockNumber": 486000,
-        "nextOutputIndex": 270,
+        "latestBlockNumber": 883800,
+        "latestOutputIndex": 491,
+        "nextBlockNumber": 885600,
+        "nextOutputIndex": 492,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -88,7 +88,7 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 18147295],
+        "params": [1000000000, 200000, 18213374],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -279,7 +279,7 @@
       "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 18147311,
+        "clock": 18213384,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -315,7 +315,7 @@
       },
       "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 18147311,
+        "clock": 18213384,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -363,7 +363,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x0125adEE89dE396b586959190e931b83120359AB",
+        "nextValidator": "0xfC3867F19161b8981d8B9c9fa3D7360c9Cee9733",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -371,7 +371,7 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 5,
+        "validatorCount": 11,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.0"
       },
@@ -380,14 +380,14 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
-    "0x0125adEE89dE396b586959190e931b83120359AB",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
     "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
     "0x4200000000000000000000000000000000000004",
     "0x4200000000000000000000000000000000000009",
     "0x420000000000000000000000000000000000000A",
     "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
-    "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081"
+    "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081",
+    "0xfC3867F19161b8981d8B9c9fa3D7360c9Cee9733"
   ],
   "abis": {
     "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095": [
