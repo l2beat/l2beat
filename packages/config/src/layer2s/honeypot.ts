@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('honeypot')
 export const honeypot: Layer2 = {
   isUnderReview: true,
   type: 'layer2',
-  id: ProjectId('cartesi-honeypot'),
+  id: ProjectId('honeypot'),
   display: {
     name: 'Honeypot (Cartesi)',
     slug: 'cartesi-honeypot',
