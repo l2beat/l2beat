@@ -4,7 +4,7 @@ import { mean } from 'lodash'
 import { makeQuery } from '../../query'
 import { isMobile } from '../../utils/isMobile'
 import { getYAxis } from './getYAxis'
-import { renderMilestones } from './renderMilestones'
+import { getMilestoneHover, getMilestoneHtml } from './htmls'
 import {
   FILL_STYLES,
   LINE_STYLES,
@@ -23,8 +23,10 @@ interface RenderParams<T> {
   seriesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
   renderHoverContents: (pointData: T) => string
-  yAxisScale: 'LOG' | 'LIN'
+  yAxisScale: YAxisScale
 }
+
+type YAxisScale = 'LOG' | 'LIN'
 
 const FIRST_LABEL_HEIGHT_PX = 20
 const HOVER_AREA_EXTENSION_PX = 16
@@ -51,30 +53,25 @@ export class ChartRenderer {
   constructor(chartView: HTMLElement) {
     const { $, $$ } = makeQuery(chartView)
 
+    this.hover = $('[data-role="chart-hover"]')
+    this.hoverLine = $('[data-role="chart-hover-line"]')
+    this.hoverPointWrapper = $('[data-role="chart-hover-points"]')
+    this.hoverContents = $('[data-role="chart-hover-contents"]')
+    this.milestonesWrapper = $('[data-role="chart-milestones"]')
     const labelWrapper = $('[data-role="chart-labels"]')
-    labelWrapper.dataset.enabled = 'true'
-
     this.labelElements = $$('[data-role="chart-label"]').reverse()
     console.assert(this.labelElements.length === LABEL_COUNT)
 
     this.canvas = $('[data-role="chart-canvas"]')
     const ctx = this.canvas.getContext('2d')
     if (!ctx) throw new Error('Failed to get canvas context')
+
     this.ctx = ctx
-    this.hover = $('[data-role="chart-hover"]')
-    this.hoverLine = $('[data-role="chart-hover-line"]')
-    this.hoverPointWrapper = $('[data-role="chart-hover-points"]')
-    this.hoverContents = $('[data-role="chart-hover-contents"]')
-    this.milestonesWrapper = $('[data-role="chart-milestones"]')
 
-    window.addEventListener('resize', () => {
-      if (this.renderParams) {
-        this.rerender(this.renderParams)
-      }
-    })
+    this.initializeListeners()
 
-    window.addEventListener('mousemove', (e) => this.onMoveEvent(e))
-    window.addEventListener('touchmove', (e) => this.onMoveEvent(e.touches[0]))
+    //TODO: REMOVE THIS AFTER REFACTOR
+    labelWrapper.dataset.enabled = 'true'
   }
 
   render<T>(params: RenderParams<T>) {
@@ -83,45 +80,18 @@ export class ChartRenderer {
   }
 
   private rerender<T>(params: RenderParams<T>) {
-    // LABELS
-    const values = params.points.flatMap((point) => point.series)
-    const { labels, getY } = getYAxis(
-      values,
-      params.yAxisScale === 'LOG',
-      params.formatYAxisLabel,
-      LABEL_COUNT,
-    )
-    this.getY = getY
-    for (let i = 0; i < LABEL_COUNT; i++) {
-      this.labelElements[i].textContent = labels[i]
-    }
-
-    // HOVER POINTS
-    this.hover.classList.add('hidden')
-    this.hoverPointWrapper.innerHTML = params.seriesStyle
-      .map((series, i) => {
-        if (!series.point) {
-          return ''
-        }
-        return `<div data-series="${i}"></div>`
-      })
-      .join('')
-
-    // CANVAS SETUP
-    const rect = this.canvas.parentElement?.getBoundingClientRect()
-    if (rect) {
-      this.canvas.width = rect.width * window.devicePixelRatio
-      this.canvas.height = rect.height * window.devicePixelRatio
-    }
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
-    // MILESTONES
-    this.milestonesWrapper.innerHTML = renderMilestones(
-      this.canvas.width,
+    this.setupCanvas()
+    this.setupYAxisLabels(
       params.points,
+      params.yAxisScale,
+      params.formatYAxisLabel,
     )
+    this.setupHoverPoints(params.seriesStyle)
+    this.renderMilestones(params.points)
+    this.renderData(params)
+  }
 
-    // CANVAS RENDERING
+  private renderData<T>(params: RenderParams<T>) {
     for (const [si, series] of params.seriesStyle.entries()) {
       const usableHeight =
         this.canvas.height - FIRST_LABEL_HEIGHT_PX * window.devicePixelRatio
@@ -153,6 +123,71 @@ export class ChartRenderer {
         this.ctx.strokeStyle = LINE_STYLES[series.line](this.ctx)
         this.ctx.stroke(linePath)
       }
+    }
+  }
+
+  private initializeListeners() {
+    window.addEventListener('resize', () => {
+      if (this.renderParams) {
+        this.rerender(this.renderParams)
+      }
+    })
+
+    window.addEventListener('mousemove', (e) => this.onMoveEvent(e))
+    window.addEventListener('touchmove', (e) => this.onMoveEvent(e.touches[0]))
+  }
+
+  private renderMilestones(points: Point<unknown>[]) {
+    const milestonesHtml = points
+      .map((point, i) =>
+        point.milestone
+          ? getMilestoneHtml(
+              (this.canvas.width / (points.length - 1)) * i,
+              point.milestone.link,
+            )
+          : '',
+      )
+      .join('')
+    this.milestonesWrapper.innerHTML = milestonesHtml
+  }
+
+  private setupCanvas() {
+    const rect = this.canvas.parentElement?.getBoundingClientRect()
+    if (rect) {
+      this.canvas.width = rect.width * window.devicePixelRatio
+      this.canvas.height = rect.height * window.devicePixelRatio
+    }
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+  }
+
+  private setupHoverPoints(seriesStyle: SeriesStyle[]) {
+    this.hover.classList.add('hidden')
+    this.hoverPointWrapper.innerHTML = seriesStyle
+      .map((series, i) => {
+        if (!series.point) {
+          return ''
+        }
+        return `<div data-series="${i}"></div>`
+      })
+      .join('')
+  }
+
+  private setupYAxisLabels(
+    points: Point<unknown>[],
+    yAxisScale: YAxisScale,
+    formatYAxisLabel: (value: number) => string,
+  ) {
+    const isLog = yAxisScale === 'LOG'
+    const values = points.flatMap((point) => point.series)
+    const { labels, getY } = getYAxis(
+      values,
+      isLog,
+      formatYAxisLabel,
+      LABEL_COUNT,
+    )
+    this.getY = getY
+    for (let i = 0; i < LABEL_COUNT; i++) {
+      this.labelElements[i].textContent = labels[i]
     }
   }
 
@@ -256,7 +291,7 @@ export class ChartRenderer {
       yValues.length === 0 ? this.canvas.height / 2 : mean(yValues)
 
     this.hoverContents.innerHTML = milestone
-      ? this.renderMilestoneHover(milestone)
+      ? getMilestoneHover(milestone)
       : this.renderParams.renderHoverContents(point.data)
     const { height } = this.hoverContents.getBoundingClientRect()
     const contentsBottom = Math.min(
@@ -279,10 +314,6 @@ export class ChartRenderer {
     }
 
     this.hover.classList.remove('hidden')
-  }
-
-  private renderMilestoneHover(milestone: Milestone) {
-    return `<div>${milestone.name}</div><div>${milestone.date}</div>`
   }
 
   private onMouseExited() {

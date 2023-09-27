@@ -2,33 +2,19 @@ import { Milestone } from '@l2beat/config'
 
 import { isMobile } from '../../utils/isMobile'
 
-export function renderMilestones(
-  width: number,
-  points: { milestone?: Milestone }[],
-) {
-  return points
-    .map((point, i) =>
-      point.milestone
-        ? getMilestoneHtml(
-            (width / (points.length - 1)) * i,
-            point.milestone.link,
-          )
-        : '',
-    )
-    .join('')
-}
+const MILESTONE_SIZE = 20
 
-const SIZE = 20
-
-function getMilestoneHtml(x: number, url: string) {
+export function getMilestoneHtml(x: number, url: string) {
   return `
   <div class="absolute z-40 select-none scale-75  md:scale-100" 
-        style="left: ${x - SIZE / 2}px; top: ${-SIZE / 2}px">
+        style="left: ${x - MILESTONE_SIZE / 2}px; top: ${
+    -MILESTONE_SIZE / 2
+  }px">
     ${isMobile() ? '' : `<a href="${url}" target="_blank">`}
       <svg
-        width="${SIZE}"
-        height="${SIZE}"
-        view-box="0 0 ${SIZE} ${SIZE}"
+        width="${MILESTONE_SIZE}"
+        height="${MILESTONE_SIZE}"
+        view-box="0 0 ${MILESTONE_SIZE} ${MILESTONE_SIZE}"
         role="img"
         aria-label="Milestone icon"
         class="fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500"
@@ -45,4 +31,8 @@ function getMilestoneHtml(x: number, url: string) {
       <svg>
     ${isMobile() ? '' : '</a>'}
   </div>`
+}
+
+export function getMilestoneHover(milestone: Milestone) {
+  return `<div>${milestone.name}</div><div>${milestone.date}</div>`
 }

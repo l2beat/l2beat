@@ -19,7 +19,7 @@ export function configureCharts() {
   const chartRenderer = new ChartRenderer(chartView)
 
   chartRenderer.render({
-    formatYAxisLabel: (value) => '%%' + value.toFixed(2),
+    formatYAxisLabel: (value) => '$' + value.toFixed(2),
     points: [
       { series: [2, 1], data: 1 },
       { series: [4, 3], data: 2 },
@@ -48,7 +48,6 @@ export function configureCharts() {
     seriesStyle: [
       { fill: 'purple', point: 'blueSquare' },
       { fill: 'pink', point: 'circle' },
-      // { fillStyle: 'signature gradient', lineStyle: 'signature gradient' },
     ],
     renderHoverContents: (point) => `<div>Tooltip is awesome: ${point}!</div>`,
   })
