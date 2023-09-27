@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 18163815,
-  "configHash": "0x281b594149a3b7150f0a2e96a0a76048b155b8c385eac85c873952a23ea07c9f",
+  "blockNumber": 18218680,
+  "configHash": "0x0d2d5dddb09e9fb7f66e5b6d978ed838796fcdb287ea312cbbc9f1981751348d",
   "version": 2,
   "contracts": [
     {
@@ -89,7 +89,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 18163814],
+        "params": [1000000000, 200000, 18218680],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -107,12 +107,22 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "CHALLENGER": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
+        "deletedOutputs": [
+          {
+            "prevNextOutputIndex": 1030,
+            "newNextOutputIndex": 1027
+          },
+          {
+            "prevNextOutputIndex": 1364,
+            "newNextOutputIndex": 1359
+          }
+        ],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 4129200,
-        "latestOutputIndex": 2293,
-        "nextBlockNumber": 4131000,
-        "nextOutputIndex": 2294,
+        "latestBlockNumber": 4462200,
+        "latestOutputIndex": 2478,
+        "nextBlockNumber": 4464000,
+        "nextOutputIndex": 2479,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -216,7 +226,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292721416",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292732139",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
