@@ -11,7 +11,7 @@ export interface TechnologyIncompleteProps {
 export function TechnologyIncomplete(props: TechnologyIncompleteProps) {
   return (
     <div
-      className="mt-8 rounded-lg bg-blue-450 bg-opacity-20 p-2 text-blue-700 dark:text-blue-300"
+      className="mt-8 rounded-lg bg-blue-450 bg-opacity-20 p-2 leading-snug text-blue-700 dark:text-blue-300"
       id="incomplete"
     >
       <strong>Note:</strong> This project&apos;s overview requires more research

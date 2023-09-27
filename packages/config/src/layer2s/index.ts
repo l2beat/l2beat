@@ -18,6 +18,7 @@ import { gluon } from './gluon'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { immutablezkevm } from './immutablezkevm'
+import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
@@ -74,6 +75,7 @@ export const layer2s: Layer2[] = [
   hermez,
   immutablex,
   immutablezkevm,
+  kinto,
   kroma,
   layer2finance,
   layer2financezk,

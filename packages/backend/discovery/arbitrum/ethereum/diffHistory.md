@@ -1,3 +1,22 @@
+## Diff at Tue, 26 Sep 2023 07:54:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+      values.challenges:
++        []
+    }
+```
+
+```diff
+    contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58) {
+      derivedName:
++        "ChallengeManager"
+    }
+```
+
 ## Diff at Fri, 22 Sep 2023 09:02:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

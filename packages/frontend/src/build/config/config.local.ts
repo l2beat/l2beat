@@ -8,8 +8,6 @@ export function getLocalConfig(): Config {
       ...common.features,
       // The local backend doesn't support activity
       activity: false,
-      detailedTvl: true,
-      tvlBreakdown: true,
       buildAllProjectPages: true,
     },
     backend: {

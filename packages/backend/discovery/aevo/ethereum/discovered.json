@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18128273,
-  "configHash": "0x15416412b322113990c2cb6bae513e96dfe007828772bf6a9bd1aeb9f52611cd",
+  "blockNumber": 18219070,
+  "configHash": "0x2c9b74e546139cafd6d2a395ed51a96738fd24ca67fd3838a33af91c74442ca9",
   "version": 2,
   "contracts": [
     {
@@ -17,7 +17,7 @@
       "sinceTimestamp": 1679193095,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622990",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623160",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -100,7 +100,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 694997, 18127486],
+        "params": [1000000000, 694997, 18218484],
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "1.7.2"
@@ -130,12 +130,13 @@
       "sinceTimestamp": 1679193083,
       "values": {
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 1542000,
-        "latestOutputIndex": 2569,
-        "nextBlockNumber": 1542600,
-        "nextOutputIndex": 2570,
+        "latestBlockNumber": 1652400,
+        "latestOutputIndex": 2753,
+        "nextBlockNumber": 1653000,
+        "nextOutputIndex": 2754,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
