@@ -6,7 +6,7 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('honeypot')
 
-export const cartesiHoneypot: Layer2 = {
+export const honeypot: Layer2 = {
   isUnderReview: true,
   type: 'layer2',
   id: ProjectId('cartesi-honeypot'),
