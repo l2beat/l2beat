@@ -1,8 +1,8 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 17619337,
-  "configHash": "0x33ca51c13c33399a88621568b90684739dd62f2a15c97649de215f4e831197d6",
+  "blockNumber": 18220383,
+  "configHash": "0xda40a10fea337b878d96bebe6d7a610052e57f0c4693e22a395313e9ac4d0c8d",
   "version": 2,
   "contracts": [
     {
@@ -28,8 +28,8 @@
       },
       "sinceTimestamp": 1635385967,
       "values": {
-        "getGlobalMetadata": "0x00000000000000000000000000000000000064a3ce1f00000fbd0e",
-        "length": 16893,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006512e0a300001027f5",
+        "length": 18853,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "StateCommitmentChain"
       },
@@ -43,8 +43,8 @@
       },
       "sinceTimestamp": 1635385259,
       "values": {
-        "getGlobalMetadata": "0x0000000000000000010cd85e0064a3cb660000005f4f00000fbd0e",
-        "length": 18688,
+        "getGlobalMetadata": "0x0000000000000000011603e4006512d3f8000000600100001027f5",
+        "length": 20657,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "CanonicalTransactionChain"
       },
@@ -209,11 +209,11 @@
       },
       "sinceTimestamp": 1628793901,
       "values": {
-        "currentDepositInfoHash": "0xc64671bef9775ff63adc5ca2a6431f80c537ba9ef4bc39420856130d54cf78ee",
+        "currentDepositInfoHash": "0x4ee78b8393518f69fe7fbe911c3b3e181568082aa1e248bd2ace5508666a21ce",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "lastHashUpdateBlock": 17615062,
+        "lastHashUpdateBlock": 18218204,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
-        "priorDepositInfoHash": "0xe6400e08c60cceb6700d3ae4b0c3797a8ee6b14be644e9d544ad84c583972d91"
+        "priorDepositInfoHash": "0xea7840782207de4cfe9977f57b6c549c774172ebb42541e1a437ff936ca902f9"
       },
       "derivedName": "L1StandardBridge"
     },
@@ -226,10 +226,11 @@
       "sinceTimestamp": 1635386294,
       "values": {
         "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
+        "deletedStateBatches": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1688456735,
-        "getTotalBatches": 16893,
-        "getTotalElements": 1031438,
+        "getLastSequencerTimestamp": 1695735971,
+        "getTotalBatches": 18853,
+        "getTotalElements": 1058805,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "SEQUENCER_PUBLISH_WINDOW": 1800
       },
@@ -246,13 +247,13 @@
         "batches": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17619038,
-        "getLastTimestamp": 1688456038,
-        "getNextQueueIndex": 24399,
+        "getLastBlockNumber": 18220004,
+        "getLastTimestamp": 1695732728,
+        "getNextQueueIndex": 24577,
         "getNumPendingQueueElements": 0,
-        "getQueueLength": 24399,
-        "getTotalBatches": 18688,
-        "getTotalElements": 1031438,
+        "getQueueLength": 24577,
+        "getTotalBatches": 20657,
+        "getTotalElements": 1058805,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "MAX_ROLLUP_TX_SIZE": 50000,

@@ -1,3 +1,15 @@
+## Diff at Tue, 26 Sep 2023 10:12:59 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+      values.deletedOutputs:
++        []
+    }
+```
+
 ## Diff at Wed, 20 Sep 2023 14:08:40 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
