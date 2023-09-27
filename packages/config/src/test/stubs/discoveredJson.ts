@@ -63,5 +63,38 @@ export const discoveredJsonStub = {
         startStandardExitBondSize: '14000000000000000',
       },
     },
+    {
+      name: 'TopMultisigMock',
+      address: '0x344DddaDd2b96ef51700574204806F25bc9a23C0',
+      code: 'https://etherscan.deth.net/address/0x344DddaDd2b96ef51700574204806F25bc9a23C0',
+      upgradeability: {
+        type: 'gnosis safe',
+      },
+      values: {
+        getThreshold: 3,
+        getOwners: [
+          '0xA4878f0E143Dad8eB8999f079fDF319988bc6EB2',
+          '0x7d2C8AB5bf6F0D72BD255e65cA98cCb0773c2F0b',
+          '0x4C6ebdEf6E8B6c9913B3FEb6ACBf8177eFcc92B3',
+          '0x4203A72C772ed980694bCEd929D982D5859d34FF',
+        ],
+      },
+    },
+    {
+      name: 'RecursiveMultisigMock',
+      address: '0x4203A72C772ed980694bCEd929D982D5859d34FF',
+      code: 'https://etherscan.deth.net/address/0x4203A72C772ed980694bCEd929D982D5859d34FF',
+      upgradeability: {
+        type: 'gnosis safe',
+      },
+      values: {
+        getThreshold: 2,
+        getOwners: [
+          '0x690698362E12b370053C0D1cED9aD179115d7fbD',
+          '0x344DddaDd2b96ef51700574204806F25bc9a23C0',
+        ],
+      },
+    },
   ],
+  eoas: [],
 }

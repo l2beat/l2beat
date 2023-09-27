@@ -130,6 +130,7 @@ export class ProjectDiscovery {
     identifier: string,
     description: string,
     references?: ProjectReference[],
+    visitedAddresses?: EthereumAddress[],
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -137,9 +138,24 @@ export class ProjectDiscovery {
       `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
     )
 
-    return [
+    if (visitedAddresses?.includes(contract.address)) {
+      return []
+    }
+
+    const accounts = this.getPermissionedAccounts(identifier, 'getOwners')
+    const multisigMembers = accounts.filter((a) => a.type === 'MultiSig')
+
+    const recursed = multisigMembers.flatMap((m) =>
+      this.getMultisigPermission(
+        m.address.toString(),
+        'Multisig member, itself a multisig.',
+        undefined,
+        visitedAddresses?.concat(contract.address) ?? [contract.address],
+      ),
+    )
+    const topLevel: ProjectPermission[] = [
       {
-        name: identifier,
+        name: contract.name,
         description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
         )} threshold.`,
@@ -151,12 +167,14 @@ export class ProjectDiscovery {
         ],
       },
       {
-        name: `${identifier} participants`,
-        description: `Those are the participants of the ${identifier}.`,
-        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
+        name: `${contract.name} participants`,
+        description: `Those are the participants of the ${contract.name}.`,
+        accounts,
         references,
       },
     ]
+
+    return topLevel.concat(recursed)
   }
 
   getContract(identifier: string): ContractParameters {

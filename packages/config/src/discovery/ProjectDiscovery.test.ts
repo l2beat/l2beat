@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
@@ -103,4 +104,93 @@ describe(ProjectDiscovery.name, () => {
       })
     },
   )
+
+  describe(ProjectDiscovery.prototype.getMultisigPermission.name, () => {
+    it('should return given permissions and avoid infite loop', () => {
+      const permissions = discovery.getMultisigPermission(
+        'TopMultisigMock',
+        'This is a top multisig',
+      )
+
+      expect(permissions).toEqual([
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x344DddaDd2b96ef51700574204806F25bc9a23C0',
+              ),
+              type: 'MultiSig',
+            },
+          ],
+          description:
+            'This is a top multisig This is a Gnosis Safe with 3 / 4 threshold.',
+          name: 'TopMultisigMock',
+        },
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0xA4878f0E143Dad8eB8999f079fDF319988bc6EB2',
+              ),
+              type: 'Contract',
+            },
+            {
+              address: EthereumAddress(
+                '0x7d2C8AB5bf6F0D72BD255e65cA98cCb0773c2F0b',
+              ),
+              type: 'Contract',
+            },
+            {
+              address: EthereumAddress(
+                '0x4C6ebdEf6E8B6c9913B3FEb6ACBf8177eFcc92B3',
+              ),
+              type: 'Contract',
+            },
+            {
+              address: EthereumAddress(
+                '0x4203A72C772ed980694bCEd929D982D5859d34FF',
+              ),
+              type: 'MultiSig',
+            },
+          ],
+          description: 'Those are the participants of the TopMultisigMock.',
+          name: 'TopMultisigMock participants',
+          references: undefined,
+        },
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x4203A72C772ed980694bCEd929D982D5859d34FF',
+              ),
+              type: 'MultiSig',
+            },
+          ],
+          description:
+            'Multisig member, itself a multisig. This is a Gnosis Safe with 2 / 2 threshold.',
+          name: 'RecursiveMultisigMock',
+        },
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x690698362E12b370053C0D1cED9aD179115d7fbD',
+              ),
+              type: 'Contract',
+            },
+            {
+              address: EthereumAddress(
+                '0x344DddaDd2b96ef51700574204806F25bc9a23C0',
+              ),
+              type: 'MultiSig',
+            },
+          ],
+          description:
+            'Those are the participants of the RecursiveMultisigMock.',
+          name: 'RecursiveMultisigMock participants',
+          references: undefined,
+        },
+      ])
+    })
+  })
 })
