@@ -23,7 +23,7 @@ export interface Token {
   formula: 'totalSupply' | 'locked' | 'circulatingSupply'
   bridgedUsing?: {
     bridge: string
-    slug: string
+    slug?: string
   }
 
   /** @deprecated */

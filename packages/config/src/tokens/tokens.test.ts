@@ -3,6 +3,7 @@ import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
+import { bridges } from '../bridges'
 import { config } from '../test/config'
 import { tokenList } from './tokens'
 import { getCanonicalTokens } from './types'
@@ -153,6 +154,25 @@ describe('tokens', () => {
           }
         }
       })
+    })
+  })
+  describe('external', () => {
+    it('every external token has a bridgedUsing property', () => {
+      const externalTokens = tokenList
+        .filter((token) => token.type === 'EBV' && !token.bridgedUsing)
+        .map((token) => token.symbol)
+      expect(externalTokens).toHaveLength(0)
+    })
+    it('every bridge slug in bridgedUsing property is valid', () => {
+      const tokenSlugs = tokenList
+        .filter((token) => token.type === 'EBV' && token.bridgedUsing?.slug)
+        .map((token) => token.bridgedUsing?.slug)
+      const bridgesSlugs = bridges.map((bridge) => bridge.display.slug)
+      const invalidSlugs = tokenSlugs.filter(
+        (slug) => !bridgesSlugs.includes(slug!),
+      )
+
+      expect(invalidSlugs).toHaveLength(0)
     })
   })
 })
