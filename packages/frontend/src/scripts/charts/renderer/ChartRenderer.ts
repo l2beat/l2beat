@@ -4,13 +4,13 @@ import { mean } from 'lodash'
 import { makeQuery } from '../../query'
 import { isMobile } from '../../utils/isMobile'
 import { getMilestoneHover, getMilestoneHtml } from '../htmls'
-import { getYAxis } from './getYAxis'
 import {
   FILL_STYLES,
   LINE_STYLES,
   POINT_CLASS_NAMES,
   SeriesStyle,
-} from './styles'
+} from '../styles'
+import { getYAxis } from './getYAxis'
 
 interface Point<T> {
   series: number[]
@@ -169,7 +169,7 @@ export class ChartRenderer {
         if (!series.point) {
           return ''
         }
-        return `<div data-series="${i}"></div>`
+        return `<div data-series="${i}" class="absolute z-40"></div>`
       })
       .join('')
   }
@@ -264,11 +264,13 @@ export class ChartRenderer {
       )
       if (pointElement) {
         const pointStyle = this.renderParams.seriesStyle[i].point
-        pointElement.className = milestone
-          ? POINT_CLASS_NAMES.milestone
-          : pointStyle
-          ? POINT_CLASS_NAMES[pointStyle]
-          : ''
+        pointElement.className = `absolute z-40 ${
+          milestone
+            ? POINT_CLASS_NAMES.milestone
+            : pointStyle
+            ? POINT_CLASS_NAMES[pointStyle]
+            : ''
+        }`
         const y = this.getY(value)
         const bottom = Math.max(
           0,

@@ -6,12 +6,12 @@ export interface SeriesStyle {
 
 export const POINT_CLASS_NAMES = {
   circle:
-    'absolute z-40 h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
-  blueSquare: 'absolute z-40 h-2 w-2 border-2 border-current bg-blue-600',
+    'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
+  blueSquare: 'h-2 w-2 border-2 border-current bg-blue-600',
   redCircle:
-    'absolute z-40 h-2 w-2 rounded-full border-2 border-current bg-red-300',
+    'h-2 w-2 rounded-full border-2 border-current bg-red-300',
   milestone:
-    'absolute z-40 h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
+    'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
 }
 
 export const FILL_STYLES = {

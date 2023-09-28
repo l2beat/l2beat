@@ -1,7 +1,8 @@
 import { formatTimestamp } from '../../../../utils'
 import { formatTpsWithUnit } from '../../../../utils/formatTps'
+import { getActivityHover } from '../../htmls'
 import { RenderParams } from '../../renderer/ChartRenderer'
-import { SeriesStyle } from '../../renderer/styles'
+import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
 import { ChartControlsState } from '../types'
 
@@ -34,18 +35,21 @@ export function getActivityRenderParams(
 
     const formatYAxisLabel = (x: number) => formatTpsWithUnit(x)
 
+    const tpsPoint = 'redCircle'
+    const ethTpsPoint = 'blueSquare'
+
     const seriesStyle: SeriesStyle[] = [
       {
         line: 'signature gradient',
         fill: 'signature gradient',
-        point: 'redCircle',
+        point: tpsPoint,
       },
     ]
     if (state.showEthereumTransactions) {
       seriesStyle.unshift({
         line: 'blue gradient',
         fill: 'blue gradient',
-        point: 'blueSquare',
+        point: ethTpsPoint,
       })
     }
 
@@ -53,7 +57,11 @@ export function getActivityRenderParams(
       formatYAxisLabel,
       points,
       seriesStyle,
-      renderHoverContents: () => '',
+      renderHoverContents: (value) =>
+        getActivityHover(value, {
+          eth: ethTpsPoint,
+          projects: tpsPoint,
+        }),
       useLogScale: state.useLogScale,
     }
   }

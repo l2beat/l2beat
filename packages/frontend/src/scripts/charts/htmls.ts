@@ -1,6 +1,8 @@
 import { Milestone } from '@l2beat/config'
 
+import { formatTps } from '../../utils/formatTps'
 import { isMobile } from '../utils/isMobile'
+import { POINT_CLASS_NAMES, SeriesStyle } from './styles'
 
 const MILESTONE_SIZE = 20
 
@@ -34,7 +36,22 @@ export function getMilestoneHtml(x: number, url: string) {
 }
 
 export function getMilestoneHover(milestone: Milestone) {
-  return `<div>${milestone.name}</div><div>${milestone.date}</div>`
+  return `
+    <div class="mb-1">${milestone.date}</div>
+    <div class="max-w-[216px] mb-2 font-bold flex flex-wrap">
+      <div class="absolute mt-[2px] md:mt-[5px] ${
+        POINT_CLASS_NAMES.milestone
+      }"></div>
+      <span class="ml-4 text-left">${milestone.name}</span>
+    </div>
+    ${
+      milestone.description
+        ? `<div class="max-w-[216px] mb-1 text-left">
+            ${milestone.description}
+          </div>`
+        : ''
+    }
+  `
 }
 
 export interface TvlData {
@@ -55,4 +72,41 @@ export function getTvlHover(data: TvlData) {
       <span>USD</span>
     </div>
   `
+}
+
+export function getActivityHover(
+  data: {
+    date: string
+    tps: number
+    ethTps: number
+  },
+  pointClassnames: {
+    eth: NonNullable<SeriesStyle['point']>
+    projects: NonNullable<SeriesStyle['point']>
+  },
+) {
+  const tpsRow = `
+    <div>
+      <div class="inline-block mr-1 relative -top-px ${
+        POINT_CLASS_NAMES[pointClassnames.projects]
+      }"></div> 
+      <span class="font-bold">Projects</span> avg. TPS: <span class="font-bold">${formatTps(
+        data.tps,
+      )}</span>
+    </div>
+  `
+  const ethTpsRow = `
+    <div>
+      <div class="inline-block mr-1 relative -top-px ${
+        POINT_CLASS_NAMES[pointClassnames.eth]
+      }"></div>
+      <span class="font-bold">Ethereum</span> avg. TPS: <span class="font-bold">${formatTps(
+        data.ethTps,
+      )}</span>
+    </div>`
+
+  return `
+    <div class="mb-1">${data.date}</div>
+      ${data.tps > data.ethTps ? tpsRow + ethTpsRow : ethTpsRow + tpsRow}
+    </div>`
 }

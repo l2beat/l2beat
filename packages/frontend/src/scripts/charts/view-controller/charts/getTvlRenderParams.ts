@@ -1,7 +1,8 @@
 import { formatCurrency } from '../../../../components/chart/configure/update/view/format'
 import { formatTimestamp } from '../../../../utils'
+import { getTvlHover } from '../../htmls'
 import { RenderParams } from '../../renderer/ChartRenderer'
-import { SeriesStyle } from '../../renderer/styles'
+import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
 import { ChartControlsState } from '../types'
 
@@ -44,7 +45,7 @@ export function getTvlRenderParams(
     formatYAxisLabel,
     points,
     seriesStyle,
-    renderHoverContents: () => '',
+    renderHoverContents: getTvlHover,
     useLogScale: state.useLogScale,
   }
 }
