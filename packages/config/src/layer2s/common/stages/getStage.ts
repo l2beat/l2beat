@@ -5,6 +5,16 @@ export type StageChecklist = Parameters<typeof getStage>[0]
 interface GetStageOptions {
   rollupNodeLink?: string
 }
+type Blueprint = ReturnType<typeof getBlueprint>
+type BlueprintChecklist = ChecklistTemplate<Blueprint>
+
+export const getStage = (
+  blueprintChecklist: BlueprintChecklist,
+  opts?: GetStageOptions,
+) => {
+  const blueprint = getBlueprint(opts)
+  return createGetStage(blueprint)(blueprintChecklist)
+}
 
 const getBlueprint = (opts?: GetStageOptions) =>
   ({
@@ -86,13 +96,3 @@ const getBlueprint = (opts?: GetStageOptions) =>
       },
     },
   } as const)
-type Blueprint = ReturnType<typeof getBlueprint>
-type BlueprintChecklist = ChecklistTemplate<Blueprint>
-
-export const getStage = (
-  blueprintChecklist: BlueprintChecklist,
-  opts?: GetStageOptions,
-) => {
-  const blueprint = getBlueprint(opts)
-  return createGetStage(blueprint)(blueprintChecklist)
-}
