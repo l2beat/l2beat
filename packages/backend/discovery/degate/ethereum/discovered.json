@@ -1,8 +1,8 @@
 {
   "name": "degate",
   "chain": "ethereum",
-  "blockNumber": 17434695,
-  "configHash": "0xadf196f9058092e27299c4f7165d10c2012663548dc91fb005ef32fa8beb5e31",
+  "blockNumber": 18220032,
+  "configHash": "0xe1cf73fc7355d3c8c24c8ccbd8560edbb13d0377b636a9ecbd492f149be68f54",
   "version": 2,
   "contracts": [
     {
@@ -95,7 +95,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 91
+        "transactionCount": 100
       },
       "derivedName": "MultiSigWallet"
     },
@@ -122,7 +122,7 @@
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
-        "getBlockHeight": 937,
+        "getBlockHeight": 1886,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           1000000,
@@ -142,8 +142,8 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x2e88ccd11b444094be16bd83c9aaf90875716c0618368f34a7587b1ef05676d1",
-        "getMerkleRoot": "0x066d0c79ec44a463f267d0dc60814b71a6a2b3b383b4869bbf8f58e1c8be9637",
+        "getMerkleAssetRoot": "0x25c10cf9f81f901dd636ad9d44d1671d7d7e8d0331d35debfbc67fc878d55bf8",
+        "getMerkleRoot": "0x0fe136c28df94c9bd0b1eb82861d55dbfea0e4a176affbec3c002003ff949d3c",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": [0, 18, 18, 0, 18],
         "isInWithdrawalMode": false,
@@ -151,6 +151,7 @@
         "loopringV3": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
         "owner": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "shutdownTriggered": [],
         "state": [
           1296000,
           "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
@@ -158,10 +159,10 @@
           "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
           "0x0000000000000000000000000000000000000000",
           "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
-          [5000, 4999, 17429470, 1, 4480000000000000],
-          "0x066d0c79ec44a463f267d0dc60814b71a6a2b3b383b4869bbf8f58e1c8be9637",
-          "0x2e88ccd11b444094be16bd83c9aaf90875716c0618368f34a7587b1ef05676d1",
-          937,
+          [5000, 4999, 18041575, 1, 4480000000000000],
+          "0x0fe136c28df94c9bd0b1eb82861d55dbfea0e4a176affbec3c002003ff949d3c",
+          "0x25c10cf9f81f901dd636ad9d44d1671d7d7e8d0331d35debfbc67fc878d55bf8",
+          1886,
           0,
           [0, 18, 18, 0, 18],
           [0, 0]

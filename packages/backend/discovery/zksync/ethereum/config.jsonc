@@ -86,6 +86,11 @@
             "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B",
             "0x225d3822De44E58eE935440E0c0B829C4232086e"
           ]
+        },
+        "revertedBlocks": {
+          "type": "stateFromEvent",
+          "event": "BlocksRevert",
+          "returnParams": ["totalBlocksCommitted", "totalBlocksVerified"]
         }
       },
       "ignoreMethods": [

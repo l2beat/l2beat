@@ -1,0 +1,4 @@
+@harness/=../../../_testHarness/
+@code/=../.code/KromaPortal/implementation/
+@openzeppelin/=../.code/KromaPortal/implementation/node_modules/@openzeppelin/
+@rari-capital/=../.code/KromaPortal/implementation/node_modules/@rari-capital/

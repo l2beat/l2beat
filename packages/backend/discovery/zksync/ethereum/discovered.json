@@ -1,8 +1,8 @@
 {
   "name": "zksync",
   "chain": "ethereum",
-  "blockNumber": 18062329,
-  "configHash": "0xa3f7b3ea2de4097770fce81fb007ed822de0f5dc7f331397b1e7bc302a7c007f",
+  "blockNumber": 18220131,
+  "configHash": "0x82dc10b38ea04e4b12bfdbc39754fb9e84c7f79a0d87767d30cd3d70f04a1e12",
   "version": 2,
   "contracts": [
     {
@@ -71,7 +71,7 @@
           "0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
         ],
         "getThreshold": 2,
-        "nonce": 288,
+        "nonce": 290,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -155,7 +155,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 17099
+        "totalSupply": 17439
       },
       "derivedName": "ZkSyncNFTFactory"
     },
@@ -175,6 +175,40 @@
         "getNoticePeriod": 0,
         "governance": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
         "isReadyForUpgrade": true,
+        "revertedBlocks": [
+          {
+            "totalBlocksCommitted": 141,
+            "totalBlocksVerified": 141
+          },
+          {
+            "totalBlocksCommitted": 859,
+            "totalBlocksVerified": 859
+          },
+          {
+            "totalBlocksCommitted": 1341,
+            "totalBlocksVerified": 1341
+          },
+          {
+            "totalBlocksCommitted": 2387,
+            "totalBlocksVerified": 2387
+          },
+          {
+            "totalBlocksCommitted": 13054,
+            "totalBlocksVerified": 13042
+          },
+          {
+            "totalBlocksCommitted": 13047,
+            "totalBlocksVerified": 13042
+          },
+          {
+            "totalBlocksCommitted": 19646,
+            "totalBlocksVerified": 19646
+          },
+          {
+            "totalBlocksCommitted": 34518,
+            "totalBlocksVerified": 34504
+          }
+        ],
         "securityCouncilMembers": [
           "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769",
           "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",

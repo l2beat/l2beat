@@ -1,8 +1,8 @@
 {
   "name": "mantapacific",
   "chain": "ethereum",
-  "blockNumber": 18133790,
-  "configHash": "0x212e118281a9f40039d0ac92765e4ba69892c71f263df8d10d628bf07248c58d",
+  "blockNumber": 18219277,
+  "configHash": "0x59148bde60aa9aa5ee97a1fae5494f52c078f975e750aa58c325c4b3911a950e",
   "version": 2,
   "contracts": [
     {
@@ -16,12 +16,13 @@
       "sinceTimestamp": 1694224883,
       "values": {
         "CHALLENGER": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 259200,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 45960,
-        "latestOutputIndex": 382,
-        "nextBlockNumber": 46080,
-        "nextOutputIndex": 383,
+        "latestBlockNumber": 149760,
+        "latestOutputIndex": 1247,
+        "nextBlockNumber": 149880,
+        "nextOutputIndex": 1248,
         "PROPOSER": "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
         "startingBlockNumber": 0,
         "startingTimestamp": 1694223959,
@@ -71,7 +72,7 @@
       "sinceTimestamp": 1694224919,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620262",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622016",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -129,7 +130,7 @@
         "GUARDIAN": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "L2_ORACLE": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 18133775],
+        "params": [1000000000, 490798, 18219213],
         "paused": false,
         "SYSTEM_CONFIG": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
         "version": "1.7.2"

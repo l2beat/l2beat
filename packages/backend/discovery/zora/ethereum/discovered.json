@@ -1,8 +1,8 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 18083967,
-  "configHash": "0x11a78f39c3de4b930a11851a87481fade694a707bca1f55e550a581c6b17b336",
+  "blockNumber": 18218892,
+  "configHash": "0x9ebcab854f081dc90cdbf6cfe9c028aef3090e6d7d4103516700399108e6c1e2",
   "version": 2,
   "contracts": [
     {
@@ -18,7 +18,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 18083965],
+        "params": [1000000000, 200000, 18218889],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -71,12 +71,13 @@
       "sinceTimestamp": 1686694007,
       "values": {
         "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 3691980,
-        "latestOutputIndex": 2275,
-        "nextBlockNumber": 3693780,
-        "nextOutputIndex": 2276,
+        "latestBlockNumber": 4510980,
+        "latestOutputIndex": 2730,
+        "nextBlockNumber": 4512780,
+        "nextOutputIndex": 2731,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -205,7 +206,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620217",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620407",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
