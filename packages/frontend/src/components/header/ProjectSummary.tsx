@@ -9,6 +9,7 @@ interface Props {
   type: 'bridge' | 'layer2'
   stats: SummaryStat[]
   detailedTvlEnabled: boolean
+  className?: string
 }
 
 export interface SummaryStat {
@@ -24,8 +25,9 @@ export function ProjectSummary(props: Props) {
   return (
     <div
       className={classNames(
-        'row grid h-fit grow grid-cols-1 gap-3 px-4 md:gap-0 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800',
+        'row grid h-fit grow gap-3 px-4 md:gap-x-3 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800',
         cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
+        props.className,
       )}
     >
       {groupedStats.map((group, groupIndex) => {
