@@ -25,7 +25,7 @@ export class ChartControls {
         type: 'activity',
         values: activity as ActivityResponse,
       },
-      timeRangeInDays: this.toDays(settings.getTimeRange()),
+      timeRangeInDays: settings.getTimeRange(),
       useAltCurrency: settings.getUseAltCurrency(),
       useLogScale: settings.getUseLogScale(),
       showEthereumTransactions: settings.getShowEthereumTransactions(),
@@ -68,18 +68,10 @@ export class ChartControls {
     )
     timeRangeControls.forEach((timeRangeControl) => {
       timeRangeControl.checked =
-        settings.getTimeRange() === timeRangeControl.value
+        settings.getTimeRange() === this.toDays(timeRangeControl.value)
       timeRangeControl.addEventListener('change', () => {
-        settings.setTimeRange(
-          timeRangeControl.value as
-            | '7D'
-            | '30D'
-            | '90D'
-            | '180D'
-            | '1Y'
-            | 'MAX',
-        )
         const timeRangeInDays = this.toDays(timeRangeControl.value)
+        settings.setTimeRange(timeRangeInDays)
         this.chartViewController.configure({ timeRangeInDays })
       })
     })
