@@ -1,6 +1,7 @@
 import { configureCharts as oldConfigureCharts } from '../../components/chart/configure'
 import { makeQuery } from '../query'
 import { ChartControls } from './ChartControls'
+import { ChartSettingsManager } from './ChartSettings'
 import { ChartRenderer } from './renderer/ChartRenderer'
 import { ChartViewController } from './view-controller/ChartViewController'
 
@@ -23,5 +24,6 @@ export function configureCharts() {
 
   const chartRenderer = new ChartRenderer(chartView)
   const chartViewController = new ChartViewController(chartRenderer)
-  new ChartControls(chart, chartViewController)
+  const chartSettingsManager = new ChartSettingsManager()
+  new ChartControls(chart, chartSettingsManager, chartViewController)
 }

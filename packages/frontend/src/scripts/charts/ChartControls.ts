@@ -6,93 +6,95 @@ import {
 } from '../../components/chart/configure/state/State'
 import { makeQuery } from '../query'
 import activity from './activity.json'
+import { ChartSettings, ChartSettingsManager } from './ChartSettings'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export class ChartControls {
   constructor(
     readonly chart: HTMLElement,
+    private readonly chartSetttings: ChartSettingsManager,
     private readonly chartViewController: ChartViewController,
   ) {
     const milestones = this.getMilestones(chart)
-    const values = this.setupControls(chart)
+    //TODO: Add chart id
+    const settings = this.chartSetttings.for('CHART ID')
+    this.setupControls(chart, settings)
 
     chartViewController.init({
       data: {
         type: 'activity',
         values: activity as ActivityResponse,
       },
-      timeRangeInDays: values.timeRangeInDays,
-      useAltCurrency: values.useAltCurrency,
-      useLogScale: values.useLogScale,
-      showEthereumTransactions: values.showEthereumTransactions,
+      timeRangeInDays: this.toDays(settings.getTimeRange()),
+      useAltCurrency: settings.getUseAltCurrency(),
+      useLogScale: settings.getUseLogScale(),
+      showEthereumTransactions: settings.getShowEthereumTransactions(),
       tokenType: 'CBV',
       milestones,
     })
   }
 
-  setupControls(chart: HTMLElement) {
+  setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
 
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )
-    // TODO: init with settings
-    scaleControls.forEach((scaleControl) =>
+    scaleControls.forEach((scaleControl) => {
+      scaleControl.checked =
+        settings.getUseLogScale() === (scaleControl.value === 'LOG')
       scaleControl.addEventListener('change', () => {
-        this.chartViewController.configure({
-          useLogScale: scaleControl.value === 'LOG',
-        })
-      }),
-    )
-    const useLogScale =
-      scaleControls.find((control) => control.checked)?.value === 'LOG'
+        const useLogScale = scaleControl.value === 'LOG'
+        settings.setUseLogScale(useLogScale)
+        this.chartViewController.configure({ useLogScale })
+      })
+    })
 
     const currencyControls = $$<HTMLInputElement>(
       '[data-role="chart-currency-controls"] input',
     )
-    // TODO: init with settings
     currencyControls.forEach((currencyControl) => {
+      currencyControl.checked =
+        settings.getUseAltCurrency() === (currencyControl.value === 'ETH')
       currencyControl.addEventListener('change', () => {
-        this.chartViewController.configure({
-          useAltCurrency: currencyControl.value === 'ETH',
-        })
+        const useAltCurrency = currencyControl.value === 'ETH'
+        settings.setUseAltCurrency(useAltCurrency)
+        this.chartViewController.configure({ useAltCurrency })
       })
     })
-    const useAltCurrency =
-      scaleControls.find((control) => control.checked)?.value === 'ETH'
 
     const timeRangeControls = $$<HTMLInputElement>(
       '[data-role="chart-range-controls"] input',
     )
-    // TODO: init with settings
     timeRangeControls.forEach((timeRangeControl) => {
+      timeRangeControl.checked =
+        settings.getTimeRange() === timeRangeControl.value
       timeRangeControl.addEventListener('change', () => {
-        this.chartViewController.configure({
-          timeRangeInDays: this.toDays(timeRangeControl.value),
-        })
+        settings.setTimeRange(
+          timeRangeControl.value as
+            | '7D'
+            | '30D'
+            | '90D'
+            | '180D'
+            | '1Y'
+            | 'MAX',
+        )
+        const timeRangeInDays = this.toDays(timeRangeControl.value)
+        this.chartViewController.configure({ timeRangeInDays })
       })
     })
-    const timeRangeInDays = this.toDays(
-      timeRangeControls.find((control) => control.checked)?.value ?? '1Y',
-    )
 
     const showEthereumTransactionToggle = $.maybe<HTMLInputElement>(
       '[data-role="toggle-ethereum-activity"]',
     )
-
-    showEthereumTransactionToggle?.addEventListener('change', () => {
-      this.chartViewController.configure({
-        showEthereumTransactions: !!showEthereumTransactionToggle.checked,
+    if (showEthereumTransactionToggle) {
+      showEthereumTransactionToggle.checked =
+        settings.getShowEthereumTransactions()
+      showEthereumTransactionToggle.addEventListener('change', () => {
+        const showEthereumTransactions = !!showEthereumTransactionToggle.checked
+        settings.setShowEthereumTransactions(showEthereumTransactions)
+        this.chartViewController.configure({ showEthereumTransactions })
       })
-    })
-
-    const showEthereumTransactions = !!showEthereumTransactionToggle?.checked
-
-    return {
-      useLogScale,
-      useAltCurrency,
-      timeRangeInDays,
-      showEthereumTransactions,
     }
   }
 
