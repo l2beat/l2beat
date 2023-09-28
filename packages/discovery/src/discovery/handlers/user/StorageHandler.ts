@@ -8,16 +8,10 @@ import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
-import { BytesFromString, NumberFromString } from '../types'
+import { SingleSlot } from '../storageCommon'
+import { NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 import { valueToBigInt } from '../utils/valueToBigInt'
-
-const SingleSlot = z.union([
-  z.number().int().nonnegative(),
-  BytesFromString,
-  NumberFromString,
-  Reference,
-])
 
 export type StorageHandlerDefinition = z.infer<typeof StorageHandlerDefinition>
 export const StorageHandlerDefinition = z.strictObject({
