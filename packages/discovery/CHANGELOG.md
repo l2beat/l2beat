@@ -1,5 +1,12 @@
 # @l2beat/discovery
 
+## 0.5.0
+
+### Minor Changes
+
+- a04ca64: `ConstructorArgsHandler` now derives constructor arguments from block explorer's response instead of raw deploy transaction's data. If it fails to do so, it will fallback to the old behavior using heuristic and try to decode constructor arguments by reading end of the deployment data.
+- 38f146e: Add DynamicArrayHandler for fetching the content of internal dynamic arrays.
+
 ## 0.4.1
 
 ### Patch Changes
