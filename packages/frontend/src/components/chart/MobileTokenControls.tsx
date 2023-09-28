@@ -13,9 +13,13 @@ import {
 
 export interface MobileTokenControlsProps {
   tokens?: TokenControl[]
+  tvlBreakdownHref: string
 }
 
-export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
+export function MobileTokenControls({
+  tokens,
+  tvlBreakdownHref,
+}: MobileTokenControlsProps) {
   if (!tokens || tokens.length === 0) {
     return null
   }
@@ -61,15 +65,11 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
                 )}
               </div>
               <div className="mt-6 flex items-center justify-center gap-1">
-                <p className="text-sm font-medium text-black dark:text-white/80">
-                  Can't find a token?
-                </p>
                 <a
-                  href="https://forms.gle/fQFsC5g1LgG5z12T7"
-                  target="_blank"
+                  href={tvlBreakdownHref}
                   className="flex flex-wrap items-center gap-1 text-sm font-bold text-blue-700 underline dark:text-blue-500"
                 >
-                  Request it here
+                  View TVL Breakdown
                   <ArrowRightIcon className="fill-current" />
                 </a>
               </div>
