@@ -18,9 +18,7 @@ export function ChartLabels() {
 function ChartLabel() {
   return (
     <div className="relative">
-      <span data-role="chart-label" className="absolute left-0 bottom-0">
-        $123
-      </span>
+      <span data-role="chart-label" className="absolute left-0 bottom-0" />
       <hr />
     </div>
   )

@@ -3,8 +3,8 @@ import { mean } from 'lodash'
 
 import { makeQuery } from '../../query'
 import { isMobile } from '../../utils/isMobile'
+import { getMilestoneHover, getMilestoneHtml } from '../htmls'
 import { getYAxis } from './getYAxis'
-import { getMilestoneHover, getMilestoneHtml } from './htmls'
 import {
   FILL_STYLES,
   LINE_STYLES,
@@ -18,15 +18,13 @@ interface Point<T> {
   milestone?: Milestone
 }
 
-interface RenderParams<T> {
+export interface RenderParams<T> {
   points: Point<T>[]
   seriesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
   renderHoverContents: (pointData: T) => string
-  yAxisScale: YAxisScale
+  useLogScale: boolean
 }
-
-type YAxisScale = 'LOG' | 'LIN'
 
 const FIRST_LABEL_HEIGHT_PX = 20
 const HOVER_AREA_EXTENSION_PX = 16
@@ -83,7 +81,7 @@ export class ChartRenderer {
     this.setupCanvas()
     this.setupYAxisLabels(
       params.points,
-      params.yAxisScale,
+      params.useLogScale,
       params.formatYAxisLabel,
     )
     this.setupHoverPoints(params.seriesStyle)
@@ -92,10 +90,10 @@ export class ChartRenderer {
   }
 
   private renderData<T>(params: RenderParams<T>) {
-    for (const [si, series] of params.seriesStyle.entries()) {
-      const usableHeight =
-        this.canvas.height - FIRST_LABEL_HEIGHT_PX * window.devicePixelRatio
+    const usableHeight =
+      this.canvas.height - FIRST_LABEL_HEIGHT_PX * window.devicePixelRatio
 
+    const paths = params.seriesStyle.map((series, si) => {
       const linePath = new Path2D()
       for (const [pi, point] of params.points.entries()) {
         const x = (pi / (params.points.length - 1)) * this.canvas.width
@@ -107,21 +105,25 @@ export class ChartRenderer {
           linePath.lineTo(x, y)
         }
       }
+      return { style: series, path: linePath }
+    })
 
-      const fillPath = new Path2D(linePath)
-      fillPath.lineTo(this.canvas.width, this.canvas.height)
-      fillPath.lineTo(0, this.canvas.height)
-      fillPath.closePath()
-
-      if (series.fill) {
-        this.ctx.fillStyle = FILL_STYLES[series.fill](this.ctx)
+    for (const { style, path } of paths) {
+      if (style.fill) {
+        this.ctx.fillStyle = FILL_STYLES[style.fill](this.ctx)
+        const fillPath = new Path2D(path)
+        fillPath.lineTo(this.canvas.width, this.canvas.height)
+        fillPath.lineTo(0, this.canvas.height)
+        fillPath.closePath()
         this.ctx.fill(fillPath)
       }
+    }
 
-      if (series.line) {
+    for (const { style, path } of paths) {
+      if (style.line) {
         this.ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
-        this.ctx.strokeStyle = LINE_STYLES[series.line](this.ctx)
-        this.ctx.stroke(linePath)
+        this.ctx.strokeStyle = LINE_STYLES[style.line](this.ctx)
+        this.ctx.stroke(path)
       }
     }
   }
@@ -174,14 +176,13 @@ export class ChartRenderer {
 
   private setupYAxisLabels(
     points: Point<unknown>[],
-    yAxisScale: YAxisScale,
+    useLogScale: boolean,
     formatYAxisLabel: (value: number) => string,
   ) {
-    const isLog = yAxisScale === 'LOG'
     const values = points.flatMap((point) => point.series)
     const { labels, getY } = getYAxis(
       values,
-      isLog,
+      useLogScale,
       formatYAxisLabel,
       LABEL_COUNT,
     )

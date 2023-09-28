@@ -1,6 +1,6 @@
 import { Milestone } from '@l2beat/config'
 
-import { isMobile } from '../../utils/isMobile'
+import { isMobile } from '../utils/isMobile'
 
 const MILESTONE_SIZE = 20
 
@@ -35,4 +35,24 @@ export function getMilestoneHtml(x: number, url: string) {
 
 export function getMilestoneHover(milestone: Milestone) {
   return `<div>${milestone.name}</div><div>${milestone.date}</div>`
+}
+
+export interface TvlData {
+  date: string
+  usd: number
+  eth: number
+}
+
+export function getTvlHover(data: TvlData) {
+  return `
+    <div class="mb-1">${data.date}</div>
+    <div>
+      <span class="font-bold">${data.eth}</span>
+      <span>ETH</span>
+    </div>
+    <div>
+      <span class="font-bold">${data.usd}</span>
+      <span>USD</span>
+    </div>
+  `
 }
