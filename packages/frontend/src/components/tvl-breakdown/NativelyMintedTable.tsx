@@ -14,7 +14,7 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
     return acc + Number(token.usdValue)
   }, 0)
 
-  return props.tokens.length === 0 ? null : (
+  return (
     <div className="flex flex-col px-4 md:px-0">
       <h2 className="mt-12 ml-1 mb-3 text-xl font-bold md:mb-4 md:ml-2 md:text-2xl">
         Natively Minted Value
@@ -22,6 +22,8 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
       <TVLBreakdownTableView
         columns={getNativelyMintedColumns()}
         items={props.tokens}
+        type="NMV"
+        empty={props.tokens.length === 0}
       />
       <TableSum amount={sum} />
     </div>
