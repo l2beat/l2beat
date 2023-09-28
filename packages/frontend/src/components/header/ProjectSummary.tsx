@@ -7,12 +7,12 @@ import { InfoIcon } from '../icons'
 
 interface Props {
   type: 'bridge' | 'layer2'
-  stats: SummaryStat[]
+  stats: ProjectSummaryStat[]
   detailedTvlEnabled: boolean
   className?: string
 }
 
-export interface SummaryStat {
+export interface ProjectSummaryStat {
   title: string
   value: ReactNode
   tooltip?: string
@@ -56,7 +56,7 @@ export function ProjectSummary(props: Props) {
   )
 }
 
-function DetailsHeaderStat(props: SummaryStat) {
+function DetailsHeaderStat(props: ProjectSummaryStat) {
   return (
     <li
       className={classNames(

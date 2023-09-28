@@ -3,7 +3,7 @@ import React from 'react'
 import { ProjectLink } from '../icons'
 import { DesktopProjectLinks } from './DesktopProjectLinks'
 import { MobileProjectLinks } from './MobileProjectLinks'
-import { ProjectSummary, SummaryStat } from './ProjectSummary'
+import { ProjectSummary, ProjectSummaryStat } from './ProjectSummary'
 import { TvlStats, TvlSummary } from './TvlSummary'
 
 interface SummaryProps {
@@ -17,7 +17,7 @@ interface SummaryProps {
 }
 
 export interface FullSummaryStats {
-  summary: SummaryStat[]
+  summary: ProjectSummaryStat[]
   l2Tvl?: TvlStats
 }
 

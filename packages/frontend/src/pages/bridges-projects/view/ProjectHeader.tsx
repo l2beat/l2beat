@@ -3,7 +3,7 @@ import React from 'react'
 
 import { NoDataBadge } from '../../../components/badge/NoDataBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
-import { SummaryStat } from '../../../components/header/ProjectSummary'
+import { ProjectSummaryStat } from '../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { ProjectLink } from '../../../components/icons'
 import { RiskCell } from '../../../components/table/RiskCell'
@@ -27,7 +27,7 @@ export interface ProjectHeaderProps {
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
-  const stats: SummaryStat[] = [
+  const stats: ProjectSummaryStat[] = [
     {
       title: 'Total value locked',
       tooltip:
