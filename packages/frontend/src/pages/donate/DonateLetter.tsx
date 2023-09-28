@@ -5,21 +5,22 @@ export function DonateLetter() {
     <article className="DonateLetter">
       <p>
         Thank you for choosing to donate to L2BEAT. Your contribution supports
-        our continuous efforts to bring education and transparency to the L2
-        space.
+        our continuous efforts to bring education and transparency to the
+        blockchain space.
       </p>
       <p>
-        L2BEAT is an analytics and research website about Ethereum layer two
-        (L2) scaling. We provide a comparison of the various Ethereum L2 systems
-        available today. Because of our commitment to education we present
-        various non-trivial metrics aside from Value Locked. We have carefully
-        examined each L2 project to determine the inner workings of their
-        technology as well as the associated risks.
+        What sets L2BEAT apart is our unwavering commitment to delivering
+        accurate and reliable information. We strive to be an impartial and
+        independent watchdog that acts in the best interest of users and the
+        broader ecosystem while always remaining credibly neutral and faithful
+        to reality and facts. We deliver data and tools that allow our community
+        to educate themselves, transact securely, and make well-informed
+        decisions
       </p>
       <p>
-        In the future we plan to introduce more metrics as well as build special
-        purpose tools for various L2s that empower users to execute operations
-        like forced transactions or view L2 state from the perspective of L1.
+        In the future we plan to introduce more metrics as well as build more
+        tools for that empower users to execute operations like forced
+        transactions or view L2 state from the perspective of L1.
       </p>
       <p>
         We are a small and independent team. Your support means a lot to us.
