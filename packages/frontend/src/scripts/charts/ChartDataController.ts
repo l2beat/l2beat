@@ -39,10 +39,14 @@ export class ChartDataController {
     // TODO: if in cache get cached
 
     // TODO: abortcontroller
+
+    console.log('fetching', url)
+
     void fetch(url)
       .then((res) => res.json())
       .then((data: unknown) => this.parseData(chartType, data))
       .then((data) => this.chartViewController.configure({ data }))
+      .then(() => console.log('done'))
   }
 
   private parseData(chartType: ChartType, data: unknown): ChartData {

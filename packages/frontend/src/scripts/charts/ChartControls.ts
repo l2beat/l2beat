@@ -7,6 +7,8 @@ import { Milestones } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export class ChartControls {
+  private chartType?: ChartType
+
   constructor(
     private readonly chart: HTMLElement,
     private readonly chartSettings: ChartSettingsManager,
@@ -16,7 +18,7 @@ export class ChartControls {
 
   init() {
     const milestones = this.getMilestones(this.chart)
-    const chartType = this.getChartType(this.chart)
+    this.chartType = this.getChartType(this.chart)
     const settings = this.chartSettings.for(
       this.chart.dataset.settingsId ?? 'unknown',
     )
@@ -30,7 +32,7 @@ export class ChartControls {
       showEthereumTransactions: settings.getShowEthereumTransactions(),
       milestones,
     })
-    this.chartDataController.setChartType(chartType)
+    this.chartDataController.setChartType(this.chartType)
   }
 
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
@@ -87,6 +89,33 @@ export class ChartControls {
         this.chartViewController.configure({ showEthereumTransactions })
       })
     }
+
+    const chartTypeControls = $$<HTMLInputElement>(
+      '[data-role="radio-chart-type-controls"] input',
+    )
+    chartTypeControls.forEach((chartTypeControl) => {
+      chartTypeControl.addEventListener('change', () => {
+        const type = chartTypeControl.value as
+          | 'tvl'
+          | 'detailedTvl'
+          | 'activity'
+
+        const slug =
+          this.chartType && 'slug' in this.chartType && this.chartType.slug
+
+        if (slug) {
+          this.chartDataController.setChartType(
+            type === 'tvl'
+              ? { type: 'project-tvl', slug }
+              : type === 'detailedTvl'
+              ? { type: 'project-detailed-tvl', slug }
+              : { type: 'project-activity', slug },
+          )
+        }
+
+        // TODO: show / hide currency, token and ethereum transaction controls
+      })
+    })
   }
 
   private getMilestones(chart: HTMLElement) {

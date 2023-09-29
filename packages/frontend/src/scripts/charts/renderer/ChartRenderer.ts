@@ -78,6 +78,7 @@ export class ChartRenderer {
   }
 
   private rerender<T>(params: RenderParams<T>) {
+    console.log('rerender')
     this.setupCanvas()
     this.setupYAxisLabels(
       params.points,
