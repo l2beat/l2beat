@@ -14,15 +14,6 @@ export class ChartDataController {
 
   constructor(private readonly chartViewController: ChartViewController) {}
 
-  // constructor(chart: HTMLElement) {
-  //   const chartType = chart.dataset.inititialType
-  //     ? ChartType.parse(chart.dataset.inititialType)
-  //     : undefined
-  //   if (!chartType) {
-  //     throw new Error('Invalid chart type')
-  //   }
-  // }
-
   setChartType(chartType: ChartType) {
     this.chartType = chartType
     this.refetch()

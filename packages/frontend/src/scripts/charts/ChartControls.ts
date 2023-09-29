@@ -1,39 +1,38 @@
 import { Milestone } from '@l2beat/config'
 
-import {
-  AggregateDetailedTvlResponse,
-  Milestones,
-} from '../../components/chart/configure/state/State'
+import { Milestones } from '../../components/chart/configure/state/State'
 import { makeQuery } from '../query'
+import { ChartDataController, ChartType } from './ChartDataController'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
-import detailedTvl from './detailed-tvl.json'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export class ChartControls {
   constructor(
-    readonly chart: HTMLElement,
-    private readonly chartSetttings: ChartSettingsManager,
+    private readonly chart: HTMLElement,
+    private readonly chartSettings: ChartSettingsManager,
     private readonly chartViewController: ChartViewController,
-  ) {
-    const milestones = this.getMilestones(chart)
-    //TODO: Add chart id
-    const settings = this.chartSetttings.for('CHART ID')
-    this.setupControls(chart, settings)
+    private readonly chartDataController: ChartDataController,
+  ) {}
 
-    chartViewController.init({
-      data: {
-        type: 'detailed-tvl',
-        values: detailedTvl as AggregateDetailedTvlResponse,
-      },
+  init() {
+    const milestones = this.getMilestones(this.chart)
+    const chartType = this.getChartType(this.chart)
+    //TODO: Add chart id
+    const settings = this.chartSettings.for('CHART ID')
+    this.setupControls(this.chart, settings)
+
+    this.chartViewController.init({
+      data: undefined,
       timeRangeInDays: settings.getTimeRange(),
       useAltCurrency: settings.getUseAltCurrency(),
       useLogScale: settings.getUseLogScale(),
       showEthereumTransactions: settings.getShowEthereumTransactions(),
       milestones,
     })
+    this.chartDataController.setChartType(chartType)
   }
 
-  setupControls(chart: HTMLElement, settings: ChartSettings) {
+  private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
 
     const scaleControls = $$<HTMLInputElement>(
@@ -99,6 +98,10 @@ export class ChartControls {
       result[timestamp] = milestone
     }
     return result
+  }
+
+  private getChartType(chart: HTMLElement) {
+    return ChartType.parse(JSON.parse(chart.dataset.initialType ?? ''))
   }
 
   private toDays(value: string) {
