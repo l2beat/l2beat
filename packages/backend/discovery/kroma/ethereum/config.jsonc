@@ -74,7 +74,7 @@
     },
     "ValidatorPool": {
       "ignoreMethods": ["getBond"],
-      "ignoreInWatchMode": ["nextValidator", "validatorCount"],
+      "ignoreInWatchMode": ["nextValidator", "validatorCount", "validators"],
       "fields": {
         "validators": {
           "type": "dynamicArray",
