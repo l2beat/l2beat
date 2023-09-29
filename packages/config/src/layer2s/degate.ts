@@ -47,6 +47,7 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 )} ETH`
 
 export const degate: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('degate'),
   display: {
