@@ -27,6 +27,7 @@ export interface ChartProps {
   detailedTvlEndpoint?: string
   activityEndpoint?: string
   tokens?: TokenControl[]
+  tvlBreakdownHref?: string
   hasActivity?: boolean
   hasTvl?: boolean
   hasDetailedTvl?: boolean
@@ -45,6 +46,7 @@ export function Chart({
   activityEndpoint,
   tokens,
   type = 'tvl',
+  tvlBreakdownHref = '/',
   hasActivity,
   hasTvl = true,
   hasDetailedTvl,
@@ -127,7 +129,12 @@ export function Chart({
             {hasTvl && (
               <div className="flex h-[2rem] items-end">
                 <CurrencyControls />
-                {hasDetailedTvl && <DesktopTokenControls tokens={tokens} />}
+                {hasDetailedTvl && (
+                  <DesktopTokenControls
+                    tvlBreakdownHref={tvlBreakdownHref}
+                    tokens={tokens}
+                  />
+                )}
               </div>
             )}
             <ScaleControls />
@@ -135,7 +142,10 @@ export function Chart({
           {hasTvl && !hasDetailedTvl ? (
             <TokenControlsToBeRemoved tokens={tokens} />
           ) : (
-            <MobileTokenControls tokens={tokens} />
+            <MobileTokenControls
+              tvlBreakdownHref={tvlBreakdownHref}
+              tokens={tokens}
+            />
           )}
         </div>
       </section>
