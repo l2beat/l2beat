@@ -18,6 +18,12 @@ export interface LoggerBackend {
   error(message: string): void
 }
 
+export interface ReportedError {
+  message?: string
+  parameters?: unknown
+  error?: Error
+}
+
 export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
@@ -27,8 +33,8 @@ export interface LoggerOptions {
   colors: boolean
   cwd: string
   getTime: () => Date
-  reportError: (error: unknown) => void
-  reportCriticalError: (error: unknown) => void
+  reportError: (error: ReportedError) => void
+  reportCriticalError: (error: ReportedError) => void
   backend: LoggerBackend
 }
 
@@ -114,7 +120,7 @@ export class Logger {
       return
     }
     this.print('CRITICAL', resolveLog(message, parameters, this.cwd))
-    this.options.reportCriticalError(parameters ?? message)
+    this.options.reportCriticalError(toReportedError(message, parameters))
   }
 
   error(message: string, parameters?: unknown): void
@@ -124,7 +130,7 @@ export class Logger {
       return
     }
     this.print('ERROR', resolveLog(message, parameters, this.cwd))
-    this.options.reportError(parameters ?? message)
+    this.options.reportError(toReportedError(message, parameters))
   }
 
   warn(message: string, parameters?: unknown): void
@@ -263,4 +269,34 @@ function toJSON(parameters: {}): string {
 function sanitize(parameters: {}): {} {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return JSON.parse(toJSON(parameters))
+}
+
+function toReportedError(arg1: unknown, arg2: unknown): ReportedError {
+  let message: string | undefined
+  let parameters: unknown
+  let error: Error | undefined
+
+  if (typeof arg1 === 'string') {
+    message = arg1
+    if (arg2 instanceof Error) {
+      error = arg2
+    } else if (arg2 !== undefined) {
+      parameters = arg2
+    }
+  } else {
+    if (arg1 instanceof Error) {
+      message = arg1.message
+      error = arg1
+    } else if (arg1 !== undefined) {
+      parameters = arg1
+      if (typeof arg1 === 'object' && arg1 !== null) {
+        const messageLike: unknown = Reflect.get(arg1, 'message')
+        if (typeof messageLike === 'string') {
+          message = messageLike
+        }
+      }
+    }
+  }
+
+  return { message, parameters, error }
 }

@@ -146,6 +146,14 @@ describe(Logger.name, () => {
   })
 
   describe('error reporting', () => {
+    const oldConsoleError = console.error
+    beforeEach(() => {
+      console.error = () => {}
+    })
+    afterEach(() => {
+      console.error = oldConsoleError
+    })
+
     it('reports error and critical error using reportError if reportCriticalError was not specified', () => {
       const mockReportError = mockFn((_: unknown) => {})
       const logger = new Logger({
@@ -156,8 +164,16 @@ describe(Logger.name, () => {
       logger.critical('bar')
 
       expect(mockReportError).toHaveBeenCalledTimes(2)
-      expect(mockReportError).toHaveBeenNthCalledWith(1, 'foo')
-      expect(mockReportError).toHaveBeenNthCalledWith(2, 'bar')
+      expect(mockReportError).toHaveBeenNthCalledWith(1, {
+        message: 'foo',
+        parameters: undefined,
+        error: undefined,
+      })
+      expect(mockReportError).toHaveBeenNthCalledWith(2, {
+        message: 'bar',
+        parameters: undefined,
+        error: undefined,
+      })
       expect(mockReportError).toHaveBeenExhausted()
     })
 
@@ -172,8 +188,72 @@ describe(Logger.name, () => {
       logger.error('foo')
       logger.critical('bar')
 
-      expect(mockReportError).toHaveBeenOnlyCalledWith('foo')
-      expect(mockReportCriticalError).toHaveBeenOnlyCalledWith('bar')
+      expect(mockReportError).toHaveBeenOnlyCalledWith({
+        message: 'foo',
+        parameters: undefined,
+        error: undefined,
+      })
+      expect(mockReportCriticalError).toHaveBeenOnlyCalledWith({
+        message: 'bar',
+        parameters: undefined,
+        error: undefined,
+      })
+    })
+
+    it('reports useful values', () => {
+      const mockReportError = mockFn((_: unknown) => {})
+      const logger = new Logger({
+        reportError: mockReportError,
+      })
+
+      logger.error('message')
+      expect(mockReportError).toHaveBeenNthCalledWith(1, {
+        message: 'message',
+        parameters: undefined,
+        error: undefined,
+      })
+
+      logger.error(new Error('message'))
+      expect(mockReportError).toHaveBeenNthCalledWith(2, {
+        message: 'message',
+        parameters: undefined,
+        error: new Error('message'),
+      })
+
+      logger.error('foo', new Error('bar'))
+      expect(mockReportError).toHaveBeenNthCalledWith(3, {
+        message: 'foo',
+        parameters: undefined,
+        error: new Error('bar'),
+      })
+
+      logger.error({ x: 1, y: 2 })
+      expect(mockReportError).toHaveBeenNthCalledWith(4, {
+        message: undefined,
+        parameters: { x: 1, y: 2 },
+        error: undefined,
+      })
+
+      logger.error('message', { x: 1, y: 2 })
+      expect(mockReportError).toHaveBeenNthCalledWith(5, {
+        message: 'message',
+        parameters: { x: 1, y: 2 },
+        error: undefined,
+      })
+
+      logger.error({ x: 1, y: 2, message: 'message' })
+      expect(mockReportError).toHaveBeenNthCalledWith(6, {
+        message: 'message',
+        parameters: { x: 1, y: 2, message: 'message' },
+        error: undefined,
+      })
+
+      logger.error({ x: 1, y: 2, message: true })
+      expect(mockReportError).toHaveBeenNthCalledWith(7, {
+        message: undefined,
+        parameters: { x: 1, y: 2, message: true },
+        error: undefined,
+      })
     })
   })
 })
