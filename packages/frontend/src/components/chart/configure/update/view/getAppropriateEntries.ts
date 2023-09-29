@@ -2,7 +2,7 @@ import {
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
   TokenTvlResponse,
-} from '../../state/State'
+} from '../../../../../scripts/charts/types'
 
 export function getAppropriateEntries<
   ResponseType extends

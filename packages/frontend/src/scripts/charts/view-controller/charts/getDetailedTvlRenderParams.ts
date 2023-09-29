@@ -1,5 +1,5 @@
-import { formatCurrency } from '../../../../components/chart/configure/update/view/format'
 import { formatTimestamp } from '../../../../utils'
+import { formatCurrency } from '../../../../utils/format'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'

@@ -1,9 +1,9 @@
 import { Milestone } from '@l2beat/config'
 
-import { Milestones } from '../../components/chart/configure/state/State'
 import { makeQuery } from '../query'
 import { ChartDataController, ChartType } from './ChartDataController'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
+import { Milestones } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export class ChartControls {

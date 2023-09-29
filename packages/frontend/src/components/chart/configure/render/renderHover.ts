@@ -2,13 +2,13 @@ import { AssetType } from '@l2beat/shared-pure'
 import { renderToString } from 'react-dom/server'
 
 import { isMobile } from '../../../../scripts/utils/isMobile'
+import { formatCurrencyExactValue } from '../../../../utils/format'
 import { formatTps } from '../../../../utils/formatTps'
 import { formatUSD } from '../../../../utils/utils'
 import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../../icons'
 import { Link } from '../../../Link'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
-import { formatCurrencyExactValue } from '../update/view/format'
 
 export function renderHover(
   elements: ChartElements,

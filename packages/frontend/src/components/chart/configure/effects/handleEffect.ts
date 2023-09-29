@@ -1,12 +1,12 @@
 import { ZodSchema } from 'zod'
 
-import { Message } from '../messages'
 import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
   TokenTvlResponse,
-} from '../state/State'
+} from '../../../../scripts/charts/types'
+import { Message } from '../messages'
 import {
   Effect,
   FetchActivityEffect,

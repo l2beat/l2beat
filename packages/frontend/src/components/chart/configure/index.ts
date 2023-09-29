@@ -1,3 +1,4 @@
+import { Milestones } from '../../../scripts/charts/types'
 import { useThemeToggle } from '../../navbar/configureDarkThemeToggle'
 import { setupControls } from './controls/setupControls'
 import { handleEffect } from './effects/handleEffect'
@@ -5,7 +6,7 @@ import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
 import { render } from './render/render'
 import { EMPTY_STATE } from './state/empty'
-import { ChartType, Milestones, State } from './state/State'
+import { ChartType, State } from './state/State'
 import { update } from './update/update'
 import { getUserChartSettings } from './userChartSettings'
 

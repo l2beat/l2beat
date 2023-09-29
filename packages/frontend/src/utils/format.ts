@@ -1,4 +1,4 @@
-import { formatLargeNumber } from '../../../../../utils'
+import { formatLargeNumber } from './formatLargeNumber'
 
 export function formatCurrency(value: number, currency: string) {
   const num = formatLargeNumber(value)

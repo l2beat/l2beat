@@ -4,7 +4,7 @@ import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
-} from '../../components/chart/configure/state/State'
+} from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 import { ChartData } from './view-controller/types'
 

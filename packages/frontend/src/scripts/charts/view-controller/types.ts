@@ -5,7 +5,7 @@ import {
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
   TokenTvlResponse,
-} from '../../../components/chart/configure/state/State'
+} from '../types'
 
 export type ChartData =
   | ChartTvlData

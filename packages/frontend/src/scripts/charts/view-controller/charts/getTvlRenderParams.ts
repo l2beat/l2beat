@@ -1,5 +1,5 @@
-import { formatCurrency } from '../../../../components/chart/configure/update/view/format'
 import { formatTimestamp } from '../../../../utils'
+import { formatCurrency } from '../../../../utils/format'
 import { getTvlHover } from '../../htmls'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
