@@ -4,7 +4,7 @@ export function ChartLabels() {
   return (
     <div
       data-role="chart-labels"
-      className="pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px] opacity-70"
+      className="pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px]"
     >
       <ChartLabel />
       <ChartLabel />
@@ -18,8 +18,11 @@ export function ChartLabels() {
 function ChartLabel() {
   return (
     <div className="relative">
-      <span data-role="chart-label" className="absolute left-0 bottom-0" />
-      <hr />
+      <span
+        data-role="chart-label"
+        className="absolute left-0 bottom-0 pb-0.5 text-sm text-gray-500 text-opacity-50 dark:text-white dark:text-opacity-50"
+      />
+      <hr className="border-gray-850 border-opacity-30 dark:border-white dark:border-opacity-30" />
     </div>
   )
 }
