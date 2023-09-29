@@ -1,6 +1,7 @@
 import { Milestone } from '@l2beat/config'
 import { mean } from 'lodash'
 
+import { formatRange } from '../../../utils'
 import { makeQuery } from '../../query'
 import { isMobile } from '../../utils/isMobile'
 import { getMilestoneHover, getMilestoneHtml } from '../htmls'
@@ -20,6 +21,7 @@ interface Point<T> {
 
 export interface RenderParams<T> {
   points: Point<T>[]
+  range: [number, number]
   seriesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
   renderHoverContents: (pointData: T) => string
@@ -44,18 +46,20 @@ export class ChartRenderer {
   private readonly hoverPointWrapper: HTMLElement
   private readonly hoverContents: HTMLElement
   private readonly milestonesWrapper: HTMLElement
+  private readonly range: HTMLElement
   private renderParams?: RenderParams<unknown>
   private wasMouseInside = false
   private getY: (value: number) => number = (x) => x
 
-  constructor(chartView: HTMLElement) {
-    const { $, $$ } = makeQuery(chartView)
+  constructor(chart: HTMLElement) {
+    const { $, $$ } = makeQuery(chart)
 
     this.hover = $('[data-role="chart-hover"]')
     this.hoverLine = $('[data-role="chart-hover-line"]')
     this.hoverPointWrapper = $('[data-role="chart-hover-points"]')
     this.hoverContents = $('[data-role="chart-hover-contents"]')
     this.milestonesWrapper = $('[data-role="chart-milestones"]')
+    this.range = $('[data-role="chart-range"]')
     this.labelElements = $$('[data-role="chart-label"]').reverse()
     console.assert(this.labelElements.length === LABEL_COUNT)
 
@@ -82,6 +86,7 @@ export class ChartRenderer {
     )
     this.setupHoverPoints(params.seriesStyle)
     this.renderMilestones(params.points)
+    this.range.innerHTML = formatRange(...params.range)
     this.renderData(params)
   }
 

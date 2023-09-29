@@ -63,6 +63,7 @@ export function getActivityRenderParams(
           projects: tpsPoint,
         }),
       useLogScale: state.useLogScale,
+      range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
     }
   }
 }

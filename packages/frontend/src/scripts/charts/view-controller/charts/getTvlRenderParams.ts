@@ -47,5 +47,6 @@ export function getTvlRenderParams(
     seriesStyle,
     renderHoverContents: getTvlHover,
     useLogScale: state.useLogScale,
+    range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
   }
 }

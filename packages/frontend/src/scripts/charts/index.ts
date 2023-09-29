@@ -8,15 +8,14 @@ import { ChartViewController } from './view-controller/ChartViewController'
 export function configureCharts() {
   const { $ } = makeQuery(document.body)
   const chart = $.maybe('[data-role="chart"]')
-  const chartView = $.maybe('[data-role="chart-view"]')
 
-  if (!chartView || !chart) {
+  if (!chart) {
     return
   }
 
   const chartSettingsManager = new ChartSettingsManager()
 
-  const chartRenderer = new ChartRenderer(chartView)
+  const chartRenderer = new ChartRenderer(chart)
   const chartViewController = new ChartViewController(chartRenderer)
   const chartDataController = new ChartDataController(chartViewController)
 
