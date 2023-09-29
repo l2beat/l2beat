@@ -1,5 +1,11 @@
 # @l2beat/backend-tools
 
+## 0.4.0
+
+### Minor Changes
+
+- 02f8ba7: Improve error reporting parameters
+
 ## 0.3.0
 
 ### Minor Changes

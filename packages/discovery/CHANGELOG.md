@@ -1,5 +1,16 @@
 # @l2beat/discovery
 
+## 0.6.0
+
+### Minor Changes
+
+- 2b3db57: Support fetching logs in batches
+
+### Patch Changes
+
+- Updated dependencies [02f8ba7]
+  - @l2beat/backend-tools@0.4.0
+
 ## 0.5.0
 
 ### Minor Changes
