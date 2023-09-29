@@ -29,7 +29,7 @@ export function TvlMetaImage(props: TvlMetaImageProps) {
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
       />
-      <Chart initialType={props.chartType} metaChart />
+      <Chart settingsId="meta" initialType={props.chartType} metaChart />
       <Logo />
     </div>
   )

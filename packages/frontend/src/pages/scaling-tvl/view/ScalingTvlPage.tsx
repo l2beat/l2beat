@@ -39,6 +39,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
           <Chart
+            settingsId="scaling-summary"
             initialType={{ type: 'layer2-tvl' }}
             milestones={props.milestones}
           />

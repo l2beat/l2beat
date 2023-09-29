@@ -17,8 +17,9 @@ export class ChartControls {
   init() {
     const milestones = this.getMilestones(this.chart)
     const chartType = this.getChartType(this.chart)
-    //TODO: Add chart id
-    const settings = this.chartSettings.for('CHART ID')
+    const settings = this.chartSettings.for(
+      this.chart.dataset.settingsId ?? 'unknown',
+    )
     this.setupControls(this.chart, settings)
 
     this.chartViewController.init({

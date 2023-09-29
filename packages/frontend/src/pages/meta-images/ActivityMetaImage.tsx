@@ -19,7 +19,11 @@ export function ActivityMetaImage(props: ActivityMetaImageProps) {
         tpsDaily={props.tpsDaily}
         tpsWeeklyChange={props.tpsWeeklyChange}
       />
-      <Chart initialType={{ type: 'layer2-activity' }} metaChart />
+      <Chart
+        settingsId="meta"
+        initialType={{ type: 'layer2-activity' }}
+        metaChart
+      />
       <Logo />
     </div>
   )

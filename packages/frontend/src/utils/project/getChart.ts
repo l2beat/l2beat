@@ -18,6 +18,7 @@ export function getChart(
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
+    settingsId: `project-${project.display.slug}`,
     initialType:
       config?.features.detailedTvl && project.type === 'layer2'
         ? { type: 'project-detailed-tvl', slug: project.display.slug }

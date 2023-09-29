@@ -23,6 +23,7 @@ import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
 export interface ChartProps {
   title?: string
   id?: string
+  settingsId: string
   tokens?: TokenControl[]
   initialType: ChartType
   tvlBreakdownHref?: string
@@ -53,6 +54,7 @@ export function Chart(props: ChartProps) {
     <>
       <section
         id={id}
+        data-settings-id={props.settingsId}
         data-role="chart"
         data-initial-type={JSON.stringify(props.initialType)}
         data-milestones={JSON.stringify(props.milestones)}

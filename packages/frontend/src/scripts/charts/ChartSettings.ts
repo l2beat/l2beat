@@ -19,35 +19,35 @@ export class ChartSettingsManager {
     this.state = LocalStorage.getItem('chart-settings') ?? {}
   }
 
-  for(chartId: string) {
+  for(settingsId: string) {
     return {
       getUseLogScale: () => {
-        return this.get(chartId).useLogScale
+        return this.get(settingsId).useLogScale
       },
       setUseLogScale: (value: boolean) => {
-        this.update(chartId, { useLogScale: value })
+        this.update(settingsId, { useLogScale: value })
       },
       getUseAltCurrency: () => {
-        return this.get(chartId).useAltCurrency
+        return this.get(settingsId).useAltCurrency
       },
       setUseAltCurrency: (value: boolean) => {
-        this.update(chartId, { useAltCurrency: value })
+        this.update(settingsId, { useAltCurrency: value })
       },
       getTimeRange: () => {
-        const value = this.get(chartId).timeRangeInDays
+        const value = this.get(settingsId).timeRangeInDays
         return value === -1 ? Infinity : value
       },
       setTimeRange: (value: number) => {
         if (value === Infinity) {
           value = -1
         }
-        this.update(chartId, { timeRangeInDays: value })
+        this.update(settingsId, { timeRangeInDays: value })
       },
       getShowEthereumTransactions: () => {
-        return this.get(chartId).showEthereumTransactions
+        return this.get(settingsId).showEthereumTransactions
       },
       setShowEthereumTransactions: (value: boolean) => {
-        this.update(chartId, { showEthereumTransactions: value })
+        this.update(settingsId, { showEthereumTransactions: value })
       },
     }
   }

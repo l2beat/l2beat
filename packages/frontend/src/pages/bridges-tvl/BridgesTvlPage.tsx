@@ -44,7 +44,10 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
             />
           </div>
           <BridgesMvpWarning />
-          <Chart initialType={{ type: 'bridges-tvl' }} />
+          <Chart
+            settingsId="bridges-tvl"
+            initialType={{ type: 'bridges-tvl' }}
+          />
           <BridgesTvlView {...props.tvlView} />
           <About />
         </main>
