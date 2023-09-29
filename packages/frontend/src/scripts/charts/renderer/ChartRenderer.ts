@@ -140,11 +140,12 @@ export class ChartRenderer {
   }
 
   private renderMilestones(points: Point<unknown>[]) {
+    const { width } = this.canvas.getBoundingClientRect()
     const milestonesHtml = points
       .map((point, i) =>
         point.milestone
           ? getMilestoneHtml(
-              (this.canvas.width / (points.length - 1)) * i,
+              (width / (points.length - 1)) * i,
               point.milestone.link,
             )
           : '',
@@ -220,9 +221,12 @@ export class ChartRenderer {
       return
     }
 
+    const { width: canvasWidth, height: canvasHeight } =
+      this.canvas.getBoundingClientRect()
+
     const pointsLength = this.renderParams.points.length
     const getCanvasX = (index: number) =>
-      (index / (pointsLength - 1)) * this.canvas.width
+      (index / (pointsLength - 1)) * canvasWidth
 
     // TODO: if point index didn't change don't rerender
     let pointIndex = Math.round(mouseX * (this.renderParams.points.length - 1))
@@ -232,7 +236,7 @@ export class ChartRenderer {
       ? MILESTONE_MAX_Y_MOBILE
       : MILESTONE_MAX_Y
 
-    const mouseCanvasX = mouseX * this.canvas.width
+    const mouseCanvasX = mouseX * canvasWidth
 
     let milestone: Milestone | undefined
     if (mouseY < milestoneMouseY) {
@@ -272,10 +276,7 @@ export class ChartRenderer {
             : ''
         }`
         const y = this.getY(value)
-        const bottom = Math.max(
-          0,
-          y * (this.canvas.height - FIRST_LABEL_HEIGHT_PX),
-        )
+        const bottom = Math.max(0, y * (canvasHeight - FIRST_LABEL_HEIGHT_PX))
         yValues.push(bottom)
         pointElement.style.left = `${left - 4}px`
         pointElement.style.bottom = `${bottom - 4}px`
@@ -290,29 +291,28 @@ export class ChartRenderer {
 
     this.hoverLine.style.left = `${left - 1}px`
 
-    const averageY =
-      yValues.length === 0 ? this.canvas.height / 2 : mean(yValues)
+    const averageY = yValues.length === 0 ? canvasHeight / 2 : mean(yValues)
 
     this.hoverContents.innerHTML = milestone
       ? getMilestoneHover(milestone)
       : this.renderParams.renderHoverContents(point.data)
     const { height } = this.hoverContents.getBoundingClientRect()
     const contentsBottom = Math.min(
-      this.canvas.height - height - HOVER_CANVAS_PADDING,
+      canvasHeight - height - HOVER_CANVAS_PADDING,
       Math.max(averageY - height / 2, HOVER_CANVAS_PADDING),
     )
     this.hoverContents.style.bottom = `${contentsBottom}px`
     //TODO: MAYBE CHECK THE CONDITION
     if (
       this.hoverContents.clientWidth + left <
-      this.canvas.width - HOVER_CANVAS_PADDING
+      canvasWidth - HOVER_CANVAS_PADDING
     ) {
       this.hoverContents.style.removeProperty('right')
       this.hoverContents.style.left = `${left + HOVER_CANVAS_PADDING}px`
     } else {
       this.hoverContents.style.removeProperty('left')
       this.hoverContents.style.right = `${
-        this.canvas.width - left + HOVER_CANVAS_PADDING
+        canvasWidth - left + HOVER_CANVAS_PADDING
       }px`
     }
 
