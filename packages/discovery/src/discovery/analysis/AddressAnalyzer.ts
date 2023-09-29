@@ -20,6 +20,7 @@ export interface AnalyzedContract {
   address: EthereumAddress
   name: string
   deploymentTimestamp: UnixTime
+  deploymentBlockNumber: number
   derivedName: string | undefined
   isVerified: boolean
   upgradeability: UpgradeabilityParameters
@@ -55,8 +56,10 @@ export class AddressAnalyzer {
       return { analysis: { type: 'EOA', address }, relatives: [] }
     }
 
-    const deploymentTimestamp =
-      await this.provider.getDeploymentTimestamp(address)
+    const {
+      timestamp: deploymentTimestamp,
+      blockNumber: deploymentBlockNumber,
+    } = await this.provider.getDeploymentInfo(address)
 
     const proxy = await this.proxyDetector.detectProxy(
       address,
@@ -86,6 +89,7 @@ export class AddressAnalyzer {
         isVerified: sources.isVerified,
         address,
         deploymentTimestamp,
+        deploymentBlockNumber,
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         implementations: proxy?.implementations ?? [],
         values: values ?? {},

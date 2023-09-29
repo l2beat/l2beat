@@ -103,6 +103,11 @@ export class DiscoveryLogger {
       )}`,
     )
   }
+
+  logFetchingEvents(fromBlock: number, toBlock: number): void {
+    const text = `Fetching events in range ${fromBlock} - ${toBlock}`
+    this.log(`  ${chalk.gray(text)}`)
+  }
 }
 
 function dots(length: number): string {

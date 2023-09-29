@@ -60,7 +60,10 @@ describe(AddressAnalyzer.name, () => {
     const addressAnalyzer = new AddressAnalyzer(
       mockObject<DiscoveryProvider>({
         getCode: async () => Bytes.fromHex('0x1234'),
-        getDeploymentTimestamp: async () => new UnixTime(1234),
+        getDeploymentInfo: async () => ({
+          timestamp: new UnixTime(1234),
+          blockNumber: 9876,
+        }),
       }),
       mockObject<ProxyDetector>({
         detectProxy: async () => ({
@@ -100,6 +103,7 @@ describe(AddressAnalyzer.name, () => {
         derivedName: undefined,
         isVerified: true,
         deploymentTimestamp: new UnixTime(1234),
+        deploymentBlockNumber: 9876,
         upgradeability: { type: 'EIP1967 proxy', implementation, admin },
         implementations: [implementation],
         values: { owner: owner.toString() },
@@ -130,7 +134,10 @@ describe(AddressAnalyzer.name, () => {
     const addressAnalyzer = new AddressAnalyzer(
       mockObject<DiscoveryProvider>({
         getCode: async () => Bytes.fromHex('0x1234'),
-        getDeploymentTimestamp: async () => new UnixTime(1234),
+        getDeploymentInfo: async () => ({
+          timestamp: new UnixTime(1234),
+          blockNumber: 9876,
+        }),
       }),
       mockObject<ProxyDetector>({
         detectProxy: async () => ({
@@ -170,6 +177,7 @@ describe(AddressAnalyzer.name, () => {
         address,
         isVerified: false,
         deploymentTimestamp: new UnixTime(1234),
+        deploymentBlockNumber: 9876,
         upgradeability: { type: 'EIP1967 proxy', implementation, admin },
         implementations: [implementation],
         values: { owner: owner.toString() },

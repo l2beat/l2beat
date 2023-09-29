@@ -14,6 +14,7 @@ describe(processAnalysis.name, () => {
     values: {},
     isVerified: true,
     deploymentTimestamp: new UnixTime(1234),
+    deploymentBlockNumber: 9876,
     upgradeability: { type: 'immutable' } as UpgradeabilityParameters,
     implementations: [],
     abis: {},

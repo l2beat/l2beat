@@ -1,3 +1,4 @@
+import { createHash } from 'crypto'
 import { providers } from 'ethers'
 
 import { Bytes } from '../../utils/Bytes'
@@ -5,6 +6,7 @@ import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { Hash256 } from '../../utils/Hash256'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { isRevert } from '../utils/isRevert'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
 import { ProviderCache } from './ProviderCache'
@@ -17,9 +19,11 @@ export class ProviderWithCache extends DiscoveryProvider {
   constructor(
     provider: providers.Provider,
     etherscanClient: EtherscanLikeClient,
+    logger: DiscoveryLogger,
     chainId: ChainId,
+    getLogsMaxRange?: number,
   ) {
-    super(provider, etherscanClient)
+    super(provider, etherscanClient, logger, getLogsMaxRange)
     this.cache = new ProviderCache(chainId)
   }
 
@@ -86,16 +90,20 @@ export class ProviderWithCache extends DiscoveryProvider {
     )
   }
 
-  override async getLogs(
+  override async getLogsBatch(
     address: EthereumAddress,
     topics: string[][],
     fromBlock: number,
-    blockNumber: number,
+    toBlock: number,
   ): Promise<providers.Log[]> {
+    const topicsHash: string = createHash('sha256')
+      .update(JSON.stringify(topics))
+      .digest('hex')
+
     return this.cacheOrFetch(
-      `blocks/${blockNumber}`,
-      `getLogs.${address.toString()}.${JSON.stringify(topics)}.${fromBlock}`,
-      () => super.getLogs(address, topics, fromBlock, blockNumber),
+      `logs/${address.toString()}`,
+      `getLogs.${fromBlock}.${toBlock}.${topicsHash}`,
+      () => super.getLogsBatch(address, topics, fromBlock, toBlock),
       identity,
       identity,
     )

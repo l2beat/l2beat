@@ -48,6 +48,7 @@ export async function singleDiscovery(
     projectConfig,
     DiscoveryLogger.CLI,
     blockNumber,
+    chainConfig.rpcGetLogsMaxRange,
   )
 
   const discoveryOutput = toDiscoveryOutput(
