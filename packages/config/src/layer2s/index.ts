@@ -8,7 +8,6 @@ import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
-import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -16,6 +15,7 @@ import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { hermez } from './hermez'
+import { honeypot } from './honeypot'
 import { immutablex } from './immutablex'
 import { immutablezkevm } from './immutablezkevm'
 import { kinto } from './kinto'
@@ -67,7 +67,7 @@ export const layer2s: Layer2[] = [
   brine,
   capx,
   canvasconnect,
-  cartesiHoneypot,
+  honeypot,
   degate,
   degate2,
   dydx,
