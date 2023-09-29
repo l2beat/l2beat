@@ -5,6 +5,7 @@ import { Chart, Header, Logo } from '../../components'
 export interface ActivityMetaImageProps {
   tpsDaily: string
   tpsWeeklyChange: string
+  fake?: boolean
 }
 
 export function ActivityMetaImage(props: ActivityMetaImageProps) {
@@ -21,7 +22,11 @@ export function ActivityMetaImage(props: ActivityMetaImageProps) {
       />
       <Chart
         settingsId="meta"
-        initialType={{ type: 'layer2-activity' }}
+        initialType={
+          props.fake
+            ? { type: 'storybook-fake-activity' }
+            : { type: 'layer2-activity' }
+        }
         metaChart
       />
       <Logo />

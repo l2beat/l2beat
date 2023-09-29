@@ -50,6 +50,7 @@ export class ChartDataController {
       case 'layer2-tvl':
       case 'bridges-tvl':
       case 'project-tvl':
+      case 'storybook-fake-tvl':
         return {
           type: 'tvl',
           values: AggregateTvlResponse.parse(data),
@@ -62,6 +63,7 @@ export class ChartDataController {
         }
       case 'layer2-activity':
       case 'project-activity':
+      case 'storybook-fake-activity':
         return {
           type: 'activity',
           values: ActivityResponse.parse(data),
@@ -90,6 +92,10 @@ export function getChartUrl(chartType: ChartType, includeCanonical = false) {
       return `/api/${chartType.slug}-detailed-tvl.json`
     case 'project-activity':
       return `/api/activity/${chartType.slug}.json`
+    case 'storybook-fake-tvl':
+      return '/fake-tvl.json'
+    case 'storybook-fake-activity':
+      return '/fake-activity.json'
   }
 }
 
@@ -102,4 +108,6 @@ export const ChartType = z.discriminatedUnion('type', [
   z.object({ type: z.literal('project-tvl'), slug: z.string() }),
   z.object({ type: z.literal('project-detailed-tvl'), slug: z.string() }),
   z.object({ type: z.literal('project-activity'), slug: z.string() }),
+  z.object({ type: z.literal('storybook-fake-tvl') }),
+  z.object({ type: z.literal('storybook-fake-activity') }),
 ])

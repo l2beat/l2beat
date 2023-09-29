@@ -47,16 +47,17 @@ function Template({
     configureCharts()
   }, [])
 
-  const activityEndpoint = hasActivity ? '/fakeActivity.json' : undefined
-
   return (
     <PageContent>
       <ChartComponent
-        tvlEndpoint="/fakeTvl.json"
-        activityEndpoint={activityEndpoint}
+        settingsId="storybook"
         tokens={tokens.slice(0, tokenCount)}
         hasActivity={hasActivity}
-        initialType={type}
+        initialType={
+          type === 'tvl'
+            ? { type: 'storybook-fake-tvl' }
+            : { type: 'storybook-fake-activity' }
+        }
         isUpcoming={isUpcoming}
         tvlBreakdownHref="/"
       />

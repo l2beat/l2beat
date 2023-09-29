@@ -10,6 +10,7 @@ export interface TvlMetaImageProps {
   chartType: ChartType
   name?: string
   icon?: string
+  fake?: boolean
 }
 
 export function TvlMetaImage(props: TvlMetaImageProps) {
@@ -29,7 +30,13 @@ export function TvlMetaImage(props: TvlMetaImageProps) {
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
       />
-      <Chart settingsId="meta" initialType={props.chartType} metaChart />
+      <Chart
+        settingsId="meta"
+        initialType={
+          props.fake ? { type: 'storybook-fake-tvl' } : props.chartType
+        }
+        metaChart
+      />
       <Logo />
     </div>
   )
