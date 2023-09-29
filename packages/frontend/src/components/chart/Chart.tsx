@@ -28,7 +28,6 @@ export interface ChartProps {
   initialType: ChartType
   tvlBreakdownHref?: string
   hasActivity?: boolean
-  hasTvl?: boolean
   hasDetailedTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
@@ -65,25 +64,24 @@ export function Chart(props: ChartProps) {
           props.sectionClassName,
         )}
       >
-        {!props.metaChart &&
-          ((props.hasTvl && props.hasActivity) ||
-            (props.hasTvl && props.hasDetailedTvl)) && (
-            <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-              <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
-                <a href={`#${id}`}>{title}</a>
-              </h2>
+        {!props.metaChart && (props.hasActivity || props.hasDetailedTvl) && (
+          <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
+            <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
+              <a href={`#${id}`}>{title}</a>
+            </h2>
 
-              <RadioChartTypeControl
-                hasActivity={props.hasActivity ?? false}
-                hasDetailedTvl={props.hasDetailedTvl ?? false}
-              />
-            </div>
-          )}
+            <RadioChartTypeControl
+              hasActivity={props.hasActivity ?? false}
+              hasDetailedTvl={props.hasDetailedTvl ?? false}
+            />
+          </div>
+        )}
         <div className="flex flex-col gap-4">
           <div
-            className={`flex justify-between ${
-              props.metaChart ? 'absolute left-0 bottom-0 w-full' : ''
-            }`}
+            className={cx(
+              'flex justify-between',
+              props.metaChart && 'absolute left-0 bottom-0 w-full',
+            )}
           >
             <TimeRange />
             <RangeControls isActivity={isActivity} />
@@ -109,13 +107,13 @@ export function Chart(props: ChartProps) {
             />
           </div>
           <div className="flex items-center justify-between">
-            {props.hasActivity && (
+            {(props.hasActivity || isActivity) && (
               <EthereumActivityToggle
                 showToggle={isActivity}
                 className="max-w-[135px] xs:max-w-none"
               />
             )}
-            {props.hasTvl && (
+            {!isActivity && (
               <div className="flex h-[2rem] items-end">
                 <CurrencyControls />
                 {props.hasDetailedTvl && (
@@ -128,14 +126,15 @@ export function Chart(props: ChartProps) {
             )}
             <ScaleControls />
           </div>
-          {props.hasTvl && !props.hasDetailedTvl ? (
-            <TokenControlsToBeRemoved tokens={props.tokens} />
-          ) : (
-            <MobileTokenControls
-              tokens={props.tokens}
-              tvlBreakdownHref={tvlBreakdownHref}
-            />
-          )}
+          {!isActivity &&
+            (!props.hasDetailedTvl ? (
+              <TokenControlsToBeRemoved tokens={props.tokens} />
+            ) : (
+              <MobileTokenControls
+                tokens={props.tokens}
+                tvlBreakdownHref={tvlBreakdownHref}
+              />
+            ))}
         </div>
       </section>
       <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
