@@ -56,6 +56,11 @@
           "type": "storage",
           "slot": 9,
           "returnType": "address"
+        },
+        "revertedBlocks": {
+          "type": "stateFromEvent",
+          "event": "BlocksRevert",
+          "returnParams": ["totalBlocksCommitted", "totalBlocksVerified"]
         }
       },
       "ignoreMethods": ["numOfPendingWithdrawalsNFT"],

@@ -59,7 +59,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
-    bridgedUsing: 'Wormhole',
+    bridgedUsing: {
+      bridge: 'Wormhole',
+      slug: 'portal',
+    },
   },
 ]
 

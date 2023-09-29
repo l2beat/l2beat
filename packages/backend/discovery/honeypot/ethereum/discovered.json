@@ -1,0 +1,141 @@
+{
+  "name": "honeypot",
+  "chain": "ethereum",
+  "blockNumber": 18225466,
+  "configHash": "0xa45be7cfb15441962d3b0bb054e1866244e20e985c07c9619273f5649276e17c",
+  "version": 2,
+  "contracts": [
+    {
+      "name": "CartesiDApp",
+      "address": "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1694553335,
+      "values": {
+        "getConsensus": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+        "getTemplateHash": "0x64523866b6437fd593d8c0c65f88f59717f2eefa81422cc4921214423c819bf2",
+        "owner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "History",
+      "address": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1694457347,
+      "values": {
+        "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
+      }
+    },
+    {
+      "name": "InputBox",
+      "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1690464923
+    },
+    {
+      "name": "ERC20Portal",
+      "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1690464947,
+      "values": {
+        "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
+      }
+    },
+    {
+      "name": "Authority",
+      "address": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1694456915,
+      "values": {
+        "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+        "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
+      }
+    }
+  ],
+  "eoas": [
+    "0x70ac08179605AF2D9e75782b8DEcDD3c22aA4D0C",
+    "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
+    "0x8cA1c547AE4C1D1bb8296a5854c2c50192118E02"
+  ],
+  "abis": {
+    "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [
+      "constructor(address _consensus, address _owner, bytes32 _templateHash)",
+      "error EtherTransferFailed()",
+      "error IncorrectEpochHash()",
+      "error IncorrectOutputHashesRootHash()",
+      "error IncorrectOutputsEpochRootHash()",
+      "error InputIndexOutOfClaimBounds()",
+      "error OnlyDApp()",
+      "error VoucherReexecutionNotAllowed()",
+      "event NewConsensus(address newConsensus)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VoucherExecuted(uint256 voucherId)",
+      "function executeVoucher(address _destination, bytes _payload, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) returns (bool)",
+      "function getConsensus() view returns (address)",
+      "function getTemplateHash() view returns (bytes32)",
+      "function migrateToConsensus(address _newConsensus)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function validateNotice(bytes _notice, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) view returns (bool)",
+      "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
+      "function withdrawEther(address _receiver, uint256 _value)"
+    ],
+    "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": [
+      "constructor(address _owner)",
+      "error InvalidClaimIndex()",
+      "error InvalidInputIndices()",
+      "error UnclaimedInputs()",
+      "event NewClaimToHistory(address indexed dapp, tuple(bytes32 epochHash, uint128 firstIndex, uint128 lastIndex) claim)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getClaim(address _dapp, bytes _proofContext) view returns (bytes32, uint256, uint256)",
+      "function migrateToConsensus(address _consensus)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function submitClaim(bytes _claimData)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x59b22D57D4f067708AB0c00552767405926dc768": [
+      "error InputSizeExceedsLimit()",
+      "event InputAdded(address indexed dapp, uint256 indexed inputIndex, address sender, bytes input)",
+      "function addInput(address _dapp, bytes _input) returns (bytes32)",
+      "function getInputHash(address _dapp, uint256 _index) view returns (bytes32)",
+      "function getNumberOfInputs(address _dapp) view returns (uint256)"
+    ],
+    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
+      "constructor(address _inputBox)",
+      "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
+      "function getInputBox() view returns (address)"
+    ],
+    "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": [
+      "constructor(address _owner)",
+      "error AuthorityWithdrawalFailed()",
+      "event ApplicationJoined(address application)",
+      "event NewHistory(address history)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getClaim(address _dapp, bytes _proofContext) view returns (bytes32, uint256, uint256)",
+      "function getHistory() view returns (address)",
+      "function join()",
+      "function migrateHistoryToConsensus(address _consensus)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setHistory(address _history)",
+      "function submitClaim(bytes _claimData)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
+    ]
+  }
+}

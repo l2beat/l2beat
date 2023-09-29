@@ -25,6 +25,7 @@ export interface ChartProps {
   id?: string
   tokens?: TokenControl[]
   initialType: ChartType
+  tvlBreakdownHref?: string
   hasActivity?: boolean
   hasTvl?: boolean
   hasDetailedTvl?: boolean
@@ -46,6 +47,7 @@ export function Chart(props: ChartProps) {
 
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
+  const tvlBreakdownHref = props.tvlBreakdownHref ?? '/'
 
   return (
     <>
@@ -115,7 +117,10 @@ export function Chart(props: ChartProps) {
               <div className="flex h-[2rem] items-end">
                 <CurrencyControls />
                 {props.hasDetailedTvl && (
-                  <DesktopTokenControls tokens={props.tokens} />
+                  <DesktopTokenControls
+                    tvlBreakdownHref={tvlBreakdownHref}
+                    tokens={props.tokens}
+                  />
                 )}
               </div>
             )}
@@ -124,7 +129,10 @@ export function Chart(props: ChartProps) {
           {props.hasTvl && !props.hasDetailedTvl ? (
             <TokenControlsToBeRemoved tokens={props.tokens} />
           ) : (
-            <MobileTokenControls tokens={props.tokens} />
+            <MobileTokenControls
+              tokens={props.tokens}
+              tvlBreakdownHref={tvlBreakdownHref}
+            />
           )}
         </div>
       </section>

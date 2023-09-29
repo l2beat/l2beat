@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 17718368,
-  "configHash": "0xf38079963f297bf5743c96341ff36cdebfa76552c8e09b39f43a9d3f5fc184ef",
+  "blockNumber": 18218644,
+  "configHash": "0xf09231d38def68363076c58ddae0fb5b343cac22e024ecb8cbe417fa851f067c",
   "version": 2,
   "contracts": [
     {
@@ -65,7 +65,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639084",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292675030",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -95,7 +95,7 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 23,
+        "nonce": 25,
         "VERSION": "1.3.0"
       }
     },
@@ -212,7 +212,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 84,
+        "nonce": 86,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -263,7 +263,7 @@
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 17718368],
+        "params": [1000000000, 491822, 18218639],
         "paused": false,
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.6.0"
@@ -328,12 +328,13 @@
       "values": {
         "CHALLENGER": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "computeL2Timestamp": [],
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 107029663,
-        "latestOutputIndex": 996,
-        "nextBlockNumber": 107031463,
-        "nextOutputIndex": 997,
+        "latestBlockNumber": 110057263,
+        "latestOutputIndex": 2678,
+        "nextBlockNumber": 110059063,
+        "nextOutputIndex": 2679,
         "PROPOSER": "0x473300df21D047806A082244b417f96b32f13A33",
         "startingBlockNumber": 105235063,
         "startingTimestamp": 1686068903,
@@ -369,7 +370,7 @@
           "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
         ],
         "getThreshold": 5,
-        "nonce": 2947,
+        "nonce": 3011,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

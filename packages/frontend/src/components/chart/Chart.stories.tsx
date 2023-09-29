@@ -58,6 +58,7 @@ function Template({
         hasActivity={hasActivity}
         initialType={type}
         isUpcoming={isUpcoming}
+        tvlBreakdownHref="/"
       />
     </PageContent>
   )

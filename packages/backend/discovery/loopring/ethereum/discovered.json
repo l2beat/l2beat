@@ -1,8 +1,8 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "blockNumber": 17372169,
-  "configHash": "0x71c69dca4c3c23fc3f8221dd539a87e439d2df4d316861c926c5424356e7524e",
+  "blockNumber": 18219921,
+  "configHash": "0xa806b78a9521ade554d961d2ccf5acc52b4e04286bc04d424df821ea66b8d49b",
   "version": 2,
   "contracts": [
     {
@@ -18,7 +18,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 41239,
+        "getBlockHeight": 44965,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -35,9 +35,9 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x088f8b7091167ba0eeddd4fab81459aeb612ccafd5dd4c3a24daf7623f026fea",
+        "getMerkleRoot": "0x0920c629c2d5c89d34d50d2239b9c65cbedd4693714dd5e639e0836be83fc7e5",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [1685191319, 0, 0, 0, 0],
+        "getProtocolFeeValues": [1695498167, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,
@@ -45,6 +45,7 @@
         "owner": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxyOwner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "shutdownTriggered": [],
         "version": "3.6.0"
       },
       "derivedName": "ExchangeV3"
@@ -183,7 +184,7 @@
           "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
         ],
         "getThreshold": 4,
-        "nonce": 160,
+        "nonce": 171,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -218,15 +219,15 @@
       },
       "sinceTimestamp": 1574241665,
       "values": {
-        "getTotalStaking": "606431271716973870704527",
+        "getTotalStaking": "586717821734903870704527",
         "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
         "MIN_CLAIM_DELAY": 7776000,
         "MIN_WITHDRAW_DELAY": 7776000,
-        "numAddresses": 974,
+        "numAddresses": 969,
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "protocolFeeVaultAddress": "0x0000000000000000000000000000000000000000",
-        "total": ["606431271716973870704527", 0, 1615975878]
+        "total": ["586717821734903870704527", 0, 1615975878]
       },
       "derivedName": "UserStakingPool"
     }

@@ -1,6 +1,6 @@
-import { isMobile } from './utils/isMobile'
 import { clamp } from '../utils'
 import { makeQuery } from './query'
+import { isMobile } from './utils/isMobile'
 
 export function configureTooltips() {
   const { $, $$ } = makeQuery(document.body)
