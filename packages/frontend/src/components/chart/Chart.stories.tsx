@@ -56,7 +56,7 @@ function Template({
         activityEndpoint={activityEndpoint}
         tokens={tokens.slice(0, tokenCount)}
         hasActivity={hasActivity}
-        type={type}
+        initialType={type}
         isUpcoming={isUpcoming}
       />
     </PageContent>

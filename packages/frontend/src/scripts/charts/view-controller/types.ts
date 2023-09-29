@@ -7,7 +7,7 @@ import {
   TokenTvlResponse,
 } from '../../../components/chart/configure/state/State'
 
-type ChartData =
+export type ChartData =
   | ChartTvlData
   | ChartActivityData
   | ChartDetailedTvlData
@@ -30,6 +30,7 @@ interface ChartDetailedTvlData {
 
 interface ChartTokenTvlData {
   type: 'token-tvl'
+  tokenType: 'CBV' | 'EBV' | 'NMV'
   values: TokenTvlResponse
 }
 
@@ -39,6 +40,5 @@ export interface ChartControlsState {
   useAltCurrency?: boolean
   showEthereumTransactions?: boolean
   useLogScale: boolean
-  tokenType: 'CBV' | 'EBV' | 'NMV'
   milestones: Record<number, Milestone>
 }

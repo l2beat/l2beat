@@ -222,6 +222,7 @@ export const Milestones = z.array(
 export type ChartType = z.infer<typeof ChartType>
 export const ChartType = z.union([
   z.literal('tvl'),
-  z.literal('detailedTvl'),
+  z.literal('detailed-tvl'),
   z.literal('activity'),
+  z.literal('token-tvl'),
 ])

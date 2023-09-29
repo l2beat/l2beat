@@ -4,7 +4,7 @@ export function ChartLabels() {
   return (
     <div
       data-role="chart-labels"
-      className="pointer-events-none relative z-25 hidden h-full flex-col justify-between pt-[20px] opacity-70 data-[enabled=true]:flex"
+      className="pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px] opacity-70"
     >
       <ChartLabel />
       <ChartLabel />

@@ -20,7 +20,6 @@ import {
 
 export interface ActivityPageProps {
   scalingFactor: string
-  apiEndpoint: string
   activityView: ScalingActivityViewProps
   footer: FooterProps
   navbar: NavbarProps
@@ -42,8 +41,7 @@ export function ActivityPage(props: ActivityPageProps) {
         <main>
           <ActivityHeader scalingFactor={props.scalingFactor} />
           <Chart
-            type="activity"
-            activityEndpoint={props.apiEndpoint}
+            initialType={{ type: 'layer2-activity' }}
             hasTvl={false}
             hasActivity
             milestones={props.milestones}

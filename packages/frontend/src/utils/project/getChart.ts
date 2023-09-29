@@ -18,13 +18,10 @@ export function getChart(
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
-    type:
+    initialType:
       config?.features.detailedTvl && project.type === 'layer2'
-        ? 'detailedTvl'
-        : 'tvl',
-    tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
-    detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
-    activityEndpoint: `/api/activity/${project.display.slug}.json`,
+        ? { type: 'project-detailed-tvl', slug: project.display.slug }
+        : { type: 'project-tvl', slug: project.display.slug },
     tokens: getTokens(
       project.id,
       tvlApiResponse,

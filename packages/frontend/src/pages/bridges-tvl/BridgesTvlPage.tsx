@@ -19,7 +19,6 @@ export interface BridgesTvlPageProps {
   bridgesTvlSevenDayChange: string
   combinedTvl: string
   combinedTvlSevenDayChange: string
-  tvlEndpoint: string
   tvlView: BridgesTvlViewProps
   footer: FooterProps
   navbar: NavbarProps
@@ -45,7 +44,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
             />
           </div>
           <BridgesMvpWarning />
-          <Chart tvlEndpoint={props.tvlEndpoint} />
+          <Chart initialType={{ type: 'bridges-tvl' }} />
           <BridgesTvlView {...props.tvlView} />
           <About />
         </main>

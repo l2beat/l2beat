@@ -56,7 +56,6 @@ export class ChartRenderer {
     this.hoverPointWrapper = $('[data-role="chart-hover-points"]')
     this.hoverContents = $('[data-role="chart-hover-contents"]')
     this.milestonesWrapper = $('[data-role="chart-milestones"]')
-    const labelWrapper = $('[data-role="chart-labels"]')
     this.labelElements = $$('[data-role="chart-label"]').reverse()
     console.assert(this.labelElements.length === LABEL_COUNT)
 
@@ -67,9 +66,6 @@ export class ChartRenderer {
     this.ctx = ctx
 
     this.initializeListeners()
-
-    //TODO: REMOVE THIS AFTER REFACTOR
-    labelWrapper.dataset.enabled = 'true'
   }
 
   render<T>(params: RenderParams<T>) {

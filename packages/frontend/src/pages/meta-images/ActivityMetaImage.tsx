@@ -21,7 +21,7 @@ export function ActivityMetaImage(props: ActivityMetaImageProps) {
         tpsWeeklyChange={props.tpsWeeklyChange}
       />
       <Chart
-        type="activity"
+        initialType="activity"
         metaChart
         activityEndpoint={props.activityEndpoint}
         hasTvl={false}

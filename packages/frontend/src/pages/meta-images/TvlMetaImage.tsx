@@ -2,13 +2,14 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Chart, Header, Logo } from '../../components'
+import { ChartType } from '../../scripts/charts/ChartDataController'
 
 export interface TvlMetaImageProps {
   tvl: string
   sevenDayChange: string
+  chartType: ChartType
   name?: string
   icon?: string
-  tvlEndpoint: string
 }
 
 export function TvlMetaImage(props: TvlMetaImageProps) {
@@ -28,7 +29,7 @@ export function TvlMetaImage(props: TvlMetaImageProps) {
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
       />
-      <Chart tvlEndpoint={props.tvlEndpoint} metaChart />
+      <Chart initialType={props.chartType} metaChart />
       <Logo />
     </div>
   )

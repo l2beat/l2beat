@@ -31,7 +31,7 @@ export function getTokenTvlRenderParams(
 
     const formatYAxisLabel = (val: number) => formatLargeNumber(val)
 
-    const seriesStyle: SeriesStyle[] = [tokenTypeToStyle(state.tokenType)]
+    const seriesStyle: SeriesStyle[] = [tokenTypeToStyle(state.data.tokenType)]
 
     return {
       formatYAxisLabel,

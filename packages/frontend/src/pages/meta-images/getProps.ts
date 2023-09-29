@@ -5,6 +5,10 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
+import {
+  ChartType,
+  getChartUrl,
+} from '../../scripts/charts/ChartDataController'
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
 import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'
@@ -34,25 +38,24 @@ export function getProps(
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const apiPath = project
-    ? `${project.display.slug}-tvl`
+  const chartType: ChartType = project
+    ? { type: 'project-tvl', slug: project.display.slug }
     : type === 'layers2s'
-    ? 'scaling-tvl'
-    : 'bridges-tvl'
+    ? { type: 'layer2-tvl' }
+    : { type: 'bridges-tvl' }
 
-  const tvlEndpoint = `/api/${apiPath}.json`
   return {
     props: {
       tvl: formatUSD(tvl),
       sevenDayChange,
       name: project?.display.name,
       icon: project && `/icons/${project.display.slug}.png`,
-      tvlEndpoint,
+      chartType,
     },
     wrapper: {
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: tvlEndpoint,
+      preloadApi: getChartUrl(chartType),
     },
   }
 }

@@ -30,7 +30,7 @@ export function DetailedTvlMetaImage(props: DetailedTvlMetaImageProps) {
       />
       <Chart
         detailedTvlEndpoint={props.detailedTvlEndpoint}
-        type={'detailedTvl'}
+        initialType={'detailedTvl'}
         metaChart
       />
       <Logo />

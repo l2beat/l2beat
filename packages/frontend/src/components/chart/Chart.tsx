@@ -2,6 +2,7 @@ import { Milestone } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
+import { ChartType } from '../../scripts/charts/ChartDataController'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
@@ -9,7 +10,6 @@ import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
 import { TokenControl } from './CommonTokenControls'
-import { ChartType } from './configure/state/State'
 import { CurrencyControls } from './CurrencyControls'
 import { DesktopTokenControls } from './DesktopTokenControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
@@ -21,13 +21,10 @@ import { TimeRange } from './TimeRange'
 import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
 
 export interface ChartProps {
-  type?: ChartType
   title?: string
   id?: string
-  tvlEndpoint?: string
-  detailedTvlEndpoint?: string
-  activityEndpoint?: string
   tokens?: TokenControl[]
+  initialType: ChartType
   hasActivity?: boolean
   hasTvl?: boolean
   hasDetailedTvl?: boolean
@@ -38,66 +35,54 @@ export interface ChartProps {
   sectionClassName?: string
 }
 
-export function Chart({
-  title = 'Chart',
-  id = 'chart',
-  tvlEndpoint,
-  detailedTvlEndpoint,
-  activityEndpoint,
-  tokens,
-  type = 'tvl',
-  hasActivity,
-  hasTvl = true,
-  hasDetailedTvl,
-  metaChart = false,
-  mobileFull: fullWidth = false,
-  milestones,
-  isUpcoming = false,
-  sectionClassName,
-}: ChartProps) {
-  if (isUpcoming) {
+export function Chart(props: ChartProps) {
+  if (props.isUpcoming) {
     return <ChartUpcoming mobileFull />
   }
 
-  const days = metaChart || type === 'activity' ? 30 : 7
+  const isActivity =
+    props.initialType.type === 'layer2-activity' ||
+    props.initialType.type === 'project-activity'
+
+  const id = props.id ?? 'chart'
+  const title = props.title ?? 'Chart'
+
   return (
     <>
       <section
         id={id}
         data-role="chart"
-        data-type={type}
-        data-tvl-endpoint={tvlEndpoint}
-        data-detailed-tvl-endpoint={detailedTvlEndpoint}
-        data-activity-endpoint={activityEndpoint}
-        data-milestones={JSON.stringify(milestones)}
+        data-initial-type={JSON.stringify(props.initialType)}
+        data-milestones={JSON.stringify(props.milestones)}
         className={cx(
-          fullWidth
+          props.mobileFull
             ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
             : 'mt-4',
-          sectionClassName,
+          props.sectionClassName,
         )}
       >
-        {!metaChart &&
-          ((hasTvl && hasActivity) || (hasTvl && hasDetailedTvl)) && (
+        {!props.metaChart &&
+          ((props.hasTvl && props.hasActivity) ||
+            (props.hasTvl && props.hasDetailedTvl)) && (
             <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
               <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
                 <a href={`#${id}`}>{title}</a>
               </h2>
 
               <RadioChartTypeControl
-                hasActivity={hasActivity ?? false}
-                hasDetailedTvl={hasDetailedTvl ?? false}
+                hasActivity={props.hasActivity ?? false}
+                hasDetailedTvl={props.hasDetailedTvl ?? false}
               />
             </div>
           )}
         <div className="flex flex-col gap-4">
           <div
             className={`flex justify-between ${
-              metaChart ? 'absolute left-0 bottom-0 w-full' : ''
+              props.metaChart ? 'absolute left-0 bottom-0 w-full' : ''
             }`}
           >
             <TimeRange />
-            <RangeControls days={days} type={type} />
+            <RangeControls isActivity={isActivity} />
           </div>
           <div
             data-role="chart-view"
@@ -110,7 +95,7 @@ export function Chart({
             <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
             <canvas
               data-role="chart-canvas"
-              data-is-meta={metaChart}
+              data-is-meta={props.metaChart}
               className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
             <ChartLabels />
@@ -120,24 +105,26 @@ export function Chart({
             />
           </div>
           <div className="flex items-center justify-between">
-            {hasActivity && (
+            {props.hasActivity && (
               <EthereumActivityToggle
-                showToggle={type === 'activity'}
+                showToggle={isActivity}
                 className="max-w-[135px] xs:max-w-none"
               />
             )}
-            {hasTvl && (
+            {props.hasTvl && (
               <div className="flex h-[2rem] items-end">
                 <CurrencyControls />
-                {hasDetailedTvl && <DesktopTokenControls tokens={tokens} />}
+                {props.hasDetailedTvl && (
+                  <DesktopTokenControls tokens={props.tokens} />
+                )}
               </div>
             )}
             <ScaleControls />
           </div>
-          {hasTvl && !hasDetailedTvl ? (
-            <TokenControlsToBeRemoved tokens={tokens} />
+          {props.hasTvl && !props.hasDetailedTvl ? (
+            <TokenControlsToBeRemoved tokens={props.tokens} />
           ) : (
-            <MobileTokenControls tokens={tokens} />
+            <MobileTokenControls tokens={props.tokens} />
           )}
         </div>
       </section>

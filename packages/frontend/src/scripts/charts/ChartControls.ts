@@ -29,7 +29,6 @@ export class ChartControls {
       useAltCurrency: settings.getUseAltCurrency(),
       useLogScale: settings.getUseLogScale(),
       showEthereumTransactions: settings.getShowEthereumTransactions(),
-      tokenType: 'CBV',
       milestones,
     })
   }
@@ -73,24 +72,6 @@ export class ChartControls {
         const timeRangeInDays = this.toDays(timeRangeControl.value)
         settings.setTimeRange(timeRangeInDays)
         this.chartViewController.configure({ timeRangeInDays })
-      })
-    })
-
-    const tokenControls = Array.from(
-      document.querySelectorAll<HTMLInputElement>(
-        '[data-role="chart-token-controls"] input',
-      ),
-    )
-
-    tokenControls.forEach((tokenControl) => {
-      tokenControl.addEventListener('change', () => {
-        const tokenType = tokenControl.dataset.assetType
-        if (!tokenType) {
-          throw new Error('Invalid token type')
-        }
-        this.chartViewController.configure({
-          tokenType: tokenType as 'CBV' | 'EBV' | 'NMV',
-        })
       })
     })
 

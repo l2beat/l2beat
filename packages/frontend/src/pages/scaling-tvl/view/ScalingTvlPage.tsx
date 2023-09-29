@@ -18,7 +18,6 @@ import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 export interface TvlPageProps {
   tvl: string
   tvlWeeklyChange: string
-  tvlEndpoint: string
   tvlView: ScalingTvlViewProps
   navbar: NavbarProps
   footer: FooterProps
@@ -40,7 +39,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
           <Chart
-            tvlEndpoint={props.tvlEndpoint}
+            initialType={{ type: 'layer2-tvl' }}
             milestones={props.milestones}
           />
           <ScalingTvlView {...props.tvlView} />
