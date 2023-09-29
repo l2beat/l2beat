@@ -1,12 +1,12 @@
 import { Milestone } from '@l2beat/config'
 
 import {
-  ActivityResponse,
+  AggregateDetailedTvlResponse,
   Milestones,
 } from '../../components/chart/configure/state/State'
 import { makeQuery } from '../query'
-import activity from './activity.json'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
+import detailedTvl from './detailed-tvl.json'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export class ChartControls {
@@ -22,8 +22,8 @@ export class ChartControls {
 
     chartViewController.init({
       data: {
-        type: 'activity',
-        values: activity as ActivityResponse,
+        type: 'detailed-tvl',
+        values: detailedTvl as AggregateDetailedTvlResponse,
       },
       timeRangeInDays: settings.getTimeRange(),
       useAltCurrency: settings.getUseAltCurrency(),
@@ -73,6 +73,24 @@ export class ChartControls {
         const timeRangeInDays = this.toDays(timeRangeControl.value)
         settings.setTimeRange(timeRangeInDays)
         this.chartViewController.configure({ timeRangeInDays })
+      })
+    })
+
+    const tokenControls = Array.from(
+      document.querySelectorAll<HTMLInputElement>(
+        '[data-role="chart-token-controls"] input',
+      ),
+    )
+
+    tokenControls.forEach((tokenControl) => {
+      tokenControl.addEventListener('change', () => {
+        const tokenType = tokenControl.dataset.assetType
+        if (!tokenType) {
+          throw new Error('Invalid token type')
+        }
+        this.chartViewController.configure({
+          tokenType: tokenType as 'CBV' | 'EBV' | 'NMV',
+        })
       })
     })
 

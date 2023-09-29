@@ -123,3 +123,7 @@ Token TVL Chart
   - Token chart displays $/Ξ icon next to token count on Y axis
   - Stacked chart tooltip doesn't change when ETH is selected
   - Token TVL tooltip chart icon breaks alignment 
+
+=== Development Bugs ===
+  - Mobile milestones
+  - Token TVL doesnt have this scale as on prod
