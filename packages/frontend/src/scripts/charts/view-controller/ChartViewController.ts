@@ -23,7 +23,7 @@ export class ChartViewController {
   }
 
   render() {
-    // TODO: handle loading
+    // TODO: (chart) handle loading
     if (!this.state?.data) {
       return
     }

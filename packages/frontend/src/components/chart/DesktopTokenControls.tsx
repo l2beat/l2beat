@@ -28,6 +28,7 @@ export function DesktopTokenControls({
     <div
       className="hidden h-full gap-6 md:flex"
       data-role="chart-token-desktop-element"
+      data-tvl-only
     >
       <div />
       <VerticalSeparator />

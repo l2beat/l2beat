@@ -16,6 +16,7 @@ export function TokenControlsToBeRemoved({
   }
   return (
     <div
+      data-tvl-only
       data-role="chart-token-controls"
       className="col-span-4 flex flex-wrap items-baseline justify-start gap-x-4"
     >

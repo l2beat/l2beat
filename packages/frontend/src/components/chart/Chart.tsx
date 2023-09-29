@@ -114,7 +114,7 @@ export function Chart(props: ChartProps) {
               />
             )}
             {!isActivity && (
-              <div className="flex h-[2rem] items-end">
+              <div className="flex h-[2rem] items-end" data-tvl-only>
                 <CurrencyControls />
                 {props.hasDetailedTvl && (
                   <DesktopTokenControls

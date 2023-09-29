@@ -78,7 +78,6 @@ export class ChartRenderer {
   }
 
   private rerender<T>(params: RenderParams<T>) {
-    console.log('rerender')
     this.setupCanvas()
     this.setupYAxisLabels(
       params.points,
@@ -230,7 +229,7 @@ export class ChartRenderer {
     const getCanvasX = (index: number) =>
       (index / (pointsLength - 1)) * canvasWidth
 
-    // TODO: if point index didn't change don't rerender
+    // TODO: (chart) if point index didn't change don't rerender
     let pointIndex = Math.round(mouseX * (this.renderParams.points.length - 1))
     let point = this.renderParams.points[pointIndex]
 
@@ -242,6 +241,7 @@ export class ChartRenderer {
 
     let milestone: Milestone | undefined
     if (mouseY < milestoneMouseY) {
+      // TODO: (chart) fix milestones being selected incorrectly
       for (let i = 0; i < this.renderParams.points.length; i++) {
         const indices = [pointIndex - i, pointIndex + i + 1]
         for (const index of indices) {
@@ -304,7 +304,6 @@ export class ChartRenderer {
       Math.max(averageY - height / 2, HOVER_CANVAS_PADDING),
     )
     this.hoverContents.style.bottom = `${contentsBottom}px`
-    //TODO: MAYBE CHECK THE CONDITION
     if (
       this.hoverContents.clientWidth + left <
       canvasWidth - HOVER_CANVAS_PADDING

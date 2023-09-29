@@ -34,19 +34,16 @@ export class ChartDataController {
     }
     const chartType = this.chartType
 
-    const url = getChartUrl(chartType)
-    // TODO: set loading
-    // TODO: if in cache get cached
+    const url = getChartUrl(chartType, this.includeCanonical)
+    // TODO: (chart) set loading
+    // TODO: (chart) if in cache get cached
 
-    // TODO: abortcontroller
-
-    console.log('fetching', url)
+    // TODO: (chart) abortcontroller
 
     void fetch(url)
       .then((res) => res.json())
       .then((data: unknown) => this.parseData(chartType, data))
       .then((data) => this.chartViewController.configure({ data }))
-      .then(() => console.log('done'))
   }
 
   private parseData(chartType: ChartType, data: unknown): ChartData {
@@ -89,10 +86,10 @@ export function getChartUrl(chartType: ChartType, includeCanonical = false) {
         ? '/api/combined-tvl.json'
         : '/api/bridges-tvl.json'
     case 'project-tvl':
-      // TODO: token
+      // TODO: (chart) token
       return `/api/${chartType.slug}-tvl.json`
     case 'project-detailed-tvl':
-      // TODO: token
+      // TODO: (chart) token
       return `/api/${chartType.slug}-detailed-tvl.json`
     case 'project-activity':
       return `/api/activity/${chartType.slug}.json`

@@ -113,8 +113,21 @@ export class ChartControls {
           )
         }
 
-        // TODO: show / hide currency, token and ethereum transaction controls
+        this.chart
+          .querySelectorAll('[data-tvl-only]')
+          .forEach((element) =>
+            element.classList.toggle('hidden', type === 'activity'),
+          )
+
+        this.chart
+          .querySelectorAll('[data-activity-only]')
+          .forEach((element) =>
+            element.classList.toggle('hidden', type !== 'activity'),
+          )
       })
+
+      // TODO: (chart) token controls
+      // TODO: (chart) canonical controls
     })
   }
 
