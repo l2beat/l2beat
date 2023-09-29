@@ -8,7 +8,7 @@ export type ChartSettings = ReturnType<
 const DEFAULT_VALUES: SavedChartSettings = {
   useLogScale: false,
   useAltCurrency: false,
-  timeRangeInDays: '365',
+  timeRangeInDays: 365,
   showEthereumTransactions: true,
 }
 
@@ -34,10 +34,14 @@ export class ChartSettingsManager {
         this.update(chartId, { useAltCurrency: value })
       },
       getTimeRange: () => {
-        return Number(this.get(chartId).timeRangeInDays)
+        const value = this.get(chartId).timeRangeInDays
+        return value === -1 ? Infinity : value
       },
       setTimeRange: (value: number) => {
-        this.update(chartId, { timeRangeInDays: value.toString() })
+        if (value === Infinity) {
+          value = -1
+        }
+        this.update(chartId, { timeRangeInDays: value })
       },
       getShowEthereumTransactions: () => {
         return this.get(chartId).showEthereumTransactions

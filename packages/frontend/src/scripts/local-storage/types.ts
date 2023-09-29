@@ -10,7 +10,7 @@ export type SavedChartSettings = z.infer<typeof SavedChartSettings>
 export const SavedChartSettings = z.object({
   useLogScale: z.boolean(),
   useAltCurrency: z.boolean(),
-  timeRangeInDays: z.string(),
+  timeRangeInDays: z.number(),
   showEthereumTransactions: z.boolean(),
 })
 
