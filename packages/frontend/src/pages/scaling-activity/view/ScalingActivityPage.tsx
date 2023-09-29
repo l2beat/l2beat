@@ -42,8 +42,6 @@ export function ActivityPage(props: ActivityPageProps) {
           <ActivityHeader scalingFactor={props.scalingFactor} />
           <Chart
             initialType={{ type: 'layer2-activity' }}
-            hasTvl={false}
-            hasActivity
             milestones={props.milestones}
           />
           <ScalingActivityView {...props.activityView} />

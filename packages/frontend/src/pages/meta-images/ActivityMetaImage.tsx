@@ -5,7 +5,6 @@ import { Chart, Header, Logo } from '../../components'
 export interface ActivityMetaImageProps {
   tpsDaily: string
   tpsWeeklyChange: string
-  activityEndpoint: string
 }
 
 export function ActivityMetaImage(props: ActivityMetaImageProps) {
@@ -20,13 +19,7 @@ export function ActivityMetaImage(props: ActivityMetaImageProps) {
         tpsDaily={props.tpsDaily}
         tpsWeeklyChange={props.tpsWeeklyChange}
       />
-      <Chart
-        initialType="activity"
-        metaChart
-        activityEndpoint={props.activityEndpoint}
-        hasTvl={false}
-        hasActivity
-      />
+      <Chart initialType={{ type: 'layer2-activity' }} metaChart />
       <Logo />
     </div>
   )
