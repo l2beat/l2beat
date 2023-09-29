@@ -1,10 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
-
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 const discovery = new ProjectDiscovery('opticsV1')
 
 export const opticsV1: Bridge = {
