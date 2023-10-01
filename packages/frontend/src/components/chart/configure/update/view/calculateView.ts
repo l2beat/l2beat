@@ -15,7 +15,7 @@ export function calculateView(
     } else {
       return calculateRegularTvlView(data, controls)
     }
-  } else if (controls.view === 'detailedTvl') {
+  } else if (controls.view === 'detailed-tvl') {
     if (controls.token) {
       return calculateTokenDetailedTvlView(data, controls)
     } else {

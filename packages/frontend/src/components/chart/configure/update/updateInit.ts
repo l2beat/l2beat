@@ -16,7 +16,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
       url: message.aggregateTvlEndpoint,
       requestId: 1,
     }
-  } else if (message.initialView === 'detailedTvl') {
+  } else if (message.initialView === 'detailed-tvl') {
     if (!message.detailedAggregateTvlEndpoint) {
       throw new Error('Invalid init message, missing detailed tvl endpoint!')
     }

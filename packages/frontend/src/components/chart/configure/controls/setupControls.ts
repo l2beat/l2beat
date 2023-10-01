@@ -67,7 +67,7 @@ export function setupControls(
     let view: ViewChangedMessage['view'] = 'tvl'
     switch (control.value) {
       case 'detailedTvl':
-        view = 'detailedTvl'
+        view = 'detailed-tvl'
         break
       case 'activity':
         view = 'activity'
