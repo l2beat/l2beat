@@ -44,6 +44,7 @@ export class ChartDataController {
       .then((data) => {
         this.chartViewController.configure({ data })
         this.chartViewController.hideLoader()
+        this.abortController = undefined
       })
   }
 
