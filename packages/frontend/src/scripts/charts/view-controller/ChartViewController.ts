@@ -9,6 +9,7 @@ import { ChartControlsState } from './types'
 export class ChartViewController {
   private state?: ChartControlsState
   private readonly loader: HTMLElement
+  private loaderTimeout?: NodeJS.Timeout
 
   constructor(private readonly chartRenderer: ChartRenderer) {
     const { $ } = makeQuery(document.body)
@@ -36,11 +37,19 @@ export class ChartViewController {
   }
 
   showLoader() {
-    this.loader.classList.remove('hidden')
+    if (this.loaderTimeout) {
+      return
+    }
+    this.loaderTimeout = setTimeout(
+      () => this.loader.classList.remove('hidden'),
+      300,
+    )
   }
 
   hideLoader() {
+    clearTimeout(this.loaderTimeout)
     this.loader.classList.add('hidden')
+    this.loaderTimeout = undefined
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
