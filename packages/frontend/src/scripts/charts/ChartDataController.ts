@@ -11,6 +11,7 @@ import { ChartData } from './view-controller/types'
 export class ChartDataController {
   private chartType?: ChartType
   private includeCanonical = false
+  private abortController?: AbortController
 
   constructor(private readonly chartViewController: ChartViewController) {}
 
@@ -18,10 +19,6 @@ export class ChartDataController {
     this.chartType = chartType
     this.refetch()
   }
-
-  // setToken(token: string | undefined) {
-
-  // }
 
   setIncludeCanonical(includeCanonical: boolean) {
     this.includeCanonical = includeCanonical
@@ -32,18 +29,22 @@ export class ChartDataController {
     if (!this.chartType) {
       return
     }
-    const chartType = this.chartType
+    this.abortController?.abort()
+    this.abortController = new AbortController()
 
+    const chartType = this.chartType
     const url = getChartUrl(chartType, this.includeCanonical)
     // TODO: (chart) set loading
     // TODO: (chart) if in cache get cached
 
-    // TODO: (chart) abortcontroller
-
-    void fetch(url)
+    this.chartViewController.showLoader()
+    void fetch(url, { signal: this.abortController.signal })
       .then((res) => res.json())
       .then((data: unknown) => this.parseData(chartType, data))
-      .then((data) => this.chartViewController.configure({ data }))
+      .then((data) => {
+        this.chartViewController.configure({ data })
+        this.chartViewController.hideLoader()
+      })
   }
 
   private parseData(chartType: ChartType, data: unknown): ChartData {

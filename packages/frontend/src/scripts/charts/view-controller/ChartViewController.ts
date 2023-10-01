@@ -1,3 +1,4 @@
+import { makeQuery } from '../../query'
 import { ChartRenderer, RenderParams } from '../renderer/ChartRenderer'
 import { getActivityRenderParams } from './charts/getActivityRenderParams'
 import { getDetailedTvlRenderParams } from './charts/getDetailedTvlRenderParams'
@@ -7,8 +8,12 @@ import { ChartControlsState } from './types'
 
 export class ChartViewController {
   private state?: ChartControlsState
+  private readonly loader: HTMLElement
 
-  constructor(private readonly chartRenderer: ChartRenderer) {}
+  constructor(private readonly chartRenderer: ChartRenderer) {
+    const { $ } = makeQuery(document.body)
+    this.loader = $('[data-role="chart-loader"]')
+  }
 
   init(state: ChartControlsState) {
     this.state = state
@@ -23,11 +28,19 @@ export class ChartViewController {
   }
 
   render() {
-    // TODO: (chart) handle loading
     if (!this.state?.data) {
       return
     }
+
     this.chartRenderer.render(this.getRenderParams())
+  }
+
+  showLoader() {
+    this.loader.classList.remove('hidden')
+  }
+
+  hideLoader() {
+    this.loader.classList.add('hidden')
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -2,10 +2,7 @@ import React from 'react'
 
 export function ChartLabels() {
   return (
-    <div
-      data-role="chart-labels"
-      className="pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px]"
-    >
+    <div className="pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px]">
       <ChartLabel />
       <ChartLabel />
       <ChartLabel />
