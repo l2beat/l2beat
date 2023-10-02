@@ -4,8 +4,8 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
+import { ProjectSummaryStat } from '../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { SummaryStat } from '../../../components/header/Summary'
 import { TvlStats } from '../../../components/header/TvlSummary'
 import { InfoIcon, ProjectLink } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
@@ -44,7 +44,7 @@ export interface ProjectHeaderProps {
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
-  const summary: SummaryStat[] = [
+  const summary: ProjectSummaryStat[] = [
     {
       title: 'Breakdown',
       value:
