@@ -37,8 +37,12 @@ function Template({
     address: '0xabac',
     name: x,
     symbol: x,
-    tvlEndpoint: '/',
-    assetType: 'EBV',
+    info: {
+      type: 'EBV',
+      assetId: '0xabac',
+      chainId: '12',
+      projectId: 'arbitrum',
+    },
     iconUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
   }))

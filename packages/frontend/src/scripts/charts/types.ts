@@ -159,3 +159,41 @@ export const Milestones = z.array(
     description: z.optional(z.string()),
   }),
 )
+
+export type TokenInfo = z.infer<typeof TokenInfo>
+export const TokenInfo = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('CBV'),
+    projectId: z.string(),
+    assetId: z.string(),
+  }),
+  z.object({
+    type: z.literal('EBV'),
+    projectId: z.string(),
+    assetId: z.string(),
+    chainId: z.string(),
+  }),
+  z.object({
+    type: z.literal('NMV'),
+    projectId: z.string(),
+    assetId: z.string(),
+    chainId: z.string(),
+  }),
+])
+
+export type ChartType = z.infer<typeof ChartType>
+export const ChartType = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('layer2-tvl') }),
+  z.object({ type: z.literal('layer2-detailed-tvl') }),
+  z.object({ type: z.literal('layer2-activity') }),
+  z.object({ type: z.literal('bridges-tvl') }),
+  z.object({ type: z.literal('project-tvl'), slug: z.string() }),
+  z.object({ type: z.literal('project-detailed-tvl'), slug: z.string() }),
+  z.object({
+    type: z.literal('project-token-tvl'),
+    info: TokenInfo,
+  }),
+  z.object({ type: z.literal('project-activity'), slug: z.string() }),
+  z.object({ type: z.literal('storybook-fake-tvl') }),
+  z.object({ type: z.literal('storybook-fake-activity') }),
+])

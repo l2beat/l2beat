@@ -1,9 +1,9 @@
-import { z } from 'zod'
-
 import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
+  ChartType,
+  TokenTvlResponse,
 } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 import { ChartData } from './view-controller/types'
@@ -34,7 +34,6 @@ export class ChartDataController {
 
     const chartType = this.chartType
     const url = getChartUrl(chartType, this.includeCanonical)
-    // TODO: (chart) set loading
     // TODO: (chart) if in cache get cached
 
     this.chartViewController.showLoader()
@@ -44,7 +43,6 @@ export class ChartDataController {
       .then((data) => {
         this.chartViewController.configure({ data })
         this.chartViewController.hideLoader()
-        this.abortController = undefined
       })
   }
 
@@ -63,6 +61,12 @@ export class ChartDataController {
         return {
           type: 'detailed-tvl',
           values: AggregateDetailedTvlResponse.parse(data),
+        }
+      case 'project-token-tvl':
+        return {
+          type: 'token-tvl',
+          tokenType: chartType.info.type,
+          values: TokenTvlResponse.parse(data),
         }
       case 'layer2-activity':
       case 'project-activity':
@@ -93,6 +97,11 @@ export function getChartUrl(chartType: ChartType, includeCanonical = false) {
     case 'project-detailed-tvl':
       // TODO: (chart) token
       return `/api/${chartType.slug}-detailed-tvl.json`
+    case 'project-token-tvl':
+      return chartType.info.type === 'CBV'
+        ? `/api/projects/${chartType.info.projectId}/tvl/assets/${chartType.info.assetId}`
+        : `/api/projects/${chartType.info.projectId}/tvl/chains/${chartType.info.chainId}/assets/${chartType.info.assetId}/types/${chartType.info.type}`
+
     case 'project-activity':
       return `/api/activity/${chartType.slug}.json`
     case 'storybook-fake-tvl':
@@ -101,16 +110,3 @@ export function getChartUrl(chartType: ChartType, includeCanonical = false) {
       return '/fake-activity.json'
   }
 }
-
-export type ChartType = z.infer<typeof ChartType>
-export const ChartType = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('layer2-tvl') }),
-  z.object({ type: z.literal('layer2-detailed-tvl') }),
-  z.object({ type: z.literal('layer2-activity') }),
-  z.object({ type: z.literal('bridges-tvl') }),
-  z.object({ type: z.literal('project-tvl'), slug: z.string() }),
-  z.object({ type: z.literal('project-detailed-tvl'), slug: z.string() }),
-  z.object({ type: z.literal('project-activity'), slug: z.string() }),
-  z.object({ type: z.literal('storybook-fake-tvl') }),
-  z.object({ type: z.literal('storybook-fake-activity') }),
-])

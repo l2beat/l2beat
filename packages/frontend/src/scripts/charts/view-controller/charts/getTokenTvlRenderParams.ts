@@ -15,6 +15,9 @@ export function getTokenTvlRenderParams(
     const dataInRange = getEntriesByDays(
       state.timeRangeInDays,
       state.data.values,
+      {
+        trimLeft: true,
+      },
     )
 
     const points = dataInRange.map(([timestamp, token, usd]) => {

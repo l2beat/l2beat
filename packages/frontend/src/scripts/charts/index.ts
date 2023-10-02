@@ -3,6 +3,7 @@ import { ChartControls } from './ChartControls'
 import { ChartDataController } from './ChartDataController'
 import { ChartSettingsManager } from './ChartSettings'
 import { ChartRenderer } from './renderer/ChartRenderer'
+import { TokenControls } from './TokenControls'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export function configureCharts() {
@@ -25,5 +26,6 @@ export function configureCharts() {
     chartViewController,
     chartDataController,
   )
+  new TokenControls(chartDataController)
   chartControls.init()
 }

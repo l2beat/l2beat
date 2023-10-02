@@ -1,14 +1,13 @@
-import { AssetType } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { TokenInfo } from '../../scripts/charts/types'
 import { CloseIcon } from '../icons/CloseIcon'
 
 export interface TokenControl {
   iconUrl: string
   symbol: string
   name: string
-  assetType: AssetType
-  tvlEndpoint: string
+  info: TokenInfo
 }
 
 export function TokenCell({ token }: { token: TokenControl }) {
@@ -20,8 +19,7 @@ export function TokenCell({ token }: { token: TokenControl }) {
         type={'radio'}
         autoComplete="off"
         value={token.symbol}
-        data-tvl-endpoint={token.tvlEndpoint}
-        data-asset-type={token.assetType}
+        data-token-info={JSON.stringify(token.info)}
       />
       <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
       <p className="text-sm" key={token.symbol}>
@@ -50,21 +48,21 @@ export function getParts(tokens: TokenControl[]) {
       title: 'Natively Minted Tokens',
       titleColor: 'text-[#FF6DCD]',
       tokens: tokens
-        .filter((t) => t.assetType.toString() === 'NMV')
+        .filter((t) => t.info.type.toString() === 'NMV')
         .slice(0, 15),
     },
     {
       title: 'Externally Bridged Tokens',
       titleColor: 'text-yellow-200',
       tokens: tokens
-        .filter((t) => t.assetType.toString() === 'EBV')
+        .filter((t) => t.info.type.toString() === 'EBV')
         .slice(0, 15),
     },
     {
       title: 'Canonically Bridged Tokens (Top 15)',
       titleColor: 'text-[#D98EFF]',
       tokens: tokens
-        .filter((t) => t.assetType.toString() === 'CBV')
+        .filter((t) => t.info.type.toString() === 'CBV')
         .slice(0, 15),
     },
   ]

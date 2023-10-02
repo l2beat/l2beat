@@ -9,6 +9,7 @@ import {
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
 import { TokenControl } from '../../components/chart/CommonTokenControls'
+import { TokenInfo } from '../../scripts/charts/types'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
@@ -23,16 +24,11 @@ export function getChart(
       config?.features.detailedTvl && project.type === 'layer2'
         ? { type: 'project-detailed-tvl', slug: project.display.slug }
         : { type: 'project-tvl', slug: project.display.slug },
-    tokens: getTokens(
-      project.id,
-      tvlApiResponse,
-      config?.features.detailedTvl ?? false,
-    ),
+    tokens: getTokens(project.id, tvlApiResponse),
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     hasActivity:
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
-    hasDetailedTvl: config?.features.detailedTvl,
     milestones: project.milestones,
     isUpcoming: project.isUpcoming ?? project.config.escrows.length === 0,
   }
@@ -41,7 +37,6 @@ export function getChart(
 export function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-  hasDetailedTVL: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
 
@@ -66,17 +61,25 @@ export function getTokens(
       const iconUrl = token?.iconUrl ?? ''
 
       if (symbol && name) {
-        const tvlEndpoint = hasDetailedTVL
-          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${assetType}`
-          : `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`
-
+        const tokenInfo: TokenInfo =
+          assetType === 'CBV'
+            ? {
+                type: 'CBV',
+                projectId: projectId.toString(),
+                assetId: assetId.toString(),
+              }
+            : {
+                type: assetType === 'EBV' ? 'EBV' : 'NMV',
+                projectId: projectId.toString(),
+                assetId: assetId.toString(),
+                chainId: chainId.toString(),
+              }
         return {
           address: address?.toString(),
           iconUrl,
           symbol,
           name,
-          assetType,
-          tvlEndpoint,
+          info: tokenInfo,
           tvl: usdValue,
         }
       }

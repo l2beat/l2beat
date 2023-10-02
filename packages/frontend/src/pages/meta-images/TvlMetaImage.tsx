@@ -2,7 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Chart, Header, Logo } from '../../components'
-import { ChartType } from '../../scripts/charts/ChartDataController'
+import { ChartType } from '../../scripts/charts/types'
 
 export interface TvlMetaImageProps {
   tvl: string

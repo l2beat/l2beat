@@ -58,7 +58,7 @@ export function render(
 
   if (state.controls.view !== previousState.controls.view) {
     const isTvl = state.controls.view === 'tvl'
-    const isDetailedTvl = state.controls.view === 'detailedTvl'
+    const isDetailedTvl = state.controls.view === 'detailed-tvl'
     const sevenDayRadio = elements.controls.days.find(
       (x) => toDays(x.value) === 7,
     )?.parentElement

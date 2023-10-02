@@ -5,10 +5,8 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import {
-  ChartType,
-  getChartUrl,
-} from '../../scripts/charts/ChartDataController'
+import { getChartUrl } from '../../scripts/charts/ChartDataController'
+import { ChartType } from '../../scripts/charts/types'
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
 import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'

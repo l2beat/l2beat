@@ -10,18 +10,11 @@ interface Tab {
 
 export function RadioChartTypeControl({
   hasActivity,
-  hasDetailedTvl,
 }: {
   hasActivity: boolean
-  hasDetailedTvl: boolean
 }) {
   const tabs: Tab[] = compact([
-    !hasDetailedTvl && {
-      fullName: 'Value Locked',
-      shortName: 'Value',
-      value: 'tvl',
-    },
-    hasDetailedTvl && {
+    {
       fullName: 'Value Locked',
       shortName: 'Value',
       value: 'detailedTvl',

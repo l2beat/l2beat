@@ -2,7 +2,7 @@ import { Milestone } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { ChartType } from '../../scripts/charts/ChartDataController'
+import { ChartType } from '../../scripts/charts/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
@@ -18,7 +18,6 @@ import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
-import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
 
 export interface ChartProps {
   title?: string
@@ -28,7 +27,6 @@ export interface ChartProps {
   initialType: ChartType
   tvlBreakdownHref?: string
   hasActivity?: boolean
-  hasDetailedTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
@@ -64,16 +62,13 @@ export function Chart(props: ChartProps) {
           props.sectionClassName,
         )}
       >
-        {!props.metaChart && (props.hasActivity || props.hasDetailedTvl) && (
+        {!props.metaChart && props.hasActivity && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
             <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
               <a href={`#${id}`}>{title}</a>
             </h2>
 
-            <RadioChartTypeControl
-              hasActivity={props.hasActivity ?? false}
-              hasDetailedTvl={props.hasDetailedTvl ?? false}
-            />
+            <RadioChartTypeControl hasActivity={props.hasActivity} />
           </div>
         )}
         <div className="flex flex-col gap-4">
@@ -116,25 +111,20 @@ export function Chart(props: ChartProps) {
             {!isActivity && (
               <div className="flex h-[2rem] items-end" data-tvl-only>
                 <CurrencyControls />
-                {props.hasDetailedTvl && (
-                  <DesktopTokenControls
-                    tvlBreakdownHref={tvlBreakdownHref}
-                    tokens={props.tokens}
-                  />
-                )}
+                <DesktopTokenControls
+                  tvlBreakdownHref={tvlBreakdownHref}
+                  tokens={props.tokens}
+                />
               </div>
             )}
             <ScaleControls />
           </div>
-          {!isActivity &&
-            (!props.hasDetailedTvl ? (
-              <TokenControlsToBeRemoved tokens={props.tokens} />
-            ) : (
-              <MobileTokenControls
-                tokens={props.tokens}
-                tvlBreakdownHref={tvlBreakdownHref}
-              />
-            ))}
+          {!isActivity && (
+            <MobileTokenControls
+              tokens={props.tokens}
+              tvlBreakdownHref={tvlBreakdownHref}
+            />
+          )}
         </div>
       </section>
       <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
