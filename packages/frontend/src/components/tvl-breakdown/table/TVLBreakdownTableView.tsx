@@ -14,6 +14,8 @@ interface Props<
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
+  type?: 'NMV' | 'EBV'
+  empty?: boolean
 }
 
 export interface ColumnConfig<T> {
@@ -21,7 +23,6 @@ export interface ColumnConfig<T> {
   shortName?: ReactNode
   alignRight?: true
   alignCenter?: true
-  minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
   idHref?: SectionId
@@ -43,7 +44,7 @@ export function TVLBreakdownTableView<
     assetId?: AssetId
     escrows?: object[]
   },
->({ items, columns, rows }: Props<T>) {
+>({ items, columns, rows, empty, type }: Props<T>) {
   const highlightedColumnClassNames =
     'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
 
@@ -57,16 +58,13 @@ export function TVLBreakdownTableView<
     >
       <table className="w-full border-collapse border-b border-b-black/10 text-left dark:border-b-white/25">
         <thead>
-          <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:bg-gray-800">
+          <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:bg-white/10">
             {columns.map((column, i) => {
-              const isLastColumn = i === columns.length - 1
               return (
                 <th
                   key={i}
                   className={cx(
-                    'whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r dark:text-gray-50',
-                    column.minimalWidth && 'w-0',
-                    isLastColumn && 'md:pr-4',
+                    'w-[20%] whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
                     column.headClassName,
                     column.highlight && highlightedColumnClassNames,
                   )}
@@ -118,20 +116,16 @@ export function TVLBreakdownTableView<
                 data-token={item.assetId}
               >
                 {columns.map((column, j) => {
-                  const isLastColumn = j === columns.length - 1
-
                   const childClassName = cx(
                     'h-full w-full items-start pt-2 pb-2',
                     column.alignRight && 'justify-end',
                     column.alignCenter && 'justify-center',
-                    isLastColumn && 'md:pr-4',
                   )
                   return (
                     <td
                       key={j}
                       className={cx(
-                        'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r md:h-10 md:pl-4',
-                        column.minimalWidth && 'w-0',
+                        'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
                         column.highlight && highlightedColumnClassNames,
                       )}
                     >
@@ -145,6 +139,24 @@ export function TVLBreakdownTableView<
             )
           })}
         </tbody>
+        {empty && (
+          <tr>
+            <td colSpan={5}>
+              <div className="flex h-20 w-full items-center justify-center text-[13px] font-normal text-[#70737D]">
+                No {type === 'NMV' ? 'natively minted ' : 'externally bridged '}
+                tokens are tracked for this chain. Request a token&nbsp;
+                <a
+                  href="https://forms.gle/fQFsC5g1LgG5z12T7"
+                  target="_blank"
+                  className="text-blue-700 underline dark:text-blue-500"
+                >
+                  here
+                </a>
+                .
+              </div>
+            </td>
+          </tr>
+        )}
       </table>
     </div>
   )

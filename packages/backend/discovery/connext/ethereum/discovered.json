@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "connext",
+  "chain": "ethereum",
   "blockNumber": 17129653,
   "configHash": "0xdcf91d8c4968003c2e4d896e5f39e668d06ba2866c5a0383fa2be56a70ca45ac",
+  "version": 2,
   "contracts": [
     {
       "name": "TransactionManager",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636004546,
       "values": {
         "assetOwnershipTimestamp": 0,
         "delay": 604800,
@@ -33,6 +35,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1636004546,
       "values": {
         "getTransactionManager": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"
       }

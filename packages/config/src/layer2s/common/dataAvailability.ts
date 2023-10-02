@@ -19,7 +19,7 @@ const ON_CHAIN_CANONICAL: ProjectTechnologyChoice = {
 const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   name: 'All data required for proofs is published on chain',
   description:
-    "All the relevant data that is used to recover the L2 balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
+    "All the relevant data that is used to recover the balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
   risks: [],
   references: [
     {

@@ -12,7 +12,6 @@ export function getLocalConfig(): Config {
   dotenv()
 
   const tvlEnabled = getEnv.boolean('TVL_ENABLED', true)
-  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
@@ -60,7 +59,6 @@ export function getLocalConfig(): Config {
 
     tvl: {
       enabled: tvlEnabled,
-      detailedTvlEnabled,
       errorOnUnsyncedDetailedTvl,
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
       ethereum: ethereumTvlEnabled && {

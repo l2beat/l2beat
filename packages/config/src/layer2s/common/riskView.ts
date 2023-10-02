@@ -279,7 +279,7 @@ export function SEQUENCER_SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
       : ''
   return {
     value: 'Self sequence',
-    description: `In the event of a sequencer failure, users can force transactions to be included in the L2 chain by sending them to L1.${delayString}`,
+    description: `In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1.${delayString}`,
     sentiment: 'good',
   }
 }
@@ -363,7 +363,7 @@ export function SEQUENCER_NO_MECHANISM(
 export const PROPOSER_CANNOT_WITHDRAW: ProjectRiskViewEntry = {
   value: 'Cannot withdraw',
   description:
-    'Only the whitelisted proposers can publish L2 state roots on L1, so in the event of failure the withdrawals are frozen.',
+    'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen.',
   sentiment: 'bad',
 }
 

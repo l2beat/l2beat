@@ -1,5 +1,4 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import MarkdownIt from 'markdown-it'
 
 import { formatLargeNumber } from './formatLargeNumber'
 
@@ -24,12 +23,6 @@ export function formatUSD(value: number) {
 
 export function isZeroUSD(value: string) {
   return value === '$0.00'
-}
-
-export function renderInlineMarkdown(markdown: string) {
-  const markdownProcessor = new MarkdownIt({ html: true })
-
-  return markdownProcessor.renderInline(markdown)
 }
 
 export function languageJoin(items?: string[]) {

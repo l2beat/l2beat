@@ -4,6 +4,7 @@ import React from 'react'
 
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
+import { Markdown } from '../Markdown'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
@@ -93,9 +94,9 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
+            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {contract.description}
-            </p>
+            </Markdown>
           )}
           {contract.upgradeableBy && (
             <p className="mt-2 text-gray-850 dark:text-gray-400">
@@ -122,9 +123,9 @@ export function ContractEntry({
                 Show upgrade details
               </button>
               {/* TODO: remove leading once line heights are fixed for all text on the page */}
-              <p className="mt-2 hidden text-sm leading-[15px] text-gray-850 dark:text-gray-400">
+              <Markdown className="mt-2 hidden text-sm leading-snug text-gray-850 dark:text-gray-400">
                 {contract.upgradeConsiderations}
-              </p>
+              </Markdown>
             </>
           )}
           {contract.references && (

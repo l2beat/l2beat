@@ -16,7 +16,7 @@ const FRAUD_PROOFS: ProjectTechnologyChoice = {
 const VALIDITY_PROOFS: ProjectTechnologyChoice = {
   name: 'Validity proofs ensure state correctness',
   description:
-    'Each update to the system state must be accompanied by a ZK Proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. Once the proof is processed on the Ethereum blockchain the L2 block is instantly finalized.',
+    'Each update to the system state must be accompanied by a ZK Proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
   risks: [],
   references: [],
 }

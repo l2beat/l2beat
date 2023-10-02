@@ -124,7 +124,7 @@ export function createTvlModule(
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.assetUpdaters ?? []),
+    submodules.flatMap((x) => x?.reportUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -161,14 +161,14 @@ export function createTvlModule(
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController, detailedTvlController, {
-    detailedTvlEnabled: config.tvl.detailedTvlEnabled,
-  })
+  const tvlRouter = createTvlRouter(tvlController, detailedTvlController)
   const dydxRouter = createDydxRouter(dydxController)
-  const tvlStatusRouter = createTvlStatusRouter(clock, [
+  const tvlStatusRouter = createTvlStatusRouter(
+    clock,
+    priceUpdater,
     aggregatedReportUpdater,
-    ...submodules.flatMap((x) => x?.assetUpdaters ?? []),
-  ])
+    submodules,
+  )
 
   // #endregion
 

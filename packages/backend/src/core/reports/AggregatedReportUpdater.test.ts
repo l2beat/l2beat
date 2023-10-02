@@ -6,7 +6,7 @@ import waitForExpect from 'wait-for-expect'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
-import { AssetUpdater, CBVUpdater } from '../assets'
+import { CBVUpdater, ReportUpdater } from '../assets'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
 import { getAggregatedConfigHash } from './getAggregatedConfigHash'
@@ -71,14 +71,14 @@ describe(AggregatedReportUpdater.name, () => {
     it('calls only updaters with proper minTimestamp', async () => {
       const timestamp = MOCK.NOW
 
-      const firstUpdater = mockObject<AssetUpdater>({
+      const firstUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: mockFn().returns([]),
         getChainId: mockFn().returns(ChainId.ETHEREUM),
         getConfigHash: mockFn().returns(''),
         getMinTimestamp: mockFn().returns(timestamp),
       })
 
-      const secondUpdater = mockObject<AssetUpdater>({
+      const secondUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: mockFn().returns([]),
         getChainId: mockFn().returns(ChainId.ETHEREUM),
         getConfigHash: mockFn().returns(''),

@@ -135,7 +135,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
-    bridgedUsing: 'LayerZero',
+    bridgedUsing: {
+      bridge: 'Layer Zero',
+      slug: 'omnichain',
+    },
   },
   {
     id: AssetId('joe-joe-token'),
@@ -150,7 +153,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
-    bridgedUsing: 'LayerZero',
+    bridgedUsing: {
+      bridge: 'Layer Zero',
+      slug: 'omnichain',
+    },
   },
   {
     id: AssetId('bifi-beefy-finance'),
@@ -165,7 +171,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
-    bridgedUsing: 'Multichain',
+    bridgedUsing: {
+      bridge: 'Multichain',
+      slug: 'multichain',
+    },
   },
   {
     id: AssetId('arbitrum:sdex-smardex'),
@@ -180,7 +189,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
-    bridgedUsing: 'Wormhole',
+    bridgedUsing: {
+      bridge: 'Wormhole',
+      slug: 'portal',
+    },
   },
   {
     id: AssetId('arbitrum:gmx-gmx'),
@@ -276,7 +288,6 @@ export const arbitrum: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
-        sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
@@ -284,7 +295,6 @@ export const arbitrum: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
-        sinceTimestamp: new UnixTime(1623867835),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
@@ -292,7 +302,6 @@ export const arbitrum: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
-        sinceTimestamp: new UnixTime(1623784100),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
@@ -300,7 +309,6 @@ export const arbitrum: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
-        sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
         description:
           'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',

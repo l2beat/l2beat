@@ -1,7 +1,7 @@
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 
-import { AssetUpdater } from '../assets'
+import { ReportUpdater } from '../assets'
 import { getAggregatedConfigHash } from './getAggregatedConfigHash'
 
 describe(getAggregatedConfigHash.name, () => {
@@ -67,7 +67,7 @@ describe(getAggregatedConfigHash.name, () => {
   })
 })
 
-function fakeUpdater(hash: string, chainId: ChainId): AssetUpdater {
+function fakeUpdater(hash: string, chainId: ChainId): ReportUpdater {
   return {
     getChainId: () => chainId,
     getConfigHash: () => Hash256('0x' + hash + '0'.repeat(64 - hash.length)),

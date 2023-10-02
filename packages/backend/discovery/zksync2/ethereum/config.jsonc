@@ -34,7 +34,18 @@
       }
     },
     "ValidatorTimelock": {
-      "ignoreMethods": ["committedBlockTimestamp"]
+      "ignoreMethods": ["committedBlockTimestamp"],
+      "fields": {
+        "revertedBlocks": {
+          "type": "stateFromEvent",
+          "event": "BlocksRevert",
+          "returnParams": [
+            "totalBlocksCommitted",
+            "totalBlocksVerified",
+            "totalBlocksExecuted"
+          ]
+        }
+      }
     },
     "zkSync Era Multisig": {
       "ignoreInWatchMode": ["nonce"]

@@ -1,13 +1,16 @@
 import { Logger } from '@l2beat/shared'
 import {
   assert,
+  AssetId,
+  ChainId,
   DetailedTvlApiProject,
+  EthereumAddress,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
   ReportType,
   Token,
 } from '@l2beat/shared-pure'
-import { mapValues } from 'lodash'
+import { Dictionary, mapValues } from 'lodash'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
@@ -225,18 +228,19 @@ export function groupAndMergeBreakdowns(
   },
 ): ProjectAssetsBreakdownApiResponse['breakdowns'] {
   const groupedExternalBreakdownEntries = groupByAndOmit(
-    breakdowns.external,
+    breakdowns.external.sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
     'projectId',
   )
 
   const groupedNativeBreakdownEntries = groupByAndOmit(
-    breakdowns.native,
+    breakdowns.native.sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
     'projectId',
   )
 
-  const groupedCanonicalBreakdownEntries = mapValues(
-    groupByAndOmit(breakdowns.canonical, 'projectId'),
-    (breakdowns) => groupByAndOmit(breakdowns, 'escrowAddress'),
+  const groupedCanonicalBreakdownEntries = reshapeCanonicalResponse(
+    mapValues(groupByAndOmit(breakdowns.canonical, 'projectId'), (breakdowns) =>
+      groupByAndOmit(breakdowns, 'assetId'),
+    ),
   )
 
   const base: ProjectAssetsBreakdownApiResponse['breakdowns'] = {}
@@ -249,7 +253,7 @@ export function groupAndMergeBreakdowns(
     /* eslint-disable @typescript-eslint/no-unnecessary-condition */
     const external = groupedExternalBreakdownEntries[projectId] ?? []
     const native = groupedNativeBreakdownEntries[projectId] ?? []
-    const canonical = groupedCanonicalBreakdownEntries[projectId] ?? {}
+    const canonical = groupedCanonicalBreakdownEntries[projectId] ?? []
     /* eslint-enable @typescript-eslint/no-unnecessary-condition */
 
     return {
@@ -261,4 +265,46 @@ export function groupAndMergeBreakdowns(
       },
     }
   }, base)
+}
+
+// We need to do this because for every asset we receive array of escrows, so we need to sum values from escrows for every asset, and add escrows field for every asset
+function reshapeCanonicalResponse(
+  breakdowns: Record<
+    string,
+    Dictionary<
+      {
+        chainId: ChainId
+        amount: string
+        usdValue: string
+        usdPrice: string
+        escrowAddress: EthereumAddress
+      }[]
+    >
+  >,
+) {
+  return Object.fromEntries(
+    Object.entries(breakdowns).map(([project, projectBreakdown]) => [
+      project,
+      Object.entries(projectBreakdown)
+        .map(([asset, escrows]) => ({
+          assetId: AssetId(asset),
+          chainId: ChainId.ETHEREUM,
+          usdValue: escrows
+            .reduce((total, e) => total + Number(e.usdValue), 0)
+            .toString(),
+          amount: escrows
+            .reduce((total, e) => total + Number(e.amount), 0)
+            .toString(),
+          escrows: escrows
+            .map((e) => ({
+              amount: e.amount,
+              usdValue: e.usdValue,
+              escrowAddress: e.escrowAddress,
+            }))
+            .sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
+          usdPrice: escrows[0].usdPrice,
+        }))
+        .sort((a, b) => Number(b.usdValue) - Number(a.usdValue)),
+    ]),
+  )
 }

@@ -11,18 +11,9 @@ export function TvlBreakdownView(props: TvlBreakdownViewProps) {
   return (
     <div>
       <TvlBreakdownSummaryBox {...props.tvlBreakdownSummary} />
-      <NativelyMintedTable
-        tokens={props.tvlBreakdowns.native}
-        explorer={props.explorer}
-      />
-      <ExternallyBridgedTable
-        tokens={props.tvlBreakdowns.external}
-        explorer={props.explorer}
-      />
-      <CanonicallyBridgedTable
-        escrows={props.tvlBreakdowns.canonical}
-        explorer="https://etherscan.io"
-      />
+      <NativelyMintedTable tokens={props.tvlBreakdowns.native} />
+      <ExternallyBridgedTable tokens={props.tvlBreakdowns.external} />
+      <CanonicallyBridgedTable tokens={props.tvlBreakdowns.canonical} />
       <RequestTokenBox />
     </div>
   )

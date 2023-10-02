@@ -43,7 +43,7 @@ export const mantle: Layer2 = {
       'Mantle is an EVM compatible Optimium that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
       It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
       Note that as currently both of these technologies are yet to be fully launched on mainnet, Mantle needs to be considered "under development".\
-      Additionally Mantle uses a set of nodes that are required to co-sign L2 state roots via TSS (Threshold Signature Scheme). This component is\
+      Additionally Mantle uses a set of nodes that are required to co-sign state roots via TSS (Threshold Signature Scheme). This component is\
       intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
     purpose: 'Universal',
     category: 'Optimium',
@@ -248,7 +248,7 @@ export const mantle: Layer2 = {
     addresses: [
       discovery.getContractDetails('CanonicalTransactionChain', {
         description:
-          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the batches instance of the ChainStorageContainerCTC. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the batches instance of the ChainStorageContainerCTC. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue a transaction, which the Sequencer must eventually append to the rollup state.',
         ...upgradesAddressManager,
       }),
       discovery.getContractDetails('StateCommitmentChain', {
@@ -269,7 +269,7 @@ export const mantle: Layer2 = {
       }),
       discovery.getContractDetails('L1CrossDomainMessenger', {
         description:
-          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Mantle, and relays messages from Mantle onto L1. In the event that a message sent from L1 to Mantle is rejected for exceeding the Mantle epoch gas limit, it can be resubmitted via this contract's replay function.",
         ...upgradesAddressManager,
         pausable: {
           paused: discovery.getContractValue<boolean>(
@@ -364,7 +364,7 @@ export const mantle: Layer2 = {
       accounts: [
         discovery.getPermissionedAccount('AddressManager', 'sequencer'),
       ],
-      description: 'Central actor allowed to commit L2 transactions to L1.',
+      description: 'Central actor allowed to commit Mantle transactions to L1.',
     },
     {
       name: 'Tss group',

@@ -8,19 +8,19 @@ export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],
 ) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-purple-300 p-6 dark:bg-purple-700 md:flex-row md:rounded-lg md:border md:border-pink-200 md:dark:border-pink-900">
+    <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 dark:bg-purple-700 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:p-6 md:dark:border-pink-900">
       <StatsItem
-        title="Total TVL"
+        title="Total Value Locked"
         mobileTitle="Total Value Locked"
         value={props.tvl.value}
         change={props.tvl.change}
         big
       />
       <StatsItem
-        title="Canonically Bridged"
-        mobileTitle="Canonically Bridged Value"
-        value={props.canonical.value}
-        change={props.canonical.change}
+        title="Natively Minted"
+        mobileTitle="Natively Minted Tokens"
+        value={props.native.value}
+        change={props.native.change}
       />
       <StatsItem
         title="Externally Bridged"
@@ -29,10 +29,10 @@ export function TvlBreakdownSummaryBox(
         change={props.external.change}
       />
       <StatsItem
-        title="Natively Minted"
-        mobileTitle="Natively Minted Tokens"
-        value={props.native.value}
-        change={props.native.change}
+        title="Canonically Bridged"
+        mobileTitle="Canonically Bridged Value"
+        value={props.canonical.value}
+        change={props.canonical.change}
       />
     </div>
   )
@@ -48,8 +48,13 @@ interface StatsItemProps {
 
 function StatsItem(props: StatsItemProps) {
   return (
-    <div className="flex items-center justify-between md:flex-col md:items-start">
-      <span className="hidden text-xs font-medium text-gray-600 md:inline">
+    <div
+      className={classNames(
+        'flex items-center justify-between md:flex-col md:items-start',
+        props.big && 'mb-1',
+      )}
+    >
+      <span className="hidden text-xs font-medium text-gray-500 dark:text-gray-600 md:inline">
         {props.title}
       </span>
       <span

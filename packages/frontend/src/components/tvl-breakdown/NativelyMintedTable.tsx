@@ -7,7 +7,6 @@ import { TVLBreakdownTableView } from './table/TVLBreakdownTableView'
 
 interface NativelyMintedTableProps {
   tokens: TVLProjectBreakdown['native']
-  explorer: string
 }
 
 export function NativelyMintedTable(props: NativelyMintedTableProps) {
@@ -15,16 +14,18 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
     return acc + Number(token.usdValue)
   }, 0)
 
-  return props.tokens.length === 0 ? null : (
-    <div className="flex flex-col px-4">
-      <h2 className="mt-12 ml-1 mb-4 text-xl font-bold md:ml-2 md:text-2xl">
+  return (
+    <div className="flex flex-col px-4 md:px-0">
+      <h2 className="mt-12 ml-1 mb-3 text-xl font-bold md:mb-4 md:ml-2 md:text-2xl">
         Natively Minted Value
       </h2>
       <TVLBreakdownTableView
-        columns={getNativelyMintedColumns(props.explorer)}
+        columns={getNativelyMintedColumns()}
         items={props.tokens}
+        type="NMV"
+        empty={props.tokens.length === 0}
       />
-      <TableSum type="NMV" amount={sum} />
+      <TableSum amount={sum} />
     </div>
   )
 }

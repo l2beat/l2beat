@@ -2,8 +2,8 @@ import React from 'react'
 
 export function RequestTokenBox() {
   return (
-    <div className="mt-12 flex flex-col items-center justify-between gap-4 bg-gradient-to-r from-[#7E41CC66] via-[#FF46C066] to-[#EE2C0166] py-6 px-10 text-lg md:mx-4 md:flex-row md:rounded-xl">
-      <div className="font-semibold">
+    <div className="md:mt-15 mt-16 -mb-4 flex flex-col items-center justify-between gap-2 bg-gradient-to-r from-[#7E41CC66] via-[#FF46C066] to-[#EE2C0166] py-6 px-10 text-lg md:mb-20 md:flex-row md:rounded-xl">
+      <div className="text-center font-semibold">
         Can't find a token you're looking for?
       </div>
       <a
