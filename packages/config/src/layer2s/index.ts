@@ -8,7 +8,6 @@ import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
-import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -16,8 +15,10 @@ import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { hermez } from './hermez'
+import { honeypot } from './honeypot'
 import { immutablex } from './immutablex'
 import { immutablezkevm } from './immutablezkevm'
+import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
@@ -26,6 +27,7 @@ import { loopring } from './loopring'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metis } from './metis'
+import { mode } from './mode'
 import { morphism } from './morphism'
 import { myria } from './myria'
 import { nova } from './nova'
@@ -65,7 +67,7 @@ export const layer2s: Layer2[] = [
   brine,
   capx,
   canvasconnect,
-  cartesiHoneypot,
+  honeypot,
   degate,
   degate2,
   dydx,
@@ -74,6 +76,7 @@ export const layer2s: Layer2[] = [
   hermez,
   immutablex,
   immutablezkevm,
+  kinto,
   kroma,
   layer2finance,
   layer2financezk,
@@ -82,6 +85,7 @@ export const layer2s: Layer2[] = [
   mantapacific,
   mantle,
   metis,
+  mode,
   morphism,
   myria,
   nova,

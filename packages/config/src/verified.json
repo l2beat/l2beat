@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-09-22T12:49:59.236Z",
+  "updatedAt": "2023-09-27T09:46:14.023Z",
   "projects": {
     "across-v2": true,
     "aevo": true,
@@ -34,6 +34,7 @@
     "hyphen": true,
     "immutablex": true,
     "immutablezkevm": true,
+    "kinto": true,
     "kroma": true,
     "layer2finance": true,
     "layer2financezk": false,
