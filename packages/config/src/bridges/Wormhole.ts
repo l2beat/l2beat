@@ -27,10 +27,10 @@ export const Wormhole: Bridge = {
   },
   description:
       'Wormhole is a cross chain payload passing protocol where the payload could be any arbitrary data',
-    category: 'Messaging Bridge',
   },
   config: {
     escrows: [
+      // Ethereum mainnet core messaging contract
       {
         address: EthereumAddress('0xf92cD566Ea4864356C5491c177A430C222d7e678'),
         sinceTimestamp: new UnixTime(1611084766),
@@ -54,8 +54,21 @@ export const Wormhole: Bridge = {
     ],
   },
   technology: {
-    destination: ['Solana','Binance Smart Chain','Terra and Terra Classic','Polygon','Avalanche','Algorand','Fantom','Karura','Celo,'Acala','Aptos','Arbitrum'
-], 
+    destination: [
+      'Solana',
+      'Binance Smart Chain',
+      'Terra and Terra Classic',
+      'Polygon',
+      'Avalanche',
+      'Algorand',
+      'Fantom',
+      'Karura',
+      'Celo',
+      'Acala',
+      'Aptos',
+      'Arbitrum'
+    ], 
+
     canonical: true,
   },
   riskView: {
@@ -66,7 +79,7 @@ export const Wormhole: Bridge = {
       sentiment: 'okay',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
-    destinationToken: RISK_VIEW.WRAPPED,
+    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   knowledgeNuggets: [
     {
