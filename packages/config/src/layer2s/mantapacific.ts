@@ -249,13 +249,18 @@ export const mantapacific: Layer2 = {
       name: 'MantaOwner',
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
       description:
-        'Owner of the SystemConfig, ProxyAdmin and configured as the Challenger and Guardian of the system.',
+        'Owner of the SystemConfig and configured as the Challenger and Guardian of the system.',
+    },
+    {
+      name: 'AdminMultisig',
+      accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
+      description: 'Owner of the ProxyAdmin contract.',
     },
     {
       name: 'ProxyAdmin',
       accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
       description:
-        'Admin of the OptimismPortal, L2OutputOracle, SystemConfig, L1StandardBridge, AddressManager proxies. It’s controlled by the MantaOwner.',
+        'Admin of the OptimismPortal, L2OutputOracle, SystemConfig, L1StandardBridge, AddressManager proxies.',
     },
     {
       name: 'Sequencer',
