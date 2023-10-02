@@ -21,11 +21,11 @@ export const Wormhole: Bridge = {
       explorers:['https://wormholescan.io'],
       socialMedia: [ 
         'https://twitter.com/wormholecrypto',
-        'https://discord.gg/wormholecrypto'
+        'https://discord.gg/wormholecrypto',
     },
     category: 'Hybrid'
   },
-  description:
+  description: {
       'Wormhole is a cross chain payload passing protocol where the payload could be any arbitrary data',
   },
   config: {
@@ -49,7 +49,7 @@ export const Wormhole: Bridge = {
           'tBTC',
           'xDATA'
         ],
-        description: 'Lock-Release Bridge'
+        description: 'Lock-Release Bridge',
       },
     ],
   },
@@ -76,11 +76,17 @@ export const Wormhole: Bridge = {
       value: 'Network of permissioned Nodes with a quorum of 2/3n +1',
       description:
         'Transfers need to be signed offchain by a set of 2/3n +1 of Guardians and then relayed to the destination chain with the relayers, as of now there are no open public relayers but anyone spin up their own.',
-      sentiment: 'okay',
+      sentiment: 'bad',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
+  Projectpermissions: [
+    {
+      name: 'Guardian Network',
+      description: 'Permissioned node network signing messages which become VAA containing transfer information'
+    },
+  ],
   knowledgeNuggets: [
     {
       title: 'Wormhole core architecture',
