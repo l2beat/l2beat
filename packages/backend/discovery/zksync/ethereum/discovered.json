@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "chain": "ethereum",
-  "blockNumber": 18220131,
+  "blockNumber": 18263288,
   "configHash": "0x82dc10b38ea04e4b12bfdbc39754fb9e84c7f79a0d87767d30cd3d70f04a1e12",
   "version": 2,
   "contracts": [
@@ -71,7 +71,7 @@
           "0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
         ],
         "getThreshold": 2,
-        "nonce": 290,
+        "nonce": 299,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -155,7 +155,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 17439
+        "totalSupply": 17532
       },
       "derivedName": "ZkSyncNFTFactory"
     },
@@ -257,7 +257,7 @@
         "getOwners": [
           "0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
           "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
-          "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F",
+          "0x733F602bB867c643542cc807a3D32AD1A86cacc1",
           "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
@@ -266,7 +266,7 @@
         ],
         "getThreshold": 4,
         "NAME": "Gnosis Safe",
-        "nonce": 109,
+        "nonce": 110,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -289,6 +289,7 @@
     "0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B",
     "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
     "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3",
+    "0x733F602bB867c643542cc807a3D32AD1A86cacc1",
     "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11",
     "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
     "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
@@ -300,7 +301,6 @@
     "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193",
     "0xB1A308e7F02798377b7acF685E997E3D774c5863",
     "0xCE990b1f86e954746AD3a57F5Aa6CFa9CC0c3348",
-    "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F",
     "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe",
     "0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f",
     "0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB",

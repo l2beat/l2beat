@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 18220216,
+  "blockNumber": 18263277,
   "configHash": "0x51742266d88802d01ba0ab7b531d4947d08e3933d887f74c84607ff837e89f8b",
   "version": 2,
   "contracts": [
@@ -116,7 +116,7 @@
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pendingStateTimeout": 432000,
         "rollupVerifier": "0x21f65deadb3b85082BA99766f323bEA90eb5a3D6",
-        "trustedAggregator": "0xdA87c4a76922598Ac0272F4D9503a35071D686eA",
+        "trustedAggregator": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
         "trustedAggregatorTimeout": 432000,
         "trustedSequencer": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
         "trustedSequencerURL": "https://zkevm-rpc.com/",
@@ -186,11 +186,11 @@
     "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
     "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
     "0x4c1665d6651ecEfa59B9B3041951608468b18891",
+    "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
     "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
     "0xA0B02B28920812324f1cC3255bd8840867d3f227",
     "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
     "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
-    "0xdA87c4a76922598Ac0272F4D9503a35071D686eA",
     "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
     "0xFe45baf0F18c207152A807c1b05926583CFE2e4b"
   ],
