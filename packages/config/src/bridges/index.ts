@@ -34,7 +34,7 @@ import { stargate } from './stargate'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
 import { Bridge } from './types'
-import { wormholeV1 } from './wormholeV1'
+import { Wormhole } from './Wormhole'
 import { xdai } from './xdai'
 
 export * from './types'
