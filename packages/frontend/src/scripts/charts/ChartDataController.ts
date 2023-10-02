@@ -3,6 +3,7 @@ import {
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
   ChartType,
+  TokenInfo,
   TokenTvlResponse,
 } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
@@ -68,6 +69,7 @@ export class ChartDataController {
           tokenType: chartType.info.type,
           values: TokenTvlResponse.parse(data),
         }
+
       case 'layer2-activity':
       case 'project-activity':
       case 'storybook-fake-activity':
@@ -92,16 +94,11 @@ export function getChartUrl(chartType: ChartType, includeCanonical = false) {
         ? '/api/combined-tvl.json'
         : '/api/bridges-tvl.json'
     case 'project-tvl':
-      // TODO: (chart) token
       return `/api/${chartType.slug}-tvl.json`
     case 'project-detailed-tvl':
-      // TODO: (chart) token
       return `/api/${chartType.slug}-detailed-tvl.json`
     case 'project-token-tvl':
-      return chartType.info.type === 'CBV'
-        ? `/api/projects/${chartType.info.projectId}/tvl/assets/${chartType.info.assetId}`
-        : `/api/projects/${chartType.info.projectId}/tvl/chains/${chartType.info.chainId}/assets/${chartType.info.assetId}/types/${chartType.info.type}`
-
+      return getTokenTvlUrl(chartType.info)
     case 'project-activity':
       return `/api/activity/${chartType.slug}.json`
     case 'storybook-fake-tvl':
@@ -109,4 +106,10 @@ export function getChartUrl(chartType: ChartType, includeCanonical = false) {
     case 'storybook-fake-activity':
       return '/fake-activity.json'
   }
+}
+
+export function getTokenTvlUrl(info: TokenInfo) {
+  const chainId = 'chainId' in info ? info.chainId : 1
+  const type = info.type === 'regular' ? 'CBV' : info.type
+  return `/api/projects/${info.projectId}/tvl/chains/${chainId}/assets/${info.assetId}/types/${type}`
 }

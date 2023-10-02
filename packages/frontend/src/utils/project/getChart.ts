@@ -1,6 +1,9 @@
 import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   ActivityApiResponse,
+  AssetId,
+  AssetType,
+  ChainId,
   DetailedTvlApiResponse,
   ProjectId,
   TvlApiResponse,
@@ -24,7 +27,7 @@ export function getChart(
       config?.features.detailedTvl && project.type === 'layer2'
         ? { type: 'project-detailed-tvl', slug: project.display.slug }
         : { type: 'project-tvl', slug: project.display.slug },
-    tokens: getTokens(project.id, tvlApiResponse),
+    tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     hasActivity:
       config?.features.activity &&
@@ -37,6 +40,7 @@ export function getChart(
 export function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  isLayer2: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
 
@@ -61,31 +65,46 @@ export function getTokens(
       const iconUrl = token?.iconUrl ?? ''
 
       if (symbol && name) {
-        const tokenInfo: TokenInfo =
-          assetType === 'CBV'
-            ? {
-                type: 'CBV',
-                projectId: projectId.toString(),
-                assetId: assetId.toString(),
-              }
-            : {
-                type: assetType === 'EBV' ? 'EBV' : 'NMV',
-                projectId: projectId.toString(),
-                assetId: assetId.toString(),
-                chainId: chainId.toString(),
-              }
         return {
           address: address?.toString(),
           iconUrl,
           symbol,
           name,
-          info: tokenInfo,
+          info: getTokenInfo(projectId, assetId, assetType, chainId, isLayer2),
           tvl: usdValue,
         }
       }
     })
     .filter(notUndefined)
     .sort((a, b) => b.tvl - a.tvl)
+}
+
+function getTokenInfo(
+  projectId: ProjectId,
+  assetId: AssetId,
+  assetType: AssetType,
+  chainId: ChainId,
+  isLayer2: boolean,
+): TokenInfo | TokenInfo {
+  if (!isLayer2) {
+    return {
+      type: 'regular',
+      projectId: projectId.toString(),
+      assetId: assetId.toString(),
+    }
+  }
+  return assetType === 'CBV'
+    ? {
+        type: 'CBV',
+        projectId: projectId.toString(),
+        assetId: assetId.toString(),
+      }
+    : {
+        type: assetType === 'EBV' ? 'EBV' : 'NMV',
+        projectId: projectId.toString(),
+        assetId: assetId.toString(),
+        chainId: chainId.valueOf(),
+      }
 }
 
 function notUndefined<T>(x: T | undefined): x is T {

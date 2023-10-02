@@ -3,29 +3,25 @@ import { ChartControls } from './ChartControls'
 import { ChartDataController } from './ChartDataController'
 import { ChartSettingsManager } from './ChartSettings'
 import { ChartRenderer } from './renderer/ChartRenderer'
-import { TokenControls } from './TokenControls'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export function configureCharts() {
-  const { $ } = makeQuery(document.body)
-  const chart = $.maybe('[data-role="chart"]')
+  const { $$ } = makeQuery(document.body)
+  const charts = $$('[data-role="chart"]')
 
-  if (!chart) {
-    return
+  for (const chart of charts) {
+    const chartSettingsManager = new ChartSettingsManager()
+
+    const chartRenderer = new ChartRenderer(chart)
+    const chartViewController = new ChartViewController(chartRenderer)
+    const chartDataController = new ChartDataController(chartViewController)
+
+    const chartControls = new ChartControls(
+      chart,
+      chartSettingsManager,
+      chartViewController,
+      chartDataController,
+    )
+    chartControls.init()
   }
-
-  const chartSettingsManager = new ChartSettingsManager()
-
-  const chartRenderer = new ChartRenderer(chart)
-  const chartViewController = new ChartViewController(chartRenderer)
-  const chartDataController = new ChartDataController(chartViewController)
-
-  const chartControls = new ChartControls(
-    chart,
-    chartSettingsManager,
-    chartViewController,
-    chartDataController,
-  )
-  new TokenControls(chartDataController)
-  chartControls.init()
 }

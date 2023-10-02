@@ -1,6 +1,7 @@
 import { formatLargeNumber, formatTimestamp } from '../../../../utils'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
+import { TokenInfo } from '../../types'
 import { getEntriesByDays } from '../getEntriesByDays'
 import { ChartControlsState } from '../types'
 
@@ -32,6 +33,7 @@ export function getTokenTvlRenderParams(
       }
     })
 
+    // TODO: (chart) show token symbol
     const formatYAxisLabel = (val: number) => formatLargeNumber(val)
 
     const seriesStyle: SeriesStyle[] = [tokenTypeToStyle(state.data.tokenType)]
@@ -47,8 +49,15 @@ export function getTokenTvlRenderParams(
   }
 }
 
-function tokenTypeToStyle(tokenType: 'CBV' | 'EBV' | 'NMV'): SeriesStyle {
+function tokenTypeToStyle(tokenType: TokenInfo['type']): SeriesStyle {
   switch (tokenType) {
+    case 'regular': {
+      return {
+        line: 'signature gradient',
+        fill: 'signature gradient',
+        point: 'circle',
+      }
+    }
     case 'CBV':
       return {
         line: 'purple',

@@ -40,7 +40,7 @@ function Template({
     info: {
       type: 'EBV',
       assetId: '0xabac',
-      chainId: '12',
+      chainId: 12,
       projectId: 'arbitrum',
     },
     iconUrl:

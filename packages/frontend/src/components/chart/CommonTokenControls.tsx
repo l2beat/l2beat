@@ -65,5 +65,12 @@ export function getParts(tokens: TokenControl[]) {
         .filter((t) => t.info.type.toString() === 'CBV')
         .slice(0, 15),
     },
+    {
+      title: 'Bridged Tokens (Top 15)',
+      titleColor: 'text-[#D98EFF]',
+      tokens: tokens
+        .filter((t) => t.info.type.toString() === 'regular')
+        .slice(0, 15),
+    },
   ]
 }

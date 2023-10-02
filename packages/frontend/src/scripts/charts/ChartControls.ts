@@ -3,11 +3,12 @@ import { Milestone } from '@l2beat/config'
 import { makeQuery } from '../query'
 import { ChartDataController } from './ChartDataController'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
-import { ChartType, Milestones } from './types'
+import { ChartType, Milestones, TokenInfo } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 
 export class ChartControls {
   private chartType?: ChartType
+  private projectSlug?: string
 
   constructor(
     private readonly chart: HTMLElement,
@@ -19,6 +20,11 @@ export class ChartControls {
   init() {
     const milestones = this.getMilestones(this.chart)
     this.chartType = this.getChartType(this.chart)
+
+    if ('slug' in this.chartType) {
+      this.projectSlug = this.chartType.slug
+    }
+
     const settings = this.chartSettings.for(
       this.chart.dataset.settingsId ?? 'unknown',
     )
@@ -37,7 +43,6 @@ export class ChartControls {
 
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
-
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )
@@ -58,6 +63,13 @@ export class ChartControls {
       currencyControl.checked =
         settings.getUseAltCurrency() === (currencyControl.value === 'ETH')
       currencyControl.addEventListener('change', () => {
+        if (this.chartType?.type === 'project-token-tvl' && this.projectSlug) {
+          this.chartDataController.setChartType({
+            type: 'project-tvl',
+            slug: this.projectSlug,
+          })
+        }
+
         const useAltCurrency = currencyControl.value === 'ETH'
         settings.setUseAltCurrency(useAltCurrency)
         this.chartViewController.configure({ useAltCurrency })
@@ -125,10 +137,27 @@ export class ChartControls {
             element.classList.toggle('hidden', type !== 'activity'),
           )
       })
-
-      // TODO: (chart) token controls
-      // TODO: (chart) canonical controls
     })
+
+    const tokenControls = $$('[data-role="chart-token-controls"] input')
+    tokenControls.forEach((tokenControl) => {
+      if (!tokenControl.dataset.tokenInfo) {
+        throw new Error('Token control missing data-token-info')
+      }
+      const tokenInfo = TokenInfo.parse(
+        JSON.parse(tokenControl.dataset.tokenInfo),
+      )
+
+      tokenControl.addEventListener('change', () => {
+        currencyControls.forEach((c) => (c.checked = false))
+        this.chartDataController.setChartType({
+          type: 'project-token-tvl',
+          info: tokenInfo,
+        })
+      })
+    })
+
+    // TODO: (chart) canonical controls
   }
 
   private getMilestones(chart: HTMLElement) {
