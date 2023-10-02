@@ -15,9 +15,7 @@ export const portal: Bridge = {
     slug: 'portal',
     links: {
       websites: ['https://wormhole.com/', 'https://linktr.ee/wormholecrypto'],
-      documentation: [
-        'https://docs.wormhole.com/',
-      ],
+      documentation: ['https://docs.wormhole.com/'],
       explorers: ['https://wormhole.com/explorer/'],
       apps: ['https://www.portalbridge.com'],
       repositories: ['https://github.com/wormhole-foundation/wormhole'],
