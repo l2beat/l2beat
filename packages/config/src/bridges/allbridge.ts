@@ -82,13 +82,13 @@ export const allbridge: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
-      description: '???',
+      value: 'Permissioned node network',
+      description: 'As it is built on top of Wormhole it uses the same Guardian Network',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: '???',
-      description: '', //TODO: fill
+      description: 'There are multiple factors affecting the upgradability of allbridge 1. Allbridge contracts   2. Underlaying protocol contracts', //TODO: fill
       sentiment: 'bad',
     },
   },

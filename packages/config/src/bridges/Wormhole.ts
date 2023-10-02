@@ -7,13 +7,13 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('Wormhole Protocol')
 
-export const wormholeV1: Bridge = {
+export const Wormhole: Bridge = {
   type: 'bridge',
   id: ProjectId('Wormhole'),
   isArchived: false,
   display: {
     name: 'Wormhole',
-    slug: 'wormhole',
+    slug: 'Wormhole',
     links: {
       websites: ['https://wormhole.com/'],
       apps: ['https://www.portalbridge.com/#/transfer'],
@@ -26,7 +26,7 @@ export const wormholeV1: Bridge = {
     category: 'Hybrid'
   },
   description:
-      'This simple message passing protocol enables developers and users of cross chain applications',
+      'Wormhole is a cross chain payload passing protocol where the payload could be any arbitrary data',
     category: 'Messaging Bridge',
   },
   config: {
@@ -35,7 +35,7 @@ export const wormholeV1: Bridge = {
         address: EthereumAddress('0xf92cD566Ea4864356C5491c177A430C222d7e678'),
         sinceTimestamp: new UnixTime(1611084766),
         tokens: [
-          //'USDC',
+          'USDC',
           'WormholeETH',
           'USDCnet',
           'USDTnet',
@@ -46,8 +46,10 @@ export const wormholeV1: Bridge = {
           'WETH',
           'FRAX',
           'WBTC',
-          'tBTC'
+          'tBTC',
+          'xDATA'
         ],
+        description: 'Lock-Release Bridge'
       },
     ],
   },
@@ -58,10 +60,10 @@ export const wormholeV1: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Network of permissioned Nodes',
+      value: 'Network of permissioned Nodes with a quorum of 2/3n +1',
       description:
         'Transfers need to be signed offchain by a set of 2/3n +1 of Guardians and then relayed to the destination chain with the relayers, as of now there are no open public relayers but anyone spin up their own.',
-      sentiment: 'bad',
+      sentiment: 'okay',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.WRAPPED,
