@@ -1,3 +1,16 @@
+## Diff at Mon, 02 Oct 2023 13:57:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+      values.getOwners.2:
+-        "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F"
++        "0x733F602bB867c643542cc807a3D32AD1A86cacc1"
+    }
+```
+
 ## Diff at Tue, 26 Sep 2023 13:05:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
