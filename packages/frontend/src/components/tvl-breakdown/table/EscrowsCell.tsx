@@ -56,7 +56,7 @@ function EscrowLink(props: EscrowLinkProps) {
       data-token={props.assetId}
     >
       {formatAddress(props.escrowAddress)}
-      <OutLinkIcon className="fill-blue-500" />
+      <OutLinkIcon className="fill-blue-700 dark:fill-blue-500" />
     </a>
   )
 }

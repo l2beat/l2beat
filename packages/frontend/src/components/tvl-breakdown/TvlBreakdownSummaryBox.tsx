@@ -17,10 +17,10 @@ export function TvlBreakdownSummaryBox(
         big
       />
       <StatsItem
-        title="Canonically Bridged"
-        mobileTitle="Canonically Bridged Value"
-        value={props.canonical.value}
-        change={props.canonical.change}
+        title="Natively Minted"
+        mobileTitle="Natively Minted Tokens"
+        value={props.native.value}
+        change={props.native.change}
       />
       <StatsItem
         title="Externally Bridged"
@@ -29,10 +29,10 @@ export function TvlBreakdownSummaryBox(
         change={props.external.change}
       />
       <StatsItem
-        title="Natively Minted"
-        mobileTitle="Natively Minted Tokens"
-        value={props.native.value}
-        change={props.native.change}
+        title="Canonically Bridged"
+        mobileTitle="Canonically Bridged Value"
+        value={props.canonical.value}
+        change={props.canonical.change}
       />
     </div>
   )

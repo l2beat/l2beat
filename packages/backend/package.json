@@ -26,7 +26,7 @@
   "dependencies": {
     "@koa/router": "^12.0.0",
     "@l2beat/config": "*",
-    "@l2beat/discovery": "0.4.1",
+    "@l2beat/discovery": "0.5.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@sentry/node": "^7.52.1",

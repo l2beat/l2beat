@@ -21,6 +21,7 @@ export function configureDropdowns() {
     const closeDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.add('hidden')
+        item.classList.add('pointer-events-none')
       })
       transparentItems.forEach((item) => {
         item.classList.add('opacity-0')
@@ -31,6 +32,7 @@ export function configureDropdowns() {
     const openDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.toggle('hidden')
+        item.classList.toggle('pointer-events-none')
       })
       transparentItems.forEach((item) => {
         item.classList.toggle('opacity-0')

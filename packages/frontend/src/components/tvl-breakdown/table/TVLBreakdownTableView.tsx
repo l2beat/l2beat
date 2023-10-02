@@ -14,6 +14,8 @@ interface Props<
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
+  type?: 'NMV' | 'EBV'
+  empty?: boolean
 }
 
 export interface ColumnConfig<T> {
@@ -42,7 +44,7 @@ export function TVLBreakdownTableView<
     assetId?: AssetId
     escrows?: object[]
   },
->({ items, columns, rows }: Props<T>) {
+>({ items, columns, rows, empty, type }: Props<T>) {
   const highlightedColumnClassNames =
     'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
 
@@ -137,6 +139,24 @@ export function TVLBreakdownTableView<
             )
           })}
         </tbody>
+        {empty && (
+          <tr>
+            <td colSpan={5}>
+              <div className="flex h-20 w-full items-center justify-center text-[13px] font-normal text-[#70737D]">
+                No {type === 'NMV' ? 'natively minted ' : 'externally bridged '}
+                tokens are tracked for this chain. Request a token&nbsp;
+                <a
+                  href="https://forms.gle/fQFsC5g1LgG5z12T7"
+                  target="_blank"
+                  className="text-blue-700 underline dark:text-blue-500"
+                >
+                  here
+                </a>
+                .
+              </div>
+            </td>
+          </tr>
+        )}
       </table>
     </div>
   )
