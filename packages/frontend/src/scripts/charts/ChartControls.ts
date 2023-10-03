@@ -71,7 +71,6 @@ export class ChartControls {
       '[data-role="chart-currency-controls"] input',
     )
     currencyControls.forEach((currencyControl) => {
-      console.log(currencyControl)
       currencyControl.checked =
         settings.getUseAltCurrency() === (currencyControl.value === 'ETH')
       currencyControl.addEventListener('change', () => {
