@@ -13,6 +13,7 @@ export class ChartDataController {
   private chartType?: ChartType
   private includeCanonical = false
   private abortController?: AbortController
+  private readonly cache = new Map<string, unknown>()
 
   constructor(private readonly chartViewController: ChartViewController) {}
 
@@ -35,16 +36,24 @@ export class ChartDataController {
 
     const chartType = this.chartType
     const url = getChartUrl(chartType, this.includeCanonical)
-    // TODO: (chart) if in cache get cached
+    if (this.cache.has(url)) {
+      this.parseAndConfigure(chartType, this.cache.get(url))
+      return
+    }
 
     this.chartViewController.showLoader()
     void fetch(url, { signal: this.abortController.signal })
       .then((res) => res.json())
-      .then((data: unknown) => this.parseData(chartType, data))
-      .then((data) => {
-        this.chartViewController.configure({ data })
-        this.chartViewController.hideLoader()
+      .then((data: unknown) => {
+        this.parseAndConfigure(chartType, data)
+        this.cache.set(url, data)
       })
+  }
+
+  private parseAndConfigure(chartType: ChartType, data: unknown) {
+    const parsedData = this.parseData(chartType, data)
+    this.chartViewController.configure({ data: parsedData })
+    this.chartViewController.hideLoader()
   }
 
   private parseData(chartType: ChartType, data: unknown): ChartData {
