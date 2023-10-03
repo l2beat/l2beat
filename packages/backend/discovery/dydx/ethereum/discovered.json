@@ -1,8 +1,8 @@
 {
   "name": "dydx",
   "chain": "ethereum",
-  "blockNumber": 18268851,
-  "configHash": "0x9ec5b77b6da0d839b6bdb7b1b4f54ac5b9773665d1168c5a7806ff9d7f339a12",
+  "blockNumber": 18268908,
+  "configHash": "0x47112df1ee28df32b58382bb684b9b5696e568eba2d4f1fb8268d1e432381939",
   "version": 2,
   "contracts": [
     {
@@ -496,7 +496,7 @@
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getTimeRemainingInCurrentEpoch": 1837525,
+        "getTimeRemainingInCurrentEpoch": 1836841,
         "getTotalActiveBalanceCurrentEpoch": 287711787301,
         "getTotalActiveBalanceNextEpoch": 285127676616,
         "getTotalBorrowedBalance": 4248,

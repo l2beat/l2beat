@@ -7,7 +7,6 @@
   "names": {
     "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": "StarkPerpetual",
     "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": "DydxGovernor",
-    "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9": "GovernanceStrategy",
     "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "SafetyModule",
     "0x92D6C1e31e14520e676a687F0a93788B716BEff5": "DydxToken",
     "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor",
@@ -100,9 +99,6 @@
           "type": "accessControl"
         }
       }
-    },
-    "GovernanceStrategy": {
-      "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
     },
     "SafetyModule": {
       "ignoreMethods": [
