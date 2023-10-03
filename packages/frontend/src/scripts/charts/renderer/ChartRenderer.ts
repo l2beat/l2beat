@@ -1,5 +1,5 @@
 import { Milestone } from '@l2beat/config'
-import { mean } from 'lodash'
+import mean from 'lodash/mean'
 
 import { formatRange } from '../../../utils'
 import { makeQuery } from '../../query'

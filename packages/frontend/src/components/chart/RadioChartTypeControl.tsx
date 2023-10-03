@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import React from 'react'
 
 interface Tab {

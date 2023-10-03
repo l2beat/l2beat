@@ -75,6 +75,7 @@ export interface TvlData {
   eth: number
 }
 
+// TODO: (chart) implement
 export function getTvlHover(data: TvlData) {
   return `
     <div class="mb-1">${data.date}</div>

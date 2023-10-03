@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { chunk } from 'lodash'
+import chunk from 'lodash/chunk'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
