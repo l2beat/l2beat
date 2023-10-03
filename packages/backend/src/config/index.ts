@@ -1,3 +1,5 @@
+import { Env, getEnv } from '@l2beat/backend-tools'
+
 import { Config } from './Config'
 import { getLocalConfig } from './config.local'
 import { getProductionConfig } from './config.production'
@@ -6,19 +8,25 @@ import { getStagingConfig } from './config.staging'
 export type { Config }
 
 export function getConfig(): Config {
-  const env =
-    process.env.DEPLOYMENT_ENV ??
-    (process.env.NODE_ENV === 'production' ? 'production' : 'local')
-  console.log('Loading config for:', env)
+  const env = getEnv()
+  const deploymentEnv = getDeploymentEnv(env)
+  console.log('Loading config for:', deploymentEnv)
 
-  switch (env) {
+  switch (deploymentEnv) {
     case 'local':
-      return getLocalConfig()
+      return getLocalConfig(env)
     case 'staging':
-      return getStagingConfig()
+      return getStagingConfig(env)
     case 'production':
-      return getProductionConfig()
+      return getProductionConfig(env)
   }
 
-  throw new TypeError(`Unrecognized env: ${env}!`)
+  throw new TypeError(`Unrecognized env: ${deploymentEnv}!`)
+}
+
+function getDeploymentEnv(env: Env) {
+  return (
+    env.optionalString('DEPLOYMENT_ENV') ??
+    (env.optionalString('NODE_ENV') === 'production' ? 'production' : 'local')
+  )
 }

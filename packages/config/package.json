@@ -19,11 +19,11 @@
     "tokens:add": "node -r esbuild-register scripts/tokens/add"
   },
   "dependencies": {
+    "@l2beat/backend-tools": "^0.4.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
-    "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",

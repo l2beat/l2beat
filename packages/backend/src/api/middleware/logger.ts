@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { Context, Middleware, Next } from 'koa'
 
 export function createApiLogger(logger: Logger): Middleware {
