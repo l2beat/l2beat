@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/discovery",
   "description": "L2Beat discovery - engine & tooling utilized for keeping an eye on L2s",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -30,11 +30,12 @@
     "node-fetch": "^2.6.7",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.0",
+    "sqlite3": "^5.1.6",
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.198",
     "@types/deep-diff": "^1.0.2",
+    "@types/lodash": "^4.14.198",
     "@types/node-fetch": "^2.6.4"
   }
 }

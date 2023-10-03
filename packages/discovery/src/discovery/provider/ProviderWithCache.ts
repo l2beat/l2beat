@@ -9,40 +9,51 @@ import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { isRevert } from '../utils/isRevert'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
-import { ProviderCache } from './ProviderCache'
 
-const identity = <T>(x: T): T => x
+const toJSON = <T>(x: T): string => JSON.stringify(x)
+const fromJSON = <T>(x: string): T => JSON.parse(x) as T
+
+export interface DiscoveryCache {
+  set(key: string, value: string): Promise<void>
+  get(key: string): Promise<string | undefined>
+}
 
 export class ProviderWithCache extends DiscoveryProvider {
-  private readonly cache: ProviderCache
-
   constructor(
     provider: providers.Provider,
-    etherscanClient: EtherscanLikeClient,
+    etherscanLikeClient: EtherscanLikeClient,
     logger: DiscoveryLogger,
-    chainId: ChainId,
+    private readonly chainId: ChainId,
+    private readonly cache: DiscoveryCache,
     getLogsMaxRange?: number,
   ) {
-    super(provider, etherscanClient, logger, getLogsMaxRange)
-    this.cache = new ProviderCache(chainId)
+    super(provider, etherscanLikeClient, logger, getLogsMaxRange)
   }
 
-  private async cacheOrFetch<R, S>(
-    filename: string,
+  private async cacheOrFetch<R>(
     key: string,
     fetch: () => Promise<R>,
-    toCache: (value: R) => S,
-    fromCache: (value: S) => R,
+    toCache: (value: R) => string,
+    fromCache: (value: string) => R,
   ): Promise<R> {
-    const known = this.cache.get(filename, key)
+    const known = await this.cache.get(key)
     if (known !== undefined) {
-      return fromCache(known as S)
+      return fromCache(known)
     }
 
     const result = await fetch()
-    this.cache.set(filename, key, toCache(result))
+    await this.cache.set(key, toCache(result))
 
     return result
+  }
+
+  buildKey(invocation: string, params: { toString: () => string }[]): string {
+    const result = [
+      this.chainId.toString(),
+      invocation,
+      ...params.map((p) => p.toString()),
+    ]
+    return result.join('.')
   }
 
   override async call(
@@ -50,9 +61,9 @@ export class ProviderWithCache extends DiscoveryProvider {
     data: Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
+    const key = this.buildKey('call', [blockNumber, address, data])
     const result = await this.cacheOrFetch(
-      `blocks/${blockNumber}`,
-      `call.${address.toString()}.${data.toString()}`,
+      key,
       async () => {
         try {
           return {
@@ -66,8 +77,8 @@ export class ProviderWithCache extends DiscoveryProvider {
           }
         }
       },
-      identity,
-      identity,
+      toJSON,
+      fromJSON,
     )
     if (result.value !== undefined) {
       return Bytes.fromHex(result.value)
@@ -81,9 +92,9 @@ export class ProviderWithCache extends DiscoveryProvider {
     slot: number | Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
+    const key = this.buildKey('getStorage', [blockNumber, address, slot])
     return this.cacheOrFetch(
-      `blocks/${blockNumber}`,
-      `getStorage.${address.toString()}.${slot.toString()}`,
+      key,
       () => super.getStorage(address, slot, blockNumber),
       (result) => result.toString(),
       (cached) => Bytes.fromHex(cached),
@@ -100,12 +111,17 @@ export class ProviderWithCache extends DiscoveryProvider {
       .update(JSON.stringify(topics))
       .digest('hex')
 
+    const key = this.buildKey('getLogsBatch', [
+      address,
+      fromBlock,
+      toBlock,
+      topicsHash,
+    ])
     return this.cacheOrFetch(
-      `logs/${address.toString()}`,
-      `getLogs.${fromBlock}.${toBlock}.${topicsHash}`,
+      key,
       () => super.getLogsBatch(address, topics, fromBlock, toBlock),
-      identity,
-      identity,
+      toJSON,
+      fromJSON,
     )
   }
 
@@ -113,9 +129,10 @@ export class ProviderWithCache extends DiscoveryProvider {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Bytes> {
+    // Ignoring blockNumber here, assuming that code will not change
+    const key = this.buildKey('getCode', [address])
     return this.cacheOrFetch(
-      `blocks/${blockNumber}`,
-      `getCode.${address.toString()}`,
+      key,
       () => super.getCode(address, blockNumber),
       (result) => result.toString(),
       (cached) => Bytes.fromHex(cached),
@@ -125,24 +142,46 @@ export class ProviderWithCache extends DiscoveryProvider {
   override async getTransaction(
     hash: Hash256,
   ): Promise<providers.TransactionResponse> {
+    const key = this.buildKey('getTransaction', [hash])
     return this.cacheOrFetch(
-      `transactions/${hash.toString()}}`,
-      `getTransaction`,
+      key,
       () => super.getTransaction(hash),
-      identity,
-      identity,
+      toJSON,
+      fromJSON,
+    )
+  }
+
+  override async getBlock(blockNumber: number): Promise<providers.Block> {
+    const key = this.buildKey('getBlock', [blockNumber])
+    return this.cacheOrFetch(
+      key,
+      () => super.getBlock(blockNumber),
+      toJSON,
+      fromJSON,
     )
   }
 
   override async getMetadata(
     address: EthereumAddress,
   ): Promise<ContractMetadata> {
+    const key = this.buildKey('getMetadata', [address])
     return this.cacheOrFetch(
-      `addresses/${address.toString()}}`,
-      `getMetadata`,
+      key,
       () => super.getMetadata(address),
-      identity,
-      identity,
+      toJSON,
+      fromJSON,
+    )
+  }
+
+  override async getContractDeploymentTx(
+    address: EthereumAddress,
+  ): Promise<Hash256> {
+    const key = this.buildKey('getContractDeploymentTx', [address])
+    return this.cacheOrFetch(
+      key,
+      () => super.getContractDeploymentTx(address),
+      toJSON,
+      fromJSON,
     )
   }
 }

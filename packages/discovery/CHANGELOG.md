@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.7.0
+
+### Minor Changes
+
+- Support custom cache backend, provide SQLite3 cache backend.
+
 ## 0.6.0
 
 ### Minor Changes

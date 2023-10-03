@@ -121,6 +121,10 @@ export class DiscoveryProvider {
     return this.provider.getTransaction(transactionHash.toString())
   }
 
+  async getBlock(blockNumber: number): Promise<providers.Block> {
+    return this.provider.getBlock(blockNumber)
+  }
+
   async getCode(address: EthereumAddress, blockNumber: number): Promise<Bytes> {
     const result = await this.provider.getCode(address.toString(), blockNumber)
     return Bytes.fromHex(result)
@@ -163,9 +167,9 @@ export class DiscoveryProvider {
     timestamp: UnixTime
   }> {
     const txHash = await this.getContractDeploymentTx(address)
-    const tx = await this.provider.getTransaction(txHash.toString())
+    const tx = await this.getTransaction(txHash)
     assert(tx.blockNumber, 'Transaction returned without a block number.')
-    const block = await this.provider.getBlock(tx.blockNumber)
+    const block = await this.getBlock(tx.blockNumber)
     return {
       blockNumber: tx.blockNumber,
       timestamp: new UnixTime(block.timestamp),

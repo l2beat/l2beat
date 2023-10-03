@@ -13,6 +13,7 @@ import { diffDiscovery } from './output/diffDiscovery'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { ProviderWithCache } from './provider/ProviderWithCache'
+import { SQLiteCache } from './provider/SQLiteCache'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
 
@@ -136,13 +137,18 @@ export async function discover(
   blockNumber: number,
   getLogsMaxRange?: number,
 ): Promise<Analysis[]> {
+  const sqliteCache = new SQLiteCache()
+  await sqliteCache.init()
+
   const discoveryProvider = new ProviderWithCache(
     provider,
     etherscanClient,
     logger,
     config.chainId,
+    sqliteCache,
     getLogsMaxRange,
   )
+
   const proxyDetector = new ProxyDetector(discoveryProvider, logger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
   const handlerExecutor = new HandlerExecutor(discoveryProvider, logger)
