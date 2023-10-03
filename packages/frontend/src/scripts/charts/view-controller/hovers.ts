@@ -98,10 +98,13 @@ export interface ActivityData {
 export function renderActivityHover(
   data: ActivityData,
   includeEthereumTps: boolean,
+  isAggregate: boolean,
 ) {
-  const projectTpsRow =
-    // TODO: (chart) fix single project label
-    renderDetailedRow('Projects avg. TPS', formatTps(data.tps), 'redCircle')
+  const projectTpsRow = renderDetailedRow(
+    `Project${isAggregate ? 's' : ''} avg. TPS`,
+    formatTps(data.tps),
+    'redCircle',
+  )
   const ethTpsRow = renderDetailedRow(
     'Ethereum avg. TPS',
     formatTps(data.ethTps),

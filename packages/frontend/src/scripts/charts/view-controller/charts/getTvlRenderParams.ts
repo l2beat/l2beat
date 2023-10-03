@@ -1,9 +1,9 @@
 import { formatTimestamp } from '../../../../utils'
 import { formatCurrency } from '../../../../utils/format'
-import { renderTvlHover, TvlData } from '../hovers'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
+import { renderTvlHover, TvlData } from '../hovers'
 import { ChartControlsState } from '../types'
 
 export function getTvlRenderParams(

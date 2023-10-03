@@ -21,6 +21,7 @@ interface ChartTvlData {
 interface ChartActivityData {
   type: 'activity'
   values: ActivityResponse
+  isAggregate: boolean
 }
 
 interface ChartDetailedTvlData {

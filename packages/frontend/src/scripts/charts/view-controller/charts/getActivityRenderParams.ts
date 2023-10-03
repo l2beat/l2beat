@@ -1,9 +1,9 @@
 import { formatTimestamp } from '../../../../utils'
 import { formatTpsWithUnit } from '../../../../utils/formatTps'
-import { ActivityData, renderActivityHover } from '../hovers'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
+import { ActivityData, renderActivityHover } from '../hovers'
 import { ChartControlsState } from '../types'
 
 export function getActivityRenderParams(
@@ -52,12 +52,18 @@ export function getActivityRenderParams(
       })
     }
 
+    const isAggregate = state.data.isAggregate
+
     return {
       formatYAxisLabel,
       points,
       seriesStyle,
       renderHoverContents: (value) =>
-        renderActivityHover(value, !!state.showEthereumTransactions),
+        renderActivityHover(
+          value,
+          !!state.showEthereumTransactions,
+          isAggregate,
+        ),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
     }

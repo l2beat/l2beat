@@ -85,6 +85,7 @@ export class ChartDataController {
       case 'storybook-fake-activity':
         return {
           type: 'activity',
+          isAggregate: chartType.type !== 'project-activity',
           values: ActivityResponse.parse(data),
         }
     }
