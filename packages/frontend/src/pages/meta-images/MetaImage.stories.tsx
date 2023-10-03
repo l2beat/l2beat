@@ -2,9 +2,9 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { configureCharts } from '../../components/chart/configure'
 import { ActivityMetaImage } from './ActivityMetaImage'
 import { TvlMetaImage } from './TvlMetaImage'
+import { configureCharts } from '../../scripts/charts'
 
 export default {
   title: 'Other/MetaImage',

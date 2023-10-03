@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { PageContent } from '../PageContent'
 import { Chart as ChartComponent } from './Chart'
 import { TokenControl } from './CommonTokenControls'
-import { configureCharts } from './configure'
+import { configureCharts } from '../../scripts/charts'
 
 export default {
   title: 'Components/Chart',
