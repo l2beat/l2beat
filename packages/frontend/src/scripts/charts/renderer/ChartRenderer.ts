@@ -50,6 +50,7 @@ export class ChartRenderer {
   private renderParams?: RenderParams<unknown>
   private wasMouseInside = false
   private getY: (value: number) => number = (x) => x
+  private lastPointIndex?: number
 
   constructor(chart: HTMLElement) {
     const { $, $$ } = makeQuery(chart)
@@ -221,17 +222,18 @@ export class ChartRenderer {
     if (!this.renderParams) {
       return
     }
+    const pointsLength = this.renderParams.points.length
+    let pointIndex = Math.round(mouseX * (pointsLength - 1))
+    if (this.lastPointIndex === pointIndex) {
+      return
+    }
+    this.lastPointIndex = pointIndex
+    let point = this.renderParams.points[pointIndex]
 
     const { width: canvasWidth, height: canvasHeight } =
       this.canvas.getBoundingClientRect()
-
-    const pointsLength = this.renderParams.points.length
     const getCanvasX = (index: number) =>
       (index / (pointsLength - 1)) * canvasWidth
-
-    // TODO: (chart) if point index didn't change don't rerender
-    let pointIndex = Math.round(mouseX * (this.renderParams.points.length - 1))
-    let point = this.renderParams.points[pointIndex]
 
     const milestoneMouseY = isMobile()
       ? MILESTONE_MAX_Y_MOBILE
@@ -242,7 +244,7 @@ export class ChartRenderer {
     let milestone: Milestone | undefined
     if (mouseY < milestoneMouseY) {
       // TODO: (chart) fix milestones being selected incorrectly
-      for (let i = 0; i < this.renderParams.points.length; i++) {
+      for (let i = 0; i < pointsLength; i++) {
         const indices = [pointIndex - i, pointIndex + i + 1]
         for (const index of indices) {
           const current = this.renderParams.points[index]
