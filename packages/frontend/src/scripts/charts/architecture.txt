@@ -127,3 +127,8 @@ Token TVL Chart
 === Development Bugs ===
   - Mobile milestones
   - Token TVL doesnt have this scale as on prod
+
+=== TODO ===
+- Mobile Token list
+- Desktop Token list spacing
+- URL selectedChart

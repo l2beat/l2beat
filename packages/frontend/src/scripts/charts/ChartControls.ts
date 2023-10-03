@@ -2,6 +2,7 @@ import { Milestone } from '@l2beat/config'
 
 import { clearRichSelect, getRichSelectValue } from '../configureRichSelect'
 import { makeQuery } from '../query'
+import { setQueryParams } from '../utils/setQueryParams'
 import { ChartDataController } from './ChartDataController'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
 import { ChartType, Milestones, TokenInfo } from './types'
@@ -11,6 +12,7 @@ export class ChartControls {
   private chartType?: ChartType
   private projectSlug?: string
   private isDetailedTvl?: boolean
+  private readonly urlParams = new URLSearchParams(window.location.search)
 
   constructor(
     private readonly chart: HTMLElement,
@@ -24,7 +26,6 @@ export class ChartControls {
     const settings = this.chartSettings.for(
       this.chart.dataset.settingsId ?? 'unknown',
     )
-    this.setupControls(this.chart, settings)
 
     this.chartViewController.init({
       data: undefined,
@@ -37,6 +38,8 @@ export class ChartControls {
 
     const chartType = this.getChartType(this.chart)
     this.updateChartType(chartType)
+
+    this.setupControls(this.chart, settings)
   }
 
   private updateChartType(chartType: ChartType) {
@@ -121,16 +124,16 @@ export class ChartControls {
     const chartTypeControls = $$<HTMLInputElement>(
       '[data-role="radio-chart-type-controls"] input',
     )
+
+    const selectedChart = this.urlParams.get('selectedChart')
     chartTypeControls.forEach((chartTypeControl) => {
       chartTypeControl.addEventListener('change', () => {
         const type = chartTypeControl.value as
           | 'tvl'
           | 'detailedTvl'
           | 'activity'
-
         const slug =
           this.chartType && 'slug' in this.chartType && this.chartType.slug
-
         if (slug) {
           this.updateChartType(
             type === 'tvl'
@@ -139,6 +142,8 @@ export class ChartControls {
               ? { type: 'project-detailed-tvl', slug }
               : { type: 'project-activity', slug },
           )
+          this.urlParams.set('selectedChart', type)
+          setQueryParams(this.urlParams)
         }
 
         $$('[data-tvl-only]').forEach((element) =>
@@ -149,6 +154,11 @@ export class ChartControls {
           element.classList.toggle('hidden', type !== 'activity'),
         )
       })
+
+      if (selectedChart === chartTypeControl.value) {
+        chartTypeControl.checked = true
+        chartTypeControl.dispatchEvent(new Event('change'))
+      }
     })
 
     tokenSelect?.addEventListener('change', () => {
