@@ -260,11 +260,11 @@ export const polygonzkevm: Layer2 = {
         'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
     },
     {
-      name: 'Aggregator',
+      name: 'Proposer',
       accounts: [
         discovery.getPermissionedAccount('PolygonZkEvm', 'trustedAggregator'),
       ],
-      description: `The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+      description: `The trusted proposer (called Aggregator) provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(
       'SecurityCouncil',

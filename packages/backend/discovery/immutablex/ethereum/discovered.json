@@ -1,8 +1,8 @@
 {
   "name": "immutablex",
   "chain": "ethereum",
-  "blockNumber": 17271523,
-  "configHash": "0xb1c3e28b03c79d1b3f5f4c08ccf0bb526f2177ffeba21774258a69efb2b8e438",
+  "blockNumber": 18263193,
+  "configHash": "0xc8737ab320efdd701a93c14bdf683b8c912e71bf1dfc00dbb46429e46cb2096a",
   "version": 2,
   "contracts": [
     {
@@ -66,8 +66,8 @@
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 259200,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getLastBatchId": 16711,
-        "getOrderRoot": "1176350810190718569209292691986355033212681030053240489484833181303580805385",
+        "getLastBatchId": 19248,
+        "getOrderRoot": "3545054254662594764574101907555092861509136108615175297786673712494103323711",
         "getOrderTreeHeight": 63,
         "getRegisteredAvailabilityVerifiers": [
           "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
@@ -75,9 +75,9 @@
         "getRegisteredVerifiers": [
           "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
-        "getSequenceNumber": 16540,
+        "getSequenceNumber": 19077,
         "getUpgradeActivationDelay": 1209600,
-        "getVaultRoot": "1356880639526391331582616521002458312104653194485360868145588751846578048622",
+        "getVaultRoot": "329905899673286312432857476194992784791420362880889597989395093936402539591",
         "getVaultTreeHeight": 31,
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
         "isFrozen": false,
@@ -111,7 +111,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "ProxyGovernanceMultisig",
       "address": "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91",
       "upgradeability": {
         "type": "gnosis safe",
@@ -127,9 +127,10 @@
           "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
         ],
         "getThreshold": 2,
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [

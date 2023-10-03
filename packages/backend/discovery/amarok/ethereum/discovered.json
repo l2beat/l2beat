@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 18128379,
-  "configHash": "0x2917b7a73f5da902ebf3b2ebc94179178a3f9d115f477ada2d17a2f49546a193",
+  "blockNumber": 18263156,
+  "configHash": "0x64a51a60e3a989296e82e194d4ed4388fac744b7c54f7e475e2630b868e4d4f1",
   "version": 2,
   "contracts": [
     {
@@ -389,7 +389,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 8879,
+        "nonce": 10462,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -517,13 +517,13 @@
           1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786
         ],
         "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
-        "getPendingInboundRootsCount": 5,
-        "lastPropagatedRoot": "0xb3fc45a47b2fdb3f04e2e8e06a9698b5e0f021fedadf06fdd8c1a67b17f4848a",
+        "getPendingInboundRootsCount": 6,
+        "lastPropagatedRoot": "0x305832374cb95af7fe009dd685ff330d72057d90c7e01347384e45af684c5257",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [35854, 35858],
+        "pendingInboundRoots": [37353, 37358],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -549,8 +549,8 @@
           "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
           "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
         ],
-        "getThreshold": 1,
-        "nonce": 0,
+        "getThreshold": 3,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -568,12 +568,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 18128275,
+        "lastSentBlock": 18263147,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xdd800605b8d20c4a0f6d7254688b6f9c4306b22010e974d148d93753ca400f9f",
+        "outboundRoot": "0xe5b32f4a3f376eb84ac500663cc2177d825c0318c204f42277a3dc2643d700a1",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,

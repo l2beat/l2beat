@@ -24,7 +24,8 @@
     "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": "OutboxV2",
     "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "GatewaysAdmin",
     "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway",
-    "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils"
+    "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils",
+    "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager"
   },
   "overrides": {
     "ArbitrumOneBridge": {
@@ -75,6 +76,16 @@
             "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
             // id == 6 is emitted inside setValidator()
             "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
           ]
         }
       }
