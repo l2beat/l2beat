@@ -235,31 +235,18 @@ export class ChartRenderer {
     const getCanvasX = (index: number) =>
       (index / (pointsLength - 1)) * canvasWidth
 
-    const milestoneMouseY = isMobile()
-      ? MILESTONE_MAX_Y_MOBILE
-      : MILESTONE_MAX_Y
-
-    const mouseCanvasX = mouseX * canvasWidth
-
     let milestone: Milestone | undefined
-    if (mouseY < milestoneMouseY) {
-      // TODO: (chart) fix milestones being selected incorrectly
-      for (let i = 0; i < pointsLength; i++) {
-        const indices = [pointIndex - i, pointIndex + i + 1]
-        for (const index of indices) {
-          const current = this.renderParams.points[index]
-          const x = getCanvasX(index)
-          if (
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            current?.milestone &&
-            Math.abs(mouseCanvasX - x) <= MILESTONE_CAPTURE_X
-          ) {
-            pointIndex = index
-            point = current
-            milestone = current.milestone
-          }
-        }
-      }
+    const milestoneHoverIndex = this.getMilestoneHoverIndex(
+      mouseX,
+      mouseY,
+      canvasWidth,
+      this.renderParams.points,
+      getCanvasX,
+    )
+    if (milestoneHoverIndex !== undefined) {
+      pointIndex = milestoneHoverIndex
+      point = this.renderParams.points[pointIndex]
+      milestone = point.milestone
     }
 
     const left = getCanvasX(pointIndex)
@@ -324,5 +311,35 @@ export class ChartRenderer {
 
   private onMouseExited() {
     this.hover.classList.add('hidden')
+  }
+
+  private getMilestoneHoverIndex(
+    mouseX: number,
+    mouseY: number,
+    canvasWidth: number,
+    points: Point<unknown>[],
+    getCanvasX: (index: number) => number,
+  ) {
+    const milestoneMouseY = isMobile()
+      ? MILESTONE_MAX_Y_MOBILE
+      : MILESTONE_MAX_Y
+    const mouseCanvasX = mouseX * canvasWidth
+
+    if (mouseY < milestoneMouseY) {
+      let result = Infinity
+      let indexResult
+      for (const [i, p] of points.entries()) {
+        if (p.milestone) {
+          const milestoneDistance = Math.abs(mouseCanvasX - getCanvasX(i))
+          if (milestoneDistance < result) {
+            result = milestoneDistance
+            indexResult = i
+          }
+        }
+      }
+      if (result <= MILESTONE_CAPTURE_X && indexResult !== undefined) {
+        return indexResult
+      }
+    }
   }
 }
