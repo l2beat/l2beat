@@ -13,7 +13,7 @@ export const morphism: Layer2 = {
     description:
       'Morphism is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs.',
     purpose: 'Universal',
-    category: 'Optimistic Rollup',
+    category: 'Optimistic ZK-Rollup',
     links: {
       websites: ['https://www.morphism.xyz'],
       apps: ['https://bridge-testnet.morphism.xyz'],
