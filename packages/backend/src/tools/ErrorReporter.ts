@@ -1,4 +1,4 @@
-import { getEnv, Logger } from '@l2beat/backend-tools'
+import { getEnv, Logger, ReportedError } from '@l2beat/backend-tools'
 import * as Sentry from '@sentry/node'
 import { Context } from 'koa'
 
@@ -15,12 +15,25 @@ if (sentryDsn) {
   console.log('Sentry integration enabled')
 }
 
-export function reportError(...args: unknown[]): void {
-  // note: we can't be sure that first arg is an error
-  if (args[0] instanceof Error) {
-    Sentry.captureException(args[0], { extra: { context: args.slice(1) } })
+export function reportError({
+  error,
+  message,
+  parameters,
+}: ReportedError): void {
+  if (error) {
+    Sentry.captureException(error, {
+      extra: { message, parameters },
+    })
+  } else if (message) {
+    Sentry.captureMessage(message, {
+      level: 'error',
+      extra: { parameters },
+    })
   } else {
-    Sentry.captureException(new Error('unknown'), { extra: { context: args } })
+    Sentry.captureMessage('Unknown error', {
+      level: 'error',
+      extra: { parameters },
+    })
   }
 }
 

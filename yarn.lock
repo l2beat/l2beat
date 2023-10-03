@@ -1899,10 +1899,10 @@
     dotenv "^16.3.1"
     error-stack-parser "^2.1.4"
 
-"@l2beat/backend-tools@^0.3.0-canary.20230913T124858":
-  version "0.3.0-canary.20230913T124858"
-  resolved "https://registry.yarnpkg.com/@l2beat/backend-tools/-/backend-tools-0.3.0-canary.20230913T124858.tgz#512c4773b68fb680d522542a05dc2eca3bc57fb8"
-  integrity sha512-3ejC5Sm6xgAEplVhNfu418aIOBF61RK+R8GZNKPonO0x6s9K5zuR4aMEaci+SGIbnNP82fWChnPx1Pfc35HChQ==
+"@l2beat/backend-tools@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/backend-tools/-/backend-tools-0.4.0.tgz#312c554ef3bd9f10e2ff2c7223318c4f6ad69344"
+  integrity sha512-UnCG81GzlS2aphojsnEb2gCppHNc6qs9RkeOuQnqOu3D+ALoQ0BhttICFhQNMgpmn3y5QhB8L5vYUkDwyS52jg==
   dependencies:
     chalk "^4.1.2"
     dotenv "^16.3.1"

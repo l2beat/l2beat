@@ -19,7 +19,7 @@
     "tokens:add": "node -r esbuild-register scripts/tokens/add"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "^0.3.0-canary.20230913T124858",
+    "@l2beat/backend-tools": "^0.4.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "chalk": "^4.1.2",

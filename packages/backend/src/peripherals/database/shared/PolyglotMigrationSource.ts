@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs'
-import { FsMigrations } from 'knex/lib/migrations/migrate/sources/fs-migrations'
 // See https://github.com/knex/knex/issues/2756
+import { FsMigrations } from 'knex/lib/migrations/migrate/sources/fs-migrations'
 import type { Knex } from 'knex/types'
 import path from 'path'
 

@@ -232,8 +232,12 @@ describe(SequenceProcessor.name, () => {
       time.uninstall()
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
-        error: expect.a(Error),
-        job: expect.a(String),
+        error: undefined,
+        message: 'Halting queue because of error',
+        parameters: {
+          error: expect.a(Error),
+          job: expect.a(String),
+        },
       })
     })
 
@@ -263,8 +267,12 @@ describe(SequenceProcessor.name, () => {
       time.uninstall()
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
-        error: expect.a(Error),
-        job: expect.a(String),
+        error: undefined,
+        message: 'Halting queue because of error',
+        parameters: {
+          error: expect.a(Error),
+          job: expect.a(String),
+        },
       })
     })
 

@@ -67,7 +67,12 @@ export class Application {
       }
       await database.migrateToLatest()
 
-      database.enableQueryLogging()
+      if (
+        config.logger.logLevel === 'DEBUG' ||
+        config.logger.logLevel === 'TRACE'
+      ) {
+        database.enableQueryLogging()
+      }
 
       for (const module of modules) {
         await module?.start?.()
