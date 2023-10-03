@@ -1,15 +1,10 @@
 import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ArrowRightIcon, ChevronDownIcon } from '../icons'
-import { TogglableDropdown } from '../TogglableDropdown'
+import { ArrowRightIcon } from '../icons'
+import { RichSelect } from '../RichSelect'
 import { VerticalSeparator } from '../VerticalSeparator'
-import {
-  getParts,
-  SelectedTokenButton,
-  TokenCell,
-  TokenControl,
-} from './CommonTokenControls'
+import { getParts, TokenControl } from './CommonTokenControls'
 
 export interface DesktopTokenControlsProps {
   tokens?: TokenControl[]
@@ -34,17 +29,7 @@ export function DesktopTokenControls({
       <VerticalSeparator />
       <div className="flex flex-wrap items-baseline justify-start gap-x-4">
         <span>View tokens</span>
-
-        <TogglableDropdown
-          button={
-            <>
-              <SelectButton />
-              <SelectedTokenButton />
-            </>
-          }
-          role="chart-token-modal"
-          centered={true}
-        >
+        <RichSelect label="Select" id="desktop-token-select">
           <TokenList tokens={tokens} />
           <div className="mt-6 flex items-center justify-center gap-1">
             <a
@@ -55,26 +40,9 @@ export function DesktopTokenControls({
               <ArrowRightIcon className="fill-current" />
             </a>
           </div>
-        </TogglableDropdown>
+        </RichSelect>
       </div>
     </div>
-  )
-}
-
-function SelectButton() {
-  return (
-    <label
-      className="flex cursor-pointer items-center justify-between gap-1.5 px-2 text-base transition-all"
-      data-role="chart-token-toggle"
-    >
-      <input
-        type="checkbox"
-        autoComplete="off"
-        className="Dropdown-Button peer hidden"
-      />
-      Select
-      <ChevronDownIcon className="h-3 w-3 transition-transform duration-300 peer-checked:-rotate-180" />
-    </label>
   )
 }
 
@@ -96,7 +64,15 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
                 data-role="chart-token-controls"
               >
                 {p.tokens.map((token, j) => (
-                  <TokenCell token={token} key={j} />
+                  <RichSelect.Item
+                    value={JSON.stringify(token.info)}
+                    selectedLabel={token.symbol}
+                    key={j}
+                  >
+                    <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
+                    <span className="text-sm font-bold">{token.name}</span> (
+                    {token.symbol})
+                  </RichSelect.Item>
                 ))}
               </div>
             </div>

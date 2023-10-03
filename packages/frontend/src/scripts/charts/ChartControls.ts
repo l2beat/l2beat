@@ -1,5 +1,6 @@
 import { Milestone } from '@l2beat/config'
 
+import { clearRichSelect, getRichSelectValue } from '../configureRichSelect'
 import { makeQuery } from '../query'
 import { ChartDataController } from './ChartDataController'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
@@ -9,6 +10,7 @@ import { ChartViewController } from './view-controller/ChartViewController'
 export class ChartControls {
   private chartType?: ChartType
   private projectSlug?: string
+  private isDetailedTvl?: boolean
 
   constructor(
     private readonly chart: HTMLElement,
@@ -19,12 +21,6 @@ export class ChartControls {
 
   init() {
     const milestones = this.getMilestones(this.chart)
-    this.chartType = this.getChartType(this.chart)
-
-    if ('slug' in this.chartType) {
-      this.projectSlug = this.chartType.slug
-    }
-
     const settings = this.chartSettings.for(
       this.chart.dataset.settingsId ?? 'unknown',
     )
@@ -38,11 +34,26 @@ export class ChartControls {
       showEthereumTransactions: settings.getShowEthereumTransactions(),
       milestones,
     })
-    this.chartDataController.setChartType(this.chartType)
+
+    const chartType = this.getChartType(this.chart)
+    this.updateChartType(chartType)
+  }
+
+  private updateChartType(chartType: ChartType) {
+    this.chartType = chartType
+    if ('slug' in this.chartType) {
+      this.projectSlug = this.chartType.slug
+    }
+    if (this.chartType.type === 'project-detailed-tvl') {
+      this.isDetailedTvl = true
+    }
+    this.chartDataController.setChartType(chartType)
   }
 
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
+    const tokenSelect = $.maybe('.RichSelect#desktop-token-select')
+
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )
@@ -60,12 +71,18 @@ export class ChartControls {
       '[data-role="chart-currency-controls"] input',
     )
     currencyControls.forEach((currencyControl) => {
+      console.log(currencyControl)
       currencyControl.checked =
         settings.getUseAltCurrency() === (currencyControl.value === 'ETH')
       currencyControl.addEventListener('change', () => {
-        if (this.chartType?.type === 'project-token-tvl' && this.projectSlug) {
-          this.chartDataController.setChartType({
-            type: 'project-tvl',
+        if (
+          this.chartType?.type === 'project-token-tvl' &&
+          this.projectSlug &&
+          tokenSelect
+        ) {
+          clearRichSelect(tokenSelect)
+          this.updateChartType({
+            type: this.isDetailedTvl ? 'project-detailed-tvl' : 'project-tvl',
             slug: this.projectSlug,
           })
         }
@@ -116,7 +133,7 @@ export class ChartControls {
           this.chartType && 'slug' in this.chartType && this.chartType.slug
 
         if (slug) {
-          this.chartDataController.setChartType(
+          this.updateChartType(
             type === 'tvl'
               ? { type: 'project-tvl', slug }
               : type === 'detailedTvl'
@@ -125,35 +142,34 @@ export class ChartControls {
           )
         }
 
-        this.chart
-          .querySelectorAll('[data-tvl-only]')
-          .forEach((element) =>
-            element.classList.toggle('hidden', type === 'activity'),
-          )
+        $$('[data-tvl-only]').forEach((element) =>
+          element.classList.toggle('hidden', type === 'activity'),
+        )
 
-        this.chart
-          .querySelectorAll('[data-activity-only]')
-          .forEach((element) =>
-            element.classList.toggle('hidden', type !== 'activity'),
-          )
+        $$('[data-activity-only]').forEach((element) =>
+          element.classList.toggle('hidden', type !== 'activity'),
+        )
       })
     })
 
-    const tokenControls = $$('[data-role="chart-token-controls"] input')
-    tokenControls.forEach((tokenControl) => {
-      if (!tokenControl.dataset.tokenInfo) {
-        throw new Error('Token control missing data-token-info')
+    tokenSelect?.addEventListener('change', () => {
+      const value = getRichSelectValue(tokenSelect)
+      if (!value) {
+        if (this.projectSlug) {
+          this.updateChartType({
+            type: this.isDetailedTvl ? 'project-detailed-tvl' : 'project-tvl',
+            slug: this.projectSlug,
+          })
+        }
+        currencyControls.forEach((c) => (c.disabled = false))
+        return
       }
-      const tokenInfo = TokenInfo.parse(
-        JSON.parse(tokenControl.dataset.tokenInfo),
-      )
+      currencyControls.forEach((c) => (c.disabled = true))
 
-      tokenControl.addEventListener('change', () => {
-        currencyControls.forEach((c) => (c.checked = false))
-        this.chartDataController.setChartType({
-          type: 'project-token-tvl',
-          info: tokenInfo,
-        })
+      const tokenInfo = TokenInfo.parse(JSON.parse(value))
+      this.updateChartType({
+        type: 'project-token-tvl',
+        info: tokenInfo,
       })
     })
 

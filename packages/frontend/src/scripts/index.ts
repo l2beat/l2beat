@@ -7,6 +7,7 @@ import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
+import { configureRichSelects } from './configureRichSelect'
 import { configureRollupsOnlyFilter } from './configureRollupsOnlyFilter'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureSlideCards } from './configureSlideCard'
@@ -35,3 +36,4 @@ configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
 configureMultipleEscrowsButton()
+configureRichSelects()

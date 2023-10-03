@@ -39,7 +39,7 @@ export function RadioGroup(props: RadioGroupProps) {
           <span
             className={cx(
               'relative block px-2',
-              'rounded-md peer-checked:bg-white dark:peer-checked:bg-black',
+              'rounded-md peer-checked:bg-white peer-disabled:cursor-not-allowed peer-disabled:!bg-transparent peer-disabled:opacity-60 dark:peer-checked:bg-black',
               'outline-current peer-focus-visible:outline peer-focus-visible:outline-2',
             )}
           >
