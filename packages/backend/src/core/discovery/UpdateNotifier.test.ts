@@ -4,7 +4,10 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
-import { DiscordClient } from '../../peripherals/discord/DiscordClient'
+import {
+  DiscordClient,
+  MAX_MESSAGE_LENGTH,
+} from '../../peripherals/discord/DiscordClient'
 import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
@@ -60,6 +63,78 @@ describe(UpdateNotifier.name, () => {
         '***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
           address.toString() +
           '\n\nA\n- 1\n+ 2\n\n```',
+        'PUBLIC',
+      )
+      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+        projectName: project,
+        diff: changes,
+        blockNumber: BLOCK,
+      })
+    })
+
+    it('truncates and sends notifications about the changes', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+        findLatestId: async () => undefined,
+      })
+      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
+      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
+        discordClient,
+        Logger.SILENT,
+      )
+
+      const project = 'project-a'
+      const dependents: string[] = []
+      const address = EthereumAddress.random()
+      const changes: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address,
+          diff: [
+            { key: 'A', before: 'A'.repeat(1000), after: 'B'.repeat(1000) },
+          ],
+        },
+      ]
+
+      await updateNotifier.handleUpdate(project, changes, {
+        dependents,
+        blockNumber: BLOCK,
+        unknownContracts: [],
+        chainId: ChainId.ETHEREUM,
+      })
+
+      const internalMsg =
+        `> #0000 (block_number=${BLOCK})\n\n` +
+        `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
+        '\n\nWarning: Message has been truncated\nA\n' +
+        `- ${'A'.repeat(1000)}\n` +
+        `+ ${'B'.repeat(800)}...\n\`\`\``
+
+      const publicMsg =
+        `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
+        '\n\nWarning: Message has been truncated\nA\n' +
+        `- ${'A'.repeat(1000)}\n` +
+        `+ ${'B'.repeat(828)}...\n\`\`\``
+
+      expect(internalMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
+      expect(publicMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        internalMsg,
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        publicMsg,
         'PUBLIC',
       )
       expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)

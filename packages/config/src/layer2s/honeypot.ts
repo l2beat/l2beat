@@ -1,17 +1,20 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
-export const cartesiHoneypot: Layer2 = {
-  isUpcoming: true,
+const discovery = new ProjectDiscovery('honeypot')
+
+export const honeypot: Layer2 = {
+  isUnderReview: true,
   type: 'layer2',
-  id: ProjectId('cartesi-honeypot'),
+  id: ProjectId('honeypot'),
   display: {
     name: 'Honeypot (Cartesi)',
     slug: 'cartesi-honeypot',
     description:
-      'Honeypot is a application specific rollup (roll-app) designed to challenge the security of Cartesi Rollups.\
+      'Honeypot is a application specific rollup designed to challenge the security of Cartesi Rollups.\
        Bug hunters are incentivized to hack the application to obtain the funds locked in the rollup contract.\
        Honeypot holds real assets with a dual objective: setting a financial benchmark for secure asset management\
        and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.',
@@ -31,20 +34,32 @@ export const cartesiHoneypot: Layer2 = {
     },
   },
   stage: {
-    stage: 'NotApplicable',
+    stage: 'UnderReview',
   },
   config: {
-    escrows: [],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366'),
+        tokens: '*',
+        description: 'Contract storing bounty funds.',
+      }),
+    ],
   },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
+  riskView: UNDER_REVIEW_RISK_VIEW,
+  technology: TECHNOLOGY.UNDER_REVIEW,
+  contracts: CONTRACTS.UNDER_REVIEW,
   milestones: [
     {
-      name: 'Honeypot DApp announcement',
+      name: 'Honeypot announcement',
       link: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
       date: '2023-04-11T00:00:00Z',
-      description: 'Honeypot DApp first announced to the community.',
+      description: 'Honeypot first announced to the community.',
+    },
+    {
+      name: 'Honeypot launch',
+      link: 'https://x.com/cartesiproject/status/1706685141421047982',
+      date: '2023-07-26T00:00:00Z',
+      description: 'Honeypot launched on mainnet.',
     },
   ],
   knowledgeNuggets: [

@@ -4,6 +4,7 @@ import React from 'react'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
+import { Markdown } from '../Markdown'
 import { BigRosette } from '../rosette'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
@@ -54,6 +55,7 @@ export function RiskAnalysis({
     </ProjectDetailsSection>
   )
 }
+
 function SingleRisk({
   name,
   riskValue,
@@ -78,9 +80,11 @@ function SingleRisk({
           >
             {riskValue.value}
           </span>
-          <p className="mt-2 text-gray-850 dark:text-gray-400">
-            {riskValue.description}
-          </p>
+          {riskValue.description && (
+            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+              {riskValue.description}
+            </Markdown>
+          )}
         </>
       )}
     </div>

@@ -10,6 +10,7 @@ type LinkProps = React.HTMLProps<HTMLAnchorElement> & {
 
 type LinkType = 'primary' | 'danger' | 'plain'
 
+// Make sure this is compatible with markdown.css
 const textClassesByType: Record<LinkType, string> = {
   primary: 'text-blue-700 group-hover:text-blue-550 dark:text-blue-500',
   danger: 'text-red-300 group-hover:text-red-700',
@@ -24,16 +25,13 @@ export function Link({
   showArrow,
   ...rest
 }: LinkProps) {
-  const isOutLink = /^https?:\/\//.test(href ?? '')
-  const target = isOutLink ? '_blank' : undefined
-  const rel = isOutLink ? 'noreferrer noopener' : undefined
-
+  const outLink = isOutLink(href)
   return (
     <a
       href={href}
       className={classNames('group', className)}
-      target={target}
-      rel={rel}
+      target={outLink ? '_blank' : undefined}
+      rel={outLink ? 'noreferrer noopener' : undefined}
       {...rest}
     >
       <span
@@ -56,4 +54,9 @@ export function Link({
       </span>
     </a>
   )
+}
+
+export function isOutLink(href: string | undefined | null) {
+  if (!href) return false
+  return /^https?:\/\//.test(href)
 }

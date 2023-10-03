@@ -118,6 +118,11 @@
       "fields": {
         "accessControl": {
           "type": "accessControl"
+        },
+        "slashings": {
+          "type": "stateFromEvent",
+          "event": "Slashed",
+          "returnParams": ["amount", "recipient", "newExchangeRate"]
         }
       }
     },

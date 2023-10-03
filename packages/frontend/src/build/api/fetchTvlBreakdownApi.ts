@@ -40,17 +40,22 @@ function getMockTvlBreakdownApiResponse(): ProjectAssetsBreakdownApiResponse {
           usdPrice: '1',
         },
       ],
-      canonical: {
-        [String(EthereumAddress.random())]: [
-          {
-            assetId: AssetId.ETH,
-            usdValue: '100',
-            amount: '100',
-            chainId: ChainId.ETHEREUM,
-            usdPrice: '1',
-          },
-        ],
-      },
+      canonical: [
+        {
+          assetId: AssetId.ETH,
+          chainId: ChainId.ETHEREUM,
+          amount: '100',
+          escrows: [
+            {
+              amount: '100',
+              usdValue: '100',
+              escrowAddress: EthereumAddress.random(),
+            },
+          ],
+          usdPrice: '1',
+          usdValue: '100',
+        },
+      ],
       external: [
         {
           assetId: AssetId.USDC,

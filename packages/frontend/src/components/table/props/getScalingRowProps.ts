@@ -53,6 +53,7 @@ function getHref(slug: ScalingTableEntry['slug'], type: ScalingRowType) {
     case 'summary':
       return base
     case 'detailedTvl':
+      return base + '/tvl-breakdown'
     case 'activity':
       return base + `?selectedChart=${type}`
     case 'risks':

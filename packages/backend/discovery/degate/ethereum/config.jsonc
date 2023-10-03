@@ -26,6 +26,11 @@
           "type": "storage",
           "slot": 5,
           "returnType": "address"
+        },
+        "shutdownTriggered": {
+          "type": "stateFromEvent",
+          "event": "Shutdown",
+          "returnParams": ["timestamp"]
         }
       }
     },

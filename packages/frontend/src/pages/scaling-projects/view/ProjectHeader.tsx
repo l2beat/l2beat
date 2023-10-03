@@ -4,8 +4,8 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
+import { ProjectSummaryStat } from '../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { SummaryStat } from '../../../components/header/Summary'
 import { TvlStats } from '../../../components/header/TvlSummary'
 import { InfoIcon, ProjectLink } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
@@ -34,7 +34,6 @@ export interface ProjectHeaderProps {
   tvlBreakdownHref: string
   risks: RiskValues
   links: ProjectLink[]
-  stagesEnabled?: boolean
   detailedTvlEnabled?: boolean
   stage: StageConfig
   isArchived?: boolean
@@ -45,7 +44,7 @@ export interface ProjectHeaderProps {
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
-  const summary: SummaryStat[] = [
+  const summary: ProjectSummaryStat[] = [
     {
       title: 'Breakdown',
       value:
@@ -73,7 +72,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.stagesEnabled && props.stage.stage !== 'NotApplicable'
+    ...(props.stage.stage !== 'NotApplicable'
       ? [
           {
             title: 'Stage',
@@ -125,7 +124,6 @@ export function ProjectHeader(props: ProjectHeaderProps) {
   return (
     <DetailsHeader
       type="layer2"
-      stagesEnabled={props.stagesEnabled}
       detailedTvlEnabled={props.detailedTvlEnabled}
       title={props.title}
       icon={props.icon}

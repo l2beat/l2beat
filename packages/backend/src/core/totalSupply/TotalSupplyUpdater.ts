@@ -9,6 +9,8 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
+import { getChainMinTimestamp } from '../../config/chains'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -17,6 +19,7 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
+import { getStatus } from '../reports/getStatus'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider, TotalSupplyQuery } from './TotalSupplyProvider'
 
@@ -44,7 +47,9 @@ export class TotalSupplyUpdater {
       ),
       'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
     )
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
+    )
     this.configHash = getTotalSupplyConfigHash(tokens)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -70,6 +75,16 @@ export class TotalSupplyUpdater {
 
   getAssetType() {
     return 'totalSupply'
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+      getChainMinTimestamp(this.chainId),
+    )
   }
 
   async getTotalSuppliesWhenReady(

@@ -8,6 +8,7 @@ import { TvlController } from '../../api/controllers/tvl/TvlController'
 import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
+import { createTvlStatusRouter } from '../../api/routers/TvlStatusRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
@@ -124,7 +125,7 @@ export function createTvlModule(
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.assetUpdaters ?? []),
+    submodules.flatMap((x) => x?.reportUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -161,10 +162,14 @@ export function createTvlModule(
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController, detailedTvlController, {
-    detailedTvlEnabled: config.tvl.detailedTvlEnabled,
-  })
+  const tvlRouter = createTvlRouter(tvlController, detailedTvlController)
   const dydxRouter = createDydxRouter(dydxController)
+  const tvlStatusRouter = createTvlStatusRouter(
+    clock,
+    priceUpdater,
+    aggregatedReportUpdater,
+    submodules,
+  )
 
   // #endregion
 
@@ -186,7 +191,7 @@ export function createTvlModule(
   }
 
   return {
-    routers: [blocksRouter, tvlRouter, dydxRouter],
+    routers: [blocksRouter, tvlRouter, dydxRouter, tvlStatusRouter],
     start,
   }
 }

@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 18147311,
-  "configHash": "0x248eaf106e123becfceb931040cb955c0cc685de50643c7f6d52677823e4b114",
+  "blockNumber": 18242946,
+  "configHash": "0x67f41079cdab648d824307cbed358752424747d033766995a4759f2491212fb3",
   "version": 2,
   "contracts": [
     {
@@ -13,14 +13,15 @@
         "implementation": "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880579,
       "values": {
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 484200,
-        "latestOutputIndex": 269,
-        "nextBlockNumber": 486000,
-        "nextOutputIndex": 270,
+        "latestBlockNumber": 1063800,
+        "latestOutputIndex": 591,
+        "nextBlockNumber": 1065600,
+        "nextOutputIndex": 592,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -37,6 +38,7 @@
         "implementation": "0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880651,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -81,11 +83,12 @@
         "implementation": "0x381F53695230BAF83a39D1a08304D233A35730Fa",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880555,
       "values": {
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 18147295],
+        "params": [1000000000, 200000, 18242936],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -100,6 +103,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693288019,
       "values": {
         "POSEIDON2": "0xFd234971881a7c72965175fA8E438c97B2Dcd273"
       }
@@ -112,6 +116,7 @@
         "implementation": "0x2af8a383C395EBa6551E674EeD02344936fE36f5",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880543,
       "values": {
         "batcherHash": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
         "gasLimit": 30000000,
@@ -143,6 +148,7 @@
         "implementation": "0x2BB1c629c46a4018fBe2538a98da7162F8355583",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880627,
       "values": {
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "getOwners": ["0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"],
@@ -162,9 +168,10 @@
         "implementation": "0x675924D68200F2C967Ba12349d5d510676C7214c",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880591,
       "values": {
         "MESSAGE_VERSION": 0,
-        "messageNonce": 14,
+        "messageNonce": 15,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -187,6 +194,7 @@
         "implementation": "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693287695,
       "values": {
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x420000000000000000000000000000000000000A",
@@ -200,6 +208,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693287587,
       "values": {
         "owner": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
       },
@@ -213,6 +222,7 @@
         "implementation": "0x7E79726560B140fd6e089547bD049509F5423BFf",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693287719,
       "values": {
         "version": "0.1.4"
       }
@@ -225,6 +235,7 @@
         "implementation": "0x7526F997ea040B3949415c3a44e708273863AA2b",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880615,
       "values": {
         "BISECTION_TIMEOUT": 3600,
         "challengedRoots": [],
@@ -249,6 +260,7 @@
         "implementation": "0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880603,
       "values": {
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000009",
@@ -264,9 +276,10 @@
         "implementation": "0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 18147311,
+        "clock": 18242946,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -300,8 +313,9 @@
         "implementation": "0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 18147311,
+        "clock": 18242946,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -334,6 +348,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693288007,
       "derivedName": ""
     },
     {
@@ -344,10 +359,11 @@
         "implementation": "0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
+      "sinceTimestamp": 1693880567,
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x0125adEE89dE396b586959190e931b83120359AB",
+        "nextValidator": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -355,7 +371,24 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 5,
+        "validatorCount": 15,
+        "validators": [
+          "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+          "0x81BF552f9Fc83e88012d6C3ab84cF1946Bc55FD0",
+          "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
+          "0xfC3867F19161b8981d8B9c9fa3D7360c9Cee9733",
+          "0x0125adEE89dE396b586959190e931b83120359AB",
+          "0x7d06b6eA10cCb824d12FEd7c934B89866ab26C33",
+          "0x1F4f1450Cb0e8BF8cB792e37a2Cc41d990dB081D",
+          "0x91b6178188ccDD1e735F54ba135cd5EcabECdB15",
+          "0x328fbE99cC9A05f9e6f956847EDF8075661eb5fF",
+          "0xcC2351dEB494557b10c5BC5593022f4b8dE121AE",
+          "0x4576481b914FE9FCA4Bbe6A85aB1A409124Ef9A7",
+          "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
+          "0x2E8a03820c77312FE1B189a78963e94553f11b6F",
+          "0xbDeE962137373A755a71C716E01B9946B1a27686",
+          "0xC63Cc019Bb47A948131891407d1371849B757714"
+        ],
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.0"
       },
@@ -365,13 +398,26 @@
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
     "0x0125adEE89dE396b586959190e931b83120359AB",
+    "0x1F4f1450Cb0e8BF8cB792e37a2Cc41d990dB081D",
+    "0x2E8a03820c77312FE1B189a78963e94553f11b6F",
+    "0x328fbE99cC9A05f9e6f956847EDF8075661eb5fF",
+    "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
     "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
     "0x4200000000000000000000000000000000000004",
     "0x4200000000000000000000000000000000000009",
     "0x420000000000000000000000000000000000000A",
+    "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
+    "0x4576481b914FE9FCA4Bbe6A85aB1A409124Ef9A7",
+    "0x7d06b6eA10cCb824d12FEd7c934B89866ab26C33",
+    "0x81BF552f9Fc83e88012d6C3ab84cF1946Bc55FD0",
+    "0x91b6178188ccDD1e735F54ba135cd5EcabECdB15",
     "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
-    "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081"
+    "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081",
+    "0xbDeE962137373A755a71C716E01B9946B1a27686",
+    "0xC63Cc019Bb47A948131891407d1371849B757714",
+    "0xcC2351dEB494557b10c5BC5593022f4b8dE121AE",
+    "0xfC3867F19161b8981d8B9c9fa3D7360c9Cee9733"
   ],
   "abis": {
     "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095": [

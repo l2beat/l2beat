@@ -52,6 +52,12 @@ export function createGetStage<T extends StageBlueprint>(
       }
     }
 
+    if (lastStage === undefined) {
+      throw new Error(
+        'Project with stage lower than Stage 0 appeared in config, we do not support it yet and we need to think how to handle it.',
+      )
+    }
+
     return { stage: lastStage, missing, summary }
   }
 }

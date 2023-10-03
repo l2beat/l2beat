@@ -1,6 +1,7 @@
 import { Layer2StateDerivation } from '@l2beat/config'
 import React from 'react'
 
+import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
 
@@ -22,11 +23,13 @@ export function StateDerivationSection(props: StateDerivationSectionProps) {
   )
 }
 
-function Item(props: { title: string; children: React.ReactNode }) {
+function Item(props: { title: string; children: string }) {
   return (
     <div>
       <span className="text-lg font-bold uppercase">{props.title}</span>
-      <div className="mt-2 text-lg opacity-80">{props.children}</div>
+      <Markdown className="mt-2 text-lg leading-snug opacity-80">
+        {props.children}
+      </Markdown>
     </div>
   )
 }

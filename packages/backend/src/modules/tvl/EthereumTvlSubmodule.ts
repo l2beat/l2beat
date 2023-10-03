@@ -110,7 +110,8 @@ export function createEthereumTvlSubmodule(
   }
 
   return {
-    assetUpdaters: [cbvUpdater],
+    reportUpdaters: [cbvUpdater],
+    dataUpdaters: [ethereumBlockNumberUpdater, balanceUpdater],
     start,
   }
 }
