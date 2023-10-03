@@ -147,15 +147,11 @@ export const opticsV1: Bridge = {
       description: 'Permissioned account that can update message roots.',
     },
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xeE42B7757798cf495CDaA8eDb0CC237F07c60C81',
-          ),
-          type: 'EOA',
-        },
-      ],
       name: 'XAppConnectionManager Watchers',
+      accounts: discovery.getPermissionedAccounts(
+        'XAppConnectionManager',
+        'watchers',
+      ),
       description:
         'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
     },

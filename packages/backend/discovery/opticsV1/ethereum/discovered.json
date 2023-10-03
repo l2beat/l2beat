@@ -1,8 +1,8 @@
 {
   "name": "opticsV1",
   "chain": "ethereum",
-  "blockNumber": 18269425,
-  "configHash": "0xa71916914058291e77c23dba95136502bc0475b40d5ae72c2a0d20597acd1bda",
+  "blockNumber": 18269790,
+  "configHash": "0xf7d0b9048afb6a6e6a64bf70104c7c4d3aff340d22dd195a30511200456cbe52",
   "version": 2,
   "contracts": [
     {
@@ -177,8 +177,10 @@
       "values": {
         "home": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97",
         "localDomain": 6648936,
-        "owner": "0x42303634F37956687fB7ff2c6146AC842481A052"
-      }
+        "owner": "0x42303634F37956687fB7ff2c6146AC842481A052",
+        "watchers": ["0xeE42B7757798cf495CDaA8eDb0CC237F07c60C81"]
+      },
+      "derivedName": "XAppConnectionManager"
     },
     {
       "name": "HomeBeaconProxy",
@@ -227,6 +229,7 @@
     "0xd85DC9A21378EF738A248236E970c2e0be89C9c2",
     "0xDB2091535eb0Ee447Ce170DDC25204FEA822dd81",
     "0xeE2b1e23e71052860C14f69E84AAF78478606D63",
+    "0xeE42B7757798cf495CDaA8eDb0CC237F07c60C81",
     "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
   ],
   "abis": {

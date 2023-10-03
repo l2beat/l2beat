@@ -13,7 +13,8 @@
     "0x42303634F37956687fB7ff2c6146AC842481A052": "GovernanceRouterBeaconProxy",
     "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b": "ReplicaBeaconProxy",
     "0x2bB2a5A724170357cb691841F40d26A950d8C33D": "RecoveryManager",
-    "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37": "Governor"
+    "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37": "Governor",
+    "0xcEc158A719d11005Bd9339865965bed938BEafA3": "XAppConnectionManager"
   },
   "overrides": {
     "HomeBeaconProxy": {
@@ -28,6 +29,16 @@
     },
     "GovernanceRouterBeaconProxy": {
       "proxyType": "Optics Beacon proxy"
+    },
+    "XAppConnectionManager": {
+      "fields": {
+        "watchers": {
+          "type": "arrayFromOneEvent",
+          "event": "WatcherPermissionSet",
+          "valueKey": "watcher",
+          "flagKey": "access"
+        }
+      }
     }
   }
 }
