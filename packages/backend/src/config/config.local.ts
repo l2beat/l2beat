@@ -14,10 +14,10 @@ export function getLocalConfig(env: Env): Config {
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
   )
-  const ethereumTvlEnabled = env.boolean('ETHEREUM_TVL_ENABLED', true)
-  const arbitrumTvlEnabled = env.boolean('ARBITRUM_TVL_ENABLED', false)
-  const optimismTvlEnabled = env.boolean('OPTIMISM_TVL_ENABLED', false)
-  const baseTvlEnabled = env.boolean('BASE_TVL_ENABLED', false)
+  const ethereumTvlEnabled = env.boolean('TVL_ETHEREUM_ENABLED', true)
+  const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
+  const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
+  const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
@@ -68,44 +68,44 @@ export function getLocalConfig(env: Env): Config {
       errorOnUnsyncedDetailedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
       ethereum: ethereumTvlEnabled && {
-        providerUrl: env.string('ETHEREUM_PROVIDER_URL'),
+        providerUrl: env.string('TVL_ETHEREUM_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
           'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
         etherscanApiKey:
           env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
-          env.string('ETHERSCAN_API_KEY'),
+          env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.etherscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       arbitrum: arbitrumTvlEnabled && {
-        providerUrl: env.string('ARBITRUM_PROVIDER_URL'),
+        providerUrl: env.string('TVL_ARBITRUM_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
           'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('ARBITRUM_ETHERSCAN_API_KEY'),
+        etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.arbiscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       optimism: optimismTvlEnabled && {
-        providerUrl: env.string('OPTIMISM_PROVIDER_URL'),
+        providerUrl: env.string('TVL_OPTIMISM_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
           'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('OPTIMISM_ETHERSCAN_API_KEY'),
+        etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       base: baseTvlEnabled && {
-        providerUrl: env.string('BASE_PROVIDER_URL'),
+        providerUrl: env.string('TVL_BASE_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
           'TVL_BASE_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('BASE_ETHERSCAN_API_KEY'),
+        etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
