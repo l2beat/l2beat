@@ -98,7 +98,6 @@ export class TransactionCountingMonitor {
       .map((s) => s.projectId)
     const connector = unsyncedNames.length === 1 ? 'is' : 'are'
 
-    //TODO: CHECK THIS
     this.logger.error(
       `${unsyncedNames.join(', ')} ${connector} lagging behind`,
       {
