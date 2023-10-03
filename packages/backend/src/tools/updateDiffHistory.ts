@@ -7,7 +7,7 @@
 import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainId } from '@l2beat/shared-pure'
+import { assert, ChainId } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { readFileSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
@@ -46,16 +46,19 @@ async function updateDiffHistoryFile() {
 
   if (diff.length > 0) {
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
-    const oldDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
-    const description = findDescription(oldDiffHistory)
+    const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
+    const { content: historyFileFromMainBranch } =
+      getFileVersionOnMainBranch(diffHistoryPath)
+    const description = findDescription(
+      diskDiffHistory,
+      historyFileFromMainBranch,
+    )
 
     const newHistoryEntry = generateDiffHistoryMarkdown(
       diff,
       mainBranchHash,
       description,
     )
-    const { content: historyFileFromMainBranch } =
-      getFileVersionOnMainBranch(diffHistoryPath)
     const diffHistory =
       historyFileFromMainBranch === ''
         ? newHistoryEntry
@@ -171,8 +174,24 @@ function generateDiffHistoryMarkdown(
   return result.join('\n')
 }
 
-function findDescription(oldDiffHistory: string): string | undefined {
-  const lines = oldDiffHistory.split('\n')
+function findDescription(
+  diskDiffHistory: string,
+  masterDiffHistory: string,
+): string | undefined {
+  const lastCommited = masterDiffHistory.split('\n').at(0)
+  let lines: string[] = []
+  if (lastCommited) {
+    const diskLines = diskDiffHistory.split('\n')
+    const lastCommitedIndex = diskLines.findIndex((l) => l === lastCommited)
+    assert(
+      lastCommitedIndex >= 0,
+      'Unexpected difference between master and disk file',
+    )
+    lines = diskLines.slice(0, lastCommitedIndex)
+  } else {
+    lines = diskDiffHistory.split('\n')
+  }
+
   const index = lines.findIndex((l) => l === '## Description')
   if (index < 0) {
     return undefined
@@ -181,6 +200,10 @@ function findDescription(oldDiffHistory: string): string | undefined {
   const lastIndex = lines.findIndex((l) => l.startsWith('```diff'))
   if (lastIndex < 0) {
     return lines.slice(index).join('\n')
+  }
+
+  if (lastIndex < index) {
+    return undefined
   }
 
   return lines.slice(index, lastIndex).join('\n')
