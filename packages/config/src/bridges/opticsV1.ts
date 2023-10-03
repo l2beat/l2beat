@@ -24,7 +24,6 @@ export const opticsV1: Bridge = {
       repositories: ['https://github.com/celo-org/optics-monorepo'],
       socialMedia: ['https://twitter.com/CeloOrg'],
     },
-
     description:
       'Optics is a general messaging bridge that uses optimistic verification to validate cross-chain bridging transactions. Version 2 of the bridge was deployed\
       after Celo governance lost control over the governors MultiSig keys.',
@@ -47,13 +46,13 @@ export const opticsV1: Bridge = {
       risks: [],
     },
     validation: {
-      name: 'Optimistic Validation',
+      name: 'Third Party',
       description: `Messages on the source (home) chain are periodically signed by Updater. Updater cannot censor messages and if it refuses to attest them, it can be changed by the governance. \
-        Once message batch is attested, it is relayed to the destination (replica) by the permissionless Relayers. After ${formatSeconds(
+        Once message batch is attested, it is relayed to the destination (replica) by the permissionless Relayers. After the ${formatSeconds(
           challengeWindowSeconds,
         )} fraud proof window messages can be delivered to the destination \
         contract. During the fraud proof window, if malicious Updater tries to relay invalid message batch, anyone can submit a fraud proof to the source (home) chain slashing Updater \
-        and stopping home contract. On the destination messages cannot be stopped, so receiving contracts have to be independently notified to not process messages.`,
+        and stopping home contract. On the destination messages cannot be stopped, so receiving contracts have to be independently notified to not process messages. Currently this mechanism is not implemented.`,
       references: [],
       risks: [
         {
@@ -63,14 +62,12 @@ export const opticsV1: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: `updater manages to relay fraudulent message batch and is not slashed by Watchers during ${formatSeconds(
-            challengeWindowSeconds,
-          )} fraud proof window.`,
+          text: `updater manages to relay a fraudulent message batch.`,
           isCritical: false,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'destination contract does not block receiving fraudulent messages after malicious Updater has been slashed.',
+          text: 'destination contract does not block receiving fraudulent messages.',
           isCritical: false,
         },
       ],
@@ -92,11 +89,11 @@ export const opticsV1: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Optimistically',
+      value: 'Third Party',
       description: `Messages are relayed to the destination chain and assumed to be correct unless challenged within the ${formatSeconds(
         challengeWindowSeconds,
-      )} fraud proof window.`,
-      sentiment: 'warning',
+      )} fraud proof window, but the slashing mechanism is not implemented yet.`,
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
