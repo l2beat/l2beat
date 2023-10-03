@@ -4,10 +4,16 @@ export interface SeriesStyle {
   line?: keyof typeof LINE_STYLES
 }
 
+export type PointStyle = keyof typeof POINT_CLASS_NAMES
+
 export const POINT_CLASS_NAMES = {
   circle: 'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
-  blueSquare: 'h-2 w-2 border-2 border-current bg-blue-600',
   redCircle: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
+  purpleCircle: 'h-2 w-2 rounded-full border-2 border-current bg-[#7E41CC]',
+  blueSquare: 'h-2 w-2 border-2 border-current bg-blue-600',
+  pinkSquare: 'h-2 w-2 border-2 border-current bg-[#FF46C0]',
+  // TODO:
+  yellowTriangle: 'h-2 w-2 border-2 border-current bg-[#FFC107]',
   milestone:
     'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
 }

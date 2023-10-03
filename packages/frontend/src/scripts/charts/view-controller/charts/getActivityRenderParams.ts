@@ -1,6 +1,6 @@
 import { formatTimestamp } from '../../../../utils'
 import { formatTpsWithUnit } from '../../../../utils/formatTps'
-import { getActivityHover } from '../../htmls'
+import { ActivityData, renderActivityHover } from '../hovers'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
@@ -8,7 +8,7 @@ import { ChartControlsState } from '../types'
 
 export function getActivityRenderParams(
   state: ChartControlsState,
-): RenderParams<{ date: string; tps: number; ethTps: number }> {
+): RenderParams<ActivityData> {
   {
     if (state.data?.type !== 'activity') {
       throw new Error('Invalid data type')
@@ -18,7 +18,6 @@ export function getActivityRenderParams(
       state.timeRangeInDays,
       state.data.values,
     )
-
     const points = dataInRange.map(([timestamp, txs, ethTxs]) => {
       const tps = getTps(txs)
       const ethTps = getTps(ethTxs)
@@ -58,10 +57,7 @@ export function getActivityRenderParams(
       points,
       seriesStyle,
       renderHoverContents: (value) =>
-        getActivityHover(value, {
-          eth: ethTpsPoint,
-          projects: tpsPoint,
-        }),
+        renderActivityHover(value, !!state.showEthereumTransactions),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
     }

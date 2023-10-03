@@ -3,6 +3,7 @@ import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { TokenInfo } from '../../types'
 import { getEntriesByDays } from '../getEntriesByDays'
+import { renderTokenTvlHover } from '../hovers'
 import { ChartControlsState } from '../types'
 
 export function getTokenTvlRenderParams(
@@ -12,6 +13,7 @@ export function getTokenTvlRenderParams(
     if (state.data?.type !== 'token-tvl') {
       throw new Error('Invalid data type')
     }
+    const { tokenSymbol, tokenType } = state.data
 
     const dataInRange = getEntriesByDays(
       state.timeRangeInDays,
@@ -33,17 +35,17 @@ export function getTokenTvlRenderParams(
       }
     })
 
-    // TODO: (chart) show token symbol
-    const formatYAxisLabel = (val: number) => formatLargeNumber(val)
+    const formatYAxisLabel = (val: number) =>
+      `${formatLargeNumber(val)} ${tokenSymbol}`
 
-    const seriesStyle: SeriesStyle[] = [tokenTypeToStyle(state.data.tokenType)]
+    const seriesStyle: SeriesStyle[] = [tokenTypeToStyle(tokenType)]
 
     return {
       formatYAxisLabel,
       points,
       seriesStyle,
-      // TODO: (chart) implement
-      renderHoverContents: () => '',
+      renderHoverContents: (data) =>
+        renderTokenTvlHover(data, tokenSymbol, tokenType),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
     }

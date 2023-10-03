@@ -31,6 +31,7 @@ interface ChartDetailedTvlData {
 interface ChartTokenTvlData {
   type: 'token-tvl'
   tokenType: 'regular' | 'CBV' | 'EBV' | 'NMV'
+  tokenSymbol: string
   values: TokenTvlResponse
 }
 

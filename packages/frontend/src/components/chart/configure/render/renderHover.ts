@@ -124,10 +124,7 @@ export function renderHover(
         rows.push(renderCBVRow(point.usdParts.cbv))
         rows.push(renderEBVRow(point.usdParts.ebv))
         rows.push(renderNMVRow(point.usdParts.nmv))
-      } else if (
-        state.view.chart.type === 'TokenDetailedTvlChart' &&
-        'balance' in point
-      ) {
+      } else if (state.view.chart.type === ' ' && 'balance' in point) {
         const type = state.view.chart.assetType
         rows.push(renderHorizontalSeparator())
         rows.push(

@@ -68,9 +68,15 @@ export function getTokens(
         return {
           address: address?.toString(),
           iconUrl,
-          symbol,
           name,
-          info: getTokenInfo(projectId, assetId, assetType, chainId, isLayer2),
+          info: getTokenInfo(
+            projectId,
+            assetId,
+            assetType,
+            chainId,
+            symbol,
+            isLayer2,
+          ),
           tvl: usdValue,
         }
       }
@@ -84,13 +90,15 @@ function getTokenInfo(
   assetId: AssetId,
   assetType: AssetType,
   chainId: ChainId,
+  symbol: string,
   isLayer2: boolean,
-): TokenInfo | TokenInfo {
+): TokenInfo {
   if (!isLayer2) {
     return {
       type: 'regular',
       projectId: projectId.toString(),
       assetId: assetId.toString(),
+      symbol,
     }
   }
   return assetType === 'CBV'
@@ -98,12 +106,14 @@ function getTokenInfo(
         type: 'CBV',
         projectId: projectId.toString(),
         assetId: assetId.toString(),
+        symbol,
       }
     : {
         type: assetType === 'EBV' ? 'EBV' : 'NMV',
         projectId: projectId.toString(),
         assetId: assetId.toString(),
         chainId: chainId.valueOf(),
+        symbol,
       }
 }
 

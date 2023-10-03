@@ -66,12 +66,12 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
                 {p.tokens.map((token, j) => (
                   <RichSelect.Item
                     value={JSON.stringify(token.info)}
-                    selectedLabel={token.symbol}
+                    selectedLabel={token.info.symbol}
                     key={j}
                   >
                     <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
                     <span className="text-sm font-bold">{token.name}</span> (
-                    {token.symbol})
+                    {token.info.symbol})
                   </RichSelect.Item>
                 ))}
               </div>

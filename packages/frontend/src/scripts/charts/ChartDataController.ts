@@ -75,6 +75,7 @@ export class ChartDataController {
       case 'project-token-tvl':
         return {
           type: 'token-tvl',
+          tokenSymbol: chartType.info.symbol,
           tokenType: chartType.info.type,
           values: TokenTvlResponse.parse(data),
         }

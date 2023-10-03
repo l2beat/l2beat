@@ -3,11 +3,12 @@ import { formatCurrency } from '../../../../utils/format'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
+import { DetailedTvlData, renderDetailedTvlHover } from '../hovers'
 import { ChartControlsState } from '../types'
 
 export function getDetailedTvlRenderParams(
   state: ChartControlsState,
-): RenderParams<{ date: string; eth: number; usd: number }> {
+): RenderParams<DetailedTvlData> {
   {
     if (state.data?.type !== 'detailed-tvl') {
       throw new Error('Invalid data type')
@@ -27,8 +28,14 @@ export function getDetailedTvlRenderParams(
             : [cbv + ebv + nmv, ebv + nmv, nmv],
           data: {
             date: formatTimestamp(timestamp, true),
-            eth,
             usd,
+            cbv,
+            ebv,
+            nmv,
+            eth,
+            cbvEth,
+            ebvEth,
+            nmvEth,
           },
           milestone: state.milestones[timestamp],
         }
@@ -47,12 +54,10 @@ export function getDetailedTvlRenderParams(
       {
         line: 'yellow',
         fill: 'yellow',
-        point: 'circle',
       },
       {
         line: 'pink',
         fill: 'pink',
-        point: 'circle',
       },
     ]
 
@@ -60,8 +65,8 @@ export function getDetailedTvlRenderParams(
       formatYAxisLabel,
       points,
       seriesStyle,
-      // TODO: (chart) implement
-      renderHoverContents: () => '',
+      renderHoverContents: (data) =>
+        renderDetailedTvlHover(data, !!state.useAltCurrency),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
     }

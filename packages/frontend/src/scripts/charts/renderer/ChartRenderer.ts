@@ -4,14 +4,15 @@ import mean from 'lodash/mean'
 import { formatRange } from '../../../utils'
 import { makeQuery } from '../../query'
 import { isMobile } from '../../utils/isMobile'
-import { getMilestoneHover, getMilestoneHtml } from '../htmls'
 import {
   FILL_STYLES,
   LINE_STYLES,
   POINT_CLASS_NAMES,
   SeriesStyle,
 } from '../styles'
+import { renderMilestoneHover } from '../view-controller/hovers'
 import { getYAxis } from './getYAxis'
+import { renderMilestone } from './milestones'
 
 interface Point<T> {
   series: number[]
@@ -146,7 +147,7 @@ export class ChartRenderer {
     const milestonesHtml = points
       .map((point, i) =>
         point.milestone
-          ? getMilestoneHtml(
+          ? renderMilestone(
               (width / (points.length - 1)) * i,
               point.milestone.link,
             )
@@ -285,7 +286,7 @@ export class ChartRenderer {
     const averageY = yValues.length === 0 ? canvasHeight / 2 : mean(yValues)
 
     this.hoverContents.innerHTML = milestone
-      ? getMilestoneHover(milestone)
+      ? renderMilestoneHover(milestone)
       : this.renderParams.renderHoverContents(point.data)
     const { height } = this.hoverContents.getBoundingClientRect()
     const contentsBottom = Math.min(

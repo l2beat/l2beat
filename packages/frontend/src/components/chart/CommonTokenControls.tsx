@@ -5,7 +5,6 @@ import { CloseIcon } from '../icons/CloseIcon'
 
 export interface TokenControl {
   iconUrl: string
-  symbol: string
   name: string
   info: TokenInfo
 }
@@ -18,12 +17,12 @@ export function TokenCell({ token }: { token: TokenControl }) {
         name="token"
         type={'radio'}
         autoComplete="off"
-        value={token.symbol}
+        value={token.info.symbol}
         data-token-info={JSON.stringify(token.info)}
       />
       <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
-      <p className="text-sm" key={token.symbol}>
-        <span className={'font-bold'}>{token.name}</span> ({token.symbol})
+      <p className="text-sm" key={token.info.symbol}>
+        <span className={'font-bold'}>{token.name}</span> ({token.info.symbol})
       </p>
     </label>
   )

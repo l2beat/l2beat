@@ -1,6 +1,6 @@
 import { formatTimestamp } from '../../../../utils'
 import { formatCurrency } from '../../../../utils/format'
-import { getTvlHover } from '../../htmls'
+import { renderTvlHover, TvlData } from '../hovers'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
@@ -8,7 +8,7 @@ import { ChartControlsState } from '../types'
 
 export function getTvlRenderParams(
   state: ChartControlsState,
-): RenderParams<{ date: string; usd: number; eth: number }> {
+): RenderParams<TvlData> {
   if (state.data?.type !== 'tvl') {
     throw new Error('Invalid data type')
   }
@@ -45,7 +45,7 @@ export function getTvlRenderParams(
     formatYAxisLabel,
     points,
     seriesStyle,
-    renderHoverContents: getTvlHover,
+    renderHoverContents: (data) => renderTvlHover(data, !!state.useAltCurrency),
     useLogScale: state.useLogScale,
     range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
   }

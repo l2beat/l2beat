@@ -36,12 +36,12 @@ function Template({
   ].map((x) => ({
     address: '0xabac',
     name: x,
-    symbol: x,
     info: {
       type: 'EBV',
       assetId: '0xabac',
       chainId: 12,
       projectId: 'arbitrum',
+      symbol: x,
     },
     iconUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
