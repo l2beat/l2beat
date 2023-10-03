@@ -1,8 +1,8 @@
 {
   "name": "dydx",
   "chain": "ethereum",
-  "blockNumber": 18268555,
-  "configHash": "0x4e86023d140227dfd1022f65220ef06551c31c3ca21a90b3f66ab23b1cd7c677",
+  "blockNumber": 18268851,
+  "configHash": "0x9ec5b77b6da0d839b6bdb7b1b4f54ac5b9773665d1168c5a7806ff9d7f339a12",
   "version": 2,
   "contracts": [
     {
@@ -390,7 +390,8 @@
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "wethDYDX",
         "totalSupply": "11123714560000000000000"
-      }
+      },
+      "derivedName": "WrappedEthereumDydxToken"
     },
     {
       "name": "CpuFrilessVerifier",
@@ -495,7 +496,7 @@
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getTimeRemainingInCurrentEpoch": 1841089,
+        "getTimeRemainingInCurrentEpoch": 1837525,
         "getTotalActiveBalanceCurrentEpoch": 287711787301,
         "getTotalActiveBalanceNextEpoch": 285127676616,
         "getTotalBorrowedBalance": 4248,
@@ -870,15 +871,10 @@
       "sinceTimestamp": 1694426291,
       "values": {
         "DYDX_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-        "getTotalPropositionSupplyAt": [0, 0, 0, 0, 0],
-        "getTotalVotingSupplyAt": [0, 0, 0, 0, 0],
         "STAKED_DYDX_TOKEN": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC",
         "WRAPPED_ETHEREUM_DYDX_TOKEN": "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
       },
-      "errors": {
-        "getTotalPropositionSupplyAt": "Too many values. Update configuration explore fully",
-        "getTotalVotingSupplyAt": "Too many values. Update configuration explore fully"
-      }
+      "derivedName": "GovernanceStrategyV2"
     },
     {
       "name": "EcdsaPointsYColumn",
@@ -916,7 +912,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 19164,
+        "getLastBatchId": 19165,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -925,7 +921,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 18865,
+        "getSequenceNumber": 18866,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
