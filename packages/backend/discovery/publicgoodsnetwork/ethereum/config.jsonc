@@ -30,7 +30,14 @@
         "nextOutputIndex",
         "latestBlockNumber",
         "latestOutputIndex"
-      ]
+      ],
+      "fields": {
+        "deletedOutputs": {
+          "type": "stateFromEvent",
+          "event": "OutputsDeleted",
+          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+        }
+      }
     },
     "PGNMultisig": {
       "ignoreInWatchMode": ["nonce"]

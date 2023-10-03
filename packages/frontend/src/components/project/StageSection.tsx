@@ -8,6 +8,7 @@ import {
   UnderReviewIcon,
 } from '../icons'
 import { Link } from '../Link'
+import { Markdown } from '../Markdown'
 import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
@@ -105,19 +106,25 @@ export function StageSection(props: StageSectionProps) {
               {satisfied.map((req, i) => (
                 <li key={i} className="flex">
                   <SatisfiedIcon className="relative top-0.5 shrink-0" />
-                  <span className="ml-2 inline-block">{req.description}</span>
+                  <Markdown className="ml-2" inline>
+                    {req.description}
+                  </Markdown>
                 </li>
               ))}
               {underReview.map((req, i) => (
                 <li key={i} className="flex">
                   <UnderReviewIcon className="relative top-0.5 shrink-0 " />
-                  <span className="ml-2 inline-block">{req.description}</span>
+                  <Markdown className="ml-2" inline>
+                    {req.description}
+                  </Markdown>
                 </li>
               ))}
               {missing.map((req, i) => (
                 <li key={i} className="flex">
                   <MissingIcon className=" relative top-0.5 shrink-0" />
-                  <span className="ml-2 inline-block">{req.description}</span>
+                  <Markdown className="ml-2" inline>
+                    {req.description}
+                  </Markdown>
                 </li>
               ))}
             </ul>
@@ -132,7 +139,7 @@ export function StageSection(props: StageSectionProps) {
         Learn more about Rollup stages
       </Link>
       <StageDisclaimer
-        className="mt-6"
+        className="mt-6 leading-snug"
         text="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
       />
     </ProjectDetailsSection>
