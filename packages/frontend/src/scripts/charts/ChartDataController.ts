@@ -11,7 +11,6 @@ import { ChartData } from './view-controller/types'
 
 export class ChartDataController {
   private chartType?: ChartType
-  private includeCanonical = false
   private abortController?: AbortController
   private readonly cache = new Map<string, unknown>()
 
@@ -19,11 +18,6 @@ export class ChartDataController {
 
   setChartType(chartType: ChartType) {
     this.chartType = chartType
-    this.refetch()
-  }
-
-  setIncludeCanonical(includeCanonical: boolean) {
-    this.includeCanonical = includeCanonical
     this.refetch()
   }
 
@@ -35,7 +29,7 @@ export class ChartDataController {
     this.abortController = new AbortController()
 
     const chartType = this.chartType
-    const url = getChartUrl(chartType, this.includeCanonical)
+    const url = getChartUrl(chartType)
     if (this.cache.has(url)) {
       this.parseAndConfigure(chartType, this.cache.get(url))
       return
@@ -92,7 +86,7 @@ export class ChartDataController {
   }
 }
 
-export function getChartUrl(chartType: ChartType, includeCanonical = false) {
+export function getChartUrl(chartType: ChartType) {
   switch (chartType.type) {
     case 'layer2-tvl':
       return '/api/scaling-tvl.json'
@@ -101,7 +95,7 @@ export function getChartUrl(chartType: ChartType, includeCanonical = false) {
     case 'layer2-activity':
       return '/api/activity/combined.json'
     case 'bridges-tvl':
-      return includeCanonical
+      return chartType.includeCanonical
         ? '/api/combined-tvl.json'
         : '/api/bridges-tvl.json'
     case 'project-tvl':

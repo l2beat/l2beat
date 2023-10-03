@@ -194,7 +194,7 @@ export const ChartType = z.discriminatedUnion('type', [
   z.object({ type: z.literal('layer2-tvl') }),
   z.object({ type: z.literal('layer2-detailed-tvl') }),
   z.object({ type: z.literal('layer2-activity') }),
-  z.object({ type: z.literal('bridges-tvl') }),
+  z.object({ type: z.literal('bridges-tvl'), includeCanonical: z.boolean() }),
   z.object({ type: z.literal('project-tvl'), slug: z.string() }),
   z.object({
     type: z.literal('project-token-tvl'),

@@ -172,7 +172,15 @@ export class ChartControls {
       })
     })
 
-    // TODO: (chart) canonical controls
+    const canonicalToggle = document.querySelector<HTMLInputElement>(
+      '[data-role="chart-combined"]',
+    )
+    if (canonicalToggle) {
+      canonicalToggle.addEventListener('change', () => {
+        const includeCanonical = !!canonicalToggle.checked
+        this.updateChartType({ type: 'bridges-tvl', includeCanonical })
+      })
+    }
   }
 
   private getMilestones(chart: HTMLElement) {

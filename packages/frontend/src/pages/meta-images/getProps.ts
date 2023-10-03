@@ -40,7 +40,7 @@ export function getProps(
     ? { type: 'project-tvl', slug: project.display.slug }
     : type === 'layers2s'
     ? { type: 'layer2-tvl' }
-    : { type: 'bridges-tvl' }
+    : { type: 'bridges-tvl', includeCanonical: false }
 
   return {
     props: {
@@ -98,7 +98,7 @@ export function getPropsDetailed(
     ? { type: 'project-detailed-tvl', slug: project.display.slug }
     : type === 'layers2s'
     ? { type: 'layer2-detailed-tvl' }
-    : { type: 'bridges-tvl' }
+    : { type: 'bridges-tvl', includeCanonical: false }
 
   return {
     props: {

@@ -46,7 +46,7 @@ export function getProps(
       footer: getFooterProps(config),
     },
     wrapper: {
-      preloadApi: getChartUrl({ type: 'bridges-tvl' }),
+      preloadApi: getChartUrl({ type: 'bridges-tvl', includeCanonical: false }),
       metadata: getPageMetadata(),
     },
   }
