@@ -288,6 +288,7 @@ export class ChartRenderer {
     this.hoverContents.innerHTML = milestone
       ? renderMilestoneHover(milestone)
       : this.renderParams.renderHoverContents(point.data)
+    this.hover.classList.remove('hidden')
     const { height } = this.hoverContents.getBoundingClientRect()
     const contentsBottom = Math.min(
       canvasHeight - height - HOVER_CANVAS_PADDING,
@@ -306,11 +307,10 @@ export class ChartRenderer {
         canvasWidth - left + HOVER_CANVAS_PADDING
       }px`
     }
-
-    this.hover.classList.remove('hidden')
   }
 
   private onMouseExited() {
+    this.lastPointIndex = undefined
     this.hover.classList.add('hidden')
   }
 
