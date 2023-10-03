@@ -9,7 +9,7 @@ import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
-import { writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 
 // This is a CLI tool. Run logic immediately.
@@ -45,14 +45,22 @@ async function updateDiffHistoryFile() {
   )
 
   if (diff.length > 0) {
-    const newHistoryEntry = generateDiffHistoryMarkdown(diff, mainBranchHash)
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
+    const oldDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
+    const description = findDescription(oldDiffHistory)
+
+    const newHistoryEntry = generateDiffHistoryMarkdown(
+      diff,
+      mainBranchHash,
+      description,
+    )
     const { content: historyFileFromMainBranch } =
       getFileVersionOnMainBranch(diffHistoryPath)
     const diffHistory =
       historyFileFromMainBranch === ''
         ? newHistoryEntry
         : newHistoryEntry.concat('\n' + historyFileFromMainBranch)
+
     writeFileSync(diffHistoryPath, diffHistory)
   } else {
     console.log('No changes found')
@@ -142,6 +150,7 @@ function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
 function generateDiffHistoryMarkdown(
   diffs: DiscoveryDiff[],
   mainBranchHash: string,
+  description?: string,
 ): string {
   const result = []
   const mainBranch = getMainBranchName()
@@ -153,8 +162,26 @@ function generateDiffHistoryMarkdown(
   result.push(`- author: ${name} (<${email}>)`)
   result.push(`- comparing to: ${mainBranch}@${mainBranchHash}`)
   result.push('')
+  if (description) {
+    result.push(description)
+  }
   result.push(discoveryDiffToMarkdown(diffs))
   result.push('')
 
   return result.join('\n')
+}
+
+function findDescription(oldDiffHistory: string): string | undefined {
+  const lines = oldDiffHistory.split('\n')
+  const index = lines.findIndex((l) => l === '## Description')
+  if (index < 0) {
+    return undefined
+  }
+
+  const lastIndex = lines.findIndex((l) => l.startsWith('```diff'))
+  if (lastIndex < 0) {
+    return lines.slice(index).join('\n')
+  }
+
+  return lines.slice(index, lastIndex).join('\n')
 }
