@@ -8,9 +8,9 @@ import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
 
 export function getProductionConfig(): Config {
-  const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
-  const optimismTvlEnabled = getEnv.boolean('OPTIMISM_TVL_ENABLED', false)
-  const baseTvlEnabled = getEnv.boolean('BASE_TVL_ENABLED', false)
+  const arbitrumTvlEnabled = getEnv.boolean('TVL_ARBITRUM_ENABLED', false)
+  const optimismTvlEnabled = getEnv.boolean('TVL_OPTIMISM_ENABLED', false)
+  const baseTvlEnabled = getEnv.boolean('TVL_BASE_ENABLED', false)
   const errorOnUnsyncedDetailedTvl = getEnv.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,

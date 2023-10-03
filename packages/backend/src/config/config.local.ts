@@ -70,7 +70,7 @@ export function getLocalConfig(): Config {
         // TODO: phase out old env variable
         etherscanApiKey:
           process.env.ETHEREUM_ETHERSCAN_API_KEY ??
-          getEnv('TVL_ETHERSCAN_API_KEY'),
+          getEnv('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.etherscan.io/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
