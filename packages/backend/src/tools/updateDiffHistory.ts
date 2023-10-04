@@ -188,16 +188,16 @@ function findDescription(
   diskDiffHistory: string,
   masterDiffHistory: string,
 ): string | undefined {
-  const lastCommited = masterDiffHistory.split('\n').at(0)
+  const lastCommitted = masterDiffHistory.split('\n').at(0)
   let lines: string[] = []
-  if (lastCommited) {
+  if (lastCommitted) {
     const diskLines = diskDiffHistory.split('\n')
-    const lastCommitedIndex = diskLines.findIndex((l) => l === lastCommited)
+    const lastCommittedIndex = diskLines.findIndex((l) => l === lastCommitted)
     assert(
-      lastCommitedIndex >= 0,
+      lastCommittedIndex >= 0,
       'Unexpected difference between master and disk file',
     )
-    lines = diskLines.slice(0, lastCommitedIndex)
+    lines = diskLines.slice(0, lastCommittedIndex)
   } else {
     lines = diskDiffHistory.split('\n')
   }
