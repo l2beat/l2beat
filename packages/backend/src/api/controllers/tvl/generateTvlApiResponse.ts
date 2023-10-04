@@ -3,6 +3,7 @@ import {
   TvlApiChart,
   TvlApiChartPoint,
   TvlApiCharts,
+  TvlApiProjectsResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
@@ -36,6 +37,25 @@ export function generateTvlApiResponse(
       {},
     ),
   }
+}
+
+export function generateTvlApiProjectsResponse(
+  hourly: AggregatedReportRecord[],
+  sixHourly: AggregatedReportRecord[],
+  daily: AggregatedReportRecord[],
+  latestReports: ReportRecord[],
+  projectIds: ProjectId[],
+): TvlApiProjectsResponse {
+  const reports = { hourly, sixHourly, daily }
+  return projectIds.reduce<TvlApiResponse['projects']>((acc, projectId) => {
+    acc[projectId.toString()] = {
+      charts: getProjectCharts(reports, projectId),
+      tokens: latestReports
+        .filter((r) => r.projectId === projectId)
+        .map((r) => ({ assetId: r.asset, tvl: asNumber(r.usdValue, 2) })),
+    }
+    return acc
+  }, {})
 }
 
 function getProjectCharts(

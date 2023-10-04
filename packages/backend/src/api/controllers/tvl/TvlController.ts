@@ -6,6 +6,7 @@ import {
   Token,
   TvlApiChart,
   TvlApiCharts,
+  TvlApiProjectsResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
@@ -16,7 +17,10 @@ import { ReportRepository } from '../../../peripherals/database/ReportRepository
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
-import { generateTvlApiResponse } from './generateTvlApiResponse'
+import {
+  generateTvlApiProjectsResponse,
+  generateTvlApiResponse,
+} from './generateTvlApiResponse'
 
 interface TvlControllerOptions {
   errorOnUnsyncedTvl: boolean
@@ -26,6 +30,16 @@ type TvlResult =
   | {
       result: 'success'
       data: TvlApiResponse
+    }
+  | {
+      result: 'error'
+      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+    }
+
+type TvlProjectResult =
+  | {
+      result: 'success'
+      data: TvlApiProjectsResponse
     }
   | {
       result: 'error'
@@ -97,6 +111,57 @@ export class TvlController {
     return {
       result: 'success',
       data: tvlApiResponse,
+    }
+  }
+
+  async getTvlApiProjectsResponse(
+    projectIdsFilter: string[],
+  ): Promise<TvlProjectResult> {
+    const dataTimings = await this.getDataTimings()
+
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
+
+    const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
+      await Promise.all([
+        this.aggregatedReportRepository.getHourly(
+          getHourlyMinTimestamp(dataTimings.latestTimestamp),
+          'TVL',
+        ),
+        this.aggregatedReportRepository.getSixHourly(
+          getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+          'TVL',
+        ),
+        this.aggregatedReportRepository.getDaily('TVL'),
+        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
+      ])
+
+    const projectIdsFilterSet = new Set(projectIdsFilter)
+
+    const tvlApiProjectResponse = generateTvlApiProjectsResponse(
+      hourlyReports,
+      sixHourlyReports,
+      dailyReports,
+      latestReports,
+      this.projects
+        .map((project) => project.projectId)
+        .filter((projectId) => projectIdsFilterSet.has(projectId.toString())),
+    )
+
+    return {
+      result: 'success',
+      data: tvlApiProjectResponse,
     }
   }
 

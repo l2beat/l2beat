@@ -43,3 +43,7 @@ export const TvlApiResponse = z.object({
   projects: z.record(z.string(), TvlApiProject.optional()),
 })
 export type TvlApiResponse = z.infer<typeof TvlApiResponse>
+
+export const TvlApiProjectsResponse = TvlApiResponse.shape.projects
+
+export type TvlApiProjectsResponse = z.infer<typeof TvlApiProjectsResponse>
