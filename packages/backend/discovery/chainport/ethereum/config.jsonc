@@ -1,0 +1,18 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "chainport",
+  "initialAddresses": [
+    "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+    "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
+  ],
+  "names": {
+    "0xB6b4C7aC240b1f176c5589d064733066a83884a1": "ChainportCongress",
+    "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19": "MultisigVault"
+  },
+  "overrides": {
+    "ChainportCongress": {
+      "ignoreMethods": ["getActions", "proposals"]
+    }
+  }
+}
