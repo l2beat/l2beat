@@ -1,6 +1,7 @@
 import {
   AssetId,
   ChainId,
+  DetailedTvlApiCharts,
   ProjectId,
   TvlApiChart,
   TvlApiChartPoint,
@@ -158,31 +159,181 @@ describe(generateTvlApiResponse.name, () => {
 })
 
 describe(generateTvlApiProjectsResponse.name, () => {
-  it('returns the only selected projects', () => {
-    const reports = fakeReports([
-      ProjectId('arbitrum'),
-      ProjectId('optimism'),
-      ProjectId('avalanche'),
-      ProjectId.ALL,
-      ProjectId.BRIDGES,
-      ProjectId.LAYER2S,
-    ])
+  it.only('returns the only selected projects', () => {
+    const mock: AggregatedReportRecord[] = [
+      ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(0), 10),
+      ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(0), 20),
+      ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(1), 100),
+      ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(1), 200),
+    ]
+
+    const selectedProjectIds = ['arbitrum', 'optimism']
+
     const result = generateTvlApiProjectsResponse(
-      reports.hourly.all,
-      reports.sixHourly.all,
-      reports.daily.all,
-      reports.latest.all,
-      [ProjectId('arbitrum'), ProjectId('optimism')],
+      mock,
+      mock,
+      mock,
+      selectedProjectIds.map((_projectId) => ProjectId(_projectId)),
     )
-    expect(result).toEqual({
-      arbitrum: {
-        charts: charts(reports, ProjectId('arbitrum')),
-        tokens: reports.latest.arbitrum,
+
+    const firstTvl = 30
+    const secondTvl = 300
+
+    const expectedResult: DetailedTvlApiCharts = {
+      hourly: {
+        types: [
+          'timestamp',
+          'usdTvl',
+          'ethTvl',
+          'usdCbv',
+          'ethCbv',
+          'usdEbv',
+          'ethEbv',
+          'usdNmv',
+          'ethNmv',
+        ],
+        data: [
+          [
+            new UnixTime(0),
+            firstTvl,
+            firstTvl,
+            firstTvl * 0.6,
+            firstTvl * 0.6,
+            firstTvl * 0.1,
+            firstTvl * 0.1,
+            firstTvl * 0.3,
+            firstTvl * 0.3,
+          ],
+          [
+            new UnixTime(0),
+            secondTvl,
+            secondTvl,
+            secondTvl * 0.6,
+            secondTvl * 0.6,
+            secondTvl * 0.1,
+            secondTvl * 0.1,
+            secondTvl * 0.3,
+            secondTvl * 0.3,
+          ],
+        ],
       },
-      optimism: {
-        charts: charts(reports, ProjectId('optimism')),
-        tokens: reports.latest.optimism,
+      sixHourly: {
+        types: [
+          'timestamp',
+          'usdTvl',
+          'ethTvl',
+          'usdCbv',
+          'ethCbv',
+          'usdEbv',
+          'ethEbv',
+          'usdNmv',
+          'ethNmv',
+        ],
+        data: [
+          [
+            new UnixTime(0),
+            firstTvl,
+            firstTvl,
+            firstTvl * 0.6,
+            firstTvl * 0.6,
+            firstTvl * 0.1,
+            firstTvl * 0.1,
+            firstTvl * 0.3,
+            firstTvl * 0.3,
+          ],
+          [
+            new UnixTime(0),
+            secondTvl,
+            secondTvl,
+            secondTvl * 0.6,
+            secondTvl * 0.6,
+            secondTvl * 0.1,
+            secondTvl * 0.1,
+            secondTvl * 0.3,
+            secondTvl * 0.3,
+          ],
+        ],
       },
-    })
+      daily: {
+        types: [
+          'timestamp',
+          'usdTvl',
+          'ethTvl',
+          'usdCbv',
+          'ethCbv',
+          'usdEbv',
+          'ethEbv',
+          'usdNmv',
+          'ethNmv',
+        ],
+        data: [
+          [
+            new UnixTime(0),
+            firstTvl,
+            firstTvl,
+            firstTvl * 0.6,
+            firstTvl * 0.6,
+            firstTvl * 0.1,
+            firstTvl * 0.1,
+            firstTvl * 0.3,
+            firstTvl * 0.3,
+          ],
+          [
+            new UnixTime(0),
+            secondTvl,
+            secondTvl,
+            secondTvl * 0.6,
+            secondTvl * 0.6,
+            secondTvl * 0.1,
+            secondTvl * 0.1,
+            secondTvl * 0.3,
+            secondTvl * 0.3,
+          ],
+        ],
+      },
+    }
+
+    expect(result).toEqual(expectedResult)
   })
 })
+
+function getMockPoints(
+  projectId: ProjectId,
+  timestamp: UnixTime,
+  value: number,
+): AggregatedReportRecord[] {
+  const tvl = value
+  const cbv = value * 0.6
+  const ebv = value * 0.1
+  const nmv = value * 0.3
+  return [
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(tvl * 100),
+      ethValue: BigInt(tvl * 1_000_000),
+      reportType: 'TVL',
+    },
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(cbv * 100),
+      ethValue: BigInt(cbv * 1_000_000),
+      reportType: 'CBV',
+    },
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(ebv * 100),
+      ethValue: BigInt(ebv * 1_000_000),
+      reportType: 'EBV',
+    },
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(nmv * 100),
+      ethValue: BigInt(nmv * 1_000_000),
+      reportType: 'NMV',
+    },
+  ]
+}

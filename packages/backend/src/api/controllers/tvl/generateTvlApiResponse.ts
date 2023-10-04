@@ -1,9 +1,10 @@
 import {
+  DetailedTvlApiCharts,
   ProjectId,
   TvlApiChart,
   TvlApiChartPoint,
   TvlApiCharts,
-  TvlApiProjectsResponse,
+  // TvlApiProjectsResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
@@ -43,19 +44,65 @@ export function generateTvlApiProjectsResponse(
   hourly: AggregatedReportRecord[],
   sixHourly: AggregatedReportRecord[],
   daily: AggregatedReportRecord[],
-  latestReports: ReportRecord[],
   projectIds: ProjectId[],
-): TvlApiProjectsResponse {
+): DetailedTvlApiCharts {
   const reports = { hourly, sixHourly, daily }
-  return projectIds.reduce<TvlApiResponse['projects']>((acc, projectId) => {
-    acc[projectId.toString()] = {
-      charts: getProjectCharts(reports, projectId),
-      tokens: latestReports
-        .filter((r) => r.projectId === projectId)
-        .map((r) => ({ assetId: r.asset, tvl: asNumber(r.usdValue, 2) })),
+
+  const _hourly: TvlApiChart = {
+    types: ['timestamp', 'usd', 'eth'],
+    data: [],
+  }
+  const _sixHourly: TvlApiChart = {
+    types: ['timestamp', 'usd', 'eth'],
+    data: [],
+  }
+  const _daily: TvlApiChart = {
+    types: ['timestamp', 'usd', 'eth'],
+    data: [],
+  }
+
+  const aggregateData = (
+    tmpData: TvlApiChartPoint[],
+    projectData: TvlApiChartPoint[],
+  ): TvlApiChartPoint[] => {
+    if (tmpData.length === 0) return projectData
+    for (let i = 0; i < tmpData.length; i++) {
+      // Skip first element which is timestamp, it should be the identical
+      tmpData[i][1] += projectData[i][1]
+      tmpData[i][2] += projectData[i][2]
     }
-    return acc
-  }, {})
+    return tmpData
+  }
+
+  for (const _projectId of projectIds) {
+    const _projectChart = getProjectCharts(reports, _projectId)
+
+    _hourly.data = aggregateData(_hourly.data, _projectChart.hourly.data)
+    _sixHourly.data = aggregateData(
+      _sixHourly.data,
+      _projectChart.sixHourly.data,
+    )
+    _daily.data = aggregateData(_daily.data, _projectChart.daily.data)
+    /*
+    _hourly{
+      data: [[timestamp(1), 1, 1], [timestamp(2), 2, 2]]
+    }
+    _projectChart.hourly{
+      data: [timestamp(1), 11, 11], [timestamp(2), 22, 22], [timestamp(3), 33, 33]]
+    }
+
+    ...
+    _hourly {
+      data: [[timestamp(1), 12, 12], [timestamp(2), 24, 24]]
+    }
+    */
+  }
+
+  return {
+    hourly: _hourly,
+    sixHourly: _sixHourly,
+    daily: _daily,
+  }
 }
 
 function getProjectCharts(

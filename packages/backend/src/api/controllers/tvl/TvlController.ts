@@ -39,7 +39,7 @@ type TvlResult =
 type TvlProjectResult =
   | {
       result: 'success'
-      data: TvlApiProjectsResponse
+      data: TvlApiCharts
     }
   | {
       result: 'error'
@@ -133,19 +133,17 @@ export class TvlController {
       }
     }
 
-    const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
-      await Promise.all([
-        this.aggregatedReportRepository.getHourly(
-          getHourlyMinTimestamp(dataTimings.latestTimestamp),
-          'TVL',
-        ),
-        this.aggregatedReportRepository.getSixHourly(
-          getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
-          'TVL',
-        ),
-        this.aggregatedReportRepository.getDaily('TVL'),
-        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
-      ])
+    const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
+      this.aggregatedReportRepository.getHourly(
+        getHourlyMinTimestamp(dataTimings.latestTimestamp),
+        'TVL',
+      ),
+      this.aggregatedReportRepository.getSixHourly(
+        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+        'TVL',
+      ),
+      this.aggregatedReportRepository.getDaily('TVL'),
+    ])
 
     const projectIdsFilterSet = new Set(projectIdsFilter)
 
@@ -153,10 +151,13 @@ export class TvlController {
       hourlyReports,
       sixHourlyReports,
       dailyReports,
-      latestReports,
       this.projects
         .map((project) => project.projectId)
-        .filter((projectId) => projectIdsFilterSet.has(projectId.toString())),
+        .filter(
+          (projectId) =>
+            projectIdsFilter.length === 0 ||
+            projectIdsFilterSet.has(projectId.toString()),
+        ),
     )
 
     return {
