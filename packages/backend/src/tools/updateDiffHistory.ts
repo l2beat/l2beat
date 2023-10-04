@@ -169,10 +169,12 @@ function generateDiffHistoryMarkdown(
   if (description) {
     result.push(description)
   } else {
-      result.push('## Description')
-      result.push('')
-      result.push('Provide description of changes. This section will be preserved.')
-      result.push('')
+    result.push('## Description')
+    result.push('')
+    result.push(
+      'Provide description of changes. This section will be preserved.',
+    )
+    result.push('')
   }
   result.push('## Watched changes')
   result.push(discoveryDiffToMarkdown(diffs))
