@@ -8,34 +8,39 @@ export function configureRichSelects() {
     .forEach(configureRichSelect)
 }
 
-function configureRichSelect(element: HTMLElement) {
-  const { $, $$ } = makeQuery(element)
+function configureRichSelect(richSelect: HTMLElement) {
+  const { $, $$ } = makeQuery(richSelect)
+  const dropdown = $('.RichSelect-Dropdown')
   const items = $$('.RichSelect-Item')
   const selectedText = $('.RichSelect-SelectedText')
   const toggle = $('.RichSelect-Toggle')
 
   function setState(state: State) {
-    element.dataset.state = state ?? ''
+    richSelect.dataset.state = state ?? ''
   }
 
   function setValue(value: string | undefined) {
-    element.dataset.value = value ?? ''
+    richSelect.dataset.value = value ?? ''
   }
 
   toggle.addEventListener('click', () => onToggleClick())
   items.forEach((item) => onItemClick(item))
   document.addEventListener('click', (e) => onOutsideClick(e))
 
+  if (richSelect.dataset.centered) {
+    centerSelect()
+  }
+
   function onToggleClick() {
-    if (element.dataset.state === 'opened') {
+    if (richSelect.dataset.state === 'opened') {
       setState(null)
       return
     }
 
-    if (element.dataset.state === 'selected') {
+    if (richSelect.dataset.state === 'selected') {
       setState(null)
       setValue(undefined)
-      element.dispatchEvent(new Event('change'))
+      richSelect.dispatchEvent(new Event('change'))
       return
     }
 
@@ -52,16 +57,25 @@ function configureRichSelect(element: HTMLElement) {
       setState('selected')
       selectedText.innerText = selectedLabel
       setValue(value)
-      element.dispatchEvent(new Event('change'))
+      richSelect.dispatchEvent(new Event('change'))
     })
   }
 
   function onOutsideClick(e: MouseEvent) {
-    if (!element.contains(e.target as Node)) {
-      if (element.dataset.state === 'opened') {
+    if (!richSelect.contains(e.target as Node)) {
+      if (richSelect.dataset.state === 'opened') {
         setState(null)
       }
     }
+  }
+
+  function centerSelect() {
+    const dropdownRect = dropdown.getBoundingClientRect()
+    const togglerRect = toggle.getBoundingClientRect()
+
+    const left = dropdownRect.width / 2 - togglerRect.width / 2
+
+    dropdown.style.left = `-${left}px`
   }
 }
 

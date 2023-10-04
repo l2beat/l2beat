@@ -8,6 +8,8 @@ interface Props {
   label: string
   children: React.ReactNode
   className?: string
+  listClassName?: string
+  centered?: boolean
   id: string
 }
 
@@ -16,6 +18,7 @@ export function RichSelect(props: Props) {
     <div
       className={classNames('RichSelect group relative', props.className)}
       id={props.id}
+      data-centered={props.centered}
     >
       <div className="RichSelect-Toggle cursor-pointer select-none rounded-lg bg-gray-200 p-1 text-base font-semibold dark:bg-gray-750">
         <div className="inline-flex items-center gap-1.5 px-2 group-data-[state=selected]:hidden">
@@ -27,9 +30,14 @@ export function RichSelect(props: Props) {
           <CloseIcon className="h-3 w-3 fill-gray-550 dark:fill-gray-50" />
         </div>
       </div>
-      <div className="pointer-events-none absolute z-60 hidden group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:block">
+      <div className="RichSelect-Dropdown pointer-events-none invisible absolute z-60 hidden group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:visible md:block">
         <hr className="h-2 border-t-0" />
-        <div className="w-max select-none rounded-lg bg-gray-200 px-3 py-2 text-base font-semibold dark:bg-gray-750">
+        <div
+          className={classNames(
+            'w-max select-none rounded-lg bg-gray-200 px-3 py-2 text-base font-semibold dark:bg-gray-750',
+            props.listClassName,
+          )}
+        >
           {props.children}
         </div>
       </div>
