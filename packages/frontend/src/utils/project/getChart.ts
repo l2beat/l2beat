@@ -30,7 +30,10 @@ export function getChart(
       tvlApiResponse,
       config?.features.detailedTvl ?? false,
     ),
-    tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
+    tvlBreakdownHref:
+      project.type === 'layer2'
+        ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
+        : undefined,
     hasActivity:
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
