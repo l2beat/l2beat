@@ -9,7 +9,7 @@ import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
-import { readFileSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 
 // This is a CLI tool. Run logic immediately.
@@ -46,13 +46,14 @@ async function updateDiffHistoryFile() {
 
   if (diff.length > 0) {
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
-    const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
     const { content: historyFileFromMainBranch } =
       getFileVersionOnMainBranch(diffHistoryPath)
-    const description = findDescription(
-      diskDiffHistory,
-      historyFileFromMainBranch,
-    )
+
+    let description = undefined
+    if (existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()) {
+      const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
+      description = findDescription(diskDiffHistory, historyFileFromMainBranch)
+    }
 
     const newHistoryEntry = generateDiffHistoryMarkdown(
       diff,
