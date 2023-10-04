@@ -40,7 +40,7 @@ export function generateTvlApiResponse(
   }
 }
 
-export function generateTvlApiProjectsResponse(
+export function generateAggregatedApiResponse(
   hourly: AggregatedReportRecord[],
   sixHourly: AggregatedReportRecord[],
   daily: AggregatedReportRecord[],

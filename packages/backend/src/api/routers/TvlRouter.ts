@@ -25,7 +25,7 @@ export function createTvlRouter(
     // get projectIds from query params
     const projectIds = ctx.query.projectIds as string[]
     // get tvl data for each project
-    const tvlProjectsResponse = await tvlController.getTvlApiProjectsResponse(
+    const tvlProjectsResponse = await tvlController.getAggregatedApiResponse(
       projectIds,
     )
 

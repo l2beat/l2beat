@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   AssetId,
+  DetailedTvlApiCharts,
   Hash256,
   ProjectId,
   Token,
   TvlApiChart,
   TvlApiCharts,
-  TvlApiProjectsResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
@@ -18,7 +18,7 @@ import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
 import {
-  generateTvlApiProjectsResponse,
+  generateAggregatedApiResponse,
   generateTvlApiResponse,
 } from './generateTvlApiResponse'
 
@@ -39,7 +39,7 @@ type TvlResult =
 type TvlProjectResult =
   | {
       result: 'success'
-      data: TvlApiCharts
+      data: DetailedTvlApiCharts
     }
   | {
       result: 'error'
@@ -114,7 +114,7 @@ export class TvlController {
     }
   }
 
-  async getTvlApiProjectsResponse(
+  async getAggregatedApiResponse(
     projectIdsFilter: string[],
   ): Promise<TvlProjectResult> {
     const dataTimings = await this.getDataTimings()
@@ -147,7 +147,7 @@ export class TvlController {
 
     const projectIdsFilterSet = new Set(projectIdsFilter)
 
-    const tvlApiProjectResponse = generateTvlApiProjectsResponse(
+    const tvlApiProjectResponse = generateAggregatedApiResponse(
       hourlyReports,
       sixHourlyReports,
       dailyReports,
