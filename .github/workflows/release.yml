@@ -25,4 +25,8 @@ jobs:
 
       - run: yarn --frozen-lockfile
       - run: yarn build
+      - run: |
+          cat << EOF > "$HOME/.npmrc"
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
       - run: yarn changeset publish
