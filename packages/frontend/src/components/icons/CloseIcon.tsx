@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React, { SVGAttributes } from 'react'
 
 import { Icon } from './Icon'
@@ -11,8 +10,8 @@ export function CloseIcon(props: SVGAttributes<SVGElement>) {
       height="16"
       viewBox="0 0 16 16"
       aria-label="Dropdown arrow icon"
-      fill="none"
-      className={classNames('my-auto', className)}
+      fill="black"
+      className={className}
       {...rest}
     >
       <path

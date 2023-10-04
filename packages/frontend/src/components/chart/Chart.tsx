@@ -11,9 +11,8 @@ import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
 import { TokenControl } from './CommonTokenControls'
 import { CurrencyControls } from './CurrencyControls'
-import { DesktopTokenControls } from './DesktopTokenControls'
+import { TokenControls } from './DesktopTokenControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
-import { MobileTokenControls } from './MobileTokenControls'
 import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
@@ -101,7 +100,7 @@ export function Chart(props: ChartProps) {
               className="absolute bottom-0 w-[100%]"
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex justify-between">
             {(props.hasActivity || isActivity) && (
               <EthereumActivityToggle
                 showToggle={isActivity}
@@ -109,22 +108,18 @@ export function Chart(props: ChartProps) {
               />
             )}
             {!isActivity && (
-              <div className="flex h-[2rem] items-end" data-tvl-only>
+              <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
                 <CurrencyControls />
-                <DesktopTokenControls
+                <TokenControls
                   tvlBreakdownHref={tvlBreakdownHref}
                   tokens={props.tokens}
                 />
               </div>
             )}
-            <ScaleControls />
+            <div className="w-min">
+              <ScaleControls />
+            </div>
           </div>
-          {!isActivity && (
-            <MobileTokenControls
-              tokens={props.tokens}
-              tvlBreakdownHref={tvlBreakdownHref}
-            />
-          )}
         </div>
       </section>
       <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
