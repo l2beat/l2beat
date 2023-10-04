@@ -3,7 +3,7 @@ import React from 'react'
 
 import { TokenInfo } from '../../scripts/charts/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ArrowRightIcon } from '../icons'
+import { Link } from '../Link'
 import { RichSelect } from '../RichSelect'
 
 export interface DesktopTokenControlsProps {
@@ -40,13 +40,9 @@ export function TokenControls({
         <MobileTokenList tokens={tokens} />
         <DesktopTokenList tokens={tokens} />
         <div className="mt-6 flex items-center justify-center gap-1">
-          <a
-            href={tvlBreakdownHref}
-            className="flex flex-wrap items-center gap-1 text-sm font-bold text-blue-700 underline dark:text-blue-500"
-          >
+          <Link href={tvlBreakdownHref} className="text-sm" showArrow>
             View TVL Breakdown
-            <ArrowRightIcon className="fill-current" />
-          </a>
+          </Link>
         </div>
       </RichSelect>
     </div>
