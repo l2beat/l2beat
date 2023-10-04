@@ -1,5 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
 import { StarkexTransactionApi } from '@l2beat/config'
-import { Logger } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
