@@ -1,6 +1,6 @@
 import { Milestone } from '@l2beat/config'
 
-import { clearRichSelect, getRichSelectValue } from '../configureRichSelect'
+import { getRichSelectValue } from '../configureRichSelect'
 import { makeQuery } from '../query'
 import { setQueryParams } from '../utils/setQueryParams'
 import { ChartDataController } from './ChartDataController'
@@ -77,12 +77,7 @@ export class ChartControls {
       currencyControl.checked =
         settings.getUseAltCurrency() === (currencyControl.value === 'ETH')
       currencyControl.addEventListener('change', () => {
-        if (
-          this.chartType?.type === 'project-token-tvl' &&
-          this.projectSlug &&
-          tokenSelect
-        ) {
-          clearRichSelect(tokenSelect)
+        if (this.chartType?.type === 'project-token-tvl' && this.projectSlug) {
           this.updateChartType({
             type: this.isDetailedTvl ? 'project-detailed-tvl' : 'project-tvl',
             slug: this.projectSlug,
@@ -132,19 +127,26 @@ export class ChartControls {
           | 'tvl'
           | 'detailedTvl'
           | 'activity'
-        const slug =
-          this.chartType && 'slug' in this.chartType && this.chartType.slug
-        if (slug) {
-          this.updateChartType(
-            type === 'tvl'
-              ? { type: 'project-tvl', slug }
+
+        if (this.projectSlug) {
+          const selectValue = tokenSelect && getRichSelectValue(tokenSelect)
+          const chartType: ChartType =
+            (type === 'tvl' || type === 'detailedTvl') && selectValue
+              ? {
+                  type: 'project-token-tvl',
+                  info: TokenInfo.parse(JSON.parse(selectValue)),
+                }
+              : type === 'tvl'
+              ? { type: 'project-tvl', slug: this.projectSlug }
               : type === 'detailedTvl'
-              ? { type: 'project-detailed-tvl', slug }
-              : { type: 'project-activity', slug },
-          )
-          this.urlParams.set('selectedChart', type)
-          setQueryParams(this.urlParams)
+              ? { type: 'project-detailed-tvl', slug: this.projectSlug }
+              : { type: 'project-activity', slug: this.projectSlug }
+
+          this.updateChartType(chartType)
         }
+
+        this.urlParams.set('selectedChart', type)
+        setQueryParams(this.urlParams)
 
         $$('[data-tvl-only]').forEach((element) =>
           element.classList.toggle('hidden', type === 'activity'),
