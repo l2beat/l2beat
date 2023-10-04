@@ -16,6 +16,7 @@ export function ChartHover() {
           'bg-gray-100 shadow-[0_4px_8px_rgba(0,0,0,0.25)] dark:bg-gray-750',
           'pointer-events-none select-none',
           'flex flex-col items-start justify-center',
+          'transition-[bottom] duration-[50ms] ease-linear',
         )}
       />
     </div>
