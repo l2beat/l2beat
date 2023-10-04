@@ -177,6 +177,7 @@ function generateDiffHistoryMarkdown(
     result.push('')
   }
   result.push('## Watched changes')
+  result.push('')
   result.push(discoveryDiffToMarkdown(diffs))
   result.push('')
 
