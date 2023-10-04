@@ -160,7 +160,7 @@ function generateDiffHistoryMarkdown(
   const mainBranch = getMainBranchName()
 
   const now = new Date().toUTCString()
-  result.push(`## Diff at ${now}:`)
+  result.push(`# Diff at ${now}:`)
   result.push('')
   const { name, email } = getGitUser()
   result.push(`- author: ${name} (<${email}>)`)
@@ -174,6 +174,7 @@ function generateDiffHistoryMarkdown(
       result.push('Provide description of changes. This section will be preserved.')
       result.push('')
   }
+  result.push('## Watched changes')
   result.push(discoveryDiffToMarkdown(diffs))
   result.push('')
 
@@ -203,7 +204,7 @@ function findDescription(
     return undefined
   }
 
-  const lastIndex = lines.findIndex((l) => l.startsWith('```diff'))
+  const lastIndex = lines.findIndex((l) => l.startsWith('## Watched changes'))
   if (lastIndex < 0) {
     return lines.slice(index).join('\n')
   }
