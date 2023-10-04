@@ -16,6 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/backend-tools": "^0.4.0",
     "@l2beat/shared-pure": "*",
     "@types/node-fetch": "^2.6.2",
     "chalk": "^4.1.2",

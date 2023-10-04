@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 

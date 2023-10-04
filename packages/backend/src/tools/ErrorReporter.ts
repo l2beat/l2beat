@@ -1,9 +1,8 @@
-import { Logger } from '@l2beat/shared'
+import { getEnv, Logger, ReportedError } from '@l2beat/backend-tools'
 import * as Sentry from '@sentry/node'
 import { Context } from 'koa'
 
-const sentryDsn = process.env.SENTRY_DSN
-
+const sentryDsn = getEnv().optionalString('SENTRY_DSN')
 if (sentryDsn) {
   Sentry.init({
     dsn: sentryDsn,
@@ -16,12 +15,25 @@ if (sentryDsn) {
   console.log('Sentry integration enabled')
 }
 
-export function reportError(...args: unknown[]): void {
-  // note: we can't be sure that first arg is an error
-  if (args[0] instanceof Error) {
-    Sentry.captureException(args[0], { extra: { context: args.slice(1) } })
+export function reportError({
+  error,
+  message,
+  parameters,
+}: ReportedError): void {
+  if (error) {
+    Sentry.captureException(error, {
+      extra: { message, parameters },
+    })
+  } else if (message) {
+    Sentry.captureMessage(message, {
+      level: 'error',
+      extra: { parameters },
+    })
   } else {
-    Sentry.captureException(new Error('unknown'), { extra: { context: args } })
+    Sentry.captureMessage('Unknown error', {
+      level: 'error',
+      extra: { parameters },
+    })
   }
 }
 
@@ -37,6 +49,6 @@ export async function flushErrors(): Promise<void> {
 export function handleServerError(logger: Logger, error: Error, ctx: Context) {
   Sentry.withScope((scope) => {
     scope.setSDKProcessingMetadata({ request: ctx.request })
-    logger.error({ path: ctx.path }, error) // logging error eventually calls reportError
+    logger.error({ path: ctx.path, error }) // logging error eventually calls reportError
   })
 }

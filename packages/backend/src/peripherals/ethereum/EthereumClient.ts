@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
