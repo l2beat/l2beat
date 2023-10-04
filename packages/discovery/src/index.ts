@@ -15,6 +15,7 @@ export {
 export { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
 export { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 export type { DiscoveryCache } from './discovery/provider/ProviderWithCache'
+export { ProviderWithCache } from './discovery/provider/ProviderWithCache'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
