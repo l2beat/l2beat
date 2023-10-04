@@ -11,7 +11,7 @@ import {
 
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
-import { TokenControl } from '../../components/chart/CommonTokenControls'
+import { TokenControl } from '../../components/chart/TokenControls'
 import { TokenInfo } from '../../scripts/charts/types'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 

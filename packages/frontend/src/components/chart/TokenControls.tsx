@@ -1,14 +1,19 @@
 import classNames from 'classnames'
 import React from 'react'
 
+import { TokenInfo } from '../../scripts/charts/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ArrowRightIcon } from '../icons'
 import { RichSelect } from '../RichSelect'
-import { getParts, TokenControl } from './CommonTokenControls'
 
 export interface DesktopTokenControlsProps {
   tokens?: TokenControl[]
   tvlBreakdownHref: string
+}
+export interface TokenControl {
+  iconUrl: string
+  name: string
+  info: TokenInfo
 }
 
 export function TokenControls({
@@ -119,4 +124,37 @@ function MobileTokenList({ tokens }: { tokens: TokenControl[] }) {
       )}
     </div>
   )
+}
+
+export function getParts(tokens: TokenControl[]) {
+  return [
+    {
+      title: 'Natively Minted Tokens',
+      titleColor: 'text-[#FF6DCD]',
+      tokens: tokens
+        .filter((t) => t.info.type.toString() === 'NMV')
+        .slice(0, 15),
+    },
+    {
+      title: 'Externally Bridged Tokens',
+      titleColor: 'text-yellow-200',
+      tokens: tokens
+        .filter((t) => t.info.type.toString() === 'EBV')
+        .slice(0, 15),
+    },
+    {
+      title: 'Canonically Bridged Tokens (Top 15)',
+      titleColor: 'text-[#D98EFF]',
+      tokens: tokens
+        .filter((t) => t.info.type.toString() === 'CBV')
+        .slice(0, 15),
+    },
+    {
+      title: 'Bridged Tokens (Top 15)',
+      titleColor: 'text-[#D98EFF]',
+      tokens: tokens
+        .filter((t) => t.info.type.toString() === 'regular')
+        .slice(0, 15),
+    },
+  ]
 }

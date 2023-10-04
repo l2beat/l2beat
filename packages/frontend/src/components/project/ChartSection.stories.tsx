@@ -2,7 +2,7 @@ import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
 import { configureCharts } from '../../scripts/charts'
-import { TokenControl } from '../chart/CommonTokenControls'
+import { TokenControl } from '../chart/TokenControls'
 import { PageContent } from '../PageContent'
 import { ChartSection as ChartSectionComponent } from './ChartSection'
 

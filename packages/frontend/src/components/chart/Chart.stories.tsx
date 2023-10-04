@@ -1,10 +1,10 @@
 import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
+import { configureCharts } from '../../scripts/charts'
 import { PageContent } from '../PageContent'
 import { Chart as ChartComponent } from './Chart'
-import { TokenControl } from './CommonTokenControls'
-import { configureCharts } from '../../scripts/charts'
+import { TokenControl } from './TokenControls'
 
 export default {
   title: 'Components/Chart',

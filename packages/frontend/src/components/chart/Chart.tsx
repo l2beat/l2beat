@@ -9,14 +9,13 @@ import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
-import { TokenControl } from './CommonTokenControls'
 import { CurrencyControls } from './CurrencyControls'
-import { TokenControls } from './DesktopTokenControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
 import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
+import { TokenControl, TokenControls } from './TokenControls'
 
 export interface ChartProps {
   title?: string

@@ -2,7 +2,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { isZeroUSD } from '../../utils/utils'
-import { TokenControl } from '../chart/CommonTokenControls'
+import { TokenControl } from '../chart/TokenControls'
 import { NumberCell } from './NumberCell'
 
 export interface ValueWithPercentageCellProps {
