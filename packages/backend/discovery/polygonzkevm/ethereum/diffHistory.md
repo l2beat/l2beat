@@ -1,7 +1,9 @@
-## Diff at Mon, 02 Oct 2023 13:55:19 GMT:
+# Diff at Mon, 02 Oct 2023 13:55:19 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+
+## Watched changes
 
 ```diff
     contract PolygonZkEvm (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
@@ -11,10 +13,12 @@
     }
 ```
 
-## Diff at Tue, 26 Sep 2023 13:22:27 GMT:
+# Diff at Tue, 26 Sep 2023 13:22:27 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+## Watched changes
 
 ```diff
     contract FflonkVerifier (0x21f65deadb3b85082BA99766f323bEA90eb5a3D6) {
@@ -23,6 +27,8 @@
     }
 ```
 
+## Watched changes
+
 ```diff
     contract PolygonZkEvm (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
       values.nondeterminsiticPendingState:
@@ -30,16 +36,20 @@
     }
 ```
 
-## Diff at Fri, 22 Sep 2023 11:25:03 GMT:
+# Diff at Fri, 22 Sep 2023 11:25:03 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@1312187d41931ca505cc65eca063068109ff1771
+
+## Watched changes
 
 ```diff
 -   Status: DELETED
     contract FflonkVerifier (0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9) {
     }
 ```
+
+## Watched changes
 
 ```diff
     contract PolygonZkEvm (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
@@ -63,6 +73,8 @@
 +        "PolygonZkEVMUpgraded"
     }
 ```
+
+## Watched changes
 
 ```diff
 +   Status: CREATED
