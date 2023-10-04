@@ -9,6 +9,6 @@ export const config: Config = {
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     getEnv().string(
       'CONFIG_ALCHEMY_API_KEY',
-      'mlGD422scpwVOpn3lye_swHEebbKQy0D',
+      'RHadMy3sqeQwwTFRakv1Ln8xelYFct0t',
     ),
 }
