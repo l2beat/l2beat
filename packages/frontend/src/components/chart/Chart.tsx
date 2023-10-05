@@ -46,7 +46,7 @@ export function Chart({
   activityEndpoint,
   tokens,
   type = 'tvl',
-  tvlBreakdownHref = '/',
+  tvlBreakdownHref,
   hasActivity,
   hasTvl = true,
   hasDetailedTvl,

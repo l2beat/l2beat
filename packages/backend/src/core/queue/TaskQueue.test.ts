@@ -1,4 +1,5 @@
-import { EventTracker, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { EventTracker } from '@l2beat/shared'
 import { Retries } from '@l2beat/shared-pure'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'

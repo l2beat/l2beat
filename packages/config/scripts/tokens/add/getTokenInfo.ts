@@ -8,13 +8,12 @@ import {
 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
-import { getEnv } from '../../checkVerifiedContracts/utils'
-
 export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
   coingeckoClient: CoingeckoClient,
   address: EthereumAddress,
   category: 'ether' | 'stablecoin' | 'other',
+  etherscanApiKey: string,
 ): Promise<Token> {
   const coingeckoId = await getCoingeckoId(coingeckoClient, address)
 
@@ -23,7 +22,7 @@ export async function getTokenInfo(
     getSymbol(provider, address),
     getDecimals(provider, address),
     coingeckoClient.getImageUrl(coingeckoId),
-    getSinceTimestamp(provider, address),
+    getSinceTimestamp(provider, address, etherscanApiKey),
   ])
 
   const tokenInfo: Token = {
@@ -124,11 +123,12 @@ async function getCoingeckoId(
 async function getSinceTimestamp(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
+  etherscanApiKey: string,
 ) {
   const http = new HttpClient()
   const response = await http.fetch(
     `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=
-      ${address.toString()}&apikey=${getEnv('ETHERSCAN_API_KEY')}`,
+      ${address.toString()}&apikey=${etherscanApiKey}`,
   )
   const data = (await response.json()) as unknown as {
     result: { txHash: string }[]

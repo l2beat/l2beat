@@ -1,5 +1,6 @@
+import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
+import { EtherscanClient } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -7,33 +8,40 @@ import { getChainMinTimestamp } from './chains'
 import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
 
-export function getProductionConfig(): Config {
-  const arbitrumTvlEnabled = getEnv.boolean('TVL_ARBITRUM_ENABLED', false)
-  const optimismTvlEnabled = getEnv.boolean('TVL_OPTIMISM_ENABLED', false)
-  const baseTvlEnabled = getEnv.boolean('TVL_BASE_ENABLED', false)
-  const errorOnUnsyncedDetailedTvl = getEnv.boolean(
+export function getProductionConfig(env: Env): Config {
+  const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
+  const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
+  const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
+  const errorOnUnsyncedDetailedTvl = env.boolean(
     'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
   )
+  const activityProjectsExcludedFromApi = env.optionalString(
+    'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
+  )
 
-  const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
+  const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
+  const discordToken = env.optionalString('DISCORD_TOKEN')
+  const publicDiscordChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
+  const internalDiscordChannelId = env.optionalString(
+    'INTERNAL_DISCORD_CHANNEL_ID',
+  )
   const discordEnabled =
-    !!process.env.DISCORD_TOKEN &&
-    !!process.env.PUBLIC_DISCORD_CHANNEL_ID &&
-    !!process.env.INTERNAL_DISCORD_CHANNEL_ID
+    !!discordToken && !!publicDiscordChannelId && !!internalDiscordChannelId
 
   return {
     name: 'Backend/Production',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
-      logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
+      logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       format: 'json',
+      utc: true,
     },
     logThrottler: {
-      threshold: 4,
-      thresholdTimeInMs: 5000,
-      throttleTimeInMs: 20000,
+      callsUntilThrottle: 4,
+      clearIntervalMs: 5000,
+      throttleTimeMs: 20000,
     },
     clock: {
       minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
@@ -42,7 +50,7 @@ export function getProductionConfig(): Config {
     database: {
       freshStart: false,
       connection: {
-        connectionString: getEnv('DATABASE_URL'),
+        connectionString: env.string('DATABASE_URL'),
         ssl: { rejectUnauthorized: false },
       },
       connectionPoolSize: {
@@ -52,124 +60,123 @@ export function getProductionConfig(): Config {
       },
     },
     api: {
-      port: getEnv.integer('PORT'),
+      port: env.integer('PORT'),
     },
     health: {
-      releasedAt: getEnv('HEROKU_RELEASE_CREATED_AT', ''),
+      releasedAt: env.string('HEROKU_RELEASE_CREATED_AT', ''),
       startedAt: new Date().toISOString(),
-      commitSha: getEnv('HEROKU_SLUG_COMMIT', getGitCommitHash()),
+      commitSha: env.string('HEROKU_SLUG_COMMIT', getGitCommitHash()),
     },
     metricsAuth: {
-      user: getEnv('METRICS_AUTH_USER'),
-      pass: getEnv('METRICS_AUTH_PASS'),
+      user: env.string('METRICS_AUTH_USER'),
+      pass: env.string('METRICS_AUTH_PASS'),
     },
     tvl: {
       errorOnUnsyncedDetailedTvl,
       enabled: true,
-      coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
+      coingeckoApiKey: env.string('COINGECKO_API_KEY'),
       ethereum: {
-        providerUrl: getEnv('TVL_ETHEREUM_PROVIDER_URL'),
-        providerCallsPerMinute: getEnv.integer(
+        providerUrl: env.string('TVL_ETHEREUM_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
           'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           500,
         ),
         // TODO: phase out old env variable
         etherscanApiKey:
-          process.env.ETHEREUM_ETHERSCAN_API_KEY ??
-          getEnv('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
+          env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
+          env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.etherscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
       },
       arbitrum: arbitrumTvlEnabled && {
-        providerUrl: getEnv('TVL_ARBITRUM_PROVIDER_URL'),
-        providerCallsPerMinute: getEnv.integer(
+        providerUrl: env.string('TVL_ARBITRUM_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
           'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
           500,
         ),
-        etherscanApiKey: getEnv('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
+        etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.arbiscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.ARBITRUM),
       },
       optimism: optimismTvlEnabled && {
-        providerUrl: getEnv('TVL_OPTIMISM_PROVIDER_URL'),
-        providerCallsPerMinute: getEnv.integer(
+        providerUrl: env.string('TVL_OPTIMISM_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
           'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
           500,
         ),
-        etherscanApiKey: getEnv('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
+        etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.OPTIMISM),
       },
       base: baseTvlEnabled && {
-        providerUrl: getEnv('TVL_BASE_PROVIDER_URL'),
-        providerCallsPerMinute: getEnv.integer(
+        providerUrl: env.string('TVL_BASE_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
           'TVL_BASE_RPC_CALLS_PER_MINUTE',
           500,
         ),
-        etherscanApiKey: getEnv('TVL_BASE_ETHERSCAN_API_KEY'),
+        etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
       },
     },
     activity: {
-      starkexApiKey: getEnv('STARKEX_API_KEY'),
-      starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
+      starkexApiKey: env.string('STARKEX_API_KEY'),
+      starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
       skipExplicitExclusion: false,
-      projectsExcludedFromAPI: getEnv.array(
-        'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
-        [],
-      ),
+      projectsExcludedFromAPI: activityProjectsExcludedFromApi
+        ? activityProjectsExcludedFromApi.split(' ')
+        : [],
       projects: {
         ethereum: {
           type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_ETHEREUM_CALLS'),
-          url: getEnv('ACTIVITY_ETHEREUM_URL'),
+          callsPerMinute: env.integer('ACTIVITY_ETHEREUM_CALLS'),
+          url: env.string('ACTIVITY_ETHEREUM_URL'),
         },
         optimism: {
           type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_OPTIMISM_CALLS'),
-          url: getEnv('ACTIVITY_OPTIMISM_URL'),
+          callsPerMinute: env.integer('ACTIVITY_OPTIMISM_CALLS'),
+          url: env.string('ACTIVITY_OPTIMISM_URL'),
         },
         arbitrum: {
           type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
-          url: getEnv('ACTIVITY_ARBITRUM_URL'),
+          callsPerMinute: env.integer('ACTIVITY_ARBITRUM_CALLS'),
+          url: env.string('ACTIVITY_ARBITRUM_URL'),
         },
         nova: {
           type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_NOVA_CALLS'),
-          url: getEnv('ACTIVITY_NOVA_URL'),
+          callsPerMinute: env.integer('ACTIVITY_NOVA_CALLS'),
+          url: env.string('ACTIVITY_NOVA_URL'),
         },
         linea: {
           type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_LINEA_CALLS'),
-          url: getEnv('ACTIVITY_LINEA_URL'),
+          callsPerMinute: env.integer('ACTIVITY_LINEA_CALLS'),
+          url: env.string('ACTIVITY_LINEA_URL'),
         },
         polygonzkevm: {
           type: 'rpc',
-          callsPerMinute: getEnv.integer('ACTIVITY_POLYGONZKEVM_CALLS'),
-          url: getEnv('ACTIVITY_POLYGONZKEVM_URL'),
+          callsPerMinute: env.integer('ACTIVITY_POLYGONZKEVM_CALLS'),
+          url: env.string('ACTIVITY_POLYGONZKEVM_URL'),
         },
         starknet: {
           type: 'starknet',
-          callsPerMinute: getEnv.integer('ACTIVITY_STARKNET_CALLS'),
-          url: getEnv('ACTIVITY_STARKNET_URL'),
+          callsPerMinute: env.integer('ACTIVITY_STARKNET_CALLS'),
+          url: env.string('ACTIVITY_STARKNET_URL'),
         },
       },
     },
-    statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
+    statusEnabled: env.boolean('STATUS_ENABLED', true),
     updateMonitor: updateMonitorEnabled && {
       discord: discordEnabled && {
-        token: getEnv('DISCORD_TOKEN'),
-        publicChannelId: getEnv('PUBLIC_DISCORD_CHANNEL_ID'),
-        internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
+        token: discordToken,
+        publicChannelId: publicDiscordChannelId,
+        internalChannelId: internalDiscordChannelId,
         callsPerMinute: 3000,
       },
       chains: [
         {
           chainId: ChainId.ETHEREUM,
-          rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
-          etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
+          rpcUrl: env.string('DISCOVERY_ETHEREUM_RPC_URL'),
+          etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
           minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
         },

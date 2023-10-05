@@ -1,7 +1,9 @@
-## Diff at Tue, 26 Sep 2023 07:54:37 GMT:
+# Diff at Tue, 26 Sep 2023 07:54:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+## Watched changes
 
 ```diff
     contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
@@ -10,6 +12,8 @@
     }
 ```
 
+## Watched changes
+
 ```diff
     contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58) {
       derivedName:
@@ -17,10 +21,12 @@
     }
 ```
 
-## Diff at Fri, 22 Sep 2023 09:02:08 GMT:
+# Diff at Fri, 22 Sep 2023 09:02:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@3a33c063dab8666dc32b4ec15a81995020325b49
+
+## Watched changes
 
 ```diff
     contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
@@ -29,10 +35,12 @@
     }
 ```
 
-## Diff at Thu, 21 Sep 2023 14:53:24 GMT:
+# Diff at Thu, 21 Sep 2023 14:53:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@7579713bbe334d225f845fec749fd69636fe060a
+
+## Watched changes
 
 ```diff
     contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
