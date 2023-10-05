@@ -14,7 +14,7 @@ export function FiltersWrapper<T extends ScalingEntry>({
   return (
     <div
       id="project-filters"
-      className="flex gap-4"
+      className="flex flex-wrap gap-4"
       data-all-slugs={generateSlugList(items)}
     >
       {children}
