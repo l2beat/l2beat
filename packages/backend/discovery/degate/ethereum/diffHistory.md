@@ -13,8 +13,6 @@
     }
 ```
 
-## Watched changes
-
 ```diff
     contract ExchangeV3 (0xe63602a9B3DFE983187525AC985Fec4F57B24eD5) {
       values.isShutdown:
