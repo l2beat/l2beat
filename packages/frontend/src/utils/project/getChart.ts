@@ -28,7 +28,10 @@ export function getChart(
         ? { type: 'project-detailed-tvl', slug: project.display.slug }
         : { type: 'project-tvl', slug: project.display.slug },
     tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
-    tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
+    tvlBreakdownHref:
+      project.type === 'layer2'
+        ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
+        : undefined,
     hasActivity:
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],

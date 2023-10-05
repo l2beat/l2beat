@@ -1,4 +1,5 @@
-import { BlockNumberProvider, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { BlockNumberProvider } from '@l2beat/shared'
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 

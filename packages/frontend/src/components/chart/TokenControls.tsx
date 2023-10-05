@@ -8,7 +8,7 @@ import { RichSelect } from '../RichSelect'
 
 export interface DesktopTokenControlsProps {
   tokens?: TokenControl[]
-  tvlBreakdownHref: string
+  tvlBreakdownHref: string | undefined
 }
 export interface TokenControl {
   iconUrl: string
@@ -39,11 +39,13 @@ export function TokenControls({
       >
         <MobileTokenList tokens={tokens} />
         <DesktopTokenList tokens={tokens} />
-        <div className="mt-6 flex items-center justify-center gap-1">
-          <Link href={tvlBreakdownHref} className="text-sm" showArrow>
-            View TVL Breakdown
-          </Link>
-        </div>
+        {tvlBreakdownHref && (
+          <div className="mt-6 flex items-center justify-center gap-1">
+            <Link href={tvlBreakdownHref} className="text-sm" showArrow>
+              View TVL Breakdown
+            </Link>
+          </div>
+        )}
       </RichSelect>
     </div>
   )

@@ -43,7 +43,7 @@ export function Chart(props: ChartProps) {
 
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
-  const tvlBreakdownHref = props.tvlBreakdownHref ?? '/'
+
 
   return (
     <>
@@ -110,7 +110,7 @@ export function Chart(props: ChartProps) {
               <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
                 <CurrencyControls />
                 <TokenControls
-                  tvlBreakdownHref={tvlBreakdownHref}
+                  tvlBreakdownHref={props.tvlBreakdownHref}
                   tokens={props.tokens}
                 />
               </div>

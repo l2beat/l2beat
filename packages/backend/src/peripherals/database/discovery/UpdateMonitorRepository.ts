@@ -1,5 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { Logger } from '@l2beat/shared'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { UpdateMonitorRow } from 'knex/types/tables'
 

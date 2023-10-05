@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'

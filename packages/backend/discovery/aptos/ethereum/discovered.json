@@ -1,8 +1,8 @@
 {
   "name": "aptos",
   "chain": "ethereum",
-  "blockNumber": 18162849,
-  "configHash": "0x958973499ce64958db371146958f80fd0cfab57839c701cb633e6272a9483162",
+  "blockNumber": 18263120,
+  "configHash": "0x104180f3dced624bb12aa1397e7b7822d5cf318496198ea7eaa0e107ed95cd08",
   "version": 2,
   "contracts": [
     {
@@ -59,7 +59,7 @@
         "emergencyWithdrawTime": 0,
         "globalPaused": false,
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-        "owner": "0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05",
+        "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "precrime": "0x0000000000000000000000000000000000000000",
         "SHARED_DECIMALS": 6,
         "useCustomAdapterParams": true,
@@ -76,6 +76,31 @@
       "values": {
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       }
+    },
+    {
+      "name": "Aptos Multisig",
+      "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "sinceTimestamp": 1647498793,
+      "values": {
+        "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
+        "getChainId": 1,
+        "getOwners": [
+          "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
+          "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+          "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1",
+          "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
+          "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4",
+          "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
+        ],
+        "getThreshold": 3,
+        "nonce": 608,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Endpoint",
@@ -100,29 +125,6 @@
       }
     },
     {
-      "name": "Aptos Multisig",
-      "address": "0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "sinceTimestamp": 1666154051,
-      "values": {
-        "domainSeparator": "0x7588aafbe9e42e355ced617c936d778c5e3ff7bfa0974486b6b88f83c6457bce",
-        "getChainId": 1,
-        "getOwners": [
-          "0xB9539A3CfeC8B6cE1953245204efDd0d8eF8244e",
-          "0x7a69957582661D2e1b0102D00Bc22a44ffe8c5AB",
-          "0x0e1B8B9714830DcC8bBA324eDC5D0F500a78f3b7",
-          "0x9134Ff6E5F2D42ADf0E8Cb7462616f18A8dEF6DC"
-        ],
-        "getThreshold": 2,
-        "nonce": 3,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "upgradeability": {
@@ -141,22 +143,24 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 44,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
-    "0x0e1B8B9714830DcC8bBA324eDC5D0F500a78f3b7",
+    "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+    "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1",
+    "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
     "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
     "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-    "0x7a69957582661D2e1b0102D00Bc22a44ffe8c5AB",
-    "0x9134Ff6E5F2D42ADf0E8Cb7462616f18A8dEF6DC",
+    "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
     "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-    "0xB9539A3CfeC8B6cE1953245204efDd0d8eF8244e",
     "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
-    "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
+    "0xe095F2590eF1Ab39601445025847Ed8E4B40D687",
+    "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
+    "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
   ],
   "abis": {
     "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": [
@@ -325,6 +329,9 @@
       "function increment(uint16 _chainId, address _ua, bytes _path) returns (uint64)",
       "function outboundNonce(uint16, bytes) view returns (uint64)"
     ],
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": [
+      "constructor(address _singleton)"
+    ],
     "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": [
       "constructor(uint16 _chainId)",
       "event DefaultReceiveVersionSet(uint16 version)",
@@ -374,9 +381,6 @@
       "function storedPayload(uint16, bytes) view returns (uint64 payloadLength, address dstAddress, bytes32 payloadHash)",
       "function transferOwnership(address newOwner)",
       "function uaConfigLookup(address) view returns (uint16 sendVersion, uint16 receiveVersion, address receiveLibraryAddress, address sendLibrary)"
-    ],
-    "0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05": [
-      "constructor(address _singleton)"
     ],
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": [
       "constructor(address _singleton)"

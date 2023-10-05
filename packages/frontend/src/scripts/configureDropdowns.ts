@@ -10,7 +10,7 @@ export function configureDropdowns() {
   const dropdowns = $$('.Dropdown')
 
   for (const dropdown of dropdowns) {
-    const button = dropdown.querySelector('.Dropdown-Button')
+    const button = dropdown.querySelector<HTMLInputElement>('.Dropdown-Button')
     if (!button) continue
     const hiddenItems = dropdown.querySelectorAll<HTMLElement>('.Dropdown-Item')
 
@@ -37,6 +37,7 @@ export function configureDropdowns() {
 
       if (!isClickInsideDropdown) {
         closeDropdown()
+        button.checked = false
       }
     })
   }

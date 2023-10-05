@@ -1,3 +1,4 @@
+import { getEnv } from '@l2beat/backend-tools'
 import { writeFile } from 'fs/promises'
 
 import { fetchMultichainConfig } from './fetchMultichainConfig'
@@ -10,7 +11,9 @@ main().catch((e) => {
 })
 
 async function main() {
-  const config = await fetchMultichainConfig()
+  const env = getEnv()
+  const useCache = env.optionalBoolean('USE_CACHE')
+  const config = await fetchMultichainConfig(useCache)
   const intermediate = generateIntermediateConfig(config)
 
   const comment =

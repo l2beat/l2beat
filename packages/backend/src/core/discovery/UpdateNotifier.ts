@@ -1,5 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { Logger } from '@l2beat/shared'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
@@ -100,7 +100,7 @@ export class UpdateNotifier {
     for (const message of arrayMessages) {
       await this.discordClient.sendMessage(message, channel).then(
         () => this.logger.debug('Notification to Discord has been sent'),
-        (e) => this.logger.error({ message: 'Discord API error' }, e),
+        (e) => this.logger.error('Discord API error', e),
       )
     }
   }
