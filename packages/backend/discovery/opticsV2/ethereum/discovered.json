@@ -1,8 +1,8 @@
 {
   "name": "opticsV2",
   "chain": "ethereum",
-  "blockNumber": 18270587,
-  "configHash": "0x1b276bcb2d9696676b8a9e618cfd26ce08ffdfd0ea88c0e9dbe69afb1814b470",
+  "blockNumber": 18284153,
+  "configHash": "0x369010433a4b11e2fc36e1a7ffe71b2987622e7e3789701db0e47d1b05cc2579",
   "version": 2,
   "contracts": [
     {
@@ -16,7 +16,7 @@
       },
       "sinceTimestamp": 1637962173,
       "values": {
-        "committedRoot": "0xfea3d69ff45be4cd0e1515b66c2c6564ebe541671db385b6d9427e26ec1c3bd8",
+        "committedRoot": "0x3717c53cac5208c752f99e9fe77ab7749676c9c77f51051311e0d654f1b741a0",
         "homeDomainHash": "0x6b881beed7c8ffb30baea620e40be2b61ea2706b341014fb812bc7ff2f75fca1",
         "localDomain": 6648936,
         "optimisticSeconds": 1800,
@@ -31,7 +31,7 @@
       "derivedName": "Replica"
     },
     {
-      "name": "GnosisSafe",
+      "name": "RecoveryManager",
       "address": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
       "upgradeability": {
         "type": "gnosis safe",
@@ -53,7 +53,33 @@
         "getThreshold": 4,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "address": "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
+      },
+      "sinceTimestamp": 1637961347,
+      "values": {
+        "domains": [2885466165, 2885466165, 2885466165, 2885466165, 2885466165],
+        "governor": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835",
+        "governorDomain": 2885466165,
+        "inRecovery": true,
+        "localDomain": 2885466165,
+        "recoveryActiveAt": "1309199231071985924005291873168752348446680987701",
+        "recoveryManager": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835",
+        "recoveryTimelock": "1309199231071985924005291873168752348446680987701",
+        "VERSION": 53,
+        "xAppConnectionManager": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
+      },
+      "errors": {
+        "domains": "Too many values. Update configuration explore fully"
+      },
+      "derivedName": "GovernanceRouter"
     },
     {
       "name": "BridgeRouterBeaconProxy",
@@ -153,7 +179,8 @@
         "recoveryManager": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
         "recoveryTimelock": 1209600,
         "VERSION": 0,
-        "xAppConnectionManager": "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
+        "xAppConnectionManager": "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD",
+        "routers": "0x000000000000000000000000d13ac1024d266b73180ca7445ca0e78b3acfe8ce"
       },
       "derivedName": "GovernanceRouter"
     }
@@ -176,6 +203,10 @@
     ],
     "0x2bB2a5A724170357cb691841F40d26A950d8C33D": [
       "constructor(address _singleton)"
+    ],
+    "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
     ],
     "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"

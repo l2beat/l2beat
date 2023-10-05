@@ -97,7 +97,7 @@ export const opticsV1: Bridge = {
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: 'Bridge can be upgraded by 3/5 MultiSig.',
+      description: 'Bridge can be upgraded by the Governor MultiSig.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.WRAPPED,

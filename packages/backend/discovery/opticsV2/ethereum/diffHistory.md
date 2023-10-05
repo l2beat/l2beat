@@ -1,7 +1,13 @@
-## Diff at Tue, 03 Oct 2023 14:25:29 GMT:
+# Diff at Thu, 05 Oct 2023 11:57:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@
+
+## Description
+
+Added config.
+
+## Watched changes
 
 ```diff
 +   Status: CREATED
@@ -11,7 +17,13 @@
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x2bB2a5A724170357cb691841F40d26A950d8C33D) {
+    contract RecoveryManager (0x2bB2a5A724170357cb691841F40d26A950d8C33D) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0x4d89F34dB307015F8002F97c1d100d84e3AFb76c) {
     }
 ```
 
