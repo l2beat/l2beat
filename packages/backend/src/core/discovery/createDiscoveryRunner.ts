@@ -28,7 +28,12 @@ export function createDiscoveryRunner(
     chainConfig.etherscanApiKey,
   )
 
-  const discoveryProvider = new DiscoveryProvider(provider, etherscanLikeClient)
+  const discoveryProvider = new DiscoveryProvider(
+    provider,
+    etherscanLikeClient,
+    discoveryLogger,
+    chainConfig.rpcGetLogsMaxRange,
+  )
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)

@@ -72,7 +72,6 @@ environment variables. One variable per line `KEY=value`.
 - `DISCOVERY_ETHEREUM_RPC_URL`
 - `DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY`
 - `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
-- `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 - `UPDATE_MONITOR_RUN_ON_START` (default `true`) - Prevent UpdateMonitor from running on start when developing locally
 - `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
 - `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
@@ -135,12 +134,10 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
 
 #-----DISCOVERY-----
-# DISCOVERY_BLOCK_NUMBER=
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=
 # INTERNAL_DISCORD_CHANNEL_ID=
 # DISCORD_TOKEN=
-# DISCOVERY_BLOCK_NUMBER=
 # DISCOVERY_ETHEREUM_RPC_URL=
 # DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY=
 

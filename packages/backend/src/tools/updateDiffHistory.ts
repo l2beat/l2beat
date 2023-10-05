@@ -11,6 +11,7 @@ import { assert, ChainId } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
+import { rimraf } from 'rimraf'
 
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
@@ -18,7 +19,6 @@ void updateDiffHistoryFile()
 async function updateDiffHistoryFile() {
   console.log('Updating diff history file...')
   const params = process.argv.filter((v) => !v.startsWith('-'))
-  console.log(params)
   const chainName = params[2]
   const projectName = params[3]
   if (!chainName || !projectName) {
@@ -27,6 +27,7 @@ async function updateDiffHistoryFile() {
   }
   const chainId = ChainId.fromName(chainName)
 
+  // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()
   const curDiscovery = await configReader.readDiscovery(projectName, chainId)
@@ -36,13 +37,30 @@ async function updateDiffHistoryFile() {
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
   const discoveryFromMainBranch =
     DiscoveryJsonFromMainBranch === ''
-      ? { contracts: [] }
+      ? undefined
       : (JSON.parse(DiscoveryJsonFromMainBranch) as DiscoveryOutput)
   const diff = diffDiscovery(
-    discoveryFromMainBranch.contracts,
+    discoveryFromMainBranch?.contracts ?? [],
     curDiscovery.contracts,
     config,
   )
+
+  // To check for changes to source code,
+  // download sources for block number from main branch
+  if (discoveryFromMainBranch) {
+    const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
+    const cli = [
+      `yarn discover:raw ${chainName} ${projectName}`,
+      `--block-number=${blockNumberFromMainBranch}`,
+      `--sources-folder=.code@${blockNumberFromMainBranch}`,
+      '--discovery-filename=@skip', // we don't need discovered.json
+    ].join(' ')
+    console.log('Downloading sources from main branch:')
+    console.log(cli)
+    execSync(cli, { stdio: 'inherit' })
+    // Remove discovered@... file, we don't need it
+    await rimraf(`discovered@${blockNumberFromMainBranch}.json`)
+  }
 
   if (diff.length > 0) {
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
