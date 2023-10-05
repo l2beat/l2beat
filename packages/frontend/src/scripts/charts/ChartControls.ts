@@ -1,5 +1,6 @@
 import { Milestone } from '@l2beat/config'
 
+import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
 import { makeQuery } from '../query'
 import { setQueryParams } from '../utils/setQueryParams'
@@ -55,8 +56,8 @@ export class ChartControls {
 
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
-    const tokenSelect = $.maybe('.RichSelect#desktop-token-select')
-
+    const tokenSelect = $.maybe('.RichSelect#token-select')
+    console.log(tokenSelect)
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )
@@ -193,6 +194,24 @@ export class ChartControls {
         this.updateChartType({ type: 'bridges-tvl', includeCanonical })
       })
     }
+
+    const projectFilters =
+      document.querySelector<HTMLElement>('#project-filters')
+    projectFilters?.addEventListener('change', () => {
+      if (
+        this.chartType?.type !== 'layer2-tvl' &&
+        this.chartType?.type !== 'layer2-detailed-tvl' &&
+        this.chartType?.type !== 'layer2-activity'
+      ) {
+        return
+      }
+      const filteredSlugs = getFilteredSlugs(projectFilters)
+      // TODO: (filtering) if filteredSlugs === [] then set empty chart type
+      this.chartDataController.setChartType({
+        ...this.chartType,
+        filteredSlugs,
+      })
+    })
   }
 
   private getMilestones(chart: HTMLElement) {

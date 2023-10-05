@@ -37,7 +37,7 @@ export function ScalingTvlFilters({ items }: Props) {
           <RichSelect.Item
             selectedLabel={da.label}
             key={da.label}
-            value={da.value}
+            value={JSON.stringify(da.value)}
           >
             {da.label}
           </RichSelect.Item>
@@ -48,13 +48,13 @@ export function ScalingTvlFilters({ items }: Props) {
         slideCardTitle="Select stage"
         id="stage-select"
       >
-        {stages.map((da) => (
+        {stages.map((stage) => (
           <RichSelect.Item
-            selectedLabel={da.label}
-            key={da.label}
-            value={da.value}
+            selectedLabel={stage.label}
+            key={stage.label}
+            value={JSON.stringify(stage.value)}
           >
-            {da.label}
+            {stage.label}
           </RichSelect.Item>
         ))}
       </RichSelect>

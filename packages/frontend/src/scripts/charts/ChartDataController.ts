@@ -89,11 +89,17 @@ export class ChartDataController {
 export function getChartUrl(chartType: ChartType) {
   switch (chartType.type) {
     case 'layer2-tvl':
-      return '/api/scaling-tvl.json'
+      return chartType.filteredSlugs
+        ? `/api/tvl?slugs=${JSON.stringify(chartType.filteredSlugs)} `
+        : '/api/scaling-tvl.json'
     case 'layer2-detailed-tvl':
-      return '/api/scaling-detailed-tvl.json'
+      return chartType.filteredSlugs
+        ? `/api/detailedTvl?slugs=${JSON.stringify(chartType.filteredSlugs)} `
+        : '/api/scaling-detailed-tvl.json'
     case 'layer2-activity':
-      return '/api/activity/combined.json'
+      return chartType.filteredSlugs
+        ? `/api/activity?slugs=${JSON.stringify(chartType.filteredSlugs)} `
+        : '/api/activity/combined.json'
     case 'bridges-tvl':
       return chartType.includeCanonical
         ? '/api/combined-tvl.json'

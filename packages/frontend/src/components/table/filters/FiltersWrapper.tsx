@@ -15,7 +15,7 @@ export function FiltersWrapper<T extends ScalingEntry>({
     <div
       id="project-filters"
       className="flex flex-wrap gap-4"
-      data-all-slugs={generateSlugList(items)}
+      data-all-slugs={JSON.stringify(generateSlugList(items))}
     >
       {children}
     </div>
@@ -25,12 +25,12 @@ export function FiltersWrapper<T extends ScalingEntry>({
 export function generateSlugList<T extends ScalingEntry>(
   items: T[],
   check?: (item: T) => boolean,
-): string {
+): string[] {
   let result = [...items]
 
   if (check) {
     result = result.filter(check)
   }
 
-  return result.map((i) => i.slug).join(',')
+  return result.map((i) => i.slug)
 }

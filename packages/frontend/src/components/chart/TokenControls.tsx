@@ -27,12 +27,12 @@ export function TokenControls({
   return (
     <div
       className={classNames('flex h-full')}
-      data-role="chart-token-desktop-element"
+      data-role="chart-token-element"
       data-tvl-only
     >
       <RichSelect
         label="Tokens"
-        id="desktop-token-select"
+        id="token-select"
         slideCardTitle="Choose token"
         listClassName="!p-6"
         centered
