@@ -17,16 +17,11 @@ export interface TvlStats {
 
 export interface TvlSummaryProps {
   stats?: TvlStats
-  detailedTvlEnabled?: boolean
   tvlBreakdownHref?: string
   showTvlBreakdown?: boolean
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
-  if (!props.detailedTvlEnabled) {
-    return null
-  }
-
   const parts = props.stats
     ? unifyPercentagesAsIntegers([
         props.stats.tvl === 0
