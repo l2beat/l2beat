@@ -23,10 +23,10 @@ export function createTvlRouter(
   // /api/tvl/projects + projectIds[]
   router.get('/api/tvl/projects', async (ctx) => {
     // get projectIds from query params
-    const projectIds = ctx.query.projectIds as string[]
+    const projectSlugs = ctx.query.projectSlugs as string;
     // get tvl data for each project
     const tvlProjectsResponse = await tvlController.getAggregatedApiResponse(
-      projectIds,
+      projectSlugs.split(',').map((slug) => slug.trim()),
     )
 
     if (tvlProjectsResponse.result === 'error') {
