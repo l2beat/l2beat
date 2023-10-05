@@ -21,9 +21,13 @@ export function createTvlRouter(
   // endpoint that will return tvl of specific projects
   // accepts projectIds[] as query params
   // /api/tvl/projects + projectIds[]
-  router.get('/api/tvl/projects', async (ctx) => {
+  router.get('/api/tvl/projects', withTypedContext(z.object({
+    query: z.object({
+        projectSlugs: z.string(),
+    }),
+  }), async (ctx) => {
     // get projectIds from query params
-    const projectSlugs = ctx.query.projectSlugs as string
+    const projectSlugs = ctx.query.projectSlugs
     // get tvl data for each project
     const tvlProjectsResponse = await tvlController.getAggregatedApiResponse(
       projectSlugs.split(',').map((slug) => slug.trim()),
@@ -42,7 +46,7 @@ export function createTvlRouter(
     }
 
     ctx.body = tvlProjectsResponse.data
-  })
+  }))
 
   router.get('/api/tvl', async (ctx) => {
     const tvlResponse = await tvlController.getTvlApiResponse()
