@@ -29,40 +29,26 @@ import {
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
+import { Result } from './types'
 
 interface DetailedTvlControllerOptions {
   errorOnUnsyncedDetailedTvl: boolean
 }
 
-type ProjectAssetBreakdownResult =
-  | {
-      result: 'success'
-      data: ProjectAssetsBreakdownApiResponse
-    }
-  | {
-      result: 'error'
-      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
-    }
+type ProjectAssetBreakdownResult = Result<
+  ProjectAssetsBreakdownApiResponse,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+>
 
-type DetailedTvlResult =
-  | {
-      result: 'success'
-      data: DetailedTvlApiResponse
-    }
-  | {
-      result: 'error'
-      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
-    }
+type DetailedTvlResult = Result<
+  DetailedTvlApiResponse,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+>
 
-type DetailedAssetTvlResult =
-  | {
-      result: 'success'
-      data: TvlApiCharts
-    }
-  | {
-      result: 'error'
-      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
-    }
+type DetailedAssetTvlResult = Result<
+  TvlApiCharts,
+  'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
+>
 
 export class DetailedTvlController {
   constructor(
