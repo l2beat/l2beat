@@ -2,7 +2,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { isZeroUSD } from '../../utils/utils'
-import { TokenControl } from '../chart/CommonTokenControls'
+import { TokenControl } from '../chart/TokenControls'
 import { NumberCell } from './NumberCell'
 
 export interface ValueWithPercentageCellProps {
@@ -75,7 +75,7 @@ function TokenGridTooltip({ tokens }: TokenGridTooltipProps) {
       {top15.map((t, i) => (
         <div className="flex items-center gap-1.5" key={i}>
           <img src={t.iconUrl} className="h-4 w-4 rounded-full" />
-          <span className="text-xs font-bold">{t.symbol}</span>
+          <span className="text-xs font-bold">{t.info.symbol}</span>
         </div>
       ))}
       {tokens.length > 15 && (

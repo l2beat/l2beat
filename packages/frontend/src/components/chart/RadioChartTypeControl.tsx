@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import React from 'react'
 
 interface Tab {
@@ -10,18 +10,11 @@ interface Tab {
 
 export function RadioChartTypeControl({
   hasActivity,
-  hasDetailedTvl,
 }: {
   hasActivity: boolean
-  hasDetailedTvl: boolean
 }) {
   const tabs: Tab[] = compact([
-    !hasDetailedTvl && {
-      fullName: 'Value Locked',
-      shortName: 'Value',
-      value: 'tvl',
-    },
-    hasDetailedTvl && {
+    {
       fullName: 'Value Locked',
       shortName: 'Value',
       value: 'detailedTvl',
