@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.7.1
+
+### Patch Changes
+
+- 951c151: Export ProviderWithCache
+
 ## 0.7.0
 
 ### Minor Changes
