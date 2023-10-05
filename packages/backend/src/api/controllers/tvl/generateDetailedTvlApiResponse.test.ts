@@ -18,7 +18,7 @@ import {
 import {
   extractReportTypeSet,
   generateDetailedTvlApiResponse,
-  getProjectChartData,
+  getProjectDetailedChartData,
 } from './generateDetailedTvlApiResponse'
 
 describe(generateDetailedTvlApiResponse.name, () => {
@@ -81,15 +81,15 @@ describe(generateDetailedTvlApiResponse.name, () => {
     return {
       hourly: {
         types,
-        data: getProjectChartData(reports.hourly, projectId, 1),
+        data: getProjectDetailedChartData(reports.hourly, projectId, 1),
       },
       sixHourly: {
         types,
-        data: getProjectChartData(reports.sixHourly, projectId, 6),
+        data: getProjectDetailedChartData(reports.sixHourly, projectId, 6),
       },
       daily: {
         types,
-        data: getProjectChartData(reports.daily, projectId, 24),
+        data: getProjectDetailedChartData(reports.daily, projectId, 24),
       },
     }
   }

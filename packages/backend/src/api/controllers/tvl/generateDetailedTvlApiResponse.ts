@@ -16,7 +16,7 @@ import {
   ReportsPerProjectIdAndTimestamp,
 } from './detailedTvl'
 
-const DETAILED_LABELS: DetailedTvlApiChart['types'] = [
+export const DETAILED_LABELS: DetailedTvlApiChart['types'] = [
   'timestamp',
   'valueUsd',
   'cbvUsd',
@@ -41,14 +41,14 @@ export function generateDetailedTvlApiResponse(
     daily: dailyReports,
   }
 
-  const layers2s = getProjectCharts(reports, ProjectId.LAYER2S)
-  const bridges = getProjectCharts(reports, ProjectId.BRIDGES)
-  const combined = getProjectCharts(reports, ProjectId.ALL)
+  const layers2s = getProjectDetailedCharts(reports, ProjectId.LAYER2S)
+  const bridges = getProjectDetailedCharts(reports, ProjectId.BRIDGES)
+  const combined = getProjectDetailedCharts(reports, ProjectId.ALL)
 
   const projects = projectIds.reduce<DetailedTvlApiResponse['projects']>(
     (acc, projectId) => {
       acc[projectId.toString()] = {
-        charts: getProjectCharts(reports, projectId),
+        charts: getProjectDetailedCharts(reports, projectId),
         tokens: getProjectTokensCharts(latestReports, projectId),
       }
       return acc
@@ -64,7 +64,7 @@ export function generateDetailedTvlApiResponse(
   }
 }
 
-function getProjectCharts(
+export function getProjectDetailedCharts(
   reports: {
     hourly: ReportsPerProjectIdAndTimestamp
     sixHourly: ReportsPerProjectIdAndTimestamp
@@ -75,20 +75,20 @@ function getProjectCharts(
   return {
     hourly: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.hourly, projectId, 1),
+      data: getProjectDetailedChartData(reports.hourly, projectId, 1),
     },
     sixHourly: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.sixHourly, projectId, 6),
+      data: getProjectDetailedChartData(reports.sixHourly, projectId, 6),
     },
     daily: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.daily, projectId, 24),
+      data: getProjectDetailedChartData(reports.daily, projectId, 24),
     },
   }
 }
 
-export function getProjectChartData(
+export function getProjectDetailedChartData(
   reportTree: ReportsPerProjectIdAndTimestamp,
   projectId: ProjectId,
   resolutionInHours: number,

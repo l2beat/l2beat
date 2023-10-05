@@ -2,6 +2,7 @@ import {
   AssetId,
   ChainId,
   DetailedTvlApiChart,
+  DetailedTvlApiChartPoint,
   DetailedTvlApiCharts,
   ProjectId,
   TvlApiChart,
@@ -207,17 +208,7 @@ describe(generateAggregatedApiResponse.name, () => {
 function getData(
   firstTvl: number,
   secondTvl: number,
-): [
-  UnixTime,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-][] {
+): DetailedTvlApiChartPoint[] {
   return [
     [
       new UnixTime(0),
