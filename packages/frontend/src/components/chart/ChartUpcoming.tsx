@@ -4,7 +4,7 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
-import { TokenControl } from './CommonTokenControls'
+import { TokenControl } from './TokenControls'
 import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {

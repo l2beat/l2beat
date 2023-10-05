@@ -76,9 +76,9 @@ export function StageSection(props: StageSectionProps) {
               <input
                 type="checkbox"
                 autoComplete="off"
-                className=" Dropdown-Button peer hidden"
+                className="Dropdown-Button peer hidden"
               />
-              <div className="flex items-center gap-3">
+              <div className="flex select-none items-center gap-3">
                 <StageBadge stage={stage.stage} big />
                 {missing.length === 0 ? (
                   <div className="flex flex-col gap-3 md:flex-row">
