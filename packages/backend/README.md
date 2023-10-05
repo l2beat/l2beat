@@ -48,7 +48,7 @@ environment variables. One variable per line `KEY=value`.
 - `LOCAL_DB_URL` - Database url used in `yarn start`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_local`
 - `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_test`
 - `DATABASE_URL` - Database url used in production deployment
-- `ETHEREUM_ETHERSCAN_API_KEY` - API key for Etherscan
+- `TVL_ETHEREUM_ETHERSCAN_API_KEY` - API key for Etherscan
 - `TVL_ETHEREUM_PROVIDER_URL` - API Url for Ethereum QuickNode provider
 
 #### Optional
