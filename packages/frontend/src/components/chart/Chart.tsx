@@ -44,7 +44,6 @@ export function Chart(props: ChartProps) {
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
 
-
   return (
     <>
       <section
