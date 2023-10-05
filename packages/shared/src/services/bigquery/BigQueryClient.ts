@@ -6,11 +6,7 @@ import { QueryRows } from './model'
 export class BigQueryClient {
   private readonly bigquery: BigQuery
 
-  constructor(
-    private readonly clientEmail: string,
-    private readonly privateKey: string,
-    private readonly projectId: string,
-  ) {
+  constructor(clientEmail: string, privateKey: string, projectId: string) {
     this.bigquery = new BigQuery({
       credentials: {
         client_email: clientEmail,
