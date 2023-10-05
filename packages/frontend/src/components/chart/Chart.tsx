@@ -92,7 +92,7 @@ export function Chart(props: ChartProps) {
               data-is-meta={props.metaChart}
               className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
-            <ChartLabels />
+            <ChartLabels className={props.metaChart ? 'hidden' : undefined} />
             <div
               data-role="chart-milestones"
               className="absolute bottom-0 w-[100%]"

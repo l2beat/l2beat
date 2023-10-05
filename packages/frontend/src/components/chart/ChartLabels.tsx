@@ -1,8 +1,18 @@
+import classNames from 'classnames'
 import React from 'react'
 
-export function ChartLabels() {
+interface Props {
+  className?: string
+}
+
+export function ChartLabels(props: Props) {
   return (
-    <div className="pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px]">
+    <div
+      className={classNames(
+        'pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px]',
+        props.className,
+      )}
+    >
       <ChartLabel />
       <ChartLabel />
       <ChartLabel />
