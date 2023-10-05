@@ -1,7 +1,7 @@
 {
   "name": "dydx",
   "chain": "ethereum",
-  "blockNumber": 18268908,
+  "blockNumber": 18282753,
   "configHash": "0x47112df1ee28df32b58382bb684b9b5696e568eba2d4f1fb8268d1e432381939",
   "version": 2,
   "contracts": [
@@ -53,7 +53,7 @@
         "getIpnsName": "rewards-data.dydx.foundation",
         "getRewardsOracle": "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
         "getWaitingPeriodEnd": 1696350743,
-        "hasPendingRoot": true,
+        "hasPendingRoot": false,
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "REWARDS_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
@@ -378,7 +378,7 @@
       },
       "sinceTimestamp": 1694426279,
       "values": {
-        "_nextAvailableBridgeId": 8,
+        "_nextAvailableBridgeId": 30,
         "decimals": 18,
         "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
         "DELEGATE_TYPEHASH": "0x9a9a49b990ba9bb39f8048c490a40ab25c18f55d208d5fbcf958261a9b48716d",
@@ -389,7 +389,7 @@
         "name": "Wrapped Ethereum DYDX",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "wethDYDX",
-        "totalSupply": "11123714560000000000000"
+        "totalSupply": "29899837393470000000000"
       },
       "derivedName": "WrappedEthereumDydxToken"
     },
@@ -496,14 +496,14 @@
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getTimeRemainingInCurrentEpoch": 1836841,
+        "getTimeRemainingInCurrentEpoch": 1669501,
         "getTotalActiveBalanceCurrentEpoch": 287711787301,
-        "getTotalActiveBalanceNextEpoch": 285127676616,
+        "getTotalActiveBalanceNextEpoch": 285029500235,
         "getTotalBorrowedBalance": 4248,
         "getTotalBorrowerDebtBalance": 0,
         "getTotalDebtAvailableToWithdraw": 0,
         "getTotalInactiveBalanceCurrentEpoch": 239206135527,
-        "getTotalInactiveBalanceNextEpoch": 241790246212,
+        "getTotalInactiveBalanceNextEpoch": 241888422593,
         "hasEpochZeroStarted": true,
         "inBlackoutWindow": false,
         "name": "dYdX Staked USDC",
@@ -643,7 +643,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "3373569871741541304215397"
+        "totalSupply": "3373519871741305592922123"
       },
       "derivedName": "SafetyModuleV2"
     },
@@ -912,7 +912,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 19165,
+        "getLastBatchId": 19207,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -921,7 +921,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 18866,
+        "getSequenceNumber": 18908,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",

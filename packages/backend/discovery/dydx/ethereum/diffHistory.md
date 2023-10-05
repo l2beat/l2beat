@@ -1,7 +1,17 @@
-## Diff at Tue, 03 Oct 2023 08:47:28 GMT:
+# Diff at Thu, 05 Oct 2023 07:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@03894908622bf9e8ff40d5177fd0b65776e38dc3
+- comparing to: master@bd8583bb786deb2218b31cd53ffe833ba3b0b72a
+
+## Description
+
+Proposal: <https://dydx.community/dashboard/proposal/15>
+
+TLDR: added wethDYDX in the calculation of governance power. wethDYDX is a token minted by locking Ethereum DYDX tokens (called ethDYDX) permanently which will be later bridged to the dYdX Chain. wethDYDX is a transferrable ERC20. Does this mean that tokens will get duplicated?
+
+We don't have a specific section on the website to specify this information, but we will soon with the Governance section, so I'll wait before adding anything to the project page.
+
+## Watched changes
 
 ```diff
     contract DydxGovernor (0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2) {
@@ -29,7 +39,7 @@
     }
 ```
 
-## Diff at Tue, 26 Sep 2023 11:49:48 GMT:
+# Diff at Tue, 26 Sep 2023 11:49:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
