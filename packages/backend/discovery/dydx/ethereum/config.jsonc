@@ -7,7 +7,6 @@
   "names": {
     "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": "StarkPerpetual",
     "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": "DydxGovernor",
-    "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9": "GovernanceStrategy",
     "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "SafetyModule",
     "0x92D6C1e31e14520e676a687F0a93788B716BEff5": "DydxToken",
     "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor",
@@ -29,7 +28,9 @@
     "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5": "EcdsaPointsXColumn",
     "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15": "EcdsaPointsYColumn",
     "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": "Committee",
-    "0xb9431E19B29B952d9358025f680077C3Fd37292f": "TreasuryVester"
+    "0xb9431E19B29B952d9358025f680077C3Fd37292f": "TreasuryVester",
+    "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9": "WrappedEthereumDydxToken",
+    "0xc2f5F3505910Da80F0592a3Cc023881C50b16505": "GovernanceStrategyV2"
   },
   "overrides": {
     "StarkPerpetual": {
@@ -98,9 +99,6 @@
           "type": "accessControl"
         }
       }
-    },
-    "GovernanceStrategy": {
-      "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
     },
     "SafetyModule": {
       "ignoreMethods": [
@@ -224,6 +222,12 @@
     "USDC": { "ignoreDiscovery": true },
     "TreasuryVester": {
       "ignoreInWatchMode": ["lastUpdate"]
+    },
+    "WrappedEthereumDydxToken": {
+      "ignoreInWatchMode": ["_nextAvailableBridgeId", "totalSupply"]
+    },
+    "GovernanceStrategyV2": {
+      "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
     }
   }
 }

@@ -250,7 +250,7 @@ function makeTechnologyContract(
           break
         case 'Optics Beacon proxy':
           links.push({
-            name: 'Upgarde Beacon',
+            name: 'Upgrade Beacon',
             href: `https://etherscan.io/address/${item.upgradeability.upgradeBeacon.toString()}#code`,
             address: item.upgradeability.upgradeBeacon.toString(),
             isAdmin: false,

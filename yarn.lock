@@ -1899,6 +1899,15 @@
     dotenv "^16.3.1"
     error-stack-parser "^2.1.4"
 
+"@l2beat/backend-tools@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/backend-tools/-/backend-tools-0.4.0.tgz#312c554ef3bd9f10e2ff2c7223318c4f6ad69344"
+  integrity sha512-UnCG81GzlS2aphojsnEb2gCppHNc6qs9RkeOuQnqOu3D+ALoQ0BhttICFhQNMgpmn3y5QhB8L5vYUkDwyS52jg==
+  dependencies:
+    chalk "^4.1.2"
+    dotenv "^16.3.1"
+    error-stack-parser "^2.1.4"
+
 "@l2beat/discovery-types@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.3.1.tgz#6acde1a029db9c40affc7644e4cc0c3d5b4a0e62"

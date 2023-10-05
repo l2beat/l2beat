@@ -1,9 +1,9 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
-import { Logger } from '@l2beat/shared'
 import {
   ChainId,
   EthereumAddress,

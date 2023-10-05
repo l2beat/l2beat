@@ -1,4 +1,4 @@
-import { range } from 'lodash'
+import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { configureExpandableContainer } from '../scripts/configureExpandableContainer'

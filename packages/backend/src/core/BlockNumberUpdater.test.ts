@@ -1,4 +1,5 @@
-import { EtherscanClient, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { EtherscanClient } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
