@@ -22,7 +22,7 @@ export function createTvlRouter(
   // accepts projectIds[] as query params
   // /api/tvl/projects + projectIds[]
   router.get(
-    '/api/tvl/projects',
+    '/api/tvl/aggregate',
     withTypedContext(
       z.object({
         query: z.object({
