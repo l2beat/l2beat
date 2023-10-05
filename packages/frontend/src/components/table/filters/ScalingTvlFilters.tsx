@@ -1,8 +1,8 @@
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import React from 'react'
 
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
-import { Select } from '../../Select'
+import { RichSelect } from '../../RichSelect'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
@@ -28,8 +28,36 @@ export function ScalingTvlFilters({ items }: Props) {
   return (
     <FiltersWrapper items={items}>
       <RollupsOnlyCheckbox items={items} />
-      <Select label="Select stack" items={providers} id="stack-select" />
-      <Select label="Select stage" items={stages} id="stage-select" />
+      <RichSelect
+        label="Select stack"
+        slideCardTitle="Select stack"
+        id="stack-select"
+      >
+        {providers.map((da) => (
+          <RichSelect.Item
+            selectedLabel={da.label}
+            key={da.label}
+            value={da.value}
+          >
+            {da.label}
+          </RichSelect.Item>
+        ))}
+      </RichSelect>
+      <RichSelect
+        label="Select stage"
+        slideCardTitle="Select stage"
+        id="stage-select"
+      >
+        {stages.map((da) => (
+          <RichSelect.Item
+            selectedLabel={da.label}
+            key={da.label}
+            value={da.value}
+          >
+            {da.label}
+          </RichSelect.Item>
+        ))}
+      </RichSelect>
     </FiltersWrapper>
   )
 }

@@ -1,8 +1,8 @@
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 import React from 'react'
 
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/view/types'
-import { Select } from '../../Select'
+import { RichSelect } from '../../RichSelect'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
@@ -28,7 +28,21 @@ export function ScalingRiskFilters({ items }: Props) {
   return (
     <FiltersWrapper items={items}>
       <RollupsOnlyCheckbox items={items} />
-      <Select label="Select DA" items={dataAvailability} id="DA-select" />
+      <RichSelect
+        label="Select DA"
+        slideCardTitle="Select data availability"
+        id="DA-select"
+      >
+        {dataAvailability.map((da) => (
+          <RichSelect.Item
+            selectedLabel={da.label}
+            key={da.label}
+            value={da.value}
+          >
+            {da.label}
+          </RichSelect.Item>
+        ))}
+      </RichSelect>
     </FiltersWrapper>
   )
 }

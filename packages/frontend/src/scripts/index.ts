@@ -11,7 +11,6 @@ import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRollupsOnlyFilter } from './configureRollupsOnlyFilter'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
-import { configureSelects } from './configureSelects'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
@@ -35,7 +34,6 @@ configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
 configureProjectFilters()
-configureSelects()
 configureMultipleEscrowsButton()
 configureRollupsOnlyFilter()
 configureRichSelects()
