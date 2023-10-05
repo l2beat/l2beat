@@ -13,8 +13,6 @@
     }
 ```
 
-## Watched changes
-
 ```diff
 +   Status: CREATED
     contract AdminMultisig (0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {

@@ -13,15 +13,11 @@
     }
 ```
 
-## Watched changes
-
 ```diff
 -   Status: DELETED
     contract Aptos Multisig (0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05) {
     }
 ```
-
-## Watched changes
 
 ```diff
 +   Status: CREATED

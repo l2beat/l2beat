@@ -25,8 +25,6 @@
     }
 ```
 
-## Watched changes
-
 ```diff
     contract ValidatorTimelock (0x3dB52cE065f728011Ac6732222270b3F2360d919) {
       values.revertedBlocks:
@@ -57,8 +55,6 @@
 +        1
     }
 ```
-
-## Watched changes
 
 ```diff
     contract zkSync Era Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
