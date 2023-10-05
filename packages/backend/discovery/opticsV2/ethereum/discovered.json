@@ -1,8 +1,8 @@
 {
   "name": "opticsV2",
   "chain": "ethereum",
-  "blockNumber": 18284153,
-  "configHash": "0x369010433a4b11e2fc36e1a7ffe71b2987622e7e3789701db0e47d1b05cc2579",
+  "blockNumber": 18284251,
+  "configHash": "0x7371f958a5898154a17f078df57948aa367b9621c9368b5ddaddca7abf755ecf",
   "version": 2,
   "contracts": [
     {
@@ -58,28 +58,15 @@
     },
     {
       "name": "UpgradeBeaconController",
-      "address": "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c",
+      "address": "0x4F50a7081792063693F46A6402390b9647562457",
       "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
+        "type": "immutable"
       },
-      "sinceTimestamp": 1637961347,
+      "sinceTimestamp": 1637960876,
       "values": {
-        "domains": [2885466165, 2885466165, 2885466165, 2885466165, 2885466165],
-        "governor": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835",
-        "governorDomain": 2885466165,
-        "inRecovery": true,
-        "localDomain": 2885466165,
-        "recoveryActiveAt": "1309199231071985924005291873168752348446680987701",
-        "recoveryManager": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835",
-        "recoveryTimelock": "1309199231071985924005291873168752348446680987701",
-        "VERSION": 53,
-        "xAppConnectionManager": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
+        "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
       },
-      "errors": {
-        "domains": "Too many values. Update configuration explore fully"
-      },
-      "derivedName": "GovernanceRouter"
+      "derivedName": "UpgradeBeaconController"
     },
     {
       "name": "BridgeRouterBeaconProxy",
@@ -204,9 +191,13 @@
     "0x2bB2a5A724170357cb691841F40d26A950d8C33D": [
       "constructor(address _singleton)"
     ],
-    "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c": [
-      "constructor(address _initialImplementation, address _controller) payable",
-      "event Upgrade(address indexed implementation)"
+    "0x4F50a7081792063693F46A6402390b9647562457": [
+      "event BeaconUpgraded(address indexed beacon, address implementation)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _beacon, address _implementation)"
     ],
     "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"

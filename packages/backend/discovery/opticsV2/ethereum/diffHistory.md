@@ -1,4 +1,4 @@
-# Diff at Thu, 05 Oct 2023 11:57:04 GMT:
+# Diff at Thu, 05 Oct 2023 12:16:43 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@
@@ -23,7 +23,7 @@ Added config.
 
 ```diff
 +   Status: CREATED
-    contract UpgradeBeaconController (0x4d89F34dB307015F8002F97c1d100d84e3AFb76c) {
+    contract UpgradeBeaconController (0x4F50a7081792063693F46A6402390b9647562457) {
     }
 ```
 

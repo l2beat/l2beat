@@ -89,14 +89,15 @@ export const opticsV2: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Optimistically',
-      description:
-        'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 20 min fraud proof window.',
-      sentiment: 'warning',
+      value: 'Third Party',
+      description: `Messages are relayed to the destination chain and assumed to be correct unless challenged within the ${formatSeconds(
+        challengeWindowSeconds,
+      )} fraud proof window, but the slashing mechanism is not implemented yet.`,
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: "Bridge can be upgraded by Celo's governance contracts.",
+      description: 'Bridge can be upgraded by the Governor MultiSig.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.WRAPPED,
