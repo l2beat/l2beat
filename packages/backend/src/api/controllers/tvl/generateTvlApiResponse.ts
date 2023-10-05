@@ -78,7 +78,7 @@ export function generateAggregatedApiResponse(
     first: DetailedTvlApiChartPoint,
     second: DetailedTvlApiChartPoint | undefined,
   ): DetailedTvlApiChartPoint => {
-    if (!second) return first;
+    if (!second) return first
     return [
       first[0],
       first[1] + second[1],
