@@ -166,12 +166,16 @@ describe(generateAggregatedApiResponse.name, () => {
     const secondArbitrumTvl = 100
     const firstOptimismTvl = 20
     const secondOptimismTvl = 200
+    const firstMainnetTvl = 30
+    const secondMainnetTvl = 300
 
     const mock: AggregatedReportRecord[] = [
       ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(0), firstArbitrumTvl),
       ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(0), firstOptimismTvl),
+      ...getMockPoints(ProjectId.ETHEREUM, new UnixTime(0), firstMainnetTvl),
       ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(1), secondArbitrumTvl),
       ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(1), secondOptimismTvl),
+      ...getMockPoints(ProjectId.ETHEREUM, new UnixTime(1), secondMainnetTvl),
     ]
 
     const selectedProjectIds = ['arbitrum', 'optimism']

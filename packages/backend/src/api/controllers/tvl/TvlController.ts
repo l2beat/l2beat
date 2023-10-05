@@ -148,7 +148,9 @@ export class TvlController {
       this.aggregatedReportRepository.getDaily('TVL'),
     ])
 
-    const projectIdsFilterSet = new Set(projectIdsFilter)
+    const projectIdsFilterSet = new Set(
+      projectIdsFilter.map((x) => x.toString()),
+    )
 
     const tvlApiProjectResponse = generateAggregatedApiResponse(
       hourlyReports,
@@ -158,7 +160,8 @@ export class TvlController {
         .map((project) => project.projectId)
         .filter(
           (projectId) =>
-            projectIdsFilter.length === 0 || projectIdsFilterSet.has(projectId),
+            projectIdsFilter.length === 0 ||
+            projectIdsFilterSet.has(projectId.toString()),
         ),
     )
 
