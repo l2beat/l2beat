@@ -1,7 +1,9 @@
-## Diff at Thu, 21 Sep 2023 12:32:23 GMT:
+# Diff at Thu, 21 Sep 2023 12:32:23 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@36d4050a6ee5a543b2163fe6e44153b540b87c16
+
+## Watched changes
 
 ```diff
     contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E) {

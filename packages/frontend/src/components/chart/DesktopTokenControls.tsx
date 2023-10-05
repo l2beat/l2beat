@@ -13,7 +13,7 @@ import {
 
 export interface DesktopTokenControlsProps {
   tokens?: TokenControl[]
-  tvlBreakdownHref: string
+  tvlBreakdownHref?: string
 }
 
 export function DesktopTokenControls({
@@ -45,15 +45,17 @@ export function DesktopTokenControls({
           centered={true}
         >
           <TokenList tokens={tokens} />
-          <div className="mt-6 flex items-center justify-center gap-1">
-            <a
-              href={tvlBreakdownHref}
-              className="flex flex-wrap items-center gap-1 text-sm font-bold text-blue-700 underline dark:text-blue-500"
-            >
-              View TVL Breakdown
-              <ArrowRightIcon className="fill-current" />
-            </a>
-          </div>
+          {tvlBreakdownHref && (
+            <div className="mt-6 flex items-center justify-center gap-1">
+              <a
+                href={tvlBreakdownHref}
+                className="flex flex-wrap items-center gap-1 text-sm font-bold text-blue-700 underline dark:text-blue-500"
+              >
+                View TVL Breakdown
+                <ArrowRightIcon className="fill-current" />
+              </a>
+            </div>
+          )}
         </TogglableDropdown>
       </div>
     </div>

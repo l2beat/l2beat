@@ -1,4 +1,5 @@
-import { EventTracker, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { EventTracker } from '@l2beat/shared'
 import { assert, json } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'

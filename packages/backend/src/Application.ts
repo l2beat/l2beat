@@ -1,4 +1,5 @@
-import { HttpClient, Logger, LogThrottler } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
@@ -19,10 +20,10 @@ export class Application {
   constructor(config: Config) {
     const loggerOptions = { ...config.logger, reportError }
 
-    const logThrottler = config.logThrottler
-      ? new LogThrottler(config.logThrottler, new Logger(loggerOptions))
-      : undefined
-    const logger = new Logger(loggerOptions, logThrottler)
+    let logger = new Logger(loggerOptions)
+    if (config.logThrottler) {
+      logger = logger.withThrottling(config.logThrottler)
+    }
 
     const database = new Database(
       config.database.connection,
@@ -66,7 +67,12 @@ export class Application {
       }
       await database.migrateToLatest()
 
-      database.enableQueryLogging()
+      if (
+        config.logger.logLevel === 'DEBUG' ||
+        config.logger.logLevel === 'TRACE'
+      ) {
+        database.enableQueryLogging()
+      }
 
       for (const module of modules) {
         await module?.start?.()

@@ -1,7 +1,9 @@
-## Diff at Fri, 29 Sep 2023 07:58:06 GMT:
+# Diff at Fri, 29 Sep 2023 07:58:06 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: master@af96105393755c6fead3fa1b6c9845f238580952
+
+## Watched changes
 
 ```diff
     contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
