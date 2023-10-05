@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17968886,
   "configHash": "0x49293ad07e522b8e81cc67951023c79b9dbc188acb13f998535dd92fd197676f",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "Committee",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603626845,
       "values": {
         "constructorArgs": [
           [
@@ -36,6 +37,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691481095,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -49,6 +51,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1626352379,
       "values": {
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
@@ -75,6 +78,7 @@
           "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
         ]
       },
+      "sinceTimestamp": 1590491810,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -119,6 +123,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1683214307,
       "values": {
         "domainSeparator": "0x00e7276e9f285a9b73208ee52227fedeba51adac2fc7b3bb3b5c2a78ea7234df",
         "getChainId": 1,

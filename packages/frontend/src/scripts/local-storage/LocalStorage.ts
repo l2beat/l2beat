@@ -1,13 +1,14 @@
 import { z } from 'zod'
 
-import { TopBarVariantData } from './types'
+import { SavedChartState, TopBarVariantData } from './types'
 
 export const strictBoolean = z
   .enum(['true', 'false'])
   .transform((x) => x === 'true')
 
-export const stringAsObject = <T extends z.AnyZodObject>(schema: T) =>
-  z.string().transform((x) => schema.parse(JSON.parse(x)) as z.infer<T>)
+export const stringAsObject = <T extends z.AnyZodObject | z.ZodRecord>(
+  schema: T,
+) => z.string().transform((x) => schema.parse(JSON.parse(x)) as z.infer<T>)
 
 const LOCAL_STORAGE_PREFIX = 'l2beat'
 
@@ -17,6 +18,7 @@ const LocalStorageKeySchemas = {
   'combined-bridges-checked': strictBoolean,
   'rollups-only-checked': strictBoolean,
   'top-bar-variant-data': stringAsObject(TopBarVariantData),
+  'chart-settings': stringAsObject(SavedChartState),
 } as const
 
 type LocalStorageKeys = keyof typeof LocalStorageKeySchemas

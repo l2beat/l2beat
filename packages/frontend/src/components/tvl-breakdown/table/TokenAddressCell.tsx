@@ -14,10 +14,10 @@ export function TokenAddressCell(props: TokenAddressCellProps) {
     <a
       href={`${props.explorer}/address/${props.address.toString()}`}
       target="_blank"
-      className="flex gap-1 pr-2 text-xs font-medium text-blue-500 underline"
+      className="flex gap-1 pr-2 text-xs font-medium text-blue-700 underline dark:text-blue-500"
     >
       {formatAddress(props.address)}
-      <OutLinkIcon className="fill-blue-500" />
+      <OutLinkIcon className="fill-blue-700 dark:fill-blue-500" />
     </a>
   )
 }

@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   ChainId,
@@ -10,6 +10,7 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
+import { getChainMinTimestamp } from '../../config/chains'
 import {
   ReportRecord,
   ReportRepository,
@@ -22,9 +23,9 @@ import { createFormulaReports } from '../reports/createFormulaReports'
 import { getStatus } from '../reports/getStatus'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
-import { AssetUpdater } from './AssetUpdater'
+import { ReportUpdater } from './Updater'
 
-export class TotalSupplyFormulaUpdater implements AssetUpdater {
+export class TotalSupplyFormulaUpdater implements ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -48,7 +49,9 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
       ),
       'Programmer error: all tokens must be using totalSupply formula have the same chainId',
     )
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
+    )
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
@@ -74,10 +77,11 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
 
   getStatus(): UpdaterStatus {
     return getStatus(
-      ChainId.getName(this.chainId) + ': ' + this.constructor.name,
+      this.constructor.name,
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
+      getChainMinTimestamp(this.chainId),
     )
   }
 

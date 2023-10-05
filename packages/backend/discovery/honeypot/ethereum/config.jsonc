@@ -1,0 +1,16 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "honeypot",
+  "initialAddresses": [
+    "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+    "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+    "0x59b22D57D4f067708AB0c00552767405926dc768",
+    "0x70ac08179605AF2D9e75782b8DEcDD3c22aA4D0C",
+    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+    "0x8cA1c547AE4C1D1bb8296a5854c2c50192118E02",
+    "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366"
+  ],
+  "names": {},
+  "overrides": {}
+}

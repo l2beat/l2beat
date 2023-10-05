@@ -1,4 +1,4 @@
-import { Logger, LoggerOptions, LogLevel } from '@l2beat/shared'
+import { Logger, LoggerOptions } from '@l2beat/backend-tools'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
@@ -37,7 +37,7 @@ describe(SequenceProcessor.name, () => {
     return new SequenceProcessor(
       PROCESSOR_ID,
       new Logger({
-        logLevel: LogLevel.ERROR, // tests rely on error being logged -- do not change
+        logLevel: 'ERROR', // tests rely on error being logged -- do not change
         format: 'pretty',
         reportError,
       }),
@@ -231,7 +231,14 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
+        error: undefined,
+        message: 'Halting queue because of error',
+        parameters: {
+          error: expect.a(Error),
+          job: expect.a(String),
+        },
+      })
     })
 
     it('works when processRange throws', async () => {
@@ -259,7 +266,14 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
+        error: undefined,
+        message: 'Halting queue because of error',
+        parameters: {
+          error: expect.a(Error),
+          job: expect.a(String),
+        },
+      })
     })
 
     it('does not process anything when already done', async () => {

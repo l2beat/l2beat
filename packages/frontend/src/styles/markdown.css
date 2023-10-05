@@ -1,0 +1,106 @@
+.mdc h1,
+.mdc h2,
+.mdc h3,
+.mdc h4,
+.mdc h5,
+.mdc h6,
+.mdc hr,
+.mdc blockquote,
+.mdc p,
+.mdc ol,
+.mdc ul,
+.mdc dl,
+.mdc table,
+.mdc pre {
+  @apply mb-4;
+}
+
+.mdc > *:last-child {
+  @apply mb-0;
+}
+
+.mdc h1 {
+  @apply text-3xl font-bold;
+}
+
+.mdc h2 {
+  @apply text-2xl font-bold;
+}
+
+.mdc h3 {
+  @apply text-xl font-bold;
+}
+
+.mdc hr {
+  @apply opacity-80 dark:opacity-50;
+}
+
+.mdc blockquote {
+  @apply border-l-2 border-gray-300 py-1 pl-4 dark:border-gray-700;
+}
+
+.mdc ul {
+  @apply list-disc pl-4;
+}
+
+.mdc ol {
+  @apply list-decimal pl-4;
+}
+
+.mdc ul ul,
+.mdc ol ul,
+.mdc ul ol,
+.mdc ol ol {
+  @apply mb-0;
+}
+
+.mdc li {
+  @apply ml-4;
+}
+
+.mdc code {
+  @apply rounded bg-gray-100 px-1 font-mono text-sm dark:bg-gray-800;
+}
+
+.mdc pre {
+  @apply rounded bg-gray-100 px-4 py-2 font-mono text-sm dark:bg-gray-800;
+}
+
+.mdc pre code {
+  @apply rounded-none bg-transparent px-0 py-0;
+}
+
+.mdc table {
+  @apply w-full;
+}
+
+.mdc table tr:not(:last-child) {
+  @apply border-b border-gray-300 dark:border-gray-700;
+}
+
+.mdc table thead tr:first-child:last-child {
+  @apply border-b border-gray-300 dark:border-gray-700;
+}
+
+.mdc table td {
+  @apply text-sm;
+}
+
+.mdc table th:not(:last-child),
+.mdc table td:not(:last-child) {
+  @apply border-r border-gray-300 text-sm dark:border-gray-700;
+}
+
+.mdc table th,
+.mdc table td {
+  @apply px-4 py-2;
+}
+
+.mdc strong {
+  @apply font-bold text-yellow-700 dark:text-yellow-300;
+}
+
+/* Make sure this is compatible with the <Link /> component */
+.mdc a {
+  @apply font-semibold text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
+}

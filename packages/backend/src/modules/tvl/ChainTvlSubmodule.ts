@@ -1,4 +1,5 @@
-import { HttpClient, Logger, UniversalEtherscanClient } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient, UniversalEtherscanClient } from '@l2beat/shared'
 import {
   capitalizeFirstLetter,
   ChainId,
@@ -145,7 +146,15 @@ export function chainTvlSubmodule(
   }
 
   return {
-    assetUpdaters: [totalSupplyFormulaUpdater, circulatingSupplyFormulaUpdater],
+    reportUpdaters: [
+      totalSupplyFormulaUpdater,
+      circulatingSupplyFormulaUpdater,
+    ],
+    dataUpdaters: [
+      blockNumberUpdater,
+      totalSupplyUpdater,
+      circulatingSupplyUpdater,
+    ],
     start,
   }
 }

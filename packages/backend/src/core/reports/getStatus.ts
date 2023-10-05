@@ -7,22 +7,30 @@ export function getStatus(
   from: UnixTime,
   to: UnixTime,
   knownSet: Set<number>,
+  minTimestamp?: UnixTime,
 ) {
   const timestamps = getHourlyTimestamps(from, to).sort(
     (a, b) => b.toNumber() - a.toNumber(),
   )
 
   const statuses: StatusPoint[] = timestamps.map((timestamp) => {
+    if (minTimestamp && timestamp.toNumber() < minTimestamp.toNumber()) {
+      return {
+        timestamp,
+        status: 'notApplicable',
+      }
+    }
+
     if (knownSet.has(timestamp.toNumber())) {
       return {
         timestamp,
         status: 'synced',
       }
-    } else {
-      return {
-        timestamp,
-        status: 'notSynced',
-      }
+    }
+
+    return {
+      timestamp,
+      status: 'notSynced',
     }
   })
 

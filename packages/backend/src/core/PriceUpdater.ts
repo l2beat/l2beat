@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   AssetId,
@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   DataBoundary,
@@ -16,6 +17,7 @@ import {
 } from '../peripherals/database/PriceRepository'
 import { Clock } from './Clock'
 import { TaskQueue } from './queue/TaskQueue'
+import { getStatus } from './reports/getStatus'
 
 export class PriceUpdater {
   private readonly knownSet = new Set<number>()
@@ -35,6 +37,15 @@ export class PriceUpdater {
       {
         metricsId: PriceUpdater.name,
       },
+    )
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
     )
   }
 

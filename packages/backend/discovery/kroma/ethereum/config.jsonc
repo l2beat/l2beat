@@ -74,15 +74,14 @@
     },
     "ValidatorPool": {
       "ignoreMethods": ["getBond"],
-      "ignoreInWatchMode": ["nextValidator", "validatorCount"]
-      /*
+      "ignoreInWatchMode": ["nextValidator", "validatorCount", "validators"],
       "fields": {
         "validators": {
-          "type": "array", //TODO: it's internal! find way to read it
-          "method": "validators"
+          "type": "dynamicArray",
+          "slot": 54,
+          "returnType": "address"
         }
       }
-      */
     },
     "UpgradeGovernor": {
       "ignoreMethods": [

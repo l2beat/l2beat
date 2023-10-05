@@ -1,4 +1,5 @@
-import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
@@ -124,7 +125,7 @@ export function createTvlModule(
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.assetUpdaters ?? []),
+    submodules.flatMap((x) => x?.reportUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -161,14 +162,14 @@ export function createTvlModule(
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController, detailedTvlController, {
-    detailedTvlEnabled: config.tvl.detailedTvlEnabled,
-  })
+  const tvlRouter = createTvlRouter(tvlController, detailedTvlController)
   const dydxRouter = createDydxRouter(dydxController)
-  const tvlStatusRouter = createTvlStatusRouter(clock, [
+  const tvlStatusRouter = createTvlStatusRouter(
+    clock,
+    priceUpdater,
     aggregatedReportUpdater,
-    ...submodules.flatMap((x) => x?.assetUpdaters ?? []),
-  ])
+    submodules,
+  )
 
   // #endregion
 

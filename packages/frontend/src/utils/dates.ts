@@ -41,7 +41,7 @@ function toNiceDate(day: string, month?: string, year?: string) {
   return day
 }
 
-export function formatRange(from: number, to: number, withTime = false) {
+export function formatRange(from: number, to: number) {
   const parsedFrom = parseTimestamp(from)
   const parsedTo = parseTimestamp(to)
   const fromDate = toNiceDate(parsedFrom.day, parsedFrom.month, parsedFrom.year)
@@ -52,12 +52,7 @@ export function formatRange(from: number, to: number, withTime = false) {
       : parsedTo.month,
     parsedFrom.year === parsedTo.year ? undefined : parsedTo.year,
   )
-  const first = formatTimeAndDate(
-    fromDate,
-    withTime ? parsedFrom.time : undefined,
-  )
-  const second = formatTimeAndDate(toDate, withTime ? parsedTo.time : undefined)
-  return `${first} &ndash;\n${second}`
+  return `${fromDate} &ndash;\n${toDate}`
 }
 
 export function formatTimestamp(timestamp: number, withTime = false) {

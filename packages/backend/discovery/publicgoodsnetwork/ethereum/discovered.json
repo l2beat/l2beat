@@ -1,8 +1,8 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 18128288,
-  "configHash": "0xa0894dde8b4387c4b469554af405a6d02e9392326eda54b75a00c649c3a7ae49",
+  "blockNumber": 18219101,
+  "configHash": "0x40d5fc7f929a6fcdeb710ba9152317ac845206a44c6df1757564e67c02c9cc98",
   "version": 2,
   "contracts": [
     {
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1689106799,
       "values": {
         "owner": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
@@ -23,6 +24,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1689022727,
       "values": {
         "domainSeparator": "0xa0c95424e029e9dbcafbbe66805964a70e72f893827f7da4fd8b501d4e245990",
         "getChainId": 1,
@@ -47,6 +49,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "sinceTimestamp": 1680797639,
       "values": {
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
@@ -71,6 +74,7 @@
         "implementation": "0x463B3777d3DD6a90234b594D1f94002267CE7948",
         "admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
+      "sinceTimestamp": 1689106883,
       "values": {
         "batcherHash": "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
         "gasLimit": 30000000,
@@ -102,9 +106,10 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x1d8180D739D01dC97e837478af8d494215C5EF5e"
       },
+      "sinceTimestamp": 1689106835,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633702",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633947",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -126,14 +131,16 @@
         "implementation": "0x76983dfED43C7ae7ebB592A92Be2BE972cAE4348",
         "admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
+      "sinceTimestamp": 1689106823,
       "values": {
         "CHALLENGER": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 2754000,
-        "latestOutputIndex": 1529,
-        "nextBlockNumber": 2755800,
-        "nextOutputIndex": 1530,
+        "latestBlockNumber": 3304800,
+        "latestOutputIndex": 1835,
+        "nextBlockNumber": 3306600,
+        "nextOutputIndex": 1836,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -150,11 +157,12 @@
         "implementation": "0x436e9FC7894e26718637f086d42B4a06439C8ae0",
         "admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
+      "sinceTimestamp": 1689106847,
       "values": {
         "GUARDIAN": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "L2_ORACLE": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491822, 18127226],
+        "params": [1000000000, 490798, 18218584],
         "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.6.0"
@@ -167,6 +175,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1689106787,
       "values": {
         "addressManager": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
         "isUpgrading": false,
@@ -181,6 +190,7 @@
         "implementation": "0x459bA3BD8fb18CCBf557Ae9Fab13ceD2542B0d8E",
         "admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
+      "sinceTimestamp": 1689106811,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
