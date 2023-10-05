@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { layer2s } from '@l2beat/config'
+import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
   DetailedTvlApiCharts,
@@ -118,9 +118,9 @@ export class TvlController {
   async getAggregatedApiResponse(slugs: string[]): Promise<TvlProjectResult> {
     const dataTimings = await this.getDataTimings()
 
-    const projectIdsFilter = layer2s
-      .filter((layer2) => slugs.includes(layer2.display.slug))
-      .map((layer2) => layer2.id)
+    const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => slugs.includes(project.display.slug))
+      .map((project) => project.id)
 
     if (!dataTimings.latestTimestamp) {
       return {
