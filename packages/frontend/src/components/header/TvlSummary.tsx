@@ -4,6 +4,7 @@ import { unifyPercentagesAsIntegers } from '../../utils'
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { CanonicalIcon, ExternalIcon, NativeIcon } from '../icons'
+import { Link } from '../Link'
 import { PercentChange } from '../PercentChange'
 
 export interface TvlStats {
@@ -153,12 +154,9 @@ export function TvlSummary(props: TvlSummaryProps) {
       ) : null}
       {props.showTvlBreakdown ? (
         <div className="flex justify-center">
-          <a
-            className="text-xs font-medium text-blue-500 underline"
-            href={props.tvlBreakdownHref}
-          >
+          <Link href={props.tvlBreakdownHref} className="text-xs">
             View TVL Breakdown
-          </a>
+          </Link>
         </div>
       ) : null}
     </div>
