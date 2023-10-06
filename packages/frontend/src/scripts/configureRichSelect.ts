@@ -14,7 +14,7 @@ export function configureRichSelects() {
 function configureRichSelect(richSelect: HTMLElement) {
   const { $, $$ } = makeQuery(richSelect)
   const dropdown = $('.RichSelect-Dropdown')
-  const slideCardCloses = $$('.RichSelect-SlideCard-Close')
+  const slideCard = $('.RichSelect-SlideCard')
   const items = $$('.RichSelect-Item')
   const selectedText = $('.RichSelect-SelectedText')
   const toggle = $('.RichSelect-Toggle')
@@ -22,13 +22,9 @@ function configureRichSelect(richSelect: HTMLElement) {
   function setState(state: State) {
     if (isMobile()) {
       if (state === 'opened') {
-        document.body.classList.add('w-screen', 'h-screen', 'overflow-hidden')
+        document.body.classList.add('w-screen', 'overflow-hidden')
       } else {
-        document.body.classList.remove(
-          'w-screen',
-          'h-screen',
-          'overflow-hidden',
-        )
+        document.body.classList.remove('w-screen', 'overflow-hidden')
       }
     }
 
@@ -42,10 +38,7 @@ function configureRichSelect(richSelect: HTMLElement) {
   toggle.addEventListener('click', () => onToggleClick())
   items.forEach((item) => onItemClick(item))
   document.addEventListener('click', (e) => onOutsideClick(e))
-
-  slideCardCloses.forEach((slideCardClose) => {
-    slideCardClose.addEventListener('click', () => onSlideCardCloseClick())
-  })
+  configureSlideCard(slideCard, setState)
 
   if (richSelect.dataset.centered) {
     centerSelect()
@@ -82,10 +75,6 @@ function configureRichSelect(richSelect: HTMLElement) {
     })
   }
 
-  function onSlideCardCloseClick() {
-    setState(null)
-  }
-
   function onOutsideClick(e: MouseEvent) {
     if (!richSelect.contains(e.target as Node)) {
       if (richSelect.dataset.state === 'opened') {
@@ -106,6 +95,45 @@ function configureRichSelect(richSelect: HTMLElement) {
 
     dropdown.style.left = `${left}px`
   }
+}
+
+function configureSlideCard(
+  slideCard: HTMLElement,
+  setState: (state: State) => void,
+) {
+  const { $ } = makeQuery(slideCard)
+  const slideCardGestureZone = $('.RichSelect-SlideCard-GestureZone')
+  const slideCardCloses = document.querySelectorAll<HTMLElement>(
+    '.RichSelect-SlideCard-Close',
+  )
+
+  let touchStartY = 0
+
+  slideCardGestureZone.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY
+  })
+
+  slideCardGestureZone.addEventListener('touchmove', (e) => {
+    const touchMoveY = e.touches[0].clientY
+    const diff = touchMoveY - touchStartY
+    if (diff < 0) {
+      return
+    }
+    slideCard.style.transform = `translateY(${touchMoveY - touchStartY}px)`
+  })
+
+  slideCardGestureZone.addEventListener('touchend', (e) => {
+    const touchEndY = e.changedTouches[0].clientY
+    const diff = touchEndY - touchStartY
+    slideCard.style.transform = ''
+    if (diff > 150) {
+      setState(null)
+    }
+  })
+
+  slideCardCloses.forEach((slideCardClose) => {
+    slideCardClose.addEventListener('click', () => setState(null))
+  })
 }
 
 export function clearRichSelect(element: HTMLElement) {

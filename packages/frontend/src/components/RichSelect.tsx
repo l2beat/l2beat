@@ -48,7 +48,7 @@ export function RichSelect(props: Props) {
       </div>
       <div className="RichSelect-SlideCard-Close pointer-events-none fixed inset-x-0 bottom-0 z-999 h-full w-full bg-black/50 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:hidden" />
       <div className="RichSelect-SlideCard fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-200 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-gray-750 md:hidden">
-        <div className="flex justify-between">
+        <div className="RichSelect-SlideCard-GestureZone flex justify-between">
           <h2 className="text-3xl font-bold">
             {props.slideCardTitle ?? props.label}
           </h2>
