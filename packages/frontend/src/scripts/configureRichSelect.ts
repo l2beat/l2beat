@@ -101,11 +101,10 @@ function configureSlideCard(
   slideCard: HTMLElement,
   setState: (state: State) => void,
 ) {
-  const { $ } = makeQuery(slideCard)
+  const { $, $$ } = makeQuery(slideCard)
+  const slideCardContent = $('.RichSelect-SlideCard-Content')
   const slideCardGestureZone = $('.RichSelect-SlideCard-GestureZone')
-  const slideCardCloses = document.querySelectorAll<HTMLElement>(
-    '.RichSelect-SlideCard-Close',
-  )
+  const slideCardCloses = $$('.RichSelect-SlideCard-Close')
 
   let touchStartY = 0
 
@@ -119,13 +118,15 @@ function configureSlideCard(
     if (diff < 0) {
       return
     }
-    slideCard.style.transform = `translateY(${touchMoveY - touchStartY}px)`
+    slideCardContent.style.transform = `translateY(${
+      touchMoveY - touchStartY
+    }px)`
   })
 
   slideCardGestureZone.addEventListener('touchend', (e) => {
     const touchEndY = e.changedTouches[0].clientY
     const diff = touchEndY - touchStartY
-    slideCard.style.transform = ''
+    slideCardContent.style.transform = ''
     if (diff > 150) {
       setState(null)
     }
