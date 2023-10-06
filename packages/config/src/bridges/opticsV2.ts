@@ -136,7 +136,8 @@ export const opticsV2: Bridge = {
     {
       name: 'Governor',
       accounts: [],
-      description: 'Manages Optics V1 bridge components via the Celo network. ',
+      description:
+        'A multisig on Celo Network that manages all Optics V1 bridge components.',
     },
     ...discovery.getMultisigPermission(
       'RecoveryManager',
