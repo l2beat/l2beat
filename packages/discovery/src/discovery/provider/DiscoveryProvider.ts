@@ -8,6 +8,7 @@ import { Hash256 } from '../../utils/Hash256'
 import { UnixTime } from '../../utils/UnixTime'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
+import { RateLimitedProvider } from './RateLimitedProvider'
 
 export interface ContractMetadata {
   name: string
@@ -28,7 +29,7 @@ export interface ContractMetadata {
  */
 export class DiscoveryProvider {
   constructor(
-    private readonly provider: providers.Provider,
+    private readonly provider: providers.Provider | RateLimitedProvider,
     private readonly etherscanLikeClient: EtherscanLikeClient,
     private readonly logger: DiscoveryLogger,
     private readonly getLogsMaxRange?: number,

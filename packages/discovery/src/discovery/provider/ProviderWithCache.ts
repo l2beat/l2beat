@@ -9,6 +9,7 @@ import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { isRevert } from '../utils/isRevert'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
+import { RateLimitedProvider } from './RateLimitedProvider'
 
 const toJSON = <T>(x: T): string => JSON.stringify(x)
 const fromJSON = <T>(x: string): T => JSON.parse(x) as T
@@ -20,7 +21,7 @@ export interface DiscoveryCache {
 
 export class ProviderWithCache extends DiscoveryProvider {
   constructor(
-    provider: providers.Provider,
+    provider: providers.Provider | RateLimitedProvider,
     etherscanLikeClient: EtherscanLikeClient,
     logger: DiscoveryLogger,
     private readonly chainId: ChainId,
