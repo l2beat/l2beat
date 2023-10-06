@@ -1,11 +1,23 @@
-## Diff at Mon, 02 Oct 2023 15:15:06 GMT:
+# Diff at Fri, 06 Oct 2023 09:11:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@
 
+## Description
+
+Multisig bridge. Don't want to spend too much time on it.
+
+## Watched changes
+
 ```diff
 +   Status: CREATED
     contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9) {
     }
 ```
 
@@ -17,13 +29,13 @@
 
 ```diff
 +   Status: CREATED
-    contract  (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
     }
 ```
 
 ```diff
 +   Status: CREATED
-    contract MultisigVault (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
     }
 ```
 

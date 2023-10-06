@@ -1,8 +1,8 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 18263493,
-  "configHash": "0x4643cca34f77c300b9a8189bca5e7fe0ae7dc4a1eec7871cf9494a19c8479992",
+  "blockNumber": 18290482,
+  "configHash": "0xdbb2fa0647de6b0a8ed4d6544aa23dd24ae5b8a81889a3bdd720efd35d56c68f",
   "version": 2,
   "contracts": [
     {
@@ -27,7 +27,30 @@
         "getMinimalQuorum": 2,
         "getNumberOfMembers": 3,
         "name": "ChainportCongressMembersRegistry"
-      }
+      },
+      "derivedName": "ChainportCongressMembersRegistry"
+    },
+    {
+      "name": "MultisigVault2",
+      "address": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "sinceTimestamp": 1641296925,
+      "values": {
+        "domainSeparator": "0x4812ce160ffe37bfbe1ff1f71c8dad41849053931e9ec9c5465469ef8083f38e",
+        "getChainId": 1,
+        "getOwners": [
+          "0x894107B7b5051409f279E8300774B2f62Febe057",
+          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+          "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
+        ],
+        "getThreshold": 2,
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "ProxyAdmin",
@@ -41,7 +64,7 @@
       }
     },
     {
-      "name": "",
+      "name": "Vault6",
       "address": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
       "unverified": true,
       "upgradeability": {
@@ -49,10 +72,11 @@
         "implementation": "0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568",
         "admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
       },
-      "sinceTimestamp": 1626949825
+      "sinceTimestamp": 1626949825,
+      "derivedName": ""
     },
     {
-      "name": "MultisigVault",
+      "name": "MultisigVault1",
       "address": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
       "upgradeability": {
         "type": "gnosis safe",
@@ -90,8 +114,10 @@
   ],
   "eoas": [
     "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8",
+    "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
     "0x894107B7b5051409f279E8300774B2f62Febe057",
-    "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+    "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+    "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
   ],
   "abis": {
     "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa": [
@@ -109,6 +135,9 @@
       "function isMember(address _address) view returns (bool)",
       "function name() view returns (string)",
       "function removeMember(address targetMember)"
+    ],
+    "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9": [
+      "constructor(address _singleton)"
     ],
     "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
