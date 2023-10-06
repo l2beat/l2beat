@@ -5,7 +5,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Multisig that can upgrade Optics V2 contracts across domains.
 
 ## Watched changes
 
