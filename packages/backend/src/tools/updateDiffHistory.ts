@@ -47,19 +47,30 @@ async function updateDiffHistoryFile() {
 
   // To check for changes to source code,
   // download sources for block number from main branch
+  let codeDiff = ''
   if (discoveryFromMainBranch) {
+    const root = `discovery/${projectName}/${chainName}`
+    // Remove any old sources we fetched before, so that their count doesn't grow
+    await rimraf(`${root}/.code@*`, { glob: true })
+
     const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
     const cli = [
       `yarn discover:raw ${chainName} ${projectName}`,
       `--block-number=${blockNumberFromMainBranch}`,
       `--sources-folder=.code@${blockNumberFromMainBranch}`,
-      '--discovery-filename=@skip', // we don't need discovered.json
+      `--discovery-filename=discovered@${blockNumberFromMainBranch}.json`, // we don't need discovered.json
     ].join(' ')
     console.log('Downloading sources from main branch:')
     console.log(cli)
     execSync(cli, { stdio: 'inherit' })
+
     // Remove discovered@... file, we don't need it
-    await rimraf(`discovered@${blockNumberFromMainBranch}.json`)
+    await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
+
+    codeDiff = compareFolders(
+      `${root}/.code@${blockNumberFromMainBranch}`,
+      `${root}/.code`,
+    )
   }
 
   if (diff.length > 0) {
@@ -76,6 +87,7 @@ async function updateDiffHistoryFile() {
     const newHistoryEntry = generateDiffHistoryMarkdown(
       diff,
       mainBranchHash,
+      codeDiff,
       description,
     )
     const diffHistory =
@@ -98,6 +110,29 @@ function getMainBranchName(): 'main' | 'master' {
     // If error, it means 'master' doesn't exist, so we'll stick with 'main'
   }
   return 'main'
+}
+
+function compareFolders(path1: string, path2: string): string {
+  try {
+    return execSync(`git diff --no-index --stat ${path1} ${path2}`).toString()
+  } catch (error) {
+    // When difference is found, git diff returns non-zero exit code
+    // so execSync throws and error, which we handle here
+    const execSyncError = error as {
+      code?: number
+      stdout?: Buffer
+      stderr?: Buffer
+    }
+    if (execSyncError.stderr && execSyncError.stderr.toString().trim() !== '') {
+      const errorMessage = `Error with git diff: ${execSyncError.stderr.toString()}`
+      console.log(errorMessage)
+      return errorMessage
+    }
+    if (execSyncError.stdout) {
+      return execSyncError.stdout.toString().trim()
+    }
+    return 'Error with git diff: no stderr or stdout found'
+  }
 }
 
 function getFileVersionOnMainBranch(filePath: string): {
@@ -172,6 +207,7 @@ function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
 function generateDiffHistoryMarkdown(
   diffs: DiscoveryDiff[],
   mainBranchHash: string,
+  codeDiff: string,
   description?: string,
 ): string {
   const result = []
@@ -194,10 +230,20 @@ function generateDiffHistoryMarkdown(
     )
     result.push('')
   }
+
   result.push('## Watched changes')
   result.push('')
   result.push(discoveryDiffToMarkdown(diffs))
   result.push('')
+
+  if (codeDiff !== '') {
+    result.push('## Source code changes')
+    result.push('')
+    result.push('```diff')
+    result.push(codeDiff)
+    result.push('```')
+    result.push('')
+  }
 
   return result.join('\n')
 }
