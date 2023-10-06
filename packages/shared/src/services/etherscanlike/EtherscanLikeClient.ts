@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   EthereumAddress,
   getErrorMessage,
@@ -7,7 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Logger } from '../../tools'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,

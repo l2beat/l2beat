@@ -309,11 +309,11 @@ export const dydx: Layer2 = {
       discovery.getContractDetails('DydxGovernor', {
         description: 'Contract storing dYdX Governance logic.',
       }),
-      discovery.getContractDetails('GovernanceStrategy', {
+      discovery.getContractDetails('GovernanceStrategyV2', {
         description:
           'Contract storing logic for votes counting in dYdX Governance.',
         upgradeConsiderations:
-          'This contract is not upgradeable, although the address of the GovernanceStrategy can be changed by the owner of DydxGovernor contract.',
+          'This contract is not upgradeable, although the address of the GovernanceStrategyV2 can be changed by the owner of DydxGovernor contract.',
       }),
       discovery.getContractDetails('DydxToken', {
         description: 'Token used by the dYdX Governance for voting.',

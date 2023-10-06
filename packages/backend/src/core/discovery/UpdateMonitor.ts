@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   diffDiscovery,
@@ -5,7 +6,6 @@ import {
   DiscoveryDiff,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { Logger } from '@l2beat/shared'
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -91,11 +91,9 @@ export class UpdateMonitor {
         await this.updateProject(runner, projectConfig, blockNumber, timestamp)
       } catch (error) {
         this.logger.error(
-          {
-            message: `[chain: ${ChainId.getName(
-              chainId,
-            )}] Failed to update project [${projectConfig.name}]`,
-          },
+          `[chain: ${ChainId.getName(chainId)}] Failed to update project [${
+            projectConfig.name
+          }]`,
           error,
         )
         errorsCount.inc()
