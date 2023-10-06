@@ -184,10 +184,20 @@ export function renderTokenTvlHover(
     regular: undefined,
   }
   const style = styles[tokenType]
+  const formattedUsd = formatCurrencyExactValue(data.usd, 'USD')
+  const formattedToken = formatCurrencyExactValue(data.token, tokenSymbol)
   return renderHover([
     renderDateRow(data.date),
-    renderCurrencyRow(data.token, tokenSymbol, style),
-    renderCurrencyRow(data.usd, 'USD', style ? 'gap' : undefined),
+    renderDetailedRow({
+      title: tokenSymbol,
+      value: formattedToken,
+      icon: isMobile() ? undefined : style,
+    }),
+    renderDetailedRow({
+      title: 'USD',
+      value: formattedUsd,
+      icon: isMobile() ? undefined : 'gap',
+    }),
   ])
 }
 
@@ -222,7 +232,7 @@ function renderDetailedRow(props: DetailedRowProps) {
     <div class="flex w-full justify-between items-center gap-2">
       <div>
         ${renderIcon(props.icon)}
-        <span class="text-gray-50 text-sm ${
+        <span class="dark:text-gray-50 text-gray-700 text-sm ${
           props.shortTitle ? 'hidden md:inline' : ''
         }">${props.title}</span>
         ${shortTitleHtml}
@@ -239,19 +249,6 @@ function renderIcon(icon?: PointStyle | 'gap') {
   return icon
     ? `<div class="inline-block mr-1 relative -top-px ${POINT_CLASS_NAMES[icon]}"></div>`
     : ''
-}
-
-function renderCurrencyRow(
-  value: number,
-  ticker: string,
-  icon?: PointStyle | 'gap',
-) {
-  const formatted = formatCurrencyExactValue(value, ticker)
-  return `<div>
-    ${renderIcon(icon)}
-    <span class="font-bold tabular-nums">${formatted}</span>
-    <span>${ticker}</span>
-  </div>`
 }
 
 function renderNameRow(name: string) {
