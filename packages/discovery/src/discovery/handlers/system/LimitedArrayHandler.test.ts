@@ -42,7 +42,7 @@ describe(LimitedArrayHandler.name, () => {
     expect(result).toEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()),
-      error: 'Too many values. Update configuration explore fully',
+      error: 'Too many values. Update configuration to explore fully',
     })
   })
 

@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.10.0
+
+### Minor Changes
+
+- New supported CLI options: --block-number, --sources-folder, --discovery-filename
+
 ## 0.9.0
 
 ### Minor Changes

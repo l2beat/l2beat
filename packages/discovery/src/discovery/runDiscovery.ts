@@ -50,6 +50,8 @@ export async function runDiscovery(
     blockNumber,
     projectConfig.hash,
     config.chainId,
+    config.sourcesFolder,
+    config.discoveryFilename,
   )
 }
 

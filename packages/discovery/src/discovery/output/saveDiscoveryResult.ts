@@ -16,6 +16,8 @@ export async function saveDiscoveryResult(
   blockNumber: number,
   configHash: Hash256,
   chain: ChainId,
+  sourcesFolder?: string,
+  discoveryFilename?: string,
 ): Promise<void> {
   const project = toDiscoveryOutput(
     config.name,
@@ -30,9 +32,12 @@ export async function saveDiscoveryResult(
 
   const root = `discovery/${config.name}/${chainName}`
 
-  await writeFile(`${root}/discovered.json`, json)
+  discoveryFilename ??= 'discovered.json'
+  await writeFile(`${root}/${discoveryFilename}`, json)
 
-  await rimraf(`${root}/.code`)
+  sourcesFolder ??= '.code'
+  const sourcesPath = `${root}/${sourcesFolder}`
+  await rimraf(sourcesPath)
   for (const result of results) {
     if (result.type === 'EOA') {
       continue
@@ -40,7 +45,7 @@ export async function saveDiscoveryResult(
     for (const [i, files] of result.sources.entries()) {
       for (const [file, content] of Object.entries(files)) {
         const codebase = getSourceName(i, result.sources.length)
-        const path = `${root}/.code/${result.name}${codebase}/${file}`
+        const path = `${sourcesPath}/${result.name}${codebase}/${file}`
         await mkdirp(dirname(path))
         await writeFile(path, content)
       }

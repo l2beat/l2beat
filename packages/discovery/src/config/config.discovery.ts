@@ -8,7 +8,6 @@ import { EthereumAddress } from '../utils/EthereumAddress'
 export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   dotenv()
 
-  const env = getEnv()
   if (
     cli.mode !== 'invert' &&
     cli.mode !== 'discover' &&
@@ -33,8 +32,10 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       chainId: cli.chain,
       dryRun: cli.dryRun,
       dev: cli.dev,
-      blockNumber: env.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
+      blockNumber: cli.blockNumber,
       getLogsMaxRange: chain.rpcGetLogsMaxRange,
+      sourcesFolder: cli.sourcesFolder,
+      discoveryFilename: cli.discoveryFilename,
     },
     singleDiscovery: singleDiscoveryEnabled && {
       address: cli.address,
@@ -181,6 +182,8 @@ export interface DiscoveryModuleConfig {
   readonly dev?: boolean
   readonly blockNumber?: number
   readonly getLogsMaxRange?: number
+  readonly sourcesFolder?: string
+  readonly discoveryFilename?: string
 }
 
 export interface SingleDiscoveryModuleConfig {

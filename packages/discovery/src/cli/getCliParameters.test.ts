@@ -37,6 +37,9 @@ describe(getCliParameters.name, () => {
       project: 'foo',
       dryRun: false,
       dev: false,
+      sourcesFolder: undefined,
+      discoveryFilename: undefined,
+      blockNumber: undefined,
     })
   })
 
@@ -48,17 +51,30 @@ describe(getCliParameters.name, () => {
       project: 'foo',
       dryRun: true,
       dev: false,
+      sourcesFolder: undefined,
+      discoveryFilename: undefined,
+      blockNumber: undefined,
     })
   })
 
-  it('discover --dev foo', () => {
-    const cli = getCliParameters(['discover', '--dev', 'ethereum', 'foo'])
+  it('discover --dev foo --sources-folder=.code@1234 --discovery-filename=discovery@1234.json', () => {
+    const cli = getCliParameters([
+      'discover',
+      '--dev',
+      'ethereum',
+      'foo',
+      '--sources-folder=.code@1234',
+      '--discovery-filename=discovery@1234',
+    ])
     expect(cli).toEqual({
       mode: 'discover',
       chain: ChainId.fromName('ethereum'),
       project: 'foo',
       dryRun: false,
       dev: true,
+      sourcesFolder: '.code@1234',
+      discoveryFilename: 'discovery@1234',
+      blockNumber: undefined,
     })
   })
 
@@ -70,5 +86,25 @@ describe(getCliParameters.name, () => {
   it('discover foo bar baz', () => {
     const cli = getCliParameters(['discover', 'foo', 'bar', 'baz', 'qux'])
     expect(cli).toEqual({ mode: 'help', error: 'Too many arguments' })
+  })
+
+  it('discover ethereum --block-number=5678 foo --dry-run', () => {
+    const cli = getCliParameters([
+      'discover',
+      'ethereum',
+      '--block-number=5678',
+      'foo',
+      '--dry-run',
+    ])
+    expect(cli).toEqual({
+      mode: 'discover',
+      chain: ChainId.fromName('ethereum'),
+      project: 'foo',
+      dryRun: true,
+      dev: false,
+      sourcesFolder: undefined,
+      discoveryFilename: undefined,
+      blockNumber: 5678,
+    })
   })
 })

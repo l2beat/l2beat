@@ -20,6 +20,9 @@ export interface DiscoverCliParameters {
   chain: ChainId
   dryRun: boolean
   dev: boolean
+  sourcesFolder?: string
+  discoveryFilename?: string
+  blockNumber?: number
 }
 
 export interface InvertCliParameters {
@@ -60,6 +63,9 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
 
     let dryRun = false
     let dev = false
+    let blockNumber: number | undefined
+    let sourcesFolder: string | undefined
+    let discoveryFilename: string | undefined
 
     if (remaining.includes('--dry-run')) {
       dryRun = true
@@ -69,6 +75,32 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
     if (remaining.includes('--dev')) {
       dev = true
       remaining.splice(remaining.indexOf('--dev'), 1)
+    }
+
+    const blockNumberArg = extractArgWithValue(remaining, '--block-number')
+    if (blockNumberArg.found) {
+      const blockNumberStr = blockNumberArg.value
+      if (blockNumberStr === undefined) {
+        return { mode: 'help', error: 'Please provide a valid block number' }
+      }
+      blockNumber = parseInt(blockNumberStr, 10)
+      assert(
+        blockNumber.toString() === blockNumberStr,
+        `"${blockNumberStr}" is not a valid block number`,
+      )
+    }
+
+    const sourcesFolderArg = extractArgWithValue(remaining, '--sources-folder')
+    if (sourcesFolderArg.found) {
+      sourcesFolder = sourcesFolderArg.value
+    }
+
+    const discoveryFilenameArg = extractArgWithValue(
+      remaining,
+      '--discovery-filename',
+    )
+    if (discoveryFilenameArg.found) {
+      discoveryFilename = discoveryFilenameArg.value
     }
 
     if (remaining.length === 0) {
@@ -86,6 +118,9 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
       project: remaining[1],
       dryRun,
       dev,
+      sourcesFolder,
+      discoveryFilename,
+      blockNumber,
     }
     return result
   }
@@ -140,4 +175,18 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
   const mode = args[0] ?? '<unknown mode>'
 
   return { mode: 'help', error: `Unknown mode: ${mode}` }
+}
+
+function extractArgWithValue(
+  args: string[],
+  argName: string,
+): { found: false } | { found: true; value: string | undefined } {
+  assert(argName.startsWith('--'), 'Argument name must start with "--"')
+  const argIndex = args.findIndex((arg) => arg.startsWith(`${argName}=`))
+  if (argIndex !== -1) {
+    const value = args[argIndex]?.split('=')[1]
+    args.splice(argIndex, 1)
+    return { found: true, value }
+  }
+  return { found: false }
 }

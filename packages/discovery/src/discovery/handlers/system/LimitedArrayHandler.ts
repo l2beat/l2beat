@@ -62,7 +62,7 @@ export class LimitedArrayHandler implements Handler {
         return {
           field: this.field,
           value,
-          error: 'Too many values. Update configuration explore fully',
+          error: 'Too many values. Update configuration to explore fully',
         }
       } else {
         return { field: this.field, value }
