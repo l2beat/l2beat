@@ -9,7 +9,7 @@ interface Props {
   id: string
   label: string
   children: React.ReactNode
-  slideCardTitle: string
+  slideCardTitle?: string
   className?: string
   listClassName?: string
   centered?: boolean
@@ -47,19 +47,15 @@ export function RichSelect(props: Props) {
         </div>
       </div>
       {/* TODO: Add gradient to scroll */}
-      <div className="RichSelect-SlideCard fixed left-0 bottom-0 z-999 flex h-[100dvh] w-full translate-y-full flex-col whitespace-normal bg-black/50 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 md:hidden">
-        <div className="RichSelect-SlideCard-Close h-[10%]" />
-        <div className="flex h-full flex-col gap-4 rounded-t-2xl bg-gray-200 p-4 dark:bg-gray-750">
-          <div className="flex justify-between">
-            <h2 className="text-3xl font-bold">{props.slideCardTitle}</h2>
-            <CloseIcon className="RichSelect-SlideCard-Close h-4 w-4 fill-black dark:fill-white" />
-          </div>
-          <div className="relative flex grow flex-wrap">
-            <div className="absolute inset-0 my-4 overflow-auto scroll-smooth">
-              {props.children}
-            </div>
-          </div>
+      <div className="RichSelect-SlideCard-Close pointer-events-none fixed inset-x-0 bottom-0 z-999 h-full w-full bg-black/50 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:hidden" />
+      <div className="RichSelect-SlideCard fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-200 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-gray-750 md:hidden">
+        <div className="flex justify-between">
+          <h2 className="text-3xl font-bold">
+            {props.slideCardTitle ?? props.label}
+          </h2>
+          <CloseIcon className="RichSelect-SlideCard-Close h-5 w-5 fill-black dark:fill-white" />
         </div>
+        <div className="mt-4 max-h-[80dvh] overflow-auto">{props.children}</div>
       </div>
     </div>
   )
@@ -67,8 +63,8 @@ export function RichSelect(props: Props) {
 
 interface RichSelectItemProps {
   children: React.ReactNode
-  selectedLabel: string
   value: string
+  selectedLabel: string
   className?: string
 }
 

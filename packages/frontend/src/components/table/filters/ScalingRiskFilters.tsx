@@ -28,11 +28,7 @@ export function ScalingRiskFilters({ items }: Props) {
   return (
     <FiltersWrapper items={items}>
       <RollupsOnlyCheckbox items={items} />
-      <RichSelect
-        label="Select DA"
-        slideCardTitle="Select data availability"
-        id="DA-select"
-      >
+      <RichSelect label="Select DA" id="DA-select">
         {dataAvailability.map((da) => (
           <RichSelect.Item
             selectedLabel={da.label}

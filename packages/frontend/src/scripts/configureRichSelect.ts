@@ -22,9 +22,13 @@ function configureRichSelect(richSelect: HTMLElement) {
   function setState(state: State) {
     if (isMobile()) {
       if (state === 'opened') {
-        document.body.classList.add('w-screen', 'overflow-hidden')
+        document.body.classList.add('w-screen', 'h-screen', 'overflow-hidden')
       } else {
-        document.body.classList.remove('w-screen', 'overflow-hidden')
+        document.body.classList.remove(
+          'w-screen',
+          'h-screen',
+          'overflow-hidden',
+        )
       }
     }
 

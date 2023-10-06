@@ -28,11 +28,7 @@ export function ScalingTvlFilters({ items }: Props) {
   return (
     <FiltersWrapper items={items}>
       <RollupsOnlyCheckbox items={items} />
-      <RichSelect
-        label="Select stack"
-        slideCardTitle="Select stack"
-        id="stack-select"
-      >
+      <RichSelect label="Select stack" id="stack-select">
         {providers.map((da) => (
           <RichSelect.Item
             selectedLabel={da.label}
@@ -43,11 +39,7 @@ export function ScalingTvlFilters({ items }: Props) {
           </RichSelect.Item>
         ))}
       </RichSelect>
-      <RichSelect
-        label="Select stage"
-        slideCardTitle="Select stage"
-        id="stage-select"
-      >
+      <RichSelect label="Select stage" id="stage-select">
         {stages.map((stage) => (
           <RichSelect.Item
             selectedLabel={stage.label}
