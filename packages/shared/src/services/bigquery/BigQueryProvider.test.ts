@@ -23,6 +23,27 @@ describe(BigQueryProvider.name, () => {
       expect(bigQuery.createQueryJob).toHaveBeenCalledWith(sql)
     })
 
+    it('calls createQueryJob and returns valid data', async () => {
+      const response = {
+        key: 'value',
+      }
+      const bigQuery = mockObject<BigQueryWrapper>({
+        createQueryJob: mockFn().resolvesToOnce([
+          {
+            getQueryResults: async () => {
+              return [response]
+            },
+          },
+        ]),
+      })
+
+      const bigQueryProvider = new BigQueryProvider(bigQuery)
+      const sql = 'SELECT * FROM my_table'
+      const results = await bigQueryProvider.query(sql)
+
+      expect(results).toEqual(response)
+    })
+
     it('handles error on getQueryResults', async () => {
       const bigQuery = mockObject<BigQueryWrapper>({
         createQueryJob: async (): Promise<any> => {
@@ -44,7 +65,7 @@ describe(BigQueryProvider.name, () => {
       )
     })
 
-    it('handles error on createQueryJob', async () => {
+    it('handles errors', async () => {
       const bigQuery = mockObject<BigQueryWrapper>({
         createQueryJob: async (): Promise<any> => {
           throw new Error('BigQuery error')
