@@ -46,7 +46,6 @@ export function RichSelect(props: Props) {
           {props.children}
         </div>
       </div>
-      {/* TODO: Add gradient to scroll */}
       <div className="RichSelect-SlideCard-Close pointer-events-none fixed inset-x-0 bottom-0 z-999 h-full w-full bg-black/50 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:hidden" />
       <div className="RichSelect-SlideCard fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-200 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-gray-750 md:hidden">
         <div className="flex justify-between">
@@ -55,7 +54,15 @@ export function RichSelect(props: Props) {
           </h2>
           <CloseIcon className="RichSelect-SlideCard-Close h-5 w-5 fill-black dark:fill-white" />
         </div>
-        <div className="mt-4 max-h-[80dvh] overflow-auto">{props.children}</div>
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-x-0 -top-1 z-20 h-6 bg-gradient-to-b from-gray-200 via-gray-200 to-transparent dark:from-gray-750 dark:via-gray-750" />
+          <div className="max-h-[80dvh] overflow-auto">
+            <div className="pointer-events-none h-6" />
+            {props.children}
+            <div className="pointer-events-none h-6" />
+          </div>
+          <div className="pointer-events-none absolute inset-x-0 -bottom-1 z-20 h-6 bg-gradient-to-t from-gray-200 via-gray-200 to-transparent dark:from-gray-750 dark:via-gray-750" />
+        </div>
       </div>
     </div>
   )
