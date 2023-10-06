@@ -104,13 +104,6 @@ export const chainport: Bridge = {
         },
       ],
     },
-    destinationToken: {
-      isIncomplete: true,
-      name: 'Destination token',
-      description: '',
-      references: [],
-      risks: [],
-    },
   },
   contracts: {
     addresses: [
