@@ -1,5 +1,6 @@
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
+import { getChartUrl } from '../../../scripts/charts/ChartDataController'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
@@ -20,14 +21,12 @@ export function getProps(
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
-  const tvlEndpoint = '/api/scaling-tvl.json'
 
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       tvl: formatUSD(tvl),
       tvlWeeklyChange,
-      tvlEndpoint,
       tvlView: getScalingTvlView(
         config,
         ordering,
@@ -41,7 +40,7 @@ export function getProps(
       milestones: config.milestones,
     },
     wrapper: {
-      preloadApi: tvlEndpoint,
+      preloadApi: getChartUrl({ type: 'layer2-tvl' }),
       metadata: getPageMetadata(),
     },
   }

@@ -149,7 +149,7 @@ export function getScalingDetailedTvlColumns() {
         <ValueWithPercentageCell
           value={project.cbv}
           percentChange={project.cbvChange}
-          tokens={project.tokens.filter((t) => t.assetType === 'CBV')}
+          tokens={project.tokens.filter((t) => t.info.type === 'CBV')}
         />
       ),
     },
@@ -168,7 +168,7 @@ export function getScalingDetailedTvlColumns() {
         <ValueWithPercentageCell
           value={project.ebv}
           percentChange={project.ebvChange}
-          tokens={project.tokens.filter((t) => t.assetType === 'EBV')}
+          tokens={project.tokens.filter((t) => t.info.type === 'EBV')}
         />
       ),
     },
@@ -187,7 +187,7 @@ export function getScalingDetailedTvlColumns() {
         <ValueWithPercentageCell
           value={project.nmv}
           percentChange={project.nmvChange}
-          tokens={project.tokens.filter((t) => t.assetType === 'NMV')}
+          tokens={project.tokens.filter((t) => t.info.type === 'NMV')}
         />
       ),
     },

@@ -2,7 +2,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { configureCharts } from '../../components/chart/configure'
+import { configureCharts } from '../../scripts/charts'
 import { ActivityMetaImage } from './ActivityMetaImage'
 import { TvlMetaImage } from './TvlMetaImage'
 
@@ -29,7 +29,8 @@ function Template() {
           sevenDayChange="+3.45%"
           name={project.display.name}
           icon={project.display.slug && `/icons/${project.display.slug}.png`}
-          tvlEndpoint="/fakeTvl.json"
+          chartType={{ type: 'project-tvl', slug: project.display.slug }}
+          fake
         />
       </div>
     </div>
@@ -50,11 +51,7 @@ export const ActivityOverview: Story = () => {
   return (
     <div className="meta flex items-center justify-center">
       <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
-        <ActivityMetaImage
-          tpsDaily="15.69"
-          tpsWeeklyChange="+3.45%"
-          activityEndpoint="/fakeActivity.json"
-        />
+        <ActivityMetaImage tpsDaily="15.69" tpsWeeklyChange="+3.45%" fake />
       </div>
     </div>
   )

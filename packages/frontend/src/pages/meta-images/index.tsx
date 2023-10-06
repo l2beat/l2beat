@@ -3,7 +3,7 @@ import {
   DetailedTvlApiResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
+import compact from 'lodash/compact'
 import React from 'react'
 
 import { Config } from '../../build/config'

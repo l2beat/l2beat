@@ -1,4 +1,4 @@
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 
 import { getMobileElements } from './getElements'
 import { highlightCurrentSection } from './highlightCurrentSection'
