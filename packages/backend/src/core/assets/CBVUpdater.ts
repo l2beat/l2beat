@@ -1,12 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  assert,
-  AssetId,
-  ChainId,
-  Hash256,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
@@ -109,14 +102,12 @@ export class CBVUpdater implements ReportUpdater {
     ])
     this.logger.debug('Prices and balances ready')
 
-    let reports = createReports(
+    const reports = createReports(
       prices,
       balances,
       this.projects,
       this.getChainId(),
     )
-    // TODO(radomski): This really needs to be refactored
-    reports = filterOutNVMReports(reports)
 
     await this.reportRepository.addOrUpdateMany(reports)
 
@@ -170,14 +161,4 @@ export class CBVUpdater implements ReportUpdater {
       return true
     })
   }
-}
-
-function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
-  return reports.filter((r) => {
-    const isOpNative =
-      r.asset === AssetId.OP && r.projectId === ProjectId.OPTIMISM
-    const isArbNative =
-      r.asset === AssetId.ARB && r.projectId === ProjectId.ARBITRUM
-    return !isOpNative && !isArbNative
-  })
 }

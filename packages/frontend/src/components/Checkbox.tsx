@@ -34,7 +34,7 @@ export function Checkbox({
         className="peer hidden"
         defaultChecked={defaultChecked}
       />
-      <CheckIcon />
+      <CheckIcon className="flex-shrink-0" />
       <span>{label}</span>
     </label>
   )
