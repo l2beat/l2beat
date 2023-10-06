@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.9.0
+
+### Minor Changes
+
+- Allow the contract deployment query to fail
+
 ## 0.8.0
 
 ### Minor Changes

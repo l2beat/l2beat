@@ -46,6 +46,10 @@ export class DiscoveryLogger {
     this.log(`  ${chalk.yellow(field)} ${dots(25 - field.length)} ${content}`)
   }
 
+  logWarning(warning: string): void {
+    this.log(`${chalk.yellow(warning)}`)
+  }
+
   logExecutionError(field: string, error: string): void {
     const prefix = 'Error: ' + field
     this.log(`  ${chalk.red(prefix)} ${dots(25 - prefix.length)} ${error}`)

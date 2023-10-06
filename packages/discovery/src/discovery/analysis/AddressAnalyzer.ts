@@ -19,8 +19,8 @@ export interface AnalyzedContract {
   type: 'Contract'
   address: EthereumAddress
   name: string
-  deploymentTimestamp: UnixTime
-  deploymentBlockNumber: number
+  deploymentTimestamp?: UnixTime
+  deploymentBlockNumber?: number
   derivedName: string | undefined
   isVerified: boolean
   upgradeability: UpgradeabilityParameters
@@ -56,10 +56,21 @@ export class AddressAnalyzer {
       return { analysis: { type: 'EOA', address }, relatives: [] }
     }
 
-    const {
-      timestamp: deploymentTimestamp,
-      blockNumber: deploymentBlockNumber,
-    } = await this.provider.getDeploymentInfo(address)
+    let deployment = undefined
+    try {
+      deployment = await this.provider.getDeploymentInfo(address)
+    } catch (e) {
+      let errorStr = ''
+      if (e instanceof Error) {
+        errorStr = e.toString()
+      } else {
+        errorStr = '<COULD NOT STRINGIFY ERROR>'
+      }
+
+      this.logger.logWarning(
+        `Failed to fetch contract creation info! [${errorStr}]`,
+      )
+    }
 
     const proxy = await this.proxyDetector.detectProxy(
       address,
@@ -88,8 +99,8 @@ export class AddressAnalyzer {
         derivedName: overrides?.name !== undefined ? sources.name : undefined,
         isVerified: sources.isVerified,
         address,
-        deploymentTimestamp,
-        deploymentBlockNumber,
+        deploymentTimestamp: deployment?.timestamp,
+        deploymentBlockNumber: deployment?.blockNumber,
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         implementations: proxy?.implementations ?? [],
         values: values ?? {},
