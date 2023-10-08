@@ -2,6 +2,7 @@ import {
   AssetId,
   ChainId,
   DetailedTvlApiChart,
+  DetailedTvlApiChartPoint,
   DetailedTvlApiCharts,
   ProjectId,
   UnixTime,
@@ -17,6 +18,7 @@ import {
 } from './detailedTvl'
 import {
   extractReportTypeSet,
+  generateAggregatedApiResponse,
   generateDetailedTvlApiResponse,
   getProjectDetailedChartData,
 } from './generateDetailedTvlApiResponse'
@@ -255,3 +257,135 @@ describe(extractReportTypeSet.name, () => {
     })
   })
 })
+
+describe(generateAggregatedApiResponse.name, () => {
+  it('aggregates projects values together', () => {
+    const firstArbitrumTvl = 10
+    const secondArbitrumTvl = 100
+    const firstOptimismTvl = 20
+    const secondOptimismTvl = 200
+    const firstMainnetTvl = 30
+    const secondMainnetTvl = 300
+
+    const mock: AggregatedReportRecord[] = [
+      ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(0), firstArbitrumTvl),
+      ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(0), firstOptimismTvl),
+      ...getMockPoints(ProjectId.ETHEREUM, new UnixTime(0), firstMainnetTvl),
+      ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(1), secondArbitrumTvl),
+      ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(1), secondOptimismTvl),
+      ...getMockPoints(ProjectId.ETHEREUM, new UnixTime(1), secondMainnetTvl),
+    ]
+
+    const selectedProjectIds = ['arbitrum', 'optimism']
+
+    const result = generateAggregatedApiResponse(
+      mock,
+      mock,
+      mock,
+      selectedProjectIds.map((_projectId) => ProjectId(_projectId)),
+    )
+
+    const firstAggregatedTvl = firstArbitrumTvl + firstOptimismTvl
+    const secondAggregatedTvl = secondArbitrumTvl + secondOptimismTvl
+
+    const expectedResult: DetailedTvlApiCharts = {
+      hourly: {
+        types,
+        data: getData(firstAggregatedTvl, secondAggregatedTvl),
+      },
+      sixHourly: {
+        types,
+        data: getData(firstAggregatedTvl, secondAggregatedTvl),
+      },
+      daily: {
+        types,
+        data: getData(firstAggregatedTvl, secondAggregatedTvl),
+      },
+    }
+
+    expect(result).toEqual(expectedResult)
+  })
+})
+
+function getData(
+  firstTvl: number,
+  secondTvl: number,
+): DetailedTvlApiChartPoint[] {
+  return [
+    [
+      new UnixTime(0),
+      firstTvl,
+      firstTvl * 0.6,
+      firstTvl * 0.1,
+      firstTvl * 0.3,
+      firstTvl,
+      firstTvl * 0.6,
+      firstTvl * 0.1,
+      firstTvl * 0.3,
+    ],
+    [
+      new UnixTime(1),
+      secondTvl,
+      secondTvl * 0.6,
+      secondTvl * 0.1,
+      secondTvl * 0.3,
+      secondTvl,
+      secondTvl * 0.6,
+      secondTvl * 0.1,
+      secondTvl * 0.3,
+    ],
+  ]
+}
+
+function getMockPoints(
+  projectId: ProjectId,
+  timestamp: UnixTime,
+  value: number,
+): AggregatedReportRecord[] {
+  const tvl = value
+  const cbv = value * 0.6
+  const ebv = value * 0.1
+  const nmv = value * 0.3
+  return [
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(tvl * 100),
+      ethValue: BigInt(tvl * 1_000_000),
+      reportType: 'TVL',
+    },
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(cbv * 100),
+      ethValue: BigInt(cbv * 1_000_000),
+      reportType: 'CBV',
+    },
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(ebv * 100),
+      ethValue: BigInt(ebv * 1_000_000),
+      reportType: 'EBV',
+    },
+    {
+      timestamp,
+      projectId,
+      usdValue: BigInt(nmv * 100),
+      ethValue: BigInt(nmv * 1_000_000),
+      reportType: 'NMV',
+    },
+  ]
+}
+
+const types: DetailedTvlApiChart['types'] = [
+  'timestamp',
+  'valueUsd',
+  'cbvUsd',
+  'ebvUsd',
+  'nmvUsd',
+  'valueEth',
+  'cbvEth',
+  'ebvEth',
+  'nmvEth',
+]

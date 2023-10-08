@@ -16,9 +16,7 @@ import { ReportRepository } from '../../../peripherals/database/ReportRepository
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
-import {
-  generateTvlApiResponse,
-} from './generateTvlApiResponse'
+import { generateTvlApiResponse } from './generateTvlApiResponse'
 import { Result } from './types'
 
 interface TvlControllerOptions {

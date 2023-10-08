@@ -7,15 +7,16 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { groupBy, toNumber } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { covertBalancesToChartPoints } from './charts'
 import {
-  getProjectTokensCharts, groupByProjectIdAndTimestamp,
+  getProjectTokensCharts,
+  groupByProjectIdAndTimestamp,
   ReportsPerProjectIdAndAsset,
   ReportsPerProjectIdAndTimestamp,
 } from './detailedTvl'
-import {groupBy, toNumber} from "lodash";
 
 export const DETAILED_LABELS: DetailedTvlApiChart['types'] = [
   'timestamp',
@@ -66,10 +67,10 @@ export function generateDetailedTvlApiResponse(
 }
 
 export function generateAggregatedApiResponse(
-    hourly: AggregatedReportRecord[],
-    sixHourly: AggregatedReportRecord[],
-    daily: AggregatedReportRecord[],
-    projectIds: ProjectId[],
+  hourly: AggregatedReportRecord[],
+  sixHourly: AggregatedReportRecord[],
+  daily: AggregatedReportRecord[],
+  projectIds: ProjectId[],
 ): DetailedTvlApiCharts {
   const groupByTimestamp = (reports: AggregatedReportRecord[]) => {
     return groupBy(reports, (report) => report.timestamp)
@@ -92,8 +93,8 @@ export function generateAggregatedApiResponse(
   const dailyGroupedByTimestamp = groupByTimestamp(daily)
 
   const mergeDetailValues = (
-      first: DetailedTvlApiChartPoint,
-      second: DetailedTvlApiChartPoint | undefined,
+    first: DetailedTvlApiChartPoint,
+    second: DetailedTvlApiChartPoint | undefined,
   ): DetailedTvlApiChartPoint => {
     if (!second) return first
     return [
@@ -111,13 +112,13 @@ export function generateAggregatedApiResponse(
 
   for (const timestamp in hourlyGroupedByTimestamp) {
     const _hourlyTimestamp = groupByProjectIdAndTimestamp(
-        hourlyGroupedByTimestamp[timestamp],
+      hourlyGroupedByTimestamp[timestamp],
     )
     const _sixHourlyTimestamp = groupByProjectIdAndTimestamp(
-        sixHourlyGroupedByTimestamp[timestamp],
+      sixHourlyGroupedByTimestamp[timestamp],
     )
     const _dailyTimestamp = groupByProjectIdAndTimestamp(
-        dailyGroupedByTimestamp[timestamp],
+      dailyGroupedByTimestamp[timestamp],
     )
 
     const initialZeroValue: DetailedTvlApiChartPoint = [
@@ -137,27 +138,27 @@ export function generateAggregatedApiResponse(
     let dailyValue: DetailedTvlApiChartPoint = [...initialZeroValue]
 
     projectIds
-        .map((projectId) => {
-          return getProjectDetailedCharts(
-              {
-                hourly: _hourlyTimestamp,
-                sixHourly: _sixHourlyTimestamp,
-                daily: _dailyTimestamp,
-              },
-              projectId,
-          )
-        })
-        .forEach((projectChart) => {
-          hourlyValue = mergeDetailValues(
-              hourlyValue,
-              projectChart.hourly.data[0],
-          )
-          sixHourlyValue = mergeDetailValues(
-              sixHourlyValue,
-              projectChart.sixHourly.data[0],
-          )
-          dailyValue = mergeDetailValues(dailyValue, projectChart.daily.data[0])
-        })
+      .map((projectId) => {
+        return getProjectDetailedCharts(
+          {
+            hourly: _hourlyTimestamp,
+            sixHourly: _sixHourlyTimestamp,
+            daily: _dailyTimestamp,
+          },
+          projectId,
+        )
+      })
+      .forEach((projectChart) => {
+        hourlyValue = mergeDetailValues(
+          hourlyValue,
+          projectChart.hourly.data[0],
+        )
+        sixHourlyValue = mergeDetailValues(
+          sixHourlyValue,
+          projectChart.sixHourly.data[0],
+        )
+        dailyValue = mergeDetailValues(dailyValue, projectChart.daily.data[0])
+      })
 
     result.hourly.data.push(hourlyValue)
     result.sixHourly.data.push(sixHourlyValue)

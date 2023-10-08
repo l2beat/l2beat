@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
-  ChainId, DetailedTvlApiCharts,
+  ChainId,
+  DetailedTvlApiCharts,
   DetailedTvlApiResponse,
   Hash256,
   ProjectAssetsBreakdownApiResponse,
@@ -30,8 +31,8 @@ import {
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import {
-  generateDetailedTvlApiResponse,
   generateAggregatedApiResponse,
+  generateDetailedTvlApiResponse,
 } from './generateDetailedTvlApiResponse'
 import { Result } from './types'
 
@@ -55,10 +56,9 @@ type DetailedAssetTvlResult = Result<
 >
 
 type TvlProjectResult = Result<
-    DetailedTvlApiCharts,
-    'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+  DetailedTvlApiCharts,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
 >
-
 
 export class DetailedTvlController {
   constructor(
