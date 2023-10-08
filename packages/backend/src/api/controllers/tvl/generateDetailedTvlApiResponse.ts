@@ -7,13 +7,11 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { groupBy, toNumber } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { covertBalancesToChartPoints } from './charts'
 import {
   getProjectTokensCharts,
-  groupByProjectIdAndTimestamp,
   ReportsPerProjectIdAndAsset,
   ReportsPerProjectIdAndTimestamp,
 } from './detailedTvl'
@@ -67,15 +65,11 @@ export function generateDetailedTvlApiResponse(
 }
 
 export function generateAggregatedApiResponse(
-  hourly: AggregatedReportRecord[],
-  sixHourly: AggregatedReportRecord[],
-  daily: AggregatedReportRecord[],
+  hourly: ReportsPerProjectIdAndTimestamp,
+  sixHourly: ReportsPerProjectIdAndTimestamp,
+  daily: ReportsPerProjectIdAndTimestamp,
   projectIds: ProjectId[],
 ): DetailedTvlApiCharts {
-  const groupByTimestamp = (reports: AggregatedReportRecord[]) => {
-    return groupBy(reports, (report) => report.timestamp)
-  }
-
   const result: DetailedTvlApiCharts = {
     hourly: {
       types: DETAILED_LABELS,
@@ -87,10 +81,6 @@ export function generateAggregatedApiResponse(
     },
     daily: { types: DETAILED_LABELS, data: [] },
   }
-
-  const hourlyGroupedByTimestamp = groupByTimestamp(hourly)
-  const sixHourlyGroupedByTimestamp = groupByTimestamp(sixHourly)
-  const dailyGroupedByTimestamp = groupByTimestamp(daily)
 
   const mergeDetailValues = (
     first: DetailedTvlApiChartPoint,
@@ -110,60 +100,38 @@ export function generateAggregatedApiResponse(
     ]
   }
 
-  for (const timestamp in hourlyGroupedByTimestamp) {
-    const _hourlyTimestamp = groupByProjectIdAndTimestamp(
-      hourlyGroupedByTimestamp[timestamp],
+  // for (const timestamp in hourlyGroupedByTimestamp) {
+  const projectDetailedCharts = projectIds.map((projectId) => {
+    return getProjectDetailedCharts(
+      {
+        hourly,
+        sixHourly,
+        daily,
+      },
+      projectId,
     )
-    const _sixHourlyTimestamp = groupByProjectIdAndTimestamp(
-      sixHourlyGroupedByTimestamp[timestamp],
+  })
+
+  const firstProjectDetailedCharts = projectDetailedCharts[0]
+  result.hourly.types = firstProjectDetailedCharts.hourly.types
+  result.sixHourly.types = firstProjectDetailedCharts.sixHourly.types
+  result.daily.types = firstProjectDetailedCharts.daily.types
+
+  result.hourly.data = firstProjectDetailedCharts.hourly.data
+  result.sixHourly.data = firstProjectDetailedCharts.sixHourly.data
+  result.daily.data = firstProjectDetailedCharts.daily.data
+
+  projectDetailedCharts.slice(1).forEach((projectChart) => {
+    result.hourly.data = result.hourly.data.map((point, index) =>
+      mergeDetailValues(point, projectChart.hourly.data[index]),
     )
-    const _dailyTimestamp = groupByProjectIdAndTimestamp(
-      dailyGroupedByTimestamp[timestamp],
+    result.sixHourly.data = result.sixHourly.data.map((point, index) =>
+      mergeDetailValues(point, projectChart.sixHourly.data[index]),
     )
-
-    const initialZeroValue: DetailedTvlApiChartPoint = [
-      new UnixTime(toNumber(timestamp)),
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ]
-
-    let hourlyValue: DetailedTvlApiChartPoint = [...initialZeroValue]
-    let sixHourlyValue: DetailedTvlApiChartPoint = [...initialZeroValue]
-    let dailyValue: DetailedTvlApiChartPoint = [...initialZeroValue]
-
-    projectIds
-      .map((projectId) => {
-        return getProjectDetailedCharts(
-          {
-            hourly: _hourlyTimestamp,
-            sixHourly: _sixHourlyTimestamp,
-            daily: _dailyTimestamp,
-          },
-          projectId,
-        )
-      })
-      .forEach((projectChart) => {
-        hourlyValue = mergeDetailValues(
-          hourlyValue,
-          projectChart.hourly.data[0],
-        )
-        sixHourlyValue = mergeDetailValues(
-          sixHourlyValue,
-          projectChart.sixHourly.data[0],
-        )
-        dailyValue = mergeDetailValues(dailyValue, projectChart.daily.data[0])
-      })
-
-    result.hourly.data.push(hourlyValue)
-    result.sixHourly.data.push(sixHourlyValue)
-    result.daily.data.push(dailyValue)
-  }
+    result.daily.data = result.daily.data.map((point, index) =>
+      mergeDetailValues(point, projectChart.daily.data[index]),
+    )
+  })
 
   return result
 }

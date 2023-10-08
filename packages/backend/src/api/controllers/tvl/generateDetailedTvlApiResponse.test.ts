@@ -17,6 +17,7 @@ import {
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import {
+  DETAILED_LABELS,
   extractReportTypeSet,
   generateAggregatedApiResponse,
   generateDetailedTvlApiResponse,
@@ -259,133 +260,153 @@ describe(extractReportTypeSet.name, () => {
 })
 
 describe(generateAggregatedApiResponse.name, () => {
+  const timestamps = [
+    0, // Zero Time
+    UnixTime.SIX_HOURS,
+    UnixTime.DAY,
+  ]
+
   it('aggregates projects values together', () => {
     const firstArbitrumTvl = 10
     const secondArbitrumTvl = 100
+    const thirdArbitrumTvl = 1000
     const firstOptimismTvl = 20
     const secondOptimismTvl = 200
+    const thirdOptimismTvl = 2000
     const firstMainnetTvl = 30
     const secondMainnetTvl = 300
+    const thirdMainnetTvl = 3000
 
-    const mock: AggregatedReportRecord[] = [
-      ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(0), firstArbitrumTvl),
-      ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(0), firstOptimismTvl),
-      ...getMockPoints(ProjectId.ETHEREUM, new UnixTime(0), firstMainnetTvl),
-      ...getMockPoints(ProjectId.ARBITRUM, new UnixTime(1), secondArbitrumTvl),
-      ...getMockPoints(ProjectId.OPTIMISM, new UnixTime(1), secondOptimismTvl),
-      ...getMockPoints(ProjectId.ETHEREUM, new UnixTime(1), secondMainnetTvl),
-    ]
+    const mock: AggregatedReportRecord[] = (
+      [
+        [
+          ProjectId.ARBITRUM,
+          [firstArbitrumTvl, secondArbitrumTvl, thirdArbitrumTvl],
+        ],
+        [
+          ProjectId.OPTIMISM,
+          [firstOptimismTvl, secondOptimismTvl, thirdOptimismTvl],
+        ],
+        [
+          ProjectId.ETHEREUM,
+          [firstMainnetTvl, secondMainnetTvl, thirdMainnetTvl],
+        ],
+      ] as [ProjectId, number[]][]
+    )
+      .map(([projectId, tvls]) =>
+        tvls
+          .map((tvl, i) => {
+            return getMockPoints(projectId, new UnixTime(timestamps[i]), tvl)
+          })
+          .flat(),
+      )
+      .flat()
 
     const selectedProjectIds = ['arbitrum', 'optimism']
 
     const result = generateAggregatedApiResponse(
-      mock,
-      mock,
-      mock,
+      groupByProjectIdAndTimestamp(mock),
+      groupByProjectIdAndTimestamp(mock),
+      groupByProjectIdAndTimestamp(mock),
       selectedProjectIds.map((_projectId) => ProjectId(_projectId)),
     )
 
     const firstAggregatedTvl = firstArbitrumTvl + firstOptimismTvl
     const secondAggregatedTvl = secondArbitrumTvl + secondOptimismTvl
+    const thirdAggregatedTvl = thirdArbitrumTvl + thirdOptimismTvl
 
+    const [zeroTime, sixHour, oneDay] = getData([
+      firstAggregatedTvl,
+      secondAggregatedTvl,
+      thirdAggregatedTvl,
+    ])
+
+    const setPointTimeMapper = (interval: number) => {
+      return (point: DetailedTvlApiChartPoint, i: number) => {
+        return [
+          new UnixTime(i * interval),
+          ...point.slice(1),
+        ] as DetailedTvlApiChartPoint
+      }
+    }
     const expectedResult: DetailedTvlApiCharts = {
       hourly: {
-        types,
-        data: getData(firstAggregatedTvl, secondAggregatedTvl),
+        types: DETAILED_LABELS,
+        data: [
+          ...new Array(6).fill(zeroTime),
+          ...new Array(18).fill(sixHour),
+          oneDay,
+        ].map(setPointTimeMapper(UnixTime.HOUR)),
       },
       sixHourly: {
-        types,
-        data: getData(firstAggregatedTvl, secondAggregatedTvl),
+        types: DETAILED_LABELS,
+        data: [zeroTime, sixHour, sixHour, sixHour, oneDay].map(
+          setPointTimeMapper(UnixTime.SIX_HOURS),
+        ),
       },
       daily: {
-        types,
-        data: getData(firstAggregatedTvl, secondAggregatedTvl),
+        types: DETAILED_LABELS,
+        data: [zeroTime, oneDay].map(setPointTimeMapper(UnixTime.DAY)),
       },
     }
 
     expect(result).toEqual(expectedResult)
   })
+
+  function getData(tvls: number[]): DetailedTvlApiChartPoint[] {
+    return tvls.map((tvl, i) => {
+      return [
+        new UnixTime(timestamps[i]),
+        tvl,
+        tvl * 0.6,
+        tvl * 0.1,
+        tvl * 0.3,
+        tvl,
+        tvl * 0.6,
+        tvl * 0.1,
+        tvl * 0.3,
+      ]
+    })
+  }
+
+  function getMockPoints(
+    projectId: ProjectId,
+    timestamp: UnixTime,
+    value: number,
+  ): AggregatedReportRecord[] {
+    const tvl = value
+    const cbv = value * 0.6
+    const ebv = value * 0.1
+    const nmv = value * 0.3
+    return [
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(tvl * 100),
+        ethValue: BigInt(tvl * 1_000_000),
+        reportType: 'TVL',
+      },
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(cbv * 100),
+        ethValue: BigInt(cbv * 1_000_000),
+        reportType: 'CBV',
+      },
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(ebv * 100),
+        ethValue: BigInt(ebv * 1_000_000),
+        reportType: 'EBV',
+      },
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(nmv * 100),
+        ethValue: BigInt(nmv * 1_000_000),
+        reportType: 'NMV',
+      },
+    ]
+  }
 })
-
-function getData(
-  firstTvl: number,
-  secondTvl: number,
-): DetailedTvlApiChartPoint[] {
-  return [
-    [
-      new UnixTime(0),
-      firstTvl,
-      firstTvl * 0.6,
-      firstTvl * 0.1,
-      firstTvl * 0.3,
-      firstTvl,
-      firstTvl * 0.6,
-      firstTvl * 0.1,
-      firstTvl * 0.3,
-    ],
-    [
-      new UnixTime(1),
-      secondTvl,
-      secondTvl * 0.6,
-      secondTvl * 0.1,
-      secondTvl * 0.3,
-      secondTvl,
-      secondTvl * 0.6,
-      secondTvl * 0.1,
-      secondTvl * 0.3,
-    ],
-  ]
-}
-
-function getMockPoints(
-  projectId: ProjectId,
-  timestamp: UnixTime,
-  value: number,
-): AggregatedReportRecord[] {
-  const tvl = value
-  const cbv = value * 0.6
-  const ebv = value * 0.1
-  const nmv = value * 0.3
-  return [
-    {
-      timestamp,
-      projectId,
-      usdValue: BigInt(tvl * 100),
-      ethValue: BigInt(tvl * 1_000_000),
-      reportType: 'TVL',
-    },
-    {
-      timestamp,
-      projectId,
-      usdValue: BigInt(cbv * 100),
-      ethValue: BigInt(cbv * 1_000_000),
-      reportType: 'CBV',
-    },
-    {
-      timestamp,
-      projectId,
-      usdValue: BigInt(ebv * 100),
-      ethValue: BigInt(ebv * 1_000_000),
-      reportType: 'EBV',
-    },
-    {
-      timestamp,
-      projectId,
-      usdValue: BigInt(nmv * 100),
-      ethValue: BigInt(nmv * 1_000_000),
-      reportType: 'NMV',
-    },
-  ]
-}
-
-const types: DetailedTvlApiChart['types'] = [
-  'timestamp',
-  'valueUsd',
-  'cbvUsd',
-  'ebvUsd',
-  'nmvUsd',
-  'valueEth',
-  'cbvEth',
-  'ebvEth',
-  'nmvEth',
-]

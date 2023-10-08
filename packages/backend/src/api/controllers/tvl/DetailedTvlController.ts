@@ -167,25 +167,30 @@ export class DetailedTvlController {
     }
 
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
-      this.aggregatedReportRepository.getHourly(
+      this.aggregatedReportRepository.getHourlyWithAnyType(
         getHourlyMinTimestamp(dataTimings.latestTimestamp),
-        'TVL',
       ),
-      this.aggregatedReportRepository.getSixHourly(
+      this.aggregatedReportRepository.getSixHourlyWithAnyType(
         getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
-        'TVL',
       ),
-      this.aggregatedReportRepository.getDaily('TVL'),
+      this.aggregatedReportRepository.getDailyWithAnyType(),
     ])
 
     const projectIdsFilterSet = new Set(
       projectIdsFilter.map((x) => x.toString()),
     )
 
+    const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
+
+    const groupedSixHourlyReportsTree =
+        groupByProjectIdAndTimestamp(sixHourlyReports)
+
+    const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
+
     const tvlApiProjectResponse = generateAggregatedApiResponse(
-      hourlyReports,
-      sixHourlyReports,
-      dailyReports,
+        groupedHourlyReports,
+        groupedSixHourlyReportsTree,
+        groupedDailyReports,
       this.projects
         .map((project) => project.projectId)
         .filter(
