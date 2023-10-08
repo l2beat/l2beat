@@ -1,7 +1,7 @@
 import { aevo } from './aevo'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
-import { astarZkEVM } from './astarZkEVM'
+import { astarzkevm } from './astarzkevm'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { base } from './base'

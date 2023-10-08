@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
-export const astarZkEVM: Layer2 = {
+export const astarzkevm: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
   id: ProjectId('astarzkevm'),
