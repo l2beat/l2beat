@@ -29,7 +29,6 @@ export class ActivityController {
   async getActivity(
     filteredProjectsSlugs: string[] = [],
   ): Promise<ActivityApiResponse> {
-
     const projectIdsFilter = [...layer2s, ...bridges]
       .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
       .map((project) => project.id)
