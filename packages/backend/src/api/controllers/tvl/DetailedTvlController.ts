@@ -31,7 +31,7 @@ import {
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import {
-  generateAggregatedApiResponse,
+  generateDetailedAggregatedApiResponse,
   generateDetailedTvlApiResponse,
 } from './generateDetailedTvlApiResponse'
 import { Result } from './types'
@@ -145,7 +145,9 @@ export class DetailedTvlController {
     }
   }
 
-  async getAggregatedApiResponse(slugs: string[]): Promise<TvlProjectResult> {
+  async getDetailedAggregatedApiResponse(
+    slugs: string[],
+  ): Promise<TvlProjectResult> {
     const dataTimings = await this.getDataTimings()
 
     const projectIdsFilter = [...layer2s, ...bridges]
@@ -183,14 +185,14 @@ export class DetailedTvlController {
     const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
 
     const groupedSixHourlyReportsTree =
-        groupByProjectIdAndTimestamp(sixHourlyReports)
+      groupByProjectIdAndTimestamp(sixHourlyReports)
 
     const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
 
-    const tvlApiProjectResponse = generateAggregatedApiResponse(
-        groupedHourlyReports,
-        groupedSixHourlyReportsTree,
-        groupedDailyReports,
+    const tvlApiProjectResponse = generateDetailedAggregatedApiResponse(
+      groupedHourlyReports,
+      groupedSixHourlyReportsTree,
+      groupedDailyReports,
       this.projects
         .map((project) => project.projectId)
         .filter(

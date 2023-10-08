@@ -19,7 +19,7 @@ import {
 import {
   DETAILED_LABELS,
   extractReportTypeSet,
-  generateAggregatedApiResponse,
+  generateDetailedAggregatedApiResponse,
   generateDetailedTvlApiResponse,
   getProjectDetailedChartData,
 } from './generateDetailedTvlApiResponse'
@@ -259,7 +259,7 @@ describe(extractReportTypeSet.name, () => {
   })
 })
 
-describe(generateAggregatedApiResponse.name, () => {
+describe(generateDetailedAggregatedApiResponse.name, () => {
   const timestamps = [
     0, // Zero Time
     UnixTime.SIX_HOURS,
@@ -304,7 +304,7 @@ describe(generateAggregatedApiResponse.name, () => {
 
     const selectedProjectIds = ['arbitrum', 'optimism']
 
-    const result = generateAggregatedApiResponse(
+    const result = generateDetailedAggregatedApiResponse(
       groupByProjectIdAndTimestamp(mock),
       groupByProjectIdAndTimestamp(mock),
       groupByProjectIdAndTimestamp(mock),

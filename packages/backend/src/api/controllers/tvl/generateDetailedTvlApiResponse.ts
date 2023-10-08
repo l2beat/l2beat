@@ -64,7 +64,7 @@ export function generateDetailedTvlApiResponse(
   }
 }
 
-export function generateAggregatedApiResponse(
+export function generateDetailedAggregatedApiResponse(
   hourly: ReportsPerProjectIdAndTimestamp,
   sixHourly: ReportsPerProjectIdAndTimestamp,
   daily: ReportsPerProjectIdAndTimestamp,
