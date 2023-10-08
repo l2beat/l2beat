@@ -25,12 +25,22 @@ export class DailyTransactionCountViewRepository extends BaseRepository {
     await knex.schema.refreshMaterializedView('activity.daily_count_view', true)
   }
 
-  async getDailyCounts(): Promise<DailyTransactionCountRecord[]> {
+  async getDailyCounts(
+    projectIdsFilter: ProjectId[],
+  ): Promise<DailyTransactionCountRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('activity.daily_count_view').orderBy(
-      'unix_timestamp',
-      'asc',
-    )
+    const rows =
+      projectIdsFilter.length === 0
+        ? await knex('activity.daily_count_view').orderBy(
+            'unix_timestamp',
+            'asc',
+          )
+        : await knex('activity.daily_count_view')
+            .whereIn(
+              'project_id',
+              projectIdsFilter.map((id) => id.toString()),
+            )
+            .orderBy('unix_timestamp', 'asc')
     return rows.map(toRecord)
   }
 }

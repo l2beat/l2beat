@@ -1,3 +1,4 @@
+import { bridges, layer2s } from '@l2beat/config'
 import {
   ActivityApiResponse,
   assert,
@@ -25,8 +26,18 @@ export class ActivityController {
     private readonly clock: Clock,
   ) {}
 
-  async getActivity(): Promise<ActivityApiResponse> {
-    const projectsCounts = await this.getPostprocessedDailyCounts()
+  async getActivity(
+    filteredProjectsSlugs: string[] = [],
+  ): Promise<ActivityApiResponse> {
+
+    const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
+      .map((project) => project.id)
+    if (projectIdsFilter.length > 0) projectIdsFilter.push(ProjectId.ETHEREUM)
+
+    const projectsCounts = await this.getPostprocessedDailyCounts(
+      projectIdsFilter,
+    )
     const layer2sCounts: DailyTransactionCountProjectsMap = new Map()
     let ethereumCounts: DailyTransactionCount[] | undefined
 
@@ -45,7 +56,7 @@ export class ActivityController {
     return {
       combined: toCombinedActivity(layer2sCounts),
       projects: toProjectsActivity(layer2sCounts),
-      ethereum: countsToChart(ethereumCounts),
+      ethereum: ethereumCounts && countsToChart(ethereumCounts),
     }
   }
 
@@ -66,12 +77,16 @@ export class ActivityController {
     }
   }
 
-  private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
-    const counts = await this.viewRepository.getDailyCounts()
+  private async getPostprocessedDailyCounts(
+    projectIdsFilter: ProjectId[],
+  ): Promise<DailyTransactionCountProjectsMap> {
+    const counts = await this.viewRepository.getDailyCounts(projectIdsFilter)
     const result: DailyTransactionCountProjectsMap = new Map()
     const now = this.clock.getLastHour()
     for (const counter of this.counters) {
       const projectId = counter.projectId
+      if (projectIdsFilter.length > 0 && !projectIdsFilter.includes(projectId))
+        continue
       if (!this.projectIds.includes(projectId)) continue
       const projectCounts = counts.filter((c) => c.projectId === projectId)
       const postprocessedCounts = postprocessCounts(
