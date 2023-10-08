@@ -34,7 +34,7 @@ export function createTvlRouter(
         const projectSlugs = ctx.query.projectSlugs
         // get tvl data for each project
         const tvlProjectsResponse =
-          await tvlController.getAggregatedApiResponse(
+          await detailedTvlController.getAggregatedApiResponse(
             projectSlugs.split(',').map((slug) => slug.trim()),
           )
 

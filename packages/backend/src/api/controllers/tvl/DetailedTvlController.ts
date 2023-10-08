@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
+import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
-  ChainId,
+  ChainId, DetailedTvlApiCharts,
   DetailedTvlApiResponse,
   Hash256,
   ProjectAssetsBreakdownApiResponse,
@@ -28,7 +29,10 @@ import {
   groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
-import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
+import {
+  generateDetailedTvlApiResponse,
+  generateAggregatedApiResponse,
+} from './generateDetailedTvlApiResponse'
 import { Result } from './types'
 
 interface DetailedTvlControllerOptions {
@@ -49,6 +53,12 @@ type DetailedAssetTvlResult = Result<
   TvlApiCharts,
   'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
 >
+
+type TvlProjectResult = Result<
+    DetailedTvlApiCharts,
+    'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+>
+
 
 export class DetailedTvlController {
   constructor(
@@ -132,6 +142,62 @@ export class DetailedTvlController {
     return {
       result: 'success',
       data: tvlApiResponse,
+    }
+  }
+
+  async getAggregatedApiResponse(slugs: string[]): Promise<TvlProjectResult> {
+    const dataTimings = await this.getDataTimings()
+
+    const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => slugs.includes(project.display.slug))
+      .map((project) => project.id)
+
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
+
+    const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
+      this.aggregatedReportRepository.getHourly(
+        getHourlyMinTimestamp(dataTimings.latestTimestamp),
+        'TVL',
+      ),
+      this.aggregatedReportRepository.getSixHourly(
+        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+        'TVL',
+      ),
+      this.aggregatedReportRepository.getDaily('TVL'),
+    ])
+
+    const projectIdsFilterSet = new Set(
+      projectIdsFilter.map((x) => x.toString()),
+    )
+
+    const tvlApiProjectResponse = generateAggregatedApiResponse(
+      hourlyReports,
+      sixHourlyReports,
+      dailyReports,
+      this.projects
+        .map((project) => project.projectId)
+        .filter(
+          (projectId) =>
+            projectIdsFilter.length === 0 ||
+            projectIdsFilterSet.has(projectId.toString()),
+        ),
+    )
+
+    return {
+      result: 'success',
+      data: tvlApiProjectResponse,
     }
   }
 
