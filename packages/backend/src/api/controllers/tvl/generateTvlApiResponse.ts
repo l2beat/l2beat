@@ -5,7 +5,6 @@ import {
   TvlApiChart,
   TvlApiChartPoint,
   TvlApiCharts,
-  // TvlApiProjectsResponse,
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -103,7 +102,7 @@ export function generateAggregatedApiResponse(
       dailyGroupedByTimestamp[timestamp],
     )
 
-    let hourlyValue: DetailedTvlApiChartPoint = [
+    const initialZeroValue: DetailedTvlApiChartPoint = [
       new UnixTime(toNumber(timestamp)),
       0,
       0,
@@ -114,28 +113,10 @@ export function generateAggregatedApiResponse(
       0,
       0,
     ]
-    let sixHourlyValue: DetailedTvlApiChartPoint = [
-      new UnixTime(toNumber(timestamp)),
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ]
-    let dailyValue: DetailedTvlApiChartPoint = [
-      new UnixTime(toNumber(timestamp)),
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ]
+
+    let hourlyValue: DetailedTvlApiChartPoint = [...initialZeroValue]
+    let sixHourlyValue: DetailedTvlApiChartPoint = [...initialZeroValue]
+    let dailyValue: DetailedTvlApiChartPoint = [...initialZeroValue]
 
     projectIds
       .map((projectId) => {
