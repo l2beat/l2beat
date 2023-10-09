@@ -19,12 +19,7 @@ export function ScalingActivityView({ items }: ScalingActivityViewProps) {
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
       <ScalingActivityFilters items={items} />
-      <TableView
-        items={items}
-        columns={columns}
-        rows={rows}
-        rerenderIndexesOn="#rollups-only-checkbox"
-      />
+      <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>
   )

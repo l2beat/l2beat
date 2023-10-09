@@ -9,7 +9,6 @@ import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
-import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
@@ -27,7 +26,6 @@ configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()
 configureTabs()
-configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
 configureProjectFilters()

@@ -36,12 +36,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
             name: 'Active projects',
             shortName: 'Active',
             content: (
-              <TableView
-                items={activeProjects}
-                columns={columns}
-                rows={rows}
-                rerenderIndexesOn="#rollups-only-checkbox"
-              />
+              <TableView items={activeProjects} columns={columns} rows={rows} />
             ),
             itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
@@ -55,7 +50,6 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
                 items={archivedProjects}
                 columns={columns}
                 rows={rows}
-                rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
             itemsCount: archivedProjects.length,

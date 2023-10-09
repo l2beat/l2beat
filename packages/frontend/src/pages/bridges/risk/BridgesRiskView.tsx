@@ -33,12 +33,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
             name: 'Active projects',
             shortName: 'Active',
             content: (
-              <TableView
-                items={activeProjects}
-                columns={columns}
-                rows={rows}
-                rerenderIndexesOn="#combined-bridges-checkbox"
-              />
+              <TableView items={activeProjects} columns={columns} rows={rows} />
             ),
             itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
@@ -52,7 +47,6 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 items={archivedProjects}
                 columns={columns}
                 rows={rows}
-                rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
             itemsCount: archivedProjects.length,

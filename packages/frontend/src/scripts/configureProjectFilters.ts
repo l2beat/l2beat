@@ -97,10 +97,10 @@ export function configureProjectFilters() {
 }
 
 function rerenderTables(slugsToShow: string[]) {
-  const tablesToRerenderIndexes =
+  const tablesToRerender =
     document.querySelectorAll<HTMLElement>(`[data-role="table"]`)
 
-  tablesToRerenderIndexes.forEach((table) => rerenderTable(table, slugsToShow))
+  tablesToRerender.forEach((table) => rerenderTable(table, slugsToShow))
 }
 
 export function getFilteredSlugs(projectFilters: HTMLElement) {

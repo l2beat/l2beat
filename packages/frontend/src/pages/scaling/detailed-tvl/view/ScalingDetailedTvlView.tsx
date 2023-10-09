@@ -24,7 +24,6 @@ export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
         items={items.filter((item) => !item.isArchived && !item.isUpcoming)}
         rows={rows}
         columns={getScalingDetailedTvlColumns()}
-        rerenderIndexesOn="#rollups-only-checkbox"
       />
       <ScalingLegend />
     </section>

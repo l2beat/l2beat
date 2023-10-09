@@ -40,7 +40,6 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={activeProjects}
                 columns={getActiveBridgesTvlColumns()}
                 rows={rows}
-                rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
             itemsCount: activeProjects.filter((i) => i.type === 'bridge')
@@ -56,7 +55,6 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={archivedProjects}
                 columns={getArchivedBridgesTvlColumns()}
                 rows={rows}
-                rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
             itemsCount: archivedProjects.filter((i) => i.type === 'bridge')
