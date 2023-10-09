@@ -24,7 +24,12 @@
       "proxyType": "Optics Beacon proxy"
     },
     "GovernanceRouterBeaconProxy": {
-      "proxyType": "Optics Beacon proxy"
+      "proxyType": "Optics Beacon proxy",
+      "fields": {
+        "domains": {
+          "type": "array"
+        }
+      }
     },
     "HomeBeaconProxy": {
       "proxyType": "Optics Beacon proxy"

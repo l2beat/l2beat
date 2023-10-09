@@ -1,8 +1,8 @@
 {
   "name": "nomad",
   "chain": "ethereum",
-  "blockNumber": 18313558,
-  "configHash": "0xca00a20050afd860747ea72ed7f4aeace5a01c39865a6eb710c73b5d9a127606",
+  "blockNumber": 18313665,
+  "configHash": "0x4e1d87e73ab92e91fb9ca40188b5ae98709a40bbc0bbc32542900ce88b958c18",
   "version": 2,
   "contracts": [
     {
@@ -60,9 +60,6 @@
         "recoveryTimelock": 86400,
         "VERSION": 0,
         "xAppConnectionManager": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F"
-      },
-      "errors": {
-        "domains": "Too many values. Update configuration to explore fully"
       },
       "derivedName": "GovernanceRouter"
     },
@@ -149,10 +146,8 @@
           "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3"
         ],
         "getThreshold": 3,
-        "nonce": 7
-      },
-      "errors": {
-        "VERSION": "Execution reverted"
+        "nonce": 7,
+        "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
