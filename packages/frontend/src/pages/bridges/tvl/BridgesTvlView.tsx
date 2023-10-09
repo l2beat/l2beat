@@ -21,6 +21,11 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     getProps: getBridgesRowProps,
   }
 
+  const activeProjects = items.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
+  const archivedProjects = items.filter((item) => item.isArchived)
+
   return (
     <section className="mt-4 sm:mt-8">
       <IncludeLayer2sCheckbox className="mb-4" />
@@ -33,14 +38,13 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             shortName: 'Active',
             content: (
               <TableView
-                items={items.filter(
-                  (item) => !item.isArchived && !item.isUpcoming,
-                )}
+                items={activeProjects}
                 columns={getActiveBridgesTvlColumns()}
                 rows={rows}
                 rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
+            itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
           },
           {
@@ -49,12 +53,13 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             shortName: 'Archived',
             content: (
               <TableView
-                items={items.filter((item) => item.isArchived)}
+                items={archivedProjects}
                 columns={getArchivedBridgesTvlColumns()}
                 rows={rows}
                 rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
+            itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
           },
         ]}

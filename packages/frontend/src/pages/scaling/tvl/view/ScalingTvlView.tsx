@@ -27,6 +27,13 @@ export function ScalingTvlView({
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
+
+  const activeProjects = items.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
+  const upcomingProjects = items.filter((item) => item.isUpcoming)
+  const archivedProjects = items.filter((item) => item.isArchived)
+
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
       <ScalingTvlFilters items={items} />
@@ -38,13 +45,12 @@ export function ScalingTvlView({
             shortName: 'Active',
             content: (
               <TableView
-                items={items.filter(
-                  (item) => !item.isArchived && !item.isUpcoming,
-                )}
+                items={activeProjects}
                 rows={rows}
                 columns={getActiveScalingTvlColumns(detailedTvlEnabled)}
               />
             ),
+            itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
           },
           {
@@ -53,11 +59,12 @@ export function ScalingTvlView({
             shortName: 'Upcoming',
             content: (
               <TableView
-                items={items.filter((item) => item.isUpcoming)}
+                items={upcomingProjects}
                 rows={rows}
                 columns={getUpcomingScalingTvlColumns()}
               />
             ),
+            itemsCount: upcomingProjects.length,
             icon: <UpcomingIcon />,
           },
           {
@@ -66,11 +73,12 @@ export function ScalingTvlView({
             shortName: 'Archived',
             content: (
               <TableView
-                items={items.filter((item) => item.isArchived)}
+                items={archivedProjects}
                 rows={rows}
                 columns={getArchivedScalingTvlColumns(detailedTvlEnabled)}
               />
             ),
+            itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
           },
         ]}

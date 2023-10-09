@@ -21,6 +21,11 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     getProps: (entry) => getScalingRowProps(entry, 'risks'),
   }
 
+  const activeProjects = items.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
+  const archivedProjects = items.filter((item) => item.isArchived)
+
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
       <ScalingRiskFilters items={items} />
@@ -32,14 +37,13 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
             shortName: 'Active',
             content: (
               <TableView
-                items={items.filter(
-                  (item) => !item.isArchived && !item.isUpcoming,
-                )}
+                items={activeProjects}
                 columns={columns}
                 rows={rows}
                 rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
+            itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
           },
           {
@@ -48,12 +52,13 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
             shortName: 'Archived',
             content: (
               <TableView
-                items={items.filter((item) => item.isArchived)}
+                items={archivedProjects}
                 columns={columns}
                 rows={rows}
                 rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
+            itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
           },
         ]}

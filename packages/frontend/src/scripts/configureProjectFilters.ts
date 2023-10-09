@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { getRichSelectValue } from './configureRichSelect'
 import { makeQuery } from './query'
-import { setTableState } from './utils/table'
+import { rerenderTable } from './utils/table'
 
 export type Slugs = z.infer<typeof Slugs>
 export const Slugs = z.array(z.string())
@@ -78,7 +78,7 @@ export function configureProjectFilters() {
     )
     // rerenderProjectFilters(slugsToShow)
     manageRowVisibility(slugsToShow)
-    rerenderIndexes()
+    rerenderTables()
     setFilteredSlugs(slugsToShow)
   }
 
@@ -103,26 +103,11 @@ export function manageRowVisibility(slugs: string[]) {
   })
 }
 
-function rerenderIndexes() {
+function rerenderTables() {
   const tablesToRerenderIndexes =
     document.querySelectorAll<HTMLElement>(`[data-role="table"]`)
 
-  tablesToRerenderIndexes.forEach((table) => {
-    const visibleRows = Array.from(table.querySelectorAll('tbody tr')).filter(
-      (r) => !r.classList.contains('hidden'),
-    )
-
-    visibleRows.forEach((r, index) => {
-      const indexCell = r.querySelector('[data-role="index-cell"]')
-      if (!indexCell) {
-        console.error('Programming error: no index cell found', r)
-        return
-      }
-      indexCell.innerHTML = `${index + 1}`
-    })
-
-    setTableState(table, visibleRows.length === 0 ? 'empty' : null)
-  })
+  tablesToRerenderIndexes.forEach((table) => rerenderTable(table))
 }
 
 export function getFilteredSlugs(projectFilters: HTMLElement) {

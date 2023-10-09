@@ -11,6 +11,7 @@ interface Tab {
   name: string
   content: ReactNode
   icon?: ReactNode
+  itemsCount?: number
   shortName?: string
 }
 
@@ -31,6 +32,11 @@ export function Tabs({ items }: TabsProps) {
               <span className="inline text-xs md:hidden">
                 {tab.shortName ?? tab.name}
               </span>
+              {tab.itemsCount && (
+                <span className="TabsItem-CountBadge ml-1.5 rounded-full bg-purple-100 px-1.5 py-0.5 text-xs tabular-nums text-white">
+                  {tab.itemsCount}
+                </span>
+              )}
               <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-80" />
             </a>
           ))}

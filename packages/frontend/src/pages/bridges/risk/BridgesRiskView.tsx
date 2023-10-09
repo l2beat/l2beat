@@ -20,6 +20,9 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
     getProps: getBridgesRowProps,
   }
 
+  const activeProjects = items.filter((item) => !item.isArchived)
+  const archivedProjects = items.filter((item) => item.isArchived)
+
   return (
     <section className="mt-4 sm:mt-8">
       <IncludeLayer2sCheckbox className="mb-4" />
@@ -31,12 +34,13 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
             shortName: 'Active',
             content: (
               <TableView
-                items={items.filter((item) => !item.isArchived)}
+                items={activeProjects}
                 columns={columns}
                 rows={rows}
                 rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
+            itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
           },
           {
@@ -45,12 +49,13 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
             shortName: 'Archived',
             content: (
               <TableView
-                items={items.filter((item) => item.isArchived)}
+                items={archivedProjects}
                 columns={columns}
                 rows={rows}
                 rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
+            itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
           },
         ]}
