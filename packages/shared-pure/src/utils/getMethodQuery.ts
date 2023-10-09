@@ -8,9 +8,7 @@ export function getMethodQuery(
   SELECT
   block_number,
   input,
-  -- from_address,
   to_address,
-  -- trace_address,  -- This is a list that represents the position of the call.
   block_timestamp,
   transaction_hash,
 FROM 
@@ -22,9 +20,7 @@ WHERE
   AND block_timestamp < TIMESTAMP("${endTimestamp}")
   AND 
   (
-    ${to_address
-      .map((address, i) => getBatch(address, method_id[i], i))
-      .join('\n')}
+${to_address.map((address, i) => getBatch(address, method_id[i], i)).join('\n')}
   )
 ORDER BY 
   block_timestamp ASC;
@@ -34,9 +30,9 @@ ORDER BY
 function getBatch(to_address: string, method_id: string, i: number) {
   let batch = ''
   if (i > 0) {
-    batch += ' OR\n '
+    batch += ' OR\n'
   }
-  batch += `(to_address = LOWER('${to_address}')
-  AND input LIKE '%${method_id}%')`
+  batch += `    (to_address = LOWER('${to_address}')
+    AND input LIKE '${method_id}%')`
   return batch
 }
