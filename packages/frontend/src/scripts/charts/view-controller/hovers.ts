@@ -146,7 +146,6 @@ export function renderActivityHover(
       renderDateRow(data.date),
       renderDetailedRow({
         title: 'Average TPS',
-        value: formatTps(data.tps + data.ethTps),
       }),
       renderHorizontalSeparator(),
       projectTpsRow,
@@ -157,7 +156,6 @@ export function renderActivityHover(
       renderDateRow(data.date),
       renderDetailedRow({
         title: 'Average TPS',
-        value: formatTps(data.tps + data.ethTps),
       }),
       renderHorizontalSeparator(),
       ethTpsRow,
