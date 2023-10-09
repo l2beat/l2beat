@@ -1,8 +1,8 @@
 {
   "name": "opticsV2",
   "chain": "celo",
-  "blockNumber": 21786427,
-  "configHash": "0x85ee319ecc475ae582e176fd3dc3f64d2a5a6895993d15d9ff3ab778de4ad3fe",
+  "blockNumber": 21838858,
+  "configHash": "0xf210e1f4ce814cc6f7c02fc696dbf6ca8b767563f5f8368c959080b65e9e0905",
   "version": 2,
   "contracts": [
     {
@@ -29,6 +29,23 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "address": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1"
+      }
+    },
+    {
+      "name": "UpgradeBeaconProxy",
+      "address": "0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1",
+      "upgradeability": {
+        "type": "immutable"
+      }
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -85,6 +102,17 @@
   "abis": {
     "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509": [
       "constructor(address _singleton)"
+    ],
+    "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee": [
+      "event BeaconUpgraded(address indexed beacon, address implementation)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _beacon, address _implementation)"
+    ],
+    "0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
     "0x69f4D1788e39c87893C980c06EdF4b7f686e2938": [
       "constructor()",

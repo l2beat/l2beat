@@ -1,4 +1,4 @@
-# Diff at Mon, 09 Oct 2023 13:01:17 GMT:
+# Diff at Mon, 09 Oct 2023 14:48:14 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@
@@ -12,6 +12,18 @@ Multisig that can upgrade Optics V2 contracts across domains.
 ```diff
 +   Status: CREATED
     contract OpticsV2Governor (0x070c2843402Aa0637ae0F2E2edf601aAB5E72509) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconProxy (0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1) {
     }
 ```
 
