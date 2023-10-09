@@ -167,7 +167,7 @@ function renderDetailedRow(
     <div class="flex w-full justify-between items-center gap-2">
       <div>
         ${renderIcon(icon)}
-        <span class="text-gray-50 text-sm">${title}</span>
+        <span class="dark:text-gray-50 text-gray-700 text-sm">${title}</span>
       </div>
       <span class="font-bold">${value}</span>
     </div>
