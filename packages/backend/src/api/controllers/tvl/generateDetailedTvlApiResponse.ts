@@ -75,6 +75,7 @@ export function generateDetailedAggregatedApiResponse(
   const result: DetailedTvlApiCharts = createEmptyDetailedTvlApiCharts()
 
   // get project detailed charts of filtered projects (projectIds)
+
   const projectDetailedCharts = projectIds.map((projectId) => {
     return getProjectDetailedCharts(
       {
@@ -86,6 +87,8 @@ export function generateDetailedAggregatedApiResponse(
     )
   })
 
+  // aggregate detailed charts
+
   const hourlyDataLength = projectDetailedCharts[0].hourly.data.length
   assert(
     projectDetailedCharts.every(
@@ -93,7 +96,7 @@ export function generateDetailedAggregatedApiResponse(
     ),
     'hourly data length mismatch',
   )
-  result.hourly.data = new Array(hourlyDataLength).map((_, i) =>
+  result.hourly.data = [...Array(hourlyDataLength).keys()].map((i) =>
     mergeDetailValues(
       projectDetailedCharts.map((projectChart) => projectChart.hourly.data[i]),
     ),
@@ -106,7 +109,7 @@ export function generateDetailedAggregatedApiResponse(
     ),
     'sixHourly data length mismatch',
   )
-  result.sixHourly.data = new Array(sixHourlyDataLength).map((_, i) =>
+  result.sixHourly.data = [...Array(sixHourlyDataLength).keys()].map((i) =>
     mergeDetailValues(
       projectDetailedCharts.map(
         (projectChart) => projectChart.sixHourly.data[i],
@@ -121,7 +124,7 @@ export function generateDetailedAggregatedApiResponse(
     ),
     'daily data length mismatch',
   )
-  result.daily.data = new Array(dailyDataLength).map((_, i) =>
+  result.daily.data = [...Array(dailyDataLength).keys()].map((i) =>
     mergeDetailValues(
       projectDetailedCharts.map((projectChart) => projectChart.daily.data[i]),
     ),
