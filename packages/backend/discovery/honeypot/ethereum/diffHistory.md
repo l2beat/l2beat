@@ -11,15 +11,11 @@
     }
 ```
 
-## Watched changes
-
 ```diff
 +   Status: CREATED
     contract History (0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9) {
     }
 ```
-
-## Watched changes
 
 ```diff
 +   Status: CREATED
@@ -27,15 +23,11 @@
     }
 ```
 
-## Watched changes
-
 ```diff
 +   Status: CREATED
     contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB) {
     }
 ```
-
-## Watched changes
 
 ```diff
 +   Status: CREATED

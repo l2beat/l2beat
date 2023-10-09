@@ -27,8 +27,6 @@
     }
 ```
 
-## Watched changes
-
 ```diff
     contract PolygonZkEvm (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
       values.nondeterminsiticPendingState:
@@ -48,8 +46,6 @@
     contract FflonkVerifier (0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9) {
     }
 ```
-
-## Watched changes
 
 ```diff
     contract PolygonZkEvm (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
@@ -73,8 +69,6 @@
 +        "PolygonZkEVMUpgraded"
     }
 ```
-
-## Watched changes
 
 ```diff
 +   Status: CREATED

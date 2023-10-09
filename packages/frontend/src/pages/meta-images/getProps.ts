@@ -5,6 +5,8 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
+import { getChartUrl } from '../../scripts/charts/ChartDataController'
+import { ChartType } from '../../scripts/charts/types'
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
 import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'
@@ -34,25 +36,24 @@ export function getProps(
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const apiPath = project
-    ? `${project.display.slug}-tvl`
+  const chartType: ChartType = project
+    ? { type: 'project-tvl', slug: project.display.slug }
     : type === 'layers2s'
-    ? 'scaling-tvl'
-    : 'bridges-tvl'
+    ? { type: 'layer2-tvl' }
+    : { type: 'bridges-tvl', includeCanonical: false }
 
-  const tvlEndpoint = `/api/${apiPath}.json`
   return {
     props: {
       tvl: formatUSD(tvl),
       sevenDayChange,
       name: project?.display.name,
       icon: project && `/icons/${project.display.slug}.png`,
-      tvlEndpoint,
+      chartType,
     },
     wrapper: {
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: tvlEndpoint,
+      preloadApi: getChartUrl(chartType),
     },
   }
 }
@@ -67,17 +68,15 @@ export function getPropsActivity(
   assert(activitySevenDaysAgo, "Can't get past daily TPS")
   const weeklyChange = getPercentageChange(activityNow, activitySevenDaysAgo)
 
-  const activityEndpoint = `/api/activity/combined.json`
   return {
     props: {
       tpsDaily: activityNow.toFixed(2),
       tpsWeeklyChange: weeklyChange,
-      activityEndpoint,
     },
     wrapper: {
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: activityEndpoint,
+      preloadApi: getChartUrl({ type: 'layer2-activity' }),
     },
   }
 }
@@ -95,25 +94,24 @@ export function getPropsDetailed(
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const apiPath = project
-    ? `${project.display.slug}-detailed-tvl`
+  const chartType: ChartType = project
+    ? { type: 'project-detailed-tvl', slug: project.display.slug }
     : type === 'layers2s'
-    ? 'scaling-detailed-tvl'
-    : 'bridges-detailed-tvl'
+    ? { type: 'layer2-detailed-tvl' }
+    : { type: 'bridges-tvl', includeCanonical: false }
 
-  const detailedTvlEndpoint = `/api/${apiPath}.json`
   return {
     props: {
       tvl: formatUSD(tvl),
       sevenDayChange,
       name: project?.display.name,
       icon: project && `/icons/${project.display.slug}.png`,
-      detailedTvlEndpoint,
+      chartType,
     },
     wrapper: {
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: detailedTvlEndpoint,
+      preloadApi: getChartUrl(chartType),
     },
   }
 }

@@ -12,8 +12,6 @@
     }
 ```
 
-## Watched changes
-
 ```diff
     contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58) {
       derivedName:
