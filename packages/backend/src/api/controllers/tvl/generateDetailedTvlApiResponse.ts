@@ -7,6 +7,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { sum } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { covertBalancesToChartPoints } from './charts'
@@ -83,20 +84,18 @@ export function generateDetailedAggregatedApiResponse(
   }
 
   const mergeDetailValues = (
-    first: DetailedTvlApiChartPoint,
-    second: DetailedTvlApiChartPoint | undefined,
+    values: DetailedTvlApiChartPoint[],
   ): DetailedTvlApiChartPoint => {
-    if (!second) return first
     return [
-      first[0],
-      first[1] + second[1],
-      first[2] + second[2],
-      first[3] + second[3],
-      first[4] + second[4],
-      first[5] + second[5],
-      first[6] + second[6],
-      first[7] + second[7],
-      first[8] + second[8],
+      values[0][0],
+      sum(values.map((value) => value[1])),
+      sum(values.map((value) => value[2])),
+      sum(values.map((value) => value[3])),
+      sum(values.map((value) => value[4])),
+      sum(values.map((value) => value[5])),
+      sum(values.map((value) => value[6])),
+      sum(values.map((value) => value[7])),
+      sum(values.map((value) => value[8])),
     ]
   }
 
@@ -111,30 +110,25 @@ export function generateDetailedAggregatedApiResponse(
     )
   })
 
-  if (projectDetailedCharts.length === 0) {
-    return result
-  }
-
   const firstProjectDetailedCharts = projectDetailedCharts[0]
-  result.hourly.types = firstProjectDetailedCharts.hourly.types
-  result.sixHourly.types = firstProjectDetailedCharts.sixHourly.types
-  result.daily.types = firstProjectDetailedCharts.daily.types
-
-  result.hourly.data = firstProjectDetailedCharts.hourly.data
-  result.sixHourly.data = firstProjectDetailedCharts.sixHourly.data
-  result.daily.data = firstProjectDetailedCharts.daily.data
-
-  projectDetailedCharts.slice(1).forEach((projectChart) => {
-    result.hourly.data = result.hourly.data.map((point, index) =>
-      mergeDetailValues(point, projectChart.hourly.data[index]),
-    )
-    result.sixHourly.data = result.sixHourly.data.map((point, index) =>
-      mergeDetailValues(point, projectChart.sixHourly.data[index]),
-    )
-    result.daily.data = result.daily.data.map((point, index) =>
-      mergeDetailValues(point, projectChart.daily.data[index]),
-    )
-  })
+  result.hourly.data = firstProjectDetailedCharts.hourly.data.map((_, i) =>
+    mergeDetailValues(
+      projectDetailedCharts.map((projectChart) => projectChart.hourly.data[i]),
+    ),
+  )
+  result.sixHourly.data = firstProjectDetailedCharts.sixHourly.data.map(
+    (_, i) =>
+      mergeDetailValues(
+        projectDetailedCharts.map(
+          (projectChart) => projectChart.sixHourly.data[i],
+        ),
+      ),
+  )
+  result.daily.data = firstProjectDetailedCharts.daily.data.map((_, i) =>
+    mergeDetailValues(
+      projectDetailedCharts.map((projectChart) => projectChart.daily.data[i]),
+    ),
+  )
 
   return result
 }

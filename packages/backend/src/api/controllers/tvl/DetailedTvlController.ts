@@ -57,7 +57,7 @@ type DetailedAssetTvlResult = Result<
 
 type TvlProjectResult = Result<
   DetailedTvlApiCharts,
-  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA' | 'EMPTY_SLUG'
 >
 
 export class DetailedTvlController {
@@ -154,6 +154,13 @@ export class DetailedTvlController {
       .filter((project) => slugs.includes(project.display.slug))
       .map((project) => project.id)
 
+    if (projectIdsFilter.length === 0) {
+      return {
+        result: 'error',
+        error: 'EMPTY_SLUG',
+      }
+    }
+
     if (!dataTimings.latestTimestamp) {
       return {
         result: 'error',
@@ -195,11 +202,7 @@ export class DetailedTvlController {
       groupedDailyReports,
       this.projects
         .map((project) => project.projectId)
-        .filter(
-          (projectId) =>
-            projectIdsFilter.length === 0 ||
-            projectIdsFilterSet.has(projectId.toString()),
-        ),
+        .filter((projectId) => projectIdsFilterSet.has(projectId.toString())),
     )
 
     return {
