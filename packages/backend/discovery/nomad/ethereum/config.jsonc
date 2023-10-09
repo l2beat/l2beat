@@ -1,0 +1,43 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "nomad",
+  "initialAddresses": [
+    "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3", //BridgeRouterBeaconProxy,
+    "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF" //ReplicaBeaconProxy
+  ],
+  "names": {
+    "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3": "BridgeRouterBeaconProxy",
+    "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF": "ReplicaBeaconProxy",
+    "0x3009C99D370B780304D2098196f1EBF779a4777a": "GovernanceRouterBeaconProxy",
+    "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8": "HomeBeaconProxy",
+    "0xFe8874778f946Ac2990A29eba3CFd50760593B2F": "XAppConnectionManager",
+    "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37": "Governor",
+    "0x2bB2a5A724170357cb691841F40d26A950d8C33D": "RecoveryManager"
+  },
+  "overrides": {
+    "BridgeRouterBeaconProxy": {
+      "proxyType": "Optics Beacon proxy",
+      "ignoreMethods": ["tokenBeacon"]
+    },
+    "ReplicaBeaconProxy": {
+      "proxyType": "Optics Beacon proxy"
+    },
+    "GovernanceRouterBeaconProxy": {
+      "proxyType": "Optics Beacon proxy"
+    },
+    "HomeBeaconProxy": {
+      "proxyType": "Optics Beacon proxy"
+    },
+    "XAppConnectionManager": {
+      "fields": {
+        "watchers": {
+          "type": "arrayFromOneEvent",
+          "event": "WatcherPermissionSet",
+          "valueKey": "watcher",
+          "flagKey": "access"
+        }
+      }
+    }
+  }
+}
