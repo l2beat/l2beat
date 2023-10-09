@@ -1,7 +1,9 @@
-## Diff at Tue, 26 Sep 2023 10:27:16 GMT:
+# Diff at Tue, 26 Sep 2023 10:27:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+## Watched changes
 
 ```diff
     contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
@@ -30,10 +32,12 @@
     }
 ```
 
-## Diff at Thu, 21 Sep 2023 12:39:16 GMT:
+# Diff at Thu, 21 Sep 2023 12:39:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@36d4050a6ee5a543b2163fe6e44153b540b87c16
+
+## Watched changes
 
 ```diff
     contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {

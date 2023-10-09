@@ -48,9 +48,8 @@ environment variables. One variable per line `KEY=value`.
 - `LOCAL_DB_URL` - Database url used in `yarn start`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_local`
 - `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_test`
 - `DATABASE_URL` - Database url used in production deployment
-- `ETHERSCAN_API_KEY` - API key for Etherscan
-- `ETHEREUM_PROVIDER_URL` - API Url for Ethereum QuickNode provider
-- `ARBITRUM_PROVIDER_URL` - API Url for Arbitrum QuickNode provider
+- `TVL_ETHEREUM_ETHERSCAN_API_KEY` - API key for Etherscan
+- `TVL_ETHEREUM_PROVIDER_URL` - API Url for Ethereum QuickNode provider
 
 #### Optional
 
@@ -61,9 +60,16 @@ environment variables. One variable per line `KEY=value`.
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
 - `ACTIVITY_ENABLED` (default `false`) - When set to `true` activity feature is enabled
 - `TVL_ENABLED` (default `true`) - When set to `true` tvl module is enabled
-- `ETHEREUM_TVL_ENABLED` (default `true`) - When set to `true` ethereum tvl sync is enabled
-- `ARBITRUM_TVL_ENABLED` (default `false`) - When set to `true` arbitrum tvl sync is enabled
-- `ARBISCAN_API_KEY` - API key for Arbiscan
+- `TVL_ETHEREUM_ENABLED` (default `true`) - When set to `true` ethereum tvl sync is enabled
+- `TVL_ARBITRUM_ENABLED` (default `false`) - When set to `true` arbitrum tvl sync is enabled
+- `TVL_OPTIMISM_ENABLED` (default `false`) - When set to `true` optimism tvl sync is enabled
+- `TVL_BASE_ENABLED` (default `false`) - When set to `true` base tvl sync is enabled
+- `TVL_ARBITRUM_PROVIDER_URL` - API Url for Arbitrum QuickNode provider
+- `TVL_OPTIMISM_PROVIDER_URL` - API Url for Optimism QuickNode provider
+- `TVL_BASE_PROVIDER_URL` - API Url for Base QuickNode provider
+- `TVL_ARBITRUM_ETHERSCAN_API_KEY` - API key for Arbiscan
+- `TVL_OPTIMISM_ETHERSCAN_API_KEY` - API key for Optimistic etherscan
+- `TVL_BASE_ETHERSCAN_API_KEY` - API key for Basescan
 - `STATUS_ENABLE`(default `true`) - enable/disable status module
 - `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - allows to exclude certain projects from the activity API response
 

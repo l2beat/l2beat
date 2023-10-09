@@ -7,9 +7,9 @@
 import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainId } from '@l2beat/shared-pure'
+import { assert, ChainId } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
-import { writeFileSync } from 'fs'
+import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 
 // This is a CLI tool. Run logic immediately.
@@ -45,14 +45,26 @@ async function updateDiffHistoryFile() {
   )
 
   if (diff.length > 0) {
-    const newHistoryEntry = generateDiffHistoryMarkdown(diff, mainBranchHash)
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
     const { content: historyFileFromMainBranch } =
       getFileVersionOnMainBranch(diffHistoryPath)
+
+    let description = undefined
+    if (existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()) {
+      const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
+      description = findDescription(diskDiffHistory, historyFileFromMainBranch)
+    }
+
+    const newHistoryEntry = generateDiffHistoryMarkdown(
+      diff,
+      mainBranchHash,
+      description,
+    )
     const diffHistory =
       historyFileFromMainBranch === ''
         ? newHistoryEntry
         : newHistoryEntry.concat('\n' + historyFileFromMainBranch)
+
     writeFileSync(diffHistoryPath, diffHistory)
   } else {
     console.log('No changes found')
@@ -142,19 +154,67 @@ function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
 function generateDiffHistoryMarkdown(
   diffs: DiscoveryDiff[],
   mainBranchHash: string,
+  description?: string,
 ): string {
   const result = []
   const mainBranch = getMainBranchName()
 
   const now = new Date().toUTCString()
-  result.push(`## Diff at ${now}:`)
+  result.push(`# Diff at ${now}:`)
   result.push('')
   const { name, email } = getGitUser()
   result.push(`- author: ${name} (<${email}>)`)
   result.push(`- comparing to: ${mainBranch}@${mainBranchHash}`)
   result.push('')
+  if (description) {
+    result.push(description)
+  } else {
+    result.push('## Description')
+    result.push('')
+    result.push(
+      'Provide description of changes. This section will be preserved.',
+    )
+    result.push('')
+  }
+  result.push('## Watched changes')
+  result.push('')
   result.push(discoveryDiffToMarkdown(diffs))
   result.push('')
 
   return result.join('\n')
+}
+
+function findDescription(
+  diskDiffHistory: string,
+  masterDiffHistory: string,
+): string | undefined {
+  const lastCommitted = masterDiffHistory.split('\n').at(0)
+  let lines: string[] = []
+  if (lastCommitted) {
+    const diskLines = diskDiffHistory.split('\n')
+    const lastCommittedIndex = diskLines.findIndex((l) => l === lastCommitted)
+    assert(
+      lastCommittedIndex >= 0,
+      'Unexpected difference between master and disk file',
+    )
+    lines = diskLines.slice(0, lastCommittedIndex)
+  } else {
+    lines = diskDiffHistory.split('\n')
+  }
+
+  const index = lines.findIndex((l) => l === '## Description')
+  if (index < 0) {
+    return undefined
+  }
+
+  const lastIndex = lines.findIndex((l) => l.startsWith('## Watched changes'))
+  if (lastIndex < 0) {
+    return lines.slice(index).join('\n')
+  }
+
+  if (lastIndex < index) {
+    return undefined
+  }
+
+  return lines.slice(index, lastIndex).join('\n')
 }

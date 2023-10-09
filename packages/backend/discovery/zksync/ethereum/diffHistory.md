@@ -1,7 +1,9 @@
-## Diff at Mon, 02 Oct 2023 13:57:17 GMT:
+# Diff at Mon, 02 Oct 2023 13:57:17 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+
+## Watched changes
 
 ```diff
     contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
@@ -11,10 +13,12 @@
     }
 ```
 
-## Diff at Tue, 26 Sep 2023 13:05:32 GMT:
+# Diff at Tue, 26 Sep 2023 13:05:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+
+## Watched changes
 
 ```diff
     contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
