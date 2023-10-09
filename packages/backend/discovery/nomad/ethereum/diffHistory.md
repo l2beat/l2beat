@@ -1,4 +1,4 @@
-# Diff at Mon, 09 Oct 2023 13:52:17 GMT:
+# Diff at Mon, 09 Oct 2023 14:38:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@
@@ -47,7 +47,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x93277b8f5939975b9E6694d5Fd2837143afBf68A) {
+    contract Governor (0x93277b8f5939975b9E6694d5Fd2837143afBf68A) {
     }
 ```
 
@@ -59,7 +59,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xda2f881f7f4e9D2b9559F97c7670472A85C1986A) {
+    contract RecoveryManager (0xda2f881f7f4e9D2b9559F97c7670472A85C1986A) {
     }
 ```
 

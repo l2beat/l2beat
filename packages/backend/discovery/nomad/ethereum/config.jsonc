@@ -12,8 +12,8 @@
     "0x3009C99D370B780304D2098196f1EBF779a4777a": "GovernanceRouterBeaconProxy",
     "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8": "HomeBeaconProxy",
     "0xFe8874778f946Ac2990A29eba3CFd50760593B2F": "XAppConnectionManager",
-    "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37": "Governor",
-    "0x2bB2a5A724170357cb691841F40d26A950d8C33D": "RecoveryManager"
+    "0x93277b8f5939975b9E6694d5Fd2837143afBf68A": "Governor",
+    "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A": "RecoveryManager"
   },
   "overrides": {
     "BridgeRouterBeaconProxy": {

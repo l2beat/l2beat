@@ -1,8 +1,8 @@
 {
   "name": "nomad",
   "chain": "ethereum",
-  "blockNumber": 18313330,
-  "configHash": "0x9334b72556108c529ffe2df75ce4df7d7ed6cd911883371c3566ef997b8b7aa3",
+  "blockNumber": 18313558,
+  "configHash": "0xca00a20050afd860747ea72ed7f4aeace5a01c39865a6eb710c73b5d9a127606",
   "version": 2,
   "contracts": [
     {
@@ -131,7 +131,7 @@
       "derivedName": "Home"
     },
     {
-      "name": "GnosisSafe",
+      "name": "Governor",
       "address": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
       "upgradeability": {
         "type": "gnosis safe",
@@ -149,9 +149,12 @@
           "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3"
         ],
         "getThreshold": 3,
-        "nonce": 7,
-        "VERSION": "1.3.0"
-      }
+        "nonce": 7
+      },
+      "errors": {
+        "VERSION": "Execution reverted"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -162,7 +165,7 @@
       "sinceTimestamp": 1669736603
     },
     {
-      "name": "GnosisSafe",
+      "name": "RecoveryManager",
       "address": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
       "upgradeability": {
         "type": "gnosis safe",
@@ -180,7 +183,8 @@
         "getThreshold": 2,
         "nonce": 4,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "UpgradeBeaconController",
