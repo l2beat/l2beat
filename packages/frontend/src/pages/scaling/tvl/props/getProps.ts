@@ -16,6 +16,7 @@ export function getProps(
   const { tvlApiResponse, verificationStatus } = pagesData
 
   const charts = tvlApiResponse.layers2s
+  // TODO (filter): Figure out where to move this file
   const { tvl } = getTvlWithChange(charts)
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
