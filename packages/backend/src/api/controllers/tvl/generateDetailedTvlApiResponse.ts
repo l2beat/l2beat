@@ -100,7 +100,6 @@ export function generateDetailedAggregatedApiResponse(
     ]
   }
 
-  // for (const timestamp in hourlyGroupedByTimestamp) {
   const projectDetailedCharts = projectIds.map((projectId) => {
     return getProjectDetailedCharts(
       {

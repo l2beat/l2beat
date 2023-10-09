@@ -15,6 +15,45 @@ import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
 
+describe(generateTvlApiResponse.name, () => {
+  it('returns the correct groupings', () => {
+    const reports = fakeReports([
+      ProjectId('arbitrum'),
+      ProjectId('optimism'),
+      ProjectId('avalanche'),
+      ProjectId.ALL,
+      ProjectId.BRIDGES,
+      ProjectId.LAYER2S,
+    ])
+    const result = generateTvlApiResponse(
+      reports.hourly.all,
+      reports.sixHourly.all,
+      reports.daily.all,
+      reports.latest.all,
+      [ProjectId('arbitrum'), ProjectId('optimism'), ProjectId('avalanche')],
+    )
+    expect(result).toEqual({
+      layers2s: charts(reports, ProjectId.LAYER2S),
+      bridges: charts(reports, ProjectId.BRIDGES),
+      combined: charts(reports, ProjectId.ALL),
+      projects: {
+        arbitrum: {
+          charts: charts(reports, ProjectId('arbitrum')),
+          tokens: reports.latest.arbitrum,
+        },
+        optimism: {
+          charts: charts(reports, ProjectId('optimism')),
+          tokens: reports.latest.optimism,
+        },
+        avalanche: {
+          charts: charts(reports, ProjectId('avalanche')),
+          tokens: reports.latest.avalanche,
+        },
+      },
+    })
+  })
+})
+
 function charts(
   reports: ReturnType<typeof fakeReports>,
   projectId: ProjectId,
@@ -115,41 +154,3 @@ function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
   }
   return result
 }
-describe(generateTvlApiResponse.name, () => {
-  it('returns the correct groupings', () => {
-    const reports = fakeReports([
-      ProjectId('arbitrum'),
-      ProjectId('optimism'),
-      ProjectId('avalanche'),
-      ProjectId.ALL,
-      ProjectId.BRIDGES,
-      ProjectId.LAYER2S,
-    ])
-    const result = generateTvlApiResponse(
-      reports.hourly.all,
-      reports.sixHourly.all,
-      reports.daily.all,
-      reports.latest.all,
-      [ProjectId('arbitrum'), ProjectId('optimism'), ProjectId('avalanche')],
-    )
-    expect(result).toEqual({
-      layers2s: charts(reports, ProjectId.LAYER2S),
-      bridges: charts(reports, ProjectId.BRIDGES),
-      combined: charts(reports, ProjectId.ALL),
-      projects: {
-        arbitrum: {
-          charts: charts(reports, ProjectId('arbitrum')),
-          tokens: reports.latest.arbitrum,
-        },
-        optimism: {
-          charts: charts(reports, ProjectId('optimism')),
-          tokens: reports.latest.optimism,
-        },
-        avalanche: {
-          charts: charts(reports, ProjectId('avalanche')),
-          tokens: reports.latest.avalanche,
-        },
-      },
-    })
-  })
-})
