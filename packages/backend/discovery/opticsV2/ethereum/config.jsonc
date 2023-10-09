@@ -4,8 +4,7 @@
   "name": "opticsV2",
   "initialAddresses": [
     "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892", // BridgeRouterBeaconProxy
-    "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785", // ReplicaBeaconProxy
-    "0x4F50a7081792063693F46A6402390b9647562457" // TODO: should be discovered automatically
+    "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785" // ReplicaBeaconProxy
   ],
   "names": {
     "0xa73a3a74C7044B5411bD61E1990618A1400DA379": "HomeBeaconProxy",
