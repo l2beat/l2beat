@@ -1,20 +1,17 @@
 import { getMethodQuery, getTransferQuery } from '@l2beat/shared-pure'
 
 import { BigQueryProvider } from './BigQueryProvider'
-import { Method, Project, Transfer } from './config'
+import { Method, Transfer } from './config'
 import { LivenessMethodsQuery, LivenessTransfersQuery } from './model'
 
 export class BigQueryClient {
   constructor(private readonly bigquery: BigQueryProvider) {}
 
   async makeTransfersQuery(
-    projectsConfig: Project[],
+    transfers: Transfer[],
     from_timestamp: string,
     to_timestamp: string,
   ) {
-    const transfers = projectsConfig
-      .filter((p) => p.transfers)
-      .flatMap((p) => p.transfers) as Transfer[]
     const from_addresses = transfers.map((t) => t.from_address.toLowerCase())
     const to_addresses = transfers.map((t) => t.to_address.toLowerCase())
     const query = getTransferQuery(
@@ -28,13 +25,10 @@ export class BigQueryClient {
   }
 
   async makeMethodsQuery(
-    projectsConfig: Project[],
+    methods: Method[],
     from_timestamp: string,
     to_timestamp: string,
   ) {
-    const methods = projectsConfig
-      .filter((p) => p.methods)
-      .flatMap((p) => p.methods) as Method[]
     const addresses = methods.map((m) => m.address.toLowerCase())
     const methodSelectors = methods.map((m) => m.selector.toLowerCase())
     const query = getMethodQuery(
