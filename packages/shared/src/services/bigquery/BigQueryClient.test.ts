@@ -24,9 +24,7 @@ describe('BigQueryClient', () => {
     const bigQuery = mockObject<BigQueryWrapper>({
       createQueryJob: mockFn().resolvesToOnce([
         {
-          getQueryResults: async () => {
-            return [transfers]
-          },
+          getQueryResults: async () => [transfers],
         },
       ]),
     })
@@ -59,9 +57,7 @@ describe('BigQueryClient', () => {
     const bigQuery = mockObject<BigQueryWrapper>({
       createQueryJob: mockFn().resolvesToOnce([
         {
-          getQueryResults: async () => {
-            return [methods]
-          },
+          getQueryResults: async () => [methods],
         },
       ]),
     })
@@ -72,5 +68,25 @@ describe('BigQueryClient', () => {
       '2023-10-01 01:00:00 UTC',
     )
     expect(results).toEqual(methods)
+  })
+
+  it('should throw an error if the query fails', async () => {
+    const bigQuery = mockObject<BigQueryWrapper>({
+      createQueryJob: mockFn().resolvesToOnce([
+        {
+          getQueryResults: async () => {
+            throw new Error('Failed to fetch query results.')
+          },
+        },
+      ]),
+    })
+    const queryProvider = new BigQueryProvider(bigQuery)
+    await expect(
+      new BigQueryClient(queryProvider).makeTransfersQuery(
+        projects,
+        '2023-10-01 00:00:00 UTC',
+        '2023-10-01 01:00:00 UTC',
+      ),
+    ).toBeRejectedWith('Failed to fetch query results.')
   })
 })
