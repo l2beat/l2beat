@@ -49,7 +49,7 @@ export async function getOpticsBeaconProxy(
       implementation,
     },
     implementations: [implementation],
-    relatives: [],
+    relatives: [beaconController],
   }
 }
 

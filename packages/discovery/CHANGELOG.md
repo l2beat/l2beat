@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.11.0
+
+### Minor Changes
+
+- Rediscover on beaconController in Optics Beacon Proxy
+
 ## 0.10.0
 
 ### Minor Changes
