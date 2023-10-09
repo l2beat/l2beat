@@ -57,7 +57,7 @@ export function RichSelect(props: Props) {
           </div>
           <div className="relative">
             <div className="pointer-events-none absolute inset-x-0 -top-1 z-20 h-6 bg-gradient-to-b from-gray-200 via-gray-200 to-transparent dark:from-gray-750 dark:via-gray-750" />
-            <div className="max-h-[80dvh] overflow-auto">
+            <div className="max-h-[80svh] overflow-auto">
               <div className="pointer-events-none h-6" />
               {props.children}
               <div className="pointer-events-none h-6" />
