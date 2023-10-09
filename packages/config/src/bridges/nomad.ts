@@ -1,8 +1,16 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
+import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('nomad')
+const challengeWindowSeconds = discovery.getContractValue<number>(
+  'ReplicaBeaconProxy',
+  'optimisticSeconds',
+)
 
 export const nomad: Bridge = {
   type: 'bridge',
@@ -30,17 +38,7 @@ export const nomad: Bridge = {
       {
         address: EthereumAddress('0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3'),
         sinceTimestamp: new UnixTime(1641899423),
-        tokens: [
-          'USDC',
-          'FRAX',
-          //'IAG',
-          'WETH',
-          'USDT',
-          'WBTC',
-          'DAI',
-          //'CQT',
-          'FXS',
-        ],
+        tokens: '*',
       },
     ],
   },
@@ -54,12 +52,13 @@ export const nomad: Bridge = {
       risks: [],
     },
     validation: {
-      name: 'Optimistic Validation',
-      description:
-        'Messages on the source (home) chain are periodically signed by Updater. Updater cannot censor messages and if it refuses to attest them, it can be changed by the governance. \
-        Once message batch is attested, it is relayed to the destination (replica) by the permissionless Relayers. After 20 min fraud proof window messages can be delivered to the destination \
-        contract. During 20 min fraud proof window, if malicious Updater tries to relay invalid message batch, anyone can submit a fraud proof to the source (home) chain slashing Updater \
-        and stopping home contract. On the destination messages cannot be stopped, so receiving contracts have to be independently notified to not process messages.',
+      name: 'Third Party',
+      description: `Messages on the source (home) chain are periodically signed by Updater. Updater cannot censor messages and if it refuses to attest them, it can be changed by the governance. \
+        Once message batch is attested, it is relayed to the destination (replica) by the permissionless Relayers. After the ${formatSeconds(
+          challengeWindowSeconds,
+        )} fraud proof window messages can be delivered to the destination \
+        contract. During the fraud proof window, if malicious Updater tries to relay invalid message batch, anyone can submit a fraud proof to the source (home) chain slashing Updater \
+        and stopping home contract. On the destination messages cannot be stopped, so receiving contracts have to be independently notified to not process messages. Currently this mechanism is not implemented.`,
       references: [],
       risks: [
         {
@@ -69,12 +68,12 @@ export const nomad: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'updater manages to relay fraudulent message batch and is not slashed by Watchers during 20 min fraud proof window.',
+          text: `updater manages to relay a fraudulent message batch.`,
           isCritical: false,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'destination contract does not block receiving fraudulent messages after malicious Updater has been slashed.',
+          text: 'destination contract does not block receiving fraudulent messages.',
           isCritical: false,
         },
       ],
@@ -96,160 +95,69 @@ export const nomad: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Optimistically',
-      description:
-        'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 20 min fraud proof window.',
-      sentiment: 'warning',
+      value: 'Third Party',
+      description: `Messages are relayed to the destination chain and assumed to be correct unless challenged within the ${formatSeconds(
+        challengeWindowSeconds,
+      )} fraud proof window, but the slashing mechanism is not implemented yet.`,
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: 'Bridge can be upgraded by 3/5 MultiSig.',
+      description: 'Bridge can be upgraded by the Governor MultiSig.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8'),
-        name: 'Home',
+      discovery.getContractDetails('HomeBeaconProxy', {
         description:
-          'Nomad Home. This contract is used to send x-chain messages, such as deposit requests. Messages are regularly signed by Attester.',
-        upgradeability: {
-          type: 'Beacon',
-          beacon: EthereumAddress('0x063e871f8DB991CEAd34B557A00B157B360084cc'),
-          beaconAdmin: EthereumAddress(
-            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          ),
-          implementation: EthereumAddress(
-            '0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0x049b51e531Fd8f90da6d92EA83dC4125002F20EF'),
-        name: 'Replica',
+          'Optics Home. This contract is used to send x-chain messages, such as deposit requests. Messages are regularly signed by the Updater.',
+      }),
+      discovery.getContractDetails('ReplicaBeaconProxy', {
         description:
-          'Nomad Replica. This contract is used to receive x-chain messages, such as withdrawal requests, from Relayers.',
-        upgradeability: {
-          type: 'Beacon',
-          beacon: EthereumAddress('0x0876dFe4AcAe0e1c0a43302716483f5752298b71'),
-          beaconAdmin: EthereumAddress(
-            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          ),
-          implementation: EthereumAddress(
-            '0xb92336759618f55bd0f8313bd843604592e27bd8',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3'),
-        name: 'BridgeRouter',
-        description:
-          'Nomad Bridge Router. Used to send messages to Home and receive messages from Replica. When receiving messages, it routes them to XAppConnectionManager.',
-        upgradeability: {
-          type: 'Beacon',
-          beacon: EthereumAddress('0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00'),
-          beaconAdmin: EthereumAddress(
-            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          ),
-          implementation: EthereumAddress(
-            '0x15fdA9F60310d09FEA54E3c99d1197DfF5107248',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0xFe8874778f946Ac2990A29eba3CFd50760593B2F'),
-        name: 'XAppConnectionManager',
+          'Optics Replica. This contract is used to receive x-chain messages, such as withdrawal requests, from Relayers.',
+      }),
+      discovery.getContractDetails('BridgeRouterBeaconProxy', {
+        description: 'Optics Governance Router. Manages all Optics components.',
+      }),
+      discovery.getContractDetails('XAppConnectionManager', {
         description:
           'Contract managing list of connections to other chains (domains) and list of watchers.',
-      },
-      {
-        address: EthereumAddress('0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79'),
-        name: 'Token Registry',
-        description: 'Nomad Token Registry.',
-        upgradeability: {
-          type: 'Beacon',
-          beacon: EthereumAddress('0x4D5ff8A01ed833E11Aba43821D2881A5F2911F98'),
-          beaconAdmin: EthereumAddress(
-            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          ),
-          implementation: EthereumAddress(
-            '0xa7E4Fea3c1468D6C1A3A77e21e6e43Daed855C1b',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e'),
-        name: 'UpgradeBeaconController',
+      }),
+      discovery.getContractDetails('GovernanceRouterBeaconProxy', {
+        description: 'Optics Governance Router. Manages all Optics components.',
+      }),
+      discovery.getContractDetails('UpdaterManager', {
+        description:
+          'Contract allowing Home to slash Updater. Currently does nothing, intended for future functionality.',
+      }),
+      discovery.getContractDetails('UpgradeBeaconController', {
         description: 'Contract managing Beacons.',
-      },
-      {
-        address: EthereumAddress('0x3009C99D370B780304D2098196f1EBF779a4777a'),
-        name: 'GovernanceRouter',
-        description: 'Nomad Governance Router. Manages all Nomad components.',
-        upgradeability: {
-          type: 'Beacon',
-          beacon: EthereumAddress('0x67833a48b3F509d4252ac2c19cd604556eD6c981'),
-          beaconAdmin: EthereumAddress(
-            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          ),
-          implementation: EthereumAddress(
-            '0x569D80f7FC17316B4C83f072b92EF37B72819DE0',
-          ),
-        },
-      },
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
+    ...discovery.getMultisigPermission(
+      'Governor',
+      'Manages Optics V1 bridge components via GovernanceRouter contract.',
+    ),
+    ...discovery.getMultisigPermission(
+      'RecoveryManager',
+      'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
+    ),
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x93277b8f5939975b9E6694d5Fd2837143afBf68A',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'Nomad Governor',
-      description:
-        'Manages Nomad bridge components via GovernanceRouter contract.',
+      name: 'Updater',
+      accounts: [discovery.getPermissionedAccount('UpdaterManager', 'updater')],
+      description: 'Permissioned account that can update message roots.',
     },
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x06D8902cfae8235047DC7783875279311798c715',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9782A3C8128f5D1BD3C9655d03181ba5b420883E',
-          ),
-          type: 'EOA',
-        },
-      ],
       name: 'XAppConnectionManager Watchers',
+      accounts: discovery.getPermissionedAccounts(
+        'XAppConnectionManager',
+        'watchers',
+      ),
       description:
         'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
     },
