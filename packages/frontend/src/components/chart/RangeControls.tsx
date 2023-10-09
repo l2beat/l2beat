@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { ChartType } from './configure/state/State'
 import { RadioGroup } from './RadioGroup'
 
-export function RangeControls({ type }: { days: number; type: ChartType }) {
+export function RangeControls({ isActivity }: { isActivity: boolean }) {
   return (
     <RadioGroup
       role="chart-range-controls"
@@ -11,7 +10,7 @@ export function RangeControls({ type }: { days: number; type: ChartType }) {
       options={[
         {
           value: '7D',
-          className: type === 'activity' ? '!hidden' : undefined,
+          className: isActivity ? '!hidden' : undefined,
         },
         { value: '30D' },
         { value: '90D', className: '!hidden sm:!block' },

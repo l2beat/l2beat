@@ -2,13 +2,15 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Chart, Header, Logo } from '../../components'
+import { ChartType } from '../../scripts/charts/types'
 
 export interface TvlMetaImageProps {
   tvl: string
   sevenDayChange: string
+  chartType: ChartType
   name?: string
   icon?: string
-  tvlEndpoint: string
+  fake?: boolean
 }
 
 export function TvlMetaImage(props: TvlMetaImageProps) {
@@ -28,7 +30,13 @@ export function TvlMetaImage(props: TvlMetaImageProps) {
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
       />
-      <Chart tvlEndpoint={props.tvlEndpoint} metaChart />
+      <Chart
+        settingsId="meta"
+        initialType={
+          props.fake ? { type: 'storybook-fake-tvl' } : props.chartType
+        }
+        metaChart
+      />
       <Logo />
     </div>
   )

@@ -1,15 +1,15 @@
-import { configureCharts } from '../components/chart/configure'
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
+import { configureCharts } from './charts'
 import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilter'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
+import { configureRichSelects } from './configureRichSelect'
 import { configureRollupsOnlyFilter } from './configureRollupsOnlyFilter'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
-import { configureSlideCards } from './configureSlideCard'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
@@ -22,7 +22,6 @@ configureSidebarMenu()
 configureTooltips()
 configureCharts()
 configureDropdowns()
-configureSlideCards()
 configureRosetteOverlay()
 configureFloatingBanner()
 configureHoverableDropdown()
@@ -35,3 +34,4 @@ configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
 configureMultipleEscrowsButton()
+configureRichSelects()

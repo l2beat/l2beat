@@ -56,9 +56,9 @@ export function StageSection(props: StageSectionProps) {
           alt={props.name}
           className="relative -top-0.5 mr-2 inline-block h-6 w-6"
         />
-        {props.name} is a
-        <StageBadge stage={props.stage.stage} big className="mx-2" />
-        <span className="lowercase">{props.type}</span>.
+        {props.name} is a{' '}
+        <StageBadge stage={props.stage.stage} big className="mx-1" />
+        <span className="lowercase"> {props.type}</span>.
       </div>
       {props.stage.summary.map((stage) => {
         const satisfied = stage.requirements.filter((r) => r.satisfied === true)
@@ -76,9 +76,9 @@ export function StageSection(props: StageSectionProps) {
               <input
                 type="checkbox"
                 autoComplete="off"
-                className=" Dropdown-Button peer hidden"
+                className="Dropdown-Button peer hidden"
               />
-              <div className="flex items-center gap-3">
+              <div className="flex select-none items-center gap-3">
                 <StageBadge stage={stage.stage} big />
                 {missing.length === 0 ? (
                   <div className="flex flex-col gap-3 md:flex-row">
