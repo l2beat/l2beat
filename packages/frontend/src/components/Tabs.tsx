@@ -27,13 +27,15 @@ export function Tabs({ items }: TabsProps) {
               id={tab.id}
               href={`#${tab.id}`}
             >
-              {tab.icon && <span className="mr-1.5">{tab.icon}</span>}
+              {tab.icon && (
+                <span className="mr-1.5 hidden md:inline">{tab.icon}</span>
+              )}
               <span className="hidden text-base md:inline">{tab.name}</span>
               <span className="inline text-xs md:hidden">
                 {tab.shortName ?? tab.name}
               </span>
               {tab.itemsCount && (
-                <span className="TabsItem-CountBadge ml-1.5 rounded-full bg-purple-100 px-1.5 py-0.5 text-xs tabular-nums text-white">
+                <span className="TabsItem-CountBadge ml-1.5 rounded-full bg-purple-100 px-1.5 py-0.5 text-2xs tabular-nums text-white md:text-xs">
                   {tab.itemsCount}
                 </span>
               )}
