@@ -16,9 +16,9 @@ export const astarzkevm: Layer2 = {
     category: 'ZK Rollup',
     provider: 'Polygon',
     links: {
-      websites: ['https://astar.network/blog/supernova-is-here!-39292'],
+      websites: ['https://astar.network/astar2'],
       apps: [],
-      documentation: ['https://astar.network/blog/supernova-is-here!-39292'],
+      documentation: ['https://docs.astar.network/docs/learn/zkEVM/'],
       explorers: [],
       repositories: [],
       socialMedia: ['https://twitter.com/AstarzkEVM'],
