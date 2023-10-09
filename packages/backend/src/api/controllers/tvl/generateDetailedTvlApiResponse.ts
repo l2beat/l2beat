@@ -111,6 +111,10 @@ export function generateDetailedAggregatedApiResponse(
     )
   })
 
+  if (projectDetailedCharts.length === 0) {
+    return result
+  }
+
   const firstProjectDetailedCharts = projectDetailedCharts[0]
   result.hourly.types = firstProjectDetailedCharts.hourly.types
   result.sixHourly.types = firstProjectDetailedCharts.sixHourly.types
