@@ -61,6 +61,7 @@ export const layer2s: Layer2[] = [
   aevo,
   apex,
   arbitrum,
+  astarzkevm,
   aztec,
   aztecconnect,
   base,
