@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ScalingEntry } from '../../../../pages/scaling'
+import { ScalingEntry } from '../../../../pages/scaling/types'
 import { Checkbox } from '../../../Checkbox'
 import { generateSlugList } from '../FiltersWrapper'
 
@@ -19,7 +19,7 @@ export function RollupsOnlyCheckbox<T extends ScalingEntry>({
       role="chart-rollups-only"
       id="rollups-only-checkbox"
       label="Show rollups only"
-      slugs={generateSlugList(
+      slugsWhenChecked={generateSlugList(
         items,
         (i) => i.category === 'Optimistic Rollup' || i.category === 'ZK Rollup',
       )}

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
-import { IncludeLayer2sCheckbox } from '../../../components/table/filters/checkboxes/IncludeLayer2sCheckbox'
+import { BridgesTvlFilters } from '../../../components/table/filters/BridgesTvlFilters'
 import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesTvlColumns,
@@ -27,9 +27,8 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   const archivedProjects = items.filter((item) => item.isArchived)
 
   return (
-    <section className="mt-4 sm:mt-8">
-      <IncludeLayer2sCheckbox className="mb-4" />
-
+    <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
+      <BridgesTvlFilters items={items} />
       <Tabs
         items={[
           {
@@ -44,7 +43,8 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
-            itemsCount: activeProjects.length,
+            itemsCount: activeProjects.filter((i) => i.type === 'bridge')
+              .length,
             icon: <ActiveIcon />,
           },
           {
@@ -59,7 +59,8 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 rerenderIndexesOn="#combined-bridges-checkbox"
               />
             ),
-            itemsCount: archivedProjects.length,
+            itemsCount: archivedProjects.filter((i) => i.type === 'bridge')
+              .length,
             icon: <ArchivedIcon />,
           },
         ]}

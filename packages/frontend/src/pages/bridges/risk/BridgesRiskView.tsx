@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
-import { IncludeLayer2sCheckbox } from '../../../components/table/filters/checkboxes/IncludeLayer2sCheckbox'
+import { BridgesRiskFilters } from '../../../components/table/filters/BridgesRiskFilters'
 import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
 import { getBridgesRiskColumns } from '../../../components/table/props/getBridgesTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
@@ -24,8 +24,8 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   const archivedProjects = items.filter((item) => item.isArchived)
 
   return (
-    <section className="mt-4 sm:mt-8">
-      <IncludeLayer2sCheckbox className="mb-4" />
+    <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
+      <BridgesRiskFilters items={items} />
       <Tabs
         items={[
           {

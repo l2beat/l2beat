@@ -32,18 +32,29 @@ export function configureProjectFilters() {
     projectFilters.dispatchEvent(new Event('change'))
   }
 
-  const configureCheckbox = (filter: HTMLInputElement, stateId: string) => {
-    const slugs = filter.dataset.slugs?.split(',').filter((i) => i.length > 0)
+  const configureCheckbox = (checkbox: HTMLInputElement, stateId: string) => {
+    const slugsWhenChecked = checkbox.dataset.slugsWhenChecked?.split(',')
+    const slugsWhenUnchecked = checkbox.dataset.slugsWhenUnchecked?.split(',')
 
-    if (!slugs) {
+    if (!slugsWhenChecked && !slugsWhenUnchecked) {
       throw new Error(`No slugs for ${stateId}`)
     }
 
-    filter.addEventListener('change', () => {
-      if (filter.checked) {
-        states.set(stateId, slugs)
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        if (slugsWhenChecked) {
+          states.set(stateId, slugsWhenChecked)
+        }
+        if (slugsWhenUnchecked) {
+          states.delete(stateId)
+        }
       } else {
-        states.delete(stateId)
+        if (slugsWhenChecked) {
+          states.delete(stateId)
+        }
+        if (slugsWhenUnchecked) {
+          states.set(stateId, slugsWhenUnchecked)
+        }
       }
       rerenderState()
     })
@@ -76,9 +87,8 @@ export function configureProjectFilters() {
       },
       [...allProjectSlugs],
     )
-    // rerenderProjectFilters(slugsToShow)
-    manageRowVisibility(slugsToShow)
-    rerenderTables()
+
+    rerenderTables(slugsToShow)
     setFilteredSlugs(slugsToShow)
   }
 
@@ -86,28 +96,11 @@ export function configureProjectFilters() {
   selects.forEach((select) => configureRichSelect(select, select.id))
 }
 
-export function manageRowVisibility(slugs: string[]) {
-  const { $$ } = makeQuery(document.body)
-  const rows = $$('[data-role="row"]')
-  rows.forEach((row) => {
-    const slug = row.dataset.slug
-    if (!slug) {
-      throw new Error('No slug found')
-    }
-
-    if (slugs.includes(slug)) {
-      row.classList.remove('hidden')
-    } else {
-      row.classList.add('hidden')
-    }
-  })
-}
-
-function rerenderTables() {
+function rerenderTables(slugsToShow: string[]) {
   const tablesToRerenderIndexes =
     document.querySelectorAll<HTMLElement>(`[data-role="table"]`)
 
-  tablesToRerenderIndexes.forEach((table) => rerenderTable(table))
+  tablesToRerenderIndexes.forEach((table) => rerenderTable(table, slugsToShow))
 }
 
 export function getFilteredSlugs(projectFilters: HTMLElement) {

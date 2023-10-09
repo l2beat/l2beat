@@ -7,7 +7,8 @@ export interface CheckboxProps {
   className?: string
   label: ReactNode
   role: string
-  slugs?: string
+  slugsWhenChecked?: string[]
+  slugsWhenUnchecked?: string[]
   id: string
   defaultChecked?: boolean
 }
@@ -16,7 +17,8 @@ export function Checkbox({
   className,
   label,
   role,
-  slugs,
+  slugsWhenChecked,
+  slugsWhenUnchecked,
   id,
   defaultChecked,
 }: CheckboxProps) {
@@ -30,7 +32,8 @@ export function Checkbox({
     >
       <input
         data-role={role}
-        data-slugs={slugs}
+        data-slugs-when-checked={slugsWhenChecked}
+        data-slugs-when-unchecked={slugsWhenUnchecked}
         id={id}
         type="checkbox"
         autoComplete="off"

@@ -30,14 +30,12 @@ export function getScalingRowProps(
       ),
       href,
       'data-slug': entry.slug,
-      'data-role': 'row',
     }
   }
 
   return {
     className: getRowVerificationClassNames(entry),
     href,
-    'data-role': 'row',
     'data-slug': entry.slug,
   }
 }

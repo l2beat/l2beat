@@ -1,13 +1,14 @@
 import React from 'react'
 
-import { ScalingEntry } from '../../../pages/scaling'
+import { BridgesEntry } from '../../../pages/bridges/types'
+import { ScalingEntry } from '../../../pages/scaling/types'
 
-interface ProjectFilters<T extends ScalingEntry> {
+interface ProjectFilters<T extends ScalingEntry | BridgesEntry> {
   items: T[]
   children: React.ReactNode
 }
 
-export function FiltersWrapper<T extends ScalingEntry>({
+export function FiltersWrapper<T extends ScalingEntry | BridgesEntry>({
   items,
   children,
 }: ProjectFilters<T>) {
@@ -22,7 +23,7 @@ export function FiltersWrapper<T extends ScalingEntry>({
   )
 }
 
-export function generateSlugList<T extends ScalingEntry>(
+export function generateSlugList<T extends ScalingEntry | BridgesEntry>(
   items: T[],
   check?: (item: T) => boolean,
 ): string[] {

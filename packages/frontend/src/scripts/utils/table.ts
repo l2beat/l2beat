@@ -2,16 +2,37 @@ import { makeQuery } from '../query'
 
 type TableState = 'empty' | null
 
-export function rerenderTable(table: HTMLElement) {
+export function rerenderTable(table: HTMLElement, slugsToShow: string[]) {
   const parentElement = table.parentElement
   const isInsideTabs = parentElement?.classList.contains('TabsContent')
 
-  const visibleRowsLength = rerenderIndexes(table)
+  const visibleRowsLength = rerenderRows(table, slugsToShow)
 
   if (parentElement && isInsideTabs) {
     rerenderTabCountBadge(parentElement.id, visibleRowsLength)
   }
+
   setTableState(table, visibleRowsLength === 0 ? 'empty' : null)
+}
+
+function rerenderRows(table: HTMLElement, slugs: string[]) {
+  const { $$ } = makeQuery(table)
+  const rows = $$('tbody tr')
+  rows.forEach((row) => {
+    const slug = row.dataset.slug
+    if (!slug) {
+      throw new Error('No slug found')
+    }
+
+    if (slugs.includes(slug)) {
+      row.classList.remove('hidden')
+    } else {
+      row.classList.add('hidden')
+    }
+  })
+
+  const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
+  return rerenderIndexes(visibleRows)
 }
 
 function rerenderTabCountBadge(tabId: string, visibleRowsLength: number) {
@@ -24,12 +45,7 @@ function rerenderTabCountBadge(tabId: string, visibleRowsLength: number) {
   tabBadgeCount.innerHTML = `${visibleRowsLength}`
 }
 
-function rerenderIndexes(table: HTMLElement) {
-  const { $$ } = makeQuery(table)
-  const visibleRows = $$('tbody tr').filter(
-    (r) => !r.classList.contains('hidden'),
-  )
-
+function rerenderIndexes(visibleRows: HTMLElement[]) {
   visibleRows.forEach((r, index) => {
     const indexCell = r.querySelector('[data-role="index-cell"]')
     if (!indexCell) {
