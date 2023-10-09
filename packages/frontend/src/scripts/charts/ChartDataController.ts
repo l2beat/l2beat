@@ -90,15 +90,19 @@ export function getChartUrl(chartType: ChartType) {
   switch (chartType.type) {
     case 'layer2-tvl':
       return chartType.filteredSlugs
-        ? `/api/tvl?slugs=${JSON.stringify(chartType.filteredSlugs)} `
+        ? `/api/tvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(',')}`
         : '/api/scaling-tvl.json'
     case 'layer2-detailed-tvl':
       return chartType.filteredSlugs
-        ? `/api/detailedTvl?slugs=${JSON.stringify(chartType.filteredSlugs)} `
+        ? `/api/detailedTvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(
+            ',',
+          )}`
         : '/api/scaling-detailed-tvl.json'
     case 'layer2-activity':
       return chartType.filteredSlugs
-        ? `/api/activity?slugs=${JSON.stringify(chartType.filteredSlugs)} `
+        ? `/api/activity/aggregate?projectSlugs=${chartType.filteredSlugs.join(
+            ',',
+          )}`
         : '/api/activity/combined.json'
     case 'bridges-tvl':
       return chartType.includeCanonical
