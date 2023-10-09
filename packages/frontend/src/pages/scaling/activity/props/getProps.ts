@@ -3,7 +3,6 @@ import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/ChartDataController'
-import { getScalingFactor } from '../../../../utils/activity/getScalingFactor'
 import { Wrapped } from '../../../Page'
 import { ActivityPageProps } from '../view/ScalingActivityPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -18,8 +17,6 @@ export function getProps(
 ): Wrapped<ActivityPageProps> {
   const { activityApiResponse, verificationStatus } = pagesData
 
-  const scalingFactor = getScalingFactor(activityApiResponse)
-  console.log(scalingFactor)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),

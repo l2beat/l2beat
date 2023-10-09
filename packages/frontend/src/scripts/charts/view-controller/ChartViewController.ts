@@ -2,11 +2,11 @@ import { formatCurrency } from '../../../utils/format'
 import { getPercentageChange } from '../../../utils/utils'
 import { makeQuery } from '../../query'
 import { ChartRenderer, RenderParams } from '../renderer/ChartRenderer'
-import { ActivityResponse } from '../types'
 import { getActivityRenderParams } from './charts/getActivityRenderParams'
 import { getDetailedTvlRenderParams } from './charts/getDetailedTvlRenderParams'
 import { getTokenTvlRenderParams } from './charts/getTokenTvlRenderParams'
 import { getTvlRenderParams } from './charts/getTvlRenderParams'
+import { getScalingFactor } from './header/getScalingFactor'
 import { ChartControlsState, ChartData } from './types'
 
 interface Header {
@@ -164,25 +164,4 @@ function getDataIndex(
   }
 
   return currency === 'usd' ? 1 : 5
-}
-
-function getScalingFactor(activityApiResponse: ActivityResponse): string {
-  const projectsWeeklyCount = activityApiResponse.daily.data
-    .slice(-7)
-    .map((x) => x[1])
-    .reduce((a, b) => a + b, 0)
-
-  const ethereumWeeklyCount = activityApiResponse.daily.data
-    .slice(-7)
-    .map((x) => x[2])
-    .reduce((a, b) => a + b, 0)
-
-  if (!projectsWeeklyCount || !ethereumWeeklyCount) {
-    return ''
-  }
-
-  const result =
-    (projectsWeeklyCount + ethereumWeeklyCount) / ethereumWeeklyCount
-
-  return result.toFixed(2) + 'x'
 }
