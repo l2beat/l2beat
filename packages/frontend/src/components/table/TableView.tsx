@@ -45,7 +45,7 @@ export function TableView<T>({
   return (
     <div
       className={cx(
-        'overflow-x-auto whitespace-pre text-base',
+        'group overflow-x-auto whitespace-pre text-base',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
@@ -97,7 +97,7 @@ export function TableView<T>({
             })}
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {items.map((item, i) => {
             const {
               href,
@@ -148,6 +148,10 @@ export function TableView<T>({
           })}
         </tbody>
       </table>
+      <div className="hidden flex-col items-center justify-center gap-4 bg-blue-700 bg-opacity-20 pt-10 pb-10 group-data-[state=empty]:flex">
+        <span className="text-2xl font-semibold">No results</span>
+        <span>There are no results meeting the criteria</span>
+      </div>
     </div>
   )
 }

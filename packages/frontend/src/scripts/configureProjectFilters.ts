@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { getRichSelectValue } from './configureRichSelect'
 import { makeQuery } from './query'
+import { setTableState } from './utils/table'
 
 export type Slugs = z.infer<typeof Slugs>
 export const Slugs = z.array(z.string())
@@ -104,7 +105,7 @@ export function manageRowVisibility(slugs: string[]) {
 
 function rerenderIndexes() {
   const tablesToRerenderIndexes =
-    document.querySelectorAll(`[data-role="table"]`)
+    document.querySelectorAll<HTMLElement>(`[data-role="table"]`)
 
   tablesToRerenderIndexes.forEach((table) => {
     const visibleRows = Array.from(table.querySelectorAll('tbody tr')).filter(
@@ -119,9 +120,8 @@ function rerenderIndexes() {
       }
       indexCell.innerHTML = `${index + 1}`
     })
-    console.debug('triggered renderNumbers() |', {
-      visibleRowsLength: visibleRows.length,
-    })
+
+    setTableState(table, visibleRows.length === 0 ? 'empty' : null)
   })
 }
 
