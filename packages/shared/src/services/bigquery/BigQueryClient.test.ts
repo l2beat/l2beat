@@ -3,7 +3,31 @@ import { expect, mockFn, mockObject } from 'earl'
 import { BigQueryClient } from './BigQueryClient'
 import { BigQueryProvider } from './BigQueryProvider'
 import { BigQueryWrapper } from './BigQueryWrapper'
-import { projects } from './config'
+import { Method, Transfer } from './config'
+
+const transfersToQuery: Transfer[] = [
+  {
+    from_address: '0x1234567890abcdef',
+    to_address: '0xabcdef1234567890',
+  },
+  {
+    from_address: '0xabcdef1234567890',
+    to_address: '0x1234567890abcdef',
+  },
+]
+
+const methodsToQuery: Method[] = [
+  {
+    name: 'method1',
+    address: '0x1234567890abcdef',
+    selector: '0xabcdef',
+  },
+  {
+    name: 'method2',
+    address: '0xabcdef1234567890',
+    selector: '0x123456',
+  },
+]
 
 describe('BigQueryClient', () => {
   it('should return valid data for transfers', async () => {
@@ -30,7 +54,7 @@ describe('BigQueryClient', () => {
     })
     const queryProvider = new BigQueryProvider(bigQuery)
     const results = await new BigQueryClient(queryProvider).makeTransfersQuery(
-      projects,
+      transfersToQuery,
       '2023-10-01 00:00:00 UTC',
       '2023-10-01 01:00:00 UTC',
     )
@@ -63,7 +87,7 @@ describe('BigQueryClient', () => {
     })
     const queryProvider = new BigQueryProvider(bigQuery)
     const results = await new BigQueryClient(queryProvider).makeMethodsQuery(
-      projects,
+      methodsToQuery,
       '2023-10-01 00:00:00 UTC',
       '2023-10-01 01:00:00 UTC',
     )
@@ -83,7 +107,7 @@ describe('BigQueryClient', () => {
     const queryProvider = new BigQueryProvider(bigQuery)
     await expect(
       new BigQueryClient(queryProvider).makeTransfersQuery(
-        projects,
+        transfersToQuery,
         '2023-10-01 00:00:00 UTC',
         '2023-10-01 01:00:00 UTC',
       ),
