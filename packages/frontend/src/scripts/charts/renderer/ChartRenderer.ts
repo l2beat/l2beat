@@ -30,8 +30,6 @@ export interface RenderParams<T> {
 }
 
 const FIRST_LABEL_HEIGHT_PX = 20
-const HOVER_AREA_EXTENSION_PX = 16
-const HOVER_BELOW_CHART = 15
 const LABEL_COUNT = 5
 const HOVER_CANVAS_PADDING = 16
 const MILESTONE_MAX_Y = 25
@@ -41,6 +39,7 @@ const MILESTONE_CAPTURE_X = 20
 export class ChartRenderer {
   private readonly labelElements: HTMLElement[] = []
   private readonly canvas: HTMLCanvasElement
+  private readonly canvasInteractionZone: HTMLElement
   private readonly ctx: CanvasRenderingContext2D
   private readonly hover: HTMLElement
   private readonly hoverLine: HTMLElement
@@ -49,7 +48,6 @@ export class ChartRenderer {
   private readonly milestonesWrapper: HTMLElement
   private readonly range: HTMLElement
   private renderParams?: RenderParams<unknown>
-  private wasMouseInside = false
   private getY: (value: number) => number = (x) => x
   private lastPointIndex?: number
 
@@ -65,6 +63,9 @@ export class ChartRenderer {
     this.labelElements = $$('[data-role="chart-label"]').reverse()
     console.assert(this.labelElements.length === LABEL_COUNT)
 
+    this.canvasInteractionZone = $(
+      '[data-role="chart-canvas-interaction-zone"]',
+    )
     this.canvas = $('[data-role="chart-canvas"]')
     const ctx = this.canvas.getContext('2d')
     if (!ctx) throw new Error('Failed to get canvas context')
@@ -138,8 +139,17 @@ export class ChartRenderer {
       }
     })
 
-    window.addEventListener('mousemove', (e) => this.onMoveEvent(e))
-    window.addEventListener('touchmove', (e) => this.onMoveEvent(e.touches[0]))
+    window.addEventListener('mousemove', (e) => this.onWindowMoveEvent(e))
+    window.addEventListener('touchmove', (e) =>
+      this.onWindowMoveEvent(e.touches[0]),
+    )
+
+    this.canvasInteractionZone.addEventListener('mousemove', (e) =>
+      this.onCanvasMoveEvent(e),
+    )
+    this.canvasInteractionZone.addEventListener('touchmove', (e) =>
+      this.onCanvasMoveEvent(e.touches[0]),
+    )
   }
 
   private renderMilestones(points: Point<unknown>[]) {
@@ -196,27 +206,27 @@ export class ChartRenderer {
     }
   }
 
-  private onMoveEvent(e: MouseEvent | Touch) {
+  private onCanvasMoveEvent(e: MouseEvent | Touch) {
     const rect = this.canvas.getBoundingClientRect()
-    // Each point on the chart except the first and the last has space on both
-    // sides that causes it to show on hover. The first and the last only have
-    // it to the right and left respectively. To combat this we extend this area
-    // artificially by an arbitrary amount.
-    const isInside =
-      e.clientX >= rect.left - HOVER_AREA_EXTENSION_PX &&
-      e.clientX <= rect.right + HOVER_AREA_EXTENSION_PX &&
-      e.clientY >= rect.top &&
-      e.clientY <= rect.bottom + HOVER_BELOW_CHART
-    const position = (e.clientX - rect.left) / rect.width
 
-    if (isInside) {
-      const x = Math.min(1, Math.max(0, position))
-      const y = Math.abs(e.clientY - rect.top - rect.height - HOVER_BELOW_CHART)
-      this.onMouseMoved(x, y)
-    } else if (this.wasMouseInside) {
+    const position = (e.clientX - rect.left) / rect.width
+    const x = Math.min(1, Math.max(0, position))
+    const y = Math.abs(e.clientY - rect.top - rect.height)
+
+    this.onMouseMoved(x, y)
+  }
+
+  private onWindowMoveEvent(e: MouseEvent | Touch) {
+    const rect = this.canvasInteractionZone.getBoundingClientRect()
+    const isInside =
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom
+
+    if (!isInside) {
       this.onMouseExited()
     }
-    this.wasMouseInside = isInside
   }
 
   private onMouseMoved(mouseX: number, mouseY: number) {

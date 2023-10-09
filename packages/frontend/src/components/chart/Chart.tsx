@@ -87,6 +87,11 @@ export function Chart(props: ChartProps) {
             <ChartLoader />
             <ChartHover />
             <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
+            <div
+              className="absolute -bottom-4 -left-4 top-0 -right-4 z-25"
+              data-role="chart-canvas-interaction-zone"
+            />
+
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
