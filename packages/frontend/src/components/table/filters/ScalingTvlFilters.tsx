@@ -33,7 +33,7 @@ export function ScalingTvlFilters({ items }: Props) {
           <RichSelect.Item
             selectedLabel={da.label}
             key={da.label}
-            value={JSON.stringify(da.value)}
+            value={da.value}
           >
             {da.label}
           </RichSelect.Item>
@@ -44,7 +44,7 @@ export function ScalingTvlFilters({ items }: Props) {
           <RichSelect.Item
             selectedLabel={stage.label}
             key={stage.label}
-            value={JSON.stringify(stage.value)}
+            value={stage.value}
           >
             {stage.label}
           </RichSelect.Item>

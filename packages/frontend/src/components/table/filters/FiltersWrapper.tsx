@@ -16,7 +16,7 @@ export function FiltersWrapper<T extends ScalingEntry | BridgesEntry>({
     <div
       id="project-filters"
       className="flex flex-wrap gap-4"
-      data-all-slugs={JSON.stringify(generateSlugList(items))}
+      data-all-slugs={generateSlugList(items)}
     >
       {children}
     </div>

@@ -73,7 +73,7 @@ export function RichSelect(props: Props) {
 
 interface RichSelectItemProps {
   children: React.ReactNode
-  value: string
+  value: string | string[]
   selectedLabel: string
   className?: string
 }

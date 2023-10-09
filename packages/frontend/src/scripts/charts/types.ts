@@ -2,8 +2,6 @@ import { Milestone } from '@l2beat/config'
 import { AssetType } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { Slugs } from '../configureProjectFilters'
-
 export interface AggregateTvlChart {
   type: 'AggregateTvlChart'
   points: {
@@ -195,15 +193,15 @@ export type ChartType = z.infer<typeof ChartType>
 export const ChartType = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('layer2-tvl'),
-    filteredSlugs: Slugs.optional(),
+    filteredSlugs: z.array(z.string()).optional(),
   }),
   z.object({
     type: z.literal('layer2-detailed-tvl'),
-    filteredSlugs: Slugs.optional(),
+    filteredSlugs: z.array(z.string()).optional(),
   }),
   z.object({
     type: z.literal('layer2-activity'),
-    filteredSlugs: Slugs.optional(),
+    filteredSlugs: z.array(z.string()).optional(),
   }),
   z.object({ type: z.literal('bridges-tvl'), includeCanonical: z.boolean() }),
   z.object({ type: z.literal('project-tvl'), slug: z.string() }),

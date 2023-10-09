@@ -33,7 +33,7 @@ export function ScalingRiskFilters({ items }: Props) {
           <RichSelect.Item
             selectedLabel={da.label}
             key={da.label}
-            value={JSON.stringify(da.value)}
+            value={da.value}
           >
             {da.label}
           </RichSelect.Item>

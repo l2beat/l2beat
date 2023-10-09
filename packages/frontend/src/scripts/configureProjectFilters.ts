@@ -1,12 +1,8 @@
 import isEqual from 'lodash/isEqual'
-import { z } from 'zod'
 
 import { getRichSelectValue } from './configureRichSelect'
 import { makeQuery } from './query'
 import { rerenderTable } from './utils/table'
-
-export type Slugs = z.infer<typeof Slugs>
-export const Slugs = z.array(z.string())
 
 const states = new Map<string, string[]>()
 
@@ -19,15 +15,13 @@ export function configureProjectFilters() {
   if (!projectFilters.dataset.allSlugs) {
     throw new Error('No allSlugs found')
   }
-  const allProjectSlugs = Slugs.parse(
-    JSON.parse(projectFilters.dataset.allSlugs),
-  )
+  const allProjectSlugs = projectFilters.dataset.allSlugs.split(',')
 
   const setFilteredSlugs = (slugs: string[]) => {
     if (isEqual(slugs, allProjectSlugs)) {
       delete projectFilters.dataset.filteredSlugs
     } else {
-      projectFilters.dataset.filteredSlugs = JSON.stringify(slugs)
+      projectFilters.dataset.filteredSlugs = slugs.join(',')
     }
     projectFilters.dispatchEvent(new Event('change'))
   }
@@ -64,7 +58,7 @@ export function configureProjectFilters() {
     richSelect.addEventListener('change', () => {
       const selectedValue = getRichSelectValue(richSelect)
       if (selectedValue) {
-        const slugs = Slugs.parse(JSON.parse(selectedValue))
+        const slugs = selectedValue.split(',')
         states.set(stateId, slugs)
       } else {
         states.delete(stateId)
@@ -76,8 +70,7 @@ export function configureProjectFilters() {
   const checkboxes = projectFilters.querySelectorAll<HTMLInputElement>(
     'input[type="checkbox"]',
   )
-  const selects =
-    projectFilters.querySelectorAll<HTMLSelectElement>('.RichSelect')
+  const selects = projectFilters.querySelectorAll<HTMLElement>('.RichSelect')
 
   const rerenderState = () => {
     const stateObj = Object.fromEntries(states)
@@ -104,12 +97,7 @@ function rerenderTables(slugsToShow: string[]) {
 }
 
 export function getFilteredSlugs(projectFilters: HTMLElement) {
-  const value = projectFilters.dataset.filteredSlugs
-  if (value === undefined) {
-    return
-  }
-
-  return Slugs.parse(JSON.parse(value))
+  return projectFilters.dataset.filteredSlugs?.split(',')
 }
 // const rerenderProjectFilters = (slugs: string[]) => {
 //   const selectItems = Array.from(selects).flatMap((select) =>
