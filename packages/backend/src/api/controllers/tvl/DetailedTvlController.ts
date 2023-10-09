@@ -148,8 +148,6 @@ export class DetailedTvlController {
   async getDetailedAggregatedApiResponse(
     slugs: string[],
   ): Promise<TvlProjectResult> {
-    const dataTimings = await this.getDataTimings()
-
     const projectIdsFilter = [...layer2s, ...bridges]
       .filter((project) => slugs.includes(project.display.slug))
       .map((project) => project.id)
@@ -160,6 +158,8 @@ export class DetailedTvlController {
         error: 'EMPTY_SLUG',
       }
     }
+
+    const dataTimings = await this.getDataTimings()
 
     if (!dataTimings.latestTimestamp) {
       return {

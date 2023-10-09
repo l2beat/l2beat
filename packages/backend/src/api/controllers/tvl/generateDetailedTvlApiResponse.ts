@@ -1,5 +1,6 @@
 import {
   AggregatedReportType,
+  assert,
   DetailedTvlApiChart,
   DetailedTvlApiChartPoint,
   DetailedTvlApiCharts,
@@ -71,34 +72,9 @@ export function generateDetailedAggregatedApiResponse(
   daily: ReportsPerProjectIdAndTimestamp,
   projectIds: ProjectId[],
 ): DetailedTvlApiCharts {
-  const result: DetailedTvlApiCharts = {
-    hourly: {
-      types: DETAILED_LABELS,
-      data: [],
-    },
-    sixHourly: {
-      types: DETAILED_LABELS,
-      data: [],
-    },
-    daily: { types: DETAILED_LABELS, data: [] },
-  }
+  const result: DetailedTvlApiCharts = createEmptyDetailedTvlApiCharts()
 
-  const mergeDetailValues = (
-    values: DetailedTvlApiChartPoint[],
-  ): DetailedTvlApiChartPoint => {
-    return [
-      values[0][0],
-      sum(values.map((value) => value[1])),
-      sum(values.map((value) => value[2])),
-      sum(values.map((value) => value[3])),
-      sum(values.map((value) => value[4])),
-      sum(values.map((value) => value[5])),
-      sum(values.map((value) => value[6])),
-      sum(values.map((value) => value[7])),
-      sum(values.map((value) => value[8])),
-    ]
-  }
-
+  // get project detailed charts of filtered projects (projectIds)
   const projectDetailedCharts = projectIds.map((projectId) => {
     return getProjectDetailedCharts(
       {
@@ -110,27 +86,78 @@ export function generateDetailedAggregatedApiResponse(
     )
   })
 
-  const firstProjectDetailedCharts = projectDetailedCharts[0]
-  result.hourly.data = firstProjectDetailedCharts.hourly.data.map((_, i) =>
+  const hourlyDataLength = projectDetailedCharts[0].hourly.data.length
+  assert(
+    projectDetailedCharts.every(
+      (chart) => chart.hourly.data.length === hourlyDataLength,
+    ),
+    'hourly data length mismatch',
+  )
+  result.hourly.data = new Array(hourlyDataLength).map((_, i) =>
     mergeDetailValues(
       projectDetailedCharts.map((projectChart) => projectChart.hourly.data[i]),
     ),
   )
-  result.sixHourly.data = firstProjectDetailedCharts.sixHourly.data.map(
-    (_, i) =>
-      mergeDetailValues(
-        projectDetailedCharts.map(
-          (projectChart) => projectChart.sixHourly.data[i],
-        ),
-      ),
+
+  const sixHourlyDataLength = projectDetailedCharts[0].sixHourly.data.length
+  assert(
+    projectDetailedCharts.every(
+      (chart) => chart.sixHourly.data.length === sixHourlyDataLength,
+    ),
+    'sixHourly data length mismatch',
   )
-  result.daily.data = firstProjectDetailedCharts.daily.data.map((_, i) =>
+  result.sixHourly.data = new Array(sixHourlyDataLength).map((_, i) =>
+    mergeDetailValues(
+      projectDetailedCharts.map(
+        (projectChart) => projectChart.sixHourly.data[i],
+      ),
+    ),
+  )
+
+  const dailyDataLength = projectDetailedCharts[0].daily.data.length
+  assert(
+    projectDetailedCharts.every(
+      (chart) => chart.daily.data.length === dailyDataLength,
+    ),
+    'daily data length mismatch',
+  )
+  result.daily.data = new Array(dailyDataLength).map((_, i) =>
     mergeDetailValues(
       projectDetailedCharts.map((projectChart) => projectChart.daily.data[i]),
     ),
   )
 
   return result
+}
+
+function createEmptyDetailedTvlApiCharts(): DetailedTvlApiCharts {
+  return {
+    hourly: {
+      types: DETAILED_LABELS,
+      data: [],
+    },
+    sixHourly: {
+      types: DETAILED_LABELS,
+      data: [],
+    },
+    daily: { types: DETAILED_LABELS, data: [] },
+  }
+}
+
+function mergeDetailValues(
+  values: DetailedTvlApiChartPoint[],
+): DetailedTvlApiChartPoint {
+  return [
+    values[0][0],
+    sum(values.map((value) => value[1])),
+    sum(values.map((value) => value[2])),
+    sum(values.map((value) => value[3])),
+    sum(values.map((value) => value[4])),
+    sum(values.map((value) => value[5])),
+    sum(values.map((value) => value[6])),
+    sum(values.map((value) => value[7])),
+    sum(values.map((value) => value[8])),
+  ]
 }
 
 export function getProjectDetailedCharts(
