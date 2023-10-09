@@ -1,10 +1,10 @@
 import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
+import { configureCharts } from '../../scripts/charts'
 import { PageContent } from '../PageContent'
 import { Chart as ChartComponent } from './Chart'
-import { TokenControl } from './CommonTokenControls'
-import { configureCharts } from './configure'
+import { TokenControl } from './TokenControls'
 
 export default {
   title: 'Components/Chart',
@@ -36,9 +36,13 @@ function Template({
   ].map((x) => ({
     address: '0xabac',
     name: x,
-    symbol: x,
-    tvlEndpoint: '/',
-    assetType: 'EBV',
+    info: {
+      type: 'EBV',
+      assetId: '0xabac',
+      chainId: 12,
+      projectId: 'arbitrum',
+      symbol: x,
+    },
     iconUrl:
       'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
   }))
@@ -47,16 +51,17 @@ function Template({
     configureCharts()
   }, [])
 
-  const activityEndpoint = hasActivity ? '/fakeActivity.json' : undefined
-
   return (
     <PageContent>
       <ChartComponent
-        tvlEndpoint="/fakeTvl.json"
-        activityEndpoint={activityEndpoint}
+        settingsId="storybook"
         tokens={tokens.slice(0, tokenCount)}
         hasActivity={hasActivity}
-        type={type}
+        initialType={
+          type === 'tvl'
+            ? { type: 'storybook-fake-tvl' }
+            : { type: 'storybook-fake-activity' }
+        }
         isUpcoming={isUpcoming}
         tvlBreakdownHref="/"
       />

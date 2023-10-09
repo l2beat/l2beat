@@ -1,6 +1,6 @@
 import { Bridge } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../components'
 import { ChartSectionProps } from '../../../components/project/ChartSection'
