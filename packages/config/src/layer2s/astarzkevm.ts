@@ -11,7 +11,7 @@ export const astarzkevm: Layer2 = {
     name: 'Astar zkEVM',
     slug: 'astarzkevm',
     description:
-      'Astar zkEVM is the Ethereum L2 scaling solution powered by Polygon\'s CDK',
+      "Astar zkEVM is the Ethereum L2 scaling solution powered by Polygon's CDK",
     purpose: 'Universal',
     category: 'ZK Rollup',
     provider: 'Polygon',
@@ -21,7 +21,7 @@ export const astarzkevm: Layer2 = {
       documentation: ['https://astar.network/blog/supernova-is-here!-39292'],
       explorers: [],
       repositories: [],
-      socialMedia: [ 'https://twitter.com/AstarzkEVM'],
+      socialMedia: ['https://twitter.com/AstarzkEVM'],
     },
   },
   stage: {
