@@ -3,6 +3,8 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ChartType } from '../../scripts/charts/types'
+import { ActivityHeader } from '../header/ActivityHeader'
+import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
@@ -30,6 +32,7 @@ export interface ChartProps {
   milestones?: Milestone[]
   isUpcoming?: boolean
   sectionClassName?: string
+  withHeader?: boolean
 }
 
 export function Chart(props: ChartProps) {
@@ -59,6 +62,7 @@ export function Chart(props: ChartProps) {
           props.sectionClassName,
         )}
       >
+        {props.withHeader && isActivity ? <ActivityHeader /> : <TvlHeader />}
         {!props.metaChart && props.hasActivity && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
             <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">

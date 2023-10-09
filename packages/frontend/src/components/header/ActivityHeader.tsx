@@ -4,20 +4,16 @@ import React from 'react'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
 
-export interface ActivityHeaderProps {
-  scalingFactor: string
-}
-
-export function ActivityHeader(props: ActivityHeaderProps) {
+export function ActivityHeader() {
   return (
-    <header className="mt-4 md:mt-12">
+    <header className="mb-4" data-role="chart-header">
       <div className="flex items-baseline justify-between">
         <h1 className="mb-1 text-3xl font-bold">Activity</h1>
         <p className="text-right text-3xl font-bold">
           <span className="hidden text-sm md:inline md:text-2xl">
             Scaling factor:{' '}
           </span>
-          {props.scalingFactor}
+          <span data-role="chart-header-value">...</span>
         </p>
       </div>
       <div className="flex items-baseline justify-between text-xs md:text-base">

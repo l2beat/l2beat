@@ -19,11 +19,10 @@ export function getProps(
   const { activityApiResponse, verificationStatus } = pagesData
 
   const scalingFactor = getScalingFactor(activityApiResponse)
-
+  console.log(scalingFactor)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      scalingFactor,
       activityView: getScalingActivityView(
         config.layer2s,
         activityApiResponse,

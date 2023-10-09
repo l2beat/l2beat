@@ -2,6 +2,7 @@ import { ActivityApiResponse } from '@l2beat/shared-pure'
 
 import { getTransactionCount } from './getTransactionCount'
 
+//TODO (filter) remove
 export function getScalingFactor(
   activityApiResponse: ActivityApiResponse,
 ): string {

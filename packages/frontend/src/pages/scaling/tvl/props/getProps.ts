@@ -4,7 +4,6 @@ import { getChartUrl } from '../../../../scripts/charts/ChartDataController'
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWitchChange'
-import { formatUSD } from '../../../../utils/utils'
 import { PagesData, Wrapped } from '../../../Page'
 import { TvlPageProps } from '../view/ScalingTvlPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -17,7 +16,7 @@ export function getProps(
   const { tvlApiResponse, verificationStatus } = pagesData
 
   const charts = tvlApiResponse.layers2s
-  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
+  const { tvl } = getTvlWithChange(charts)
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
@@ -25,8 +24,6 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      tvl: formatUSD(tvl),
-      tvlWeeklyChange,
       tvlView: getScalingTvlView(
         config,
         ordering,

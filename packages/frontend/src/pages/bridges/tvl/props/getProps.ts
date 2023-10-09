@@ -4,7 +4,6 @@ import { getChartUrl } from '../../../../scripts/charts/ChartDataController'
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWitchChange'
-import { formatUSD } from '../../../../utils/utils'
 import { PagesData, Wrapped } from '../../../Page'
 import { BridgesTvlPageProps } from '../BridgesTvlPage'
 import { getBridgesTvlView } from './getBridgesTvlView'
@@ -16,10 +15,8 @@ export function getProps(
 ): Wrapped<BridgesTvlPageProps> {
   const { tvlApiResponse, verificationStatus } = pagesData
 
-  const { tvl: bridgesTvl, tvlWeeklyChange: bridgesTvlSevenDayChange } =
-    getTvlWithChange(tvlApiResponse.bridges)
-  const { tvl: combinedTvl, tvlWeeklyChange: combinedTvlSevenDayChange } =
-    getTvlWithChange(tvlApiResponse.combined)
+  const { tvl: bridgesTvl } = getTvlWithChange(tvlApiResponse.bridges)
+  const { tvl: combinedTvl } = getTvlWithChange(tvlApiResponse.combined)
 
   const included = getIncludedProjects(
     [...config.bridges, ...config.layer2s],
@@ -30,10 +27,6 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'bridges'),
-      bridgesTvl: formatUSD(bridgesTvl),
-      bridgesTvlSevenDayChange,
-      combinedTvl: formatUSD(combinedTvl),
-      combinedTvlSevenDayChange,
       tvlView: {
         items: getBridgesTvlView(
           ordering,

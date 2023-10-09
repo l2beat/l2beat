@@ -8,7 +8,6 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
-import { TvlHeader } from '../../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
@@ -18,8 +17,6 @@ import {
 } from './ScalingDetailedTvlView'
 
 export interface ScalingDetailedTvlPageProps {
-  tvl: string
-  tvlWeeklyChange: string
   detailedTvlEndpoint: string
   navbar: NavbarProps
   footer: FooterProps
@@ -38,11 +35,11 @@ export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
           showDetailedTvl={props.showDetailedTvl}
           selected="detailed"
         />
-        <main>
-          <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
+        <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-tvl"
             initialType={{ type: 'layer2-detailed-tvl' }}
+            withHeader
           />
           <ScalingDetailedTvlView {...props.detailedTvlView} />
           <OtherSites />

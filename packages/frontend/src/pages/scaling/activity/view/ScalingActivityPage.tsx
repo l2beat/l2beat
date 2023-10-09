@@ -9,7 +9,6 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
-import { ActivityHeader } from '../../../../components/header/ActivityHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
@@ -19,7 +18,6 @@ import {
 } from './ScalingActivityView'
 
 export interface ActivityPageProps {
-  scalingFactor: string
   activityView: ScalingActivityViewProps
   footer: FooterProps
   navbar: NavbarProps
@@ -38,12 +36,12 @@ export function ActivityPage(props: ActivityPageProps) {
           showDetailedTvl={props.showDetailedTvl}
           selected="activity"
         />
-        <main>
-          <ActivityHeader scalingFactor={props.scalingFactor} />
+        <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-activity"
             initialType={{ type: 'layer2-activity' }}
             milestones={props.milestones}
+            withHeader
           />
           <ScalingActivityView {...props.activityView} />
           <OtherSites />
