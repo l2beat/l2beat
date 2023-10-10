@@ -11,6 +11,13 @@ import { UnixTime } from './UnixTime'
 
 class EtherscanError extends Error {}
 
+// If a given instance of Etherscan does not support some endpoint set a
+// corresponding variable to true, otherwise do not set to anything -
+// `undefined` is treated as supported.
+export interface EtherscanUnsupportedMethods {
+  getContractCreation?: boolean
+}
+
 export class EtherscanLikeClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
@@ -21,7 +28,8 @@ export class EtherscanLikeClient {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     private readonly apiKey: string,
-    readonly minTimestamp: UnixTime,
+    private readonly minTimestamp: UnixTime,
+    private readonly unsupportedMethods: EtherscanUnsupportedMethods = {},
     private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
@@ -87,7 +95,14 @@ export class EtherscanLikeClient {
     return source[0]
   }
 
-  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
+  // Returns undefined if the method is not supported by API.
+  async getContractDeploymentTx(
+    address: EthereumAddress,
+  ): Promise<Hash256 | undefined> {
+    if (this.unsupportedMethods.getContractCreation) {
+      return undefined
+    }
+
     const response = await this.call('contract', 'getcontractcreation', {
       contractaddresses: address.toString(),
     })

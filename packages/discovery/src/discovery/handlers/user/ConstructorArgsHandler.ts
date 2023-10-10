@@ -69,6 +69,12 @@ export class ConstructorArgsHandler implements Handler {
     address: EthereumAddress,
   ): Promise<ethers.utils.Result> {
     const deploymentTxHash = await provider.getContractDeploymentTx(address)
+    if (deploymentTxHash === undefined) {
+      throw new Error(
+        "Can't discover constructor because getContractDeploymentTx is not available",
+      )
+    }
+
     const deploymentTx = await provider.getTransaction(deploymentTxHash)
 
     const decodedConstructorArguments = decodeConstructorArgs(

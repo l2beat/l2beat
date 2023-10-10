@@ -176,13 +176,22 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   override async getContractDeploymentTx(
     address: EthereumAddress,
-  ): Promise<Hash256> {
+  ): Promise<Hash256 | undefined> {
     const key = this.buildKey('getContractDeploymentTx', [address])
-    return this.cacheOrFetch(
-      key,
-      () => super.getContractDeploymentTx(address),
-      toJSON,
-      fromJSON,
-    )
+
+    // Special cache handling is necessary because
+    // we support cases where getContractDeploymentTx API
+    // is not available.
+    const cached = await this.cache.get(key)
+    if (cached !== undefined) {
+      return fromJSON(cached)
+    }
+
+    const result = await super.getContractDeploymentTx(address)
+    // Don't cache "undefined"
+    if (result !== undefined) {
+      await this.cache.set(key, toJSON(result))
+    }
+    return result
   }
 }

@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.12.0
+
+### Minor Changes
+
+- Etherscan like clients can now configure unsuppoted methods
+
 ## 0.11.0
 
 ### Minor Changes

@@ -11,6 +11,10 @@ export async function getProxyGovernance(
   blockNumber: number,
 ): Promise<EthereumAddress[]> {
   const deployer = await provider.getDeployer(address)
+  if (!deployer) {
+    throw new Error('Unable to fetch deployer for StarkWare Proxy governance')
+  }
+
   const fullGovernance = await getFullGovernance(
     provider,
     address,

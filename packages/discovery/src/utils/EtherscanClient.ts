@@ -1,7 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { ChainId } from './ChainId'
-import { EtherscanLikeClient } from './EtherscanLikeClient'
+import {
+  EtherscanLikeClient,
+  EtherscanUnsupportedMethods,
+} from './EtherscanLikeClient'
 import { HttpClient } from './HttpClient'
 import { UnixTime } from './UnixTime'
 
@@ -14,9 +17,17 @@ export class EtherscanClient extends EtherscanLikeClient {
     httpClient: HttpClient,
     apiKey: string,
     minTimestamp: UnixTime,
+    unsupportedMethods: EtherscanUnsupportedMethods = {},
     logger = Logger.SILENT,
   ) {
-    super(httpClient, EtherscanClient.API_URL, apiKey, minTimestamp, logger)
+    super(
+      httpClient,
+      EtherscanClient.API_URL,
+      apiKey,
+      minTimestamp,
+      unsupportedMethods,
+      logger,
+    )
   }
 
   getChainId(): ChainId {

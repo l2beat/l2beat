@@ -83,7 +83,7 @@ export class DiscoveryProvider {
 
     // Let's start with the deployment block number if it's higher than fromBlock
     const { blockNumber: deploymentBlockNumber } =
-      await this.getDeploymentInfo(address)
+      (await this.getDeploymentInfo(address)) ?? { blockNumber: 0 } // for cases where API to get deployment info is not available
 
     const maxRange = this.getLogsMaxRange
     const allLogs: providers.Log[][] = []
@@ -148,12 +148,20 @@ export class DiscoveryProvider {
     return result.ConstructorArguments
   }
 
-  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
+  async getContractDeploymentTx(
+    address: EthereumAddress,
+  ): Promise<Hash256 | undefined> {
     return this.etherscanLikeClient.getContractDeploymentTx(address)
   }
 
-  async getDeployer(address: EthereumAddress): Promise<EthereumAddress> {
+  async getDeployer(
+    address: EthereumAddress,
+  ): Promise<EthereumAddress | undefined> {
     const txHash = await this.getContractDeploymentTx(address)
+    if (txHash === undefined) {
+      // This is for situations where getContractDeploymentTx API is not available
+      return undefined
+    }
     const tx = await this.getTransaction(txHash)
 
     return EthereumAddress(tx.from)
@@ -163,11 +171,18 @@ export class DiscoveryProvider {
     return this.etherscanLikeClient.getFirstTxTimestamp(address)
   }
 
-  async getDeploymentInfo(address: EthereumAddress): Promise<{
-    blockNumber: number
-    timestamp: UnixTime
-  }> {
+  async getDeploymentInfo(address: EthereumAddress): Promise<
+    | {
+        blockNumber: number
+        timestamp: UnixTime
+      }
+    | undefined
+  > {
     const txHash = await this.getContractDeploymentTx(address)
+    if (txHash === undefined) {
+      return undefined
+    }
+
     const tx = await this.getTransaction(txHash)
     assert(tx.blockNumber, 'Transaction returned without a block number.')
     const block = await this.getBlock(tx.blockNumber)

@@ -4,6 +4,7 @@ import { config as dotenv } from 'dotenv'
 import { CliParameters } from '../cli/getCliParameters'
 import { ChainId } from '../utils/ChainId'
 import { EthereumAddress } from '../utils/EthereumAddress'
+import { EtherscanUnsupportedMethods } from '../utils/EtherscanLikeClient'
 
 export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   dotenv()
@@ -118,6 +119,9 @@ function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
         ),
         etherscanApiKey: env.string('DISCOVERY_CELO_ETHERSCAN_API_KEY'),
         etherscanUrl: 'https://api.celoscan.io/api',
+        etherscanUnsupported: {
+          getContractCreation: true,
+        },
       }
     case ChainId.LINEA:
       return {
@@ -197,6 +201,7 @@ export interface DiscoveryChainConfig {
   rpcGetLogsMaxRange?: number
   etherscanApiKey: string
   etherscanUrl: string
+  etherscanUnsupported?: EtherscanUnsupportedMethods
 }
 
 export interface InversionConfig {

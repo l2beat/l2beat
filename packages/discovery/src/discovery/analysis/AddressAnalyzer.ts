@@ -56,21 +56,7 @@ export class AddressAnalyzer {
       return { analysis: { type: 'EOA', address }, relatives: [] }
     }
 
-    let deployment = undefined
-    try {
-      deployment = await this.provider.getDeploymentInfo(address)
-    } catch (e) {
-      let errorStr = ''
-      if (e instanceof Error) {
-        errorStr = e.toString()
-      } else {
-        errorStr = '<COULD NOT STRINGIFY ERROR>'
-      }
-
-      this.logger.logWarning(
-        `Failed to fetch contract creation info! [${errorStr}]`,
-      )
-    }
+    const deployment = await this.provider.getDeploymentInfo(address)
 
     const proxy = await this.proxyDetector.detectProxy(
       address,
