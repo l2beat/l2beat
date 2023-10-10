@@ -15,7 +15,12 @@ const toJSON = <T>(x: T): string => JSON.stringify(x)
 const fromJSON = <T>(x: string): T => JSON.parse(x) as T
 
 export interface DiscoveryCache {
-  set(key: string, value: string): Promise<void>
+  set(
+    key: string,
+    value: string,
+    chainId: number,
+    blockNumber: number | undefined,
+  ): Promise<void>
   get(key: string): Promise<string | undefined>
 }
 
@@ -33,6 +38,7 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   private async cacheOrFetch<R>(
     key: string,
+    blockNumber: number | undefined,
     fetch: () => Promise<R>,
     toCache: (value: R) => string,
     fromCache: (value: string) => R,
@@ -43,7 +49,12 @@ export class ProviderWithCache extends DiscoveryProvider {
     }
 
     const result = await fetch()
-    await this.cache.set(key, toCache(result))
+    await this.cache.set(
+      key,
+      toCache(result),
+      this.chainId.valueOf(),
+      blockNumber,
+    )
 
     return result
   }
@@ -54,6 +65,7 @@ export class ProviderWithCache extends DiscoveryProvider {
       invocation,
       ...params.map((p) => p.toString()),
     ]
+
     return result.join('.')
   }
 
@@ -63,8 +75,10 @@ export class ProviderWithCache extends DiscoveryProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     const key = this.buildKey('call', [blockNumber, address, data])
+
     const result = await this.cacheOrFetch(
       key,
+      blockNumber,
       async () => {
         try {
           return {
@@ -94,8 +108,10 @@ export class ProviderWithCache extends DiscoveryProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     const key = this.buildKey('getStorage', [blockNumber, address, slot])
+
     return this.cacheOrFetch(
       key,
+      blockNumber,
       () => super.getStorage(address, slot, blockNumber),
       (result) => result.toString(),
       (cached) => Bytes.fromHex(cached),
@@ -118,8 +134,25 @@ export class ProviderWithCache extends DiscoveryProvider {
       toBlock,
       topicsHash,
     ])
+
+    /**
+     * Passing `toBlock` as a point-in-time reference, so that whenever you are up to the invalidation
+     * you will include whole range of blocks.
+     *
+     * @example
+     *
+     * ```ts
+     * const invalidateAfterBlock = 1000
+     *
+     * const fromBlock = 500
+     * const toBlock = 1500
+     *
+     * await invalidateAfter(invalidateAfterBlock) // catches 1500 and thus whole range
+     * ```
+     */
     return this.cacheOrFetch(
       key,
+      toBlock,
       () => super.getLogsBatch(address, topics, fromBlock, toBlock),
       toJSON,
       fromJSON,
@@ -130,10 +163,15 @@ export class ProviderWithCache extends DiscoveryProvider {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Bytes> {
-    // Ignoring blockNumber here, assuming that code will not change
-    const key = this.buildKey('getCode', [address])
+    const key = this.buildKey(
+      'getCode',
+      // Ignoring blockNumber here, assuming that code will not change
+      [address],
+    )
+
     return this.cacheOrFetch(
       key,
+      blockNumber,
       () => super.getCode(address, blockNumber),
       (result) => result.toString(),
       (cached) => Bytes.fromHex(cached),
@@ -144,8 +182,10 @@ export class ProviderWithCache extends DiscoveryProvider {
     hash: Hash256,
   ): Promise<providers.TransactionResponse> {
     const key = this.buildKey('getTransaction', [hash])
+
     return this.cacheOrFetch(
       key,
+      undefined,
       () => super.getTransaction(hash),
       toJSON,
       fromJSON,
@@ -154,8 +194,10 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   override async getBlock(blockNumber: number): Promise<providers.Block> {
     const key = this.buildKey('getBlock', [blockNumber])
+
     return this.cacheOrFetch(
       key,
+      blockNumber,
       () => super.getBlock(blockNumber),
       toJSON,
       fromJSON,
@@ -166,12 +208,28 @@ export class ProviderWithCache extends DiscoveryProvider {
     address: EthereumAddress,
   ): Promise<ContractMetadata> {
     const key = this.buildKey('getMetadata', [address])
-    return this.cacheOrFetch(
-      key,
-      () => super.getMetadata(address),
-      toJSON,
-      fromJSON,
-    )
+
+    const cachedResult = await this.cache.get(key)
+
+    if (cachedResult !== undefined) {
+      return fromJSON(cachedResult)
+    }
+
+    const result = await super.getMetadata(address)
+
+    // Cache only present & verified contracts to prevent cache poisoning
+    if (result.isVerified && result.source.length > 0) {
+      const currentBlock = await super.getBlockNumber()
+
+      await this.cache.set(
+        key,
+        toJSON(result),
+        this.chainId.valueOf(),
+        currentBlock,
+      )
+    }
+
+    return result
   }
 
   override async getContractDeploymentTx(
@@ -190,7 +248,14 @@ export class ProviderWithCache extends DiscoveryProvider {
     const result = await super.getContractDeploymentTx(address)
     // Don't cache "undefined"
     if (result !== undefined) {
-      await this.cache.set(key, toJSON(result))
+      const currentBlock = await super.getBlockNumber()
+
+      await this.cache.set(
+        key,
+        toJSON(result),
+        this.chainId.valueOf(),
+        currentBlock,
+      )
     }
     return result
   }

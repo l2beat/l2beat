@@ -23,6 +23,8 @@ export class SQLiteCache implements DiscoveryCache {
     await this.query(`
       CREATE TABLE IF NOT EXISTS cache (
         key TEXT PRIMARY KEY,
+        blockNumber INTEGER,
+        chainId INTEGER,
         value TEXT
       )
     `)
@@ -39,14 +41,19 @@ export class SQLiteCache implements DiscoveryCache {
     }
   }
 
-  async set(key: string, value: string): Promise<void> {
+  async set(
+    key: string,
+    value: string,
+    chainId: number,
+    blockNumber: number | undefined,
+  ): Promise<void> {
     try {
       await this.query(
         `
-        INSERT INTO cache(key, value) 
-        VALUES($1, $2) 
-        ON CONFLICT(key) DO UPDATE SET value=$2`,
-        [key, value],
+        INSERT INTO cache(key, value, chainId, blockNumber) 
+        VALUES($1, $2, $3, $4) 
+        ON CONFLICT(key) DO UPDATE SET value=$2, chainId=$3, blockNumber=$4`,
+        [key, value, chainId, blockNumber],
       )
     } catch (error) {
       console.error('Error writing to cache', error)

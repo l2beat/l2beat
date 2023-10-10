@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.13.0
+
+### Minor Changes
+
+- 0b08f01: Added point-in-time cache reference data
+
 ## 0.12.0
 
 ### Minor Changes
