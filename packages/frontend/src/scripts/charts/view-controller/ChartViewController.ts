@@ -15,15 +15,19 @@ interface Header {
   currency?: HTMLElement
 }
 
+type ChartState = 'empty' | 'loading' | null
+
 export class ChartViewController {
   private state?: ChartControlsState
-  private readonly loader: HTMLElement
+  private chartState: ChartState
   private readonly header?: Header
-  private loaderTimeout?: NodeJS.Timeout
 
-  constructor(private readonly chartRenderer: ChartRenderer) {
-    const { $ } = makeQuery(document.body)
-    this.loader = $('[data-role="chart-loader"]')
+  constructor(
+    private readonly chart: HTMLElement,
+    private readonly chartRenderer: ChartRenderer,
+  ) {
+    const { $ } = makeQuery(chart)
+    this.chartState = (chart.dataset.state ?? null) as ChartState
     const header = $.maybe('[data-role="chart-header"]')
     this.header = header ? this.getHeaderElements(header) : undefined
   }
@@ -41,12 +45,35 @@ export class ChartViewController {
   }
 
   render() {
-    if (!this.state?.data) {
+    if (!this.state?.data || this.chartState === 'empty') {
       return
     }
 
+    this.setChartState(null)
+
     this.chartRenderer.render(this.getRenderParams())
     this.updateFeaturedValue()
+  }
+
+  showLoader() {
+    this.setChartState('loading')
+  }
+
+  hideLoader() {
+    if (this.chartState !== 'empty') {
+      this.setChartState(null)
+    }
+  }
+
+  setChartState(state: ChartState | null) {
+    console.log(state)
+    this.chartState = state
+    if (!state) {
+      delete this.chart.dataset.state
+      return
+    }
+
+    this.chart.dataset.state = state
   }
 
   private getHeaderElements(header: HTMLElement) {
@@ -84,22 +111,6 @@ export class ChartViewController {
       const scalingFactor = getScalingFactor(this.state.data.values)
       this.header.value.innerHTML = scalingFactor
     }
-  }
-
-  showLoader() {
-    if (this.loaderTimeout) {
-      return
-    }
-    this.loaderTimeout = setTimeout(
-      () => this.loader.classList.remove('hidden'),
-      300,
-    )
-  }
-
-  hideLoader() {
-    clearTimeout(this.loaderTimeout)
-    this.loader.classList.add('hidden')
-    this.loaderTimeout = undefined
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

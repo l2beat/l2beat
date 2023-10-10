@@ -7,6 +7,7 @@ import { ActivityHeader } from '../header/ActivityHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
+import { ChartEmptyState } from './ChartEmptyState'
 import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
@@ -56,6 +57,7 @@ export function Chart(props: ChartProps) {
         data-initial-type={JSON.stringify(props.initialType)}
         data-milestones={JSON.stringify(props.milestones)}
         className={cx(
+          'group/chart',
           props.mobileFull
             ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
             : 'mt-4',
@@ -92,10 +94,10 @@ export function Chart(props: ChartProps) {
             <ChartHover />
             <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
             <div
-              className="absolute -bottom-4 -left-4 top-0 -right-4 z-25"
+              className="absolute -bottom-4 -left-4 top-0 -right-4 z-25 group-data-[state=empty]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
             />
-
+            <ChartEmptyState />
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
@@ -104,7 +106,7 @@ export function Chart(props: ChartProps) {
             <ChartLabels className={props.metaChart ? 'hidden' : undefined} />
             <div
               data-role="chart-milestones"
-              className="absolute bottom-0 w-[100%]"
+              className="absolute bottom-0 w-[100%] group-data-[state=empty]/chart:hidden"
             />
           </div>
           <div className="flex justify-between">

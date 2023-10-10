@@ -110,35 +110,8 @@ function rerenderTables(slugsToShow: string[]) {
 }
 
 export function getFilteredSlugs(projectFilters: HTMLElement) {
+  if (projectFilters.dataset.filteredSlugs === '') {
+    return []
+  }
   return projectFilters.dataset.filteredSlugs?.split(',')
 }
-// const rerenderProjectFilters = (slugs: string[]) => {
-//   const selectItems = Array.from(selects).flatMap((select) =>
-//     Array.from(select.querySelectorAll<HTMLDivElement>('.RichSelect-Item')),
-//   )
-
-//   checkboxes.forEach((checkbox) => {
-//     const checkboxSlugs = checkbox.dataset.slugs?.split(',')
-//     const slugsUnion = checkboxSlugs?.filter((i) => slugs.includes(i))
-
-//     if (isEmpty(slugsUnion)) {
-//       checkbox.disabled = true
-//     } else {
-//       checkbox.disabled = false
-//     }
-//   })
-
-//   selectItems.forEach((option) => {
-//     if (!option.dataset.value) {
-//       throw new Error('No value found')
-//     }
-//     const itemSlugs = Slugs.parse(JSON.parse(option.dataset.value))
-//     const slugsUnion = itemSlugs.filter((i) => slugs.includes(i))
-
-//     if (isEmpty(slugsUnion)) {
-//       option.disabled = true
-//     } else {
-//       option.disabled = false
-//     }
-//   })
-// }

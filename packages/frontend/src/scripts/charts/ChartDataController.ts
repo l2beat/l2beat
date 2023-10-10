@@ -16,8 +16,15 @@ export class ChartDataController {
   constructor(private readonly chartViewController: ChartViewController) {}
 
   setChartType(chartType: ChartType) {
+    this.chartViewController.setChartState(null)
     this.chartType = chartType
     this.refetch()
+  }
+
+  showEmptyChart() {
+    this.abortController?.abort()
+    this.abortController = new AbortController()
+    this.chartViewController.setChartState('empty')
   }
 
   private refetch() {
@@ -41,16 +48,18 @@ export class ChartDataController {
         this.parseAndConfigure(chartType, data)
         this.cache.set(url, data)
       })
+      .finally(() => this.chartViewController.hideLoader())
   }
 
   private parseAndConfigure(chartType: ChartType, data: unknown) {
     const parsedData = this.parseData(chartType, data)
     this.chartViewController.configure({ data: parsedData })
-    this.chartViewController.hideLoader()
   }
 
   private parseData(chartType: ChartType, data: unknown): ChartData {
     switch (chartType.type) {
+      case 'empty':
+        throw new Error('Tried to parse empty chart data')
       case 'layer2-tvl':
       case 'bridges-tvl':
       case 'project-tvl':
@@ -87,6 +96,8 @@ export class ChartDataController {
 
 export function getChartUrl(chartType: ChartType) {
   switch (chartType.type) {
+    case 'empty':
+      throw new Error('Tried to get chart url of empty chart')
     case 'layer2-tvl':
     case 'layer2-detailed-tvl':
       return chartType.filteredSlugs

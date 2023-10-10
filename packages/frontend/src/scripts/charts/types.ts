@@ -182,6 +182,9 @@ export const TokenInfo = z.discriminatedUnion('type', [
 export type ChartType = z.infer<typeof ChartType>
 export const ChartType = z.discriminatedUnion('type', [
   z.object({
+    type: z.literal('empty'),
+  }),
+  z.object({
     type: z.literal('layer2-tvl'),
     filteredSlugs: z.array(z.string()).optional(),
   }),

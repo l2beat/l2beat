@@ -15,7 +15,7 @@ export function TvlHeader() {
           <span data-role="chart-header-currency">...</span>
         </p>
       </div>
-      <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
+      <div className="flex flex-row items-baseline gap-2 transition-opacity duration-200 group-data-[state=empty]/chart:pointer-events-none group-data-[state=empty]/chart:opacity-0 md:flex-col md:items-end md:gap-1">
         <p
           className="text-right text-lg font-bold md:text-3xl"
           data-role="chart-header-value"

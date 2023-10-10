@@ -1,4 +1,5 @@
 import { Milestone } from '@l2beat/config'
+import isEmpty from 'lodash/isEmpty'
 
 import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
@@ -199,13 +200,15 @@ export class ChartControls {
     projectFilters?.addEventListener('change', () => {
       if (
         this.chartType?.type !== 'layer2-tvl' &&
-        this.chartType?.type !== 'layer2-detailed-tvl' &&
-        this.chartType?.type !== 'layer2-activity'
+        this.chartType?.type !== 'layer2-detailed-tvl'
       ) {
         return
       }
       const filteredSlugs = getFilteredSlugs(projectFilters)
-      // TODO: (filtering) if filteredSlugs === [] then set empty chart type
+      if (filteredSlugs !== undefined && isEmpty(filteredSlugs)) {
+        this.chartDataController.showEmptyChart()
+        return
+      }
       this.chartDataController.setChartType({
         ...this.chartType,
         filteredSlugs,
