@@ -1,13 +1,13 @@
 import isEqual from 'lodash/isEqual'
 
-import { getRichSelectValue } from './configureRichSelect'
+import { clearRichSelect, getRichSelectValue } from './configureRichSelect'
 import { rerenderTable } from './configureTables'
 import { makeQuery } from './query'
 
 const states = new Map<string, string[]>()
 
 export function configureProjectFilters() {
-  const { $ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery(document.body)
   const projectFilters = $.maybe('#project-filters')
   if (!projectFilters) {
     return
@@ -15,6 +15,7 @@ export function configureProjectFilters() {
   if (!projectFilters.dataset.allSlugs) {
     throw new Error('No allSlugs found')
   }
+  const resetButtons = $$('.ProjectFilters-ResetButton')
   const allProjectSlugs = projectFilters.dataset.allSlugs.split(',')
 
   const setFilteredSlugs = (slugs: string[]) => {
@@ -84,6 +85,18 @@ export function configureProjectFilters() {
     rerenderTables(slugsToShow)
     setFilteredSlugs(slugsToShow)
   }
+
+  const onResetButtonClick = () => {
+    states.clear()
+    rerenderState()
+    projectFilters.dispatchEvent(new Event('change'))
+    checkboxes.forEach((checkbox) => (checkbox.checked = false))
+    selects.forEach((select) => clearRichSelect(select))
+  }
+
+  resetButtons.forEach((button) =>
+    button.addEventListener('click', onResetButtonClick),
+  )
 
   checkboxes.forEach((checkbox) => configureCheckbox(checkbox, checkbox.id))
   selects.forEach((select) => configureRichSelect(select, select.id))

@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../icons'
+import { Link } from '../Link'
 import { SectionId } from '../project/sectionId'
 
 interface Props<T> {
@@ -146,9 +147,12 @@ export function TableView<T>({
           })}
         </tbody>
       </table>
-      <div className="hidden flex-col items-center justify-center gap-4 bg-blue-700 bg-opacity-20 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
-        <span className="text-2xl font-semibold">No results</span>
-        <span>There are no results meeting the criteria</span>
+      <div className="hidden flex-col items-center justify-center bg-blue-700 bg-opacity-20 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
+        <span className="mb-4 text-2xl font-semibold">No results</span>
+        <span className="mb-6">There are no results meeting the criteria</span>
+        <Link className="ProjectFilters-ResetButton cursor-pointer">
+          Reset all filters
+        </Link>
       </div>
     </div>
   )
