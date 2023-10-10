@@ -60,7 +60,6 @@ describe('tokens', () => {
 
       before('fetch metadata', async () => {
         console.log('Using the key: ', config.alchemyApiKey)
-        console.log('Config object: ', JSON.stringify(config, null, 2))
         const provider = new providers.AlchemyProvider(
           'mainnet',
           config.alchemyApiKey,
