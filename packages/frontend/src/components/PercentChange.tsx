@@ -9,6 +9,10 @@ interface Props {
   className?: string
 }
 
+/*  IMPORTANT
+  If you change this file you need to update the following file too:
+  * packages/frontend/src/scripts/charts/view-controller/header/getChangeHtml.ts
+*/
 export function PercentChange({ value, className, role }: Props) {
   const isMore = value.startsWith('+')
   const isLess = value.startsWith('-')
