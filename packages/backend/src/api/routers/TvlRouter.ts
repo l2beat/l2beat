@@ -18,6 +18,43 @@ export function createTvlRouter(
 ) {
   const router = new Router()
 
+  // endpoint that will return tvl of specific projects
+  // accepts projectIds[] as query params
+  // /api/tvl/projects + projectIds[]
+  router.get(
+    '/api/tvl/aggregate',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          projectSlugs: z.string(),
+        }),
+      }),
+      async (ctx) => {
+        // get projectIds from query params
+        const projectSlugs = ctx.query.projectSlugs
+        // get tvl data for each project
+        const tvlProjectsResponse =
+          await detailedTvlController.getDetailedAggregatedApiResponse(
+            projectSlugs.split(',').map((slug) => slug.trim()),
+          )
+
+        if (tvlProjectsResponse.result === 'error') {
+          if (tvlProjectsResponse.error === 'DATA_NOT_FULLY_SYNCED') {
+            ctx.status = 422
+          }
+
+          if (tvlProjectsResponse.error === 'NO_DATA') {
+            ctx.status = 404
+          }
+
+          return
+        }
+
+        ctx.body = tvlProjectsResponse.data
+      },
+    ),
+  )
+
   router.get('/api/tvl', async (ctx) => {
     const tvlResponse = await tvlController.getTvlApiResponse()
     if (tvlResponse.result === 'error') {
