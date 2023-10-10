@@ -1,7 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
+import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
+  DetailedTvlApiCharts,
   DetailedTvlApiResponse,
   Hash256,
   ProjectAssetsBreakdownApiResponse,
@@ -28,41 +30,35 @@ import {
   groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
-import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
+import {
+  generateDetailedAggregatedApiResponse,
+  generateDetailedTvlApiResponse,
+} from './generateDetailedTvlApiResponse'
+import { Result } from './types'
 
 interface DetailedTvlControllerOptions {
   errorOnUnsyncedDetailedTvl: boolean
 }
 
-type ProjectAssetBreakdownResult =
-  | {
-      result: 'success'
-      data: ProjectAssetsBreakdownApiResponse
-    }
-  | {
-      result: 'error'
-      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
-    }
+type ProjectAssetBreakdownResult = Result<
+  ProjectAssetsBreakdownApiResponse,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+>
 
-type DetailedTvlResult =
-  | {
-      result: 'success'
-      data: DetailedTvlApiResponse
-    }
-  | {
-      result: 'error'
-      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
-    }
+type DetailedTvlResult = Result<
+  DetailedTvlApiResponse,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+>
 
-type DetailedAssetTvlResult =
-  | {
-      result: 'success'
-      data: TvlApiCharts
-    }
-  | {
-      result: 'error'
-      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
-    }
+type DetailedAssetTvlResult = Result<
+  TvlApiCharts,
+  'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
+>
+
+type TvlProjectResult = Result<
+  DetailedTvlApiCharts,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA' | 'EMPTY_SLUG'
+>
 
 export class DetailedTvlController {
   constructor(
@@ -146,6 +142,72 @@ export class DetailedTvlController {
     return {
       result: 'success',
       data: tvlApiResponse,
+    }
+  }
+
+  async getDetailedAggregatedApiResponse(
+    slugs: string[],
+  ): Promise<TvlProjectResult> {
+    const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => slugs.includes(project.display.slug))
+      .map((project) => project.id)
+
+    if (projectIdsFilter.length === 0) {
+      return {
+        result: 'error',
+        error: 'EMPTY_SLUG',
+      }
+    }
+
+    const dataTimings = await this.getDataTimings()
+
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
+
+    const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
+      this.aggregatedReportRepository.getHourlyWithAnyType(
+        getHourlyMinTimestamp(dataTimings.latestTimestamp),
+      ),
+      this.aggregatedReportRepository.getSixHourlyWithAnyType(
+        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+      ),
+      this.aggregatedReportRepository.getDailyWithAnyType(),
+    ])
+
+    const projectIdsFilterSet = new Set(
+      projectIdsFilter.map((x) => x.toString()),
+    )
+
+    const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
+
+    const groupedSixHourlyReportsTree =
+      groupByProjectIdAndTimestamp(sixHourlyReports)
+
+    const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
+
+    const tvlApiProjectResponse = generateDetailedAggregatedApiResponse(
+      groupedHourlyReports,
+      groupedSixHourlyReportsTree,
+      groupedDailyReports,
+      this.projects
+        .map((project) => project.projectId)
+        .filter((projectId) => projectIdsFilterSet.has(projectId.toString())),
+    )
+
+    return {
+      result: 'success',
+      data: tvlApiProjectResponse,
     }
   }
 
