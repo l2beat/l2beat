@@ -1,5 +1,11 @@
 # @l2beat/uif
 
+## 0.2.1
+
+### Patch Changes
+
+- Specify exact version of @l2beat/backend-tools
+
 ## 0.2.0
 
 ### Minor Changes
