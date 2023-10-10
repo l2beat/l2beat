@@ -74,6 +74,7 @@ export function configureProjectFilters() {
   const selects = projectFilters.querySelectorAll<HTMLElement>('.RichSelect')
 
   const rerenderState = () => {
+    // TODO: (filter) Consider lodash intersection
     const stateObj = Object.fromEntries(states)
     const slugsToShow = Object.values(stateObj).reduce<string[]>(
       (acc, curr) => {
