@@ -9,7 +9,6 @@ interface Props {
   className?: string
 }
 
-// TODO: (filters) add comment
 export function PercentChange({ value, className, role }: Props) {
   const isMore = value.startsWith('+')
   const isLess = value.startsWith('-')
