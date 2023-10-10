@@ -5,6 +5,7 @@ import { aptos } from './aptos'
 import { avalanche } from './avalanche'
 import { beamerbridgev2 } from './beamerBridgeV2'
 import { cBridge } from './cBridge'
+import { chainport } from './chainport'
 import { connext } from './connext'
 import { debridge } from './debridge'
 import { gravity } from './gravity'
@@ -51,6 +52,7 @@ export const bridges: Bridge[] = [
   debridge,
   gravity,
   harmony,
+  chainport,
   hop,
   hyphen,
   lzOmnichain,
