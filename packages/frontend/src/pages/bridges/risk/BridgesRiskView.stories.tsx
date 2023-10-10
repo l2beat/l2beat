@@ -3,8 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
-import { configureCanonicalBridgesFilter } from '../../../scripts/configureCanonicalBridgesFilter'
-import { configureTableIndexRerender } from '../../../scripts/configureTableIndexRerender'
+import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
 import { configureTabs } from '../../../scripts/configureTabs'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { click } from '../../../utils/storybook/click'
@@ -893,8 +892,7 @@ export const Active: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureCanonicalBridgesFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#active')
       }, [])
       return <Story />
@@ -908,8 +906,7 @@ export const ActiveWithCanonicalBridges: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureCanonicalBridgesFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#active')
         click('#combined-bridges-checkbox')
       }, [])
@@ -924,8 +921,7 @@ export const Archived: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureCanonicalBridgesFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#archived')
       }, [])
       return <Story />
@@ -939,8 +935,7 @@ export const ArchivedWithCanonicalBridges: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureCanonicalBridgesFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#archived')
         click('#combined-bridges-checkbox')
       }, [])

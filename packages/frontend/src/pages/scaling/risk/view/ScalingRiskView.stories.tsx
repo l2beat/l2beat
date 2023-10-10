@@ -3,8 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../../components/PageContent'
 import { Tooltip } from '../../../../components/Tooltip'
-import { configureRollupsOnlyFilter } from '../../../../scripts/configureRollupsOnlyFilter'
-import { configureTableIndexRerender } from '../../../../scripts/configureTableIndexRerender'
+import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
 import { configureTabs } from '../../../../scripts/configureTabs'
 import { configureTooltips } from '../../../../scripts/configureTooltips'
 import { click } from '../../../../utils/storybook/click'
@@ -576,8 +575,7 @@ export const Active: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureRollupsOnlyFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#active')
       }, [])
       return <Story />
@@ -591,8 +589,7 @@ export const ActiveWithRollupsOnly: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureRollupsOnlyFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#active')
         click('#rollups-only-checkbox')
       }, [])
@@ -607,8 +604,7 @@ export const Archived: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureRollupsOnlyFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#archived')
       }, [])
       return <Story />
@@ -622,8 +618,7 @@ export const ArchivedWithRollupsOnly: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
-        configureRollupsOnlyFilter()
-        configureTableIndexRerender()
+        configureProjectFilters()
         click('.TabsItem#archived')
         click('#rollups-only-checkbox')
       }, [])
