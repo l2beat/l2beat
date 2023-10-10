@@ -16,12 +16,15 @@ export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
   const rows: RowConfig<ScalingDetailedTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'detailedTvl'),
   }
+  const itemsToShow = items.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <ScalingDetailedTvlFilters items={items} />
+      <ScalingDetailedTvlFilters items={itemsToShow} />
       <TableView
-        items={items.filter((item) => !item.isArchived && !item.isUpcoming)}
+        items={itemsToShow}
         rows={rows}
         columns={getScalingDetailedTvlColumns()}
       />
