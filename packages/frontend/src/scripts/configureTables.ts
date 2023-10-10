@@ -1,8 +1,14 @@
-import { makeQuery } from '../query'
+import { makeQuery } from './query'
 
 type TableState = 'empty' | null
 
-export function rerenderTable(table: HTMLElement, slugsToShow: string[]) {
+export function configureTables() {
+  const { $$ } = makeQuery(document.body)
+  const tablesToRerenderOnLoad = $$('[data-role=table][data-rerender-on-load]')
+  tablesToRerenderOnLoad.forEach((table) => rerenderTable(table))
+}
+
+export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
   const parentElement = table.parentElement
   const isInsideTabs = parentElement?.classList.contains('TabsContent')
 
@@ -15,21 +21,24 @@ export function rerenderTable(table: HTMLElement, slugsToShow: string[]) {
   setTableState(table, visibleRowsLength === 0 ? 'empty' : null)
 }
 
-function rerenderRows(table: HTMLElement, slugs: string[]) {
+function rerenderRows(table: HTMLElement, slugs?: string[]) {
   const { $$ } = makeQuery(table)
   const rows = $$('tbody tr')
-  rows.forEach((row) => {
-    const slug = row.dataset.slug
-    if (!slug) {
-      throw new Error('No slug found')
-    }
 
-    if (slugs.includes(slug)) {
-      row.classList.remove('hidden')
-    } else {
-      row.classList.add('hidden')
-    }
-  })
+  if (slugs) {
+    rows.forEach((row) => {
+      const slug = row.dataset.slug
+      if (!slug) {
+        throw new Error('No slug found')
+      }
+
+      if (slugs.includes(slug)) {
+        row.classList.remove('hidden')
+      } else {
+        row.classList.add('hidden')
+      }
+    })
+  }
 
   const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
   return rerenderIndexes(visibleRows)

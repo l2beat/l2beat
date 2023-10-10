@@ -8,6 +8,7 @@ interface Props<T> {
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
+  rerenderOnLoad?: boolean
 }
 
 export interface ColumnConfig<T> {
@@ -32,7 +33,12 @@ export interface RowConfig<T> {
     Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
-export function TableView<T>({ items, columns, rows }: Props<T>) {
+export function TableView<T>({
+  items,
+  columns,
+  rows,
+  rerenderOnLoad,
+}: Props<T>) {
   const highlightedColumnClassNames =
     'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
 
@@ -43,6 +49,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
+      data-rerender-on-load={rerenderOnLoad}
     >
       <table className="w-full border-collapse text-left">
         <thead>

@@ -40,10 +40,10 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={activeProjects}
                 columns={getActiveBridgesTvlColumns()}
                 rows={rows}
+                rerenderOnLoad
               />
             ),
-            itemsCount: activeProjects.filter((i) => i.type === 'bridge')
-              .length,
+            itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
           },
           {
@@ -55,10 +55,10 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={archivedProjects}
                 columns={getArchivedBridgesTvlColumns()}
                 rows={rows}
+                rerenderOnLoad
               />
             ),
-            itemsCount: archivedProjects.filter((i) => i.type === 'bridge')
-              .length,
+            itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
           },
         ]}

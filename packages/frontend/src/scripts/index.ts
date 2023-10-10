@@ -14,6 +14,7 @@ import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
+import { configureTables } from './configureTables'
 
 configureDarkThemeToggle()
 configureSidebarMenu()
@@ -31,3 +32,4 @@ configureTopBars()
 configureProjectFilters()
 configureMultipleEscrowsButton()
 configureRichSelects()
+configureTables()

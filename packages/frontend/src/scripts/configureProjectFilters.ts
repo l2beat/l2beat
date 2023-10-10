@@ -1,8 +1,8 @@
 import isEqual from 'lodash/isEqual'
 
 import { getRichSelectValue } from './configureRichSelect'
+import { rerenderTable } from './configureTables'
 import { makeQuery } from './query'
-import { rerenderTable } from './utils/table'
 
 const states = new Map<string, string[]>()
 
