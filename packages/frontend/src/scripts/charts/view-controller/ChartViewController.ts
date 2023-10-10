@@ -49,8 +49,6 @@ export class ChartViewController {
       return
     }
 
-    this.setChartState(null)
-
     this.chartRenderer.render(this.getRenderParams())
     this.updateFeaturedValue()
   }
