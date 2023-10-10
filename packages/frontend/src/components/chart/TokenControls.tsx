@@ -37,8 +37,7 @@ export function TokenControls({
         listClassName="!p-6"
         centered
       >
-        <MobileTokenList tokens={tokens} />
-        <DesktopTokenList tokens={tokens} />
+        <TokenList tokens={tokens} />
         {tvlBreakdownHref && (
           <div className="mt-6 flex items-center justify-center gap-1">
             <Link href={tvlBreakdownHref} className="text-sm" showArrow>
@@ -51,11 +50,11 @@ export function TokenControls({
   )
 }
 
-function DesktopTokenList({ tokens }: { tokens: TokenControl[] }) {
+function TokenList({ tokens }: { tokens: TokenControl[] }) {
   const parts = getParts(tokens)
 
   return (
-    <div className="hidden flex-col gap-3 md:flex">
+    <div className="flex flex-col gap-6 md:gap-3">
       {parts.map(
         (p, i) =>
           p.tokens.length > 0 && (
@@ -65,50 +64,14 @@ function DesktopTokenList({ tokens }: { tokens: TokenControl[] }) {
               </div>
               <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
-                className="grid grid-cols-3 gap-x-6"
+                className="grid grid-cols-1 gap-y-3 gap-x-6 md:grid-cols-3 md:gap-y-0"
                 data-role="chart-token-controls"
               >
                 {p.tokens.map((token, j) => (
                   <RichSelect.Item
                     value={JSON.stringify(token.info)}
                     selectedLabel={token.info.symbol}
-                    className="!py-1.5"
-                    key={j}
-                  >
-                    <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
-                    <span className="text-sm font-bold">{token.name}</span> (
-                    {token.info.symbol})
-                  </RichSelect.Item>
-                ))}
-              </div>
-            </div>
-          ),
-      )}
-    </div>
-  )
-}
-
-function MobileTokenList({ tokens }: { tokens: TokenControl[] }) {
-  const parts = getParts(tokens)
-
-  return (
-    <div className="flex w-full flex-col gap-6 md:hidden">
-      {parts.map(
-        (p, i) =>
-          p.tokens.length > 0 && (
-            <div key={i}>
-              <div className={`text-sm font-bold ${p.titleColor}`}>
-                {p.title}
-              </div>
-              <HorizontalSeparator className="mb-4 dark:border-gray-650" />
-              <div
-                className="flex flex-col gap-y-3 gap-x-6"
-                data-role="chart-token-controls"
-              >
-                {p.tokens.map((token, j) => (
-                  <RichSelect.Item
-                    value={JSON.stringify(token.info)}
-                    selectedLabel={token.info.symbol}
+                    className="md:!py-1.5"
                     key={j}
                   >
                     <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
