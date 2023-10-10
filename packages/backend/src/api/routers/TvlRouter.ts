@@ -27,6 +27,7 @@ export function createTvlRouter(
         }),
       }),
       async (ctx) => {
+        console.time('[Aggregate endpoint]: runtime')
         const projectSlugs = ctx.query.projectSlugs
 
         const tvlProjectsResponse =
@@ -47,6 +48,8 @@ export function createTvlRouter(
         }
 
         ctx.body = tvlProjectsResponse.data
+
+        console.timeEnd('[Aggregate endpoint]: runtime')
       },
     ),
   )
