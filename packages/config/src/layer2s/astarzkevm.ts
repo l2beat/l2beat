@@ -11,7 +11,7 @@ export const astarzkevm: Layer2 = {
     name: 'Astar zkEVM',
     slug: 'astarzkevm',
     description:
-      "Astar zkEVM is the Ethereum L2 scaling solution powered by Polygon's CDK",
+      "Astar zkEVM is the Ethereum L2 scaling solution powered by Polygon's CDK.",
     purpose: 'Universal',
     category: 'ZK Rollup',
     provider: 'Polygon',
