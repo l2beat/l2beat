@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, StageConfig } from '@l2beat/config'
 
 import { TokenControl } from '../../../components/chart/TokenControls'
 import { RiskValues } from '../../../utils/risks/types'
@@ -23,4 +23,5 @@ export interface ScalingDetailedTvlViewEntry {
   cbvChange?: string
   nmvChange?: string
   tokens: TokenControl[]
+  stage: StageConfig
 }

@@ -57,7 +57,6 @@ export class ChartControls {
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
     const tokenSelect = $.maybe('.RichSelect#token-select')
-    console.log(tokenSelect)
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )

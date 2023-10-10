@@ -23,7 +23,6 @@ export function configureProjectFilters() {
     } else {
       projectFilters.dataset.filteredSlugs = slugs.join(',')
     }
-    projectFilters.dispatchEvent(new Event('change'))
   }
 
   const configureCheckbox = (checkbox: HTMLInputElement, stateId: string) => {
@@ -64,6 +63,7 @@ export function configureProjectFilters() {
         states.delete(stateId)
       }
       rerenderState()
+      projectFilters.dispatchEvent(new Event('change'))
     })
   }
 

@@ -57,13 +57,13 @@ export function RichSelect(props: Props) {
             <CloseIcon className="RichSelect-SlideCard-Close z-[1000] h-5 w-5 fill-black dark:fill-white" />
           </div>
           <div className="relative">
-            <div className="pointer-events-none absolute inset-x-0 -top-1 z-20 h-6 bg-gradient-to-b from-gray-200 via-gray-200 to-transparent dark:from-gray-750 dark:via-gray-750" />
+            <div className="absolute inset-x-0 -top-1 z-20 h-6 bg-gradient-to-b from-gray-200 via-gray-200 to-transparent dark:from-gray-750 dark:via-gray-750" />
             <div className="max-h-[80svh] overflow-auto">
-              <div className="pointer-events-none h-6" />
+              <div className="h-6" />
               {props.children}
-              <div className="pointer-events-none h-6" />
+              <div className="h-6" />
             </div>
-            <div className="pointer-events-none absolute inset-x-0 -bottom-1 z-20 h-6 bg-gradient-to-t from-gray-200 via-gray-200 to-transparent dark:from-gray-750 dark:via-gray-750" />
+            <div className="absolute inset-x-0 -bottom-1 z-20 h-6 bg-gradient-to-t from-gray-200 via-gray-200 to-transparent dark:from-gray-750 dark:via-gray-750" />
           </div>
         </div>
       </div>

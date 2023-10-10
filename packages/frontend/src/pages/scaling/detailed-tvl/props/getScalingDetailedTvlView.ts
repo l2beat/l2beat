@@ -52,5 +52,6 @@ function getScalingDetailedTvlViewEntry(
     cbvChange: partsWeeklyChange.canonical,
     nmvChange: partsWeeklyChange.native,
     tokens: getTokens(project.id, tvlApiResponse, true),
+    stage: project.stage,
   }
 }

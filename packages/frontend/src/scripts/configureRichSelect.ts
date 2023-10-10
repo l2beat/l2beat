@@ -3,6 +3,8 @@ import clamp from 'lodash/clamp'
 import { makeQuery } from './query'
 import { isMobile } from './utils/isMobile'
 
+const CLOSE_GESTURE_Y_DIFF = 150
+
 type State = 'opened' | 'selected' | null
 
 export function configureRichSelects() {
@@ -21,10 +23,11 @@ function configureRichSelect(richSelect: HTMLElement) {
 
   function setState(state: State) {
     if (isMobile()) {
+      const classList = ['w-screen', 'overflow-hidden', 'touch-none']
       if (state === 'opened') {
-        document.body.classList.add('w-screen', 'overflow-hidden')
+        document.body.classList.add(...classList)
       } else {
-        document.body.classList.remove('w-screen', 'overflow-hidden')
+        document.body.classList.remove(...classList)
       }
     }
 
@@ -127,7 +130,7 @@ function configureSlideCard(
     const touchEndY = e.changedTouches[0].clientY
     const diff = touchEndY - touchStartY
     slideCardContent.style.transform = ''
-    if (diff > 150) {
+    if (diff > CLOSE_GESTURE_Y_DIFF) {
       setState(null)
     }
   })
