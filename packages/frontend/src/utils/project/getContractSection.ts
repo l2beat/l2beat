@@ -212,6 +212,7 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
+
         case 'zkSpace proxy':
           links.push({
             name: 'Implementation (Upgradable)',
@@ -234,6 +235,7 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
+
         case 'Polygon Extension proxy':
           links.push({
             name: 'Implementation (Upgradable)',
@@ -250,7 +252,7 @@ function makeTechnologyContract(
           break
         case 'Optics Beacon proxy':
           links.push({
-            name: 'Upgarde Beacon',
+            name: 'Upgrade Beacon',
             href: `https://etherscan.io/address/${item.upgradeability.upgradeBeacon.toString()}#code`,
             address: item.upgradeability.upgradeBeacon.toString(),
             isAdmin: false,

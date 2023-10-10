@@ -1,4 +1,5 @@
-import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'

@@ -1,10 +1,11 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
   DiscoveryLogger,
   HttpClient as DiscoveryHttpClient,
 } from '@l2beat/discovery'
-import { HttpClient, Logger } from '@l2beat/shared'
+import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'

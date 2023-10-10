@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   AssetId,
   Hash256,
@@ -17,30 +17,19 @@ import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
+import { Result } from './types'
 
 interface TvlControllerOptions {
   errorOnUnsyncedTvl: boolean
 }
 
-type TvlResult =
-  | {
-      result: 'success'
-      data: TvlApiResponse
-    }
-  | {
-      result: 'error'
-      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
-    }
+type TvlResult = Result<TvlApiResponse, 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'>
 
-type AssetTvlResult =
-  | {
-      result: 'success'
-      data: TvlApiCharts
-    }
-  | {
-      result: 'error'
-      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
-    }
+type AssetTvlResult = Result<
+  TvlApiCharts,
+  'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
+>
+
 export class TvlController {
   constructor(
     private readonly reportRepository: ReportRepository,

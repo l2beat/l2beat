@@ -1,4 +1,4 @@
-import { range } from 'lodash'
+import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { ScalingDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'

@@ -1,5 +1,6 @@
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
+import { getChartUrl } from '../../../scripts/charts/ChartDataController'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
@@ -33,7 +34,6 @@ export function getProps(
       bridgesTvlSevenDayChange,
       combinedTvl: formatUSD(combinedTvl),
       combinedTvlSevenDayChange,
-      tvlEndpoint: '/api/bridges-tvl.json',
       tvlView: {
         items: getBridgesTvlView(
           ordering,
@@ -46,7 +46,7 @@ export function getProps(
       footer: getFooterProps(config),
     },
     wrapper: {
-      preloadApi: '/api/bridges-tvl.json',
+      preloadApi: getChartUrl({ type: 'bridges-tvl', includeCanonical: false }),
       metadata: getPageMetadata(),
     },
   }

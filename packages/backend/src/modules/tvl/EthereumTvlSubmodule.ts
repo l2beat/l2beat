@@ -1,4 +1,5 @@
-import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { EtherscanClient, HttpClient } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 

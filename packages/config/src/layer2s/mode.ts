@@ -23,7 +23,7 @@ export const mode: Layer2 = {
       repositories: [],
       socialMedia: [
         'https://twitter.com/modenetwork',
-        'https://discord.gg/modenetwork',
+        'https://discord.gg/modenetworkofficial',
         'https://mode.mirror.xyz/',
         'https://t.me/ModeNetworkOfficial',
       ],

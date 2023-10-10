@@ -23,10 +23,7 @@ export function RadioGroup(props: RadioGroupProps) {
       {props.options.map((option, i) => (
         <label
           key={i}
-          className={cx(
-            'relative block cursor-pointer select-none',
-            option.className,
-          )}
+          className={cx('relative block select-none', option.className)}
         >
           <input
             className="peer absolute top-0 left-0 block h-full w-full cursor-pointer opacity-0"
@@ -39,7 +36,7 @@ export function RadioGroup(props: RadioGroupProps) {
           <span
             className={cx(
               'relative block px-2',
-              'rounded-md peer-checked:bg-white dark:peer-checked:bg-black',
+              'cursor-pointer rounded-md peer-checked:bg-white peer-disabled:cursor-not-allowed peer-disabled:!bg-transparent peer-disabled:opacity-60 dark:peer-checked:bg-black',
               'outline-current peer-focus-visible:outline peer-focus-visible:outline-2',
             )}
           >
