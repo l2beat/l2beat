@@ -1,0 +1,18 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "celo",
+  "name": "opticsV2",
+  "initialAddresses": ["0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"],
+  "names": {
+    "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE": "BeaconProxy",
+    "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509": "OpticsV2Governor"
+  },
+  "overrides": {
+    "BeaconProxy": {
+      "proxyType": "Optics Beacon proxy"
+    },
+    "OpticsV2Governor": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}
