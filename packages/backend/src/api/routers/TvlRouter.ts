@@ -18,9 +18,6 @@ export function createTvlRouter(
 ) {
   const router = new Router()
 
-  // endpoint that will return tvl of specific projects
-  // accepts projectIds[] as query params
-  // /api/tvl/projects + projectIds[]
   router.get(
     '/api/tvl/aggregate',
     withTypedContext(
@@ -30,9 +27,9 @@ export function createTvlRouter(
         }),
       }),
       async (ctx) => {
-        // get projectIds from query params
+        console.time('[Aggregate endpoint]: runtime')
         const projectSlugs = ctx.query.projectSlugs
-        // get tvl data for each project
+
         const tvlProjectsResponse =
           await detailedTvlController.getDetailedAggregatedApiResponse(
             projectSlugs.split(',').map((slug) => slug.trim()),
@@ -51,6 +48,8 @@ export function createTvlRouter(
         }
 
         ctx.body = tvlProjectsResponse.data
+
+        console.timeEnd('[Aggregate endpoint]: runtime')
       },
     ),
   )
