@@ -52,7 +52,7 @@ export function TableView<T>({
       data-role="table"
       data-rerender-on-load={rerenderOnLoad}
     >
-      <table className="w-full border-collapse text-left">
+      <table className="w-full border-collapse text-left group-data-[state=empty]/tableview:hidden">
         <thead>
           <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
             {columns.map((column, i) => {
