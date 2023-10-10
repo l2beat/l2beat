@@ -1,5 +1,6 @@
 import {
   AggregatedReportType,
+  assert,
   DetailedTvlApiChart,
   DetailedTvlApiChartPoint,
   DetailedTvlApiCharts,
@@ -7,6 +8,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { sum } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { covertBalancesToChartPoints } from './charts'
@@ -16,7 +18,7 @@ import {
   ReportsPerProjectIdAndTimestamp,
 } from './detailedTvl'
 
-const DETAILED_LABELS: DetailedTvlApiChart['types'] = [
+export const DETAILED_LABELS: DetailedTvlApiChart['types'] = [
   'timestamp',
   'valueUsd',
   'cbvUsd',
@@ -41,14 +43,14 @@ export function generateDetailedTvlApiResponse(
     daily: dailyReports,
   }
 
-  const layers2s = getProjectCharts(reports, ProjectId.LAYER2S)
-  const bridges = getProjectCharts(reports, ProjectId.BRIDGES)
-  const combined = getProjectCharts(reports, ProjectId.ALL)
+  const layers2s = getProjectDetailedCharts(reports, ProjectId.LAYER2S)
+  const bridges = getProjectDetailedCharts(reports, ProjectId.BRIDGES)
+  const combined = getProjectDetailedCharts(reports, ProjectId.ALL)
 
   const projects = projectIds.reduce<DetailedTvlApiResponse['projects']>(
     (acc, projectId) => {
       acc[projectId.toString()] = {
-        charts: getProjectCharts(reports, projectId),
+        charts: getProjectDetailedCharts(reports, projectId),
         tokens: getProjectTokensCharts(latestReports, projectId),
       }
       return acc
@@ -64,7 +66,104 @@ export function generateDetailedTvlApiResponse(
   }
 }
 
-function getProjectCharts(
+export function generateDetailedAggregatedApiResponse(
+  hourly: ReportsPerProjectIdAndTimestamp,
+  sixHourly: ReportsPerProjectIdAndTimestamp,
+  daily: ReportsPerProjectIdAndTimestamp,
+  projectIds: ProjectId[],
+): DetailedTvlApiCharts {
+  const result: DetailedTvlApiCharts = createEmptyDetailedTvlApiCharts()
+
+  // get project detailed charts of filtered projects (projectIds)
+
+  const projectDetailedCharts = projectIds.map((projectId) => {
+    return getProjectDetailedCharts(
+      {
+        hourly,
+        sixHourly,
+        daily,
+      },
+      projectId,
+    )
+  })
+
+  // aggregate detailed charts
+
+  const hourlyDataLength = projectDetailedCharts[0].hourly.data.length
+  assert(
+    projectDetailedCharts.every(
+      (chart) => chart.hourly.data.length === hourlyDataLength,
+    ),
+    'hourly data length mismatch',
+  )
+  result.hourly.data = [...Array(hourlyDataLength).keys()].map((i) =>
+    mergeDetailValues(
+      projectDetailedCharts.map((projectChart) => projectChart.hourly.data[i]),
+    ),
+  )
+
+  const sixHourlyDataLength = projectDetailedCharts[0].sixHourly.data.length
+  assert(
+    projectDetailedCharts.every(
+      (chart) => chart.sixHourly.data.length === sixHourlyDataLength,
+    ),
+    'sixHourly data length mismatch',
+  )
+  result.sixHourly.data = [...Array(sixHourlyDataLength).keys()].map((i) =>
+    mergeDetailValues(
+      projectDetailedCharts.map(
+        (projectChart) => projectChart.sixHourly.data[i],
+      ),
+    ),
+  )
+
+  const dailyDataLength = projectDetailedCharts[0].daily.data.length
+  assert(
+    projectDetailedCharts.every(
+      (chart) => chart.daily.data.length === dailyDataLength,
+    ),
+    'daily data length mismatch',
+  )
+  result.daily.data = [...Array(dailyDataLength).keys()].map((i) =>
+    mergeDetailValues(
+      projectDetailedCharts.map((projectChart) => projectChart.daily.data[i]),
+    ),
+  )
+
+  return result
+}
+
+function createEmptyDetailedTvlApiCharts(): DetailedTvlApiCharts {
+  return {
+    hourly: {
+      types: DETAILED_LABELS,
+      data: [],
+    },
+    sixHourly: {
+      types: DETAILED_LABELS,
+      data: [],
+    },
+    daily: { types: DETAILED_LABELS, data: [] },
+  }
+}
+
+function mergeDetailValues(
+  values: DetailedTvlApiChartPoint[],
+): DetailedTvlApiChartPoint {
+  return [
+    values[0][0],
+    sum(values.map((value) => value[1])),
+    sum(values.map((value) => value[2])),
+    sum(values.map((value) => value[3])),
+    sum(values.map((value) => value[4])),
+    sum(values.map((value) => value[5])),
+    sum(values.map((value) => value[6])),
+    sum(values.map((value) => value[7])),
+    sum(values.map((value) => value[8])),
+  ]
+}
+
+export function getProjectDetailedCharts(
   reports: {
     hourly: ReportsPerProjectIdAndTimestamp
     sixHourly: ReportsPerProjectIdAndTimestamp
@@ -75,20 +174,20 @@ function getProjectCharts(
   return {
     hourly: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.hourly, projectId, 1),
+      data: getProjectDetailedChartData(reports.hourly, projectId, 1),
     },
     sixHourly: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.sixHourly, projectId, 6),
+      data: getProjectDetailedChartData(reports.sixHourly, projectId, 6),
     },
     daily: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.daily, projectId, 24),
+      data: getProjectDetailedChartData(reports.daily, projectId, 24),
     },
   }
 }
 
-export function getProjectChartData(
+export function getProjectDetailedChartData(
   reportTree: ReportsPerProjectIdAndTimestamp,
   projectId: ProjectId,
   resolutionInHours: number,

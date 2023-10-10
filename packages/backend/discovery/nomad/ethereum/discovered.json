@@ -1,0 +1,480 @@
+{
+  "name": "nomad",
+  "chain": "ethereum",
+  "blockNumber": 18313665,
+  "configHash": "0x4e1d87e73ab92e91fb9ca40188b5ae98709a40bbc0bbc32542900ce88b958c18",
+  "version": 2,
+  "contracts": [
+    {
+      "name": "ReplicaBeaconProxy",
+      "address": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
+      "upgradeability": {
+        "type": "Optics Beacon proxy",
+        "upgradeBeacon": "0x0876dFe4AcAe0e1c0a43302716483f5752298b71",
+        "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+        "implementation": "0x7f221A1850c12b57fed1f0831dd25399a13b68c2"
+      },
+      "sinceTimestamp": 1641898337,
+      "values": {
+        "committedRoot": "0xbb90049d8b1cda864b192a1373fb41c4fd16df6da499d8a98bc1f622afb55064",
+        "homeDomainHash": "0x6d99fb87e3b04d5511e33963be35e5bf1413faef07088eb5a343ed9bae06d90c",
+        "LEGACY_STATUS_NONE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "LEGACY_STATUS_PROCESSED": "0x0000000000000000000000000000000000000000000000000000000000000002",
+        "LEGACY_STATUS_PROVEN": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "localDomain": 6648936,
+        "optimisticSeconds": 1800,
+        "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+        "remoteDomain": 1650811245,
+        "state": 1,
+        "updater": "0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98",
+        "VERSION": 0
+      },
+      "derivedName": "Replica"
+    },
+    {
+      "name": "UpgradeBeaconProxy",
+      "address": "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641899379
+    },
+    {
+      "name": "GovernanceRouterBeaconProxy",
+      "address": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+      "upgradeability": {
+        "type": "Optics Beacon proxy",
+        "upgradeBeacon": "0x67833a48b3F509d4252ac2c19cd604556eD6c981",
+        "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+        "implementation": "0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"
+      },
+      "sinceTimestamp": 1641898263,
+      "values": {
+        "domains": [1650811245, 25393, 2019844457, 1635148152, 1702260083],
+        "governor": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
+        "governorDomain": 6648936,
+        "inRecovery": true,
+        "localDomain": 6648936,
+        "recoveryActiveAt": 1668451007,
+        "recoveryManager": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
+        "recoveryTimelock": 86400,
+        "VERSION": 0,
+        "xAppConnectionManager": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F"
+      },
+      "derivedName": "GovernanceRouter"
+    },
+    {
+      "name": "BridgeRouterBeaconProxy",
+      "address": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
+      "upgradeability": {
+        "type": "Optics Beacon proxy",
+        "upgradeBeacon": "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00",
+        "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+        "implementation": "0xe0db61ac718f502B485DEc66D013afbbE0B52F84"
+      },
+      "sinceTimestamp": 1641899423,
+      "values": {
+        "accountant": "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c",
+        "DUST_AMOUNT": "60000000000000000",
+        "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+        "tokenRegistry": "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79",
+        "VERSION": 0,
+        "xAppConnectionManager": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F"
+      },
+      "derivedName": "EthereumBridgeRouter"
+    },
+    {
+      "name": "UpdaterManager",
+      "address": "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641898065,
+      "values": {
+        "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+        "updater": "0xa728bE5Be33E60D9c65677EBa569555536e587E4"
+      }
+    },
+    {
+      "name": "HomeBeaconProxy",
+      "address": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8",
+      "upgradeability": {
+        "type": "Optics Beacon proxy",
+        "upgradeBeacon": "0x063e871f8DB991CEAd34B557A00B157B360084cc",
+        "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+        "implementation": "0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"
+      },
+      "sinceTimestamp": 1641898210,
+      "values": {
+        "committedRoot": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
+        "count": 20122,
+        "homeDomainHash": "0x112314385541338d132d96253c1d3cb02a64b68804296e64e833f21583d1c512",
+        "localDomain": 6648936,
+        "MAX_MESSAGE_BODY_BYTES": 2048,
+        "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+        "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "queueLength": 0,
+        "root": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
+        "state": 1,
+        "suggestUpdate": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "tree": 20122,
+        "updater": "0xa728bE5Be33E60D9c65677EBa569555536e587E4",
+        "updaterManager": "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
+        "VERSION": 0
+      },
+      "derivedName": "Home"
+    },
+    {
+      "name": "Governor",
+      "address": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "sinceTimestamp": 1641859677,
+      "values": {
+        "domainSeparator": "0x4b0a5430a1110ea8471f56a66e59c488aebf0374837beab79653f791466fbcaf",
+        "getChainId": 1,
+        "getOwners": [
+          "0x83865712c50f702fA4650C7fadEd90A54242046e",
+          "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F",
+          "0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5",
+          "0xC69b66cc2811B509829448FBFfb2553c4CBb627e",
+          "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3"
+        ],
+        "getThreshold": 3,
+        "nonce": 7,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "UpgradeBeaconProxy",
+      "address": "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1669736603
+    },
+    {
+      "name": "RecoveryManager",
+      "address": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "sinceTimestamp": 1641860106,
+      "values": {
+        "domainSeparator": "0x07b1f27ad489f4abb323a3805d73cdefbccbf32dd9ad3c5d67f402f356cef96d",
+        "getChainId": 1,
+        "getOwners": [
+          "0xea24Ac04DEFb338CA8595C3750E20166F3b4998A",
+          "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4",
+          "0xCc20f031B2F06374e4986Af33A36bDda55bed21d"
+        ],
+        "getThreshold": 2,
+        "nonce": 4,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "address": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641897946,
+      "values": {
+        "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a"
+      }
+    },
+    {
+      "name": "XAppConnectionManager",
+      "address": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641898174,
+      "values": {
+        "home": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8",
+        "localDomain": 6648936,
+        "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+        "watchers": [
+          "0x9782A3C8128f5D1BD3C9655d03181ba5b420883E",
+          "0x06D8902cfae8235047DC7783875279311798c715",
+          "0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960",
+          "0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f",
+          "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D"
+        ]
+      },
+      "derivedName": "XAppConnectionManager"
+    }
+  ],
+  "eoas": [
+    "0x06D8902cfae8235047DC7783875279311798c715",
+    "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F",
+    "0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f",
+    "0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98",
+    "0x83865712c50f702fA4650C7fadEd90A54242046e",
+    "0x9782A3C8128f5D1BD3C9655d03181ba5b420883E",
+    "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3",
+    "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D",
+    "0xa728bE5Be33E60D9c65677EBa569555536e587E4",
+    "0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5",
+    "0xC69b66cc2811B509829448FBFfb2553c4CBb627e",
+    "0xCc20f031B2F06374e4986Af33A36bDda55bed21d",
+    "0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960",
+    "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4",
+    "0xea24Ac04DEFb338CA8595C3750E20166F3b4998A"
+  ],
+  "abis": {
+    "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x3009C99D370B780304D2098196f1EBF779a4777a": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x7f221A1850c12b57fed1f0831dd25399a13b68c2": [
+      "constructor(uint32 _localDomain)",
+      "event NewUpdater(address oldUpdater, address newUpdater)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Process(bytes32 indexed messageHash, bool indexed success, bytes indexed returnData)",
+      "event SetConfirmation(bytes32 indexed root, uint256 previousConfirmAt, uint256 newConfirmAt)",
+      "event SetOptimisticTimeout(uint256 timeout)",
+      "event Update(uint32 indexed homeDomain, bytes32 indexed oldRoot, bytes32 indexed newRoot, bytes signature)",
+      "function LEGACY_STATUS_NONE() view returns (bytes32)",
+      "function LEGACY_STATUS_PROCESSED() view returns (bytes32)",
+      "function LEGACY_STATUS_PROVEN() view returns (bytes32)",
+      "function VERSION() view returns (uint8)",
+      "function acceptableRoot(bytes32 _root) view returns (bool)",
+      "function committedRoot() view returns (bytes32)",
+      "function confirmAt(bytes32) view returns (uint256)",
+      "function homeDomainHash() view returns (bytes32)",
+      "function initialize(uint32 _remoteDomain, address _updater, bytes32 _committedRoot, uint256 _optimisticSeconds)",
+      "function localDomain() view returns (uint32)",
+      "function messages(bytes32) view returns (bytes32)",
+      "function optimisticSeconds() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function process(bytes _message) returns (bool _success)",
+      "function prove(bytes32 _leaf, bytes32[32] _proof, uint256 _index) returns (bool)",
+      "function proveAndProcess(bytes _message, bytes32[32] _proof, uint256 _index)",
+      "function remoteDomain() view returns (uint32)",
+      "function renounceOwnership()",
+      "function setConfirmation(bytes32 _root, uint256 _confirmAt)",
+      "function setOptimisticTimeout(uint256 _optimisticSeconds)",
+      "function setUpdater(address _updater)",
+      "function state() view returns (uint8)",
+      "function transferOwnership(address newOwner)",
+      "function update(bytes32 _oldRoot, bytes32 _newRoot, bytes _signature)",
+      "function updater() view returns (address)"
+    ],
+    "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715": [
+      "constructor(address _updaterAddress) payable",
+      "event FakeSlashed(address reporter)",
+      "event NewHome(address home)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setHome(address _home)",
+      "function setUpdater(address _updaterAddress)",
+      "function slashUpdater(address _reporter)",
+      "function transferOwnership(address newOwner)",
+      "function updater() view returns (address)"
+    ],
+    "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x93277b8f5939975b9E6694d5Fd2837143afBf68A": [
+      "constructor(address _singleton)"
+    ],
+    "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A": [
+      "constructor(address _singleton)"
+    ],
+    "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e": [
+      "event BeaconUpgraded(address indexed beacon, address implementation)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _beacon, address _implementation)"
+    ],
+    "0xe0db61ac718f502B485DEc66D013afbbE0B52F84": [
+      "constructor(address _accountant)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Receive(uint64 indexed originAndNonce, address indexed token, address indexed recipient, address liquidityProvider, uint256 amount)",
+      "event Send(address indexed token, address indexed from, uint32 indexed toDomain, bytes32 toId, uint256 amount, bool toHook)",
+      "function DUST_AMOUNT() view returns (uint256)",
+      "function VERSION() view returns (uint8)",
+      "function accountant() view returns (address)",
+      "function approveAffectedAssets()",
+      "function enrollCustom(uint32 _domain, bytes32 _id, address _custom)",
+      "function enrollRemoteRouter(uint32 _domain, bytes32 _router)",
+      "function handle(uint32 _origin, uint32 _nonce, bytes32 _sender, bytes _message)",
+      "function initialize(address _tokenRegistry, address _xAppConnectionManager)",
+      "function liquidityProvider(bytes32) view returns (address)",
+      "function migrate(address _oldRepr)",
+      "function owner() view returns (address)",
+      "function remotes(uint32) view returns (bytes32)",
+      "function renounceOwnership()",
+      "function send(address _token, uint256 _amount, uint32 _destination, bytes32 _recipient, bool)",
+      "function sendToHook(address _token, uint256 _amount, uint32 _destination, bytes32 _remoteHook, bytes _extraData)",
+      "function setXAppConnectionManager(address _xAppConnectionManager)",
+      "function tokenRegistry() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function xAppConnectionManager() view returns (address)"
+    ],
+    "0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707": [
+      "constructor(uint32 _localDomain, uint256 _recoveryTimelock)",
+      "event BatchExecuted(bytes32 indexed batchHash)",
+      "event BatchReceived(bytes32 indexed batchHash)",
+      "event ExitRecovery(address recoveryManager)",
+      "event InitiateRecovery(address indexed recoveryManager, uint256 recoveryActiveAt)",
+      "event SetRouter(uint32 indexed domain, bytes32 previousRouter, bytes32 newRouter)",
+      "event TransferGovernor(uint32 previousGovernorDomain, uint32 newGovernorDomain, address indexed previousGovernor, address indexed newGovernor)",
+      "event TransferRecoveryManager(address indexed previousRecoveryManager, address indexed newRecoveryManager)",
+      "function VERSION() view returns (uint8)",
+      "function domains(uint256) view returns (uint32)",
+      "function executeCallBatch(tuple(bytes32 to, bytes data)[] _calls)",
+      "function executeGovernanceActions(tuple(bytes32 to, bytes data)[] _localCalls, uint32[] _domains, tuple(bytes32 to, bytes data)[][] _remoteCalls)",
+      "function exitRecovery()",
+      "function governor() view returns (address)",
+      "function governorDomain() view returns (uint32)",
+      "function handle(uint32 _origin, uint32, bytes32 _sender, bytes _message)",
+      "function inRecovery() view returns (bool)",
+      "function inboundCallBatches(bytes32) view returns (uint8)",
+      "function initialize(address _xAppConnectionManager, address _recoveryManager)",
+      "function initiateRecoveryTimelock()",
+      "function localDomain() view returns (uint32)",
+      "function recoveryActiveAt() view returns (uint256)",
+      "function recoveryManager() view returns (address)",
+      "function recoveryTimelock() view returns (uint256)",
+      "function routers(uint32) view returns (bytes32)",
+      "function setRouterGlobal(uint32 _domain, bytes32 _router)",
+      "function setRouterLocal(uint32 _domain, bytes32 _router)",
+      "function setXAppConnectionManager(address _xAppConnectionManager)",
+      "function transferGovernor(uint32 _newDomain, address _newGovernor)",
+      "function transferRecoveryManager(address _newRecoveryManager)",
+      "function xAppConnectionManager() view returns (address)"
+    ],
+    "0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06": [
+      "constructor(uint32 _localDomain)",
+      "event Dispatch(bytes32 indexed messageHash, uint256 indexed leafIndex, uint64 indexed destinationAndNonce, bytes32 committedRoot, bytes message)",
+      "event DoubleUpdate(bytes32 oldRoot, bytes32[2] newRoot, bytes signature, bytes signature2)",
+      "event ImproperUpdate(bytes32 oldRoot, bytes32 newRoot, bytes signature)",
+      "event NewUpdater(address oldUpdater, address newUpdater)",
+      "event NewUpdaterManager(address updaterManager)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Update(uint32 indexed homeDomain, bytes32 indexed oldRoot, bytes32 indexed newRoot, bytes signature)",
+      "event UpdaterSlashed(address indexed updater, address indexed reporter)",
+      "function MAX_MESSAGE_BODY_BYTES() view returns (uint256)",
+      "function VERSION() view returns (uint8)",
+      "function committedRoot() view returns (bytes32)",
+      "function count() view returns (uint256)",
+      "function dispatch(uint32 _destinationDomain, bytes32 _recipientAddress, bytes _messageBody)",
+      "function doubleUpdate(bytes32 _oldRoot, bytes32[2] _newRoot, bytes _signature, bytes _signature2)",
+      "function homeDomainHash() view returns (bytes32)",
+      "function improperUpdate(bytes32 _oldRoot, bytes32 _newRoot, bytes _signature) returns (bool)",
+      "function initialize(address _updaterManager)",
+      "function localDomain() view returns (uint32)",
+      "function nonces(uint32) view returns (uint32)",
+      "function owner() view returns (address)",
+      "function queueContains(bytes32 _item) view returns (bool)",
+      "function queueEnd() view returns (bytes32)",
+      "function queueLength() view returns (uint256)",
+      "function renounceOwnership()",
+      "function root() view returns (bytes32)",
+      "function setUpdater(address _updater)",
+      "function setUpdaterManager(address _updaterManager)",
+      "function state() view returns (uint8)",
+      "function suggestUpdate() view returns (bytes32 _committedRoot, bytes32 _new)",
+      "function transferOwnership(address newOwner)",
+      "function tree() view returns (uint256 count)",
+      "function update(bytes32 _committedRoot, bytes32 _newRoot, bytes _signature)",
+      "function updater() view returns (address)",
+      "function updaterManager() view returns (address)"
+    ],
+    "0xFe8874778f946Ac2990A29eba3CFd50760593B2F": [
+      "constructor()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReplicaEnrolled(uint32 indexed domain, address replica)",
+      "event ReplicaUnenrolled(uint32 indexed domain, address replica)",
+      "event WatcherPermissionSet(uint32 indexed domain, address watcher, bool access)",
+      "function domainToReplica(uint32) view returns (address)",
+      "function home() view returns (address)",
+      "function isReplica(address _replica) view returns (bool)",
+      "function localDomain() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function ownerEnrollReplica(address _replica, uint32 _domain)",
+      "function ownerUnenrollReplica(address _replica)",
+      "function renounceOwnership()",
+      "function replicaToDomain(address) view returns (uint32)",
+      "function setHome(address _home)",
+      "function setWatcherPermission(address _watcher, uint32 _domain, bool _access)",
+      "function transferOwnership(address newOwner)",
+      "function unenrollReplica(uint32 _domain, bytes32 _updater, bytes _signature)",
+      "function watcherPermission(address _watcher, uint32 _domain) view returns (bool)"
+    ]
+  }
+}

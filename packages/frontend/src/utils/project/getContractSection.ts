@@ -212,6 +212,7 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
+
         case 'zkSpace proxy':
           links.push({
             name: 'Implementation (Upgradable)',
@@ -234,6 +235,7 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
+
         case 'Polygon Extension proxy':
           links.push({
             name: 'Implementation (Upgradable)',
