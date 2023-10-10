@@ -74,8 +74,25 @@ describe('tokens', () => {
                 [x.address, DECIMALS],
               ],
         )
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const data: string[] = (await contract.functions.aggregate(calls))[1]
+        let data: string[] = []
+
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          data = (await contract.functions.aggregate(calls))[1]
+        } catch (error) {
+          // @ts-expect-error Alchemy error is not typed
+          const errorBody = error.error.body
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          const message = JSON.parse(errorBody).error.message
+
+          if (message) {
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            throw new Error('Multicall failed. Alchemy error: ' + message)
+          } else {
+            throw error
+          }
+        }
+
         for (let i = 0; i < calls.length; i += 3) {
           const nameResult = data[i]
           const symbolResult = data[i + 1]
@@ -128,10 +145,7 @@ describe('tokens', () => {
       this.timeout(10000)
 
       const http = new HttpClient()
-      const coingeckoClient = new CoingeckoClient(
-        http,
-        process.env.COINGECKO_API_KEY,
-      )
+      const coingeckoClient = new CoingeckoClient(http, config.coingeckoApiKey)
 
       const coinsList = await coingeckoClient.getCoinList({
         includePlatform: true,
