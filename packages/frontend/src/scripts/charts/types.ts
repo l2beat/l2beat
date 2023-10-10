@@ -80,17 +80,7 @@ export interface ActivityChart {
     milestone?: Milestone
   }[]
 }
-const AggregateTvlChart = z.object({
-  types: z.tuple([z.literal('timestamp'), z.literal('usd'), z.literal('eth')]),
-  data: z.array(z.tuple([z.number(), z.number(), z.number()])),
-})
 
-export type AggregateTvlResponse = z.infer<typeof AggregateTvlResponse>
-export const AggregateTvlResponse = z.object({
-  hourly: AggregateTvlChart,
-  sixHourly: AggregateTvlChart,
-  daily: AggregateTvlChart,
-})
 const AggregateDetailedTvlChart = z.object({
   types: z.tuple([
     z.literal('timestamp'),

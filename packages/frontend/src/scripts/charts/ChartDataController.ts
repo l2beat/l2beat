@@ -1,7 +1,6 @@
 import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
-  AggregateTvlResponse,
   ChartType,
   TokenInfo,
   TokenTvlResponse,
@@ -58,7 +57,7 @@ export class ChartDataController {
       case 'storybook-fake-tvl':
         return {
           type: 'tvl',
-          values: AggregateTvlResponse.parse(data),
+          values: AggregateDetailedTvlResponse.parse(data),
         }
       case 'layer2-detailed-tvl':
       case 'project-detailed-tvl':
@@ -89,15 +88,10 @@ export class ChartDataController {
 export function getChartUrl(chartType: ChartType) {
   switch (chartType.type) {
     case 'layer2-tvl':
-      return chartType.filteredSlugs
-        ? `/api/tvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(',')}`
-        : '/api/scaling-tvl.json'
     case 'layer2-detailed-tvl':
       return chartType.filteredSlugs
-        ? `/api/detailedTvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(
-            ',',
-          )}`
-        : '/api/scaling-detailed-tvl.json'
+        ? `/api/tvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(',')}`
+        : '/api/tvl/scaling.json'
     case 'layer2-activity':
       return chartType.filteredSlugs
         ? `/api/activity/aggregate?projectSlugs=${chartType.filteredSlugs.join(
@@ -106,12 +100,11 @@ export function getChartUrl(chartType: ChartType) {
         : '/api/activity/combined.json'
     case 'bridges-tvl':
       return chartType.includeCanonical
-        ? '/api/combined-tvl.json'
-        : '/api/bridges-tvl.json'
+        ? '/api/tvl/combined.json'
+        : '/api/tvl/bridges.json'
     case 'project-tvl':
-      return `/api/${chartType.slug}-tvl.json`
     case 'project-detailed-tvl':
-      return `/api/${chartType.slug}-detailed-tvl.json`
+      return `/api/tvl/${chartType.slug}.json`
     case 'project-token-tvl':
       return getTokenTvlUrl(chartType.info)
     case 'project-activity':

@@ -26,7 +26,7 @@ export function ChartUpcoming({ mobileFull: fullWidth = false }: ChartProps) {
       <section
         data-role="chart"
         data-type="tvl"
-        data-tvl-endpoint={`/api/placeholder-tvl.json`}
+        data-tvl-endpoint={`/api/tvl/placeholder.json`}
         className={cx(
           fullWidth
             ? 'bg-gray-100 px-4 py-6 dark:bg-gray-950 md:bg-transparent md:p-0 md:dark:bg-transparent'

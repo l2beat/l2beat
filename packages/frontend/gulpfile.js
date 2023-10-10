@@ -93,6 +93,13 @@ function serve() {
       changeOrigin: true,
     }),
   )
+  app.use(
+    '/api/tvl/aggregate',
+    createProxyMiddleware({
+      target: apiUrl,
+      changeOrigin: true,
+    }),
+  )
   const server = app.listen(8080, '0.0.0.0')
   console.log('Listening on http://localhost:8080')
   return server
