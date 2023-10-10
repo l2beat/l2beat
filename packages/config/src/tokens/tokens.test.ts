@@ -87,7 +87,7 @@ describe('tokens', () => {
 
           if (message) {
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            throw new Error('Multicall failed: ' + message)
+            throw new Error('Multicall failed. Alchemy error: ' + message)
           } else {
             throw error
           }
