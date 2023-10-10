@@ -59,6 +59,7 @@ describe('tokens', () => {
       )
 
       before('fetch metadata', async () => {
+        console.log('Using the key: ', config.alchemyApiKey)
         const provider = new providers.AlchemyProvider(
           'mainnet',
           config.alchemyApiKey,
@@ -74,8 +75,13 @@ describe('tokens', () => {
                 [x.address, DECIMALS],
               ],
         )
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const data: string[] = (await contract.functions.aggregate(calls))[1]
+        let data: string[] = []
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          data = (await contract.functions.aggregate(calls))[1]
+        } catch (e) {
+          throw new Error('Multicall failed')
+        }
         for (let i = 0; i < calls.length; i += 3) {
           const nameResult = data[i]
           const symbolResult = data[i + 1]
