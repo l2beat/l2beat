@@ -148,6 +148,8 @@ export class DetailedTvlController {
   async getDetailedAggregatedApiResponse(
     slugs: string[],
   ): Promise<TvlProjectResult> {
+    console.time('[Aggregate endpoint]: setup')
+
     const projectIdsFilter = [...layer2s, ...bridges]
       .filter((project) => slugs.includes(project.display.slug))
       .map((project) => project.id)
@@ -174,7 +176,9 @@ export class DetailedTvlController {
         error: 'DATA_NOT_FULLY_SYNCED',
       }
     }
+    console.timeEnd('[Aggregate endpoint]: setup')
 
+    console.time('[Aggregate endpoint]: database')
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.aggregatedReportRepository.getHourlyWithAnyType(
         getHourlyMinTimestamp(dataTimings.latestTimestamp),
@@ -184,7 +188,9 @@ export class DetailedTvlController {
       ),
       this.aggregatedReportRepository.getDailyWithAnyType(),
     ])
+    console.timeEnd('[Aggregate endpoint]: database')
 
+    console.time('[Aggregate endpoint]: aggregation')
     const projectIdsFilterSet = new Set(
       projectIdsFilter.map((x) => x.toString()),
     )
@@ -204,6 +210,7 @@ export class DetailedTvlController {
         .map((project) => project.projectId)
         .filter((projectId) => projectIdsFilterSet.has(projectId.toString())),
     )
+    console.timeEnd('[Aggregate endpoint]: aggregation')
 
     return {
       result: 'success',
