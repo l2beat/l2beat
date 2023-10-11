@@ -51,5 +51,8 @@
     "typescript": "^4.9.4",
     "wait-for-expect": "^3.0.2",
     "wsrun": "^5.2.4"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.0.7"
   }
 }
