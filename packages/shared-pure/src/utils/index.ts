@@ -1,5 +1,3 @@
-export * from '../../../shared/src/services/bigquery/sql/getFunctionCallQuery'
-export * from '../../../shared/src/services/bigquery/sql/getTransferQuery'
 export * from './address'
 export * from './divOrZero'
 export * from './formatLargeNumberShared'
