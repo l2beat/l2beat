@@ -1,0 +1,235 @@
+{
+  "name": "chainport",
+  "chain": "ethereum",
+  "blockNumber": 18290482,
+  "configHash": "0xdbb2fa0647de6b0a8ed4d6544aa23dd24ae5b8a81889a3bdd720efd35d56c68f",
+  "version": 2,
+  "contracts": [
+    {
+      "name": "ChainportCongressMembersRegistry",
+      "address": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1621598125,
+      "values": {
+        "allMembers": [
+          "0x894107B7b5051409f279E8300774B2f62Febe057",
+          "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8",
+          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+        ],
+        "chainportCongress": "0xB6b4C7aC240b1f176c5589d064733066a83884a1",
+        "getAllMemberAddresses": [
+          "0x894107B7b5051409f279E8300774B2f62Febe057",
+          "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8",
+          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+        ],
+        "getMinimalQuorum": 2,
+        "getNumberOfMembers": 3,
+        "name": "ChainportCongressMembersRegistry"
+      },
+      "derivedName": "ChainportCongressMembersRegistry"
+    },
+    {
+      "name": "MultisigVault2",
+      "address": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "sinceTimestamp": 1641296925,
+      "values": {
+        "domainSeparator": "0x4812ce160ffe37bfbe1ff1f71c8dad41849053931e9ec9c5465469ef8083f38e",
+        "getChainId": 1,
+        "getOwners": [
+          "0x894107B7b5051409f279E8300774B2f62Febe057",
+          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+          "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
+        ],
+        "getThreshold": 2,
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1626949762,
+      "values": {
+        "owner": "0xB6b4C7aC240b1f176c5589d064733066a83884a1"
+      }
+    },
+    {
+      "name": "Vault6",
+      "address": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568",
+        "admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
+      },
+      "sinceTimestamp": 1626949825,
+      "derivedName": ""
+    },
+    {
+      "name": "MultisigVault1",
+      "address": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "sinceTimestamp": 1627899254,
+      "values": {
+        "domainSeparator": "0x6ff8db429aea0adcadf7f7b4b96be80cf9a3a712bedcf4525d275fdcda9a5dcd",
+        "getChainId": 1,
+        "getOwners": [
+          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+          "0x894107B7b5051409f279E8300774B2f62Febe057",
+          "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
+        ],
+        "getThreshold": 2,
+        "nonce": 179,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "ChainportCongress",
+      "address": "0xB6b4C7aC240b1f176c5589d064733066a83884a1",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1621598093,
+      "values": {
+        "getMembersRegistry": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
+        "name": "ChainportCongress",
+        "proposalCount": 44
+      },
+      "derivedName": "ChainportCongress"
+    }
+  ],
+  "eoas": [
+    "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8",
+    "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+    "0x894107B7b5051409f279E8300774B2f62Febe057",
+    "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+    "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
+  ],
+  "abis": {
+    "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa": [
+      "constructor(address[] initialCongressMembers, bytes32[] initialCongressMemberNames, address _chainportCongress)",
+      "event MembershipChanged(address member, bool isMember)",
+      "function addMember(address targetMember, bytes32 memberName)",
+      "function address2Member(address) view returns (bytes32 name, uint256 memberSince)",
+      "function allMembers(uint256) view returns (address)",
+      "function chainportCongress() view returns (address)",
+      "function changeMinimumQuorum(uint256 newMinimumQuorum)",
+      "function getAllMemberAddresses() view returns (address[])",
+      "function getMemberInfo(address _member) view returns (address, bytes32, uint256)",
+      "function getMinimalQuorum() view returns (uint256)",
+      "function getNumberOfMembers() view returns (uint256)",
+      "function isMember(address _address) view returns (bool)",
+      "function name() view returns (string)",
+      "function removeMember(address targetMember)"
+    ],
+    "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9": [
+      "constructor(address _singleton)"
+    ],
+    "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19": [
+      "constructor(address _masterCopy)"
+    ],
+    "0xB6b4C7aC240b1f176c5589d064733066a83884a1": [
+      "event ExecuteTransaction(address indexed target, uint256 value, string signature, bytes data)",
+      "event ProposalCanceled(uint256 id)",
+      "event ProposalCreated(uint256 id, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description)",
+      "event ProposalExecuted(uint256 id)",
+      "event ReceivedEther(address sender, uint256 amount)",
+      "event VoteCast(address voter, uint256 proposalId, bool support)",
+      "function cancel(uint256 proposalId)",
+      "function castVote(uint256 proposalId, bool support)",
+      "function execute(uint256 proposalId) payable",
+      "function getActions(uint256 proposalId) view returns (address[] targets, uint256[] values, string[] signatures, bytes[] calldatas)",
+      "function getMembersRegistry() view returns (address)",
+      "function name() view returns (string)",
+      "function proposalCount() view returns (uint256)",
+      "function proposals(uint256) view returns (uint256 id, address proposer, uint256 forVotes, uint256 againstVotes, bool canceled, bool executed, uint256 timestamp)",
+      "function propose(address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description) returns (uint256)",
+      "function setMembersRegistry(address _membersRegistry)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ]
+  }
+}
