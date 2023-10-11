@@ -13,6 +13,7 @@ describe('getTransferQuery', () => {
     const expectedQuery = [
       'SELECT',
       'block_number,',
+      'from_address,',
       'to_address,',
       'block_timestamp,',
       'transaction_hash,',
