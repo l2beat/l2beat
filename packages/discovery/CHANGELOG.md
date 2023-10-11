@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.14.2
+
+### Patch Changes
+
+- Rediscover on upgradeBeacon too
+
 ## 0.14.1
 
 ### Patch Changes
