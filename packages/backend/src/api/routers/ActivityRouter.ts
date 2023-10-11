@@ -22,7 +22,7 @@ export function createActivityRouter(activityController: ActivityController) {
       }),
       async (ctx) => {
         const projectSlugs = ctx.query.projectSlugs
-        const data = await activityController.getActivity(
+        const data = await activityController.getProjectsActivity(
           projectSlugs.split(',').map((slug) => slug.trim()),
         )
         ctx.body = data
