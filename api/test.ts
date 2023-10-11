@@ -6,9 +6,7 @@ export default function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  const x = readFileSync(
-    "../packages/frontend/src/build/api/tvl/arbitrum.json"
-  );
+  const x = readFileSync("../packages/frontend/build/api/acrossv2-tvl.json");
   const json: unknown = JSON.parse(x.toString());
   response.status(200).json(json);
 }
