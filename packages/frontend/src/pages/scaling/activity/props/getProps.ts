@@ -2,7 +2,7 @@ import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getChartUrl } from '../../../../scripts/charts/ChartDataController'
+import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { Wrapped } from '../../../Page'
 import { ActivityPageProps } from '../view/ScalingActivityPage'
 import { getPageMetadata } from './getPageMetadata'

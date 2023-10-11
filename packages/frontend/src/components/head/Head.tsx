@@ -10,7 +10,7 @@ interface Props {
   description: string
   image: string
   url: string
-  preloadApi?: string
+  preloadApi?: string | string[]
 }
 
 export function Head(props: Props) {

@@ -2,7 +2,7 @@ import { Bridge } from '@l2beat/config'
 
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getChartUrl } from '../../../../scripts/charts/ChartDataController'
+import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { getChart } from '../../../../utils/project/getChart'
 import { getHeader } from '../../../../utils/project/getHeader'
 import { PagesData, Wrapped } from '../../../Page'

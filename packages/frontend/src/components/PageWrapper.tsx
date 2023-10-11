@@ -8,7 +8,7 @@ import { Tooltip } from './Tooltip'
 export interface PageWrapperProps {
   htmlClassName?: string
   metadata: PageMetadata
-  preloadApi?: string
+  preloadApi?: string | string[]
   children: ReactNode
 }
 

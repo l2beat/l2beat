@@ -1,6 +1,6 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getChartUrl } from '../../../../scripts/charts/ChartDataController'
+import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWitchChange'

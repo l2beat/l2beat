@@ -1,14 +1,14 @@
-import range from 'lodash/range'
-
 import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   ChartType,
   TokenInfo,
   TokenTvlResponse,
-} from './types'
-import { ChartViewController } from './view-controller/ChartViewController'
-import { ChartData } from './view-controller/types'
+} from '../types'
+import { ChartViewController } from '../view-controller/ChartViewController'
+import { ChartData } from '../view-controller/types'
+import { groupAndSumActivityData } from './groupAndSumActivityData'
+import { groupAndSumTvlData } from './groupAndSumTvlData'
 
 export class ChartDataController {
   private chartType?: ChartType
@@ -140,7 +140,7 @@ export class ChartDataController {
   }
 }
 
-export function getChartUrl(chartType: ChartType) {
+export function getChartUrl<T extends ChartType>(chartType: T) {
   switch (chartType.type) {
     case 'layer2-tvl':
     case 'layer2-detailed-tvl':
@@ -173,94 +173,4 @@ export function getTokenTvlUrl(info: TokenInfo) {
   const chainId = 'chainId' in info ? info.chainId : 1
   const type = info.type === 'regular' ? 'CBV' : info.type
   return `/api/projects/${info.projectId}/tvl/chains/${chainId}/assets/${info.assetId}/types/${type}`
-}
-
-function groupAndSumTvlData(
-  dataArray: AggregateDetailedTvlResponse[],
-): AggregateDetailedTvlResponse {
-  return {
-    hourly: {
-      data: groupTvlDataByTimestamp(dataArray, 'hourly'),
-      types: dataArray[0].hourly.types,
-    },
-    sixHourly: {
-      data: groupTvlDataByTimestamp(dataArray, 'sixHourly'),
-      types: dataArray[0].sixHourly.types,
-    },
-    daily: {
-      data: groupTvlDataByTimestamp(dataArray, 'daily'),
-      types: dataArray[0].daily.types,
-    },
-  }
-}
-
-function groupAndSumActivityData(
-  dataArray: ActivityResponse[],
-): ActivityResponse {
-  return {
-    daily: {
-      data: groupActivityDataByTimestamp(dataArray, 'daily'),
-      types: dataArray[0].daily.types,
-    },
-  }
-}
-
-function groupTvlDataByTimestamp(
-  responses: AggregateDetailedTvlResponse[],
-  key: keyof AggregateDetailedTvlResponse,
-) {
-  const groupedByTimestamp = new Map<
-    number,
-    AggregateDetailedTvlResponse['daily']['data'][0]
-  >()
-
-  for (const response of responses) {
-    const data = response[key].data
-
-    for (const values of data) {
-      const timestamp = values[0]
-      const groupedDataArray = groupedByTimestamp.get(timestamp)
-
-      if (!groupedDataArray) {
-        groupedByTimestamp.set(timestamp, values)
-        continue
-      }
-
-      for (const index of range(1, values.length)) {
-        groupedDataArray[index] += values[index]
-      }
-      groupedByTimestamp.set(timestamp, groupedDataArray)
-    }
-  }
-
-  return Array.from(groupedByTimestamp.values()).sort((a, b) => a[0] - b[0])
-}
-
-function groupActivityDataByTimestamp(
-  responses: ActivityResponse[],
-  key: keyof ActivityResponse,
-) {
-  const projectTpsIndex = 1
-  const groupedByTimestamp = new Map<
-    number,
-    ActivityResponse['daily']['data'][0]
-  >()
-
-  for (const response of responses) {
-    const data = response[key].data
-
-    for (const values of data) {
-      const timestamp = values[0]
-      const groupedDataArray = groupedByTimestamp.get(timestamp)
-
-      if (!groupedDataArray) {
-        groupedByTimestamp.set(timestamp, values)
-        continue
-      }
-
-      groupedDataArray[projectTpsIndex] += values[projectTpsIndex]
-      groupedByTimestamp.set(timestamp, groupedDataArray)
-    }
-  }
-  return Array.from(groupedByTimestamp.values()).sort((a, b) => a[0] - b[0])
 }
