@@ -9,31 +9,20 @@ import {
 import { BigQueryProvider } from './BigQueryProvider'
 import { BigQueryWrapper } from './BigQueryWrapper'
 
-const transfersToQuery: TransferQueryParams[] = [
-  {
-    from: EthereumAddress.random(),
-    to: EthereumAddress.random(),
-  },
-  {
-    from: EthereumAddress.random(),
-    to: EthereumAddress.random(),
-  },
-]
-
-const functionCallsToQuery: FunctionCallQueryParams[] = [
-  {
-    address: EthereumAddress.random(),
-    selector: '0xabcdef',
-  },
-  {
-    address: EthereumAddress.random(),
-    selector: '0x123456',
-  },
-]
-
 describe('BigQueryClient', () => {
   it('should return valid data for transfers', async () => {
-    const expected = [
+    const transfersToQuery: TransferQueryParams[] = [
+      {
+        from: EthereumAddress.random(),
+        to: EthereumAddress.random(),
+      },
+      {
+        from: EthereumAddress.random(),
+        to: EthereumAddress.random(),
+      },
+    ]
+
+    const bigQueryResponse = [
       {
         block_number: 12345,
         from_address: transfersToQuery[0].from.toLocaleLowerCase(),
@@ -52,7 +41,7 @@ describe('BigQueryClient', () => {
     const bigQuery = mockObject<BigQueryWrapper>({
       createQueryJob: mockFn().resolvesToOnce([
         {
-          getQueryResults: async () => [expected],
+          getQueryResults: async () => [bigQueryResponse],
         },
       ]),
     })
@@ -64,22 +53,40 @@ describe('BigQueryClient', () => {
       UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
     )
 
+    const expected = bigQueryResponse.map((transfer) => ({
+      ...transfer,
+      from_address: EthereumAddress(transfer.from_address),
+      to_address: EthereumAddress(transfer.to_address),
+      block_timestamp: UnixTime.fromDate(new Date(transfer.block_timestamp)),
+    }))
+
     expect(results).toEqual(expected)
   })
 
-  it('should return valid data for methods', async () => {
-    const expected = [
+  it('should return valid data for function calls', async () => {
+    const functionCallsToQuery: FunctionCallQueryParams[] = [
+      {
+        address: EthereumAddress.random(),
+        selector: '0xabcdef',
+      },
+      {
+        address: EthereumAddress.random(),
+        selector: '0x123456',
+      },
+    ]
+
+    const bigQueryResponse = [
       {
         block_number: 12345,
         input: 'some input',
-        to_address: '0x1234567890abcdef',
+        to_address: functionCallsToQuery[0].address.toLocaleLowerCase(),
         block_timestamp: '2022-01-01T00:00:00Z',
         transaction_hash: '0xabcdef1234567890',
       },
       {
         block_number: 12346,
         input: 'some other input',
-        to_address: '0xabcdef1234567890',
+        to_address: functionCallsToQuery[1].address.toLocaleLowerCase(),
         block_timestamp: '2022-01-01T00:01:00Z',
         transaction_hash: '0x1234567890abcdef',
       },
@@ -88,7 +95,7 @@ describe('BigQueryClient', () => {
     const bigQuery = mockObject<BigQueryWrapper>({
       createQueryJob: mockFn().resolvesToOnce([
         {
-          getQueryResults: async () => [expected],
+          getQueryResults: async () => [bigQueryResponse],
         },
       ]),
     })
@@ -98,6 +105,12 @@ describe('BigQueryClient', () => {
       UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
       UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
     )
+
+    const expected = bigQueryResponse.map((method) => ({
+      ...method,
+      to_address: EthereumAddress(method.to_address),
+      block_timestamp: UnixTime.fromDate(new Date(method.block_timestamp)),
+    }))
 
     expect(results).toEqual(expected)
   })
@@ -115,7 +128,7 @@ describe('BigQueryClient', () => {
     const queryProvider = new BigQueryProvider(bigQuery)
     await expect(
       new BigQueryClient(queryProvider).getTransfers(
-        transfersToQuery,
+        [],
         UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
         UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
       ),
