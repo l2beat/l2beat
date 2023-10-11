@@ -31,7 +31,7 @@ export function createDiscoveryRunner(
   const discoveryProvider = new DiscoveryProvider(
     provider,
     etherscanLikeClient,
-    discoveryLogger,
+    DiscoveryLogger.CLI,
     chainConfig.rpcGetLogsMaxRange,
   )
 

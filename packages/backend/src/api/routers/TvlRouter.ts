@@ -18,6 +18,42 @@ export function createTvlRouter(
 ) {
   const router = new Router()
 
+  router.get(
+    '/api/tvl/aggregate',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          projectSlugs: z.string(),
+        }),
+      }),
+      async (ctx) => {
+        console.time('[Aggregate endpoint]: runtime')
+        const projectSlugs = ctx.query.projectSlugs
+
+        const tvlProjectsResponse =
+          await detailedTvlController.getDetailedAggregatedApiResponse(
+            projectSlugs.split(',').map((slug) => slug.trim()),
+          )
+
+        if (tvlProjectsResponse.result === 'error') {
+          if (tvlProjectsResponse.error === 'DATA_NOT_FULLY_SYNCED') {
+            ctx.status = 422
+          }
+
+          if (tvlProjectsResponse.error === 'NO_DATA') {
+            ctx.status = 404
+          }
+
+          return
+        }
+
+        ctx.body = tvlProjectsResponse.data
+
+        console.timeEnd('[Aggregate endpoint]: runtime')
+      },
+    ),
+  )
+
   router.get('/api/tvl', async (ctx) => {
     const tvlResponse = await tvlController.getTvlApiResponse()
     if (tvlResponse.result === 'error') {
