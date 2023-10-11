@@ -1,6 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DailyTransactionCountRow } from 'knex/types/tables'
+import {
+  DailyTransactionCountRow,
+  ProjectsAggregatedDailyCountRow,
+} from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
@@ -14,11 +17,6 @@ export interface DailyTransactionCountRecord {
 export type ProjectsAggregatedDailyTransactionCounts = Pick<
   DailyTransactionCountRecord,
   'timestamp' | 'count'
->
-
-type ProjectsAggregatedDailyCountRow = Pick<
-  DailyTransactionCountRow,
-  'unix_timestamp' | 'count'
 >
 
 export class DailyTransactionCountViewRepository extends BaseRepository {
