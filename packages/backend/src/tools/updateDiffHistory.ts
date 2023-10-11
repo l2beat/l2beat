@@ -45,33 +45,14 @@ async function updateDiffHistoryFile() {
     config,
   )
 
-  // To check for changes to source code,
-  // download sources for block number from main branch
-  let codeDiff = ''
-  if (discoveryFromMainBranch) {
-    const root = `discovery/${projectName}/${chainName}`
-    // Remove any old sources we fetched before, so that their count doesn't grow
-    await rimraf(`${root}/.code@*`, { glob: true })
-
-    const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
-    const cli = [
-      `yarn discover:raw ${chainName} ${projectName}`,
-      `--block-number=${blockNumberFromMainBranch}`,
-      `--sources-folder=.code@${blockNumberFromMainBranch}`,
-      `--discovery-filename=discovered@${blockNumberFromMainBranch}.json`, // we don't need discovered.json
-    ].join(' ')
-    console.log('Downloading sources from main branch:')
-    console.log(cli)
-    execSync(cli, { stdio: 'inherit' })
-
-    // Remove discovered@... file, we don't need it
-    await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
-
-    codeDiff = compareFolders(
-      `${root}/.code@${blockNumberFromMainBranch}`,
-      `${root}/.code`,
-    )
-  }
+  const codeDiff =
+    discoveryFromMainBranch !== undefined
+      ? await getCodeDiffWithMainBranch(
+          discoveryFromMainBranch,
+          projectName,
+          chainName,
+        )
+      : undefined
 
   if (diff.length > 0) {
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
@@ -99,6 +80,39 @@ async function updateDiffHistoryFile() {
   } else {
     console.log('No changes found')
   }
+}
+
+async function getCodeDiffWithMainBranch(
+  discoveryFromMainBranch: DiscoveryOutput,
+  projectName: string,
+  chainName: string,
+): Promise<string | undefined> {
+  // To check for changes to source code,
+  // download sources for block number from main branch
+  const root = `discovery/${projectName}/${chainName}`
+  // Remove any old sources we fetched before, so that their count doesn't grow
+  await rimraf(`${root}/.code@*`, { glob: true })
+
+  const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
+  const cli = [
+    `yarn discover:raw ${chainName} ${projectName}`,
+    `--block-number=${blockNumberFromMainBranch}`,
+    `--sources-folder=.code@${blockNumberFromMainBranch}`,
+    `--discovery-filename=discovered@${blockNumberFromMainBranch}.json`, // we don't need discovered.json
+  ].join(' ')
+  console.log('Downloading sources from main branch:')
+  console.log(cli)
+  execSync(cli, { stdio: 'inherit' })
+
+  // Remove discovered@... file, we don't need it
+  await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
+
+  const codeDiff = compareFolders(
+    `${root}/.code@${blockNumberFromMainBranch}`,
+    `${root}/.code`,
+  )
+
+  return codeDiff === '' ? undefined : codeDiff
 }
 
 function getMainBranchName(): 'main' | 'master' {
@@ -207,7 +221,7 @@ function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
 function generateDiffHistoryMarkdown(
   diffs: DiscoveryDiff[],
   mainBranchHash: string,
-  codeDiff: string,
+  codeDiff?: string,
   description?: string,
 ): string {
   const result = []
@@ -236,7 +250,7 @@ function generateDiffHistoryMarkdown(
   result.push(discoveryDiffToMarkdown(diffs))
   result.push('')
 
-  if (codeDiff !== '') {
+  if (codeDiff !== undefined) {
     result.push('## Source code changes')
     result.push('')
     result.push('```diff')

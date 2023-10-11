@@ -76,6 +76,7 @@ environment variables. One variable per line `KEY=value`.
 #### Discovery/Bot related
 
 - `DISCOVERY_ETHEREUM_RPC_URL`
+- `DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE` - maximum range for getLogs() call. Optional, by default no limit.
 - `DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY`
 - `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
 - `UPDATE_MONITOR_RUN_ON_START` (default `true`) - Prevent UpdateMonitor from running on start when developing locally
@@ -145,6 +146,7 @@ ETHEREUM_ALCHEMY_API_KEY=
 # INTERNAL_DISCORD_CHANNEL_ID=
 # DISCORD_TOKEN=
 # DISCOVERY_ETHEREUM_RPC_URL=
+# DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE=
 # DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY=
 
 #-----DISCOVERY CLI (MULTICHAIN, OPTIONAL)-----
