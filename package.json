@@ -34,6 +34,7 @@
     "@sinonjs/fake-timers": "^10.0.2",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.18",
+    "@types/node-fetch": "^2.6.6",
     "@types/sinonjs__fake-timers": "^8.1.2",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
@@ -53,6 +54,7 @@
     "wsrun": "^5.2.4"
   },
   "dependencies": {
-    "@vercel/node": "^3.0.7"
+    "@vercel/node": "^3.0.7",
+    "node-fetch": "^3.3.2"
   }
 }
