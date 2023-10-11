@@ -19,6 +19,12 @@ function buildScripts() {
   )
 }
 
+function buildServerless() {
+  return exec(
+    `esbuild --bundle src/build/test3.ts --outfile=build/api/test3.js --minify`,
+  )
+}
+
 function watchScripts() {
   return gulp.watch(['src/**/*.ts'], buildScripts)
 }
@@ -100,7 +106,14 @@ function serve() {
 
 const build = gulp.series(
   clean,
-  gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
+  gulp.parallel(
+    buildScripts,
+    buildSass,
+    buildStyles,
+    buildContent,
+    copyStatic,
+    buildServerless,
+  ),
   generateMetaImages,
 )
 
