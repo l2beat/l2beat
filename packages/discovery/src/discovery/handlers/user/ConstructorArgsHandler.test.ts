@@ -22,6 +22,7 @@ describe(ConstructorArgsHandler.name, () => {
     it('extracts constructor arguments using heuristic', async () => {
       const handler = new ConstructorArgsHandler(
         'constructorArgs',
+        { type: 'constructorArgs' },
         sampleAbi,
         DiscoveryLogger.SILENT,
       )
@@ -57,6 +58,46 @@ describe(ConstructorArgsHandler.name, () => {
       expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
     })
 
+    it('names args', async () => {
+      const handler = new ConstructorArgsHandler(
+        'constructorArgs',
+        { type: 'constructorArgs', nameArgs: true },
+        sampleAbi,
+        DiscoveryLogger.SILENT,
+      )
+
+      const contractAddress = EthereumAddress.random()
+      const txHash = Hash256.random()
+      const transaction = fakeEthersTransaction({ data: sampleTxData })
+
+      const provider = mockObject<DiscoveryProvider>({
+        getContractDeploymentTx:
+          mockFn<DiscoveryProvider['getContractDeploymentTx']>().resolvesTo(
+            txHash,
+          ),
+        getTransaction:
+          mockFn<DiscoveryProvider['getTransaction']>().resolvesTo(transaction),
+      })
+
+      const response = await handler.execute(provider, contractAddress)
+
+      expect(response).toEqual({
+        field: 'constructorArgs',
+        value: {
+          name: 'Pi Day N00b Token',
+          symbol: 'PIE',
+          decimals: 18,
+          someBytes:
+            '0xdc03b7993bad736ad595eb9e3ba51877ac17ecc31d2355f8f270125b9427ece7',
+          someNumber: '0',
+        },
+      })
+      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
+        contractAddress,
+      )
+      expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
+    })
+
     it('falls back to extraction with block explorer if heuristic fails', async () => {
       /**
        * You can achive the same result using:
@@ -81,6 +122,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       const handler = new ConstructorArgsHandler(
         'constructorArgs',
+        { type: 'constructorArgs' },
         sampleAbi,
         DiscoveryLogger.SILENT,
       )

@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.14.0
+
+### Minor Changes
+
+- 733dcc6: Add LayerZeroMultisig handler
+
 ## 0.13.1
 
 ### Patch Changes

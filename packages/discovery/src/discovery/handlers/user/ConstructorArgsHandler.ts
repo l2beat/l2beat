@@ -13,6 +13,7 @@ export type ConstructorArgsDefinition = z.infer<
 >
 export const ConstructorArgsDefinition = z.strictObject({
   type: z.literal('constructorArgs'),
+  nameArgs: z.boolean().optional(),
 })
 
 export class ConstructorArgsHandler implements Handler {
@@ -21,6 +22,7 @@ export class ConstructorArgsHandler implements Handler {
 
   constructor(
     readonly field: string,
+    private readonly definition: ConstructorArgsDefinition,
     abi: string[],
     readonly logger: DiscoveryLogger,
   ) {
@@ -40,14 +42,37 @@ export class ConstructorArgsHandler implements Handler {
     provider: DiscoveryProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
+    const result = await this.getSerializedConstructorArgs(provider, address)
+
+    if (!this.definition.nameArgs || !Array.isArray(result)) {
+      return {
+        field: 'constructorArgs',
+        value: result,
+      }
+    }
+
+    const namedArgs = Object.fromEntries(
+      this.constructorFragment.inputs.map((input, index) => [
+        input.name,
+        result[index],
+      ]),
+    )
+
+    return {
+      field: 'constructorArgs',
+      value: namedArgs,
+    }
+  }
+
+  async getSerializedConstructorArgs(
+    provider: DiscoveryProvider,
+    address: EthereumAddress,
+  ): Promise<ContractValue> {
     try {
       const decodedConstructorArguments =
         await this.getWithDeploymentTransaction(provider, address)
 
-      return {
-        field: 'constructorArgs',
-        value: serializeResult(decodedConstructorArguments),
-      }
+      return serializeResult(decodedConstructorArguments)
     } catch (error) {
       this.logger.log(
         'Could not get constructor arguments with heuristic approach. Trying with block explorer.',
@@ -56,11 +81,7 @@ export class ConstructorArgsHandler implements Handler {
         provider,
         address,
       )
-
-      return {
-        field: 'constructorArgs',
-        value: serializeResult(decodedConstructorArguments),
-      }
+      return serializeResult(decodedConstructorArguments)
     }
   }
 
