@@ -72,7 +72,7 @@ describe(DailyTransactionCountViewRepository.name, () => {
     )
   })
 
-  it('should return correct response for multiple project activities', async () => {
+  it('should return correct response for multiple projects', async () => {
     const blockMockRecords = [
       mockBlockRecord(PROJECT_A, 0, 0, 1),
       mockBlockRecord(PROJECT_A, 1, 0, 2),
