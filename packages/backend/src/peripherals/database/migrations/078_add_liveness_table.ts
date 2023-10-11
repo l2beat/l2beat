@@ -16,7 +16,7 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('liveness', function (table) {
     table.string('project_id').notNullable()
-    table.timestamp('timestamp').notNullable()
+    table.dateTime('timestamp', { useTz: false }).notNullable()
     table.integer('block_number').notNullable()
     table.string('tx_hash').notNullable()
     table.string('type').notNullable()
