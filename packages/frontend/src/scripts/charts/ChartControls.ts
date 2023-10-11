@@ -200,7 +200,8 @@ export class ChartControls {
     projectFilters?.addEventListener('change', () => {
       if (
         this.chartType?.type !== 'layer2-tvl' &&
-        this.chartType?.type !== 'layer2-detailed-tvl'
+        this.chartType?.type !== 'layer2-detailed-tvl' &&
+        this.chartType?.type !== 'layer2-activity'
       ) {
         return
       }
