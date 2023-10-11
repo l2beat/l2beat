@@ -1,39 +1,40 @@
+import { EthereumAddress, UnixTime } from '../types'
+
 export function getTransferQuery(
-  from_address: string[],
-  to_address: string[],
-  startTimestamp: string,
-  endTimestamp: string,
+  senders: EthereumAddress[],
+  receivers: EthereumAddress[],
+  from: UnixTime,
+  to: UnixTime,
 ) {
-  return `
-SELECT
-  block_number,
-  to_address,
-  block_timestamp,
-  transaction_hash,
-FROM 
-  bigquery-public-data.crypto_ethereum.traces
-WHERE
-  call_type = 'call'  -- 'call' type indicates an internal call
-  AND status = 1  -- successful calls
-  AND block_timestamp >= TIMESTAMP("${startTimestamp}")
-  AND block_timestamp < TIMESTAMP("${endTimestamp}")
-  AND 
-  (
-${from_address
-  .map((address, i) => getBatch(address, to_address[i], i))
-  .join('\n')}
-  )
-ORDER BY 
-  block_timestamp ASC;
-  `
+  return [
+    'SELECT',
+    'block_number',
+    'from_address',
+    'to_address',
+    'block_timestamp',
+    'transaction_hash',
+    'FROM',
+    'bigquery-public-data.crypto_ethereum.traces',
+    'WHERE',
+    "call_type = 'call'",
+    'AND status = 1',
+    `AND block_timestamp >= TIMESTAMP('${from.toDate().toISOString()}')`,
+    `AND block_timestamp < TIMESTAMP('${to.toDate().toISOString()}')`,
+    'AND ',
+    '(',
+    ...senders.map((address, i) => getBatch(address, receivers[i], i)),
+    ')',
+    'ORDER BY ',
+    'block_timestamp ASC;',
+  ].join('\n')
 }
 
-function getBatch(from_address: string, to_address: string, i: number) {
+function getBatch(from: EthereumAddress, to: EthereumAddress, i: number) {
   let batch = ''
   if (i > 0) {
-    batch += ' OR\n'
+    batch += 'OR\n'
   }
-  batch += `    (from_address = LOWER('${from_address}')
-  AND to_address = LOWER('${to_address}'))`
+  batch += `(from_address = LOWER('${from.toLocaleLowerCase()}')
+AND to_address = LOWER('${to.toLocaleLowerCase()}'))`
   return batch
 }
