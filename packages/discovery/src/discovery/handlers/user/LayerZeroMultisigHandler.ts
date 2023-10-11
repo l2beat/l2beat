@@ -26,7 +26,7 @@ const SIGNER_KEY = '_signer'
 const FLAG_KEY = '_active'
 
 const UPDATE_QUORUM_EVENT_FRAGMENT = toEventFragment(
-  'event UpdateQuorum(uint64 _quorum);',
+  'event UpdateQuorum(uint64 _quorum)',
 )
 
 const QUORUM_KEY = '_quorum'
