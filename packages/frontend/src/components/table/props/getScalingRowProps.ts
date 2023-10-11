@@ -30,6 +30,7 @@ export function getScalingRowProps(
       ),
       href,
       'data-slug': entry.slug,
+      'data-non-filterable': true,
     }
   }
 

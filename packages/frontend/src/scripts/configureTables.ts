@@ -31,6 +31,9 @@ function rerenderRows(table: HTMLElement, slugs?: string[]) {
       if (!slug) {
         throw new Error('No slug found')
       }
+      if (row.dataset.nonFilterable) {
+        return
+      }
 
       if (slugs.includes(slug)) {
         row.classList.remove('hidden')
