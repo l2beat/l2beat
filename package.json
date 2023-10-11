@@ -55,6 +55,6 @@
   },
   "dependencies": {
     "@vercel/node": "^3.0.7",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^2.6.1"
   }
 }
