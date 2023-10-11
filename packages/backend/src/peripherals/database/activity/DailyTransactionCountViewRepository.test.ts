@@ -52,7 +52,7 @@ describe(DailyTransactionCountViewRepository.name, () => {
     expect(result).toEqual([])
   })
 
-  it('should return correct response for single project activities', async () => {
+  it('should return correct response for single project', async () => {
     await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_A, 0, 0, 1))
     await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_A, 1, 0, 2))
     await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_A, 2, 0, 3))
