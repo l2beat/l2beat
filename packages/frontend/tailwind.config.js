@@ -22,6 +22,7 @@ module.exports = {
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
+        900: '#131215',
       },
       zinc: {
         800: '#272A2F',
