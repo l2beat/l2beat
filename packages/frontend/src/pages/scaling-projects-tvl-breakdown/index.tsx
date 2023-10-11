@@ -22,7 +22,6 @@ export function getProjectTvlBreakdownPages(
     config.layer2s,
     pagesData.tvlApiResponse,
     pagesData.tvlBreakdownApiResponse,
-    config.features.buildAllProjectPages,
   )
 
   return included.map((project) => {
