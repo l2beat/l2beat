@@ -20,8 +20,8 @@ export async function up(knex: Knex) {
     table.integer('block_number').notNullable()
     table.string('tx_hash').notNullable()
     table.string('type').notNullable()
-    table.index(['project_id', 'timestamp'])
-    table.primary(['tx_hash'])
+
+    table.primary(['tx_hash', 'type'])
   })
 }
 

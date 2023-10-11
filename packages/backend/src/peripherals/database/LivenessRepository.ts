@@ -13,8 +13,7 @@ export interface LivenessRecord {
   type: LivenessType
 }
 
-export const SIX_HOURS = UnixTime.HOUR * 6
-
+// TODO: add index when we will write controler
 export class LivenessRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
