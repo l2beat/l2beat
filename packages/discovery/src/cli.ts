@@ -50,6 +50,7 @@ async function discover(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
+    chainConfig.etherscanUnsupported,
   )
   const configReader = new ConfigReader()
 

@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.13.1
+
+### Patch Changes
+
+- Pass the unsupported
+
 ## 0.13.0
 
 ### Minor Changes

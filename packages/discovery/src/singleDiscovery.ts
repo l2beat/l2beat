@@ -36,6 +36,7 @@ export async function singleDiscovery(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
+    chainConfig.etherscanUnsupported,
   )
   const blockNumber = await provider.getBlockNumber()
 
