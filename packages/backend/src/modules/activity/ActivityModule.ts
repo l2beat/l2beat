@@ -79,7 +79,7 @@ export function createActivityModule(
 
   return {
     routers: [activityV2Router],
-    // start,
+    start,
   }
 }
 
