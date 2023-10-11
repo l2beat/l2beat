@@ -9,12 +9,12 @@ import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureTables } from './configureTables'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
-import { configureTables } from './configureTables'
 
 configureDarkThemeToggle()
 configureSidebarMenu()

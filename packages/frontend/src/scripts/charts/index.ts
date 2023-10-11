@@ -1,7 +1,7 @@
 import { makeQuery } from '../query'
 import { ChartControls } from './ChartControls'
-import { ChartDataController } from './data-controller/ChartDataController'
 import { ChartSettingsManager } from './ChartSettings'
+import { ChartDataController } from './data-controller/ChartDataController'
 import { ChartRenderer } from './renderer/ChartRenderer'
 import { ChartViewController } from './view-controller/ChartViewController'
 
