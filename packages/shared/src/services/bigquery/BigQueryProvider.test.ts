@@ -1,7 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { BigQueryClient, TransferQueryParams } from './BigQueryClient'
 import { BigQueryProvider } from './BigQueryProvider'
 import { BigQueryWrapper } from './BigQueryWrapper'
 
