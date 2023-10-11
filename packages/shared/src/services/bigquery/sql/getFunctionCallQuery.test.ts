@@ -1,6 +1,6 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress, UnixTime } from '../types'
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 
 describe('getMethodQuery', () => {

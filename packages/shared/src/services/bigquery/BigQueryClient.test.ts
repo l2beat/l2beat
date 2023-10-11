@@ -27,14 +27,14 @@ describe('BigQueryClient', () => {
         block_number: 12345,
         from_address: transfersToQuery[0].from.toLocaleLowerCase(),
         to_address: transfersToQuery[0].to.toLocaleLowerCase(),
-        block_timestamp: '2022-01-01T00:00:00Z',
+        block_timestamp: { value: '2022-01-01T00:00:00Z' },
         transaction_hash: '0xabcdef1234567890',
       },
       {
         block_number: 12346,
         from_address: transfersToQuery[1].from.toLocaleLowerCase(),
         to_address: transfersToQuery[1].to.toLocaleLowerCase(),
-        block_timestamp: '2022-01-01T00:01:00Z',
+        block_timestamp: { value: '2022-01-01T00:01:00Z' },
         transaction_hash: '0x1234567890abcdef',
       },
     ]
@@ -57,7 +57,9 @@ describe('BigQueryClient', () => {
       ...transfer,
       from_address: EthereumAddress(transfer.from_address),
       to_address: EthereumAddress(transfer.to_address),
-      block_timestamp: UnixTime.fromDate(new Date(transfer.block_timestamp)),
+      block_timestamp: UnixTime.fromDate(
+        new Date(transfer.block_timestamp.value),
+      ),
     }))
 
     expect(results).toEqual(expected)
@@ -80,14 +82,14 @@ describe('BigQueryClient', () => {
         block_number: 12345,
         input: 'some input',
         to_address: functionCallsToQuery[0].address.toLocaleLowerCase(),
-        block_timestamp: '2022-01-01T00:00:00Z',
+        block_timestamp: { value: '2022-01-01T00:00:00Z' },
         transaction_hash: '0xabcdef1234567890',
       },
       {
         block_number: 12346,
         input: 'some other input',
         to_address: functionCallsToQuery[1].address.toLocaleLowerCase(),
-        block_timestamp: '2022-01-01T00:01:00Z',
+        block_timestamp: { value: '2022-01-01T00:01:00Z' },
         transaction_hash: '0x1234567890abcdef',
       },
     ]
@@ -109,7 +111,9 @@ describe('BigQueryClient', () => {
     const expected = bigQueryResponse.map((method) => ({
       ...method,
       to_address: EthereumAddress(method.to_address),
-      block_timestamp: UnixTime.fromDate(new Date(method.block_timestamp)),
+      block_timestamp: UnixTime.fromDate(
+        new Date(method.block_timestamp.value),
+      ),
     }))
 
     expect(results).toEqual(expected)

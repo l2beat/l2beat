@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '../types'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 export function getFunctionCallQuery(
   contracts: EthereumAddress[],

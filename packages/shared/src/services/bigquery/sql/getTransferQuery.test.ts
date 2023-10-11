@@ -1,6 +1,6 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress, UnixTime } from '../types'
 import { getTransferQuery } from './getTransferQuery'
 
 describe('getTransferQuery', () => {
@@ -12,10 +12,10 @@ describe('getTransferQuery', () => {
 
     const expectedQuery = [
       'SELECT',
-      'block_number',
-      'to_address',
-      'block_timestamp',
-      'transaction_hash',
+      'block_number,',
+      'to_address,',
+      'block_timestamp,',
+      'transaction_hash,',
       'FROM',
       'bigquery-public-data.crypto_ethereum.traces',
       'WHERE',
