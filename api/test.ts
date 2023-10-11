@@ -12,5 +12,5 @@ export default async function handler(
 
   const json: unknown = await res.json();
 
-  response.status(200).send(json);
+  response.status(200).json(json);
 }
