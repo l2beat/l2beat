@@ -22,17 +22,31 @@ export interface TvlData {
 }
 
 export function renderTvlHover(data: TvlData, useAltCurrency: boolean) {
+  const formattedUsd = formatCurrencyExactValue(data.usd, 'USD')
+  const formattedEth = formatCurrencyExactValue(data.eth, 'ETH')
   if (useAltCurrency) {
     return renderHover([
       renderDateRow(data.date),
-      renderCurrencyRow(data.eth, 'ETH'),
-      renderCurrencyRow(data.usd, 'USD'),
+      renderDetailedRow({
+        title: 'ETH',
+        value: formattedEth,
+      }),
+      renderDetailedRow({
+        title: 'USD',
+        value: formattedUsd,
+      }),
     ])
   } else {
     return renderHover([
       renderDateRow(data.date),
-      renderCurrencyRow(data.usd, 'USD'),
-      renderCurrencyRow(data.eth, 'ETH'),
+      renderDetailedRow({
+        title: 'USD',
+        value: formattedUsd,
+      }),
+      renderDetailedRow({
+        title: 'ETH',
+        value: formattedEth,
+      }),
     ])
   }
 }
@@ -62,23 +76,29 @@ export function renderDetailedTvlHover(
 
   return renderHover([
     renderDateRow(data.date),
-    renderDetailedRow('Total TVL', formatCurrency(total, currency)),
+    renderDetailedRow({
+      title: 'Total TVL',
+      value: formatCurrency(total, currency),
+    }),
     renderHorizontalSeparator(),
-    renderDetailedRow(
-      'Canonically Bridged',
-      formatCurrency(selectedCbv, currency),
-      'purpleCircle',
-    ),
-    renderDetailedRow(
-      'Externally Bridged',
-      formatCurrency(selectedEbv, currency),
-      'yellowTriangle',
-    ),
-    renderDetailedRow(
-      'Natively Minted',
-      formatCurrency(selectedNmv, currency),
-      'pinkSquare',
-    ),
+    renderDetailedRow({
+      title: 'Canonically Bridged',
+      shortTitle: 'Canonical',
+      value: formatCurrency(selectedCbv, currency),
+      icon: 'purpleCircle',
+    }),
+    renderDetailedRow({
+      title: 'Externally Bridged',
+      shortTitle: 'External',
+      value: formatCurrency(selectedEbv, currency),
+      icon: 'yellowTriangle',
+    }),
+    renderDetailedRow({
+      title: 'Natively Minted',
+      shortTitle: 'Native',
+      value: formatCurrency(selectedNmv, currency),
+      icon: 'pinkSquare',
+    }),
   ])
 }
 
@@ -100,24 +120,47 @@ export function renderActivityHover(
   includeEthereumTps: boolean,
   isAggregate: boolean,
 ) {
-  const projectTpsRow = renderDetailedRow(
-    `Project${isAggregate ? 's' : ''} avg. TPS`,
-    formatTps(data.tps),
-    'redCircle',
-  )
-  const ethTpsRow = renderDetailedRow(
-    'Ethereum avg. TPS',
-    formatTps(data.ethTps),
-    'blueSquare',
-  )
+  const projectTpsRow = renderDetailedRow({
+    title: `Project${isAggregate ? 's' : ''}`,
+    value: formatTps(data.tps),
+    icon: 'redCircle',
+  })
+  const ethTpsRow = renderDetailedRow({
+    title: 'Ethereum',
+    value: formatTps(data.ethTps),
+    icon: 'blueSquare',
+  })
   if (!includeEthereumTps) {
-    return renderHover([renderDateRow(data.date), projectTpsRow])
+    return renderHover([
+      renderDateRow(data.date),
+      renderDetailedRow({
+        title: 'Average TPS',
+      }),
+      renderHorizontalSeparator(),
+      projectTpsRow,
+    ])
   }
 
   if (data.tps > data.ethTps) {
-    return renderHover([renderDateRow(data.date), projectTpsRow, ethTpsRow])
+    return renderHover([
+      renderDateRow(data.date),
+      renderDetailedRow({
+        title: 'Average TPS',
+      }),
+      renderHorizontalSeparator(),
+      projectTpsRow,
+      ethTpsRow,
+    ])
   } else {
-    return renderHover([renderDateRow(data.date), ethTpsRow, projectTpsRow])
+    return renderHover([
+      renderDateRow(data.date),
+      renderDetailedRow({
+        title: 'Average TPS',
+      }),
+      renderHorizontalSeparator(),
+      ethTpsRow,
+      projectTpsRow,
+    ])
   }
 }
 
@@ -139,10 +182,20 @@ export function renderTokenTvlHover(
     regular: undefined,
   }
   const style = styles[tokenType]
+  const formattedUsd = formatCurrencyExactValue(data.usd, 'USD')
+  const formattedToken = formatCurrencyExactValue(data.token, tokenSymbol)
   return renderHover([
     renderDateRow(data.date),
-    renderCurrencyRow(data.token, tokenSymbol, style),
-    renderCurrencyRow(data.usd, 'USD', style ? 'gap' : undefined),
+    renderDetailedRow({
+      title: tokenSymbol,
+      value: formattedToken,
+      icon: isMobile() ? undefined : style,
+    }),
+    renderDetailedRow({
+      title: 'USD',
+      value: formattedUsd,
+      icon: isMobile() ? undefined : 'gap',
+    }),
   ])
 }
 
@@ -158,18 +211,31 @@ function renderHorizontalSeparator() {
   return `<hr class="w-full border-gray-200 dark:border-gray-650 md:border-t-1 my-1"/>`
 }
 
-function renderDetailedRow(
-  title: string,
-  value: string,
-  icon?: PointStyle | 'gap',
-) {
+interface DetailedRowProps {
+  title: string
+  shortTitle?: string
+  value?: string
+  icon?: PointStyle | 'gap'
+}
+
+function renderDetailedRow(props: DetailedRowProps) {
+  const shortTitleHtml = props.shortTitle
+    ? `<span class="text-gray-50 text-sm md:hidden">${props.shortTitle}</span>`
+    : ''
+
+  const valueHtml = props.value
+    ? `<span class="font-bold tabular-nums">${props.value}</span>`
+    : ''
   return `
     <div class="flex w-full justify-between items-center gap-2">
       <div>
-        ${renderIcon(icon)}
-        <span class="dark:text-gray-50 text-gray-700 text-sm">${title}</span>
+        ${renderIcon(props.icon)}
+        <span class="dark:text-gray-50 text-gray-700 text-sm ${
+          props.shortTitle ? 'hidden md:inline' : ''
+        }">${props.title}</span>
+        ${shortTitleHtml}
       </div>
-      <span class="font-bold">${value}</span>
+      ${valueHtml}
     </div>
   `
 }
@@ -181,19 +247,6 @@ function renderIcon(icon?: PointStyle | 'gap') {
   return icon
     ? `<div class="inline-block mr-1 relative -top-px ${POINT_CLASS_NAMES[icon]}"></div>`
     : ''
-}
-
-function renderCurrencyRow(
-  value: number,
-  ticker: string,
-  icon?: PointStyle | 'gap',
-) {
-  const formatted = formatCurrencyExactValue(value, ticker)
-  return `<div>
-    ${renderIcon(icon)}
-    <span class="font-bold">${formatted}</span>
-    <span>${ticker}</span>
-  </div>`
 }
 
 function renderNameRow(name: string) {
