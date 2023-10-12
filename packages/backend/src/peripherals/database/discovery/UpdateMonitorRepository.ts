@@ -61,7 +61,7 @@ export class UpdateMonitorRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('update_monitor').delete()
+    return knex('update_monitor').delete()
   }
 }
 
