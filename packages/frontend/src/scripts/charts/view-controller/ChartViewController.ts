@@ -65,7 +65,6 @@ export class ChartViewController {
   }
 
   setChartState(state: ChartState | null) {
-    console.log(state)
     this.chartState = state
     if (!state) {
       delete this.chart.dataset.state

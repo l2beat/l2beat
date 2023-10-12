@@ -11,14 +11,7 @@ interface Props {
 }
 
 export function ScalingRiskFilters({ items }: Props) {
-  const dataAvailability = uniq(
-    items.map((i) => {
-      if (i.dataAvailability.value === '') {
-        console.log(i)
-      }
-      return i.dataAvailability.value
-    }),
-  )
+  const dataAvailability = uniq(items.map((i) => i.dataAvailability.value))
     .sort()
     .map((val) => ({
       label: val,

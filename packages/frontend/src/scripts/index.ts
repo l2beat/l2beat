@@ -1,6 +1,7 @@
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureCharts } from './charts'
+import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
@@ -33,3 +34,4 @@ configureProjectFilters()
 configureMultipleEscrowsButton()
 configureRichSelects()
 configureTables()
+configureBridgesAndCombinedOnly()
