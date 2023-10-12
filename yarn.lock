@@ -6163,6 +6163,9 @@ eslint-module-utils@^2.7.4:
   dependencies:
     debug "^3.2.7"
 
+"eslint-plugin-custom-rules@file:./packages/backend/.eslint":
+  version "1.0.0"
+
 eslint-plugin-import@^2.27.5:
   version "2.27.5"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.27.5.tgz#876a6d03f52608a3e5bb439c2550588e51dd6c65"

@@ -4,7 +4,7 @@
 DO NOT EDIT OR RENAME THIS FILE
 
 This is a migration file. Once created the file should not be renamed or edited,
-because migrations are only run once on the production server. 
+because migrations are only run once on the production server.
 
 If you find that something was incorrectly set up in the `up` function you
 should create a new migration file that fixes the issue.
@@ -19,7 +19,7 @@ export async function up(knex: Knex) {
     .createTable('zksync', function (table) {
       table.integer('block_number').notNullable()
       table.integer('block_index').notNullable()
-      table.dateTime('unix_timestamp').notNullable()
+      table.dateTime('unix_timestamp', { useTz: false }).notNullable()
       table.primary(['block_number', 'block_index'])
     })
 }
