@@ -1,5 +1,4 @@
 import { branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export type BigQueryFunctionCallsResult = z.infer<
