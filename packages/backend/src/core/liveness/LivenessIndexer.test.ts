@@ -7,7 +7,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
-import { LivenessConfig, LivenessIndexer } from './LivenessIndexer'
+import { LivenessIndexer } from './LivenessIndexer'
+import { LivenessConfig } from './types/LivenessConfig'
 
 describe(LivenessIndexer.name, () => {
   it('should return valid data for transfers', async () => {
