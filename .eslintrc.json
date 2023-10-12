@@ -17,8 +17,15 @@
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["simple-import-sort", "no-only-tests", "unused-imports", "react"],
+  "plugins": [
+    "simple-import-sort",
+    "no-only-tests",
+    "unused-imports",
+    "react",
+    "prettier"
+  ],
   "rules": {
+    "prettier/prettier": "error",
     "@typescript-eslint/prefer-readonly": ["error"],
     "@typescript-eslint/ban-tslint-comment": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -27,15 +34,25 @@
     "@typescript-eslint/no-throw-literal": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
-      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
     ],
     "import/no-cycle": "error",
     "import/no-default-export": "error",
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": false }
+      {
+        "devDependencies": false
+      }
     ],
-    "import/no-unresolved": ["error", { "ignore": ["^knex/types/tables$"] }],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["^knex/types/tables$"]
+      }
+    ],
     "import/no-internal-modules": [
       "error",
       {
