@@ -34,6 +34,7 @@ import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
+import { opbnb } from './opbnb'
 import { optimism } from './optimism'
 import { palm } from './palm'
 import { polygonmiden } from './polygonmiden'
@@ -94,6 +95,7 @@ export const layer2s: Layer2[] = [
   obscuro,
   omgnetwork,
   optimism,
+  opbnb,
   palm,
   polygonmiden,
   polygonzkevm,
