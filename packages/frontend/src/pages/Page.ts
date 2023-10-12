@@ -20,9 +20,8 @@ export interface Wrapped<Props> {
 export interface WrapperProps {
   htmlClassName?: string
   metadata: PageMetadata
-  preloadApi?: string | string[]
+  preloadApi?: string
 }
-
 export interface PageMetadata {
   title: string
   description: string
