@@ -68,6 +68,7 @@ export const layer2s: Layer2[] = [
   base,
   bobanetwork,
   brine,
+  canto,
   capx,
   canvasconnect,
   honeypot,

@@ -21,7 +21,10 @@ export const canto: Layer2 = {
       documentation: ['https://docs.canto.io'],
       explorers: [],
       repositories: [],
-      socialMedia: ['https://twitter.com/CantoPublic', 'https://discord.gg/canto'],
+      socialMedia: [
+        'https://twitter.com/CantoPublic',
+        'https://discord.gg/canto',
+      ],
     },
   },
   stage: {
