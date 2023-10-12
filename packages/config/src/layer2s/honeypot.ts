@@ -7,7 +7,8 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   OPERATOR,
-  RISK_VIEW} from './common'
+  RISK_VIEW,
+} from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -47,7 +48,7 @@ export const honeypot: Layer2 = {
       rollupNodeSourceAvailable: true,
     },
     stage1: {
-      stateVerificationOnL1: false,
+      stateVerificationOnL1: [false, 'There is no onchain fraud proof system.'],
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
@@ -69,8 +70,11 @@ export const honeypot: Layer2 = {
     ],
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_NONE,
-    dataAvailability:  {
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      value: 'None',
+    },
+    dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
@@ -91,7 +95,7 @@ export const honeypot: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Honeypot DApp permits invalid state roots.',
+        'Ultimately, Cartesi DApps will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the Honeypot DApp permits invalid state roots. Since Honeypot is immutable, this feature will not be added to the DApp.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -135,23 +139,22 @@ export const honeypot: Layer2 = {
     addresses: [
       discovery.getContractDetails('Honeypot', {
         description:
-          'CartesiDApp instance for the Honeypot DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.'
+          'CartesiDApp instance for the Honeypot DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
       }),
       discovery.getContractDetails('InputBox', {
         description:
-          'Contract that receives arbitrary blobs as inputs to Cartesi DApps.'
+          'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
       }),
       discovery.getContractDetails('ERC20Portal', {
         description:
-          'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.'
+          'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.',
       }),
       discovery.getContractDetails('Authority', {
         description:
-          'Simple consensus model controlled by a single address, the owner.'
+          'Simple consensus model controlled by a single address, the owner.',
       }),
       discovery.getContractDetails('History', {
-        description:
-          'Contract that stores claims for Cartesi DApps.'
+        description: 'Contract that stores claims for Cartesi DApps.',
       }),
     ],
     risks: [],
