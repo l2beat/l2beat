@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
-import { BridgesTvlFilters } from '../../../components/table/filters/BridgesTvlFilters'
+import { BridgesFilters } from '../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesTvlColumns,
@@ -28,7 +28,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <BridgesTvlFilters items={items} />
+      <BridgesFilters items={items} />
       <Tabs
         items={[
           {

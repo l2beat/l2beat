@@ -2,15 +2,16 @@ import uniq from 'lodash/uniq'
 import React from 'react'
 
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
+import { ScalingEntry } from '../../../pages/scaling/types'
 import { RichSelect } from '../../RichSelect'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
 interface Props {
-  items: ScalingTvlViewEntry[]
+  items: ScalingEntry[]
 }
 
-export function ScalingTvlFilters({ items }: Props) {
+export function ScalingFilters({ items }: Props) {
   const providers = uniq(items.map((i) => i.provider))
     .sort()
     .map((p) => ({
@@ -18,11 +19,12 @@ export function ScalingTvlFilters({ items }: Props) {
       value: generateSlugList(items, (i) => i.provider === p),
     }))
 
-  const stages = uniq(items.map((i) => i.stage.stage))
+  const stages = uniq(items.map((i) => i.stage?.stage))
     .sort()
+    .filter(noUndefined)
     .map((stage) => ({
       label: stageLabel(stage),
-      value: generateSlugList(items, (i) => i.stage.stage === stage),
+      value: generateSlugList(items, (i) => i.stage?.stage === stage),
     }))
 
   return (
@@ -63,4 +65,8 @@ function stageLabel(stage: ScalingTvlViewEntry['stage']['stage']) {
     default:
       return stage
   }
+}
+
+function noUndefined<T>(x: T | undefined): x is T {
+  return x !== undefined
 }

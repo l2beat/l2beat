@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
-import { BridgesRiskFilters } from '../../../components/table/filters/BridgesRiskFilters'
+import { BridgesFilters } from '../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
 import { getBridgesRiskColumns } from '../../../components/table/props/getBridgesTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
@@ -25,7 +25,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <BridgesRiskFilters items={items} />
+      <BridgesFilters items={items} />
       <Tabs
         items={[
           {

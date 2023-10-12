@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, StageConfig } from '@l2beat/config'
 
 export interface ActivityViewEntry {
   name: string
@@ -16,4 +16,5 @@ export interface ActivityViewEntry {
   transactionsMonthlyCount: number | undefined
   maxTps?: number
   maxTpsDate?: string
+  stage?: StageConfig
 }

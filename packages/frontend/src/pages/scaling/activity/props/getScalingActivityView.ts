@@ -47,6 +47,7 @@ export function getScalingActivityViewEntry(
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
+    stage: project.stage,
     ...getActivityViewEntryDetails(data),
   }
 }

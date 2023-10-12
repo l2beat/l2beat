@@ -1,4 +1,4 @@
-import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
+import { Layer2, ProjectRiskViewEntry, StageConfig } from '@l2beat/config'
 
 export interface ScalingRiskViewEntry {
   name: string
@@ -15,4 +15,5 @@ export interface ScalingRiskViewEntry {
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
   proposerFailure: ProjectRiskViewEntry
+  stage: StageConfig
 }

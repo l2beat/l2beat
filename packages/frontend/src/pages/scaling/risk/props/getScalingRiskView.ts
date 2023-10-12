@@ -35,6 +35,7 @@ export function getScalingRiskViewEntry(
     isVerified,
     isUpcoming: project.isUpcoming,
     category: project.display.category,
+    stage: project.stage,
     ...project.riskView,
   }
 }

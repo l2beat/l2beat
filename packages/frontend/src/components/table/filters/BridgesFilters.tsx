@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
+import { BridgesEntry } from '../../../pages/bridges/types'
 import { IncludeLayer2sCheckbox } from './checkboxes/IncludeLayer2sCheckbox'
 import { FiltersWrapper } from './FiltersWrapper'
 
 interface Props {
-  items: BridgesRiskViewEntry[]
+  items: BridgesEntry[]
 }
 
-export function BridgesRiskFilters({ items }: Props) {
+export function BridgesFilters({ items }: Props) {
   return (
     <FiltersWrapper items={items}>
       <IncludeLayer2sCheckbox items={items} />
