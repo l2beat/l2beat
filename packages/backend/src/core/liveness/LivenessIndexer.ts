@@ -66,6 +66,51 @@ export class LivenessIndexer {
     })
     return results
   }
+
+  async fetchFunctionCalls(
+    configs: LivenessConfig[],
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<LivenessRecord[]> {
+    const functionCalls = configs
+      .flatMap((c) => c.functionCalls)
+      .filter(notEmpty)
+
+    const queryResults = await this.bigQueryClient.getFunctionCalls(
+      functionCalls,
+      from,
+      to,
+    )
+
+    const results: LivenessRecord[] = queryResults.map((r) => {
+      const project = configs.find((c) =>
+        c.functionCalls?.find(
+          (cc) =>
+            r.input.startsWith(cc.selector) && cc.address === r.to_address,
+        ),
+      )
+
+      assert(project, 'Programmer error: project should not be undefined there')
+
+      const call = functionCalls.find(
+        (t) => r.input.startsWith(t.selector) && t.address === r.to_address,
+      )
+
+      assert(
+        call,
+        'Programmer error: function call should not be undefined there',
+      )
+
+      return {
+        projectId: project.projectId,
+        timestamp: r.block_timestamp,
+        blockNumber: r.block_number,
+        txHash: r.transaction_hash,
+        type: call.type,
+      }
+    })
+    return results
+  }
 }
 
 function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
