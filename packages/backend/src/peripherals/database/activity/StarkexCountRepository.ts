@@ -43,7 +43,7 @@ export class StarkexTransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('activity.starkex').delete()
+    return knex('activity.starkex').delete()
   }
 
   async findLastTimestampByProjectId(

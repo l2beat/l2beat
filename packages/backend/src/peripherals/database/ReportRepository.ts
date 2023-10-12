@@ -90,7 +90,7 @@ export class ReportRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('reports').delete()
+    return knex('reports').delete()
   }
 
   /**
