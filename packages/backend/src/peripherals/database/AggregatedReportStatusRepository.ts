@@ -46,7 +46,7 @@ export class AggregatedReportStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('aggregated_reports_status').delete()
+    return knex('aggregated_reports_status').delete()
   }
 
   async findCountsForHash(
