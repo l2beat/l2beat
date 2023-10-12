@@ -1,13 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import fetch from "node-fetch";
+import { readdirSync } from "fs";
 // eslint-disable-next-line import/no-default-export
-export default async function handler(
+export default function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  const res = await fetch("/api/scaling-tvl.json");
+  const currentDir = readdirSync("./");
+  const currentDir2 = readdirSync(__dirname);
+  const prevDir = readdirSync("../");
+  const prevPrevDir = readdirSync("../../");
+  const prevPrevPrevDir = readdirSync("../../../");
 
-  const json = await res.json();
-
-  response.status(200).json(json);
+  response.status(200).json({
+    currentDir,
+    currentDir2,
+    prevDir,
+    prevPrevDir,
+    prevPrevPrevDir,
+  });
 }
