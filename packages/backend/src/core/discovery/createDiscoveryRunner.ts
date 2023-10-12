@@ -32,6 +32,7 @@ export function createDiscoveryRunner(
     provider,
     etherscanLikeClient,
     DiscoveryLogger.CLI,
+    chainConfig.rpcGetLogsMaxRange,
   )
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
