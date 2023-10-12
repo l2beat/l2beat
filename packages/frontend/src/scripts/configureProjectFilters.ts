@@ -1,3 +1,4 @@
+import intersection from 'lodash/intersection'
 import isEqual from 'lodash/isEqual'
 
 import { clearRichSelect, getRichSelectValue } from './configureRichSelect'
@@ -74,14 +75,8 @@ export function configureProjectFilters() {
   const selects = projectFilters.querySelectorAll<HTMLElement>('.RichSelect')
 
   const rerenderState = () => {
-    // TODO: (filter) Consider lodash intersection
-    const stateObj = Object.fromEntries(states)
-    const slugsToShow = Object.values(stateObj).reduce<string[]>(
-      (acc, curr) => {
-        return acc.filter((i) => curr.includes(i))
-      },
-      [...allProjectSlugs],
-    )
+    const stateValues = Array.from(states.values())
+    const slugsToShow = intersection(allProjectSlugs, ...stateValues)
 
     rerenderTables(slugsToShow)
     setFilteredSlugs(slugsToShow)
