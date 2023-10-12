@@ -53,9 +53,8 @@ export async function main() {
   )
 
   const projects = [...layer2s, ...bridges]
-  const previouslyVerified = await loadPreviouslyVerifiedContracts(
-    OUTPUT_FILEPATH,
-  )
+  const previouslyVerified =
+    await loadPreviouslyVerifiedContracts(OUTPUT_FILEPATH)
   const addresses = getUniqueContractsForAllProjects(projects)
   const etherscanClient = getEtherscanClient()
   const addressVerificationMap = await verifyContracts(

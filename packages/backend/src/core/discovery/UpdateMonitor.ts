@@ -65,9 +65,8 @@ export class UpdateMonitor {
 
     const metricsDone = this.initMetrics(blockNumber)
 
-    const projectConfigs = await this.configReader.readAllConfigsForChain(
-      chainId,
-    )
+    const projectConfigs =
+      await this.configReader.readAllConfigsForChain(chainId)
 
     this.logger.info('Update started', {
       chain: ChainId.getName(chainId),

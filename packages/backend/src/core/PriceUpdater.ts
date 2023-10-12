@@ -126,9 +126,8 @@ export class PriceUpdater {
     }
   }
   private getCoingeckoId(assetId: AssetId) {
-    const coingeckoId = this.tokens.find(
-      (token) => token.id === assetId,
-    )?.coingeckoId
+    const coingeckoId = this.tokens.find((token) => token.id === assetId)
+      ?.coingeckoId
     assert(coingeckoId, 'Incorrect asset ID')
 
     return coingeckoId

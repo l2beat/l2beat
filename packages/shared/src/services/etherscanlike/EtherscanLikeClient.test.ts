@@ -182,9 +182,8 @@ describe(EtherscanLikeClient.name, () => {
         'key',
         new UnixTime(0),
       )
-      const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
-        timestamp,
-      )
+      const blockNumber =
+        await arbiscanClient.getBlockNumberAtOrBefore(timestamp)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
