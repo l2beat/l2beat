@@ -49,7 +49,7 @@ export class TotalSupplyStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('total_supplies_status').delete()
+    return knex('total_supplies_status').delete()
   }
 
   async getBetween(

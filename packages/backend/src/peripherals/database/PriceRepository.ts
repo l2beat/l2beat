@@ -66,7 +66,7 @@ export class PriceRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('coingecko_prices').delete()
+    return knex('coingecko_prices').delete()
   }
 
   async findDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {

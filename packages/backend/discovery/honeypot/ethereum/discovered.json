@@ -1,12 +1,12 @@
 {
   "name": "honeypot",
   "chain": "ethereum",
-  "blockNumber": 18225466,
-  "configHash": "0xa45be7cfb15441962d3b0bb054e1866244e20e985c07c9619273f5649276e17c",
+  "blockNumber": 18226868,
+  "configHash": "0x739402fe6b9de3b16298e0e54274197fb71e0ee9fc59b37fc630845ff5bf8f97",
   "version": 2,
   "contracts": [
     {
-      "name": "CartesiDApp",
+      "name": "Honeypot",
       "address": "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
       "upgradeability": {
         "type": "immutable"
@@ -16,7 +16,8 @@
         "getConsensus": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
         "getTemplateHash": "0x64523866b6437fd593d8c0c65f88f59717f2eefa81422cc4921214423c819bf2",
         "owner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "CartesiDApp"
     },
     {
       "name": "History",
@@ -27,7 +28,8 @@
       "sinceTimestamp": 1694457347,
       "values": {
         "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
-      }
+      },
+      "derivedName": "History"
     },
     {
       "name": "InputBox",
@@ -35,7 +37,8 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1690464923
+      "sinceTimestamp": 1690464923,
+      "derivedName": "InputBox"
     },
     {
       "name": "ERC20Portal",
@@ -46,7 +49,8 @@
       "sinceTimestamp": 1690464947,
       "values": {
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
-      }
+      },
+      "derivedName": "ERC20Portal"
     },
     {
       "name": "Authority",
@@ -58,14 +62,11 @@
       "values": {
         "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
         "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
-      }
+      },
+      "derivedName": "Authority"
     }
   ],
-  "eoas": [
-    "0x70ac08179605AF2D9e75782b8DEcDD3c22aA4D0C",
-    "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
-    "0x8cA1c547AE4C1D1bb8296a5854c2c50192118E02"
-  ],
+  "eoas": ["0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"],
   "abis": {
     "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [
       "constructor(address _consensus, address _owner, bytes32 _templateHash)",

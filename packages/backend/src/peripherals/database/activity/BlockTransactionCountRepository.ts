@@ -43,7 +43,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('activity.block').delete()
+    return knex('activity.block').delete()
   }
 
   async findLastTimestampByProjectId(

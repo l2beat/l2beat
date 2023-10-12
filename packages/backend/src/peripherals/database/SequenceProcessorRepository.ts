@@ -34,7 +34,7 @@ export class SequenceProcessorRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('sequence_processor').delete()
+    return knex('sequence_processor').delete()
   }
 }
 

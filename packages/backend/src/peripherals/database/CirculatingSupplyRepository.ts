@@ -71,7 +71,7 @@ export class CirculatingSupplyRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('circulating_supplies').delete()
+    return knex('circulating_supplies').delete()
   }
 }
 
