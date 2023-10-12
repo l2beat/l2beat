@@ -1,5 +1,5 @@
 import { BigQueryClient } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessConfig } from './types/LivenessConfig'
@@ -16,7 +16,9 @@ export class LivenessIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const transfersConfig = configs.flatMap((c) => c.transfers).filter(notEmpty)
+    const transfersConfig = configs
+      .flatMap((c) => c.transfers)
+      .filter(notUndefined)
 
     const queryResults = await this.bigQueryClient.getTransfers(
       transfersConfig,
@@ -34,7 +36,7 @@ export class LivenessIndexer {
   ): Promise<LivenessRecord[]> {
     const functionCallsConfig = configs
       .flatMap((c) => c.functionCalls)
-      .filter(notEmpty)
+      .filter(notUndefined)
 
     const queryResults = await this.bigQueryClient.getFunctionCalls(
       functionCallsConfig,
@@ -48,8 +50,4 @@ export class LivenessIndexer {
       queryResults,
     )
   }
-}
-
-function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
-  return value !== null && value !== undefined
 }
