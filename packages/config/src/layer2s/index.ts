@@ -26,6 +26,7 @@ import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { linea } from './linea'
 import { loopring } from './loopring'
+import { lyrafinance } from './lyrafinance'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metis } from './metis'
@@ -86,6 +87,7 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   linea,
   loopring,
+  lyrafinance,
   mantapacific,
   mantle,
   metis,
