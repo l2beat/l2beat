@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-10-12T08:11:09.255Z",
+  "updatedAt": "2023-10-12T12:13:02.714Z",
   "projects": {
     "across-v2": true,
     "aevo": true,
@@ -16,6 +16,7 @@
     "beamer-bridge-v2": true,
     "bobanetwork": true,
     "brine": true,
+    "canto": true,
     "canvasconnect": true,
     "capx": true,
     "cbridge": true,
@@ -42,6 +43,7 @@
     "layer2financezk": false,
     "linea": true,
     "loopring": true,
+    "lyrafinance": true,
     "lzomnichain": false,
     "mantapacific": true,
     "mantle": true,
