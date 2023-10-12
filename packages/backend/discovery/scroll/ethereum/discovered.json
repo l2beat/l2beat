@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 18334258,
-  "configHash": "0xed35667a012a3208f35c1bb3c0872561a00a250f917216f615bd8d5225244b53",
+  "blockNumber": 18334305,
+  "configHash": "0xf4e238995172fc9704d4d7de04a9f58ff9e097fc701fadf6f7a751a70c10ad61",
   "version": 2,
   "contracts": [
     {
@@ -186,7 +186,7 @@
       },
       "sinceTimestamp": 1696782323,
       "values": {
-        "lastFinalizedBatchIndex": 214,
+        "lastFinalizedBatchIndex": 215,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",

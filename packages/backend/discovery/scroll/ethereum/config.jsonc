@@ -20,7 +20,7 @@
         "isMessageSkipped",
         "messageQueue"
       ],
-      "ignoreInWatchMode": ["nextCrossDomainMessageIndex", "pendinQueueIndex"]
+      "ignoreInWatchMode": ["nextCrossDomainMessageIndex", "pendingQueueIndex"]
     },
     "L1ScrollMessenger": {
       "ignoreMethods": ["prevReplayIndex"]
