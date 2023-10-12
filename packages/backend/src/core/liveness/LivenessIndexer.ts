@@ -4,14 +4,15 @@ import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessConfig } from './types/LivenessConfig'
 import {
-  formatFunctionCallsQueryResult,
-  formatTransfersQueryResult,
+  isTimestampInRange,
+  transformFunctionCallsQueryResult,
+  transformTransfersQueryResult,
 } from './utils'
 
 export class LivenessIndexer {
   constructor(private readonly bigQueryClient: BigQueryClient) {}
 
-  async fetchTransfers(
+  async getTransfers(
     configs: LivenessConfig[],
     from: UnixTime,
     to: UnixTime,
@@ -19,6 +20,7 @@ export class LivenessIndexer {
     const transfersConfig = configs
       .flatMap((c) => c.transfers)
       .filter(notUndefined)
+      .filter((c) => isTimestampInRange(c.untilTimestamp, from, to))
 
     const queryResults = await this.bigQueryClient.getTransfers(
       transfersConfig,
@@ -26,10 +28,10 @@ export class LivenessIndexer {
       to,
     )
 
-    return formatTransfersQueryResult(configs, transfersConfig, queryResults)
+    return transformTransfersQueryResult(configs, transfersConfig, queryResults)
   }
 
-  async fetchFunctionCalls(
+  async getFunctionCalls(
     configs: LivenessConfig[],
     from: UnixTime,
     to: UnixTime,
@@ -37,6 +39,7 @@ export class LivenessIndexer {
     const functionCallsConfig = configs
       .flatMap((c) => c.functionCalls)
       .filter(notUndefined)
+      .filter((c) => isTimestampInRange(c.untilTimestamp, from, to))
 
     const queryResults = await this.bigQueryClient.getFunctionCalls(
       functionCallsConfig,
@@ -44,7 +47,7 @@ export class LivenessIndexer {
       to,
     )
 
-    return formatFunctionCallsQueryResult(
+    return transformFunctionCallsQueryResult(
       configs,
       functionCallsConfig,
       queryResults,

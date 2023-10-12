@@ -1,35 +1,39 @@
-import { BigQueryTransfersResult } from '@l2beat/shared'
+import { BigQueryFunctionCallsResult } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
 import { LivenessConfig } from '../types/LivenessConfig'
 
-export function formatTransfersQueryResult(
+// TODO: add test for this function and transfers
+export function transformFunctionCallsQueryResult(
   configs: LivenessConfig[],
-  transfersConfig: LivenessConfig['transfers'],
-  queryResults: BigQueryTransfersResult,
+  functionCallsConfig: LivenessConfig['functionCalls'],
+  queryResults: BigQueryFunctionCallsResult,
 ): LivenessRecord[] {
   const results: LivenessRecord[] = queryResults.map((r) => {
     const project = configs.find((c) =>
-      c.transfers?.find(
-        (cc) => cc.from === r.from_address && cc.to === r.to_address,
+      c.functionCalls?.find(
+        (cc) => r.input.startsWith(cc.selector) && cc.address === r.to_address,
       ),
     )
 
     assert(project, 'Programmer error: project should not be undefined there')
 
-    const transfer = transfersConfig?.find(
-      (t) => t.from === r.from_address && t.to === r.to_address,
+    const call = functionCallsConfig?.find(
+      (t) => r.input.startsWith(t.selector) && t.address === r.to_address,
     )
 
-    assert(transfer, 'Programmer error: transfer should not be undefined there')
+    assert(
+      call,
+      'Programmer error: function call should not be undefined there',
+    )
 
     return {
       projectId: project.projectId,
       timestamp: r.block_timestamp,
       blockNumber: r.block_number,
       txHash: r.transaction_hash,
-      type: transfer.type,
+      type: call.type,
     }
   })
   return results
