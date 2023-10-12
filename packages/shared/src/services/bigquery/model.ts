@@ -8,12 +8,7 @@ export type BigQueryFunctionCallsResult = z.infer<
 export const BigQueryFunctionCallsResult = z
   .object({
     transaction_hash: z.string(),
-    transaction_hash: z.string(),
     block_number: z.number(),
-    block_timestamp: z
-      .object({ value: z.string() })
-      .transform((v) => UnixTime.fromDate(new Date(v.value))),
-    to_address: branded(z.string(), EthereumAddress),
     block_timestamp: z
       .object({ value: z.string() })
       .transform((v) => UnixTime.fromDate(new Date(v.value))),
@@ -24,16 +19,8 @@ export const BigQueryFunctionCallsResult = z
 
 export type BigQueryTransfersResult = z.infer<typeof BigQueryTransfersResult>
 export const BigQueryTransfersResult = z
-export type BigQueryTransfersResult = z.infer<typeof BigQueryTransfersResult>
-export const BigQueryTransfersResult = z
   .object({
     transaction_hash: z.string(),
-    block_number: z.number(),
-    block_timestamp: z
-      .object({ value: z.string() })
-      .transform((v) => UnixTime.fromDate(new Date(v.value))),
-    from_address: branded(z.string(), EthereumAddress),
-    to_address: branded(z.string(), EthereumAddress),
     block_number: z.number(),
     block_timestamp: z
       .object({ value: z.string() })

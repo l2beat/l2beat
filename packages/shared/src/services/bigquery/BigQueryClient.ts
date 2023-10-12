@@ -4,7 +4,6 @@ import { BigQueryProvider } from './BigQueryProvider'
 import { BigQueryFunctionCallsResult, BigQueryTransfersResult } from './model'
 import { getFunctionCallQuery } from './sql/getFunctionCallQuery'
 import { getTransferQuery } from './sql/getTransferQuery'
-import { BigQueryClient } from '.'
 
 export interface FunctionCallQueryParams {
   address: EthereumAddress
@@ -38,12 +37,7 @@ export class BigQueryClient {
     methods: FunctionCallQueryParams[],
     from: UnixTime,
     to: UnixTime,
-  async getFunctionCalls(
-    methods: FunctionCallQueryParams[],
-    from: UnixTime,
-    to: UnixTime,
   ) {
-    const addresses = methods.map((m) => m.address)
     const addresses = methods.map((m) => m.address)
     const methodSelectors = methods.map((m) => m.selector.toLowerCase())
 
