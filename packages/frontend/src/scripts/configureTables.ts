@@ -24,24 +24,21 @@ export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
 function rerenderRows(table: HTMLElement, slugs?: string[]) {
   const { $$ } = makeQuery(table)
   const rows = $$('tbody tr')
+  rows.forEach((row) => {
+    const slug = row.dataset.slug
+    if (!slug) {
+      throw new Error('No slug found')
+    }
+    if (row.dataset.nonFilterable) {
+      return
+    }
 
-  if (slugs) {
-    rows.forEach((row) => {
-      const slug = row.dataset.slug
-      if (!slug) {
-        throw new Error('No slug found')
-      }
-      if (row.dataset.nonFilterable) {
-        return
-      }
-
-      if (slugs.includes(slug)) {
-        row.classList.remove('hidden')
-      } else {
-        row.classList.add('hidden')
-      }
-    })
-  }
+    if (!slugs || slugs.includes(slug)) {
+      row.classList.remove('hidden')
+    } else {
+      row.classList.add('hidden')
+    }
+  })
 
   const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
   return rerenderIndexes(visibleRows)

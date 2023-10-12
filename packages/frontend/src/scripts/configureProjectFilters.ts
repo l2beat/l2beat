@@ -1,5 +1,4 @@
 import intersection from 'lodash/intersection'
-import isEqual from 'lodash/isEqual'
 
 import { clearRichSelect, getRichSelectValue } from './configureRichSelect'
 import { rerenderTable } from './configureTables'
@@ -13,14 +12,11 @@ export function configureProjectFilters() {
   if (!projectFilters) {
     return
   }
-  if (!projectFilters.dataset.allSlugs) {
-    throw new Error('No allSlugs found')
-  }
-  const resetButtons = $$('.ProjectFilters-ResetButton')
-  const allProjectSlugs = projectFilters.dataset.allSlugs.split(',')
 
-  const setFilteredSlugs = (slugs: string[]) => {
-    if (isEqual(slugs, allProjectSlugs)) {
+  const resetButtons = $$('.ProjectFilters-ResetButton')
+
+  const setFilteredSlugs = (slugs: string[] | null) => {
+    if (!slugs) {
       delete projectFilters.dataset.filteredSlugs
     } else {
       projectFilters.dataset.filteredSlugs = slugs.join(',')
@@ -76,7 +72,12 @@ export function configureProjectFilters() {
 
   const rerenderState = () => {
     const stateValues = Array.from(states.values())
-    const slugsToShow = intersection(allProjectSlugs, ...stateValues)
+    if (stateValues.length === 0) {
+      setFilteredSlugs(null)
+      rerenderTables()
+      return
+    }
+    const slugsToShow = intersection(...stateValues)
 
     rerenderTables(slugsToShow)
     setFilteredSlugs(slugsToShow)
@@ -98,7 +99,7 @@ export function configureProjectFilters() {
   selects.forEach((select) => configureRichSelect(select, select.id))
 }
 
-function rerenderTables(slugsToShow: string[]) {
+function rerenderTables(slugsToShow?: string[]) {
   const tablesToRerender =
     document.querySelectorAll<HTMLElement>(`[data-role="table"]`)
 

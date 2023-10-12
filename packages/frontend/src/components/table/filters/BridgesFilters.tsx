@@ -10,7 +10,7 @@ interface Props {
 
 export function BridgesFilters({ items }: Props) {
   return (
-    <FiltersWrapper items={items}>
+    <FiltersWrapper>
       <IncludeLayer2sCheckbox items={items} />
     </FiltersWrapper>
   )

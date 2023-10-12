@@ -48,8 +48,8 @@ export class ChartDataController {
       .then((data: unknown) => {
         this.parseAndConfigure(chartType, data)
         this.cache.set(url, data)
+        this.chartViewController.hideLoader()
       })
-      .finally(() => this.chartViewController.hideLoader())
   }
 
   private parseAndConfigure(chartType: ChartType, data: unknown) {

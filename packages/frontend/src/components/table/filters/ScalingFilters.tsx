@@ -28,7 +28,7 @@ export function ScalingFilters({ items }: Props) {
     }))
 
   return (
-    <FiltersWrapper items={items}>
+    <FiltersWrapper>
       <RollupsOnlyCheckbox items={items} />
       <RichSelect label="Select stack" id="stack-select">
         {providers.map((da) => (

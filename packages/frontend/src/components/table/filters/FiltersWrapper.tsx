@@ -3,21 +3,13 @@ import React from 'react'
 import { BridgesEntry } from '../../../pages/bridges/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 
-interface ProjectFilters<T extends ScalingEntry | BridgesEntry> {
-  items: T[]
+interface ProjectFilters {
   children: React.ReactNode
 }
 
-export function FiltersWrapper<T extends ScalingEntry | BridgesEntry>({
-  items,
-  children,
-}: ProjectFilters<T>) {
+export function FiltersWrapper({ children }: ProjectFilters) {
   return (
-    <div
-      id="project-filters"
-      className="flex flex-wrap gap-4"
-      data-all-slugs={generateSlugList(items)}
-    >
+    <div id="project-filters" className="flex flex-wrap gap-4">
       {children}
     </div>
   )
