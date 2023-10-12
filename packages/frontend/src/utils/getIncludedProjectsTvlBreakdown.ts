@@ -11,12 +11,7 @@ export function getIncludedProjectsTvlBreakdown<
   projects: T[],
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
-  buildAllProjectPages = false,
 ) {
-  if (buildAllProjectPages) {
-    return projects
-  }
-
   const included = projects
     .filter((x) => !x.isUpcoming)
     .filter(
@@ -25,10 +20,6 @@ export function getIncludedProjectsTvlBreakdown<
         // eslint-disable-next-line
         !!tvlBreakdownApiResponse.breakdowns[x.id.toString()],
     )
-
-  if (projects.every((x) => x.type === 'layer2')) {
-    included.push(...projects.filter((x) => x.isUpcoming))
-  }
 
   return included
 }
