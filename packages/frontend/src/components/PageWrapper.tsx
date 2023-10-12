@@ -22,7 +22,7 @@ export function PageWrapper(props: PageWrapperProps) {
       )}
     >
       <Head {...props.metadata} preloadApi={props.preloadApi} />
-      <body className="bg-white text-black dark:bg-black dark:text-white">
+      <body className="bg-white text-black dark:bg-neutral-900 dark:text-white">
         {props.children}
         <Tooltip />
         <script src="/scripts/main.js" />

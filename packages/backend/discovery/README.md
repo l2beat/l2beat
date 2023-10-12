@@ -1,7 +1,7 @@
 # How to run discovery?
 
 - `yarn discover [chain] [project]` run discovery for the project
-- `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [chain] [project]` run discovery on a specific block number
+- `yarn discover [chain] [project] --block-number=<block_number>` run discovery on a specific block number
 - `yarn discover [chain] [project] --dry-run` check simulated update-monitor output
 - `yarn discover [chain] [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
 - `yarn invert [chain] [project]` print addresses and their functions
@@ -499,13 +499,3 @@ Assumes there is `event AddInboundProofLibraryForChain(uint16 chainId, address l
 ## Cache
 
 Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
-
-### env variable
-
-Set the proper environmental variable to prevent script from fetching the same data multiple times:
-
-`DISCOVERY_BLOCK_NUMBER`- overrides the block number used during local discovery
-
-### proposed usage
-
-`DISCOVERY_BLOCK_NUMBER=<block_number> y discover <project>`

@@ -1,22 +1,28 @@
+import { branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export type LivenessMethodsQuery = z.infer<typeof LivenessMethodsQuery>
-export const LivenessMethodsQuery = z
+export type BigQueryMethodsResult = z.infer<typeof BigQueryMethodsResult>
+export const BigQueryMethodsResult = z
   .object({
-    block_number: z.number(),
-    input: z.string(),
-    to_address: z.string(),
-    block_timestamp: z.string(),
     transaction_hash: z.string(),
+    block_number: z.number(),
+    block_timestamp: z
+      .object({ value: z.string() })
+      .transform((v) => UnixTime.fromDate(new Date(v.value))),
+    to_address: branded(z.string(), EthereumAddress),
+    input: z.string(),
   })
   .array()
 
-export type LivenessTransfersQuery = z.infer<typeof LivenessTransfersQuery>
-export const LivenessTransfersQuery = z
+export type BigQueryTransfersResult = z.infer<typeof BigQueryTransfersResult>
+export const BigQueryTransfersResult = z
   .object({
-    block_number: z.number(),
-    to_address: z.string(),
-    block_timestamp: z.string(),
     transaction_hash: z.string(),
+    block_number: z.number(),
+    block_timestamp: z
+      .object({ value: z.string() })
+      .transform((v) => UnixTime.fromDate(new Date(v.value))),
+    from_address: branded(z.string(), EthereumAddress),
+    to_address: branded(z.string(), EthereumAddress),
   })
   .array()
