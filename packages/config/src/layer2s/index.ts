@@ -87,6 +87,7 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   linea,
   loopring,
+  lyrafinance,
   mantapacific,
   mantle,
   metis,
