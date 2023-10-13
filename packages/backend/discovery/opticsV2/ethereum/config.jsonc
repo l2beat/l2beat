@@ -42,16 +42,16 @@
       }
     },
     "BridgeUpgradeBeacon": {
-      "proxyType": "Optics Upgrade Beacon"
+      "proxyType": "immutable"
     },
     "ReplicaUpgradeBeacon": {
-      "proxyType": "Optics Upgrade Beacon"
+      "proxyType": "immutable"
     },
     "HomeUpgradeBeacon": {
-      "proxyType": "Optics Upgrade Beacon"
+      "proxyType": "immutable"
     },
     "GovernanceUpgradeBeacon": {
-      "proxyType": "Optics Upgrade Beacon"
+      "proxyType": "immutable"
     },
     "XAppConnectionManager": {
       "fields": {
