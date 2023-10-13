@@ -22,9 +22,17 @@ export function createActivityRouter(activityController: ActivityController) {
       }),
       async (ctx) => {
         const projectSlugs = ctx.query.projectSlugs
-        const data = await activityController.getProjectsActivity(
-          projectSlugs.split(',').map((slug) => slug.trim()),
-        )
+          .split(',')
+          .map((slug) => slug.trim())
+
+        if (projectSlugs.length === 0) {
+          ctx.body = {
+            result: 'error',
+            error: 'EMPTY_SLUG',
+          }
+        }
+
+        const data = await activityController.getProjectsActivity(projectSlugs)
         ctx.body = data
       },
     ),
