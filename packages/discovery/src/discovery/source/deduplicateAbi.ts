@@ -15,14 +15,14 @@ export function deduplicateAbi(abis: string[]): string[] {
   return [...result.values()].sort()
 }
 
-function getSignature(fragment: utils.Fragment): string {
+export function getSignature(fragment: utils.Fragment): string {
   if (fragment.type === 'constructor') {
     return 'constructor'
   }
   return `${fragment.type} ${fragment.format()}`
 }
 
-function makeFragment(entry: string): utils.Fragment | null {
+export function makeFragment(entry: string): utils.Fragment | null {
   try {
     // this value can actually also be null because ethers lies
     return utils.Fragment.from(entry)

@@ -1,5 +1,16 @@
 # @l2beat/discovery
 
+## 0.15.0
+
+### Minor Changes
+
+- Add quick mode (hasOutputChanged)
+
+### Patch Changes
+
+- Updated dependencies
+  - @l2beat/discovery-types@0.4.0
+
 ## 0.14.3
 
 ### Patch Changes

@@ -41,6 +41,10 @@ export function processAnalysis(
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
           upgradeability: x.upgradeability,
+          implementations:
+            Object.keys(x.implementations).length === 0
+              ? undefined
+              : x.implementations,
           sinceTimestamp: x.deploymentTimestamp?.toNumber(),
           values: Object.keys(x.values).length === 0 ? undefined : x.values,
           errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,

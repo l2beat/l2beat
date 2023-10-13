@@ -69,6 +69,7 @@ describe(processAnalysis.name, () => {
       admin: ADDRESS_D,
       implementation: ADDRESS_E,
     },
+    implementations: [ADDRESS_E],
     values: {
       foo: 'foo',
       bar: 'bar',
@@ -150,6 +151,7 @@ describe(processAnalysis.name, () => {
           name: 'C',
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
           upgradeability: CONTRACT_C.upgradeability,
+          implementations: CONTRACT_C.implementations,
           values: CONTRACT_C.values,
         },
       ],
@@ -191,6 +193,7 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_C,
           name: 'C',
           upgradeability: CONTRACT_C.upgradeability,
+          implementations: CONTRACT_C.implementations,
           values: CONTRACT_C.values,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },

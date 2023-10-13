@@ -1,3 +1,5 @@
+import { DiscoveryOutput } from '@l2beat/discovery-types'
+
 import { AddressAnalyzer, Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryLogger } from '../DiscoveryLogger'
@@ -7,8 +9,8 @@ import { shouldSkip } from './shouldSkip'
 // Bump this value when the logic of discovery changes,
 // causing a difference in discovery output
 
-// Last change: removed `code` key from the output
-export const DISCOVERY_LOGIC_VERSION = 2
+// Last change: add implementations to the output
+export const DISCOVERY_LOGIC_VERSION = 3
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -49,6 +51,46 @@ export class DiscoveryEngine {
     this.checkErrors(resolved)
 
     return resolved
+  }
+
+  async hasOutputChanged(
+    config: DiscoveryConfig,
+    prevOutput: DiscoveryOutput,
+    blockNumber: number,
+  ): Promise<boolean> {
+    const contracts = prevOutput.contracts
+
+    const contractsChanged = await Promise.all(
+      contracts.map(async (contract) => {
+        const overrides = config.overrides.get(contract.address)
+
+        return await this.addressAnalyzer.hasContractChanged(
+          contract,
+          overrides,
+          blockNumber,
+          prevOutput.abis,
+        )
+      }),
+    )
+
+    if (contractsChanged.some((x) => x)) {
+      this.logger.log('Some contracts changed')
+      return true
+    }
+
+    const eoas = prevOutput.eoas
+    const eoasChanged = await Promise.all(
+      eoas.map(async (eoa) => {
+        return await this.addressAnalyzer.hasEoaBecomeContract(eoa, blockNumber)
+      }),
+    )
+
+    if (eoasChanged.some((x) => x)) {
+      this.logger.log('Some EOAs became contracts')
+      return true
+    }
+
+    return false
   }
 
   private checkErrors(resolved: Analysis[]): void {

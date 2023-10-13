@@ -20,6 +20,7 @@ export interface ContractParameters {
   sinceTimestamp?: number
   address: EthereumAddress
   upgradeability: UpgradeabilityParameters
+  implementations?: EthereumAddress[]
   values?: Record<string, ContractValue>
   errors?: Record<string, string>
 }

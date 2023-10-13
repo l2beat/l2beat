@@ -1,7 +1,10 @@
+import { assert } from '@l2beat/backend-tools'
 import {
+  ContractParameters,
   ContractValue,
   UpgradeabilityParameters,
 } from '@l2beat/discovery-types'
+import { isEqual } from 'lodash'
 
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { UnixTime } from '../../utils/UnixTime'
@@ -102,4 +105,80 @@ export class AddressAnalyzer {
       ),
     }
   }
+
+  async hasContractChanged(
+    contract: ContractParameters,
+    overrides: ContractOverrides,
+    blockNumber: number,
+    abis: Record<string, string[]>,
+  ): Promise<boolean> {
+    if (contract.unverified) {
+      // Check if the contract is verified now
+      const { isVerified } = await this.sourceCodeService.getSources(
+        contract.address,
+        contract.implementations,
+      )
+      return isVerified
+    }
+
+    const abi = this.sourceCodeService.getRelevantAbi(
+      abis,
+      contract.address,
+      contract.implementations,
+      overrides.ignoreInWatchMode,
+    )
+
+    const { values: newValues, errors } = await this.handlerExecutor.execute(
+      contract.address,
+      abi,
+      overrides,
+      blockNumber,
+    )
+
+    assert(
+      errors === undefined || Object.keys(errors).length === 0,
+      'Errors during watch mode',
+    )
+
+    const prevRelevantValues = getRelevantValues(
+      contract.values ?? {},
+      overrides.ignoreInWatchMode ?? [],
+    )
+
+    if (!isEqual(newValues, prevRelevantValues)) {
+      this.logger.log(
+        `Some values changed on contract ${
+          contract.name
+        }(${contract.address.toString()})})`,
+      )
+      return true
+    }
+
+    return false
+  }
+
+  async hasEoaBecomeContract(
+    address: EthereumAddress,
+    blockNumber: number,
+  ): Promise<boolean> {
+    const code = await this.provider.getCode(address, blockNumber)
+    if (code.length > 0) {
+      this.logger.log(`EOA ${address.toString()} became a contract`)
+      return true
+    }
+
+    return false
+  }
+}
+
+function getRelevantValues(
+  contractValues: Record<string, ContractValue | undefined>,
+  ignoreInWatchMode: string[],
+): Record<string, ContractValue | undefined> {
+  return Object.keys(contractValues)
+    .filter((key) => !ignoreInWatchMode.includes(key))
+    .reduce((obj: Record<string, ContractValue | undefined>, key: string) => {
+      obj[key] = contractValues[key]
+      return obj
+    }, {})
 }
