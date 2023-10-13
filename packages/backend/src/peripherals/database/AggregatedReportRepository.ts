@@ -18,6 +18,30 @@ export interface AggregatedReportRecord {
   reportType: AggregatedReportType
 }
 
+interface CombinedAggregatedRow {
+  unix_timestamp: Date
+  cbv_usd_value: bigint
+  cbv_eth_value: bigint
+  ebv_usd_value: bigint
+  ebv_eth_value: bigint
+  nmv_usd_value: bigint
+  nmv_eth_value: bigint
+  tvl_usd_value: bigint
+  tvl_eth_value: bigint
+}
+
+interface CombinedAggregatedRecord {
+  timestamp: UnixTime
+  cbvUsdValue: bigint
+  cbvEthValue: bigint
+  ebvUsdValue: bigint
+  ebvEthValue: bigint
+  nmvUsdValue: bigint
+  nmvEthValue: bigint
+  tvlUsdValue: bigint
+  tvlEthValue: bigint
+}
+
 export class AggregatedReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -91,13 +115,13 @@ export class AggregatedReportRepository extends BaseRepository {
   async getAggregateHourly(projectIds: ProjectId[], from: UnixTime) {
     const knex = await this.knex()
 
-    const rows = await knex('aggregated_reports')
+    const rows = (await knex('aggregated_reports')
       .select('unix_timestamp')
       .select(AGGREGATED_SUM_QUERIES.map((q) => knex.raw(q)))
       .whereIn('project_id', projectIds)
       .where('unix_timestamp', '>=', from.toDate())
       .groupBy('unix_timestamp')
-      .orderBy('unix_timestamp', 'desc')
+      .orderBy('unix_timestamp', 'asc')) as unknown as CombinedAggregatedRow[]
 
     return rows.map((row) => toAggregatedRow(row))
   }
@@ -105,14 +129,14 @@ export class AggregatedReportRepository extends BaseRepository {
   async getAggregateSixHourly(projectIds: ProjectId[], from: UnixTime) {
     const knex = await this.knex()
 
-    const rows = await knex('aggregated_reports')
+    const rows = (await knex('aggregated_reports')
       .select('unix_timestamp')
       .select(AGGREGATED_SUM_QUERIES.map((q) => knex.raw(q)))
       .whereIn('project_id', projectIds)
       .where('unix_timestamp', '>=', from.toDate())
       .whereRaw('EXTRACT(hour FROM unix_timestamp) % 6 = 0')
       .groupBy('unix_timestamp')
-      .orderBy('unix_timestamp', 'desc')
+      .orderBy('unix_timestamp', 'asc')) as unknown as CombinedAggregatedRow[]
 
     return rows.map((row) => toAggregatedRow(row))
   }
@@ -120,13 +144,13 @@ export class AggregatedReportRepository extends BaseRepository {
   async getAggregateDaily(projectIds: ProjectId[]) {
     const knex = await this.knex()
 
-    const rows = await knex('aggregated_reports')
+    const rows = (await knex('aggregated_reports')
       .select('unix_timestamp')
       .select(AGGREGATED_SUM_QUERIES.map((q) => knex.raw(q)))
       .whereIn('project_id', projectIds)
       .whereRaw('EXTRACT(hour FROM unix_timestamp) = 0')
       .groupBy('unix_timestamp')
-      .orderBy('unix_timestamp', 'desc')
+      .orderBy('unix_timestamp', 'asc')) as unknown as CombinedAggregatedRow[]
 
     return rows.map((row) => toAggregatedRow(row))
   }
@@ -200,42 +224,16 @@ function toRecord(row: AggregatedReportRow): AggregatedReportRecord {
   }
 }
 
-function toAggregatedRow(row: Pick<AggregatedReportRow, 'unix_timestamp'>): {
-  timestamp: UnixTime
-  cbvUsdValue: bigint
-  cbvEthValue: bigint
-  ebvUsdValue: bigint
-  ebvEthValue: bigint
-  nmvUsdValue: bigint
-  nmvEthValue: bigint
-  tvlUsdValue: bigint
-  tvlEthValue: bigint
-} {
+function toAggregatedRow(row: CombinedAggregatedRow): CombinedAggregatedRecord {
   return {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     cbvUsdValue: BigInt(row.cbv_usd_value),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     cbvEthValue: BigInt(row.cbv_eth_value),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     ebvUsdValue: BigInt(row.ebv_usd_value),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     ebvEthValue: BigInt(row.ebv_eth_value),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     nmvUsdValue: BigInt(row.nmv_usd_value),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     nmvEthValue: BigInt(row.nmv_eth_value),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     tvlUsdValue: BigInt(row.tvl_usd_value),
-    // @ts-expect-error not typed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     tvlEthValue: BigInt(row.tvl_eth_value),
   }
 }
