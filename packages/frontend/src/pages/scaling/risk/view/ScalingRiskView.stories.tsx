@@ -54,6 +54,7 @@ const meta = {
             'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
           sentiment: 'warning',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Polygon Hermez',
@@ -95,6 +96,7 @@ const meta = {
             'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
           sentiment: 'warning',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'ZKSwap 2.0',
@@ -136,6 +138,7 @@ const meta = {
             'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
           sentiment: 'warning',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Gluon',
@@ -177,6 +180,7 @@ const meta = {
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
           sentiment: 'good',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'OMG Network',
@@ -217,6 +221,7 @@ const meta = {
             'Users are able to exit the system. The details are unknown.',
           sentiment: 'warning',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'L2.Finance-zk',
@@ -258,6 +263,7 @@ const meta = {
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
           sentiment: 'good',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Arbitrum One',
@@ -301,6 +307,7 @@ const meta = {
             'Anyone can become a Validator after approximately 7 days (45818 blocks) of inactivity from the currently whitelisted Validators.',
           sentiment: 'good',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Optimism',
@@ -344,6 +351,7 @@ const meta = {
             'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
           sentiment: 'bad',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'dYdX',
@@ -384,6 +392,7 @@ const meta = {
             'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
           sentiment: 'good',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'zkSync Era',
@@ -425,6 +434,7 @@ const meta = {
             'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
           sentiment: 'bad',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Metis Andromeda',
@@ -468,6 +478,7 @@ const meta = {
             'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
           sentiment: 'bad',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Loopring',
@@ -511,6 +522,7 @@ const meta = {
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
           sentiment: 'good',
         },
+        stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Immutable X',
@@ -551,6 +563,7 @@ const meta = {
             'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
           sentiment: 'good',
         },
+        stage: { stage: 'NotApplicable' },
       },
     ],
   },
