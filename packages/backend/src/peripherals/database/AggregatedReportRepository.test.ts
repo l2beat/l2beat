@@ -23,6 +23,163 @@ describe(AggregatedReportRepository.name, () => {
     await repository.deleteAll()
   })
 
+  describe(AggregatedReportRepository.prototype.getAggregateDaily.name, () => {
+    it.only('works', async () => {
+      const DAY_ONE = UnixTime.now().toStartOf('day')
+      const DAY_TWO = DAY_ONE.add(1, 'days')
+      const PROJECT_A = ProjectId('project-a')
+      const PROJECT_B = ProjectId('project-b')
+
+      const reports: AggregatedReportRecord[] = [
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_A,
+          usdValue: 100n,
+          ethValue: 100_000n,
+          reportType: 'TVL',
+        },
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_A,
+          usdValue: 50n,
+          ethValue: 50_000n,
+          reportType: 'CBV',
+        },
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_A,
+          usdValue: 20n,
+          ethValue: 20_000n,
+          reportType: 'EBV',
+        },
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_A,
+          usdValue: 30n,
+          ethValue: 30_000n,
+          reportType: 'NMV',
+        },
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_B,
+          usdValue: 100n,
+          ethValue: 100_000n,
+          reportType: 'TVL',
+        },
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_B,
+          usdValue: 50n,
+          ethValue: 50_000n,
+          reportType: 'CBV',
+        },
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_B,
+          usdValue: 20n,
+          ethValue: 20_000n,
+          reportType: 'EBV',
+        },
+        {
+          timestamp: DAY_ONE,
+          projectId: PROJECT_B,
+          usdValue: 30n,
+          ethValue: 30_000n,
+          reportType: 'NMV',
+        },
+      ]
+
+      const reports2: AggregatedReportRecord[] = [
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_A,
+          usdValue: 100n,
+          ethValue: 100_000n,
+          reportType: 'TVL',
+        },
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_A,
+          usdValue: 50n,
+          ethValue: 50_000n,
+          reportType: 'CBV',
+        },
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_A,
+          usdValue: 20n,
+          ethValue: 20_000n,
+          reportType: 'EBV',
+        },
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_A,
+          usdValue: 30n,
+          ethValue: 30_000n,
+          reportType: 'NMV',
+        },
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_B,
+          usdValue: 100n,
+          ethValue: 100_000n,
+          reportType: 'TVL',
+        },
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_B,
+          usdValue: 50n,
+          ethValue: 50_000n,
+          reportType: 'CBV',
+        },
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_B,
+          usdValue: 20n,
+          ethValue: 20_000n,
+          reportType: 'EBV',
+        },
+        {
+          timestamp: DAY_TWO,
+          projectId: PROJECT_B,
+          usdValue: 30n,
+          ethValue: 30_000n,
+          reportType: 'NMV',
+        },
+      ]
+
+      await repository.addOrUpdateMany(reports)
+      await repository.addOrUpdateMany(reports2)
+
+      const result = await repository.getAggregateDaily([PROJECT_A, PROJECT_B])
+
+      expect(result).toEqual([
+        {
+          timestamp: DAY_TWO,
+          tvlUsdValue: 2n * 100n,
+          tvlEthValue: 2n * 100_000n,
+          cbvUsdValue: 2n * 50n,
+          cbvEthValue: 2n * 50_000n,
+          ebvUsdValue: 2n * 20n,
+          ebvEthValue: 2n * 20_000n,
+          nmvUsdValue: 2n * 30n,
+          nmvEthValue: 2n * 30_000n,
+        },
+        {
+          timestamp: DAY_ONE,
+          tvlUsdValue: 2n * 100n,
+          tvlEthValue: 2n * 100_000n,
+          cbvUsdValue: 2n * 50n,
+          cbvEthValue: 2n * 50_000n,
+          ebvUsdValue: 2n * 20n,
+          ebvEthValue: 2n * 20_000n,
+          nmvUsdValue: 2n * 30n,
+          nmvEthValue: 2n * 30_000n,
+        },
+      ])
+    })
+  })
+
   describe(AggregatedReportRepository.prototype.getDaily.name, () => {
     it('returns only full days', async () => {
       const REPORT = fakeAggregateReport({ timestamp: TIME_0 })

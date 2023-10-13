@@ -24,6 +24,247 @@ export class AggregatedReportRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AggregatedReportRepository>>(this)
   }
 
+  async getAggregateSixHourly(projectIds: ProjectId[], from: UnixTime) {
+    const knex = await this.knex()
+
+    const rows = await knex('aggregated_reports')
+      .select('unix_timestamp')
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'CBV' THEN usd_value ELSE 0 END as cbv_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'CBV' THEN eth_value ELSE 0 END as cbv_eth_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'EBV' THEN usd_value ELSE 0 END as ebv_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'EBV' THEN eth_value ELSE 0 END as ebv_eth_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'NMV' THEN usd_value ELSE 0 END as nmv_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'NMV' THEN eth_value ELSE 0 END as nmv_eth_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'TVL' THEN usd_value ELSE 0 END as tvl_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'TVL' THEN eth_value ELSE 0 END as tvl_eth_value",
+        ),
+      )
+      .whereIn(
+        'project_id',
+        projectIds.map((p) => p.toString()),
+      )
+      .whereRaw('EXTRACT(hour FROM unix_timestamp) % 6 = 0')
+      .where('unix_timestamp', '>=', from.toDate())
+      .groupBy('unix_timestamp')
+      .orderBy('unix_timestamp', 'desc')
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.unix_timestamp),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      cbvUsdValue: BigInt(row.cbv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      cbvEthValue: BigInt(row.cbv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      ebvUsdValue: BigInt(row.ebv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      ebvEthValue: BigInt(row.ebv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      nmvUsdValue: BigInt(row.nmv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      nmvEthValue: BigInt(row.nmv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      tvlUsdValue: BigInt(row.tvl_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      tvlEthValue: BigInt(row.tvl_eth_value),
+    }))
+  }
+
+  async getAggregateDaily(projectIds: ProjectId[]) {
+    const knex = await this.knex()
+
+    const rows = await knex('aggregated_reports')
+      .select('unix_timestamp')
+      .select([
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN usd_value ELSE 0 END) as cbv_usd_value',
+          ['CBV'],
+        ),
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN eth_value ELSE 0 END) as cbv_eth_value',
+          ['CBV'],
+        ),
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN usd_value ELSE 0 END) as ebv_usd_value',
+          ['EBV'],
+        ),
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN eth_value ELSE 0 END) as ebv_eth_value',
+          ['EBV'],
+        ),
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN usd_value ELSE 0 END) as nmv_usd_value',
+          ['NMV'],
+        ),
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN eth_value ELSE 0 END) as nmv_eth_value',
+          ['NMV'],
+        ),
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN usd_value ELSE 0 END) as tvl_usd_value',
+          ['TVL'],
+        ),
+        knex.raw(
+          'SUM(CASE WHEN report_type = ? THEN eth_value ELSE 0 END) as tvl_eth_value',
+          ['TVL'],
+        ),
+      ])
+      .whereIn(
+        'project_id',
+        projectIds.map((p) => p.toString()),
+      )
+      .whereRaw('EXTRACT(hour FROM unix_timestamp) = 0')
+      .groupBy('unix_timestamp')
+      .orderBy('unix_timestamp', 'desc')
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.unix_timestamp),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      cbvUsdValue: BigInt(row.cbv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      cbvEthValue: BigInt(row.cbv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      ebvUsdValue: BigInt(row.ebv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      ebvEthValue: BigInt(row.ebv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      nmvUsdValue: BigInt(row.nmv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      nmvEthValue: BigInt(row.nmv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      tvlUsdValue: BigInt(row.tvl_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      tvlEthValue: BigInt(row.tvl_eth_value),
+    }))
+  }
+
+  async getAggregateHourly(projectIds: ProjectId[], from: UnixTime) {
+    const knex = await this.knex()
+
+    const rows = await knex('aggregated_reports')
+      .select('unix_timestamp')
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'CBV' THEN usd_value ELSE 0 END as cbv_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'CBV' THEN eth_value ELSE 0 END as cbv_eth_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'EBV' THEN usd_value ELSE 0 END as ebv_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'EBV' THEN eth_value ELSE 0 END as ebv_eth_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'NMV' THEN usd_value ELSE 0 END as nmv_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'NMV' THEN eth_value ELSE 0 END as nmv_eth_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'TVL' THEN usd_value ELSE 0 END as tvl_usd_value",
+        ),
+      )
+      .sum(
+        knex.raw(
+          "CASE WHEN report_type = 'TVL' THEN eth_value ELSE 0 END as tvl_eth_value",
+        ),
+      )
+      .whereIn(
+        'project_id',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('unix_timestamp', '>=', from.toDate())
+      .groupBy('unix_timestamp')
+      .orderBy('unix_timestamp', 'desc')
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.unix_timestamp),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      cbvUsdValue: BigInt(row.cbv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      cbvEthValue: BigInt(row.cbv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      ebvUsdValue: BigInt(row.ebv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      ebvEthValue: BigInt(row.ebv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      nmvUsdValue: BigInt(row.nmv_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      nmvEthValue: BigInt(row.nmv_eth_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      tvlUsdValue: BigInt(row.tvl_usd_value),
+      // @ts-expect-error not typed
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      tvlEthValue: BigInt(row.tvl_eth_value),
+    }))
+  }
+
   async getDaily(
     reportType: AggregatedReportType,
   ): Promise<AggregatedReportRecord[]> {
