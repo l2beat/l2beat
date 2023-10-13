@@ -1,6 +1,8 @@
 import {
   BigQueryClient,
+  BigQueryFunctionCallsResult,
   BigQueryProvider,
+  BigQueryTransfersResult,
   BigQueryWrapper,
 } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
@@ -8,7 +10,11 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessIndexer } from './LivenessIndexer'
-import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
+import {
+  LivenessConfig,
+  LivenessFunctionCall,
+  LivenessTransfer,
+} from './types/LivenessConfig'
 
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.getTransfers.name, () => {
@@ -207,5 +213,223 @@ describe(LivenessIndexer.name, () => {
 
       expect(results).toEqual(expected)
     })
+  })
+
+  describe(LivenessIndexer.prototype.getLivenessData.name, () => {
+    it('should fetch and transform data properly', async () => {
+      const ADDRESS_1 = EthereumAddress.random()
+      const ADDRESS_2 = EthereumAddress.random()
+      const ADDRESS_3 = EthereumAddress.random()
+      const ADDRESS_4 = EthereumAddress.random()
+      const ADDRESS_5 = EthereumAddress.random()
+      const ADDRESS_6 = EthereumAddress.random()
+      const configs: LivenessConfig = {
+        transfers: [
+          {
+            projectId: ProjectId('project1'),
+            from: ADDRESS_1,
+            to: ADDRESS_2,
+            type: 'DA',
+          },
+          {
+            projectId: ProjectId('project2'),
+            from: ADDRESS_3,
+            to: ADDRESS_4,
+            type: 'STATE',
+          },
+        ],
+        functionCalls: [
+          {
+            projectId: ProjectId('project1'),
+            address: ADDRESS_5,
+            selector: '0x9aaab648',
+            type: 'DA',
+          },
+          {
+            projectId: ProjectId('project2'),
+            address: ADDRESS_6,
+            selector: '0x7739cbe7',
+            type: 'STATE',
+          },
+        ],
+      }
+      const transfersQueryResults = [
+        {
+          block_number: 1,
+          block_timestamp: { value: '2022-01-01T00:00:00Z' },
+          from_address: ADDRESS_1.toLocaleLowerCase(),
+          to_address: ADDRESS_2.toLocaleLowerCase(),
+          transaction_hash: '0xabcdef1234567890',
+        },
+        {
+          block_number: 2,
+          block_timestamp: { value: '2022-01-01T01:00:00Z' },
+          from_address: ADDRESS_3.toLocaleLowerCase(),
+          to_address: ADDRESS_4.toLocaleLowerCase(),
+          transaction_hash: '0xabcdef1234567891',
+        },
+      ]
+
+      const functionCallsQueryResults = [
+        {
+          block_number: 3,
+          block_timestamp: { value: '2022-01-01T00:00:00Z' },
+          input: '0x9aaab648da640f49b7fbd17ea63a961cba1b09414',
+          to_address: ADDRESS_5.toLocaleLowerCase(),
+          transaction_hash: '0xabcdef1234567893',
+        },
+        {
+          block_number: 4,
+          block_timestamp: { value: '2022-01-01T01:00:00Z' },
+          input: '0x7739cbe7d5363037dc70ec111bd9b26f95981f3e8',
+          to_address: ADDRESS_6.toLocaleLowerCase(),
+          transaction_hash: '0xabcdef1234567894',
+        },
+      ]
+
+      const expected: LivenessRecord[] = [
+        {
+          projectId: ProjectId('project1'),
+          blockNumber: 1,
+          timestamp: UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
+          txHash: '0xabcdef1234567890',
+          type: 'DA',
+        },
+        {
+          projectId: ProjectId('project2'),
+          blockNumber: 2,
+          timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
+          txHash: '0xabcdef1234567891',
+          type: 'STATE',
+        },
+        {
+          projectId: ProjectId('project1'),
+          blockNumber: 3,
+          timestamp: UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
+          txHash: '0xabcdef1234567893',
+          type: 'DA',
+        },
+        {
+          projectId: ProjectId('project2'),
+          blockNumber: 4,
+          timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
+          txHash: '0xabcdef1234567894',
+          type: 'STATE',
+        },
+      ]
+
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getTransfers: mockFn().resolvesToOnce(
+          BigQueryTransfersResult.parse(transfersQueryResults),
+        ),
+        getFunctionCalls: mockFn().resolvesToOnce(
+          BigQueryFunctionCallsResult.parse(functionCallsQueryResults),
+        ),
+      })
+      const livenessIndexer = new LivenessIndexer(bigQueryClient)
+
+      const results = await livenessIndexer.getLivenessData(
+        configs,
+        UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
+        UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
+      )
+
+      expect(results).toEqual(expected)
+    })
+  })
+
+  it('should take into consideration untilTimestamp', async () => {
+    const ADDRESS_1 = EthereumAddress.random()
+    const ADDRESS_2 = EthereumAddress.random()
+    const ADDRESS_3 = EthereumAddress.random()
+    const ADDRESS_4 = EthereumAddress.random()
+    const ADDRESS_5 = EthereumAddress.random()
+    const ADDRESS_6 = EthereumAddress.random()
+    const configs: LivenessConfig = {
+      transfers: [
+        {
+          projectId: ProjectId('project1'),
+          from: ADDRESS_1,
+          to: ADDRESS_2,
+          type: 'DA',
+          untilTimestamp: UnixTime.fromDate(new Date('2021-01-01T00:00:00Z')),
+        },
+        {
+          projectId: ProjectId('project2'),
+          from: ADDRESS_3,
+          to: ADDRESS_4,
+          type: 'STATE',
+        },
+      ],
+      functionCalls: [
+        {
+          projectId: ProjectId('project1'),
+          address: ADDRESS_5,
+          selector: '0x9aaab648',
+          type: 'DA',
+        },
+        {
+          projectId: ProjectId('project2'),
+          address: ADDRESS_6,
+          selector: '0x7739cbe7',
+          type: 'STATE',
+          untilTimestamp: UnixTime.fromDate(new Date('2021-01-01T00:00:00Z')),
+        },
+      ],
+    }
+    const transfersQueryResults = [
+      {
+        block_number: 2,
+        block_timestamp: { value: '2022-01-01T01:00:00Z' },
+        from_address: ADDRESS_3.toLocaleLowerCase(),
+        to_address: ADDRESS_4.toLocaleLowerCase(),
+        transaction_hash: '0xabcdef1234567891',
+      },
+    ]
+
+    const functionCallsQueryResults = [
+      {
+        block_number: 3,
+        block_timestamp: { value: '2022-01-01T00:00:00Z' },
+        input: '0x9aaab648da640f49b7fbd17ea63a961cba1b09414',
+        to_address: ADDRESS_5.toLocaleLowerCase(),
+        transaction_hash: '0xabcdef1234567893',
+      },
+    ]
+
+    const expected: LivenessRecord[] = [
+      {
+        projectId: ProjectId('project2'),
+        blockNumber: 2,
+        timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
+        txHash: '0xabcdef1234567891',
+        type: 'STATE',
+      },
+      {
+        projectId: ProjectId('project1'),
+        blockNumber: 3,
+        timestamp: UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
+        txHash: '0xabcdef1234567893',
+        type: 'DA',
+      },
+    ]
+
+    const bigQueryClient = mockObject<BigQueryClient>({
+      getTransfers: mockFn().resolvesToOnce(
+        BigQueryTransfersResult.parse(transfersQueryResults),
+      ),
+      getFunctionCalls: mockFn().resolvesToOnce(
+        BigQueryFunctionCallsResult.parse(functionCallsQueryResults),
+      ),
+    })
+    const livenessIndexer = new LivenessIndexer(bigQueryClient)
+
+    const results = await livenessIndexer.getLivenessData(
+      configs,
+      UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
+      UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
+    )
+
+    expect(results).toEqual(expected)
   })
 })
