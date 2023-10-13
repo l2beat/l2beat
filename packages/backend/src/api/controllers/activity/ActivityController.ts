@@ -1,4 +1,6 @@
+import { bridges, layer2s } from '@l2beat/config'
 import {
+  ActivityApiChart,
   ActivityApiResponse,
   assert,
   json,
@@ -47,6 +49,25 @@ export class ActivityController {
       projects: toProjectsActivity(layer2sCounts),
       ethereum: countsToChart(ethereumCounts),
     }
+  }
+
+  async getProjectsActivity(
+    filteredProjectsSlugs: string[] = [],
+  ): Promise<ActivityApiChart> {
+    const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
+      .map((project) => project.id)
+
+    if (projectIdsFilter.length === 0) return countsToChart([])
+
+    const aggregatedDailyCounts =
+      await this.viewRepository.getProjectsAggregatedDailyCount(
+        projectIdsFilter,
+      )
+    const now = this.clock.getLastHour()
+
+    const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
+    return countsToChart(processedCounts)
   }
 
   async getStatus(): Promise<json> {

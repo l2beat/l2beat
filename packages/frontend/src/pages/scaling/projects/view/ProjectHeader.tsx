@@ -136,7 +136,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}
-      showTvlBreakdown={props.showTvlBreakdown}
+      showTvlBreakdown={props.isUpcoming ? false : props.showTvlBreakdown}
     />
   )
 }

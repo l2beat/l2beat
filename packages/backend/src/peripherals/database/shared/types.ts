@@ -85,6 +85,11 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  type ProjectsAggregatedDailyCountRow = Omit<
+    DailyTransactionCountRow,
+    'project_id'
+  >
+
   interface UpdateMonitorRow {
     project_name: string
     chain_id: number
@@ -130,6 +135,14 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  interface LivenessRow {
+    project_id: string
+    timestamp: Date
+    block_number: number
+    tx_hash: string
+    type: string
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -150,6 +163,7 @@ declare module 'knex/types/tables' {
     total_supplies_status: TotalSupplyStatusRow
     circulating_supplies: CirculatingSupplyRow
     circulating_supplies_status: CirculatingSupplyStatusRow
+    liveness: LivenessRow
   }
 }
 

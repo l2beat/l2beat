@@ -1,6 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DailyTransactionCountRow } from 'knex/types/tables'
+import {
+  DailyTransactionCountRow,
+  ProjectsAggregatedDailyCountRow,
+} from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
@@ -10,6 +13,11 @@ export interface DailyTransactionCountRecord {
   timestamp: UnixTime
   count: number
 }
+
+export type ProjectsAggregatedDailyTransactionCounts = Pick<
+  DailyTransactionCountRecord,
+  'timestamp' | 'count'
+>
 
 export class DailyTransactionCountViewRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
@@ -33,11 +41,38 @@ export class DailyTransactionCountViewRepository extends BaseRepository {
     )
     return rows.map(toRecord)
   }
+
+  async getProjectsAggregatedDailyCount(
+    projectIdsFilter: ProjectId[],
+  ): Promise<ProjectsAggregatedDailyTransactionCounts[]> {
+    const knex = await this.knex()
+    const rows = await knex('activity.daily_count_view')
+      .whereIn(
+        'project_id',
+        projectIdsFilter.map((id) => id.toString()),
+      )
+      .select('unix_timestamp')
+      .sum('count as count')
+      .groupBy('unix_timestamp')
+      .orderBy('unix_timestamp', 'asc')
+    return (rows as unknown as ProjectsAggregatedDailyCountRow[]).map(
+      toProjectsAggregatedRecord,
+    )
+  }
 }
 
 function toRecord(row: DailyTransactionCountRow): DailyTransactionCountRecord {
   return {
     projectId: ProjectId(row.project_id),
+    count: Number(row.count),
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
+  }
+}
+
+function toProjectsAggregatedRecord(
+  row: ProjectsAggregatedDailyCountRow,
+): ProjectsAggregatedDailyTransactionCounts {
+  return {
     count: Number(row.count),
     timestamp: UnixTime.fromDate(row.unix_timestamp),
   }

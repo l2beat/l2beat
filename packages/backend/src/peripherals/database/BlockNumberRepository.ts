@@ -48,7 +48,7 @@ export class BlockNumberRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('block_numbers').delete()
+    return knex('block_numbers').delete()
   }
 }
 
