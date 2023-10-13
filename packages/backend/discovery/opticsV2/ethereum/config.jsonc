@@ -12,9 +12,13 @@
     "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94": "GovernanceRouterBeaconProxy",
     "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785": "ReplicaBeaconProxy",
     "0x2bB2a5A724170357cb691841F40d26A950d8C33D": "RecoveryManager",
-    // "0x0": "Governor", it is governened by Celo's governance
+    // "0x0": "Governor", it is governed by Celo's governance
     "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD": "XAppConnectionManager",
-    "0x4F50a7081792063693F46A6402390b9647562457": "UpgradeBeaconController"
+    "0x4F50a7081792063693F46A6402390b9647562457": "UpgradeBeaconController",
+    "0xA734EDE8229970776e1B68085D579b6b6E97dAd4": "ReplicaUpgradeBeacon",
+    "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE": "BridgeUpgradeBeacon",
+    "0x101a39eA1143cb252fc8093847399046fc35Db89": "HomeUpgradeBeacon",
+    "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c": "GovernanceUpgradeBeacon"
   },
   "overrides": {
     "HomeBeaconProxy": {
@@ -36,6 +40,18 @@
           "args": ["{{ governorDomain }}"]
         }
       }
+    },
+    "BridgeUpgradeBeacon": {
+      "proxyType": "immutable"
+    },
+    "ReplicaUpgradeBeacon": {
+      "proxyType": "immutable"
+    },
+    "HomeUpgradeBeacon": {
+      "proxyType": "immutable"
+    },
+    "GovernanceUpgradeBeacon": {
+      "proxyType": "immutable"
     },
     "XAppConnectionManager": {
       "fields": {
