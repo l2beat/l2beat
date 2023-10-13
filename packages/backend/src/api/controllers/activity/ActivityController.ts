@@ -54,11 +54,6 @@ export class ActivityController {
   async getProjectsActivity(
     filteredProjectsSlugs: string[] = [],
   ): Promise<FrontendActivityApiChart> {
-    assert(
-      filteredProjectsSlugs.length === 0,
-      'Slugs should not be empty there',
-    )
-
     const projectIdsFilter = [...layer2s, ...bridges]
       .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
       .map((project) => project.id)
