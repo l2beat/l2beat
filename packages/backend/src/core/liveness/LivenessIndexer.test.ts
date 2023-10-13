@@ -76,6 +76,12 @@ describe(LivenessIndexer.name, () => {
       const results = await livenessIndexer.getTransfers(configs, FROM, TO)
 
       expect(results).toEqual(expected)
+      expect(bigQueryClient.getTransfers).toHaveBeenNthCalledWith(
+        1,
+        configs,
+        FROM,
+        TO,
+      )
     })
   })
 
@@ -125,6 +131,12 @@ describe(LivenessIndexer.name, () => {
       const results = await livenessIndexer.getFunctionCalls(configs, FROM, TO)
 
       expect(results).toEqual(expected)
+      expect(bigQueryClient.getFunctionCalls).toHaveBeenNthCalledWith(
+        1,
+        configs,
+        FROM,
+        TO,
+      )
     })
   })
 
