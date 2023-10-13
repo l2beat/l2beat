@@ -13,7 +13,7 @@ export function createActivityRouter(activityController: ActivityController) {
   })
 
   router.get(
-    '/api/activity/projects',
+    '/api/activity/aggregate',
     withTypedContext(
       z.object({
         query: z.object({
