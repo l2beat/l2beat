@@ -1,3 +1,38 @@
+# Diff at Fri, 13 Oct 2023 07:04:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@28e18077472448efd6132e6ee714b582cc1ee80b
+
+## Description
+
+Newly created contracts are the result of rediscovering the `upgradeBeacon` address.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract ReplicaUpgradeBeacon (0x10a432946e24C49866c243a13BE7205B3EF929ee) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BridgeUpgradeBeacon (0x3b96B42D1F4962CB21049fB237A886E2860AfacB) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceUpgradeBeacon (0x681Edb6d52138cEa8210060C309230244BcEa61b) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HomeUpgradeBeacon (0x9E4C2547307e221383A4bcba6065389C69Bd4628) {
+    }
+```
+
 # Diff at Mon, 09 Oct 2023 13:37:39 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

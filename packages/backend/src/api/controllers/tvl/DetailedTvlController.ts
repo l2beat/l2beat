@@ -3,6 +3,7 @@ import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
+  DetailedTvlApiChart,
   DetailedTvlApiCharts,
   DetailedTvlApiResponse,
   Hash256,
@@ -12,6 +13,7 @@ import {
   Token,
   TvlApiChart,
   TvlApiCharts,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
@@ -22,6 +24,7 @@ import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
+import { asNumber } from './asNumber'
 import { getProjectAssetChartData } from './charts'
 import {
   getCanonicalAssetsBreakdown,
@@ -30,10 +33,7 @@ import {
   groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
-import {
-  generateDetailedAggregatedApiResponse,
-  generateDetailedTvlApiResponse,
-} from './generateDetailedTvlApiResponse'
+import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
 import { Result } from './types'
 
 interface DetailedTvlControllerOptions {
@@ -180,41 +180,31 @@ export class DetailedTvlController {
 
     console.time('[Aggregate endpoint]: database')
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
-      this.aggregatedReportRepository.getHourlyWithAnyType(
+      this.aggregatedReportRepository.getAggregateHourly(
+        projectIdsFilter,
         getHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
-      this.aggregatedReportRepository.getSixHourlyWithAnyType(
+      this.aggregatedReportRepository.getAggregateSixHourly(
+        projectIdsFilter,
         getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
-      this.aggregatedReportRepository.getDailyWithAnyType(),
+      this.aggregatedReportRepository.getAggregateDaily(projectIdsFilter),
     ])
     console.timeEnd('[Aggregate endpoint]: database')
 
     console.time('[Aggregate endpoint]: aggregation')
-    const projectIdsFilterSet = new Set(
-      projectIdsFilter.map((x) => x.toString()),
-    )
 
-    const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
+    const data: DetailedTvlApiCharts = {
+      hourly: aggregateRecordsToResponse(hourlyReports),
+      sixHourly: aggregateRecordsToResponse(sixHourlyReports),
+      daily: aggregateRecordsToResponse(dailyReports),
+    }
 
-    const groupedSixHourlyReportsTree =
-      groupByProjectIdAndTimestamp(sixHourlyReports)
-
-    const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
-
-    const tvlApiProjectResponse = generateDetailedAggregatedApiResponse(
-      groupedHourlyReports,
-      groupedSixHourlyReportsTree,
-      groupedDailyReports,
-      this.projects
-        .map((project) => project.projectId)
-        .filter((projectId) => projectIdsFilterSet.has(projectId.toString())),
-    )
     console.timeEnd('[Aggregate endpoint]: aggregation')
 
     return {
       result: 'success',
-      data: tvlApiProjectResponse,
+      data,
     }
   }
 
@@ -370,5 +360,69 @@ export class DetailedTvlController {
     }
 
     return result
+  }
+}
+
+export const DETAILED_LABELS: DetailedTvlApiChart['types'] = [
+  'timestamp',
+  'valueUsd',
+  'cbvUsd',
+  'ebvUsd',
+  'nmvUsd',
+  'valueEth',
+  'cbvEth',
+  'ebvEth',
+  'nmvEth',
+]
+
+function aggregateRecordsToResponse(
+  hourlyReports: {
+    timestamp: UnixTime
+    cbvUsdValue: bigint
+    cbvEthValue: bigint
+    ebvUsdValue: bigint
+    ebvEthValue: bigint
+    nmvUsdValue: bigint
+    nmvEthValue: bigint
+    tvlUsdValue: bigint
+    tvlEthValue: bigint
+  }[],
+): {
+  data: [
+    UnixTime,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+  ][]
+  types: [
+    'timestamp',
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+  ]
+} {
+  return {
+    types: DETAILED_LABELS,
+    data: hourlyReports.map((report) => [
+      report.timestamp,
+      asNumber(report.tvlUsdValue, 2),
+      asNumber(report.cbvUsdValue, 2),
+      asNumber(report.ebvUsdValue, 2),
+      asNumber(report.nmvUsdValue, 2),
+      asNumber(report.tvlEthValue, 6),
+      asNumber(report.cbvEthValue, 6),
+      asNumber(report.ebvEthValue, 6),
+      asNumber(report.nmvEthValue, 6),
+    ]),
   }
 }

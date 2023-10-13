@@ -195,6 +195,9 @@
     },
     "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": {
       "ignoreMethods": ["chain_under_challenge"]
+    },
+    "Metis Multisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

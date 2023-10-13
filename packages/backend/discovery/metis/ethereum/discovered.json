@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 17272120,
-  "configHash": "0x1a8c7f109e78f0dcd6581b9313d6f003a8b207a956032357d114b7ef323afca7",
+  "blockNumber": 18340232,
+  "configHash": "0x5eca465843ed06c8c121ad03b227879a4fa5953046064db3cc2eef2919673b14",
   "version": 2,
   "contracts": [
     {
@@ -30,12 +30,12 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000064636c37000056ddb9",
-        "length": 15257,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006528f4bb0000884234",
+        "length": 18814,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000064636c37000056ddb9",
-        "lengthByChainId": 15257
+        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006528f4bb0000884234",
+        "lengthByChainId": 18814
       },
       "derivedName": "ChainStorageContainer"
     },
@@ -89,7 +89,7 @@
           "0xa6D8941F935932a531A856C2e48046DA73a1098E"
         ],
         "getThreshold": 4,
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -106,13 +106,13 @@
         "DEFAULT_CHAINID": 1088,
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17272013,
-        "getLastTimestamp": 1684237176,
-        "getNextQueueIndex": 26507,
+        "getLastBlockNumber": 18340151,
+        "getLastTimestamp": 1697184290,
+        "getNextQueueIndex": 28922,
         "getNumPendingQueueElements": 1,
-        "getQueueLength": 26508,
-        "getTotalBatches": 34919,
-        "getTotalElements": 5693533,
+        "getQueueLength": 28923,
+        "getTotalBatches": 38514,
+        "getTotalElements": 8930295,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -267,14 +267,14 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1684237367,
-        "getTotalBatches": 15257,
-        "getTotalElements": 5692857,
+        "getLastSequencerTimestamp": 1697182907,
+        "getTotalBatches": 18814,
+        "getTotalElements": 8929844,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000,
-        "getLastSequencerTimestampByChainId": 1684237367,
-        "getTotalBatchesByChainId": 15257,
-        "getTotalElementsByChainId": 5692857
+        "getLastSequencerTimestampByChainId": 1697182907,
+        "getTotalBatchesByChainId": 18814,
+        "getTotalElementsByChainId": 8929844
       },
       "derivedName": "StateCommitmentChain"
     },
