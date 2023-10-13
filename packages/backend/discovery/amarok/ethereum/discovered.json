@@ -764,7 +764,7 @@
       "error BridgeFacet__addSequencer_invalidSequencer()",
       "error BridgeFacet__bumpTransfer_noRelayerVault()",
       "error BridgeFacet__bumpTransfer_valueIsZero()",
-      "error BridgeFacet__execute_insufficientGas()",
+      "error BridgeFacet__excecute_insufficientGas()",
       "error BridgeFacet__executePortalTransfer_insufficientAmountWithdrawn()",
       "error BridgeFacet__execute_badFastLiquidityStatus()",
       "error BridgeFacet__execute_externalCallFailed()",
