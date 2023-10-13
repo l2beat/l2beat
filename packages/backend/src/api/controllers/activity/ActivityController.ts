@@ -1,6 +1,8 @@
+import { bridges, layer2s } from '@l2beat/config'
 import {
   ActivityApiResponse,
   assert,
+  FrontendActivityApiChart,
   json,
   ProjectId,
 } from '@l2beat/shared-pure'
@@ -8,7 +10,7 @@ import {
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { Clock } from '../../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
-import { countsToChart } from './countsToChart'
+import { countsToChart, countsToFrontendChart } from './countsToChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
 import { toProjectsActivity } from './toProjectsActivity'
@@ -47,6 +49,34 @@ export class ActivityController {
       projects: toProjectsActivity(layer2sCounts),
       ethereum: countsToChart(ethereumCounts),
     }
+  }
+
+  async getProjectsActivity(
+    filteredProjectsSlugs: string[] = [],
+  ): Promise<FrontendActivityApiChart> {
+    assert(
+      filteredProjectsSlugs.length === 0,
+      'Slugs should not be empty there',
+    )
+
+    const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
+      .map((project) => project.id)
+
+    const aggregatedDailyCounts =
+      await this.viewRepository.getProjectsAggregatedDailyCount(
+        projectIdsFilter,
+      )
+    const now = this.clock.getLastHour()
+
+    const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
+
+    const ethereumCounts = await this.viewRepository.getDailyCountsPerProject(
+      ProjectId.ETHEREUM,
+    )
+    const processedEthereumCounts = postprocessCounts(ethereumCounts, true, now)
+
+    return countsToFrontendChart(processedCounts, processedEthereumCounts)
   }
 
   async getStatus(): Promise<json> {
