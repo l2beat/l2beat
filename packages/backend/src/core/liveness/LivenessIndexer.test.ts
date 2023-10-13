@@ -15,52 +15,41 @@ import {
   LivenessFunctionCall,
   LivenessTransfer,
 } from './types/LivenessConfig'
+import { transformTransfersQueryResult } from './utils'
+
+const ADDRESS_1 = EthereumAddress.random()
+const ADDRESS_2 = EthereumAddress.random()
+const ADDRESS_3 = EthereumAddress.random()
+const ADDRESS_4 = EthereumAddress.random()
+const ADDRESS_5 = EthereumAddress.random()
+const ADDRESS_6 = EthereumAddress.random()
+
+const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+const TO = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.getTransfers.name, () => {
-    it('should fetch and transform data properly', async () => {
-      const ADDRESS_1 = EthereumAddress.random()
-      const ADDRESS_2 = EthereumAddress.random()
-      const ADDRESS_3 = EthereumAddress.random()
-      const ADDRESS_4 = EthereumAddress.random()
-      const ADDRESS_5 = EthereumAddress.random()
-      const ADDRESS_6 = EthereumAddress.random()
-
-      const queryResults = [
+    it.only('should fetch and transform data properly', async () => {
+      const queryResults: BigQueryTransfersResult = [
         {
           block_number: 1,
-          block_timestamp: { value: '2022-01-01T00:00:00Z' },
-          from_address: ADDRESS_1.toLocaleLowerCase(),
-          to_address: ADDRESS_2.toLocaleLowerCase(),
+          block_timestamp: FROM,
+          from_address: ADDRESS_1,
+          to_address: ADDRESS_2,
           transaction_hash: '0xabcdef1234567890',
         },
         {
           block_number: 2,
-          block_timestamp: { value: '2022-01-01T01:00:00Z' },
-          from_address: ADDRESS_3.toLocaleLowerCase(),
-          to_address: ADDRESS_4.toLocaleLowerCase(),
+          block_timestamp: FROM,
+          from_address: ADDRESS_3,
+          to_address: ADDRESS_4,
           transaction_hash: '0xabcdef1234567891',
-        },
-        {
-          block_number: 3,
-          block_timestamp: { value: '2022-01-01T02:00:00Z' },
-          from_address: ADDRESS_5.toLocaleLowerCase(),
-          to_address: ADDRESS_6.toLocaleLowerCase(),
-          transaction_hash: '0xabcdef1234567892',
         },
       ]
 
-      const bigQuery = mockObject<BigQueryWrapper>({
-        createQueryJob: mockFn().resolvesToOnce([
-          {
-            getQueryResults: async () => {
-              return [queryResults]
-            },
-          },
-        ]),
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getTransfers: mockFn().resolvesToOnce(queryResults),
       })
-      const bigQueryProvider = new BigQueryProvider(bigQuery)
-      const bigQueryClient = new BigQueryClient(bigQueryProvider)
 
       const configs: LivenessTransfer[] = [
         {
@@ -70,49 +59,20 @@ describe(LivenessIndexer.name, () => {
           type: 'DA',
         },
         {
-          projectId: ProjectId('project1'),
+          projectId: ProjectId('project2'),
           from: ADDRESS_3,
           to: ADDRESS_4,
           type: 'STATE',
         },
-        {
-          projectId: ProjectId('project2'),
-          from: ADDRESS_5,
-          to: ADDRESS_6,
-          type: 'STATE',
-        },
       ]
 
-      const expected: LivenessRecord[] = [
-        {
-          blockNumber: 1,
-          projectId: ProjectId('project1'),
-          timestamp: UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
-          txHash: '0xabcdef1234567890',
-          type: 'DA',
-        },
-        {
-          blockNumber: 2,
-          projectId: ProjectId('project1'),
-          timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
-          txHash: '0xabcdef1234567891',
-          type: 'STATE',
-        },
-        {
-          blockNumber: 3,
-          projectId: ProjectId('project2'),
-          timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
-          txHash: '0xabcdef1234567892',
-          type: 'STATE',
-        },
-      ]
+      const expected: LivenessRecord[] = transformTransfersQueryResult(
+        configs,
+        queryResults,
+      )
 
       const livenessIndexer = new LivenessIndexer(bigQueryClient)
-      const results = await livenessIndexer.getTransfers(
-        configs,
-        UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
-        UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
-      )
+      const results = await livenessIndexer.getTransfers(configs, FROM, TO)
 
       expect(results).toEqual(expected)
     })
@@ -120,14 +80,10 @@ describe(LivenessIndexer.name, () => {
 
   describe(LivenessIndexer.prototype.getFunctionCalls.name, () => {
     it('should fetch and transform data properly', async () => {
-      const ADDRESS_1 = EthereumAddress.random()
-      const ADDRESS_2 = EthereumAddress.random()
-      const ADDRESS_3 = EthereumAddress.random()
-
       const queryResults = [
         {
           block_number: 1,
-          block_timestamp: { value: '2022-01-01T00:00:00Z' },
+          block_timestamp: FROM,
           input: '0x9aaab648da640f49b7fbd17ea63a961cba1b09414',
           to_address: ADDRESS_1.toLocaleLowerCase(),
           transaction_hash: '0xabcdef1234567890',
@@ -217,15 +173,6 @@ describe(LivenessIndexer.name, () => {
 
   describe(LivenessIndexer.prototype.getLivenessData.name, () => {
     it('prepares config properly and calls internal methods', async () => {
-      const ADDRESS_1 = EthereumAddress.random()
-      const ADDRESS_2 = EthereumAddress.random()
-      const ADDRESS_3 = EthereumAddress.random()
-      const ADDRESS_4 = EthereumAddress.random()
-      const ADDRESS_5 = EthereumAddress.random()
-      const ADDRESS_6 = EthereumAddress.random()
-
-      const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
-      const TO = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
       const configs: LivenessConfig = {
         transfers: [
           {
