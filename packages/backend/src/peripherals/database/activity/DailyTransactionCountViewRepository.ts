@@ -42,6 +42,16 @@ export class DailyTransactionCountViewRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getDailyCountsPerProject(
+    projectId: ProjectId,
+  ): Promise<DailyTransactionCountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('activity.daily_count_view')
+      .where('project_id', projectId.toString())
+      .orderBy('unix_timestamp', 'asc')
+    return rows.map(toRecord)
+  }
+
   async getProjectsAggregatedDailyCount(
     projectIdsFilter: ProjectId[],
   ): Promise<ProjectsAggregatedDailyTransactionCounts[]> {
