@@ -5,7 +5,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Updated the logic used to take into account the timestamp drift between L1 and L2 blocks.
 
 ## Watched changes
 
