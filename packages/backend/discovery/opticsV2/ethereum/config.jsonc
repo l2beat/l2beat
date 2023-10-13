@@ -25,7 +25,8 @@
       "proxyType": "Optics Beacon proxy"
     },
     "ReplicaBeaconProxy": {
-      "proxyType": "Optics Beacon proxy"
+      "proxyType": "Optics Beacon proxy",
+      "ignoreInWatchMode": ["committedRoot"]
     },
     "BridgeRouterBeaconProxy": {
       "proxyType": "Optics Beacon proxy",

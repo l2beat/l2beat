@@ -25,7 +25,8 @@
       "ignoreMethods": ["tokenBeacon"]
     },
     "ReplicaBeaconProxy": {
-      "proxyType": "Optics Beacon proxy"
+      "proxyType": "Optics Beacon proxy",
+      "ignoreInWatchMode": ["committedRoot"]
     },
     "GovernanceRouterBeaconProxy": {
       "proxyType": "Optics Beacon proxy",
