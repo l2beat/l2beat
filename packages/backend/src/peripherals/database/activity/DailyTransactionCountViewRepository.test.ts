@@ -155,6 +155,25 @@ describe(DailyTransactionCountViewRepository.name, () => {
   )
 
   describe(
+    DailyTransactionCountViewRepository.prototype.getDailyCountsPerProject.name,
+    () => {
+      it('should filter by project', async () => {
+        await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_A, 0, 0, 1))
+        await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_B, 0, 0, 1))
+
+        await repository.refresh()
+
+        const result = await repository.getDailyCountsPerProject(PROJECT_A)
+        expect(result).toEqual(
+          [[0, 1]].map(([day, count]) =>
+            getDailyTransactionCountRecord(PROJECT_A, day, count),
+          ),
+        )
+      })
+    },
+  )
+
+  describe(
     DailyTransactionCountViewRepository.prototype
       .getProjectsAggregatedDailyCount.name,
     () => {
