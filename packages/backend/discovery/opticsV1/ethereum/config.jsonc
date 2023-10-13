@@ -13,7 +13,11 @@
     "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b": "ReplicaBeaconProxy",
     "0x2bB2a5A724170357cb691841F40d26A950d8C33D": "RecoveryManager",
     "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37": "Governor",
-    "0xcEc158A719d11005Bd9339865965bed938BEafA3": "XAppConnectionManager"
+    "0xcEc158A719d11005Bd9339865965bed938BEafA3": "XAppConnectionManager",
+    "0x681Edb6d52138cEa8210060C309230244BcEa61b": "GovernanceUpgradeBeacon",
+    "0x3b96B42D1F4962CB21049fB237A886E2860AfacB": "BridgeUpgradeBeacon",
+    "0x10a432946e24C49866c243a13BE7205B3EF929ee": "ReplicaUpgradeBeacon",
+    "0x9E4C2547307e221383A4bcba6065389C69Bd4628": "HomeUpgradeBeacon"
   },
   "overrides": {
     "HomeBeaconProxy": {
@@ -28,6 +32,18 @@
     },
     "GovernanceRouterBeaconProxy": {
       "proxyType": "Optics Beacon proxy"
+    },
+    "GovernanceUpgradeBeacon": {
+      "proxyType": "immutable"
+    },
+    "BridgeUpgradeBeacon": {
+      "proxyType": "immutable"
+    },
+    "ReplicaUpgradeBeacon": {
+      "proxyType": "immutable"
+    },
+    "HomeUpgradeBeacon": {
+      "proxyType": "immutable"
     },
     "XAppConnectionManager": {
       "fields": {

@@ -2,9 +2,18 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 18313071,
-  "configHash": "0x3f275b55c696fdd3b6b2c2d01b14ce5306e2c2e605ebf5daddefe9be3f8721e5",
+  "configHash": "0xe12d2aabdc339e485c027a1b304a9f078b9618616b8fd771d7d047935e202474",
   "version": 2,
   "contracts": [
+    {
+      "name": "HomeUpgradeBeacon",
+      "address": "0x101a39eA1143cb252fc8093847399046fc35Db89",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1637961283,
+      "derivedName": "UpgradeBeacon"
+    },
     {
       "name": "ReplicaBeaconProxy",
       "address": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
@@ -55,6 +64,15 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "GovernanceUpgradeBeacon",
+      "address": "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1637961347,
+      "derivedName": "UpgradeBeacon"
     },
     {
       "name": "UpgradeBeaconController",
@@ -115,6 +133,15 @@
       "derivedName": "XAppConnectionManager"
     },
     {
+      "name": "ReplicaUpgradeBeacon",
+      "address": "0xA734EDE8229970776e1B68085D579b6b6E97dAd4",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1637962173,
+      "derivedName": "UpgradeBeacon"
+    },
+    {
       "name": "HomeBeaconProxy",
       "address": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
       "upgradeability": {
@@ -145,6 +172,15 @@
         "VERSION": 0
       },
       "derivedName": "Home"
+    },
+    {
+      "name": "BridgeUpgradeBeacon",
+      "address": "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1637963549,
+      "derivedName": "UpgradeBeacon"
     },
     {
       "name": "GovernanceRouterBeaconProxy",
@@ -185,11 +221,19 @@
     "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
   ],
   "abis": {
+    "0x101a39eA1143cb252fc8093847399046fc35Db89": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
+    ],
     "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
     "0x2bB2a5A724170357cb691841F40d26A950d8C33D": [
       "constructor(address _singleton)"
+    ],
+    "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
     ],
     "0x4F50a7081792063693F46A6402390b9647562457": [
       "event BeaconUpgraded(address indexed beacon, address implementation)",
@@ -295,8 +339,16 @@
       "function update(bytes32 _oldRoot, bytes32 _newRoot, bytes _signature)",
       "function updater() view returns (address)"
     ],
+    "0xA734EDE8229970776e1B68085D579b6b6E97dAd4": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
+    ],
     "0xa73a3a74C7044B5411bD61E1990618A1400DA379": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
     ],
     "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
