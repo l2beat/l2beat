@@ -1,28 +1,27 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
+const discovery = new ProjectDiscovery('scroll')
+
 export const scroll: Layer2 = {
-  isUpcoming: true,
+  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('scroll'),
   display: {
     name: 'Scroll',
     slug: 'scroll',
     description:
-      'Scroll is an EVM compatible zkRollup that has been designed for use on the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
+      'Scroll is an EVM compatible zkRollup that has been designed for use on the Ethereum network.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      apps: ['https://scroll.io/alpha/bridge', 'https://uniswap-v3.scroll.io'],
-      documentation: ['https://guide.scroll.io'],
-      explorers: [
-        'https://scroll.io/alpha/rollupscan',
-        'https://blockscout.scroll.io',
-        'https://scrollscan-alpha.unifra.io',
-      ],
+      apps: ['https://scroll.io/bridge', 'https://uniswap-v3.scroll.io'],
+      documentation: ['https://docs.scroll.io/en/home/'],
+      explorers: ['https://blockscout.scroll.io', 'https://scroll.unifra.xyz/'],
       repositories: [
         'https://github.com/scroll-tech/zkevm-circuits',
         'https://github.com/scroll-tech/zkevm-specs',
@@ -39,12 +38,21 @@ export const scroll: Layer2 = {
     },
   },
   stage: {
-    stage: 'NotApplicable',
+    stage: 'UnderReview',
   },
   config: {
-    escrows: [],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),
+        tokens: '*',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367'),
+        tokens: ['ETH'],
+      }),
+    ],
   },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
+  riskView: UNDER_REVIEW_RISK_VIEW,
+  technology: TECHNOLOGY.UNDER_REVIEW,
+  contracts: CONTRACTS.UNDER_REVIEW,
 }

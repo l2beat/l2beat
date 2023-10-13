@@ -2,7 +2,7 @@
   "name": "nomad",
   "chain": "ethereum",
   "blockNumber": 18313665,
-  "configHash": "0x4e1d87e73ab92e91fb9ca40188b5ae98709a40bbc0bbc32542900ce88b958c18",
+  "configHash": "0xd525961230f04909833d5bd4b093f90f8ab3978663a95d81e1147585415bfbc9",
   "version": 2,
   "contracts": [
     {
@@ -30,6 +30,24 @@
         "VERSION": 0
       },
       "derivedName": "Replica"
+    },
+    {
+      "name": "HomeUpgradeBeacon",
+      "address": "0x063e871f8DB991CEAd34B557A00B157B360084cc",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641898210,
+      "derivedName": "UpgradeBeacon"
+    },
+    {
+      "name": "ReplicaUpgradeBeacon",
+      "address": "0x0876dFe4AcAe0e1c0a43302716483f5752298b71",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641898337,
+      "derivedName": "UpgradeBeacon"
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -62,6 +80,15 @@
         "xAppConnectionManager": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F"
       },
       "derivedName": "GovernanceRouter"
+    },
+    {
+      "name": "GovernanceUpgradeBeacon",
+      "address": "0x67833a48b3F509d4252ac2c19cd604556eD6c981",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641898261,
+      "derivedName": "UpgradeBeacon"
     },
     {
       "name": "BridgeRouterBeaconProxy",
@@ -160,6 +187,15 @@
       "sinceTimestamp": 1669736603
     },
     {
+      "name": "BridgeUpgradeBeacon",
+      "address": "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1641899423,
+      "derivedName": "UpgradeBeacon"
+    },
+    {
       "name": "RecoveryManager",
       "address": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
       "upgradeability": {
@@ -235,11 +271,23 @@
     "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
+    "0x063e871f8DB991CEAd34B557A00B157B360084cc": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
+    ],
+    "0x0876dFe4AcAe0e1c0a43302716483f5752298b71": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
+    ],
     "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
     "0x3009C99D370B780304D2098196f1EBF779a4777a": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x67833a48b3F509d4252ac2c19cd604556eD6c981": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
     ],
     "0x7f221A1850c12b57fed1f0831dd25399a13b68c2": [
       "constructor(uint32 _localDomain)",
@@ -299,6 +347,10 @@
     ],
     "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
