@@ -215,6 +215,11 @@ export class ChartControls {
         filteredSlugs,
       })
     })
+
+    const refetchButton = $('[data-role="chart-refetch-button"]')
+    refetchButton.addEventListener('click', () => {
+      this.chartDataController.refetch()
+    })
   }
 
   private getMilestones(chart: HTMLElement) {

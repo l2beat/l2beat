@@ -8,6 +8,7 @@ import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ChartEmptyState } from './ChartEmptyState'
+import { ChartErrorState } from './ChartErrorState'
 import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
@@ -94,10 +95,12 @@ export function Chart(props: ChartProps) {
             <ChartHover />
             <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
             <div
-              className="absolute -bottom-4 -left-4 top-0 -right-4 z-25 group-data-[state=empty]/chart:hidden"
+              className="absolute -bottom-4 -left-4 top-0 -right-4 z-25 group-data-[interactivity-disabled=true]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
             />
             <ChartEmptyState />
+            <ChartErrorState />
+
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
@@ -106,16 +109,11 @@ export function Chart(props: ChartProps) {
             <ChartLabels className={props.metaChart ? 'hidden' : undefined} />
             <div
               data-role="chart-milestones"
-              className="absolute bottom-0 w-[100%] group-data-[state=empty]/chart:hidden"
+              className="absolute bottom-0 w-[100%] group-data-[interactivity-disabled]/chart:hidden"
             />
           </div>
           <div className="flex justify-between">
-            {(props.hasActivity || isActivity) && (
-              <EthereumActivityToggle
-                showToggle={isActivity}
-                className="max-w-[135px] xs:max-w-none"
-              />
-            )}
+            {(props.hasActivity || isActivity) && <EthereumActivityToggle />}
             {!isActivity && (
               <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
                 <CurrencyControls />

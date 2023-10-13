@@ -1,10 +1,11 @@
-import cx from 'classnames'
+import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { CheckIcon } from './icons'
 
 export interface CheckboxProps {
   className?: string
+  checkIconClassName?: string
   label: ReactNode
   role: string
   slugsWhenChecked?: string[]
@@ -15,6 +16,7 @@ export interface CheckboxProps {
 
 export function Checkbox({
   className,
+  checkIconClassName,
   label,
   role,
   slugsWhenChecked,
@@ -24,7 +26,7 @@ export function Checkbox({
 }: CheckboxProps) {
   return (
     <label
-      className={cx(
+      className={classNames(
         'bg-gray-200 text-base font-semibold dark:bg-gray-750',
         'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg py-1 pl-2 pr-3',
         className,
@@ -40,7 +42,7 @@ export function Checkbox({
         className="peer hidden"
         defaultChecked={defaultChecked}
       />
-      <CheckIcon className="flex-shrink-0" />
+      <CheckIcon className={classNames('flex-shrink-0', checkIconClassName)} />
       <span>{label}</span>
     </label>
   )

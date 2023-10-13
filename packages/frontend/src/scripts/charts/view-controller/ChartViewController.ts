@@ -16,7 +16,7 @@ interface Header {
   currency?: HTMLElement
 }
 
-type ChartState = 'empty' | 'loading' | null
+type ChartState = 'empty' | 'loading' | 'error' | null
 
 export class ChartViewController {
   private state?: ChartControlsState
@@ -59,19 +59,36 @@ export class ChartViewController {
   }
 
   hideLoader() {
-    if (this.chartState !== 'empty') {
-      this.setChartState(null)
-    }
+    this.setChartState(null)
   }
 
-  setChartState(state: ChartState | null) {
-    this.chartState = state
-    if (!state) {
-      delete this.chart.dataset.state
-      return
-    }
+  showEmptyState() {
+    this.setChartState('empty')
+  }
 
-    this.chart.dataset.state = state
+  showErrorState() {
+    this.setChartState('error')
+  }
+
+  private setChartState(state: ChartState | null) {
+    this.chartState = state
+    switch (state) {
+      case null:
+        delete this.chart.dataset.state
+        delete this.chart.dataset.interactivityDisabled
+        break
+      case 'empty':
+      case 'error':
+        this.chart.dataset.state = state
+        this.chart.dataset.interactivityDisabled = 'true'
+        break
+      case 'loading':
+        this.chart.dataset.state = state
+        delete this.chart.dataset.interactivityDisabled
+        break
+      default:
+        throw new Error('Unknown chart state')
+    }
   }
 
   private getHeaderElements(header: HTMLElement) {

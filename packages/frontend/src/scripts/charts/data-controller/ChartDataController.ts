@@ -23,10 +23,10 @@ export class ChartDataController {
   showEmptyChart() {
     this.abortController?.abort()
     this.abortController = new AbortController()
-    this.chartViewController.setChartState('empty')
+    this.chartViewController.showEmptyState()
   }
 
-  private refetch() {
+  refetch() {
     if (!this.chartType) {
       return
     }
@@ -49,6 +49,13 @@ export class ChartDataController {
         this.parseAndConfigure(chartType, data)
         this.cache.set(url, data)
         this.chartViewController.hideLoader()
+      })
+      .catch((err) => {
+        if (err instanceof DOMException && err.name === 'AbortError') {
+          // It was aborted on purpose by user so we don't need to show error
+          return
+        }
+        this.chartViewController.showErrorState()
       })
   }
 
