@@ -4,7 +4,6 @@ import { assert } from '@l2beat/shared-pure'
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
 import { LivenessFunctionCall } from '../types/LivenessConfig'
 
-// TODO: add test for this function and transfers
 export function transformFunctionCallsQueryResult(
   configs: LivenessFunctionCall[],
   queryResults: BigQueryFunctionCallsResult,
