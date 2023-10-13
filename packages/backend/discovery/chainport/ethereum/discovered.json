@@ -1,8 +1,8 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 18290482,
-  "configHash": "0xdbb2fa0647de6b0a8ed4d6544aa23dd24ae5b8a81889a3bdd720efd35d56c68f",
+  "blockNumber": 18340162,
+  "configHash": "0xf39cb47c575b306d683e2827dd8b2a3be925c549a0c75882bdc0a2bc470ecd7c",
   "version": 2,
   "contracts": [
     {
@@ -92,7 +92,7 @@
           "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
         ],
         "getThreshold": 2,
-        "nonce": 179,
+        "nonce": 180,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
