@@ -1,5 +1,11 @@
 # @l2beat/discovery-types
 
+## 0.3.2
+
+### Patch Changes
+
+- Add immutable proxy override
+
 ## 0.3.1
 
 ### Patch Changes
