@@ -2,7 +2,11 @@ import { BigQueryClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
-import { LivenessConfig } from './types/LivenessConfig'
+import {
+  LivenessConfig,
+  LivenessFunctionCall,
+  LivenessTransfer,
+} from './types/LivenessConfig'
 import {
   isTimestampInRange,
   transformFunctionCallsQueryResult,
@@ -12,39 +16,52 @@ import {
 export class LivenessIndexer {
   constructor(private readonly bigQueryClient: BigQueryClient) {}
 
-  async getTransfers(
-    projectConfigs: LivenessConfig[],
+  async getLivenessData(
+    config: LivenessConfig,
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const combinedConfigs = projectConfigs
-      .flatMap((c) => c.transfers)
-      .filter((c) => isTimestampInRange(c.untilTimestamp, from, to))
-
-    const queryResults = await this.bigQueryClient.getTransfers(
-      combinedConfigs,
+    const transfersConfig = config.transfers.filter((c) =>
+      isTimestampInRange(c.untilTimestamp, from, to),
+    )
+    const functionCallsConfig = config.functionCalls.filter((c) =>
+      isTimestampInRange(c.untilTimestamp, from, to),
+    )
+    const transfers = await this.getTransfers(transfersConfig, from, to)
+    const functionCalls = await this.getFunctionCalls(
+      functionCallsConfig,
       from,
       to,
     )
 
-    return transformTransfersQueryResult(combinedConfigs, queryResults)
+    return [...transfers, ...functionCalls]
+  }
+
+  async getTransfers(
+    transfersConfigs: LivenessTransfer[],
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<LivenessRecord[]> {
+    const queryResults = await this.bigQueryClient.getTransfers(
+      transfersConfigs,
+      from,
+      to,
+    )
+
+    return transformTransfersQueryResult(transfersConfigs, queryResults)
   }
 
   async getFunctionCalls(
-    projectConfigs: LivenessConfig[],
+    functionCallsConfigs: LivenessFunctionCall[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const allConfigs = projectConfigs
-      .flatMap((c) => c.functionCalls)
-      .filter((c) => isTimestampInRange(c.untilTimestamp, from, to))
-
     const queryResults = await this.bigQueryClient.getFunctionCalls(
-      allConfigs,
+      functionCallsConfigs,
       from,
       to,
     )
 
-    return transformFunctionCallsQueryResult(allConfigs, queryResults)
+    return transformFunctionCallsQueryResult(functionCallsConfigs, queryResults)
   }
 }
