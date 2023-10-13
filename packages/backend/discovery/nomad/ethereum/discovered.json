@@ -1,8 +1,8 @@
 {
   "name": "nomad",
   "chain": "ethereum",
-  "blockNumber": 18313665,
-  "configHash": "0xd525961230f04909833d5bd4b093f90f8ab3978663a95d81e1147585415bfbc9",
+  "blockNumber": 18340273,
+  "configHash": "0x3c8de204c06277389693a4ba9864893c9150841ca216bc8526f50a9c3d91ae34",
   "version": 2,
   "contracts": [
     {
@@ -16,7 +16,7 @@
       },
       "sinceTimestamp": 1641898337,
       "values": {
-        "committedRoot": "0xbb90049d8b1cda864b192a1373fb41c4fd16df6da499d8a98bc1f622afb55064",
+        "committedRoot": "0x9977da56f7c9e2955827bca8ea2675bc565e31b7095f276e83f0850923e9e66b",
         "homeDomainHash": "0x6d99fb87e3b04d5511e33963be35e5bf1413faef07088eb5a343ed9bae06d90c",
         "LEGACY_STATUS_NONE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LEGACY_STATUS_PROCESSED": "0x0000000000000000000000000000000000000000000000000000000000000002",
