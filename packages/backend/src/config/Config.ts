@@ -102,6 +102,7 @@ export interface DiscordConfig {
 export interface UpdateMonitorChainConfig {
   chainId: ChainId
   rpcUrl: string
+  rpcGetLogsMaxRange?: number
   etherscanApiKey: string
   etherscanUrl: string
   minTimestamp: UnixTime

@@ -1,43 +1,50 @@
-import { getMethodQuery, getTransferQuery } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { BigQueryProvider } from './BigQueryProvider'
-import { Method, Transfer } from './config'
-import { LivenessMethodsQuery, LivenessTransfersQuery } from './model'
+import { BigQueryMethodsResult, BigQueryTransfersResult } from './model'
+import { getFunctionCallQuery } from './sql/getFunctionCallQuery'
+import { getTransferQuery } from './sql/getTransferQuery'
+
+export interface FunctionCallQueryParams {
+  address: EthereumAddress
+  selector: string
+}
+
+export interface TransferQueryParams {
+  from: EthereumAddress
+  to: EthereumAddress
+}
 
 export class BigQueryClient {
   constructor(private readonly bigquery: BigQueryProvider) {}
 
-  async makeTransfersQuery(
-    transfers: Transfer[],
-    from_timestamp: string,
-    to_timestamp: string,
+  async getTransfers(
+    transfers: TransferQueryParams[],
+    from: UnixTime,
+    to: UnixTime,
   ) {
-    const from_addresses = transfers.map((t) => t.from_address.toLowerCase())
-    const to_addresses = transfers.map((t) => t.to_address.toLowerCase())
-    const query = getTransferQuery(
-      from_addresses,
-      to_addresses,
-      from_timestamp,
-      to_timestamp,
-    )
-    const transfersData = await this.bigquery.query(query)
-    return LivenessTransfersQuery.parse(transfersData)
+    const senders = transfers.map((t) => t.from)
+    const receivers = transfers.map((t) => t.to)
+
+    const query = getTransferQuery(senders, receivers, from, to)
+
+    const result = await this.bigquery.query(query)
+
+    return BigQueryTransfersResult.parse(result)
   }
 
-  async makeMethodsQuery(
-    methods: Method[],
-    from_timestamp: string,
-    to_timestamp: string,
+  async getFunctionCalls(
+    methods: FunctionCallQueryParams[],
+    from: UnixTime,
+    to: UnixTime,
   ) {
-    const addresses = methods.map((m) => m.address.toLowerCase())
+    const addresses = methods.map((m) => m.address)
     const methodSelectors = methods.map((m) => m.selector.toLowerCase())
-    const query = getMethodQuery(
-      addresses,
-      methodSelectors,
-      from_timestamp,
-      to_timestamp,
-    )
-    const methodsData = await this.bigquery.query(query)
-    return LivenessMethodsQuery.parse(methodsData)
+
+    const query = getFunctionCallQuery(addresses, methodSelectors, from, to)
+
+    const result = await this.bigquery.query(query)
+
+    return BigQueryMethodsResult.parse(result)
   }
 }

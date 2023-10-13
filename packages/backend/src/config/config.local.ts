@@ -188,6 +188,9 @@ export function getLocalConfig(env: Env): Config {
         {
           chainId: ChainId.ETHEREUM,
           rpcUrl: env.string('DISCOVERY_ETHEREUM_RPC_URL'),
+          rpcGetLogsMaxRange: env.optionalInteger(
+            'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
+          ),
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
           minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),

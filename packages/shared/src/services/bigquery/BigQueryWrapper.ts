@@ -2,9 +2,9 @@ import { BigQuery } from '@google-cloud/bigquery'
 
 export interface BigQueryAuth {
   // Client Email
-  client_email: string
+  clientEmail: string
   // Consumer Private Key
-  private_key: string
+  privateKey: string
   // Project ID
   projectId: string
 }
@@ -15,8 +15,8 @@ export class BigQueryWrapper {
   constructor(params: BigQueryAuth) {
     this.bigquery = new BigQuery({
       credentials: {
-        client_email: params.client_email,
-        private_key: params.private_key,
+        client_email: params.clientEmail,
+        private_key: params.privateKey,
       },
       projectId: params.projectId,
     })
