@@ -121,7 +121,7 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'Verifier28x32',
           references: [
-            'https://etherscan.io/address/0xB656f4219f565b93DF57D531B574E17FE0F25939#code#F3#L150',
+            'https://etherscan.io/address/0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69#code#F3#L150',
           ],
         },
       ],
