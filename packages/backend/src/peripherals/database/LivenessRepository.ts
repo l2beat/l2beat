@@ -35,7 +35,7 @@ export class LivenessRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('liveness').delete()
+    return knex('liveness').delete()
   }
 }
 

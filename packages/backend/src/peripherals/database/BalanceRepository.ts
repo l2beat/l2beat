@@ -75,7 +75,7 @@ export class BalanceRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('balances').delete()
+    return knex('balances').delete()
   }
 }
 

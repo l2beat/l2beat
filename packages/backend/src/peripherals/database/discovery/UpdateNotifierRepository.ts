@@ -54,7 +54,7 @@ export class UpdateNotifierRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('update_notifier').delete()
+    return knex('update_notifier').delete()
   }
 }
 

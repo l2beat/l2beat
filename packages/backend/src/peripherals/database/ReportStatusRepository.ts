@@ -56,7 +56,7 @@ export class ReportStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('reports_status').delete()
+    return knex('reports_status').delete()
   }
 
   async getBetween(
