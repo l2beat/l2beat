@@ -1,8 +1,8 @@
 {
   "name": "opticsV2",
   "chain": "ethereum",
-  "blockNumber": 18313071,
-  "configHash": "0xe12d2aabdc339e485c027a1b304a9f078b9618616b8fd771d7d047935e202474",
+  "blockNumber": 18340280,
+  "configHash": "0x48aa6338e9c24644996168d5847dd89e287395d1b35a9f11a3b4a9809a54e725",
   "version": 2,
   "contracts": [
     {
@@ -25,7 +25,7 @@
       },
       "sinceTimestamp": 1637962173,
       "values": {
-        "committedRoot": "0x35b8cd076170a57ee946d4dd47d349329e1dae83a41833079787da9466bc86e3",
+        "committedRoot": "0xfae953dd987fd08fed61f27962bb7d5bfc8110c797eaa2f6d4fb5c5e081e2566",
         "homeDomainHash": "0x6b881beed7c8ffb30baea620e40be2b61ea2706b341014fb812bc7ff2f75fca1",
         "localDomain": 6648936,
         "optimisticSeconds": 1800,
