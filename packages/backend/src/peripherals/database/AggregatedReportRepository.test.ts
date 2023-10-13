@@ -64,8 +64,8 @@ describe(AggregatedReportRepository.name, () => {
       const result = await repository.getAggregateDaily(projects)
 
       expect(result).toEqual([
-        getResult(DAY_TWO, projects, TVL, CBV, EBV, NMV),
         getResult(DAY_ONE, projects, TVL, CBV, EBV, NMV),
+        getResult(DAY_TWO, projects, TVL, CBV, EBV, NMV),
       ])
     })
 
@@ -109,8 +109,8 @@ describe(AggregatedReportRepository.name, () => {
       const result = await repository.getAggregateDaily(projects)
 
       expect(result).toEqual([
-        getResult(DAY_TWO, projects, TVL, CBV, EBV, NMV),
         getResult(DAY_ONE, projects, TVL, CBV, EBV, NMV),
+        getResult(DAY_TWO, projects, TVL, CBV, EBV, NMV),
       ])
     })
   })
