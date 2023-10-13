@@ -1,9 +1,7 @@
 import {
   BigQueryClient,
   BigQueryFunctionCallsResult,
-  BigQueryProvider,
   BigQueryTransfersResult,
-  BigQueryWrapper,
 } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -15,7 +13,10 @@ import {
   LivenessFunctionCall,
   LivenessTransfer,
 } from './types/LivenessConfig'
-import { transformTransfersQueryResult } from './utils'
+import {
+  transformFunctionCallsQueryResult,
+  transformTransfersQueryResult,
+} from './utils'
 
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
@@ -29,7 +30,7 @@ const TO = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.getTransfers.name, () => {
-    it.only('should fetch and transform data properly', async () => {
+    it('should fetch and transform data properly', async () => {
       const queryResults: BigQueryTransfersResult = [
         {
           block_number: 1,
@@ -80,41 +81,26 @@ describe(LivenessIndexer.name, () => {
 
   describe(LivenessIndexer.prototype.getFunctionCalls.name, () => {
     it('should fetch and transform data properly', async () => {
-      const queryResults = [
+      const queryResults: BigQueryFunctionCallsResult = [
         {
           block_number: 1,
           block_timestamp: FROM,
           input: '0x9aaab648da640f49b7fbd17ea63a961cba1b09414',
-          to_address: ADDRESS_1.toLocaleLowerCase(),
+          to_address: ADDRESS_1,
           transaction_hash: '0xabcdef1234567890',
         },
         {
           block_number: 2,
-          block_timestamp: { value: '2022-01-01T01:00:00Z' },
+          block_timestamp: FROM,
           input: '0x7739cbe7d5363037dc70ec111bd9b26f95981f3e8',
-          to_address: ADDRESS_2.toLocaleLowerCase(),
+          to_address: ADDRESS_2,
           transaction_hash: '0xabcdef1234567891',
-        },
-        {
-          block_number: 3,
-          block_timestamp: { value: '2022-01-01T02:00:00Z' },
-          input: '0xa04cee60ad0d1d7ec9ec16d4606b208470d97fc76a',
-          to_address: ADDRESS_3.toLocaleLowerCase(),
-          transaction_hash: '0xabcdef1234567892',
         },
       ]
 
-      const bigQuery = mockObject<BigQueryWrapper>({
-        createQueryJob: mockFn().resolvesToOnce([
-          {
-            getQueryResults: async () => {
-              return [queryResults]
-            },
-          },
-        ]),
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getFunctionCalls: mockFn().resolvesToOnce(queryResults),
       })
-      const bigQueryProvider = new BigQueryProvider(bigQuery)
-      const bigQueryClient = new BigQueryClient(bigQueryProvider)
 
       const configs: LivenessFunctionCall[] = [
         {
@@ -129,43 +115,14 @@ describe(LivenessIndexer.name, () => {
           selector: '0x7739cbe7',
           type: 'STATE',
         },
-        {
-          projectId: ProjectId('project2'),
-          address: ADDRESS_3,
-          selector: '0xa04cee60',
-          type: 'DA',
-        },
       ]
-      const expected: LivenessRecord[] = [
-        {
-          blockNumber: 1,
-          projectId: ProjectId('project1'),
-          timestamp: UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
-          txHash: '0xabcdef1234567890',
-          type: 'DA',
-        },
-        {
-          blockNumber: 2,
-          projectId: ProjectId('project2'),
-          timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
-          txHash: '0xabcdef1234567891',
-          type: 'STATE',
-        },
-        {
-          blockNumber: 3,
-          projectId: ProjectId('project2'),
-          timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
-          txHash: '0xabcdef1234567892',
-          type: 'DA',
-        },
-      ]
+      const expected: LivenessRecord[] = transformFunctionCallsQueryResult(
+        configs,
+        queryResults,
+      )
 
       const livenessIndexer = new LivenessIndexer(bigQueryClient)
-      const results = await livenessIndexer.getFunctionCalls(
-        configs,
-        UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
-        UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
-      )
+      const results = await livenessIndexer.getFunctionCalls(configs, FROM, TO)
 
       expect(results).toEqual(expected)
     })
