@@ -35,11 +35,13 @@ export type FrontedActivityApiChartPoint = z.infer<
 >
 
 export const FrontendActivityApiChart = z.object({
-  types: z.tuple([
-    z.literal('timestamp'),
-    z.literal('transactions'),
-    z.literal('ethereumTransactions'),
-  ]),
-  data: z.array(FrontedActivityApiChartPoint),
+  daily: z.object({
+    types: z.tuple([
+      z.literal('timestamp'),
+      z.literal('transactions'),
+      z.literal('ethereumTransactions'),
+    ]),
+    data: z.array(FrontedActivityApiChartPoint),
+  }),
 })
 export type FrontendActivityApiChart = z.infer<typeof FrontendActivityApiChart>
