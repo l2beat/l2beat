@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { AggregatedReportType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -24,158 +24,93 @@ describe(AggregatedReportRepository.name, () => {
   })
 
   describe(AggregatedReportRepository.prototype.getAggregateDaily.name, () => {
-    it.only('works', async () => {
+    it('correctly aggregates by timestamp', async () => {
       const DAY_ONE = UnixTime.now().toStartOf('day')
       const DAY_TWO = DAY_ONE.add(1, 'days')
       const PROJECT_A = ProjectId('project-a')
       const PROJECT_B = ProjectId('project-b')
 
+      const TVL = 10n
+      const CBV = 5n
+      const EBV = 2n
+      const NMV = 3n
+
       const reports: AggregatedReportRecord[] = [
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_A,
-          usdValue: 100n,
-          ethValue: 100_000n,
-          reportType: 'TVL',
-        },
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_A,
-          usdValue: 50n,
-          ethValue: 50_000n,
-          reportType: 'CBV',
-        },
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_A,
-          usdValue: 20n,
-          ethValue: 20_000n,
-          reportType: 'EBV',
-        },
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_A,
-          usdValue: 30n,
-          ethValue: 30_000n,
-          reportType: 'NMV',
-        },
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_B,
-          usdValue: 100n,
-          ethValue: 100_000n,
-          reportType: 'TVL',
-        },
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_B,
-          usdValue: 50n,
-          ethValue: 50_000n,
-          reportType: 'CBV',
-        },
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_B,
-          usdValue: 20n,
-          ethValue: 20_000n,
-          reportType: 'EBV',
-        },
-        {
-          timestamp: DAY_ONE,
-          projectId: PROJECT_B,
-          usdValue: 30n,
-          ethValue: 30_000n,
-          reportType: 'NMV',
-        },
+        mockRecord(DAY_ONE, PROJECT_A, TVL, 'TVL'),
+        mockRecord(DAY_ONE, PROJECT_A, CBV, 'CBV'),
+        mockRecord(DAY_ONE, PROJECT_A, EBV, 'EBV'),
+        mockRecord(DAY_ONE, PROJECT_A, NMV, 'NMV'),
+        mockRecord(DAY_ONE, PROJECT_B, TVL, 'TVL'),
+        mockRecord(DAY_ONE, PROJECT_B, CBV, 'CBV'),
+        mockRecord(DAY_ONE, PROJECT_B, EBV, 'EBV'),
+        mockRecord(DAY_ONE, PROJECT_B, NMV, 'NMV'),
       ]
 
       const reports2: AggregatedReportRecord[] = [
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_A,
-          usdValue: 100n,
-          ethValue: 100_000n,
-          reportType: 'TVL',
-        },
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_A,
-          usdValue: 50n,
-          ethValue: 50_000n,
-          reportType: 'CBV',
-        },
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_A,
-          usdValue: 20n,
-          ethValue: 20_000n,
-          reportType: 'EBV',
-        },
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_A,
-          usdValue: 30n,
-          ethValue: 30_000n,
-          reportType: 'NMV',
-        },
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_B,
-          usdValue: 100n,
-          ethValue: 100_000n,
-          reportType: 'TVL',
-        },
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_B,
-          usdValue: 50n,
-          ethValue: 50_000n,
-          reportType: 'CBV',
-        },
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_B,
-          usdValue: 20n,
-          ethValue: 20_000n,
-          reportType: 'EBV',
-        },
-        {
-          timestamp: DAY_TWO,
-          projectId: PROJECT_B,
-          usdValue: 30n,
-          ethValue: 30_000n,
-          reportType: 'NMV',
-        },
+        mockRecord(DAY_TWO, PROJECT_A, TVL, 'TVL'),
+        mockRecord(DAY_TWO, PROJECT_A, CBV, 'CBV'),
+        mockRecord(DAY_TWO, PROJECT_A, EBV, 'EBV'),
+        mockRecord(DAY_TWO, PROJECT_A, NMV, 'NMV'),
+        mockRecord(DAY_TWO, PROJECT_B, TVL, 'TVL'),
+        mockRecord(DAY_TWO, PROJECT_B, CBV, 'CBV'),
+        mockRecord(DAY_TWO, PROJECT_B, EBV, 'EBV'),
+        mockRecord(DAY_TWO, PROJECT_B, NMV, 'NMV'),
       ]
 
       await repository.addOrUpdateMany(reports)
       await repository.addOrUpdateMany(reports2)
 
-      const result = await repository.getAggregateDaily([PROJECT_A, PROJECT_B])
+      const projects = [PROJECT_A, PROJECT_B]
+      const result = await repository.getAggregateDaily(projects)
 
       expect(result).toEqual([
-        {
-          timestamp: DAY_TWO,
-          tvlUsdValue: 2n * 100n,
-          tvlEthValue: 2n * 100_000n,
-          cbvUsdValue: 2n * 50n,
-          cbvEthValue: 2n * 50_000n,
-          ebvUsdValue: 2n * 20n,
-          ebvEthValue: 2n * 20_000n,
-          nmvUsdValue: 2n * 30n,
-          nmvEthValue: 2n * 30_000n,
-        },
-        {
-          timestamp: DAY_ONE,
-          tvlUsdValue: 2n * 100n,
-          tvlEthValue: 2n * 100_000n,
-          cbvUsdValue: 2n * 50n,
-          cbvEthValue: 2n * 50_000n,
-          ebvUsdValue: 2n * 20n,
-          ebvEthValue: 2n * 20_000n,
-          nmvUsdValue: 2n * 30n,
-          nmvEthValue: 2n * 30_000n,
-        },
+        getResult(DAY_TWO, projects, TVL, CBV, EBV, NMV),
+        getResult(DAY_ONE, projects, TVL, CBV, EBV, NMV),
+      ])
+    })
+
+    it('filters projects', async () => {
+      const DAY_ONE = UnixTime.now().toStartOf('day')
+      const DAY_TWO = DAY_ONE.add(1, 'days')
+      const PROJECT_A = ProjectId('project-a')
+      const PROJECT_B = ProjectId('project-b')
+
+      const TVL = 10n
+      const CBV = 5n
+      const EBV = 2n
+      const NMV = 3n
+
+      const reports: AggregatedReportRecord[] = [
+        mockRecord(DAY_ONE, PROJECT_A, TVL, 'TVL'),
+        mockRecord(DAY_ONE, PROJECT_A, CBV, 'CBV'),
+        mockRecord(DAY_ONE, PROJECT_A, EBV, 'EBV'),
+        mockRecord(DAY_ONE, PROJECT_A, NMV, 'NMV'),
+        mockRecord(DAY_ONE, PROJECT_B, TVL, 'TVL'),
+        mockRecord(DAY_ONE, PROJECT_B, CBV, 'CBV'),
+        mockRecord(DAY_ONE, PROJECT_B, EBV, 'EBV'),
+        mockRecord(DAY_ONE, PROJECT_B, NMV, 'NMV'),
+      ]
+
+      const reports2: AggregatedReportRecord[] = [
+        mockRecord(DAY_TWO, PROJECT_A, TVL, 'TVL'),
+        mockRecord(DAY_TWO, PROJECT_A, CBV, 'CBV'),
+        mockRecord(DAY_TWO, PROJECT_A, EBV, 'EBV'),
+        mockRecord(DAY_TWO, PROJECT_A, NMV, 'NMV'),
+        mockRecord(DAY_TWO, PROJECT_B, TVL, 'TVL'),
+        mockRecord(DAY_TWO, PROJECT_B, CBV, 'CBV'),
+        mockRecord(DAY_TWO, PROJECT_B, EBV, 'EBV'),
+        mockRecord(DAY_TWO, PROJECT_B, NMV, 'NMV'),
+      ]
+
+      await repository.addOrUpdateMany(reports)
+      await repository.addOrUpdateMany(reports2)
+
+      const projects: ProjectId[] = [PROJECT_A]
+      const result = await repository.getAggregateDaily(projects)
+
+      expect(result).toEqual([
+        getResult(DAY_TWO, projects, TVL, CBV, EBV, NMV),
+        getResult(DAY_ONE, projects, TVL, CBV, EBV, NMV),
       ])
     })
   })
@@ -354,6 +289,52 @@ describe(AggregatedReportRepository.name, () => {
     })
   })
 })
+
+function getResult(
+  DAY_TWO: UnixTime,
+  projects: ProjectId[],
+  tvl: bigint,
+  cbv: bigint,
+  ebv: bigint,
+  nmv: bigint,
+): {
+  timestamp: UnixTime
+  cbvUsdValue: bigint
+  cbvEthValue: bigint
+  ebvUsdValue: bigint
+  ebvEthValue: bigint
+  nmvUsdValue: bigint
+  nmvEthValue: bigint
+  tvlUsdValue: bigint
+  tvlEthValue: bigint
+} {
+  return {
+    timestamp: DAY_TWO,
+    tvlUsdValue: BigInt(projects.length) * tvl * 100n,
+    tvlEthValue: BigInt(projects.length) * tvl * 100000n,
+    cbvUsdValue: BigInt(projects.length) * cbv * 100n,
+    cbvEthValue: BigInt(projects.length) * cbv * 100000n,
+    ebvUsdValue: BigInt(projects.length) * ebv * 100n,
+    ebvEthValue: BigInt(projects.length) * ebv * 100000n,
+    nmvUsdValue: BigInt(projects.length) * nmv * 100n,
+    nmvEthValue: BigInt(projects.length) * nmv * 100000n,
+  }
+}
+
+function mockRecord(
+  DAY_ONE: UnixTime,
+  PROJECT_A: ProjectId,
+  value: bigint,
+  type: AggregatedReportType,
+): AggregatedReportRecord {
+  return {
+    timestamp: DAY_ONE,
+    projectId: PROJECT_A,
+    usdValue: value * 100n,
+    ethValue: value * 100_000n,
+    reportType: type,
+  }
+}
 
 function fakeAggregateReport(
   report?: Partial<AggregatedReportRecord>,
