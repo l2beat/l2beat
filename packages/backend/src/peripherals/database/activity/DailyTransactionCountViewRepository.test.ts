@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { groupBy, mapValues } from 'lodash'
+import { groupBy, mapValues, omit } from 'lodash'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
 import {
@@ -20,36 +20,36 @@ const PROJECT_B = ProjectId('project-b')
 const PROJECT_C = ProjectId('project-c')
 
 describe(DailyTransactionCountViewRepository.name, () => {
+  const { database } = setupDatabaseTestSuite()
+  const repository = new DailyTransactionCountViewRepository(
+    database,
+    Logger.SILENT,
+  )
+  const blockRepository = new BlockTransactionCountRepository(
+    database,
+    Logger.SILENT,
+  )
+  const zkSyncRepository = new ZksyncTransactionRepository(
+    database,
+    Logger.SILENT,
+  )
+  const starkExRepository = new StarkexTransactionCountRepository(
+    database,
+    Logger.SILENT,
+  )
+
+  beforeEach(async () => {
+    // Delete all rows from all tables that are used in the view
+    await blockRepository.deleteAll()
+    await zkSyncRepository.deleteAll()
+    await starkExRepository.deleteAll()
+
+    await repository.refresh()
+  })
+
   describe(
     DailyTransactionCountViewRepository.prototype.getDailyCounts.name,
     () => {
-      const { database } = setupDatabaseTestSuite()
-      const repository = new DailyTransactionCountViewRepository(
-        database,
-        Logger.SILENT,
-      )
-      const blockRepository = new BlockTransactionCountRepository(
-        database,
-        Logger.SILENT,
-      )
-      const zkSyncRepository = new ZksyncTransactionRepository(
-        database,
-        Logger.SILENT,
-      )
-      const starkExRepository = new StarkexTransactionCountRepository(
-        database,
-        Logger.SILENT,
-      )
-
-      beforeEach(async () => {
-        // Delete all rows from all tables that are used in the view
-        await blockRepository.deleteAll()
-        await zkSyncRepository.deleteAll()
-        await starkExRepository.deleteAll()
-
-        await repository.refresh()
-      })
-
       it('view must be empty', async () => {
         const result = await repository.getDailyCounts()
         expect(result).toEqual([])
@@ -150,6 +150,78 @@ describe(DailyTransactionCountViewRepository.name, () => {
           groupByTimestampAndSortByProjectIdInside(result)
 
         expect(resultPerTimestamp).toEqual(expectedValuesPerTimestamp)
+      })
+    },
+  )
+
+  describe(
+    DailyTransactionCountViewRepository.prototype
+      .getProjectsAggregatedDailyCount.name,
+    () => {
+      it('should return correct response for single project', async () => {
+        await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_A, 0, 0, 1))
+        await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_B, 1, 0, 2))
+        await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_A, 2, 0, 3))
+        await blockRepository.addOrUpdate(mockBlockRecord(PROJECT_B, 2, 1, 4))
+
+        await repository.refresh()
+
+        const result = await repository.getProjectsAggregatedDailyCount([
+          PROJECT_A,
+        ])
+        expect(result).toEqual(
+          [
+            [0, 1],
+            [2, 3],
+          ]
+            .map(([day, count]) =>
+              getDailyTransactionCountRecord(PROJECT_A, day, count),
+            )
+            .map((i) => omit(i, 'projectId')),
+        )
+      })
+
+      it('should return correct response for multiple projects', async () => {
+        const mockRecords = [
+          // day 0
+          mockBlockRecord(PROJECT_A, 0, 0, 1),
+          mockBlockRecord(PROJECT_A, 0, 1, 1),
+          // day 1
+          mockBlockRecord(PROJECT_B, 1, 0, 2),
+          mockBlockRecord(PROJECT_C, 1, 0, 3),
+          // day 2
+          mockBlockRecord(PROJECT_A, 2, 0, 3),
+          mockBlockRecord(PROJECT_B, 2, 1, 4),
+          // day 3
+          mockBlockRecord(PROJECT_B, 3, 0, 2),
+          mockBlockRecord(PROJECT_C, 3, 0, 3),
+          // day 4
+          mockBlockRecord(PROJECT_C, 4, 0, 4),
+          // day 5
+          mockBlockRecord(PROJECT_B, 5, 0, 2),
+        ]
+        await Promise.all(
+          mockRecords.map((record) => blockRepository.addOrUpdate(record)),
+        )
+
+        await repository.refresh()
+
+        const result = await repository.getProjectsAggregatedDailyCount([
+          PROJECT_A,
+          PROJECT_B,
+        ])
+        expect(result).toEqual(
+          [
+            [0, 2],
+            [1, 2],
+            [2, 7],
+            [3, 2],
+            [5, 2],
+          ].map(([day, count]) => ({
+            timestamp: new UnixTime(UnixTime.DAY * day),
+            count,
+          })),
+        )
       })
     },
   )
