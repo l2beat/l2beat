@@ -16,7 +16,9 @@ export function formatFrontendChart(
   data: FrontedActivityApiChartPoint[],
 ): FrontendActivityApiChart {
   return {
-    types: ['timestamp', 'transactions', 'ethereumTransactions'],
-    data,
+    daily: {
+      types: ['timestamp', 'transactions', 'ethereumTransactions'],
+      data,
+    },
   }
 }
