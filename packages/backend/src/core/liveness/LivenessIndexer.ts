@@ -1,5 +1,5 @@
 import { BigQueryClient } from '@l2beat/shared'
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessConfig } from './types/LivenessConfig'
@@ -13,44 +13,38 @@ export class LivenessIndexer {
   constructor(private readonly bigQueryClient: BigQueryClient) {}
 
   async getTransfers(
-    configs: LivenessConfig[],
+    projectConfigs: LivenessConfig[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const transfersConfig = configs
+    const combinedConfigs = projectConfigs
       .flatMap((c) => c.transfers)
-      .filter(notUndefined)
       .filter((c) => isTimestampInRange(c.untilTimestamp, from, to))
 
     const queryResults = await this.bigQueryClient.getTransfers(
-      transfersConfig,
+      combinedConfigs,
       from,
       to,
     )
 
-    return transformTransfersQueryResult(configs, transfersConfig, queryResults)
+    return transformTransfersQueryResult(combinedConfigs, queryResults)
   }
 
   async getFunctionCalls(
-    configs: LivenessConfig[],
+    projectConfigs: LivenessConfig[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const functionCallsConfig = configs
+    const allConfigs = projectConfigs
       .flatMap((c) => c.functionCalls)
-      .filter(notUndefined)
       .filter((c) => isTimestampInRange(c.untilTimestamp, from, to))
 
     const queryResults = await this.bigQueryClient.getFunctionCalls(
-      functionCallsConfig,
+      allConfigs,
       from,
       to,
     )
 
-    return transformFunctionCallsQueryResult(
-      configs,
-      functionCallsConfig,
-      queryResults,
-    )
+    return transformFunctionCallsQueryResult(allConfigs, queryResults)
   }
 }
