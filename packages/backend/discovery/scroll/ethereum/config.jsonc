@@ -1,0 +1,45 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "scroll",
+  "initialAddresses": ["0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"],
+  "names": {
+    "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "L1GatewayRouter",
+    "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": "L1MessageQueue",
+    "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "L1ScrollMessenger",
+    "0x987e300fDfb06093859358522a79098848C33852": "L2GasPriceOracle",
+    "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "ScrollChain",
+    "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": "MultipleVersionRollupVerifier"
+  },
+  "overrides": {
+    "L1MessageQueue": {
+      "ignoreMethods": [
+        "estimateCrossDomainMessageFee",
+        "getCrossDomainMessage",
+        "isMessageDropped",
+        "isMessageSkipped",
+        "messageQueue"
+      ],
+      "ignoreInWatchMode": ["nextCrossDomainMessageIndex", "pendingQueueIndex"]
+    },
+    "L1ScrollMessenger": {
+      "ignoreMethods": ["prevReplayIndex"]
+    },
+    "L2GasPriceOracle": {
+      "ignoreMethods": ["estimateCrossDomainMessageFee"],
+      "ignoreInWatchMode": ["l2BaseFee"]
+    },
+    "ScrollChain": {
+      "ignoreMethods": [
+        "committedBatches",
+        "finalizedStateRoots",
+        "isBatchFinalized",
+        "withdrawRoots"
+      ],
+      "ignoreInWatchMode": ["lastFinalizedBatchIndex"]
+    },
+    "MultipleVersionRollupVerifier": {
+      "ignoreMethods": ["getVerifier"]
+    }
+  }
+}

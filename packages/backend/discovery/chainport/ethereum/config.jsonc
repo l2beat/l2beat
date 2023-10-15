@@ -21,6 +21,12 @@
   "overrides": {
     "ChainportCongress": {
       "ignoreMethods": ["getActions", "proposals"]
+    },
+    "MultisigVault1": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "MultisigVault2": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

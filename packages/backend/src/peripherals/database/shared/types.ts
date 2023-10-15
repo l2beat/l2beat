@@ -85,6 +85,11 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  type ProjectsAggregatedDailyCountRow = Omit<
+    DailyTransactionCountRow,
+    'project_id'
+  >
+
   interface UpdateMonitorRow {
     project_name: string
     chain_id: number

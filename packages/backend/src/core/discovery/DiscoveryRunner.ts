@@ -19,8 +19,9 @@ export interface DiscoveryRunnerOptions {
   retryDelayMs?: number
 }
 
-const MAX_RETRIES = 6
-const RETRY_DELAY_MS = 10_000
+// 10 minutes
+const MAX_RETRIES = 30
+const RETRY_DELAY_MS = 20_000
 
 export class DiscoveryRunner {
   constructor(

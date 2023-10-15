@@ -50,7 +50,7 @@ export function createUpdateMonitorModule(
     logger,
   )
 
-  // TODO: get rid of that once we achive full library separation
+  // TODO: get rid of that once we achieve full library separation
   const discoveryHttpClient = new DiscoveryHttpClient()
 
   const runners = config.updateMonitor.chains.map((chainConfig) =>
