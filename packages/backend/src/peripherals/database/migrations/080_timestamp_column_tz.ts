@@ -54,16 +54,16 @@ export async function up(knex: Knex) {
     const tempColumnName = `${column.column_name}_temp`
 
     await knex.raw(
-      `ALTER TABLE "${table_schema}.${table_name}" ADD COLUMN ${tempColumnName} timestamp without time zone;`,
+      `ALTER TABLE "${table_schema}"."${table_name}" ADD COLUMN ${tempColumnName} timestamp without time zone;`,
     )
     await knex.raw(
-      `UPDATE "${table_schema}.${table_name}" SET ${tempColumnName} = ${column_name};`,
+      `UPDATE "${table_schema}"."${table_name}" SET ${tempColumnName} = ${column_name};`,
     )
     await knex.raw(
-      `ALTER TABLE "${table_schema}.${table_name}" DROP COLUMN ${column_name};`,
+      `ALTER TABLE "${table_schema}"."${table_name}" DROP COLUMN ${column_name};`,
     )
     await knex.raw(
-      `ALTER TABLE "${table_schema}.${table_name}" RENAME COLUMN ${tempColumnName} TO ${column_name};`,
+      `ALTER TABLE "${table_schema}"."${table_name}" RENAME COLUMN ${tempColumnName} TO ${column_name};`,
     )
   }
 }
