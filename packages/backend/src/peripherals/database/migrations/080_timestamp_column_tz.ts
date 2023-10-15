@@ -13,6 +13,10 @@ should create a new migration file that fixes the issue.
 
 import { Knex } from 'knex'
 
+const dailyCountViewSchema = 'activity'
+const dailyCountViewName = 'daily_count_view'
+const dailyCountView = `${dailyCountViewSchema}.${dailyCountViewName}`
+
 interface ColumnInfo {
   table_catalog: string
   table_schema: string
@@ -22,6 +26,7 @@ interface ColumnInfo {
 }
 
 export async function up(knex: Knex) {
+  // get all columns that are of type timestamp with time zone
   const columns = (await knex('information_schema.columns')
     .select(
       'table_catalog',
@@ -34,10 +39,6 @@ export async function up(knex: Knex) {
       data_type: 'timestamp with time zone',
     })
     .whereIn('table_schema', ['public', 'activity'])) as ColumnInfo[]
-
-  const dailyCountViewSchema = 'activity'
-  const dailyCountViewName = 'daily_count_view'
-  const dailyCountView = `${dailyCountViewSchema}.${dailyCountViewName}`
 
   // get definition of activity.daily_count_view materialized view
   const dailyCountViewDefinition = (await knex('pg_matviews')
@@ -68,39 +69,10 @@ export async function up(knex: Knex) {
     // to use the new column type by reparsing the originally supplied expression.
 
     // get list of indexes table is involved in
-    try {
-      console.log('table:', table_name, 'column:', column_name)
-      const indexes_before = await knex('pg_indexes')
-        .select('indexname')
-        .where({ tablename: table_name, schemaname: table_schema })
-        .andWhereLike('indexdef', `%${column_name}%`)
-
-      await knex.raw(
-        `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column_name}
+    await knex.raw(
+      `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column_name}
         SET DATA TYPE timestamp without time zone USING ${column_name}::timestamp without time zone`,
-      )
-      const indexes_after = await knex('pg_indexes')
-        .select('indexname')
-        .where({ tablename: table_name, schemaname: table_schema })
-        .andWhereLike('indexdef', `%${column_name}%`)
-
-      console.log(
-        '##############################################################',
-      )
-      console.log('indexes before:')
-      console.log(indexes_before)
-      console.log(
-        '--------------------------------------------------------------',
-      )
-      console.log('indexes after:')
-      console.log(indexes_after)
-      console.log(
-        '##############################################################',
-      )
-    } catch (error) {
-      console.log(error)
-      throw error
-    }
+    )
   }
 
   // recreate materialized view
@@ -112,6 +84,9 @@ export async function up(knex: Knex) {
   for (const index of dailyCountViewIndexes) {
     await knex.raw(index.indexdef)
   }
+
+  // refresh materialized view
+  await knex.raw(`REFRESH MATERIALIZED VIEW ${dailyCountView}`)
 }
 
 export async function down(_: Knex) {}
