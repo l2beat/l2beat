@@ -68,4 +68,4 @@ export async function up(knex: Knex) {
   }
 }
 
-export async function down(knex: Knex) {}
+export async function down(_: Knex) {}
