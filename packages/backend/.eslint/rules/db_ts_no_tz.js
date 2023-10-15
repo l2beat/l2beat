@@ -23,7 +23,6 @@ const rule = {
           // Check if the method is called with the expected parameters
           if (
             args.length !== 2 ||
-            args[0].value !== 'unix_timestamp' ||
             !args[1].properties.some(
               (prop) => prop.key.name === 'useTz' && prop.value.value === false,
             )
