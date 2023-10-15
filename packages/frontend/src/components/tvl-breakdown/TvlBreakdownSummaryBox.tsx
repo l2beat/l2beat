@@ -60,29 +60,29 @@ function StatsItem(props: StatsItemProps) {
         props.big && 'mb-1',
       )}
     >
-      
-      <span className="hidden text-xs font-medium text-gray-500 dark:text-gray-600 md:inline">
-        {props.title}
-      </span>
-      <span
-        className={classNames(
-          'font-medium  md:hidden',
-          props.big
-            ? 'text-lg text-black dark:text-white'
-            : 'text-xs text-gray-600',
-        )}
+      <div className="flex items-center gap-1">
+        <span className="hidden text-xs font-medium text-gray-500 dark:text-gray-600 md:inline">
+          {props.title}
+        </span>
+        <span
+          className={classNames(
+            'font-medium  md:hidden',
+            props.big
+              ? 'text-lg text-black dark:text-white'
+              : 'text-xs text-gray-600',
+          )}
         
-      >
-        {props.mobileTitle}
-      </span>
+        >
+          {props.mobileTitle}
+        </span>
       
-      <span
-        className="Tooltip -translate-y-px md:translate-y-0"
-        title={props.tooltip}
-      >
-        <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
-      </span>
-      
+        <span
+          className="Tooltip -translate-y-px md:translate-y-0 ml-0.5"
+          title={props.tooltip}
+        >
+          <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+        </span>
+      </div>
       <div className="flex items-center gap-1">
         <span
           className={classNames(
