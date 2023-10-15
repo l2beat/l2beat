@@ -32,39 +32,85 @@ export async function up(knex: Knex) {
     )
     .where({
       data_type: 'timestamp with time zone',
-      table_schema: 'public',
-    })) as ColumnInfo[]
+    })
+    .whereIn('table_schema', ['public', 'activity'])) as ColumnInfo[]
+
+  const dailyCountViewSchema = 'activity'
+  const dailyCountViewName = 'daily_count_view'
+  const dailyCountView = `${dailyCountViewSchema}.${dailyCountViewName}`
+
+  // get definition of activity.daily_count_view materialized view
+  const dailyCountViewDefinition = (await knex('pg_matviews')
+    .select('definition')
+    .where({
+      schemaname: dailyCountViewSchema,
+      matviewname: dailyCountViewName,
+    })) as { definition: string }[]
+
+  // get definition of all indexes on activity.daily_count_view
+  const dailyCountViewIndexes = (await knex('pg_indexes')
+    .select('indexdef')
+    .where({
+      schemaname: dailyCountViewSchema,
+      tablename: dailyCountViewName,
+    })) as { indexdef: string }[]
+
+  // drop materialized view since it's not possible to alter
+  // a column type when it's used in a materialized view or a view
+  await knex.raw(`DROP MATERIALIZED VIEW ${dailyCountView}`)
 
   for (const column of columns) {
     const { table_name, column_name, table_schema } = column
     if (table_name === 'knex_migrations') continue
 
-    // ChatGTP! 2023-10-11
-    // Altering a column directly in PostgreSQL does not inherently result in data loss. However, it's important to exercise caution and consider the potential impact on your data when altering column types.
-    //
-    // When altering a column type, PostgreSQL will attempt to perform a type conversion for each existing value in the column. If the conversion is not possible due to incompatible data or constraints, an error may occur, and data loss could potentially happen.
-    //
-    // To minimize the risk of data loss, it's recommended to follow best practices:
-    //
-    // 1. Backup your database before making any alterations to critical columns.
-    // 2. Test the alteration on a non-production environment or a copy of the database first.
-    // 3. Ensure that the new column type is compatible with the data and any constraints or dependencies.
-    // 4. Consider any potential implications on queries, application logic, and data integrity.
+    // https://www.postgresql.org/docs/14/sql-altertable.html
+    // Indexes and simple table constraints involving the column will be automatically converted
+    // to use the new column type by reparsing the originally supplied expression.
 
-    const tempColumnName = `${column.column_name}_temp`
+    // get list of indexes table is involved in
+    try {
+      console.log('table:', table_name, 'column:', column_name)
+      const indexes_before = await knex('pg_indexes')
+        .select('indexname')
+        .where({ tablename: table_name, schemaname: table_schema })
+        .andWhereLike('indexdef', `%${column_name}%`)
 
-    await knex.raw(
-      `ALTER TABLE "${table_schema}"."${table_name}" ADD COLUMN ${tempColumnName} timestamp without time zone;`,
-    )
-    await knex.raw(
-      `UPDATE "${table_schema}"."${table_name}" SET ${tempColumnName} = ${column_name};`,
-    )
-    await knex.raw(
-      `ALTER TABLE "${table_schema}"."${table_name}" DROP COLUMN ${column_name};`,
-    )
-    await knex.raw(
-      `ALTER TABLE "${table_schema}"."${table_name}" RENAME COLUMN ${tempColumnName} TO ${column_name};`,
-    )
+      await knex.raw(
+        `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column_name}
+        SET DATA TYPE timestamp without time zone USING ${column_name}::timestamp without time zone`,
+      )
+      const indexes_after = await knex('pg_indexes')
+        .select('indexname')
+        .where({ tablename: table_name, schemaname: table_schema })
+        .andWhereLike('indexdef', `%${column_name}%`)
+
+      console.log(
+        '##############################################################',
+      )
+      console.log('indexes before:')
+      console.log(indexes_before)
+      console.log(
+        '--------------------------------------------------------------',
+      )
+      console.log('indexes after:')
+      console.log(indexes_after)
+      console.log(
+        '##############################################################',
+      )
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+  // recreate materialized view
+  await knex.raw(`
+    CREATE MATERIALIZED VIEW ${dailyCountView} AS
+      ${dailyCountViewDefinition[0].definition}`)
+
+  // recreate indexes
+  for (const index of dailyCountViewIndexes) {
+    await knex.raw(index.indexdef)
   }
 }
 
