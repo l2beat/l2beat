@@ -1,4 +1,5 @@
 import { Layer2 } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
 
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../components/project/TechnologySection'
@@ -31,7 +32,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
           'data-availability',
           project.technology.dataAvailability,
         ),
-      ].filter(noUndefined),
+      ].filter(notUndefined),
     }
 
     const operator: TechnologySectionProps = {
@@ -57,7 +58,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
         ),
         project.technology.massExit &&
           makeTechnologyChoice('mass-exit', project.technology.massExit),
-      ].filter(noUndefined),
+      ].filter(notUndefined),
     }
 
     const other: TechnologySectionProps = {
@@ -80,7 +81,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
             'upgrade-mechanism',
             project.technology.upgradeMechanism,
           ),
-      ].filter(noUndefined),
+      ].filter(notUndefined),
     }
 
     const filtered = [technology, operator, withdrawals, other].filter(
@@ -112,8 +113,4 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     incomplete,
     sections,
   }
-}
-
-function noUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
 }
