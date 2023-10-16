@@ -113,7 +113,9 @@ export function Chart(props: ChartProps) {
             />
           </div>
           <div className="flex justify-between">
-            {(props.hasActivity || isActivity) && <EthereumActivityToggle />}
+            {(props.hasActivity || isActivity) && (
+              <EthereumActivityToggle showToggle={isActivity} />
+            )}
             {!isActivity && (
               <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
                 <CurrencyControls />
