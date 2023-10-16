@@ -141,7 +141,6 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 }
 
 export function checkIfEmptyActivityCharts(allProjects: ActivityProjectData[]) {
-  console.log(allProjects)
   const emptyActivityCharts = allProjects.filter(
     ([_, data]) => data.length === 0,
   )
