@@ -269,7 +269,7 @@ export const starknet: Layer2 = {
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      ...RISK_VIEW.SEQUENCER_APPLICATIVE_SEQUENCE(),
       sources: [
         {
           contract: 'Starknet',
