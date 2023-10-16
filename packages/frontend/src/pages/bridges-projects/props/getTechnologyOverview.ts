@@ -1,4 +1,5 @@
 import { Bridge } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
 
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../components/project/TechnologySection'
@@ -30,7 +31,7 @@ export function getTechnologyOverview(project: Bridge): TechnologyOverview {
             'destination-token',
             project.technology.destinationToken,
           ),
-      ].filter(noUndefined),
+      ].filter(notUndefined),
     }
     const filtered = [technology].filter((x) => x.items.length > 0)
 
@@ -62,8 +63,4 @@ export function getTechnologyOverview(project: Bridge): TechnologyOverview {
     incomplete,
     sections,
   }
-}
-
-function noUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
 }

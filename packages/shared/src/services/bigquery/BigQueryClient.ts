@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { BigQueryProvider } from './BigQueryProvider'
-import { BigQueryMethodsResult, BigQueryTransfersResult } from './model'
+import { BigQueryFunctionCallsResult, BigQueryTransfersResult } from './model'
 import { getFunctionCallQuery } from './sql/getFunctionCallQuery'
 import { getTransferQuery } from './sql/getTransferQuery'
 
@@ -45,6 +45,6 @@ export class BigQueryClient {
 
     const result = await this.bigquery.query(query)
 
-    return BigQueryMethodsResult.parse(result)
+    return BigQueryFunctionCallsResult.parse(result)
   }
 }
