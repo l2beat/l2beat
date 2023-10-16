@@ -62,7 +62,7 @@ export class ActivityController {
     }
   }
 
-  async getProjectsActivity(
+  async getAggregatedActivity(
     filteredProjectsSlugs: string[] = [],
   ): Promise<ActivityApiCharts> {
     const projectIdsFilter = [...layer2s, ...bridges]
