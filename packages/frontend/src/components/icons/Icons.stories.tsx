@@ -39,7 +39,7 @@ import { SunIcon } from './symbols/SunIcon'
 import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
-import { WarningIcon } from './symbols/WarningIcon'
+import { RoundedWarningIcon } from './symbols/RoundedWarningIcon'
 
 export default {
   title: 'Components/Icons',
@@ -121,7 +121,7 @@ export function SymbolIcons() {
       <UnverifiedIcon />
       <UpcomingIcon />
       <UserIcon />
-      <WarningIcon />
+      <RoundedWarningIcon />
     </Template>
   )
 }
