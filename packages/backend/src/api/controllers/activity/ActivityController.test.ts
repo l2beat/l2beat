@@ -45,7 +45,89 @@ describe(ActivityController.name, () => {
       )
     })
 
-    it('groups data for included projects', async () => {
+    it('returns only included projects', async () => {
+      const includedIds: ProjectId[] = [ProjectId.ETHEREUM, PROJECT_A]
+      const counters: TransactionCounter[] = [
+        mockCounter({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
+        }),
+        mockCounter({
+          projectId: PROJECT_B,
+          hasProcessedAll: true,
+        }),
+        mockCounter({
+          projectId: ProjectId.ETHEREUM,
+          hasProcessedAll: false,
+        }),
+      ]
+
+      const controller = new ActivityController(
+        includedIds,
+        counters,
+        mockRepository([
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2137,
+          },
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 420,
+          },
+          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2,
+          },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 1,
+          },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY,
+            count: 2,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 1,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY,
+            count: 2,
+          },
+        ]),
+        mockObject<Clock>({ getLastHour: () => NOW }),
+      )
+
+      expect(await controller.getActivity()).toEqual(
+        formatActivity({
+          combined: [
+            [TODAY.add(-2, 'days').toNumber(), 2, 2137],
+            [TODAY.add(-1, 'days').toNumber(), 1, 420],
+          ],
+          projects: {
+            'project-a': [
+              [TODAY.add(-2, 'days').toNumber(), 2, 2137],
+              [TODAY.add(-1, 'days').toNumber(), 1, 420],
+            ],
+          },
+        }),
+      )
+    })
+
+    it('groups data', async () => {
       const includedIds: ProjectId[] = [
         PROJECT_A,
         PROJECT_B,
