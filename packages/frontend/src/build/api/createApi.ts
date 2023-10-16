@@ -1,5 +1,5 @@
 import {
-  ActivityApiChart,
+  ActivityApiCharts,
   ActivityApiResponse,
   DetailedTvlApiCharts,
   DetailedTvlApiResponse,
@@ -13,13 +13,6 @@ import path from 'path'
 
 import { Config } from '../config'
 
-export interface FrontendActivityChart {
-  daily: {
-    types: ['timestamp', 'transactions', 'ethereumTransactions']
-    data: [number, number, number][]
-  }
-}
-
 export function createApi(
   config: Config,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
@@ -27,7 +20,7 @@ export function createApi(
 ) {
   const urlCharts = new Map<
     string,
-    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+    TvlApiCharts | DetailedTvlApiCharts | ActivityApiCharts
   >()
 
   urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
@@ -52,14 +45,8 @@ export function createApi(
   }
   urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)
 
-  if (activityApiResponse) {
-    urlCharts.set(
-      'activity/combined',
-      getActivityChart(
-        activityApiResponse.combined,
-        activityApiResponse.ethereum,
-      ),
-    )
+  if (activityApiResponse?.combined) {
+    urlCharts.set('activity/combined', activityApiResponse.combined)
 
     for (const [projectId, chart] of Object.entries(
       activityApiResponse.projects,
@@ -67,10 +54,7 @@ export function createApi(
       const slug = config.layer2s.find((x) => x.id.toString() === projectId)
         ?.display.slug
       if (chart && slug) {
-        urlCharts.set(
-          `activity/${slug}`,
-          getActivityChart(chart, activityApiResponse.ethereum),
-        )
+        urlCharts.set(`activity/${slug}`, chart)
       }
     }
   }
@@ -81,7 +65,7 @@ export function createApi(
 export function outputCharts(
   urlCharts: Map<
     string,
-    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+    TvlApiCharts | DetailedTvlApiCharts | ActivityApiCharts
   >,
 ) {
   for (const [url, charts] of urlCharts) {
@@ -110,52 +94,6 @@ export function outputCharts(
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(path.join('build/api', `${url}.json`), json)
   }
-}
-
-function getActivityChart(
-  apiChart: ActivityApiChart,
-  ethereumChart: ActivityApiChart,
-): FrontendActivityChart {
-  return {
-    daily: {
-      types: ['timestamp', 'transactions', 'ethereumTransactions'],
-      data: alignActivityData(apiChart.data, ethereumChart.data),
-    },
-  }
-}
-
-export function alignActivityData(
-  apiChartData: ActivityApiChart['data'],
-  ethereumChartData: ActivityApiChart['data'],
-): FrontendActivityChart['daily']['data'] {
-  const lastProjectTimestamp = apiChartData.at(-1)?.[0]
-  if (!lastProjectTimestamp) {
-    throw new Error('No data in activity chart')
-  }
-  const ethChartTimestampIndex = ethereumChartData.findIndex(
-    (x) => x[0].toNumber() === lastProjectTimestamp.toNumber(),
-  )
-  if (ethChartTimestampIndex === -1) {
-    throw new Error('No matching timestamp in ethereum chart')
-  }
-  const alignedEthChartData = ethereumChartData.slice(
-    0,
-    ethChartTimestampIndex + 1,
-  )
-  const length = Math.min(apiChartData.length, alignedEthChartData.length)
-
-  const data: FrontendActivityChart['daily']['data'] = new Array(length)
-    .fill(0)
-    .map((_, i) => {
-      const apiPoint = apiChartData.at(-length + i)
-      const ethPoint = alignedEthChartData.at(-length + i)
-      return [
-        apiPoint?.[0].toNumber() ?? 0,
-        apiPoint?.[1] ?? 0,
-        ethPoint?.[1] ?? 0,
-      ]
-    })
-  return data
 }
 
 const PLACEHOLDER_API_DATA: TvlApiCharts = {

@@ -8,9 +8,9 @@ const ONE_TPS = 24 * 60 * 60
 describe(getTpsDaily.name, () => {
   it('calculates correctly', () => {
     const data: ActivityApiChartPoint[] = [
-      [new UnixTime(0), 0],
-      [new UnixTime(1), 1],
-      [new UnixTime(2), ONE_TPS],
+      [new UnixTime(0), 0, 5],
+      [new UnixTime(1), 1, 4],
+      [new UnixTime(2), ONE_TPS, 2],
     ]
 
     const result = getTpsDaily(data)
