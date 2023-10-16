@@ -4,11 +4,15 @@ import { formatTimestamp } from '../dates'
 
 const SECONDS_IN_A_DAY = 24 * 60 * 60
 
-export function getMaxTps(
-  data: ActivityApiChartPoint[] | undefined,
-): { maxTps: number; maxTpsDate: string } | undefined {
+export function getMaxTps(data: ActivityApiChartPoint[] | undefined): {
+  maxTps: number | undefined
+  maxTpsDate: string | undefined
+} {
   if (!data || data.length === 0) {
-    return
+    return {
+      maxTps: undefined,
+      maxTpsDate: undefined,
+    }
   }
 
   const maxEntry = data.reduce((max, current) =>

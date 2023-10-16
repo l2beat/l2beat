@@ -54,13 +54,18 @@ export function getScalingActivityViewEntry(
 
 function getEthereumActivityViewEntry(
   activityApiResponse: ActivityApiResponse,
-) {
+): ActivityViewEntry {
   const data = activityApiResponse.combined.daily.data
   return {
     name: 'Ethereum',
     slug: 'ethereum',
     dataSource: 'Blockchain RPC',
-    verificationStatus: true,
+    category: undefined,
+    provider: undefined,
+    warning: undefined,
+    isVerified: undefined,
+    showProjectUnderReview: undefined,
+    stage: undefined,
     ...getActivityViewEntryDetails({ data, transactionCountType: 'ethereum' }),
   }
 }
