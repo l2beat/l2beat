@@ -1,6 +1,5 @@
 import z from 'zod'
 
-
 export const ActivityApiChartPoint = z.tuple([
   z.number().int(),
   z.number().int(),
@@ -9,13 +8,17 @@ export const ActivityApiChartPoint = z.tuple([
 export type ActivityApiChartPoint = z.infer<typeof ActivityApiChartPoint>
 
 export const ActivityApiChart = z.object({
-  types: z.tuple([z.literal('timestamp'), z.literal('transactions'), z.literal('ethereumTransactions')]),
+  types: z.tuple([
+    z.literal('timestamp'),
+    z.literal('transactions'),
+    z.literal('ethereumTransactions'),
+  ]),
   data: z.array(ActivityApiChartPoint),
 })
 export type ActivityApiChart = z.infer<typeof ActivityApiChart>
 
 export const ActivityApiCharts = z.object({
-  daily: ActivityApiChart
+  daily: ActivityApiChart,
 })
 export type ActivityApiCharts = z.infer<typeof ActivityApiCharts>
 

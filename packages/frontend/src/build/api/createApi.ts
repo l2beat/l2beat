@@ -52,10 +52,7 @@ export function createApi(
   urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)
 
   if (activityApiResponse?.combined) {
-    urlCharts.set(
-      'activity/combined',
-      activityApiResponse.combined
-    )
+    urlCharts.set('activity/combined', activityApiResponse.combined)
 
     for (const [projectId, chart] of Object.entries(
       activityApiResponse.projects,
@@ -63,10 +60,7 @@ export function createApi(
       const slug = config.layer2s.find((x) => x.id.toString() === projectId)
         ?.display.slug
       if (chart && slug) {
-        urlCharts.set(
-          `activity/${slug}`,
-          chart
-        )
+        urlCharts.set(`activity/${slug}`, chart)
       }
     }
   }

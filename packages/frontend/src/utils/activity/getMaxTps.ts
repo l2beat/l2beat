@@ -17,6 +17,6 @@ export function getMaxTps(
 
   return {
     maxTps: maxEntry[1] / SECONDS_IN_A_DAY,
-    maxTpsDate: formatTimestamp(maxEntry[0].toNumber()),
+    maxTpsDate: formatTimestamp(maxEntry[0]),
   }
 }

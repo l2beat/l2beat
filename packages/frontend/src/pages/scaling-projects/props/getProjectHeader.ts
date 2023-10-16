@@ -68,10 +68,14 @@ export function getProjectHeader(
       : getBasic(apiProject?.charts)
 
   const activityData =
-    activityApiResponse?.projects[project.id.toString()]?.data
+    activityApiResponse?.projects[project.id.toString()]?.daily.data
   const tpsDaily = getTpsDaily(activityData)
   const tpsWeeklyChange = getTpsWeeklyChange(activityData)
-  const transactionMonthlyCount = getTransactionCount(activityData, 'month')
+  const transactionMonthlyCount = getTransactionCount(
+    activityData,
+    'project',
+    'month',
+  )
 
   const tvlBreakdown = getTvlBreakdown(
     project.display.name,
