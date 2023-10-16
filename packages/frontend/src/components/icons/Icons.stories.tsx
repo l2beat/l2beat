@@ -33,13 +33,13 @@ import { MenuOpenIcon } from './symbols/MenuOpenIcon'
 import { MilestoneIcon } from './symbols/MilestoneIcon'
 import { MoonIcon } from './symbols/MoonIcon'
 import { OutLinkIcon } from './symbols/OutLinkIcon'
+import { RoundedWarningIcon } from './symbols/RoundedWarningIcon'
 import { SearchIcon } from './symbols/SearchIcon'
 import { ShieldIcon } from './symbols/ShieldIcon'
 import { SunIcon } from './symbols/SunIcon'
 import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
-import { RoundedWarningIcon } from './symbols/RoundedWarningIcon'
 
 export default {
   title: 'Components/Icons',
