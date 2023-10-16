@@ -30,8 +30,9 @@ export function ScalingFilters({ items }: Props) {
 
   const categories = uniq(items.map((i) => i.category))
     .sort()
+    .filter(notUndefined)
     .map((category) => ({
-      label: category ?? 'No category',
+      label: category,
       value: generateSlugList(items, (i) => i.category === category),
     }))
 
