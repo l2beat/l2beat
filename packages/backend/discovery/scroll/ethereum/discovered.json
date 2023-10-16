@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 18362238,
-  "configHash": "0xd412d95e3b725526983d5ec305c262d823af9c7a77c9705faa70d91926e7f2a2",
+  "configHash": "0x93af0da143d6b4a7ad95dae26b205e544b3e00007cce89352920d3b5ba3c3674",
   "version": 2,
   "contracts": [
     {
@@ -111,7 +111,7 @@
       "derivedName": "TimelockController"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ExecutorMultisig",
       "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
       "upgradeability": {
         "type": "gnosis safe",
@@ -131,7 +131,8 @@
         "getThreshold": 1,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Whitelist",
@@ -276,7 +277,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "FeeVaultMultisig",
       "address": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
       "upgradeability": {
         "type": "gnosis safe",
@@ -294,7 +295,8 @@
         "getThreshold": 2,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L2GasPriceOracle",
@@ -350,7 +352,7 @@
       "derivedName": "MultipleVersionRollupVerifier"
     },
     {
-      "name": "GnosisSafe",
+      "name": "InstantMultisig",
       "address": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
       "upgradeability": {
         "type": "gnosis safe",
@@ -370,7 +372,8 @@
         "getThreshold": 2,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L2TokenImplementationFallback",
@@ -410,13 +413,39 @@
       },
       "sinceTimestamp": 1696782479,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b",
+              "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 604800,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
+      },
+      "derivedName": "TimelockController"
     },
     {
       "name": "Fallback",
@@ -441,7 +470,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "ProposerMultisig",
       "address": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
       "upgradeability": {
         "type": "gnosis safe",
@@ -461,7 +490,8 @@
         "getThreshold": 4,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1GatewayRouter",

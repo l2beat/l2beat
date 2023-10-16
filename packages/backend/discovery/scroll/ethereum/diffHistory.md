@@ -1,4 +1,4 @@
-# Diff at Mon, 16 Oct 2023 11:33:20 GMT:
+# Diff at Mon, 16 Oct 2023 11:40:33 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@5a4b84dcfce795ed237969fc2de963545b00da78
@@ -49,6 +49,16 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+    contract GnosisSafe (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+      name:
+-        "GnosisSafe"
++        "FeeVaultMultisig"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
+```diff
     contract Fallback (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69) {
       name:
 -        "Fallback"
@@ -72,13 +82,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
     }
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    contract InstantMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
     }
 ```
 
@@ -90,7 +100,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    contract ProposerMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
     }
 ```
 

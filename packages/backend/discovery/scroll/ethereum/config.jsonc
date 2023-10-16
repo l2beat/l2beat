@@ -13,10 +13,15 @@
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner",
     "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C": "TimelockSlow",
     "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockFast",
+    "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b": "TimelockController",
     "0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "L2TokenFactoryFallback",
     "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": "L2TokenImplementationFallback",
     "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": "L2ScrollMessengerFallback",
-    "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": "L2ETHGatewayFallback"
+    "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": "L2ETHGatewayFallback",
+    "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "ProposerMultisig",
+    "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "ExecutorMultisig",
+    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "FeeVaultMultisig",
+    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "InstantMultisig"
   },
   "overrides": {
     "L1MessageQueue": {
@@ -63,6 +68,13 @@
       }
     },
     "TimelockFast": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "TimelockController": {
       "fields": {
         "accessControl": {
           "type": "accessControl"
