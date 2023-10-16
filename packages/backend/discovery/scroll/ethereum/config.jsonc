@@ -9,7 +9,14 @@
     "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "L1ScrollMessenger",
     "0x987e300fDfb06093859358522a79098848C33852": "L2GasPriceOracle",
     "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "ScrollChain",
-    "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": "MultipleVersionRollupVerifier"
+    "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": "MultipleVersionRollupVerifier",
+    "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner",
+    "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C": "TimelockSlow",
+    "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockFast",
+    "0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "L2TokenFactoryFallback",
+    "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": "L2TokenImplementationFallback",
+    "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": "L2ScrollMessengerFallback",
+    "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": "L2ETHGatewayFallback"
   },
   "overrides": {
     "L1MessageQueue": {
@@ -40,6 +47,27 @@
     },
     "MultipleVersionRollupVerifier": {
       "ignoreMethods": ["getVerifier"]
+    },
+    "ScrollOwner": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "TimelockSlow": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "TimelockFast": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
     }
   }
 }
