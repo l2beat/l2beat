@@ -45,60 +45,7 @@ describe(ActivityController.name, () => {
       )
     })
 
-    it('returns only included projects', async () => {
-      const includedIds: ProjectId[] = [ProjectId.ETHEREUM]
-      const counters: TransactionCounter[] = [
-        mockCounter({
-          projectId: PROJECT_A,
-          hasProcessedAll: true,
-        }),
-        mockCounter({
-          projectId: PROJECT_B,
-          hasProcessedAll: true,
-        }),
-        mockCounter({
-          projectId: ProjectId.ETHEREUM,
-          hasProcessedAll: false,
-        }),
-      ]
-
-      const controller = new ActivityController(
-        includedIds,
-        counters,
-        mockRepository([
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: TODAY.add(-2, 'days'),
-            count: 2137,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: TODAY.add(-1, 'days'),
-            count: 420,
-          },
-          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
-          {
-            projectId: PROJECT_A,
-            timestamp: TODAY.add(-3, 'days'),
-            count: 2,
-          },
-        ]),
-        mockObject<Clock>({ getLastHour: () => NOW }),
-      )
-
-      expect(await controller.getActivity()).toEqual(
-        formatActivity({
-          combined: [],
-          projects: {},
-          ethereum: [
-            [TODAY.add(-2, 'days'), 2137],
-            [TODAY.add(-1, 'days'), 420],
-          ],
-        }),
-      )
-    })
-
-    it('groups data', async () => {
+    it('groups data for included projects', async () => {
       const includedIds: ProjectId[] = [
         PROJECT_A,
         PROJECT_B,
@@ -161,23 +108,19 @@ describe(ActivityController.name, () => {
       expect(await controller.getActivity()).toEqual(
         formatActivity({
           combined: [
-            [TODAY.add(-2, 'days'), 1339],
-            [TODAY.add(-1, 'days'), 70],
+            [TODAY.add(-2, 'days').toNumber(), 1339, 2137],
+            [TODAY.add(-1, 'days').toNumber(), 70, 420],
           ],
           projects: {
             [PROJECT_A.toString()]: [
-              [TODAY.add(-2, 'days'), 2],
-              [TODAY.add(-1, 'days'), 1],
+              [TODAY.add(-2, 'days').toNumber(), 2, 2137],
+              [TODAY.add(-1, 'days').toNumber(), 1, 420],
             ],
             [PROJECT_B.toString()]: [
-              [TODAY.add(-2, 'days'), 1337],
-              [TODAY.add(-1, 'days'), 69],
+              [TODAY.add(-2, 'days').toNumber(), 1337, 2137],
+              [TODAY.add(-1, 'days').toNumber(), 69, 420],
             ],
           },
-          ethereum: [
-            [TODAY.add(-2, 'days'), 2137],
-            [TODAY.add(-1, 'days'), 420],
-          ],
         }),
       )
     })
@@ -187,27 +130,25 @@ describe(ActivityController.name, () => {
 function formatActivity({
   combined,
   projects,
-  ethereum,
 }: {
   combined: ActivityApiChartPoint[]
   projects: Record<string, ActivityApiChartPoint[]>
-  ethereum: ActivityApiChartPoint[]
 }): ActivityApiResponse {
   return {
     combined: {
-      types: ['timestamp', 'daily tx count'],
-      data: combined,
-    },
-    ethereum: {
-      types: ['timestamp', 'daily tx count'],
-      data: ethereum,
+      daily: {
+        types: ['timestamp', 'transactions', 'ethereumTransactions'],
+        data: combined,
+      },
     },
     projects: Object.entries(projects).reduce((acc, cur) => {
       return {
         ...acc,
         [cur[0]]: {
-          types: ['timestamp', 'daily tx count'],
-          data: cur[1],
+          daily: {
+            types: ['timestamp', 'transactions', 'ethereumTransactions'],
+            data: cur[1],
+          },
         },
       }
     }, {}),
