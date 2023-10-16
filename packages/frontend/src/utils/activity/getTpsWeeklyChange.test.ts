@@ -8,14 +8,14 @@ const ONE_TPS = 24 * 60 * 60
 describe(getTpsWeeklyChange.name, () => {
   it('calculates correctly', () => {
     const data: ActivityApiChartPoint[] = [
-      [new UnixTime(1), ONE_TPS],
-      [new UnixTime(2), ONE_TPS],
-      [new UnixTime(3), ONE_TPS],
-      [new UnixTime(4), ONE_TPS],
-      [new UnixTime(5), ONE_TPS],
-      [new UnixTime(6), ONE_TPS],
-      [new UnixTime(7), ONE_TPS],
-      [new UnixTime(8), ONE_TPS * 2],
+      [new UnixTime(1), ONE_TPS, 2],
+      [new UnixTime(2), ONE_TPS, 2],
+      [new UnixTime(3), ONE_TPS, 2],
+      [new UnixTime(4), ONE_TPS, 2],
+      [new UnixTime(5), ONE_TPS, 2],
+      [new UnixTime(6), ONE_TPS, 2],
+      [new UnixTime(7), ONE_TPS, 2],
+      [new UnixTime(8), ONE_TPS * 2, 2],
     ]
 
     const result = getTpsWeeklyChange(data)
@@ -30,7 +30,7 @@ describe(getTpsWeeklyChange.name, () => {
     expect(result).toEqual('')
   })
   it('returns 0 if data array is too short', () => {
-    const result = getTpsWeeklyChange([[new UnixTime(1), ONE_TPS]])
+    const result = getTpsWeeklyChange([[new UnixTime(1), ONE_TPS, 2]])
 
     expect(result).toEqual('+0.00%')
   })

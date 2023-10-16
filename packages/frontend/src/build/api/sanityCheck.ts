@@ -197,7 +197,7 @@ export function checkIfDelayedActivity(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const lastValue = data.daily.data.at(-1)!
       const lastTimestamp = lastValue[0]
-      const delay = now.toNumber() - lastTimestamp
+      const delay = now.toNumber() - lastTimestamp.toNumber()
       return { name, delay }
     })
     .filter(({ delay }) => delay > ACTIVITY_ACCEPTABLE_DELAY)

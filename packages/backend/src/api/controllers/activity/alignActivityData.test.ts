@@ -23,9 +23,9 @@ describe(alignActivityData.name, () => {
     const result = alignActivityData(apiChartData, ethChartData)
 
     expect(result).toEqual([
-      [lastDay.add(-2, 'days').toNumber(), 1, 4],
-      [lastDay.add(-1, 'days').toNumber(), 2, 5],
-      [lastDay.toNumber(), 3, 6],
+      [lastDay.add(-2, 'days'), 1, 4],
+      [lastDay.add(-1, 'days'), 2, 5],
+      [lastDay, 3, 6],
     ])
   })
 
@@ -45,8 +45,8 @@ describe(alignActivityData.name, () => {
       const result = alignActivityData(apiChartData, ethChartData)
 
       expect(result).toEqual([
-        [lastDay.add(-2, 'days').toNumber(), 1, 4],
-        [lastDay.add(-1, 'days').toNumber(), 2, 5],
+        [lastDay.add(-2, 'days'), 1, 4],
+        [lastDay.add(-1, 'days'), 2, 5],
       ])
     })
 
@@ -65,8 +65,8 @@ describe(alignActivityData.name, () => {
       const result = alignActivityData(apiChartData, ethChartData)
 
       expect(result).toEqual([
-        [lastDay.add(-1, 'days').toNumber(), 2, 5],
-        [lastDay.toNumber(), 3, 6],
+        [lastDay.add(-1, 'days'), 2, 5],
+        [lastDay, 3, 6],
       ])
     })
   })
@@ -102,8 +102,8 @@ describe(alignActivityData.name, () => {
       const result = alignActivityData(apiChartData, ethChartData)
 
       expect(result).toEqual([
-        [lastDay.add(-1, 'days').toNumber(), 2, 5],
-        [lastDay.toNumber(), 3, 6],
+        [lastDay.add(-1, 'days'), 2, 5],
+        [lastDay, 3, 6],
       ])
     })
   })

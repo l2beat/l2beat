@@ -110,15 +110,15 @@ describe(activitySanityCheck.name, () => {
     [
       'projectA',
       dataToChart([
-        [today.add(-1, 'days').toNumber(), 1, 5],
-        [today.toNumber(), 2, 3],
+        [today.add(-1, 'days'), 1, 5],
+        [today, 2, 3],
       ]),
     ],
     [
       'projectB',
       dataToChart([
-        [today.add(-1, 'days').toNumber(), 3, 5],
-        [today.toNumber(), 4, 2],
+        [today.add(-1, 'days'), 3, 5],
+        [today, 4, 2],
       ]),
     ],
   ]
@@ -133,8 +133,8 @@ describe(activitySanityCheck.name, () => {
         [
           'projectA',
           dataToChart([
-            [today.add(-1, 'days').toNumber(), 1, 3],
-            [today.toNumber(), 2, 5],
+            [today.add(-1, 'days'), 1, 3],
+            [today, 2, 5],
           ]),
         ],
         ['projectB', dataToChart([])],
@@ -160,15 +160,15 @@ describe(activitySanityCheck.name, () => {
         [
           'projectA',
           dataToChart([
-            [today.add(-1, 'days').toNumber(), 1, 2],
-            [today.toNumber(), 0, 4],
+            [today.add(-1, 'days'), 1, 2],
+            [today, 0, 4],
           ]),
         ],
         [
           'projectB',
           dataToChart([
-            [today.add(-1, 'days').toNumber(), 3, 2],
-            [today.toNumber(), 4, 3],
+            [today.add(-1, 'days'), 3, 2],
+            [today, 4, 3],
           ]),
         ],
       ]
@@ -183,8 +183,8 @@ describe(activitySanityCheck.name, () => {
         [
           'projectA',
           dataToChart([
-            [today.add(-1, 'days').toNumber(), 1, 2],
-            [today.toNumber(), 1, 3],
+            [today.add(-1, 'days'), 1, 2],
+            [today, 1, 3],
           ]),
         ],
       ]
@@ -205,7 +205,7 @@ describe(activitySanityCheck.name, () => {
     it('throws if delayed activity', () => {
       const now = today.add(3, 'hours')
       const allProjects: ActivityProjectData[] = [
-        ['projectA', dataToChart([[today.add(-2, 'days').toNumber(), 1, 5]])],
+        ['projectA', dataToChart([[today.add(-2, 'days'), 1, 5]])],
       ]
 
       expect(() => checkIfDelayedActivity(allProjects, now)).toThrow(

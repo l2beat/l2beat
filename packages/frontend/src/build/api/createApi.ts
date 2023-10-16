@@ -1,4 +1,5 @@
 import {
+  ActivityApiCharts,
   ActivityApiResponse,
   DetailedTvlApiCharts,
   DetailedTvlApiResponse,
@@ -12,13 +13,6 @@ import path from 'path'
 
 import { Config } from '../config'
 
-export interface FrontendActivityChart {
-  daily: {
-    types: ['timestamp', 'transactions', 'ethereumTransactions']
-    data: [number, number, number][]
-  }
-}
-
 export function createApi(
   config: Config,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
@@ -26,7 +20,7 @@ export function createApi(
 ) {
   const urlCharts = new Map<
     string,
-    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+    TvlApiCharts | DetailedTvlApiCharts | ActivityApiCharts
   >()
 
   urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
@@ -71,7 +65,7 @@ export function createApi(
 export function outputCharts(
   urlCharts: Map<
     string,
-    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+    TvlApiCharts | DetailedTvlApiCharts | ActivityApiCharts
   >,
 ) {
   for (const [url, charts] of urlCharts) {

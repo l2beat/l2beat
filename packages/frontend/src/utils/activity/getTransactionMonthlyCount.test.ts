@@ -1,4 +1,4 @@
-import { ActivityApiChartPoint } from '@l2beat/shared-pure'
+import { ActivityApiChartPoint, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getTransactionCount } from '../../../src/utils/activity/getTransactionCount'
@@ -8,7 +8,7 @@ const ONE_TPS = 24 * 60 * 60
 describe(getTransactionCount.name, () => {
   it('calculates month correctly', () => {
     const data: ActivityApiChartPoint[] = new Array(50).fill([
-      0,
+      new UnixTime(0),
       ONE_TPS,
       ONE_TPS * 2,
     ])
@@ -19,7 +19,7 @@ describe(getTransactionCount.name, () => {
   })
   it('calculates week correctly', () => {
     const data: ActivityApiChartPoint[] = new Array(50).fill([
-      0,
+      new UnixTime(0),
       ONE_TPS,
       ONE_TPS * 2,
     ])
@@ -37,7 +37,7 @@ describe(getTransactionCount.name, () => {
   })
   it('counts as much as it can if the data is too short', () => {
     const result = getTransactionCount(
-      [[1, ONE_TPS, ONE_TPS * 2]],
+      [[new UnixTime(1), ONE_TPS, ONE_TPS * 2]],
       'project',
       'month',
     )
@@ -47,7 +47,7 @@ describe(getTransactionCount.name, () => {
 
   it('counts ethereum data', () => {
     const data: ActivityApiChartPoint[] = new Array(50).fill([
-      0,
+      new UnixTime(0),
       ONE_TPS,
       ONE_TPS * 2,
     ])

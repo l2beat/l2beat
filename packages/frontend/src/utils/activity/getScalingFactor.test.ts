@@ -1,4 +1,4 @@
-import { ActivityApiResponse } from '@l2beat/shared-pure'
+import { ActivityApiResponse, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getScalingFactor } from './getScalingFactor'
@@ -12,14 +12,14 @@ describe(getScalingFactor.name, () => {
         daily: {
           types: ['timestamp', 'transactions', 'ethereumTransactions'],
           data: [
-            [0, ONE_TPS, ONE_TPS],
-            [1, ONE_TPS, ONE_TPS],
-            [2, ONE_TPS, ONE_TPS],
-            [3, ONE_TPS, ONE_TPS],
-            [4, ONE_TPS, ONE_TPS],
-            [5, ONE_TPS, ONE_TPS],
-            [6, ONE_TPS, ONE_TPS],
-            [7, ONE_TPS, ONE_TPS],
+            [new UnixTime(0), ONE_TPS, ONE_TPS],
+            [new UnixTime(1), ONE_TPS, ONE_TPS],
+            [new UnixTime(2), ONE_TPS, ONE_TPS],
+            [new UnixTime(3), ONE_TPS, ONE_TPS],
+            [new UnixTime(4), ONE_TPS, ONE_TPS],
+            [new UnixTime(5), ONE_TPS, ONE_TPS],
+            [new UnixTime(6), ONE_TPS, ONE_TPS],
+            [new UnixTime(7), ONE_TPS, ONE_TPS],
           ],
         },
       },

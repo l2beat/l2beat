@@ -1,4 +1,8 @@
-import { ActivityApiChart, ActivityApiChartPoint } from '@l2beat/shared-pure'
+import {
+  ActivityApiChart,
+  ActivityApiChartPoint,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { DailyTransactionCount } from './types'
 
@@ -28,7 +32,7 @@ export function alignActivityData(
       const apiPoint = apiChartData.at(-length + i)
       const ethPoint = alignedEthChartData.at(-length + i)
       return [
-        apiPoint?.timestamp.toNumber() ?? 0,
+        apiPoint?.timestamp ?? new UnixTime(0),
         apiPoint?.count ?? 0,
         ethPoint?.count ?? 0,
       ]

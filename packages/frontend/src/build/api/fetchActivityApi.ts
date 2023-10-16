@@ -40,7 +40,7 @@ function getMockActivityApiChart(): ActivityApiCharts {
   }
   for (let i = -365; i <= 0; i++) {
     const timestamp = now.add(i, 'days')
-    chart.data.push([timestamp.toNumber(), 50, 20])
+    chart.data.push([timestamp, 50, 20])
   }
   return {
     daily: chart,
