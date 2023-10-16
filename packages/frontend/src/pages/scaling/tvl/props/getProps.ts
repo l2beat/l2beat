@@ -3,7 +3,7 @@ import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { getTvlWithChange } from '../../../../utils/tvl/getTvlWitchChange'
+import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { PagesData, Wrapped } from '../../../Page'
 import { TvlPageProps } from '../view/ScalingTvlPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -16,7 +16,6 @@ export function getProps(
   const { tvlApiResponse, verificationStatus } = pagesData
 
   const charts = tvlApiResponse.layers2s
-  // TODO (filter): Figure out where to move this file
   const { tvl } = getTvlWithChange(charts)
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)

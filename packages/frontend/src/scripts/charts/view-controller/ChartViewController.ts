@@ -1,4 +1,5 @@
 import { formatCurrency } from '../../../utils/format'
+import { getTvlWithChange } from '../../../utils/tvl/getTvlWithChange'
 import { makeQuery } from '../../query'
 import { ChartRenderer, RenderParams } from '../renderer/ChartRenderer'
 import { getActivityRenderParams } from './charts/getActivityRenderParams'
@@ -7,7 +8,6 @@ import { getTokenTvlRenderParams } from './charts/getTokenTvlRenderParams'
 import { getTvlRenderParams } from './charts/getTvlRenderParams'
 import { getChangeHtml } from './header/getChangeHtml'
 import { getScalingFactor } from './header/getScalingFactor'
-import { getTvlWithChange } from './header/getTvlWithChange'
 import { ChartControlsState } from './types'
 
 interface Header {

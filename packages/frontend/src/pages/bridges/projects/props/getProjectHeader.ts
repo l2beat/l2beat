@@ -4,7 +4,7 @@ import { DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 import { ProjectLink } from '../../../../components/icons'
 import { getDestination } from '../../../../utils/getDestination'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
-import { getTvlWithChange } from '../../../../utils/tvl/getTvlWitchChange'
+import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 

@@ -1,13 +1,21 @@
 import { DetailedTvlApiCharts, TvlApiCharts } from '@l2beat/shared-pure'
 
+import { AggregateDetailedTvlResponse } from '../../scripts/charts/types'
 import { getPercentageChange } from '../utils'
 
 export function getTvlWithChange(
-  charts: TvlApiCharts | DetailedTvlApiCharts | undefined,
+  charts:
+    | TvlApiCharts
+    | DetailedTvlApiCharts
+    | AggregateDetailedTvlResponse
+    | undefined,
+  currency?: 'usd' | 'eth',
 ) {
   const data = charts?.hourly.data ?? []
-  const tvl = data.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = data.at(0)?.[1] ?? 0
+  const dataIndex = currency === 'eth' ? 5 : 1
+
+  const tvl = data.at(-1)?.[dataIndex] ?? 0
+  const tvlSevenDaysAgo = data.at(0)?.[dataIndex] ?? 0
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
   return { tvl, tvlWeeklyChange }
 }

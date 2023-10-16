@@ -5,7 +5,7 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWitchChange'
+import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
 
 export type TVLProjectBreakdown =

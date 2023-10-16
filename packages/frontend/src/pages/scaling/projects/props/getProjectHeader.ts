@@ -21,7 +21,7 @@ import { unifyTokensResponse } from '../../../../utils/tvl/getTvlStats'
 import {
   getDetailedTvlWithChange,
   getTvlWithChange,
-} from '../../../../utils/tvl/getTvlWitchChange'
+} from '../../../../utils/tvl/getTvlWithChange'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
