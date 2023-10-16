@@ -61,7 +61,7 @@ export function getProps(
 export function getPropsActivity(
   activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityMetaImageProps> {
-  const activityData = activityApiResponse.combined.data
+  const activityData = activityApiResponse.combined.daily.data
   const activityNow = getTpsDaily(activityData)
   assert(activityNow, "Can't get current daily TPS")
   const activitySevenDaysAgo = getTpsDaily(activityData, 8)
