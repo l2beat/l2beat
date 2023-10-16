@@ -437,7 +437,7 @@
     },
     {
       "id": "brkl-brokoli-token",
-      "name": "Brokoli-Token",
+      "name": "Brokoli Token",
       "coingeckoId": "brokoli",
       "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
       "symbol": "BRKL",
@@ -535,7 +535,7 @@
     },
     {
       "id": "portx-chainport-token",
-      "name": "ChainPort-Token",
+      "name": "ChainPort Token",
       "coingeckoId": "chainport",
       "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
       "symbol": "PORTX",
@@ -1025,7 +1025,7 @@
     },
     {
       "id": "epik-epik-prime",
-      "name": "Epik-Prime",
+      "name": "Epik Prime",
       "coingeckoId": "epik-prime",
       "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
       "symbol": "EPIK",
@@ -1248,21 +1248,7 @@
     },
     {
       "id": "game-game-coin",
-      "name": "Game-Coin",
-      "coingeckoId": "gamestarter",
-      "address": "0xD567B5F02b9073aD3a982a099a23Bf019FF11d1c",
-      "symbol": "GAME",
-      "decimals": 5,
-      "sinceTimestamp": 1626767324,
-      "category": "ether",
-      "iconUrl": "https://assets.coingecko.com/coins/images/17604/large/gpMi14-r_400x400.jpg?1696517136",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
-      "id": "game-game-coin",
-      "name": "Game-Coin",
+      "name": "Game Coin",
       "coingeckoId": "gamestarter",
       "address": "0xD567B5F02b9073aD3a982a099a23Bf019FF11d1c",
       "symbol": "GAME",
@@ -1850,7 +1836,7 @@
     },
     {
       "id": "nftd-nftrade-token",
-      "name": "NFTrade-Token",
+      "name": "NFTrade Token",
       "coingeckoId": "nftrade",
       "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
       "symbol": "NFTD",
@@ -1878,7 +1864,7 @@
     },
     {
       "id": "num-num-token",
-      "name": "NUM-Token",
+      "name": "NUM Token",
       "coingeckoId": "numbers-protocol",
       "address": "0x3496B523e5C00a4b4150D6721320CdDb234c3079",
       "symbol": "NUM",
@@ -2018,7 +2004,7 @@
     },
     {
       "id": "orion-orion-money-token",
-      "name": "Orion-Money-Token",
+      "name": "Orion Money Token",
       "coingeckoId": "orion-money",
       "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
       "symbol": "ORION",
@@ -3040,7 +3026,7 @@
     },
     {
       "id": "xcad-xcad-token",
-      "name": "XCAD-Token",
+      "name": "XCAD Token",
       "coingeckoId": "xcad-network",
       "address": "0x7659CE147D0e714454073a5dd7003544234b6Aa0",
       "symbol": "XCAD",
