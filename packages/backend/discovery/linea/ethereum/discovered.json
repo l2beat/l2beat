@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 18062403,
-  "configHash": "0x0c292a1ed3a1b3f46ea06090d8e8056f81b5d1b9e91456ec43b9c963d507ce35",
+  "blockNumber": 18361372,
+  "configHash": "0x13c73103706023eb384134690698592a2aba7fc2a8a1a78ebfb4215a5c85f9f9",
   "version": 2,
   "contracts": [
     {
@@ -25,6 +25,14 @@
         "tokenBeacon": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
       },
       "derivedName": "TokenBridge"
+    },
+    {
+      "name": "PlonkVerifierFullLarge",
+      "address": "0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1697036915
     },
     {
       "name": "BridgedToken",
@@ -74,7 +82,7 @@
       },
       "sinceTimestamp": 1691086271,
       "values": {
-        "balance": 7081106509900,
+        "balance": 9637652915780,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -94,6 +102,14 @@
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "name": "PlonkVerifierFull",
+      "address": "0x6312E56c17e1011dD0821558034a77BB60D06e1B",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1697036471
     },
     {
       "name": "AdminMultisig",
@@ -117,7 +133,7 @@
           "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
         ],
         "getThreshold": 4,
-        "nonce": 26,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -134,31 +150,6 @@
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
       "derivedName": "UpgradeableBeacon"
-    },
-    {
-      "name": "PlonkVerifierFullLarge",
-      "address": "0xa4F1155202D36348097b7488b0D2365fA91f8CaC",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1689160607
-    },
-    {
-      "name": "PlonkVerifierFull",
-      "address": "0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1689158687
-    },
-    {
-      "name": "PlonkVerifierFull2",
-      "address": "0xC84832f69bFFbC1A94E44a157A342766E959ED27",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1691501627,
-      "derivedName": "PlonkVerifierFull"
     },
     {
       "name": "zkEVM",
@@ -188,7 +179,7 @@
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "currentPeriodAmountInWei": "198256988676171080474",
+        "currentPeriodAmountInWei": "1417453754623842247573",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0",
         "generalPause": false,
@@ -209,10 +200,16 @@
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
         "sender": "0x00000000000000000000000000000000075BCd15",
         "verifiers": [
-          "0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32",
-          "0xa4F1155202D36348097b7488b0D2365fA91f8CaC",
+          "0x1111111111111111111111111111111111111111",
+          "0x1111111111111111111111111111111111111111",
           "0x0000000000000000000000000000000000000000",
-          "0xC84832f69bFFbC1A94E44a157A342766E959ED27"
+          "0x1111111111111111111111111111111111111111",
+          "0x1111111111111111111111111111111111111111",
+          "0x0000000000000000000000000000000000000000",
+          "0x6312E56c17e1011dD0821558034a77BB60D06e1B",
+          "0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000"
         ]
       },
       "derivedName": "ZkEvmV2"
@@ -270,6 +267,7 @@
   ],
   "eoas": [
     "0x00000000000000000000000000000000075BCd15",
+    "0x1111111111111111111111111111111111111111",
     "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
     "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
     "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
@@ -328,6 +326,9 @@
       "function transferOwnership(address newOwner)",
       "function unpause()",
       "function usdc() view returns (address)"
+    ],
+    "0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "0x36f274C1C197F277EA3C57859729398FCc8a3763": [
       "constructor()",
@@ -389,6 +390,9 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x6312E56c17e1011dD0821558034a77BB60D06e1B": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "0x6ccfD65b0b14F67259C77Ca6267104e058dDB292": [
       "constructor()",
@@ -460,9 +464,6 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
-    ],
-    "0xa4F1155202D36348097b7488b0D2365fA91f8CaC": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool)"
     ],
     "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3": [
       "constructor()",
@@ -550,12 +551,6 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unPauseByType(bytes32 _pauseType)",
       "function verifiers(uint256) view returns (address)"
-    ],
-    "0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool)"
-    ],
-    "0xC84832f69bFFbC1A94E44a157A342766E959ED27": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": [
       "constructor(address _logic, address admin_, bytes _data) payable",
