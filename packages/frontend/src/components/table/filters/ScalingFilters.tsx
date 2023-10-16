@@ -28,6 +28,13 @@ export function ScalingFilters({ items }: Props) {
       value: generateSlugList(items, (i) => i.stage?.stage === stage),
     }))
 
+  const categories = uniq(items.map((i) => i.category))
+    .sort()
+    .map((category) => ({
+      label: category ?? 'No category',
+      value: generateSlugList(items, (i) => i.category === category),
+    }))
+
   return (
     <FiltersWrapper>
       <RollupsOnlyCheckbox items={items} />
@@ -50,6 +57,17 @@ export function ScalingFilters({ items }: Props) {
             value={stage.value}
           >
             {stage.label}
+          </RichSelect.Item>
+        ))}
+      </RichSelect>
+      <RichSelect label="Select technology" id="technology-select">
+        {categories.map((category) => (
+          <RichSelect.Item
+            selectedLabel={category.label}
+            key={category.label}
+            value={category.value}
+          >
+            {category.label}
           </RichSelect.Item>
         ))}
       </RichSelect>
