@@ -31,7 +31,7 @@
       "fields": {
         "verifiers": {
           "type": "array",
-          "length": 4
+          "length": 10
         },
         "accessControl": {
           "type": "accessControl",
