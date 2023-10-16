@@ -127,13 +127,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
     ([name, chart]) => [name, chart] as ActivityProjectData,
   )
 
-  const importantProjects = [
-    'ethereum',
-    'dydx',
-    'arbitrum',
-    'optimism',
-    'starknet',
-  ]
+  const importantProjects = ['dydx', 'arbitrum', 'optimism', 'starknet']
 
   checkIfEmptyActivityCharts(allProjectsData)
   checkIfZeroTpsProjects(allProjectsData, importantProjects)
