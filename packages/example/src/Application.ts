@@ -91,11 +91,12 @@ function createMainModule(config: Config, logger: Logger): Module | undefined {
   const balanceRepository = new BalanceRepository()
   const tvlRepository = new TvlRepository()
 
-  BaseIndexer.DEFAULT_RETRY_STRATEGY = Retries.exponentialBackOff({
-    initialTimeoutMs: 100,
-    maxAttempts: 10,
-    maxTimeoutMs: 60 * 1000,
-  })
+  BaseIndexer.GET_DEFAULT_RETRY_STRATEGY = () =>
+    Retries.exponentialBackOff({
+      initialTimeoutMs: 100,
+      maxAttempts: 10,
+      maxTimeoutMs: 60 * 1000,
+    })
 
   const fakeClockIndexer = new FakeClockIndexer(logger)
   const blockNumberIndexer = new BlockNumberIndexer(

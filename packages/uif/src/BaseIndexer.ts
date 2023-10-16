@@ -19,11 +19,12 @@ import { Retries, RetryStrategy } from './Retries'
 export abstract class BaseIndexer implements Indexer {
   private readonly children: Indexer[] = []
 
-  static DEFAULT_RETRY_STRATEGY = Retries.exponentialBackOff({
-    initialTimeoutMs: 1000,
-    maxAttempts: 10,
-    maxTimeoutMs: 60 * 1000,
-  })
+  static GET_DEFAULT_RETRY_STRATEGY: () => RetryStrategy = () =>
+    Retries.exponentialBackOff({
+      initialTimeoutMs: 1000,
+      maxAttempts: 10,
+      maxTimeoutMs: 60 * 1000,
+    })
 
   /**
    * Should read the height from the database. It must return a height, so
@@ -83,11 +84,11 @@ export abstract class BaseIndexer implements Indexer {
     })
 
     this.tickRetryStrategy =
-      opts?.tickRetryStrategy ?? BaseIndexer.DEFAULT_RETRY_STRATEGY
+      opts?.tickRetryStrategy ?? BaseIndexer.GET_DEFAULT_RETRY_STRATEGY()
     this.updateRetryStrategy =
-      opts?.updateRetryStrategy ?? BaseIndexer.DEFAULT_RETRY_STRATEGY
+      opts?.updateRetryStrategy ?? BaseIndexer.GET_DEFAULT_RETRY_STRATEGY()
     this.invalidateRetryStrategy =
-      opts?.invalidateRetryStrategy ?? BaseIndexer.DEFAULT_RETRY_STRATEGY
+      opts?.invalidateRetryStrategy ?? BaseIndexer.GET_DEFAULT_RETRY_STRATEGY()
   }
 
   async start(): Promise<void> {
@@ -189,9 +190,11 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   private executeScheduleRetryUpdate(): void {
+    const timeoutMs = this.updateRetryStrategy.timeoutMs()
+    this.logger.debug('Scheduling retry update', { timeoutMs })
     setTimeout(() => {
       this.dispatch({ type: 'RetryUpdate' })
-    }, this.updateRetryStrategy.timeoutMs())
+    }, timeoutMs)
   }
 
   private async executeInvalidate(effect: InvalidateEffect): Promise<void> {
@@ -216,9 +219,11 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   private executeScheduleRetryInvalidate(): void {
+    const timeoutMs = this.invalidateRetryStrategy.timeoutMs()
+    this.logger.debug('Scheduling retry invalidate', { timeoutMs })
     setTimeout(() => {
       this.dispatch({ type: 'RetryInvalidate' })
-    }, this.invalidateRetryStrategy.timeoutMs())
+    }, timeoutMs)
   }
 
   private executeNotifyReady(effect: NotifyReadyEffect): void {
@@ -251,9 +256,11 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   private executeScheduleRetryTick(): void {
+    const timeoutMs = this.tickRetryStrategy.timeoutMs()
+    this.logger.debug('Scheduling retry tick', { timeoutMs })
     setTimeout(() => {
       this.dispatch({ type: 'RetryTick' })
-    }, this.tickRetryStrategy.timeoutMs())
+    }, timeoutMs)
   }
 
   /**

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ChildIndexer, Retries } from '@l2beat/uif'
+import { ChildIndexer } from '@l2beat/uif'
 import { setTimeout } from 'timers/promises'
 
 import { BlockNumberRepository } from '../repositories/BlockNumberRepository'
@@ -11,12 +11,7 @@ export class BlockNumberIndexer extends ChildIndexer {
     fakeClockIndexer: FakeClockIndexer,
     private readonly blockNumberRepository: BlockNumberRepository,
   ) {
-    super(logger, [fakeClockIndexer], {
-      updateRetryStrategy: Retries.exponentialBackOff({
-        initialTimeoutMs: 100,
-        maxAttempts: 10,
-      }),
-    })
+    super(logger, [fakeClockIndexer])
   }
 
   override async update(from: number, targetHeight: number): Promise<number> {

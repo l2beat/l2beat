@@ -1,5 +1,11 @@
 # @l2beat/uif
 
+## 0.2.2
+
+### Patch Changes
+
+- Fix retry strategies forgetting number of attempts
+
 ## 0.2.1
 
 ### Patch Changes
