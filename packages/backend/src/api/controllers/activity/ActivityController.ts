@@ -69,17 +69,15 @@ export class ActivityController {
       .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
       .map((project) => project.id)
 
-    const aggregatedDailyCounts =
+    const [aggregatedDailyCounts, ethereumCounts] = await Promise.all([
       await this.viewRepository.getProjectsAggregatedDailyCount(
         projectIdsFilter,
-      )
+      ),
+      await this.viewRepository.getDailyCountsPerProject(ProjectId.ETHEREUM),
+    ])
     const now = this.clock.getLastHour()
 
     const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
-
-    const ethereumCounts = await this.viewRepository.getDailyCountsPerProject(
-      ProjectId.ETHEREUM,
-    )
     const processedEthereumCounts = postprocessCounts(ethereumCounts, true, now)
 
     const chartPoints = alignActivityData(
