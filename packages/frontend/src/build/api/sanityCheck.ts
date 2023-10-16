@@ -120,8 +120,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
   ).filter(([id]) => activityIds.includes(id))
 
   const allProjects = [
-    ['combined', activityApiResponse.combined],
-    ['ethereum', activityApiResponse.ethereum],
+    ['combined', activityApiResponse.combined.daily],
     ...filteredProjectsCharts,
   ] as [string, ActivityApiChart][]
   const allProjectsData = allProjects.map(
@@ -142,6 +141,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 }
 
 export function checkIfEmptyActivityCharts(allProjects: ActivityProjectData[]) {
+  console.log(allProjects)
   const emptyActivityCharts = allProjects.filter(
     ([_, data]) => data.length === 0,
   )
@@ -204,7 +204,7 @@ export function checkIfDelayedActivity(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const lastValue = data.at(-1)!
       const lastTimestamp = lastValue[0]
-      const delay = now.toNumber() - lastTimestamp.toNumber()
+      const delay = now.toNumber() - lastTimestamp
       return { name, delay }
     })
     .filter(({ delay }) => delay > ACTIVITY_ACCEPTABLE_DELAY)
