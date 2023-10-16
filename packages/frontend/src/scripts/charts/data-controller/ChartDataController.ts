@@ -93,7 +93,9 @@ export class ChartDataController {
       case 'storybook-fake-activity':
         return {
           type: 'activity',
-          isAggregate: chartType.type !== 'project-activity',
+          isAggregate:
+            chartType.type === 'layer2-activity' &&
+            chartType.filteredSlugs?.length !== 1,
           values: ActivityResponse.parse(data),
         }
     }
