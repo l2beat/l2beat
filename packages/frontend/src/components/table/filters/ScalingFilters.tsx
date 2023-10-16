@@ -1,3 +1,4 @@
+import { notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import React from 'react'
 
@@ -21,7 +22,7 @@ export function ScalingFilters({ items }: Props) {
 
   const stages = uniq(items.map((i) => i.stage?.stage))
     .sort()
-    .filter(noUndefined)
+    .filter(notUndefined)
     .map((stage) => ({
       label: stageLabel(stage),
       value: generateSlugList(items, (i) => i.stage?.stage === stage),
@@ -65,8 +66,4 @@ function stageLabel(stage: ScalingTvlViewEntry['stage']['stage']) {
     default:
       return stage
   }
-}
-
-function noUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
 }
