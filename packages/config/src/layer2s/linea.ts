@@ -262,10 +262,6 @@ export const linea: Layer2 = {
         'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
       discovery.getContractDetails(
-        'PlonkVerifierFull2',
-        'Plonk verifier contract used by the Linea zkEVM rollup.',
-      ),
-      discovery.getContractDetails(
         'PlonkVerifierFullLarge',
         'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
