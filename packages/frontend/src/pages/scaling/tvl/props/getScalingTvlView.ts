@@ -1,9 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import {
-  DetailedTvlApiResponse,
-  TvlApiResponse,
-  VerificationStatus,
-} from '@l2beat/shared-pure'
+import { DetailedTvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
@@ -17,7 +13,7 @@ import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 export function getScalingTvlView(
   config: Config,
   projects: Layer2[],
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   tvl: number,
   verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
@@ -37,7 +33,7 @@ export function getScalingTvlView(
 
 function getScalingTvlViewEntry(
   project: Layer2,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   aggregateTvl: number,
   detailedTvlEnabled: boolean,
   isVerified?: boolean,
