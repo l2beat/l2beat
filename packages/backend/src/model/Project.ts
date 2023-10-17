@@ -2,21 +2,26 @@ import {
   Bridge,
   getCanonicalTokenBySymbol,
   Layer2,
+  Layer2LivenessConfig,
   Layer2TransactionApi,
   tokenList,
 } from '@l2beat/config'
 import {
   EthereumAddress,
+  LivenessType,
   ProjectId,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
+
+import { LivenessConfig } from '../core/liveness/types/LivenessConfig'
 
 export interface Project {
   projectId: ProjectId
   type: 'layer2' | 'bridge'
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
+  livenessConfig?: LivenessConfig
 }
 
 export interface ProjectEscrow {
@@ -38,6 +43,7 @@ export function layer2ToProject(layer2: Layer2): Project {
           : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
     transactionApi: layer2.config.transactionApi,
+    livenessConfig: toBackendLivenessConfig(layer2.id, layer2.config.liveness),
   }
 }
 
@@ -55,3 +61,13 @@ export function bridgeToProject(bridge: Bridge): Project {
     })),
   }
 }
+
+function toBackendLivenessConfig(
+  projectId: ProjectId,
+  config: Layer2LivenessConfig,
+): LivenessConfig {}
+// projectId: ProjectId
+// type: LivenessType
+// from: EthereumAddress
+// to: EthereumAddress
+// untilTimestamp?: UnixTime
