@@ -4,7 +4,7 @@ import { CloseIcon } from '../icons/CloseIcon'
 
 export function FloatingBanner() {
   return (
-    <div className="FloatingBanner fixed inset-x-0 bottom-0 z-110 m-4 hidden max-h-[223px] overflow-hidden rounded-md bg-gray-200 shadow-lg data-[state=visible]:flex dark:bg-zinc-800 md:right-[unset] md:m-6">
+    <div className="FloatingBanner fixed inset-x-0 bottom-0 z-110 m-4 hidden max-h-[223px] overflow-hidden rounded-md bg-gray-200 shadow-lg data-[state=visible]:flex dark:bg-zinc-800 xs:right-[unset] xs:m-6">
       <Close />
       <img
         src="/images/announcements/l2-days-floating.png"
