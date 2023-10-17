@@ -62,9 +62,9 @@ export function getPropsActivity(
   activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityMetaImageProps> {
   const activityData = activityApiResponse.combined.daily.data
-  const activityNow = getTpsDaily(activityData)
+  const activityNow = getTpsDaily(activityData, 'project')
   assert(activityNow, "Can't get current daily TPS")
-  const activitySevenDaysAgo = getTpsDaily(activityData, 8)
+  const activitySevenDaysAgo = getTpsDaily(activityData, 'project', 8)
   assert(activitySevenDaysAgo, "Can't get past daily TPS")
   const weeklyChange = getPercentageChange(activityNow, activitySevenDaysAgo)
 
