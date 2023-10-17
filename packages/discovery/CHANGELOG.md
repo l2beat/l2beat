@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.16.1
+
+### Patch Changes
+
+- Export ChainId, Remove an unused test
+
 ## 0.16.0
 
 ### Minor Changes
