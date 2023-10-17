@@ -43,7 +43,7 @@ export const loopring: Layer2 = {
     description:
       "Loopring's zkRollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
     purpose: 'Tokens, NFTs, AMM',
-    provider: 'loopring',
+    provider: 'Loopring',
     category: 'ZK Rollup',
     links: {
       websites: ['https://loopring.org'],

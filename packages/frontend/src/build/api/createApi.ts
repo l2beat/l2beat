@@ -8,7 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import fsx from 'fs-extra'
-import { at } from 'lodash'
 import path from 'path'
 
 import { Config } from '../config'
@@ -23,27 +22,17 @@ export function createApi(
     TvlApiCharts | DetailedTvlApiCharts | ActivityApiCharts
   >()
 
-  urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
-  urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
-  urlCharts.set('combined-tvl', tvlApiResponse.combined)
-
-  if (config.features.detailedTvl) {
-    urlCharts.set('scaling-detailed-tvl', tvlApiResponse.layers2s)
-  }
+  urlCharts.set('tvl/scaling', tvlApiResponse.layers2s)
+  urlCharts.set('tvl/bridges', tvlApiResponse.bridges)
+  urlCharts.set('tvl/combined', tvlApiResponse.combined)
 
   for (const project of [...config.layer2s, ...config.bridges]) {
     const projectTvlData = tvlApiResponse.projects[project.id.toString()]
     if (projectTvlData) {
-      urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
-      if (config.features.detailedTvl) {
-        urlCharts.set(
-          `${project.display.slug}-detailed-tvl`,
-          projectTvlData.charts,
-        )
-      }
+      urlCharts.set(`tvl/${project.display.slug}`, projectTvlData.charts)
     }
   }
-  urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)
+  urlCharts.set(`tvl/placeholder`, PLACEHOLDER_API_DATA)
 
   if (activityApiResponse?.combined) {
     urlCharts.set('activity/combined', activityApiResponse.combined)
@@ -69,28 +58,7 @@ export function outputCharts(
   >,
 ) {
   for (const [url, charts] of urlCharts) {
-    // TODO(radomski): This check is be removed when we retire the /api/tvl
-    // endpoint and use only the /api/detailed-tvl
-    const json =
-      'hourly' in charts &&
-      charts.hourly.types.length === 9 &&
-      !url.includes('-detailed-tvl')
-        ? JSON.stringify({
-            hourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: charts.hourly.data.map((e) => at(e, [0, 1, 5])),
-            },
-            sixHourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: charts.sixHourly.data.map((e) => at(e, [0, 1, 5])),
-            },
-            daily: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: charts.daily.data.map((e) => at(e, [0, 1, 5])),
-            },
-          })
-        : JSON.stringify(charts)
-
+    const json = JSON.stringify(charts)
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(path.join('build/api', `${url}.json`), json)
   }

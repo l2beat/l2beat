@@ -27,12 +27,12 @@ export function TokenControls({
   return (
     <div
       className={classNames('flex h-full')}
-      data-role="chart-token-desktop-element"
+      data-role="chart-token-element"
       data-tvl-only
     >
       <RichSelect
         label="Tokens"
-        id="desktop-token-select"
+        id="token-select"
         slideCardTitle="Choose token"
         listClassName="!p-6"
         centered
@@ -64,7 +64,7 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
               </div>
               <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
-                className="grid grid-cols-1 gap-y-3 gap-x-6 md:grid-cols-3 md:gap-y-0"
+                className="grid grid-cols-1 gap-x-6 md:grid-cols-3"
                 data-role="chart-token-controls"
               >
                 {p.tokens.map((token, j) => (

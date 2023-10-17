@@ -22,7 +22,6 @@ export interface WrapperProps {
   metadata: PageMetadata
   preloadApi?: string
 }
-
 export interface PageMetadata {
   title: string
   description: string
