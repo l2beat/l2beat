@@ -8,7 +8,7 @@ export function getTransactionCount(
   if (data === undefined) {
     return undefined
   }
-  const dataIndex = type === 'project' ? 1 : 2
+  const dataIndex = type === 'ethereum' ? 2 : 1
   const length = period === 'month' ? 30 : 7
   const lastSevenDays = data.slice(-length)
   return lastSevenDays
