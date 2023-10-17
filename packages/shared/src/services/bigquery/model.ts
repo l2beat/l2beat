@@ -1,8 +1,10 @@
 import { branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export type BigQueryMethodsResult = z.infer<typeof BigQueryMethodsResult>
-export const BigQueryMethodsResult = z
+export type BigQueryFunctionCallsResult = z.infer<
+  typeof BigQueryFunctionCallsResult
+>
+export const BigQueryFunctionCallsResult = z
   .object({
     transaction_hash: z.string(),
     block_number: z.number(),
