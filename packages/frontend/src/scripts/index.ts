@@ -18,12 +18,12 @@ import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
 
 configureDarkThemeToggle()
+configureFloatingBanner()
 configureSidebarMenu()
 configureTooltips()
 configureCharts()
 configureDropdowns()
 configureRosetteOverlay()
-configureFloatingBanner()
 configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()
