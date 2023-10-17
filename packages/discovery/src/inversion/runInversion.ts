@@ -3,6 +3,7 @@ import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { constants, utils } from 'ethers'
 import { mkdir, writeFile } from 'fs/promises'
+import { isObject } from 'lodash'
 
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { ChainId } from '../utils/ChainId'
@@ -81,16 +82,27 @@ export async function runInversion(
           })
         }
       } else if (key === 'accessControl') {
-        for (const [roleName, role] of Object.entries(
-          value as Record<string, { members: string[] }>,
-        )) {
-          for (const member of role.members) {
-            add(member, {
-              name: roleName,
-              atName: contract.name,
-              atAddress: contract.address,
-            })
+        const addRoles = (
+          roleMembers: Record<string, { members: string[] }>,
+        ): void => {
+          for (const [roleName, role] of Object.entries(roleMembers)) {
+            for (const member of role.members) {
+              add(member, {
+                name: roleName,
+                atName: contract.name,
+                atAddress: contract.address,
+              })
+            }
           }
+        }
+
+        const isScrollAccessControl =
+          value && isObject(value) && 'roles' in value && 'targets' in value
+
+        if (isScrollAccessControl) {
+          addRoles(value.roles as Record<string, { members: string[] }>)
+        } else {
+          addRoles(value as Record<string, { members: string[] }>)
         }
       } else if (value) {
         add(value, {

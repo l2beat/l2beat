@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.16.2
+
+### Patch Changes
+
+- fix inversion for scroll access control
+
 ## 0.16.1
 
 ### Patch Changes
