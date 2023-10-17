@@ -2,7 +2,14 @@
   "$schema": "../../config.schema.json",
   "chain": "ethereum",
   "name": "scroll",
-  "initialAddresses": ["0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"],
+  "initialAddresses": [
+    "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+    "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+    "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+    "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+    "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
+    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE"
+  ],
   "names": {
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "L1GatewayRouter",
     "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": "L1MessageQueue",
@@ -12,8 +19,8 @@
     "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": "MultipleVersionRollupVerifier",
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner",
     "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C": "TimelockSlow",
+    "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b": "TimelockMid",
     "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockFast",
-    "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b": "TimelockController",
     "0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "L2TokenFactoryFallback",
     "0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": "L2TokenImplementationFallback",
     "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": "L2ScrollMessengerFallback",
@@ -21,7 +28,13 @@
     "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "ProposerMultisig",
     "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "ExecutorMultisig",
     "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "FeeVaultMultisig",
-    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "InstantMultisig"
+    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "InstantMultisig",
+    "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": "L1USDCGateway",
+    "0xb2b10a289A229415a124EFDeF310C10cb004B6ff": "L1CustomERC20Gateway",
+    "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": "EnforcedTxGateway",
+    "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": "L1ERC1155Gateway",
+    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "L1ERC721Gateway",
+    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "L1WETHGateway"
   },
   "overrides": {
     "L1MessageQueue": {
@@ -72,7 +85,11 @@
         "accessControl": {
           "type": "scrollAccessControl",
           "roleNames": {
-            "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "UPGRADER_ROLE"
+            "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "UPGRADER_ROLE",
+            "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "PAUSER_REMOVER_ROLE_1",
+            "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "PAUSER_REMOVER_ROLE_2",
+            "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "UPDATER_ADDER_ROLE",
+            "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "CIRCLE_UPDATER"
           }
         }
       }
@@ -97,6 +114,25 @@
           "type": "accessControl"
         }
       }
+    },
+    "L1USDCGateway": {
+      "ignoreMethods": ["l1USDC"],
+      "ignoreInWatchMode": ["totalBridgedUSDC"]
+    },
+    "L1WETHGateway": {
+      "ignoreMethods": ["WETH"]
+    },
+    "InstantMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "ExecutorMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "FeeVaultMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "ProposerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

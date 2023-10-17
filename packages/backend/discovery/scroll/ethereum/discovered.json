@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 18370208,
-  "configHash": "0x1a5d2979277e3ad1528207dc70933b25a0929a69ad7573f5a2eb2e849adaad3a",
+  "blockNumber": 18370416,
+  "configHash": "0x0d652394630bc5e52000d24e96f4b29aa068ab4406f64c25589f0e134acfaca4",
   "version": 3,
   "contracts": [
     {
@@ -20,9 +20,9 @@
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 1430,
+        "nextCrossDomainMessageIndex": 1544,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 1426,
+        "pendingQueueIndex": 1430,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
       },
       "derivedName": "L1MessageQueue"
@@ -168,6 +168,28 @@
       }
     },
     {
+      "name": "Fallback",
+      "address": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1696927307,
+      "values": {
+        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      }
+    },
+    {
+      "name": "Fallback",
+      "address": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1696927307,
+      "values": {
+        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      }
+    },
+    {
       "name": "L2TokenFactoryFallback",
       "address": "0x66e5312EDeEAef6e80759A0F789e7914Fb401484",
       "upgradeability": {
@@ -214,6 +236,45 @@
       "derivedName": "Fallback"
     },
     {
+      "name": "Fallback",
+      "address": "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1696927307,
+      "values": {
+        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      }
+    },
+    {
+      "name": "EnforcedTxGateway",
+      "address": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x642af405bF64660665B37977449C9C536B806318",
+        "admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
+      },
+      "implementations": ["0x642af405bF64660665B37977449C9C536B806318"],
+      "sinceTimestamp": 1696782323,
+      "values": {
+        "DOMAIN_SEPARATOR": "0x4ba6355a403460269233dc486e88f1f91f64c2c97dc065c7ee1782de423fd902",
+        "eip712Domain": [
+          "0x0f",
+          "EnforcedTxGateway",
+          "1",
+          1,
+          "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          []
+        ],
+        "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
+        "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "paused": true
+      },
+      "derivedName": "EnforcedTxGateway"
+    },
+    {
       "name": "L2ScrollMessengerFallback",
       "address": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
       "upgradeability": {
@@ -243,19 +304,19 @@
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
             },
-            "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": {
+            "PAUSER_REMOVER_ROLE_1": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
             },
-            "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": {
+            "PAUSER_REMOVER_ROLE_2": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
             },
-            "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": {
+            "UPDATER_ADDER_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0x0e58939204eEDa84F796FBc86840A50af10eC4F4"]
             },
-            "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": {
+            "CIRCLE_UPDATER": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xDC1d1189Da69Ae2016E4976A43De20972D349B1b"]
             }
@@ -267,100 +328,72 @@
             },
             "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": {
               "revertBatch(bytes,uint256)": [
-                "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85",
-                "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"
+                "PAUSER_REMOVER_ROLE_1",
+                "PAUSER_REMOVER_ROLE_2"
               ],
               "removeSequencer(address)": [
-                "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85",
-                "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"
+                "PAUSER_REMOVER_ROLE_1",
+                "PAUSER_REMOVER_ROLE_2"
               ],
               "removeProver(address)": [
-                "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85",
-                "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"
+                "PAUSER_REMOVER_ROLE_1",
+                "PAUSER_REMOVER_ROLE_2"
               ],
               "setPause(bool)": [
-                "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85",
-                "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"
+                "PAUSER_REMOVER_ROLE_1",
+                "PAUSER_REMOVER_ROLE_2"
               ],
-              "addSequencer(address)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ],
-              "addProver(address)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ],
-              "updateMaxNumTxInChunk(uint256)": [
-                "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"
-              ]
+              "addSequencer(address)": ["UPDATER_ADDER_ROLE"],
+              "addProver(address)": ["UPDATER_ADDER_ROLE"],
+              "updateMaxNumTxInChunk(uint256)": ["CIRCLE_UPDATER"]
             },
             "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": {
-              "updateGasOracle(address)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ],
-              "updateMaxGasLimit(uint256)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ]
+              "updateGasOracle(address)": ["UPDATER_ADDER_ROLE"],
+              "updateMaxGasLimit(uint256)": ["UPDATER_ADDER_ROLE"]
             },
             "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": {
               "setPause(bool)": [
-                "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85",
-                "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"
+                "PAUSER_REMOVER_ROLE_1",
+                "PAUSER_REMOVER_ROLE_2"
               ],
-              "updateMaxReplayTimes(uint256)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ]
+              "updateMaxReplayTimes(uint256)": ["UPDATER_ADDER_ROLE"]
             },
             "0x987e300fDfb06093859358522a79098848C33852": {
               "setIntrinsicParams(uint64,uint64,uint64,uint64)": [
-                "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85",
-                "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"
+                "PAUSER_REMOVER_ROLE_1",
+                "PAUSER_REMOVER_ROLE_2"
               ]
             },
             "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": {
-              "updateWhitelistStatus(address[],bool)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ]
+              "updateWhitelistStatus(address[],bool)": ["UPDATER_ADDER_ROLE"]
             },
             "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": {
               "updateVerifier(uint64,address)": [
                 "UPGRADER_ROLE",
-                "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"
+                "CIRCLE_UPDATER"
               ]
             },
             "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": {
-              "setERC20Gateway(address[],address[])": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ]
+              "setERC20Gateway(address[],address[])": ["UPDATER_ADDER_ROLE"]
             },
             "0xb2b10a289A229415a124EFDeF310C10cb004B6ff": {
-              "updateTokenMapping(address,address)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ]
+              "updateTokenMapping(address,address)": ["UPDATER_ADDER_ROLE"]
             },
             "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": {
-              "updateTokenMapping(address,address)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ]
+              "updateTokenMapping(address,address)": ["UPDATER_ADDER_ROLE"]
             },
             "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": {
-              "updateTokenMapping(address,address)": [
-                "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"
-              ]
+              "updateTokenMapping(address,address)": ["UPDATER_ADDER_ROLE"]
             },
             "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": {
-              "updateCircleCaller(address)": [
-                "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"
-              ],
-              "pauseDeposit(bool)": [
-                "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"
-              ],
-              "pauseWithdraw(bool)": [
-                "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"
-              ]
+              "updateCircleCaller(address)": ["CIRCLE_UPDATER"],
+              "pauseDeposit(bool)": ["CIRCLE_UPDATER"],
+              "pauseWithdraw(bool)": ["CIRCLE_UPDATER"]
             },
             "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": {
               "setPause(bool)": [
-                "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85",
-                "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"
+                "PAUSER_REMOVER_ROLE_1",
+                "PAUSER_REMOVER_ROLE_2"
               ]
             }
           }
@@ -368,6 +401,25 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
       "derivedName": "ScrollOwner"
+    },
+    {
+      "name": "L1WETHGateway",
+      "address": "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xd3c42158682D55E082EaBe08a29F7515A97cA307",
+        "admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
+      },
+      "implementations": ["0xd3c42158682D55E082EaBe08a29F7515A97cA307"],
+      "sinceTimestamp": 1696782323,
+      "values": {
+        "counterpart": "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
+        "l2WETH": "0x5300000000000000000000000000000000000004",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      },
+      "derivedName": "L1WETHGateway"
     },
     {
       "name": "L1ETHGateway",
@@ -438,7 +490,7 @@
       "implementations": ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"],
       "sinceTimestamp": 1696782323,
       "values": {
-        "lastFinalizedBatchIndex": 506,
+        "lastFinalizedBatchIndex": 508,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -471,6 +523,42 @@
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
       },
       "derivedName": "MultipleVersionRollupVerifier"
+    },
+    {
+      "name": "L1CustomERC20Gateway",
+      "address": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb",
+        "admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
+      },
+      "implementations": ["0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"],
+      "sinceTimestamp": 1696782323,
+      "values": {
+        "counterpart": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      },
+      "derivedName": "L1CustomERC20Gateway"
+    },
+    {
+      "name": "L1ERC1155Gateway",
+      "address": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xCb4638620E4C6DeCef26374e71b0dd4871863593",
+        "admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
+      },
+      "implementations": ["0xCb4638620E4C6DeCef26374e71b0dd4871863593"],
+      "sinceTimestamp": 1696782323,
+      "values": {
+        "counterpart": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "L1ERC1155Gateway"
     },
     {
       "name": "InstantMultisig",
@@ -529,38 +617,13 @@
       }
     },
     {
-      "name": "TimelockController",
+      "name": "TimelockMid",
       "address": "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1696782479,
       "values": {
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "TIMELOCK_ADMIN_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b",
-              "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
-            ]
-          },
-          "PROPOSER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
-          },
-          "EXECUTOR_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
-          },
-          "CANCELLER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
-          }
-        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -618,6 +681,29 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "L1USDCGateway",
+      "address": "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6667123b5017AAB9945F73345848B82D7A953AA8",
+        "admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
+      },
+      "implementations": ["0x6667123b5017AAB9945F73345848B82D7A953AA8"],
+      "sinceTimestamp": 1696919351,
+      "values": {
+        "circleCaller": "0x0000000000000000000000000000000000000000",
+        "counterpart": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
+        "depositPaused": false,
+        "l2USDC": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+        "totalBridgedUSDC": 212184147757,
+        "withdrawPaused": false
+      },
+      "derivedName": "L1USDCGateway"
+    },
+    {
       "name": "L1GatewayRouter",
       "address": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
       "upgradeability": {
@@ -638,8 +724,11 @@
   ],
   "eoas": [
     "0x0000000000000000000000000000000000000001",
+    "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
     "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7",
+    "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
     "0x356483dC32B004f32Ea0Ce58F7F88879886e9074",
+    "0x5300000000000000000000000000000000000004",
     "0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06",
     "0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59",
     "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f",
@@ -816,6 +905,76 @@
       "function plonkVerifier() view returns (address)",
       "function verify(bytes aggrProof, bytes32 publicInputHash) view"
     ],
+    "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "0x642af405bF64660665B37977449C9C536B806318": [
+      "constructor()",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event UpdateFeeVault(address _oldFeeVault, address _newFeeVault)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function feeVault() view returns (address)",
+      "function initialize(address _queue, address _feeVault)",
+      "function messageQueue() view returns (address)",
+      "function nonces(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function sendTransaction(address _target, uint256 _value, uint256 _gasLimit, bytes _data) payable",
+      "function sendTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data, uint256 _deadline, bytes _signature, address _refundAddress) payable",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFeeVault(address _newFeeVault)"
+    ],
+    "0x64CCBE37c9A82D85A1F2E74649b7A42923067988": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "0x6667123b5017AAB9945F73345848B82D7A953AA8": [
+      "constructor(address _l1USDC, address _l2USDC)",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "function burnAllLockedUSDC()",
+      "function circleCaller() view returns (address)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function depositPaused() view returns (bool)",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function l1USDC() view returns (address)",
+      "function l2USDC() view returns (address)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function pauseDeposit(bool _paused)",
+      "function pauseWithdraw(bool _paused)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function totalBridgedUSDC() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateCircleCaller(address _caller)",
+      "function withdrawPaused() view returns (bool)"
+    ],
     "0x66e5312EDeEAef6e80759A0F789e7914Fb401484": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function execute(address _target, bytes _data) payable",
@@ -837,6 +996,20 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -865,6 +1038,12 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateAccess(address _target, bytes4[] _selectors, bytes32 _role, bool _status)"
+    ],
+    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -962,6 +1141,12 @@
       "function updateMaxReplayTimes(uint256 _newMaxReplayTimes)",
       "function xDomainMessageSender() view returns (address)"
     ],
+    "0xb2b10a289A229415a124EFDeF310C10cb004B6ff": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0xb93Ac04010Bd61F45BF492022A5b49a902F798F3": [
       "constructor()",
       "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
@@ -997,6 +1182,36 @@
       "function setERC20Gateway(address[] _tokens, address[] _gateways)",
       "function setETHGateway(address _newEthGateway)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb": [
+      "constructor()",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address _l1Token) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
     "0xBC9D741501A20F962756C95BF906b4abffadcf8F": [
       "constructor()",
@@ -1044,6 +1259,60 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "0xCb4638620E4C6DeCef26374e71b0dd4871863593": [
+      "constructor()",
+      "event BatchDepositERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
+      "event BatchRefundERC1155(address indexed token, address indexed recipient, uint256[] tokenIds, uint256[] amounts)",
+      "event DepositERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId, uint256 _amount)",
+      "event FinalizeBatchWithdrawERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
+      "event FinalizeWithdrawERC1155(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId, uint256 _amount)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC1155(address indexed token, address indexed recipient, uint256 tokenId, uint256 amount)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function batchDepositERC1155(address _token, uint256[] _tokenIds, uint256[] _amounts, uint256 _gasLimit) payable",
+      "function batchDepositERC1155(address _token, address _to, uint256[] _tokenIds, uint256[] _amounts, uint256 _gasLimit) payable",
+      "function counterpart() view returns (address)",
+      "function depositERC1155(address _token, address _to, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC1155(address _token, uint256 _tokenId, uint256 _amount, uint256 _gasLimit) payable",
+      "function finalizeBatchWithdrawERC1155(address _l1Token, address _l2Token, address _from, address _to, uint256[] _tokenIds, uint256[] _amounts)",
+      "function finalizeWithdrawERC1155(address _l1Token, address _l2Token, address _from, address _to, uint256 _tokenId, uint256 _amount)",
+      "function initialize(address _counterpart, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
+    ],
+    "0xd3c42158682D55E082EaBe08a29F7515A97cA307": [
+      "constructor(address _WETH, address _l2WETH)",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "function WETH() view returns (address)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address) view returns (address)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function l2WETH() view returns (address)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function transferOwnership(address newOwner)"
     ],
     "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1160,6 +1429,12 @@
     ],
     "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": [
       "constructor(address _singleton)"
+    ],
+    "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": [
       "constructor(address _logic, address admin_, bytes _data) payable",

@@ -1,4 +1,4 @@
-# Diff at Tue, 17 Oct 2023 12:53:11 GMT:
+# Diff at Tue, 17 Oct 2023 13:33:55 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@51e09b406b3616ef251dd9e0b82a634022f2f662
@@ -56,7 +56,7 @@ Provide description of changes. This section will be preserved.
 ```diff
     contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
       values.accessControl:
-+        {"roles":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C"]},"UPGRADER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]},"0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x0e58939204eEDa84F796FBc86840A50af10eC4F4"]},"0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xDC1d1189Da69Ae2016E4976A43De20972D349B1b"]}},"targets":{"0xEB803eb3F501998126bf37bB823646Ed3D59d072":{"upgrade(address,address)":["UPGRADER_ROLE"],"upgradeAndCall(address,address,bytes)":["UPGRADER_ROLE"]},"0xa13BAF47339d63B743e7Da8741db5456DAc1E556":{"revertBatch(bytes,uint256)":["0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85","0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"],"removeSequencer(address)":["0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85","0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"],"removeProver(address)":["0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85","0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"],"setPause(bool)":["0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85","0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"],"addSequencer(address)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"],"addProver(address)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"],"updateMaxNumTxInChunk(uint256)":["0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"]},"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B":{"updateGasOracle(address)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"],"updateMaxGasLimit(uint256)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"]},"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367":{"setPause(bool)":["0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85","0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"],"updateMaxReplayTimes(uint256)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"]},"0x987e300fDfb06093859358522a79098848C33852":{"setIntrinsicParams(uint64,uint64,uint64,uint64)":["0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85","0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"]},"0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37":{"updateWhitelistStatus(address[],bool)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"]},"0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0":{"updateVerifier(uint64,address)":["UPGRADER_ROLE","0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"]},"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6":{"setERC20Gateway(address[],address[])":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"]},"0xb2b10a289A229415a124EFDeF310C10cb004B6ff":{"updateTokenMapping(address,address)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"]},"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B":{"updateTokenMapping(address,address)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"]},"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6":{"updateTokenMapping(address,address)":["0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79"]},"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B":{"updateCircleCaller(address)":["0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"],"pauseDeposit(bool)":["0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"],"pauseWithdraw(bool)":["0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35"]},"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d":{"setPause(bool)":["0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85","0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761"]}}}
++        {"roles":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C"]},"UPGRADER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"PAUSER_REMOVER_ROLE_1":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"PAUSER_REMOVER_ROLE_2":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]},"UPDATER_ADDER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x0e58939204eEDa84F796FBc86840A50af10eC4F4"]},"CIRCLE_UPDATER":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xDC1d1189Da69Ae2016E4976A43De20972D349B1b"]}},"targets":{"0xEB803eb3F501998126bf37bB823646Ed3D59d072":{"upgrade(address,address)":["UPGRADER_ROLE"],"upgradeAndCall(address,address,bytes)":["UPGRADER_ROLE"]},"0xa13BAF47339d63B743e7Da8741db5456DAc1E556":{"revertBatch(bytes,uint256)":["PAUSER_REMOVER_ROLE_1","PAUSER_REMOVER_ROLE_2"],"removeSequencer(address)":["PAUSER_REMOVER_ROLE_1","PAUSER_REMOVER_ROLE_2"],"removeProver(address)":["PAUSER_REMOVER_ROLE_1","PAUSER_REMOVER_ROLE_2"],"setPause(bool)":["PAUSER_REMOVER_ROLE_1","PAUSER_REMOVER_ROLE_2"],"addSequencer(address)":["UPDATER_ADDER_ROLE"],"addProver(address)":["UPDATER_ADDER_ROLE"],"updateMaxNumTxInChunk(uint256)":["CIRCLE_UPDATER"]},"0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B":{"updateGasOracle(address)":["UPDATER_ADDER_ROLE"],"updateMaxGasLimit(uint256)":["UPDATER_ADDER_ROLE"]},"0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367":{"setPause(bool)":["PAUSER_REMOVER_ROLE_1","PAUSER_REMOVER_ROLE_2"],"updateMaxReplayTimes(uint256)":["UPDATER_ADDER_ROLE"]},"0x987e300fDfb06093859358522a79098848C33852":{"setIntrinsicParams(uint64,uint64,uint64,uint64)":["PAUSER_REMOVER_ROLE_1","PAUSER_REMOVER_ROLE_2"]},"0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37":{"updateWhitelistStatus(address[],bool)":["UPDATER_ADDER_ROLE"]},"0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0":{"updateVerifier(uint64,address)":["UPGRADER_ROLE","CIRCLE_UPDATER"]},"0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6":{"setERC20Gateway(address[],address[])":["UPDATER_ADDER_ROLE"]},"0xb2b10a289A229415a124EFDeF310C10cb004B6ff":{"updateTokenMapping(address,address)":["UPDATER_ADDER_ROLE"]},"0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B":{"updateTokenMapping(address,address)":["UPDATER_ADDER_ROLE"]},"0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6":{"updateTokenMapping(address,address)":["UPDATER_ADDER_ROLE"]},"0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B":{"updateCircleCaller(address)":["CIRCLE_UPDATER"],"pauseDeposit(bool)":["CIRCLE_UPDATER"],"pauseWithdraw(bool)":["CIRCLE_UPDATER"]},"0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d":{"setPause(bool)":["PAUSER_REMOVER_ROLE_1","PAUSER_REMOVER_ROLE_2"]}}}
       derivedName:
 +        "ScrollOwner"
     }
@@ -143,19 +143,67 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract Fallback (0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Fallback (0x64CCBE37c9A82D85A1F2E74649b7A42923067988) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Fallback (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    }
+```
+
+```diff
++   Status: CREATED
     contract InstantMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
     }
 ```
 
 ```diff
 +   Status: CREATED
-    contract TimelockController (0xDC1d1189Da69Ae2016E4976A43De20972D349B1b) {
+    contract TimelockMid (0xDC1d1189Da69Ae2016E4976A43De20972D349B1b) {
     }
 ```
 
 ```diff
 +   Status: CREATED
     contract ProposerMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
     }
 ```
 
