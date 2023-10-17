@@ -51,7 +51,7 @@ export function RichSelect(props: Props) {
         <div className="RichSelect-SlideCard-Content fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-100 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-gray-750 md:hidden">
           <div className="relative flex justify-between">
             <div className="RichSelect-SlideCard-GestureZone absolute bottom-0 -top-4 -left-4 -right-4" />
-            <h2 className="text-3xl font-bold">
+            <h2 className="text-3xl font-bold leading-normal">
               {props.slideCardTitle ?? props.label}
             </h2>
             <CloseIcon className="RichSelect-SlideCard-CloseButton z-[1000] h-5 w-5 fill-black dark:fill-white" />
