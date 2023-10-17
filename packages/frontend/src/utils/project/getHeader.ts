@@ -22,9 +22,9 @@ export function getHeader(
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const activityData =
-    activityApiResponse?.projects[project.id.toString()]?.data
-  const tpsDaily = getTpsDaily(activityData)
-  const tpsWeeklyChange = getTpsWeeklyChange(activityData)
+    activityApiResponse?.projects[project.id.toString()]?.daily.data
+  const tpsDaily = getTpsDaily(activityData, 'project')
+  const tpsWeeklyChange = getTpsWeeklyChange(activityData, 'project')
 
   return {
     icon: `/icons/${project.display.slug}.png`,

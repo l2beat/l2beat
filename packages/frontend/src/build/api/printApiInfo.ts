@@ -43,7 +43,6 @@ export function printApiInfo(
 export function printActivityInfo(activityApiResponse: ActivityApiResponse) {
   console.debug('\n', 'ACTIVITY')
   printActivity('combined', activityApiResponse.combined)
-  printActivity('ethereum', activityApiResponse.ethereum)
   for (const project of [...layer2s]) {
     const chart = activityApiResponse.projects[project.id.toString()]
     printActivity(project.id.toString(), chart)
@@ -59,8 +58,8 @@ export function printActivityInfo(activityApiResponse: ActivityApiResponse) {
       return
     }
 
-    const tps = (chart.data.at(-1)?.[1] ?? 0).toFixed(2)
-    const daily = chart.data.length.toString()
+    const tps = (chart.daily.data.at(-1)?.[1] ?? 0).toFixed(2)
+    const daily = chart.daily.data.length.toString()
     console.debug(
       label,
       '.'.repeat(30 - label.length - tps.length),

@@ -1,8 +1,8 @@
 import { bridges, layer2s } from '@l2beat/config'
 import {
+  ActivityApiCharts,
   ActivityApiResponse,
   assert,
-  FrontendActivityApiChart,
   json,
   ProjectId,
 } from '@l2beat/shared-pure'
@@ -10,10 +10,10 @@ import {
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { Clock } from '../../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
-import { countsToChart, countsToFrontendChart } from './countsToChart'
+import { alignActivityData } from './alignActivityData'
+import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
-import { toProjectsActivity } from './toProjectsActivity'
 import {
   DailyTransactionCount,
   DailyTransactionCountProjectsMap,
@@ -44,34 +44,48 @@ export class ActivityController {
     }
     assert(ethereumCounts, 'Ethereum missing in daily transaction count')
 
+    const combinedChartPoints = alignActivityData(
+      toCombinedActivity(layer2sCounts),
+      ethereumCounts,
+    )
+
+    const projects: ActivityApiResponse['projects'] = {}
+    for (const [projectId, counts] of layer2sCounts.entries()) {
+      projects[projectId.toString()] = formatActivityChart(
+        alignActivityData(counts, ethereumCounts),
+      )
+    }
+
     return {
-      combined: toCombinedActivity(layer2sCounts),
-      projects: toProjectsActivity(layer2sCounts),
-      ethereum: countsToChart(ethereumCounts),
+      combined: formatActivityChart(combinedChartPoints),
+      projects,
     }
   }
 
-  async getProjectsActivity(
+  async getAggregatedActivity(
     filteredProjectsSlugs: string[] = [],
-  ): Promise<FrontendActivityApiChart> {
+  ): Promise<ActivityApiCharts> {
     const projectIdsFilter = [...layer2s, ...bridges]
       .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
       .map((project) => project.id)
 
-    const aggregatedDailyCounts =
+    const [aggregatedDailyCounts, ethereumCounts] = await Promise.all([
       await this.viewRepository.getProjectsAggregatedDailyCount(
         projectIdsFilter,
-      )
+      ),
+      await this.viewRepository.getDailyCountsPerProject(ProjectId.ETHEREUM),
+    ])
     const now = this.clock.getLastHour()
 
     const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
-
-    const ethereumCounts = await this.viewRepository.getDailyCountsPerProject(
-      ProjectId.ETHEREUM,
-    )
     const processedEthereumCounts = postprocessCounts(ethereumCounts, true, now)
 
-    return countsToFrontendChart(processedCounts, processedEthereumCounts)
+    const chartPoints = alignActivityData(
+      processedCounts,
+      processedEthereumCounts,
+    )
+
+    return formatActivityChart(chartPoints)
   }
 
   async getStatus(): Promise<json> {
