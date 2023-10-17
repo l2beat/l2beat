@@ -104,39 +104,50 @@ function configureSlideCard(
   slideCard: HTMLElement,
   setState: (state: State) => void,
 ) {
-  const { $, $$ } = makeQuery(slideCard)
-  const slideCardContent = $('.RichSelect-SlideCard-Content')
-  const slideCardGestureZone = $('.RichSelect-SlideCard-GestureZone')
-  const slideCardCloses = $$('.RichSelect-SlideCard-Close')
-
+  const { $ } = makeQuery(slideCard)
+  const content = $('.RichSelect-SlideCard-Content')
+  const gestureZone = $('.RichSelect-SlideCard-GestureZone')
+  const closeButton = $('.RichSelect-SlideCard-CloseButton')
+  const background = $('.RichSelect-SlideCard-Background')
   let touchStartY = 0
 
-  slideCardGestureZone.addEventListener('touchstart', (e) => {
+  function onTouchStart(e: TouchEvent) {
     touchStartY = e.touches[0].clientY
-  })
+    background.classList.remove('transition-opacity')
+  }
 
-  slideCardGestureZone.addEventListener('touchmove', (e) => {
+  function onTouchMove(e: TouchEvent) {
     const touchMoveY = e.touches[0].clientY
     const diff = touchMoveY - touchStartY
-    if (diff < 0) {
-      return
-    }
-    slideCardContent.style.transform = `translateY(${
-      touchMoveY - touchStartY
-    }px)`
-  })
 
-  slideCardGestureZone.addEventListener('touchend', (e) => {
+    const translateY = clamp(diff, 0, window.innerHeight)
+    const opacity = 1 - translateY / content.clientHeight
+    content.style.transform = `translateY(${translateY}px)`
+    background.style.opacity = `${opacity}`
+  }
+
+  function onTouchEnd(e: TouchEvent) {
     const touchEndY = e.changedTouches[0].clientY
     const diff = touchEndY - touchStartY
-    slideCardContent.style.transform = ''
+    content.style.transform = ''
+    background.style.opacity = ''
     if (diff > CLOSE_GESTURE_Y_DIFF) {
       setState(null)
     }
-  })
+    background.classList.add('transition-opacity')
+  }
 
-  slideCardCloses.forEach((slideCardClose) => {
-    slideCardClose.addEventListener('click', () => setState(null))
+  function close() {
+    setState(null)
+  }
+
+  gestureZone.addEventListener('touchstart', onTouchStart)
+  gestureZone.addEventListener('touchmove', onTouchMove)
+  gestureZone.addEventListener('touchend', onTouchEnd)
+
+  const closeElements = [background, closeButton]
+  closeElements.forEach((slideCardClose) => {
+    slideCardClose.addEventListener('click', close)
   })
 }
 
