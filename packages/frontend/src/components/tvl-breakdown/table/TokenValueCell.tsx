@@ -2,7 +2,7 @@ import { safeGetTokenByAssetId } from '@l2beat/config'
 import { AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { TVLProjectBreakdown } from '../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
+import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatLargeNumberWithCommas } from '../../../utils'
 
 interface TokenValueCellProps {

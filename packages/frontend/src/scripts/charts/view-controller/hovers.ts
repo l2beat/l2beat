@@ -1,5 +1,6 @@
 import { Milestone } from '@l2beat/config'
 
+import { formatDate } from '../../../utils'
 import { formatCurrency, formatCurrencyExactValue } from '../../../utils/format'
 import { formatTps } from '../../../utils/formatTps'
 import { isMobile } from '../../utils/isMobile'
@@ -8,7 +9,7 @@ import { TokenInfo } from '../types'
 
 export function renderMilestoneHover(milestone: Milestone) {
   return renderHover([
-    renderDateRow(milestone.date),
+    renderDateRow(formatDate(milestone.date.slice(0, 10))),
     renderNameRow(milestone.name),
     milestone.description && renderDescriptionRow(milestone.description),
     isMobile() && renderMilestoneLink(milestone.link),

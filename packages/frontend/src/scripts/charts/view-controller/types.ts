@@ -3,7 +3,6 @@ import { Milestone } from '@l2beat/config'
 import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
-  AggregateTvlResponse,
   TokenTvlResponse,
 } from '../types'
 
@@ -15,7 +14,7 @@ export type ChartData =
 
 interface ChartTvlData {
   type: 'tvl'
-  values: AggregateTvlResponse
+  values: AggregateDetailedTvlResponse
 }
 
 interface ChartActivityData {
