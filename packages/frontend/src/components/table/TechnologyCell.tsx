@@ -60,7 +60,7 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
       {provider === 'Loopring' && (
         <span
           className={providerClassName}
-          title="This project is based on loopring's code base."
+          title="This project is based on Loopring's code base."
         >
           <LoopringIcon className={providerIconClassName} />
         </span>
