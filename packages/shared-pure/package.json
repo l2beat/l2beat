@@ -21,7 +21,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@l2beat/discovery-types": "^0.3.2",
+    "@l2beat/discovery-types": "^0.4.0",
     "prom-client": "^14.1.0"
   }
 }
