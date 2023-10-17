@@ -2,8 +2,8 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { TvlBreakdownViewProps } from '../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
-import { PercentChange } from '../PercentChange'
 import { InfoIcon } from '../icons'
+import { PercentChange } from '../PercentChange'
 
 export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],
@@ -71,13 +71,12 @@ function StatsItem(props: StatsItemProps) {
               ? 'text-lg text-black dark:text-white'
               : 'text-xs text-gray-600',
           )}
-        
         >
           {props.mobileTitle}
         </span>
-      
+
         <span
-          className="Tooltip -translate-y-px md:translate-y-0 ml-0.5"
+          className="Tooltip ml-0.5 -translate-y-px md:translate-y-0"
           title={props.tooltip}
         >
           <InfoIcon className="md:h-3.5 md:w-3.5" />
