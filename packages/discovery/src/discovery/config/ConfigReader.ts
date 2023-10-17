@@ -5,12 +5,22 @@ import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
 
 import { ChainId } from '../../utils/ChainId'
+import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
   async readConfig(name: string, chain: ChainId): Promise<DiscoveryConfig> {
     const chainName = ChainId.getName(chain).toString()
+    assert(
+      fileExistsCaseSensitive(`discovery/${name}`),
+      'Project not found, check if case matches',
+    )
+    assert(
+      fileExistsCaseSensitive(`discovery/${name}/${chainName}`),
+      'Chain not found in project, check if case matches',
+    )
+
     const contents = await readFile(
       `discovery/${name}/${chainName}/config.jsonc`,
       'utf-8',
@@ -32,6 +42,14 @@ export class ConfigReader {
 
   async readDiscovery(name: string, chain: ChainId): Promise<DiscoveryOutput> {
     const chainName = ChainId.getName(chain).toString()
+    assert(
+      fileExistsCaseSensitive(`discovery/${name}`),
+      'Project not found, check if case matches',
+    )
+    assert(
+      fileExistsCaseSensitive(`discovery/${name}/${chainName}`),
+      'Chain not found in project, check if case matches',
+    )
 
     const contents = await readFile(
       `discovery/${name}/${chainName}/discovered.json`,
