@@ -48,7 +48,21 @@
         "isBatchFinalized",
         "withdrawRoots"
       ],
-      "ignoreInWatchMode": ["lastFinalizedBatchIndex"]
+      "ignoreInWatchMode": ["lastFinalizedBatchIndex"],
+      "fields": {
+        "sequencers": {
+          "type": "arrayFromOneEvent",
+          "event": "UpdateSequencer",
+          "valueKey": "account",
+          "flagKey": "status"
+        },
+        "provers": {
+          "type": "arrayFromOneEvent",
+          "event": "UpdateProver",
+          "valueKey": "account",
+          "flagKey": "status"
+        }
+      }
     },
     "MultipleVersionRollupVerifier": {
       "ignoreMethods": ["getVerifier"]
@@ -56,7 +70,10 @@
     "ScrollOwner": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "type": "scrollAccessControl",
+          "roleNames": {
+            "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "UPGRADER_ROLE"
+          }
         }
       }
     },
