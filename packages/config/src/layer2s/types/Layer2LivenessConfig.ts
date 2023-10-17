@@ -5,7 +5,7 @@ export interface Layer2LivenessConfig {
   batchSubmissions: (FunctionCallParams | TransferParams)[]
 }
 
-interface FunctionCallParams {
+export interface FunctionCallParams {
   formula: 'functionCall'
   address: EthereumAddress
   selector: string
@@ -13,7 +13,7 @@ interface FunctionCallParams {
   untilTimestamp?: UnixTime
 }
 
-interface TransferParams {
+export interface TransferParams {
   formula: 'transfer'
   from: EthereumAddress
   to: EthereumAddress

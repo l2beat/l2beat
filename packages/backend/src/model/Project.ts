@@ -64,10 +64,36 @@ export function bridgeToProject(bridge: Bridge): Project {
 
 function toBackendLivenessConfig(
   projectId: ProjectId,
-  config: Layer2LivenessConfig,
-): LivenessConfig {}
-// projectId: ProjectId
-// type: LivenessType
-// from: EthereumAddress
-// to: EthereumAddress
-// untilTimestamp?: UnixTime
+  config: Layer2LivenessConfig | undefined,
+): LivenessConfig | undefined {
+  if (config === undefined) return
+
+  const livenessConfig: LivenessConfig = {
+    transfers: [],
+    functionCalls: [],
+  }
+
+  const combined = [...config.stateUpdates, ...config.batchSubmissions]
+
+  combined.forEach((param) => {
+    if (param.formula === 'functionCall') {
+      livenessConfig.functionCalls.push({
+        address: param.address,
+        projectId,
+        selector: param.selector,
+        type: LivenessType('STATE'),
+        untilTimestamp: param.untilTimestamp,
+      })
+    } else {
+      livenessConfig.transfers.push({
+        from: param.from,
+        projectId,
+        to: param.to,
+        type: LivenessType('STATE'),
+        untilTimestamp: param.untilTimestamp,
+      })
+    }
+  })
+
+  return livenessConfig
+}
