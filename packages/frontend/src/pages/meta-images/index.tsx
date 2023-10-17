@@ -27,9 +27,11 @@ export function getMetaImagePages(
   const activity = activityApiResponse
     ? getPropsActivity(activityApiResponse)
     : undefined
-  const detailedScaling = config.features.detailedTvl
-    ? getPropsDetailed(tvlApiResponse, undefined, 'layers2s')
-    : undefined
+  const detailedScaling = getPropsDetailed(
+    tvlApiResponse,
+    undefined,
+    'layers2s',
+  )
 
   return compact(
     [
@@ -41,7 +43,7 @@ export function getMetaImagePages(
           </PageWrapper>
         ),
       },
-      detailedScaling && {
+      {
         slug: '/meta-images/overview-detailed-scaling',
         page: (
           <PageWrapper {...detailedScaling.wrapper}>
@@ -77,22 +79,21 @@ export function getMetaImagePages(
         }
       }),
     ].concat(
-      detailedScaling &&
-        included.map((project) => {
-          const { props, wrapper } = getPropsDetailed(
-            tvlApiResponse,
-            project,
-            'layers2s',
-          )
-          return {
-            slug: `/meta-images/${project.display.slug}-detailed`,
-            page: (
-              <PageWrapper {...wrapper}>
-                <DetailedTvlMetaImage {...props} />
-              </PageWrapper>
-            ),
-          }
-        }),
+      included.map((project) => {
+        const { props, wrapper } = getPropsDetailed(
+          tvlApiResponse,
+          project,
+          'layers2s',
+        )
+        return {
+          slug: `/meta-images/${project.display.slug}-detailed`,
+          page: (
+            <PageWrapper {...wrapper}>
+              <DetailedTvlMetaImage {...props} />
+            </PageWrapper>
+          ),
+        }
+      }),
     ),
   )
 }

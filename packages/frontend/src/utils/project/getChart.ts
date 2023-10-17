@@ -23,7 +23,7 @@ export function getChart(
   return {
     settingsId: `project-${project.display.slug}`,
     initialType:
-      config?.features.detailedTvl && project.type === 'layer2'
+      project.type === 'layer2'
         ? { type: 'project-detailed-tvl', slug: project.display.slug }
         : { type: 'project-tvl', slug: project.display.slug },
     tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),

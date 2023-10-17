@@ -34,7 +34,6 @@ export interface ProjectHeaderProps {
   tvlBreakdownHref: string
   risks: RiskValues
   links: ProjectLink[]
-  detailedTvlEnabled?: boolean
   stage: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
@@ -104,7 +103,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
   ]
 
-  if (!props.detailedTvlEnabled && props.tvlStats) {
+  if (props.tvlStats) {
     summary.unshift({
       title: 'Total value locked',
       tooltip:
@@ -124,7 +123,6 @@ export function ProjectHeader(props: ProjectHeaderProps) {
   return (
     <DetailsHeader
       type="layer2"
-      detailedTvlEnabled={props.detailedTvlEnabled}
       title={props.title}
       icon={props.icon}
       stats={{ summary, l2Tvl: props.tvlStats }}
