@@ -37,6 +37,7 @@ export function getProps(
     wrapper: {
       metadata: getPageMetadata(),
       preloadApi: getChartUrl({ type: 'layer2-activity' }),
+      banner: config.features.banner,
     },
   }
 }

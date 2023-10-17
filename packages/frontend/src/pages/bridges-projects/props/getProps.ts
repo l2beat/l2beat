@@ -30,6 +30,7 @@ export function getProps(
     wrapper: {
       preloadApi: getChartUrl(chart.initialType),
       metadata: getPageMetadata(bridge),
+      banner: config.features.banner,
     },
   }
 }

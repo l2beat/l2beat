@@ -42,6 +42,7 @@ export function getProps(
     wrapper: {
       preloadApi: getChartUrl({ type: 'layer2-tvl' }),
       metadata: getPageMetadata(),
+      banner: config.features.banner,
     },
   }
 }

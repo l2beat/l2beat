@@ -48,6 +48,7 @@ export function getProps(
     wrapper: {
       preloadApi: getChartUrl({ type: 'bridges-tvl', includeCanonical: false }),
       metadata: getPageMetadata(),
+      banner: config.features.banner,
     },
   }
 }
