@@ -74,6 +74,11 @@
           "event": "UpdateProver",
           "valueKey": "account",
           "flagKey": "status"
+        },
+        "revertedBatches": {
+          "type": "stateFromEvent",
+          "event": "RevertBatch",
+          "returnParams": ["batchIndex"]
         }
       }
     },

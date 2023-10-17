@@ -1,4 +1,4 @@
-# Diff at Tue, 17 Oct 2023 13:33:55 GMT:
+# Diff at Tue, 17 Oct 2023 13:57:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@51e09b406b3616ef251dd9e0b82a634022f2f662
@@ -92,6 +92,8 @@ Provide description of changes. This section will be preserved.
     contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
       values.provers:
 +        ["0x356483dC32B004f32Ea0Ce58F7F88879886e9074","0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06"]
+      values.revertedBatches:
++        []
       values.sequencers:
 +        ["0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f","0x2ce8B4A516ebBc8B425764a867B742F76C2244c7"]
       implementations:
