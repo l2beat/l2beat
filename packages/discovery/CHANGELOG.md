@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.16.0
+
+### Minor Changes
+
+- add ScrollAccessControlHandler
+
 ## 0.15.0
 
 ### Minor Changes

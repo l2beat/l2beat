@@ -38,6 +38,10 @@ import {
   LayerZeroMultisigHandlerDefinition,
 } from './LayerZeroMultisigHandler'
 import {
+  ScrollAccessControlHandler,
+  ScrollAccessControlHandlerDefinition,
+} from './ScrollAccessControlHandler'
+import {
   StarkWareGovernanceHandler,
   StarkWareGovernanceHandlerDefinition,
 } from './StarkWareGovernanceHandler'
@@ -60,6 +64,7 @@ export const UserHandlerDefinition = z.union([
   CallHandlerDefinition,
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
+  ScrollAccessControlHandlerDefinition,
   ArrayFromOneEventHandlerDefinition,
   ArrayFromOneEventWithArgHandlerDefinition,
   ArrayFromTwoEventsHandlerDefinition,
@@ -90,6 +95,8 @@ export function getUserHandler(
       return new StarkWareNamedStorageHandler(field, definition, logger)
     case 'accessControl':
       return new AccessControlHandler(field, definition, abi, logger)
+    case 'scrollAccessControl':
+      return new ScrollAccessControlHandler(field, definition, abi, logger)
     case 'arrayFromOneEvent':
       return new ArrayFromOneEventHandler(field, definition, abi, logger)
     case 'arrayFromOneEventWithArg':
