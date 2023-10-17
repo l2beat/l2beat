@@ -1,10 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BigQueryClient } from '@l2beat/shared'
-import { Hash256, hashJson, UnixTime } from '@l2beat/shared-pure'
+import { hashJson, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
-import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
+import {
+  LivenessRecord,
+  LivenessRepository,
+} from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import {
   LivenessConfig,
@@ -28,6 +31,7 @@ export class LivenessIndexer extends ChildIndexer {
     parentIndexer: HourlyIndexer,
     private readonly bigQueryClient: BigQueryClient,
     private readonly stateRepository: IndexerStateRepository,
+    private readonly livenessRepository: LivenessRepository,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
@@ -37,25 +41,24 @@ export class LivenessIndexer extends ChildIndexer {
     // TODO
   }
 
-  override async update(from: number, to: number): Promise<number> {
-    // TODO
-  }
+  override async update(from: number, _to: number): Promise<number> {
+    const config: LivenessConfig = {
+      transfers: [],
+      functionCalls: [],
+    }
 
-  // override async invalidate(targetHeight: number): Promise<number> {
-  //   // TODO
-  // }
+    // TODO: think about this logic, should it always add 1 hour?
+    const fromUnixTime = new UnixTime(from)
+    const toUnixTime = fromUnixTime.add(1, 'hours')
 
-  override async getSafeHeight(): Promise<number> {
-    const height = await this.stateRepository.getSafeHeight(this.indexerId)
-    return height ?? this.minTimestamp.toNumber()
-  }
+    // find missing data for this range(from,to)
 
-  override async setSafeHeight(height: number): Promise<void> {
-    await this.stateRepository.addOrUpdate({
-      indexerId: this.indexerId,
-      configHash: CONFIG_HASH,
-      safeHeight: height,
-    })
+    // get missing data
+    const data = await this.getLivenessData(config, fromUnixTime, toUnixTime)
+
+    await this.livenessRepository.addMany(data)
+
+    return toUnixTime.toNumber()
   }
 
   async getLivenessData(
@@ -105,5 +108,23 @@ export class LivenessIndexer extends ChildIndexer {
     )
 
     return transformFunctionCallsQueryResult(functionCallsConfigs, queryResults)
+  }
+
+  override async getSafeHeight(): Promise<number> {
+    const height = await this.stateRepository.getSafeHeight(this.indexerId)
+    return height ?? this.minTimestamp.toNumber()
+  }
+
+  override async setSafeHeight(height: number): Promise<void> {
+    await this.stateRepository.addOrUpdate({
+      indexerId: this.indexerId,
+      configHash: CONFIG_HASH,
+      safeHeight: height,
+    })
+  }
+
+  // TODO: add comment why there is no need to delete anything
+  override async invalidate(targetHeight: number): Promise<number> {
+    return Promise.resolve(targetHeight)
   }
 }
