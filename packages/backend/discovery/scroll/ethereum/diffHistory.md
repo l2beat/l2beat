@@ -1,4 +1,4 @@
-# Diff at Tue, 17 Oct 2023 13:57:37 GMT:
+# Diff at Tue, 17 Oct 2023 14:02:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@51e09b406b3616ef251dd9e0b82a634022f2f662
@@ -13,6 +13,15 @@ Provide description of changes. This section will be preserved.
     contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
       implementations:
 +        ["0xBC9D741501A20F962756C95BF906b4abffadcf8F"]
+    }
+```
+
+```diff
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
+      values.whitelisted:
++        ["0x21b8a9F5a4640c3FC13E19C48e776173e1210995"]
+      derivedName:
++        "Whitelist"
     }
 ```
 

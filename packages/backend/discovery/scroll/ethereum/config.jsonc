@@ -34,7 +34,8 @@
     "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": "EnforcedTxGateway",
     "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": "L1ERC1155Gateway",
     "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": "L1ERC721Gateway",
-    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "L1WETHGateway"
+    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "L1WETHGateway",
+    "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": "Whitelist"
   },
   "overrides": {
     "L1MessageQueue": {
@@ -138,6 +139,16 @@
     },
     "ProposerMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "Whitelist": {
+      "fields": {
+        "whitelisted": {
+          "type": "arrayFromOneEvent",
+          "event": "WhitelistStatusChanged",
+          "valueKey": "_account",
+          "flagKey": "_status"
+        }
+      }
     }
   }
 }

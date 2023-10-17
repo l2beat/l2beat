@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 18370416,
-  "configHash": "0x4658362cf8526e148ea81ebbf63a4c34b7a003ed5f0cfcc2e55e32aca7e0c404",
+  "configHash": "0xedf6221e6b3445158d035f203fe869c56e510484b4746d1e42a41ad1d841a2b6",
   "version": 3,
   "contracts": [
     {
@@ -144,8 +144,10 @@
       },
       "sinceTimestamp": 1696782311,
       "values": {
-        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
-      }
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "whitelisted": ["0x21b8a9F5a4640c3FC13E19C48e776173e1210995"]
+      },
+      "derivedName": "Whitelist"
     },
     {
       "name": "",
@@ -726,6 +728,7 @@
   "eoas": [
     "0x0000000000000000000000000000000000000001",
     "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+    "0x21b8a9F5a4640c3FC13E19C48e776173e1210995",
     "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7",
     "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
     "0x356483dC32B004f32Ea0Ce58F7F88879886e9074",
