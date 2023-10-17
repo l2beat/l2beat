@@ -347,6 +347,39 @@ Specify some names:
 }
 ```
 
+### Scroll access control handler
+
+This handler allows you to analyze a contract using Scroll's modified OpenZeppelin's AccessControl pattern.
+
+WARNING: Make sure that the name of this field is `scrollAccessControl`. The inversion logic depends on that.
+
+**Parameters:**
+
+- `type` - always the literal: `"scrollAccessControl"`
+- `roleNames` - (optional) a record of bytes32 role hashes to predefined role names. Usually this handler is pretty good at guessing, so this is often unnecessary
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+**Examples:**
+
+Analyze the contract:
+
+```json
+{
+  "type": "scrollAccessControl"
+}
+```
+
+Specify some names:
+
+```json
+{
+  "type": "scrollAccessControl",
+  "roleNames": {
+    "0x3f3b3bf06419b25db8f1ac3dfb014d79b6fb633e65d1ca540c6a3c665e32e106": "GOBLIN_ROLE"
+  }
+}
+```
+
 ### StarkWare named storage handler
 
 This handler allows you to read values from contracts using StarkWare's named storage pattern. This handler only supports simple values and does not support mappings and other possible types.
