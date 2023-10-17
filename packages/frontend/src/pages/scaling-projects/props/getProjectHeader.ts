@@ -69,8 +69,8 @@ export function getProjectHeader(
 
   const activityData =
     activityApiResponse?.projects[project.id.toString()]?.daily.data
-  const tpsDaily = getTpsDaily(activityData)
-  const tpsWeeklyChange = getTpsWeeklyChange(activityData)
+  const tpsDaily = getTpsDaily(activityData, 'project')
+  const tpsWeeklyChange = getTpsWeeklyChange(activityData, 'project')
   const transactionMonthlyCount = getTransactionCount(
     activityData,
     'project',
