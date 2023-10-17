@@ -49,7 +49,7 @@ interface StatsItemProps {
   value: string
   change: string
   big?: boolean
-  tooltip?: string
+  tooltip: string
 }
 
 function StatsItem(props: StatsItemProps) {
@@ -80,7 +80,7 @@ function StatsItem(props: StatsItemProps) {
           className="Tooltip -translate-y-px md:translate-y-0 ml-0.5"
           title={props.tooltip}
         >
-          <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+          <InfoIcon className="md:h-3.5 md:w-3.5" />
         </span>
       </div>
       <div className="flex items-center gap-1">
