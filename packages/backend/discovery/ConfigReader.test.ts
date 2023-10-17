@@ -7,7 +7,7 @@ describe(ConfigReader.name, () => {
   // FIXME: This is a temporary hack to make the tests while configs are in backend
   const dir = process.cwd()
 
-  process.chdir(path.resolve(__dirname, '../../'))
+  process.chdir(path.resolve(__dirname, './..'))
   console.log('cwd', process.cwd())
 
   after(() => {
