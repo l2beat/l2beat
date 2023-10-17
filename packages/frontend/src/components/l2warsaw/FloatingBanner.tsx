@@ -20,7 +20,7 @@ export function FloatingBanner() {
         <div className="mb-7 font-extrabold xs:text-xl">at Devconnect</div>
         <a
           className="w-full max-w-[142px] rounded-md bg-[#DE4A2A] py-[8px] text-center text-base font-medium text-white transition-colors hover:bg-[#ba371b] md:w-40"
-          href="https://warsaw.l2beat.com"
+          href="https://l2days.xyz/"
           target="_blank"
         >
           Get tickets
