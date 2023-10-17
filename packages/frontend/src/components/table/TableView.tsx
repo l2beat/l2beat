@@ -2,13 +2,14 @@ import cx from 'classnames'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../icons'
+import { Link } from '../Link'
 import { SectionId } from '../project/sectionId'
 
 interface Props<T> {
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
-  rerenderIndexesOn?: string
+  rerenderOnLoad?: boolean
 }
 
 export interface ColumnConfig<T> {
@@ -37,7 +38,7 @@ export function TableView<T>({
   items,
   columns,
   rows,
-  rerenderIndexesOn,
+  rerenderOnLoad,
 }: Props<T>) {
   const highlightedColumnClassNames =
     'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
@@ -45,15 +46,13 @@ export function TableView<T>({
   return (
     <div
       className={cx(
-        'overflow-x-auto whitespace-pre text-base',
+        'group/tableview overflow-x-auto whitespace-pre text-base',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
-      {...(rerenderIndexesOn
-        ? { 'data-table-rerender-indexes-on': rerenderIndexesOn }
-        : {})}
+      data-rerender-on-load={rerenderOnLoad}
     >
-      <table className="w-full border-collapse text-left">
+      <table className="w-full border-collapse text-left group-data-[state=empty]/tableview:hidden">
         <thead>
           <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
             {columns.map((column, i) => {
@@ -97,7 +96,7 @@ export function TableView<T>({
             })}
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {items.map((item, i) => {
             const {
               href,
@@ -148,6 +147,13 @@ export function TableView<T>({
           })}
         </tbody>
       </table>
+      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
+        <span className="mb-4 text-2xl font-semibold">No results</span>
+        <span className="mb-6">There are no results meeting the criteria</span>
+        <Link className="ProjectFilters-ResetButton cursor-pointer">
+          Reset all filters
+        </Link>
+      </div>
     </div>
   )
 }

@@ -19,15 +19,20 @@ export function getTvlRenderParams(
     { trimLeft: true },
   )
 
-  const points = dataInRange.map(([timestamp, usd, eth]) => ({
-    series: [state.useAltCurrency ? eth : usd],
-    data: {
-      date: formatTimestamp(timestamp, true),
-      usd,
-      eth,
-    },
-    milestone: state.milestones[timestamp],
-  }))
+  const points = dataInRange.map((data) => {
+    const timestamp = data[0]
+    const usd = data[1]
+    const eth = data[5]
+    return {
+      series: [state.useAltCurrency ? eth : usd],
+      data: {
+        date: formatTimestamp(timestamp, true),
+        usd: data[1],
+        eth: eth,
+      },
+      milestone: state.milestones[timestamp],
+    }
+  })
 
   const formatYAxisLabel = state.useAltCurrency
     ? (x: number) => formatCurrency(x, 'eth')

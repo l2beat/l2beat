@@ -21,7 +21,7 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
       getRowVerificationClassNames(entry),
       entry.type === 'layer2' && 'hidden',
     ),
-    'data-layer2': entry.type === 'layer2' ? true : undefined,
+    'data-slug': entry.slug,
     href,
   }
 }

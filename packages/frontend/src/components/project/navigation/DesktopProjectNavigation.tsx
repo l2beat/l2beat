@@ -1,8 +1,8 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { BridgeDetailsSection } from '../../../pages/bridges-projects/props/getProjectDetails'
-import { ScalingDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
+import { BridgeDetailsSection } from '../../../pages/bridges/projects/props/getProjectDetails'
+import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
 import { UnderReviewCallout } from '../UnderReviewCallout'

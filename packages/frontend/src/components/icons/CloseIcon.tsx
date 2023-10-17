@@ -10,6 +10,7 @@ export function CloseIcon(props: SVGAttributes<SVGElement>) {
       height="10"
       viewBox="0 0 10 10"
       fill="black"
+      aria-label="Close icon"
       className={className}
       {...rest}
     >

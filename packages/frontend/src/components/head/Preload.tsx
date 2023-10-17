@@ -7,9 +7,7 @@ interface Props {
 export function Preload(props: Props) {
   return (
     <>
-      {props.preloadApi && (
-        <link rel="preload" href={props.preloadApi} as="fetch" />
-      )}
+      <link rel="preload" href={props.preloadApi} as="fetch" />
       <link
         rel="preload"
         href="/fonts/Roboto/roboto-v30-latin-regular.woff2"
