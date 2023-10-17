@@ -47,7 +47,7 @@ export function getScalingActivityViewEntry(
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
-    ...getActivityViewEntryDetails({ data, transactionCountType: 'project' }),
+    ...getActivityViewEntryDetails(data, 'project'),
   }
 }
 
@@ -59,27 +59,19 @@ function getEthereumActivityViewEntry(
     name: 'Ethereum',
     slug: 'ethereum',
     dataSource: 'Blockchain RPC',
-    verificationStatus: true,
-    ...getActivityViewEntryDetails({ data, transactionCountType: 'ethereum' }),
+    ...getActivityViewEntryDetails(data, 'ethereum'),
   }
 }
 
-function getActivityViewEntryDetails({
-  data,
-  transactionCountType,
-}: {
-  data?: ActivityApiChart['data']
-  transactionCountType: 'project' | 'ethereum'
-}) {
+function getActivityViewEntryDetails(
+  data: ActivityApiChart['data'] | undefined,
+  type: 'project' | 'ethereum',
+) {
   return {
-    tpsDaily: getTpsDaily(data),
-    tpsWeeklyChange: getTpsWeeklyChange(data),
-    transactionsMonthlyCount: getTransactionCount(
-      data,
-      transactionCountType,
-      'month',
-    ),
-    ...getMaxTps(data),
+    tpsDaily: getTpsDaily(data, type),
+    tpsWeeklyChange: getTpsWeeklyChange(data, type),
+    transactionsMonthlyCount: getTransactionCount(data, type, 'month'),
+    ...getMaxTps(data, type),
   }
 }
 
