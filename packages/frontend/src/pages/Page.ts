@@ -21,6 +21,7 @@ export interface WrapperProps {
   htmlClassName?: string
   metadata: PageMetadata
   preloadApi?: string
+  banner: boolean | undefined
 }
 export interface PageMetadata {
   title: string

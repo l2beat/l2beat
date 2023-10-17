@@ -14,6 +14,7 @@ export function getProps(config: Config): Wrapped<MultisigReportPageProps> {
     },
     wrapper: {
       metadata: getPageMetadata(),
+      banner: config.features.banner,
     },
   }
 }

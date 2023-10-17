@@ -48,6 +48,7 @@ export function getProps(
     },
     wrapper: {
       metadata: getPageMetadata(),
+      banner: config.features.banner,
     },
   }
 }

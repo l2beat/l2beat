@@ -40,6 +40,7 @@ export function getProps(
     wrapper: {
       preloadApi: getChartUrl(chart.initialType),
       metadata: getPageMetadata(project),
+      banner: config.features.banner,
     },
   }
 }

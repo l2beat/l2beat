@@ -54,6 +54,7 @@ export function getProps(
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl(chartType),
+      banner: false,
     },
   }
 }
@@ -77,6 +78,7 @@ export function getPropsActivity(
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl({ type: 'layer2-activity' }),
+      banner: false,
     },
   }
 }
@@ -112,6 +114,7 @@ export function getPropsDetailed(
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl(chartType),
+      banner: false,
     },
   }
 }

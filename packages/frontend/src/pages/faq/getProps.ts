@@ -20,6 +20,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
         image: 'https://l2beat.com/meta-images/overview-scaling.png',
         url: 'https://l2beat.com/faq/',
       },
+      banner: config.features.banner,
     },
   }
 }

@@ -40,6 +40,7 @@ export function getProps(
     wrapper: {
       // TODO: (maciekzygmunt) consider preload for tvl breakdown endpoint
       metadata: getPageMetadata(project),
+      banner: config.features.banner,
     },
   }
 }
