@@ -39,6 +39,17 @@ export function ScalingFilters({ items }: Props) {
   return (
     <FiltersWrapper>
       <RollupsOnlyCheckbox items={items} />
+      <RichSelect label="Select technology" id="technology-select">
+        {categories.map((category) => (
+          <RichSelect.Item
+            selectedLabel={category.label}
+            key={category.label}
+            value={category.value}
+          >
+            {category.label}
+          </RichSelect.Item>
+        ))}
+      </RichSelect>
       <RichSelect label="Select stack" id="stack-select">
         {providers.map((da) => (
           <RichSelect.Item
@@ -58,17 +69,6 @@ export function ScalingFilters({ items }: Props) {
             value={stage.value}
           >
             {stage.label}
-          </RichSelect.Item>
-        ))}
-      </RichSelect>
-      <RichSelect label="Select technology" id="technology-select">
-        {categories.map((category) => (
-          <RichSelect.Item
-            selectedLabel={category.label}
-            key={category.label}
-            value={category.value}
-          >
-            {category.label}
           </RichSelect.Item>
         ))}
       </RichSelect>
