@@ -1,16 +1,16 @@
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureCharts } from './charts'
-import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilter'
+import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
+import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
-import { configureRollupsOnlyFilter } from './configureRollupsOnlyFilter'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
-import { configureTableIndexRerender } from './configureTableIndexRerender'
+import { configureTables } from './configureTables'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
@@ -28,10 +28,10 @@ configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()
 configureTabs()
-configureCanonicalBridgesFilter()
-configureRollupsOnlyFilter()
-configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
+configureProjectFilters()
 configureMultipleEscrowsButton()
 configureRichSelects()
+configureTables()
+configureBridgesAndCombinedOnly()
