@@ -57,10 +57,10 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           <ZkSyncIcon className={providerIconClassName} />
         </span>
       )}
-      {provider === 'loopring' && (
+      {provider === 'Loopring' && (
         <span
           className={providerClassName}
-          title="This project is based on loopring's code base."
+          title="This project is based on Loopring's code base."
         >
           <LoopringIcon className={providerIconClassName} />
         </span>

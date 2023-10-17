@@ -19,8 +19,6 @@ export function getScalingRowProps(
   entry: ScalingTableEntry,
   type: ScalingRowType,
 ) {
-  const isRollup =
-    entry.category === 'Optimistic Rollup' || entry.category === 'ZK Rollup'
   const href = getHref(entry.slug, type)
 
   const isEthereum = entry.slug === 'ethereum'
@@ -31,15 +29,15 @@ export function getScalingRowProps(
         'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
       ),
       href,
-      'data-role': 'row',
+      'data-slug': entry.slug,
+      'data-non-filterable': true,
     }
   }
 
   return {
     className: getRowVerificationClassNames(entry),
     href,
-    'data-role': 'row',
-    'data-rollup': isRollup,
+    'data-slug': entry.slug,
   }
 }
 

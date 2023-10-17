@@ -39,20 +39,18 @@ async function updateDiffHistoryFile() {
     DiscoveryJsonFromMainBranch === ''
       ? undefined
       : (JSON.parse(DiscoveryJsonFromMainBranch) as DiscoveryOutput)
+
+  const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
+    discoveryFromMainBranch,
+    projectName,
+    chainName,
+  )
+
   const diff = diffDiscovery(
-    discoveryFromMainBranch?.contracts ?? [],
+    prevDiscovery?.contracts ?? [],
     curDiscovery.contracts,
     config,
   )
-
-  const codeDiff =
-    discoveryFromMainBranch !== undefined
-      ? await getCodeDiffWithMainBranch(
-          discoveryFromMainBranch,
-          projectName,
-          chainName,
-        )
-      : undefined
 
   if (diff.length > 0) {
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
@@ -82,11 +80,15 @@ async function updateDiffHistoryFile() {
   }
 }
 
-async function getCodeDiffWithMainBranch(
-  discoveryFromMainBranch: DiscoveryOutput,
+async function performDiscoveryOnPreviousBlock(
+  discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
   chainName: string,
-): Promise<string | undefined> {
+) {
+  if (discoveryFromMainBranch === undefined) {
+    return { prevDiscovery: undefined, codeDiff: undefined }
+  }
+
   // To check for changes to source code,
   // download sources for block number from main branch
   const root = `discovery/${projectName}/${chainName}`
@@ -104,15 +106,19 @@ async function getCodeDiffWithMainBranch(
   console.log(cli)
   execSync(cli, { stdio: 'inherit' })
 
+  const prevDiscovery = readFileSync(
+    `${root}/discovered@${blockNumberFromMainBranch}.json`,
+  ) as unknown as DiscoveryOutput
   // Remove discovered@... file, we don't need it
   await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
 
+  // get code diff with main branch
   const codeDiff = compareFolders(
     `${root}/.code@${blockNumberFromMainBranch}`,
     `${root}/.code`,
   )
 
-  return codeDiff === '' ? undefined : codeDiff
+  return { prevDiscovery, codeDiff: codeDiff === '' ? undefined : codeDiff }
 }
 
 function getMainBranchName(): 'main' | 'master' {

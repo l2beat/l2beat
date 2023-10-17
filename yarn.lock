@@ -1966,10 +1966,10 @@
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.16.0.tgz#91fcd2666f10bf18728d7ca200fb2efbc83ca8f7"
-  integrity sha512-RzvvjcK/pudEBqz1fMeAnrGMdV08NQIC6ArQK6Z6vo0bWcJfo2fK5w8y9nC3EndmNTaEwzMD5UovB7vGcWkQjw==
+"@l2beat/discovery@0.16.2":
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.16.2.tgz#e468062c6bb0c00a1e72315237822f25b54a05b9"
+  integrity sha512-5S7Ra7J7Y1BIDG7CgS1lVJhR9OuUH4UfgWraqlJ69oJ4QRawp7ygjhlIDYozeGKeUbl4yBaRsP+BRUzXYy0zPg==
   dependencies:
     "@l2beat/backend-tools" "^0.4.0"
     "@l2beat/discovery-types" "^0.4.0"

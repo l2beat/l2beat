@@ -80,17 +80,7 @@ export interface ActivityChart {
     milestone?: Milestone
   }[]
 }
-const AggregateTvlChart = z.object({
-  types: z.tuple([z.literal('timestamp'), z.literal('usd'), z.literal('eth')]),
-  data: z.array(z.tuple([z.number(), z.number(), z.number()])),
-})
 
-export type AggregateTvlResponse = z.infer<typeof AggregateTvlResponse>
-export const AggregateTvlResponse = z.object({
-  hourly: AggregateTvlChart,
-  sixHourly: AggregateTvlChart,
-  daily: AggregateTvlChart,
-})
 const AggregateDetailedTvlChart = z.object({
   types: z.tuple([
     z.literal('timestamp'),
@@ -191,9 +181,18 @@ export const TokenInfo = z.discriminatedUnion('type', [
 
 export type ChartType = z.infer<typeof ChartType>
 export const ChartType = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('layer2-tvl') }),
-  z.object({ type: z.literal('layer2-detailed-tvl') }),
-  z.object({ type: z.literal('layer2-activity') }),
+  z.object({
+    type: z.literal('layer2-tvl'),
+    filteredSlugs: z.array(z.string()).optional(),
+  }),
+  z.object({
+    type: z.literal('layer2-detailed-tvl'),
+    filteredSlugs: z.array(z.string()).optional(),
+  }),
+  z.object({
+    type: z.literal('layer2-activity'),
+    filteredSlugs: z.array(z.string()).optional(),
+  }),
   z.object({ type: z.literal('bridges-tvl'), includeCanonical: z.boolean() }),
   z.object({ type: z.literal('project-tvl'), slug: z.string() }),
   z.object({
