@@ -98,6 +98,15 @@
     {
       "source": "/api/tvl/aggregate",
       "destination": "https://api.l2beat.com/api/tvl/aggregate"
+    },
+    {
+      "source": "/api/activity/aggregate",
+      "has": [{ "type": "host", "value": ".*l2beat-staging.*" }],
+      "destination": "https://staging.l2beat.com/api/activity/aggregate"
+    },
+    {
+      "source": "/api/activity/aggregate",
+      "destination": "https://api.l2beat.com/api/activity/aggregate"
     }
   ],
   "trailingSlash": false
