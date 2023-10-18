@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 18370416,
-  "configHash": "0xedf6221e6b3445158d035f203fe869c56e510484b4746d1e42a41ad1d841a2b6",
+  "blockNumber": 18376600,
+  "configHash": "0xe8a01493d21650c2c90e46850f4e8d807b9fa1c9d42aaa8575704d35d206079c",
   "version": 3,
   "contracts": [
     {
@@ -20,9 +20,9 @@
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 1544,
+        "nextCrossDomainMessageIndex": 7075,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 1430,
+        "pendingQueueIndex": 6727,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
       },
       "derivedName": "L1MessageQueue"
@@ -150,13 +150,14 @@
       "derivedName": "Whitelist"
     },
     {
-      "name": "",
+      "name": "PlonkVerifier",
       "address": "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1",
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1696780751
+      "sinceTimestamp": 1696780751,
+      "derivedName": ""
     },
     {
       "name": "ZkEvmVerifierV1",
@@ -170,7 +171,7 @@
       }
     },
     {
-      "name": "Fallback",
+      "name": "L2ERC1155GatewayFallback",
       "address": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
       "upgradeability": {
         "type": "immutable"
@@ -178,10 +179,29 @@
       "sinceTimestamp": 1696927307,
       "values": {
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      }
+      },
+      "derivedName": "Fallback"
     },
     {
-      "name": "Fallback",
+      "name": "L1ERC721Gateway",
+      "address": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe",
+        "admin": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
+      },
+      "implementations": ["0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"],
+      "sinceTimestamp": 1696782323,
+      "values": {
+        "counterpart": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+        "router": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "L1ERC721Gateway"
+    },
+    {
+      "name": "L2CustomERC20GatewayFallback",
       "address": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
       "upgradeability": {
         "type": "immutable"
@@ -189,7 +209,8 @@
       "sinceTimestamp": 1696927307,
       "values": {
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      }
+      },
+      "derivedName": "Fallback"
     },
     {
       "name": "L2TokenFactoryFallback",
@@ -238,7 +259,7 @@
       "derivedName": "Fallback"
     },
     {
-      "name": "Fallback",
+      "name": "L2WETHGatewayFallback",
       "address": "0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9",
       "upgradeability": {
         "type": "immutable"
@@ -246,7 +267,8 @@
       "sinceTimestamp": 1696927307,
       "values": {
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      }
+      },
+      "derivedName": "Fallback"
     },
     {
       "name": "EnforcedTxGateway",
@@ -302,100 +324,112 @@
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C"]
             },
-            "UPGRADER_ROLE": {
+            "SECURITY_COUNCIL_NO_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
             },
-            "PAUSER_REMOVER_ROLE_1": {
+            "SCROLL_MULTISIG_NO_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
             },
-            "PAUSER_REMOVER_ROLE_2": {
+            "EMERGENCY_MULTISIG_NO_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"]
             },
-            "UPDATER_ADDER_ROLE": {
+            "TIMELOCK_1DAY_DELAY_TOLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0x0e58939204eEDa84F796FBc86840A50af10eC4F4"]
             },
-            "CIRCLE_UPDATER": {
+            "TIMELOCK_7DAY_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["0xDC1d1189Da69Ae2016E4976A43De20972D349B1b"]
             }
           },
           "targets": {
             "0xEB803eb3F501998126bf37bB823646Ed3D59d072": {
-              "upgrade(address,address)": ["UPGRADER_ROLE"],
-              "upgradeAndCall(address,address,bytes)": ["UPGRADER_ROLE"]
+              "upgrade(address,address)": ["SECURITY_COUNCIL_NO_DELAY_ROLE"],
+              "upgradeAndCall(address,address,bytes)": [
+                "SECURITY_COUNCIL_NO_DELAY_ROLE"
+              ]
             },
             "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": {
               "revertBatch(bytes,uint256)": [
-                "PAUSER_REMOVER_ROLE_1",
-                "PAUSER_REMOVER_ROLE_2"
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ],
               "removeSequencer(address)": [
-                "PAUSER_REMOVER_ROLE_1",
-                "PAUSER_REMOVER_ROLE_2"
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ],
               "removeProver(address)": [
-                "PAUSER_REMOVER_ROLE_1",
-                "PAUSER_REMOVER_ROLE_2"
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ],
               "setPause(bool)": [
-                "PAUSER_REMOVER_ROLE_1",
-                "PAUSER_REMOVER_ROLE_2"
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ],
-              "addSequencer(address)": ["UPDATER_ADDER_ROLE"],
-              "addProver(address)": ["UPDATER_ADDER_ROLE"],
-              "updateMaxNumTxInChunk(uint256)": ["CIRCLE_UPDATER"]
+              "addSequencer(address)": ["TIMELOCK_1DAY_DELAY_TOLE"],
+              "addProver(address)": ["TIMELOCK_1DAY_DELAY_TOLE"],
+              "updateMaxNumTxInChunk(uint256)": ["TIMELOCK_7DAY_DELAY_ROLE"]
             },
             "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": {
-              "updateGasOracle(address)": ["UPDATER_ADDER_ROLE"],
-              "updateMaxGasLimit(uint256)": ["UPDATER_ADDER_ROLE"]
+              "updateGasOracle(address)": ["TIMELOCK_1DAY_DELAY_TOLE"],
+              "updateMaxGasLimit(uint256)": ["TIMELOCK_1DAY_DELAY_TOLE"]
             },
             "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": {
               "setPause(bool)": [
-                "PAUSER_REMOVER_ROLE_1",
-                "PAUSER_REMOVER_ROLE_2"
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ],
-              "updateMaxReplayTimes(uint256)": ["UPDATER_ADDER_ROLE"]
+              "updateMaxReplayTimes(uint256)": ["TIMELOCK_1DAY_DELAY_TOLE"]
             },
             "0x987e300fDfb06093859358522a79098848C33852": {
               "setIntrinsicParams(uint64,uint64,uint64,uint64)": [
-                "PAUSER_REMOVER_ROLE_1",
-                "PAUSER_REMOVER_ROLE_2"
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ]
             },
             "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": {
-              "updateWhitelistStatus(address[],bool)": ["UPDATER_ADDER_ROLE"]
+              "updateWhitelistStatus(address[],bool)": [
+                "TIMELOCK_1DAY_DELAY_TOLE"
+              ]
             },
             "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": {
               "updateVerifier(uint64,address)": [
-                "UPGRADER_ROLE",
-                "CIRCLE_UPDATER"
+                "SECURITY_COUNCIL_NO_DELAY_ROLE",
+                "TIMELOCK_7DAY_DELAY_ROLE"
               ]
             },
             "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": {
-              "setERC20Gateway(address[],address[])": ["UPDATER_ADDER_ROLE"]
+              "setERC20Gateway(address[],address[])": [
+                "TIMELOCK_1DAY_DELAY_TOLE"
+              ]
             },
             "0xb2b10a289A229415a124EFDeF310C10cb004B6ff": {
-              "updateTokenMapping(address,address)": ["UPDATER_ADDER_ROLE"]
+              "updateTokenMapping(address,address)": [
+                "TIMELOCK_1DAY_DELAY_TOLE"
+              ]
             },
             "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": {
-              "updateTokenMapping(address,address)": ["UPDATER_ADDER_ROLE"]
+              "updateTokenMapping(address,address)": [
+                "TIMELOCK_1DAY_DELAY_TOLE"
+              ]
             },
             "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6": {
-              "updateTokenMapping(address,address)": ["UPDATER_ADDER_ROLE"]
+              "updateTokenMapping(address,address)": [
+                "TIMELOCK_1DAY_DELAY_TOLE"
+              ]
             },
             "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": {
-              "updateCircleCaller(address)": ["CIRCLE_UPDATER"],
-              "pauseDeposit(bool)": ["CIRCLE_UPDATER"],
-              "pauseWithdraw(bool)": ["CIRCLE_UPDATER"]
+              "updateCircleCaller(address)": ["TIMELOCK_7DAY_DELAY_ROLE"],
+              "pauseDeposit(bool)": ["TIMELOCK_7DAY_DELAY_ROLE"],
+              "pauseWithdraw(bool)": ["TIMELOCK_7DAY_DELAY_ROLE"]
             },
             "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": {
               "setPause(bool)": [
-                "PAUSER_REMOVER_ROLE_1",
-                "PAUSER_REMOVER_ROLE_2"
+                "SCROLL_MULTISIG_NO_DELAY_ROLE",
+                "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
               ]
             }
           }
@@ -422,6 +456,18 @@
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
       },
       "derivedName": "L1WETHGateway"
+    },
+    {
+      "name": "L2ERC721GatewayFallback",
+      "address": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1696927307,
+      "values": {
+        "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+      },
+      "derivedName": "Fallback"
     },
     {
       "name": "L1ETHGateway",
@@ -492,7 +538,7 @@
       "implementations": ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"],
       "sinceTimestamp": 1696782323,
       "values": {
-        "lastFinalizedBatchIndex": 508,
+        "lastFinalizedBatchIndex": 773,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -564,7 +610,7 @@
       "derivedName": "L1ERC1155Gateway"
     },
     {
-      "name": "InstantMultisig",
+      "name": "EmergencyMultisig",
       "address": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
       "upgradeability": {
         "type": "gnosis safe",
@@ -627,6 +673,31 @@
       },
       "sinceTimestamp": 1696782479,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b",
+              "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -637,7 +708,7 @@
       "derivedName": "TimelockController"
     },
     {
-      "name": "Fallback",
+      "name": "L2StandardERC20GatewayFallback",
       "address": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
       "upgradeability": {
         "type": "immutable"
@@ -645,7 +716,8 @@
       "sinceTimestamp": 1696927307,
       "values": {
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
-      }
+      },
+      "derivedName": "Fallback"
     },
     {
       "name": "ProxyAdmin",
@@ -659,7 +731,7 @@
       }
     },
     {
-      "name": "ProposerMultisig",
+      "name": "ScrollMultisig",
       "address": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
       "upgradeability": {
         "type": "gnosis safe",
@@ -701,7 +773,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 212184147757,
+        "totalBridgedUSDC": 946721491148,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -917,6 +989,12 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
+    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x642af405bF64660665B37977449C9C536B806318": [
       "constructor()",
       "event EIP712DomainChanged()",
@@ -1048,6 +1126,14 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function execute(address _target, bytes _data) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
     "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1411,6 +1497,35 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe": [
+      "constructor()",
+      "event BatchDepositERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds)",
+      "event BatchRefundERC721(address indexed token, address indexed recipient, uint256[] tokenIds)",
+      "event DepositERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId)",
+      "event FinalizeBatchWithdrawERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256[] _tokenIds)",
+      "event FinalizeWithdrawERC721(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _tokenId)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC721(address indexed token, address indexed recipient, uint256 tokenId)",
+      "event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token)",
+      "function batchDepositERC721(address _token, address _to, uint256[] _tokenIds, uint256 _gasLimit) payable",
+      "function batchDepositERC721(address _token, uint256[] _tokenIds, uint256 _gasLimit) payable",
+      "function counterpart() view returns (address)",
+      "function depositERC721(address _token, address _to, uint256 _tokenId, uint256 _gasLimit) payable",
+      "function depositERC721(address _token, uint256 _tokenId, uint256 _gasLimit) payable",
+      "function finalizeBatchWithdrawERC721(address _l1Token, address _l2Token, address _from, address _to, uint256[] _tokenIds)",
+      "function finalizeWithdrawERC721(address _l1Token, address _l2Token, address _from, address _to, uint256 _tokenId)",
+      "function initialize(address _counterpart, address _messenger)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function tokenMapping(address) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateTokenMapping(address _l1Token, address _l2Token)"
     ],
     "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
