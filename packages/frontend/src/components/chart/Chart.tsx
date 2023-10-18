@@ -95,7 +95,7 @@ export function Chart(props: ChartProps) {
             <ChartHover />
             <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
             <div
-              className="absolute -bottom-4 -left-4 top-0 -right-4 z-25 group-data-[interactivity-disabled]/chart:hidden"
+              className="absolute -bottom-4 -left-4 top-0 -right-4 z-40 group-data-[interactivity-disabled]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
             />
             <ChartEmptyState />
@@ -109,7 +109,7 @@ export function Chart(props: ChartProps) {
             <ChartLabels className={props.metaChart ? 'hidden' : undefined} />
             <div
               data-role="chart-milestones"
-              className="absolute bottom-0 w-[100%] group-data-[interactivity-disabled]/chart:hidden"
+              className="absolute bottom-0 z-40 w-[100%] group-data-[interactivity-disabled]/chart:hidden"
             />
           </div>
           <div className="flex justify-between">
