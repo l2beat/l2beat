@@ -2,8 +2,17 @@ import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
-import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import {
+  TECHNOLOGY,
+  UNDER_REVIEW_RISK_VIEW,
+  makeBridgeCompatible,
+} from './common'
 import { Layer2 } from './types'
+import {
+  VALIDATED_BY_ETHEREUM,
+  NATIVE_AND_CANONICAL,
+  RISK_VIEW,
+} from './common/riskView'
 
 const discovery = new ProjectDiscovery('scroll')
 
@@ -72,9 +81,45 @@ export const scroll: Layer2 = {
         address: EthereumAddress('0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367'),
         tokens: ['ETH'],
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'),
+        tokens: '*',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
+        tokens: ['USDC'],
+      }),
     ],
   },
-  riskView: UNDER_REVIEW_RISK_VIEW,
+  riskView: makeBridgeCompatible({
+    stateValidation: {
+      value: '',
+      description: '',
+      sentiment: 'UnderReview',
+    },
+    dataAvailability: {
+      value: '',
+      description: '',
+      sentiment: 'UnderReview',
+    },
+    upgradeability: {
+      value: '',
+      description: '',
+      sentiment: 'UnderReview',
+    },
+    sequencerFailure: {
+      value: '',
+      description: '',
+      sentiment: 'UnderReview',
+    },
+    proposerFailure: {
+      value: '',
+      description: '',
+      sentiment: 'UnderReview',
+    },
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  }),
   technology: {
     stateCorrectness: {
       name: '',
