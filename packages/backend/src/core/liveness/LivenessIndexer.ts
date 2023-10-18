@@ -19,6 +19,7 @@ import {
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
+import { Project } from '../../model'
 
 const LOGIC_VERSION = 0
 const CONFIG_HASH = hashJson('LIVENESS_CONFIG_HASH' + LOGIC_VERSION.toString())
@@ -33,6 +34,7 @@ export class LivenessIndexer extends ChildIndexer {
     private readonly stateRepository: IndexerStateRepository,
     private readonly livenessRepository: LivenessRepository,
     private readonly minTimestamp: UnixTime,
+    private readonly projects: Project[],
   ) {
     super(logger, [parentIndexer])
   }
@@ -42,11 +44,6 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async update(from: number, _to: number): Promise<number> {
-    const config: LivenessConfig = {
-      transfers: [],
-      functionCalls: [],
-    }
-
     // TODO: think about this logic, should it always add 1 hour?
     const fromUnixTime = new UnixTime(from)
     const toUnixTime = fromUnixTime.add(1, 'hours')
@@ -54,7 +51,11 @@ export class LivenessIndexer extends ChildIndexer {
     // find missing data for this range(from,to)
 
     // get missing data
-    const data = await this.getLivenessData(config, fromUnixTime, toUnixTime)
+    const data = await this.getLivenessData(
+      this.projects,
+      fromUnixTime,
+      toUnixTime,
+    )
 
     await this.livenessRepository.addMany(data)
 
@@ -62,10 +63,13 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   async getLivenessData(
-    config: LivenessConfig,
+    projects: Project[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
+    // transform projects to liveness config
+    const config: LivenessConfig
+
     const transfersConfig = config.transfers.filter((c) =>
       isTimestampInRange(c.untilTimestamp, from, to),
     )
