@@ -5,10 +5,15 @@ import { ArrowDownIcon, ArrowUpIcon } from './icons/Arrows'
 
 interface Props {
   value: string
+  role?: string
   className?: string
 }
 
-export function PercentChange({ value, className }: Props) {
+/*  IMPORTANT
+  If you change this file you need to update the following file too:
+  * packages/frontend/src/scripts/charts/view-controller/header/getChangeHtml.ts
+*/
+export function PercentChange({ value, className, role }: Props) {
   const isMore = value.startsWith('+')
   const isLess = value.startsWith('-')
 
@@ -20,6 +25,7 @@ export function PercentChange({ value, className }: Props) {
         'relative',
         className,
       )}
+      data-role={role}
     >
       {isMore && (
         <ArrowUpIcon className="absolute top-1/2 translate-y-[-50%]" />

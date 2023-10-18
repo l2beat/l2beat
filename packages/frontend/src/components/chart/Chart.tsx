@@ -3,8 +3,12 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ChartType } from '../../scripts/charts/types'
+import { ActivityHeader } from '../header/ActivityHeader'
+import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
+import { ChartEmptyState } from './ChartEmptyState'
+import { ChartErrorState } from './ChartErrorState'
 import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
@@ -30,6 +34,7 @@ export interface ChartProps {
   milestones?: Milestone[]
   isUpcoming?: boolean
   sectionClassName?: string
+  withHeader?: boolean
 }
 
 export function Chart(props: ChartProps) {
@@ -53,12 +58,14 @@ export function Chart(props: ChartProps) {
         data-initial-type={JSON.stringify(props.initialType)}
         data-milestones={JSON.stringify(props.milestones)}
         className={cx(
+          'group/chart',
           props.mobileFull
             ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
             : 'mt-4',
           props.sectionClassName,
         )}
       >
+        {props.withHeader && isActivity ? <ActivityHeader /> : <TvlHeader />}
         {!props.metaChart && props.hasActivity && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
             <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
@@ -87,6 +94,13 @@ export function Chart(props: ChartProps) {
             <ChartLoader />
             <ChartHover />
             <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
+            <div
+              className="absolute -bottom-4 -left-4 top-0 -right-4 z-25 group-data-[interactivity-disabled]/chart:hidden"
+              data-role="chart-canvas-interaction-zone"
+            />
+            <ChartEmptyState />
+            <ChartErrorState />
+
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
@@ -95,15 +109,12 @@ export function Chart(props: ChartProps) {
             <ChartLabels className={props.metaChart ? 'hidden' : undefined} />
             <div
               data-role="chart-milestones"
-              className="absolute bottom-0 w-[100%]"
+              className="absolute bottom-0 w-[100%] group-data-[interactivity-disabled]/chart:hidden"
             />
           </div>
           <div className="flex justify-between">
             {(props.hasActivity || isActivity) && (
-              <EthereumActivityToggle
-                showToggle={isActivity}
-                className="max-w-[135px] xs:max-w-none"
-              />
+              <EthereumActivityToggle showToggle={isActivity} />
             )}
             {!isActivity && (
               <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
