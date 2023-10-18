@@ -59,7 +59,7 @@ export function getProjectDetails(
         riskValues: getRiskValues(project.riskView),
         isUnderReview: project.isUnderReview,
         id: 'risk-analysis',
-        title: 'Risk Analysis',
+        title: 'Risk analysis',
       },
     })
 
@@ -105,7 +105,7 @@ export function getProjectDetails(
         type: 'StateDerivationSection',
         props: {
           id: 'state-derivation',
-          title: 'State Derivation',
+          title: 'State derivation',
           ...project.stateDerivation,
         },
       })
@@ -145,7 +145,7 @@ export function getProjectDetails(
         props: {
           knowledgeNuggets: project.knowledgeNuggets,
           id: 'knowledge-nuggets',
-          title: 'Knowledge Nuggets',
+          title: 'Knowledge nuggets',
         },
       })
     }
