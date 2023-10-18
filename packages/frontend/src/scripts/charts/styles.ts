@@ -13,8 +13,10 @@ export type PointShapeDef =
   | {
       type: 'svg'
       className: string
+      height: number
+      width: number
       svgViewBox: string
-      svgPath: string
+      svgShape: string
     }
 
 export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
@@ -27,23 +29,33 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
     type: 'html',
     className: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
   },
-  purpleCircle: {
-    type: 'html',
-    className: 'h-2 w-2 rounded-full border-2 border-current bg-[#7E41CC]',
-  },
   blueSquare: {
     type: 'html',
     className: 'h-2 w-2 border-2 border-current bg-blue-600',
   },
+  purpleCircle: {
+    type: 'svg',
+    className: 'h-[9px] w-[9px] stroke-black dark:stroke-white',
+    height: 9,
+    width: 9,
+    svgViewBox: '0 0 9 9',
+    svgShape: '<circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
+  },
   pinkSquare: {
-    type: 'html',
-    className: 'h-2 w-2 border-2 border-current bg-[#FF46C0]',
+    type: 'svg',
+    className: 'h-2 w-2 stroke-black dark:stroke-white',
+    height: 9,
+    width: 9,
+    svgViewBox: '0 0 9 9',
+    svgShape: `<rect x="0" y="0" width="9" height="9" fill="#FF46C0" strokeWidth="2" />`,
   },
   yellowTriangle: {
     type: 'svg',
-    className: 'h-2 w-2 stroke-black dark:stroke-white',
+    className: 'h-2.5 w-2.5 stroke-black dark:stroke-white',
+    height: 12,
+    width: 12,
     svgViewBox: '0 0 12 12',
-    svgPath: `d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#FFC107" stroke-width="2"`,
+    svgShape: `<path d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#ef8f00" strokeWidth="1.0585" />`,
   },
   milestone: {
     type: 'html',
