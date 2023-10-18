@@ -5,13 +5,26 @@ type TableState = 'empty' | null
 export function configureTables() {
   const { $$ } = makeQuery(document.body)
   const tablesToRerenderOnLoad = $$('[data-role=table][data-rerender-on-load]')
-  tablesToRerenderOnLoad.forEach((table) => rerenderTable(table))
+  tablesToRerenderOnLoad.forEach((table) => onLoad(table))
+}
+
+function onLoad(table: HTMLElement) {
+  const { $$ } = makeQuery(table)
+  const parentElement = table.parentElement
+  const isInsideTabs = parentElement?.classList.contains('TabsContent')
+
+  const rows = $$('tbody tr')
+  const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
+
+  const visibleRowsLength = rerenderIndexes(visibleRows)
+  if (parentElement && isInsideTabs) {
+    rerenderTabCountBadge(parentElement.id, visibleRowsLength)
+  }
 }
 
 export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
   const parentElement = table.parentElement
   const isInsideTabs = parentElement?.classList.contains('TabsContent')
-
   const visibleRowsLength = rerenderRows(table, slugsToShow)
 
   if (parentElement && isInsideTabs) {
@@ -24,24 +37,25 @@ export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
 function rerenderRows(table: HTMLElement, slugs?: string[]) {
   const { $$ } = makeQuery(table)
   const rows = $$('tbody tr')
-  rows.forEach((row) => {
-    const slug = row.dataset.slug
-    if (!slug) {
-      throw new Error('No slug found')
-    }
-    if (row.dataset.nonFilterable) {
-      return
-    }
-
-    if (!slugs || slugs.includes(slug)) {
-      row.classList.remove('hidden')
-    } else {
-      row.classList.add('hidden')
-    }
-  })
+  rows.forEach((row) => manageRowVisiblity(row, slugs))
 
   const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
   return rerenderIndexes(visibleRows)
+}
+
+function manageRowVisiblity(row: HTMLElement, slugs?: string[]) {
+  const slug = row.dataset.slug
+  if (!slug) {
+    throw new Error('No slug found')
+  }
+  if (row.dataset.nonFilterable) {
+    return
+  }
+  if (!slugs || slugs.includes(slug)) {
+    row.classList.remove('hidden')
+  } else {
+    row.classList.add('hidden')
+  }
 }
 
 function rerenderTabCountBadge(tabId: string, visibleRowsLength: number) {

@@ -19,7 +19,7 @@ export function ExpandableContainer(props: ExpandableContainerProps) {
         )}
       >
         <div>{props.children}</div>
-        <div className="ExpandableContainerContentGradient pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-b from-transparent to-white dark:to-black " />
+        <div className="ExpandableContainerContentGradient pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-b from-transparent to-white dark:to-neutral-900 " />
       </div>
       <div className="ExpandableContainerButton mx-auto mt-1 flex w-min cursor-pointer items-center justify-center rounded-md border border-pink-900 px-8 py-2 transition hover:bg-pink-900 hover:bg-opacity-25">
         <div className="flex gap-2.5">
