@@ -365,7 +365,7 @@ export const optimism: Layer2 = {
     compressionScheme:
       'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
     genesisState:
-      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). The reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
     dataFormat:
       "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
   },
