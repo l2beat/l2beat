@@ -267,7 +267,6 @@ function renderIcon(icon?: PointStyle | 'gap') {
     </div>
   `
   }
-  // point.type === 'html'
   return `<div class="inline-block relative -top-px ${point.className}"></div>`
 }
 

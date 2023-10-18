@@ -7,7 +7,7 @@ export interface SeriesStyle {
 export type PointStyle = keyof typeof POINT_CLASS_NAMES
 export type PointShapeDef =
   | {
-      type: 'html'
+      type: 'div'
       className: string
     }
   | {
@@ -21,16 +21,16 @@ export type PointShapeDef =
 
 export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
   circle: {
-    type: 'html',
+    type: 'div',
     className:
       'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
   },
   redCircle: {
-    type: 'html',
+    type: 'div',
     className: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
   },
   blueSquare: {
-    type: 'html',
+    type: 'div',
     className: 'h-2 w-2 border-2 border-current bg-blue-600',
   },
   purpleCircle: {
@@ -58,7 +58,7 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
     svgShape: `<path d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#ef8f00" stroke-width="1.0585" />`,
   },
   milestone: {
-    type: 'html',
+    type: 'div',
     className:
       'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
   },
