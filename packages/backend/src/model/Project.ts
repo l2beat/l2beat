@@ -73,15 +73,14 @@ function toBackendLivenessConfig(
     functionCalls: [],
   }
 
-  const combined = [...config.stateUpdates, ...config.batchSubmissions]
-
-  combined.forEach((param) => {
+  config.stateUpdates.forEach((param) => {
     if (param.formula === 'functionCall') {
       livenessConfig.functionCalls.push({
         address: param.address,
         projectId,
         selector: param.selector,
         type: LivenessType('STATE'),
+        sinceTimestamp: param.sinceTimestamp,
         untilTimestamp: param.untilTimestamp,
       })
     } else {
@@ -90,6 +89,29 @@ function toBackendLivenessConfig(
         projectId,
         to: param.to,
         type: LivenessType('STATE'),
+        sinceTimestamp: param.sinceTimestamp,
+        untilTimestamp: param.untilTimestamp,
+      })
+    }
+  })
+
+  config.batchSubmissions.forEach((param) => {
+    if (param.formula === 'functionCall') {
+      livenessConfig.functionCalls.push({
+        address: param.address,
+        projectId,
+        selector: param.selector,
+        type: LivenessType('DA'),
+        sinceTimestamp: param.sinceTimestamp,
+        untilTimestamp: param.untilTimestamp,
+      })
+    } else {
+      livenessConfig.transfers.push({
+        from: param.from,
+        projectId,
+        to: param.to,
+        type: LivenessType('DA'),
+        sinceTimestamp: param.sinceTimestamp,
         untilTimestamp: param.untilTimestamp,
       })
     }

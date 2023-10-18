@@ -1,8 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BigQueryClient } from '@l2beat/shared'
-import { hashJson, UnixTime } from '@l2beat/shared-pure'
+import { hashJson, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 
+import { Project } from '../../model'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import {
   LivenessRecord,
@@ -19,7 +20,6 @@ import {
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
-import { Project } from '../../model'
 
 const LOGIC_VERSION = 0
 const CONFIG_HASH = hashJson('LIVENESS_CONFIG_HASH' + LOGIC_VERSION.toString())
@@ -67,14 +67,20 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    // transform projects to liveness config
-    const config: LivenessConfig
+    const config: LivenessConfig = {
+      transfers: projects
+        .flatMap((p) => p.livenessConfig?.transfers)
+        .filter(notUndefined),
+      functionCalls: projects
+        .flatMap((p) => p.livenessConfig?.functionCalls)
+        .filter(notUndefined),
+    }
 
     const transfersConfig = config.transfers.filter((c) =>
-      isTimestampInRange(c.untilTimestamp, from, to),
+      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
     )
     const functionCallsConfig = config.functionCalls.filter((c) =>
-      isTimestampInRange(c.untilTimestamp, from, to),
+      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
     )
     const transfers = await this.getTransfers(transfersConfig, from, to)
     const functionCalls = await this.getFunctionCalls(

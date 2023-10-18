@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Hash256 } from '@l2beat/shared-pure'
+import { IndexerStateRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
-import { IndexerStateRow } from 'knex/types/tables'
 
 export interface IndexerStateRecord {
   indexerId: string

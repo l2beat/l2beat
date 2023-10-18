@@ -10,6 +10,7 @@ export interface LivenessFunctionCall {
   address: EthereumAddress
   selector: string
   type: LivenessType
+  sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
 }
 
@@ -18,6 +19,7 @@ export interface LivenessTransfer {
   type: LivenessType
   from: EthereumAddress
   to: EthereumAddress
+  sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
 }
 
