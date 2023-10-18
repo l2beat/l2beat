@@ -39,7 +39,7 @@ const getBlueprint = (opts?: GetStageOptions) =>
           positive:
             'A source-available node exists that can recreate the state from L1 data.' +
             (opts?.rollupNodeLink
-              ? ` [View code](${opts.rollupNodeLink})`
+              ? ` [View code](${opts.rollupNodeLink}).`
               : ''),
           negative:
             'No source-available node exists that can recreate the state from L1 data.',
