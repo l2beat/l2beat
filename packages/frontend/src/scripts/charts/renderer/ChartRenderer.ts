@@ -144,12 +144,17 @@ export class ChartRenderer {
       this.onWindowMoveEvent(e.touches[0]),
     )
 
-    this.canvasInteractionZone.addEventListener('mousemove', (e) =>
-      this.onCanvasMoveEvent(e),
-    )
-    this.canvasInteractionZone.addEventListener('touchmove', (e) =>
-      this.onCanvasMoveEvent(e.touches[0]),
-    )
+    const interactiveZones = [
+      this.milestonesWrapper,
+      this.canvasInteractionZone,
+    ]
+
+    interactiveZones.forEach((zone) => {
+      zone.addEventListener('mousemove', (e) => this.onCanvasMoveEvent(e))
+      zone.addEventListener('touchmove', (e) =>
+        this.onCanvasMoveEvent(e.touches[0]),
+      )
+    })
   }
 
   private renderMilestones(points: Point<unknown>[]) {
