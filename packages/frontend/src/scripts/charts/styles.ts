@@ -47,7 +47,7 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
     height: 9,
     width: 9,
     svgViewBox: '0 0 9 9',
-    svgShape: `<rect x="0" y="0" width="9" height="9" fill="#FF46C0" strokeWidth="2" />`,
+    svgShape: `<rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke-width="2"/>`,
   },
   yellowTriangle: {
     type: 'svg',
@@ -55,7 +55,7 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
     height: 12,
     width: 12,
     svgViewBox: '0 0 12 12',
-    svgShape: `<path d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#ef8f00" strokeWidth="1.0585" />`,
+    svgShape: `<path d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#ef8f00" stroke-width="1.0585" />`,
   },
   milestone: {
     type: 'html',

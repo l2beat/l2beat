@@ -229,7 +229,7 @@ function renderDetailedRow(props: DetailedRowProps) {
     : ''
   return `
     <div class="flex w-full justify-between items-center gap-2">
-      <div>
+      <div class="flex items-center gap-1">
         ${renderIcon(props.icon)}
         <span class="dark:text-gray-50 text-gray-700 text-sm ${
           props.shortTitle ? 'hidden md:inline' : ''
@@ -243,7 +243,7 @@ function renderDetailedRow(props: DetailedRowProps) {
 
 function renderIcon(icon?: PointStyle | 'gap') {
   if (icon === 'gap') {
-    return `<div class="inline-block mr-1 w-2 h-2"></div>`
+    return `<div class="inline-block w-2 h-2"></div>`
   }
 
   if (!icon) return ''
@@ -252,7 +252,7 @@ function renderIcon(icon?: PointStyle | 'gap') {
 
   if (point.type === 'svg') {
     return `
-    <div class="flex h-[10px] w-[10px] items-center justify-center">
+    <div class="flex h-2.5 w-2.5 items-center justify-center">
       <svg 
         viewBox="${point.svgViewBox}"
         fill="var(--text)"
@@ -268,7 +268,7 @@ function renderIcon(icon?: PointStyle | 'gap') {
   `
   }
   // point.type === 'html'
-  return `<div class="inline-block mr-1 relative -top-px ${point.className}"></div>`
+  return `<div class="inline-block relative -top-px ${point.className}"></div>`
 }
 
 function renderNameRow(name: string) {
