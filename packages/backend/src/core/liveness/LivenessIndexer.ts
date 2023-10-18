@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { BigQueryClient } from '@l2beat/shared'
 import { hashJson, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
@@ -50,12 +50,15 @@ export class LivenessIndexer extends ChildIndexer {
     const toUnixTime = fromUnixTime.add(1, 'hours')
 
     // TODO: find missing data for this range(from,to)
+    let data: LivenessRecord[] | undefined
 
-    const data = await this.getLivenessData(
-      this.projects,
-      fromUnixTime,
-      toUnixTime,
-    )
+    try {
+      data = await this.getLivenessData(this.projects, fromUnixTime, toUnixTime)
+    } catch (e) {
+      this.logger.error(e)
+    }
+
+    assert(data, 'Liveness data should not be undefined there')
 
     await this.livenessRepository.addMany(data)
 
@@ -90,16 +93,12 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    try {
-      const queryResults = await this.bigQueryClient.getTransfers(
-        transfersConfigs,
-        from,
-        to,
-      )
-      return transformTransfersQueryResult(transfersConfigs, queryResults)
-    } catch (e) {
-      this.logger.error(e)
-    }
+    const queryResults = await this.bigQueryClient.getTransfers(
+      transfersConfigs,
+      from,
+      to,
+    )
+    return transformTransfersQueryResult(transfersConfigs, queryResults)
   }
 
   async getFunctionCalls(
@@ -107,20 +106,13 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    try {
-      const queryResults = await this.bigQueryClient.getFunctionCalls(
-        functionCallsConfigs,
-        from,
-        to,
-      )
+    const queryResults = await this.bigQueryClient.getFunctionCalls(
+      functionCallsConfigs,
+      from,
+      to,
+    )
 
-      return transformFunctionCallsQueryResult(
-        functionCallsConfigs,
-        queryResults,
-      )
-    } catch (e) {
-      this.logger.error(e)
-    }
+    return transformFunctionCallsQueryResult(functionCallsConfigs, queryResults)
   }
 
   override async getSafeHeight(): Promise<number> {
