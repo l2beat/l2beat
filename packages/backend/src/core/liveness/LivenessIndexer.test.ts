@@ -7,23 +7,16 @@ import {
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Project } from '../../model'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import {
   LivenessRecord,
   LivenessRepository,
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
-import { LivenessIndexer } from './LivenessIndexer'
-import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
-import {
-  transformFunctionCallsQueryResult,
-  transformTransfersQueryResult,
-} from './utils'
-import { Project } from '../../model'
+import { LivenessIndexer, mergeConfigs } from './LivenessIndexer'
+import { LivenessConfig, LivenessTransfer } from './types/LivenessConfig'
+import { isTimestampInRange } from './utils'
 
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
@@ -34,6 +27,37 @@ const ADDRESS_6 = EthereumAddress.random()
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 const TO = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+
+const hourlyIndexer = mockObject<HourlyIndexer>({
+  start: async () => {},
+  tick: async () => 1,
+  subscribe: () => {},
+})
+const stateRepository = mockObject<IndexerStateRepository>({
+  getSafeHeight() {
+    return Promise.resolve(1)
+  },
+  addOrUpdate() {
+    return Promise.resolve('')
+  },
+  getAll() {
+    return Promise.resolve([])
+  },
+  deleteAll() {
+    return Promise.resolve(1)
+  },
+})
+const livenessRepository = mockObject<LivenessRepository>({
+  getAll() {
+    return Promise.resolve([])
+  },
+  addMany() {
+    return Promise.resolve(1)
+  },
+  deleteAll() {
+    return Promise.resolve(1)
+  },
+})
 
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.getTransfers.name, () => {
@@ -113,51 +137,29 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const hourlyIndexer = mockObject<HourlyIndexer>({
-        start: async () => {},
-        tick: async () => 1,
-      })
-      const stateRepository = mockObject<IndexerStateRepository>({
-        getSafeHeight() {
-          return Promise.resolve(1)
-        },
-        addOrUpdate() {
-          return Promise.resolve('')
-        },
-        getAll() {
-          return Promise.resolve([])
-        },
-        deleteAll() {
-          return Promise.resolve(1)
-        },
-      })
-      const livenessRepository = mockObject<LivenessRepository>({
-        getAll() {
-          return Promise.resolve([])
-        },
-        addMany() {
-          return Promise.resolve(1)
-        },
-        deleteAll() {
-          return Promise.resolve(1)
-        },
-      })
-
       const livenessIndexer = new LivenessIndexer(
         Logger.SILENT,
         hourlyIndexer,
+        projects,
         bigQueryClient,
         stateRepository,
         livenessRepository,
         FROM,
-        projects,
       )
-      const results = await livenessIndexer.getTransfers(configs, FROM, TO)
+      const expectedConfig: LivenessTransfer[] = [
+        projects[0].livenessConfig!.transfers[0],
+        projects[1].livenessConfig!.transfers[0],
+      ]
+      const results = await livenessIndexer.getTransfers(
+        expectedConfig,
+        FROM,
+        TO,
+      )
 
       expect(results).toEqual(expected)
       expect(bigQueryClient.getTransfers).toHaveBeenNthCalledWith(
         1,
-        configs,
+        expectedConfig,
         FROM,
         TO,
       )
@@ -166,38 +168,60 @@ describe(LivenessIndexer.name, () => {
 
   describe(LivenessIndexer.prototype.getLivenessData.name, () => {
     it('prepares config properly and calls internal methods', async () => {
-      const configs: LivenessConfig = {
-        transfers: [
-          {
-            projectId: ProjectId('project1'),
-            from: ADDRESS_1,
-            to: ADDRESS_2,
-            type: 'DA',
-            untilTimestamp: FROM.add(-1, 'days'),
+      const projects: Project[] = [
+        {
+          projectId: ProjectId('project1'),
+          escrows: [],
+          type: 'layer2',
+          livenessConfig: {
+            transfers: [
+              {
+                projectId: ProjectId('project1'),
+                from: ADDRESS_1,
+                to: ADDRESS_2,
+                type: 'DA',
+                sinceTimestamp: FROM,
+                untilTimestamp: FROM.add(-1, 'days'),
+              },
+            ],
+            functionCalls: [
+              {
+                projectId: ProjectId('project1'),
+                address: ADDRESS_5,
+                selector: '0x9aaab648',
+                sinceTimestamp: FROM,
+                type: 'DA',
+              },
+            ],
           },
-          {
-            projectId: ProjectId('project2'),
-            from: ADDRESS_3,
-            to: ADDRESS_4,
-            type: 'STATE',
+        },
+        {
+          projectId: ProjectId('project2'),
+          escrows: [],
+          type: 'layer2',
+          livenessConfig: {
+            transfers: [
+              {
+                projectId: ProjectId('project2'),
+                from: ADDRESS_3,
+                to: ADDRESS_4,
+                type: 'STATE',
+                sinceTimestamp: FROM,
+              },
+            ],
+            functionCalls: [
+              {
+                projectId: ProjectId('project2'),
+                address: ADDRESS_6,
+                selector: '0x7739cbe7',
+                type: 'STATE',
+                untilTimestamp: FROM.add(-1, 'days'),
+                sinceTimestamp: FROM,
+              },
+            ],
           },
-        ],
-        functionCalls: [
-          {
-            projectId: ProjectId('project1'),
-            address: ADDRESS_5,
-            selector: '0x9aaab648',
-            type: 'DA',
-          },
-          {
-            projectId: ProjectId('project2'),
-            address: ADDRESS_6,
-            selector: '0x7739cbe7',
-            type: 'STATE',
-            untilTimestamp: FROM.add(-1, 'days'),
-          },
-        ],
-      }
+        },
+      ]
 
       const bigQueryClient = mockObject<BigQueryClient>({
         getTransfers: mockFn().resolvesToOnce(
@@ -208,19 +232,33 @@ describe(LivenessIndexer.name, () => {
         ),
       })
 
-      const livenessIndexer = new LivenessIndexer(bigQueryClient)
-      await livenessIndexer.getLivenessData(configs, FROM, TO)
+      const livenessIndexer = new LivenessIndexer(
+        Logger.SILENT,
+        hourlyIndexer,
+        projects,
+        bigQueryClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+      await livenessIndexer.getLivenessData(projects, FROM, TO)
+      const config: LivenessConfig = mergeConfigs(projects)
 
+      const transfersConfig = config.transfers.filter((c) =>
+        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
+      )
       expect(bigQueryClient.getTransfers).toHaveBeenNthCalledWith(
         1,
-        [configs.transfers[1]],
+        transfersConfig,
         FROM,
         TO,
       )
-
+      const functionCallsConfig = config.functionCalls.filter((c) =>
+        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
+      )
       expect(bigQueryClient.getFunctionCalls).toHaveBeenNthCalledWith(
         1,
-        [configs.functionCalls[0]],
+        functionCallsConfig,
         FROM,
         TO,
       )

@@ -30,17 +30,18 @@ export class LivenessIndexer extends ChildIndexer {
   constructor(
     logger: Logger,
     parentIndexer: HourlyIndexer,
+    private readonly projects: Project[],
     private readonly bigQueryClient: BigQueryClient,
     private readonly stateRepository: IndexerStateRepository,
     private readonly livenessRepository: LivenessRepository,
     private readonly minTimestamp: UnixTime,
-    private readonly projects: Project[],
   ) {
     super(logger, [parentIndexer])
   }
 
   override async start(): Promise<void> {
     // TODO
+    await super.start()
   }
 
   override async update(from: number, _to: number): Promise<number> {
@@ -51,15 +52,23 @@ export class LivenessIndexer extends ChildIndexer {
     // find missing data for this range(from,to)
 
     // get missing data
-    const data = await this.getLivenessData(
-      this.projects,
-      fromUnixTime,
-      toUnixTime,
+    // const data = await this.getLivenessData(
+    //   this.projects,
+    //   fromUnixTime,
+    //   toUnixTime,
+    // )
+
+    // await this.livenessRepository.addMany(data)
+
+    this.logger.info(
+      `Getting liveness data from: ${fromUnixTime
+        .toDate()
+        .toISOString()} to: ${toUnixTime.toDate().toISOString()}`,
     )
 
-    await this.livenessRepository.addMany(data)
+    // return new Promise(() => setTimeout(() => toUnixTime.toNumber(), 5_000))
 
-    return toUnixTime.toNumber()
+    return Promise.resolve(toUnixTime.toNumber())
   }
 
   async getLivenessData(
@@ -67,14 +76,7 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const config: LivenessConfig = {
-      transfers: projects
-        .flatMap((p) => p.livenessConfig?.transfers)
-        .filter(notUndefined),
-      functionCalls: projects
-        .flatMap((p) => p.livenessConfig?.functionCalls)
-        .filter(notUndefined),
-    }
+    const config: LivenessConfig = mergeConfigs(projects)
 
     const transfersConfig = config.transfers.filter((c) =>
       isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
@@ -136,5 +138,16 @@ export class LivenessIndexer extends ChildIndexer {
   // TODO: add comment why there is no need to delete anything
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
+  }
+}
+
+export function mergeConfigs(projects: Project[]): LivenessConfig {
+  return {
+    transfers: projects
+      .flatMap((p) => p.livenessConfig?.transfers)
+      .filter(notUndefined),
+    functionCalls: projects
+      .flatMap((p) => p.livenessConfig?.functionCalls)
+      .filter(notUndefined),
   }
 }
