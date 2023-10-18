@@ -136,7 +136,7 @@
     "L1WETHGateway": {
       "ignoreMethods": ["WETH"]
     },
-    "InstantMultisig": {
+    "ScrollMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "ExecutorMultisig": {
