@@ -19,7 +19,8 @@ export async function up(knex: Knex) {
     .createTable('zksync', function (table) {
       table.integer('block_number').notNullable()
       table.integer('block_index').notNullable()
-      table.dateTime('unix_timestamp', { useTz: false }).notNullable()
+      // eslint-disable-next-line custom-rules/db_ts_no_tz
+      table.dateTime('unix_timestamp').notNullable()
       table.primary(['block_number', 'block_index'])
     })
 }

@@ -13,10 +13,6 @@ should create a new migration file that fixes the issue.
 
 import { Knex } from 'knex'
 
-const dailyCountViewSchema = 'activity'
-const dailyCountViewName = 'daily_count_view'
-const dailyCountView = `${dailyCountViewSchema}.${dailyCountViewName}`
-
 interface ColumnInfo {
   table_catalog: string
   table_schema: string
@@ -37,28 +33,8 @@ export async function up(knex: Knex) {
     )
     .where({
       data_type: 'timestamp with time zone',
-    })
-    .whereIn('table_schema', ['public', 'activity'])) as ColumnInfo[]
-
-  // get definition of activity.daily_count_view materialized view
-  const dailyCountViewDefinition = (await knex('pg_matviews')
-    .select('definition')
-    .where({
-      schemaname: dailyCountViewSchema,
-      matviewname: dailyCountViewName,
-    })) as { definition: string }[]
-
-  // get definition of all indexes on activity.daily_count_view
-  const dailyCountViewIndexes = (await knex('pg_indexes')
-    .select('indexdef')
-    .where({
-      schemaname: dailyCountViewSchema,
-      tablename: dailyCountViewName,
-    })) as { indexdef: string }[]
-
-  // drop materialized view since it's not possible to alter
-  // a column type when it's used in a materialized view or a view
-  await knex.raw(`DROP MATERIALIZED VIEW ${dailyCountView}`)
+      table_schema: 'public',
+    })) as ColumnInfo[]
 
   for (const column of columns) {
     const { table_name, column_name, table_schema } = column
@@ -74,19 +50,6 @@ export async function up(knex: Knex) {
         SET DATA TYPE timestamp without time zone USING ${column_name}::timestamp without time zone`,
     )
   }
-
-  // recreate materialized view
-  await knex.raw(`
-    CREATE MATERIALIZED VIEW ${dailyCountView} AS
-      ${dailyCountViewDefinition[0].definition}`)
-
-  // recreate indexes
-  for (const index of dailyCountViewIndexes) {
-    await knex.raw(index.indexdef)
-  }
-
-  // refresh materialized view
-  await knex.raw(`REFRESH MATERIALIZED VIEW ${dailyCountView}`)
 }
 
 export async function down(_: Knex) {}

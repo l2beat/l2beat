@@ -16,7 +16,8 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('starkex_transaction_count', function (table) {
     table.string('project_id').notNullable()
-    table.dateTime('unix_timestamp', { useTz: false }).notNullable()
+    // eslint-disable-next-line custom-rules/db_ts_no_tz
+    table.dateTime('unix_timestamp').notNullable()
     table.integer('count').notNullable()
     table.primary(['project_id', 'unix_timestamp'])
   })
