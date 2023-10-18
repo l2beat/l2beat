@@ -90,13 +90,16 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const queryResults = await this.bigQueryClient.getTransfers(
-      transfersConfigs,
-      from,
-      to,
-    )
-
-    return transformTransfersQueryResult(transfersConfigs, queryResults)
+    try {
+      const queryResults = await this.bigQueryClient.getTransfers(
+        transfersConfigs,
+        from,
+        to,
+      )
+      return transformTransfersQueryResult(transfersConfigs, queryResults)
+    } catch (e) {
+      this.logger.error(e)
+    }
   }
 
   async getFunctionCalls(
@@ -104,13 +107,20 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    const queryResults = await this.bigQueryClient.getFunctionCalls(
-      functionCallsConfigs,
-      from,
-      to,
-    )
+    try {
+      const queryResults = await this.bigQueryClient.getFunctionCalls(
+        functionCallsConfigs,
+        from,
+        to,
+      )
 
-    return transformFunctionCallsQueryResult(functionCallsConfigs, queryResults)
+      return transformFunctionCallsQueryResult(
+        functionCallsConfigs,
+        queryResults,
+      )
+    } catch (e) {
+      this.logger.error(e)
+    }
   }
 
   override async getSafeHeight(): Promise<number> {

@@ -123,7 +123,7 @@ export function getProductionConfig(env: Env): Config {
     liveness: livenessEnabled && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
-        privateKey: env.string('LIVENESS_PRIVATE_KEY'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
         projectId: env.string('LIVENESS_PROJECT_ID'),
       },
     },
