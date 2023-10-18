@@ -7,45 +7,47 @@ export interface SeriesStyle {
 export type PointStyle = keyof typeof POINT_CLASS_NAMES
 export type PointShapeDef =
   | {
-      type: 'div'
-      style: string
+      type: 'html'
+      className: string
     }
   | {
       type: 'svg'
-      style: string
+      className: string
+      svgViewBox: string
       svgPath: string
     }
 
 export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
   circle: {
-    type: 'div',
-    style:
+    type: 'html',
+    className:
       'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
   },
   redCircle: {
-    type: 'div',
-    style: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
+    type: 'html',
+    className: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
   },
   purpleCircle: {
-    type: 'div',
-    style: 'h-2 w-2 rounded-full border-2 border-current bg-[#7E41CC]',
+    type: 'html',
+    className: 'h-2 w-2 rounded-full border-2 border-current bg-[#7E41CC]',
   },
   blueSquare: {
-    type: 'div',
-    style: 'h-2 w-2 border-2 border-current bg-blue-600',
+    type: 'html',
+    className: 'h-2 w-2 border-2 border-current bg-blue-600',
   },
   pinkSquare: {
-    type: 'div',
-    style: 'h-2 w-2 border-2 border-current bg-[#FF46C0]',
+    type: 'html',
+    className: 'h-2 w-2 border-2 border-current bg-[#FF46C0]',
   },
   yellowTriangle: {
     type: 'svg',
-    style: 'h-3 w-3 stroke-black dark:stroke-white',
-    svgPath: `d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#FFC107" stroke-width="1.0585"`,
+    className: 'h-2 w-2 stroke-black dark:stroke-white',
+    svgViewBox: '0 0 12 12',
+    svgPath: `d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#FFC107" stroke-width="2"`,
   },
   milestone: {
-    type: 'div',
-    style:
+    type: 'html',
+    className:
       'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
   },
 }

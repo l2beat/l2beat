@@ -252,21 +252,21 @@ function renderIcon(icon?: PointStyle | 'gap') {
 
   if (point.type === 'svg') {
     return `
+    <div class="inline-block mr-1 relative -top-px">
     <svg 
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
+    viewBox="${point.svgViewBox}"
       fill="var(--text)"
       role="img"
       aria-label="External asset icon"
-      class="inline-block ${point.style}">
+      class="inline-block ${point.className}">
 
         <path ${point.svgPath}></path>
     </svg>
+    </div>
   `
   }
-  // point.type === 'div'
-  return `<div class="inline-block mr-1 relative -top-px ${point.style}"></div>`
+  // point.type === 'html'
+  return `<div class="inline-block mr-1 relative -top-px ${point.className}"></div>`
 }
 
 function renderNameRow(name: string) {
