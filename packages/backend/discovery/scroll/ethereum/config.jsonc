@@ -145,7 +145,7 @@
     "FeeVaultMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "ProposerMultisig": {
+    "EmergencyMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "Whitelist": {
