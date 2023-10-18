@@ -19,6 +19,7 @@ export function getProductionConfig(env: Env): Config {
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
+  const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
 
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
@@ -117,6 +118,14 @@ export function getProductionConfig(env: Env): Config {
         etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
+      },
+    },
+    liveness: {
+      enabled: livenessEnabled,
+      bigQuery: livenessEnabled && {
+        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY'),
+        projectId: env.string('LIVENESS_PROJECT_ID'),
       },
     },
     activity: {

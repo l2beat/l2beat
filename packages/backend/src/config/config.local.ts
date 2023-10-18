@@ -23,6 +23,8 @@ export function getLocalConfig(env: Env): Config {
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
 
+  const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
+
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const internalDiscordChannelId = env.optionalString(
@@ -62,7 +64,6 @@ export function getLocalConfig(env: Env): Config {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
     },
-
     tvl: {
       enabled: tvlEnabled,
       errorOnUnsyncedDetailedTvl,
@@ -108,6 +109,14 @@ export function getLocalConfig(env: Env): Config {
         etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+    },
+    liveness: {
+      enabled: livenessEnabled,
+      bigQuery: livenessEnabled && {
+        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY'),
+        projectId: env.string('LIVENESS_PROJECT_ID'),
       },
     },
     activity: activityEnabled && {
