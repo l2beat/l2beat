@@ -2,17 +2,13 @@ import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
-import {
-  TECHNOLOGY,
-  UNDER_REVIEW_RISK_VIEW,
-  makeBridgeCompatible,
-} from './common'
+import { EXITS, makeBridgeCompatible, OPERATOR } from './common'
+import { DATA_AVAILABILITY } from './common/dataAvailability'
+import { FORCE_TRANSACTIONS } from './common/forceTransactions'
+import { RISK_VIEW, STATE_ZKP_SN } from './common/riskView'
+import { getStage } from './common/stages/getStage'
+import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
-import {
-  VALIDATED_BY_ETHEREUM,
-  NATIVE_AND_CANONICAL,
-  RISK_VIEW,
-} from './common/riskView'
 
 const discovery = new ProjectDiscovery('scroll')
 
@@ -67,10 +63,28 @@ export const scroll: Layer2 = {
         'https://twitter.com/Scroll_ZKP',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
-  stage: {
-    stage: 'UnderReview',
-  },
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeSourceAvailable: 'UnderReview',
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: false,
+      securityCouncilProperlySetUp: false,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
+  }),
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -90,68 +104,125 @@ export const scroll: Layer2 = {
         tokens: ['USDC'],
       }),
     ],
+    transactionApi: {
+      type: 'rpc',
+      startBlock: 1,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
-      value: '',
-      description: '',
-      sentiment: 'UnderReview',
+      ...STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'ScrollChain',
+          references: [
+            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L319',
+          ],
+        },
+      ],
     },
     dataAvailability: {
-      value: '',
-      description: '',
-      sentiment: 'UnderReview',
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'ScrollChain',
+          references: [
+            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L164',
+          ],
+        },
+      ],
     },
     upgradeability: {
-      value: '',
-      description: '',
-      sentiment: 'UnderReview',
+      ...RISK_VIEW.UPGRADABLE_YES,
+      sources: [
+        {
+          contract: 'ScrollChain',
+          references: [
+            'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154',
+          ],
+        },
+      ],
     },
     sequencerFailure: {
-      value: '',
-      description: '',
-      sentiment: 'UnderReview',
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      sources: [
+        {
+          contract: 'L1MessageQueue',
+          references: [
+            'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#L286',
+          ],
+        },
+        {
+          contract: 'L1MessageQueue',
+          references: [
+            'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#71',
+          ],
+        },
+      ],
     },
     proposerFailure: {
-      value: '',
-      description: '',
-      sentiment: 'UnderReview',
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      sources: [
+        {
+          contract: 'ScrollChain',
+          references: [
+            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L296',
+          ],
+        },
+      ],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
   technology: {
     stateCorrectness: {
-      name: '',
-      description: '',
-      references: [],
-      risks: [],
+      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      references: [
+        {
+          text: 'ScrollChain.sol#L319 - Etherscan source code, verifyAggregateProof() call',
+          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L319',
+        },
+      ],
     },
     dataAvailability: {
-      name: '',
-      description: '',
-      references: [],
-      risks: [],
+      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      references: [
+        {
+          text: 'ScrollChain.sol#L164 - Etherscan source code commitBatch() function',
+          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L164',
+        },
+      ],
     },
     operator: {
-      name: '',
-      description: '',
-      references: [],
-      risks: [],
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      references: [
+        {
+          text: 'ScrollChain.sol#L296 - Etherscan source code, finalizeBatchWithProof() function modifier',
+          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L296',
+        },
+      ],
     },
     forceTransactions: {
-      name: '',
-      description: '',
-      references: [],
-      risks: [],
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      references: [
+        {
+          text: 'L1MessageQueue.sol#L71 - Etherscan source code, skippedMessageBitmap mapping',
+          href: 'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#L71',
+        },
+      ],
     },
-    exitMechanisms: [],
-    smartContracts: {
-      name: '',
-      description: '',
-      risks: [],
-      references: [],
-    },
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR('zk', 'no proof'),
+        risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
+        references: [
+          {
+            text: 'L1ETHGateway.sol#L70 - Etherscan source code, finalizeWithdrawETH function',
+            href: 'https://etherscan.io/address/0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d#code#L1#L70',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: [
@@ -266,5 +337,24 @@ export const scroll: Layer2 = {
       'EmergencyMultisig',
       'Can revert batches, remove sequencers and provers, and pause contracts.',
     ),
+    {
+      name: 'Sequencers',
+      accounts: discovery.getPermissionedAccounts('ScrollChain', 'sequencers'),
+      description: 'Actors allowed to commit transaction batches.',
+    },
+    {
+      name: 'Proposers',
+      accounts: discovery.getPermissionedAccounts('ScrollChain', 'provers'),
+      description:
+        'Actors allowed to prove transaction batches and publish state root updates.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Scroll official launch',
+      link: 'https://x.com/Scroll_ZKP/status/1714286874020528554',
+      date: '2023-10-17T00:00:00.00Z',
+      description: 'Scroll announces its official launch.',
+    },
   ],
 }
