@@ -120,9 +120,8 @@ export function getProductionConfig(env: Env): Config {
         minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
       },
     },
-    liveness: {
-      enabled: livenessEnabled,
-      bigQuery: livenessEnabled && {
+    liveness: livenessEnabled && {
+      bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
         privateKey: env.string('LIVENESS_PRIVATE_KEY'),
         projectId: env.string('LIVENESS_PROJECT_ID'),

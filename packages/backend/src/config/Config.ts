@@ -17,7 +17,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
-  readonly liveness: LivenessConfig
+  readonly liveness: LivenessConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly statusEnabled: boolean
@@ -61,14 +61,11 @@ export interface TvlConfig {
 }
 
 export interface LivenessConfig {
-  readonly enabled: boolean
-  readonly bigQuery:
-    | {
-        readonly clientEmail: string
-        readonly privateKey: string
-        readonly projectId: string
-      }
-    | false
+  readonly bigQuery: {
+    readonly clientEmail: string
+    readonly privateKey: string
+    readonly projectId: string
+  }
 }
 
 export interface ChainTvlConfig {

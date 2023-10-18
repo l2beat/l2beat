@@ -40,7 +40,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    // TODO
+    // TODO: check config hash
     await super.start()
   }
 
@@ -49,24 +49,15 @@ export class LivenessIndexer extends ChildIndexer {
     const fromUnixTime = new UnixTime(from)
     const toUnixTime = fromUnixTime.add(1, 'hours')
 
-    // find missing data for this range(from,to)
+    // TODO: find missing data for this range(from,to)
 
-    // get missing data
-    // const data = await this.getLivenessData(
-    //   this.projects,
-    //   fromUnixTime,
-    //   toUnixTime,
-    // )
-
-    // await this.livenessRepository.addMany(data)
-
-    this.logger.info(
-      `Getting liveness data from: ${fromUnixTime
-        .toDate()
-        .toISOString()} to: ${toUnixTime.toDate().toISOString()}`,
+    const data = await this.getLivenessData(
+      this.projects,
+      fromUnixTime,
+      toUnixTime,
     )
 
-    // return new Promise(() => setTimeout(() => toUnixTime.toNumber(), 5_000))
+    await this.livenessRepository.addMany(data)
 
     return Promise.resolve(toUnixTime.toNumber())
   }

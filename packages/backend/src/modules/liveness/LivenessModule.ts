@@ -21,13 +21,14 @@ export function createLivenessModule(
   database: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.liveness.enabled || !config.liveness.bigQuery) {
+  if (!config.liveness) {
     logger.info('Liveness module disabled')
     return
   }
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const indexerStateRepository = new IndexerStateRepository(database, logger)
+  const livenessRepository = new LivenessRepository(database, logger)
+
   const bigQueryWrapper = new BigQueryWrapper({
     clientEmail: config.liveness.bigQuery.clientEmail,
     privateKey: config.liveness.bigQuery.privateKey,
@@ -36,8 +37,7 @@ export function createLivenessModule(
   const bigQueryProvider = new BigQueryProvider(bigQueryWrapper)
   const bigQueryClient = new BigQueryClient(bigQueryProvider)
 
-  const livenessRepository = new LivenessRepository(database, logger)
-
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
   const liveness = new LivenessIndexer(
     logger,
     hourlyIndexer,
@@ -47,10 +47,12 @@ export function createLivenessModule(
     livenessRepository,
     UnixTime.now().toStartOf('hour').add(-1, 'days'),
   )
+
   const start = async () => {
     await hourlyIndexer.start()
     await liveness.start()
   }
+
   return {
     start,
   }
