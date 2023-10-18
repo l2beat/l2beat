@@ -82,7 +82,7 @@ function StatsItem(props: StatsItemProps) {
           <InfoIcon className={classNames(
             'md:h-3.5 md:w-3.5',
             props.big
-              ? 'fill-black dark:fill-white'
+              ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
               : 'fill-gray-500 dark:fill-gray-600',
             )} />
         </span>
