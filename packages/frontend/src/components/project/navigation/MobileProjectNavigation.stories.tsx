@@ -1,7 +1,7 @@
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
-import { ScalingDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
+import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
 import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
 import { MobileProjectNavigation } from './MobileProjectNavigation'

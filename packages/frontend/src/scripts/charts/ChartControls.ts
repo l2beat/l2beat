@@ -1,10 +1,12 @@
 import { Milestone } from '@l2beat/config'
+import isEmpty from 'lodash/isEmpty'
 
+import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
 import { makeQuery } from '../query'
 import { setQueryParams } from '../utils/setQueryParams'
-import { ChartDataController } from './ChartDataController'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
+import { ChartDataController } from './data-controller/ChartDataController'
 import { ChartType, Milestones, TokenInfo } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 
@@ -55,8 +57,7 @@ export class ChartControls {
 
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
-    const tokenSelect = $.maybe('.RichSelect#desktop-token-select')
-
+    const tokenSelect = $.maybe('.RichSelect#token-select')
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )
@@ -193,6 +194,32 @@ export class ChartControls {
         this.updateChartType({ type: 'bridges-tvl', includeCanonical })
       })
     }
+
+    const projectFilters =
+      document.querySelector<HTMLElement>('#project-filters')
+    projectFilters?.addEventListener('change', () => {
+      if (
+        this.chartType?.type !== 'layer2-tvl' &&
+        this.chartType?.type !== 'layer2-detailed-tvl' &&
+        this.chartType?.type !== 'layer2-activity'
+      ) {
+        return
+      }
+      const filteredSlugs = getFilteredSlugs(projectFilters)
+      if (filteredSlugs !== undefined && isEmpty(filteredSlugs)) {
+        this.chartDataController.showEmptyChart()
+        return
+      }
+      this.chartDataController.setChartType({
+        ...this.chartType,
+        filteredSlugs,
+      })
+    })
+
+    const refetchButton = $('[data-role="chart-refetch-button"]')
+    refetchButton.addEventListener('click', () => {
+      this.chartDataController.refetch()
+    })
   }
 
   private getMilestones(chart: HTMLElement) {

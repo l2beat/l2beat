@@ -4,20 +4,16 @@ import React from 'react'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
 
-export interface ActivityHeaderProps {
-  scalingFactor: string
-}
-
-export function ActivityHeader(props: ActivityHeaderProps) {
+export function ActivityHeader() {
   return (
-    <header className="mt-4 md:mt-12">
+    <header className="mb-4" data-role="chart-header">
       <div className="flex items-baseline justify-between">
         <h1 className="mb-1 text-3xl font-bold">Activity</h1>
-        <p className="text-right text-3xl font-bold">
+        <p className="text-right text-3xl font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
           <span className="hidden text-sm md:inline md:text-2xl">
             Scaling factor:{' '}
           </span>
-          {props.scalingFactor}
+          <span data-role="chart-header-value">...</span>
         </p>
       </div>
       <div className="flex items-baseline justify-between text-xs md:text-base">
@@ -28,6 +24,7 @@ export function ActivityHeader(props: ActivityHeaderProps) {
           className={cx(
             'w-full text-right text-gray-500 dark:text-gray-600 md:w-auto',
             'flex items-center gap-1.5',
+            'group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0',
           )}
         >
           Observed over the last 7 days

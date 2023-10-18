@@ -31,6 +31,8 @@ export const mantapacific: Layer2 = {
     slug: 'mantapacific',
     description:
       'Manta Pacific is an optimistic rollup empowering EVM-native zero-knowledge (ZK) applications and general dapps with a scalable, cost-effective environment to deploy simply using Solidity. Manta Pacific plans to eventually leverage Celestia for data availability to lower gas costs for users across all applications in its ecosystem.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',

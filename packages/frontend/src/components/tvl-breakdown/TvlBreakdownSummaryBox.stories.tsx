@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react'
 import React from 'react'
 
-import { TvlBreakdownViewProps } from '../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
+import { TvlBreakdownViewProps } from '../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { TvlBreakdownSummaryBox as TvlBreakdownSummaryBoxComponent } from './TvlBreakdownSummaryBox'
 
 export default {
