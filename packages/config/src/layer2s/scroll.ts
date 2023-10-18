@@ -75,7 +75,39 @@ export const scroll: Layer2 = {
     ],
   },
   riskView: UNDER_REVIEW_RISK_VIEW,
-  technology: TECHNOLOGY.UNDER_REVIEW,
+  technology: {
+    stateCorrectness: {
+      name: '',
+      description: '',
+      references: [],
+      risks: [],
+    },
+    dataAvailability: {
+      name: '',
+      description: '',
+      references: [],
+      risks: [],
+    },
+    operator: {
+      name: '',
+      description: '',
+      references: [],
+      risks: [],
+    },
+    forceTransactions: {
+      name: '',
+      description: '',
+      references: [],
+      risks: [],
+    },
+    exitMechanisms: [],
+    smartContracts: {
+      name: '',
+      description: '',
+      risks: [],
+      references: [],
+    },
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('ScrollChain', {
@@ -176,7 +208,7 @@ export const scroll: Layer2 = {
     ],
     risks: [],
   },
-  permissions: {
+  permissions: [
     ...discovery.getMultisigPermission(
       'ScrollMultisig',
       'Currently also designated as the Security Council. Can upgrade proxies and the verifier without delay and propose transactions within Timelocks. It can also revert non finalized batches, remove sequencers and provers and pause contracts.',
@@ -189,5 +221,5 @@ export const scroll: Layer2 = {
       'EmergencyMultisig',
       'Can revert batches, remove sequencers and provers, and pause contracts.',
     ),
-  },
+  ],
 }
