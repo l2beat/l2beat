@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "chain": "ethereum",
-  "blockNumber": 18263288,
+  "blockNumber": 18341468,
   "configHash": "0x82dc10b38ea04e4b12bfdbc39754fb9e84c7f79a0d87767d30cd3d70f04a1e12",
   "version": 2,
   "contracts": [
@@ -129,7 +129,7 @@
         "nextTargets": [],
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 10
+        "versionId": 11
       },
       "derivedName": "UpgradeGatekeeper"
     },
@@ -138,7 +138,7 @@
       "address": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC",
+        "implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
       "sinceTimestamp": 1592218707,
@@ -155,7 +155,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 17532
+        "totalSupply": 17787
       },
       "derivedName": "ZkSyncNFTFactory"
     },
@@ -266,7 +266,7 @@
         ],
         "getThreshold": 4,
         "NAME": "Gnosis Safe",
-        "nonce": 110,
+        "nonce": 113,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -497,6 +497,14 @@
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
+    "0x6e95812C432F293b8045811F4B1758285EBDB206": [
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)",
+      "function verifyAggregatedBlockProof(uint256[] _recursiveInput, uint256[] _proof, uint8[] _vkIndexes, uint256[] _individualVksInputs, uint256[16] _subproofsLimbs) view returns (bool)",
+      "function verifyExitProof(bytes32 _rootHash, uint32 _accountId, address _owner, uint32 _tokenId, uint128 _amount, uint32 _nftCreatorAccountId, address _nftCreatorAddress, uint32 _nftSerialId, bytes32 _nftContentHash, uint256[] _proof) view returns (bool)",
+      "function verify_serialized_proof(uint256[] public_inputs, uint256[] serialized_proof, tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[7] gate_setup_commitments, tuple(uint256 X, uint256 Y)[2] gate_selector_commitments, tuple(uint256 X, uint256 Y)[4] copy_permutation_commitments, tuple(uint256 value)[3] copy_permutation_non_residues, tuple(uint256[2] X, uint256[2] Y) g2_x) vk) view returns (bool)",
+      "function verify_serialized_proof_with_recursion(uint256[] public_inputs, uint256[] serialized_proof, uint256 recursive_vks_root, uint8 max_valid_index, uint8[] recursive_vks_indexes, uint256[] individual_vks_inputs, uint256[16] subproofs_limbs, tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[7] gate_setup_commitments, tuple(uint256 X, uint256 Y)[2] gate_selector_commitments, tuple(uint256 X, uint256 Y)[4] copy_permutation_commitments, tuple(uint256 value)[3] copy_permutation_non_residues, tuple(uint256[2] X, uint256[2] Y) g2_x) vk) view returns (bool)"
+    ],
     "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": [
       "constructor(string name, string symbol, address zkSyncAddress)",
       "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
@@ -650,14 +658,6 @@
     ],
     "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": [
       "constructor(address _masterCopy)"
-    ],
-    "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC": [
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)",
-      "function verifyAggregatedBlockProof(uint256[] _recursiveInput, uint256[] _proof, uint8[] _vkIndexes, uint256[] _individualVksInputs, uint256[16] _subproofsLimbs) view returns (bool)",
-      "function verifyExitProof(bytes32 _rootHash, uint32 _accountId, address _owner, uint32 _tokenId, uint128 _amount, uint32 _nftCreatorAccountId, address _nftCreatorAddress, uint32 _nftSerialId, bytes32 _nftContentHash, uint256[] _proof) view returns (bool)",
-      "function verify_serialized_proof(uint256[] public_inputs, uint256[] serialized_proof, tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[7] gate_setup_commitments, tuple(uint256 X, uint256 Y)[2] gate_selector_commitments, tuple(uint256 X, uint256 Y)[4] copy_permutation_commitments, tuple(uint256 value)[3] copy_permutation_non_residues, tuple(uint256[2] X, uint256[2] Y) g2_x) vk) view returns (bool)",
-      "function verify_serialized_proof_with_recursion(uint256[] public_inputs, uint256[] serialized_proof, uint256 recursive_vks_root, uint8 max_valid_index, uint8[] recursive_vks_indexes, uint256[] individual_vks_inputs, uint256[16] subproofs_limbs, tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[7] gate_setup_commitments, tuple(uint256 X, uint256 Y)[2] gate_selector_commitments, tuple(uint256 X, uint256 Y)[4] copy_permutation_commitments, tuple(uint256 value)[3] copy_permutation_non_residues, tuple(uint256[2] X, uint256[2] Y) g2_x) vk) view returns (bool)"
     ]
   }
 }
