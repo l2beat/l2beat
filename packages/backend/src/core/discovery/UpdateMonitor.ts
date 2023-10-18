@@ -105,7 +105,7 @@ export class UpdateMonitor {
       })
     }
 
-    await this.findUnresolvedProjects(projectConfigs, timestamp)
+    await this.findUnresolvedProjects(runner, projectConfigs, timestamp)
 
     metricsDone()
     this.logger.info('Update finished', {
@@ -183,18 +183,40 @@ export class UpdateMonitor {
       })
       previousDiscovery = databaseEntry.discovery
     } else {
-      this.logger.info('Using committed file', {
-        chain: ChainId.getName(runner.getChainId()),
-        project: projectConfig.name,
-      })
-      previousDiscovery = await this.configReader.readDiscovery(
-        projectConfig.name,
-        ChainId.ETHEREUM,
+      previousDiscovery = await this.readCommittedDiscovery(
+        runner.getChainId(),
+        projectConfig,
       )
     }
 
-    if (previousDiscovery.version === this.version) {
-      return previousDiscovery
+    return this.handleNewDiscoveryVersion(
+      runner,
+      projectConfig,
+      previousDiscovery,
+    )
+  }
+
+  private async readCommittedDiscovery(
+    chainId: ChainId,
+    projectConfig: DiscoveryConfig,
+  ) {
+    this.logger.info('Using committed file', {
+      chain: ChainId.getName(chainId),
+      project: projectConfig.name,
+    })
+    return await this.configReader.readDiscovery(
+      projectConfig.name,
+      ChainId.ETHEREUM,
+    )
+  }
+
+  private async handleNewDiscoveryVersion(
+    runner: DiscoveryRunner,
+    projectConfig: DiscoveryConfig,
+    prevDiscovery: DiscoveryOutput,
+  ): Promise<DiscoveryOutput> {
+    if (prevDiscovery.version === this.version) {
+      return prevDiscovery
     }
     this.logger.info(
       'Discovery logic version changed, discovering with new logic',
@@ -203,7 +225,7 @@ export class UpdateMonitor {
         project: projectConfig.name,
       },
     )
-    return await runner.run(projectConfig, previousDiscovery.blockNumber, {
+    return await runner.run(projectConfig, prevDiscovery.blockNumber, {
       runSanityCheck: true,
       injectInitialAddresses: true,
     })
@@ -237,30 +259,39 @@ export class UpdateMonitor {
     }
   }
 
-  // this function gets a diff between current discovery and committed discovery
+  // this function gets a diff between current discovery and discovery on a committed block
+  // NOTE: if a discovery version has changed it will call the discovery on the committed block
+  // to avoid false positives
   // and checks if there are any changes that are not yet resolved
   // sends the results to the notification manager
   async findUnresolvedProjects(
+    runner: DiscoveryRunner,
     projectConfigs: DiscoveryConfig[],
     timestamp: UnixTime,
   ) {
     const notUpdatedProjects: string[] = []
 
     for (const projectConfig of projectConfigs) {
-      const discovery = this.cachedDiscovery.get(projectConfig.name)
+      const currDiscovery = this.cachedDiscovery.get(projectConfig.name)
 
-      if (!discovery) {
+      if (!currDiscovery) {
         continue
       }
 
-      const committed = await this.configReader.readDiscovery(
-        projectConfig.name,
-        ChainId.ETHEREUM,
+      const committedDiscovery = await this.readCommittedDiscovery(
+        runner.getChainId(),
+        projectConfig,
+      )
+
+      const prevDiscovery = await this.handleNewDiscoveryVersion(
+        runner,
+        projectConfig,
+        committedDiscovery,
       )
 
       const diff = diffDiscovery(
-        committed.contracts,
-        discovery.contracts,
+        prevDiscovery.contracts,
+        currDiscovery.contracts,
         projectConfig,
       )
 

@@ -358,7 +358,7 @@ describe(UpdateMonitor.name, () => {
 
       await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
 
-      expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
+      expect(discoveryRunner.run).toHaveBeenCalledTimes(3)
       expect(discoveryRunner.run).toHaveBeenNthCalledWith(
         1,
         config,
@@ -369,6 +369,13 @@ describe(UpdateMonitor.name, () => {
         2,
         config,
         BLOCK_NUMBER,
+        OPTIONS,
+      )
+      // calls discovery runner again to findUnresolvedProjects
+      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+        3,
+        config,
+        BLOCK_NUMBER - 1,
         OPTIONS,
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
