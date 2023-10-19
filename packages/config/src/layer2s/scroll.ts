@@ -9,6 +9,7 @@ import { RISK_VIEW, STATE_ZKP_SN } from './common/riskView'
 import { getStage } from './common/stages/getStage'
 import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
+import { text } from 'cheerio'
 
 const discovery = new ProjectDiscovery('scroll')
 
@@ -285,7 +286,15 @@ export const scroll: Layer2 = {
         description:
           'Current verifier, used to prepare data for the PlonkVerifier.',
       }),
-      discovery.getContractDetails('PlonkVerifier'),
+      discovery.getContractDetails('PlonkVerifier', {
+        description: 'Plonk verifier used to verify the zk proof.',
+        references: [
+          {
+            text: 'evm_verifier.yul source code',
+            href: 'https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul',
+          },
+        ],
+      }),
       discovery.getContractDetails('L1ETHGateway', {
         description: 'Contract used to bridge ETH from L1 to L2.',
         ...upgradesScrollMultisig,
