@@ -1,4 +1,4 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
 import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { constants, utils } from 'ethers'
@@ -21,14 +21,47 @@ interface Role {
   atAddress: EthereumAddress
 }
 
+export type InvertedAddresses = Map<string, AddressDetails>
+
 export async function runInversion(
   project: string,
   configReader: ConfigReader,
   useMermaidMarkup: boolean,
   chain: ChainId,
 ): Promise<void> {
+  const discovery = await configReader.readDiscovery(project, chain)
+  const addresses = calculateInversion(discovery)
+
+  if (useMermaidMarkup) {
+    const mermaid = createMermaid(addresses)
+    const mermaidPage = `
+    <!DOCTYPE html>
+    <html lang="en">
+      <body>
+        <pre class="mermaid">
+          ${mermaid};
+        </pre>
+        <script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        </script>
+      </body>
+    </html>`
+
+    const root = `discovery/${project}/${chain.toString()}`
+    const htmlFilePath = `${root}/mermaid/index.html`
+    await mkdir(`${root}/mermaid`, { recursive: true })
+    await writeFile(htmlFilePath, mermaidPage)
+    await writeFile(`${root}/mermaid/graph`, mermaid)
+    execSync(`open ${htmlFilePath}`)
+  } else {
+    print(addresses)
+  }
+}
+
+export function calculateInversion(
+  discovery: DiscoveryOutput,
+): InvertedAddresses {
   const addresses = new Map<string, AddressDetails>()
-  const projectDiscovery = await configReader.readDiscovery(project, chain)
 
   function add(address: ContractValue, role?: Role): void {
     if (
@@ -41,9 +74,8 @@ export async function runInversion(
     let details = addresses.get(address)
     if (!details) {
       details = {
-        name: projectDiscovery.contracts.find(
-          (x) => x.address.toString() === address,
-        )?.name,
+        name: discovery.contracts.find((x) => x.address.toString() === address)
+          ?.name,
         address,
         roles: [],
       }
@@ -54,7 +86,7 @@ export async function runInversion(
     }
   }
 
-  for (const contract of projectDiscovery.contracts) {
+  for (const contract of discovery.contracts) {
     const upgradeabilityValues = {
       ...(contract.upgradeability as unknown as Record<string, ContractValue>),
 
@@ -114,30 +146,7 @@ export async function runInversion(
     }
   }
 
-  if (useMermaidMarkup) {
-    const mermaid = createMermaid(addresses)
-    const mermaidPage = `
-    <!DOCTYPE html>
-    <html lang="en">
-      <body>
-        <pre class="mermaid">
-          ${mermaid};
-        </pre>
-        <script type="module">
-          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        </script>
-      </body>
-    </html>`
-
-    const root = `discovery/${project}/${chain.toString()}`
-    const htmlFilePath = `${root}/mermaid/index.html`
-    await mkdir(`${root}/mermaid`, { recursive: true })
-    await writeFile(htmlFilePath, mermaidPage)
-    await writeFile(`${root}/mermaid/graph`, mermaid)
-    execSync(`open ${htmlFilePath}`)
-  } else {
-    print(addresses)
-  }
+  return addresses
 }
 
 function print(addresses: Map<string, AddressDetails>): void {

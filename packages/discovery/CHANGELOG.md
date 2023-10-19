@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.17.1
+
+### Patch Changes
+
+- Expose the inverse functionality
+
 ## 0.17.0
 
 ### Minor Changes
