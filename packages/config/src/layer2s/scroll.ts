@@ -373,5 +373,11 @@ export const scroll: Layer2 = {
       date: '2023-10-17T00:00:00.00Z',
       description: 'Scroll announces its official launch.',
     },
+    {
+      name: 'Scroll Alpha testnet launch',
+      link: 'https://scroll.io/blog/alphaTestnet',
+      date: '2023-02-27T00:00:00.00Z',
+      description: 'Scroll launches its Alpha testnet on Goerli.',
+    },
   ],
 }
