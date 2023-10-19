@@ -128,7 +128,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 className="flex w-full flex-wrap items-end justify-between"
               >
                 <div className="flex items-center gap-1">
-                  <div className="flex h-[10px] w-[10px] items-center justify-center">
+                  <div className="flex h-2.5 w-2.5 items-center justify-center">
                     {s.icon}
                   </div>
                   <span className="text-xs leading-none text-gray-500 dark:text-gray-600">
