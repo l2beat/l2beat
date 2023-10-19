@@ -5,7 +5,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added Scroll. Their AccessControl extension needed a custom handler since it also specifies which function a role can call. Fallback contracts are not being displayed on the website because they're just used to recover funds in case of a mistake.
 
 ## Watched changes
 
