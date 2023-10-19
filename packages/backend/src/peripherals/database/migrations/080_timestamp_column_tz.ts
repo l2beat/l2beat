@@ -21,6 +21,13 @@ interface ColumnInfo {
   data_type: string
 }
 
+const tableWhitelist = [
+  'circulating_supplies',
+  'total_supplies',
+  'total_supplies_status',
+  'update_notifier',
+]
+
 export async function up(knex: Knex) {
   // get all columns that are of type timestamp with time zone
   const columns = (await knex('information_schema.columns')
@@ -34,11 +41,11 @@ export async function up(knex: Knex) {
     .where({
       data_type: 'timestamp with time zone',
       table_schema: 'public',
-    })) as ColumnInfo[]
+    })
+    .whereIn('table_name', tableWhitelist)) as ColumnInfo[]
 
   for (const column of columns) {
     const { table_name, column_name, table_schema } = column
-    if (table_name === 'knex_migrations') continue
 
     // https://www.postgresql.org/docs/14/sql-altertable.html
     // Indexes and simple table constraints involving the column will be automatically converted
