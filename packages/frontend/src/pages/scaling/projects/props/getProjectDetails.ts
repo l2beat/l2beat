@@ -2,7 +2,6 @@ import { Layer2 } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { Config } from '../../../../build/config'
 import { ChartProps } from '../../../../components'
 import { ChartSectionProps } from '../../../../components/project/ChartSection'
 import { ContractsSectionProps } from '../../../../components/project/ContractsSection'
@@ -23,7 +22,6 @@ import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
   project: Layer2,
-  config: Config,
   verificationStatus: VerificationStatus,
   chart: ChartProps,
 ) {
@@ -61,7 +59,7 @@ export function getProjectDetails(
         riskValues: getRiskValues(project.riskView),
         isUnderReview: project.isUnderReview,
         id: 'risk-analysis',
-        title: 'Risk Analysis',
+        title: 'Risk analysis',
       },
     })
 
@@ -88,7 +86,32 @@ export function getProjectDetails(
       })
     }
 
-    technologySections.forEach((section) =>
+    /* We want state derivation to be after technology section
+       so we split the technology sections into two arrays
+       and add state derivation in between */
+    const technologySection = technologySections[0]
+    items.push({
+      type: 'TechnologySection',
+      props: {
+        items: technologySection.items,
+        id: technologySection.id,
+        title: technologySection.title,
+        isUnderReview: technologySection.isUnderReview,
+      },
+    })
+
+    if (project.stateDerivation) {
+      items.push({
+        type: 'StateDerivationSection',
+        props: {
+          id: 'state-derivation',
+          title: 'State derivation',
+          ...project.stateDerivation,
+        },
+      })
+    }
+
+    technologySections.slice(1).forEach((section) =>
       items.push({
         type: 'TechnologySection',
         props: {
@@ -99,17 +122,6 @@ export function getProjectDetails(
         },
       }),
     )
-
-    if (project.stateDerivation) {
-      items.push({
-        type: 'StateDerivationSection',
-        props: {
-          id: 'state-derivation',
-          title: 'State Derivation',
-          ...project.stateDerivation,
-        },
-      })
-    }
 
     if (permissionsSection) {
       items.push({
@@ -133,7 +145,7 @@ export function getProjectDetails(
         props: {
           knowledgeNuggets: project.knowledgeNuggets,
           id: 'knowledge-nuggets',
-          title: 'Knowledge Nuggets',
+          title: 'Knowledge nuggets',
         },
       })
     }

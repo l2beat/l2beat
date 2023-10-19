@@ -105,7 +105,7 @@ export function renderDetailedTvlHover(
 
 function renderMilestoneLink(link: string) {
   return `
-  <a href="${link}" class="font-semibold text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550" target="_blank" rel="noreferrer noopener">
+  <a href="${link}" class="font-semibold pointer-events-auto text-blue-700 z-50 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550" target="_blank" rel="noreferrer noopener">
     Learn more
   </a>`
 }
