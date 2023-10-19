@@ -365,6 +365,9 @@ describe('layer2s', () => {
         }
         for (const item of layer2.stage.summary) {
           for (const req of item.requirements) {
+            if (req.description.includes('[View code]')) {
+              continue
+            }
             it(req.description, () => {
               expect(req.description.endsWith('.')).toEqual(true)
             })

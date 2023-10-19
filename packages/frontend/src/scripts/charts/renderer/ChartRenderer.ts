@@ -277,9 +277,9 @@ export class ChartRenderer {
         const pointStyle = this.renderParams.seriesStyle[i].point
         pointElement.className = `absolute z-40 ${
           milestone
-            ? POINT_CLASS_NAMES.milestone
+            ? POINT_CLASS_NAMES.milestone.className
             : pointStyle
-            ? POINT_CLASS_NAMES[pointStyle]
+            ? POINT_CLASS_NAMES[pointStyle].className
             : ''
         }`
         const y = this.getY(value)
