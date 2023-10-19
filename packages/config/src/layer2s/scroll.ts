@@ -9,7 +9,6 @@ import { RISK_VIEW, STATE_ZKP_SN } from './common/riskView'
 import { getStage } from './common/stages/getStage'
 import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
-import { text } from 'cheerio'
 
 const discovery = new ProjectDiscovery('scroll')
 
