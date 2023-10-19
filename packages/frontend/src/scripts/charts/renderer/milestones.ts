@@ -6,7 +6,7 @@ export function renderMilestone(x: number, url: string) {
   const left = x - MILESTONE_SIZE / 2
   const top = -MILESTONE_SIZE / 2
   return `
-  <div class="absolute z-40 select-none scale-75  md:scale-100" style="left: ${left}px; top: ${top}px">
+  <div class="absolute select-none scale-75 md:scale-100" style="left: ${left}px; top: ${top}px">
     ${isMobile() ? '' : `<a href="${url}" target="_blank">`}
       <svg
         width="${MILESTONE_SIZE}"
