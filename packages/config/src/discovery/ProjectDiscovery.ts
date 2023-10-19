@@ -1,3 +1,5 @@
+import { calculateInversion } from '@l2beat/discovery'
+import { InvertedAddresses } from '@l2beat/discovery/dist/inversion/runInversion'
 import type {
   ContractParameters,
   ContractValue,
@@ -25,6 +27,13 @@ import {
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import {
+  OpStackContractName,
+  OpStackPermissionName,
+  OPStackPermissionTemplate,
+  OP_STACK_CONTRACT_DESCRIPTION,
+  OP_STACK_PERMISSION_TEMPLATES,
+} from './OpStackTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -124,6 +133,41 @@ export class ProjectDiscovery {
         upgradeDelay,
       },
     }
+  }
+
+  getInversion(): InvertedAddresses {
+    return calculateInversion(this.discovery)
+  }
+
+  getOpStackPermissions(): ProjectPermission[] {
+    const inversion = this.getInversion()
+
+    const result: Record<string, Record<string, string[]>> = {}
+    const sources: Record<string, {contract: string, value: string}> = {}
+    for(const template of OP_STACK_PERMISSION_TEMPLATES) {
+        for(const contract of inversion.values()) {
+            const role = contract.roles.find((r) => r.name === template.role.value && r.atName === template.role.contract)
+            if(role) {
+                const contractKey = contract.name ?? template.role.value;
+                result[contractKey] ??= {};
+                result[contractKey][role.name] ??= [];
+                result[contractKey][role.name].push(stringFormat(template.description, template.role.contract))
+                sources[contractKey] ??= template.role
+            }
+        }
+    }
+
+    const k = Object.entries(result).map(([permissioned, roleDescription]) => ({
+        name: permissioned,
+        accounts: [
+            this.getPermissionedAccount(sources[permissioned].contract, sources[permissioned].value),
+        ],
+        description: Object.values(roleDescription).flat().join(" "),
+    }))
+
+    console.log(k)
+
+    return k
   }
 
   getMultisigPermission(
@@ -359,6 +403,21 @@ export class ProjectDiscovery {
     return contract
   }
 
+  getOpStackContractDetails(
+    upgradesProxy: Partial<ProjectContractSingleAddress>,
+    overrides?: Partial<Record<OpStackContractName, string>>,
+  ): ProjectContractSingleAddress[] {
+    return OP_STACK_CONTRACT_DESCRIPTION.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
+        ...upgradesProxy,
+      }),
+    )
+  }
+
   private getContractByName(name: string): ContractParameters {
     const contracts = this.discovery.contracts.filter(
       (contract) => contract.name === name,
@@ -380,4 +439,11 @@ function isNonNullable<T>(
   value: T | undefined | null,
 ): value is NonNullable<T> {
   return value !== null && value !== undefined
+}
+
+export function stringFormat(str: string, ...val: string[]) {
+  for (let index = 0; index < val.length; index++) {
+    str = str.replaceAll(`{${index}}`, val[index])
+  }
+  return str
 }

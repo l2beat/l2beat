@@ -258,50 +258,10 @@ export const mantapacific: Layer2 = {
       accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
       description: 'Owner of the ProxyAdmin contract.',
     },
-    {
-      name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description:
-        'Admin of the OptimismPortal, L2OutputOracle, SystemConfig, L1StandardBridge, AddressManager proxies.',
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions to L1',
-    },
-    {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
-      ],
-      description: 'Central actor allowed to post new L2 state roots to L1',
-    },
+    ...discovery.getOpStackPermissions(),
   ],
   contracts: {
-    addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        ...upgradesProxy,
-      }),
-    ],
+    addresses: [...discovery.getOpStackContractDetails(upgradesProxy)],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
