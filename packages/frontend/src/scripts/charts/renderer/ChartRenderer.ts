@@ -144,12 +144,17 @@ export class ChartRenderer {
       this.onWindowMoveEvent(e.touches[0]),
     )
 
-    this.canvasInteractionZone.addEventListener('mousemove', (e) =>
-      this.onCanvasMoveEvent(e),
-    )
-    this.canvasInteractionZone.addEventListener('touchmove', (e) =>
-      this.onCanvasMoveEvent(e.touches[0]),
-    )
+    const interactiveZones = [
+      this.milestonesWrapper,
+      this.canvasInteractionZone,
+    ]
+
+    interactiveZones.forEach((zone) => {
+      zone.addEventListener('mousemove', (e) => this.onCanvasMoveEvent(e))
+      zone.addEventListener('touchmove', (e) =>
+        this.onCanvasMoveEvent(e.touches[0]),
+      )
+    })
   }
 
   private renderMilestones(points: Point<unknown>[]) {
@@ -272,9 +277,9 @@ export class ChartRenderer {
         const pointStyle = this.renderParams.seriesStyle[i].point
         pointElement.className = `absolute z-40 ${
           milestone
-            ? POINT_CLASS_NAMES.milestone
+            ? POINT_CLASS_NAMES.milestone.className
             : pointStyle
-            ? POINT_CLASS_NAMES[pointStyle]
+            ? POINT_CLASS_NAMES[pointStyle].className
             : ''
         }`
         const y = this.getY(value)

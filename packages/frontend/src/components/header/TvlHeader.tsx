@@ -11,7 +11,8 @@ export function TvlHeader() {
       <div>
         <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
         <p className="hidden text-gray-500 dark:text-gray-600 md:block">
-          Sum of all funds locked on Ethereum converted to{' '}
+          Sum of all canonically bridged, externally bridged, and natively
+          minted tokens, converted to{' '}
           <span data-role="chart-header-currency">...</span>
         </p>
       </div>
