@@ -21,6 +21,7 @@ interface ColumnInfo {
   data_type: string
 }
 
+const table_schema = 'public'
 const tableWhitelist = [
   'circulating_supplies',
   'total_supplies',
@@ -29,33 +30,29 @@ const tableWhitelist = [
 ]
 
 export async function up(knex: Knex) {
-  // get all columns that are of type timestamp with time zone
-  const columns = (await knex('information_schema.columns')
-    .select(
-      'table_catalog',
-      'table_schema',
-      'table_name',
-      'column_name',
-      'data_type',
-    )
-    .where({
-      data_type: 'timestamp with time zone',
-      table_schema: 'public',
-    })
-    .whereIn('table_name', tableWhitelist)) as ColumnInfo[]
+  for (const table_name of tableWhitelist) {
+    // get all columns that are of type timestamp with time zone
+    const columns = (await knex('information_schema.columns')
+      .select('column_name')
+      .where({
+        data_type: 'timestamp with time zone',
+        table_schema,
+        table_name,
+      })) as ColumnInfo[]
 
-  for (const column of columns) {
-    const { table_name, column_name, table_schema } = column
+    for (const column of columns) {
+      const { column_name } = column
 
-    // https://www.postgresql.org/docs/14/sql-altertable.html
-    // Indexes and simple table constraints involving the column will be automatically converted
-    // to use the new column type by reparsing the originally supplied expression.
+      // https://www.postgresql.org/docs/14/sql-altertable.html
+      // Indexes and simple table constraints involving the column will be automatically converted
+      // to use the new column type by reparsing the originally supplied expression.
 
-    // get list of indexes table is involved in
-    await knex.raw(
-      `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column_name}
+      // get list of indexes table is involved in
+      await knex.raw(
+        `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column_name}
         SET DATA TYPE timestamp without time zone USING ${column_name}::timestamp without time zone`,
-    )
+      )
+    }
   }
 }
 
