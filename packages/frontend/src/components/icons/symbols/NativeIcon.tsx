@@ -4,7 +4,7 @@ import React, { SVGAttributes } from 'react'
 import { Icon } from '../Icon'
 
 /*  IMPORTANT
-  If you change this file you need to update the following file too:
+  If you change this file you need to update POINT_CLASS_NAMES.pinkSquare in the following file too:
   * packages/frontend/src/scripts/charts/styles.ts
 */
 export function NativeIcon(props: SVGAttributes<SVGElement>) {
