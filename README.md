@@ -1,5 +1,9 @@
 # L2BEAT 💓
 
+[![Twitter Follow](https://img.shields.io/twitter/follow/l2beat)](https://twitter.com/l2beat)
+[![Discord](https://img.shields.io/discord/885067338158837800?color=%235865F2&label=Discord&logo=discord&logoColor=%23fff)](https://discord.com/invite/eaVKXPmtWk)
+[![YouTube](https://img.shields.io/youtube/channel/subscribers/UCDrl-fNXFjOoykr4lQij9BA)](https://www.youtube.com/@l2beat228)
+
 L2BEAT (Layer 2 Beat) is a website dedicated to providing research and statistics about the very exciting layer 2 technology on Ethereum.
 
 You can visit the site yourself at https://www.l2beat.com/.
