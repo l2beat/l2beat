@@ -24,7 +24,15 @@ export interface DiscoveryCache {
   get(key: string): Promise<string | undefined>
 }
 
+// If reorgSafeDepth is provided, we need to refresh
+// current block number from time to time to calculate
+// which block numbers are safe to cache.
+const CUR_BLOCK_CHECK_INTERVAL_SECONDS = 60
+
 export class ProviderWithCache extends DiscoveryProvider {
+  private curBlockNumber?: number
+  private lastCurBlockCheckTime?: number
+
   constructor(
     provider: providers.Provider | RateLimitedProvider,
     etherscanLikeClient: EtherscanLikeClient,
@@ -32,11 +40,12 @@ export class ProviderWithCache extends DiscoveryProvider {
     private readonly chainId: ChainId,
     private readonly cache: DiscoveryCache,
     getLogsMaxRange?: number,
+    readonly reorgSafeDepth?: number,
   ) {
     super(provider, etherscanLikeClient, logger, getLogsMaxRange)
   }
 
-  private async cacheOrFetch<R>(
+  public async cacheOrFetch<R>(
     key: string,
     blockNumber: number | undefined,
     fetch: () => Promise<R>,
@@ -49,14 +58,46 @@ export class ProviderWithCache extends DiscoveryProvider {
     }
 
     const result = await fetch()
-    await this.cache.set(
-      key,
-      toCache(result),
-      this.chainId.valueOf(),
-      blockNumber,
-    )
+
+    const isReorgSafe = await this.isBlockNumberReorgSafe(blockNumber)
+    if (isReorgSafe) {
+      await this.cache.set(
+        key,
+        toCache(result),
+        this.chainId.valueOf(),
+        blockNumber,
+      )
+    }
 
     return result
+  }
+
+  public async isBlockNumberReorgSafe(
+    blockNumber: number | undefined,
+    curTimeMsOverride?: number, // for testing
+  ): Promise<boolean> {
+    if (blockNumber === undefined) {
+      return true
+    }
+
+    if (this.reorgSafeDepth === undefined) {
+      return true
+    }
+
+    const curTime = curTimeMsOverride ?? Date.now()
+    const timeSinceLastCurBlockCheck =
+      curTime - (this.lastCurBlockCheckTime ?? 0)
+
+    if (
+      this.curBlockNumber === undefined ||
+      timeSinceLastCurBlockCheck >= CUR_BLOCK_CHECK_INTERVAL_SECONDS * 1000
+    ) {
+      this.curBlockNumber = await super.getBlockNumber()
+      this.lastCurBlockCheckTime = curTime
+    }
+
+    const reorgSafeBlockNumber = this.curBlockNumber - this.reorgSafeDepth
+    return blockNumber <= reorgSafeBlockNumber
   }
 
   buildKey(invocation: string, params: { toString: () => string }[]): string {

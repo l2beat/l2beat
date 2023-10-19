@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.17.0
+
+### Minor Changes
+
+- Add optional support for reorg cache protection via safe depth
+
 ## 0.16.2
 
 ### Patch Changes
