@@ -224,6 +224,15 @@ export const scroll: Layer2 = {
       },
     ],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The ability to check consistency with L1 data is [in the works](https://github.com/scroll-tech/go-ethereum/pull/515).',
+    compressionScheme: 'The rollup does not use compression.',
+    genesisState:
+      'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
+    dataFormat:
+      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/ChunkCodec.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('ScrollChain', {
