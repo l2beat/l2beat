@@ -30,7 +30,7 @@ const rule = {
             context.report({
               node,
               message:
-                "The 'table.dateTime' method should be called with ('unix_timestamp', { useTz: false })",
+                "The 'dateTime' column should be without timezone, call it with '{ useTz: false }'",
             })
           }
         }
