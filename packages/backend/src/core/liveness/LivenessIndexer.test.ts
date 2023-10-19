@@ -4,7 +4,13 @@ import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
 } from '@l2beat/shared'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  Hash256,
+  hashJson,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../model'
@@ -16,7 +22,7 @@ import {
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessIndexer, mergeConfigs } from './LivenessIndexer'
 import { LivenessConfig, LivenessTransfer } from './types/LivenessConfig'
-import { isTimestampInRange } from './utils'
+import { getLivenessConfigHash, isTimestampInRange } from './utils'
 
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
@@ -45,6 +51,9 @@ const stateRepository = mockObject<IndexerStateRepository>({
   },
   deleteAll() {
     return Promise.resolve(1)
+  },
+  getConfigHash() {
+    return Promise.resolve(hashJson('test'))
   },
 })
 const livenessRepository = mockObject<LivenessRepository>({
@@ -264,4 +273,139 @@ describe(LivenessIndexer.name, () => {
       )
     })
   })
+  describe(LivenessIndexer.prototype.update.name, () => {
+    it('throws error', async () => {
+      const projects: Project[] = [
+        {
+          projectId: ProjectId('project1'),
+          escrows: [],
+          type: 'layer2',
+          livenessConfig: {
+            transfers: [
+              {
+                projectId: ProjectId('project1'),
+                from: ADDRESS_1,
+                to: ADDRESS_2,
+                type: 'DA',
+                sinceTimestamp: FROM,
+                untilTimestamp: FROM.add(-1, 'days'),
+              },
+            ],
+            functionCalls: [],
+          },
+        },
+      ]
+
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getTransfers: () => {
+          throw new Error('error')
+        },
+      })
+
+      const wrappedLogger = mockObject<Logger>({
+        error: () => {},
+        debug: () => {},
+      })
+
+      const logger = mockObject<Logger>({
+        for: () => wrappedLogger,
+      })
+
+      const livenessIndexer = new LivenessIndexer(
+        logger,
+        hourlyIndexer,
+        projects,
+        bigQueryClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+
+      await expect(
+        async () =>
+          await livenessIndexer.update(FROM.toNumber(), TO.toNumber()),
+      ).toBeRejected()
+
+      expect(wrappedLogger.error).toHaveBeenCalled()
+    })
+  })
+
+  describe(LivenessIndexer.prototype.start.name, () => {
+    const PROJECTS: Project[] = []
+
+    it('undefined config hash', async () => {
+      const CONFIG_HASH = undefined
+
+      const { livenessIndexer, stateRepository } = getMockLivenessIndexer(
+        PROJECTS,
+        CONFIG_HASH,
+      )
+      await livenessIndexer.start()
+
+      expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
+        indexerId: livenessIndexer.getIndexerId(),
+        configHash: livenessIndexer.getConfigHash(),
+        safeHeight: 0,
+      })
+    })
+
+    it('different config hash', async () => {
+      const CONFIG_HASH = hashJson('different-config-hash')
+
+      const { livenessIndexer, stateRepository } = getMockLivenessIndexer(
+        PROJECTS,
+        CONFIG_HASH,
+      )
+      await livenessIndexer.start()
+
+      expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
+        indexerId: livenessIndexer.getIndexerId(),
+        configHash: livenessIndexer.getConfigHash(),
+        safeHeight: 0,
+      })
+    })
+
+    it('the same config hash', async () => {
+      const CONFIG_HASH = getLivenessConfigHash(PROJECTS)
+
+      const { livenessIndexer, stateRepository } = getMockLivenessIndexer(
+        PROJECTS,
+        CONFIG_HASH,
+      )
+
+      await livenessIndexer.start()
+
+      expect(stateRepository.addOrUpdate).not.toHaveBeenCalled()
+    })
+  })
 })
+
+function getMockLivenessIndexer(
+  projects: Project[],
+  configHash: Hash256 | undefined,
+) {
+  const bigQueryClient = mockObject<BigQueryClient>({})
+
+  const stateRepository = mockObject<IndexerStateRepository>({
+    getSafeHeight() {
+      return Promise.resolve(1)
+    },
+    addOrUpdate() {
+      return Promise.resolve('')
+    },
+    getConfigHash() {
+      return Promise.resolve(configHash)
+    },
+  })
+
+  const livenessIndexer = new LivenessIndexer(
+    Logger.SILENT,
+    hourlyIndexer,
+    projects,
+    bigQueryClient,
+    stateRepository,
+    livenessRepository,
+    FROM,
+  )
+  return { livenessIndexer, stateRepository }
+}

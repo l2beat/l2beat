@@ -1,8 +1,7 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { BigQueryClient } from '@l2beat/shared'
-import { Hash256, hashJson, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { Hash256, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
-import { sortBy } from 'lodash'
 
 import { Project } from '../../model'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
@@ -17,12 +16,11 @@ import {
   LivenessTransfer,
 } from './types/LivenessConfig'
 import {
+  getLivenessConfigHash,
   isTimestampInRange,
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
-
-const LIVENESS_LOGIC_VERSION = 0
 
 export class LivenessIndexer extends ChildIndexer {
   private readonly indexerId = 'liveness_indexer'
@@ -38,7 +36,6 @@ export class LivenessIndexer extends ChildIndexer {
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
-    // ! write this fn
     this.configHash = getLivenessConfigHash(this.projects)
   }
 
@@ -47,9 +44,7 @@ export class LivenessIndexer extends ChildIndexer {
       this.indexerId,
     )
 
-    // TODO: write a test for it
-    // expect this.stateRepository.addOrUpdate to be called with {..., newHash, safeHeight: 0}
-    if (oldConfigHash && oldConfigHash !== this.configHash) {
+    if (oldConfigHash === undefined || oldConfigHash !== this.configHash) {
       await this.stateRepository.addOrUpdate({
         indexerId: this.indexerId,
         configHash: this.configHash,
@@ -61,7 +56,6 @@ export class LivenessIndexer extends ChildIndexer {
     await super.start()
   }
 
-  // ! write test if throws error
   override async update(from: number, _to: number): Promise<number> {
     // TODO: think about this logic, should it always add 1 hour?
     const fromUnixTime = new UnixTime(from)
@@ -149,6 +143,14 @@ export class LivenessIndexer extends ChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
   }
+
+  getIndexerId(): typeof this.indexerId {
+    return this.indexerId
+  }
+
+  getConfigHash(): Hash256 {
+    return this.configHash
+  }
 }
 
 export function mergeConfigs(projects: Project[]): LivenessConfig {
@@ -160,19 +162,4 @@ export function mergeConfigs(projects: Project[]): LivenessConfig {
       .flatMap((p) => p.livenessConfig?.functionCalls)
       .filter(notUndefined),
   }
-}
-
-function getLivenessConfigHash(projects: Project[]): Hash256 {
-  return hashJson([getEntries(projects), LIVENESS_LOGIC_VERSION])
-}
-
-export function getEntries(projects: Project[]) {
-  const serializedEntries = projects.map(({ projectId, livenessConfig }) => {
-    return {
-      projectId: projectId.toString(),
-      transfers: livenessConfig?.transfers,
-      functionCalls: livenessConfig?.functionCalls,
-    }
-  })
-  return sortBy(serializedEntries, ['projectId'])
 }
