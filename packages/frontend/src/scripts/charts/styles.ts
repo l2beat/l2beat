@@ -5,17 +5,63 @@ export interface SeriesStyle {
 }
 
 export type PointStyle = keyof typeof POINT_CLASS_NAMES
+export type PointShapeDef =
+  | {
+      type: 'div'
+      className: string
+    }
+  | {
+      type: 'svg'
+      className: string
+      height: number
+      width: number
+      svgViewBox: string
+      svgShape: string
+    }
 
-export const POINT_CLASS_NAMES = {
-  circle: 'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
-  redCircle: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
-  purpleCircle: 'h-2 w-2 rounded-full border-2 border-current bg-[#7E41CC]',
-  blueSquare: 'h-2 w-2 border-2 border-current bg-blue-600',
-  pinkSquare: 'h-2 w-2 border-2 border-current bg-[#FF46C0]',
-  // TODO:
-  yellowTriangle: 'h-2 w-2 border-2 border-current bg-[#FFC107]',
-  milestone:
-    'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
+export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
+  circle: {
+    type: 'div',
+    className:
+      'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
+  },
+  redCircle: {
+    type: 'div',
+    className: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
+  },
+  blueSquare: {
+    type: 'div',
+    className: 'h-2 w-2 border-2 border-current bg-blue-600',
+  },
+  purpleCircle: {
+    type: 'svg',
+    className: 'h-[9px] w-[9px] stroke-black dark:stroke-white',
+    height: 9,
+    width: 9,
+    svgViewBox: '0 0 9 9',
+    svgShape: '<circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
+  },
+  pinkSquare: {
+    type: 'svg',
+    className: 'h-2 w-2 stroke-black dark:stroke-white',
+    height: 9,
+    width: 9,
+    svgViewBox: '0 0 9 9',
+    svgShape: `<rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke-width="2"/>`,
+  },
+  yellowTriangle: {
+    type: 'svg',
+    className: 'h-2.5 w-2.5 stroke-black dark:stroke-white',
+    height: 12,
+    width: 12,
+    svgViewBox: '0 0 12 12',
+    svgShape: `<path d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#ef8f00" stroke-width="1.0585" />`,
+  },
+  milestone: {
+    type: 'div',
+    className:
+      'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
+  },
 }
 
 export const FILL_STYLES = {
