@@ -28,11 +28,9 @@ import {
 } from '../common/ProjectContracts'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import {
-  OpStackContractName,
-  OpStackPermissionName,
-  OPStackPermissionTemplate,
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
+  OpStackContractName,
 } from './OpStackTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
@@ -157,17 +155,13 @@ export class ProjectDiscovery {
         }
     }
 
-    const k = Object.entries(result).map(([permissioned, roleDescription]) => ({
+    return Object.entries(result).map(([permissioned, roleDescription]) => ({
         name: permissioned,
         accounts: [
             this.getPermissionedAccount(sources[permissioned].contract, sources[permissioned].value),
         ],
         description: Object.values(roleDescription).flat().join(" "),
     }))
-
-    console.log(k)
-
-    return k
   }
 
   getMultisigPermission(
