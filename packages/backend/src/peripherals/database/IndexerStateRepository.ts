@@ -17,6 +17,18 @@ export class IndexerStateRepository extends BaseRepository {
     this.autoWrap<CheckConvention<IndexerStateRepository>>(this)
   }
 
+  async getConfigHash(indexerId: string): Promise<Hash256 | undefined> {
+    const knex = await this.knex()
+
+    const row = await knex('indexer_state')
+      .where({
+        indexer_id: indexerId,
+      })
+      .first()
+
+    return row ? Hash256(row.config_hash) : undefined
+  }
+
   async getSafeHeight(indexerId: string): Promise<number | undefined> {
     const knex = await this.knex()
 
