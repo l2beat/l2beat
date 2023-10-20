@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { LivenessRow } from 'knex/types/tables'
 
+import { LivenessConfig } from '../../core/liveness/types/LivenessConfig'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -19,6 +20,10 @@ export class LivenessRepository extends BaseRepository {
     super(database, logger)
     this.autoWrap<CheckConvention<LivenessRepository>>(this)
   }
+
+  async getStatuses(
+    config: LivenessConfig,
+  ): Promise<Record<string, UnixTime>> {}
 
   async getAll(): Promise<LivenessRecord[]> {
     const knex = await this.knex()

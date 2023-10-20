@@ -16,9 +16,9 @@ export interface LivenessFunctionCall {
 
 export interface LivenessTransfer {
   projectId: ProjectId
-  type: LivenessType
   from: EthereumAddress
   to: EthereumAddress
+  type: LivenessType
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
 }

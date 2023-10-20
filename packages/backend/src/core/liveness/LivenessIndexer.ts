@@ -52,7 +52,7 @@ export class LivenessIndexer extends ChildIndexer {
         safeHeight: 0,
       })
     }
-    // TODO: check config hash
+
     await super.start()
   }
 
@@ -61,7 +61,6 @@ export class LivenessIndexer extends ChildIndexer {
     const fromUnixTime = new UnixTime(from)
     const toUnixTime = fromUnixTime.add(1, 'hours')
 
-    // TODO: find missing data for this range(from,to)
     let data: LivenessRecord[] | undefined
 
     try {
@@ -82,6 +81,9 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
+    // TODO: find missing data for this range(from,to)
+
+
     const config: LivenessConfig = mergeConfigs(projects)
 
     const transfersConfig = config.transfers.filter((c) =>
@@ -91,6 +93,7 @@ export class LivenessIndexer extends ChildIndexer {
       isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
     )
 
+    // TODO: if transfers or functionCall empty then do not call
     const [transfers, functionCalls] = await Promise.all([
       this.getTransfers(transfersConfig, from, to),
       this.getFunctionCalls(functionCallsConfig, from, to),
