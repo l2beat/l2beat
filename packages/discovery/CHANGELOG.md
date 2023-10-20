@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.18.1
+
+### Patch Changes
+
+- Expose the type for inversion
+
 ## 0.18.0
 
 ### Minor Changes
