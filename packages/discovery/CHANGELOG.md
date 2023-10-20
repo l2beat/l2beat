@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.18.2
+
+### Patch Changes
+
+- Export multicall config type
+
 ## 0.18.1
 
 ### Patch Changes
