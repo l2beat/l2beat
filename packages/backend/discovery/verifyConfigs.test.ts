@@ -3,7 +3,6 @@ import { expect } from 'earl'
 import path from 'path'
 
 describe('Verify Discovery config files', () => {
-  // FIXME: This is a temporary hack to make the tests while configs are in backend
   const dir = process.cwd()
 
   process.chdir(path.resolve(__dirname, './..'))
