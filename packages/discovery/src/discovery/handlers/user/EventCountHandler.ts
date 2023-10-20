@@ -3,7 +3,7 @@ import * as z from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type EventCountHandlerDefinition = z.infer<
   typeof EventCountHandlerDefinition
@@ -13,7 +13,7 @@ export const EventCountHandlerDefinition = z.strictObject({
   topics: z.array(z.string()),
 })
 
-export class EventCountHandler implements Handler {
+export class EventCountHandler implements ClassicHandler {
   readonly dependencies: string[] = []
 
   constructor(

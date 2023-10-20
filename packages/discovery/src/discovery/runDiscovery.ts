@@ -12,6 +12,8 @@ import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { diffDiscovery } from './output/diffDiscovery'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
+import { MulticallClient } from './provider/multicall/MulticallClient'
+import { MulticallConfig } from './provider/multicall/types'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { ProxyDetector } from './proxies/ProxyDetector'
@@ -20,6 +22,7 @@ import { SourceCodeService } from './source/SourceCodeService'
 export async function runDiscovery(
   provider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
+  multicallConfig: MulticallConfig,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ): Promise<void> {
@@ -39,6 +42,7 @@ export async function runDiscovery(
   const result = await discover(
     provider,
     etherscanClient,
+    multicallConfig,
     projectConfig,
     logger,
     blockNumber,
@@ -58,6 +62,7 @@ export async function runDiscovery(
 export async function dryRunDiscovery(
   provider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
+  multicallConfig: MulticallConfig,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ): Promise<void> {
@@ -74,6 +79,7 @@ export async function dryRunDiscovery(
     justDiscover(
       provider,
       etherscanClient,
+      multicallConfig,
       projectConfig,
       blockNumber,
       config.getLogsMaxRange,
@@ -81,6 +87,7 @@ export async function dryRunDiscovery(
     justDiscover(
       provider,
       etherscanClient,
+      multicallConfig,
       projectConfig,
       blockNumberYesterday,
       config.getLogsMaxRange,
@@ -103,6 +110,7 @@ export async function dryRunDiscovery(
 export async function justDiscover(
   provider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
+  multicallConfig: MulticallConfig,
   config: DiscoveryConfig,
   blockNumber: number,
   getLogsMaxRange?: number,
@@ -110,6 +118,7 @@ export async function justDiscover(
   const result = await discover(
     provider,
     etherscanClient,
+    multicallConfig,
     config,
     DiscoveryLogger.CLI,
     blockNumber,
@@ -134,6 +143,7 @@ export async function justDiscover(
 export async function discover(
   provider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
+  multicallConfig: MulticallConfig,
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
   blockNumber: number,
@@ -153,7 +163,15 @@ export async function discover(
 
   const proxyDetector = new ProxyDetector(discoveryProvider, logger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
-  const handlerExecutor = new HandlerExecutor(discoveryProvider, logger)
+  const multicallClient = new MulticallClient(
+    discoveryProvider,
+    multicallConfig,
+  )
+  const handlerExecutor = new HandlerExecutor(
+    discoveryProvider,
+    multicallClient,
+    logger,
+  )
   const addressAnalyzer = new AddressAnalyzer(
     discoveryProvider,
     proxyDetector,

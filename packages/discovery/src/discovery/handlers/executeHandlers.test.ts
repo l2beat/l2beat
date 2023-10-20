@@ -4,8 +4,11 @@ import { Bytes } from '../../utils/Bytes'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { MulticallClient } from '../provider/multicall/MulticallClient'
 import { executeHandlers } from './executeHandlers'
-import { Handler, HandlerResult } from './Handler'
+import { ClassicHandler, HandlerResult } from './Handler'
+import { SimpleMethodHandler } from './system/SimpleMethodHandler'
+import { ArrayHandler } from './user/ArrayHandler'
 import { StorageHandler } from './user/StorageHandler'
 
 describe(executeHandlers.name, () => {
@@ -13,7 +16,7 @@ describe(executeHandlers.name, () => {
 
   function providerWithStorage(layout: Record<string, number>) {
     return mockObject<DiscoveryProvider>({
-      async getStorage(address, slot) {
+      async getStorage(_, slot) {
         const number = Number(BigInt(slot.toString()))
         const value = layout[number]
         return Bytes.fromHex(value!.toString(16).padStart(64, '0'))
@@ -28,6 +31,7 @@ describe(executeHandlers.name, () => {
     })
     const values = await executeHandlers(
       provider,
+      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'foo',
@@ -59,6 +63,7 @@ describe(executeHandlers.name, () => {
     })
     const values = await executeHandlers(
       provider,
+      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'xxx',
@@ -104,6 +109,7 @@ describe(executeHandlers.name, () => {
     })
     const values = await executeHandlers(
       provider,
+      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'aab',
@@ -174,6 +180,7 @@ describe(executeHandlers.name, () => {
     const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(
       provider,
+      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'a',
@@ -192,6 +199,7 @@ describe(executeHandlers.name, () => {
     const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(
       provider,
+      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'a',
@@ -210,6 +218,7 @@ describe(executeHandlers.name, () => {
     const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(
       provider,
+      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'a',
@@ -230,7 +239,7 @@ describe(executeHandlers.name, () => {
   })
 
   it('handles handlers with errors', async () => {
-    class FunkyHandler implements Handler {
+    class FunkyHandler implements ClassicHandler {
       dependencies: string[] = []
       field = 'foo'
       logger = DiscoveryLogger.SILENT
@@ -242,11 +251,123 @@ describe(executeHandlers.name, () => {
     const provider = mockObject<DiscoveryProvider>()
     const values = await executeHandlers(
       provider,
+      mockObject<MulticallClient>(),
       [new FunkyHandler()],
       EthereumAddress.random(),
       BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
+  })
+
+  it('handles multicallable handlers', async () => {
+    const ADDRESS = EthereumAddress.random()
+    const method = 'function foo() external view returns (uint256)'
+    const selector = 'c2985578'
+    const provider = providerWithStorage({
+      1: 123,
+    })
+    const multicall = mockObject<MulticallClient>({
+      multicallNamed: async (requests) => {
+        expect(requests).toEqual({
+          foo: [
+            {
+              address: ADDRESS,
+              data: Bytes.fromHex(selector),
+            },
+          ],
+        })
+
+        return {
+          foo: [
+            {
+              success: true,
+              data: Bytes.fromHex('0x' + '12345678'.padStart(64, '0')),
+            },
+          ],
+        }
+      },
+    })
+    const values = await executeHandlers(
+      provider,
+      multicall,
+      [
+        new StorageHandler(
+          'a',
+          { type: 'storage', slot: 1, returnType: 'number' },
+          DiscoveryLogger.SILENT,
+        ),
+        new SimpleMethodHandler(method, DiscoveryLogger.SILENT),
+      ],
+      ADDRESS,
+      BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
+    )
+
+    expect(values).toEqual([
+      { field: 'foo', value: 0x12345678 },
+      { field: 'a', value: 123, ignoreRelative: undefined },
+    ])
+  })
+
+  it('handles multicallable handlers with dependencies', async () => {
+    const ADDRESS = EthereumAddress.random()
+    const method = 'function foo() external view returns (uint256)'
+    const selector = 'c2985578'
+    const provider = mockObject<DiscoveryProvider>({
+      async call() {
+        return Bytes.fromHex('0x' + '12345678'.padStart(64, '0'))
+      },
+    })
+    const multicall = mockObject<MulticallClient>({
+      multicallNamed: async (requests) => {
+        expect(requests).toEqual({
+          foo: [
+            {
+              address: ADDRESS,
+              data: Bytes.fromHex(selector),
+            },
+          ],
+        })
+
+        return {
+          foo: [
+            {
+              success: true,
+              data: Bytes.fromHex('0x' + '3'.padStart(64, '0')),
+            },
+          ],
+        }
+      },
+    })
+    const values = await executeHandlers(
+      provider,
+      multicall,
+      [
+        new ArrayHandler(
+          'bar',
+          {
+            type: 'array',
+            method: 'bar',
+            length: '{{ foo }}',
+          },
+          ['function bar(uint256) external view returns (uint256)'],
+          DiscoveryLogger.SILENT,
+        ),
+        new SimpleMethodHandler(method, DiscoveryLogger.SILENT),
+      ],
+      ADDRESS,
+      BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
+    )
+
+    expect(values).toEqual([
+      { field: 'foo', value: 3 },
+      {
+        field: 'bar',
+        value: [0x12345678, 0x12345678, 0x12345678],
+        ignoreRelative: undefined,
+      },
+    ])
   })
 })

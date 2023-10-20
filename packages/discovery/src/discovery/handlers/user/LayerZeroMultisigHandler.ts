@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 import { toEventFragment } from '../utils/toEventFragment'
 import { ConstructorArgsHandler } from './ConstructorArgsHandler'
@@ -36,7 +36,7 @@ const ABI = new utils.Interface([
   UPDATE_QUORUM_EVENT_FRAGMENT,
 ])
 
-export class LayerZeroMultisigHandler implements Handler {
+export class LayerZeroMultisigHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   readonly constructorArgsHandler: ConstructorArgsHandler
 

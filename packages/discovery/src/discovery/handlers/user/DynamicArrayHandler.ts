@@ -7,7 +7,7 @@ import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { SingleSlot } from '../storageCommon'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
@@ -30,7 +30,7 @@ export const DynamicArrayHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class DynamicArrayHandler implements Handler {
+export class DynamicArrayHandler implements ClassicHandler {
   readonly dependencies: string[]
 
   constructor(

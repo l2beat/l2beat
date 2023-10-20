@@ -4,11 +4,11 @@ import { utils } from 'ethers'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
-export class LimitedArrayHandler implements Handler {
+export class LimitedArrayHandler implements ClassicHandler {
   readonly field: string
   readonly dependencies = []
   private readonly fragment: utils.FunctionFragment

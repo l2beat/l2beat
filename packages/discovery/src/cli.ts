@@ -61,6 +61,7 @@ async function discover(
     await dryRunDiscovery(
       provider,
       etherscanClient,
+      config.chain.multicall,
       configReader,
       discoverConfig,
     )
@@ -71,7 +72,13 @@ async function discover(
   logger.info('Starting discovery...\n')
   logger.info(`Project: ${discoverConfig.project}`)
   logger.info(`Chain: ${ChainId.getName(discoverConfig.chainId)}\n`)
-  await runDiscovery(provider, etherscanClient, configReader, discoverConfig)
+  await runDiscovery(
+    provider,
+    etherscanClient,
+    config.chain.multicall,
+    configReader,
+    discoverConfig,
+  )
 }
 
 async function invert(

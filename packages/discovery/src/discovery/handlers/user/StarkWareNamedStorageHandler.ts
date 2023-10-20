@@ -6,7 +6,7 @@ import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 
 export type StarkWareNamedStorageHandlerDefinition = z.infer<
@@ -19,7 +19,7 @@ export const StarkWareNamedStorageHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class StarkWareNamedStorageHandler implements Handler {
+export class StarkWareNamedStorageHandler implements ClassicHandler {
   readonly dependencies = []
 
   constructor(

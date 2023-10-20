@@ -5,7 +5,7 @@ import * as z from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
 
@@ -27,7 +27,7 @@ export const ArrayFromOneEventHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class ArrayFromOneEventHandler implements Handler {
+export class ArrayFromOneEventHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   private readonly fragment: utils.EventFragment
   private readonly abi: utils.Interface

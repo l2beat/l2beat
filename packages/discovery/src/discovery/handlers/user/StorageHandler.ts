@@ -6,7 +6,7 @@ import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { SingleSlot } from '../storageCommon'
 import { NumberFromString } from '../types'
@@ -24,7 +24,7 @@ export const StorageHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class StorageHandler implements Handler {
+export class StorageHandler implements ClassicHandler {
   readonly dependencies: string[]
 
   constructor(

@@ -6,7 +6,7 @@ import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type ScrollAccessControlHandlerDefinition = z.infer<
   typeof ScrollAccessControlHandlerDefinition
@@ -27,7 +27,7 @@ const abi = new utils.Interface([
   'event RevokeAccess(bytes32 indexed role, address indexed target, bytes4[] selectors)',
 ])
 
-export class ScrollAccessControlHandler implements Handler {
+export class ScrollAccessControlHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   private readonly knownNames = new Map<string, string>()
 

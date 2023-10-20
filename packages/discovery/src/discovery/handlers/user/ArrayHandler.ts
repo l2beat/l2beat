@@ -5,7 +5,7 @@ import * as z from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { getReferencedName, Reference, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
@@ -23,7 +23,7 @@ export const ArrayHandlerDefinition = z.strictObject({
 
 const DEFAULT_MAX_LENGTH = 100
 
-export class ArrayHandler implements Handler {
+export class ArrayHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   readonly fragment: utils.FunctionFragment
 

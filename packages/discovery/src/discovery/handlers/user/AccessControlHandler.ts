@@ -4,7 +4,7 @@ import * as z from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type AccessControlHandlerDefinition = z.infer<
   typeof AccessControlHandlerDefinition
@@ -23,7 +23,7 @@ const abi = new utils.Interface([
   'event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)',
 ])
 
-export class AccessControlHandler implements Handler {
+export class AccessControlHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   private readonly knownNames = new Map<string, string>()
 

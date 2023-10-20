@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.18.0
+
+### Minor Changes
+
+- Add multicall support and use multicall for SimpleStorageHandler
+
 ## 0.17.2
 
 ### Patch Changes

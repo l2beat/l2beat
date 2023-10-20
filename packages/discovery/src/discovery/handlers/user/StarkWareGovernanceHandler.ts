@@ -5,7 +5,7 @@ import * as z from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { toContractValue } from '../utils/toContractValue'
@@ -25,7 +25,7 @@ const EVENT_FRAGMENT = toEventFragment(
 const EVENT_KEY = 'acceptedGovernor'
 const ABI = new utils.Interface([EVENT_FRAGMENT])
 
-export class StarkWareGovernanceHandler implements Handler {
+export class StarkWareGovernanceHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   readonly filterBy: utils.FunctionFragment
 

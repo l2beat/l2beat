@@ -4,6 +4,7 @@ import { EthereumAddress } from '../../utils/EthereumAddress'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { MulticallClient } from '../provider/multicall/MulticallClient'
 import { executeHandlers } from './executeHandlers'
 import { getHandlers } from './getHandlers'
 import { getValuesAndErrors } from './getValuesAndErrors'
@@ -12,6 +13,7 @@ import { HandlerResult } from './Handler'
 export class HandlerExecutor {
   constructor(
     private readonly provider: DiscoveryProvider,
+    private readonly multicallClient: MulticallClient,
     private readonly logger: DiscoveryLogger,
   ) {}
 
@@ -28,6 +30,7 @@ export class HandlerExecutor {
     const handlers = getHandlers(abi, overrides, this.logger)
     const results = await executeHandlers(
       this.provider,
+      this.multicallClient,
       handlers,
       address,
       blockNumber,

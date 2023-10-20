@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type ConstructorArgsDefinition = z.infer<
   typeof ConstructorArgsDefinition
@@ -16,7 +16,7 @@ export const ConstructorArgsDefinition = z.strictObject({
   nameArgs: z.boolean().optional(),
 })
 
-export class ConstructorArgsHandler implements Handler {
+export class ConstructorArgsHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   readonly constructorFragment: ethers.utils.Fragment
 

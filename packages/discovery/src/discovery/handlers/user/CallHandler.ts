@@ -5,7 +5,7 @@ import * as z from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Handler, HandlerResult } from '../Handler'
+import { ClassicHandler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { callMethod, EXEC_REVERT_MSG } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
@@ -19,7 +19,7 @@ export const CallHandlerDefinition = z.strictObject({
   expectRevert: z.optional(z.boolean()),
 })
 
-export class CallHandler implements Handler {
+export class CallHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   readonly fragment: utils.FunctionFragment
 

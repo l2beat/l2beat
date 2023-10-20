@@ -46,6 +46,7 @@ export async function singleDiscovery(
   const results = await discovery(
     provider,
     etherscanClient,
+    chainConfig.multicall,
     projectConfig,
     DiscoveryLogger.CLI,
     blockNumber,
