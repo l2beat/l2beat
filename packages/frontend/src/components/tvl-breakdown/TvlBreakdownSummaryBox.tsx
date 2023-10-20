@@ -34,7 +34,7 @@ export function TvlBreakdownSummaryBox(
       />
       <StatsItem
         title="Canonically Bridged"
-        tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
+        tooltip="Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         mobileTitle="Canonically Bridged Value"
         value={props.canonical.value}
         change={props.canonical.change}
