@@ -1,5 +1,13 @@
 # @l2beat/discovery
 
+## 0.17.2
+
+### Patch Changes
+
+- Add AxelarProxy as auto detecting proxy
+- Updated dependencies
+  - @l2beat/discovery-types@0.4.1
+
 ## 0.17.1
 
 ### Patch Changes
