@@ -22,6 +22,7 @@
     "@l2beat/backend-tools": "^0.4.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
+    "@l2beat/discovery": "0.18.2",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "ethers": "^5.7.2",

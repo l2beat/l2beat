@@ -1,5 +1,4 @@
-import { calculateInversion } from '@l2beat/discovery'
-import { InvertedAddresses } from '@l2beat/discovery/dist/inversion/runInversion'
+import { calculateInversion, InvertedAddresses } from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -141,26 +140,35 @@ export class ProjectDiscovery {
     const inversion = this.getInversion()
 
     const result: Record<string, Record<string, string[]>> = {}
-    const sources: Record<string, {contract: string, value: string}> = {}
-    for(const template of OP_STACK_PERMISSION_TEMPLATES) {
-        for(const contract of inversion.values()) {
-            const role = contract.roles.find((r) => r.name === template.role.value && r.atName === template.role.contract)
-            if(role) {
-                const contractKey = contract.name ?? template.role.value;
-                result[contractKey] ??= {};
-                result[contractKey][role.name] ??= [];
-                result[contractKey][role.name].push(stringFormat(template.description, template.role.contract))
-                sources[contractKey] ??= template.role
-            }
+    const sources: Record<string, { contract: string; value: string }> = {}
+    for (const template of OP_STACK_PERMISSION_TEMPLATES) {
+      for (const contract of inversion.values()) {
+        const role = contract.roles.find(
+          (r) =>
+            r.name === template.role.value &&
+            r.atName === template.role.contract,
+        )
+        if (role) {
+          const contractKey = contract.name ?? template.role.value
+          result[contractKey] ??= {}
+          result[contractKey][role.name] ??= []
+          result[contractKey][role.name].push(
+            stringFormat(template.description, template.role.contract),
+          )
+          sources[contractKey] ??= template.role
         }
+      }
     }
 
     return Object.entries(result).map(([permissioned, roleDescription]) => ({
-        name: permissioned,
-        accounts: [
-            this.getPermissionedAccount(sources[permissioned].contract, sources[permissioned].value),
-        ],
-        description: Object.values(roleDescription).flat().join(" "),
+      name: permissioned,
+      accounts: [
+        this.getPermissionedAccount(
+          sources[permissioned].contract,
+          sources[permissioned].value,
+        ),
+      ],
+      description: Object.values(roleDescription).flat().join(' '),
     }))
   }
 

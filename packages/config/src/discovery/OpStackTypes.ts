@@ -42,31 +42,31 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
 export const OP_STACK_PERMISSION_TEMPLATES: OPStackPermissionTemplate[] = [
   {
     role: { value: 'owner', contract: 'AddressManager' },
-    description: "Owner of {0}.",
+    description: 'Owner of {0}.',
   },
   {
     role: { value: 'admin', contract: 'OptimismPortal' },
-    description: "Admin of {0}.",
+    description: 'Admin of {0}.',
   },
   {
     role: { value: 'admin', contract: 'SystemConfig' },
-    description: "Admin of {0}.",
+    description: 'Admin of {0}.',
   },
   {
     role: { value: 'admin', contract: 'L2OutputOracle' },
-    description: "Admin of {0}.",
+    description: 'Admin of {0}.',
   },
   {
     role: { value: 'admin', contract: 'L1ERC721Bridge' },
-    description: "Admin of {0}.",
+    description: 'Admin of {0}.',
   },
   {
     role: { value: 'admin', contract: 'OptimismMintableERC20Factory' },
-    description: "Admin of {0}.",
+    description: 'Admin of {0}.',
   },
   {
     role: { value: 'admin', contract: 'L1StandardBridge' },
-    description: "Admin of {0}.",
+    description: 'Admin of {0}.',
   },
   {
     role: { value: 'batcherHash', contract: 'SystemConfig' },
