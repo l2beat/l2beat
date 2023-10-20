@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.18.3
+
+### Patch Changes
+
+- Fix address analyzer log output
+
 ## 0.18.2
 
 ### Patch Changes

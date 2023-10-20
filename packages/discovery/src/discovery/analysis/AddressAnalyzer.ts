@@ -149,7 +149,7 @@ export class AddressAnalyzer {
       this.logger.log(
         `Some values changed on contract ${
           contract.name
-        }(${contract.address.toString()})})`,
+        }(${contract.address.toString()})`,
       )
       return true
     }
