@@ -62,7 +62,7 @@ export function getContractSection(
 
   return {
     id: 'contracts',
-    title: 'Smart Contracts',
+    title: 'Smart contracts',
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
