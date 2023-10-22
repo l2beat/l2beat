@@ -103,6 +103,7 @@ export interface UpdateMonitorChainConfig {
   chainId: ChainId
   rpcUrl: string
   rpcGetLogsMaxRange?: number
+  reorgSafeDepth?: number
   etherscanApiKey: string
   etherscanUrl: string
   minTimestamp: UnixTime

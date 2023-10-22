@@ -143,6 +143,13 @@ declare module 'knex/types/tables' {
     type: string
   }
 
+  interface DiscoveryCacheRow {
+    key: string
+    value: string
+    chain_id: number
+    block_number: number | null
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -164,6 +171,7 @@ declare module 'knex/types/tables' {
     circulating_supplies: CirculatingSupplyRow
     circulating_supplies_status: CirculatingSupplyStatusRow
     liveness: LivenessRow
+    discovery_cache: DiscoveryCacheRow
   }
 }
 

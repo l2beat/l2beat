@@ -184,6 +184,9 @@ export function getProductionConfig(env: Env): Config {
           rpcGetLogsMaxRange: env.optionalInteger(
             'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
           ),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
+          ),
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
           minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
