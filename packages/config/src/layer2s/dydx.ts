@@ -330,6 +330,13 @@ export const dydx: Layer2 = {
       },
     ],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'The node software is a fork of cosmos-sdk and based on Tendermint consensus. The software source code can be found [here](https://github.com/dydxprotocol/cosmos-sdk).',
+    compressionScheme: '',
+    genesisState: '',
+    dataFormat: '',
+  },
   permissions: [
     // TODO: detailed breakdown of permissions
     {
