@@ -333,9 +333,13 @@ export const dydx: Layer2 = {
   stateDerivation: {
     nodeSoftware:
       'The node software is a fork of cosmos-sdk and based on Tendermint consensus. The software source code can be found [here](https://github.com/dydxprotocol/cosmos-sdk).',
-    compressionScheme: '',
-    genesisState: '',
-    dataFormat: '',
+    compressionScheme: `Instead of compression, the STARKs proofing system creates short proof.`,
+    genesisState:
+      'There is no genesis file for dydx. By default, all accounts were empty at the beginning.',
+    dataFormat:
+      `StarkEx utilizes off-chain tree data structures to store balances and orders. Specifically, balances are stored in a Merkle Tree, while orders are stored in a Patricia Tree. You can learn more about this process [here](https://docs.starkware.co/starkex/spot/shared/README-off-chain-state.html).` +
+      '\n' +
+      `Transactions within StarkEx undergo a recursive process of proof generation, verification, and combination facilitated by the Shared Prover service, [SHARP](https://docs.starkware.co/starkex/spot/shared/how-cairo-is-used-in-starkex.html). This process continues until a resulting proof is eventually submitted to an on-chain verifier contract.`,
   },
   permissions: [
     // TODO: detailed breakdown of permissions
