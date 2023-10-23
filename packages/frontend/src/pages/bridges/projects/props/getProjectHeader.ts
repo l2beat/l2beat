@@ -1,5 +1,5 @@
 import { Bridge, ProjectLinks } from '@l2beat/config'
-import { DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import { DetailedTvlApiResponse } from '@l2beat/shared-pure'
 
 import { ProjectLink } from '../../../../components/icons'
 import { getDestination } from '../../../../utils/getDestination'
@@ -10,7 +10,7 @@ import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
   project: Bridge,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
 ): ProjectHeaderProps {
   const charts = tvlApiResponse.projects[project.id.toString()]?.charts
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)

@@ -7,7 +7,7 @@ export interface FaqItem {
   answer: React.ReactNode
 }
 
-export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
+export function getFaqItems(): FaqItem[] {
   return [
     {
       question: 'What is the overall purpose of this site?',
@@ -281,7 +281,7 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
     },
     {
       question: 'How exactly do you calculate metrics like TVL?',
-      answer: enabledDetailTvl ? (
+      answer: (
         <div>
           <p className="mt-4">
             It varies from project to project but in general, the TVL is defined
@@ -313,65 +313,44 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
             for some tokens)
           </p>
         </div>
-      ) : (
+      ),
+    },
+    {
+      question: 'What do the values in the TVL breakdown mean?',
+      answer: (
         <div>
+          <UnorderedList>
+            <li>
+              <Strong>Canonically Bridged Value (CBV) </Strong>is the value of
+              assets that use L1 Ethereum as their main ledger and are bridged
+              to L2 via a canonical bridge locking tokens in L1 escrow and
+              minting on L2 an IOU representation of that token.
+            </li>
+            <li>
+              <Strong>Externally Bridged Value (EBV) </Strong>is the value of
+              assets that use some external blockchain as their main ledger and
+              are bridged to L2 via a non-canonical bridge. Tokens are locked on
+              their native ledger and the bridge is minting on L2 an IOU
+              representation of that token.
+            </li>
+            <li>
+              <Strong>Natively Minted Value (NMV) </Strong>is the value of
+              assets that use an L2 as their ledger and are minted directly on
+              the L2. Note that for some tokens (omnichain tokens) their ledger
+              is distributed across many blockchains and they can be moved to L2
+              via a burn-mint bridge.
+            </li>
+          </UnorderedList>
           <p className="mt-4">
-            It varies from project to project but we generally track the amount
-            of tokens locked in all token escrow contracts for a given L2.
-            Sometimes it's a single token escrow like for zkSync but sometimes
-            these are multiple token escrows for a single L2 (Optimism).
-          </p>
-          <p className="mt-4">
-            For more details see our{' '}
-            <Link href="https://github.com/l2beat/l2beat/tree/master/packages/config/src">
-              project definitions
+            For more information read the{' '}
+            <Link href="https://medium.com/l2beat/redefining-total-value-locked-for-l2s-756160602747">
+              L2 Assets blog post
             </Link>
             .
           </p>
         </div>
       ),
     },
-    ...(enabledDetailTvl
-      ? [
-          {
-            question: 'What do the values in the TVL breakdown mean?',
-            answer: (
-              <div>
-                <UnorderedList>
-                  <li>
-                    <Strong>Canonically Bridged Value (CBV) </Strong>is the
-                    value of assets that use L1 Ethereum as their main ledger
-                    and are bridged to L2 via a canonical bridge locking tokens
-                    in L1 escrow and minting on L2 an IOU representation of that
-                    token.
-                  </li>
-                  <li>
-                    <Strong>Externally Bridged Value (EBV) </Strong>is the value
-                    of assets that use some external blockchain as their main
-                    ledger and are bridged to L2 via a non-canonical bridge.
-                    Tokens are locked on their native ledger and the bridge is
-                    minting on L2 an IOU representation of that token.
-                  </li>
-                  <li>
-                    <Strong>Natively Minted Value (NMV) </Strong>is the value of
-                    assets that use an L2 as their ledger and are minted
-                    directly on the L2. Note that for some tokens (omnichain
-                    tokens) their ledger is distributed across many blockchains
-                    and they can be moved to L2 via a burn-mint bridge.
-                  </li>
-                </UnorderedList>
-                <p className="mt-4">
-                  For more information read the{' '}
-                  <Link href="https://medium.com/l2beat/redefining-total-value-locked-for-l2s-756160602747">
-                    L2 Assets blog post
-                  </Link>
-                  .
-                </p>
-              </div>
-            ),
-          },
-        ]
-      : []),
     {
       question: 'Apart from TVL, what is L2BEAT aiming to track?',
       answer:

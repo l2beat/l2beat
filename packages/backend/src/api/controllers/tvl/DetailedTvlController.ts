@@ -387,30 +387,7 @@ function aggregateRecordsToResponse(
     tvlUsdValue: bigint
     tvlEthValue: bigint
   }[],
-): {
-  data: [
-    UnixTime,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-  ][]
-  types: [
-    'timestamp',
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-  ]
-} {
+): DetailedTvlApiChart {
   return {
     types: DETAILED_LABELS,
     data: hourlyReports.map((report) => [

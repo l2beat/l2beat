@@ -23,14 +23,14 @@ export type DetailedTvlApiChartPoint = z.infer<typeof DetailedTvlApiChartPoint>
 const DetailedTvlApiChart = z.object({
   types: z.tuple([
     z.literal('timestamp'),
-    z.string(),
-    z.string(),
-    z.string(),
-    z.string(),
-    z.string(),
-    z.string(),
-    z.string(),
-    z.string(),
+    z.literal('valueUsd'),
+    z.literal('cbvUsd'),
+    z.literal('ebvUsd'),
+    z.literal('nmvUsd'),
+    z.literal('valueEth'),
+    z.literal('cbvEth'),
+    z.literal('ebvEth'),
+    z.literal('nmvEth'),
   ]),
   data: z.array(DetailedTvlApiChartPoint),
 })
