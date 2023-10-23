@@ -83,7 +83,6 @@ export class LivenessIndexer extends ChildIndexer {
   ): Promise<LivenessRecord[]> {
     // TODO: find missing data for this range(from,to)
 
-
     const config: LivenessConfig = mergeConfigs(projects)
 
     const transfersConfig = config.transfers.filter((c) =>
@@ -145,14 +144,6 @@ export class LivenessIndexer extends ChildIndexer {
   // TODO: add comment why there is no need to delete anything
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
-  }
-
-  getIndexerId(): typeof this.indexerId {
-    return this.indexerId
-  }
-
-  getConfigHash(): Hash256 {
-    return this.configHash
   }
 }
 
