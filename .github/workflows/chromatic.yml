@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "packages/frontend/**"
+  workflow_dispatch:
 
 jobs:
   chromatic:
