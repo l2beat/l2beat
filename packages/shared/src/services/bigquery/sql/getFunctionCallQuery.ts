@@ -9,7 +9,7 @@ export function getFunctionCallQuery(
   return [
     'SELECT',
     'block_number,',
-    'input,',
+    'LEFT(input, 10) AS input,',
     'to_address,',
     'block_timestamp,',
     'transaction_hash,',
