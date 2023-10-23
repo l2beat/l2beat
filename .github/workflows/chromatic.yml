@@ -1,13 +1,15 @@
 name: "Chromatic"
 
 on:
-  merge_group: "*"
+  pull_request:
+    types:
+      - synchronize
 
 jobs:
   chromatic:
     runs-on: ubuntu-latest
-    # Run only on merge attempt
-    if: github.event_name == 'pull_request' && github.event.action == 'synchronize' && github.ref == 'refs/heads/master'
+    # Run only on merge to master attempt
+    if: github.event.pull_request.base.ref == 'master'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
