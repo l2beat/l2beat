@@ -18,7 +18,9 @@ export function FaqPage(props: FaqPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <div className="mt-16">
-          <div className="mb-4 text-4xl font-extrabold" />
+          <div className="mb-4 text-4xl font-extrabold">
+            Welcome to the L2BEAT FAQ!
+          </div>
           <div className="text-xl font-semibold">
             Hi! We are glad you've made it here. Below you will find answers to
             most frequently asked questions about L2BEAT.
