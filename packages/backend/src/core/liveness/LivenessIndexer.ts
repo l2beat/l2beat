@@ -59,7 +59,12 @@ export class LivenessIndexer extends ChildIndexer {
   override async update(from: number, _to: number): Promise<number> {
     // TODO: think about this logic, should it always add 1 hour?
     const fromUnixTime = new UnixTime(from)
-    const toUnixTime = fromUnixTime.add(1, 'hours')
+    const _toUnixTime = new UnixTime(_to)
+    let toUnixTime: UnixTime = fromUnixTime.add(1, 'hours')
+    const hoursDiff = (_toUnixTime.toNumber() - fromUnixTime.toNumber()) / 3600
+    if (hoursDiff >= 24) {
+      toUnixTime = fromUnixTime.add(24, 'hours')
+    }
 
     let data: LivenessRecord[] | undefined
 

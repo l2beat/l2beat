@@ -32,7 +32,7 @@ const ADDRESS_5 = EthereumAddress.random()
 const ADDRESS_6 = EthereumAddress.random()
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
-const TO = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
 
 const hourlyIndexer = mockObject<HourlyIndexer>({
   start: async () => {},
