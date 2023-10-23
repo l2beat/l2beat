@@ -409,6 +409,10 @@ describe(LivenessIndexer.name, () => {
         TO,
       )
     })
+
+    it('does not call BigQuery if configs are empty', () => {
+      throw new Error('not implemented')
+    })
   })
 
   describe(LivenessIndexer.prototype.getTransfers.name, () => {
@@ -514,6 +518,10 @@ describe(LivenessIndexer.name, () => {
         FROM,
         TO,
       )
+    })
+
+    it('does not call BigQuery if configs are empty', () => {
+      throw new Error('not implemented')
     })
   })
 

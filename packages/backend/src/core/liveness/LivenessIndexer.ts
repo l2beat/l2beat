@@ -48,8 +48,7 @@ export class LivenessIndexer extends ChildIndexer {
       await this.stateRepository.addOrUpdate({
         indexerId: this.indexerId,
         configHash: this.configHash,
-        // TODO: should it be zero?
-        safeHeight: 0,
+        safeHeight: this.minTimestamp.toNumber(),
       })
     }
 
@@ -97,7 +96,6 @@ export class LivenessIndexer extends ChildIndexer {
       isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
     )
 
-    // TODO: if transfers or functionCall empty then do not call
     const [transfers, functionCalls] = await Promise.all([
       this.getTransfers(transfersConfig, from, to),
       this.getFunctionCalls(functionCallsConfig, from, to),
@@ -111,6 +109,8 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
+    if (transfersConfigs.length === 0) return Promise.resolve([])
+
     const queryResults = await this.bigQueryClient.getTransfers(
       transfersConfigs,
       from,
@@ -124,6 +124,8 @@ export class LivenessIndexer extends ChildIndexer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
+    if (functionCallsConfigs.length === 0) return Promise.resolve([])
+
     const queryResults = await this.bigQueryClient.getFunctionCalls(
       functionCallsConfigs,
       from,
@@ -154,7 +156,9 @@ export class LivenessIndexer extends ChildIndexer {
     return this.configHash
   }
 
-  // TODO: add comment why there is no need to delete anything
+  // This function will not be used, but it is required by the UIF.
+  // In our case there is no re-org handling so we do not have to worry
+  // that our data will become invalid.
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
   }
