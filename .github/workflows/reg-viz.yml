@@ -15,9 +15,10 @@ jobs:
         with:
           node-version: 16.x
           cache: "yarn"
+      - run: yarn config set ignore-engines true
       - run: yarn --frozen-lockfile
       - run: |
-          yarn storybook:build
+          yarn storybook:build 
           yarn storybook:screenshot
         working-directory: ./packages/frontend
       - uses: krzkaczor/reg-actions@action
