@@ -13,9 +13,9 @@ describe(IndexerStateRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(IndexerStateRepository.prototype.getSafeHeight.name, () => {
+  describe(IndexerStateRepository.prototype.findSafeHeight.name, () => {
     it('returns undefined if no record exists', async () => {
-      const safeHeight = await repository.getSafeHeight('indexer')
+      const safeHeight = await repository.findSafeHeight('indexer')
       expect(safeHeight).toEqual(undefined)
     })
 
@@ -26,7 +26,7 @@ describe(IndexerStateRepository.name, () => {
         safeHeight: 12345,
       }
       await repository.addOrUpdate(newRecord)
-      const safeHeight = await repository.getSafeHeight('indexer1')
+      const safeHeight = await repository.findSafeHeight('indexer1')
       expect(safeHeight).toEqual(newRecord.safeHeight)
     })
   })

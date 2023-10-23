@@ -22,7 +22,12 @@ import {
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessIndexer, mergeConfigs } from './LivenessIndexer'
 import { LivenessConfig, LivenessTransfer } from './types/LivenessConfig'
-import { getLivenessConfigHash, isTimestampInRange } from './utils'
+import {
+  getLivenessConfigHash,
+  isTimestampInRange,
+  transformFunctionCallsQueryResult,
+  transformTransfersQueryResult,
+} from './utils'
 
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
@@ -66,6 +71,15 @@ const livenessRepository = mockObject<LivenessRepository>({
   deleteAll() {
     return Promise.resolve(1)
   },
+})
+
+const wrappedLogger = mockObject<Logger>({
+  error: () => {},
+  debug: () => {},
+})
+
+const logger = mockObject<Logger>({
+  for: () => wrappedLogger,
 })
 
 describe(LivenessIndexer.name, () => {
@@ -142,15 +156,6 @@ describe(LivenessIndexer.name, () => {
         },
       })
 
-      const wrappedLogger = mockObject<Logger>({
-        error: () => {},
-        debug: () => {},
-      })
-
-      const logger = mockObject<Logger>({
-        for: () => wrappedLogger,
-      })
-
       const livenessIndexer = new LivenessIndexer(
         logger,
         hourlyIndexer,
@@ -169,12 +174,137 @@ describe(LivenessIndexer.name, () => {
       expect(wrappedLogger.error).toHaveBeenCalled()
     })
 
-    it('schedules sync for daily if possible', () => {
-      throw new Error('not implemented')
+    it('schedules sync for daily if possible', async () => {
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getTransfers: async () => [],
+        getFunctionCalls: async () => [],
+      })
+      const livenessIndexer = new LivenessIndexer(
+        logger,
+        hourlyIndexer,
+        [],
+        bigQueryClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+      const from = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+      const to = UnixTime.fromDate(new Date('2022-01-03T00:00:00Z'))
+
+      await livenessIndexer.update(from.toNumber(), to.toNumber())
+
+      expect(bigQueryClient.getFunctionCalls).toHaveBeenCalledWith(
+        [],
+        from,
+        from.add(1, 'days'),
+      )
+      expect(bigQueryClient.getTransfers).toHaveBeenCalledWith(
+        [],
+        from,
+        from.add(1, 'days'),
+      )
     })
 
     it('calls getLivenessData and adds results to database', async () => {
-      throw new Error('not implemented')
+      const projects: Project[] = [
+        {
+          projectId: ProjectId('project1'),
+          escrows: [],
+          type: 'layer2',
+          livenessConfig: {
+            transfers: [
+              {
+                projectId: ProjectId('project1'),
+                from: ADDRESS_1,
+                to: ADDRESS_2,
+                type: 'DA',
+                sinceTimestamp: FROM,
+                untilTimestamp: FROM.add(2, 'days'),
+              },
+            ],
+            functionCalls: [
+              {
+                projectId: ProjectId('project1'),
+                address: ADDRESS_5,
+                selector: '0x9aaab648',
+                sinceTimestamp: FROM,
+                type: 'STATE',
+              },
+            ],
+          },
+        },
+      ]
+      const transfers = [
+        {
+          block_number: 1,
+          block_timestamp: { value: FROM.toDate().toISOString() },
+          from_address: ADDRESS_1,
+          to_address: ADDRESS_2,
+          transaction_hash: '0xabcdef1234567890',
+        },
+      ]
+
+      const functionCalls = [
+        {
+          block_number: 2,
+          block_timestamp: {
+            value: FROM.add(1, 'minutes').toDate().toISOString(),
+          },
+          input: '0x9aaab648',
+          to_address: ADDRESS_5,
+          transaction_hash: '0xabcdef1234567891',
+        },
+      ]
+
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getTransfers: mockFn().resolvesToOnce(
+          BigQueryTransfersResult.parse(transfers),
+        ),
+        getFunctionCalls: mockFn().resolvesToOnce(
+          BigQueryFunctionCallsResult.parse(functionCalls),
+        ),
+      })
+      const livenessIndexer = new LivenessIndexer(
+        logger,
+        hourlyIndexer,
+        projects,
+        bigQueryClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+      await livenessIndexer.update(FROM.toNumber(), TO.toNumber())
+
+      const config: LivenessConfig = mergeConfigs(projects)
+      const transfersConfig = config.transfers.filter((c) =>
+        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
+      )
+      const functionCallsConfig = config.functionCalls.filter((c) =>
+        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
+      )
+
+      const expectedToSave: LivenessRecord[] = [
+        ...transformTransfersQueryResult(
+          transfersConfig,
+          BigQueryTransfersResult.parse(transfers),
+        ),
+        ...transformFunctionCallsQueryResult(
+          functionCallsConfig,
+          BigQueryFunctionCallsResult.parse(functionCalls),
+        ),
+      ]
+
+      expect(bigQueryClient.getTransfers).toHaveBeenCalledWith(
+        transfersConfig,
+        FROM,
+        FROM.add(1, 'hours'),
+      )
+      expect(bigQueryClient.getFunctionCalls).toHaveBeenCalledWith(
+        functionCallsConfig,
+        FROM,
+        FROM.add(1, 'hours'),
+      )
+      expect(livenessRepository.addMany).toHaveBeenCalledWith(expectedToSave)
     })
   })
 
