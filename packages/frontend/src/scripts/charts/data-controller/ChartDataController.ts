@@ -65,7 +65,6 @@ export class ChartDataController {
   }
 
   private parseData(chartType: ChartType, data: unknown): ChartData {
-    console.log('chartType', chartType)
     switch (chartType.type) {
       case 'layer2-tvl':
       case 'bridges-tvl':
