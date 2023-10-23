@@ -2007,7 +2007,7 @@
   integrity sha512-jLtmyx3Ilmm/1v3zb1Sl8vdOVuSA6zI5ZqCBs3viZ0DRQ9JxCjR7gecXwOt/Ki3t7L2Lxe5xj7DHN7FOuqq4Kw==
   dependencies:
     "@l2beat/backend-tools" "^0.4.0"
-    "@l2beat/discovery-types" "^0.4.0"
+    "@l2beat/discovery-types" "^0.4.1"
     chalk "^4.1.2"
     deep-diff "^1.0.2"
     dotenv "^16.0.3"
