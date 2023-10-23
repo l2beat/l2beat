@@ -40,7 +40,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    const oldConfigHash = await this.stateRepository.getConfigHash(
+    const oldConfigHash = await this.stateRepository.findConfigHash(
       this.indexerId,
     )
 
@@ -129,7 +129,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async getSafeHeight(): Promise<number> {
-    const height = await this.stateRepository.getSafeHeight(this.indexerId)
+    const height = await this.stateRepository.setSafeHeight(this.indexerId)
     return height ?? this.minTimestamp.toNumber()
   }
 
