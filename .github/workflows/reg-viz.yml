@@ -1,0 +1,26 @@
+name: Reg-viz
+
+on:
+  pull_request:
+    type: synchronize
+    paths:
+      - "packages/frontend/**"
+
+jobs:
+  storybook-visual-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: "yarn"
+      - run: yarn --frozen-lockfile
+      - run: |
+          yarn storybook:build
+          yarn storybook:screenshot
+        working-directory: ./packages/frontend
+      - uses: krzkaczor/reg-actions@action
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          image-directory-path: "./packages/frontend/__screenshots__"
