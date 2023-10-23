@@ -16,7 +16,6 @@ import {
   TVLBreakdownProps,
 } from '../../../../components/TVLBreakdown'
 import { RiskValues } from '../../../../utils/risks/types'
-import { formatUSD } from '../../../../utils/utils'
 
 export interface ProjectHeaderProps {
   title: string
@@ -34,7 +33,6 @@ export interface ProjectHeaderProps {
   tvlBreakdownHref: string
   risks: RiskValues
   links: ProjectLink[]
-  detailedTvlEnabled?: boolean
   stage: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
@@ -104,27 +102,9 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
   ]
 
-  if (!props.detailedTvlEnabled && props.tvlStats) {
-    summary.unshift({
-      title: 'Total value locked',
-      tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
-      value: !props.isUpcoming ? (
-        <StatWithChange
-          className="font-bold"
-          stat={formatUSD(props.tvlStats.tvl)}
-          change={props.tvlStats.tvlChange}
-        />
-      ) : (
-        <UpcomingBadge />
-      ),
-    })
-  }
-
   return (
     <DetailsHeader
       type="layer2"
-      detailedTvlEnabled={props.detailedTvlEnabled}
       title={props.title}
       icon={props.icon}
       stats={{ summary, l2Tvl: props.tvlStats }}

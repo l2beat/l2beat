@@ -22,7 +22,6 @@ export function getProps(
       riskView: getScalingRiskView(ordering, verificationStatus),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
-      showDetailedTvl: config.features.detailedTvl,
     },
     wrapper: {
       metadata: getPageMetadata(),

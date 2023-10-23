@@ -49,9 +49,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  if (config.features.detailedTvl) {
-    pages.push(getDetailedTvlPage(config, pagesData))
-  }
+  pages.push(getDetailedTvlPage(config, pagesData))
 
   if (config.features.tvlBreakdown && tvlBreakdownApiResponse) {
     pages.push(

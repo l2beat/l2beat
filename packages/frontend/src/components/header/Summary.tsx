@@ -11,7 +11,6 @@ interface SummaryProps {
   type: 'bridge' | 'layer2'
   stats: FullSummaryStats
   links: ProjectLink[]
-  detailedTvlEnabled?: boolean
   isUpcoming?: boolean
   tvlBreakdownHref?: string
   showTvlBreakdown?: boolean
@@ -31,10 +30,10 @@ export function Summary(props: SummaryProps) {
       <div
         className={classNames(
           'grid w-full gap-4',
-          props.detailedTvlEnabled && 'md:grid-cols-3',
+          props.type === 'layer2' && 'md:grid-cols-3',
         )}
       >
-        {props.detailedTvlEnabled && (
+        {props.type === 'layer2' && (
           <TvlSummary
             stats={props.stats.l2Tvl}
             tvlBreakdownHref={props.tvlBreakdownHref}
@@ -44,8 +43,7 @@ export function Summary(props: SummaryProps) {
         <ProjectSummary
           stats={props.stats.summary}
           type={props.type}
-          detailedTvlEnabled={!!props.detailedTvlEnabled}
-          className={classNames(props.detailedTvlEnabled && 'md:col-span-2')}
+          className={classNames(props.type === 'layer2' && 'md:col-span-2')}
         />
       </div>
       <div className="w-full px-4 md:hidden md:px-0">
