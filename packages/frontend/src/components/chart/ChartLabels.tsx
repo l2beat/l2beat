@@ -27,7 +27,7 @@ function ChartLabel() {
     <div className="relative">
       <span
         data-role="chart-label"
-        className="absolute left-0 bottom-0 pb-0.5 text-sm text-gray-500 text-opacity-50 dark:text-white dark:text-opacity-50"
+        className="absolute left-0 bottom-0 pb-0.5 text-sm text-gray-500 text-opacity-50 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 dark:text-white dark:text-opacity-50"
       />
       <hr className="border-gray-850 border-opacity-30 dark:border-white dark:border-opacity-30" />
     </div>

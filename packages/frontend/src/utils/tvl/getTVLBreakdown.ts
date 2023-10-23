@@ -1,5 +1,5 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { DetailedTvlApiToken, TvlApiToken } from '@l2beat/shared-pure'
+import { DetailedTvlApiToken } from '@l2beat/shared-pure'
 
 import { TVLBreakdownProps } from '../../components/TVLBreakdown'
 import { formatPercent } from '../utils'
@@ -8,7 +8,7 @@ export function getTvlBreakdown(
   name: string,
   associatedTokens: string[],
   total: number,
-  tokens: (TvlApiToken | DetailedTvlApiToken)[],
+  tokens: DetailedTvlApiToken[],
 ): TVLBreakdownProps {
   const partial = getPartialTVLBreakdown(associatedTokens, total, tokens)
 
@@ -25,7 +25,7 @@ export function getTvlBreakdown(
 function getPartialTVLBreakdown(
   associatedTokens: string[],
   total: number,
-  tokens: (TvlApiToken | DetailedTvlApiToken)[],
+  tokens: DetailedTvlApiToken[],
 ) {
   let associated = 0
   let ether = 0
@@ -33,18 +33,17 @@ function getPartialTVLBreakdown(
   let other = 0
 
   for (const token of tokens) {
-    const usdValue = 'tvl' in token ? token.tvl : token.usdValue
     const safeToken = safeGetTokenByAssetId(token.assetId)
     if (!safeToken) {
-      other += usdValue
+      other += token.usdValue
     } else if (associatedTokens.includes(safeToken.symbol)) {
-      associated += usdValue
+      associated += token.usdValue
     } else if (safeToken.category === 'ether') {
-      ether += usdValue
+      ether += token.usdValue
     } else if (safeToken.category === 'stablecoin') {
-      stable += usdValue
+      stable += token.usdValue
     } else {
-      other += usdValue
+      other += token.usdValue
     }
   }
 

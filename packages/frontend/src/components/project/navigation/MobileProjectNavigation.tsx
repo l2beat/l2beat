@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { BridgeDetailsSection } from '../../../pages/bridges-projects/props/getProjectDetails'
-import { ScalingDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
+import { BridgeDetailsSection } from '../../../pages/bridges/projects/props/getProjectDetails'
+import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { ChevronLeftIcon, ChevronRightIcon } from '../../icons'
 import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
 

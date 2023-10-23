@@ -80,7 +80,7 @@ export interface Layer2Display {
     | 'StarkEx'
     | 'OP Stack'
     | 'zkSync'
-    | 'loopring'
+    | 'Loopring'
     | 'Arbitrum'
     | 'Polygon'
     | 'OVM'

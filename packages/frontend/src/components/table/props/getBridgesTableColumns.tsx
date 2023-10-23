@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { BridgesRiskViewEntry } from '../../../pages/bridges-risk/types'
-import { BridgesTvlViewEntry } from '../../../pages/bridges-tvl/types'
+import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
+import { BridgesTvlViewEntry } from '../../../pages/bridges/tvl/types'
 import { TVLBreakdown } from '../../TVLBreakdown'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'

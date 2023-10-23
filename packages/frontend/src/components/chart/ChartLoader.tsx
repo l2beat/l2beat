@@ -4,7 +4,7 @@ export function ChartLoader() {
   return (
     <svg
       data-role="chart-loader"
-      className="pointer-events-none absolute inset-0 z-40 m-auto hidden select-none opacity-40"
+      className="pointer-events-none absolute inset-0 z-40 m-auto select-none opacity-0 duration-500 group-data-[state=loading]/chart:opacity-40"
       width="50px"
       height="50px"
       viewBox="0 0 100 100"
