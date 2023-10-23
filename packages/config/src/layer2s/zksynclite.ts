@@ -337,7 +337,7 @@ export const zksynclite: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware: `The node software is open-sourced and the source can be found [here](https://github.com/matter-labs/zksync).`,
-    compressionScheme: 'Transactions saved off-chain are not compressed.',
+    compressionScheme: 'No compression, transactions are always the same size.',
     genesisState:
       'There is no genesis file nor regenesis for zkSync Lite. By default, all accounts were empty at the beginning.',
     dataFormat: `The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).`,
