@@ -13,47 +13,37 @@ should create a new migration file that fixes the issue.
 
 import { Knex } from 'knex'
 
-interface ColumnInfo {
-  table_catalog: string
-  table_schema: string
-  table_name: string
-  column_name: string
-  data_type: string
+const table_schema = 'public'
+const tableColumnToUpdate: Record<string, [string, ...string[]]> = {
+  circulating_supplies: ['unix_timestamp'],
+  total_supplies: ['unix_timestamp'],
+  total_supplies_status: ['unix_timestamp'],
+  update_notifier: ['updated_at', 'created_at'],
 }
 
-const table_schema = 'public'
-const tableWhitelist = [
-  'circulating_supplies',
-  'total_supplies',
-  'total_supplies_status',
-  'update_notifier',
-]
-
 export async function up(knex: Knex) {
-  for (const table_name of tableWhitelist) {
-    // get all columns that are of type timestamp with time zone
-    const columns = (await knex('information_schema.columns')
-      .select('column_name')
-      .where({
-        data_type: 'timestamp with time zone',
-        table_schema,
-        table_name,
-      })) as ColumnInfo[]
-
+  for (const [table_name, columns] of Object.entries(tableColumnToUpdate)) {
     for (const column of columns) {
-      const { column_name } = column
-
       // https://www.postgresql.org/docs/14/sql-altertable.html
       // Indexes and simple table constraints involving the column will be automatically converted
       // to use the new column type by reparsing the originally supplied expression.
 
       // get list of indexes table is involved in
       await knex.raw(
-        `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column_name}
-        SET DATA TYPE timestamp without time zone USING ${column_name}::timestamp without time zone`,
+        `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column}
+        SET DATA TYPE timestamp without time zone USING ${column}::timestamp without time zone`,
       )
     }
   }
 }
 
-export async function down(_: Knex) {}
+export async function down(knex: Knex) {
+  for (const [table_name, columns] of Object.entries(tableColumnToUpdate)) {
+    for (const column of columns) {
+      await knex.raw(
+        `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column}
+        SET DATA TYPE timestamp with time zone USING ${column}::timestamp with time zone`,
+      )
+    }
+  }
+}
