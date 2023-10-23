@@ -1,15 +1,16 @@
 name: "Chromatic"
 
 on:
-  push:
+  pull_request:
+    types:
+      - synchronize
     paths:
       - "packages/frontend/**"
-  workflow_dispatch:
 
 jobs:
   chromatic:
     runs-on: ubuntu-latest
-    # Run only on merge to master attempt
+    # Run only on merge attempt
     if: github.event.pull_request.base.ref == 'master'
     steps:
       - name: Checkout repository
