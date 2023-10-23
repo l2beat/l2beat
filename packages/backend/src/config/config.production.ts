@@ -20,7 +20,6 @@ export function getProductionConfig(env: Env): Config {
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
   const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
-
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const publicDiscordChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')

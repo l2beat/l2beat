@@ -75,6 +75,7 @@ export class Application {
       ) {
         database.enableQueryLogging()
       }
+
       for (const module of modules) {
         await module?.start?.()
       }

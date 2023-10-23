@@ -9,6 +9,7 @@ export function isTimestampInRange(
   if (sinceTimestamp.gte(to)) {
     return false
   }
+
   if (untilTimestamp === undefined) {
     return true
   }
