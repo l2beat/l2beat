@@ -162,6 +162,11 @@ export function getProductionConfig(env: Env): Config {
           callsPerMinute: env.integer('ACTIVITY_STARKNET_CALLS'),
           url: env.string('ACTIVITY_STARKNET_URL'),
         },
+        scroll: {
+          type: 'rpc',
+          callsPerMinute: env.integer('ACTIVITY_SCROLL_CALLS'),
+          url: env.string('ACTIVITY_SCROLL_URL'),
+        },
       },
     },
     statusEnabled: env.boolean('STATUS_ENABLED', true),
