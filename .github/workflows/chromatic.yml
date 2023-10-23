@@ -1,0 +1,23 @@
+name: "Chromatic"
+
+on:
+  merge_group: "*"
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    # Run only on merge attempt
+    if: github.event_name == 'pull_request' && github.event.action == 'synchronize' && github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 👈 Required to retrieve git history
+      - name: Install dependencies
+        run: yarn
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: storybook:build
+          workingDir: packages/frontend
