@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17039298,
   "configHash": "0x3a9dc943b43efbe78df09c89e26fd75fd12cff9b3dc9b74adeea7fe25c550c39",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Committee",
@@ -47,6 +47,15 @@
         },
         "proxyGovernance": ["0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"]
       },
+      "implementations": [
+        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+        "0x613ee54C54D5548627064B4D648942bF3648f376",
+        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+      ],
       "sinceTimestamp": 1659542607,
       "values": {
         "defaultVaultWithdrawalLock": 0,
