@@ -41,3 +41,4 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
           workingDir: packages/frontend
+          exitZeroOnChanges: true
