@@ -40,7 +40,7 @@ const hourlyIndexer = mockObject<HourlyIndexer>({
   subscribe: () => {},
 })
 const stateRepository = mockObject<IndexerStateRepository>({
-  getSafeHeight() {
+  findSafeHeight() {
     return Promise.resolve(1)
   },
   addOrUpdate() {
@@ -52,7 +52,7 @@ const stateRepository = mockObject<IndexerStateRepository>({
   deleteAll() {
     return Promise.resolve(1)
   },
-  getConfigHash() {
+  findConfigHash() {
     return Promise.resolve(hashJson('test'))
   },
 })
@@ -397,13 +397,13 @@ function getMockLivenessIndexer(
   const bigQueryClient = mockObject<BigQueryClient>({})
 
   const stateRepository = mockObject<IndexerStateRepository>({
-    getSafeHeight() {
+    findSafeHeight() {
       return Promise.resolve(1)
     },
     addOrUpdate() {
       return Promise.resolve('')
     },
-    getConfigHash() {
+    findConfigHash() {
       return Promise.resolve(configHash)
     },
   })

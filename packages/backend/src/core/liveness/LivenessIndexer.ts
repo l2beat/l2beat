@@ -129,7 +129,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async getSafeHeight(): Promise<number> {
-    const height = await this.stateRepository.setSafeHeight(this.indexerId)
+    const height = await this.stateRepository.findSafeHeight(this.indexerId)
     return height ?? this.minTimestamp.toNumber()
   }
 

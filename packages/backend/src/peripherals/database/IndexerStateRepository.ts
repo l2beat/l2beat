@@ -29,7 +29,7 @@ export class IndexerStateRepository extends BaseRepository {
     return row ? Hash256(row.config_hash) : undefined
   }
 
-  async setSafeHeight(indexerId: string): Promise<number | undefined> {
+  async findSafeHeight(indexerId: string): Promise<number | undefined> {
     const knex = await this.knex()
 
     const row = await knex('indexer_state')
