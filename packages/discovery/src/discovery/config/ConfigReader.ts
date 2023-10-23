@@ -94,9 +94,26 @@ export class ConfigReader {
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
 
-      if (contents.includes(ChainId.getName(chain))) {
-        projects.push(folder.name)
+      if (!contents.includes(ChainId.getName(chain))) {
+        continue
       }
+
+      const chainFiles = readdirSync(
+        `discovery/${folder.name}/${ChainId.getName(chain)}`,
+        {
+          withFileTypes: true,
+        },
+      )
+        .filter((x) => x.isFile())
+        .map((x) => x.name)
+
+      const hasConfig = chainFiles.includes('config.jsonc')
+      const hasDiscovered = chainFiles.includes('discovered.json')
+      if (!hasConfig || !hasDiscovered) {
+        continue
+      }
+
+      projects.push(folder.name)
     }
 
     return projects

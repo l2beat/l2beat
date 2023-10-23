@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.18.4
+
+### Patch Changes
+
+- Categorize a project as a folder with a config.jsonc and discovered.json
+
 ## 0.18.3
 
 ### Patch Changes
