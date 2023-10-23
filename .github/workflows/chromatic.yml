@@ -4,14 +4,29 @@ on:
   pull_request:
     types:
       - synchronize
-    paths:
-      - "packages/frontend/**"
 
 jobs:
+  changes:
+    name: Determine if we need to run the workflow
+    runs-on: ubuntu-latest
+    outputs:
+      changesFound: ${{ steps.filter.outputs.changesFound }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            changesFound:
+                    - 'packages/frontend/**'
+
   chromatic:
     runs-on: ubuntu-latest
-    # Run only on merge attempt
-    if: github.event.pull_request.base.ref == 'master'
+    needs: changes
+    # Run only on frontend files change
+    if: ${{ needs.changes.outputs.changesFound == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
