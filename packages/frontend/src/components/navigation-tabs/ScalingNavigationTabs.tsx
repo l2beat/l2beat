@@ -6,7 +6,6 @@ import { NavigationPage, NavigationTabs } from './NavigationTabs'
 interface ScalingNavigationTabsProps {
   selected: 'summary' | 'detailed' | 'risk' | 'activity'
   showActivity: boolean
-  showDetailedTvl?: boolean
 }
 
 export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
@@ -19,15 +18,13 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       selected: props.selected === 'summary',
     },
   ]
-  if (props.showDetailedTvl) {
-    pages.push({
-      fullTitle: 'Value Locked',
-      shortTitle: 'Value',
-      icon: <TvlIcon />,
-      link: '/scaling/detailedTvl',
-      selected: props.selected === 'detailed',
-    })
-  }
+  pages.push({
+    fullTitle: 'Value Locked',
+    shortTitle: 'Value',
+    icon: <TvlIcon />,
+    link: '/scaling/detailedTvl',
+    selected: props.selected === 'detailed',
+  })
 
   pages.push({
     fullTitle: 'Risk Analysis',

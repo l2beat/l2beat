@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import { DetailedTvlApiResponse } from '@l2beat/shared-pure'
 
 import { getTokens } from '../../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
@@ -10,15 +10,12 @@ import { ScalingDetailedTvlViewEntry } from '../types'
 import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
 
 export function getScalingDetailedTvlView(
-  tvlApiResponse: DetailedTvlApiResponse | TvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   projects: Layer2[],
 ): ScalingDetailedTvlViewProps {
   return {
     items: projects.map((project) =>
-      getScalingDetailedTvlViewEntry(
-        tvlApiResponse as DetailedTvlApiResponse,
-        project,
-      ),
+      getScalingDetailedTvlViewEntry(tvlApiResponse, project),
     ),
   }
 }
