@@ -282,6 +282,18 @@ export const kroma: Layer2 = {
       ],
     },
   },
+  stateDerivation: {
+    nodeSoftware:
+      'Korma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/main/specs/differences-from-optimism-bedrock.md).' +
+      '\n' +
+      'The run instruction, also contains instructions to run the proposer (called validator…) and zk prover, is documented [here](https://docs.kroma.network/developers/running-nodes-on-kroma).',
+    compressionScheme:
+      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level',
+    genesisState:
+      'The genesis file can be found [here](https://github.com/kroma-network/kroma-up/blob/main/config/mainnet/genesis.json).',
+    dataFormat:
+      'Driving L2 blocks from L1 data plus the format and architecture of batch submission is documented [here](https://github.com/kroma-network/kroma/blob/main/specs/derivation.md).',
+  },
   permissions: [
     {
       name: 'KromaAdmin',
