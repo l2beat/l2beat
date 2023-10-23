@@ -21,7 +21,11 @@ import {
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessIndexer, mergeConfigs } from './LivenessIndexer'
-import { LivenessConfig, LivenessTransfer } from './types/LivenessConfig'
+import {
+  LivenessConfig,
+  LivenessFunctionCall,
+  LivenessTransfer,
+} from './types/LivenessConfig'
 import {
   getLivenessConfigHash,
   isTimestampInRange,
@@ -513,11 +517,147 @@ describe(LivenessIndexer.name, () => {
     })
   })
 
-  // tests for:
-  // - getFunctionCalls
-  // - getSafeHeight
-  // - setSafeHeight
-  // - invalidate
+  describe(LivenessIndexer.prototype.getFunctionCalls.name, () => {
+    it('should fetch and transform data properly', async () => {
+      const queryResults: BigQueryFunctionCallsResult = [
+        {
+          block_number: 1,
+          block_timestamp: FROM,
+          input: '0x9aaab648',
+          to_address: ADDRESS_2,
+          transaction_hash: '0xabcdef1234567890',
+        },
+        {
+          block_number: 2,
+          block_timestamp: FROM,
+          input: '0x7739cbe7',
+          to_address: ADDRESS_4,
+          transaction_hash: '0xabcdef1234567891',
+        },
+      ]
+
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getFunctionCalls: mockFn().resolvesToOnce(queryResults),
+      })
+
+      const projects: Project[] = [
+        {
+          projectId: ProjectId('project1'),
+          escrows: [],
+          type: 'layer2',
+          livenessConfig: {
+            transfers: [],
+            functionCalls: [
+              {
+                address: ADDRESS_2,
+                selector: '0x9aaab648',
+                type: 'DA',
+                projectId: ProjectId('project1'),
+                sinceTimestamp: FROM,
+              },
+            ],
+          },
+        },
+        {
+          projectId: ProjectId('project2'),
+          escrows: [],
+          type: 'layer2',
+          livenessConfig: {
+            transfers: [],
+            functionCalls: [
+              {
+                address: ADDRESS_4,
+                selector: '0x7739cbe7',
+                type: 'STATE',
+                projectId: ProjectId('project2'),
+                sinceTimestamp: FROM,
+              },
+            ],
+          },
+        },
+      ]
+
+      const expected: LivenessRecord[] = [
+        {
+          projectId: ProjectId('project1'),
+          timestamp: FROM,
+          blockNumber: 1,
+          txHash: '0xabcdef1234567890',
+          type: 'DA',
+        },
+        {
+          projectId: ProjectId('project2'),
+          timestamp: FROM,
+          blockNumber: 2,
+          txHash: '0xabcdef1234567891',
+          type: 'STATE',
+        },
+      ]
+
+      const livenessIndexer = new LivenessIndexer(
+        Logger.SILENT,
+        hourlyIndexer,
+        projects,
+        bigQueryClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+      const expectedConfig: LivenessFunctionCall[] = [
+        projects[0].livenessConfig!.functionCalls[0],
+        projects[1].livenessConfig!.functionCalls[0],
+      ]
+      const results = await livenessIndexer.getFunctionCalls(
+        expectedConfig,
+        FROM,
+        TO,
+      )
+
+      expect(results).toEqual(expected)
+      expect(bigQueryClient.getFunctionCalls).toHaveBeenNthCalledWith(
+        1,
+        expectedConfig,
+        FROM,
+        TO,
+      )
+    })
+  })
+
+  describe(LivenessIndexer.prototype.getSafeHeight.name, () => {
+    it('should return valid value', async () => {
+      const livenessIndexer = getMockLivenessIndexer(
+        [],
+        undefined,
+      ).livenessIndexer
+      const safeHeight = await livenessIndexer.getSafeHeight()
+      expect(safeHeight).toEqual(1)
+    })
+  })
+
+  describe(LivenessIndexer.prototype.setSafeHeight.name, () => {
+    it('should be called with valid parameters', async () => {
+      const mock = getMockLivenessIndexer([], undefined)
+      const livenessIndexer = mock.livenessIndexer
+      const stateRepository = mock.stateRepository
+      await livenessIndexer.setSafeHeight(12)
+
+      expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
+        safeHeight: 12,
+        indexerId: livenessIndexer.getIndexerId(),
+        configHash: livenessIndexer.getConfigHash(),
+      })
+    })
+  })
+
+  describe(LivenessIndexer.prototype.invalidate.name, () => {
+    it('should return its parameter', async () => {
+      const mock = getMockLivenessIndexer([], undefined)
+      const livenessIndexer = mock.livenessIndexer
+      const value = await livenessIndexer.invalidate(1)
+
+      expect(value).toEqual(1)
+    })
+  })
 })
 
 function getMockLivenessIndexer(

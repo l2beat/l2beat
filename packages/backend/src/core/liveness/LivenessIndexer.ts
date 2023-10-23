@@ -146,6 +146,14 @@ export class LivenessIndexer extends ChildIndexer {
     })
   }
 
+  getIndexerId(): string {
+    return this.indexerId
+  }
+
+  getConfigHash(): Hash256 {
+    return this.configHash
+  }
+
   // TODO: add comment why there is no need to delete anything
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
