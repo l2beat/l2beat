@@ -91,6 +91,11 @@ function gatherAddressesFromUpgradeability(
     case 'EIP2535 diamond proxy':
       // Ignoring types because no (admin/user)implementation included in them
       break
+    case 'Axelar proxy':
+      result.push(...item.admins)
+      result.push(...item.owners)
+      result.push(...item.operators)
+      break
     default:
       // This code triggers a typescript compile-time error if not all cases have been covered
       assertUnreachable(item)
