@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18219070,
   "configHash": "0x2c9b74e546139cafd6d2a395ed51a96738fd24ca67fd3838a33af91c74442ca9",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -14,6 +14,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB"
       },
+      "implementations": ["0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB"],
       "sinceTimestamp": 1679193095,
       "values": {
         "MESSAGE_VERSION": 1,
@@ -53,6 +54,7 @@
         "implementation": "0x20F1380A78492227A9B2366242335D684aF22507",
         "admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
       },
+      "implementations": ["0x20F1380A78492227A9B2366242335D684aF22507"],
       "sinceTimestamp": 1679193071,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
@@ -70,6 +72,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
       "values": {
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
@@ -95,6 +98,7 @@
         "implementation": "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3",
         "admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
       },
+      "implementations": ["0x098927F692C86fA1722115652b9d2d7BE8cBa6D3"],
       "sinceTimestamp": 1679193119,
       "values": {
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -127,6 +131,7 @@
         "implementation": "0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f",
         "admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
       },
+      "implementations": ["0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f"],
       "sinceTimestamp": 1679193083,
       "values": {
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -153,6 +158,7 @@
         "implementation": "0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E",
         "admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
       },
+      "implementations": ["0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E"],
       "sinceTimestamp": 1679193155,
       "values": {
         "batcherHash": "0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d",

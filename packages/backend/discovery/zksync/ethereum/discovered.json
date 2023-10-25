@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18341468,
   "configHash": "0x82dc10b38ea04e4b12bfdbc39754fb9e84c7f79a0d87767d30cd3d70f04a1e12",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Multisig 1",
@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1612680486,
       "values": {
         "domainSeparator": "0xb6ece672e8e44cdf87193dcee0001432734caf5c8dd0d2b5ee44e98b5dbbc0f5",
@@ -36,6 +37,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1621970023,
       "values": {
         "domainSeparator": "0x0612918ac0a704543b30ac33fe529b71be8e02810fe3dff217f7d9f5448442bc",
@@ -61,6 +63,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1587354416,
       "values": {
         "domainSeparator": "0x8c5e6abcda42210fa2b28fcb8c59671ec835bf9c06954d07036009a0c6646557",
@@ -84,6 +87,7 @@
         "implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
+      "implementations": ["0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8"],
       "sinceTimestamp": 1592218707,
       "values": {
         "defaultFactory": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
@@ -141,6 +145,7 @@
         "implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
+      "implementations": ["0x6e95812C432F293b8045811F4B1758285EBDB206"],
       "sinceTimestamp": 1592218707,
       "derivedName": "Verifier"
     },
@@ -168,6 +173,10 @@
         "implementation": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
         "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
       },
+      "implementations": [
+        "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
+        "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
+      ],
       "sinceTimestamp": 1592218707,
       "values": {
         "approvedUpgradeNoticePeriod": 1814400,
@@ -250,6 +259,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1585581484,
       "values": {
         "domainSeparator": "0xcd86f82218dc46b5501da06e0b96a9cf73cd8f35153e9da3a481f79b6be5ff63",
