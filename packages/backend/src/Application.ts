@@ -7,6 +7,7 @@ import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
@@ -47,6 +48,7 @@ export class Application {
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
       createStatusModule(config, logger, database, clock),
+      createLivenessModule(config, logger, database, clock),
     ]
 
     const apiServer = new ApiServer(

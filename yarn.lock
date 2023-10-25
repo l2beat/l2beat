@@ -1986,6 +1986,13 @@
     sqlite3 "^5.1.6"
     zod "^3.22.2"
 
+"@l2beat/uif@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@l2beat/uif/-/uif-0.2.2.tgz#e3d728b7d52d02de7562d6a96415d856d0503b6f"
+  integrity sha512-JAwNrdodRZcpeWqb2xziQ7qNwIVH6GL/rS03ADTYIpRjAyaN8KCTbAyMmNih/PjifGUxcODAv6omRHgAB4U4FA==
+  dependencies:
+    "@l2beat/backend-tools" "^0.4.0"
+
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.11.tgz#417db42b7f5323d79e93b34a6d7a2a12c0df43fa"
