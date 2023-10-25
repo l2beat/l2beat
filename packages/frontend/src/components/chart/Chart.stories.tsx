@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import React, { useEffect } from 'react'
+import { userEvent, within } from '@storybook/testing-library'
 
 import { configureCharts } from '../../scripts/charts'
 import { click } from '../../utils/storybook/click'
@@ -165,8 +166,9 @@ export const PrimaryWithEth: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-eth',
   },
-  play: () => {
-    click('[value="ETH"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('ETH'))
   },
 }
 
@@ -174,8 +176,9 @@ export const PrimaryWithLogScale: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-log-scale',
   },
-  play: () => {
-    click('[value="LOG"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('LOG'))
   },
 }
 
@@ -183,8 +186,9 @@ export const PrimaryWith7D: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-7d',
   },
-  play: () => {
-    click('[value="7D"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('7D'))
   },
 }
 
@@ -193,8 +197,9 @@ export const PrimaryWith30D: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-30d',
   },
-  play: () => {
-    click('[value="30D"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('30D'))
   },
 }
 
@@ -202,8 +207,9 @@ export const PrimaryWith90D: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-90d',
   },
-  play: () => {
-    click('[value="90D"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('90D'))
   },
 }
 
@@ -211,8 +217,9 @@ export const PrimaryWith180D: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-180d',
   },
-  play: () => {
-    click('[value="180D"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('180D'))
   },
 }
 
@@ -220,8 +227,9 @@ export const PrimaryWith1Y: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-1y',
   },
-  play: () => {
-    click('[value="1Y"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('1Y'))
   },
 }
 
@@ -229,8 +237,9 @@ export const PrimaryWithMax: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-max',
   },
-  play: () => {
-    click('[value="MAX"]')
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByDisplayValue('MAX'))
   },
 }
 

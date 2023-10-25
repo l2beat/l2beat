@@ -1,7 +1,7 @@
 import { withThemeByDataAttribute } from '@storybook/addon-styling'
-import { ScreenshotOptions, withScreenshot } from 'storycap'
 import '../src/styles/main.scss'
 import '../src/styles/style.css'
+import { allModes } from './modes'
 
 document.body.classList.add(
   'bg-white',
@@ -11,7 +11,6 @@ document.body.classList.add(
 )
 
 export const decorators = [
-  withScreenshot,
   withThemeByDataAttribute({
     themes: {
       light: 'light',
@@ -22,22 +21,7 @@ export const decorators = [
   }),
 ]
 
-const screenshotOptions: ScreenshotOptions = {
-  delay: 50,
-  viewports: {
-    mobile: {
-      width: 390,
-      height: 844,
-      isMobile: true,
-    },
-    large: {
-      width: 2560,
-      height: 1440,
-    },
-  },
-}
 export const parameters = {
-  screenshot: screenshotOptions,
   layout: 'fullscreen',
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
@@ -46,5 +30,8 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  viewport: {
+    viewports: allModes,
   },
 }
