@@ -1,5 +1,6 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
+import { multicallConfig } from '@l2beat/discovery'
 import { EtherscanClient } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
@@ -22,7 +23,7 @@ export function getLocalConfig(env: Env): Config {
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
-
+  const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const internalDiscordChannelId = env.optionalString(
@@ -62,7 +63,6 @@ export function getLocalConfig(env: Env): Config {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
     },
-
     tvl: {
       enabled: tvlEnabled,
       errorOnUnsyncedDetailedTvl,
@@ -108,6 +108,13 @@ export function getLocalConfig(env: Env): Config {
         etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+    },
+    liveness: livenessEnabled && {
+      bigQuery: {
+        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('LIVENESS_PROJECT_ID'),
       },
     },
     activity: activityEnabled && {
@@ -191,6 +198,7 @@ export function getLocalConfig(env: Env): Config {
           rpcGetLogsMaxRange: env.optionalInteger(
             'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
           ),
+          multicall: multicallConfig.ethereum,
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
           minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),

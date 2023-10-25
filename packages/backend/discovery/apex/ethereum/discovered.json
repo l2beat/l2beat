@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17705531,
   "configHash": "0xf318b1d0c2dad0392e1b6e4d71389461b890be5513385cf3cb3cd32804f37186",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Committee",
@@ -49,6 +49,13 @@
           "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6"
         ]
       },
+      "implementations": [
+        "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
+        "0x533a7f4bE5453513049EB94A2b115F2CcE161dce",
+        "0x564EA75a26Dc0Bb5c5033B4752f88953A25AD058",
+        "0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859",
+        "0x34E7cfedF99995A47B3e3D0AB88ba67072B55035"
+      ],
       "sinceTimestamp": 1660252039,
       "values": {
         "configurationDelay": 0,
@@ -112,6 +119,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1672216439,
       "values": {
         "domainSeparator": "0x297308a751114e4f0f8a219d1ff2f770e6c333f1f2698b3adf7b531e33f22e03",

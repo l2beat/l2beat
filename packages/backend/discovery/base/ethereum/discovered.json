@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18218680,
   "configHash": "0x0d2d5dddb09e9fb7f66e5b6d978ed838796fcdb287ea312cbbc9f1981751348d",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -26,6 +26,7 @@
         "implementation": "0x3d2c2f8f95CAba644eA25319c4c08594b8DC0359",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
+      "implementations": ["0x3d2c2f8f95CAba644eA25319c4c08594b8DC0359"],
       "sinceTimestamp": 1686793895,
       "values": {
         "BRIDGE": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
@@ -40,6 +41,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1685980643,
       "values": {
         "domainSeparator": "0xf3474c66ee08325b410c3f442c878d01ec97dd55a415a307e9d7d2ea24336289",
@@ -66,6 +68,7 @@
         "implementation": "0x3F3C0F6bC115E698E35038E1759E9c31032E590c",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
+      "implementations": ["0x3F3C0F6bC115E698E35038E1759E9c31032E590c"],
       "sinceTimestamp": 1686793895,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
@@ -84,6 +87,7 @@
         "implementation": "0x5FB30336A8d0841cf15d452afA297cB6D10877D7",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
+      "implementations": ["0x5FB30336A8d0841cf15d452afA297cB6D10877D7"],
       "sinceTimestamp": 1686793895,
       "values": {
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
@@ -104,6 +108,7 @@
         "implementation": "0xf2460D3433475C8008ceFfe8283F07EB1447E39a",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
+      "implementations": ["0xf2460D3433475C8008ceFfe8283F07EB1447E39a"],
       "sinceTimestamp": 1686793895,
       "values": {
         "CHALLENGER": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
@@ -139,6 +144,7 @@
         "implementation": "0x3311aC7F72bb4108d9f4D5d50E7623B1498A9eC0",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
+      "implementations": ["0x3311aC7F72bb4108d9f4D5d50E7623B1498A9eC0"],
       "sinceTimestamp": 1686793895,
       "values": {
         "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -170,6 +176,7 @@
         "implementation": "0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
+      "implementations": ["0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"],
       "sinceTimestamp": 1686793895,
       "values": {
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
@@ -200,6 +207,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689804143,
       "values": {
         "domainSeparator": "0xe84c799b3c2ca46c34ff8fa9bfdb5533a5e36e90aadfb803c75e31eac995151d",
@@ -223,6 +231,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x81C4Bd600793EBd1C0323604E1F455fE50A951F8"
       },
+      "implementations": ["0x81C4Bd600793EBd1C0323604E1F455fE50A951F8"],
       "sinceTimestamp": 1686793895,
       "values": {
         "MESSAGE_VERSION": 1,
@@ -258,6 +267,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1684875515,
       "values": {
         "domainSeparator": "0x88aac3dc27cc1618ec43a87b3df21482acd24d172027ba3fbb5a5e625d895a0b",
@@ -283,6 +293,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1610850364,
       "values": {
         "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",

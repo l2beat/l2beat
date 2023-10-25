@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0x0a88b91a8c286dec34e7b69f534199ba36da7672dafdc8ba4a70fe617319dfd6",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Hop Multisig",
@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1625076853,
       "values": {
         "domainSeparator": "0x62766f0ec4bb63fc0cf61622e436018804fdac93d59b3a03e6318b6bf34dd76c",
