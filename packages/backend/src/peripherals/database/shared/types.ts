@@ -143,6 +143,12 @@ declare module 'knex/types/tables' {
     type: string
   }
 
+  interface IndexerStateRow {
+    indexer_id: string
+    config_hash: string
+    safe_height: number
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -164,6 +170,7 @@ declare module 'knex/types/tables' {
     circulating_supplies: CirculatingSupplyRow
     circulating_supplies_status: CirculatingSupplyStatusRow
     liveness: LivenessRow
+    indexer_state: IndexerStateRow
   }
 }
 

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18061473,
   "configHash": "0x18d13869837793143c9fbab3364790146e0ecbc24282da9590daeb2c80ba5059",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "EthereumL1Messenger",

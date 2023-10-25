@@ -33,12 +33,12 @@ async function updateDiffHistoryFile() {
   const curDiscovery = await configReader.readDiscovery(projectName, chainId)
   const config = await configReader.readConfig(projectName, chainId)
   const discoveryFolder = `./discovery/${projectName}/${chainName}`
-  const { content: DiscoveryJsonFromMainBranch, mainBranchHash } =
+  const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
   const discoveryFromMainBranch =
-    DiscoveryJsonFromMainBranch === ''
+    discoveryJsonFromMainBranch === ''
       ? undefined
-      : (JSON.parse(DiscoveryJsonFromMainBranch) as DiscoveryOutput)
+      : (JSON.parse(discoveryJsonFromMainBranch) as DiscoveryOutput)
 
   const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
     discoveryFromMainBranch,
@@ -106,9 +106,12 @@ async function performDiscoveryOnPreviousBlock(
   console.log(cli)
   execSync(cli, { stdio: 'inherit' })
 
-  const prevDiscovery = readFileSync(
+  const prevDiscoveryFile = readFileSync(
     `${root}/discovered@${blockNumberFromMainBranch}.json`,
-  ) as unknown as DiscoveryOutput
+    'utf-8',
+  )
+  const prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
+
   // Remove discovered@... file, we don't need it
   await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
 

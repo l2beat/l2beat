@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18168455,
   "configHash": "0x665f7cf5f3311e3ba1c22318c90b05fa543fedc1c4d185febec1d557f591c086",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -13,6 +13,7 @@
         "implementation": "0x797161BCC625155D2302251404ccB93c2632658e",
         "admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
       },
+      "implementations": ["0x797161BCC625155D2302251404ccB93c2632658e"],
       "sinceTimestamp": 1637595390,
       "values": {
         "BPS_DENOMINATOR": 10000,
@@ -47,6 +48,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637442903,
       "values": {
         "domainSeparator": "0x1e756d21e24d2471c566451e17756f6febc40c36cb31d6437730beb1c93c306c",
@@ -75,6 +77,7 @@
         "implementation": "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491",
         "admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
       },
+      "implementations": ["0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"],
       "sinceTimestamp": 1637613802,
       "values": {
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
@@ -93,6 +96,7 @@
         "implementation": "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8",
         "admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
       },
+      "implementations": ["0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"],
       "sinceTimestamp": 1637625277,
       "values": {
         "DEBRIDGE_GATE_ROLE": "0xd5a6101e940ba33e226d2395b16238ab3063d7ee83d7b3ff59cb92988b395437",
@@ -110,6 +114,7 @@
         "implementation": "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4",
         "admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
       },
+      "implementations": ["0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"],
       "sinceTimestamp": 1637621914,
       "values": {
         "confirmationThreshold": 3,
@@ -145,6 +150,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637430511,
       "values": {
         "domainSeparator": "0xd9512e4bd742ce576138697d48c92dcc7b1776e492c423a4c0c37e3aa6999b8e",
@@ -167,6 +173,7 @@
         "implementation": "0x37a52ddb753c924f8C914de65ef00b5210Caa83C",
         "admin": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
       },
+      "implementations": ["0x37a52ddb753c924f8C914de65ef00b5210Caa83C"],
       "sinceTimestamp": 1637651844,
       "values": {
         "debridgeGate": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",

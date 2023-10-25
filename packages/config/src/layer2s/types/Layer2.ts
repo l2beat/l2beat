@@ -15,6 +15,7 @@ import {
   ProjectPermission,
 } from '../../common'
 import { StageConfig } from '../common/stages/types'
+import { Layer2LivenessConfig } from './Layer2LivenessConfig'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2StateDerivation } from './Layer2StateDerivation'
 import { Layer2Technology } from './Layer2Technology'
@@ -102,6 +103,10 @@ export interface Layer2Config {
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
+  /** Text displayed on the TVL number hover */
+  tvlTooltip?: string
+  /** Configuration for getting state updates and batch submission */
+  liveness?: Layer2LivenessConfig
 }
 
 export interface Layer2ExternalAssets {
