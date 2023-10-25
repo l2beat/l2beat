@@ -1,9 +1,6 @@
 name: "Chromatic"
 
-on:
-  pull_request:
-    types:
-      - synchronize
+on: push
 
 jobs:
   changes:
