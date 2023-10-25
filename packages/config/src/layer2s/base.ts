@@ -288,7 +288,7 @@ export const base: Layer2 = {
       'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
     genesisState:
       'The genesis file can be found [here](https://raw.githubusercontent.com/base-org/node/main/mainnet/genesis-l2.json).',
-    dataFormat: `It's the same Optimism [data format](https://github.com/ethereum-optimism/optimism/blob/33741760adce92c8bdf61f693058144bb6986e30/specs/derivation.md#batch-submission-wire-format).`,
+    dataFormat: `Batch submission format can be found [here](https://github.com/ethereum-optimism/optimism/blob/33741760adce92c8bdf61f693058144bb6986e30/specs/derivation.md#batch-submission-wire-format).`,
   },
   permissions: [
     ...discovery.getMultisigPermission(
