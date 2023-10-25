@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { allModes } from '../../../.storybook/modes'
 import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
@@ -43,6 +44,12 @@ import { UserIcon } from './symbols/UserIcon'
 
 const meta = {
   title: 'Other/Icons',
+  parameters: {
+    chromatic: {
+      'light desktop': allModes['light desktop'],
+      'dark desktop': allModes['dark desktop'],
+    },
+  },
 }
 export default meta
 

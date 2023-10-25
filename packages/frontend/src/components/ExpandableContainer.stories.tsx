@@ -58,9 +58,7 @@ export const NonExpandable: Story = {
       <div className="my-2">
         Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit sit
         enim ullamco qui anim ex id aliquip deserunt quis. Voluptate occaecat
-        anim elit magna officia sunt. Proident irure commodo culpa officia nisi
-        labore veniam esse irure minim pariatur culpa. Culpa exercitation amet
-        deserunt dolor veniam dolor.
+        anim elit magna officia sunt.
       </div>
     ),
   },

@@ -1,6 +1,7 @@
 import { Meta } from '@storybook/react'
 import React, { useEffect } from 'react'
 
+import { allModes } from '../../../.storybook/modes'
 import { configureCharts } from '../../scripts/charts'
 import { ActivityMetaImage } from './ActivityMetaImage'
 import { DetailedTvlMetaImage } from './DetailedTvlMetaImage'
@@ -16,6 +17,12 @@ const meta: Meta<typeof TvlMetaImage> = {
       return <Story />
     },
   ],
+  parameters: {
+    chromatic: {
+      'light desktop': allModes['light desktop'],
+      'dark desktop': allModes['dark desktop'],
+    },
+  },
 }
 export default meta
 

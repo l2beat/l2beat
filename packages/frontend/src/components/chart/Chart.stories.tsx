@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { allModes } from '../../../.storybook/modes'
 import { configureCharts } from '../../scripts/charts'
 import { Chart } from './Chart'
 
@@ -186,7 +187,6 @@ export const PrimaryWith7D: Story = {
   },
 }
 
-//Do the same for 30D 90D 180D 1Y and MAX
 export const PrimaryWith30D: Story = {
   args: {
     settingsId: 'storybook-chart-primary-with-30d',
@@ -205,6 +205,12 @@ export const PrimaryWith90D: Story = {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('90D'))
   },
+  parameters: {
+    chromatic: {
+      'light desktop': allModes['light desktop'],
+      'dark desktop': allModes['dark desktop'],
+    },
+  },
 }
 
 export const PrimaryWith180D: Story = {
@@ -214,6 +220,12 @@ export const PrimaryWith180D: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('180D'))
+  },
+  parameters: {
+    chromatic: {
+      'light desktop': allModes['light desktop'],
+      'dark desktop': allModes['dark desktop'],
+    },
   },
 }
 
@@ -286,6 +298,18 @@ export const Activity: Story = {
   args: {
     settingsId: 'storybook-chart-activity',
     initialType: { type: 'storybook-fake-activity' },
+  },
+}
+
+export const ActivityWithoutEthTxs: Story = {
+  args: {
+    settingsId: 'storybook-chart-activity',
+    initialType: { type: 'storybook-fake-activity' },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const checkbox = canvas.getByText('ETH Txs')
+    await userEvent.click(checkbox)
   },
 }
 

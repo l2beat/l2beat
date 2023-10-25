@@ -3,6 +3,7 @@ import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
+import { configureTables } from '../../../../scripts/configureTables'
 import { configureTabs } from '../../../../scripts/configureTabs'
 import { ScalingTvlView } from './ScalingTvlView'
 
@@ -1083,6 +1084,7 @@ const meta = {
   decorators: [
     (Story) => {
       useEffect(() => {
+        configureTables()
         configureTabs()
         configureProjectFilters()
       }, [])
@@ -1097,7 +1099,9 @@ type Story = StoryObj<typeof ScalingTvlView>
 export const Active: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
+    const activeTab = canvas.getByText('Active projects')
     await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
+    setTimeout(() => activeTab.blur(), 1000)
   },
 }
 

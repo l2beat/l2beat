@@ -3,6 +3,7 @@ import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
+import { configureTables } from '../../../scripts/configureTables'
 import { configureTabs } from '../../../scripts/configureTabs'
 import { BridgesRiskView } from './BridgesRiskView'
 
@@ -12,6 +13,7 @@ const meta = {
   decorators: [
     (Story) => {
       useEffect(() => {
+        configureTables()
         configureTabs()
         configureProjectFilters()
       }, [])

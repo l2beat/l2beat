@@ -1,57 +1,60 @@
+import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { testConfigureTooltipsAndShow } from '../../scripts/configureTooltips'
+import { configureTooltips } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
 import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
-export default {
-  title: 'Components/Tooltip',
-  parameters: {
-    screenshot: {
-      delay: 200,
+const meta: Meta<typeof TooltipComponent> = {
+  component: TooltipComponent,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+      }, [])
+      return <Story />
+    },
+  ],
+}
+export default meta
+type Story = StoryObj<typeof TooltipComponent>
+
+const project: RosetteTooltipProps = {
+  riskSentiments: {
+    proposerFailure: 'bad',
+    upgradeability: 'bad',
+    sequencerFailure: 'good',
+    dataAvailability: 'warning',
+    stateValidation: 'good',
+  },
+  riskValues: {
+    stateValidation: {
+      value: 'Fraud proofs',
+      sentiment: 'good',
+    },
+    proposerFailure: {
+      value: 'No mechanism',
+      sentiment: 'bad',
+    },
+    upgradeability: {
+      value: 'Yes',
+      sentiment: 'bad',
+    },
+    sequencerFailure: {
+      value: 'Transact using L1',
+      sentiment: 'good',
+    },
+    dataAvailability: {
+      value: 'Optimistic',
+      sentiment: 'warning',
     },
   },
 }
 
-export function RosetteTooltip() {
-  useEffect(() => {
-    testConfigureTooltipsAndShow()
-  }, [])
-
-  const project: RosetteTooltipProps = {
-    riskSentiments: {
-      proposerFailure: 'bad',
-      upgradeability: 'bad',
-      sequencerFailure: 'good',
-      dataAvailability: 'warning',
-      stateValidation: 'good',
-    },
-    riskValues: {
-      stateValidation: {
-        value: 'Fraud proofs',
-        sentiment: 'good',
-      },
-      proposerFailure: {
-        value: 'No mechanism',
-        sentiment: 'bad',
-      },
-      upgradeability: {
-        value: 'Yes',
-        sentiment: 'bad',
-      },
-      sequencerFailure: {
-        value: 'Transact using L1',
-        sentiment: 'good',
-      },
-      dataAvailability: {
-        value: 'Optimistic',
-        sentiment: 'warning',
-      },
-    },
-  }
-
-  return (
+export const RosetteTooltip: Story = {
+  render: () => (
     <div className="m-4 ml-32">
       <span
         className="Tooltip inline-block"
@@ -67,5 +70,12 @@ export function RosetteTooltip() {
       </span>
       <TooltipComponent />
     </div>
-  )
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const tooltip = canvas.getByText('Element with tooltip')
+    await waitFor(async () => {
+      await userEvent.hover(tooltip)
+    })
+  },
 }

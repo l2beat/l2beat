@@ -1,23 +1,26 @@
+import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { Tooltip as TooltipComponent } from '../components/Tooltip'
-import { testConfigureTooltipsAndShow } from '../scripts/configureTooltips'
+import { configureTooltips } from '../scripts/configureTooltips'
 
-export default {
-  title: 'Components/Tooltip',
-  parameters: {
-    screenshot: {
-      delay: 200,
+const meta: Meta<typeof TooltipComponent> = {
+  component: TooltipComponent,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+      }, [])
+      return <Story />
     },
-  },
+  ],
 }
+export default meta
+type Story = StoryObj<typeof TooltipComponent>
 
-export function Tooltip() {
-  useEffect(() => {
-    testConfigureTooltipsAndShow()
-  }, [])
-
-  return (
+export const Tooltip: Story = {
+  render: () => (
     <div className="m-4 ml-32">
       <span
         className="Tooltip inline-block"
@@ -27,5 +30,12 @@ export function Tooltip() {
       </span>
       <TooltipComponent />
     </div>
-  )
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const tooltip = canvas.getByText('Element with tooltip')
+    await waitFor(async () => {
+      await userEvent.hover(tooltip)
+    })
+  },
 }
