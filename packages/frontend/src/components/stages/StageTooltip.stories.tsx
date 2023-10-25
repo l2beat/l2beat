@@ -18,6 +18,11 @@ const meta: Meta<typeof TooltipComponent> = {
       return <Story />
     },
   ],
+  parameters: {
+    chromatic: {
+      delay: 250,
+    },
+  },
 }
 export default meta
 type Story = StoryObj<typeof TooltipComponent>
