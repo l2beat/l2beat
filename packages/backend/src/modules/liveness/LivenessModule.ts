@@ -45,6 +45,7 @@ export function createLivenessModule(
     bigQueryClient,
     indexerStateRepository,
     livenessRepository,
+    // TODO: figure out from where to start
     UnixTime.now().toStartOf('hour').add(-1, 'days'),
   )
 
