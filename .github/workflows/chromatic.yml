@@ -26,6 +26,8 @@ jobs:
           exitZeroOnChanges: true
           exitOnceUploaded: true
           onlyChanged: true
+          debug: true
+          diagnostics: true
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
         uses: chromaui/action@v1
