@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18340180,
   "configHash": "0x1fbc4c99b60324dcfcdd9798955efb7c8dac6d42261720f4c2d433eccdf1f2c5",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Emergency Multisig",
@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1653687769,
       "values": {
         "domainSeparator": "0xbb4c14311b94437fa30194d9467b3c7f175456bf8c6bc27bf3b2b2770c5dac19",
@@ -46,6 +47,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1668605483,
       "values": {
         "domainSeparator": "0x29b99d4dc1bacc29c16bb544f33927846f031d20c47063cabf7042d4912df697",
@@ -80,6 +82,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1668604175,
       "values": {
         "domainSeparator": "0xc211ddb07f51d4255fd887fac104189ce72ce524985eb9914e66bb9dc5b058c0",
@@ -132,6 +135,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1610552620,
       "values": {
         "domainSeparator": "0xf37d5181cb1c7c67c7e79d1dd66f78e41f525d498f652270e8f68c486406872b",
@@ -154,6 +158,7 @@
         "implementation": "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09",
         "admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
       },
+      "implementations": ["0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09"],
       "sinceTimestamp": 1654638194,
       "values": {
         "accessControl": {
