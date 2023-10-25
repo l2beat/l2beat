@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18083455,
   "configHash": "0xa02a89a2ccb87ec58298cdb9c61ed63ab6bc885c1783d886cfe3f4c4d74aa05d",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "BridgeMultisig",
@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1692867743,
       "values": {
         "domainSeparator": "0x07112ea70e3b813e71d47e25500e17035517d3b51bd3c8d3500ccf54424e8f00",
@@ -49,6 +50,7 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
       "sinceTimestamp": 1657137600,
       "values": {
         "getUpgradeActivationDelay": 604800,
@@ -76,6 +78,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1672587635,
       "values": {
         "domainSeparator": "0xfbf46e0cae4a0b01c142fd1c393d4058f5af0efa75d9b1a23dee605fdb7aaf81",
@@ -98,6 +101,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1672587815,
       "values": {
         "domainSeparator": "0xb6cf2054f0384f47744cb3c2cbc3f6a9881e00205c03bf14afc7a6a862a8b9c6",
@@ -145,6 +149,7 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"],
       "sinceTimestamp": 1647857148,
       "values": {
         "bridgedToken": "0x0000000000000000000000000000000000000000",
@@ -182,6 +187,7 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
       "sinceTimestamp": 1657137615,
       "values": {
         "getUpgradeActivationDelay": 604800,
@@ -212,6 +218,7 @@
         "isFinal": false,
         "proxyGovernance": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
       },
+      "implementations": ["0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"],
       "sinceTimestamp": 1685452751,
       "values": {
         "getUpgradeActivationDelay": 0,
@@ -242,6 +249,7 @@
           "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
         ]
       },
+      "implementations": ["0x16938E4b59297060484Fa56a12594d8D6F4177e8"],
       "sinceTimestamp": 1636978914,
       "values": {
         "configHash": "671483050609816861429812414688707376174032882875357307847551691140236175837",
@@ -284,6 +292,7 @@
         "isFinal": false,
         "proxyGovernance": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
       "sinceTimestamp": 1685880791,
       "values": {
         "getUpgradeActivationDelay": 0,
@@ -315,6 +324,7 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
       "sinceTimestamp": 1657137639,
       "values": {
         "getUpgradeActivationDelay": 604800,

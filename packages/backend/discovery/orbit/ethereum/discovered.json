@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17913544,
   "configHash": "0x98346feb853bf4d73e55ef73d1ee2696d7405012638b5b207c0ee6d84fe2c6f7",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ETH Vault",
@@ -12,6 +12,7 @@
         "type": "call implementation proxy",
         "implementation": "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"
       },
+      "implementations": ["0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"],
       "sinceTimestamp": 1603950507,
       "values": {
         "bridgingFee": 0,
@@ -59,6 +60,7 @@
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
         "admin": "0xFb504CD4eD46024B83c4337044995CF112205f18"
       },
+      "implementations": ["0xdbF3C7e0a1493B81B295547ae3D0711417481A55"],
       "sinceTimestamp": 1649902126,
       "values": {
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
@@ -75,6 +77,7 @@
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
         "admin": "0xFb504CD4eD46024B83c4337044995CF112205f18"
       },
+      "implementations": ["0xdbF3C7e0a1493B81B295547ae3D0711417481A55"],
       "sinceTimestamp": 1649903842,
       "values": {
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
@@ -91,6 +94,7 @@
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
         "admin": "0xFb504CD4eD46024B83c4337044995CF112205f18"
       },
+      "implementations": ["0xdbF3C7e0a1493B81B295547ae3D0711417481A55"],
       "sinceTimestamp": 1649902155,
       "values": {
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
@@ -107,6 +111,7 @@
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
         "admin": "0xFb504CD4eD46024B83c4337044995CF112205f18"
       },
+      "implementations": ["0xdbF3C7e0a1493B81B295547ae3D0711417481A55"],
       "sinceTimestamp": 1649905062,
       "values": {
         "getAdmin": "0xFb504CD4eD46024B83c4337044995CF112205f18",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18263237,
   "configHash": "0x12ff72fc2b7d2394b395e51f26feaa392717a99a81ba83f659a327d5c59d06c2",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -13,6 +13,7 @@
         "implementation": "0x1E5e634981564fc645dcbC6546aE618d7870B30a",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "implementations": ["0x1E5e634981564fc645dcbC6546aE618d7870B30a"],
       "sinceTimestamp": 1694224883,
       "values": {
         "CHALLENGER": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
@@ -50,6 +51,7 @@
         "implementation": "0x62b257A1b1fC81c4e6E5Dc5b47F1E6184341Cd58",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "implementations": ["0x62b257A1b1fC81c4e6E5Dc5b47F1E6184341Cd58"],
       "sinceTimestamp": 1694224907,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
@@ -67,6 +69,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1695706187,
       "values": {
         "domainSeparator": "0x0bf27f0da5ef709aa533b0e7dd8cc96a87f1f0a50be54f7a14627534eac95734",
@@ -95,6 +98,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f"
       },
+      "implementations": ["0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f"],
       "sinceTimestamp": 1694224919,
       "values": {
         "MESSAGE_VERSION": 1,
@@ -120,6 +124,7 @@
         "implementation": "0xeF01a6aE995791FfFcA3d70bDA7B91E5Fa1aD0aE",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "implementations": ["0xeF01a6aE995791FfFcA3d70bDA7B91E5Fa1aD0aE"],
       "sinceTimestamp": 1694224895,
       "values": {
         "batcherHash": "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
@@ -151,6 +156,7 @@
         "implementation": "0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1",
         "admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
       },
+      "implementations": ["0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1"],
       "sinceTimestamp": 1694224871,
       "values": {
         "GUARDIAN": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",

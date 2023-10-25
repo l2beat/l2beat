@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17990763,
   "configHash": "0x6bb2f6515f379bd9f658e5b42d44ee08d430d26deee0c258699a59d81ffd4731",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "BridgeGovernance",
@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1600956399,
       "values": {
         "domainSeparator": "0x877c70937e5670b3f50eb943a4e9d65fbd9bc8ce060659a7dc0543885a0ca59e",
@@ -47,6 +48,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686042107,
       "values": {
         "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
@@ -70,6 +72,7 @@
         "admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "implementation": "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"
       },
+      "implementations": ["0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"],
       "sinceTimestamp": 1579258532,
       "values": {
         "allowReentrantRequests": false,
@@ -158,6 +161,7 @@
         "admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "implementation": "0x8eB3b7D8498a6716904577b2579e1c313d48E347"
       },
+      "implementations": ["0x8eB3b7D8498a6716904577b2579e1c313d48E347"],
       "sinceTimestamp": 1596501090,
       "values": {
         "bridgeContract": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
@@ -182,6 +186,7 @@
         "admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "implementation": "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"
       },
+      "implementations": ["0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"],
       "sinceTimestamp": 1579258396,
       "values": {
         "deployedAtBlock": 9298321,

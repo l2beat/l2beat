@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17031968,
   "configHash": "0x80112d572c320dae60a1cc29c37f837881984f02c13575f623751c96992ac434",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "CpuFrilessVerifier",
@@ -80,6 +80,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678120703,
       "values": {
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
@@ -152,6 +153,7 @@
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
         ]
       },
+      "implementations": ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"],
       "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
