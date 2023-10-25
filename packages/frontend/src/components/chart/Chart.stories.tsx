@@ -207,8 +207,10 @@ export const PrimaryWith90D: Story = {
   },
   parameters: {
     chromatic: {
-      'light desktop': allModes['light desktop'],
-      'dark desktop': allModes['dark desktop'],
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
     },
   },
 }
@@ -223,8 +225,10 @@ export const PrimaryWith180D: Story = {
   },
   parameters: {
     chromatic: {
-      'light desktop': allModes['light desktop'],
-      'dark desktop': allModes['dark desktop'],
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
     },
   },
 }

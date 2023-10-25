@@ -19,8 +19,10 @@ const meta: Meta<typeof TvlMetaImage> = {
   ],
   parameters: {
     chromatic: {
-      'light desktop': allModes['light desktop'],
-      'dark desktop': allModes['dark desktop'],
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
     },
   },
 }

@@ -40,8 +40,10 @@ const meta: Meta<typeof MobileProjectNavigation> = {
   },
   parameters: {
     chromatic: {
-      'light mobile': allModes['light mobile'],
-      'dark mobile': allModes['dark mobile'],
+      modes: {
+        'light mobile': allModes['light mobile'],
+        'dark mobile': allModes['dark mobile'],
+      },
     },
   },
 }

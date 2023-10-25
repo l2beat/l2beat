@@ -8,8 +8,10 @@ const meta: Meta<typeof DesktopProjectLinksComponent> = {
   component: DesktopProjectLinksComponent,
   parameters: {
     chromatic: {
-      'light desktop': allModes['light desktop'],
-      'dark desktop': allModes['dark desktop'],
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
     },
   },
 }
