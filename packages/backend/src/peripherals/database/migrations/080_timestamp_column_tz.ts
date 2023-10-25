@@ -27,8 +27,6 @@ export async function up(knex: Knex) {
       // https://www.postgresql.org/docs/14/sql-altertable.html
       // Indexes and simple table constraints involving the column will be automatically converted
       // to use the new column type by reparsing the originally supplied expression.
-
-      // get list of indexes table is involved in
       await knex.raw(
         `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column}
         SET DATA TYPE timestamp without time zone USING ${column}::timestamp without time zone`,
