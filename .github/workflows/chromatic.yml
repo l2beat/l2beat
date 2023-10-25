@@ -44,7 +44,6 @@ jobs:
           workingDir: packages/frontend
           exitZeroOnChanges: true
           exitOnceUploaded: true
-          onlyChanged: true
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
         uses: chromaui/action@v1
@@ -54,5 +53,4 @@ jobs:
           workingDir: packages/frontend
           exitZeroOnChanges: true
           exitOnceUploaded: true
-          onlyChanged: true
           autoAcceptChanges: true
