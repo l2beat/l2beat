@@ -1,13 +1,10 @@
+import { Meta, StoryObj } from '@storybook/react'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
-
-export default {
-  title: 'Components/Project/Navigation/DesktopProjectNavigation',
-}
 
 const sections: ScalingDetailsSection[] = range(10).map(() => ({
   type: 'DescriptionSection',
@@ -26,32 +23,24 @@ const sections: ScalingDetailsSection[] = range(10).map(() => ({
   },
 }))
 
-function Template() {
-  useEffect(() => {
-    configureDesktopProjectNavigation()
-  }, [])
-  return (
-    <div>
-      <DesktopProjectNavigation
-        project={{ title: 'Arbitrum One', icon: '/icons/arbitrum.png' }}
-        sections={sections}
-      />
-    </div>
-  )
+const meta: Meta<typeof DesktopProjectNavigation> = {
+  component: DesktopProjectNavigation,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureDesktopProjectNavigation()
+      }, [])
+      return <Story />
+    },
+  ],
+  args: {
+    project: { title: 'Arbitrum One', icon: '/icons/arbitrum.png' },
+    sections,
+  },
 }
+export default meta
+type Story = StoryObj<typeof DesktopProjectNavigation>
 
-export function WithoutProjectHeader() {
-  return (
-    <div className="mt-12 px-4">
-      <Template />
-    </div>
-  )
-}
-
-export function WithProjectHeader() {
-  return (
-    <div className="p-4">
-      <Template />
-    </div>
-  )
-}
+//TODO: (chromatic) CHECK THIS OUT
+export const WithoutProjectHeader: Story = {}
+export const WithProjectHeader: Story = {}

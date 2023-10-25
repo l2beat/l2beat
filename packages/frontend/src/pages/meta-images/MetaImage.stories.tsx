@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import React, { useEffect } from 'react'
 
 import { configureCharts } from '../../scripts/charts'
@@ -6,15 +6,20 @@ import { ActivityMetaImage } from './ActivityMetaImage'
 import { DetailedTvlMetaImage } from './DetailedTvlMetaImage'
 import { TvlMetaImage } from './TvlMetaImage'
 
-export default {
+const meta: Meta<typeof TvlMetaImage> = {
   title: 'Other/MetaImage',
-} as Meta
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureCharts()
+      })
+      return <Story />
+    },
+  ],
+}
+export default meta
 
-export function TvlOverview() {
-  useEffect(() => {
-    configureCharts()
-  })
-
+export const Overview = () => {
   return (
     <div className="meta flex items-center justify-center">
       <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
@@ -29,10 +34,7 @@ export function TvlOverview() {
   )
 }
 
-export function ProjectOverview() {
-  useEffect(() => {
-    configureCharts()
-  })
+export const ProjectOverview = () => {
   const project = {
     display: {
       name: 'Arbitrum One',
@@ -56,11 +58,7 @@ export function ProjectOverview() {
   )
 }
 
-export function DetailedTvlOverview() {
-  useEffect(() => {
-    configureCharts()
-  })
-
+export const DetailedTvlOverview = () => {
   return (
     <div className="meta flex items-center justify-center">
       <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
@@ -75,10 +73,7 @@ export function DetailedTvlOverview() {
   )
 }
 
-export function DetailedProjectOverview() {
-  useEffect(() => {
-    configureCharts()
-  })
+export const DetailedProjectOverview = () => {
   const project = {
     display: {
       name: 'Arbitrum One',
@@ -105,10 +100,7 @@ export function DetailedProjectOverview() {
   )
 }
 
-export const ActivityOverview: StoryFn = () => {
-  useEffect(() => {
-    configureCharts()
-  })
+export const ActivityOverview = () => {
   return (
     <div className="meta flex items-center justify-center">
       <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">

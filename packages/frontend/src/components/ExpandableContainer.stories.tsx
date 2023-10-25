@@ -1,13 +1,12 @@
+import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { configureExpandableContainer } from '../scripts/configureExpandableContainer'
 import { ExpandableContainer as ExpandableContainerComponent } from './ExpandableContainer'
-import { Meta, StoryObj } from '@storybook/react'
-import { within, userEvent } from '@storybook/testing-library'
 
 const meta: Meta<typeof ExpandableContainerComponent> = {
-  title: 'Components/ExpandableContainer',
   component: ExpandableContainerComponent,
   decorators: [
     (Story) => {

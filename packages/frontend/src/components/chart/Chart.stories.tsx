@@ -1,12 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react'
-import React, { useEffect } from 'react'
 import { userEvent, within } from '@storybook/testing-library'
+import React, { useEffect } from 'react'
 
 import { configureCharts } from '../../scripts/charts'
 import { Chart } from './Chart'
 
 const meta: Meta<typeof Chart> = {
-  title: 'Components/Chart',
   component: Chart,
   args: {
     initialType: { type: 'storybook-fake-tvl' },
@@ -117,11 +116,7 @@ const meta: Meta<typeof Chart> = {
         configureCharts()
       }, [])
 
-      return (
-        <div style={{ margin: '3em' }}>
-          <Story />
-        </div>
-      )
+      return <Story />
     },
   ],
 }

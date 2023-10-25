@@ -11,7 +11,9 @@ export interface DetailedTvlMetaImageProps {
   icon?: string
   chartType: Extract<
     ChartType,
-    { type: 'project-detailed-tvl' } | { type: 'layer2-detailed-tvl' }
+    | { type: 'project-detailed-tvl' }
+    | { type: 'layer2-detailed-tvl' }
+    | { type: 'bridges-tvl' }
   >
   fake?: boolean
 }

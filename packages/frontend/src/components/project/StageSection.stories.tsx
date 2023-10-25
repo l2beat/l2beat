@@ -1,13 +1,20 @@
-import { StageConfig, UsableStageConfig } from '@l2beat/config'
-import { Story } from '@storybook/react'
-import React, { useEffect } from 'react'
+import { StageConfig } from '@l2beat/config'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { configureDropdowns } from '../../scripts/configureDropdowns'
 import { StageSection as StageSectionComponent } from './StageSection'
 
-export default {
-  title: 'Components/Project/StageSection',
+const meta: Meta<typeof StageSectionComponent> = {
+  component: StageSectionComponent,
+  args: {
+    title: 'Rollup stage',
+    id: 'stage',
+    icon: '/icons/arbitrum.png',
+    name: 'Arbitrum One',
+    type: 'Optimistic Rollup',
+  },
 }
+export default meta
+type Story = StoryObj<typeof StageSectionComponent>
 
 const item: StageConfig = {
   stage: 'Stage 1',
@@ -53,26 +60,13 @@ const item: StageConfig = {
     },
   ],
 }
-function Template(stage: UsableStageConfig) {
-  useEffect(() => {
-    configureDropdowns()
-  }, [])
-  return (
-    <div className="p-4 leading-normal">
-      <StageSectionComponent
-        title="Rollup stage"
-        id="stage"
-        stage={stage}
-        icon="/icons/arbitrum.png"
-        name="Arbitrum One"
-        type="Optimistic Rollup"
-      />
-    </div>
-  )
+
+export const StageSection: Story = {
+  args: {
+    stage: item,
+  },
 }
 
-export const StageSection: Story<StageConfig> = Template.bind({})
-StageSection.args = item
-
-export const StageSectionUnderReview: Story<StageConfig> = Template.bind({})
-StageSectionUnderReview.args = { stage: 'UnderReview' }
+export const StageSectionUnderReview: Story = {
+  args: { stage: { stage: 'UnderReview' } },
+}

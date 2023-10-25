@@ -41,9 +41,10 @@ import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
 
-export default {
-  title: 'Components/Icons',
+const meta = {
+  title: 'Other/Icons',
 }
+export default meta
 
 function Template(props: { children: React.ReactNode }) {
   return (

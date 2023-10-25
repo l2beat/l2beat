@@ -1,3 +1,4 @@
+import { Meta, StoryObj } from '@storybook/react'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
@@ -5,10 +6,6 @@ import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/get
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
 import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
 import { MobileProjectNavigation } from './MobileProjectNavigation'
-
-export default {
-  title: 'Components/Project/Navigation/MobileProjectNavigation',
-}
 
 const sections: ScalingDetailsSection[] = range(10).map(() => ({
   type: 'DescriptionSection',
@@ -27,37 +24,39 @@ const sections: ScalingDetailsSection[] = range(10).map(() => ({
   },
 }))
 
-function Template() {
-  useEffect(() => {
-    configureMobileProjectNavigation()
-  }, [])
-  return (
-    <div className="max-w-sm">
-      <MobileProjectNavigation sections={sections} />
-    </div>
-  )
+const meta: Meta<typeof MobileProjectNavigation> = {
+  component: MobileProjectNavigation,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureMobileProjectNavigation()
+      }, [])
+      return <Story />
+    },
+  ],
+  args: {
+    sections,
+  },
 }
+export default meta
+type Story = StoryObj<typeof MobileProjectNavigation>
 
-export function ScrolledToStart() {
-  return <Template />
-}
+export const ScrolledToStart: Story = {}
 
-export function ScrolledToMiddle() {
-  useEffect(() => {
+export const ScrolledToMiddle: Story = {
+  play: () => {
     const list = document.querySelector(
       `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
     )
     list?.scrollTo(list.scrollWidth / 2, 0)
-  })
-  return <Template />
+  },
 }
 
-export function ScrolledToEnd() {
-  useEffect(() => {
+export const ScrolledToEnd: Story = {
+  play: () => {
     const list = document.querySelector(
       `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
     )
     list?.scrollTo(list.scrollWidth, 0)
-  })
-  return <Template />
+  },
 }

@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react'
-
-import { configureHoverableDropdown } from '../../scripts/configureHoverableDropdown'
+import { Meta, StoryObj } from '@storybook/react'
 import { ProjectLink } from '../icons'
 import { DesktopProjectLinks as DesktopProjectLinksComponent } from './DesktopProjectLinks'
-import { userEvent, within } from '@storybook/testing-library'
-import { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof DesktopProjectLinksComponent> = {
-  title: 'Components/DesktopProjectLinks',
   component: DesktopProjectLinksComponent,
 }
 export default meta

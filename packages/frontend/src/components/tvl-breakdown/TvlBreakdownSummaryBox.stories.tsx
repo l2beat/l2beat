@@ -1,12 +1,12 @@
-import { Story } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { TvlBreakdownViewProps } from '../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { TvlBreakdownSummaryBox as TvlBreakdownSummaryBoxComponent } from './TvlBreakdownSummaryBox'
 
-export default {
-  title: 'Components/TVL Breakdown/TvlBreakdownSummaryBox',
+const meta: Meta<typeof TvlBreakdownSummaryBoxComponent> = {
+  component: TvlBreakdownSummaryBoxComponent,
 }
+export default meta
+type Story = StoryObj<typeof TvlBreakdownSummaryBoxComponent>
 
 const MOCK_DATA = {
   tvl: {
@@ -27,16 +27,8 @@ const MOCK_DATA = {
   },
 }
 
-function Template(props: TvlBreakdownViewProps['tvlBreakdownSummary']) {
-  return (
-    <div className="p-4 leading-normal">
-      <TvlBreakdownSummaryBoxComponent {...props} />
-    </div>
-  )
-}
-
-export const Description: Story<TvlBreakdownViewProps['tvlBreakdownSummary']> =
-  Template.bind({})
-Description.args = {
-  ...MOCK_DATA,
+export const Description: Story = {
+  args: {
+    ...MOCK_DATA,
+  },
 }

@@ -1,13 +1,12 @@
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
-import { configureHoverableDropdown } from '../scripts/configureHoverableDropdown'
-import { within, userEvent } from '@storybook/testing-library'
-import { HoverableDropdown } from './HoverableDropdown'
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
+import { configureHoverableDropdown } from '../scripts/configureHoverableDropdown'
+import { HoverableDropdown } from './HoverableDropdown'
 
 const meta: Meta<typeof HoverableDropdown> = {
-  title: 'Components/HoverableDropdown',
   component: HoverableDropdown,
   decorators: [
     (Story) => {

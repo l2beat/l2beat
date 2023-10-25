@@ -3,7 +3,6 @@ import { Meta, StoryObj } from '@storybook/react'
 import { MilestonesSection } from './MilestonesSection'
 
 const meta: Meta<typeof MilestonesSection> = {
-  title: 'Components/Project/MilestonesSection',
   component: MilestonesSection,
 }
 export default meta
