@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17129653,
   "configHash": "0xdcf91d8c4968003c2e4d896e5f39e668d06ba2866c5a0383fa2be56a70ca45ac",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "TransactionManager",

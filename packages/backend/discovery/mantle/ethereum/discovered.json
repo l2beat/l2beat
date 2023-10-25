@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18128280,
   "configHash": "0x4c744122b7570555a99223855f92941d97712a643f1232a1aa33b5f8456fabc5",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -38,6 +38,7 @@
         "implementation": "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"],
       "sinceTimestamp": 1687932047,
       "values": {
         "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
@@ -76,6 +77,7 @@
         "implementation": "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"],
       "sinceTimestamp": 1687930955,
       "values": {
         "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
@@ -133,6 +135,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686902471,
       "values": {
         "domainSeparator": "0x509138b8efbf4ec65dfd2396c0fbf689e8a0193b00f12ce81d154ffd0de8f6af",
@@ -171,6 +174,7 @@
         "implementation": "0xF7576237087F808eB39531cA490b4F8eFd4a0c69",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xF7576237087F808eB39531cA490b4F8eFd4a0c69"],
       "sinceTimestamp": 1687956143,
       "values": {
         "getTssGroupInfo": [
@@ -228,6 +232,7 @@
         "implementation": "0xCd368c1d80120b0Dd92447c87eB570154f8e685c",
         "admin": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
       },
+      "implementations": ["0xCd368c1d80120b0Dd92447c87eB570154f8e685c"],
       "sinceTimestamp": 1687241795,
       "values": {
         "decimals": 18,
@@ -252,6 +257,7 @@
         "implementation": "0xA1C7B28B4743248584725fEf31516fD4Ea72aEA8",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xA1C7B28B4743248584725fEf31516fD4Ea72aEA8"],
       "sinceTimestamp": 1687961051,
       "values": {
         "blockFinalizationVerifier": "0x0000000000000000000000000000000000000000",
@@ -274,6 +280,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686825851,
       "values": {
         "domainSeparator": "0xdb0a463cc9b4cc346b69933f9ff0173d72743028edaa3a32cb04fecaf0d12dcc",
@@ -323,6 +330,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1683509999,
       "values": {
         "domainSeparator": "0xc2040462c2819b7e5f0c5e3926088f96c882d435e0b03cef5b72ef73cdfaf7d4",
@@ -356,6 +364,7 @@
         "implementation": "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"],
       "sinceTimestamp": 1688282303,
       "values": {
         "BLOCK_STALE_MEASURE": 500,
@@ -382,6 +391,7 @@
         "implementation": "0xAB42127980a3bff124E6465e097a5fC97228827e",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0xAB42127980a3bff124E6465e097a5fC97228827e"],
       "sinceTimestamp": 1687931975,
       "values": {
         "adversaryThresholdBasisPoints": 4000,
@@ -435,6 +445,7 @@
         "implementationName": "BVM_L1CrossDomainMessenger",
         "implementation": "0x4692363048d0F32a2dE7816860D48fff0c61B24B"
       },
+      "implementations": ["0x4692363048d0F32a2dE7816860D48fff0c61B24B"],
       "sinceTimestamp": 1687953527,
       "values": {
         "getPauseOwner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
@@ -480,6 +491,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1684377983,
       "values": {
         "domainSeparator": "0xc1d265aa3661784e967614a86ab34bbccd5c4a901612dfe9cde9f949b055b09f",
@@ -501,6 +513,7 @@
         "implementation": "0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x09b276F9EcB83Fb6a37970e655863B04143Dc431"],
       "sinceTimestamp": 1687956431,
       "values": {
         "delegation": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
@@ -534,6 +547,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686827603,
       "values": {
         "domainSeparator": "0x7d78093058bf4da0080823e097f898933ef67a743628dcf5350d61aafd425780",
@@ -580,6 +594,7 @@
         "implementation": "0xC159F0B28a7bd4b4924e762207275a4475C09fd5",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xC159F0B28a7bd4b4924e762207275a4475C09fd5"],
       "sinceTimestamp": 1687955255,
       "values": {
         "delegation": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
@@ -596,6 +611,7 @@
         "implementation": "0x18Dd3cBE484f955217165FEaC6fe928D04a56a72",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"],
       "sinceTimestamp": 1687931999,
       "values": {
         "IS_TEST": false,
@@ -611,6 +627,7 @@
         "implementation": "0x6B6e0dC564d4603452E40752ecDAa0e9630B38A2",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x6B6e0dC564d4603452E40752ecDAa0e9630B38A2"],
       "sinceTimestamp": 1687954103,
       "values": {
         "l1MantleAddress": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
@@ -627,6 +644,7 @@
         "implementation": "0x1872Ce78A362c58D093EE107cAdeE2667b7Bd993",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x1872Ce78A362c58D093EE107cAdeE2667b7Bd993"],
       "sinceTimestamp": 1687960751,
       "values": {
         "rollupAddress": "0xD1328C9167e0693B689b5aa5a024379d4e437858"
@@ -641,6 +659,7 @@
         "implementation": "0x988DdC2b0ad9Ba5Ade892E1BF848308e8c7A9187",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x988DdC2b0ad9Ba5Ade892E1BF848308e8c7A9187"],
       "sinceTimestamp": 1687954967,
       "values": {
         "delegation": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
@@ -665,6 +684,7 @@
         "implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"],
       "sinceTimestamp": 1687931291,
       "values": {
         "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
@@ -686,6 +706,7 @@
         "implementation": "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"],
       "sinceTimestamp": 1687930979,
       "values": {
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -701,6 +722,7 @@
         "implementation": "0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"],
       "sinceTimestamp": 1687932023,
       "values": {
         "challengeUtils": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
@@ -717,6 +739,7 @@
         "implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"],
       "sinceTimestamp": 1687931243,
       "values": {
         "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
@@ -738,6 +761,7 @@
         "implementation": "0xd8d731624d97a66e012E62208cFc921d7033c564",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0xd8d731624d97a66e012E62208cFc921d7033c564"],
       "sinceTimestamp": 1687931951,
       "values": {
         "getZeroPolyMerkleRoot": []
@@ -752,6 +776,7 @@
         "implementation": "0x242a33ca49C564caFC9C83C700b79f1074c42A0D",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x242a33ca49C564caFC9C83C700b79f1074c42A0D"],
       "sinceTimestamp": 1687961351,
       "values": {
         "assertions": "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317",
@@ -810,6 +835,7 @@
         "implementation": "0x7126F676ac359eCE8D5244120FF9E78eD3222246",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x7126F676ac359eCE8D5244120FF9E78eD3222246"],
       "sinceTimestamp": 1687954679,
       "values": {
         "DELEGATION_TYPEHASH": "0xb2a21c2f78b6ef501475a2971550fe4cedb86f0dec990e23909bfb01fd61c54c",
@@ -829,6 +855,7 @@
         "implementation": "0xAdA69A18B30B3B9235AB2748116bB9195e16aDba",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"],
       "sinceTimestamp": 1687930907,
       "values": {
         "DELEGATION_TYPEHASH": "0xb2a21c2f78b6ef501475a2971550fe4cedb86f0dec990e23909bfb01fd61c54c",

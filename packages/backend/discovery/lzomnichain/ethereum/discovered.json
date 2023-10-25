@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18163835,
   "configHash": "0x793b1ec31c66d6ecaeef1247cd5d435add6d670a809cd8db79296bd0e33c8eb0",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -30,6 +30,7 @@
         "implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
         "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
       },
+      "implementations": ["0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE"],
       "sinceTimestamp": 1669425971
     },
     {
@@ -831,6 +832,7 @@
         "implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
         "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
       },
+      "implementations": ["0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"],
       "sinceTimestamp": 1661536020,
       "derivedName": ""
     },
@@ -852,6 +854,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1647498793,
       "values": {
         "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
@@ -935,6 +938,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
       "values": {
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
