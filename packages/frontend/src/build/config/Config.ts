@@ -12,7 +12,6 @@ export interface Config {
     multisigReport: string
   }
   features: {
-    detailedTvl: boolean
     activity: boolean
     banner: boolean
     tvlBreakdown: boolean

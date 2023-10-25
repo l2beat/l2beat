@@ -2,7 +2,6 @@ import { Bridge, Layer2 } from '@l2beat/config'
 import {
   ActivityApiResponse,
   DetailedTvlApiResponse,
-  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { HeaderProps } from '../../components'
@@ -12,7 +11,7 @@ import { formatUSD, getPercentageChange } from '../utils'
 
 export function getHeader(
   project: Layer2 | Bridge,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): HeaderProps {
   const hourly =

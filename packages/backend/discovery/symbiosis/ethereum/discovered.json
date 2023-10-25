@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18184280,
   "configHash": "0x5117b8684b4518e6245edbaabc8a7fad4039b0fdbe691096d2935e8383ff58b0",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "MetaRouterGateway",
@@ -58,6 +58,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1668412331,
       "values": {
         "domainSeparator": "0xccc4d4f74988d0bce955a06b16641953bb625b9cc161a33d515a2555d06794ab",
@@ -83,6 +84,7 @@
         "implementation": "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365",
         "admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
       },
+      "implementations": ["0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365"],
       "sinceTimestamp": 1668406727,
       "values": {
         "currentChainId": 1,
@@ -102,6 +104,7 @@
         "implementation": "0x086488E659253FF26D0C743325C059FB57Ca7934",
         "admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
       },
+      "implementations": ["0x086488E659253FF26D0C743325C059FB57Ca7934"],
       "sinceTimestamp": 1668406751,
       "values": {
         "bridge": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
@@ -123,6 +126,7 @@
         "implementation": "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662",
         "admin": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
       },
+      "implementations": ["0x61608F9520C311052D88Bc7d0c2c4Cba1c964662"],
       "sinceTimestamp": 1643968081,
       "derivedName": ""
     }

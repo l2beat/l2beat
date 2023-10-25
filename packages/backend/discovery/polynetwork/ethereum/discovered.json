@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17990915,
   "configHash": "0xb4ebc7a036e1e73ccda66a209d0cd9ed093e26866e1fd84957422a1674e6cb24",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "EthCrossChainManager",
