@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18219921,
   "configHash": "0xa806b78a9521ade554d961d2ccf5acc52b4e04286bc04d424df821ea66b8d49b",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -13,6 +13,7 @@
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
       },
+      "implementations": ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"],
       "sinceTimestamp": 1603950102,
       "values": {
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
@@ -170,6 +171,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1606289169,
       "values": {
         "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",

@@ -17,13 +17,9 @@ import { ScalingTvlViewEntry } from '../types'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
-  detailedTvlEnabled: boolean
 }
 
-export function ScalingTvlView({
-  items,
-  detailedTvlEnabled,
-}: ScalingTvlViewProps) {
+export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
@@ -47,7 +43,7 @@ export function ScalingTvlView({
               <TableView
                 items={activeProjects}
                 rows={rows}
-                columns={getActiveScalingTvlColumns(detailedTvlEnabled)}
+                columns={getActiveScalingTvlColumns()}
               />
             ),
             itemsCount: activeProjects.length,
@@ -75,7 +71,7 @@ export function ScalingTvlView({
               <TableView
                 items={archivedProjects}
                 rows={rows}
-                columns={getArchivedScalingTvlColumns(detailedTvlEnabled)}
+                columns={getArchivedScalingTvlColumns()}
               />
             ),
             itemsCount: archivedProjects.length,

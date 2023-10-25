@@ -1,5 +1,6 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
+import { MulticallConfig } from '@l2beat/discovery'
 import { ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
@@ -17,6 +18,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
+  readonly liveness: LivenessConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly statusEnabled: boolean
@@ -57,6 +59,14 @@ export interface TvlConfig {
   readonly arbitrum: ChainTvlConfig | false
   readonly optimism: ChainTvlConfig | false
   readonly base: ChainTvlConfig | false
+}
+
+export interface LivenessConfig {
+  readonly bigQuery: {
+    readonly clientEmail: string
+    readonly privateKey: string
+    readonly projectId: string
+  }
 }
 
 export interface ChainTvlConfig {
@@ -103,6 +113,7 @@ export interface UpdateMonitorChainConfig {
   chainId: ChainId
   rpcUrl: string
   rpcGetLogsMaxRange?: number
+  multicall: MulticallConfig
   etherscanApiKey: string
   etherscanUrl: string
   minTimestamp: UnixTime

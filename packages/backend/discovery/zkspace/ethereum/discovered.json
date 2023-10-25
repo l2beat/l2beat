@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18220342,
   "configHash": "0x1bf79f76eb9cd111b4d19cceabf7272c4ccc06359bf74943b5c2fca2653ab68e",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "VerifierExit",
@@ -13,6 +13,7 @@
         "implementation": "0x41455808B3109AD0f79672C44D75933D3529FEaE",
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
       },
+      "implementations": ["0x41455808B3109AD0f79672C44D75933D3529FEaE"],
       "sinceTimestamp": 1639569183,
       "values": {
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -32,6 +33,12 @@
           "0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7"
         ]
       },
+      "implementations": [
+        "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
+        "0x899A605a3B7A11eA5D928958b77014e763c53426",
+        "0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
+        "0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7"
+      ],
       "sinceTimestamp": 1639569183,
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
@@ -77,6 +84,7 @@
         "implementation": "0x6659174CdB0c445B897aEd25181f293E468941a5",
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
       },
+      "implementations": ["0x6659174CdB0c445B897aEd25181f293E468941a5"],
       "sinceTimestamp": 1639569183,
       "values": {
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -141,6 +149,7 @@
         "implementation": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
       },
+      "implementations": ["0x44DedA2C824458A5DfE1e363c679dea33f1ffA39"],
       "sinceTimestamp": 1639569183,
       "values": {
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -155,6 +164,7 @@
         "implementation": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
       },
+      "implementations": ["0x5f3bE7846efC473552C5619b929F7d4aa640fb54"],
       "sinceTimestamp": 1639569183,
       "values": {
         "allPairsLength": 64,
@@ -172,6 +182,7 @@
         "implementation": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
       },
+      "implementations": ["0xD06986022EFE62A5BC8258299e4495Bb27567BE0"],
       "sinceTimestamp": 1639569183,
       "values": {
         "baseURI": "",
