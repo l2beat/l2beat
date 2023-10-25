@@ -7,53 +7,64 @@ describe(isTimestampInRange.name, () => {
   const START = UnixTime.now()
   const testCases = [
     {
-      name: 'until smaller than from',
+      name: 'since & until smaller than from',
+      since: START.add(-2, 'hours'),
       until: START.add(-1, 'hours'),
       from: START,
       to: START.add(1, 'hours'),
       expected: false,
     },
     {
-      name: 'until bigger than to',
-      until: START.add(2, 'hours'),
-      from: START,
-      to: START.add(1, 'hours'),
-      expected: true,
-    },
-    {
-      name: 'until bigger than from & smaller than to',
+      name: 'since smaller than from | until bigger than from & smaller than to',
+      since: START.add(-1, 'hours'),
       until: START.add(1, 'hours'),
       from: START,
       to: START.add(2, 'hours'),
       expected: true,
     },
     {
-      name: 'until is undefined',
-      until: undefined,
+      name: 'since smaller than from | until bigger than to',
+      since: START.add(-1, 'hours'),
+      until: START.add(3, 'hours'),
       from: START,
       to: START.add(2, 'hours'),
       expected: true,
     },
     {
-      name: 'until is equal from',
-      until: START,
-      from: START,
-      to: START.add(2, 'hours'),
-      expected: true,
-    },
-    {
-      name: 'until is equal to',
+      name: 'since bigger than from & smaller than to | until bigger than from & smaller than to',
+      since: START.add(1, 'hours'),
       until: START.add(2, 'hours'),
       from: START,
+      to: START.add(3, 'hours'),
+      expected: true,
+    },
+    {
+      name: 'since bigger than from & smaller than to | until bigger than to',
+      since: START.add(1, 'hours'),
+      until: START.add(3, 'hours'),
+      from: START,
       to: START.add(2, 'hours'),
       expected: true,
+    },
+    {
+      name: 'since bigger than to | until bigger than to',
+      since: START.add(2, 'hours'),
+      until: START.add(3, 'hours'),
+      from: START,
+      to: START.add(1, 'hours'),
+      expected: false,
     },
   ]
 
   for (const testCase of testCases) {
     it(testCase.name, () => {
       expect(
-        isTimestampInRange(testCase.until, testCase.from, testCase.to),
+        isTimestampInRange(
+          testCase.since,
+          testCase.until,
+          testCase.from,
+          testCase.to,
+        ),
       ).toEqual(testCase.expected)
     })
   }

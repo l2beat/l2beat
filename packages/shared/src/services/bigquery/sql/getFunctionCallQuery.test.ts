@@ -3,7 +3,7 @@ import { expect } from 'earl'
 
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 
-describe('getMethodQuery', () => {
+describe(getFunctionCallQuery.name, () => {
   it('should return valid SQL query', () => {
     const receivers = [EthereumAddress.random(), EthereumAddress.random()]
     const methodsIds = ['0xabcdef', '0x123456']
@@ -11,11 +11,11 @@ describe('getMethodQuery', () => {
     const endTimestamp = UnixTime.fromDate(new Date('2022-01-02T00:00:00Z'))
     const expectedQuery = [
       'SELECT',
-      'block_number',
-      'input',
-      'to_address',
-      'block_timestamp',
-      'transaction_hash',
+      'block_number,',
+      'LEFT(input, 10) AS input,',
+      'to_address,',
+      'block_timestamp,',
+      'transaction_hash,',
       'FROM',
       'bigquery-public-data.crypto_ethereum.traces',
       'WHERE',
