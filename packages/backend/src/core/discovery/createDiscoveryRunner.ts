@@ -7,6 +7,7 @@ import {
   EtherscanLikeClient,
   HandlerExecutor,
   HttpClient,
+  MulticallClient,
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
@@ -37,8 +38,13 @@ export function createDiscoveryRunner(
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
+  const multicallClient = new MulticallClient(
+    discoveryProvider,
+    chainConfig.multicall,
+  )
   const handlerExecutor = new HandlerExecutor(
     discoveryProvider,
+    multicallClient,
     discoveryLogger,
   )
   const addressAnalyzer = new AddressAnalyzer(

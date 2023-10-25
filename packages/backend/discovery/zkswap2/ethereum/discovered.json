@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16767881,
   "configHash": "0x879a7179f610639a3c172e2a1a3b2f58ea32b2e0ac512188d2f4541dc49309b3",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -34,6 +34,7 @@
         "implementation": "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829",
         "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
       },
+      "implementations": ["0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829"],
       "sinceTimestamp": 1626059966,
       "values": {
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
@@ -48,6 +49,7 @@
         "implementation": "0xf2c351f22b148A9fF583a0F81701471a74E7338e",
         "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
       },
+      "implementations": ["0xf2c351f22b148A9fF583a0F81701471a74E7338e"],
       "sinceTimestamp": 1626059966,
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
@@ -83,6 +85,7 @@
         "implementation": "0x95269f9E76540459c797089034dc74b48dF780a2",
         "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
       },
+      "implementations": ["0x95269f9E76540459c797089034dc74b48dF780a2"],
       "sinceTimestamp": 1626059966,
       "values": {
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
@@ -123,6 +126,7 @@
         "implementation": "0x17e51B3659884d70a306906B5BDD73D1c64a3892",
         "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
       },
+      "implementations": ["0x17e51B3659884d70a306906B5BDD73D1c64a3892"],
       "sinceTimestamp": 1626059966,
       "values": {
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
@@ -148,6 +152,7 @@
         "implementation": "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89",
         "admin": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"
       },
+      "implementations": ["0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89"],
       "sinceTimestamp": 1626059966,
       "values": {
         "allPairsLength": 72,

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18340162,
   "configHash": "0xf39cb47c575b306d683e2827dd8b2a3be925c549a0c75882bdc0a2bc470ecd7c",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -37,6 +37,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641296925,
       "values": {
         "domainSeparator": "0x4812ce160ffe37bfbe1ff1f71c8dad41849053931e9ec9c5465469ef8083f38e",
@@ -72,6 +73,7 @@
         "implementation": "0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568",
         "admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
       },
+      "implementations": ["0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568"],
       "sinceTimestamp": 1626949825,
       "derivedName": ""
     },
@@ -82,6 +84,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1627899254,
       "values": {
         "domainSeparator": "0x6ff8db429aea0adcadf7f7b4b96be80cf9a3a712bedcf4525d275fdcda9a5dcd",

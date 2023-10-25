@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18062315,
   "configHash": "0x71d3998c2972afe832c73d5d0e6220a819e62bf324488c065af37d80bfc79c95",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Governance",
@@ -13,6 +13,7 @@
         "implementation": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
         "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
       },
+      "implementations": ["0x9d3fdf9b4782753d12f6262bf22B6322608962b8"],
       "sinceTimestamp": 1613135194,
       "values": {
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
@@ -31,6 +32,7 @@
         "implementation": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
         "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
       },
+      "implementations": ["0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"],
       "sinceTimestamp": 1613135194,
       "values": {
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
@@ -71,6 +73,7 @@
         "implementation": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
         "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
       },
+      "implementations": ["0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"],
       "sinceTimestamp": 1613135194,
       "values": {
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
@@ -118,6 +121,7 @@
         "implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
         "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
       },
+      "implementations": ["0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f"],
       "sinceTimestamp": 1613135194,
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
@@ -151,6 +155,7 @@
         "implementation": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
         "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
       },
+      "implementations": ["0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"],
       "sinceTimestamp": 1613135194,
       "values": {
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
