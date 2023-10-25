@@ -33,7 +33,7 @@ export function Tabs({ items }: TabsProps) {
                 {tab.shortName ?? tab.name}
               </span>
               {tab.itemsCount && (
-                <span className="TabsItem-CountBadge flex items-center justify-center rounded-full bg-pink-100 px-1.5 py-0.5 text-2xs tabular-nums leading-none text-white md:text-xs">
+                <span className="TabsItem-CountBadge flex items-center justify-center rounded-full bg-purple-100 px-1.5 py-0.5 text-2xs tabular-nums leading-none text-white md:text-xs">
                   {tab.itemsCount}
                 </span>
               )}

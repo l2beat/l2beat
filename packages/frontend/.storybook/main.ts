@@ -27,7 +27,7 @@ const config: StorybookConfig = {
         configType === 'PRODUCTION'
           ? [
               turbosnap({
-                rootDir: process.cwd(),
+                rootDir: config.root ?? process.cwd(),
               }),
             ]
           : [],
