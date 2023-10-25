@@ -24,9 +24,6 @@ const tableColumnToUpdate: Record<string, [string, ...string[]]> = {
 export async function up(knex: Knex) {
   for (const [table_name, columns] of Object.entries(tableColumnToUpdate)) {
     for (const column of columns) {
-      // https://www.postgresql.org/docs/14/sql-altertable.html
-      // Indexes and simple table constraints involving the column will be automatically converted
-      // to use the new column type by reparsing the originally supplied expression.
       await knex.raw(
         `ALTER TABLE "${table_schema}"."${table_name}" ALTER COLUMN ${column}
         SET DATA TYPE timestamp without time zone USING ${column}::timestamp without time zone`,
