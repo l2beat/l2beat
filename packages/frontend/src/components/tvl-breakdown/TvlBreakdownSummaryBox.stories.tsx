@@ -13,15 +13,15 @@ const MOCK_DATA = {
     value: '$5.47 B',
     change: '+ 2.9%',
   },
-  cb: {
+  canonical: {
     value: '$2.99 B',
     change: '+ 2.38%',
   },
-  eb: {
+  external: {
     value: '$2.2 B',
     change: '- 11.14%',
   },
-  ntm: {
+  native: {
     value: '$280 M',
     change: '+ 12.49%',
   },
