@@ -14,24 +14,29 @@ describe(transformTransfersQueryResult.name, () => {
     const ADDRESS_4 = EthereumAddress.random()
     const ADDRESS_5 = EthereumAddress.random()
     const ADDRESS_6 = EthereumAddress.random()
+    const sinceTimestamp = UnixTime.now()
+
     const config: LivenessTransfer[] = [
       {
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
         type: 'STATE',
+        sinceTimestamp,
       },
       {
         projectId: ProjectId('project1'),
         from: ADDRESS_3,
         to: ADDRESS_4,
         type: 'DA',
+        sinceTimestamp,
       },
       {
         projectId: ProjectId('project2'),
         from: ADDRESS_5,
         to: ADDRESS_6,
         type: 'STATE',
+        sinceTimestamp,
       },
     ]
     const queryResults: BigQueryTransfersResult = [

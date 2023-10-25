@@ -65,6 +65,7 @@ export class LivenessIndexer extends ChildIndexer {
       data = await this.getLivenessData(this.projects, fromUnixTime, toUnixTime)
     } catch (e) {
       this.logger.error(e)
+      throw e
     }
 
     assert(data, 'Liveness data should not be undefined there')

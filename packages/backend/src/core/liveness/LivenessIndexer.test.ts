@@ -97,28 +97,36 @@ describe(LivenessIndexer.name, () => {
     it('undefined config hash', async () => {
       const DB_CONFIG_HASH = undefined
 
-      const { livenessIndexer, stateRepository, indexerConfigHash } =
-        getMockLivenessIndexer(PROJECTS, DB_CONFIG_HASH)
+      const {
+        livenessIndexer,
+        stateRepository,
+        indexerConfigHash,
+        minTimestamp,
+      } = getMockLivenessIndexer(PROJECTS, DB_CONFIG_HASH)
       await livenessIndexer.start()
 
       expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
         indexerId: 'liveness_indexer',
         configHash: indexerConfigHash,
-        safeHeight: 0,
+        safeHeight: minTimestamp.toNumber(),
       })
     })
 
     it('different config hash', async () => {
       const DB_CONFIG_HASH = hashJson('different-config-hash')
 
-      const { livenessIndexer, stateRepository, indexerConfigHash } =
-        getMockLivenessIndexer(PROJECTS, DB_CONFIG_HASH)
+      const {
+        livenessIndexer,
+        stateRepository,
+        indexerConfigHash,
+        minTimestamp,
+      } = getMockLivenessIndexer(PROJECTS, DB_CONFIG_HASH)
       await livenessIndexer.start()
 
       expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
         indexerId: 'liveness_indexer',
         configHash: indexerConfigHash,
-        safeHeight: 0,
+        safeHeight: minTimestamp.toNumber(),
       })
     })
 
@@ -136,7 +144,7 @@ describe(LivenessIndexer.name, () => {
   })
 
   describe(LivenessIndexer.prototype.update.name, () => {
-    it('throws error', async () => {
+    it('handles error', async () => {
       const projects: Project[] = [
         {
           projectId: ProjectId('project1'),
@@ -150,7 +158,6 @@ describe(LivenessIndexer.name, () => {
                 to: ADDRESS_2,
                 type: 'DA',
                 sinceTimestamp: FROM,
-                untilTimestamp: FROM.add(-1, 'days'),
               },
             ],
             functionCalls: [],
@@ -187,27 +194,55 @@ describe(LivenessIndexer.name, () => {
         getTransfers: async () => [],
         getFunctionCalls: async () => [],
       })
+
+      const PROJECT: Project = {
+        projectId: ProjectId('project1'),
+        escrows: [],
+        type: 'layer2',
+        livenessConfig: {
+          transfers: [
+            {
+              projectId: ProjectId('project1'),
+              from: ADDRESS_1,
+              to: ADDRESS_2,
+              type: 'DA',
+              sinceTimestamp: FROM,
+            },
+          ],
+          functionCalls: [
+            {
+              projectId: ProjectId('project1'),
+              address: ADDRESS_1,
+              selector: '0x12345678',
+              type: 'STATE',
+              sinceTimestamp: FROM,
+            },
+          ],
+        },
+      }
       const livenessIndexer = new LivenessIndexer(
         logger,
         hourlyIndexer,
-        [],
+        [PROJECT],
         bigQueryClient,
         stateRepository,
         livenessRepository,
         FROM,
       )
+
       const from = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
       const to = UnixTime.fromDate(new Date('2022-01-03T01:00:00Z'))
 
       await livenessIndexer.update(from.toNumber(), to.toNumber())
 
       expect(bigQueryClient.getFunctionCalls).toHaveBeenCalledWith(
-        [],
+        [PROJECT.livenessConfig!.functionCalls[0]],
         from,
         from.add(1, 'days'),
       )
+
       expect(bigQueryClient.getTransfers).toHaveBeenCalledWith(
-        [],
+        [PROJECT.livenessConfig!.transfers[0]],
         from,
         from.add(1, 'days'),
       )
@@ -305,12 +340,12 @@ describe(LivenessIndexer.name, () => {
       expect(bigQueryClient.getTransfers).toHaveBeenCalledWith(
         transfersConfig,
         FROM,
-        FROM.add(1, 'hours'),
+        TO,
       )
       expect(bigQueryClient.getFunctionCalls).toHaveBeenCalledWith(
         functionCallsConfig,
         FROM,
-        FROM.add(1, 'hours'),
+        TO,
       )
       expect(livenessRepository.addMany).toHaveBeenCalledWith(expectedToSave)
     })
@@ -520,8 +555,24 @@ describe(LivenessIndexer.name, () => {
       )
     })
 
-    it('does not call BigQuery if configs are empty', () => {
-      throw new Error('not implemented')
+    it('does not call BigQuery if configs are empty', async () => {
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getTransfers: async () => [],
+      })
+
+      const livenessIndexer = new LivenessIndexer(
+        Logger.SILENT,
+        hourlyIndexer,
+        [],
+        bigQueryClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+
+      await livenessIndexer.getTransfers([], FROM, TO)
+
+      expect(bigQueryClient.getTransfers).not.toHaveBeenCalled()
     })
   })
 
@@ -630,8 +681,24 @@ describe(LivenessIndexer.name, () => {
       )
     })
 
-    it('does not call BigQuery if configs are empty', () => {
-      throw new Error('not implemented')
+    it('does not call BigQuery if configs are empty', async () => {
+      const bigQueryClient = mockObject<BigQueryClient>({
+        getFunctionCalls: async () => [],
+      })
+
+      const livenessIndexer = new LivenessIndexer(
+        Logger.SILENT,
+        hourlyIndexer,
+        [],
+        bigQueryClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+
+      await livenessIndexer.getFunctionCalls([], FROM, TO)
+
+      expect(bigQueryClient.getFunctionCalls).not.toHaveBeenCalled()
     })
   })
 
@@ -704,6 +771,7 @@ function getMockLivenessIndexer(
     livenessIndexer,
     stateRepository,
     indexerConfigHash: getLivenessConfigHash(projects),
+    minTimestamp: FROM,
   }
 }
 
