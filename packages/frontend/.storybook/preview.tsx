@@ -21,7 +21,7 @@ export const decorators = [
     attributeName: 'class',
   }),
   (Story) => (
-    <div style={{ margin: '3em' }}>
+    <div style={{ margin: '1rem' }}>
       <Story />
     </div>
   ),
