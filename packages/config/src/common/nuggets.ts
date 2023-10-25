@@ -6,6 +6,7 @@ const THUMBNAILS = {
   AZTEC_01: 'aztec-01.jpg',
   AZTEC_02: 'aztec-02.jpg',
   FUEL_01: 'fuel-01.jpg',
+  KROMA_01: 'kroma-01.jpg',
   L2BEAT_01: 'l2beat-01.jpg',
   L2BEAT_02: 'l2beat-02.jpg',
   L2BEAT_03: 'l2beat-03.jpg',
