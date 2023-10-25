@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { userEvent, within } from '@storybook/testing-library'
+import { userEvent, waitFor, within } from '@storybook/testing-library'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
@@ -40,7 +40,9 @@ export const Hovered: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const toggle = canvas.getByText('Example dropdown')
-    await userEvent.hover(toggle)
+    await waitFor(async () => {
+      await userEvent.hover(toggle)
+    })
   },
   parameters: {
     pseudo: {
