@@ -25,7 +25,3 @@ export const Description: Story = {
     editLink: '#',
   },
 }
-Description.args = {
-  isVerified: false,
-  warning,
-}
