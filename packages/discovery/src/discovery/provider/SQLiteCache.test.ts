@@ -64,27 +64,6 @@ describe('SQLiteCache', () => {
       expect(result.blockNumber).toEqual(newBlockNumber)
       expect(result.chainId).toEqual(newChainId)
     }))
-
-  it('transforms undefined into null', () =>
-    withTemporaryFile(async (sqlCache, rqe) => {
-      const key = 'key'
-      const value = 'value'
-      const chainId = 1
-      const blockNumber = undefined
-
-      await sqlCache.set(key, value, chainId, blockNumber)
-
-      const resultRaw = await rqe.query<CacheEntry[]>(
-        'SELECT * FROM cache WHERE key=$1',
-        [key],
-      )
-
-      const [result] = resultRaw
-
-      assert(result)
-
-      expect(result.blockNumber).toEqual(null!)
-    }))
 })
 
 interface CacheEntry {

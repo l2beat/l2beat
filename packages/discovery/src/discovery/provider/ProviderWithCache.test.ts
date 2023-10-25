@@ -3,6 +3,7 @@ import { providers } from 'ethers'
 
 import { ChainId } from '../../utils/ChainId'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
+import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryCache, ProviderWithCache } from './ProviderWithCache'
 
@@ -35,26 +36,6 @@ function setupProviderWithMockCache(values: {
 
 describe(ProviderWithCache.name, () => {
   describe(ProviderWithCache.prototype.cacheOrFetch.name, () => {
-    it('works when reorgSafeDepth and blockNumber is undefined, value cached', async () => {
-      const { providerWithCache, mockCache } = setupProviderWithMockCache({
-        curBlockNumber: 1000,
-        reorgSafeDepth: undefined,
-      })
-
-      const blockNumber = undefined
-      const result = await providerWithCache.cacheOrFetch(
-        'mockCachedKey',
-        blockNumber,
-        async () => 'mockNotCachedValue',
-        (value) => value,
-        (value) => value,
-      )
-
-      expect(result).toEqual('mockCachedValue')
-      expect(mockCache.get).toHaveBeenCalledWith('mockCachedKey')
-      expect(mockCache.set).toHaveBeenCalledTimes(0)
-    })
-
     it('works when reorgSafeDepth is undefined, value cached', async () => {
       const { providerWithCache, mockCache } = setupProviderWithMockCache({
         curBlockNumber: 1000,
@@ -73,30 +54,6 @@ describe(ProviderWithCache.name, () => {
       expect(result).toEqual('mockCachedValue')
       expect(mockCache.get).toHaveBeenCalledWith('mockCachedKey')
       expect(mockCache.set).toHaveBeenCalledTimes(0)
-    })
-
-    it('works when reorgSafeDepth and blockNumber is undefined, value not cached', async () => {
-      const { providerWithCache, mockCache } = setupProviderWithMockCache({
-        curBlockNumber: 1000,
-        reorgSafeDepth: undefined,
-      })
-
-      const blockNumber = undefined
-      const result = await providerWithCache.cacheOrFetch(
-        'mockNotCachedKey',
-        blockNumber,
-        async () => 'mockNotCachedValue',
-        (value) => value,
-        (value) => value,
-      )
-
-      expect(result).toEqual('mockNotCachedValue')
-      expect(mockCache.set).toHaveBeenCalledWith(
-        'mockNotCachedKey',
-        'mockNotCachedValue',
-        1,
-        blockNumber,
-      )
     })
 
     it('works when reorgSafeDepth is undefined, value not cached', async () => {
@@ -263,6 +220,36 @@ describe(ProviderWithCache.name, () => {
         curTimeMs + 120_000,
       )
       expect(mockProvider.getBlockNumber).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  describe(ProviderWithCache.prototype.getTransaction.name, () => {
+    it('throws and does not cache non-mined transactions', async () => {
+      const txHash = Hash256.random()
+
+      const nonMinedTransactions = {
+        transactionHash: txHash,
+        blockNumber: undefined,
+        blockHash: undefined,
+        timestamp: undefined,
+      }
+
+      const { providerWithCache, mockCache, mockProvider } =
+        setupProviderWithMockCache({
+          curBlockNumber: 1000, // Doesn't matter
+          reorgSafeDepth: 1000, // Doesn't matter
+        })
+
+      // Force cache-miss to trigger getTransaction
+      mockCache.get = mockFn().resolvesToOnce(undefined)
+      mockProvider.getTransaction = mockFn().resolvesTo(nonMinedTransactions)
+
+      await expect(() =>
+        providerWithCache.getTransaction(txHash),
+      ).toBeRejectedWith('Transaction not mined')
+
+      expect(mockCache.get).toHaveBeenCalledTimes(1)
+      expect(mockCache.set).not.toHaveBeenCalled()
     })
   })
 })

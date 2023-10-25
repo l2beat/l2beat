@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.19.0
+
+### Minor Changes
+
+- Block number is now required when working with cache despite invoked method
+
 ## 0.18.4
 
 ### Patch Changes

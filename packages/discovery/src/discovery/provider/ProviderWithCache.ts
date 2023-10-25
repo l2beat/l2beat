@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import { createHash } from 'crypto'
 import { providers } from 'ethers'
 
@@ -19,7 +20,7 @@ export interface DiscoveryCache {
     key: string,
     value: string,
     chainId: number,
-    blockNumber: number | undefined,
+    blockNumber: number,
   ): Promise<void>
   get(key: string): Promise<string | undefined>
 }
@@ -47,7 +48,7 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   public async cacheOrFetch<R>(
     key: string,
-    blockNumber: number | undefined,
+    blockNumber: number,
     fetch: () => Promise<R>,
     toCache: (value: R) => string,
     fromCache: (value: string) => R,
@@ -60,6 +61,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     const result = await fetch()
 
     const isReorgSafe = await this.isBlockNumberReorgSafe(blockNumber)
+
     if (isReorgSafe) {
       await this.cache.set(
         key,
@@ -224,13 +226,25 @@ export class ProviderWithCache extends DiscoveryProvider {
   ): Promise<providers.TransactionResponse> {
     const key = this.buildKey('getTransaction', [hash])
 
-    return this.cacheOrFetch(
+    const cachedResult = await this.cache.get(key)
+
+    if (cachedResult !== undefined) {
+      return fromJSON(cachedResult)
+    }
+
+    const result = await super.getTransaction(hash)
+
+    // We don't want to cache nor return non-mined transactions
+    assert(result.blockNumber, 'Transaction not mined')
+
+    await this.cache.set(
       key,
-      undefined,
-      () => super.getTransaction(hash),
-      toJSON,
-      fromJSON,
+      toJSON(result),
+      this.chainId.valueOf(),
+      result.blockNumber,
     )
+
+    return result
   }
 
   override async getBlock(blockNumber: number): Promise<providers.Block> {
