@@ -1,5 +1,6 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
+import { MulticallConfig } from '@l2beat/discovery'
 import { ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
@@ -103,6 +104,7 @@ export interface UpdateMonitorChainConfig {
   chainId: ChainId
   rpcUrl: string
   rpcGetLogsMaxRange?: number
+  multicall: MulticallConfig
   etherscanApiKey: string
   etherscanUrl: string
   minTimestamp: UnixTime
