@@ -2,7 +2,6 @@ import {
   ActivityApiResponse,
   DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
-  TvlApiResponse,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 import { ReactElement } from 'react'
@@ -31,7 +30,7 @@ export interface PageMetadata {
 }
 
 export interface PagesData {
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse
+  tvlApiResponse: DetailedTvlApiResponse
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined

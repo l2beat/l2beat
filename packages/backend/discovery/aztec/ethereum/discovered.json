@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17378164,
   "configHash": "0xe2a93d58ae1c112d7b8332ec0805a1148e3d5f61c498a0ce0198e92c81db0c82",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "AztecFeeDistributor",
@@ -111,6 +111,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1610552620,
       "values": {
         "domainSeparator": "0xf37d5181cb1c7c67c7e79d1dd66f78e41f525d498f652270e8f68c486406872b",

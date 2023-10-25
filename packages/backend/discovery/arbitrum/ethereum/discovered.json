@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18218589,
   "configHash": "0x8d5b06f005e718aca008dc5ea33e68e62a1386b9c95cb3f82da9d03cf9777a87",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "OutboxV2",
@@ -13,6 +13,7 @@
         "implementation": "0x0eA7372338a589e7f0b00E463a53AA464ef04e17",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0x0eA7372338a589e7f0b00E463a53AA464ef04e17"],
       "sinceTimestamp": 1661457944,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -47,6 +48,7 @@
         "implementation": "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1661457944,
       "values": {
         "batchCount": 351988,
@@ -83,6 +85,7 @@
         "implementation": "0x86f0cf42Ad673B3D666d103E009EC142D1298a17",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "implementations": ["0x86f0cf42Ad673B3D666d103E009EC142D1298a17"],
       "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
@@ -123,6 +126,7 @@
         "implementation": "0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94"],
       "sinceTimestamp": 1622243344,
       "values": {
         "allowListEnabled": false,
@@ -164,6 +168,7 @@
         "implementation": "0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0x806421D09cDb253aa9d128a658e60c0B95eFFA01"],
       "sinceTimestamp": 1661457944,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -190,6 +195,10 @@
         "adminImplementation": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
         "userImplementation": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
       },
+      "implementations": [
+        "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
+        "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
+      ],
       "sinceTimestamp": 1661457944,
       "values": {
         "baseStake": "1000000000000000000",
@@ -239,6 +248,7 @@
         "implementation": "0x263a68002876E307804168795519da0B32CC62fE",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0x263a68002876E307804168795519da0B32CC62fE"],
       "sinceTimestamp": 1622243344,
       "values": {
         "beacon": "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b",
@@ -263,6 +273,7 @@
         "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
+      "implementations": ["0x52595021fA01B3E14EC6C88953AFc8E35dFf423c"],
       "sinceTimestamp": 1623784095,
       "values": {
         "counterpartGateway": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
@@ -281,6 +292,7 @@
         "implementation": "0x360861b7b245c968128F0a53d281aDb1Df760711",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0x360861b7b245c968128F0a53d281aDb1Df760711"],
       "sinceTimestamp": 1630296149,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -305,6 +317,7 @@
         "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0x1066CEcC8880948FE55e427E94F1FF221d626591"],
       "sinceTimestamp": 1661457944,
       "values": {
         "activeOutbox": "0x0000000000000000000000000000000000000000",
@@ -383,6 +396,7 @@
         "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
+      "implementations": ["0xb4299A1F5f26fF6a98B7BA35572290C359fde900"],
       "sinceTimestamp": 1623784100,
       "values": {
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
@@ -431,6 +445,7 @@
         "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
+      "implementations": ["0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45"],
       "sinceTimestamp": 1623867835,
       "values": {
         "counterpartGateway": "0x096760F208390250649E3e8763348E783AEF5562",
@@ -487,6 +502,7 @@
         "implementation": "0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
+      "implementations": ["0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445"],
       "sinceTimestamp": 1661457944,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -505,6 +521,7 @@
         "implementation": "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "implementations": ["0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3"],
       "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
@@ -606,6 +623,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1692138791,
       "values": {
         "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",

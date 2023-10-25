@@ -9,7 +9,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
     props: {
       navbar: getNavbarProps(config, 'faq'),
       title: 'Frequently Asked Questions',
-      items: getFaqItems(config.features.detailedTvl),
+      items: getFaqItems(),
       footer: getFooterProps(config),
     },
     wrapper: {
