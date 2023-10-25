@@ -1,5 +1,6 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
+import { multicallConfig } from '@l2beat/discovery'
 import { EtherscanClient } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 
@@ -19,7 +20,7 @@ export function getProductionConfig(env: Env): Config {
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
-
+  const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const publicDiscordChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
@@ -119,6 +120,13 @@ export function getProductionConfig(env: Env): Config {
         minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
       },
     },
+    liveness: livenessEnabled && {
+      bigQuery: {
+        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('LIVENESS_PROJECT_ID'),
+      },
+    },
     activity: {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
@@ -162,6 +170,11 @@ export function getProductionConfig(env: Env): Config {
           callsPerMinute: env.integer('ACTIVITY_STARKNET_CALLS'),
           url: env.string('ACTIVITY_STARKNET_URL'),
         },
+        scroll: {
+          type: 'rpc',
+          callsPerMinute: env.integer('ACTIVITY_SCROLL_CALLS'),
+          url: env.string('ACTIVITY_SCROLL_URL'),
+        },
       },
     },
     statusEnabled: env.boolean('STATUS_ENABLED', true),
@@ -179,6 +192,7 @@ export function getProductionConfig(env: Env): Config {
           rpcGetLogsMaxRange: env.optionalInteger(
             'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
           ),
+          multicall: multicallConfig.ethereum,
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
           minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),

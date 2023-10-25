@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17321271,
   "configHash": "0x93d4ddbdf45c48e50296f6ea9e52c0c535908ed407738973689e4d9f45a7b2ad",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "USDC_POOL",

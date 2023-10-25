@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18263156,
   "configHash": "0x64a51a60e3a989296e82e194d4ed4388fac744b7c54f7e475e2630b868e4d4f1",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "GnosisHubConnector",
@@ -34,6 +34,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1693742291,
       "values": {
         "domainSeparator": "0x629aade541ce1b7d73beab1242554404bc43e210de8d86b5a43700596c5cb2b2",
@@ -60,6 +61,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1671651491,
       "values": {
         "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
@@ -181,6 +183,20 @@
           "0x3Bcf4185443A339517aD4e580067f178d1B68E1D"
         ]
       },
+      "implementations": [
+        "0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81",
+        "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2",
+        "0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295",
+        "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d",
+        "0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352",
+        "0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769",
+        "0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D",
+        "0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686",
+        "0x6369F971fd1f1f230B8584151Ed7747FF710Cc68",
+        "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b",
+        "0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4",
+        "0x3Bcf4185443A339517aD4e580067f178d1B68E1D"
+      ],
       "sinceTimestamp": 1671625595,
       "values": {
         "aavePool": "0x0000000000000000000000000000000000000000",
@@ -538,6 +554,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1693608707,
       "values": {
         "domainSeparator": "0xa721cba4d2f32af7fbfd7a202a7c61a16ec27fc0140de338b2f91560251fd997",

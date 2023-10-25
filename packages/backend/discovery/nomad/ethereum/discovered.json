@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18340273,
   "configHash": "0x3c8de204c06277389693a4ba9864893c9150841ca216bc8526f50a9c3d91ae34",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
@@ -14,6 +14,7 @@
         "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "implementation": "0x7f221A1850c12b57fed1f0831dd25399a13b68c2"
       },
+      "implementations": ["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"],
       "sinceTimestamp": 1641898337,
       "values": {
         "committedRoot": "0x9977da56f7c9e2955827bca8ea2675bc565e31b7095f276e83f0850923e9e66b",
@@ -66,6 +67,7 @@
         "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "implementation": "0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"
       },
+      "implementations": ["0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"],
       "sinceTimestamp": 1641898263,
       "values": {
         "domains": [1650811245, 25393, 2019844457, 1635148152, 1702260083],
@@ -99,6 +101,7 @@
         "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "implementation": "0xe0db61ac718f502B485DEc66D013afbbE0B52F84"
       },
+      "implementations": ["0xe0db61ac718f502B485DEc66D013afbbE0B52F84"],
       "sinceTimestamp": 1641899423,
       "values": {
         "accountant": "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c",
@@ -131,6 +134,7 @@
         "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "implementation": "0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"
       },
+      "implementations": ["0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"],
       "sinceTimestamp": 1641898210,
       "values": {
         "committedRoot": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
@@ -161,6 +165,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641859677,
       "values": {
         "domainSeparator": "0x4b0a5430a1110ea8471f56a66e59c488aebf0374837beab79653f791466fbcaf",
@@ -202,6 +207,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641860106,
       "values": {
         "domainSeparator": "0x07b1f27ad489f4abb323a3805d73cdefbccbf32dd9ad3c5d67f402f356cef96d",

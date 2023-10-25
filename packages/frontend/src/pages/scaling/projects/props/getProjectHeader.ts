@@ -1,11 +1,8 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
-  assert,
   DetailedTvlApiCharts,
   DetailedTvlApiResponse,
-  TvlApiCharts,
-  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
@@ -18,26 +15,18 @@ import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionU
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../../utils/tvl/getTVLBreakdown'
 import { unifyTokensResponse } from '../../../../utils/tvl/getTvlStats'
-import {
-  getDetailedTvlWithChange,
-  getTvlWithChange,
-} from '../../../../utils/tvl/getTvlWithChange'
+import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
   project: Layer2,
   config: Config,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
 
-  const getDetailed = (
-    chart: TvlApiCharts | DetailedTvlApiCharts | undefined,
-  ) => {
-    if (chart) {
-      assert(chart.hourly.types.length === 9)
-    }
+  const getDetailed = (chart: DetailedTvlApiCharts | undefined) => {
     const { parts, partsWeeklyChange } = getDetailedTvlWithChange(chart)
     return {
       tvl: parts.tvl,
@@ -48,24 +37,9 @@ export function getProjectHeader(
     }
   }
 
-  const getBasic = (chart: TvlApiCharts | DetailedTvlApiCharts | undefined) => {
-    if (chart) {
-      assert(chart.hourly.types.length === 3)
-    }
-    const { tvl, tvlWeeklyChange } = getTvlWithChange(chart)
-    return {
-      tvl,
-      tvlWeeklyChange,
-      canonical: undefined,
-      external: undefined,
-      native: undefined,
-    }
-  }
-
-  const { tvl, tvlWeeklyChange, canonical, external, native } =
-    apiProject?.charts.hourly.types.length === 9
-      ? getDetailed(apiProject.charts)
-      : getBasic(apiProject?.charts)
+  const { tvl, tvlWeeklyChange, canonical, external, native } = getDetailed(
+    apiProject?.charts,
+  )
 
   const activityData =
     activityApiResponse?.projects[project.id.toString()]?.daily.data
@@ -108,7 +82,6 @@ export function getProjectHeader(
     showTvlBreakdown: config.features.tvlBreakdown,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     links: getLinks(project.display.links),
-    detailedTvlEnabled: config.features.detailedTvl,
     stage: project.stage,
     // TODO: will need to be riskValues when rosette has hover
     risks: getRiskValues(project.riskView),

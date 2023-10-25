@@ -48,7 +48,7 @@ export function Chart(props: ChartProps) {
 
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
-
+  const header = isActivity ? <ActivityHeader /> : <TvlHeader />
   return (
     <>
       <section
@@ -65,7 +65,7 @@ export function Chart(props: ChartProps) {
           props.sectionClassName,
         )}
       >
-        {props.withHeader && isActivity ? <ActivityHeader /> : <TvlHeader />}
+        {props.withHeader && !props.metaChart && header}
         {!props.metaChart && props.hasActivity && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
             <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">

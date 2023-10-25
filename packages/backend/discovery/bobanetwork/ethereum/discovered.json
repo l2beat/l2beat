@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18220383,
   "configHash": "0xda40a10fea337b878d96bebe6d7a610052e57f0c4693e22a395313e9ac4d0c8d",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger_2",
@@ -115,6 +115,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820"
       },
+      "implementations": ["0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820"],
       "sinceTimestamp": 1628792652,
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
@@ -207,6 +208,7 @@
         "implementation": "0xAf41c681143Cb91f218959375f4452A604504833",
         "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
       },
+      "implementations": ["0xAf41c681143Cb91f218959375f4452A604504833"],
       "sinceTimestamp": 1628793901,
       "values": {
         "currentDepositInfoHash": "0x4ee78b8393518f69fe7fbe911c3b3e181568082aa1e248bd2ace5508666a21ce",

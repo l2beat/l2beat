@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18189883,
   "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "OneStepProverMath",
@@ -21,6 +21,7 @@
         "implementation": "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1656050353,
       "values": {
         "batchCount": 20597,
@@ -40,6 +41,7 @@
         "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "implementations": ["0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45"],
       "sinceTimestamp": 1656312893,
       "values": {
         "counterpartGateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
@@ -75,6 +77,7 @@
         "implementation": "0x32642eE509001D02615951090c7c56D6000e22C2",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x32642eE509001D02615951090c7c56D6000e22C2"],
       "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -89,6 +92,7 @@
         "implementation": "0x86f0cf42Ad673B3D666d103E009EC142D1298a17",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "implementations": ["0x86f0cf42Ad673B3D666d103E009EC142D1298a17"],
       "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
@@ -221,6 +225,7 @@
         "implementation": "0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566"],
       "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -250,6 +255,7 @@
         "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "implementations": ["0xb4299A1F5f26fF6a98B7BA35572290C359fde900"],
       "sinceTimestamp": 1656312805,
       "values": {
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
@@ -268,6 +274,7 @@
         "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x1066CEcC8880948FE55e427E94F1FF221d626591"],
       "sinceTimestamp": 1656050353,
       "values": {
         "activeOutbox": "0x0000000000000000000000000000000000000000",
@@ -291,6 +298,7 @@
         "implementation": "0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x1b2676D32E2f7430a564DD4560641F990dFE3D6a"],
       "sinceTimestamp": 1656050353,
       "values": {
         "allowListEnabled": false,
@@ -307,6 +315,7 @@
         "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "implementations": ["0x52595021fA01B3E14EC6C88953AFc8E35dFf423c"],
       "sinceTimestamp": 1656312748,
       "values": {
         "counterpartGateway": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
@@ -325,6 +334,7 @@
         "implementation": "0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f"],
       "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -358,6 +368,7 @@
         "implementation": "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "implementations": ["0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3"],
       "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
@@ -400,6 +411,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1692138791,
       "values": {
         "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
@@ -432,6 +444,10 @@
         "adminImplementation": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
         "userImplementation": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
       },
+      "implementations": [
+        "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
+        "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
+      ],
       "sinceTimestamp": 1656050353,
       "values": {
         "baseStake": "1000000000000000000",

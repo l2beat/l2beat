@@ -25,7 +25,6 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       tvlView: getScalingTvlView(
-        config,
         ordering,
         tvlApiResponse,
         tvl,
@@ -33,7 +32,6 @@ export function getProps(
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
-      showDetailedTvl: config.features.detailedTvl,
       milestones: config.milestones,
     },
     wrapper: {
