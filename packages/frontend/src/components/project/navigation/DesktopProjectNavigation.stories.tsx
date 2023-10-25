@@ -48,6 +48,13 @@ const meta: Meta<typeof DesktopProjectNavigation> = {
 export default meta
 type Story = StoryObj<typeof DesktopProjectNavigation>
 
-//TODO: (chromatic) CHECK THIS OUT
-export const WithoutProjectHeader: Story = {}
+export const WithoutProjectHeader: Story = {
+  decorators: [
+    (Story) => (
+      <div className="mt-12">
+        <Story />
+      </div>
+    ),
+  ],
+}
 export const WithProjectHeader: Story = {}
