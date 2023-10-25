@@ -1,4 +1,5 @@
 import { withThemeByDataAttribute } from '@storybook/addon-styling'
+import React from 'react'
 import '../src/styles/main.scss'
 import '../src/styles/style.css'
 import { allModes } from './modes'
@@ -19,6 +20,12 @@ export const decorators = [
     defaultTheme: 'light',
     attributeName: 'class',
   }),
+  (Story) => (
+    <div style={{ margin: '3em' }}>
+      {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
+      <Story />
+    </div>
+  ),
 ]
 
 export const parameters = {

@@ -2,26 +2,50 @@ import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { configureHoverableDropdown } from '../scripts/configureHoverableDropdown'
-import { hoverOver } from '../utils/storybook/hoverOver'
-import { HoverableDropdown as HoverableDropdownComponent } from './HoverableDropdown'
+import { within, userEvent } from '@storybook/testing-library'
+import { HoverableDropdown } from './HoverableDropdown'
+import { Meta, StoryObj } from '@storybook/react'
 
-export default {
+const meta: Meta<typeof HoverableDropdown> = {
   title: 'Components/HoverableDropdown',
+  component: HoverableDropdown,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureHoverableDropdown()
+      }, [])
+      return <Story />
+    },
+  ],
+}
+export default meta
+type Story = StoryObj<typeof HoverableDropdown>
+
+export const Primary: Story = {
+  args: {
+    children: range(4).map((i) => {
+      return <div key={i}>Example dropdown item {i}</div>
+    }),
+    title: 'Example dropdown',
+  },
 }
 
-export const HoverableDropdown = () => {
-  useEffect(() => {
-    configureHoverableDropdown()
-    hoverOver('.HoverableDropdownToggle')
-  }, [])
+export const Hovered: Story = {
+  args: {
+    children: range(4).map((i) => {
+      return <div key={i}>Example dropdown item {i}</div>
+    }),
+    title: 'Example dropdown',
+  },
 
-  return (
-    <div className="p-4">
-      <HoverableDropdownComponent title="Example dropdown">
-        {range(4).map((i) => {
-          return <div key={i}>Example dropdown item {i}</div>
-        })}
-      </HoverableDropdownComponent>
-    </div>
-  )
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const toggle = canvas.getByText('Example dropdown')
+    await userEvent.hover(toggle)
+  },
+  parameters: {
+    pseudo: {
+      hover: true,
+    },
+  },
 }

@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import { userEvent, within } from '@storybook/testing-library'
 
 import { configureCharts } from '../../scripts/charts'
-import { click } from '../../utils/storybook/click'
 import { Chart } from './Chart'
 
 const meta: Meta<typeof Chart> = {
