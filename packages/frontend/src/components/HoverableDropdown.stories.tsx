@@ -46,7 +46,7 @@ export const Hovered: Story = {
   },
   parameters: {
     chromatic: {
-      delay: 250,
+      delay: 400,
     },
     pseudo: {
       hover: true,

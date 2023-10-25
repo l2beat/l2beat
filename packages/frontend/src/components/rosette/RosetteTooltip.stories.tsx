@@ -14,14 +14,14 @@ const meta: Meta<typeof TooltipComponent> = {
       useEffect(() => {
         configureTooltips()
       }, [])
-      return <Story />
+      return (
+        <div>
+          <Story />
+          <TooltipComponent />
+        </div>
+      )
     },
   ],
-  parameters: {
-    chromatic: {
-      delay: 250,
-    },
-  },
 }
 export default meta
 type Story = StoryObj<typeof TooltipComponent>
@@ -73,12 +73,13 @@ export const RosetteTooltip: Story = {
       >
         <span>Element with tooltip</span>
       </span>
-      <TooltipComponent />
     </div>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const tooltip = canvas.getByText('Element with tooltip')
+    // Wait for the tooltip to appear
+    await new Promise((resolve) => setTimeout(resolve, 200))
     await waitFor(async () => {
       await userEvent.hover(tooltip)
     })
