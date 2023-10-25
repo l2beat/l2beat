@@ -20,7 +20,11 @@ import {
   LivenessRepository,
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
-import { LivenessIndexer, mergeConfigs } from './LivenessIndexer'
+import {
+  adjustToForBigqueryCall,
+  LivenessIndexer,
+  mergeConfigs,
+} from './LivenessIndexer'
 import {
   LivenessConfig,
   LivenessFunctionCall,
@@ -193,7 +197,7 @@ describe(LivenessIndexer.name, () => {
         FROM,
       )
       const from = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
-      const to = UnixTime.fromDate(new Date('2022-01-03T00:00:00Z'))
+      const to = UnixTime.fromDate(new Date('2022-01-03T01:00:00Z'))
 
       await livenessIndexer.update(from.toNumber(), to.toNumber())
 
@@ -408,10 +412,6 @@ describe(LivenessIndexer.name, () => {
         FROM,
         TO,
       )
-    })
-
-    it('does not call BigQuery if configs are empty', () => {
-      throw new Error('not implemented')
     })
   })
 
@@ -629,6 +629,10 @@ describe(LivenessIndexer.name, () => {
         TO,
       )
     })
+
+    it('does not call BigQuery if configs are empty', () => {
+      throw new Error('not implemented')
+    })
   })
 
   describe(LivenessIndexer.prototype.getSafeHeight.name, () => {
@@ -702,3 +706,24 @@ function getMockLivenessIndexer(
     indexerConfigHash: getLivenessConfigHash(projects),
   }
 }
+
+describe(adjustToForBigqueryCall.name, () => {
+  it('the same day', () => {
+    const from = UnixTime.fromDate(new Date('2022-01-01T12:00:00Z'))
+
+    const result = adjustToForBigqueryCall(
+      from.toNumber(),
+      from.add(1, 'hours').toNumber(),
+    )
+
+    expect(result).toEqual(UnixTime.fromDate(new Date('2022-01-01T13:00:00Z')))
+  })
+
+  it('different days', () => {
+    const from = UnixTime.fromDate(new Date('2022-01-01T12:00:00Z'))
+    const to = UnixTime.fromDate(new Date('2022-01-02T12:00:00Z'))
+
+    const result = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
+    expect(result).toEqual(UnixTime.fromDate(new Date('2022-01-02T00:00:00Z')))
+  })
+})

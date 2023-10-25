@@ -55,15 +55,9 @@ export class LivenessIndexer extends ChildIndexer {
     await super.start()
   }
 
-  override async update(from: number, _to: number): Promise<number> {
-    // TODO: think about this logic, should it always add 1 hour?
+  override async update(from: number, to: number): Promise<number> {
     const fromUnixTime = new UnixTime(from)
-    const _toUnixTime = new UnixTime(_to)
-    let toUnixTime = fromUnixTime.add(1, 'hours')
-    const hoursDiff = (_toUnixTime.toNumber() - fromUnixTime.toNumber()) / 3600
-    if (hoursDiff >= 24) {
-      toUnixTime = fromUnixTime.add(24, 'hours')
-    }
+    const toUnixTime = adjustToForBigqueryCall(from, to)
 
     let data: LivenessRecord[] | undefined
 
@@ -172,5 +166,16 @@ export function mergeConfigs(projects: Project[]): LivenessConfig {
     functionCalls: projects
       .flatMap((p) => p.livenessConfig?.functionCalls)
       .filter(notUndefined),
+  }
+}
+
+export function adjustToForBigqueryCall(from: number, to: number): UnixTime {
+  const fromUnixTime = new UnixTime(from)
+  const toUnixTime = new UnixTime(to)
+
+  if (!fromUnixTime.toStartOf('day').equals(toUnixTime.toStartOf('day'))) {
+    return fromUnixTime.toNext('day')
+  } else {
+    return toUnixTime
   }
 }
