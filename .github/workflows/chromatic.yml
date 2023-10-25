@@ -7,7 +7,7 @@ on:
 
 jobs:
   changes:
-    name: Determine if we need to run the workflow
+    name: FE files check
     runs-on: ubuntu-latest
     outputs:
       changesFound: ${{ steps.filter.outputs.changesFound }}
@@ -36,9 +36,23 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Publish to Chromatic
+        if: github.ref != 'refs/heads/main'
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
           workingDir: packages/frontend
           exitZeroOnChanges: true
+          onlyChanged: true
+          externals: packages/frontend/tailwind.config.js
+      - name: Publish to Chromatic and auto accept changes
+        if: github.ref == 'refs/heads/main'
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: storybook:build
+          workingDir: packages/frontend
+          exitZeroOnChanges: true
+          onlyChanged: true
+          externals: packages/frontend/tailwind.config.js
+          autoAcceptChanges: true
