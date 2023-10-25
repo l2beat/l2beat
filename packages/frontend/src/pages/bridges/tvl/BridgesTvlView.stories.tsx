@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
-import { userEvent, within } from '@storybook/testing-library'
 import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
 import { configureTabs } from '../../../scripts/configureTabs'
 import { BridgesTvlView } from './BridgesTvlView'
@@ -681,14 +681,14 @@ type Story = StoryObj<typeof BridgesTvlView>
 export const Active: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByText('Active projects'))
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
   },
 }
 
 export const ActiveWithCanonicalBridges: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByText('Active projects'))
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
     await userEvent.click(canvas.getByText('Include canonical bridges'))
   },
 }
@@ -696,14 +696,14 @@ export const ActiveWithCanonicalBridges: Story = {
 export const Archived: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByText('Archived projects'))
+    await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
   },
 }
 
 export const ArchivedWithCanonicalBridges: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByText('Archived projects'))
+    await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
     await userEvent.click(canvas.getByText('Include canonical bridges'))
   },
 }
