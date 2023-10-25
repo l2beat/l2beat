@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18340367,
   "configHash": "0x464a979ad1c5441bd1a1a9b7ee6ea055bc3b9c272403ddb9c0e610587ff3c1d9",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "VotingToken",
@@ -128,6 +128,7 @@
         "implementation": "0x5ab0A812327aD959dE664AEC8408Ef8c6ABe7184",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "implementations": ["0x5ab0A812327aD959dE664AEC8408Ef8c6ABe7184"],
       "sinceTimestamp": 1682355155,
       "values": {
         "chainId": 1,
@@ -181,6 +182,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1597806870,
       "values": {
         "domainSeparator": "0xc6747c7ca6899274b3575cd632681f9db9a0788dd1b7c7379382739baa6aa665",
@@ -240,6 +242,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1636157803,
       "values": {
         "domainSeparator": "0xbb022dfb1fe065f2a2c6ea647af6240343ff4b980bc3c1183ecd630958c3b59e",
