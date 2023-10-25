@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
-import { userEvent, within } from '@storybook/testing-library'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
 import { configureTabs } from '../../../../scripts/configureTabs'
 import { ScalingRiskView } from './ScalingRiskView'
