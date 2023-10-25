@@ -9,6 +9,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  NUGGETS,
   OPERATOR,
   subtractOne,
 } from './common'
@@ -99,7 +100,7 @@ export const kroma: Layer2 = {
       ...RISK_VIEW.STATE_FP_INT_ZK,
       description:
         RISK_VIEW.STATE_FP_INT_ZK.description +
-        ' The challenge protocol can be subject to delay attacks and can fail under certain conditions.',
+        " The challenge protocol can be subject to delay attacks and can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault, meaning that DA is not enforced.",
       sentiment: 'warning',
     },
     dataAvailability: {
@@ -417,6 +418,13 @@ export const kroma: Layer2 = {
       link: 'https://twitter.com/kroma_network/status/1699267271968055305?s=20',
       date: '2023-09-06T00:00:00Z',
       description: 'Kroma is live on mainnet.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Kroma’s Road to Stage 2',
+      url: 'https://blog.kroma.network/kromas-road-to-stage-2-0c02e41d8c99',
+      thumbnail: NUGGETS.THUMBNAILS.KROMA_01,
     },
   ],
 }
