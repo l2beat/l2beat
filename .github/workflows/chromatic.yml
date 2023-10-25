@@ -1,9 +1,9 @@
 name: "Chromatic"
 
 on:
-  push:
-    paths:
-      - "packages/frontend"
+  pull_request:
+    types:
+      - synchronize
 
 jobs:
   chromatic:
