@@ -1,5 +1,6 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
+import { multicallConfig } from '@l2beat/discovery'
 import { EtherscanClient } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
@@ -191,6 +192,7 @@ export function getLocalConfig(env: Env): Config {
           rpcGetLogsMaxRange: env.optionalInteger(
             'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
           ),
+          multicall: multicallConfig.ethereum,
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
           minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
