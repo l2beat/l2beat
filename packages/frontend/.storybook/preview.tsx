@@ -3,6 +3,7 @@ import React from 'react'
 import '../src/styles/main.scss'
 import '../src/styles/style.css'
 import { allModes } from './modes'
+import { viewports } from './viewports'
 
 document.body.classList.add(
   'bg-white',
@@ -38,6 +39,9 @@ export const parameters = {
     },
   },
   viewport: {
-    viewports: allModes,
+    viewports: viewports,
+  },
+  chromatic: {
+    modes: allModes,
   },
 }

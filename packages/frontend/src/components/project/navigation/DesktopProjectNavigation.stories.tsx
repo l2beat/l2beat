@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
+import { allModes } from '../../../../.storybook/modes'
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
@@ -36,6 +37,12 @@ const meta: Meta<typeof DesktopProjectNavigation> = {
   args: {
     project: { title: 'Arbitrum One', icon: '/icons/arbitrum.png' },
     sections,
+  },
+  parameters: {
+    chromatic: {
+      'light desktop': allModes['light desktop'],
+      'dark desktop': allModes['dark desktop'],
+    },
   },
 }
 export default meta

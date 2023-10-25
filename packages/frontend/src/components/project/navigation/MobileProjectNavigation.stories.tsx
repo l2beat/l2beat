@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
+import { allModes } from '../../../../.storybook/modes'
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
 import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
@@ -36,6 +37,12 @@ const meta: Meta<typeof MobileProjectNavigation> = {
   ],
   args: {
     sections,
+  },
+  parameters: {
+    chromatic: {
+      'light mobile': allModes['light mobile'],
+      'dark mobile': allModes['dark mobile'],
+    },
   },
 }
 export default meta

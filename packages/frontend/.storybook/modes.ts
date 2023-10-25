@@ -1,16 +1,29 @@
-export const allModes = {
-  mobile: {
-    name: 'Mobile',
-    styles: {
-      width: '390px',
-      height: '844px',
-    },
+import { viewports } from './viewports'
+
+type Viewport = keyof typeof viewports
+type Theme = 'light' | 'dark'
+
+type ModeKey = `${Theme} ${Viewport}`
+type Mode = {
+  theme: Theme
+  viewport: Viewport
+}
+
+export const allModes: Record<ModeKey, Mode> = {
+  'light mobile': {
+    theme: 'light',
+    viewport: 'mobile',
   },
-  desktop: {
-    name: 'Desktop',
-    styles: {
-      width: '2560px',
-      height: '1440px',
-    },
+  'dark mobile': {
+    theme: 'dark',
+    viewport: 'mobile',
+  },
+  'light desktop': {
+    theme: 'light',
+    viewport: 'desktop',
+  },
+  'dark desktop': {
+    theme: 'dark',
+    viewport: 'desktop',
   },
 }
