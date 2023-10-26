@@ -41,7 +41,8 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
-          workingDir: packages/frontend
+          workingDir: "packages/frontend"
+          onlyChanged: true
           exitZeroOnChanges: true
           exitOnceUploaded: true
       - name: Publish to Chromatic and auto accept changes
@@ -50,7 +51,8 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
-          workingDir: packages/frontend
+          workingDir: "packages/frontend"
+          onlyChanged: true
           exitZeroOnChanges: true
           exitOnceUploaded: true
           autoAcceptChanges: true

@@ -60,6 +60,11 @@ export const ScrolledToMiddle: Story = {
     )
     list?.scrollTo(list.scrollWidth / 2, 0)
   },
+  parameters: {
+    chromatic: {
+      delay: 400,
+    },
+  },
 }
 
 export const ScrolledToEnd: Story = {
