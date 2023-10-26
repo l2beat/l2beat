@@ -17,7 +17,11 @@ import {
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient, mergeConfigs } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
-import { LivenessConfig } from './types/LivenessConfig'
+import {
+  LivenessConfig,
+  LivenessFunctionCall,
+  LivenessTransfer,
+} from './types/LivenessConfig'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
@@ -84,26 +88,6 @@ describe(LivenessIndexer.name, () => {
 
   describe(LivenessIndexer.prototype.update.name, () => {
     it('handles error', async () => {
-      const projects: Project[] = [
-        {
-          projectId: ProjectId('project1'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [
-              {
-                projectId: ProjectId('project1'),
-                from: ADDRESS_1,
-                to: ADDRESS_2,
-                type: 'DA',
-                sinceTimestamp: FROM,
-              },
-            ],
-            functionCalls: [],
-          },
-        },
-      ]
-
       const livenessClient = mockObject<LivenessClient>({
         getTransfers: () => {
           throw new Error('error')
@@ -129,73 +113,9 @@ describe(LivenessIndexer.name, () => {
     })
 
     it('calls getLivenessData and adds results to database, returns "to"', async () => {
-      const projects: Project[] = [
-        {
-          projectId: ProjectId('project1'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [
-              {
-                projectId: ProjectId('project1'),
-                from: ADDRESS_1,
-                to: ADDRESS_2,
-                type: 'DA',
-                sinceTimestamp: FROM,
-                untilTimestamp: FROM.add(2, 'days'),
-              },
-            ],
-            functionCalls: [
-              {
-                projectId: ProjectId('project1'),
-                address: ADDRESS_3,
-                selector: '0x9aaab648',
-                sinceTimestamp: FROM,
-                type: 'STATE',
-              },
-            ],
-          },
-        },
-      ]
-      const transfers = [
-        {
-          block_number: 1,
-          block_timestamp: { value: FROM.toDate().toISOString() },
-          from_address: ADDRESS_1,
-          to_address: ADDRESS_2,
-          transaction_hash: '0xabcdef1234567890',
-        },
-      ]
-
-      const functionCalls = [
-        {
-          block_number: 2,
-          block_timestamp: {
-            value: FROM.add(1, 'minutes').toDate().toISOString(),
-          },
-          input: '0x9aaab648',
-          to_address: ADDRESS_3,
-          transaction_hash: '0xabcdef1234567891',
-        },
-      ]
-      const config: LivenessConfig = mergeConfigs(projects)
-
-      const transfersConfig = config.transfers.filter((c) =>
-        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
-      )
-      const functionCallsConfig = config.functionCalls.filter((c) =>
-        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
-      )
-
       const expectedToSave: LivenessRecord[] = [
-        ...transformTransfersQueryResult(
-          transfersConfig,
-          BigQueryTransfersResult.parse(transfers),
-        ),
-        ...transformFunctionCallsQueryResult(
-          functionCallsConfig,
-          BigQueryFunctionCallsResult.parse(functionCalls),
-        ),
+        ...TRANSFERS_EXPECTED,
+        ...FUNCTIONS_EXPECTED,
       ]
       const livenessClient = mockObject<LivenessClient>({
         getLivenessData: mockFn().resolvesTo({
@@ -204,15 +124,12 @@ describe(LivenessIndexer.name, () => {
         }),
       })
 
-      const livenessIndexer = new LivenessIndexer(
-        logger,
-        hourlyIndexer,
+      const livenessIndexer = getMockLivenessIndexer(
         projects,
+        undefined,
         livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
+      ).livenessIndexer
+
       const currentTo = await livenessIndexer.update(
         FROM.toNumber(),
         TO.toNumber(),
@@ -265,11 +182,15 @@ describe(LivenessIndexer.name, () => {
   })
 })
 
+// MOCKS
+
 function getMockLivenessIndexer(
   projects: Project[],
   configHash: Hash256 | undefined,
+  providedLivenessClient?: LivenessClient,
 ) {
-  const livenessClient = mockObject<LivenessClient>({})
+  const livenessClient =
+    providedLivenessClient ?? mockObject<LivenessClient>({})
 
   const stateRepository = mockObject<IndexerStateRepository>({
     findSafeHeight() {
@@ -301,7 +222,29 @@ function getMockLivenessIndexer(
   }
 }
 
-// MOCKS
+function getFilteredConfigs(
+  projects: Project[],
+  from: UnixTime,
+  to: UnixTime,
+): {
+  transfers: LivenessTransfer[]
+  functionCalls: LivenessFunctionCall[]
+} {
+  const config: LivenessConfig = mergeConfigs(projects)
+
+  const transfers = config.transfers.filter((c) =>
+    isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
+  )
+
+  const functionCalls = config.functionCalls.filter((c) =>
+    isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
+  )
+
+  return {
+    transfers,
+    functionCalls,
+  }
+}
 
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
@@ -352,3 +295,64 @@ const wrappedLogger = mockObject<Logger>({
 const logger = mockObject<Logger>({
   for: () => wrappedLogger,
 })
+
+const projects: Project[] = [
+  {
+    projectId: ProjectId('project1'),
+    escrows: [],
+    type: 'layer2',
+    livenessConfig: {
+      transfers: [
+        {
+          projectId: ProjectId('project1'),
+          from: ADDRESS_1,
+          to: ADDRESS_2,
+          type: 'DA',
+          sinceTimestamp: FROM,
+          untilTimestamp: FROM.add(2, 'days'),
+        },
+      ],
+      functionCalls: [
+        {
+          projectId: ProjectId('project1'),
+          address: ADDRESS_3,
+          selector: '0x9aaab648',
+          sinceTimestamp: FROM,
+          type: 'STATE',
+        },
+      ],
+    },
+  },
+]
+
+const TRANSFER_RESPONSE = [
+  {
+    block_number: 1,
+    block_timestamp: { value: FROM.toDate().toISOString() },
+    from_address: ADDRESS_1,
+    to_address: ADDRESS_2,
+    transaction_hash: '0xabcdef1234567890',
+  },
+]
+
+const FUNCTIONS_RESPONSE = [
+  {
+    block_number: 2,
+    block_timestamp: {
+      value: FROM.add(1, 'minutes').toDate().toISOString(),
+    },
+    input: '0x9aaab648',
+    to_address: ADDRESS_3,
+    transaction_hash: '0xabcdef1234567891',
+  },
+]
+
+const TRANSFERS_EXPECTED = transformTransfersQueryResult(
+  getFilteredConfigs(projects, FROM, TO).transfers,
+  BigQueryTransfersResult.parse(TRANSFER_RESPONSE),
+)
+
+const FUNCTIONS_EXPECTED = transformFunctionCallsQueryResult(
+  getFilteredConfigs(projects, FROM, TO).functionCalls,
+  BigQueryFunctionCallsResult.parse(FUNCTIONS_RESPONSE),
+)
