@@ -15,6 +15,7 @@ import {
   LivenessRepository,
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
+import { LivenessClient } from './LivenessClient'
 import {
   adjustToForBigqueryCall,
   LivenessIndexer,
@@ -26,16 +27,15 @@ import {
   LivenessTransfer,
 } from './types/LivenessConfig'
 import {
+  BigQueryFunctionCallsResult,
+  BigQueryTransfersResult,
+} from './types/model'
+import {
   getLivenessConfigHash,
   isTimestampInRange,
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
-import { LivenessClient } from './LivenessClient'
-import {
-  BigQueryFunctionCallsResult,
-  BigQueryTransfersResult,
-} from './types/model'
 
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()

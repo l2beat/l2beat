@@ -1,12 +1,11 @@
+import { BigQueryClient } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
 } from './types/model'
-import { getFunctionCallQuery } from './utils'
-import { getTransferQuery } from './utils'
-import { BigQueryClient } from '@l2beat/shared'
+import { getFunctionCallQuery, getTransferQuery } from './utils'
 
 export interface FunctionCallQueryParams {
   address: EthereumAddress

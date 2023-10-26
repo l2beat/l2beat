@@ -9,6 +9,7 @@ import {
   LivenessRepository,
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
+import { LivenessClient } from './LivenessClient'
 import {
   LivenessConfig,
   LivenessFunctionCall,
@@ -20,7 +21,6 @@ import {
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
-import { LivenessClient } from './LivenessClient'
 
 export class LivenessIndexer extends ChildIndexer {
   private readonly indexerId = 'liveness_indexer'
