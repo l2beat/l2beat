@@ -59,3 +59,7 @@ jobs:
       - name: Show logs
         if: always()
         run: cat /home/runner/work/l2beat/l2beat/packages/frontend/build-storybook.log
+        run: cd /tmp/
+        run: cd (ls -d * | grep "^chromatic--")
+        run: ls
+        run: cat preview-stats.json
