@@ -6,6 +6,7 @@ import { mkdir, writeFile } from 'fs/promises'
 import { isObject } from 'lodash'
 
 import { ConfigReader } from '../discovery/config/ConfigReader'
+import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { ChainId } from '../utils/ChainId'
 import { EthereumAddress } from '../utils/EthereumAddress'
 
@@ -30,7 +31,8 @@ export async function runInversion(
   chain: ChainId,
 ): Promise<void> {
   const discovery = await configReader.readDiscovery(project, chain)
-  const addresses = calculateInversion(discovery)
+  const config = await configReader.readConfig(project, chain)
+  const addresses = calculateInversion(discovery, config)
 
   if (useMermaidMarkup) {
     const mermaid = createMermaid(addresses)
@@ -60,6 +62,7 @@ export async function runInversion(
 
 export function calculateInversion(
   discovery: DiscoveryOutput,
+  config: DiscoveryConfig,
 ): InvertedAddresses {
   const addresses = new Map<string, AddressDetails>()
 
@@ -74,8 +77,9 @@ export function calculateInversion(
     let details = addresses.get(address)
     if (!details) {
       details = {
-        name: discovery.contracts.find((x) => x.address.toString() === address)
-          ?.name,
+        name:
+          discovery.contracts.find((x) => x.address.toString() === address)
+            ?.name ?? config.names[address],
         address,
         roles: [],
       }

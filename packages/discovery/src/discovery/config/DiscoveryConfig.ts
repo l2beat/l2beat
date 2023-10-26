@@ -23,6 +23,10 @@ export class DiscoveryConfig {
     return this.config.name
   }
 
+  get names(): Record<string, string> {
+    return this.config.names ?? {}
+  }
+
   get chainId(): ChainId {
     return this.config.chain
   }

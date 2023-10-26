@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.19.1
+
+### Patch Changes
+
+- b34f1df: Use config.json names entry in naming EOAs in the mermaid diagram
+
 ## 0.19.0
 
 ### Minor Changes
