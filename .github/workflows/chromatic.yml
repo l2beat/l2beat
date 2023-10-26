@@ -58,8 +58,4 @@ jobs:
           autoAcceptChanges: true
       - name: Show logs
         if: always()
-        run: cat /home/runner/work/l2beat/l2beat/packages/frontend/build-storybook.log
-        run: cd /tmp/
-        run: cd (ls -d * | grep "^chromatic--")
-        run: ls
-        run: cat preview-stats.json
+        run: cat /home/runner/work/l2beat/l2beat/packages/frontend/build-storybook.log && cd /tmp && cd (ls -d * | grep "^chromatic--") && ls && cat preview-stats.json
