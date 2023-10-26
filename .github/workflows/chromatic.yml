@@ -1,5 +1,10 @@
 name: "Chromatic"
 
+# It would be nice to use the @chromeui/action to build storybook and deploy to chromatic
+# Although I had problem with it to make turbosnap work
+# You can check the issue here:
+# https://github.com/IanVS/vite-plugin-turbosnap/issues/13
+
 on: push
 
 jobs:
@@ -23,12 +28,4 @@ jobs:
         run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
-        uses: chromaui/action@v1
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: storybook:build
-          workingDir: "packages/frontend"
-          onlyChanged: true
-          exitZeroOnChanges: true
-          exitOnceUploaded: true
-          autoAcceptChanges: true
+        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --auto-accept-changes
