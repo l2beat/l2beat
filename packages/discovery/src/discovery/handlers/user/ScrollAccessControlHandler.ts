@@ -4,7 +4,10 @@ import * as z from 'zod'
 
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import {
+  ContractMetadata,
+  DiscoveryProvider,
+} from '../../provider/DiscoveryProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import { ClassicHandler, HandlerResult } from '../Handler'
 
@@ -85,6 +88,12 @@ export class ScrollAccessControlHandler implements ClassicHandler {
     > = {}
     const targets: Record<string, Record<string, Set<string>>> = {}
 
+    // Metadatas of all contracts that are involved in the access modification events
+    const contractToMetadata: Record<string, ContractMetadata> = {}
+    // Proxy contracts to their implementations mapping.
+    // (i.e. for contracts involved in the access modification events)
+    const proxyContractToImplementations: Record<string, EthereumAddress[]> = {}
+
     getRole('DEFAULT_ADMIN_ROLE')
 
     function getRole(role: string): {
@@ -114,21 +123,12 @@ export class ScrollAccessControlHandler implements ClassicHandler {
       return value
     }
 
-    const proxyDetector = new ProxyDetector(provider, this.logger)
-    async function decodeSelectors(
+    const proxyDetector = new ProxyDetector(provider, DiscoveryLogger.SILENT)
+    function decodeSelectors(
       target: EthereumAddress,
       encodedSelectors: string[],
-    ): Promise<string[]> {
-      const abiAddresses = [target]
-
-      const proxy = await proxyDetector.detectProxy(target, blockNumber)
-      if (proxy) {
-        abiAddresses.push(...proxy.implementations)
-      }
-
-      const metadatas = await Promise.all(
-        abiAddresses.map((a) => provider.getMetadata(a)),
-      )
+      metadatas: ContractMetadata[],
+    ): string[] {
       const ifaces = metadatas.map((m) => new utils.Interface(m.abi))
       const abiSelectors = ifaces.flatMap((iface) =>
         Object.entries(iface.functions).map(([functionName, fragment]) => [
@@ -149,6 +149,64 @@ export class ScrollAccessControlHandler implements ClassicHandler {
       })
     }
 
+    /**
+     * Resolves all metadata for the contracts that are involved in the access
+     * modification events.
+     */
+    async function resolveMetaDatas(): Promise<void> {
+      const accessChangeLogs = logs
+        .map(parseRoleLog)
+        .filter((parsed) =>
+          ['GrantAccess', 'RevokeAccess'].includes(parsed.type),
+        ) as AccessChangeLog[]
+
+      const contracts = new Set<EthereumAddress>(
+        accessChangeLogs.map((parsed) => parsed.target),
+      )
+
+      // Find all proxy contracts and their implementations
+      await Promise.all(
+        [...contracts].map(async (address) => {
+          const proxy = await proxyDetector.detectProxy(address, blockNumber)
+          if (proxy) {
+            proxyContractToImplementations[address.toString()] =
+              proxy.implementations
+          }
+        }),
+      )
+      const implementationContracts = new Set<EthereumAddress>(
+        Object.values(proxyContractToImplementations).flat(),
+      )
+
+      // Resovle all metadata for the contracts
+      await Promise.all(
+        [...contracts, ...implementationContracts].map(async (address) => {
+          contractToMetadata[address.toString()] =
+            await provider.getMetadata(address)
+        }),
+      )
+    }
+
+    await resolveMetaDatas()
+
+    /**
+     * @param address
+     * @returns Metadata of the contract and all its implementations
+     */
+    function getMetadatas(address: EthereumAddress): ContractMetadata[] {
+      const contractMetadata = contractToMetadata[address.toString()]
+      const implementationsMetaData = (
+        proxyContractToImplementations[address.toString()] ?? []
+      ).map(
+        (implementationAddress) =>
+          contractToMetadata[implementationAddress.toString()],
+      )
+
+      return [contractMetadata, ...implementationsMetaData].filter(
+        (metadata) => metadata !== undefined,
+      ) as ContractMetadata[]
+    }
+
     for (const log of logs) {
       const parsed = parseRoleLog(log)
       const role = getRole(this.getRoleName(parsed.role))
@@ -160,7 +218,11 @@ export class ScrollAccessControlHandler implements ClassicHandler {
         role.members.delete(parsed.account)
       } else if (parsed.type === 'GrantAccess') {
         const target = getTarget(parsed.target)
-        const decoded = await decodeSelectors(parsed.target, parsed.selectors)
+        const decoded = decodeSelectors(
+          parsed.target,
+          parsed.selectors,
+          getMetadatas(parsed.target),
+        )
         decoded.forEach((s) => {
           if (target[s] === undefined) {
             target[s] = new Set()
@@ -172,7 +234,11 @@ export class ScrollAccessControlHandler implements ClassicHandler {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       } else if (parsed.type === 'RevokeAccess') {
         const target = getTarget(parsed.target)
-        const decoded = await decodeSelectors(parsed.target, parsed.selectors)
+        const decoded = decodeSelectors(
+          parsed.target,
+          parsed.selectors,
+          getMetadatas(parsed.target),
+        )
         decoded.forEach((s) => {
           const selector = getSelector(target, s)
           selector.delete(this.getRoleName(parsed.role))
@@ -216,26 +282,27 @@ export class ScrollAccessControlHandler implements ClassicHandler {
     }
   }
 }
-
-function parseRoleLog(log: providers.Log):
-  | {
-      readonly type: 'RoleGranted' | 'RoleRevoked'
-      readonly role: string
-      readonly account: EthereumAddress
-      readonly adminRole?: undefined
-    }
-  | {
-      readonly type: 'RoleAdminChanged'
-      readonly role: string
-      readonly adminRole: string
-      readonly account?: undefined
-    }
-  | {
-      readonly type: 'GrantAccess' | 'RevokeAccess'
-      readonly role: string
-      readonly target: EthereumAddress
-      readonly selectors: string[]
-    } {
+interface RoleChangeLog {
+  readonly type: 'RoleGranted' | 'RoleRevoked'
+  readonly role: string
+  readonly account: EthereumAddress
+  readonly adminRole?: undefined
+}
+interface RoleAdminChangeLog {
+  readonly type: 'RoleAdminChanged'
+  readonly role: string
+  readonly adminRole: string
+  readonly account?: undefined
+}
+interface AccessChangeLog {
+  readonly type: 'GrantAccess' | 'RevokeAccess'
+  readonly role: string
+  readonly target: EthereumAddress
+  readonly selectors: string[]
+}
+function parseRoleLog(
+  log: providers.Log,
+): RoleChangeLog | RoleAdminChangeLog | AccessChangeLog {
   const event = abi.parseLog(log)
   if (event.name === 'RoleGranted' || event.name === 'RoleRevoked') {
     return {
