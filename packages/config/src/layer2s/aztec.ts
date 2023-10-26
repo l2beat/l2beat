@@ -38,13 +38,14 @@ function getRollupProviders() {
 }
 
 export const aztec: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('aztec'),
   display: {
-    name: 'Aztec',
+    name: 'Zk.Money v1 (Aztec v1)',
     slug: 'aztec',
     warning:
-      'EOL: Aztec team announced to shut down the rollup infrastructure on July 8th, 2023. The rollup is still active due to funds still locked in, but it is not recommended to bridge to it.',
+      'EOL: Aztec team announced the intent to shut down the infrastructure for this rollup on Mar 13, 2023. The rollup is still active due to funds locked in, but is not accepting deposits.',
     description:
       'Aztec is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs.',
     purpose: 'Private payments',
@@ -148,6 +149,14 @@ export const aztec: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
+  stateDerivation: {
+    nodeSoftware:
+      'There are two ways to run a node and use the escape hatch: by running [falafel](https://github.com/AztecProtocol/aztec-2.0/tree/master/falafel), or by running the [SDK](https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw) in escape hatch mode and connecting to an [escape hatch server](https://github.com/AztecProtocol/aztec-v2-escape-hatch-server).',
+    compressionScheme: 'No compression scheme is used.',
+    genesisState: 'No genesis state is used.',
+    dataFormat:
+      'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol)',
+  },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,

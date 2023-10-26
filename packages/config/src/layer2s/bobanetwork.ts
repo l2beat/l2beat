@@ -344,6 +344,15 @@ export const bobanetwork: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'Node sofware source code can be found [here](https://github.com/bobanetwork/boba).',
+    compressionScheme: `They utilize a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli) for calldata compression.`,
+    genesisState:
+      'Genesis state file can be found [here](https://github.com/bobanetwork/boba/blob/develop/boba_community/boba-node/state-dumps/mainnet/state-dump.latest.json).',
+    dataFormat:
+      'Refer to [this link](https://github.com/bobanetwork/boba/blob/develop/packages/contracts/contracts/L1/rollup/CanonicalTransactionChain.sol) for the reference implementation.',
+  },
   permissions: [
     {
       name: 'Owner',

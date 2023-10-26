@@ -206,9 +206,9 @@
         "recoveryActiveAt": 0,
         "recoveryManager": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
         "recoveryTimelock": 1209600,
+        "routers": "0x000000000000000000000000d13ac1024d266b73180ca7445ca0e78b3acfe8ce",
         "VERSION": 0,
-        "xAppConnectionManager": "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD",
-        "routers": "0x000000000000000000000000d13ac1024d266b73180ca7445ca0e78b3acfe8ce"
+        "xAppConnectionManager": "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
       },
       "derivedName": "GovernanceRouter"
     }
