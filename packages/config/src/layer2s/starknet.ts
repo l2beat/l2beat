@@ -139,7 +139,7 @@ export const starknet: Layer2 = {
     name: 'Starknet',
     slug: 'starknet',
     description:
-      'Starknet is a general purpose ZK-Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
+      'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
       infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
       is available and contracts are fully composable. It is currently launched \
       with a single Sequencer.',
@@ -447,7 +447,7 @@ export const starknet: Layer2 = {
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: '2021-11-29T00:00:00Z',
       description:
-        'Rollup is live on mainnet, enabling general computation using zkRollup technology.',
+        'Rollup is live on mainnet, enabling general computation using ZK Rollup technology.',
     },
     {
       name: 'StarkGate Alpha',
