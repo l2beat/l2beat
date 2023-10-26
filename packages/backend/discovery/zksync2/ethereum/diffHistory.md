@@ -1,3 +1,25 @@
+# Diff at Thu, 26 Oct 2023 14:41:21 GMT:
+
+- author: unknown (<unknown>)
+- comparing to: master@1e069416789e8b88c5a46b6cec2267696460734b
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      values.getCurrentProposalId:
+-        8
++        9
+      values.getProtocolVersion:
+-        15
++        16
+    }
+```
+
 # Diff at Tue, 26 Sep 2023 10:27:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
