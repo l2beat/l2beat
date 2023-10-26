@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17271618,
   "configHash": "0xcaa1cbc5c03ede6a2281b93df0293fc741b921d5ec4594bef060e7fddcf5817c",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678120703,
       "values": {
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
@@ -40,6 +41,7 @@
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
         ]
       },
+      "implementations": ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"],
       "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
@@ -118,6 +120,15 @@
         },
         "proxyGovernance": ["0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"]
       },
+      "implementations": [
+        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+        "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+        "0x8536850750956c2FEebeCAB786d82271a5467687",
+        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+        "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+      ],
       "sinceTimestamp": 1645130774,
       "values": {
         "defaultVaultWithdrawalLock": 0,

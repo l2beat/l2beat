@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18340232,
   "configHash": "0x5eca465843ed06c8c121ad03b227879a4fa5953046064db3cc2eef2919673b14",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -14,6 +14,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
       },
+      "implementations": ["0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"],
       "sinceTimestamp": 1637076488,
       "values": {
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
@@ -60,6 +61,7 @@
         "implementation": "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "implementations": ["0xa0cfE8Af2AB5C9232714647702DbACf862EA4798"],
       "sinceTimestamp": 1637077208,
       "values": {
         "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
@@ -76,6 +78,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1636927409,
       "values": {
         "domainSeparator": "0xfb4b712c4b7702310419a72c040b8486f1f9e8b0b84ae19732273a65d3a840c5",
@@ -138,6 +141,7 @@
         "implementation": "0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "implementations": ["0xC878771A4ff7466B7be8b59FB8766719AEa8d562"],
       "sinceTimestamp": 1649638297,
       "values": {
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
@@ -242,6 +246,7 @@
         "implementation": "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "implementations": ["0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E"],
       "sinceTimestamp": 1649719906,
       "values": {
         "activeChallenges": 0,
@@ -286,6 +291,7 @@
         "implementation": "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
         "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
+      "implementations": ["0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5"],
       "sinceTimestamp": 1637089464,
       "values": {
         "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18361372,
   "configHash": "0x13c73103706023eb384134690698592a2aba7fc2a8a1a78ebfb4215a5c85f9f9",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ERC20Bridge",
@@ -13,6 +13,7 @@
         "implementation": "0x6ccfD65b0b14F67259C77Ca6267104e058dDB292",
         "admin": "0x5B0bb17755FBa06028530682E2FD5bc373931768"
       },
+      "implementations": ["0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"],
       "sinceTimestamp": 1691067875,
       "values": {
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -80,6 +81,7 @@
         "implementation": "0x0eC393209674090368C592A591B25811e490BF36",
         "admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5"
       },
+      "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
         "balance": 9637652915780,
@@ -118,6 +120,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689149759,
       "values": {
         "domainSeparator": "0xf720f1fd8bfacb497aa1c16a19a7f17ba6e7bfba9ae23c73812ce40727956e08",
@@ -159,6 +162,7 @@
         "implementation": "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3",
         "admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
       },
+      "implementations": ["0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"],
       "sinceTimestamp": 1689159923,
       "values": {
         "accessControl": {

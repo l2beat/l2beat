@@ -6,7 +6,6 @@ import {
   ChainId,
   DetailedTvlApiResponse,
   ProjectId,
-  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../build/config'
@@ -17,14 +16,14 @@ import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
   project: Layer2 | Bridge,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
     settingsId: `project-${project.display.slug}`,
     initialType:
-      config?.features.detailedTvl && project.type === 'layer2'
+      project.type === 'layer2'
         ? { type: 'project-detailed-tvl', slug: project.display.slug }
         : { type: 'project-tvl', slug: project.display.slug },
     tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
@@ -42,7 +41,7 @@ export function getChart(
 
 export function getTokens(
   projectId: ProjectId,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   isLayer2: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens

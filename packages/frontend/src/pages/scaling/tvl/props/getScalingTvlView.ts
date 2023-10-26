@@ -1,11 +1,6 @@
 import { Layer2 } from '@l2beat/config'
-import {
-  DetailedTvlApiResponse,
-  TvlApiResponse,
-  VerificationStatus,
-} from '@l2beat/shared-pure'
+import { DetailedTvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
-import { Config } from '../../../../build/config'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
@@ -15,9 +10,8 @@ import { ScalingTvlViewEntry } from '../types'
 import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 
 export function getScalingTvlView(
-  config: Config,
   projects: Layer2[],
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   tvl: number,
   verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
@@ -27,19 +21,16 @@ export function getScalingTvlView(
         project,
         tvlApiResponse,
         tvl,
-        config.features.detailedTvl,
         verificationStatus.projects[project.id.toString()],
       ),
     ),
-    detailedTvlEnabled: config.features.detailedTvl,
   }
 }
 
 function getScalingTvlViewEntry(
   project: Layer2,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   aggregateTvl: number,
-  detailedTvlEnabled: boolean,
   isVerified?: boolean,
 ): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
@@ -67,9 +58,7 @@ function getScalingTvlViewEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
-    tvlTooltip: detailedTvlEnabled
-      ? getProjectTvlTooltipText(project.config)
-      : project.config.tvlTooltip,
+    tvlTooltip: getProjectTvlTooltipText(project.config),
     tvlBreakdown:
       stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
     oneDayChange:

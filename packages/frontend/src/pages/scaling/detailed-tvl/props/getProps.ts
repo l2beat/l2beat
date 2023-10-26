@@ -20,7 +20,6 @@ export function getProps(
   return {
     props: {
       detailedTvlEndpoint,
-      showDetailedTvl: config.features.detailedTvl,
       showActivity: config.features.activity,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),

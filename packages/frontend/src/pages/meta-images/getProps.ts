@@ -2,7 +2,6 @@ import { Bridge, Layer2 } from '@l2beat/config'
 import {
   ActivityApiResponse,
   DetailedTvlApiResponse,
-  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { getChartUrl } from '../../scripts/charts/data-controller/ChartDataController'
@@ -25,7 +24,7 @@ export function assert(
 }
 
 export function getProps(
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
 ): Wrapped<TvlMetaImageProps> {
@@ -84,14 +83,14 @@ export function getPropsActivity(
 }
 
 export function getPropsDetailed(
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: DetailedTvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
 ): Wrapped<DetailedTvlMetaImageProps> {
   const daily = project
     ? tvlApiResponse.projects[project.id.toString()]?.charts.daily.data ?? []
     : tvlApiResponse[type].daily.data
-  assert(daily[0].length === 9)
+
   const tvl = daily.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)

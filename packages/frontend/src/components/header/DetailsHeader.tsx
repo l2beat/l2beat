@@ -27,7 +27,6 @@ export interface HeaderProps {
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
-  detailedTvlEnabled?: boolean
   warning?: string | { text: string; href: string }
 }
 
@@ -89,7 +88,6 @@ export function DetailsHeader(props: HeaderProps) {
             stats={props.stats}
             links={props.links}
             isUpcoming={props.isUpcoming}
-            detailedTvlEnabled={props.detailedTvlEnabled}
             tvlBreakdownHref={props.tvlBreakdownHref}
             showTvlBreakdown={props.showTvlBreakdown}
           />

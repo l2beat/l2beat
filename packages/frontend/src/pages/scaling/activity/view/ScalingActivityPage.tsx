@@ -22,7 +22,6 @@ export interface ActivityPageProps {
   footer: FooterProps
   navbar: NavbarProps
   showActivity: boolean
-  showDetailedTvl: boolean
   milestones?: Milestone[]
 }
 
@@ -33,7 +32,6 @@ export function ActivityPage(props: ActivityPageProps) {
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
-          showDetailedTvl={props.showDetailedTvl}
           selected="activity"
         />
         <main className="mt-4 md:mt-12">

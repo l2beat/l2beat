@@ -8,7 +8,6 @@ import { InfoIcon } from '../icons'
 interface Props {
   type: 'bridge' | 'layer2'
   stats: ProjectSummaryStat[]
-  detailedTvlEnabled: boolean
   className?: string
 }
 
@@ -20,7 +19,7 @@ export interface ProjectSummaryStat {
 }
 
 export function ProjectSummary(props: Props) {
-  const cols = props.type === 'bridge' || !props.detailedTvlEnabled ? 4 : 3
+  const cols = props.type === 'bridge' ? 4 : 3
   const groupedStats = chunk(props.stats, cols)
   return (
     <div

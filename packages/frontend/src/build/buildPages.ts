@@ -8,7 +8,6 @@ import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDetailedTvlApi } from './api/fetchDetailedTvlApi'
-import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 import { getVerificationStatus } from './api/getVerificationStatus'
 import { printActivityInfo, printApiInfo } from './api/printApiInfo'
@@ -36,9 +35,7 @@ async function main() {
 
   const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
-  const tvlApiResponse = config.features.detailedTvl
-    ? await fetchDetailedTvlApi(config.backend, http)
-    : await fetchTvlApi(config.backend, http)
+  const tvlApiResponse = await fetchDetailedTvlApi(config.backend, http)
   printApiInfo(tvlApiResponse)
   tvlSanityCheck(tvlApiResponse)
 
