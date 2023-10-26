@@ -56,3 +56,5 @@ jobs:
           exitZeroOnChanges: true
           exitOnceUploaded: true
           autoAcceptChanges: true
+      - name: Show logs
+        run: cat /home/runner/work/l2beat/l2beat/packages/frontend/build-storybook.log
