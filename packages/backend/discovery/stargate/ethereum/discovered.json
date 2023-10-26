@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17968752,
   "configHash": "0xf4647eea5ee0ad585f71dba48ec65cef3f4adc4f85acfd27e20911a18c090333",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Factory",
@@ -470,6 +470,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1647498793,
       "values": {
         "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
@@ -667,6 +668,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
       "values": {
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",

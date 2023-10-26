@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18263277,
   "configHash": "0x51742266d88802d01ba0ab7b531d4947d08e3933d887f74c84607ff837e89f8b",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -32,6 +32,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678956815,
       "values": {
         "domainSeparator": "0xd8cfae7b548133655e0a54436471b813794d3d208ff7a47b740e06ea90b3d0b8",
@@ -54,6 +55,7 @@
         "implementation": "0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C",
         "admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
       },
+      "implementations": ["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"],
       "sinceTimestamp": 1679653127,
       "values": {
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
@@ -70,6 +72,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678429487,
       "values": {
         "domainSeparator": "0x33ea3e28c0dfd2e84cb64bd76585cb4f6ed8e2e6f5fe17293c8c09fa01db36d7",
@@ -97,6 +100,7 @@
         "implementation": "0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F",
         "admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
       },
+      "implementations": ["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"],
       "sinceTimestamp": 1679653163,
       "values": {
         "_HALT_AGGREGATION_TIMEOUT": 604800,
@@ -134,6 +138,7 @@
         "implementation": "0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3",
         "admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
       },
+      "implementations": ["0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"],
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",

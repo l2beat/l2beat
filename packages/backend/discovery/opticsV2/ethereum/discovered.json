@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18340280,
   "configHash": "0x48aa6338e9c24644996168d5847dd89e287395d1b35a9f11a3b4a9809a54e725",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",
@@ -23,6 +23,7 @@
         "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
         "implementation": "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"
       },
+      "implementations": ["0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"],
       "sinceTimestamp": 1637962173,
       "values": {
         "committedRoot": "0xfae953dd987fd08fed61f27962bb7d5bfc8110c797eaa2f6d4fb5c5e081e2566",
@@ -46,6 +47,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637291734,
       "values": {
         "domainSeparator": "0x91e4f1847ce233a59cb33402a728cd2aad575e149d033d1b0d939dc5331af707",
@@ -95,6 +97,7 @@
         "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
         "implementation": "0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"
       },
+      "implementations": ["0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"],
       "sinceTimestamp": 1637963549,
       "values": {
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
@@ -150,6 +153,7 @@
         "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
         "implementation": "0xfc6E146384b5c65f372d5b20537F3e8727aD3723"
       },
+      "implementations": ["0xfc6E146384b5c65f372d5b20537F3e8727aD3723"],
       "sinceTimestamp": 1637961283,
       "values": {
         "committedRoot": "0x82c0255a011e275f80ac5223cb0af0da00883cfb386a416b9bab09da70f6856b",
@@ -191,6 +195,7 @@
         "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
         "implementation": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
       },
+      "implementations": ["0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"],
       "sinceTimestamp": 1637961347,
       "values": {
         "domains": [1667591279, 1886350457, 1635148152, 6648936],
