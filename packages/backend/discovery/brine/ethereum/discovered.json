@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17821210,
   "configHash": "0xb03efc49cd04c082e7001d53a82ab71dc71138acc2d59a1754f4120db954c9ac",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "StarkExchange",
@@ -23,6 +23,15 @@
         },
         "proxyGovernance": ["0x303775491494a08b07365938787274F742a81F63"]
       },
+      "implementations": [
+        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+        "0x613ee54C54D5548627064B4D648942bF3648f376",
+        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+      ],
       "sinceTimestamp": 1657453320,
       "values": {
         "defaultVaultWithdrawalLock": 0,
@@ -73,6 +82,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678120703,
       "values": {
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
@@ -102,6 +112,7 @@
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
         ]
       },
+      "implementations": ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"],
       "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",

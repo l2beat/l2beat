@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18219348,
   "configHash": "0x3f1b488ebb67cf3066bcb401d15c3b47fa258078eeb242070365dec6b4517afa",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "zkSync",
@@ -18,6 +18,13 @@
           "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
         ]
       },
+      "implementations": [
+        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4",
+        "0x7444DE636699F080cA1C033528D2bB3705B391Ce",
+        "0x62aA95ac4740A367746A664C4C69034d52E968EF",
+        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b",
+        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      ],
       "sinceTimestamp": 1676315375,
       "values": {
         "facetAddresses": [
@@ -296,6 +303,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1666872275,
       "values": {
         "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
@@ -324,6 +332,7 @@
         "implementation": "0x7FB17101A744e156e63d5fF6A4775fb48756577c",
         "admin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       },
+      "implementations": ["0x7FB17101A744e156e63d5fF6A4775fb48756577c"],
       "sinceTimestamp": 1676370683,
       "values": {
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",

@@ -8,11 +8,11 @@ export function getFunctionCallQuery(
 ) {
   return [
     'SELECT',
-    'block_number',
-    'input',
-    'to_address',
-    'block_timestamp',
-    'transaction_hash',
+    'block_number,',
+    'LEFT(input, 10) AS input,',
+    'to_address,',
+    'block_timestamp,',
+    'transaction_hash,',
     'FROM',
     'bigquery-public-data.crypto_ethereum.traces',
     'WHERE',

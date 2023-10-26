@@ -246,6 +246,15 @@ export const polygonzkevm: Layer2 = {
       },
     ],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
+    compressionScheme: 'No compression scheme yet.',
+    genesisState:
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/deployment/genesis.json).',
+    dataFormat:
+      'The trusted sequencer batches transactions according to the specifications documented [here](https://wiki.polygon.technology/docs/zkevm/protocol/transaction-batching/#transactions).',
+  },
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',

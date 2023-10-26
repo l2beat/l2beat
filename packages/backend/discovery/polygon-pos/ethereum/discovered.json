@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17770180,
   "configHash": "0xac0e650429335471436f5a7062a14488f3a41f97824925e0c15d306720a1ad44",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ERC1155Predicate",
@@ -13,6 +13,7 @@
         "implementation": "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"],
       "sinceTimestamp": 1598437004,
       "values": {
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -86,6 +87,7 @@
         "implementation": "0xDb161A896Be50a020B636D6B60DA7c59817412a5",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0xDb161A896Be50a020B636D6B60DA7c59817412a5"],
       "sinceTimestamp": 1613107769,
       "values": {
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -107,6 +109,7 @@
         "implementation": "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"],
       "sinceTimestamp": 1598436664,
       "values": {
         "accessControl": {
@@ -150,6 +153,7 @@
         "implementation": "0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0x54006763154c764da4AF42a8c3cfc25Ea29765D5"],
       "sinceTimestamp": 1598437971,
       "values": {
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -170,6 +174,7 @@
         "isUpgradable": true,
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
+      "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
         "_nextHeaderBlock": 487420000,
@@ -194,6 +199,7 @@
         "implementation": "0x7FBd00c577cAA70318BCF1c6c11e23732823b387",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0x7FBd00c577cAA70318BCF1c6c11e23732823b387"],
       "sinceTimestamp": 1598436896,
       "values": {
         "BATCH_LIMIT": 20,
@@ -215,6 +221,7 @@
         "implementation": "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"],
       "sinceTimestamp": 1613100777,
       "values": {
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -235,6 +242,7 @@
         "implementation": "0x37D26DC2890b35924b40574BAc10552794771997",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0x37D26DC2890b35924b40574BAc10552794771997"],
       "sinceTimestamp": 1598436547,
       "values": {
         "checkpointManagerAddress": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
@@ -318,6 +326,7 @@
         "implementation": "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"],
       "sinceTimestamp": 1630304491,
       "values": {
         "CHAIN_EXIT_EVENT_SIG": "0xc7b80b68f1c661da97dbd7e6e143a0c7c587dfc522cb2ac508b9084fecc492bc",
@@ -338,6 +347,7 @@
         "implementation": "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"],
       "sinceTimestamp": 1598436766,
       "values": {
         "BATCH_LIMIT": 20,
@@ -358,6 +368,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1593593561,
       "values": {
         "domainSeparator": "0x3bc292918071cc597c13d3994268d3c83097b8388d750481c8cbce67a284ed5c",

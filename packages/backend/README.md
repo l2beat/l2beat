@@ -184,6 +184,8 @@ ETHEREUM_ALCHEMY_API_KEY=
 - `yarn test` - run tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
 
+- `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
+
 ## Repository naming convention
 
 - `add(T): number` - adds a new record and returns its id

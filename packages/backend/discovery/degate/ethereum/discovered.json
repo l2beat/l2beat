@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18263139,
   "configHash": "0xe1cf73fc7355d3c8c24c8ccbd8560edbb13d0377b636a9ecbd492f149be68f54",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "BlockVerifier",
