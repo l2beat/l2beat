@@ -1,5 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { Hash256, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 
 import { Project } from '../../model'
@@ -10,17 +10,7 @@ import {
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
-import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
-import {
-  getLivenessConfigHash,
-  isTimestampInRange,
-  transformFunctionCallsQueryResult,
-  transformTransfersQueryResult,
-} from './utils'
+import { getLivenessConfigHash } from './utils'
 
 export class LivenessIndexer extends ChildIndexer {
   private readonly indexerId = 'liveness_indexer'
@@ -57,12 +47,16 @@ export class LivenessIndexer extends ChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const fromUnixTime = new UnixTime(from)
-    const toUnixTime = adjustToForBigqueryCall(from, to)
+    const toUnixTime = new UnixTime(to)
 
-    let data: LivenessRecord[] | undefined
+    let data: { data: LivenessRecord[]; to: UnixTime } | undefined
 
     try {
-      data = await this.getLivenessData(this.projects, fromUnixTime, toUnixTime)
+      data = await this.livenessClient.getLivenessData(
+        this.projects,
+        fromUnixTime,
+        toUnixTime,
+      )
     } catch (e) {
       this.logger.error(e)
       throw e
@@ -70,64 +64,9 @@ export class LivenessIndexer extends ChildIndexer {
 
     assert(data, 'Liveness data should not be undefined there')
 
-    await this.livenessRepository.addMany(data)
+    await this.livenessRepository.addMany(data.data)
 
-    return Promise.resolve(toUnixTime.toNumber())
-  }
-
-  async getLivenessData(
-    projects: Project[],
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    // TODO: find missing data for this range(from,to)
-
-    const config: LivenessConfig = mergeConfigs(projects)
-
-    const transfersConfig = config.transfers.filter((c) =>
-      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
-    )
-    const functionCallsConfig = config.functionCalls.filter((c) =>
-      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
-    )
-
-    const [transfers, functionCalls] = await Promise.all([
-      this.getTransfers(transfersConfig, from, to),
-      this.getFunctionCalls(functionCallsConfig, from, to),
-    ])
-
-    return [...transfers, ...functionCalls]
-  }
-
-  async getTransfers(
-    transfersConfigs: LivenessTransfer[],
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    if (transfersConfigs.length === 0) return Promise.resolve([])
-
-    const queryResults = await this.livenessClient.getTransfers(
-      transfersConfigs,
-      from,
-      to,
-    )
-    return transformTransfersQueryResult(transfersConfigs, queryResults)
-  }
-
-  async getFunctionCalls(
-    functionCallsConfigs: LivenessFunctionCall[],
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    if (functionCallsConfigs.length === 0) return Promise.resolve([])
-
-    const queryResults = await this.livenessClient.getFunctionCalls(
-      functionCallsConfigs,
-      from,
-      to,
-    )
-
-    return transformFunctionCallsQueryResult(functionCallsConfigs, queryResults)
+    return Promise.resolve(data.to.toNumber())
   }
 
   override async getSafeHeight(): Promise<number> {
@@ -156,27 +95,5 @@ export class LivenessIndexer extends ChildIndexer {
   // that our data will become invalid.
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
-  }
-}
-
-export function mergeConfigs(projects: Project[]): LivenessConfig {
-  return {
-    transfers: projects
-      .flatMap((p) => p.livenessConfig?.transfers)
-      .filter(notUndefined),
-    functionCalls: projects
-      .flatMap((p) => p.livenessConfig?.functionCalls)
-      .filter(notUndefined),
-  }
-}
-
-export function adjustToForBigqueryCall(from: number, to: number): UnixTime {
-  const fromUnixTime = new UnixTime(from)
-  const toUnixTime = new UnixTime(to)
-
-  if (!fromUnixTime.toStartOf('day').equals(toUnixTime.toStartOf('day'))) {
-    return fromUnixTime.toNext('day')
-  } else {
-    return toUnixTime
   }
 }
