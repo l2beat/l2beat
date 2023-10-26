@@ -280,7 +280,7 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('RollupProcessorV2', {
-        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof. The escape hatch delay is currently set to ${escapeHatchDelayString})}`,
+        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside a ZK proof. The escape hatch delay is currently set to ${escapeHatchDelayString})}`,
         pausable: {
           paused: discovery.getContractValue('RollupProcessorV2', 'paused'),
           pausableBy: ['Emergency Multisig'],
@@ -353,7 +353,7 @@ export const aztecconnect: Layer2 = {
       thumbnail: NUGGETS.THUMBNAILS.AZTEC_01,
     },
     {
-      title: 'Economics of Aztec zkRollup',
+      title: 'Economics of Aztec ZK Rollup',
       url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
       thumbnail: NUGGETS.THUMBNAILS.AZTEC_02,
     },
