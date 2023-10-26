@@ -61,7 +61,7 @@ describe(BigQueryClient.name, () => {
       const sql = 'SELECT * FROM my_table'
 
       await expect(bigQueryClient.query(sql)).toBeRejectedWith(
-        '[Google BigQuery] Failed to query:',
+        'Google BigQuery error: BigQuery error',
       )
     })
 
@@ -76,7 +76,7 @@ describe(BigQueryClient.name, () => {
       const sql = 'SELECT * FROM my_table'
 
       await expect(bigQueryClient.query(sql)).toBeRejectedWith(
-        '[Google BigQuery] Failed to query:',
+        'Google BigQuery error: BigQuery error',
       )
     })
   })

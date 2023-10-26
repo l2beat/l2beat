@@ -16,9 +16,14 @@ export class BigQueryClient {
       const [rows] = await job.getQueryResults()
       return rows as unknown
     } catch (error) {
-      throw new Error(
-        '[Google BigQuery] Failed to query: ' + (error as Error).message,
-      )
+      if (error instanceof Error) {
+        throw {
+          ...error,
+          message: 'Google BigQuery error: ' + error.message,
+        }
+      } else {
+        throw error
+      }
     }
   }
 }
