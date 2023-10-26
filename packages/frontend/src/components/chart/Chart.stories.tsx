@@ -157,9 +157,45 @@ export const Primary: Story = {
   },
 }
 
-export const PrimaryWithEth: Story = {
+export const EmptyState: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-eth',
+    settingsId: 'storybook-chart-empty-state',
+  },
+  play: async () => {
+    await new Promise((resolve) => setTimeout(resolve, 200))
+    const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
+    if (!chart) throw new Error('Chart not found')
+    chart.dataset.state = 'empty'
+    chart.dataset.interactivityDisabled = 'true'
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
+}
+
+export const ErrorState: Story = {
+  args: {
+    settingsId: 'storybook-chart-error-state',
+  },
+  play: async () => {
+    await new Promise((resolve) => setTimeout(resolve, 200))
+    const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
+    if (!chart) throw new Error('Chart not found')
+    chart.dataset.state = 'error'
+    chart.dataset.interactivityDisabled = 'true'
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
+}
+
+export const WithEth: Story = {
+  args: {
+    settingsId: 'storybook-chart-with-eth',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -167,9 +203,9 @@ export const PrimaryWithEth: Story = {
   },
 }
 
-export const PrimaryWithLogScale: Story = {
+export const WithLogScale: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-log-scale',
+    settingsId: 'storybook-chart-with-log-scale',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -177,9 +213,9 @@ export const PrimaryWithLogScale: Story = {
   },
 }
 
-export const PrimaryWith7D: Story = {
+export const With7D: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-7d',
+    settingsId: 'storybook-chart-with-7d',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -187,9 +223,9 @@ export const PrimaryWith7D: Story = {
   },
 }
 
-export const PrimaryWith30D: Story = {
+export const With30D: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-30d',
+    settingsId: 'storybook-chart-with-30d',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -197,9 +233,9 @@ export const PrimaryWith30D: Story = {
   },
 }
 
-export const PrimaryWith90D: Story = {
+export const With90D: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-90d',
+    settingsId: 'storybook-chart-with-90d',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -215,9 +251,9 @@ export const PrimaryWith90D: Story = {
   },
 }
 
-export const PrimaryWith180D: Story = {
+export const With180D: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-180d',
+    settingsId: 'storybook-chart-with-180d',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -233,9 +269,9 @@ export const PrimaryWith180D: Story = {
   },
 }
 
-export const PrimaryWith1Y: Story = {
+export const With1Y: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-1y',
+    settingsId: 'storybook-chart-with-1y',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -243,9 +279,9 @@ export const PrimaryWith1Y: Story = {
   },
 }
 
-export const PrimaryWithMax: Story = {
+export const WithMax: Story = {
   args: {
-    settingsId: 'storybook-chart-primary-with-max',
+    settingsId: 'storybook-chart-with-max',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
