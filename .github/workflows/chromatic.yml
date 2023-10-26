@@ -56,6 +56,9 @@ jobs:
           exitZeroOnChanges: true
           exitOnceUploaded: true
           autoAcceptChanges: true
-      - name: Show logs
+      - name: Upload artifacts
         if: always()
-        run: cat /home/runner/work/l2beat/l2beat/packages/frontend/build-storybook.log && cd /tmp && cd (ls -d * | grep "^chromatic--") && ls && cat preview-stats.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: /tmp/chromatic--*
