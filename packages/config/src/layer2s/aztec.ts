@@ -149,6 +149,14 @@ export const aztec: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
+  stateDerivation: {
+    nodeSoftware:
+      'There are two ways to run a node and use the escape hatch: by running [falafel](https://github.com/AztecProtocol/aztec-2.0/tree/master/falafel), or by running the [SDK](https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw) in escape hatch mode and connecting to an [escape hatch server](https://github.com/AztecProtocol/aztec-v2-escape-hatch-server).',
+    compressionScheme: 'No compression scheme is used.',
+    genesisState: 'No genesis state is used.',
+    dataFormat:
+      'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol)',
+  },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,
