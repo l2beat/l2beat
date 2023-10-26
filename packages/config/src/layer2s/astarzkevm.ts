@@ -18,10 +18,13 @@ export const astarzkevm: Layer2 = {
     links: {
       websites: ['https://astar.network/astar2'],
       apps: [],
-      documentation: ['https://docs.astar.network/docs/learn/zkEVM/'],
+      documentation: ['https://docs.astar.network/docs/build/zkEVM/'],
       explorers: [],
       repositories: [],
-      socialMedia: ['https://twitter.com/AstarzkEVM'],
+      socialMedia: [
+        'https://twitter.com/AstarNetwork',
+        'https://twitter.com/AstarzkEVM',
+      ],
     },
   },
   stage: {

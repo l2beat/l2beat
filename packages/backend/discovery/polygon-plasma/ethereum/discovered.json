@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18368561,
   "configHash": "0xa6a26ac439c39e55635de77dc8b7d61f6879f86db46a10d9a9931ac93a2b3111",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -60,6 +60,7 @@
         "isUpgradable": true,
         "implementation": "0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de"
       },
+      "implementations": ["0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de"],
       "sinceTimestamp": 1590850831,
       "values": {
         "exitNft": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
@@ -104,6 +105,7 @@
         "isUpgradable": true,
         "implementation": "0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf"
       },
+      "implementations": ["0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf"],
       "sinceTimestamp": 1590850640,
       "values": {
         "childChain": "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
@@ -141,6 +143,10 @@
         "implementation": "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
         "extension": "0xef49Ea6996073752b6840CDA34773FFA78F78166"
       },
+      "implementations": [
+        "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
+        "0xef49Ea6996073752b6840CDA34773FFA78F78166"
+      ],
       "sinceTimestamp": 1593189690,
       "values": {
         "accountStateRoot": "0x85d7a8f1697e2a84910d571af5875abfdb954c6050766f6866a6bb9fc7c660ca",
@@ -200,6 +206,7 @@
         "implementation": "0x0672777617CAA1E778083a4f74eBC997262C9EdD",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
       },
+      "implementations": ["0x0672777617CAA1E778083a4f74eBC997262C9EdD"],
       "sinceTimestamp": 1616774452,
       "values": {
         "implementation": "0x0672777617CAA1E778083a4f74eBC997262C9EdD",
@@ -216,6 +223,7 @@
         "isUpgradable": true,
         "implementation": "0x98165b71cdDea047C0A49413350C40571195fd07"
       },
+      "implementations": ["0x98165b71cdDea047C0A49413350C40571195fd07"],
       "sinceTimestamp": 1590849863,
       "values": {
         "implementation": "0x98165b71cdDea047C0A49413350C40571195fd07",
@@ -247,6 +255,7 @@
         "isUpgradable": true,
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
+      "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
         "_nextHeaderBlock": 522790000,
@@ -399,6 +408,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1593593561,
       "values": {
         "domainSeparator": "0x3bc292918071cc597c13d3994268d3c83097b8388d750481c8cbce67a284ed5c",

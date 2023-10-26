@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18226868,
   "configHash": "0x739402fe6b9de3b16298e0e54274197fb71e0ee9fc59b37fc630845ff5bf8f97",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Honeypot",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17619955,
   "configHash": "0x087b9989306e11a8d2db2c0ced551a809b035a18b56eeb2752b5d5589cea5ee1",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "ProxyAdminOwner",
@@ -12,6 +12,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1601280823,
       "values": {
         "domainSeparator": "0xfe553e7fa2b6b6eabfd8b489f5d70c9409db0501fd37f91a9f6f48239e815eaa",
@@ -37,6 +38,7 @@
         "implementation": "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"],
       "sinceTimestamp": 1626720238,
       "values": {
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
@@ -56,6 +58,7 @@
         "implementation": "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"],
       "sinceTimestamp": 1626719733,
       "values": {
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
@@ -75,6 +78,7 @@
         "implementation": "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"],
       "sinceTimestamp": 1626719564,
       "values": {
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
@@ -96,6 +100,7 @@
         "implementation": "0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0x676FAFCE73F5a304988C519407AAc06bD117CdD0"],
       "sinceTimestamp": 1626719338,
       "values": {
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
@@ -113,6 +118,7 @@
         "implementation": "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"],
       "sinceTimestamp": 1626720065,
       "values": {
         "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
@@ -132,6 +138,7 @@
         "implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"],
       "sinceTimestamp": 1626719196,
       "values": {
         "CHAIN_CONNECTOR_ROLE": "0x2785f35fe7d8743aa971942d8474737bb31895d396eff2cc688a481e0221e191",
@@ -160,6 +167,7 @@
         "implementation": "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"],
       "sinceTimestamp": 1626719900,
       "values": {
         "ARBITER_ROLE": "0xbb08418a67729a078f87bbc8d02a770929bb68f5bfdf134ae2ead6ed38e2f4ae",
@@ -180,6 +188,7 @@
         "implementation": "0xF99F446340483C5d9D63697a60232ECb9274E1e7",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "implementations": ["0xF99F446340483C5d9D63697a60232ECb9274E1e7"],
       "sinceTimestamp": 1650021217,
       "values": {
         "contractManagerOfSkaleManager": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",

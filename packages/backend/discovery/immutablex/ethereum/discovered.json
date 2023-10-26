@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18263193,
   "configHash": "0xc8737ab320efdd701a93c14bdf683b8c912e71bf1dfc00dbb46429e46cb2096a",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "Committee",
@@ -61,6 +61,15 @@
         },
         "proxyGovernance": ["0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91"]
       },
+      "implementations": [
+        "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
+        "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
+        "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
+        "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
+        "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
+        "0x2D542881E93491e765E5110c1e373FC2968E720A",
+        "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+      ],
       "sinceTimestamp": 1615389188,
       "values": {
         "defaultVaultWithdrawalLock": 0,
@@ -117,6 +126,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1683124943,
       "values": {
         "domainSeparator": "0x0733691424a2d0bc85b95e6971bb8e89e60325c348f87b405049bcf97a719593",
