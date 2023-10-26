@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18282753,
   "configHash": "0x47112df1ee28df32b58382bb684b9b5696e568eba2d4f1fb8268d1e432381939",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "MerkleDistributor",
@@ -13,6 +13,7 @@
         "implementation": "0xFE1d5439625a9524a80F66670733129E80E0C112",
         "admin": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
       },
+      "implementations": ["0xFE1d5439625a9524a80F66670733129E80E0C112"],
       "sinceTimestamp": 1627709502,
       "values": {
         "accessControl": {
@@ -436,6 +437,7 @@
         "implementation": "0xBE607a58206180fef691bf1B5aE9670174284388",
         "admin": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
       },
+      "implementations": ["0xBE607a58206180fef691bf1B5aE9670174284388"],
       "sinceTimestamp": 1627709656,
       "values": {
         "accessControl": {
@@ -539,6 +541,7 @@
         "implementation": "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
         "admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
       },
+      "implementations": ["0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce"],
       "sinceTimestamp": 1627708861,
       "values": {
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
@@ -575,6 +578,7 @@
         "implementation": "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A",
         "admin": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
       },
+      "implementations": ["0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"],
       "sinceTimestamp": 1627709015,
       "values": {
         "accessControl": {
@@ -904,6 +908,13 @@
           "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
         ]
       },
+      "implementations": [
+        "0x2C0df87E073755139101b35c0A51e065291cc2d3",
+        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
+        "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545",
+        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0",
+        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+      ],
       "sinceTimestamp": 1613033682,
       "values": {
         "configurationDelay": 0,

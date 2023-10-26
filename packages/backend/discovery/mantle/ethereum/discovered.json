@@ -49,11 +49,6 @@
         "minimumStakeSecondQuorum": 0,
         "NUMBER_OF_QUORUMS": 2,
         "numOperators": 10,
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-        "pubkeyCompendium": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
-        "serviceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-        "strategiesConsideredAndMultipliersLength": [1, 1],
         "operatorList": [
           "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
           "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
@@ -65,7 +60,12 @@
           "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
           "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
           "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645"
-        ]
+        ],
+        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+        "pubkeyCompendium": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+        "serviceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+        "strategiesConsideredAndMultipliersLength": [1, 1]
       },
       "derivedName": "BLSRegistry"
     },
