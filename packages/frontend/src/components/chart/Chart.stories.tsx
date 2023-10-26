@@ -302,7 +302,7 @@ export const TvlWithActivity: Story = {
 
 export const DetailedTvlWithActivity: Story = {
   args: {
-    settingsId: 'storybook-chart-6',
+    settingsId: 'storybook-chart-detailed-with-activity',
     initialType: { type: 'storybook-fake-detailed-tvl' },
     hasActivity: true,
   },
@@ -310,7 +310,7 @@ export const DetailedTvlWithActivity: Story = {
 
 export const DetailedTvlWithHeader: Story = {
   args: {
-    settingsId: 'storybook-chart-7',
+    settingsId: 'storybook-chart-detailed-with-header',
     initialType: { type: 'storybook-fake-detailed-tvl' },
     withHeader: true,
   },
@@ -333,14 +333,15 @@ export const Activity: Story = {
 
 export const ActivityWithoutEthTxs: Story = {
   args: {
-    settingsId: 'storybook-chart-activity',
+    settingsId: 'storybook-chart-activity-without-eth-txs',
     initialType: { type: 'storybook-fake-activity' },
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    const checkbox =
-      canvas.queryByText('ETH Mainnet Transactions') ??
-      canvas.getByText('ETH Txs')
+    const checkbox = canvasElement.querySelector<HTMLInputElement>(
+      '[data-role="toggle-ethereum-activity"]',
+    )
+    if (!checkbox) throw new Error('Checkbox not found')
+    if (!checkbox.checked) return
     await userEvent.click(checkbox)
   },
 }
@@ -355,6 +356,7 @@ export const ActivityWithHeader: Story = {
 
 export const Upcoming: Story = {
   args: {
+    settingsId: 'storybook-chart-upcoming',
     isUpcoming: true,
   },
 }

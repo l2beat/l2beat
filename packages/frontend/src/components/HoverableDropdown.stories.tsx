@@ -40,10 +40,10 @@ export const Hovered: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const toggle = canvas.getByText('Example dropdown')
+    await new Promise((resolve) => setTimeout(resolve, 350))
     await waitFor(async () => {
       await userEvent.hover(toggle)
     })
-    await new Promise((resolve) => setTimeout(resolve, 350))
   },
   parameters: {
     chromatic: {
