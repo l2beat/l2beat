@@ -1,22 +1,24 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { Test } from "@harness/Test.sol";
+import { Test } from '@harness/Test.sol';
 
-import { Colosseum } from "@code/contracts/L1/Colosseum.sol";
-import { ValidatorPool } from "@code/contracts/L1/ValidatorPool.sol";
-import { L2OutputOracle } from "@code/contracts/L1/L2OutputOracle.sol";
-import { Types } from "@code/contracts/libraries/Types.sol";
+import { Colosseum } from '@code/contracts/L1/Colosseum.sol';
+import { ValidatorPool } from '@code/contracts/L1/ValidatorPool.sol';
+import { L2OutputOracle } from '@code/contracts/L1/L2OutputOracle.sol';
+import { Types } from '@code/contracts/libraries/Types.sol';
 
 contract ColosseumTest is Test {
-
-    Colosseum constant colosseum = Colosseum(address(0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a));
-    ValidatorPool constant validatorPool = ValidatorPool(address(0xFdFF462845953D90719A78Fd12a2d103541d2103));
-    L2OutputOracle constant l2OutputOracle = L2OutputOracle(address(0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6));
+    Colosseum constant colosseum =
+        Colosseum(address(0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a));
+    ValidatorPool constant validatorPool =
+        ValidatorPool(address(0xFdFF462845953D90719A78Fd12a2d103541d2103));
+    L2OutputOracle constant l2OutputOracle =
+        L2OutputOracle(address(0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6));
 
     address proposer;
     uint256 outputIndex = 271;
-    string RPC_URL = vm.envString("RPC_URL");
+    string RPC_URL = vm.envString('RPC_URL');
 
     function setUp() public {
         uint256 fork = vm.createSelectFork(RPC_URL);
@@ -37,10 +39,10 @@ contract ColosseumTest is Test {
     }
 
     function _joinAsProposer() internal {
-        proposer = makeAddr("proposer");
+        proposer = makeAddr('proposer');
         vm.deal(proposer, 1 ether);
         vm.prank(proposer);
-        validatorPool.deposit{value: 0.2 ether}();
+        validatorPool.deposit{ value: 0.2 ether }();
     }
 
     function testJoinAsProposer() public {
@@ -61,10 +63,15 @@ contract ColosseumTest is Test {
         uint256 blockNumber = block.number;
         bytes32 blockHash = blockhash(blockNumber);
 
-        Types.CheckpointOutput memory prevOutput = l2OutputOracle.getL2Output(outputIndex - 1);
-        Types.CheckpointOutput memory targetOutput = l2OutputOracle.getL2Output(outputIndex);
+        Types.CheckpointOutput memory prevOutput = l2OutputOracle.getL2Output(
+            outputIndex - 1
+        );
+        Types.CheckpointOutput memory targetOutput = l2OutputOracle.getL2Output(
+            outputIndex
+        );
 
-        uint256 requiredLength = colosseum.getSegmentsLength(1); // TURN_INIT = 1
+        uint256 requiredLength = colosseum.getSegmentsLength(1);
+        assertEq(requiredLength, 9);
         bytes32[] memory segments = new bytes32[](requiredLength);
         segments[0] = prevOutput.outputRoot;
 
@@ -74,7 +81,12 @@ contract ColosseumTest is Test {
         vm.prank(proposer);
         vm.expectEmit(true, true, true, true);
         emit ChallengeCreated(outputIndex, asserter, proposer, block.timestamp);
-        colosseum.createChallenge(outputIndex, blockHash, blockNumber, segments);
+        colosseum.createChallenge(
+            outputIndex,
+            blockHash,
+            blockNumber,
+            segments
+        );
     }
 
     bytes32 dummyOutputRoot = bytes32('0x1234567890');
@@ -85,20 +97,30 @@ contract ColosseumTest is Test {
         uint256 blockNumber = block.number;
         bytes32 blockHash = blockhash(blockNumber);
 
-        uint256 expectedTimestamp = l2OutputOracle.computeL2Timestamp(nextL2BlockNumber);
+        uint256 expectedTimestamp = l2OutputOracle.computeL2Timestamp(
+            nextL2BlockNumber
+        );
         vm.warp(expectedTimestamp + 1); // cannot submit future block output!
 
         vm.prank(nextValidator);
-        l2OutputOracle.submitL2Output(dummyOutputRoot, nextL2BlockNumber, blockHash, blockNumber);
+        l2OutputOracle.submitL2Output(
+            dummyOutputRoot,
+            nextL2BlockNumber,
+            blockHash,
+            blockNumber
+        );
     }
 
     function testSubmitInvalidL2OutputRoot() public {
         _submitInvalidL2OutputRootAsNextProposer();
-        assertEq(l2OutputOracle.getL2Output(outputIndex + 1).outputRoot, dummyOutputRoot);
+        assertEq(
+            l2OutputOracle.getL2Output(outputIndex + 1).outputRoot,
+            dummyOutputRoot
+        );
     }
 
     function _waitUntilNextProposer() internal returns (uint256) {
-        while(validatorPool.nextValidator() != proposer) {
+        while (validatorPool.nextValidator() != proposer) {
             _submitInvalidL2OutputRootAsNextProposer();
         }
         return l2OutputOracle.latestOutputIndex();
@@ -115,7 +137,8 @@ contract ColosseumTest is Test {
         uint256 currentOutputIndex = _waitUntilNextProposer();
         _submitInvalidL2OutputRootAsNextProposer();
 
-        Types.CheckpointOutput memory currentOutput = l2OutputOracle.getL2Output(currentOutputIndex + 1);
+        Types.CheckpointOutput memory currentOutput = l2OutputOracle
+            .getL2Output(currentOutputIndex + 1);
 
         assertEq(currentOutput.outputRoot, dummyOutputRoot);
         assertEq(currentOutput.submitter, proposer);

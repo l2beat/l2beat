@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17620009,
   "configHash": "0x7f5b5661d230aca74956b184647ad600ae0db124a982bff7a24f73c9193dd9a5",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -13,6 +13,7 @@
         "implementation": "0x31fe393815822edacBd81C2262467402199EFD0D",
         "admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
       },
+      "implementations": ["0x31fe393815822edacBd81C2262467402199EFD0D"],
       "sinceTimestamp": 1629082107,
       "values": {
         "accessControl": {
@@ -75,6 +76,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1628970480,
       "values": {
         "domainSeparator": "0x8c2034447704652155262224ded80d817537f663fe2aa23efb2f627783672c6c",

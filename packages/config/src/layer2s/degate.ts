@@ -234,6 +234,15 @@ export const degate: Layer2 = {
       },
     ],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'Node software source code can be found [here](https://github.com/degatedev/degate-state-recover).',
+    compressionScheme: 'No compression is used.',
+    genesisState:
+      'The system does not begin with a genesis state; instead, it initiates from a zero state, as referenced in [`CreateEmptyState`](https://github.com/degatedev/degate-state-recover/blob/main/statemanager/state.go#L28).',
+    dataFormat:
+      'DeGate bundles off-chain transactions into [zkBlocks](https://github.com/degatedev/protocols/blob/degate_mainnet/Circuit%20Design.md#zkblock) and submits them to the blockchain. zkBlock data definition is documented [here](https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#zkblock-data-definition).',
+  },
   permissions: [
     {
       name: 'DefaultDepositContract Owner',
