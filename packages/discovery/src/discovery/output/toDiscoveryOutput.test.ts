@@ -4,7 +4,7 @@ import { expect } from 'earl'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { UnixTime } from '../../utils/UnixTime'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { processAnalysis } from './toDiscoveryOutput'
+import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
 describe(processAnalysis.name, () => {
   const base = {
@@ -209,7 +209,7 @@ describe(processAnalysis.name, () => {
     expect(JSON.stringify(result)).toMatchSnapshot(this)
   })
 
-  it('field order matters', () => {
+  it('field order does not matter', () => {
     // TODO: in the future it shouldn't
     const result1 = processAnalysis([
       {
@@ -226,20 +226,33 @@ describe(processAnalysis.name, () => {
       },
     ])
 
-    expect(JSON.stringify(result1)).not.toEqual(JSON.stringify(result2))
-  }),
-    it('undefined keys in upgradeability are skipped', () => {
-      const resultUndefined = processAnalysis([
-        {
-          ...CONTRACT_A,
-          upgradeability: {
-            type: 'immutable',
-            key: undefined,
-          } as UpgradeabilityParameters,
-        },
-      ])
-      const result = processAnalysis([CONTRACT_A])
+    expect(JSON.stringify(result1)).toEqual(JSON.stringify(result2))
+  })
 
-      expect(resultUndefined).toEqual(result)
-    })
+  it('undefined keys in upgradeability are skipped', () => {
+    const resultUndefined = processAnalysis([
+      {
+        ...CONTRACT_A,
+        upgradeability: {
+          type: 'immutable',
+          key: undefined,
+        } as UpgradeabilityParameters,
+      },
+    ])
+    const result = processAnalysis([CONTRACT_A])
+
+    expect(resultUndefined).toEqual(result)
+  })
+})
+
+describe(sortByKeys.name, () => {
+  it('sorts an object by keys', () => {
+    const obj = {
+      foo: 'foo',
+      bar: 'bar',
+    }
+
+    expect(JSON.stringify(obj)).toEqual('{"foo":"foo","bar":"bar"}')
+    expect(JSON.stringify(sortByKeys(obj))).toEqual('{"bar":"bar","foo":"foo"}')
+  })
 })

@@ -46,8 +46,14 @@ export function processAnalysis(
               ? undefined
               : x.implementations,
           sinceTimestamp: x.deploymentTimestamp?.toNumber(),
-          values: Object.keys(x.values).length === 0 ? undefined : x.values,
-          errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,
+          values:
+            Object.keys(x.values).length === 0
+              ? undefined
+              : sortByKeys(x.values),
+          errors:
+            Object.keys(x.errors).length === 0
+              ? undefined
+              : sortByKeys(x.errors),
           derivedName: x.derivedName,
         }),
       ),
@@ -79,4 +85,10 @@ function getContracts(results: Analysis[]): {
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
+}
+
+export function sortByKeys<T extends object>(obj: T): T {
+  return Object.fromEntries(
+    Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
+  ) as T
 }

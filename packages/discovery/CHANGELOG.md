@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.20.0
+
+### Minor Changes
+
+- Sort discovery output values by keys
+
 ## 0.19.2
 
 ### Patch Changes
