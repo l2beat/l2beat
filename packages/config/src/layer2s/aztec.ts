@@ -258,7 +258,7 @@ export const aztec: Layer2 = {
     addresses: [
       discovery.getContractDetails(
         'RollupProcessor',
-        'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+        'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside a ZK proof.',
       ),
       discovery.getContractDetails(
         'AztecFeeDistributor',

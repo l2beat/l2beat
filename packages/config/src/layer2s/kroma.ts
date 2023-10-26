@@ -182,8 +182,8 @@ export const kroma: Layer2 = {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',
       description:
-        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then zk proven. The zkEVM used is based on Scroll.\
-        Once the single block of disagreement is found, CHALLENGER is required to present zkProof of the fraud. When the proof is validated, the incorrect\
+        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. The zkEVM used is based on Scroll.\
+        Once the single block of disagreement is found, CHALLENGER is required to present ZK proof of the fraud. When the proof is validated, the incorrect\
         state output is deleted. The Security Council can always override the result of the challenge, it can also delete any L2 state root at any time. If\
         the malicious ATTESTER and CHALLENGER collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenge\
         resulting in lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',

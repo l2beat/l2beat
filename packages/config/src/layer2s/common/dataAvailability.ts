@@ -27,7 +27,7 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
       href: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
     },
     {
-      text: 'ZK-Rollup - StarkEx documentation',
+      text: 'ZK Rollup - StarkEx documentation',
       href: 'https://docs.starkware.co/starkex/con_data_availability.html#zk_rollup',
     },
   ],

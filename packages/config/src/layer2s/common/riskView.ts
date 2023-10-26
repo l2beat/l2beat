@@ -55,14 +55,14 @@ export const STATE_FP_INT_ZK: ProjectRiskViewEntry = {
 export const STATE_ZKP_SN: ProjectRiskViewEntry = {
   value: 'ZK proofs (SN)',
   description:
-    'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+    'zkSNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
 }
 
 export const STATE_ZKP_ST: ProjectRiskViewEntry = {
   value: 'ZK proofs (ST)',
   description:
-    'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+    'zkSTARKS are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
 }
 
