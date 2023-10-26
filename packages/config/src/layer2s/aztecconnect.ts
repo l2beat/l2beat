@@ -310,6 +310,14 @@ export const aztecconnect: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  stateDerivation: {
+    nodeSoftware: `The entire stack's source code is housed in a single monorepo, which can be found [here](https://github.com/AztecProtocol/aztec-connect/tree/v2.1). For instructions on running the node, please refer to [this readme](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/README.md).`,
+    compressionScheme: 'No compression is used.',
+    genesisState:
+      'The genesis file is available [here](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/falafel/src/environment/init/data/mainnet/accounts), and it includes accounts from [zk.money](http://zk.money) as well.',
+    dataFormat:
+      'The code to decode onchain data can be found [here](https://github.com/AztecProtocol/aztec-connect/blob/master/yarn-project/barretenberg.js/src/rollup_proof/rollup_proof_data.ts#L453)',
+  },
   permissions: [
     ...getAccessControl(),
     {
