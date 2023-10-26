@@ -15,17 +15,9 @@ import {
   LivenessRepository,
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
-import { LivenessClient } from './LivenessClient'
-import {
-  adjustToForBigqueryCall,
-  LivenessIndexer,
-  mergeConfigs,
-} from './LivenessIndexer'
-import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
+import { LivenessClient, mergeConfigs } from './LivenessClient'
+import { LivenessIndexer } from './LivenessIndexer'
+import { LivenessConfig } from './types/LivenessConfig'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
@@ -40,9 +32,6 @@ import {
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
 const ADDRESS_3 = EthereumAddress.random()
-const ADDRESS_4 = EthereumAddress.random()
-const ADDRESS_5 = EthereumAddress.random()
-const ADDRESS_6 = EthereumAddress.random()
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
@@ -193,6 +182,11 @@ describe(LivenessIndexer.name, () => {
       const livenessClient = mockObject<LivenessClient>({
         getTransfers: async () => [],
         getFunctionCalls: async () => [],
+        getLivenessData: async (
+          projects: Project[],
+          from: UnixTime,
+          to: UnixTime,
+        ) => Promise.resolve({ data: [], to }),
       })
 
       const PROJECT: Project = {
@@ -268,7 +262,7 @@ describe(LivenessIndexer.name, () => {
             functionCalls: [
               {
                 projectId: ProjectId('project1'),
-                address: ADDRESS_5,
+                address: ADDRESS_3,
                 selector: '0x9aaab648',
                 sinceTimestamp: FROM,
                 type: 'STATE',
@@ -294,7 +288,7 @@ describe(LivenessIndexer.name, () => {
             value: FROM.add(1, 'minutes').toDate().toISOString(),
           },
           input: '0x9aaab648',
-          to_address: ADDRESS_5,
+          to_address: ADDRESS_3,
           transaction_hash: '0xabcdef1234567891',
         },
       ]
@@ -348,357 +342,6 @@ describe(LivenessIndexer.name, () => {
         TO,
       )
       expect(livenessRepository.addMany).toHaveBeenCalledWith(expectedToSave)
-    })
-  })
-
-  describe(LivenessIndexer.prototype.getLivenessData.name, () => {
-    it('prepares config properly and calls internal methods', async () => {
-      const projects: Project[] = [
-        {
-          projectId: ProjectId('project1'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [
-              {
-                projectId: ProjectId('project1'),
-                from: ADDRESS_1,
-                to: ADDRESS_2,
-                type: 'DA',
-                sinceTimestamp: FROM,
-                untilTimestamp: FROM.add(-1, 'days'),
-              },
-            ],
-            functionCalls: [
-              {
-                projectId: ProjectId('project1'),
-                address: ADDRESS_5,
-                selector: '0x9aaab648',
-                sinceTimestamp: FROM,
-                type: 'DA',
-              },
-            ],
-          },
-        },
-        {
-          projectId: ProjectId('project2'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [
-              {
-                projectId: ProjectId('project2'),
-                from: ADDRESS_3,
-                to: ADDRESS_4,
-                type: 'STATE',
-                sinceTimestamp: FROM,
-              },
-            ],
-            functionCalls: [
-              {
-                projectId: ProjectId('project2'),
-                address: ADDRESS_6,
-                selector: '0x7739cbe7',
-                type: 'STATE',
-                untilTimestamp: FROM.add(-1, 'days'),
-                sinceTimestamp: FROM,
-              },
-            ],
-          },
-        },
-      ]
-
-      const livenessClient = mockObject<LivenessClient>({
-        getTransfers: mockFn().resolvesToOnce(
-          BigQueryTransfersResult.parse([]),
-        ),
-        getFunctionCalls: mockFn().resolvesToOnce(
-          BigQueryFunctionCallsResult.parse([]),
-        ),
-      })
-
-      const livenessIndexer = new LivenessIndexer(
-        Logger.SILENT,
-        hourlyIndexer,
-        projects,
-        livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
-      await livenessIndexer.getLivenessData(projects, FROM, TO)
-      const config: LivenessConfig = mergeConfigs(projects)
-
-      const transfersConfig = config.transfers.filter((c) =>
-        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
-      )
-      expect(livenessClient.getTransfers).toHaveBeenNthCalledWith(
-        1,
-        transfersConfig,
-        FROM,
-        TO,
-      )
-      const functionCallsConfig = config.functionCalls.filter((c) =>
-        isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
-      )
-      expect(livenessClient.getFunctionCalls).toHaveBeenNthCalledWith(
-        1,
-        functionCallsConfig,
-        FROM,
-        TO,
-      )
-    })
-  })
-
-  describe(LivenessIndexer.prototype.getTransfers.name, () => {
-    it('should fetch and transform data properly', async () => {
-      const queryResults: BigQueryTransfersResult = [
-        {
-          block_number: 1,
-          block_timestamp: FROM,
-          from_address: ADDRESS_1,
-          to_address: ADDRESS_2,
-          transaction_hash: '0xabcdef1234567890',
-        },
-        {
-          block_number: 2,
-          block_timestamp: FROM,
-          from_address: ADDRESS_3,
-          to_address: ADDRESS_4,
-          transaction_hash: '0xabcdef1234567891',
-        },
-      ]
-
-      const livenessClient = mockObject<LivenessClient>({
-        getTransfers: mockFn().resolvesToOnce(queryResults),
-      })
-
-      const projects: Project[] = [
-        {
-          projectId: ProjectId('project1'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [
-              {
-                from: ADDRESS_1,
-                to: ADDRESS_2,
-                type: 'DA',
-                projectId: ProjectId('project1'),
-                sinceTimestamp: FROM,
-              },
-            ],
-            functionCalls: [],
-          },
-        },
-        {
-          projectId: ProjectId('project2'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [
-              {
-                from: ADDRESS_3,
-                to: ADDRESS_4,
-                type: 'STATE',
-                projectId: ProjectId('project2'),
-                sinceTimestamp: FROM,
-              },
-            ],
-            functionCalls: [],
-          },
-        },
-      ]
-
-      const expected: LivenessRecord[] = [
-        {
-          projectId: ProjectId('project1'),
-          timestamp: FROM,
-          blockNumber: 1,
-          txHash: '0xabcdef1234567890',
-          type: 'DA',
-        },
-        {
-          projectId: ProjectId('project2'),
-          timestamp: FROM,
-          blockNumber: 2,
-          txHash: '0xabcdef1234567891',
-          type: 'STATE',
-        },
-      ]
-
-      const livenessIndexer = new LivenessIndexer(
-        Logger.SILENT,
-        hourlyIndexer,
-        projects,
-        livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
-      const expectedConfig: LivenessTransfer[] = [
-        projects[0].livenessConfig!.transfers[0],
-        projects[1].livenessConfig!.transfers[0],
-      ]
-      const results = await livenessIndexer.getTransfers(
-        expectedConfig,
-        FROM,
-        TO,
-      )
-
-      expect(results).toEqual(expected)
-      expect(livenessClient.getTransfers).toHaveBeenNthCalledWith(
-        1,
-        expectedConfig,
-        FROM,
-        TO,
-      )
-    })
-
-    it('does not call BigQuery if configs are empty', async () => {
-      const livenessClient = mockObject<LivenessClient>({
-        getTransfers: async () => [],
-      })
-
-      const livenessIndexer = new LivenessIndexer(
-        Logger.SILENT,
-        hourlyIndexer,
-        [],
-        livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
-
-      await livenessIndexer.getTransfers([], FROM, TO)
-
-      expect(livenessClient.getTransfers).not.toHaveBeenCalled()
-    })
-  })
-
-  describe(LivenessIndexer.prototype.getFunctionCalls.name, () => {
-    it('should fetch and transform data properly', async () => {
-      const queryResults: BigQueryFunctionCallsResult = [
-        {
-          block_number: 1,
-          block_timestamp: FROM,
-          input: '0x9aaab648',
-          to_address: ADDRESS_2,
-          transaction_hash: '0xabcdef1234567890',
-        },
-        {
-          block_number: 2,
-          block_timestamp: FROM,
-          input: '0x7739cbe7',
-          to_address: ADDRESS_4,
-          transaction_hash: '0xabcdef1234567891',
-        },
-      ]
-
-      const livenessClient = mockObject<LivenessClient>({
-        getFunctionCalls: mockFn().resolvesToOnce(queryResults),
-      })
-
-      const projects: Project[] = [
-        {
-          projectId: ProjectId('project1'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [],
-            functionCalls: [
-              {
-                address: ADDRESS_2,
-                selector: '0x9aaab648',
-                type: 'DA',
-                projectId: ProjectId('project1'),
-                sinceTimestamp: FROM,
-              },
-            ],
-          },
-        },
-        {
-          projectId: ProjectId('project2'),
-          escrows: [],
-          type: 'layer2',
-          livenessConfig: {
-            transfers: [],
-            functionCalls: [
-              {
-                address: ADDRESS_4,
-                selector: '0x7739cbe7',
-                type: 'STATE',
-                projectId: ProjectId('project2'),
-                sinceTimestamp: FROM,
-              },
-            ],
-          },
-        },
-      ]
-
-      const expected: LivenessRecord[] = [
-        {
-          projectId: ProjectId('project1'),
-          timestamp: FROM,
-          blockNumber: 1,
-          txHash: '0xabcdef1234567890',
-          type: 'DA',
-        },
-        {
-          projectId: ProjectId('project2'),
-          timestamp: FROM,
-          blockNumber: 2,
-          txHash: '0xabcdef1234567891',
-          type: 'STATE',
-        },
-      ]
-
-      const livenessIndexer = new LivenessIndexer(
-        Logger.SILENT,
-        hourlyIndexer,
-        projects,
-        livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
-      const expectedConfig: LivenessFunctionCall[] = [
-        projects[0].livenessConfig!.functionCalls[0],
-        projects[1].livenessConfig!.functionCalls[0],
-      ]
-      const results = await livenessIndexer.getFunctionCalls(
-        expectedConfig,
-        FROM,
-        TO,
-      )
-
-      expect(results).toEqual(expected)
-      expect(livenessClient.getFunctionCalls).toHaveBeenNthCalledWith(
-        1,
-        expectedConfig,
-        FROM,
-        TO,
-      )
-    })
-
-    it('does not call BigQuery if configs are empty', async () => {
-      const livenessClient = mockObject<LivenessClient>({
-        getFunctionCalls: async () => [],
-      })
-
-      const livenessIndexer = new LivenessIndexer(
-        Logger.SILENT,
-        hourlyIndexer,
-        [],
-        livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
-
-      await livenessIndexer.getFunctionCalls([], FROM, TO)
-
-      expect(livenessClient.getFunctionCalls).not.toHaveBeenCalled()
     })
   })
 
@@ -774,24 +417,3 @@ function getMockLivenessIndexer(
     minTimestamp: FROM,
   }
 }
-
-describe(adjustToForBigqueryCall.name, () => {
-  it('the same day', () => {
-    const from = UnixTime.fromDate(new Date('2022-01-01T12:00:00Z'))
-
-    const result = adjustToForBigqueryCall(
-      from.toNumber(),
-      from.add(1, 'hours').toNumber(),
-    )
-
-    expect(result).toEqual(UnixTime.fromDate(new Date('2022-01-01T13:00:00Z')))
-  })
-
-  it('different days', () => {
-    const from = UnixTime.fromDate(new Date('2022-01-01T12:00:00Z'))
-    const to = UnixTime.fromDate(new Date('2022-01-02T12:00:00Z'))
-
-    const result = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
-    expect(result).toEqual(UnixTime.fromDate(new Date('2022-01-02T00:00:00Z')))
-  })
-})

@@ -63,39 +63,31 @@ export class LivenessClient {
   }
 
   async getTransfers(
-    transfersConfigs: LivenessTransfer[],
+    transfersConfig: LivenessTransfer[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    if (transfersConfigs.length === 0) return Promise.resolve([])
+    if (transfersConfig.length === 0) return Promise.resolve([])
 
-    const senders = transfersConfigs.map((t) => t.from)
-    const receivers = transfersConfigs.map((t) => t.to)
-
-    const query = getTransferQuery(senders, receivers, from, to)
+    const query = getTransferQuery(transfersConfig, from, to)
 
     const queryResult = await this.bigquery.query(query)
     const parsedResult = BigQueryTransfersResult.parse(queryResult)
-    return transformTransfersQueryResult(transfersConfigs, parsedResult)
+    return transformTransfersQueryResult(transfersConfig, parsedResult)
   }
 
   async getFunctionCalls(
-    functionCallsConfigs: LivenessFunctionCall[],
+    functionCallsConfig: LivenessFunctionCall[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    if (functionCallsConfigs.length === 0) return Promise.resolve([])
+    if (functionCallsConfig.length === 0) return Promise.resolve([])
 
-    const addresses = functionCallsConfigs.map((m) => m.address)
-    const methodSelectors = functionCallsConfigs.map((m) =>
-      m.selector.toLowerCase(),
-    )
+    const query = getFunctionCallQuery(functionCallsConfig, from, to)
 
-    const query = getFunctionCallQuery(addresses, methodSelectors, from, to)
     const queryResult = await this.bigquery.query(query)
     const parsedResult = BigQueryFunctionCallsResult.parse(queryResult)
-
-    return transformFunctionCallsQueryResult(functionCallsConfigs, parsedResult)
+    return transformFunctionCallsQueryResult(functionCallsConfig, parsedResult)
   }
 }
 
