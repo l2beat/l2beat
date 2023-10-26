@@ -1,5 +1,4 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { BigQueryClient } from '@l2beat/shared'
 import { Hash256, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 
@@ -21,6 +20,7 @@ import {
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
+import { LivenessClient } from './LivenessClient'
 
 export class LivenessIndexer extends ChildIndexer {
   private readonly indexerId = 'liveness_indexer'
@@ -30,7 +30,7 @@ export class LivenessIndexer extends ChildIndexer {
     logger: Logger,
     parentIndexer: HourlyIndexer,
     private readonly projects: Project[],
-    private readonly bigQueryClient: BigQueryClient,
+    private readonly livenessClient: LivenessClient,
     private readonly stateRepository: IndexerStateRepository,
     private readonly livenessRepository: LivenessRepository,
     private readonly minTimestamp: UnixTime,
@@ -106,7 +106,7 @@ export class LivenessIndexer extends ChildIndexer {
   ): Promise<LivenessRecord[]> {
     if (transfersConfigs.length === 0) return Promise.resolve([])
 
-    const queryResults = await this.bigQueryClient.getTransfers(
+    const queryResults = await this.livenessClient.getTransfers(
       transfersConfigs,
       from,
       to,
@@ -121,7 +121,7 @@ export class LivenessIndexer extends ChildIndexer {
   ): Promise<LivenessRecord[]> {
     if (functionCallsConfigs.length === 0) return Promise.resolve([])
 
-    const queryResults = await this.bigQueryClient.getFunctionCalls(
+    const queryResults = await this.livenessClient.getFunctionCalls(
       functionCallsConfigs,
       from,
       to,

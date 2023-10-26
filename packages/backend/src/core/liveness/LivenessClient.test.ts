@@ -1,15 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { BigQueryProvider } from '../../../../shared/src/services/bigquery/BigQueryProvider'
+import { BigQuerySDKWrapper } from '../../../../shared/src/services/bigquery/BigQuerySDKWrapper'
 import {
-  BigQueryClient,
   FunctionCallQueryParams,
+  LivenessClient,
   TransferQueryParams,
-} from './BigQueryClient'
-import { BigQueryProvider } from './BigQueryProvider'
-import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
+} from './LivenessClient'
 
-describe('BigQueryClient', () => {
+describe('LivenessClient', () => {
   it('should return valid data for transfers', async () => {
     const transfersToQuery: TransferQueryParams[] = [
       {
@@ -47,7 +47,7 @@ describe('BigQueryClient', () => {
     })
     const queryProvider = new BigQueryProvider(bigQuery)
 
-    const results = await new BigQueryClient(queryProvider).getTransfers(
+    const results = await new LivenessClient(queryProvider).getTransfers(
       transfersToQuery,
       UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
       UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
@@ -102,7 +102,7 @@ describe('BigQueryClient', () => {
       ]),
     })
     const queryProvider = new BigQueryProvider(bigQuery)
-    const results = await new BigQueryClient(queryProvider).getFunctionCalls(
+    const results = await new LivenessClient(queryProvider).getFunctionCalls(
       functionCallsToQuery,
       UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
       UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
@@ -131,7 +131,7 @@ describe('BigQueryClient', () => {
     })
     const queryProvider = new BigQueryProvider(bigQuery)
     await expect(
-      new BigQueryClient(queryProvider).getTransfers(
+      new LivenessClient(queryProvider).getTransfers(
         [],
         UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
         UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),

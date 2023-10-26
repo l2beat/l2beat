@@ -1,10 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  BigQueryClient,
-  BigQueryFunctionCallsResult,
-  BigQueryTransfersResult,
-} from '@l2beat/shared'
-import {
   EthereumAddress,
   Hash256,
   hashJson,
@@ -36,6 +31,11 @@ import {
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
+import { LivenessClient } from './LivenessClient'
+import {
+  BigQueryFunctionCallsResult,
+  BigQueryTransfersResult,
+} from './types/model'
 
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
@@ -165,7 +165,7 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getTransfers: () => {
           throw new Error('error')
         },
@@ -175,7 +175,7 @@ describe(LivenessIndexer.name, () => {
         logger,
         hourlyIndexer,
         projects,
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -190,7 +190,7 @@ describe(LivenessIndexer.name, () => {
     })
 
     it('schedules sync for daily if possible', async () => {
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getTransfers: async () => [],
         getFunctionCalls: async () => [],
       })
@@ -224,7 +224,7 @@ describe(LivenessIndexer.name, () => {
         logger,
         hourlyIndexer,
         [PROJECT],
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -235,13 +235,13 @@ describe(LivenessIndexer.name, () => {
 
       await livenessIndexer.update(from.toNumber(), to.toNumber())
 
-      expect(bigQueryClient.getFunctionCalls).toHaveBeenCalledWith(
+      expect(livenessClient.getFunctionCalls).toHaveBeenCalledWith(
         [PROJECT.livenessConfig!.functionCalls[0]],
         from,
         from.add(1, 'days'),
       )
 
-      expect(bigQueryClient.getTransfers).toHaveBeenCalledWith(
+      expect(livenessClient.getTransfers).toHaveBeenCalledWith(
         [PROJECT.livenessConfig!.transfers[0]],
         from,
         from.add(1, 'days'),
@@ -299,7 +299,7 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getTransfers: mockFn().resolvesToOnce(
           BigQueryTransfersResult.parse(transfers),
         ),
@@ -311,7 +311,7 @@ describe(LivenessIndexer.name, () => {
         logger,
         hourlyIndexer,
         projects,
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -337,12 +337,12 @@ describe(LivenessIndexer.name, () => {
         ),
       ]
 
-      expect(bigQueryClient.getTransfers).toHaveBeenCalledWith(
+      expect(livenessClient.getTransfers).toHaveBeenCalledWith(
         transfersConfig,
         FROM,
         TO,
       )
-      expect(bigQueryClient.getFunctionCalls).toHaveBeenCalledWith(
+      expect(livenessClient.getFunctionCalls).toHaveBeenCalledWith(
         functionCallsConfig,
         FROM,
         TO,
@@ -408,7 +408,7 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getTransfers: mockFn().resolvesToOnce(
           BigQueryTransfersResult.parse([]),
         ),
@@ -421,7 +421,7 @@ describe(LivenessIndexer.name, () => {
         Logger.SILENT,
         hourlyIndexer,
         projects,
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -432,7 +432,7 @@ describe(LivenessIndexer.name, () => {
       const transfersConfig = config.transfers.filter((c) =>
         isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
       )
-      expect(bigQueryClient.getTransfers).toHaveBeenNthCalledWith(
+      expect(livenessClient.getTransfers).toHaveBeenNthCalledWith(
         1,
         transfersConfig,
         FROM,
@@ -441,7 +441,7 @@ describe(LivenessIndexer.name, () => {
       const functionCallsConfig = config.functionCalls.filter((c) =>
         isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
       )
-      expect(bigQueryClient.getFunctionCalls).toHaveBeenNthCalledWith(
+      expect(livenessClient.getFunctionCalls).toHaveBeenNthCalledWith(
         1,
         functionCallsConfig,
         FROM,
@@ -469,7 +469,7 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getTransfers: mockFn().resolvesToOnce(queryResults),
       })
 
@@ -531,7 +531,7 @@ describe(LivenessIndexer.name, () => {
         Logger.SILENT,
         hourlyIndexer,
         projects,
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -547,7 +547,7 @@ describe(LivenessIndexer.name, () => {
       )
 
       expect(results).toEqual(expected)
-      expect(bigQueryClient.getTransfers).toHaveBeenNthCalledWith(
+      expect(livenessClient.getTransfers).toHaveBeenNthCalledWith(
         1,
         expectedConfig,
         FROM,
@@ -556,7 +556,7 @@ describe(LivenessIndexer.name, () => {
     })
 
     it('does not call BigQuery if configs are empty', async () => {
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getTransfers: async () => [],
       })
 
@@ -564,7 +564,7 @@ describe(LivenessIndexer.name, () => {
         Logger.SILENT,
         hourlyIndexer,
         [],
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -572,7 +572,7 @@ describe(LivenessIndexer.name, () => {
 
       await livenessIndexer.getTransfers([], FROM, TO)
 
-      expect(bigQueryClient.getTransfers).not.toHaveBeenCalled()
+      expect(livenessClient.getTransfers).not.toHaveBeenCalled()
     })
   })
 
@@ -595,7 +595,7 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getFunctionCalls: mockFn().resolvesToOnce(queryResults),
       })
 
@@ -657,7 +657,7 @@ describe(LivenessIndexer.name, () => {
         Logger.SILENT,
         hourlyIndexer,
         projects,
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -673,7 +673,7 @@ describe(LivenessIndexer.name, () => {
       )
 
       expect(results).toEqual(expected)
-      expect(bigQueryClient.getFunctionCalls).toHaveBeenNthCalledWith(
+      expect(livenessClient.getFunctionCalls).toHaveBeenNthCalledWith(
         1,
         expectedConfig,
         FROM,
@@ -682,7 +682,7 @@ describe(LivenessIndexer.name, () => {
     })
 
     it('does not call BigQuery if configs are empty', async () => {
-      const bigQueryClient = mockObject<BigQueryClient>({
+      const livenessClient = mockObject<LivenessClient>({
         getFunctionCalls: async () => [],
       })
 
@@ -690,7 +690,7 @@ describe(LivenessIndexer.name, () => {
         Logger.SILENT,
         hourlyIndexer,
         [],
-        bigQueryClient,
+        livenessClient,
         stateRepository,
         livenessRepository,
         FROM,
@@ -698,7 +698,7 @@ describe(LivenessIndexer.name, () => {
 
       await livenessIndexer.getFunctionCalls([], FROM, TO)
 
-      expect(bigQueryClient.getFunctionCalls).not.toHaveBeenCalled()
+      expect(livenessClient.getFunctionCalls).not.toHaveBeenCalled()
     })
   })
 
@@ -743,7 +743,7 @@ function getMockLivenessIndexer(
   projects: Project[],
   configHash: Hash256 | undefined,
 ) {
-  const bigQueryClient = mockObject<BigQueryClient>({})
+  const livenessClient = mockObject<LivenessClient>({})
 
   const stateRepository = mockObject<IndexerStateRepository>({
     findSafeHeight() {
@@ -761,7 +761,7 @@ function getMockLivenessIndexer(
     Logger.SILENT,
     hourlyIndexer,
     projects,
-    bigQueryClient,
+    livenessClient,
     stateRepository,
     livenessRepository,
     FROM,

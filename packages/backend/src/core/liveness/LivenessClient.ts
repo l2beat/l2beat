@@ -1,9 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { BigQueryProvider } from './BigQueryProvider'
-import { BigQueryFunctionCallsResult, BigQueryTransfersResult } from './model'
-import { getFunctionCallQuery } from './sql/getFunctionCallQuery'
-import { getTransferQuery } from './sql/getTransferQuery'
+import {
+  BigQueryFunctionCallsResult,
+  BigQueryTransfersResult,
+} from './types/model'
+import { getFunctionCallQuery } from './utils/sql/getFunctionCallQuery'
+import { getTransferQuery } from './utils/sql/getTransferQuery'
+import { BigQueryProvider } from '@l2beat/shared'
 
 export interface FunctionCallQueryParams {
   address: EthereumAddress
@@ -15,7 +18,7 @@ export interface TransferQueryParams {
   to: EthereumAddress
 }
 
-export class BigQueryClient {
+export class LivenessClient {
   constructor(private readonly bigquery: BigQueryProvider) {}
 
   async getTransfers(
