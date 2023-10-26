@@ -70,10 +70,11 @@ function getAccessControl() {
 }
 
 export const aztecconnect: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),
   display: {
-    name: 'Aztec Connect',
+    name: 'Zk.Money v2 (Aztec Connect)',
     slug: 'aztecconnect',
     warning: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024. The escape hatch delay has been recently increased to ${escapeHatchDelayString}, meaning that users will not be able to exit when the operator will be shut down.`,
     description:
