@@ -114,7 +114,7 @@ const meta: Meta<typeof Chart> = {
   decorators: [
     (Story) => {
       useEffect(() => {
-        configureCharts()
+        configureCharts({ disableLocalStorage: true })
       }, [])
 
       return <Story />
@@ -151,16 +151,9 @@ const tokens = [
     } as const),
 )
 
-export const Primary: Story = {
-  args: {
-    settingsId: 'storybook-chart-primary',
-  },
-}
+export const Primary: Story = {}
 
 export const EmptyState: Story = {
-  args: {
-    settingsId: 'storybook-chart-empty-state',
-  },
   play: async () => {
     await new Promise((resolve) => setTimeout(resolve, 200))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
@@ -171,9 +164,6 @@ export const EmptyState: Story = {
 }
 
 export const ErrorState: Story = {
-  args: {
-    settingsId: 'storybook-chart-error-state',
-  },
   play: async () => {
     await new Promise((resolve) => setTimeout(resolve, 200))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
@@ -184,9 +174,6 @@ export const ErrorState: Story = {
 }
 
 export const WithEth: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-eth',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('ETH'))
@@ -194,9 +181,6 @@ export const WithEth: Story = {
 }
 
 export const WithLogScale: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-log-scale',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('LOG'))
@@ -204,9 +188,6 @@ export const WithLogScale: Story = {
 }
 
 export const With7D: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-7d',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('7D'))
@@ -214,9 +195,6 @@ export const With7D: Story = {
 }
 
 export const With30D: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-30d',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('30D'))
@@ -224,9 +202,6 @@ export const With30D: Story = {
 }
 
 export const With90D: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-90d',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('90D'))
@@ -242,9 +217,6 @@ export const With90D: Story = {
 }
 
 export const With180D: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-180d',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('180D'))
@@ -260,9 +232,6 @@ export const With180D: Story = {
 }
 
 export const With1Y: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-1y',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('1Y'))
@@ -270,9 +239,6 @@ export const With1Y: Story = {
 }
 
 export const WithMax: Story = {
-  args: {
-    settingsId: 'storybook-chart-with-max',
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByDisplayValue('MAX'))
@@ -281,28 +247,24 @@ export const WithMax: Story = {
 
 export const TvlWithHeader: Story = {
   args: {
-    settingsId: 'storybook-chart-tvl-with-header',
     withHeader: true,
   },
 }
 
 export const TvlWithTokens: Story = {
   args: {
-    settingsId: 'storybook-chart-tvl-with-tokens',
     tokens,
   },
 }
 
 export const TvlWithActivity: Story = {
   args: {
-    settingsId: 'storybook-chart-tvl-with-activity',
     hasActivity: true,
   },
 }
 
 export const DetailedTvlWithActivity: Story = {
   args: {
-    settingsId: 'storybook-chart-detailed-with-activity',
     initialType: { type: 'storybook-fake-detailed-tvl' },
     hasActivity: true,
   },
@@ -310,7 +272,6 @@ export const DetailedTvlWithActivity: Story = {
 
 export const DetailedTvlWithHeader: Story = {
   args: {
-    settingsId: 'storybook-chart-detailed-with-header',
     initialType: { type: 'storybook-fake-detailed-tvl' },
     withHeader: true,
   },
@@ -318,7 +279,6 @@ export const DetailedTvlWithHeader: Story = {
 
 export const DetailedTvlWithTokens: Story = {
   args: {
-    settingsId: 'storybook-chart-detailed-tvl-with-tokens',
     initialType: { type: 'storybook-fake-detailed-tvl' },
     tokens,
   },
@@ -326,29 +286,25 @@ export const DetailedTvlWithTokens: Story = {
 
 export const Activity: Story = {
   args: {
-    settingsId: 'storybook-chart-activity',
     initialType: { type: 'storybook-fake-activity' },
   },
 }
 
 export const ActivityWithoutEthTxs: Story = {
   args: {
-    settingsId: 'storybook-chart-activity-without-eth-txs',
     initialType: { type: 'storybook-fake-activity' },
   },
   play: async ({ canvasElement }) => {
-    const checkbox = canvasElement.querySelector<HTMLInputElement>(
-      '[data-role="toggle-ethereum-activity"]',
-    )
-    if (!checkbox) throw new Error('Checkbox not found')
-    if (!checkbox.checked) return
+    const canvas = within(canvasElement)
+    const checkbox =
+      canvas.queryByText('ETH Mainnet Transactions') ??
+      canvas.getByText('ETH Txs')
     await userEvent.click(checkbox)
   },
 }
 
 export const ActivityWithHeader: Story = {
   args: {
-    settingsId: 'storybook-chart-activity-with-header',
     initialType: { type: 'storybook-fake-activity' },
     withHeader: true,
   },
@@ -356,7 +312,6 @@ export const ActivityWithHeader: Story = {
 
 export const Upcoming: Story = {
   args: {
-    settingsId: 'storybook-chart-upcoming',
     isUpcoming: true,
   },
 }
