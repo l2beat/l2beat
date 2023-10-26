@@ -41,8 +41,9 @@ export class LivenessClient {
   ): Promise<{ data: LivenessRecord[]; to: UnixTime }> {
     // TODO: find missing data for this range(from,to)
 
-    const config: LivenessConfig = mergeConfigs(projects)
     const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
+
+    const config: LivenessConfig = mergeConfigs(projects)
 
     const transfersConfig = config.transfers.filter((c) =>
       isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, adjustedTo),
