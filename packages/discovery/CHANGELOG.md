@@ -16,7 +16,8 @@
 
 ### Patch Changes
 
-- b34f1df: Use config.json names entry in naming EOAs in the mermaid diagram
+- Use config.json names entry in naming EOAs in the mermaid diagram
+- Minimized proxy detection calls in scroll access control
 
 ## 0.19.0
 
