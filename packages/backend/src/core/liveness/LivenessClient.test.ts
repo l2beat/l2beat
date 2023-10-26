@@ -1,3 +1,4 @@
+import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
@@ -6,7 +7,6 @@ import {
   LivenessClient,
   TransferQueryParams,
 } from './LivenessClient'
-import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
 
 describe('LivenessClient', () => {
   it('should return valid data for transfers', async () => {

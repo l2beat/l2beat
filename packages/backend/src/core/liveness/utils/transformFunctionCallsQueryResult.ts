@@ -1,8 +1,8 @@
-import { BigQueryFunctionCallsResult } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
 import { LivenessFunctionCall } from '../types/LivenessConfig'
+import { BigQueryFunctionCallsResult } from '../types/model'
 
 export function transformFunctionCallsQueryResult(
   configs: LivenessFunctionCall[],
