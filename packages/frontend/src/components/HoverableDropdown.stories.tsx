@@ -43,11 +43,9 @@ export const Hovered: Story = {
     await waitFor(async () => {
       await userEvent.hover(toggle)
     })
+    await new Promise((resolve) => setTimeout(resolve, 350))
   },
   parameters: {
-    chromatic: {
-      delay: 400,
-    },
     pseudo: {
       hover: true,
     },

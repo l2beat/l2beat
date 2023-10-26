@@ -168,11 +168,6 @@ export const EmptyState: Story = {
     chart.dataset.state = 'empty'
     chart.dataset.interactivityDisabled = 'true'
   },
-  parameters: {
-    chromatic: {
-      delay: 300,
-    },
-  },
 }
 
 export const ErrorState: Story = {
@@ -185,11 +180,6 @@ export const ErrorState: Story = {
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'error'
     chart.dataset.interactivityDisabled = 'true'
-  },
-  parameters: {
-    chromatic: {
-      delay: 300,
-    },
   },
 }
 
@@ -348,7 +338,9 @@ export const ActivityWithoutEthTxs: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const checkbox = canvas.getByText('ETH Txs')
+    const checkbox =
+      canvas.queryByText('ETH Mainnet Transactions') ??
+      canvas.getByText('ETH Txs')
     await userEvent.click(checkbox)
   },
 }

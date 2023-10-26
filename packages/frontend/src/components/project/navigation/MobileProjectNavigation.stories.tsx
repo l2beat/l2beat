@@ -53,7 +53,8 @@ type Story = StoryObj<typeof MobileProjectNavigation>
 export const ScrolledToStart: Story = {}
 
 export const ScrolledToMiddle: Story = {
-  play: () => {
+  play: async () => {
+    await new Promise((resolve) => setTimeout(resolve, 200))
     const list = document.querySelector(
       `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
     )

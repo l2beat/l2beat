@@ -69,7 +69,7 @@ export function Chart(props: ChartProps) {
         {props.withHeader && !props.metaChart && header}
         {!props.metaChart && props.hasActivity && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            <h2 className="hidden text-2xl font-extrabold md:block md:text-4xl md:leading-normal">
+            <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
               <a href={`#${id}`}>{title}</a>
             </h2>
 
