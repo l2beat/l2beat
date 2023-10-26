@@ -84,6 +84,18 @@ describe(getHandlers.name, () => {
     expect(handlers).toEqual([])
   })
 
+  it("ignores methods that don't return anything", () => {
+    const handlers = getHandlers(
+      [
+        'function requireUnresolved(uint256 nodeNum) view',
+        'function requireUnresolvedExists() view',
+      ],
+      undefined,
+      DiscoveryLogger.SILENT,
+    )
+    expect(handlers).toEqual([])
+  })
+
   it('ignores write methods', () => {
     const handlers = getHandlers(
       ['function write()'],

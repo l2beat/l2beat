@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.21.0
+
+### Minor Changes
+
+- Skip functions with no outputs during discovery
+
 ## 0.20.0
 
 ### Minor Changes
