@@ -203,7 +203,7 @@
     "MToken": {
       // isOwner() compares caller to 0x00.. which gives true for call()
       // and returns false for multicall(). Let's ignore it.
-      "ignoreMethods": ["isOwner"] // 
+      "ignoreMethods": ["isOwner"]
     }
   }
 }
