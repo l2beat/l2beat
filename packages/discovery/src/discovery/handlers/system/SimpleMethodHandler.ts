@@ -10,8 +10,7 @@ import {
   MulticallResponse,
 } from '../../provider/multicall/types'
 import { HandlerResult, MulticallableHandler } from '../Handler'
-import { callMethod } from '../utils/callMethod'
-import { toContractValue } from '../utils/toContractValue'
+import { callMethod, decodeMethodResult } from '../utils/callMethod'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements MulticallableHandler {
@@ -71,17 +70,11 @@ export class SimpleMethodHandler implements MulticallableHandler {
       'Decoding from multicall ',
       this.fragment.name + '()',
     ])
-    const output = this.fragment.outputs?.[0]
-    const resultType = output?.type
-    assert(resultType, 'Expected output type')
-    const decoded = utils.defaultAbiCoder.decode(
-      [resultType],
-      response.data.toString(),
-    )
-    const value = decoded[0] as string
+    const abi = new utils.Interface([this.fragment])
+
     return {
       field: this.field,
-      value: toContractValue(value),
+      value: decodeMethodResult(abi, this.fragment, response.data),
     }
   }
 }

@@ -18,17 +18,28 @@ export async function callMethod(
   blockNumber: number,
 ) {
   const abi = new utils.Interface([fragment])
+
   try {
     const callData = Bytes.fromHex(abi.encodeFunctionData(fragment, parameters))
     const result = await provider.call(address, callData, blockNumber)
-    const decoded = abi.decodeFunctionResult(fragment, result.toString())
-    const mapped = decoded.map(toContractValue)
+
     return {
-      value: mapped.length === 1 ? mapped[0] : mapped,
+      value: decodeMethodResult(abi, fragment, result),
     }
   } catch (e) {
     return {
       error: isRevert(e) ? EXEC_REVERT_MSG : getErrorMessage(e),
     }
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function decodeMethodResult(
+  abi: utils.Interface,
+  fragment: utils.FunctionFragment,
+  result: Bytes,
+) {
+  const decoded = abi.decodeFunctionResult(fragment, result.toString())
+  const mapped = decoded.map(toContractValue)
+  return mapped.length === 1 ? mapped[0] : mapped
 }

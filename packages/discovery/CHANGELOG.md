@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.19.2
+
+### Patch Changes
+
+- Properly decode tuples from multicall
+
 ## 0.19.1
 
 ### Patch Changes

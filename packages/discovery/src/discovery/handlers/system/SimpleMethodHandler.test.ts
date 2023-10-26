@@ -135,5 +135,33 @@ describe(SimpleMethodHandler.name, () => {
         error: 'Multicall failed',
       })
     })
+
+    it('can correctly decode a tuple', async () => {
+      const response =
+        '0x0000000000000000000000000000000000000000000000000000000001312d00000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000003b9aca0000000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000ffffffffffffffffffffffffffffffff'
+      const abi =
+        'function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))'
+
+      const handler = new SimpleMethodHandler(abi, DiscoveryLogger.SILENT)
+
+      const decoded = handler.decode([
+        {
+          success: true,
+          data: Bytes.fromHex(response),
+        },
+      ])
+
+      expect(decoded).toEqual({
+        field: 'resourceConfig',
+        value: [
+          20000000,
+          10,
+          8,
+          1000000000,
+          1000000,
+          '340282366920938463463374607431768211455',
+        ],
+      })
+    })
   })
 })
