@@ -4,9 +4,9 @@ import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
 } from './types/model'
-import { getFunctionCallQuery } from './utils/sql/getFunctionCallQuery'
-import { getTransferQuery } from './utils/sql/getTransferQuery'
-import { BigQueryProvider } from '@l2beat/shared'
+import { getFunctionCallQuery } from './utils'
+import { getTransferQuery } from './utils'
+import { BigQueryClient } from '@l2beat/shared'
 
 export interface FunctionCallQueryParams {
   address: EthereumAddress
@@ -19,7 +19,7 @@ export interface TransferQueryParams {
 }
 
 export class LivenessClient {
-  constructor(private readonly bigquery: BigQueryProvider) {}
+  constructor(private readonly bigquery: BigQueryClient) {}
 
   async getTransfers(
     transfers: TransferQueryParams[],

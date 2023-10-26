@@ -1,2 +1,2 @@
-export * from './BigQueryProvider'
+export * from './BigQueryClient'
 export * from './BigQuerySDKWrapper'

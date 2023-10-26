@@ -1,10 +1,10 @@
 import { expect, mockFn, mockObject } from 'earl'
 
-import { BigQueryProvider } from './BigQueryProvider'
+import { BigQueryClient } from './BigQueryClient'
 import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
 
-describe(BigQueryProvider.name, () => {
-  describe(BigQueryProvider.prototype.query.name, () => {
+describe(BigQueryClient.name, () => {
+  describe(BigQueryClient.prototype.query.name, () => {
     it('calls createQueryJob with the passed SQL', async () => {
       const bigQuery = mockObject<BigQuerySDKWrapper>({
         createQueryJob: mockFn().resolvesToOnce([
@@ -16,9 +16,9 @@ describe(BigQueryProvider.name, () => {
         ]),
       })
 
-      const bigQueryProvider = new BigQueryProvider(bigQuery)
+      const bigQueryClient = new BigQueryClient(bigQuery)
       const sql = 'SELECT * FROM my_table'
-      await bigQueryProvider.query(sql)
+      await bigQueryClient.query(sql)
 
       expect(bigQuery.createQueryJob).toHaveBeenCalledWith(sql)
     })
@@ -37,9 +37,9 @@ describe(BigQueryProvider.name, () => {
         ]),
       })
 
-      const bigQueryProvider = new BigQueryProvider(bigQuery)
+      const bigQueryClient = new BigQueryClient(bigQuery)
       const sql = 'SELECT * FROM my_table'
-      const results = await bigQueryProvider.query(sql)
+      const results = await bigQueryClient.query(sql)
 
       expect(results).toEqual(response)
     })
@@ -57,10 +57,10 @@ describe(BigQueryProvider.name, () => {
         },
       })
 
-      const bigQueryProvider = new BigQueryProvider(bigQuery)
+      const bigQueryClient = new BigQueryClient(bigQuery)
       const sql = 'SELECT * FROM my_table'
 
-      await expect(bigQueryProvider.query(sql)).toBeRejectedWith(
+      await expect(bigQueryClient.query(sql)).toBeRejectedWith(
         '[Google BigQuery] Failed to query:',
       )
     })
@@ -72,10 +72,10 @@ describe(BigQueryProvider.name, () => {
         },
       })
 
-      const bigQueryProvider = new BigQueryProvider(bigQuery)
+      const bigQueryClient = new BigQueryClient(bigQuery)
       const sql = 'SELECT * FROM my_table'
 
-      await expect(bigQueryProvider.query(sql)).toBeRejectedWith(
+      await expect(bigQueryClient.query(sql)).toBeRejectedWith(
         '[Google BigQuery] Failed to query:',
       )
     })

@@ -1,13 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { BigQueryProvider } from '../../../../shared/src/services/bigquery/BigQueryProvider'
-import { BigQuerySDKWrapper } from '../../../../shared/src/services/bigquery/BigQuerySDKWrapper'
 import {
   FunctionCallQueryParams,
   LivenessClient,
   TransferQueryParams,
 } from './LivenessClient'
+import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
 
 describe('LivenessClient', () => {
   it('should return valid data for transfers', async () => {
@@ -45,9 +44,9 @@ describe('LivenessClient', () => {
         },
       ]),
     })
-    const queryProvider = new BigQueryProvider(bigQuery)
+    const queryClient = new BigQueryClient(bigQuery)
 
-    const results = await new LivenessClient(queryProvider).getTransfers(
+    const results = await new LivenessClient(queryClient).getTransfers(
       transfersToQuery,
       UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
       UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
@@ -101,8 +100,8 @@ describe('LivenessClient', () => {
         },
       ]),
     })
-    const queryProvider = new BigQueryProvider(bigQuery)
-    const results = await new LivenessClient(queryProvider).getFunctionCalls(
+    const queryClient = new BigQueryClient(bigQuery)
+    const results = await new LivenessClient(queryClient).getFunctionCalls(
       functionCallsToQuery,
       UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
       UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
@@ -129,9 +128,9 @@ describe('LivenessClient', () => {
         },
       ]),
     })
-    const queryProvider = new BigQueryProvider(bigQuery)
+    const queryClient = new BigQueryClient(bigQuery)
     await expect(
-      new LivenessClient(queryProvider).getTransfers(
+      new LivenessClient(queryClient).getTransfers(
         [],
         UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
         UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),

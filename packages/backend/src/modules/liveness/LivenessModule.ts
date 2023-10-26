@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BigQueryProvider, BigQuerySDKWrapper } from '@l2beat/shared'
+import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
@@ -31,8 +31,8 @@ export function createLivenessModule(
     privateKey: config.liveness.bigQuery.privateKey,
     projectId: config.liveness.bigQuery.projectId,
   })
-  const bigQueryProvider = new BigQueryProvider(bigQueryWrapper)
-  const livenessClient = new LivenessClient(bigQueryProvider)
+  const bigQueryClient = new BigQueryClient(bigQueryWrapper)
+  const livenessClient = new LivenessClient(bigQueryClient)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const liveness = new LivenessIndexer(
