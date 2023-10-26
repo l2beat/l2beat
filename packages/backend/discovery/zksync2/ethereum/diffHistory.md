@@ -5,7 +5,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+A new proposal has been detected.
 
 ## Watched changes
 
