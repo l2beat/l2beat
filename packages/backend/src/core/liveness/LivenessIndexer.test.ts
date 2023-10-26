@@ -29,56 +29,6 @@ import {
   transformTransfersQueryResult,
 } from './utils'
 
-const ADDRESS_1 = EthereumAddress.random()
-const ADDRESS_2 = EthereumAddress.random()
-const ADDRESS_3 = EthereumAddress.random()
-
-const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
-const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
-
-const hourlyIndexer = mockObject<HourlyIndexer>({
-  start: async () => {},
-  tick: async () => 1,
-  subscribe: () => {},
-})
-const stateRepository = mockObject<IndexerStateRepository>({
-  findSafeHeight() {
-    return Promise.resolve(1)
-  },
-  addOrUpdate() {
-    return Promise.resolve('')
-  },
-  getAll() {
-    return Promise.resolve([])
-  },
-  deleteAll() {
-    return Promise.resolve(1)
-  },
-  findConfigHash() {
-    return Promise.resolve(hashJson('test'))
-  },
-})
-const livenessRepository = mockObject<LivenessRepository>({
-  getAll() {
-    return Promise.resolve([])
-  },
-  addMany() {
-    return Promise.resolve(1)
-  },
-  deleteAll() {
-    return Promise.resolve(1)
-  },
-})
-
-const wrappedLogger = mockObject<Logger>({
-  error: () => {},
-  debug: () => {},
-})
-
-const logger = mockObject<Logger>({
-  for: () => wrappedLogger,
-})
-
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.start.name, () => {
     const PROJECTS: Project[] = []
@@ -178,71 +128,7 @@ describe(LivenessIndexer.name, () => {
       expect(wrappedLogger.error).toHaveBeenCalled()
     })
 
-    it('schedules sync for daily if possible', async () => {
-      const livenessClient = mockObject<LivenessClient>({
-        getTransfers: async () => [],
-        getFunctionCalls: async () => [],
-        getLivenessData: async (
-          projects: Project[],
-          from: UnixTime,
-          to: UnixTime,
-        ) => Promise.resolve({ data: [], to }),
-      })
-
-      const PROJECT: Project = {
-        projectId: ProjectId('project1'),
-        escrows: [],
-        type: 'layer2',
-        livenessConfig: {
-          transfers: [
-            {
-              projectId: ProjectId('project1'),
-              from: ADDRESS_1,
-              to: ADDRESS_2,
-              type: 'DA',
-              sinceTimestamp: FROM,
-            },
-          ],
-          functionCalls: [
-            {
-              projectId: ProjectId('project1'),
-              address: ADDRESS_1,
-              selector: '0x12345678',
-              type: 'STATE',
-              sinceTimestamp: FROM,
-            },
-          ],
-        },
-      }
-      const livenessIndexer = new LivenessIndexer(
-        logger,
-        hourlyIndexer,
-        [PROJECT],
-        livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
-
-      const from = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
-      const to = UnixTime.fromDate(new Date('2022-01-03T01:00:00Z'))
-
-      await livenessIndexer.update(from.toNumber(), to.toNumber())
-
-      expect(livenessClient.getFunctionCalls).toHaveBeenCalledWith(
-        [PROJECT.livenessConfig!.functionCalls[0]],
-        from,
-        from.add(1, 'days'),
-      )
-
-      expect(livenessClient.getTransfers).toHaveBeenCalledWith(
-        [PROJECT.livenessConfig!.transfers[0]],
-        from,
-        from.add(1, 'days'),
-      )
-    })
-
-    it('calls getLivenessData and adds results to database', async () => {
+    it('calls getLivenessData and adds results to database, returns "to"', async () => {
       const projects: Project[] = [
         {
           projectId: ProjectId('project1'),
@@ -292,27 +178,8 @@ describe(LivenessIndexer.name, () => {
           transaction_hash: '0xabcdef1234567891',
         },
       ]
-
-      const livenessClient = mockObject<LivenessClient>({
-        getTransfers: mockFn().resolvesToOnce(
-          BigQueryTransfersResult.parse(transfers),
-        ),
-        getFunctionCalls: mockFn().resolvesToOnce(
-          BigQueryFunctionCallsResult.parse(functionCalls),
-        ),
-      })
-      const livenessIndexer = new LivenessIndexer(
-        logger,
-        hourlyIndexer,
-        projects,
-        livenessClient,
-        stateRepository,
-        livenessRepository,
-        FROM,
-      )
-      await livenessIndexer.update(FROM.toNumber(), TO.toNumber())
-
       const config: LivenessConfig = mergeConfigs(projects)
+
       const transfersConfig = config.transfers.filter((c) =>
         isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, FROM, TO),
       )
@@ -330,17 +197,33 @@ describe(LivenessIndexer.name, () => {
           BigQueryFunctionCallsResult.parse(functionCalls),
         ),
       ]
+      const livenessClient = mockObject<LivenessClient>({
+        getLivenessData: mockFn().resolvesTo({
+          data: expectedToSave,
+          to: TO,
+        }),
+      })
 
-      expect(livenessClient.getTransfers).toHaveBeenCalledWith(
-        transfersConfig,
+      const livenessIndexer = new LivenessIndexer(
+        logger,
+        hourlyIndexer,
+        projects,
+        livenessClient,
+        stateRepository,
+        livenessRepository,
+        FROM,
+      )
+      const currentTo = await livenessIndexer.update(
+        FROM.toNumber(),
+        TO.toNumber(),
+      )
+
+      expect(livenessClient.getLivenessData).toHaveBeenCalledWith(
+        projects,
         FROM,
         TO,
       )
-      expect(livenessClient.getFunctionCalls).toHaveBeenCalledWith(
-        functionCallsConfig,
-        FROM,
-        TO,
-      )
+      expect(currentTo).toEqual(TO.toNumber())
       expect(livenessRepository.addMany).toHaveBeenCalledWith(expectedToSave)
     })
   })
@@ -417,3 +300,55 @@ function getMockLivenessIndexer(
     minTimestamp: FROM,
   }
 }
+
+// MOCKS
+
+const ADDRESS_1 = EthereumAddress.random()
+const ADDRESS_2 = EthereumAddress.random()
+const ADDRESS_3 = EthereumAddress.random()
+
+const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
+
+const hourlyIndexer = mockObject<HourlyIndexer>({
+  start: async () => {},
+  tick: async () => 1,
+  subscribe: () => {},
+})
+const stateRepository = mockObject<IndexerStateRepository>({
+  findSafeHeight() {
+    return Promise.resolve(1)
+  },
+  addOrUpdate() {
+    return Promise.resolve('')
+  },
+  getAll() {
+    return Promise.resolve([])
+  },
+  deleteAll() {
+    return Promise.resolve(1)
+  },
+  findConfigHash() {
+    return Promise.resolve(hashJson('test'))
+  },
+})
+const livenessRepository = mockObject<LivenessRepository>({
+  getAll() {
+    return Promise.resolve([])
+  },
+  addMany() {
+    return Promise.resolve(1)
+  },
+  deleteAll() {
+    return Promise.resolve(1)
+  },
+})
+
+const wrappedLogger = mockObject<Logger>({
+  error: () => {},
+  debug: () => {},
+})
+
+const logger = mockObject<Logger>({
+  for: () => wrappedLogger,
+})
