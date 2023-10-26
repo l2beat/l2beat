@@ -316,7 +316,7 @@ export const aztecconnect: Layer2 = {
     genesisState:
       'The genesis file is available [here](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/falafel/src/environment/init/data/mainnet/accounts), and it includes accounts from [zk.money](http://zk.money) as well.',
     dataFormat:
-      'The genesis file is available [here](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/falafel/src/environment/init/data/mainnet/accounts), and it includes accounts from [zk.money](http://zk.money) as well.',
+      'The code to decode onchain data can be found [here](https://github.com/AztecProtocol/aztec-connect/blob/master/yarn-project/barretenberg.js/src/rollup_proof/rollup_proof_data.ts#L453)',
   },
   permissions: [
     ...getAccessControl(),
