@@ -1,12 +1,12 @@
 import { expect, mockFn, mockObject } from 'earl'
 
 import { BigQueryProvider } from './BigQueryProvider'
-import { BigQueryWrapper } from './BigQueryWrapper'
+import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
 
 describe(BigQueryProvider.name, () => {
   describe(BigQueryProvider.prototype.query.name, () => {
     it('calls createQueryJob with the passed SQL', async () => {
-      const bigQuery = mockObject<BigQueryWrapper>({
+      const bigQuery = mockObject<BigQuerySDKWrapper>({
         createQueryJob: mockFn().resolvesToOnce([
           {
             getQueryResults: async () => {
@@ -27,7 +27,7 @@ describe(BigQueryProvider.name, () => {
       const response = {
         key: 'value',
       }
-      const bigQuery = mockObject<BigQueryWrapper>({
+      const bigQuery = mockObject<BigQuerySDKWrapper>({
         createQueryJob: mockFn().resolvesToOnce([
           {
             getQueryResults: async () => {
@@ -45,7 +45,7 @@ describe(BigQueryProvider.name, () => {
     })
 
     it('handles error on getQueryResults', async () => {
-      const bigQuery = mockObject<BigQueryWrapper>({
+      const bigQuery = mockObject<BigQuerySDKWrapper>({
         createQueryJob: async (): Promise<any> => {
           return [
             {
@@ -66,7 +66,7 @@ describe(BigQueryProvider.name, () => {
     })
 
     it('handles errors', async () => {
-      const bigQuery = mockObject<BigQueryWrapper>({
+      const bigQuery = mockObject<BigQuerySDKWrapper>({
         createQueryJob: async (): Promise<any> => {
           throw new Error('BigQuery error')
         },

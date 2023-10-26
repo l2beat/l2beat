@@ -1,9 +1,9 @@
 import { RateLimiter } from '@l2beat/shared-pure'
 
-import { BigQueryWrapper } from './BigQueryWrapper'
+import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
 
 export class BigQueryProvider {
-  constructor(private readonly bigquery: BigQueryWrapper) {
+  constructor(private readonly bigquery: BigQuerySDKWrapper) {
     const rateLimiter = new RateLimiter({
       callsPerMinute: 100,
     })

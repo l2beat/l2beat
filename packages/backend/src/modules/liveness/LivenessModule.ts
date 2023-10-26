@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   BigQueryClient,
   BigQueryProvider,
-  BigQueryWrapper,
+  BigQuerySDKWrapper,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
@@ -29,7 +29,7 @@ export function createLivenessModule(
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
 
-  const bigQueryWrapper = new BigQueryWrapper({
+  const bigQueryWrapper = new BigQuerySDKWrapper({
     clientEmail: config.liveness.bigQuery.clientEmail,
     privateKey: config.liveness.bigQuery.privateKey,
     projectId: config.liveness.bigQuery.projectId,

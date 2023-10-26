@@ -7,7 +7,7 @@ import {
   TransferQueryParams,
 } from './BigQueryClient'
 import { BigQueryProvider } from './BigQueryProvider'
-import { BigQueryWrapper } from './BigQueryWrapper'
+import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
 
 describe('BigQueryClient', () => {
   it('should return valid data for transfers', async () => {
@@ -38,7 +38,7 @@ describe('BigQueryClient', () => {
         transaction_hash: '0x1234567890abcdef',
       },
     ]
-    const bigQuery = mockObject<BigQueryWrapper>({
+    const bigQuery = mockObject<BigQuerySDKWrapper>({
       createQueryJob: mockFn().resolvesToOnce([
         {
           getQueryResults: async () => [bigQueryResponse],
@@ -94,7 +94,7 @@ describe('BigQueryClient', () => {
       },
     ]
 
-    const bigQuery = mockObject<BigQueryWrapper>({
+    const bigQuery = mockObject<BigQuerySDKWrapper>({
       createQueryJob: mockFn().resolvesToOnce([
         {
           getQueryResults: async () => [bigQueryResponse],
@@ -120,7 +120,7 @@ describe('BigQueryClient', () => {
   })
 
   it('should throw an error if the query fails', async () => {
-    const bigQuery = mockObject<BigQueryWrapper>({
+    const bigQuery = mockObject<BigQuerySDKWrapper>({
       createQueryJob: mockFn().resolvesToOnce([
         {
           getQueryResults: async () => {
