@@ -468,8 +468,6 @@
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "paused": false,
-        "requireUnresolved": [],
-        "requireUnresolvedExists": [],
         "rollupDeploymentBlock": 15016829,
         "rollupEventInbox": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",

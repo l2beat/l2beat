@@ -892,12 +892,12 @@
         "isReceivingPayload": false,
         "isSendingPayload": false,
         "latestVersion": 3,
-        "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "libraryLookup": [
           "0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C",
           "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
           "0xbE4fB271cfB7bcbB47EA9573321c7bfe309fc220"
-        ]
+        ],
+        "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
       },
       "derivedName": "Endpoint"
     },
