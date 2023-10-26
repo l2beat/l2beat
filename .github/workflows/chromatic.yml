@@ -25,6 +25,9 @@ jobs:
   chromatic:
     name: Deploy
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/frontend
     needs: changes
     # Run only on frontend files change
     if: ${{ needs.changes.outputs.changesFound == 'true' }}
@@ -35,16 +38,11 @@ jobs:
           fetch-depth: 0 # 👈 Required to retrieve git history
       - name: Install dependencies
         run: yarn
+      - name: Build Storybook
+        run: yarn storybook:build
       - name: Publish to Chromatic
         if: github.ref != 'refs/heads/main'
-        uses: chromaui/action@v1
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: storybook:build
-          workingDir: "packages/frontend"
-          onlyChanged: true
-          exitZeroOnChanges: true
-          exitOnceUploaded: true
+        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
         uses: chromaui/action@v1
@@ -56,9 +54,3 @@ jobs:
           exitZeroOnChanges: true
           exitOnceUploaded: true
           autoAcceptChanges: true
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: /tmp/chromatic--*
