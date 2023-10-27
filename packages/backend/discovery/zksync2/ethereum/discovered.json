@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 18219348,
+  "blockNumber": 18440939,
   "configHash": "0x3f1b488ebb67cf3066bcb401d15c3b47fa258078eeb242070365dec6b4517afa",
   "version": 3,
   "contracts": [
@@ -115,24 +115,24 @@
           ]
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
-        "getCurrentProposalId": 8,
-        "getFirstUnprocessedPriorityTx": 2331942,
+        "getCurrentProposalId": 9,
+        "getFirstUnprocessedPriorityTx": 2609898,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x0100089b8a2f2e6a20ba28f02c9e0ed0c13d702932364561a0ea61621f65f0a8",
         "getL2DefaultAccountBytecodeHash": "0x0100067d16a5485875b4249040bf421f53e869337fe118ec747cf40a4c777e5f",
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 10067,
+        "getPriorityQueueSize": 3538,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
-        "getProtocolVersion": 15,
+        "getProtocolVersion": 16,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 236213,
-        "getTotalBlocksExecuted": 234660,
-        "getTotalBlocksVerified": 235519,
-        "getTotalPriorityTxs": 2342009,
+        "getTotalBlocksCommitted": 287769,
+        "getTotalBlocksExecuted": 286647,
+        "getTotalBlocksVerified": 287147,
+        "getTotalPriorityTxs": 2613436,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x3F04F86f14aB74953fDAEde8175e0714eB8e798e",
         "getVerifierParams": [
@@ -143,8 +143,8 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x42bc957982791067e9788cf697aea9a7adda4cb4f21e2517fb3298077c54b0b4",
-          1695644771,
+          "0x6c9c2da2d6ffc1c60b191b546bbac30c1efd7e4e90df49509b34afa208f08fe5",
+          1698323939,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
@@ -319,7 +319,7 @@
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
         "getThreshold": 4,
-        "nonce": 70,
+        "nonce": 73,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
