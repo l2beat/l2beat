@@ -1,50 +1,29 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { RateLimiter } from '@l2beat/shared-pure'
 
-import { BigQueryProvider } from './BigQueryProvider'
-import { BigQueryFunctionCallsResult, BigQueryTransfersResult } from './model'
-import { getFunctionCallQuery } from './sql/getFunctionCallQuery'
-import { getTransferQuery } from './sql/getTransferQuery'
-
-export interface FunctionCallQueryParams {
-  address: EthereumAddress
-  selector: string
-}
-
-export interface TransferQueryParams {
-  from: EthereumAddress
-  to: EthereumAddress
-}
+import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
 
 export class BigQueryClient {
-  constructor(private readonly bigquery: BigQueryProvider) {}
-
-  async getTransfers(
-    transfers: TransferQueryParams[],
-    from: UnixTime,
-    to: UnixTime,
-  ) {
-    const senders = transfers.map((t) => t.from)
-    const receivers = transfers.map((t) => t.to)
-
-    const query = getTransferQuery(senders, receivers, from, to)
-
-    const result = await this.bigquery.query(query)
-
-    return BigQueryTransfersResult.parse(result)
+  constructor(private readonly bigquery: BigQuerySDKWrapper) {
+    const rateLimiter = new RateLimiter({
+      callsPerMinute: 100,
+    })
+    this.query = rateLimiter.wrap(this.query.bind(this))
   }
 
-  async getFunctionCalls(
-    methods: FunctionCallQueryParams[],
-    from: UnixTime,
-    to: UnixTime,
-  ) {
-    const addresses = methods.map((m) => m.address)
-    const methodSelectors = methods.map((m) => m.selector.toLowerCase())
-
-    const query = getFunctionCallQuery(addresses, methodSelectors, from, to)
-
-    const result = await this.bigquery.query(query)
-
-    return BigQueryFunctionCallsResult.parse(result)
+  async query(sqlQuery: string): Promise<unknown> {
+    try {
+      const [job] = await this.bigquery.createQueryJob(sqlQuery)
+      const [rows] = await job.getQueryResults()
+      return rows as unknown
+    } catch (error) {
+      if (error instanceof Error) {
+        throw {
+          ...error,
+          message: 'Google BigQuery error: ' + error.message,
+        }
+      } else {
+        throw error
+      }
+    }
   }
 }
