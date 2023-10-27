@@ -19,9 +19,6 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../src/static', './static'],
   async viteFinal(config, { configType }) {
-    console.log('configType', configType)
-    console.log('configType', process.cwd())
-
     return mergeConfig(config, {
       optimizeDeps: {
         include: ['@l2beat/config', '@l2beat/shared-pure'],
