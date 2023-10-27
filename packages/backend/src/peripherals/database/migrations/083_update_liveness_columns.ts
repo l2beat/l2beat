@@ -19,6 +19,10 @@ export async function up(knex: Knex) {
     table.dropColumn('project_id')
     table.dropColumn('type')
     table.integer('liveness_configuration_id').unsigned().notNullable()
+    table
+      .foreign('liveness_configuration_id')
+      .references('id')
+      .inTable('liveness_configuration')
   })
 }
 
