@@ -1,11 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { LivenessFunctionCall } from '../../types/LivenessConfig'
+
 export function getFunctionCallQuery(
-  contracts: EthereumAddress[],
-  selectors: string[],
+  functionCallsConfig: LivenessFunctionCall[],
   from: UnixTime,
   to: UnixTime,
 ) {
+  const addresses = functionCallsConfig.map((m) => m.address)
+  const methodSelectors = functionCallsConfig.map((m) =>
+    m.selector.toLowerCase(),
+  )
+
   return [
     'SELECT',
     'block_number,',
@@ -22,7 +28,7 @@ export function getFunctionCallQuery(
     `AND block_timestamp < TIMESTAMP("${to.toDate().toISOString()}")`,
     'AND',
     '(',
-    ...contracts.map((address, i) => getBatch(address, selectors[i], i)),
+    ...addresses.map((address, i) => getBatch(address, methodSelectors[i], i)),
     ')',
     'ORDER BY',
     'block_timestamp ASC;',

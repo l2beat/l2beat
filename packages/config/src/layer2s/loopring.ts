@@ -41,7 +41,7 @@ export const loopring: Layer2 = {
     name: 'Loopring',
     slug: 'loopring',
     description:
-      "Loopring's zkRollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
+      "Loopring's ZK Rollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
     purpose: 'Tokens, NFTs, AMM',
     provider: 'Loopring',
     category: 'ZK Rollup',
@@ -305,7 +305,7 @@ export const loopring: Layer2 = {
   },
   milestones: [
     {
-      name: 'Loopring zkRollup is live',
+      name: 'Loopring ZK Rollup is live',
       link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
       date: '2019-12-04T00:00:00Z',
       description:
@@ -319,7 +319,7 @@ export const loopring: Layer2 = {
         'Enhancements in transfers, order-book trading and AMM swap.',
     },
     {
-      name: 'Loopring’s zkRollup AMM is Live',
+      name: 'Loopring’s ZK Rollup AMM is Live',
       link: 'https://medium.loopring.io/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
       date: '2020-12-02T00:00:00Z',
       description:
@@ -349,7 +349,7 @@ export const loopring: Layer2 = {
       link: 'https://medium.loopring.io/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
       date: '2020-02-27T00:00:00Z',
       description:
-        'zkRollup trading is live, as Loopring launches their order book based exchange.',
+        'ZK Rollup trading is live, as Loopring launches their order book based exchange.',
     },
   ],
 }
