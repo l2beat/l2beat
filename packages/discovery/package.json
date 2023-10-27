@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/discovery",
   "description": "L2Beat discovery - engine & tooling utilized for keeping an eye on L2s",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "^0.4.0",
+    "@l2beat/backend-tools": "^0.5.0",
     "@l2beat/discovery-types": "^0.4.1",
     "chalk": "^4.1.2",
     "deep-diff": "^1.0.2",

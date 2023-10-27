@@ -1,5 +1,14 @@
 # @l2beat/backend-tools
 
+## 0.5.0
+
+### Minor Changes
+
+- b8e1c2f: All logging methods in Logger now accept variadic arguments of any type.
+  The `reportError` option callback now receives full context of the logged message.
+  Added documentation for the `Logger` class.
+  Logging in the `json` format now outputs a `"parameters"` property.
+
 ## 0.4.0
 
 ### Minor Changes

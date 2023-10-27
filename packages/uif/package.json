@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/uif",
   "description": "Universal Indexer Framework.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "MIT",
   "repository": "https://github.com/l2beat/tools",
   "bugs": {
@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "^0.4.0"
+    "@l2beat/backend-tools": "^0.5.0"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^11.1.0",

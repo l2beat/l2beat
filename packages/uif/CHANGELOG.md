@@ -1,5 +1,12 @@
 # @l2beat/uif
 
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [b8e1c2f]
+  - @l2beat/backend-tools@0.5.0
+
 ## 0.2.2
 
 ### Patch Changes

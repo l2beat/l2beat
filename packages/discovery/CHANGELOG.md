@@ -1,5 +1,12 @@
 # @l2beat/discovery
 
+## 0.21.1
+
+### Patch Changes
+
+- Updated dependencies [b8e1c2f]
+  - @l2beat/backend-tools@0.5.0
+
 ## 0.21.0
 
 ### Minor Changes

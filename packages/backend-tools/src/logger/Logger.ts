@@ -8,7 +8,8 @@ import { formatServicePretty } from './formatServicePretty'
 import { formatTimePretty } from './formatTimePretty'
 import { LEVEL, LogLevel } from './LogLevel'
 import { LogThrottle, LogThrottleOptions } from './LogThrottle'
-import { resolveLog } from './resolveLog'
+import { parseLogArguments } from './parseLogArguments'
+import { ResolvedError, resolveError } from './resolveError'
 import { tagService } from './tagService'
 
 export interface LoggerBackend {
@@ -16,12 +17,6 @@ export interface LoggerBackend {
   log(message: string): void
   warn(message: string): void
   error(message: string): void
-}
-
-export interface ReportedError {
-  message?: string
-  parameters?: unknown
-  error?: Error
 }
 
 export interface LoggerOptions {
@@ -33,11 +28,23 @@ export interface LoggerOptions {
   colors: boolean
   cwd: string
   getTime: () => Date
-  reportError: (error: ReportedError) => void
-  reportCriticalError: (error: ReportedError) => void
+  reportError: (entry: LogEntry) => void
   backend: LoggerBackend
 }
 
+export interface LogEntry {
+  level: LogLevel
+  time: Date
+  service?: string
+  message?: string
+  error?: Error
+  resolvedError?: ResolvedError
+  parameters?: object
+}
+
+/**
+ * [Read full documentation](https://github.com/l2beat/tools/blob/master/packages/backend-tools/src/logger/docs.md)
+ */
 export class Logger {
   private readonly options: LoggerOptions
   private readonly logLevel: number
@@ -55,8 +62,6 @@ export class Logger {
       cwd: options.cwd ?? process.cwd(),
       getTime: options.getTime ?? (() => new Date()),
       reportError: options.reportError ?? (() => {}),
-      reportCriticalError:
-        options.reportCriticalError ?? options.reportError ?? (() => {}),
       backend: options.backend ?? console,
     }
     this.cwd = join(this.options.cwd, '/')
@@ -107,95 +112,89 @@ export class Logger {
   withThrottling(options: LogThrottleOptions): Logger {
     const logger = new Logger(this.options)
     logger.throttle = new LogThrottle(
-      { print: (...args) => logger.printExactly(...args) },
+      {
+        print: (level, service, message, parameters) =>
+          logger.print({
+            time: logger.options.getTime(),
+            level,
+            service,
+            message,
+            parameters,
+          }),
+      },
       options,
     )
     return logger
   }
 
-  critical(message: string, parameters?: unknown): void
-  critical(parameters: unknown): void
-  critical(message: unknown, parameters?: unknown): void {
-    if (this.logLevel < LEVEL.CRITICAL) {
-      return
+  critical(...args: unknown[]): void {
+    if (this.logLevel >= LEVEL.CRITICAL) {
+      const parsed = this.parseEntry('CRITICAL', args)
+      this.print(parsed)
+      this.options.reportError(parsed)
     }
-    this.print('CRITICAL', resolveLog(message, parameters, this.cwd))
-    this.options.reportCriticalError(toReportedError(message, parameters))
   }
 
-  error(message: string, parameters?: unknown): void
-  error(parameters: unknown): void
-  error(message: unknown, parameters?: unknown): void {
-    if (this.logLevel < LEVEL.ERROR) {
-      return
+  error(...args: unknown[]): void {
+    if (this.logLevel >= LEVEL.ERROR) {
+      const entry = this.parseEntry('ERROR', args)
+      this.print(entry)
+      this.options.reportError(entry)
     }
-    this.print('ERROR', resolveLog(message, parameters, this.cwd))
-    this.options.reportError(toReportedError(message, parameters))
   }
 
-  warn(message: string, parameters?: unknown): void
-  warn(parameters: unknown): void
-  warn(message: unknown, parameters?: unknown): void {
-    if (this.logLevel < LEVEL.WARN) {
-      return
+  warn(...args: unknown[]): void {
+    if (this.logLevel >= LEVEL.WARN) {
+      this.print(this.parseEntry('WARN', args))
     }
-    this.print('WARN', resolveLog(message, parameters, this.cwd))
   }
 
-  info(message: string, parameters?: unknown): void
-  info(parameters: unknown): void
-  info(message: unknown, parameters?: unknown): void {
-    if (this.logLevel < LEVEL.INFO) {
-      return
+  info(...args: unknown[]): void {
+    if (this.logLevel >= LEVEL.INFO) {
+      this.print(this.parseEntry('INFO', args))
     }
-    this.print('INFO', resolveLog(message, parameters, this.cwd))
   }
 
-  debug(message: string, parameters?: unknown): void
-  debug(parameters: unknown): void
-  debug(message: unknown, parameters?: unknown): void {
-    if (this.logLevel < LEVEL.DEBUG) {
-      return
+  debug(...args: unknown[]): void {
+    if (this.logLevel >= LEVEL.DEBUG) {
+      this.print(this.parseEntry('DEBUG', args))
     }
-    this.print('DEBUG', resolveLog(message, parameters, this.cwd))
   }
 
-  trace(message: string, parameters?: unknown): void
-  trace(parameters: unknown): void
-  trace(message: unknown, parameters?: unknown): void {
-    if (this.logLevel < LEVEL.TRACE) {
-      return
+  trace(...args: unknown[]): void {
+    if (this.logLevel >= LEVEL.TRACE) {
+      this.print(this.parseEntry('TRACE', args))
     }
-    this.print('TRACE', resolveLog(message, parameters, this.cwd))
   }
 
-  private print(level: LogLevel, parameters: {}): void {
-    const service = tagService(this.options.service, this.options.tag)
-    let message: string | undefined
-    if ('message' in parameters && typeof parameters.message === 'string') {
-      message = parameters.message
-      delete parameters.message
+  private parseEntry(level: LogLevel, args: unknown[]): LogEntry {
+    const parsed = parseLogArguments(args)
+    return {
+      ...parsed,
+      resolvedError: parsed.error
+        ? resolveError(parsed.error, this.cwd)
+        : undefined,
+      level,
+      time: this.options.getTime(),
+      service: tagService(this.options.service, this.options.tag),
     }
+  }
 
-    if (this.throttle?.throttle(level, service, message)) {
+  private print(entry: LogEntry): void {
+    if (this.throttle?.throttle(entry.level, entry.service, entry.message)) {
       return
     }
 
-    this.printExactly(level, service, message, parameters)
+    this.printExactly(entry)
   }
 
-  private printExactly(
-    level: LogLevel,
-    service: string | undefined,
-    message: string | undefined,
-    parameters: {},
-  ): void {
+  private printExactly(entry: LogEntry): void {
     const output =
       this.options.format === 'json'
-        ? this.formatJson(level, service, message, parameters)
-        : this.formatPretty(level, service, message, parameters)
+        ? this.formatJson(entry)
+        : this.formatPretty(entry)
 
-    switch (level) {
+    switch (entry.level) {
       case 'CRITICAL':
       case 'ERROR':
         this.options.backend.error(output)
@@ -213,46 +212,41 @@ export class Logger {
       case 'NONE':
         break
       default:
-        assertUnreachable(level)
+        assertUnreachable(entry.level)
     }
   }
 
-  private formatJson(
-    level: LogLevel,
-    service: string | undefined,
-    message: string | undefined,
-    parameters: {},
-  ): string {
+  private formatJson(entry: LogEntry): string {
     const core = {
-      time: this.options.getTime().toISOString(),
-      level,
-      service,
-      message,
+      time: entry.time.toISOString(),
+      level: entry.level,
+      service: entry.service,
+      message: entry.message,
+      error: entry.resolvedError,
     }
     try {
-      return toJSON({ ...core, ...parameters })
+      return toJSON({ ...core, parameters: entry.parameters })
     } catch (e) {
       this.error('Unable to log', e)
       return JSON.stringify(core)
     }
   }
 
-  private formatPretty(
-    level: LogLevel,
-    service: string | undefined,
-    message: string | undefined,
-    parameters: {},
-  ): string {
+  private formatPretty(entry: LogEntry): string {
     const timeOut = formatTimePretty(
-      this.options.getTime(),
+      entry.time,
       this.options.utc,
       this.options.colors,
     )
-    const levelOut = formatLevelPretty(level, this.options.colors)
-    const serviceOut = formatServicePretty(service, this.options.colors)
-    const messageOut = message ? ` ${message}` : ''
+    const levelOut = formatLevelPretty(entry.level, this.options.colors)
+    const serviceOut = formatServicePretty(entry.service, this.options.colors)
+    const messageOut = entry.message ? ` ${entry.message}` : ''
     const paramsOut = formatParametersPretty(
-      sanitize(parameters),
+      sanitize(
+        entry.resolvedError
+          ? { ...entry.resolvedError, ...entry.parameters }
+          : entry.parameters ?? {},
+      ),
       this.options.colors,
     )
 
@@ -269,34 +263,4 @@ function toJSON(parameters: {}): string {
 function sanitize(parameters: {}): {} {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return JSON.parse(toJSON(parameters))
-}
-
-function toReportedError(arg1: unknown, arg2: unknown): ReportedError {
-  let message: string | undefined
-  let parameters: unknown
-  let error: Error | undefined
-
-  if (typeof arg1 === 'string') {
-    message = arg1
-    if (arg2 instanceof Error) {
-      error = arg2
-    } else if (arg2 !== undefined) {
-      parameters = arg2
-    }
-  } else {
-    if (arg1 instanceof Error) {
-      message = arg1.message
-      error = arg1
-    } else if (arg1 !== undefined) {
-      parameters = arg1
-      if (typeof arg1 === 'object' && arg1 !== null) {
-        const messageLike: unknown = Reflect.get(arg1, 'message')
-        if (typeof messageLike === 'string') {
-          message = messageLike
-        }
-      }
-    }
-  }
-
-  return { message, parameters, error }
 }

@@ -1,6 +1,6 @@
-import { expect, mockFn } from 'earl'
+import { expect, formatCompact, mockFn } from 'earl'
 
-import { Logger } from './Logger'
+import { LogEntry, Logger } from './Logger'
 
 describe(Logger.name, () => {
   it('calls correct backend', () => {
@@ -37,8 +37,10 @@ describe(Logger.name, () => {
       JSON.stringify({
         time: '1970-01-01T00:00:00.000Z',
         level: 'INFO',
-        foo: '123',
-        bar: ['4', '56'],
+        parameters: {
+          foo: '123',
+          bar: ['4', '56'],
+        },
       }),
     )
   })
@@ -154,106 +156,156 @@ describe(Logger.name, () => {
       console.error = oldConsoleError
     })
 
-    it('reports error and critical error using reportError if reportCriticalError was not specified', () => {
-      const mockReportError = mockFn((_: unknown) => {})
-      const logger = new Logger({
-        reportError: mockReportError,
-      })
-
-      logger.error('foo')
-      logger.critical('bar')
-
-      expect(mockReportError).toHaveBeenCalledTimes(2)
-      expect(mockReportError).toHaveBeenNthCalledWith(1, {
-        message: 'foo',
-        parameters: undefined,
-        error: undefined,
-      })
-      expect(mockReportError).toHaveBeenNthCalledWith(2, {
-        message: 'bar',
-        parameters: undefined,
-        error: undefined,
-      })
-      expect(mockReportError).toHaveBeenExhausted()
-    })
-
     it('reports error and critical error', () => {
       const mockReportError = mockFn((_: unknown) => {})
-      const mockReportCriticalError = mockFn((_: unknown) => {})
       const logger = new Logger({
         reportError: mockReportError,
-        reportCriticalError: mockReportCriticalError,
       })
 
       logger.error('foo')
       logger.critical('bar')
 
-      expect(mockReportError).toHaveBeenOnlyCalledWith({
+      expect(mockReportError).toHaveBeenNthCalledWith(1, {
+        level: 'ERROR',
+        time: expect.a(Date),
+        service: undefined,
         message: 'foo',
         parameters: undefined,
         error: undefined,
+        resolvedError: undefined,
       })
-      expect(mockReportCriticalError).toHaveBeenOnlyCalledWith({
+      expect(mockReportError).toHaveBeenNthCalledWith(2, {
+        level: 'CRITICAL',
+        time: expect.a(Date),
+        service: undefined,
         message: 'bar',
         parameters: undefined,
         error: undefined,
+        resolvedError: undefined,
       })
     })
 
-    it('reports useful values', () => {
-      const mockReportError = mockFn((_: unknown) => {})
-      const logger = new Logger({
-        reportError: mockReportError,
-      })
+    describe('usage patterns', () => {
+      const patterns: [unknown[], LogEntry][] = [
+        [
+          ['message'],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: 'message',
+            parameters: undefined,
+            error: undefined,
+            resolvedError: undefined,
+          },
+        ],
+        [
+          [new Error('message')],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: undefined,
+            parameters: undefined,
+            error: new Error('message'),
+            resolvedError: {
+              name: 'Error',
+              error: 'message',
+              stack: expect.a(Array),
+            },
+          },
+        ],
+        [
+          ['foo', new Error('bar')],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: 'foo',
+            parameters: undefined,
+            error: new Error('bar'),
+            resolvedError: {
+              name: 'Error',
+              error: 'bar',
+              stack: expect.a(Array),
+            },
+          },
+        ],
+        [
+          [{ x: 1, y: 2 }],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: undefined,
+            parameters: { x: 1, y: 2 },
+            error: undefined,
+            resolvedError: undefined,
+          },
+        ],
+        [
+          ['message', { x: 1, y: 2 }],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: 'message',
+            parameters: { x: 1, y: 2 },
+            error: undefined,
+            resolvedError: undefined,
+          },
+        ],
+        [
+          [{ x: 1, y: 2, message: 'message' }],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: 'message',
+            parameters: { x: 1, y: 2 },
+            error: undefined,
+            resolvedError: undefined,
+          },
+        ],
+        [
+          [{ x: 1, y: 2, message: true }],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: undefined,
+            parameters: { x: 1, y: 2, message: true },
+            error: undefined,
+            resolvedError: undefined,
+          },
+        ],
+        [
+          [new Error('foo'), 'bar', { x: 1, y: 2 }],
+          {
+            level: 'ERROR',
+            time: expect.a(Date),
+            service: undefined,
+            message: 'bar',
+            parameters: { x: 1, y: 2 },
+            error: new Error('foo'),
+            resolvedError: {
+              name: 'Error',
+              error: 'foo',
+              stack: expect.a(Array),
+            },
+          },
+        ],
+      ]
 
-      logger.error('message')
-      expect(mockReportError).toHaveBeenNthCalledWith(1, {
-        message: 'message',
-        parameters: undefined,
-        error: undefined,
-      })
+      for (const [args, expected] of patterns) {
+        it(`supports ${formatCompact(args, 60)}`, () => {
+          const mockReportError = mockFn((_: unknown) => {})
+          const logger = new Logger({ reportError: mockReportError })
 
-      logger.error(new Error('message'))
-      expect(mockReportError).toHaveBeenNthCalledWith(2, {
-        message: 'message',
-        parameters: undefined,
-        error: new Error('message'),
-      })
-
-      logger.error('foo', new Error('bar'))
-      expect(mockReportError).toHaveBeenNthCalledWith(3, {
-        message: 'foo',
-        parameters: undefined,
-        error: new Error('bar'),
-      })
-
-      logger.error({ x: 1, y: 2 })
-      expect(mockReportError).toHaveBeenNthCalledWith(4, {
-        message: undefined,
-        parameters: { x: 1, y: 2 },
-        error: undefined,
-      })
-
-      logger.error('message', { x: 1, y: 2 })
-      expect(mockReportError).toHaveBeenNthCalledWith(5, {
-        message: 'message',
-        parameters: { x: 1, y: 2 },
-        error: undefined,
-      })
-
-      logger.error({ x: 1, y: 2, message: 'message' })
-      expect(mockReportError).toHaveBeenNthCalledWith(6, {
-        message: 'message',
-        parameters: { x: 1, y: 2, message: 'message' },
-        error: undefined,
-      })
-
-      logger.error({ x: 1, y: 2, message: true })
-      expect(mockReportError).toHaveBeenNthCalledWith(7, {
-        message: undefined,
-        parameters: { x: 1, y: 2, message: true },
-        error: undefined,
-      })
+          logger.error(...args)
+          expect(mockReportError).toHaveBeenOnlyCalledWith(expected)
+        })
+      }
     })
   })
 })
