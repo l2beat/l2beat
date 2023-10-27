@@ -6,7 +6,8 @@
   "names": {
     "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer",
     "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": "StateCommitmentChain",
-    "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig"
+    "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig",
+    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
   },
   "overrides": {
     "0x918778e825747a892b17C66fe7D24C618262867d": {
@@ -198,6 +199,11 @@
     },
     "Metis Multisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "MToken": {
+      // isOwner() compares caller to 0x00.. which gives true for call()
+      // and returns false for multicall(). Let's ignore it.
+      "ignoreMethods": ["isOwner"]
     }
   }
 }

@@ -1,15 +1,23 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { configureTabs } from '../scripts/configureTabs'
 import { Tabs } from './Tabs'
 
-const meta = {
+const meta: Meta<typeof Tabs> = {
   title: 'Components/Tabs',
   component: Tabs,
-} satisfies Meta<typeof Tabs>
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTabs()
+      }, [])
+      return <Story />
+    },
+  ],
+}
 export default meta
-
 type Story = StoryObj<typeof Tabs>
 
 export const Default: Story = {
@@ -53,16 +61,9 @@ export const Default: Story = {
       },
     ],
   },
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTabs()
-      }, [])
-      return (
-        <div className="p-4">
-          <Story />
-        </div>
-      )
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const tab = canvas.getByText('Example item')
+    await userEvent.click(tab, { delay: 25 })
+  },
 }

@@ -82,14 +82,6 @@ export class LivenessIndexer extends ChildIndexer {
     })
   }
 
-  getIndexerId(): string {
-    return this.indexerId
-  }
-
-  getConfigHash(): Hash256 {
-    return this.configHash
-  }
-
   // This function will not be used, but it is required by the UIF.
   // In our case there is no re-org handling so we do not have to worry
   // that our data will become invalid.

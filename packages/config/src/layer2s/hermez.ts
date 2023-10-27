@@ -23,7 +23,7 @@ export const hermez: Layer2 = {
     warning:
       'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
     description:
-      'Hermez is an open-source ZK-Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
+      'Hermez is an open-source ZK Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
     purpose: 'Payments',
     category: 'ZK Rollup',
     provider: 'Polygon',
@@ -72,7 +72,7 @@ export const hermez: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ZK-Proofs - Hermez documentation',
+          text: 'ZK proofs - Hermez documentation',
           href: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
         },
       ],
@@ -81,7 +81,7 @@ export const hermez: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'ZK-Proofs - Hermez documentation',
+          text: 'ZK proofs - Hermez documentation',
           href: 'https://docs.hermez.io/#/about/security?id=zk-proofs',
         },
         {

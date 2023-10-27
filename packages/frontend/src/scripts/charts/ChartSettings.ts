@@ -5,6 +5,10 @@ export type ChartSettings = ReturnType<
   typeof ChartSettingsManager.prototype.for
 >
 
+interface ChartSettingsManagerOptions {
+  disableLocalStorage?: boolean
+}
+
 const DEFAULT_VALUES: SavedChartSettings = {
   useLogScale: false,
   useAltCurrency: false,
@@ -15,8 +19,10 @@ const DEFAULT_VALUES: SavedChartSettings = {
 export class ChartSettingsManager {
   private readonly state: SavedChartState
 
-  constructor() {
-    this.state = LocalStorage.getItem('chart-settings') ?? {}
+  constructor(opts?: ChartSettingsManagerOptions) {
+    this.state = opts?.disableLocalStorage
+      ? {}
+      : LocalStorage.getItem('chart-settings') ?? {}
   }
 
   for(settingsId: string) {

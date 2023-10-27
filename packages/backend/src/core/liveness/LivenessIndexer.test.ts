@@ -165,8 +165,8 @@ describe(LivenessIndexer.name, () => {
 
       expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
         safeHeight: 12,
-        indexerId: livenessIndexer.getIndexerId(),
-        configHash: livenessIndexer.getConfigHash(),
+        indexerId: 'liveness_indexer',
+        configHash: mock.indexerConfigHash,
       })
     })
   })

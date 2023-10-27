@@ -1,101 +1,65 @@
+import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { configureExpandableContainer } from '../scripts/configureExpandableContainer'
-import { click } from '../utils/storybook/click'
 import { ExpandableContainer as ExpandableContainerComponent } from './ExpandableContainer'
 
-export default {
-  title: 'Components/ExpandableContainer',
-  parameters: {
-    screenshot: {
-      delay: 400,
+const meta: Meta<typeof ExpandableContainerComponent> = {
+  component: ExpandableContainerComponent,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureExpandableContainer()
+      }, [])
+      return (
+        <div className="max-w-[50%]">
+          <Story />
+        </div>
+      )
     },
+  ],
+}
+export default meta
+type Story = StoryObj<typeof ExpandableContainerComponent>
+
+const items = range(8).map(() => {
+  return (
+    <div className="my-2">
+      Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit sit enim
+      ullamco qui anim ex id aliquip deserunt quis. Voluptate occaecat anim elit
+      magna officia sunt. Proident irure commodo culpa officia nisi labore
+      veniam esse irure minim pariatur culpa. Culpa exercitation amet deserunt
+      dolor veniam dolor.
+    </div>
+  )
+})
+
+export const Collapsed: Story = {
+  args: {
+    children: items,
   },
 }
 
-function Template({
-  children,
-  className,
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  useEffect(() => configureExpandableContainer(), [])
-  return (
-    <div className="mx-auto max-w-[50%]">
-      <ExpandableContainerComponent className={className}>
-        {children}
-      </ExpandableContainerComponent>
-    </div>
-  )
+export const Expanded: Story = {
+  args: {
+    children: items,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Show more'))
+  },
 }
 
-export function Collapsed() {
-  return (
-    <Template>
-      {range(8).map(() => {
-        return (
-          <div className="my-2">
-            Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit
-            sit enim ullamco qui anim ex id aliquip deserunt quis. Voluptate
-            occaecat anim elit magna officia sunt. Proident irure commodo culpa
-            officia nisi labore veniam esse irure minim pariatur culpa. Culpa
-            exercitation amet deserunt dolor veniam dolor.
-          </div>
-        )
-      })}
-    </Template>
-  )
-}
-
-export function Expanded() {
-  useEffect(() => {
-    click('.ExpandableContainerButton')
-  }, [])
-  return (
-    <Template>
-      {range(8).map(() => {
-        return (
-          <div className="my-2">
-            Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit
-            sit enim ullamco qui anim ex id aliquip deserunt quis. Voluptate
-            occaecat anim elit magna officia sunt. Proident irure commodo culpa
-            officia nisi labore veniam esse irure minim pariatur culpa. Culpa
-            exercitation amet deserunt dolor veniam dolor.
-          </div>
-        )
-      })}
-    </Template>
-  )
-}
-
-export function WithCustomMaxHeight() {
-  return (
-    <Template className="max-h-20">
-      {range(4).map(() => {
-        return (
-          <div className="my-2">
-            Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit
-            sit enim ullamco qui anim ex id aliquip deserunt quis. Voluptate
-            occaecat anim elit magna officia sunt. Proident irure commodo culpa
-            officia nisi labore veniam esse irure minim pariatur culpa. Culpa
-            exercitation amet deserunt dolor veniam dolor.
-          </div>
-        )
-      })}
-    </Template>
-  )
-}
-
-export function WithoutButton() {
-  return (
-    <Template>
+export const NonExpandable: Story = {
+  args: {
+    children: (
       <div className="my-2">
         Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit sit
         enim ullamco qui anim ex id aliquip deserunt quis. Voluptate occaecat
         anim elit magna officia sunt.
       </div>
-    </Template>
-  )
+    ),
+  },
 }
