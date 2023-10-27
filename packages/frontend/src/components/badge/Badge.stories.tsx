@@ -1,40 +1,42 @@
-import { Story } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { Badge, BadgeProps } from './Badge'
+import { Badge } from './Badge'
 
-export default {
-  title: 'Components/Badge',
+const meta: Meta<typeof Badge> = {
+  component: Badge,
+  args: {
+    children: 'Badge',
+  },
+}
+export default meta
+type Story = StoryObj<typeof Badge>
+
+export const Error: Story = {
+  args: {
+    type: 'error',
+  },
 }
 
-function Template(props: BadgeProps) {
-  return (
-    <Badge {...props} className="m-4">
-      Badge
-    </Badge>
-  )
-}
-export const Error: Story<BadgeProps> = Template.bind({})
-Error.args = {
-  type: 'error',
+export const Warning: Story = {
+  args: {
+    type: 'warning',
+  },
 }
 
-export const Warning: Story<BadgeProps> = Template.bind({})
-Warning.args = {
-  type: 'warning',
+export const BrightYellow: Story = {
+  args: {
+    type: 'brightYellow',
+  },
 }
 
-export const BrightYellow: Story<BadgeProps> = Template.bind({})
-BrightYellow.args = {
-  type: 'brightYellow',
+export const Purple: Story = {
+  args: {
+    type: 'purple',
+  },
 }
 
-export const Purple: Story<BadgeProps> = Template.bind({})
-Purple.args = {
-  type: 'purple',
-}
-
-export const Gray: Story<BadgeProps> = Template.bind({})
-Gray.args = {
-  type: 'gray',
+export const Gray: Story = {
+  args: {
+    type: 'gray',
+  },
 }

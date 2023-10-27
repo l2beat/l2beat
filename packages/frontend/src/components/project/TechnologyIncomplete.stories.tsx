@@ -1,15 +1,15 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { TechnologyIncomplete as TechnologyIncompleteComponent } from './TechnologyIncomplete'
 
-export default {
-  title: 'Components/Project/TechnologyIncomplete',
+const meta: Meta<typeof TechnologyIncompleteComponent> = {
+  component: TechnologyIncompleteComponent,
+  args: {
+    editLink: '#',
+    twitterLink: '#',
+  },
 }
+export default meta
+type Story = StoryObj<typeof TechnologyIncompleteComponent>
 
-export function TechnologyIncomplete() {
-  return (
-    <div className="p-4 leading-normal">
-      <TechnologyIncompleteComponent editLink="#" twitterLink="#" />
-    </div>
-  )
-}
+export const TechnologyIncomplete: Story = {}

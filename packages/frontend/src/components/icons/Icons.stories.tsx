@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { allModes } from '../../../.storybook/modes'
 import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
@@ -41,9 +42,18 @@ import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
 
-export default {
-  title: 'Components/Icons',
+const meta = {
+  title: 'Other/Icons',
+  parameters: {
+    chromatic: {
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
+    },
+  },
 }
+export default meta
 
 function Template(props: { children: React.ReactNode }) {
   return (

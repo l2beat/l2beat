@@ -1,13 +1,22 @@
-import React, { useEffect } from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { configureHoverableDropdown } from '../../scripts/configureHoverableDropdown'
-import { hoverOver } from '../../utils/storybook/hoverOver'
+import { allModes } from '../../../.storybook/modes'
 import { ProjectLink } from '../icons'
 import { DesktopProjectLinks as DesktopProjectLinksComponent } from './DesktopProjectLinks'
 
-export default {
-  title: 'Components/DesktopProjectLinks',
+const meta: Meta<typeof DesktopProjectLinksComponent> = {
+  component: DesktopProjectLinksComponent,
+  parameters: {
+    chromatic: {
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
+    },
+  },
 }
+export default meta
+type Story = StoryObj<typeof DesktopProjectLinksComponent>
 
 const links: ProjectLink[] = [
   { name: 'Website', links: ['https://bridge.gnosischain.com/'] },
@@ -37,11 +46,8 @@ const links: ProjectLink[] = [
   },
 ]
 
-export const DesktopProjectLinks = () => {
-  useEffect(() => {
-    configureHoverableDropdown()
-    hoverOver('.HoverableDropdownToggle')
-  }, [])
-
-  return <DesktopProjectLinksComponent projectLinks={links} />
+export const DesktopProjectLinks: Story = {
+  args: {
+    projectLinks: links,
+  },
 }

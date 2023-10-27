@@ -1,13 +1,11 @@
+import { Meta, StoryObj } from '@storybook/react'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
+import { allModes } from '../../../../.storybook/modes'
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
-
-export default {
-  title: 'Components/Project/Navigation/DesktopProjectNavigation',
-}
 
 const sections: ScalingDetailsSection[] = range(10).map(() => ({
   type: 'DescriptionSection',
@@ -26,32 +24,39 @@ const sections: ScalingDetailsSection[] = range(10).map(() => ({
   },
 }))
 
-function Template() {
-  useEffect(() => {
-    configureDesktopProjectNavigation()
-  }, [])
-  return (
-    <div>
-      <DesktopProjectNavigation
-        project={{ title: 'Arbitrum One', icon: '/icons/arbitrum.png' }}
-        sections={sections}
-      />
-    </div>
-  )
+const meta: Meta<typeof DesktopProjectNavigation> = {
+  component: DesktopProjectNavigation,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureDesktopProjectNavigation()
+      }, [])
+      return <Story />
+    },
+  ],
+  args: {
+    project: { title: 'Arbitrum One', icon: '/icons/arbitrum.png' },
+    sections,
+  },
+  parameters: {
+    chromatic: {
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
+    },
+  },
 }
+export default meta
+type Story = StoryObj<typeof DesktopProjectNavigation>
 
-export function WithoutProjectHeader() {
-  return (
-    <div className="mt-12 px-4">
-      <Template />
-    </div>
-  )
+export const WithoutProjectHeader: Story = {
+  decorators: [
+    (Story) => (
+      <div className="mt-12">
+        <Story />
+      </div>
+    ),
+  ],
 }
-
-export function WithProjectHeader() {
-  return (
-    <div className="p-4">
-      <Template />
-    </div>
-  )
-}
+export const WithProjectHeader: Story = {}
