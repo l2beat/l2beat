@@ -1,36 +1,30 @@
-import { Story } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { StageBadge, StageBadgeProps } from './StageBadge'
+import { StageBadge } from './StageBadge'
 
-export default {
-  title: 'Components/Stages',
+const meta: Meta<typeof StageBadge> = {
+  component: StageBadge,
 }
+export default meta
+type Story = StoryObj<typeof StageBadge>
 
-function Template(props: StageBadgeProps) {
-  return (
-    <div className="m-4 ml-32">
-      <StageBadge stage={props.stage} big={props.big} />
-    </div>
-  )
-}
-
-export const Badge: Story<StageBadgeProps> = Template.bind({})
-Badge.argTypes = {
-  stage: {
-    control: 'radio',
-    options: ['Stage 0', 'Stage 1', 'Stage 2', undefined],
+export const Badge: Story = {
+  args: {
+    stage: 'Stage 0',
+    big: false,
   },
-  big: {
-    control: 'radio',
-    options: [true, false],
+  argTypes: {
+    stage: {
+      control: 'radio',
+      options: ['Stage 0', 'Stage 1', 'Stage 2', undefined],
+    },
+    big: {
+      control: 'radio',
+      options: [true, false],
+    },
+    oneSize: {
+      control: 'radio',
+      options: [true, false],
+    },
   },
-  oneSize: {
-    control: 'radio',
-    options: [true, false],
-  },
-}
-Badge.args = {
-  stage: 'Stage 0',
-  big: false,
 }

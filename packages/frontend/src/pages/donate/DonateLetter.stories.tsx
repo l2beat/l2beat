@@ -1,16 +1,11 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { PageContent } from '../../components/PageContent'
 import { DonateLetter } from './DonateLetter'
 
-export default {
-  title: 'Pages/Donate/Letter',
+const meta: Meta<typeof DonateLetter> = {
+  component: DonateLetter,
 }
+export default meta
+type Story = StoryObj<typeof DonateLetter>
 
-export function Letter() {
-  return (
-    <PageContent>
-      <DonateLetter />
-    </PageContent>
-  )
-}
+export const Letter: Story = {}

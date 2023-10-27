@@ -1,4 +1,3 @@
-import { StageConfig } from '@l2beat/config'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
@@ -6,7 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
-import { StageTooltip as StageTooltipComponent } from './StageTooltip'
+import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
 const meta: Meta<typeof TooltipComponent> = {
   component: TooltipComponent,
@@ -27,21 +26,49 @@ const meta: Meta<typeof TooltipComponent> = {
 export default meta
 type Story = StoryObj<typeof TooltipComponent>
 
-const item: StageConfig = {
-  stage: 'Stage 1',
-  missing: {
-    nextStage: 'Stage 2',
-    requirements: ['A requirement'],
+const project: RosetteTooltipProps = {
+  riskSentiments: {
+    proposerFailure: 'bad',
+    upgradeability: 'bad',
+    sequencerFailure: 'good',
+    dataAvailability: 'warning',
+    stateValidation: 'good',
   },
-  summary: [],
+  riskValues: {
+    stateValidation: {
+      value: 'Fraud proofs',
+      sentiment: 'good',
+    },
+    proposerFailure: {
+      value: 'No mechanism',
+      sentiment: 'bad',
+    },
+    upgradeability: {
+      value: 'Yes',
+      sentiment: 'bad',
+    },
+    sequencerFailure: {
+      value: 'Transact using L1',
+      sentiment: 'good',
+    },
+    dataAvailability: {
+      value: 'Optimistic',
+      sentiment: 'warning',
+    },
+  },
 }
 
-export const Tooltip: Story = {
+export const RosetteTooltip: Story = {
   render: () => (
     <div className="m-4 ml-32">
       <span
         className="Tooltip inline-block"
-        title={renderToStaticMarkup(<StageTooltipComponent item={item} />)}
+        title={renderToStaticMarkup(
+          <RosetteTooltipPopup
+            riskSentiments={project.riskSentiments}
+            riskValues={project.riskValues}
+          />,
+        )}
         data-tooltip-big
       >
         <span>Element with tooltip</span>
