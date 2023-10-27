@@ -25,7 +25,7 @@ jobs:
         run: yarn storybook:build
       - name: Publish to Chromatic
         if: github.ref != 'refs/heads/main'
-        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes
+        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --externals ./tailwind.config.js --externals ./src/styles --externals ./src/static/fonts
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
-        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --auto-accept-changes
+        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --externals ./tailwind.config.js --externals ./src/styles --externals ./src/static/fonts --auto-accept-changes
