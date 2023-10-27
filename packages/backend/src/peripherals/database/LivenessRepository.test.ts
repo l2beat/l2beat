@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -12,32 +12,28 @@ describe(LivenessRepository.name, () => {
   const START = UnixTime.now()
   const DATA = [
     {
-      projectId: ProjectId('project1'),
       timestamp: START.add(-1, 'hours'),
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
-      type: LivenessType('DA'),
+      livenessConfigurationId: 1,
     },
     {
-      projectId: ProjectId('project2'),
       timestamp: START.add(-2, 'hours'),
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
-      type: LivenessType('STATE'),
+      livenessConfigurationId: 2,
     },
     {
-      projectId: ProjectId('project3'),
       timestamp: START.add(-3, 'hours'),
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
-      type: LivenessType('STATE'),
+      livenessConfigurationId: 3,
     },
     {
-      projectId: ProjectId('project4'),
       timestamp: START.add(-4, 'hours'),
       blockNumber: 12348,
       txHash: '0xabcdef1234567891',
-      type: LivenessType('DA'),
+      livenessConfigurationId: 4,
     },
   ]
 
@@ -50,18 +46,16 @@ describe(LivenessRepository.name, () => {
     it('only new rows', async () => {
       const newRows = [
         {
-          projectId: ProjectId('project5'),
           timestamp: START.add(-5, 'hours'),
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
-          type: LivenessType('DA'),
+          livenessConfigurationId: 1,
         },
         {
-          projectId: ProjectId('project6'),
           timestamp: START.add(-6, 'hours'),
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
-          type: LivenessType('STATE'),
+          livenessConfigurationId: 2,
         },
       ]
       await repository.addMany(newRows)
@@ -78,11 +72,10 @@ describe(LivenessRepository.name, () => {
       const records: LivenessRecord[] = []
       for (let i = 5; i < 15_000; i++) {
         records.push({
-          projectId: ProjectId(`project${i}`),
           timestamp: START.add(-i, 'hours'),
           blockNumber: i,
           txHash: `0xabcdef1234567892${i}`,
-          type: LivenessType(i % 2 === 0 ? 'STATE' : 'DA'),
+          livenessConfigurationId: i,
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()
