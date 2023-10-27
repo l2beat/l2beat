@@ -1,4 +1,4 @@
-import { DetailedTvlApiProject, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, TvlApiProject, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { orderByTvl } from '../../src/utils/orderByTvl'
@@ -11,7 +11,7 @@ describe(orderByTvl.name, () => {
       { id: ProjectId('third') },
     ]
 
-    const projectWithHourlyUsd = (values: number[]): DetailedTvlApiProject => ({
+    const projectWithHourlyUsd = (values: number[]): TvlApiProject => ({
       tokens: {
         CBV: [],
         EBV: [],

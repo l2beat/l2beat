@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import classNames from 'classnames'
 import { ProjectLink } from '../icons'
 import { DesktopProjectLinks } from './DesktopProjectLinks'
 import { MobileProjectLinks } from './MobileProjectLinks'
