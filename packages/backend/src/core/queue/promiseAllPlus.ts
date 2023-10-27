@@ -45,6 +45,7 @@ export async function promiseAllPlus<T>(
         stepMs: 1000,
         maxDistanceMs: 60_000,
         maxAttempts: maxAttempts,
+        notificationThresholdMs: Infinity,
       })(job)
 
       if (!shouldRetry.retry) {

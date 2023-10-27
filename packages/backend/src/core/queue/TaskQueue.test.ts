@@ -50,7 +50,7 @@ describe(TaskQueue.name, () => {
     }
 
     const queue = new TaskQueue(execute, Logger.SILENT, {
-      shouldRetry: Retries.always,
+      shouldRetry: Retries.always(),
       metricsId: 'test',
     })
 

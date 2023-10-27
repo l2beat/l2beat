@@ -12,10 +12,13 @@ import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
+const SIX_HOURS = 6 * 60 * 60000
+const TEN_MINUTES = 10 * 60000
 const DEFAULT_RETRY = Retries.exponentialBackOff({
-  stepMs: 1000,
-  maxDistanceMs: 60_000,
-  maxAttempts: 10,
+  stepMs: 1000, // 2s 4s 8s 16s 32s 64s....
+  maxAttempts: Infinity,
+  maxDistanceMs: SIX_HOURS,
+  notificationThresholdMs: TEN_MINUTES,
 })
 
 type Task<T> = (task: T) => Promise<void>
