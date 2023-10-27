@@ -5,7 +5,11 @@ name: "Chromatic"
 # You can check the issue here:
 # https://github.com/IanVS/vite-plugin-turbosnap/issues/13
 
-on: push
+on:
+  push:
+    branches-ignore:
+      # disable for merge queue
+      - "gh-readonly-queue/master/*"
 
 jobs:
   deploy:
@@ -28,9 +32,4 @@ jobs:
         run: yarn storybook:build
 
       - name: Publish to Chromatic
-        if: github.ref != 'refs/heads/main'
         run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts
-
-      - name: Publish to Chromatic and auto accept changes
-        if: github.ref == 'refs/heads/main'
-        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts --auto-accept-changes
