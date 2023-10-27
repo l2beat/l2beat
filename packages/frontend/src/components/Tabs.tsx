@@ -33,15 +33,15 @@ export function Tabs({ items }: TabsProps) {
                 {tab.shortName ?? tab.name}
               </span>
               {tab.itemsCount && (
-                <span className="TabsItem-CountBadge flex items-center justify-center rounded-full bg-purple-100 px-1.5 py-0.5 text-2xs tabular-nums leading-none text-white md:text-xs">
+                <span className="TabsItem-CountBadge flex items-center justify-center rounded-full bg-yellow-100 px-1.5 py-0.5 text-2xs tabular-nums leading-none text-white md:text-xs">
                   {tab.itemsCount}
                 </span>
               )}
-              <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-80" />
+              <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-blue-700 opacity-0 transition-all duration-300 group-hover:opacity-80" />
             </a>
           ))}
         </div>
-        <span className="TabsUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-900 transition-all duration-300 dark:bg-pink-200" />
+        <span className="TabsUnderline absolute bottom-0 block h-1 rounded-t-sm bg-gray-900 transition-all duration-300 dark:bg-pink-200" />
       </div>
       <HorizontalSeparator className="mb-3 md:mb-6" />
       {items.map((tab) => (
