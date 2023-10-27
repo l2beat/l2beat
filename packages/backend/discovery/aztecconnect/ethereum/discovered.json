@@ -197,20 +197,6 @@
         "getEscapeHatchStatus": [false, 380],
         "getImplementationVersion": 2,
         "getPendingDefiInteractionHashesLength": 1,
-        "getSupportedAssetsLength": 15,
-        "getSupportedBridgesLength": 18,
-        "lastRollupTimeStamp": 1697171759,
-        "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
-        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
-        "paused": false,
-        "prevDefiInteractionsHash": "0x2af92273d78efd009fae4e0897c43f99376179a19d59997e5146c64b12da5e90",
-        "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
-        "rollupProviders": [
-          "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
-          "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
-        ],
-        "rollupStateHash": "0xdb86e1696a16af893e15fa495f12c340002fc26fa7a149a6c3c8269992e7bf08",
-        "verifier": "0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69",
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
           "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -228,6 +214,7 @@
           "0x7C07F7aBe10CE8e33DC6C5aD68FE033085256A84",
           "0x378cb52b00F9D0921cb46dFc099CFf73b42419dC"
         ],
+        "getSupportedAssetsLength": 15,
         "getSupportedBridge": [
           "0xaeD181779A8AAbD8Ce996949853FEA442C2CDB47",
           "0x381abF150B53cc699f0dBBBEF3C5c0D1fA4B3Efd",
@@ -247,7 +234,20 @@
           "0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0",
           "0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0",
           "0xA915B9C104F865105Caa29E122C8e558cC22bd41"
-        ]
+        ],
+        "getSupportedBridgesLength": 18,
+        "lastRollupTimeStamp": 1697171759,
+        "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
+        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
+        "paused": false,
+        "prevDefiInteractionsHash": "0x2af92273d78efd009fae4e0897c43f99376179a19d59997e5146c64b12da5e90",
+        "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
+        "rollupProviders": [
+          "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
+          "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+        ],
+        "rollupStateHash": "0xdb86e1696a16af893e15fa495f12c340002fc26fa7a149a6c3c8269992e7bf08",
+        "verifier": "0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69"
       },
       "derivedName": "RollupProcessorV2"
     }

@@ -55,7 +55,7 @@ environment variables. One variable per line `KEY=value`.
 
 - `STARKEX_API_KEY` - Starkex API key
 - `COINGECKO_API_KEY` (Optional) - API key for Coingecko
-- `LOG_LEVEL` (Optional) - Integer specifying the log level. `0` - none, `1` - error, `2` - warn, `3` - info, `4` - debug
+- `LOG_LEVEL` (Optional) - String specifying the log level, options: "NONE", "CRITICAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE"
 - `PORT` (Optional) - The port on which the application exposes the api
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
 - `ACTIVITY_ENABLED` (default `false`) - When set to `true` activity feature is enabled

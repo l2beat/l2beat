@@ -220,8 +220,6 @@
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "paused": false,
-        "requireUnresolved": [],
-        "requireUnresolvedExists": [],
         "rollupDeploymentBlock": 15411056,
         "rollupEventInbox": "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",

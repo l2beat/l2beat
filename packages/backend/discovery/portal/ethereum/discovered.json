@@ -73,12 +73,6 @@
         "getGuardianSetExpiry": 0,
         "governanceChainId": 1,
         "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
-        "isFork": false,
-        "messageFee": 0,
-        "quorum": [
-          1, 1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9, 9, 10, 11, 11, 12, 13, 13, 14,
-          15, 15, 16, 17, 17, 18, 19, 19, 20
-        ],
         "guardianSet": [
           [
             "0x58CC3AE5C097b213cE3c81979e1B9f9570746AA5",
@@ -102,6 +96,12 @@
             "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
           ],
           0
+        ],
+        "isFork": false,
+        "messageFee": 0,
+        "quorum": [
+          1, 1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9, 9, 10, 11, 11, 12, 13, 13, 14,
+          15, 15, 16, 17, 17, 18, 19, 19, 20
         ]
       },
       "derivedName": "Implementation"

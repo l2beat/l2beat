@@ -182,8 +182,8 @@ export const kroma: Layer2 = {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',
       description:
-        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then zk proven. The zkEVM used is based on Scroll.\
-        Once the single block of disagreement is found, CHALLENGER is required to present zkProof of the fraud. When the proof is validated, the incorrect\
+        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. The zkEVM used is based on Scroll.\
+        Once the single block of disagreement is found, CHALLENGER is required to present ZK proof of the fraud. When the proof is validated, the incorrect\
         state output is deleted. The Security Council can always override the result of the challenge, it can also delete any L2 state root at any time. If\
         the malicious ATTESTER and CHALLENGER collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenge\
         resulting in lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
@@ -282,6 +282,18 @@ export const kroma: Layer2 = {
         },
       ],
     },
+  },
+  stateDerivation: {
+    nodeSoftware:
+      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/main/specs/differences-from-optimism-bedrock.md).' +
+      '\n' +
+      'The instructions to run the proposer (called validator) and the ZK prover, are documented [here](https://docs.kroma.network/developers/running-nodes-on-kroma).',
+    compressionScheme:
+      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level',
+    genesisState:
+      'The genesis file can be found [here](https://github.com/kroma-network/kroma-up/blob/main/config/mainnet/genesis.json).',
+    dataFormat:
+      'L2 blocks derivation from L1 data plus the format and architecture of batch submission is documented [here](https://github.com/kroma-network/kroma/blob/main/specs/derivation.md).',
   },
   permissions: [
     {
