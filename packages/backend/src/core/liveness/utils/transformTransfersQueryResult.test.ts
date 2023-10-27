@@ -1,9 +1,9 @@
-import { BigQueryTransfersResult } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
 import { LivenessTransfer } from '../types/LivenessConfig'
+import { BigQueryTransfersResult } from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
 describe(transformTransfersQueryResult.name, () => {

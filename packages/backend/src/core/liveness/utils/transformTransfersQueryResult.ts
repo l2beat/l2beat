@@ -1,8 +1,8 @@
-import { BigQueryTransfersResult } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
 import { LivenessTransfer } from '../types/LivenessConfig'
+import { BigQueryTransfersResult } from '../types/model'
 
 export function transformTransfersQueryResult(
   configs: LivenessTransfer[],
