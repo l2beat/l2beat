@@ -19,7 +19,7 @@ export async function fetchTvlApi(
   if (backend.mock) {
     return getMockTvlApiResponse()
   }
-  const url = `${backend.apiUrl}/api/-tvl`
+  const url = `${backend.apiUrl}/api/tvl`
   const json = await http.fetchJson(url)
   return TvlApiResponse.parse(json)
 }
