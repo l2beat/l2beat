@@ -80,7 +80,5 @@
     "ts-node": "^10.9.1",
     "vite": "^3.0.9",
     "vite-plugin-turbosnap": "^1.0.3"
-  },
-  "readme": "ERROR: No README data found!",
-  "_id": "@l2beat/frontend@0.1.0"
+  }
 }
