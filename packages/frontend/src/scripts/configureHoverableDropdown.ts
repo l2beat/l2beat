@@ -5,11 +5,11 @@ export function configureHoverableDropdown() {
     document.querySelectorAll<HTMLElement>('.HoverableDropdown')
 
   const show = (menu: HTMLElement) => {
-    menu.classList.remove()
+    menu.classList.remove('opacity-0', 'pointer-events-none')
   }
 
   const hide = (menu: HTMLElement) => {
-    menu.classList.add()
+    menu.classList.add('opacity-0', 'pointer-events-none')
   }
 
   hoverableDropdowns.forEach((hoverableDropdown) => {
