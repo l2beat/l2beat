@@ -48,6 +48,7 @@ export const scroll: Layer2 = {
         'https://scrollscan.com/',
         'https://blockscout.scroll.io',
         'https://scroll.unifra.xyz/',
+        'https://www.ondora.xyz/network/scroll',
       ],
       repositories: [
         'https://github.com/scroll-tech/zkevm-circuits',

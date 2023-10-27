@@ -1,14 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  BigQueryClient,
-  BigQueryProvider,
-  BigQueryWrapper,
-} from '@l2beat/shared'
+import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { HourlyIndexer } from '../../core/liveness/HourlyIndexer'
+import { LivenessClient } from '../../core/liveness/LivenessClient'
 import { LivenessIndexer } from '../../core/liveness/LivenessIndexer'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
@@ -29,20 +26,20 @@ export function createLivenessModule(
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
 
-  const bigQueryWrapper = new BigQueryWrapper({
+  const bigQueryWrapper = new BigQuerySDKWrapper({
     clientEmail: config.liveness.bigQuery.clientEmail,
     privateKey: config.liveness.bigQuery.privateKey,
     projectId: config.liveness.bigQuery.projectId,
   })
-  const bigQueryProvider = new BigQueryProvider(bigQueryWrapper)
-  const bigQueryClient = new BigQueryClient(bigQueryProvider)
+  const bigQueryClient = new BigQueryClient(bigQueryWrapper)
+  const livenessClient = new LivenessClient(bigQueryClient)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const liveness = new LivenessIndexer(
     logger,
     hourlyIndexer,
     config.projects,
-    bigQueryClient,
+    livenessClient,
     indexerStateRepository,
     livenessRepository,
     // TODO: figure out from where to start

@@ -1,11 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { LivenessTransfer } from '../../types/LivenessConfig'
+
 export function getTransferQuery(
-  senders: EthereumAddress[],
-  receivers: EthereumAddress[],
+  transfersConfig: LivenessTransfer[],
   from: UnixTime,
   to: UnixTime,
 ) {
+  const senders = transfersConfig.map((t) => t.from)
+  const receivers = transfersConfig.map((t) => t.to)
+
   return [
     'SELECT',
     'block_number,',

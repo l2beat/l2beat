@@ -9,7 +9,7 @@ export interface BigQueryAuth {
   projectId: string
 }
 
-export class BigQueryWrapper {
+export class BigQuerySDKWrapper {
   private readonly bigquery: BigQuery
 
   constructor(params: BigQueryAuth) {
