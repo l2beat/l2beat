@@ -1,10 +1,12 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { KnowledgeNuggetItem } from './KnowledgeNuggetItem'
 
-export default {
-  title: 'Components/Project/KnowledgeNuggets',
+const meta: Meta<typeof KnowledgeNuggetItem> = {
+  component: KnowledgeNuggetItem,
 }
+export default meta
+type Story = StoryObj<typeof KnowledgeNuggetItem>
 
 const knowledgeNuggetExample = {
   title: 'Arbitrum fraud proofs tested on POW ETH',
@@ -12,10 +14,8 @@ const knowledgeNuggetExample = {
   thumbnail: 'arbitrum-01.jpg',
 }
 
-export function KnowledgeNugget() {
-  return (
-    <div className="p-4">
-      <KnowledgeNuggetItem knowledgeNugget={knowledgeNuggetExample} />
-    </div>
-  )
+export const KnowledgeNugget: Story = {
+  args: {
+    knowledgeNugget: knowledgeNuggetExample,
+  },
 }

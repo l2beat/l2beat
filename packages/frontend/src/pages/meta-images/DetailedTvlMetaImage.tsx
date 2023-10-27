@@ -9,12 +9,17 @@ export interface DetailedTvlMetaImageProps {
   sevenDayChange: string
   name?: string
   icon?: string
-  chartType: ChartType
+  chartType: Extract<
+    ChartType,
+    | { type: 'project-detailed-tvl' }
+    | { type: 'layer2-detailed-tvl' }
+    | { type: 'bridges-tvl' }
+  >
+  fake?: boolean
 }
 
 export function DetailedTvlMetaImage(props: DetailedTvlMetaImageProps) {
   const name = props.name ?? 'Overview'
-
   return (
     <div
       className={cx(
@@ -29,7 +34,13 @@ export function DetailedTvlMetaImage(props: DetailedTvlMetaImageProps) {
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
       />
-      <Chart settingsId="meta" initialType={props.chartType} metaChart />
+      <Chart
+        settingsId="meta"
+        initialType={
+          props.fake ? { type: 'storybook-fake-detailed-tvl' } : props.chartType
+        }
+        metaChart
+      />
       <Logo />
     </div>
   )

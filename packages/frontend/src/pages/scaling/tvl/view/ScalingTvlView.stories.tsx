@@ -1,12 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
-import { PageContent } from '../../../../components/PageContent'
-import { Tooltip } from '../../../../components/Tooltip'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
+import { configureTables } from '../../../../scripts/configureTables'
 import { configureTabs } from '../../../../scripts/configureTabs'
-import { configureTooltips } from '../../../../scripts/configureTooltips'
-import { click } from '../../../../utils/storybook/click'
 import { ScalingTvlView } from './ScalingTvlView'
 
 const meta = {
@@ -1084,14 +1082,14 @@ const meta = {
     ],
   },
   decorators: [
-    (Story) => (
-      <>
-        <PageContent>
-          <Story />
-        </PageContent>
-        <Tooltip />
-      </>
-    ),
+    (Story) => {
+      useEffect(() => {
+        configureTables()
+        configureTabs()
+        configureProjectFilters()
+      }, [])
+      return <Story />
+    },
   ],
 } satisfies Meta<typeof ScalingTvlView>
 export default meta
@@ -1099,88 +1097,48 @@ export default meta
 type Story = StoryObj<typeof ScalingTvlView>
 
 export const Active: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#active')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const activeTab = canvas.getByText('Active projects')
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
+    setTimeout(() => activeTab.blur(), 1000)
+  },
 }
 
 export const ActiveWithRollupsOnly: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#active')
-        click('#rollups-only-checkbox')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Show rollups only'))
+  },
 }
 
 export const Upcoming: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#upcoming')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Upcoming projects'), { delay: 25 })
+  },
 }
 
 export const UpcomingWithRollupsOnly: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#upcoming')
-        click('#rollups-only-checkbox')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Upcoming projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Show rollups only'))
+  },
 }
 
 export const Archived: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#archived')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
+  },
 }
 
 export const ArchivedWithRollupsOnly: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#archived')
-        click('#rollups-only-checkbox')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Show rollups only'))
+  },
 }

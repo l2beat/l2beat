@@ -76,6 +76,7 @@ export class ChartDataController {
         }
       case 'layer2-detailed-tvl':
       case 'project-detailed-tvl':
+      case 'storybook-fake-detailed-tvl':
         return {
           type: 'detailed-tvl',
           values: AggregateDetailedTvlResponse.parse(data),
@@ -98,6 +99,8 @@ export class ChartDataController {
             chartType.filteredSlugs?.length !== 1,
           values: ActivityResponse.parse(data),
         }
+      default:
+        assertUnreachable(chartType)
     }
   }
 }
@@ -127,9 +130,12 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
     case 'project-activity':
       return `/api/activity/${chartType.slug}.json`
     case 'storybook-fake-tvl':
+    case 'storybook-fake-detailed-tvl':
       return '/fake-tvl.json'
     case 'storybook-fake-activity':
       return '/fake-activity.json'
+    default:
+      assertUnreachable(chartType)
   }
 }
 
@@ -137,4 +143,8 @@ export function getTokenTvlUrl(info: TokenInfo) {
   const chainId = 'chainId' in info ? info.chainId : 1
   const type = info.type === 'regular' ? 'CBV' : info.type
   return `/api/projects/${info.projectId}/tvl/chains/${chainId}/assets/${info.assetId}/types/${type}`
+}
+
+function assertUnreachable(_: never): never {
+  throw new Error('Unreachable code')
 }

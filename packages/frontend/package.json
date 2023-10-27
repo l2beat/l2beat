@@ -24,7 +24,8 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
-    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared-pure,config} -recsm build --module es6) && storybook build"
+    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared-pure,config} -recsm build --module es6) && storybook build",
+    "chromatic": "chromatic --build-script-name=storybook:build -d ./storybook-static --project-token chpt_9ae911ea817bd16 --only-changed --exit-once-uploaded --exit-zero-on-changes"
   },
   "dependencies": {
     "@l2beat/config": "*",
@@ -50,16 +51,20 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
-    "@storybook/addon-actions": "^7.0.9",
-    "@storybook/addon-essentials": "^7.0.9",
+    "@storybook/addon-actions": "7.0.9",
+    "@storybook/addon-essentials": "7.0.9",
+    "@storybook/addon-interactions": "7.0.9",
     "@storybook/addon-styling": "^1.0.6",
-    "@storybook/addons": "^7.0.9",
-    "@storybook/react": "^7.0.9",
-    "@storybook/react-vite": "^7.0.9",
+    "@storybook/addons": "7.0.9",
+    "@storybook/react": "7.0.9",
+    "@storybook/react-vite": "7.0.9",
+    "@storybook/testing-library": "^0.2.2",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^8.2.5",
+    "chromatic": "^7.4.0",
     "cssnano": "^5.1.14",
     "del": "^6.1.1",
+    "eslint-plugin-storybook": "^0.6.15",
     "gulp": "^4.0.2",
     "gulp-postcss": "^9.0.1",
     "gulp-sass": "^5.0.0",
@@ -69,10 +74,11 @@
     "prettier": "^2.6.2",
     "prettier-plugin-tailwindcss": "^0.2.2",
     "sass": "^1.52.2",
-    "storybook": "^7.0.9",
-    "storycap": "^4.2.0",
+    "storybook": "7.0.9",
+    "storybook-addon-pseudo-states": "^2.1.2",
     "tailwindcss": "^3.1.0",
     "ts-node": "^10.9.1",
-    "vite": "^3.0.9"
+    "vite": "^3.0.9",
+    "vite-plugin-turbosnap": "^1.0.3"
   }
 }
