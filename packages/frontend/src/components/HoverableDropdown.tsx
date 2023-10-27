@@ -37,7 +37,7 @@ function HoverableDropdownToggle(props: HoverableDropdownToggleProps) {
   return (
     <div
       ref={props.toggleRef}
-      className="HoverableDropdownToggle flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-neutral-700 dark:group-hover:bg-gray-750"
+      className="HoverableDropdownToggle flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-yellow-300 py-1.5 px-2 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-blue-700 dark:group-hover:bg-gray-750"
     >
       {props.children}
       <ChevronDownIcon className="HoverableDropdownToggleIcon m-auto scale-75 transition-transform duration-300 group-hover:-rotate-180" />
