@@ -162,6 +162,10 @@ export class TaskQueue<T> {
       }
       return
     }
+    // TODO: test this line
+    if (result.notify) {
+      this.logger.error(error)
+    }
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
     this.queue.unshift(job)
     this.logger.info({
@@ -202,18 +206,6 @@ export class TaskQueue<T> {
     } finally {
       this.busyWorkers--
       setTimeout(() => this.execute())
-    }
-  }
-
-  // WARNING: this method clears the queue, be cautious when using it
-  // some Updaters will not function properly after you unhalt them using this method
-  // because they rely on the start() function which is called only once
-  // so use it only in Updaters with generic (updating all the missing data) update() function
-  // or rewrite the logic of your updater
-  unhaltIfNeeded() {
-    if (this.halted) {
-      this.queue.splice(0, this.queue.length)
-      this.halted = false
     }
   }
 }

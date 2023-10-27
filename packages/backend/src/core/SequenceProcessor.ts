@@ -112,7 +112,6 @@ export class SequenceProcessor extends EventEmitter {
     await this.loadState()
     this.processQueue.addIfEmpty()
     this.refreshId = setInterval(() => {
-      this.processQueue.unhaltIfNeeded()
       this.processQueue.addIfEmpty()
     }, this.scheduleInterval)
   }
