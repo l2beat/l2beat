@@ -1,16 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { LivenessRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface LivenessRecord {
-  projectId: ProjectId
   timestamp: UnixTime
   blockNumber: number
   txHash: string
-  type: LivenessType
+  livenessConfigurationId: number
 }
 
 // TODO: add index when we will write controler
@@ -41,20 +40,18 @@ export class LivenessRepository extends BaseRepository {
 
 function toRecord(row: LivenessRow): LivenessRecord {
   return {
-    projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
     txHash: row.tx_hash,
-    type: LivenessType(row.type),
+    livenessConfigurationId: row.liveness_configuration_id,
   }
 }
 
 function toRow(record: LivenessRecord): LivenessRow {
   return {
-    project_id: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
     tx_hash: record.txHash,
-    type: record.type,
+    liveness_configuration_id: record.livenessConfigurationId,
   }
 }

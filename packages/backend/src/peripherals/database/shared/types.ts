@@ -136,11 +136,21 @@ declare module 'knex/types/tables' {
   }
 
   interface LivenessRow {
-    project_id: string
     timestamp: Date
     block_number: number
     tx_hash: string
+    liveness_configuration_id: number
+  }
+
+  interface LivenessConfigurationRow {
+    id: number
+    project_id: string
     type: string
+    config_hash: string
+    config_raw: object
+    from_timestamp: Date
+    to_timestamp: Date
+    last_synced_timestamp: Date
   }
 
   interface IndexerStateRow {
@@ -170,6 +180,7 @@ declare module 'knex/types/tables' {
     circulating_supplies: CirculatingSupplyRow
     circulating_supplies_status: CirculatingSupplyStatusRow
     liveness: LivenessRow
+    liveness_configuration: LivenessConfigurationRow
     indexer_state: IndexerStateRow
   }
 }
