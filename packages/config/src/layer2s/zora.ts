@@ -44,7 +44,7 @@ export const zora: Layer2 = {
       repositories: ['https://github.com/ourzora/optimism'],
       socialMedia: [
         'https://twitter.com/ourZORA',
-        'https://www.instagram.com/our.zora',
+        'https://instagram.com/our.zora',
         'https://zora.community',
       ],
     },
