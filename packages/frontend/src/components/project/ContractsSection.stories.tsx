@@ -1,19 +1,12 @@
-import { Story } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { ContractsSection, ContractsSectionProps } from './ContractsSection'
 
-export default {
-  title: 'Components/Project/ContractsSection',
+const meta: Meta<typeof ContractsSection> = {
+  component: ContractsSection,
 }
-
-function Template(props: ContractsSectionProps) {
-  return (
-    <div className="px-4">
-      <ContractsSection {...props} />
-    </div>
-  )
-}
+export default meta
+type Story = StoryObj<typeof ContractsSection>
 
 const props: ContractsSectionProps = {
   id: 'contracts',
@@ -101,19 +94,20 @@ const props: ContractsSectionProps = {
   nativeL2TokensIncludedInTVL: ['ARB'],
 }
 
-export const Contracts: Story<ContractsSectionProps> = Template.bind({})
-Contracts.args = props
+export const Contracts: Story = { args: props }
 
-export const NoImage: Story<ContractsSectionProps> = Template.bind({})
-NoImage.args = {
-  ...props,
-  architectureImage: '',
+export const NoImage: Story = {
+  args: {
+    ...props,
+    architectureImage: '',
+  },
 }
 
-export const EmptyContract: Story<ContractsSectionProps> = Template.bind({})
-EmptyContract.args = {
-  contracts: [],
-  escrows: [],
-  risks: [],
-  references: [],
+export const EmptyContract: Story = {
+  args: {
+    contracts: [],
+    escrows: [],
+    risks: [],
+    references: [],
+  },
 }

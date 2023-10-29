@@ -51,7 +51,7 @@ export const zksynclite: Layer2 = {
     name: 'zkSync Lite',
     slug: 'zksync-lite',
     description:
-      'zkSync Lite (formerly zkSync) is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
+      'zkSync Lite (formerly zkSync) is a user-centric ZK Rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
     purpose: 'Payments, Tokens',
     provider: 'zkSync',
     category: 'ZK Rollup',
@@ -293,11 +293,11 @@ export const zksynclite: Layer2 = {
     addresses: [
       discovery.getContractDetails('ZkSync', {
         description:
-          'The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
+          'The main Rollup contract. Allows the operator to commit blocks, provide ZK proofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
         ...upgrades,
       }),
       discovery.getContractDetails('Verifier', {
-        description: 'Implements zkProof verification logic.',
+        description: 'Implements ZK proof verification logic.',
         ...upgrades,
       }),
       discovery.getContractDetails('Governance', {
@@ -334,6 +334,13 @@ export const zksynclite: Layer2 = {
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  stateDerivation: {
+    nodeSoftware: `The node software is open-sourced and the source can be found [here](https://github.com/matter-labs/zksync).`,
+    compressionScheme: 'No compression, transactions are always the same size.',
+    genesisState:
+      'There is no genesis file nor regenesis for zkSync Lite. By default, all accounts were empty at the beginning.',
+    dataFormat: `The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).`,
   },
   permissions: [
     ...discovery.getMultisigPermission(
@@ -379,7 +386,7 @@ export const zksynclite: Layer2 = {
       link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       date: '2020-06-18T00:00:00Z',
       description:
-        'zkSync is live, bringing scalable payments to Ethereum using zkRollup technology.',
+        'zkSync is live, bringing scalable payments to Ethereum using ZK Rollup technology.',
     },
     {
       name: 'Rebranding',

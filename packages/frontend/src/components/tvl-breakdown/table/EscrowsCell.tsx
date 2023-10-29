@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
-import { TVLProjectBreakdown } from '../../../pages/scaling-projects-tvl-breakdown/props/getTvlBreakdownView'
+import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatAddress } from '../../../utils/utils'
 import { ChevronDownIcon, OutLinkIcon } from '../../icons'
 

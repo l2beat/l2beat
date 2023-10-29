@@ -22,7 +22,7 @@ export const zkswap2: Layer2 = {
     warning:
       'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
     description:
-      'ZKSwap is a fork of ZkSync with added AMM functionality. Based on ZK-Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
+      'ZKSwap is a fork of ZkSync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
     purpose: 'Payments, AMM',
     provider: 'zkSync',
     category: zkswap.display.category,
@@ -83,7 +83,7 @@ export const zkswap2: Layer2 = {
     addresses: [
       discovery.getContractDetails(
         'ZkSync',
-        'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+        'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
       ),
       discovery.getContractDetails(
         'ZkSyncCommitBlock',
@@ -98,7 +98,7 @@ export const zkswap2: Layer2 = {
         'UniswapV2Factory',
         'Manages trading pairs.',
       ),
-      discovery.getContractDetails('Verifier', 'zk-SNARK Plonk Verifier.'),
+      discovery.getContractDetails('Verifier', 'zkSNARK Plonk Verifier.'),
       discovery.getContractDetails('VerifierExit'),
       discovery.getContractDetails('UpgradeGatekeeper'),
     ],

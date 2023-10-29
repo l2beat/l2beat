@@ -1,4 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import {
+  ActivityApiChartPoint,
+  ActivityApiCharts,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
@@ -105,17 +109,17 @@ describe(activitySanityCheck.name, () => {
   const allProjects: ActivityProjectData[] = [
     [
       'projectA',
-      [
-        [today.add(-1, 'days'), 1],
-        [today, 2],
-      ],
+      dataToChart([
+        [today.add(-1, 'days'), 1, 5],
+        [today, 2, 3],
+      ]),
     ],
     [
       'projectB',
-      [
-        [today.add(-1, 'days'), 3],
-        [today, 4],
-      ],
+      dataToChart([
+        [today.add(-1, 'days'), 3, 5],
+        [today, 4, 2],
+      ]),
     ],
   ]
 
@@ -128,12 +132,12 @@ describe(activitySanityCheck.name, () => {
       const allProjects: ActivityProjectData[] = [
         [
           'projectA',
-          [
-            [today.add(-1, 'days'), 1],
-            [today, 2],
-          ],
+          dataToChart([
+            [today.add(-1, 'days'), 1, 3],
+            [today, 2, 5],
+          ]),
         ],
-        ['projectB', []],
+        ['projectB', dataToChart([])],
       ]
 
       expect(() => checkIfEmptyActivityCharts(allProjects)).toThrow(
@@ -155,17 +159,17 @@ describe(activitySanityCheck.name, () => {
       const allProjects: ActivityProjectData[] = [
         [
           'projectA',
-          [
-            [today.add(-1, 'days'), 1],
-            [today, 0],
-          ],
+          dataToChart([
+            [today.add(-1, 'days'), 1, 2],
+            [today, 0, 4],
+          ]),
         ],
         [
           'projectB',
-          [
-            [today.add(-1, 'days'), 3],
-            [today, 4],
-          ],
+          dataToChart([
+            [today.add(-1, 'days'), 3, 2],
+            [today, 4, 3],
+          ]),
         ],
       ]
 
@@ -178,10 +182,10 @@ describe(activitySanityCheck.name, () => {
       const allProjects: ActivityProjectData[] = [
         [
           'projectA',
-          [
-            [today.add(-1, 'days'), 1],
-            [today, 1],
-          ],
+          dataToChart([
+            [today.add(-1, 'days'), 1, 2],
+            [today, 1, 3],
+          ]),
         ],
       ]
 
@@ -201,7 +205,7 @@ describe(activitySanityCheck.name, () => {
     it('throws if delayed activity', () => {
       const now = today.add(3, 'hours')
       const allProjects: ActivityProjectData[] = [
-        ['projectA', [[today.add(-2, 'days'), 1]]],
+        ['projectA', dataToChart([[today.add(-2, 'days'), 1, 5]])],
       ]
 
       expect(() => checkIfDelayedActivity(allProjects, now)).toThrow(
@@ -210,3 +214,12 @@ describe(activitySanityCheck.name, () => {
     })
   })
 })
+
+function dataToChart(data: ActivityApiChartPoint[]): ActivityApiCharts {
+  return {
+    daily: {
+      types: ['timestamp', 'transactions', 'ethereumTransactions'],
+      data,
+    },
+  }
+}

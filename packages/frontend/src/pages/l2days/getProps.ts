@@ -10,6 +10,7 @@ export function getProps(): Wrapped<undefined> {
         image: 'https://l2beat.com/images/announcements/l2days.jpg',
         url: 'https://l2beat.com/l2days/',
       },
+      banner: false,
     },
   }
 }

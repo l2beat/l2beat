@@ -1,15 +1,11 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { UnverifiedContractsWarning as UnverifiedContractsWarningComponent } from './UnverifiedContractsWarning'
 
-export default {
-  title: 'Components/Table/UnverifiedContractsWarning',
+const meta: Meta<typeof UnverifiedContractsWarningComponent> = {
+  component: UnverifiedContractsWarningComponent,
 }
+export default meta
+type Story = StoryObj<typeof UnverifiedContractsWarningComponent>
 
-export function UnverifiedContractsWarning() {
-  return (
-    <div className="p-10">
-      <UnverifiedContractsWarningComponent tooltip="This is tooltip message" />
-    </div>
-  )
-}
+export const UnverifiedContractsWarning: Story = {}

@@ -41,7 +41,7 @@ export const zksyncera: Layer2 = {
       ? `Withdrawals are delayed by ${delay}. The length of the delay can be arbitrarily set by a MultiSig.`
       : undefined,
     description:
-      'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
+      'zkSync Era is a general-purpose ZK Rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its ZK friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
     purpose: 'Universal',
     provider: 'zkSync',
@@ -257,14 +257,14 @@ export const zksyncera: Layer2 = {
     addresses: [
       discovery.getContractDetails('zkSync', {
         description:
-          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
+          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract \
           and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-          It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
+          It uses separate Verifier to validate ZK proofs. Governance manages list of Validators and can set basic rollup parameters.\
           It is also serves the purpose of ETH bridge.',
         ...upgrades,
       }),
       discovery.getContractDetails('Verifier', {
-        description: 'Implements zkProof verification logic.',
+        description: 'Implements ZK proof verification logic.',
         ...upgrades,
         upgradeConsiderations:
           'Multisig can change the verifier with no delay.',

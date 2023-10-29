@@ -77,7 +77,7 @@ export const linea: Layer2 = {
     slug: 'linea',
     warning: 'The circuit of the program being proven is not public.',
     description:
-      'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
+      'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     links: {
@@ -133,7 +133,7 @@ export const linea: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       description:
         RISK_VIEW.DATA_ON_CHAIN.description +
-        ' Unlike most zk rollups, transaction data is posted instead of state diffs.',
+        ' Unlike most ZK rollups, transaction data is posted instead of state diffs.',
       sources: [
         {
           contract: 'zkEVM',
@@ -259,10 +259,6 @@ export const linea: Layer2 = {
       }),
       discovery.getContractDetails(
         'PlonkVerifierFull',
-        'Plonk verifier contract used by the Linea zkEVM rollup.',
-      ),
-      discovery.getContractDetails(
-        'PlonkVerifierFull2',
         'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
       discovery.getContractDetails(

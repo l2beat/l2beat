@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18220037,
   "configHash": "0x7f8ce44079225523e10d861f2c029725746778c39b3fbdb838206a5ceaedf024",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "LoopringIOExchangeOwner",

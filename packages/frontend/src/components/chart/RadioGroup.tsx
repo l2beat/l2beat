@@ -4,6 +4,8 @@ import React from 'react'
 export interface RadioGroupProps {
   role: string
   name: string
+  className?: string
+  optionsClassname?: string
   options: {
     value: string
     checked?: boolean
@@ -18,12 +20,17 @@ export function RadioGroup(props: RadioGroupProps) {
       className={cx(
         'bg-gray-200 text-base font-medium dark:bg-gray-750',
         'inline-flex items-center gap-1 rounded-lg p-1',
+        props.className,
       )}
     >
       {props.options.map((option, i) => (
         <label
           key={i}
-          className={cx('relative block select-none', option.className)}
+          className={cx(
+            'relative block select-none',
+            props.optionsClassname,
+            option.className,
+          )}
         >
           <input
             className="peer absolute top-0 left-0 block h-full w-full cursor-pointer opacity-0"

@@ -1,3 +1,40 @@
+# Diff at Fri, 13 Oct 2023 12:28:20 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@94e530cf4d7e9cfd400a51f99572fc352ba85712
+
+## Description
+
+Updated verification keys. There are also some other changes in Config.sol, but they are an artefact of Etherscan verification and they are not used in practice.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+      values.versionId:
+-        10
++        11
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+      upgradeability.implementation:
+-        "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC"
++        "0x6e95812C432F293b8045811F4B1758285EBDB206"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Verifier/implementation/Config.sol                   | 16 +++++++++++++---
+ .../Verifier/implementation/KeysWithPlonkVerifier.sol    |  2 +-
+ .../Verifier/implementation/Verifier.sol                 |  2 +-
+ .../Verifier/implementation/meta.txt                     |  2 +-
+ 4 files changed, 16 insertions(+), 6 deletions(-)
+```
+
 # Diff at Mon, 02 Oct 2023 13:57:17 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

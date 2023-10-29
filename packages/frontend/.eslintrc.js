@@ -1,5 +1,5 @@
 module.exports = {
-  extends: '../../.eslintrc.json',
+  extends: ['../../.eslintrc.json', 'plugin:storybook/recommended'],
   overrides: [
     {
       files: ['*'],
