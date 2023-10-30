@@ -1,5 +1,5 @@
 import { BigQueryClient } from '@l2beat/shared'
-import { EthereumAddress, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { Project } from '../../model'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
@@ -20,16 +20,6 @@ import {
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
-
-export interface FunctionCallQueryParams {
-  address: EthereumAddress
-  selector: string
-}
-
-export interface TransferQueryParams {
-  from: EthereumAddress
-  to: EthereumAddress
-}
 
 export class LivenessClient {
   constructor(private readonly bigquery: BigQueryClient) {}
