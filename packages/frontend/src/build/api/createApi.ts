@@ -1,5 +1,5 @@
 import {
-  ActivityApiChart,
+  ActivityApiCharts,
   ActivityApiResponse,
   DetailedTvlApiCharts,
   DetailedTvlApiResponse,
@@ -8,17 +8,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import fsx from 'fs-extra'
-import { at } from 'lodash'
 import path from 'path'
 
 import { Config } from '../config'
-
-export interface FrontendActivityChart {
-  daily: {
-    types: ['timestamp', 'transactions', 'ethereumTransactions']
-    data: [number, number, number][]
-  }
-}
 
 export function createApi(
   config: Config,
@@ -27,39 +19,23 @@ export function createApi(
 ) {
   const urlCharts = new Map<
     string,
-    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+    TvlApiCharts | DetailedTvlApiCharts | ActivityApiCharts
   >()
 
-  urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
-  urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
-  urlCharts.set('combined-tvl', tvlApiResponse.combined)
-
-  if (config.features.detailedTvl) {
-    urlCharts.set('scaling-detailed-tvl', tvlApiResponse.layers2s)
-  }
+  urlCharts.set('tvl/scaling', tvlApiResponse.layers2s)
+  urlCharts.set('tvl/bridges', tvlApiResponse.bridges)
+  urlCharts.set('tvl/combined', tvlApiResponse.combined)
 
   for (const project of [...config.layer2s, ...config.bridges]) {
     const projectTvlData = tvlApiResponse.projects[project.id.toString()]
     if (projectTvlData) {
-      urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
-      if (config.features.detailedTvl) {
-        urlCharts.set(
-          `${project.display.slug}-detailed-tvl`,
-          projectTvlData.charts,
-        )
-      }
+      urlCharts.set(`tvl/${project.display.slug}`, projectTvlData.charts)
     }
   }
-  urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)
+  urlCharts.set(`tvl/placeholder`, PLACEHOLDER_API_DATA)
 
-  if (activityApiResponse) {
-    urlCharts.set(
-      'activity/combined',
-      getActivityChart(
-        activityApiResponse.combined,
-        activityApiResponse.ethereum,
-      ),
-    )
+  if (activityApiResponse?.combined) {
+    urlCharts.set('activity/combined', activityApiResponse.combined)
 
     for (const [projectId, chart] of Object.entries(
       activityApiResponse.projects,
@@ -67,10 +43,7 @@ export function createApi(
       const slug = config.layer2s.find((x) => x.id.toString() === projectId)
         ?.display.slug
       if (chart && slug) {
-        urlCharts.set(
-          `activity/${slug}`,
-          getActivityChart(chart, activityApiResponse.ethereum),
-        )
+        urlCharts.set(`activity/${slug}`, chart)
       }
     }
   }
@@ -81,81 +54,14 @@ export function createApi(
 export function outputCharts(
   urlCharts: Map<
     string,
-    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+    TvlApiCharts | DetailedTvlApiCharts | ActivityApiCharts
   >,
 ) {
   for (const [url, charts] of urlCharts) {
-    // TODO(radomski): This check is be removed when we retire the /api/tvl
-    // endpoint and use only the /api/detailed-tvl
-    const json =
-      'hourly' in charts &&
-      charts.hourly.types.length === 9 &&
-      !url.includes('-detailed-tvl')
-        ? JSON.stringify({
-            hourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: charts.hourly.data.map((e) => at(e, [0, 1, 5])),
-            },
-            sixHourly: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: charts.sixHourly.data.map((e) => at(e, [0, 1, 5])),
-            },
-            daily: {
-              types: ['timestamp', 'usd', 'eth'],
-              data: charts.daily.data.map((e) => at(e, [0, 1, 5])),
-            },
-          })
-        : JSON.stringify(charts)
-
+    const json = JSON.stringify(charts)
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
     fsx.writeFileSync(path.join('build/api', `${url}.json`), json)
   }
-}
-
-function getActivityChart(
-  apiChart: ActivityApiChart,
-  ethereumChart: ActivityApiChart,
-): FrontendActivityChart {
-  return {
-    daily: {
-      types: ['timestamp', 'transactions', 'ethereumTransactions'],
-      data: alignActivityData(apiChart.data, ethereumChart.data),
-    },
-  }
-}
-
-export function alignActivityData(
-  apiChartData: ActivityApiChart['data'],
-  ethereumChartData: ActivityApiChart['data'],
-): FrontendActivityChart['daily']['data'] {
-  const lastProjectTimestamp = apiChartData.at(-1)?.[0]
-  if (!lastProjectTimestamp) {
-    throw new Error('No data in activity chart')
-  }
-  const ethChartTimestampIndex = ethereumChartData.findIndex(
-    (x) => x[0].toNumber() === lastProjectTimestamp.toNumber(),
-  )
-  if (ethChartTimestampIndex === -1) {
-    throw new Error('No matching timestamp in ethereum chart')
-  }
-  const alignedEthChartData = ethereumChartData.slice(
-    0,
-    ethChartTimestampIndex + 1,
-  )
-  const length = Math.min(apiChartData.length, alignedEthChartData.length)
-
-  const data: FrontendActivityChart['daily']['data'] = new Array(length)
-    .fill(0)
-    .map((_, i) => {
-      const apiPoint = apiChartData.at(-length + i)
-      const ethPoint = alignedEthChartData.at(-length + i)
-      return [
-        apiPoint?.[0].toNumber() ?? 0,
-        apiPoint?.[1] ?? 0,
-        ethPoint?.[1] ?? 0,
-      ]
-    })
-  return data
 }
 
 const PLACEHOLDER_API_DATA: TvlApiCharts = {

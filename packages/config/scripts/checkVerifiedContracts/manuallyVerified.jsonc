@@ -1,4 +1,5 @@
 [
   "0x6880f6Fd960D1581C2730a451A22EED1081cfD72", // FuelV1 contract written in Yul+
-  "0xFd234971881a7c72965175fA8E438c97B2Dcd273" // Kroma's Poseidon2 contract, deployed using Circomlibjs: https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js
+  "0xFd234971881a7c72965175fA8E438c97B2Dcd273", // Kroma's Poseidon2 contract, deployed using Circomlibjs: https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js,
+  "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1" // Scroll's PlonkVerifier written in Yul+
 ]

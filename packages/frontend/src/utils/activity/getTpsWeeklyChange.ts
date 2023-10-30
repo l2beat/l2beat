@@ -5,9 +5,10 @@ import { getTpsDaily } from './getTpsDaily'
 
 export function getTpsWeeklyChange(
   data: ActivityApiChartPoint[] | undefined,
+  type: 'project' | 'ethereum',
 ): string {
-  const tps = getTpsDaily(data)
-  const tpsSevenDaysAgo = getTpsDaily(data, 7)
+  const tps = getTpsDaily(data, type)
+  const tpsSevenDaysAgo = getTpsDaily(data, type, 7)
 
   if (tps === undefined || tpsSevenDaysAgo === undefined) {
     return ''

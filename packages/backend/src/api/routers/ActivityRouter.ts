@@ -32,7 +32,9 @@ export function createActivityRouter(activityController: ActivityController) {
           }
         }
 
-        const data = await activityController.getProjectsActivity(projectSlugs)
+        const data = await activityController.getAggregatedActivity(
+          projectSlugs,
+        )
         ctx.body = data
       },
     ),

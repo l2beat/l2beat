@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { allModes } from '../../../.storybook/modes'
 import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
@@ -33,17 +34,26 @@ import { MenuOpenIcon } from './symbols/MenuOpenIcon'
 import { MilestoneIcon } from './symbols/MilestoneIcon'
 import { MoonIcon } from './symbols/MoonIcon'
 import { OutLinkIcon } from './symbols/OutLinkIcon'
+import { RoundedWarningIcon } from './symbols/RoundedWarningIcon'
 import { SearchIcon } from './symbols/SearchIcon'
 import { ShieldIcon } from './symbols/ShieldIcon'
 import { SunIcon } from './symbols/SunIcon'
 import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
-import { WarningIcon } from './symbols/WarningIcon'
 
-export default {
-  title: 'Components/Icons',
+const meta = {
+  title: 'Other/Icons',
+  parameters: {
+    chromatic: {
+      modes: {
+        'light desktop': allModes['light desktop'],
+        'dark desktop': allModes['dark desktop'],
+      },
+    },
+  },
 }
+export default meta
 
 function Template(props: { children: React.ReactNode }) {
   return (
@@ -121,7 +131,7 @@ export function SymbolIcons() {
       <UnverifiedIcon />
       <UpcomingIcon />
       <UserIcon />
-      <WarningIcon />
+      <RoundedWarningIcon />
     </Template>
   )
 }

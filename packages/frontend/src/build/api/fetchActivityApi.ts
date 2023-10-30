@@ -1,6 +1,7 @@
 import { layer2s as allLayer2s } from '@l2beat/config'
 import {
   ActivityApiChart,
+  ActivityApiCharts,
   ActivityApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -24,7 +25,6 @@ function getMockActivityApiResponse(): ActivityApiResponse {
   const result: ActivityApiResponse = {
     combined: getMockActivityApiChart(),
     projects: {},
-    ethereum: getMockActivityApiChart(),
   }
   for (const project of allLayer2s) {
     result.projects[project.id.toString()] = getMockActivityApiChart()
@@ -32,15 +32,17 @@ function getMockActivityApiResponse(): ActivityApiResponse {
   return result
 }
 
-function getMockActivityApiChart(): ActivityApiChart {
+function getMockActivityApiChart(): ActivityApiCharts {
   const now = UnixTime.now().toStartOf('day')
   const chart: ActivityApiChart = {
-    types: ['timestamp', 'daily tx count'],
+    types: ['timestamp', 'transactions', 'ethereumTransactions'],
     data: [],
   }
   for (let i = -365; i <= 0; i++) {
     const timestamp = now.add(i, 'days')
-    chart.data.push([timestamp, 50])
+    chart.data.push([timestamp, 50, 20])
   }
-  return chart
+  return {
+    daily: chart,
+  }
 }

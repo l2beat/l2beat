@@ -10,9 +10,10 @@ describe(getTransactionCount.name, () => {
     const data: ActivityApiChartPoint[] = new Array(50).fill([
       new UnixTime(0),
       ONE_TPS,
+      ONE_TPS * 2,
     ])
 
-    const result = getTransactionCount(data, 'month')
+    const result = getTransactionCount(data, 'project', 'month')
 
     expect(result).toEqual(30 * ONE_TPS)
   })
@@ -20,22 +21,39 @@ describe(getTransactionCount.name, () => {
     const data: ActivityApiChartPoint[] = new Array(50).fill([
       new UnixTime(0),
       ONE_TPS,
+      ONE_TPS * 2,
     ])
 
-    const result = getTransactionCount(data, 'week')
+    const result = getTransactionCount(data, 'project', 'week')
 
     expect(result).toEqual(7 * ONE_TPS)
   })
   it('returns undefined if data is undefined', () => {
     const data = undefined
 
-    const result = getTransactionCount(data, 'month')
+    const result = getTransactionCount(data, 'project', 'month')
 
     expect(result).toEqual(undefined)
   })
   it('counts as much as it can if the data is too short', () => {
-    const result = getTransactionCount([[new UnixTime(1), ONE_TPS]], 'month')
+    const result = getTransactionCount(
+      [[new UnixTime(1), ONE_TPS, ONE_TPS * 2]],
+      'project',
+      'month',
+    )
 
     expect(result).toEqual(ONE_TPS)
+  })
+
+  it('counts ethereum data', () => {
+    const data: ActivityApiChartPoint[] = new Array(50).fill([
+      new UnixTime(0),
+      ONE_TPS,
+      ONE_TPS * 2,
+    ])
+
+    const result = getTransactionCount(data, 'ethereum', 'month')
+
+    expect(result).toEqual(30 * ONE_TPS * 2)
   })
 })

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18218644,
   "configHash": "0xf09231d38def68363076c58ddae0fb5b343cac22e024ecb8cbe417fa851f067c",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "L1DAITokenBridge",
@@ -30,6 +30,7 @@
         "implementation": "0x5efa852e92800D1C982711761e45c3FE39a2b6D8",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "implementations": ["0x5efa852e92800D1C982711761e45c3FE39a2b6D8"],
       "sinceTimestamp": 1685377403,
       "values": {
         "batcherHash": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
@@ -62,6 +63,7 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"
       },
+      "implementations": ["0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"],
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
@@ -86,6 +88,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678243007,
       "values": {
         "domainSeparator": "0xc7edf91fb84ec337ffa25b6f502a8c52c3dd4ea86d452728767d2836fa3819e3",
@@ -181,6 +184,7 @@
         "implementation": "0xBFB731Cd36D26c2a7287716DE857E4380C73A64a",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "implementations": ["0xBFB731Cd36D26c2a7287716DE857E4380C73A64a"],
       "sinceTimestamp": 1624401464,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
@@ -197,6 +201,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1610850364,
       "values": {
         "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
@@ -258,6 +263,7 @@
         "implementation": "0x28a55488fef40005309e2DA0040DbE9D300a64AB",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "implementations": ["0x28a55488fef40005309e2DA0040DbE9D300a64AB"],
       "sinceTimestamp": 1685377379,
       "values": {
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -324,6 +330,7 @@
         "implementation": "0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "implementations": ["0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00"],
       "sinceTimestamp": 1685377367,
       "values": {
         "CHALLENGER": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -350,6 +357,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1583108804,
       "values": {
         "domainSeparator": "0x812bd2187bbdb6f18e0fde445c3e46e10661c15c4af7f51d5795d4dec4fb4caa",

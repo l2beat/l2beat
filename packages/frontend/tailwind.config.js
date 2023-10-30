@@ -26,6 +26,7 @@ module.exports = {
       },
       zinc: {
         800: '#272A2F',
+        900: '#1D1E22',
       },
       gray: {
         50: '#AEAEAE',
@@ -137,6 +138,9 @@ module.exports = {
       },
       spacing: {
         '2/3': '66.666666%',
+      },
+      opacity: {
+        15: '0.15',
       },
       transitionProperty: {
         height: 'height',
