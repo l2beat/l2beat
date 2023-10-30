@@ -42,7 +42,11 @@ export const zora: Layer2 = {
       documentation: ['https://docs.zora.co/docs/zora-network/intro'],
       explorers: ['https://explorer.zora.energy/'],
       repositories: ['https://github.com/ourzora/optimism'],
-      socialMedia: ['https://twitter.com/ourZORA'],
+      socialMedia: [
+        'https://twitter.com/ourZORA',
+        'https://instagram.com/our.zora',
+        'https://zora.community',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },
