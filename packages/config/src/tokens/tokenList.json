@@ -690,7 +690,7 @@
       "chainId": 1,
       "type": "CBV"
     },
-     {
+    {
       "id": "copi-cornucopias",
       "name": "Cornucopias",
       "coingeckoId": "cornucopias",
@@ -950,7 +950,7 @@
       "chainId": 1,
       "type": "CBV"
     },
-     {
+    {
       "id": "epik-epik-prime",
       "name": "Epik Prime",
       "coingeckoId": "epik-prime",
@@ -1131,7 +1131,7 @@
       "chainId": 1,
       "type": "CBV"
     },
-     {
+    {
       "id": "gains-gains",
       "name": "GAINS",
       "coingeckoId": "gains",
