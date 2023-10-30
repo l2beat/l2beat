@@ -43,12 +43,12 @@ export async function promiseAllPlus<T>(
     shouldRetry: (job, error) => {
       const shouldRetry = Retries.exponentialBackOff({
         stepMs: 1000,
-        maxDistanceMs: 60_000,
+        maxDistanceMs: 1_000, // fail fast
         maxAttempts: maxAttempts,
-        notificationThresholdMs: Infinity,
-      })(job)
+        attemptsNotificationThreshold: Infinity, // do not notify
+      })(job, error)
 
-      if (!shouldRetry.retry) {
+      if (shouldRetry.shouldStop) {
         permanentError = error
       }
       return shouldRetry

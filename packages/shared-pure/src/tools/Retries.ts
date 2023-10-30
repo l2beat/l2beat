@@ -1,6 +1,9 @@
 import { assert } from './assert'
 
-export type ShouldRetry<T> = (job: { task: T; attempts: number }) => {
+export type ShouldRetry<T> = (
+  job: { task: T; attempts: number },
+  error?: unknown,
+) => {
   shouldStop: boolean
   notify: boolean
   executeAfter?: number

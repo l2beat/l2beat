@@ -63,7 +63,7 @@ describe(TaskQueue.name, () => {
     expect(completed).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
-  it('can handle permanent failure', async () => {
+  it('can stop on permanent failure', async () => {
     const eventTracker = mockObject<EventTracker<string>>({
       record: mockFn().returns(undefined),
     })
@@ -83,41 +83,6 @@ describe(TaskQueue.name, () => {
       shouldRetry: Retries.maxAttempts(1),
       metricsId: 'test',
       eventTracker,
-      shouldHaltAfterFailedRetries: false,
-    })
-
-    for (let i = 0; i < 3; i++) {
-      queue.addToBack(i)
-    }
-
-    await time.runAllAsync()
-    await queue.waitTillEmpty()
-
-    expect(completed).toEqual([0, 2]) // 1 was dropped
-    expect(eventTracker.record).toHaveBeenCalledWith('error')
-  })
-
-  it('can halt on permanent failure', async () => {
-    const eventTracker = mockObject<EventTracker<string>>({
-      record: mockFn().returns(undefined),
-    })
-
-    const completed: number[] = []
-
-    async function execute(i: number) {
-      await wait(1)
-      if (i === 1) {
-        throw new Error('oops')
-      }
-
-      completed.push(i)
-    }
-
-    const queue = new TaskQueue(execute, Logger.SILENT, {
-      shouldRetry: Retries.maxAttempts(1),
-      metricsId: 'test',
-      eventTracker,
-      shouldHaltAfterFailedRetries: true,
     })
 
     for (let i = 0; i < 3; i++) {
@@ -126,7 +91,7 @@ describe(TaskQueue.name, () => {
 
     await time.runAllAsync()
 
-    expect(queue.isHalted()).toEqual(true)
+    expect(queue.isStopped()).toEqual(true)
     expect(completed).toEqual([0]) // everything after task '1' was dropped
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })

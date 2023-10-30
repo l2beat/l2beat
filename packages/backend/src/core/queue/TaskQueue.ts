@@ -12,13 +12,12 @@ import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
-const SIX_HOURS = 6 * 60 * 60000
-const TEN_MINUTES = 10 * 60000
+const TWO_HOURS = 2 * 60 * 60000
 const DEFAULT_RETRY = Retries.exponentialBackOff({
-  stepMs: 1000, // 2s 4s 8s 16s 32s 64s....
+  stepMs: 1000, // 2s 4s 8s 16s 32s 64s 128s 256s 512s 1024s...
   maxAttempts: Infinity,
-  maxDistanceMs: SIX_HOURS,
-  notificationThresholdMs: TEN_MINUTES,
+  maxDistanceMs: TWO_HOURS,
+  attemptsNotificationThreshold: 10, // sum = 2046s minutes = 34 minutes
 })
 
 type Task<T> = (task: T) => Promise<void>
@@ -58,7 +57,7 @@ export class TaskQueue<T> {
   private readonly shouldRetry: ShouldRetry<T>
   private readonly eventTracker?: TaskQueueEventTracker
   private readonly shouldHaltAfterFailedRetries
-  private halted = false
+  private stopped = false
 
   constructor(
     executeTask: Task<T>,
@@ -120,8 +119,8 @@ export class TaskQueue<T> {
     }
   }
 
-  isHalted(): boolean {
-    return this.halted
+  isStopped(): boolean {
+    return this.stopped
   }
 
   isEmpty(): boolean {
@@ -133,8 +132,8 @@ export class TaskQueue<T> {
   }
 
   private execute() {
-    if (this.halted) {
-      this.logger.debug("Queue is halted, won't execute")
+    if (this.stopped) {
+      this.logger.debug("Queue is stopped, won't execute")
       return
     }
 
@@ -151,21 +150,23 @@ export class TaskQueue<T> {
   private handleFailure(job: Job<T>, error: unknown) {
     job.attempts++
     const result = this.shouldRetry(job, error)
-    if (!result.retry) {
+
+    if (result.shouldStop && this.shouldHaltAfterFailedRetries) {
       this.eventTracker?.record('error')
-      if (this.shouldHaltAfterFailedRetries) {
-        this.logger.error('Halting queue because of error', {
-          job: JSON.stringify(job),
-          error,
-        })
-        this.halted = true
-      }
+      // TODO: new logger usage
+      this.logger.error('Stopping queue because of error', {
+        job: JSON.stringify(job),
+        error,
+      })
+      this.stopped = true
       return
     }
+
     // TODO: test this line
     if (result.notify) {
       this.logger.error(error)
     }
+
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
     this.queue.unshift(job)
     this.logger.info({
