@@ -1,9 +1,7 @@
 import React from 'react'
 
 import { ShieldIcon, UnderReviewIcon } from '../icons'
-import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
-import { UpcomingIcon } from '../icons/symbols/UpcomingIcon'
 
 export interface ProjectCellProps {
   project: {
