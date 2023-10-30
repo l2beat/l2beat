@@ -38,15 +38,21 @@ export class LivenessConfigurationRepository extends BaseRepository {
 
   async addOrUpdateMany(
     records: Omit<LivenessConfigurationRecord, 'id'>[],
-  ): Promise<number> {
+  ): Promise<number[]> {
     const knex = await this.knex()
 
-    await knex('liveness_configuration')
+    const ids = await knex('liveness_configuration')
       .insert(records.map(toRow))
       .onConflict('id')
       .merge()
+      .returning('id')
 
-    return records.length
+    return ids.map((id) => id.id)
+  }
+
+  async deleteAll() {
+    const knex = await this.knex()
+    return knex('liveness_configuration').delete()
   }
 }
 

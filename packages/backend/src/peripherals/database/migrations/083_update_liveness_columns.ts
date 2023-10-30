@@ -23,6 +23,7 @@ export async function up(knex: Knex) {
       .foreign('liveness_configuration_id')
       .references('id')
       .inTable('liveness_configuration')
+      .onDelete('CASCADE')
   })
 }
 
