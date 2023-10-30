@@ -1,3 +1,36 @@
+# Diff at Mon, 30 Oct 2023 09:59:06 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@571047cc8f858ed595e25bc9512b54414c949c8e
+
+## Description
+
+Change of owners of Emergency MultiSig and Scroll MultiSig.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+      values.getOwners.2:
+-        "0xEbbeeAA424AE904508465a41c927Be594C43Dc68"
++        "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402"
+      values.getOwners.1:
+-        "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402"
++        "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+      values.getOwners.0:
+-        "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
+```diff
+    contract ScrollMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+      values.getOwners.1:
+-        "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402"
++        "0xE2e6345baAD18f779167443Dc4886495507b3249"
+    }
+```
+
 # Diff at Thu, 19 Oct 2023 08:22:39 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
