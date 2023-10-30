@@ -54,6 +54,8 @@ export const scroll: Layer2 = {
         'https://www.ondora.xyz/network/scroll',
       ],
       repositories: [
+        'https://github.com/scroll-tech/scroll',
+        'https://github.com/scroll-tech/scroll-prover',
         'https://github.com/scroll-tech/zkevm-circuits',
         'https://github.com/scroll-tech/zkevm-specs',
         'https://github.com/scroll-tech/scroll-zkevm',
