@@ -64,7 +64,7 @@ export const Default: Story = {
   },
 }
 
-export const TooltipShown: Story = {
+export const WithTooltip: Story = {
   args: {
     anomalies: anomalies,
   },
