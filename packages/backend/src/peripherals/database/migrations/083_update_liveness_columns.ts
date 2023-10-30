@@ -24,6 +24,7 @@ export async function up(knex: Knex) {
       .references('id')
       .inTable('liveness_configuration')
       .onDelete('CASCADE')
+      .onUpdate('CASCADE')
   })
 }
 

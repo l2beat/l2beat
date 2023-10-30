@@ -48,43 +48,60 @@ describe(LivenessConfigurationRepository.name, () => {
     Logger.SILENT,
   )
 
+  let ids: number[]
   //   TODO: tests on update constraint
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdateMany(CONFIG_DATA)
+    ids = await repository.addMany(CONFIG_DATA)
   })
 
-  describe(
-    LivenessConfigurationRepository.prototype.addOrUpdateMany.name,
-    () => {
-      it('should new rows', async () => {
-        const newRow = [
-          {
-            projectId: ProjectId('project4'),
-            type: LivenessType('DA'),
-            configHash: 'hash-4',
-            configRaw: { key1: 'value7', key2: 'value8' },
-            fromTimestamp: START.add(-10, 'hours'),
-            toTimestamp: START.add(-11, 'hours'),
-            lastSyncedTimestamp: START.add(-12, 'hours'),
-          },
-        ]
-        await repository.addOrUpdateMany(newRow)
+  describe(LivenessConfigurationRepository.prototype.addMany.name, () => {
+    it('should new rows', async () => {
+      const newRow = [
+        {
+          projectId: ProjectId('project4'),
+          type: LivenessType('DA'),
+          configHash: 'hash-4',
+          configRaw: { key1: 'value7', key2: 'value8' },
+          fromTimestamp: START.add(-10, 'hours'),
+          toTimestamp: START.add(-11, 'hours'),
+          lastSyncedTimestamp: START.add(-12, 'hours'),
+        },
+      ]
+      const newIds = await repository.addMany(newRow)
 
-        const results = await repository.getAll()
+      const results = await repository.getAll()
 
-        expect(results).toEqualUnsorted([...CONFIG_DATA, ...newRow])
-      })
-      it('empty array', async () => {
-        await expect(repository.addOrUpdateMany([])).not.toBeRejected()
-      })
-    },
-  )
+      expect(results).toEqualUnsorted([
+        ...CONFIG_DATA.map((r, i) => ({ ...r, id: ids[i] })),
+        { ...newRow[0], id: newIds[0] },
+      ])
+    })
+
+    it('empty array', async () => {
+      await expect(repository.addMany([])).not.toBeRejected()
+    })
+  })
+  describe(LivenessConfigurationRepository.prototype.addMany2.name, () => {
+    it('should update record', async () => {
+      const records = await repository.getAll()
+      const record = records[0]
+      const newRecord = {
+        ...record,
+        configRaw: { key1: 'value9', key2: 'value10' },
+      }
+      await repository.addMany2([newRecord])
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([newRecord, ...records.slice(1)])
+    })
+  })
   describe(LivenessConfigurationRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(CONFIG_DATA)
+      expect(results).toEqualUnsorted([
+        ...CONFIG_DATA.map((r, i) => ({ ...r, id: ids[i] })),
+      ])
     })
   })
 

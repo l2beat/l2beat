@@ -6,6 +6,7 @@ import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface LivenessConfigurationRecord {
+  id: number
   projectId: ProjectId
   type: LivenessType
   configHash: string
@@ -36,13 +37,23 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(
+  async addMany(
     records: Omit<LivenessConfigurationRecord, 'id'>[],
   ): Promise<number[]> {
     const knex = await this.knex()
 
-    const ids = await knex('liveness_configuration')
+    const insertedRows = await knex('liveness_configuration')
       .insert(records.map(toRow))
+      .returning('id')
+
+    return insertedRows.map((row) => row.id)
+  }
+
+  async addMany2(records: LivenessConfigurationRecord[]): Promise<number[]> {
+    const knex = await this.knex()
+    const rows = records.map((r) => ({ ...toRow(r), id: r.id }))
+    const ids = await knex('liveness_configuration')
+      .insert(rows)
       .onConflict('id')
       .merge()
       .returning('id')
@@ -56,10 +67,9 @@ export class LivenessConfigurationRepository extends BaseRepository {
   }
 }
 
-function toRecord(
-  row: Omit<LivenessConfigurationRow, 'id'>,
-): LivenessConfigurationRecord {
+function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
   return {
+    id: row.id,
     projectId: ProjectId(row.project_id),
     type: LivenessType(row.type),
     configHash: row.config_hash,
@@ -71,7 +81,7 @@ function toRecord(
 }
 
 function toRow(
-  record: LivenessConfigurationRecord,
+  record: Omit<LivenessConfigurationRecord, 'id'>,
 ): Omit<LivenessConfigurationRow, 'id'> {
   return {
     project_id: record.projectId.toString(),

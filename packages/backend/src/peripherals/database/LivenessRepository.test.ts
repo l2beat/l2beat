@@ -38,7 +38,7 @@ describe(LivenessRepository.name, () => {
   beforeEach(async function () {
     this.timeout(10000)
     await configRepository.deleteAll()
-    ids = await configRepository.addOrUpdateMany(CONFIG_DATA)
+    ids = await configRepository.addMany(CONFIG_DATA)
     await repository.deleteAll()
     await repository.addMany(
       DATA.map((e, i) => ({
