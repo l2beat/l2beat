@@ -1,10 +1,7 @@
 import { assert } from './assert'
 
-export type ShouldRetry<T> = (
-  job: { task: T; attempts: number },
-  error: unknown,
-) => {
-  retry: boolean
+export type ShouldRetry<T> = (job: { task: T; attempts: number }) => {
+  shouldStop: boolean
   notify: boolean
   executeAfter?: number
 }
@@ -13,35 +10,35 @@ interface ExponentialBackOffOpts {
   stepMs: number
   maxAttempts: number // use Infinity for indefinite retries
   maxDistanceMs: number // use Infinity for unlimited distance
-  notificationThresholdMs: number // use Infinity to avoid notifications
+  attemptsNotificationThreshold: number // use Infinity to avoid notifications
 }
 
 export function exponentialBackOff<T>(
   opts: ExponentialBackOffOpts,
 ): ShouldRetry<T> {
   const maxAttempts = opts.maxAttempts
-  assert(maxAttempts > 0)
+  assert(maxAttempts > 0, 'maxAttempts needs to be a positive number')
   const maxDistanceMs = opts.maxDistanceMs
-  assert(maxDistanceMs > 0)
-  const notificationThresholdMs = opts.notificationThresholdMs
-  assert(notificationThresholdMs > 0)
-
-  let totalRetryTimeMs = 0
+  assert(maxDistanceMs > 0, 'maxDistanceMs needs to be a positive number')
+  const attemptsNotificationThreshold = opts.attemptsNotificationThreshold
+  assert(
+    attemptsNotificationThreshold > 0,
+    'attemptsNotificationThreshold needs to be a positive number',
+  )
 
   return ({ attempts }: { attempts: number }) => {
     const distance = Math.pow(2, attempts) * opts.stepMs
-    totalRetryTimeMs += distance
 
     if (attempts === maxAttempts) {
       return {
-        retry: false,
-        notify: totalRetryTimeMs >= notificationThresholdMs,
+        shouldStop: true,
+        notify: attempts >= attemptsNotificationThreshold,
       }
     }
 
     return {
-      retry: true,
-      notify: totalRetryTimeMs >= notificationThresholdMs,
+      shouldStop: false,
+      notify: attempts >= attemptsNotificationThreshold,
       executeAfter: Math.min(distance, maxDistanceMs),
     }
   }
@@ -50,7 +47,7 @@ export function exponentialBackOff<T>(
 export function maxAttempts<T>(max: number): ShouldRetry<T> {
   return ({ attempts }) => {
     return {
-      retry: attempts < max,
+      shouldStop: attempts >= max,
       notify: false,
     }
   }
@@ -59,7 +56,7 @@ export function maxAttempts<T>(max: number): ShouldRetry<T> {
 function always<T>(): ShouldRetry<T> {
   return () => {
     return {
-      retry: true,
+      shouldStop: false,
       notify: false,
     }
   }
