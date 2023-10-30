@@ -1729,7 +1729,7 @@
       "chainId": 1,
       "type": "CBV"
     },
-{
+    {
       "id": "num-num-token",
       "name": "NUM Token",
       "coingeckoId": "numbers-protocol",
