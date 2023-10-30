@@ -233,7 +233,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
         error: undefined,
-        message: 'Halting queue because of error',
+        message: 'Stopping queue because of error',
         parameters: {
           error: expect.a(Error),
           job: expect.a(String),
@@ -268,7 +268,7 @@ describe(SequenceProcessor.name, () => {
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
         error: undefined,
-        message: 'Halting queue because of error',
+        message: 'Stopping queue because of error',
         parameters: {
           error: expect.a(Error),
           job: expect.a(String),

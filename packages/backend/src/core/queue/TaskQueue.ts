@@ -15,7 +15,7 @@ import { setTimeout as wait } from 'timers/promises'
 const TWO_HOURS = 2 * 60 * 60000
 const DEFAULT_RETRY = Retries.exponentialBackOff({
   stepMs: 1000, // 2s 4s 8s 16s 32s 64s 128s 256s 512s 1024s...
-  maxAttempts: Infinity,
+  maxAttempts: Infinity, // never stop the queue
   maxDistanceMs: TWO_HOURS,
   notifyAfterAttempts: 10, // sum = 2046s minutes = 34 minutes
 })
