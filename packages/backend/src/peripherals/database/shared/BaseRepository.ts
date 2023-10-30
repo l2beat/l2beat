@@ -11,6 +11,8 @@ type IdType = number | string | String | Number
 type AnyMethod = (...args: any[]) => Promise<any>
 type AddMethod = (record: any) => Promise<IdType>
 type AddManyMethod = (records: any[]) => Promise<IdType[] | number>
+type UpdateMethod = (record: any) => Promise<IdType>
+type UpdateManyMethod = (records: any[]) => Promise<IdType[] | number>
 type GetMethod = (...args: any[]) => Promise<{}[]>
 type FindMethod = (...args: any[]) => Promise<{} | undefined>
 type DeleteMethod = (...args: any[]) => Promise<number>
@@ -21,6 +23,8 @@ type Match<T, U> = T extends U ? T : Exclude<U, T>
 
 type AddKeys<T> = Exclude<Keys<T, `add${string}`>, AddManyKeys<T>>
 type AddManyKeys<T> = Keys<T, `addMany${string}` | `add${string}Many`>
+type UpdateKeys<T> = Exclude<Keys<T, `update${string}`>, UpdateManyKeys<T>>
+type UpdateManyKeys<T> = Keys<T, `updateMany${string}` | `update${string}Many`>
 type FindKeys<T> = Keys<T, `find${string}`>
 type GetKeys<T> = Keys<T, `get${string}`>
 type DeleteKeys<T> = Keys<T, `delete${string}`>
@@ -29,6 +33,10 @@ export type CheckConvention<T extends BaseRepository> = {
   [K in AddKeys<T>]: Match<T[K], AddMethod>
 } & {
   [K in AddManyKeys<T>]: Match<T[K], AddManyMethod>
+} & {
+  [K in UpdateKeys<T>]: Match<T[K], UpdateMethod>
+} & {
+  [K in UpdateManyKeys<T>]: Match<T[K], UpdateManyMethod>
 } & {
   [K in FindKeys<T>]: Match<T[K], FindMethod>
 } & {
@@ -131,6 +139,23 @@ export abstract class BaseRepository {
       if (methodName.startsWith('add')) {
         obj[methodName] = this.wrapAdd(
           method as unknown as AddMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (
+        methodName.startsWith('updateMany') ||
+        (methodName.startsWith('update') && methodName.endsWith('Many'))
+      ) {
+        obj[methodName] = this.wrapAddMany(
+          method as unknown as UpdateManyMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (methodName.startsWith('update')) {
+        obj[methodName] = this.wrapAdd(
+          method as unknown as UpdateMethod,
         ) as unknown as T[keyof T & string]
         continue
       }

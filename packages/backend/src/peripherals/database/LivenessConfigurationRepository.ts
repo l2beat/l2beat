@@ -49,7 +49,7 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return insertedRows.map((row) => row.id)
   }
 
-  async addMany2(records: LivenessConfigurationRecord[]): Promise<number[]> {
+  async updateMany(records: LivenessConfigurationRecord[]): Promise<number[]> {
     const knex = await this.knex()
     const rows = records.map((r) => ({ ...toRow(r), id: r.id }))
     const ids = await knex('liveness_configuration')
