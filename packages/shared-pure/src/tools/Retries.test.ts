@@ -11,7 +11,7 @@ describe('Retries', () => {
         stepMs: 100,
         maxAttempts: 1,
         maxDistanceMs: Infinity,
-        attemptsNotificationThreshold: Infinity,
+        notifyAfterAttempts: Infinity,
       })({
         attempts: 1,
         task,
@@ -24,7 +24,7 @@ describe('Retries', () => {
         stepMs: 1000,
         maxAttempts: Infinity,
         maxDistanceMs: 200,
-        attemptsNotificationThreshold: Infinity,
+        notifyAfterAttempts: Infinity,
       })({
         attempts: 1,
         task,
@@ -40,7 +40,7 @@ describe('Retries', () => {
       const shouldRetry = exponentialBackOff({
         stepMs: 1,
         maxAttempts: 5,
-        attemptsNotificationThreshold: Infinity,
+        notifyAfterAttempts: Infinity,
         maxDistanceMs: Infinity,
       })
       const results = [1, 2, 3, 4]
@@ -53,7 +53,7 @@ describe('Retries', () => {
       const shouldRetry = exponentialBackOff({
         stepMs: 1000,
         maxAttempts: Infinity,
-        attemptsNotificationThreshold: 3,
+        notifyAfterAttempts: 3,
         maxDistanceMs: Infinity,
       })
       const results = [1, 2, 3]

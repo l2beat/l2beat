@@ -17,7 +17,7 @@ const DEFAULT_RETRY = Retries.exponentialBackOff({
   stepMs: 1000, // 2s 4s 8s 16s 32s 64s 128s 256s 512s 1024s...
   maxAttempts: Infinity,
   maxDistanceMs: TWO_HOURS,
-  attemptsNotificationThreshold: 10, // sum = 2046s minutes = 34 minutes
+  notifyAfterAttempts: 10, // sum = 2046s minutes = 34 minutes
 })
 
 type Task<T> = (task: T) => Promise<void>

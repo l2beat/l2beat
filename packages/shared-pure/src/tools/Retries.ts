@@ -13,7 +13,7 @@ interface ExponentialBackOffOpts {
   stepMs: number
   maxAttempts: number // use Infinity for indefinite retries
   maxDistanceMs: number // use Infinity for unlimited distance
-  attemptsNotificationThreshold: number // use Infinity to avoid notifications
+  notifyAfterAttempts: number // use Infinity to avoid notifications
 }
 
 export function exponentialBackOff<T>(
@@ -23,7 +23,7 @@ export function exponentialBackOff<T>(
   assert(maxAttempts > 0, 'maxAttempts needs to be a positive number')
   const maxDistanceMs = opts.maxDistanceMs
   assert(maxDistanceMs > 0, 'maxDistanceMs needs to be a positive number')
-  const attemptsNotificationThreshold = opts.attemptsNotificationThreshold
+  const attemptsNotificationThreshold = opts.notifyAfterAttempts
   assert(
     attemptsNotificationThreshold > 0,
     'attemptsNotificationThreshold needs to be a positive number',
