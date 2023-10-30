@@ -25,7 +25,8 @@
     "react-dom": "^18.2.0",
     "zod": "^3.20.2",
     "zustand": "^4.3.2",
-    "@total-typescript/ts-reset": "^0.3.7"
+    "@total-typescript/ts-reset": "^0.3.7",
+    "@l2beat/discovery-types": "0.4.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.0.0",

@@ -50,8 +50,11 @@ function SidebarForSingleNode({
   }
 
   const humanReadableName = node.type === 'Contract' ? node.name : node.type
-  const etherscanLink = `https://etherscan.io/address/${node.data.address}`
-  const sourceLink = node.type === 'Contract' ? node.data.code : undefined
+  const etherscanLink = `https://etherscan.io/address/${node.data.address.toString()}`
+  const sourceLink =
+    node.type === 'Contract'
+      ? `https://vscode.blockscan.com/ethereum/${node.data.address.toString()}`
+      : undefined
 
   return (
     <>

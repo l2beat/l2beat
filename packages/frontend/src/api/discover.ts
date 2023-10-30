@@ -1,6 +1,7 @@
+import { DiscoveryOutput } from '@l2beat/discovery-types'
+
 import { SimpleNode } from './SimpleNode'
 import { transformContracts } from './transform'
-import { ProjectParameters } from './types'
 
 export async function discover(
   address: string,
@@ -13,6 +14,6 @@ export async function discover(
     return []
   }
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const discovery = (await res.json()) as ProjectParameters
+  const discovery = (await res.json()) as DiscoveryOutput
   return transformContracts(discovery)
 }

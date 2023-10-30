@@ -1,14 +1,19 @@
+import {
+  ContractParameters,
+  ContractValue,
+  DiscoveryOutput,
+} from '@l2beat/discovery-types'
+
 import { ContractNode, EOANode, SimpleNode } from './SimpleNode'
-import { ContractParameters, ContractValue, ProjectParameters } from './types'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export function transformContracts(discovery: ProjectParameters): SimpleNode[] {
+export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
   const contractNodes: ContractNode[] = discovery.contracts.map((contract) => {
     const { proxyFields, implementations } = getProxyDetails(contract)
     return {
       type: 'Contract',
-      id: contract.address,
+      id: contract.address.toString(),
       name: emojifyContractName(contract),
       discovered: true,
       fields: [...proxyFields, ...mapFields(contract.values)].filter(
@@ -20,12 +25,12 @@ export function transformContracts(discovery: ProjectParameters): SimpleNode[] {
 
   const eoaNodes: EOANode[] = discovery.eoas.map((address) => ({
     type: 'EOA',
-    id: address,
-    name: `🧍 EOA ${address}`,
+    id: address.toString(),
+    name: `🧍 EOA ${address.toString()}`,
     discovered: true,
     fields: [],
     data: {
-      address,
+      address: address.toString(),
     },
   }))
 
@@ -39,7 +44,7 @@ interface FieldProps {
 }
 
 function mapFields(
-  values: ContractValue | undefined,
+  values: Record<string, ContractValue> | ContractValue | undefined,
   prefix = '',
 ): FieldProps[] {
   if (values === undefined) {
@@ -98,58 +103,37 @@ function getProxyDetails(contract: ContractParameters): {
   implementations: string[]
 } {
   const proxyFields: FieldProps[] = []
-  const implementations: string[] = []
+  const implementations: string[] =
+    contract.implementations?.map((a) => a.toString()) ?? []
   switch (contract.upgradeability.type) {
     case 'immutable':
       break
-    case 'gnosis safe':
-      implementations.push(contract.upgradeability.masterCopy)
-      break
     case 'EIP1967 proxy':
-      proxyFields.push({ name: 'admin', value: contract.upgradeability.admin })
-      implementations.push(contract.upgradeability.implementation)
+      proxyFields.push({
+        name: 'admin',
+        value: contract.upgradeability.admin.toString(),
+      })
       break
     case 'ZeppelinOS proxy':
       if (contract.upgradeability.admin) {
         proxyFields.push({
           name: 'admin',
-          value: contract.upgradeability.admin,
+          value: contract.upgradeability.admin.toString(),
         })
       }
-      implementations.push(contract.upgradeability.implementation)
-      break
-    case 'StarkWare proxy':
-      implementations.push(contract.upgradeability.implementation)
-      break
-    case 'StarkWare diamond':
-      implementations.push(
-        contract.upgradeability.implementation,
-        ...Object.values(contract.upgradeability.facets),
-      )
       break
     case 'Arbitrum proxy':
     case 'new Arbitrum proxy':
-      proxyFields.push({ name: 'admin', value: contract.upgradeability.admin })
-      implementations.push(
-        contract.upgradeability.userImplementation,
-        contract.upgradeability.adminImplementation,
-      )
+      proxyFields.push({
+        name: 'admin',
+        value: contract.upgradeability.admin.toString(),
+      })
       break
     case 'resolved delegate proxy':
       proxyFields.push({
         name: 'addressManager',
-        value: contract.upgradeability.addressManager,
+        value: contract.upgradeability.addressManager.toString(),
       })
-      implementations.push(contract.upgradeability.implementation)
-      break
-    case 'EIP897 proxy':
-      implementations.push(contract.upgradeability.implementation)
-      break
-    case 'call implementation proxy':
-      implementations.push(contract.upgradeability.implementation)
-      break
-    case 'EIP2535 diamond proxy':
-      implementations.push(...contract.upgradeability.facets)
       break
   }
 

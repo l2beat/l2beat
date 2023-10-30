@@ -1,4 +1,4 @@
-import { ContractParameters } from './types'
+import { ContractParameters } from '@l2beat/discovery-types'
 
 interface SimpleNodeShared {
   id: string
@@ -25,4 +25,4 @@ export interface UnknownNode extends SimpleNodeShared {
   type: 'Unknown'
 }
 
-export type SimpleNode = ContractNode | EOANode | UnknownNode
+export type SimpleNode = EOANode | UnknownNode | ContractNode

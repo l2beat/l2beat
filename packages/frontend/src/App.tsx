@@ -1,5 +1,6 @@
 import '@total-typescript/ts-reset'
 
+import { DiscoveryOutput } from '@l2beat/discovery-types'
 import cx from 'classnames'
 import { useState } from 'react'
 
@@ -7,6 +8,7 @@ import { deleteNode } from './api/delete'
 import { discover } from './api/discover'
 import { merge } from './api/merge'
 import { SimpleNode } from './api/SimpleNode'
+import { transformContracts } from './api/transform'
 import { nodeToSimpleNode } from './store/actions/updateNodes'
 import { useStore } from './store/store'
 import { Sidebar } from './view/Sidebar'
@@ -49,6 +51,20 @@ export function App() {
     setNodes((nodes) => merge(nodes, result))
   }
 
+  async function discoverFromFile(discoveredFile: File) {
+    console.log('LOADING')
+
+    markLoading('Discovery.json parse', true)
+
+    const contents = await discoveredFile.text()
+    const parsed: unknown = JSON.parse(contents)
+    const discovery = parsed as DiscoveryOutput
+    const result = transformContracts(discovery)
+
+    markLoading('Discovery.json parse', false)
+    setNodes((nodes) => merge(nodes, result))
+  }
+
   function deleteNodeAction(id: string[]) {
     try {
       const newNodes = deleteNode(nodes, id)
@@ -60,61 +76,82 @@ export function App() {
 
   return (
     <div
-      className={cx(
-        'grid h-full w-full grid-rows-[_1fr]',
-        showSidebar ? 'grid-cols-[1fr,_400px]' : 'grid-cols-[1fr]',
-      )}
+      id="drop_zone"
+      className="h-full w-full"
+      onDrop={(event) => {
+        event.preventDefault()
+        ;[...event.dataTransfer.items].forEach((item) => {
+          if (item.kind === 'file') {
+            const file = item.getAsFile()
+            if (file) {
+              discoverFromFile(file).catch((e) => {
+                throw e
+              })
+            }
+          }
+        })
+      }}
+      onDragOver={(event) => {
+        event.preventDefault()
+      }}
     >
-      <div className="relative flex h-full w-full items-center justify-center">
-        <Viewport
-          nodes={nodes}
-          loading={loading}
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onDiscover={discoverContract}
-        />
+      <div
+        className={cx(
+          'grid h-full w-full grid-rows-[_1fr]',
+          showSidebar ? 'grid-cols-[1fr,_400px]' : 'grid-cols-[1fr]',
+        )}
+      >
+        <div className="relative flex h-full w-full items-center justify-center">
+          <Viewport
+            nodes={nodes}
+            loading={loading}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onDiscover={discoverContract}
+          />
 
-        <div className="absolute top-0 w-full p-2">
-          <div className="flex flex-row content-center items-center	 justify-between">
-            <div className="ml-2">Contracts loaded: {nodes.length}</div>
+          <div className="absolute top-0 w-full p-2">
+            <div className="flex flex-row content-center items-center justify-between">
+              <div className="ml-2">Contracts loaded: {nodes.length}</div>
 
-            <div>
-              <button
-                className={cx(
-                  'rounded bg-blue-500 py-2 px-4 font-bold text-white',
-                  !loading.global && 'hover:bg-blue-700',
-                )}
-                type="button"
-                disabled={loading.global}
-                onClick={() => void showPrompt()}
-              >
-                Discover!
-                {loading.global && '🔄'}
-              </button>
-            </div>
+              <div>
+                <button
+                  className={cx(
+                    'rounded bg-blue-500 py-2 px-4 font-bold text-white',
+                    !loading.global && 'hover:bg-blue-700',
+                  )}
+                  type="button"
+                  disabled={loading.global}
+                  onClick={() => void showPrompt()}
+                >
+                  Discover!
+                  {loading.global && '🔄'}
+                </button>
+              </div>
 
-            <div>
-              <button
-                className="ml-2	text-2xl"
-                type="button"
-                disabled={loading.global}
-                onClick={clear}
-                title="Clear"
-              >
-                🚮
-              </button>
+              <div>
+                <button
+                  className="ml-2 text-2xl"
+                  type="button"
+                  disabled={loading.global}
+                  onClick={clear}
+                  title="Clear"
+                >
+                  🚮
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {showSidebar && (
-        <div className="row-span-2 bg-white p-2 drop-shadow-xl">
-          <Sidebar
-            selectedNodes={selectedNodes}
-            onDeleteNodes={deleteNodeAction}
-          />
-        </div>
-      )}
+        {showSidebar && (
+          <div className="row-span-2 bg-white p-2 drop-shadow-xl">
+            <Sidebar
+              selectedNodes={selectedNodes}
+              onDeleteNodes={deleteNodeAction}
+            />
+          </div>
+        )}
+      </div>
     </div>
   )
 }
