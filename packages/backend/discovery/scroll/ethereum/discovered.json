@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 18383160,
+  "blockNumber": 18462223,
   "configHash": "0x350d76cfe048e4bf4fc7f9d51cbbf4fc491c827194bcab19da2d77e2477fa1a7",
   "version": 3,
   "contracts": [
@@ -20,9 +20,9 @@
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 11065,
+        "nextCrossDomainMessageIndex": 43823,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 10770,
+        "pendingQueueIndex": 43629,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556"
       },
       "derivedName": "L1MessageQueue"
@@ -504,7 +504,7 @@
           "0xfc31892C5500AbE00974280b28907BaA9190E384"
         ],
         "getThreshold": 2,
-        "nonce": 0,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -521,7 +521,7 @@
       "sinceTimestamp": 1696782311,
       "values": {
         "intrinsicParams": [21000, 53000, 4, 16],
-        "l2BaseFee": 500000000,
+        "l2BaseFee": 600000000,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "whitelist": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -538,7 +538,7 @@
       "implementations": ["0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"],
       "sinceTimestamp": 1696782323,
       "values": {
-        "lastFinalizedBatchIndex": 1072,
+        "lastFinalizedBatchIndex": 7418,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -622,14 +622,14 @@
         "domainSeparator": "0x7fefd60c480c008b3e78bd9438ded85b15722eff470797839b69ed8f36a54f6b",
         "getChainId": 1,
         "getOwners": [
+          "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
           "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632",
           "0xd3FfEE6e6312e4303A88BD2fFaFdcA8B09310236"
         ],
         "getThreshold": 2,
-        "nonce": 2,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -744,13 +744,13 @@
         "getChainId": 1,
         "getOwners": [
           "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
-          "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
+          "0xE2e6345baAD18f779167443Dc4886495507b3249",
           "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
           "0xfc31892C5500AbE00974280b28907BaA9190E384",
           "0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59"
         ],
         "getThreshold": 4,
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -773,7 +773,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 1790111477293,
+        "totalBridgedUSDC": 8259877039817,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -800,6 +800,7 @@
   "eoas": [
     "0x0000000000000000000000000000000000000001",
     "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+    "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
     "0x21b8a9F5a4640c3FC13E19C48e776173e1210995",
     "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7",
     "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
@@ -810,6 +811,7 @@
     "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f",
     "0xd3FfEE6e6312e4303A88BD2fFaFdcA8B09310236",
     "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632",
+    "0xE2e6345baAD18f779167443Dc4886495507b3249",
     "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
     "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
     "0xF9062b8a30e0d7722960e305049FA50b86ba6253",
