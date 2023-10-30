@@ -338,6 +338,14 @@ export const starknet: Layer2 = {
     },
     exitMechanisms: EXITS.STARKNET,
   },
+  stateDerivation: {
+    nodeSoftware:
+      'The [Juno](github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
+    compressionScheme: "Starknet doesn't use any compression scheme.",
+    genesisState: 'There is no non-empty genesis state.',
+    dataFormat:
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/).',
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('Starknet', {
