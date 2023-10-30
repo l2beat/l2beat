@@ -16,6 +16,9 @@ module.exports = {
       '4xl': ['40px', '60px'],
       '5xl': ['48px', '60px'],
     },
+    gridTemplateColumns: {
+      30: 'repeat(30, minmax(0, 1fr))',
+    },
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
