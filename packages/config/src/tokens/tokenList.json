@@ -1729,9 +1729,9 @@
       "chainId": 1,
       "type": "CBV"
     },
-    {
+{
       "id": "num-num-token",
-      "name": "NUMToken",
+      "name": "NUM Token",
       "coingeckoId": "numbers-protocol",
       "address": "0x3496B523e5C00a4b4150D6721320CdDb234c3079",
       "symbol": "NUM",
