@@ -1,26 +1,24 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { ReferenceList as ReferenceListComponent } from './ReferenceList'
 
-export default {
-  title: 'Components/Project/ReferenceList',
+const meta: Meta<typeof ReferenceListComponent> = {
+  component: ReferenceListComponent,
 }
+export default meta
+type Story = StoryObj<typeof ReferenceListComponent>
 
-export function ReferenceList() {
-  return (
-    <div className="p-4 leading-normal">
-      <ReferenceListComponent
-        references={[
-          {
-            href: '#',
-            text: 'Withdrawing back to L1 - Optimism Help Center',
-          },
-          {
-            href: '#',
-            text: 'mockOVM_BondManager.sol#L71 - Etherscan source code',
-          },
-        ]}
-      />
-    </div>
-  )
+export const ReferenceList: Story = {
+  args: {
+    references: [
+      {
+        href: '#',
+        text: 'Withdrawing back to L1 - Optimism Help Center',
+      },
+      {
+        href: '#',
+        text: 'mockOVM_BondManager.sol#L71 - Etherscan source code',
+      },
+    ],
+  },
 }

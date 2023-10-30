@@ -44,7 +44,8 @@ export function Chart(props: ChartProps) {
 
   const isActivity =
     props.initialType.type === 'layer2-activity' ||
-    props.initialType.type === 'project-activity'
+    props.initialType.type === 'project-activity' ||
+    props.initialType.type === 'storybook-fake-activity'
 
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'

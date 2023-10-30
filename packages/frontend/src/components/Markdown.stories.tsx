@@ -1,4 +1,4 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { Markdown as MarkdownComponent } from './Markdown'
 
@@ -135,14 +135,14 @@ With a reference later in the document defining the URL location.
 [logo]: https://l2beat.com/favicon.svg "Our logo"
 `
 
-export default {
-  title: 'Components/Markdown',
+const meta: Meta<typeof MarkdownComponent> = {
+  component: MarkdownComponent,
 }
+export default meta
+type Story = StoryObj<typeof MarkdownComponent>
 
-export const Markdown = () => {
-  return (
-    <div className="max-w-xl p-8">
-      <MarkdownComponent>{CONTENT}</MarkdownComponent>
-    </div>
-  )
+export const Markdown: Story = {
+  args: {
+    children: CONTENT,
+  },
 }

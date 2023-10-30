@@ -1,12 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
-import { PageContent } from '../../../components/PageContent'
-import { Tooltip } from '../../../components/Tooltip'
 import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
+import { configureTables } from '../../../scripts/configureTables'
 import { configureTabs } from '../../../scripts/configureTabs'
-import { configureTooltips } from '../../../scripts/configureTooltips'
-import { click } from '../../../utils/storybook/click'
 import { BridgesTvlView } from './BridgesTvlView'
 
 const meta = {
@@ -668,14 +666,14 @@ const meta = {
     ],
   },
   decorators: [
-    (Story) => (
-      <>
-        <PageContent>
-          <Story />
-        </PageContent>
-        <Tooltip />
-      </>
-    ),
+    (Story) => {
+      useEffect(() => {
+        configureTables()
+        configureTabs()
+        configureProjectFilters()
+      }, [])
+      return <Story />
+    },
   ],
 } satisfies Meta<typeof BridgesTvlView>
 export default meta
@@ -683,59 +681,31 @@ export default meta
 type Story = StoryObj<typeof BridgesTvlView>
 
 export const Active: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#active')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
+  },
 }
 
 export const ActiveWithCanonicalBridges: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#active')
-        click('#combined-bridges-checkbox')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Include canonical bridges'))
+  },
 }
 
 export const Archived: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#archived')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
+  },
 }
 
 export const ArchivedWithCanonicalBridges: Story = {
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTooltips()
-        configureTabs()
-        configureProjectFilters()
-        click('.TabsItem#archived')
-        click('#combined-bridges-checkbox')
-      }, [])
-      return <Story />
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Include canonical bridges'))
+  },
 }

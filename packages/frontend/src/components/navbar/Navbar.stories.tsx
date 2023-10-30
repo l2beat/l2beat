@@ -1,70 +1,68 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import React, { useEffect } from 'react'
 
 import { configureDarkThemeToggle } from './configureDarkThemeToggle'
 import { configureSidebarMenu } from './configureSidebarMenu'
 import { Navbar } from './Navbar'
-import { NavbarPage } from './types'
 
-export default {
-  title: 'Components/Navbar',
+const meta: Meta<typeof Navbar> = {
+  component: Navbar,
   argTypes: {
     selectedPage: {
       options: ['scaling', 'bridges', 'donate', 'faq'],
       control: { type: 'select' },
     },
   },
-} as Meta
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureSidebarMenu()
+        configureDarkThemeToggle()
+      }, [])
+      return <Story />
+    },
+  ],
+  args: {
+    forumLink: '#',
+    showActivity: true,
+    showHiringBadge: true,
+    socialLinks: {
+      discordLink: '#',
+      githubLink: '#',
+      linkedinLink: '#',
+      mediumLink: '#',
+      twitterLink: '#',
+      youTubeLink: '#',
+    },
+  },
+}
+export default meta
+type Story = StoryObj<typeof Navbar>
 
-interface TemplateProps {
-  showBanner: boolean
-  selectedPage: NavbarPage
+export const NoBannerScaling: Story = {
+  args: {
+    showBanner: false,
+    selectedPage: 'scaling',
+  },
 }
 
-function Template(props: TemplateProps) {
-  useEffect(() => {
-    configureDarkThemeToggle()
-    configureSidebarMenu()
-  }, [])
-  return (
-    <Navbar
-      showBanner={props.showBanner}
-      forumLink="#"
-      showActivity
-      showHiringBadge
-      selectedPage={props.selectedPage}
-      socialLinks={{
-        discordLink: '#',
-        githubLink: '#',
-        linkedinLink: '#',
-        mediumLink: '#',
-        twitterLink: '#',
-        youTubeLink: '#',
-      }}
-    />
-  )
+export const NoBannerBridges: Story = {
+  args: {
+    showBanner: false,
+    selectedPage: 'bridges',
+  },
 }
 
-export const NoBannerScaling: Story<TemplateProps> = Template.bind({})
-NoBannerScaling.args = {
-  showBanner: false,
-  selectedPage: 'scaling',
+export const NoBannerDonate: Story = {
+  args: {
+    showBanner: false,
+    selectedPage: 'donate',
+  },
 }
 
-export const NoBannerBridges: Story<TemplateProps> = Template.bind({})
-NoBannerBridges.args = {
-  showBanner: false,
-  selectedPage: 'bridges',
-}
-
-export const NoBannerDonate: Story<TemplateProps> = Template.bind({})
-NoBannerDonate.args = {
-  showBanner: false,
-  selectedPage: 'donate',
-}
-
-export const BannerScaling: Story<TemplateProps> = Template.bind({})
-BannerScaling.args = {
-  showBanner: true,
-  selectedPage: 'scaling',
+export const BannerScaling: Story = {
+  args: {
+    showBanner: true,
+    selectedPage: 'scaling',
+  },
 }

@@ -42,7 +42,10 @@ export const scroll: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      apps: ['https://scroll.io/bridge', 'https://uniswap-v3.scroll.io'],
+      apps: [
+        'https://scroll.io/bridge',
+        'https://uniswap-showcase.sepolia.scroll.xyz/',
+      ],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',

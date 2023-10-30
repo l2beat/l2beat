@@ -7,7 +7,10 @@ import { ChartType } from '../../scripts/charts/types'
 export interface TvlMetaImageProps {
   tvl: string
   sevenDayChange: string
-  chartType: ChartType
+  chartType: Extract<
+    ChartType,
+    { type: 'project-tvl' } | { type: 'layer2-tvl' } | { type: 'bridges-tvl' }
+  >
   name?: string
   icon?: string
   fake?: boolean
