@@ -18,7 +18,7 @@ export async function up(knex: Knex): Promise<void> {
     table.text('key').notNullable().primary()
     table.text('value').notNullable()
     table.integer('chain_id').notNullable()
-    table.integer('block_number')
+    table.integer('block_number').notNullable()
   })
 }
 

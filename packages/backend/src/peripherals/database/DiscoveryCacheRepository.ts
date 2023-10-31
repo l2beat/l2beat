@@ -9,7 +9,7 @@ export interface DiscoveryCacheRecord {
   key: string
   value: string
   chainId: ChainId
-  blockNumber: number | null
+  blockNumber: number
 }
 
 export class DiscoveryCacheRepository extends BaseRepository {

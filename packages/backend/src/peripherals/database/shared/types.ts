@@ -147,7 +147,7 @@ declare module 'knex/types/tables' {
     key: string
     value: string
     chain_id: number
-    block_number: number | null
+    block_number: number
   }
 
   interface IndexerStateRow {

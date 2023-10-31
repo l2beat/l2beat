@@ -17,13 +17,13 @@ export class DiscoveryCache implements DiscoveryCacheInterface {
     key: string,
     value: string,
     chainId: number,
-    blockNumber: number | undefined,
+    blockNumber: number,
   ): Promise<void> {
     await this.repository.addOrUpdate({
       key,
       value,
       chainId: ChainId(chainId),
-      blockNumber: blockNumber ?? null,
+      blockNumber,
     })
   }
 }
