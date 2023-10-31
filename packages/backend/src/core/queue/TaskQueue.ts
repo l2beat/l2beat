@@ -43,11 +43,11 @@ export interface TaskQueueOpts<T> {
   shouldRetry?: ShouldRetry<T>
   eventTracker?: TaskQueueEventTracker
   metricsId: string
-  shouldHaltAfterFailedRetries?: boolean
+  shouldStopAfterFailedRetries?: boolean
 }
 /**
- * Note: by default, queue will retry failing tasks finite number of times using exponential back off strategy and halt if error persists.
- * This can be customized by changing `shouldRetry` function and `shouldHaltAfterFailedRetries` parameter.
+ * Note: by default, queue will retry failing tasks finite number of times using exponential back off strategy and stop if error persists.
+ * This can be customized by changing `shouldRetry` function and `shouldStopAfterFailedRetries` parameter.
  */
 export class TaskQueue<T> {
   private readonly executeTask: Task<T>
@@ -56,7 +56,7 @@ export class TaskQueue<T> {
   private readonly workers: number
   private readonly shouldRetry: ShouldRetry<T>
   private readonly eventTracker?: TaskQueueEventTracker
-  private readonly shouldHaltAfterFailedRetries
+  private readonly shouldStopAfterFailedRetries
   private stopped = false
 
   constructor(
@@ -73,8 +73,8 @@ export class TaskQueue<T> {
     if (opts.eventTracker) {
       this.eventTracker = opts.eventTracker
     }
-    this.shouldHaltAfterFailedRetries =
-      opts.shouldHaltAfterFailedRetries ?? true
+    this.shouldStopAfterFailedRetries =
+      opts.shouldStopAfterFailedRetries ?? true
 
     this.executeTask = wrapAndMeasure(executeTask, {
       histogram: taskQueueHistogram,
@@ -151,7 +151,7 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job, error)
 
-    if (result.shouldStop && this.shouldHaltAfterFailedRetries) {
+    if (result.shouldStop && this.shouldStopAfterFailedRetries) {
       this.eventTracker?.record('error')
       // TODO: new logger usage
       this.logger.error('Stopping queue because of error', {

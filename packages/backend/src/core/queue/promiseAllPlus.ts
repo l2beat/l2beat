@@ -53,7 +53,7 @@ export async function promiseAllPlus<T>(
       }
       return shouldRetry
     },
-    shouldHaltAfterFailedRetries: false, // we have our own strategy to handle that
+    shouldStopAfterFailedRetries: false, // we have our own strategy to handle that
     metricsId: opts.metricsId,
   })
 
