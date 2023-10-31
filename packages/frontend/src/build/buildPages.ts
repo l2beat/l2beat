@@ -7,7 +7,7 @@ import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
-import { fetchDetailedTvlApi } from './api/fetchDetailedTvlApi'
+import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 import { getVerificationStatus } from './api/getVerificationStatus'
 import { printActivityInfo, printApiInfo } from './api/printApiInfo'
@@ -16,7 +16,7 @@ import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 
 /**
- * Temporary timeout for HTTP calls due to increased size of new detailed TVL API and flaky connection times
+ * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
  * 10s is high-top limit for response time so 30s is more than safe bet here
  */
 const TEMP_HTTP_CALL_TIMEOUT_TIME_MS = 30_000
@@ -35,7 +35,7 @@ async function main() {
 
   const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
-  const tvlApiResponse = await fetchDetailedTvlApi(config.backend, http)
+  const tvlApiResponse = await fetchTvlApi(config.backend, http)
   printApiInfo(tvlApiResponse)
   tvlSanityCheck(tvlApiResponse)
 

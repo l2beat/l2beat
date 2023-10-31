@@ -2,7 +2,6 @@ import { bridges as allBridges, layer2s as allLayer2s } from '@l2beat/config'
 import {
   ActivityApiCharts,
   ActivityApiResponse,
-  DetailedTvlApiResponse,
   ProjectId,
   TvlApiCharts,
   TvlApiResponse,
@@ -18,9 +17,7 @@ const layer2s = allLayer2s
 
 export type TvlProjectData = [string, TvlApiCharts]
 
-export function tvlSanityCheck(
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-) {
+export function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
   const projectsInApi = Object.keys(tvlApiResponse.projects).map(ProjectId)
 
   const bridgesInApi = bridges.filter((x) => projectsInApi.includes(x.id))

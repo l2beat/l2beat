@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import {
-  DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
+  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
@@ -33,7 +33,7 @@ export interface TvlBreakdownViewProps {
 
 export function getTvlBreakdownView(
   project: Layer2,
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
 ): TvlBreakdownViewProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
