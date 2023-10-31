@@ -3,12 +3,12 @@ import {
   assert,
   AssetId,
   ChainId,
-  DetailedTvlApiProject,
   EthereumAddress,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
   ReportType,
   Token,
+  TvlApiProject,
 } from '@l2beat/shared-pure'
 import { Dictionary, mapValues } from 'lodash'
 
@@ -49,11 +49,11 @@ export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
 export function getProjectTokensCharts(
   reports: ReportsPerProjectIdAndAsset,
   projectId: ProjectId,
-): DetailedTvlApiProject['tokens'] {
+): TvlApiProject['tokens'] {
   // type => ReportRecord[]
   const assetValuesPerProject = reports[projectId.toString()]
 
-  const baseResult: DetailedTvlApiProject['tokens'] = {
+  const baseResult: TvlApiProject['tokens'] = {
     CBV: [],
     EBV: [],
     NMV: [],

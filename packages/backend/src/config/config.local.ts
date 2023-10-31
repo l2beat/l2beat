@@ -11,10 +11,7 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(env: Env): Config {
   const tvlEnabled = env.boolean('TVL_ENABLED', true)
-  const errorOnUnsyncedDetailedTvl = env.boolean(
-    'ERROR_ON_UNSYNCED_DETAILED_TVL',
-    false,
-  )
+  const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const ethereumTvlEnabled = env.boolean('TVL_ETHEREUM_ENABLED', true)
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
@@ -65,7 +62,7 @@ export function getLocalConfig(env: Env): Config {
     },
     tvl: {
       enabled: tvlEnabled,
-      errorOnUnsyncedDetailedTvl,
+      errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
       ethereum: ethereumTvlEnabled && {
         providerUrl: env.string('TVL_ETHEREUM_PROVIDER_URL'),

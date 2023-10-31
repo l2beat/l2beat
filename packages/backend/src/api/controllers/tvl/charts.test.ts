@@ -1,20 +1,20 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { addDetailedMissingTimestamps, addMissingTimestamps } from './charts'
+import { addMissingTimestamps, addTokenMissingTimestamps } from './charts'
 
 const now = UnixTime.now().toStartOf('day')
 
-describe(addMissingTimestamps.name, () => {
+describe(addTokenMissingTimestamps.name, () => {
   it('returns empty for empty input', () => {
-    expect(addMissingTimestamps([], 1)).toEqual([])
+    expect(addTokenMissingTimestamps([], 1)).toEqual([])
   })
 
   const cases = [1, 6, 24]
   cases.forEach((hours) => {
     it(`adds missing ${hours}h timestamps`, () => {
       expect(
-        addMissingTimestamps(
+        addTokenMissingTimestamps(
           [
             [now, 1, 1],
             [now.add(2 * hours, 'hours'), 2, 2],
@@ -34,16 +34,16 @@ describe(addMissingTimestamps.name, () => {
   })
 })
 
-describe(addDetailedMissingTimestamps.name, () => {
+describe(addMissingTimestamps.name, () => {
   it('returns empty for empty input', () => {
-    expect(addDetailedMissingTimestamps([], 1)).toEqual([])
+    expect(addMissingTimestamps([], 1)).toEqual([])
   })
 
   const cases = [1, 6, 24]
   cases.forEach((hours) => {
     it(`adds missing ${hours}h timestamps`, () => {
       expect(
-        addDetailedMissingTimestamps(
+        addMissingTimestamps(
           [
             [now, 1, 1, 1, 1, 1, 1, 1, 1],
             [now.add(2 * hours, 'hours'), 2, 2, 2, 2, 2, 2, 2, 2],
