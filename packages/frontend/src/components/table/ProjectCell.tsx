@@ -1,9 +1,7 @@
 import React from 'react'
 
 import { ShieldIcon, UnderReviewIcon } from '../icons'
-import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
-import { UpcomingIcon } from '../icons/symbols/UpcomingIcon'
 
 export interface ProjectCellProps {
   project: {
@@ -56,26 +54,6 @@ export function ProjectCell({ project }: ProjectCellProps) {
         <span className="pl-1.5">
           <span className="Tooltip inline-block" title={project.warning}>
             <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
-          </span>
-        </span>
-      )}
-      {project.isArchived && (
-        <span className="pl-1.5">
-          <span
-            className="Tooltip ml-1.5 inline-block"
-            title={'This project is archived and no longer maintained.'}
-          >
-            <ArchivedIcon className="relative top-px h-4" />
-          </span>
-        </span>
-      )}
-      {project.isUpcoming && (
-        <span className="pl-1.5">
-          <span
-            className="Tooltip inline-block"
-            title={'This is an upcoming project. Stay tuned!'}
-          >
-            <UpcomingIcon className="relative top-px h-4" />
           </span>
         </span>
       )}

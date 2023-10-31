@@ -496,5 +496,10 @@ export const optimism: Layer2 = {
       url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
       thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
+    {
+      title: 'The Optimistic Vision',
+      url: 'https://www.optimism.io/vision',
+      thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_VISION,
+    },
   ],
 }

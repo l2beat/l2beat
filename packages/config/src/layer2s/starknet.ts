@@ -146,7 +146,10 @@ export const starknet: Layer2 = {
     purpose: 'Universal',
     category: 'ZK Rollup',
     links: {
-      apps: [],
+      apps: [
+        'https://www.dappland.com/',
+        'https://www.starknet-ecosystem.com/',
+      ],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
@@ -161,6 +164,7 @@ export const starknet: Layer2 = {
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
+        'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg',
       ],
     },
     activityDataSource: 'Blockchain RPC',
