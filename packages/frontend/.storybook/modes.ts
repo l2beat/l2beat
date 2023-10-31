@@ -29,6 +29,10 @@ export const allModes: Record<ModeKey, Mode> = {
 }
 
 export const onlyDesktopModes = {
-  'light desktop': allModes['light desktop'],
-  'dark desktop': allModes['dark desktop'],
+  'light mobile': {
+    disable: true,
+  },
+  'dark mobile': {
+    disable: true,
+  },
 }
