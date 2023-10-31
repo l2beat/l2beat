@@ -151,6 +151,10 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job, error)
 
+    if (result.notify) {
+      this.logger.error(error)
+    }
+
     if (result.shouldStop) {
       this.eventTracker?.record('error')
       if (this.shouldStopAfterFailedRetries) {
@@ -162,10 +166,6 @@ export class TaskQueue<T> {
         this.stopped = true
       }
       return
-    }
-
-    if (result.notify) {
-      this.logger.error(error)
     }
 
     job.executeAt = Date.now() + (result.executeAfter ?? 0)

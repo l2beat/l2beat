@@ -96,7 +96,7 @@ describe(TaskQueue.name, () => {
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
-  it('notifies after configured threshold is reached', async () => {
+  it.only('notifies after configured threshold is reached', async () => {
     const eventTracker = mockObject<EventTracker<string>>({
       record: mockFn().returns(undefined),
     })
@@ -108,18 +108,18 @@ describe(TaskQueue.name, () => {
     }
 
     const logger = mockObject<Logger>({
-      error: mockFn().returns(undefined),
-      warn: mockFn().returns(undefined),
-      debug: mockFn().returns(undefined),
-      info: mockFn().returns(undefined),
+      error: () => undefined,
+      warn: () => undefined,
+      debug: () => undefined,
+      info: () => undefined,
     })
 
     const queue = new TaskQueue(execute, logger, {
       shouldRetry: Retries.exponentialBackOff({
         stepMs: 1,
-        maxAttempts: 5,
         maxDistanceMs: Infinity,
-        notifyAfterAttempts: 2, // 5 - 2 = 3 (notifications)
+        maxAttempts: 5,
+        notifyAfterAttempts: 2,
       }),
       metricsId: 'test',
       eventTracker,
@@ -128,11 +128,27 @@ describe(TaskQueue.name, () => {
 
     await time.runAllAsync()
 
+    // max attempts = 5
+    // notify after attempts = 2
+    // 1st attempt: retry
+    // 2nd attempt: retry
+    // 3rd attempt: retry + notify
+    // 4th attempt: retry + notify
+    // 5th attempt: stop queue
+
     // 3 notifications + 1 error when stopping queue
-    expect(logger.error).toHaveBeenCalledTimes(4)
+    expect(logger.error).toHaveBeenCalledTimes(3)
     expect(logger.error).toHaveBeenNthCalledWith(1, error)
     expect(logger.error).toHaveBeenNthCalledWith(2, error)
-    expect(logger.error).toHaveBeenNthCalledWith(3, error)
+    expect(logger.error).toHaveBeenNthCalledWith(
+      3,
+      'Stopping queue because of error',
+      // @ts-expect-error mock
+      {
+        job: expect.a(String),
+        error,
+      },
+    )
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 

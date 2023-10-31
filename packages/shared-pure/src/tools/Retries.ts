@@ -23,10 +23,10 @@ export function exponentialBackOff<T>(
   assert(maxAttempts > 0, 'maxAttempts needs to be a positive number')
   const maxDistanceMs = opts.maxDistanceMs
   assert(maxDistanceMs > 0, 'maxDistanceMs needs to be a positive number')
-  const attemptsNotificationThreshold = opts.notifyAfterAttempts
+  const notifyAfterAttempts = opts.notifyAfterAttempts
   assert(
-    attemptsNotificationThreshold > 0,
-    'attemptsNotificationThreshold needs to be a positive number',
+    notifyAfterAttempts > 0,
+    'notifyAfterAttempts needs to be a positive number',
   )
 
   return ({ attempts }: { attempts: number }) => {
@@ -35,13 +35,13 @@ export function exponentialBackOff<T>(
     if (attempts === maxAttempts) {
       return {
         shouldStop: true,
-        notify: attempts >= attemptsNotificationThreshold,
+        notify: false, // no need to notify, the error after stop will be sent
       }
     }
 
     return {
       shouldStop: false,
-      notify: attempts >= attemptsNotificationThreshold,
+      notify: attempts > notifyAfterAttempts,
       executeAfter: Math.min(distance, maxDistanceMs),
     }
   }
