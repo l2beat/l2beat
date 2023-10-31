@@ -8,10 +8,10 @@ import { HourlyIndexer } from '../../core/liveness/HourlyIndexer'
 import { LivenessClient } from '../../core/liveness/LivenessClient'
 import { LivenessIndexer } from '../../core/liveness/LivenessIndexer'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
+import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
-import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 
 export function createLivenessModule(
   config: Config,
