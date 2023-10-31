@@ -11,10 +11,7 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(env: Env): Config {
   const tvlEnabled = env.boolean('TVL_ENABLED', true)
-  const errorOnUnsyncedDetailedTvl = env.boolean(
-    'ERROR_ON_UNSYNCED_DETAILED_TVL',
-    false,
-  )
+  const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const ethereumTvlEnabled = env.boolean('TVL_ETHEREUM_ENABLED', true)
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
@@ -23,7 +20,7 @@ export function getLocalConfig(env: Env): Config {
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
-
+  const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const internalDiscordChannelId = env.optionalString(
@@ -63,10 +60,9 @@ export function getLocalConfig(env: Env): Config {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
     },
-
     tvl: {
       enabled: tvlEnabled,
-      errorOnUnsyncedDetailedTvl,
+      errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
       ethereum: ethereumTvlEnabled && {
         providerUrl: env.string('TVL_ETHEREUM_PROVIDER_URL'),
@@ -109,6 +105,13 @@ export function getLocalConfig(env: Env): Config {
         etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+    },
+    liveness: livenessEnabled && {
+      bigQuery: {
+        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('LIVENESS_PROJECT_ID'),
       },
     },
     activity: activityEnabled && {

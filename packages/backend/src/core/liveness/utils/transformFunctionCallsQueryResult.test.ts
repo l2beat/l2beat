@@ -1,9 +1,9 @@
-import { BigQueryFunctionCallsResult } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
 import { LivenessFunctionCall } from '../types/LivenessConfig'
+import { BigQueryFunctionCallsResult } from '../types/model'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 describe(transformFunctionCallsQueryResult.name, () => {
@@ -11,24 +11,29 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const ADDRESS_1 = EthereumAddress.random()
     const ADDRESS_2 = EthereumAddress.random()
     const ADDRESS_3 = EthereumAddress.random()
+    const sinceTimestamp = UnixTime.now()
+
     const config: LivenessFunctionCall[] = [
       {
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: '0x095e4',
         type: 'STATE',
+        sinceTimestamp,
       },
       {
         projectId: ProjectId('project1'),
         address: ADDRESS_2,
         selector: '0x915d9',
         type: 'DA',
+        sinceTimestamp,
       },
       {
         projectId: ProjectId('project2'),
         address: ADDRESS_3,
         selector: '0x90d5e',
         type: 'STATE',
+        sinceTimestamp,
       },
     ]
     const queryResults: BigQueryFunctionCallsResult = [

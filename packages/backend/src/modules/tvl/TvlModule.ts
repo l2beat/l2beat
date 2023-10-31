@@ -3,7 +3,6 @@ import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
-import { DetailedTvlController } from '../../api/controllers/tvl/DetailedTvlController'
 import { TvlController } from '../../api/controllers/tvl/TvlController'
 import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
@@ -135,18 +134,8 @@ export function createTvlModule(
 
   // #region api
   const blocksController = new BlocksController(db.blockNumberRepository)
-  const tvlController = new TvlController(
-    db.reportRepository,
-    db.aggregatedReportRepository,
-    db.aggregatedReportStatusRepository,
-    config.projects,
-    config.tokens,
-    aggregatedReportUpdater.getConfigHash(),
-    { errorOnUnsyncedTvl: false },
-    logger,
-  )
 
-  const detailedTvlController = new DetailedTvlController(
+  const tvlController = new TvlController(
     db.aggregatedReportRepository,
     db.reportRepository,
     db.aggregatedReportStatusRepository,
@@ -156,13 +145,13 @@ export function createTvlModule(
     config.tokens,
     logger,
     aggregatedReportUpdater.getConfigHash(),
-    { errorOnUnsyncedDetailedTvl: config.tvl.errorOnUnsyncedDetailedTvl },
+    { errorOnUnsyncedTvl: config.tvl.errorOnUnsyncedTvl },
   )
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController, detailedTvlController)
+  const tvlRouter = createTvlRouter(tvlController)
   const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(
     clock,

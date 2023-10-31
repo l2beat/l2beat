@@ -17,7 +17,6 @@ import {
 } from './ScalingDetailedTvlView'
 
 export interface ScalingDetailedTvlPageProps {
-  detailedTvlEndpoint: string
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean

@@ -1,3 +1,25 @@
+# Diff at Fri, 27 Oct 2023 10:26:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@f531a9c18fd564738c9f66b8b1e5c04730dce464
+
+## Description
+
+A new proposal has been detected.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      values.getCurrentProposalId:
+-        8
++        9
+      values.getProtocolVersion:
+-        15
++        16
+    }
+```
+
 # Diff at Tue, 26 Sep 2023 10:27:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

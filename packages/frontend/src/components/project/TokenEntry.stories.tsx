@@ -1,11 +1,15 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { TokenEntry } from './TokenEntry'
 
-export default {
-  title: 'Components/Project/TokenEntry',
+const meta: Meta<typeof TokenEntry> = {
+  component: TokenEntry,
 }
+export default meta
+type Story = StoryObj<typeof TokenEntry>
 
-export function TokenEntryStory() {
-  return <TokenEntry l2Tokens={['ARB']} />
+export const TokenEntryStory: Story = {
+  args: {
+    l2Tokens: ['ARB'],
+  },
 }

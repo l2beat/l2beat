@@ -128,9 +128,6 @@
         "chainId": 2,
         "feeCollector": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "isOwner": false,
-        "maxLockProxyIndex": 7,
-        "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
-        "paused": false,
         "lockProxyIndexMap": [
           "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
           "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
@@ -139,7 +136,10 @@
           "0xf6378141BC900020a438F3914e4C3ceA29907b27",
           "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
           "0x51ba447DaD1de30b91286471BcB570F69ECE968D"
-        ]
+        ],
+        "maxLockProxyIndex": 7,
+        "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+        "paused": false
       },
       "derivedName": "PolyWrapper"
     },

@@ -427,6 +427,16 @@ export const dydx: Layer2 = {
       ],
     },
   ],
+  stateDerivation: {
+    nodeSoftware:
+      'State can be independently derived from data (state updates) published on Ethereum by running an open-source [StarkEx Explorer](https://github.com/l2beat/starkex-explorer). The explorer, once fully synced, provides UI interface to perform forced actions, trigger rollup freeze and withdraw funds using escape hatch.',
+    compressionScheme:
+      'No compression is used, state updates and other metadata are simply serialized for L1',
+    genesisState:
+      'There is no genesis file for dYdX. By default, all accounts were empty at the beginning.',
+    dataFormat:
+      "dYdX doesn't publish transactions. Balances of user positions are stored in a Merkle Tree and updates to that tree are published on Ethereum, together with Merkle Root and a ZK proof. Deserialization of that data is implemented [here](https://github.com/l2beat/starkex-explorer/blob/59e5c744cd3a1103c01893881a40492a817f13bd/packages/encoding/src/decoding/decodeOnChainData.ts#L6). Generating Merkle Proof is implemented [here](https://github.com/l2beat/starkex-explorer/blob/d957fe5ed3b8f6590a84507655eb76c7b2876e67/packages/state/src/MerkleTree.ts#L92).",
+  },
   milestones: [
     {
       name: 'Public launch',

@@ -55,7 +55,7 @@ environment variables. One variable per line `KEY=value`.
 
 - `STARKEX_API_KEY` - Starkex API key
 - `COINGECKO_API_KEY` (Optional) - API key for Coingecko
-- `LOG_LEVEL` (Optional) - Integer specifying the log level. `0` - none, `1` - error, `2` - warn, `3` - info, `4` - debug
+- `LOG_LEVEL` (Optional) - String specifying the log level, options: "NONE", "CRITICAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE"
 - `PORT` (Optional) - The port on which the application exposes the api
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
 - `ACTIVITY_ENABLED` (default `false`) - When set to `true` activity feature is enabled
@@ -133,10 +133,8 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
 # ARBITRUM_PROVIDER_URL=
-## Enable/disable detailed-tvl endpoint exposure - defaults to false
-# DETAILED_TVL_ENABLED=true
-## Should detailed-tvl endpoint return 404 if data is not synced yet? - defaults to false
-# ERROR_ON_UNSYNCED_DETAILED_TVL=true
+## Should tvl endpoint return 404 if data is not synced yet? - defaults to false
+# ERROR_ON_UNSYNCED_TVL=true
 # UPDATE_MONITOR_RUN_ON_START=
 # ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
 

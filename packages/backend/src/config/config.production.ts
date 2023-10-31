@@ -13,14 +13,11 @@ export function getProductionConfig(env: Env): Config {
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
-  const errorOnUnsyncedDetailedTvl = env.boolean(
-    'ERROR_ON_UNSYNCED_DETAILED_TVL',
-    false,
-  )
+  const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
-
+  const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const publicDiscordChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
@@ -73,7 +70,7 @@ export function getProductionConfig(env: Env): Config {
       pass: env.string('METRICS_AUTH_PASS'),
     },
     tvl: {
-      errorOnUnsyncedDetailedTvl,
+      errorOnUnsyncedTvl,
       enabled: true,
       coingeckoApiKey: env.string('COINGECKO_API_KEY'),
       ethereum: {
@@ -118,6 +115,13 @@ export function getProductionConfig(env: Env): Config {
         etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
         etherscanApiUrl: 'https://api.basescan.org/api',
         minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
+      },
+    },
+    liveness: livenessEnabled && {
+      bigQuery: {
+        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('LIVENESS_PROJECT_ID'),
       },
     },
     activity: {

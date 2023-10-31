@@ -42,14 +42,20 @@ export const scroll: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      apps: ['https://scroll.io/bridge', 'https://uniswap-v3.scroll.io'],
+      apps: [
+        'https://scroll.io/bridge',
+        'https://uniswap-showcase.sepolia.scroll.xyz/',
+      ],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
         'https://blockscout.scroll.io',
         'https://scroll.unifra.xyz/',
+        'https://www.ondora.xyz/network/scroll',
       ],
       repositories: [
+        'https://github.com/scroll-tech/scroll',
+        'https://github.com/scroll-tech/scroll-prover',
         'https://github.com/scroll-tech/zkevm-circuits',
         'https://github.com/scroll-tech/zkevm-specs',
         'https://github.com/scroll-tech/scroll-zkevm',
@@ -61,6 +67,7 @@ export const scroll: Layer2 = {
       socialMedia: [
         'https://discord.gg/scroll',
         'https://twitter.com/Scroll_ZKP',
+        'https://youtube.com/@Scroll_ZKP',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -286,7 +293,7 @@ export const scroll: Layer2 = {
           'Current verifier, used to prepare data for the PlonkVerifier.',
       }),
       discovery.getContractDetails('PlonkVerifier', {
-        description: 'Plonk verifier used to verify the zk proof.',
+        description: 'Plonk verifier used to verify the ZK proof.',
         references: [
           {
             text: 'evm_verifier.yul source code',

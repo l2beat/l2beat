@@ -1,67 +1,91 @@
-import { BigQueryClient } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, Logger } from '@l2beat/backend-tools'
+import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { ChildIndexer } from '@l2beat/uif'
 
-import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
+import { Project } from '../../model'
+import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
-import {
-  isTimestampInRange,
-  transformFunctionCallsQueryResult,
-  transformTransfersQueryResult,
-} from './utils'
+  LivenessRecord,
+  LivenessRepository,
+} from '../../peripherals/database/LivenessRepository'
+import { HourlyIndexer } from './HourlyIndexer'
+import { LivenessClient } from './LivenessClient'
+import { getLivenessConfigHash } from './utils'
 
-export class LivenessIndexer {
-  constructor(private readonly bigQueryClient: BigQueryClient) {}
+export class LivenessIndexer extends ChildIndexer {
+  private readonly indexerId = 'liveness_indexer'
+  private readonly configHash: Hash256
 
-  async getLivenessData(
-    config: LivenessConfig,
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    const transfersConfig = config.transfers.filter((c) =>
-      isTimestampInRange(c.untilTimestamp, from, to),
-    )
-    const functionCallsConfig = config.functionCalls.filter((c) =>
-      isTimestampInRange(c.untilTimestamp, from, to),
-    )
-    const transfers = await this.getTransfers(transfersConfig, from, to)
-    const functionCalls = await this.getFunctionCalls(
-      functionCallsConfig,
-      from,
-      to,
-    )
-
-    return [...transfers, ...functionCalls]
+  constructor(
+    logger: Logger,
+    parentIndexer: HourlyIndexer,
+    private readonly projects: Project[],
+    private readonly livenessClient: LivenessClient,
+    private readonly stateRepository: IndexerStateRepository,
+    private readonly livenessRepository: LivenessRepository,
+    private readonly minTimestamp: UnixTime,
+  ) {
+    super(logger, [parentIndexer])
+    this.configHash = getLivenessConfigHash(this.projects)
   }
 
-  async getTransfers(
-    transfersConfigs: LivenessTransfer[],
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    const queryResults = await this.bigQueryClient.getTransfers(
-      transfersConfigs,
-      from,
-      to,
+  override async start(): Promise<void> {
+    const oldConfigHash = await this.stateRepository.findConfigHash(
+      this.indexerId,
     )
 
-    return transformTransfersQueryResult(transfersConfigs, queryResults)
+    if (oldConfigHash === undefined || oldConfigHash !== this.configHash) {
+      await this.stateRepository.addOrUpdate({
+        indexerId: this.indexerId,
+        configHash: this.configHash,
+        safeHeight: this.minTimestamp.toNumber(),
+      })
+    }
+
+    await super.start()
   }
 
-  async getFunctionCalls(
-    functionCallsConfigs: LivenessFunctionCall[],
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<LivenessRecord[]> {
-    const queryResults = await this.bigQueryClient.getFunctionCalls(
-      functionCallsConfigs,
-      from,
-      to,
-    )
+  override async update(from: number, to: number): Promise<number> {
+    const fromUnixTime = new UnixTime(from)
+    const toUnixTime = new UnixTime(to)
 
-    return transformFunctionCallsQueryResult(functionCallsConfigs, queryResults)
+    let data: { data: LivenessRecord[]; to: UnixTime } | undefined
+
+    try {
+      data = await this.livenessClient.getLivenessData(
+        this.projects,
+        fromUnixTime,
+        toUnixTime,
+      )
+    } catch (e) {
+      this.logger.error(e)
+      throw e
+    }
+
+    assert(data, 'Liveness data should not be undefined there')
+
+    await this.livenessRepository.addMany(data.data)
+
+    return Promise.resolve(data.to.toNumber())
+  }
+
+  override async getSafeHeight(): Promise<number> {
+    const height = await this.stateRepository.findSafeHeight(this.indexerId)
+    return height ?? this.minTimestamp.toNumber()
+  }
+
+  override async setSafeHeight(height: number): Promise<void> {
+    await this.stateRepository.addOrUpdate({
+      indexerId: this.indexerId,
+      configHash: this.configHash,
+      safeHeight: height,
+    })
+  }
+
+  // This function will not be used, but it is required by the UIF.
+  // In our case there is no re-org handling so we do not have to worry
+  // that our data will become invalid.
+  override async invalidate(targetHeight: number): Promise<number> {
+    return Promise.resolve(targetHeight)
   }
 }
