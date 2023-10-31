@@ -151,14 +151,16 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job, error)
 
-    if (result.shouldStop && this.shouldStopAfterFailedRetries) {
+    if (result.shouldStop) {
       this.eventTracker?.record('error')
-      // TODO: new logger usage
-      this.logger.error('Stopping queue because of error', {
-        job: JSON.stringify(job),
-        error,
-      })
-      this.stopped = true
+      if (this.shouldStopAfterFailedRetries) {
+        // TODO: new logger usage
+        this.logger.error('Stopping queue because of error', {
+          job: JSON.stringify(job),
+          error,
+        })
+        this.stopped = true
+      }
       return
     }
 
@@ -208,5 +210,15 @@ export class TaskQueue<T> {
       this.busyWorkers--
       setTimeout(() => this.execute())
     }
+  }
+
+  // WARNING: this method clears the queue, be cautious when using it
+  // some Updaters will not function properly after you unhalt them using this method
+  // because they rely on the start() function which is called only once
+  // so use it only in Updaters with generic (updating all the missing data) update() function
+  // or rewrite the logic of your updater
+  restart() {
+    this.queue.splice(0, this.queue.length)
+    this.stopped = false
   }
 }
