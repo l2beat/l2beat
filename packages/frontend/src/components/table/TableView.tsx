@@ -69,10 +69,12 @@ export function TableView<T>({
           )}
           <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
             {columnsConfig.map((columnConfig, i) => {
+              const isLastColumn = i === columnsConfig.length - 1
               if (columnConfig.type === 'group') {
                 return columnConfig.columns.map((col, colIndex) => (
                   <ColumnHeader
                     column={col}
+                    isLastColumn={isLastColumn}
                     groupOptions={{
                       isFirst: colIndex === 0,
                       isLast: colIndex === columnConfig.columns.length - 1,
@@ -82,7 +84,13 @@ export function TableView<T>({
                   />
                 ))
               }
-              return <ColumnHeader column={columnConfig} key={i} />
+              return (
+                <ColumnHeader
+                  column={columnConfig}
+                  isLastColumn={isLastColumn}
+                  key={i}
+                />
+              )
             })}
           </tr>
         </thead>
@@ -104,6 +112,7 @@ export function TableView<T>({
                 )}
               >
                 {columnsConfig.map((columnConfig, j) => {
+                  const isLastColumn = j === columnsConfig.length - 1
                   if (columnConfig.type === 'group') {
                     return columnConfig.columns.map((col, colIndex) => (
                       <DataCell
@@ -111,6 +120,7 @@ export function TableView<T>({
                         item={item}
                         href={href}
                         rowIndex={i}
+                        isLastColumn={isLastColumn}
                         groupOptions={{
                           isFirst: colIndex === 0,
                           isLast: colIndex === columnConfig.columns.length - 1,
@@ -122,6 +132,7 @@ export function TableView<T>({
                   return (
                     <DataCell
                       columnConfig={columnConfig}
+                      isLastColumn={isLastColumn}
                       item={item}
                       href={href}
                       rowIndex={i}
@@ -132,7 +143,7 @@ export function TableView<T>({
               </tr>
             )
           })}
-          {groupedColumns && <EmptyRow columnsConfig={columnsConfig} />}
+          {groupedColumns && <EmptyRow groupedColumns={groupedColumns} />}
         </tbody>
       </table>
       <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
@@ -148,6 +159,7 @@ export function TableView<T>({
 
 function ColumnHeader<T>(props: {
   column: SingleColumnConfig<T>
+  isLastColumn: boolean
   groupOptions?: {
     isFirst: boolean
     isLast: boolean
@@ -199,7 +211,9 @@ function ColumnHeader<T>(props: {
           )}
         </div>
       </th>
-      {props.groupOptions?.isLast && <th className="pr-3 md:pr-4" />}
+      {props.groupOptions?.isLast && !props.isLastColumn && (
+        <th className="pr-3 md:pr-4" />
+      )}
     </>
   )
 }
@@ -207,8 +221,9 @@ function ColumnHeader<T>(props: {
 function DataCell<T>(props: {
   columnConfig: SingleColumnConfig<T>
   item: T
+  isLastColumn: boolean
   rowIndex: number
-  href?: string
+  href: string | undefined
   groupOptions?: {
     isFirst: boolean
     isLast: boolean
@@ -243,7 +258,7 @@ function DataCell<T>(props: {
           {props.columnConfig.getValue(props.item, props.rowIndex)}
         </a>
       </td>
-      {props.groupOptions?.isLast && (
+      {props.groupOptions?.isLast && !props.isLastColumn && (
         <td>
           <a href={idHref} className={cx(childClassName, 'flex')} />
         </td>
@@ -256,7 +271,7 @@ function ColGroup(props: { groupedColumns: GroupedColumn[] }) {
   return (
     <>
       {props.groupedColumns.map((groupedColumn, i) => {
-        if (groupedColumn.type === 'fill') {
+        if (groupedColumn.type === 'single') {
           return (
             <colgroup key={i}>
               <col />
@@ -279,7 +294,7 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
   return (
     <tr className="uppercase leading-none">
       {props.groupedColumns.map((groupedColumn, i) => {
-        if (groupedColumn.type === 'fill') {
+        if (groupedColumn.type === 'single') {
           return <th key={i} />
         }
         if (!groupedColumn.title) {
@@ -305,28 +320,18 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
   )
 }
 
-function EmptyRow<T>(props: { columnsConfig: ColumnConfig<T>[] }) {
+function EmptyRow(props: { groupedColumns: GroupedColumn[] }) {
   return (
     <tr data-non-filterable>
-      {props.columnsConfig.map((columnConfig, i) => {
-        if (columnConfig.type === 'group') {
-          return columnConfig.columns.map((_, colIndex) => {
-            const isFirstInGroup = colIndex === 0
-            const isLastInGroup = colIndex === columnConfig.columns.length - 1
-            return (
-              <>
-                <td
-                  key={`${i}:${colIndex}`}
-                  className={classNames(
-                    'h-4',
-                    isFirstInGroup && 'rounded-bl-lg',
-                    isLastInGroup && 'rounded-br-lg',
-                  )}
-                />
-                {isLastInGroup && <td className="h-4" />}
-              </>
-            )
-          })
+      {props.groupedColumns.map((groupedColumn, i) => {
+        if (groupedColumn.type === 'group') {
+          return (
+            <td
+              key={`${i}`}
+              colSpan={groupedColumn.span}
+              className={classNames('h-4 rounded-b-lg')}
+            />
+          )
         }
         return <td className="h-4" key={i} />
       })}
@@ -341,7 +346,7 @@ type GroupedColumn =
       title?: string
     }
   | {
-      type: 'fill'
+      type: 'single'
     }
 
 function getGroupedColumns<T>(
@@ -351,21 +356,26 @@ function getGroupedColumns<T>(
     return undefined
   }
 
-  return columnConfigs.flatMap((columnConfig) => {
+  return columnConfigs.flatMap((columnConfig, i) => {
     if (columnConfig.type === 'group') {
+      const isLastColumn = i === columnConfigs.length - 1
       return [
         {
           type: 'group',
           title: columnConfig.title,
           span: columnConfig.columns.length,
         } as const,
-        {
-          type: 'fill',
-        } as const,
+        ...(!isLastColumn
+          ? [
+              {
+                type: 'single',
+              } as const,
+            ]
+          : []),
       ]
     }
     return {
-      type: 'fill',
+      type: 'single',
     } as const
   })
 }
