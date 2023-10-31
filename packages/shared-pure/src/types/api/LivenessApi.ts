@@ -4,8 +4,8 @@ import { branded } from '../branded'
 import { UnixTime } from '../UnixTime'
 
 const DataPoint = z.object({
-  averageInSeconds: z.number().positive(),
-  maximumInSeconds: z.number().positive(),
+  averageInSeconds: z.number().positive().int(),
+  maximumInSeconds: z.number().positive().int(),
 })
 
 export const LivenessApiProject = z.object({
@@ -22,7 +22,7 @@ export const LivenessApiProject = z.object({
   anomalies: z.array(
     z.object({
       timestamp: branded(z.number(), (n) => new UnixTime(n)),
-      durationInSeconds: z.number().positive(),
+      durationInSeconds: z.number().positive().int(),
     }),
   ),
 })
