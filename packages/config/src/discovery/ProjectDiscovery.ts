@@ -54,7 +54,7 @@ const filesystem = {
   },
 }
 
-// TODO(radomski): Replace getDiscoveryJson and getConfigJson with sync verions
+// TODO(radomski): Replace getDiscoveryJson and getConfigJson with sync versions
 // of readConfig/readDiscovery from ConfigReader.
 // For more information see L2B-2948
 type RawDiscoveryConfig = ConstructorParameters<typeof DiscoveryConfig>[0]
@@ -166,39 +166,42 @@ export class ProjectDiscovery {
 
   getOpStackPermissions(
     overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
   ): ProjectPermission[] {
     const inversion = this.getInversion()
 
     const result: Record<string, Record<string, string[]>> = {}
+    const names: Record<string, string> = {}
     const sources: Record<string, { contract: string; value: string }> = {}
     for (const template of OP_STACK_PERMISSION_TEMPLATES) {
       for (const contract of inversion.values()) {
         const role = contract.roles.find(
           (r) =>
             r.name === template.role.value &&
-            r.atName === template.role.contract,
+            r.atName === (contractOverrides?.[template.role.contract] ?? template.role.contract),
         )
         if (role) {
           const contractKey =
-            contract.name ??
-            overrides?.[template.role.value] ??
-            template.role.value
+              overrides?.[template.role.value] ?? 
+              contract.name ??
+              template.role.value
           result[contractKey] ??= {}
           result[contractKey][role.name] ??= []
           result[contractKey][role.name].push(
             stringFormat(template.description, template.role.contract),
           )
           sources[contractKey] ??= template.role
+          names[contractKey] ??= overrides?.[template.role.value] ?? contract.name ?? template.role.value
         }
       }
     }
 
-    return Object.entries(result).map(([permissioned, roleDescription]) => ({
-      name: permissioned,
+    return Object.entries(result).map(([key, roleDescription]) => ({
+      name: names[key],
       accounts: [
         this.getPermissionedAccount(
-          sources[permissioned].contract,
-          sources[permissioned].value,
+          sources[key].contract,
+          sources[key].value,
         ),
       ],
       description: Object.values(roleDescription).flat().join(' '),

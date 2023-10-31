@@ -376,6 +376,8 @@ export const optimism: Layer2 = {
     ...discovery.getOpStackPermissions({
       batcherHash: 'Sequencer',
       PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger'
     }),
     {
       name: 'Challenger',

@@ -76,4 +76,12 @@ export const OP_STACK_PERMISSION_TEMPLATES: OPStackPermissionTemplate[] = [
     role: { value: 'PROPOSER', contract: 'L2OutputOracle' },
     description: 'Central actor allowed to post new L2 state roots to L1.',
   },
+  {
+    role: { value: 'CHALLENGER', contract: 'L2OutputOracle' },
+    description: 'Central actor allowed to delete L2 state roots proposed by a Proposer.',
+  },
+  {
+    role: { value: 'GUARDIAN', contract: 'OptimismPortal' },
+    description: 'Central actor allowed to pause deposits and withdrawals.',
+  },
 ]

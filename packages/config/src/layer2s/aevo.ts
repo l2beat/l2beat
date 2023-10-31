@@ -240,23 +240,9 @@ export const aevo: Layer2 = {
     ...discovery.getOpStackPermissions({
       batcherHash: 'Sequencer',
       PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger'
     }),
-    {
-      name: 'Challenger',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
-      ],
-      description:
-        'Central actor allowed to delete L2 state roots proposed by a Proposer. Currently Challenger is PGNMultiSig',
-    },
-    {
-      name: 'Guardian',
-      accounts: [
-        discovery.getPermissionedAccount('OptimismPortal', 'GUARDIAN'),
-      ],
-      description:
-        'Central actor allowed to pause deposits and withdrawals. Currently Guardian is PGNMultiSig',
-    },
   ],
   contracts: {
     addresses: [

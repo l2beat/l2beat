@@ -257,6 +257,8 @@ export const publicgoodsnetwork: Layer2 = {
     ...discovery.getOpStackPermissions({
       batcherHash: 'Sequencer',
       PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger'
     }),
   ],
   contracts: {
