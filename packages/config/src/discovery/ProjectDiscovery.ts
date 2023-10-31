@@ -14,6 +14,7 @@ import fs from 'fs'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
+import { getManuallyVerifiedSynced } from '../../scripts/checkVerifiedContracts/manuallyVerified'
 import {
   ProjectEscrow,
   ProjectPermission,
@@ -79,11 +80,27 @@ export class ProjectDiscovery {
       }
       descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
+
+    let references = descriptionOrOptions?.references
+
+    const manuallyVerifiedContracts = getManuallyVerifiedSynced()
+    const manuallyVerifiedSourceLink = manuallyVerifiedContracts[
+      contract.address.toString()
+    ] as string | undefined
+    if (manuallyVerifiedSourceLink) {
+      references = references ?? []
+      references.push({
+        text: 'Source code',
+        href: manuallyVerifiedSourceLink,
+      })
+    }
+
     return {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
       ...descriptionOrOptions,
+      references,
     }
   }
 
