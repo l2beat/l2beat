@@ -146,11 +146,11 @@ declare module 'knex/types/tables' {
     id: number
     project_id: string
     type: string
-    config_hash: string
-    config_raw: object
+    identifier: string
+    params: string
     from_timestamp: Date
     to_timestamp: Date
-    last_synced_timestamp: Date
+    last_synced_timestamp: Date | undefined
   }
 
   interface IndexerStateRow {

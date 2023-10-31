@@ -1,11 +1,12 @@
 import { assert } from '@l2beat/backend-tools'
 import { BigQueryClient } from '@l2beat/shared'
-import { hashJson, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { Project } from '../../model'
 import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
+import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
@@ -107,10 +108,7 @@ export function mergeConfigs(
       .filter(notUndefined)
       .map((t) => {
         const config = configs.find(
-          (c) =>
-            c.projectId === t.projectId &&
-            c.configHash ===
-              hashJson([t.from.toString(), t.to.toString()]).toString(),
+          (c) => c.identifier === LivenessConfigurationIdentifier(t),
         )
         assert(config, 'Config should not be undefined there')
 
@@ -125,13 +123,7 @@ export function mergeConfigs(
       .filter(notUndefined)
       .map((t) => {
         const config = configs.find(
-          (c) =>
-            c.projectId === t.projectId &&
-            c.configHash ===
-              hashJson([
-                t.address.toString(),
-                t.selector.toString(),
-              ]).toString(),
+          (c) => c.identifier === LivenessConfigurationIdentifier(t),
         )
         assert(config, 'Config should not be undefined there')
 

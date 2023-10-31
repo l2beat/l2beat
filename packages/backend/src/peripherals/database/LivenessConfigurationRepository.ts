@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { LivenessConfigurationRow } from 'knex/types/tables'
 
+import { LivenessConfigurationIdentifier } from '../../core/liveness/types/LivenessConfigurationIdentifier'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -9,8 +10,8 @@ export interface LivenessConfigurationRecord {
   id: number
   projectId: ProjectId
   type: LivenessType
-  configHash: string
-  configRaw: object
+  identifier: LivenessConfigurationIdentifier
+  params: string
   fromTimestamp: UnixTime
   toTimestamp: UnixTime
   lastSyncedTimestamp: UnixTime | undefined
@@ -21,14 +22,6 @@ export class LivenessConfigurationRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<LivenessConfigurationRepository>>(this)
-  }
-
-  async getByConfigHash(
-    config_hash: string,
-  ): Promise<LivenessConfigurationRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('liveness_configuration').where({ config_hash })
-    return rows.map(toRecord)
   }
 
   async getAll(): Promise<LivenessConfigurationRecord[]> {
@@ -72,11 +65,13 @@ function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
     id: row.id,
     projectId: ProjectId(row.project_id),
     type: LivenessType(row.type),
-    configHash: row.config_hash,
-    configRaw: row.config_raw,
+    identifier: LivenessConfigurationIdentifier.unsafe(row.identifier),
+    params: row.params,
     fromTimestamp: UnixTime.fromDate(row.from_timestamp),
     toTimestamp: UnixTime.fromDate(row.to_timestamp),
-    lastSyncedTimestamp: UnixTime.fromDate(row.last_synced_timestamp),
+    lastSyncedTimestamp: row.last_synced_timestamp
+      ? UnixTime.fromDate(row.last_synced_timestamp)
+      : undefined,
   }
 }
 
@@ -86,10 +81,12 @@ function toRow(
   return {
     project_id: record.projectId.toString(),
     type: record.type,
-    config_hash: record.configHash,
-    config_raw: record.configRaw,
+    identifier: record.identifier.toString(),
+    params: record.params,
     from_timestamp: record.fromTimestamp.toDate(),
     to_timestamp: record.toTimestamp.toDate(),
-    last_synced_timestamp: record.lastSyncedTimestamp.toDate(),
+    last_synced_timestamp: record.lastSyncedTimestamp
+      ? record.lastSyncedTimestamp.toDate()
+      : undefined,
   }
 }

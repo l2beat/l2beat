@@ -35,6 +35,10 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
+    // add missing liveness configs to the database
+    // fromTimestamp, -- safeguard configuration changes to earlier start times
+    // toTimestamp? -- delete superfluous records so they don't appear in query results
+    // there cannot be two same hashes in one project, write a test for it, this can be solved via including sinceTimestamp probably
     const oldConfigHash = await this.stateRepository.findConfigHash(
       this.indexerId,
     )
