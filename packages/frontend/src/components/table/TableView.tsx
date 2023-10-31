@@ -224,19 +224,19 @@ function DataCell<T>(props: {
     'h-full w-full items-center',
     props.columnConfig.alignRight && 'justify-end',
     props.columnConfig.alignCenter && 'justify-center',
+    hasPaddingRight &&
+      !props.groupOptions?.isLast &&
+      'pr-3 group-last/data-cell:last:pr-0 md:pr-4',
   )
 
   return (
     <>
       <td
         className={cx(
-          'h-9 md:h-14',
+          'group/data-cell h-9 md:h-14',
           props.columnConfig.minimalWidth && 'w-0',
           props.groupOptions?.isFirst && '!pl-6',
           props.groupOptions?.isLast && '!pr-6',
-          hasPaddingRight &&
-            !props.groupOptions?.isLast &&
-            'pr-3 last:pr-0 md:pr-4',
         )}
       >
         <a href={idHref} className={cx(childClassName, 'flex')}>
