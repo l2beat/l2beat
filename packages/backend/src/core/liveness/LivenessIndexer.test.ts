@@ -17,11 +17,7 @@ import {
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient, mergeConfigs } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
-import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
+import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
@@ -230,7 +226,7 @@ function getFilteredConfigs(
   transfers: LivenessTransfer[]
   functionCalls: LivenessFunctionCall[]
 } {
-  const config: LivenessConfig = mergeConfigs(projects)
+  const config = mergeConfigs(projects)
 
   const transfers = config.transfers.filter((c) =>
     isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),

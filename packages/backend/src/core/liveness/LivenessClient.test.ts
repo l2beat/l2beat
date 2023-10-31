@@ -1,19 +1,16 @@
 import { BigQueryClient } from '@l2beat/shared'
 import {
   EthereumAddress,
-  LivenessType,
+  hashJson,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../model'
+import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessClient, mergeConfigs } from './LivenessClient'
-import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
+import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
 import {
   adjustToForBigqueryCall,
   getFunctionCallQuery,
@@ -37,6 +34,7 @@ describe(LivenessClient.name, () => {
 
       const { data, to } = await livenessClient.getLivenessData(
         PROJECTS,
+        LIVENESS_CONFIGURATIONS,
         FROM,
         TO,
       )
@@ -45,6 +43,7 @@ describe(LivenessClient.name, () => {
       const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
       const { transfers, functionCalls } = getFilteredConfigs(
         PROJECTS,
+        LIVENESS_CONFIGURATIONS,
         FROM,
         adjustedTo,
       )
@@ -73,7 +72,13 @@ describe(LivenessClient.name, () => {
       const bigquery = getMockBiqQuery(TRANSFER_RESPONSE)
 
       const to = FROM.add(1, 'hours')
-      const { transfers } = getFilteredConfigs(PROJECTS, FROM, to)
+      const { transfers } = getFilteredConfigs(
+        PROJECTS,
+
+        LIVENESS_CONFIGURATIONS,
+        FROM,
+        to,
+      )
 
       const livenessClient = new LivenessClient(bigquery)
       const result = await livenessClient.getTransfers(transfers, FROM, to)
@@ -100,7 +105,12 @@ describe(LivenessClient.name, () => {
       const bigquery = getMockBiqQuery(FUNCTIONS_RESPONSE)
 
       const to = FROM.add(1, 'hours')
-      const { functionCalls } = getFilteredConfigs(PROJECTS, FROM, to)
+      const { functionCalls } = getFilteredConfigs(
+        PROJECTS,
+        LIVENESS_CONFIGURATIONS,
+        FROM,
+        to,
+      )
 
       const livenessClient = new LivenessClient(bigquery)
       const result = await livenessClient.getFunctionCalls(
@@ -142,6 +152,14 @@ const PROJECTS: Project[] = [
     type: 'layer2',
     livenessConfig: {
       transfers: [
+        // this one should not be used
+        {
+          projectId: ProjectId('project1'),
+          from: EthereumAddress.random(),
+          to: EthereumAddress.random(),
+          type: 'DA',
+          sinceTimestamp: FROM.add(-360, 'days'),
+        },
         // this one should not be used
         {
           projectId: ProjectId('project1'),
@@ -222,6 +240,144 @@ const PROJECTS: Project[] = [
   },
 ]
 
+const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.transfers[0].type,
+    configHash: hashJson([
+      PROJECTS[0].livenessConfig!.transfers[0].from.toString(),
+      PROJECTS[0].livenessConfig!.transfers[0].to.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[0].livenessConfig!.transfers[0],
+      to: PROJECTS[0].livenessConfig!.transfers[0],
+    },
+    fromTimestamp: PROJECTS[0].livenessConfig!.transfers[0].sinceTimestamp,
+    toTimestamp: PROJECTS[0].livenessConfig!.transfers[0].sinceTimestamp,
+    lastSyncedTimestamp: FROM.add(1, 'days'),
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.transfers[1].type,
+    configHash: hashJson([
+      PROJECTS[0].livenessConfig!.transfers[1].from.toString(),
+      PROJECTS[0].livenessConfig!.transfers[1].to.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[0].livenessConfig!.transfers[1],
+      to: PROJECTS[0].livenessConfig!.transfers[1],
+    },
+    fromTimestamp: PROJECTS[0].livenessConfig!.transfers[1].sinceTimestamp,
+    toTimestamp: PROJECTS[0].livenessConfig!.transfers[1].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.transfers[2].type,
+    configHash: hashJson([
+      PROJECTS[0].livenessConfig!.transfers[2].from.toString(),
+      PROJECTS[0].livenessConfig!.transfers[2].to.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[0].livenessConfig!.transfers[2],
+      to: PROJECTS[0].livenessConfig!.transfers[2],
+    },
+    fromTimestamp: PROJECTS[0].livenessConfig!.transfers[2].sinceTimestamp,
+    toTimestamp: PROJECTS[0].livenessConfig!.transfers[2].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.functionCalls[0].type,
+    configHash: hashJson([
+      PROJECTS[0].livenessConfig!.functionCalls[0].address.toString(),
+      PROJECTS[0].livenessConfig!.functionCalls[0].selector.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[0].livenessConfig!.functionCalls[0],
+      to: PROJECTS[0].livenessConfig!.functionCalls[0],
+    },
+    fromTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].sinceTimestamp,
+    toTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.functionCalls[1].type,
+    configHash: hashJson([
+      PROJECTS[0].livenessConfig!.functionCalls[1].address.toString(),
+      PROJECTS[0].livenessConfig!.functionCalls[1].selector.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[0].livenessConfig!.functionCalls[1],
+      to: PROJECTS[0].livenessConfig!.functionCalls[1],
+    },
+    fromTimestamp: PROJECTS[0].livenessConfig!.functionCalls[1].sinceTimestamp,
+    toTimestamp: PROJECTS[0].livenessConfig!.functionCalls[1].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.transfers[0].type,
+    configHash: hashJson([
+      PROJECTS[1].livenessConfig!.transfers[0].from.toString(),
+      PROJECTS[1].livenessConfig!.transfers[0].to.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[1].livenessConfig!.transfers[0],
+      to: PROJECTS[1].livenessConfig!.transfers[0],
+    },
+    fromTimestamp: PROJECTS[1].livenessConfig!.transfers[0].sinceTimestamp,
+    toTimestamp: PROJECTS[1].livenessConfig!.transfers[0].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.transfers[1].type,
+    configHash: hashJson([
+      PROJECTS[1].livenessConfig!.transfers[1].from.toString(),
+      PROJECTS[1].livenessConfig!.transfers[1].to.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[1].livenessConfig!.transfers[1],
+      to: PROJECTS[1].livenessConfig!.transfers[1],
+    },
+    fromTimestamp: PROJECTS[1].livenessConfig!.transfers[1].sinceTimestamp,
+    toTimestamp: PROJECTS[1].livenessConfig!.transfers[1].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.functionCalls[0].type,
+    configHash: hashJson([
+      PROJECTS[1].livenessConfig!.functionCalls[0].address.toString(),
+      PROJECTS[1].livenessConfig!.functionCalls[0].selector.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[1].livenessConfig!.functionCalls[0],
+      to: PROJECTS[1].livenessConfig!.functionCalls[0],
+    },
+    fromTimestamp: PROJECTS[1].livenessConfig!.functionCalls[0].sinceTimestamp,
+    toTimestamp: PROJECTS[1].livenessConfig!.functionCalls[0].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.functionCalls[1].type,
+    configHash: hashJson([
+      PROJECTS[1].livenessConfig!.functionCalls[1].address.toString(),
+      PROJECTS[1].livenessConfig!.functionCalls[1].selector.toString(),
+    ]).toString(),
+    configRaw: {
+      from: PROJECTS[1].livenessConfig!.functionCalls[1],
+      to: PROJECTS[1].livenessConfig!.functionCalls[1],
+    },
+    fromTimestamp: PROJECTS[1].livenessConfig!.functionCalls[1].sinceTimestamp,
+    toTimestamp: PROJECTS[1].livenessConfig!.functionCalls[1].sinceTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+].map((c, i) => ({ ...c, id: i }))
+
 const TRANSFER_RESPONSE = [
   {
     block_number: 1,
@@ -245,18 +401,16 @@ const TRANSFER_RESPONSE = [
 
 const TRANSFERS_EXPECTED = [
   {
-    projectId: ProjectId('project1'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 1,
     txHash: '0x123456',
-    type: LivenessType('DA'),
+    livenessConfigurationId: 2,
   },
   {
-    projectId: ProjectId('project2'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 2,
     txHash: '0x123456',
-    type: LivenessType('STATE'),
+    livenessConfigurationId: 5,
   },
 ]
 
@@ -283,18 +437,16 @@ const FUNCTIONS_RESPONSE = [
 
 const FUNCTION_EXPECTED = [
   {
-    projectId: ProjectId('project1'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 1,
     txHash: '0x123456',
-    type: LivenessType('DA'),
+    livenessConfigurationId: 4,
   },
   {
-    projectId: ProjectId('project2'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 2,
     txHash: '0x123456',
-    type: LivenessType('STATE'),
+    livenessConfigurationId: 8,
   },
 ]
 
@@ -306,20 +458,33 @@ function getMockBiqQuery(response: unknown) {
 
 function getFilteredConfigs(
   projects: Project[],
+  configs: LivenessConfigurationRecord[],
   from: UnixTime,
   to: UnixTime,
 ): {
   transfers: LivenessTransfer[]
   functionCalls: LivenessFunctionCall[]
 } {
-  const config: LivenessConfig = mergeConfigs(projects)
+  const config = mergeConfigs(projects, configs)
 
   const transfers = config.transfers.filter((c) =>
-    isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
+    isTimestampInRange(
+      c.sinceTimestamp,
+      c.untilTimestamp,
+      c.latestSyncedTimestamp,
+      from,
+      to,
+    ),
   )
 
   const functionCalls = config.functionCalls.filter((c) =>
-    isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
+    isTimestampInRange(
+      c.sinceTimestamp,
+      c.untilTimestamp,
+      c.latestSyncedTimestamp,
+      from,
+      to,
+    ),
   )
 
   return {

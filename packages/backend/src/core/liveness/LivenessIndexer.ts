@@ -5,6 +5,10 @@ import { ChildIndexer } from '@l2beat/uif'
 import { Project } from '../../model'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import {
+  LivenessConfigurationRecord,
+  LivenessConfigurationRepository,
+} from '../../peripherals/database/LivenessConfigurationRepository'
+import {
   LivenessRecord,
   LivenessRepository,
 } from '../../peripherals/database/LivenessRepository'
@@ -23,6 +27,7 @@ export class LivenessIndexer extends ChildIndexer {
     private readonly livenessClient: LivenessClient,
     private readonly stateRepository: IndexerStateRepository,
     private readonly livenessRepository: LivenessRepository,
+    private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
@@ -49,11 +54,15 @@ export class LivenessIndexer extends ChildIndexer {
     const fromUnixTime = new UnixTime(from)
     const toUnixTime = new UnixTime(to)
 
+    let configs: LivenessConfigurationRecord[] | undefined
     let data: { data: LivenessRecord[]; to: UnixTime } | undefined
 
     try {
+      configs = await this.livenessConfigurationRepository.getAll()
+
       data = await this.livenessClient.getLivenessData(
         this.projects,
+        configs,
         fromUnixTime,
         toUnixTime,
       )
@@ -63,8 +72,18 @@ export class LivenessIndexer extends ChildIndexer {
     }
 
     assert(data, 'Liveness data should not be undefined there')
+    assert(configs, 'Configs should not be undefined there')
 
+    // TODO: run in a transaction
     await this.livenessRepository.addMany(data.data)
+    await this.livenessConfigurationRepository.updateMany(
+      configs.map((c) => {
+        // TODO: fix typescript issue
+        assert(data, 'Liveness data should not be undefined there')
+
+        return { ...c, latestSyncedTimestamp: data.to }
+      }),
+    )
 
     return Promise.resolve(data.to.toNumber())
   }

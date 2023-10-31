@@ -13,7 +13,7 @@ export interface LivenessConfigurationRecord {
   configRaw: object
   fromTimestamp: UnixTime
   toTimestamp: UnixTime
-  lastSyncedTimestamp: UnixTime
+  lastSyncedTimestamp: UnixTime | undefined
 }
 
 // TODO: add index when we will write controler
