@@ -96,6 +96,46 @@ describe(TaskQueue.name, () => {
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
+  it('notifies after configured threshold is reached', async () => {
+    const eventTracker = mockObject<EventTracker<string>>({
+      record: mockFn().returns(undefined),
+    })
+
+    const error = new Error('oops')
+
+    async function execute() {
+      throw error
+    }
+
+    const logger = mockObject<Logger>({
+      error: mockFn().returns(undefined),
+      warn: mockFn().returns(undefined),
+      debug: mockFn().returns(undefined),
+      info: mockFn().returns(undefined),
+    })
+
+    const queue = new TaskQueue(execute, logger, {
+      shouldRetry: Retries.exponentialBackOff({
+        stepMs: 1,
+        maxAttempts: 5,
+        maxDistanceMs: Infinity,
+        notifyAfterAttempts: 2, // 5 - 2 = 3 (notifications)
+      }),
+      metricsId: 'test',
+      eventTracker,
+    })
+    queue.addToBack(0)
+
+    await time.runAllAsync()
+
+    // 3 notifications + 1 error when stopping queue
+    expect(logger.error).toHaveBeenCalledTimes(4)
+    expect(logger.error).toHaveBeenNthCalledWith(1, error)
+    expect(logger.error).toHaveBeenNthCalledWith(2, error)
+    expect(logger.error).toHaveBeenNthCalledWith(3, error)
+    expect(eventTracker.record).toHaveBeenCalledWith('error')
+  })
+
   it('can add jobs to front', async () => {
     const completed: number[] = []
 

@@ -164,7 +164,6 @@ export class TaskQueue<T> {
       return
     }
 
-    // TODO: test this line
     if (result.notify) {
       this.logger.error(error)
     }
