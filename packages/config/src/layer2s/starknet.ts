@@ -164,6 +164,7 @@ export const starknet: Layer2 = {
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
+        'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg',
       ],
     },
     activityDataSource: 'Blockchain RPC',
