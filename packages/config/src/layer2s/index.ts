@@ -38,6 +38,7 @@ import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { palm } from './palm'
+import { paradex } from './paradex'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -99,6 +100,7 @@ export const layer2s: Layer2[] = [
   omgnetwork,
   optimism,
   palm,
+  paradex,
   polygonmiden,
   polygonzkevm,
   polygonpos2,
