@@ -32,30 +32,58 @@ export default meta
 type Story = StoryObj<typeof AnomalyIndicator>
 
 const anomalies = [
-  { isAnomaly: true, timestamp: 1696758992, durationInMinutes: 120 } as const,
-  { isAnomaly: true, timestamp: 1697277392, durationInMinutes: 20 } as const,
+  {
+    isAnomaly: true,
+    timestamp: 1696758992,
+    durationInSeconds: 120 * 60,
+  } as const,
+  {
+    isAnomaly: true,
+    timestamp: 1697277392,
+    durationInSeconds: 20 * 60,
+  } as const,
   { isAnomaly: false } as const,
-  { isAnomaly: true, timestamp: 1697363792, durationInMinutes: 1440 } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: true, timestamp: 1697622992, durationInMinutes: 180 } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: true, timestamp: 1698054992, durationInMinutes: 45 } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: true, timestamp: 1698227792, durationInMinutes: 15 } as const,
+  {
+    isAnomaly: true,
+    timestamp: 1697363792,
+    durationInSeconds: 1440 * 60,
+  } as const,
   { isAnomaly: false } as const,
   { isAnomaly: false } as const,
   { isAnomaly: false } as const,
+  {
+    isAnomaly: true,
+    timestamp: 1697622992,
+    durationInSeconds: 180 * 60,
+  } as const,
   { isAnomaly: false } as const,
   { isAnomaly: false } as const,
-  { isAnomaly: true, timestamp: 1698663392, durationInMinutes: 75 } as const,
+  { isAnomaly: false } as const,
+  {
+    isAnomaly: true,
+    timestamp: 1698054992,
+    durationInSeconds: 45 * 60,
+  } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  {
+    isAnomaly: true,
+    timestamp: 1698227792,
+    durationInSeconds: 15 * 60,
+  } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  { isAnomaly: false } as const,
+  {
+    isAnomaly: true,
+    timestamp: 1698663392,
+    durationInSeconds: 75 * 60,
+  } as const,
   { isAnomaly: false } as const,
   { isAnomaly: false } as const,
   { isAnomaly: false } as const,
@@ -65,12 +93,6 @@ const anomalies = [
 ]
 
 export const Default: Story = {
-  args: {
-    anomalies: anomalies,
-  },
-}
-
-export const WithTooltip: Story = {
   args: {
     anomalies: anomalies,
   },

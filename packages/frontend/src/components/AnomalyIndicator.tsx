@@ -14,7 +14,7 @@ type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
 interface AnomalyEntry {
   isAnomaly: true
   timestamp: number
-  durationInMinutes: number
+  durationInSeconds: number
 }
 
 interface NonAnomalyEntry {
@@ -25,7 +25,7 @@ export function AnomalyIndicator({ anomalies }: Props) {
   if (anomalies.length === 0) {
     return (
       <div className="w-min select-none text-center">
-        <div className="mx-auto text-gray-50">No data</div>
+        <div className="mx-auto text-gray-500 dark:text-gray-50">No data</div>
         <div className="flex h-6 gap-x-0.5">
           {range(30).map(() => (
             <div className="h-0.5 w-0.5 rounded-full bg-neutral-700" />
@@ -69,7 +69,7 @@ function AnomalyTooltip(props: { anomalies: AnomalyEntry[] }) {
   return (
     <div>
       <span>Anomalies from last 30 days:</span>
-      <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-50">
+      <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {props.anomalies.map((anomaly) => (
           <li>
             <span>
@@ -78,7 +78,7 @@ function AnomalyTooltip(props: { anomalies: AnomalyEntry[] }) {
                 longMonthName: true,
               })}
             </span>
-            <DurationRow durationInMinutes={anomaly.durationInMinutes} />
+            <DurationRow durationInSeconds={anomaly.durationInSeconds} />
           </li>
         ))}
       </ul>
@@ -86,18 +86,23 @@ function AnomalyTooltip(props: { anomalies: AnomalyEntry[] }) {
   )
 }
 
-function DurationRow(props: { durationInMinutes: number }) {
-  const hours = Math.floor(props.durationInMinutes / 60)
+function DurationRow(props: { durationInSeconds: number }) {
+  const minutes = Math.floor(props.durationInSeconds / 60)
+  const hours = Math.floor(minutes / 60)
   const days = Math.floor(hours / 24)
 
   const duration =
     days > 0 ? (
-      <span className="text-orange-500">{days} days</span>
+      <span className="text-orange-600 dark:text-orange-500">{days} days</span>
     ) : hours > 0 ? (
-      <span className="text-yellow-100">{hours} hours</span>
+      <span className="text-yellow-700 dark:text-yellow-100">
+        {hours} hours
+      </span>
     ) : (
-      <span className="text-green-450">{props.durationInMinutes} minutes</span>
+      <span className="text-green-300 dark:text-green-450">
+        {minutes} minutes
+      </span>
     )
 
-  return <div className="text-white">Duration: {duration}</div>
+  return <div className="text-black dark:text-white">Duration: {duration}</div>
 }
