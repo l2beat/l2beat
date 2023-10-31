@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import range from 'lodash/range'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../icons'
@@ -7,12 +8,16 @@ import { SectionId } from '../project/sectionId'
 
 interface Props<T> {
   items: T[]
-  columns: ColumnConfig<T>[]
+  columnsConfig: ColumnConfig<T>[]
   rows?: RowConfig<T>
   rerenderOnLoad?: boolean
 }
 
-export interface ColumnConfig<T> {
+export type ColumnConfig<T> =
+  | (SingleColumnConfig<T> & { type?: never })
+  | GroupedColumnConfig<T>
+
+interface SingleColumnConfig<T> {
   name: ReactNode
   shortName?: ReactNode
   alignRight?: true
@@ -26,6 +31,13 @@ export interface ColumnConfig<T> {
   highlight?: boolean
 }
 
+export interface GroupedColumnConfig<T> {
+  type: 'group'
+  columns: SingleColumnConfig<T>[]
+  title: string
+  className?: string
+}
+
 export interface RowConfig<T> {
   getProps: (
     value: T,
@@ -34,14 +46,16 @@ export interface RowConfig<T> {
     Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
+const highlightedColumnClassNames =
+  'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
+
 export function TableView<T>({
   items,
-  columns,
+  columnsConfig,
   rows,
   rerenderOnLoad,
 }: Props<T>) {
-  const highlightedColumnClassNames =
-    'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
+  const groupedColumns = getGroupedColumns(columnsConfig)
 
   return (
     <div
@@ -53,46 +67,33 @@ export function TableView<T>({
       data-rerender-on-load={rerenderOnLoad}
     >
       <table className="w-full border-collapse text-left group-data-[state=empty]/tableview:hidden">
+        {groupedColumns && <ColGroup groupedColumns={groupedColumns} />}
         <thead>
+          {groupedColumns && (
+            <GroupedColumnsHeaders groupedColumns={groupedColumns} />
+          )}
           <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
-            {columns.map((column, i) => {
-              const isLastColumn = i === columns.length - 1
-              const hasPaddingRight = !column.noPaddingRight && !isLastColumn
-              return (
-                <th
-                  key={i}
-                  className={cx(
-                    'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
-                    column.minimalWidth && 'w-0',
-                    hasPaddingRight && 'pr-3 md:pr-4',
-                    column.headClassName,
-                    column.highlight && highlightedColumnClassNames,
-                  )}
-                >
-                  <div
-                    className={cx(
-                      'flex flex-row items-center gap-1.5',
-                      column.alignRight && 'justify-end',
-                      column.alignCenter && 'justify-center',
-                    )}
-                  >
-                    <span className={cx(column.shortName && 'hidden md:block')}>
-                      {column.name}
-                    </span>
-                    {column.shortName && (
-                      <span className="md:hidden">{column.shortName}</span>
-                    )}
-                    {column.tooltip && (
-                      <span
-                        className="Tooltip -translate-y-px md:translate-y-0"
-                        title={column.tooltip}
-                      >
-                        <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
-                      </span>
-                    )}
-                  </div>
-                </th>
-              )
+            {columnsConfig.map((columnConfig, i) => {
+              if (columnConfig.type === 'group') {
+                return columnConfig.columns.map((col, colIndex) => {
+                  const isFirstInGroup = colIndex === 0
+                  const isLastInGroup =
+                    colIndex === columnConfig.columns.length - 1
+                  const placeInGroup = isFirstInGroup
+                    ? 'first'
+                    : isLastInGroup
+                    ? 'last'
+                    : undefined
+                  return (
+                    <ColumnHeader
+                      column={col}
+                      placeInGroup={placeInGroup}
+                      key={`${i}:${colIndex}`}
+                    />
+                  )
+                })
+              }
+              return <ColumnHeader column={columnConfig} key={i} />
             })}
           </tr>
         </thead>
@@ -113,33 +114,37 @@ export function TableView<T>({
                   rowClassName,
                 )}
               >
-                {columns.map((column, j) => {
-                  const isLastColumn = j === columns.length - 1
-                  const hasPaddingRight =
-                    !column.noPaddingRight && !isLastColumn
-                  const idHref =
-                    column.idHref && href ? `${href}#${column.idHref}` : href
-
-                  const childClassName = cx(
-                    'h-full w-full items-center',
-                    column.alignRight && 'justify-end',
-                    column.alignCenter && 'justify-center',
-                    hasPaddingRight && 'pr-3 md:pr-4',
-                  )
-
+                {columnsConfig.map((columnConfig, j) => {
+                  if (columnConfig.type === 'group') {
+                    return columnConfig.columns.map((col, colIndex) => {
+                      const isFirstInGroup = colIndex === 0
+                      const isLastInGroup =
+                        colIndex === columnConfig.columns.length - 1
+                      const placeInGroup = isFirstInGroup
+                        ? 'first'
+                        : isLastInGroup
+                        ? 'last'
+                        : undefined
+                      return (
+                        <DataCell
+                          columnConfig={col}
+                          item={item}
+                          href={href}
+                          rowIndex={i}
+                          placeInGroup={placeInGroup}
+                          key={`${j}:${colIndex}`}
+                        />
+                      )
+                    })
+                  }
                   return (
-                    <td
+                    <DataCell
+                      columnConfig={columnConfig}
+                      item={item}
+                      href={href}
+                      rowIndex={i}
                       key={j}
-                      className={cx(
-                        'h-9 md:h-14',
-                        column.minimalWidth && 'w-0',
-                        column.highlight && highlightedColumnClassNames,
-                      )}
-                    >
-                      <a href={idHref} className={cx(childClassName, 'flex')}>
-                        {column.getValue(item, i)}
-                      </a>
-                    </td>
+                    />
                   )
                 })}
               </tr>
@@ -156,4 +161,178 @@ export function TableView<T>({
       </div>
     </div>
   )
+}
+
+function ColumnHeader<T>(props: {
+  column: SingleColumnConfig<T>
+  placeInGroup?: 'first' | 'last'
+}) {
+  const hasPaddingRight = !props.column.noPaddingRight
+  return (
+    <>
+      <th
+        className={cx(
+          'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
+          props.column.minimalWidth && 'w-0',
+          hasPaddingRight &&
+            props.placeInGroup !== 'last' &&
+            'pr-3 last:pr-0 md:pr-4',
+          props.placeInGroup === 'first' && '!pl-6',
+          props.placeInGroup === 'last' && '!pr-6',
+          props.column.headClassName,
+          props.column.highlight && highlightedColumnClassNames,
+        )}
+      >
+        <div
+          className={cx(
+            'flex flex-row items-center gap-1.5',
+            props.column.alignRight && 'justify-end',
+            props.column.alignCenter && 'justify-center',
+          )}
+        >
+          <span className={cx(props.column.shortName && 'hidden md:block')}>
+            {props.column.name}
+          </span>
+          {props.column.shortName && (
+            <span className="md:hidden">{props.column.shortName}</span>
+          )}
+          {props.column.tooltip && (
+            <span
+              className="Tooltip -translate-y-px md:translate-y-0"
+              title={props.column.tooltip}
+            >
+              <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+            </span>
+          )}
+        </div>
+      </th>
+      {props.placeInGroup === 'last' && <th className="pr-3 md:pr-4" />}
+    </>
+  )
+}
+
+function DataCell<T>(props: {
+  columnConfig: SingleColumnConfig<T>
+  item: T
+  rowIndex: number
+  href?: string
+  placeInGroup?: 'first' | 'last'
+}) {
+  const hasPaddingRight = !props.columnConfig.noPaddingRight
+  const idHref =
+    props.columnConfig.idHref && props.href
+      ? `${props.href}#${props.columnConfig.idHref}`
+      : props.href
+
+  const childClassName = cx(
+    'h-full w-full items-center',
+    props.columnConfig.alignRight && 'justify-end',
+    props.columnConfig.alignCenter && 'justify-center',
+    hasPaddingRight && props.placeInGroup !== 'last' && 'pr-3 md:pr-4',
+  )
+
+  return (
+    <>
+      <td
+        className={cx(
+          'h-9 md:h-14',
+          props.columnConfig.minimalWidth && 'w-0',
+          props.columnConfig.highlight && highlightedColumnClassNames,
+          props.placeInGroup === 'first' && '!pl-6',
+          props.placeInGroup === 'last' && '!pr-6',
+        )}
+      >
+        <a href={idHref} className={cx(childClassName, 'flex')}>
+          {props.columnConfig.getValue(props.item, props.rowIndex)}
+        </a>
+      </td>
+      {props.placeInGroup === 'last' && (
+        <td>
+          <a href={idHref} className={cx(childClassName, 'flex')} />
+        </td>
+      )}
+    </>
+  )
+}
+
+function ColGroup(props: { groupedColumns: GroupedColumn[] }) {
+  return (
+    <>
+      {props.groupedColumns.map((groupedColumn, i) => {
+        if (groupedColumn.type === 'fill') {
+          return (
+            <colgroup key={i}>
+              <col />
+            </colgroup>
+          )
+        }
+        return (
+          <colgroup key={i} className={groupedColumn.className}>
+            {range(groupedColumn.span).map((_, i) => (
+              <col key={i} />
+            ))}
+          </colgroup>
+        )
+      })}
+    </>
+  )
+}
+
+function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
+  return (
+    <tr className="uppercase leading-none">
+      {props.groupedColumns.map((groupedColumn, i) => {
+        if (groupedColumn.type === 'fill') {
+          return <th key={i} />
+        }
+        return (
+          <th
+            colSpan={groupedColumn.span}
+            key={i}
+            className="rounded-t-lg px-6 pt-4"
+          >
+            {groupedColumn.title}
+          </th>
+        )
+      })}
+    </tr>
+  )
+}
+
+type GroupedColumn =
+  | {
+      type: 'group'
+      title: string
+      span: number
+      className?: string
+    }
+  | {
+      type: 'fill'
+    }
+
+function getGroupedColumns<T>(
+  columnConfigs: ColumnConfig<T>[],
+): GroupedColumn[] | undefined {
+  if (!columnConfigs.some((columnConfig) => columnConfig.type === 'group')) {
+    return undefined
+  }
+
+  return columnConfigs.flatMap((columnConfig) => {
+    if (columnConfig.type === 'group') {
+      return [
+        {
+          type: 'group',
+          title: columnConfig.title,
+          span: columnConfig.columns.length,
+          className: columnConfig.className,
+        } as const,
+        {
+          type: 'fill',
+        } as const,
+      ]
+    }
+    return {
+      type: 'fill',
+    } as const
+  })
 }

@@ -20,7 +20,7 @@ import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
-export function getActiveScalingTvlColumns() {
+export function getActiveScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -106,7 +106,7 @@ export function getActiveScalingTvlColumns() {
   return columns
 }
 
-export function getScalingDetailedTvlColumns() {
+export function getScalingDetailedTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
     {
       name: '#',
@@ -195,7 +195,7 @@ export function getScalingDetailedTvlColumns() {
   return columns
 }
 
-export function getUpcomingScalingTvlColumns() {
+export function getUpcomingScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -230,7 +230,7 @@ export function getUpcomingScalingTvlColumns() {
   return columns
 }
 
-export function getArchivedScalingTvlColumns() {
+export function getArchivedScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -295,7 +295,7 @@ export function getArchivedScalingTvlColumns() {
   return columns
 }
 
-export function getScalingRiskColumns() {
+export function getScalingRiskColumnsConfig() {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: '#',
@@ -341,7 +341,7 @@ export function getScalingRiskColumns() {
   return columns
 }
 
-export function getScalingActivityColumns() {
+export function getScalingActivityColumnsConfig() {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
       name: '#',
