@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { onlyDesktopModes } from '../../.storybook/modes'
 import { configureTooltips } from '../scripts/configureTooltips'
 import { AnomalyIndicator } from './AnomalyIndicator'
 import { Tooltip } from './Tooltip'
@@ -21,6 +22,11 @@ const meta: Meta<typeof AnomalyIndicator> = {
       )
     },
   ],
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 }
 export default meta
 type Story = StoryObj<typeof AnomalyIndicator>

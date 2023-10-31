@@ -27,3 +27,8 @@ export const allModes: Record<ModeKey, Mode> = {
     viewport: 'desktop',
   },
 }
+
+export const onlyDesktopModes = {
+  'light desktop': allModes['light desktop'],
+  'dark desktop': allModes['dark desktop'],
+}
