@@ -1,6 +1,6 @@
 import {
-  DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
+  TvlApiResponse,
 } from '@l2beat/shared-pure'
 import React from 'react'
 
@@ -13,7 +13,7 @@ import { ProjectTvlBreakdownPage } from './view/ProjectTvlBreakdownPage'
 export function getProjectTvlBreakdownPages(
   config: Config,
   pagesData: {
-    tvlApiResponse: DetailedTvlApiResponse
+    tvlApiResponse: TvlApiResponse
     tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse
   },
 ) {
