@@ -1,3 +1,22 @@
+# Diff at Tue, 31 Oct 2023 07:30:26 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@553c8048735381be48fc993e73c034e7ed45f44c
+
+## Description
+
+FeeVaultMultisig owner change.
+
+## Watched changes
+
+```diff
+    contract FeeVaultMultisig (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+      values.getOwners.1:
+-        "0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59"
++        "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0"
+    }
+```
+
 # Diff at Mon, 30 Oct 2023 09:59:06 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
