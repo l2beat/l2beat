@@ -53,7 +53,7 @@ describe('Retries', () => {
       const shouldRetry = exponentialBackOff({
         stepMs: 1000,
         maxAttempts: Infinity,
-        notifyAfterAttempts: 3,
+        notifyAfterAttempts: 2,
         maxDistanceMs: Infinity,
       })
       const results = [1, 2, 3]
