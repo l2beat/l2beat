@@ -37,6 +37,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 items={activeProjects}
                 columnsConfig={columns}
                 rows={rows}
+                rerenderOnLoad
               />
             ),
             itemsCount: activeProjects.length,
@@ -51,6 +52,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 items={archivedProjects}
                 columnsConfig={columns}
                 rows={rows}
+                rerenderOnLoad
               />
             ),
             itemsCount: archivedProjects.length,
