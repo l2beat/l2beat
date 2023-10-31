@@ -27,6 +27,7 @@ async function main() {
     const server = app.listen(1234, () => resolve(server))
   })
 
+  //TODO: Check this
   const slugs = [...layer2s, ...bridges]
     .map((x) => x.display.slug)
     .filter((slug) =>

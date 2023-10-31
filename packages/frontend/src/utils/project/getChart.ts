@@ -4,8 +4,8 @@ import {
   AssetId,
   AssetType,
   ChainId,
-  DetailedTvlApiResponse,
   ProjectId,
+  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../build/config'
@@ -16,7 +16,7 @@ import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
   project: Layer2 | Bridge,
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
@@ -41,7 +41,7 @@ export function getChart(
 
 export function getTokens(
   projectId: ProjectId,
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   isLayer2: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens

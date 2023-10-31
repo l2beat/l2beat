@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import {
-  DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
+  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
@@ -16,7 +16,7 @@ export function getProps(
   project: Layer2,
   config: Config,
   pagesData: {
-    tvlApiResponse: DetailedTvlApiResponse
+    tvlApiResponse: TvlApiResponse
     tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse
   },
 ): Wrapped<TvlBreakdownPageProps> {

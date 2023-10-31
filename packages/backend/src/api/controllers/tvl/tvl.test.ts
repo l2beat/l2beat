@@ -8,9 +8,9 @@ import {
   getProjectTokensCharts,
   groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
-} from './detailedTvl'
+} from './tvl'
 
-describe('detailedTvl', () => {
+describe('tvl', () => {
   describe(groupByProjectIdAndTimestamp.name, () => {
     it('groups reports by project id and timestamp', () => {
       const firstUnixTimestamp = UnixTime.now()

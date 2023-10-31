@@ -1,11 +1,8 @@
-import { DetailedTvlApiResponse, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, TvlApiResponse } from '@l2beat/shared-pure'
 
 export function orderByTvl<
   T extends { id: ProjectId; isArchived?: boolean; isUpcoming?: boolean },
->(
-  projects: T[],
-  tvlApiResponse: Pick<DetailedTvlApiResponse, 'projects'>,
-): T[] {
+>(projects: T[], tvlApiResponse: Pick<TvlApiResponse, 'projects'>): T[] {
   const active = projects.filter(
     (project) => !project.isArchived && !project.isUpcoming,
   )
