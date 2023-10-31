@@ -206,11 +206,13 @@ export class ProviderWithCache extends DiscoveryProvider {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Bytes> {
-    const key = this.buildKey(
-      'getCode',
-      // Ignoring blockNumber here, assuming that code will not change
-      [address],
-    )
+    // Contract code can change at any moment, so we cache *with blockNumber*
+    // see: https://medium.com/coinmonks/dark-side-of-create2-opcode-6b6838a42d71
+    // Another problem is running discovery on a very old block number
+    // when some contract has not been deployed yet:
+    // getCode() would return previously cached value instead of empty code.
+
+    const key = this.buildKey('getCode', [blockNumber, address])
 
     return this.cacheOrFetch(
       key,

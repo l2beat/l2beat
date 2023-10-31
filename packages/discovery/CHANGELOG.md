@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.21.2
+
+### Patch Changes
+
+- Cache getCode() with blockNumber because the code can change
+
 ## 0.21.1
 
 ### Patch Changes
