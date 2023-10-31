@@ -165,7 +165,9 @@ export class ProjectDiscovery {
     return calculateInversion(this.discovery, this.config)
   }
 
-  getOpStackPermissions(): ProjectPermission[] {
+  getOpStackPermissions(
+    overrides?: Record<string, string>,
+  ): ProjectPermission[] {
     const inversion = this.getInversion()
 
     const result: Record<string, Record<string, string[]>> = {}
@@ -178,7 +180,7 @@ export class ProjectDiscovery {
             r.atName === template.role.contract,
         )
         if (role) {
-          const contractKey = contract.name ?? template.role.value
+          const contractKey = contract.name ?? overrides?.[template.role.value] ?? template.role.value
           result[contractKey] ??= {}
           result[contractKey][role.name] ??= []
           result[contractKey][role.name].push(
