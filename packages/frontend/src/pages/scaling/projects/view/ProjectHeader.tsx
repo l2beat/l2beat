@@ -22,7 +22,7 @@ export interface ProjectHeaderProps {
   titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
-  tvlStats?: TvlStats
+  tvlStats: TvlStats
   tpsDaily?: string
   tpsWeeklyChange?: string
   transactionMonthlyCount?: string
