@@ -161,9 +161,7 @@ function ColumnHeader<T>(props: {
         className={cx(
           'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
           props.column.minimalWidth && 'w-0',
-          hasPaddingRight &&
-            !props.groupOptions?.isLast &&
-            'pr-3 last:pr-0 md:pr-4',
+          hasPaddingRight && !props.groupOptions?.isLast && 'pr-3 md:pr-4',
           props.groupOptions?.isFirst && '!pl-6',
           props.groupOptions?.isLast && '!pr-6',
           props.groupOptions?.noGroupTitle &&
@@ -224,7 +222,7 @@ function DataCell<T>(props: {
     'h-full w-full items-center',
     props.columnConfig.alignRight && 'justify-end',
     props.columnConfig.alignCenter && 'justify-center',
-    hasPaddingRight && !props.groupOptions?.isLast && 'pr-3 last:pr-0 md:pr-4',
+    hasPaddingRight && !props.groupOptions?.isLast && 'pr-3 md:pr-4',
   )
 
   return (
