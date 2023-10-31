@@ -136,7 +136,6 @@ export function getScalingDetailedTvlColumnsConfig() {
           ),
         },
       ],
-      className: 'bg-gray-100 dark:bg-zinc-800',
     },
     {
       name: (

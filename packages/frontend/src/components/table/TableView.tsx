@@ -34,7 +34,6 @@ export interface GroupedColumnConfig<T> {
   type: 'group'
   columns: SingleColumnConfig<T>[]
   title?: string
-  className?: string
 }
 
 export interface RowConfig<T> {
@@ -52,9 +51,7 @@ export function TableView<T>({
   rerenderOnLoad,
 }: Props<T>) {
   const groupedColumns = getGroupedColumns(columnsConfig)
-  const noGroupTitle = !groupedColumns?.some(
-    (groupedColumn) => groupedColumn.type === 'group' && groupedColumn.title,
-  )
+
   return (
     <div
       className={cx(
@@ -67,29 +64,23 @@ export function TableView<T>({
       <table className="w-full border-collapse text-left group-data-[state=empty]/tableview:hidden">
         {groupedColumns && <ColGroup groupedColumns={groupedColumns} />}
         <thead>
-          {groupedColumns && !noGroupTitle && (
+          {groupedColumns && (
             <GroupedColumnsHeaders groupedColumns={groupedColumns} />
           )}
           <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
             {columnsConfig.map((columnConfig, i) => {
               if (columnConfig.type === 'group') {
-                return columnConfig.columns.map((col, colIndex) => {
-                  const isFirstInGroup = colIndex === 0
-                  const isLastInGroup =
-                    colIndex === columnConfig.columns.length - 1
-
-                  return (
-                    <ColumnHeader
-                      column={col}
-                      groupOptions={{
-                        isFirst: isFirstInGroup,
-                        isLast: isLastInGroup,
-                        noGroupTitle,
-                      }}
-                      key={`${i}:${colIndex}`}
-                    />
-                  )
-                })
+                return columnConfig.columns.map((col, colIndex) => (
+                  <ColumnHeader
+                    column={col}
+                    groupOptions={{
+                      isFirst: colIndex === 0,
+                      isLast: colIndex === columnConfig.columns.length - 1,
+                      noGroupTitle: !columnConfig.title,
+                    }}
+                    key={`${i}:${colIndex}`}
+                  />
+                ))
               }
               return <ColumnHeader column={columnConfig} key={i} />
             })}
@@ -114,25 +105,19 @@ export function TableView<T>({
               >
                 {columnsConfig.map((columnConfig, j) => {
                   if (columnConfig.type === 'group') {
-                    return columnConfig.columns.map((col, colIndex) => {
-                      const isFirstInGroup = colIndex === 0
-                      const isLastInGroup =
-                        colIndex === columnConfig.columns.length - 1
-
-                      return (
-                        <DataCell
-                          columnConfig={col}
-                          item={item}
-                          href={href}
-                          rowIndex={i}
-                          groupOptions={{
-                            isFirst: isFirstInGroup,
-                            isLast: isLastInGroup,
-                          }}
-                          key={`${j}:${colIndex}`}
-                        />
-                      )
-                    })
+                    return columnConfig.columns.map((col, colIndex) => (
+                      <DataCell
+                        columnConfig={col}
+                        item={item}
+                        href={href}
+                        rowIndex={i}
+                        groupOptions={{
+                          isFirst: colIndex === 0,
+                          isLast: colIndex === columnConfig.columns.length - 1,
+                        }}
+                        key={`${j}:${colIndex}`}
+                      />
+                    ))
                   }
                   return (
                     <DataCell
@@ -147,28 +132,7 @@ export function TableView<T>({
               </tr>
             )
           })}
-          <tr>
-            {columnsConfig.map((columnConfig, i) => {
-              if (columnConfig.type === 'group') {
-                return columnConfig.columns.map((_, colIndex) => {
-                  const isFirstInGroup = colIndex === 0
-                  const isLastInGroup =
-                    colIndex === columnConfig.columns.length - 1
-                  return (
-                    <td
-                      key={`${i}:${colIndex}`}
-                      className={classNames(
-                        'h-4',
-                        isFirstInGroup && 'rounded-bl-lg',
-                        isLastInGroup && 'rounded-br-lg',
-                      )}
-                    />
-                  )
-                })
-              }
-              return <td className="h-4" key={i} />
-            })}
-          </tr>
+          {groupedColumns && <EmptyRow columnsConfig={columnsConfig} />}
         </tbody>
       </table>
       <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
@@ -208,6 +172,7 @@ function ColumnHeader<T>(props: {
           props.groupOptions?.noGroupTitle &&
             props.groupOptions.isLast &&
             'rounded-tr-lg',
+          props.groupOptions?.noGroupTitle && 'pt-4',
           props.column.headClassName,
         )}
       >
@@ -297,7 +262,7 @@ function ColGroup(props: { groupedColumns: GroupedColumn[] }) {
           )
         }
         return (
-          <colgroup key={i} className={groupedColumn.className}>
+          <colgroup key={i} className="bg-gray-100 dark:bg-zinc-800">
             {range(groupedColumn.span).map((_, i) => (
               <col key={i} />
             ))}
@@ -312,8 +277,17 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
   return (
     <tr className="uppercase leading-none">
       {props.groupedColumns.map((groupedColumn, i) => {
-        if (groupedColumn.type === 'fill' || !groupedColumn.title) {
+        if (groupedColumn.type === 'fill') {
           return <th key={i} />
+        }
+        if (!groupedColumn.title) {
+          return (
+            <th
+              key={i}
+              colSpan={groupedColumn.span}
+              className="bg-white dark:bg-neutral-900"
+            />
+          )
         }
         return (
           <th
@@ -329,12 +303,40 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
   )
 }
 
+function EmptyRow<T>(props: { columnsConfig: ColumnConfig<T>[] }) {
+  return (
+    <tr data-non-filterable>
+      {props.columnsConfig.map((columnConfig, i) => {
+        if (columnConfig.type === 'group') {
+          return columnConfig.columns.map((_, colIndex) => {
+            const isFirstInGroup = colIndex === 0
+            const isLastInGroup = colIndex === columnConfig.columns.length - 1
+            return (
+              <>
+                <td
+                  key={`${i}:${colIndex}`}
+                  className={classNames(
+                    'h-4',
+                    isFirstInGroup && 'rounded-bl-lg',
+                    isLastInGroup && 'rounded-br-lg',
+                  )}
+                />
+                {isLastInGroup && <td className="h-4" />}
+              </>
+            )
+          })
+        }
+        return <td className="h-4" key={i} />
+      })}
+    </tr>
+  )
+}
+
 type GroupedColumn =
   | {
       type: 'group'
       span: number
       title?: string
-      className?: string
     }
   | {
       type: 'fill'
@@ -354,7 +356,6 @@ function getGroupedColumns<T>(
           type: 'group',
           title: columnConfig.title,
           span: columnConfig.columns.length,
-          className: columnConfig.className,
         } as const,
         {
           type: 'fill',
