@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import { default as classNames, default as cx } from 'classnames'
 import range from 'lodash/range'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
@@ -28,13 +28,12 @@ interface SingleColumnConfig<T> {
   idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
-  highlight?: boolean
 }
 
 export interface GroupedColumnConfig<T> {
   type: 'group'
   columns: SingleColumnConfig<T>[]
-  title: string
+  title?: string
   className?: string
 }
 
@@ -46,9 +45,6 @@ export interface RowConfig<T> {
     Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
-const highlightedColumnClassNames =
-  'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
-
 export function TableView<T>({
   items,
   columnsConfig,
@@ -56,11 +52,13 @@ export function TableView<T>({
   rerenderOnLoad,
 }: Props<T>) {
   const groupedColumns = getGroupedColumns(columnsConfig)
-
+  const noGroupTitle = !groupedColumns?.some(
+    (groupedColumn) => groupedColumn.type === 'group' && groupedColumn.title,
+  )
   return (
     <div
       className={cx(
-        'group/tableview overflow-x-auto whitespace-pre text-base',
+        'group/tableview mt-3 overflow-x-auto whitespace-pre text-base md:mt-6',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
@@ -69,7 +67,7 @@ export function TableView<T>({
       <table className="w-full border-collapse text-left group-data-[state=empty]/tableview:hidden">
         {groupedColumns && <ColGroup groupedColumns={groupedColumns} />}
         <thead>
-          {groupedColumns && (
+          {groupedColumns && !noGroupTitle && (
             <GroupedColumnsHeaders groupedColumns={groupedColumns} />
           )}
           <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
@@ -79,15 +77,15 @@ export function TableView<T>({
                   const isFirstInGroup = colIndex === 0
                   const isLastInGroup =
                     colIndex === columnConfig.columns.length - 1
-                  const placeInGroup = isFirstInGroup
-                    ? 'first'
-                    : isLastInGroup
-                    ? 'last'
-                    : undefined
+
                   return (
                     <ColumnHeader
                       column={col}
-                      placeInGroup={placeInGroup}
+                      groupOptions={{
+                        isFirst: isFirstInGroup,
+                        isLast: isLastInGroup,
+                        noGroupTitle,
+                      }}
                       key={`${i}:${colIndex}`}
                     />
                   )
@@ -120,18 +118,17 @@ export function TableView<T>({
                       const isFirstInGroup = colIndex === 0
                       const isLastInGroup =
                         colIndex === columnConfig.columns.length - 1
-                      const placeInGroup = isFirstInGroup
-                        ? 'first'
-                        : isLastInGroup
-                        ? 'last'
-                        : undefined
+
                       return (
                         <DataCell
                           columnConfig={col}
                           item={item}
                           href={href}
                           rowIndex={i}
-                          placeInGroup={placeInGroup}
+                          groupOptions={{
+                            isFirst: isFirstInGroup,
+                            isLast: isLastInGroup,
+                          }}
                           key={`${j}:${colIndex}`}
                         />
                       )
@@ -150,6 +147,28 @@ export function TableView<T>({
               </tr>
             )
           })}
+          <tr>
+            {columnsConfig.map((columnConfig, i) => {
+              if (columnConfig.type === 'group') {
+                return columnConfig.columns.map((_, colIndex) => {
+                  const isFirstInGroup = colIndex === 0
+                  const isLastInGroup =
+                    colIndex === columnConfig.columns.length - 1
+                  return (
+                    <td
+                      key={`${i}:${colIndex}`}
+                      className={classNames(
+                        'h-4',
+                        isFirstInGroup && 'rounded-bl-lg',
+                        isLastInGroup && 'rounded-br-lg',
+                      )}
+                    />
+                  )
+                })
+              }
+              return <td className="h-4" key={i} />
+            })}
+          </tr>
         </tbody>
       </table>
       <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
@@ -165,7 +184,11 @@ export function TableView<T>({
 
 function ColumnHeader<T>(props: {
   column: SingleColumnConfig<T>
-  placeInGroup?: 'first' | 'last'
+  groupOptions?: {
+    isFirst: boolean
+    isLast: boolean
+    noGroupTitle: boolean
+  }
 }) {
   const hasPaddingRight = !props.column.noPaddingRight
   return (
@@ -175,12 +198,17 @@ function ColumnHeader<T>(props: {
           'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
           props.column.minimalWidth && 'w-0',
           hasPaddingRight &&
-            props.placeInGroup !== 'last' &&
+            !props.groupOptions?.isLast &&
             'pr-3 last:pr-0 md:pr-4',
-          props.placeInGroup === 'first' && '!pl-6',
-          props.placeInGroup === 'last' && '!pr-6',
+          props.groupOptions?.isFirst && '!pl-6',
+          props.groupOptions?.isLast && '!pr-6',
+          props.groupOptions?.noGroupTitle &&
+            props.groupOptions.isFirst &&
+            'rounded-tl-lg',
+          props.groupOptions?.noGroupTitle &&
+            props.groupOptions.isLast &&
+            'rounded-tr-lg',
           props.column.headClassName,
-          props.column.highlight && highlightedColumnClassNames,
         )}
       >
         <div
@@ -206,7 +234,7 @@ function ColumnHeader<T>(props: {
           )}
         </div>
       </th>
-      {props.placeInGroup === 'last' && <th className="pr-3 md:pr-4" />}
+      {props.groupOptions?.isLast && <th className="pr-3 md:pr-4" />}
     </>
   )
 }
@@ -216,7 +244,10 @@ function DataCell<T>(props: {
   item: T
   rowIndex: number
   href?: string
-  placeInGroup?: 'first' | 'last'
+  groupOptions?: {
+    isFirst: boolean
+    isLast: boolean
+  }
 }) {
   const hasPaddingRight = !props.columnConfig.noPaddingRight
   const idHref =
@@ -228,7 +259,7 @@ function DataCell<T>(props: {
     'h-full w-full items-center',
     props.columnConfig.alignRight && 'justify-end',
     props.columnConfig.alignCenter && 'justify-center',
-    hasPaddingRight && props.placeInGroup !== 'last' && 'pr-3 md:pr-4',
+    hasPaddingRight && !props.groupOptions?.isLast && 'pr-3 last:pr-0 md:pr-4',
   )
 
   return (
@@ -237,16 +268,15 @@ function DataCell<T>(props: {
         className={cx(
           'h-9 md:h-14',
           props.columnConfig.minimalWidth && 'w-0',
-          props.columnConfig.highlight && highlightedColumnClassNames,
-          props.placeInGroup === 'first' && '!pl-6',
-          props.placeInGroup === 'last' && '!pr-6',
+          props.groupOptions?.isFirst && '!pl-6',
+          props.groupOptions?.isLast && '!pr-6',
         )}
       >
         <a href={idHref} className={cx(childClassName, 'flex')}>
           {props.columnConfig.getValue(props.item, props.rowIndex)}
         </a>
       </td>
-      {props.placeInGroup === 'last' && (
+      {props.groupOptions?.isLast && (
         <td>
           <a href={idHref} className={cx(childClassName, 'flex')} />
         </td>
@@ -282,7 +312,7 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
   return (
     <tr className="uppercase leading-none">
       {props.groupedColumns.map((groupedColumn, i) => {
-        if (groupedColumn.type === 'fill') {
+        if (groupedColumn.type === 'fill' || !groupedColumn.title) {
           return <th key={i} />
         }
         return (
@@ -302,8 +332,8 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
 type GroupedColumn =
   | {
       type: 'group'
-      title: string
       span: number
+      title?: string
       className?: string
     }
   | {

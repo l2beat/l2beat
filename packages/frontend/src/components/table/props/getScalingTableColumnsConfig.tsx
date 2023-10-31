@@ -121,17 +121,22 @@ export function getScalingDetailedTvlColumnsConfig() {
       getValue: (project) => <ProjectCell project={project} />,
     },
     {
-      name: 'Total',
-      tooltip: 'Total = Canonical + External + Native',
-      alignCenter: true,
-      noPaddingRight: true,
-      highlight: true,
-      getValue: (project) => (
-        <ValueWithPercentageCell
-          value={project.tvl}
-          percentChange={project.tvlChange}
-        />
-      ),
+      type: 'group',
+      columns: [
+        {
+          name: 'Total',
+          tooltip: 'Total = Canonical + External + Native',
+          alignCenter: true,
+          noPaddingRight: true,
+          getValue: (project) => (
+            <ValueWithPercentageCell
+              value={project.tvl}
+              percentChange={project.tvlChange}
+            />
+          ),
+        },
+      ],
+      className: 'bg-gray-100 dark:bg-zinc-800',
     },
     {
       name: (
