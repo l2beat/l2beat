@@ -104,6 +104,19 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
+          ),
+          selector: '0xf81cccbe',
+          sinceTimestamp: new UnixTime(1654638194),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

@@ -83,6 +83,19 @@ export const immutablex: Layer2 = {
       sinceTimestamp: new UnixTime(1615389188),
       resyncLastDays: 7,
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
+          ),
+          selector: '0x538f9406',
+          sinceTimestamp: new UnixTime(1615389188),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

@@ -83,6 +83,19 @@ export const zksynclite: Layer2 = {
       type: 'zksync',
       callsPerMinute: 3_000,
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+          ),
+          selector: '0x83981808',
+          sinceTimestamp: new UnixTime(1592218707),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

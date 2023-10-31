@@ -327,6 +327,28 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x8f111f3c',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
+          ),
+          selector: '0xa04cee60',
+          sinceTimestamp: new UnixTime(1661455766),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

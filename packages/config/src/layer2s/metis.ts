@@ -65,6 +65,28 @@ export const metis: Layer2 = {
       url: 'https://andromeda.metis.io/',
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a',
+          ),
+          selector: '0xa8cda37b',
+          sinceTimestamp: new UnixTime(1649638297),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xf209815E595Cdf3ed0aAF9665b1772e608AB9380',
+          ),
+          selector: '0xd710083f',
+          sinceTimestamp: new UnixTime(1637071157),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,

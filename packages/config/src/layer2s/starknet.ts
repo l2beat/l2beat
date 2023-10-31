@@ -239,6 +239,19 @@ export const starknet: Layer2 = {
     transactionApi: {
       type: 'starknet',
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0x77552641',
+          sinceTimestamp: new UnixTime(1636978914),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

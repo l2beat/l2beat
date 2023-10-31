@@ -79,6 +79,19 @@ export const apex: Layer2 = {
       sinceTimestamp: new UnixTime(1660252039),
       resyncLastDays: 7,
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
+          ),
+          selector: '0x538f9406',
+          sinceTimestamp: new UnixTime(1660252039),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

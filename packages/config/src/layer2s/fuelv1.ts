@@ -43,6 +43,19 @@ export const fuelv1: Layer2 = {
         tokens: ['ETH', 'DAI', 'USDC', 'USDT'],
       },
     ],
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',
+          ),
+          selector: '0x80b39a1f',
+          sinceTimestamp: new UnixTime(1612414780),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,

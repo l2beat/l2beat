@@ -74,6 +74,26 @@ export const publicgoodsnetwork: Layer2 = {
       callsPerMinute: 1500,
       assessCount: subtractOne,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167'),
+          to: EthereumAddress('0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5'),
+          sinceTimestamp: new UnixTime(1689108083),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xA38d0c4E6319F9045F20318BA5f04CDe94208608',
+          ),
+          selector: '0x9aaab648',
+          sinceTimestamp: new UnixTime(1689106823),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,

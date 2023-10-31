@@ -130,6 +130,19 @@ export const dydx: Layer2 = {
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+          ),
+          selector: '0x538f9406',
+          sinceTimestamp: new UnixTime(1613033682),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

@@ -83,6 +83,19 @@ export const degate: Layer2 = {
         tokens: '*',
       }),
     ],
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83',
+          ),
+          selector: '0x377bb770',
+          sinceTimestamp: new UnixTime(1681993655),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

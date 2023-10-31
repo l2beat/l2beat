@@ -63,6 +63,26 @@ export const aevo: Layer2 = {
         ...upgradesProxy,
       }),
     ],
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d'),
+          to: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
+          sinceTimestamp: new UnixTime(1679202395),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x909E51211e959339EFb14b36f5A50955a8ae3770',
+          ),
+          selector: '0x9aaab648',
+          sinceTimestamp: new UnixTime(1679193083),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,

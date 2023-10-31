@@ -91,6 +91,19 @@ export const rhinofi: Layer2 = {
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+          ),
+          selector: '0x538f9406',
+          sinceTimestamp: new UnixTime(1590491810),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

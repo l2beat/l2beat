@@ -119,6 +119,26 @@ export const base: Layer2 = {
       callsPerMinute: 1500,
       assessCount: subtractOne,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x5050F69a9786F081509234F1a7F4684b5E5b76C9'),
+          to: EthereumAddress('0xFf00000000000000000000000000000000008453'),
+          sinceTimestamp: new UnixTime(1686796655),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x56315b90c40730925ec5485cf004d835058518A0',
+          ),
+          selector: '0x9aaab648',
+          sinceTimestamp: new UnixTime(1686793895),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
