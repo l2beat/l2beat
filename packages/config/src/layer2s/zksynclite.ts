@@ -66,6 +66,7 @@ export const zksynclite: Layer2 = {
         'https://join.zksync.dev/',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
+        'https://twitter.com/zkSyncDevs',
       ],
     },
     activityDataSource: 'Explorer API',
