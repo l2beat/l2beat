@@ -311,7 +311,7 @@ export const base: Layer2 = {
       batcherHash: 'Sequencer',
       PROPOSER: 'Proposer',
       GUARDIAN: 'Guardian',
-      CHALLENGER: 'Challenger'
+      CHALLENGER: 'Challenger',
     }),
   ],
   contracts: {

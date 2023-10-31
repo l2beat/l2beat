@@ -178,20 +178,25 @@ export class ProjectDiscovery {
         const role = contract.roles.find(
           (r) =>
             r.name === template.role.value &&
-            r.atName === (contractOverrides?.[template.role.contract] ?? template.role.contract),
+            r.atName ===
+              (contractOverrides?.[template.role.contract] ??
+                template.role.contract),
         )
         if (role) {
           const contractKey =
-              overrides?.[template.role.value] ?? 
-              contract.name ??
-              template.role.value
+            overrides?.[template.role.value] ??
+            contract.name ??
+            template.role.value
           result[contractKey] ??= {}
           result[contractKey][role.name] ??= []
           result[contractKey][role.name].push(
             stringFormat(template.description, template.role.contract),
           )
           sources[contractKey] ??= template.role
-          names[contractKey] ??= overrides?.[template.role.value] ?? contract.name ?? template.role.value
+          names[contractKey] ??=
+            overrides?.[template.role.value] ??
+            contract.name ??
+            template.role.value
         }
       }
     }
@@ -199,10 +204,7 @@ export class ProjectDiscovery {
     return Object.entries(result).map(([key, roleDescription]) => ({
       name: names[key],
       accounts: [
-        this.getPermissionedAccount(
-          sources[key].contract,
-          sources[key].value,
-        ),
+        this.getPermissionedAccount(sources[key].contract, sources[key].value),
       ],
       description: Object.values(roleDescription).flat().join(' '),
     }))

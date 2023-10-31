@@ -262,7 +262,7 @@ export const mantapacific: Layer2 = {
       batcherHash: 'Sequencer',
       PROPOSER: 'Proposer',
       GUARDIAN: 'Guardian',
-      CHALLENGER: 'Challenger'
+      CHALLENGER: 'Challenger',
     }),
   ],
   contracts: {
