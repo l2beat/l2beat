@@ -1,14 +1,14 @@
 import {
-  DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
+  TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 export function getIncludedProjectsTvlBreakdown<
   T extends { id: ProjectId; isUpcoming?: boolean; type: 'bridge' | 'layer2' },
 >(
   projects: T[],
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
 ) {
   const included = projects

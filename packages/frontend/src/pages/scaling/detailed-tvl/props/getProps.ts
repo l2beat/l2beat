@@ -16,10 +16,8 @@ export function getProps(
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
 
-  const detailedTvlEndpoint = '/api/scaling-detailed-tvl.json'
   return {
     props: {
-      detailedTvlEndpoint,
       showActivity: config.features.activity,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),

@@ -1,5 +1,5 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { DetailedTvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
@@ -8,7 +8,7 @@ import { BridgesTvlViewEntry } from '../types'
 
 export function getBridgesTvlView(
   projects: (Bridge | Layer2)[],
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,
   combinedTvl: number,
   verificationStatus: VerificationStatus,
@@ -26,7 +26,7 @@ export function getBridgesTvlView(
 
 function getBridgesTvlViewEntry(
   project: Bridge | Layer2,
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,
   combinedTvl: number,
   verificationStatus: VerificationStatus,

@@ -1,8 +1,5 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import {
-  ActivityApiResponse,
-  DetailedTvlApiResponse,
-} from '@l2beat/shared-pure'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { getChartUrl } from '../../scripts/charts/data-controller/ChartDataController'
 import { ChartType } from '../../scripts/charts/types'
@@ -24,7 +21,7 @@ export function assert(
 }
 
 export function getProps(
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
 ): Wrapped<TvlMetaImageProps> {
@@ -83,7 +80,7 @@ export function getPropsActivity(
 }
 
 export function getPropsDetailed(
-  tvlApiResponse: DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
 ): Wrapped<DetailedTvlMetaImageProps> {
