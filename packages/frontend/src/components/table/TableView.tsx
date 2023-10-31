@@ -212,7 +212,7 @@ function ColumnHeader<T>(props: {
         </div>
       </th>
       {props.groupOptions?.isLast && !props.isLastColumn && (
-        <th className="pr-3 md:pr-4" />
+        <th className="w-4" />
       )}
     </>
   )
@@ -235,15 +235,6 @@ function DataCell<T>(props: {
       ? `${props.href}#${props.columnConfig.idHref}`
       : props.href
 
-  const childClassName = cx(
-    'h-full w-full items-center',
-    props.columnConfig.alignRight && 'justify-end',
-    props.columnConfig.alignCenter && 'justify-center',
-    hasPaddingRight &&
-      !props.groupOptions?.isLast &&
-      'pr-3 group-last/data-cell:last:pr-0 md:pr-4',
-  )
-
   return (
     <>
       <td
@@ -254,13 +245,24 @@ function DataCell<T>(props: {
           props.groupOptions?.isLast && '!pr-6',
         )}
       >
-        <a href={idHref} className={cx(childClassName, 'flex')}>
+        <a
+          href={idHref}
+          className={cx(
+            'h-full w-full items-center',
+            props.columnConfig.alignRight && 'justify-end',
+            props.columnConfig.alignCenter && 'justify-center',
+            hasPaddingRight &&
+              !props.groupOptions?.isLast &&
+              'pr-3 group-last/data-cell:last:pr-0 md:pr-4',
+            'flex',
+          )}
+        >
           {props.columnConfig.getValue(props.item, props.rowIndex)}
         </a>
       </td>
       {props.groupOptions?.isLast && !props.isLastColumn && (
-        <td>
-          <a href={idHref} className={cx(childClassName, 'flex')} />
+        <td className="h-9 md:h-14">
+          <a href={idHref} className="flex h-full w-4 items-center" />
         </td>
       )}
     </>
