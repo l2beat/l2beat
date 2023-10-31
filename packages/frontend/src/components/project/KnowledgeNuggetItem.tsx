@@ -13,7 +13,7 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
   return (
     <OutLink
       href={knowledgeNugget.url}
-      className="group grid grid-cols-7 items-center gap-3 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 "
+      className="grid-cols-7 group grid items-center gap-3 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 "
     >
       <div className="relative col-span-2 overflow-hidden rounded-md pb-2/3 drop-shadow-md">
         <img
