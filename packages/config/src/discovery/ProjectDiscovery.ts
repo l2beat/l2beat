@@ -1,4 +1,9 @@
-import { calculateInversion, InvertedAddresses } from '@l2beat/discovery'
+import {
+  calculateInversion,
+  ConfigReader,
+  DiscoveryConfig,
+  InvertedAddresses,
+} from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -6,6 +11,7 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
+  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -31,6 +37,8 @@ import {
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
 } from './OpStackTypes'
+import { parse, ParseError } from 'jsonc-parser'
+import { RawDiscoveryConfig } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -51,19 +59,40 @@ const filesystem = {
 
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
+  private readonly config: DiscoveryConfig
   constructor(
     public readonly projectName: string,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
+    this.config = this.getConfigJson(projectName)
   }
 
+  // TODO(radomski): Replace these with sync verions of
+  // readConfig/readDiscovery from ConfigReader.
+  // For more information see L2B-2948
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(`../backend/discovery/${project}/ethereum/discovered.json`),
     )
 
     return JSON.parse(discoveryFile) as DiscoveryOutput
+  }
+
+  private getConfigJson(project: string): DiscoveryConfig {
+    const configFile = this.fs.readFileSync(
+      path.resolve(`../backend/discovery/${project}/ethereum/config.jsonc`),
+    )
+
+    const errors: ParseError[] = []
+    const parsed: unknown = parse(configFile, errors, {
+      allowTrailingComma: true,
+    })
+    if (errors.length !== 0) {
+      throw new Error('Cannot parse file')
+    }
+    const rawConfig = parsed as RawDiscoveryConfig
+    return new DiscoveryConfig(rawConfig)
   }
 
   getContractDetails(
@@ -133,7 +162,7 @@ export class ProjectDiscovery {
   }
 
   getInversion(): InvertedAddresses {
-    return calculateInversion(this.discovery)
+    return calculateInversion(this.discovery, this.config)
   }
 
   getOpStackPermissions(): ProjectPermission[] {
