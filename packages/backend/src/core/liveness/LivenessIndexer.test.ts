@@ -2,7 +2,6 @@ import { hashJson } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../model'
-import { LIVENESS_CONFIGS } from '../../peripherals/database/LivenessConfigurationRepository.test'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LIVENESS_MOCK } from '../../test/mockLiveness'
 import { LivenessClient } from './LivenessClient'
@@ -14,6 +13,7 @@ const {
   FROM,
   TO,
   PROJECTS,
+  CONFIGURATIONS,
   TRANSFERS_EXPECTED,
   FUNCTIONS_EXPECTED,
 } = LIVENESS_MOCK
@@ -118,7 +118,7 @@ describe(LivenessIndexer.name, () => {
 
       expect(livenessClient.getLivenessData).toHaveBeenCalledWith(
         PROJECTS,
-        LIVENESS_CONFIGS.map((c, i) => ({
+        CONFIGURATIONS.map((c, i) => ({
           ...c,
           id: i,
           lastSyncedTimestamp: undefined,
