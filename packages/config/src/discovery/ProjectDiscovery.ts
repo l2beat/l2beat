@@ -1,6 +1,5 @@
 import {
   calculateInversion,
-  ConfigReader,
   DiscoveryConfig,
   InvertedAddresses,
 } from '@l2beat/discovery'
@@ -11,13 +10,13 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
-  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import fs from 'fs'
+import { parse, ParseError } from 'jsonc-parser'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
@@ -37,8 +36,6 @@ import {
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
 } from './OpStackTypes'
-import { parse, ParseError } from 'jsonc-parser'
-import { RawDiscoveryConfig } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -57,6 +54,11 @@ const filesystem = {
   },
 }
 
+// TODO(radomski): Replace getDiscoveryJson and getConfigJson with sync verions
+// of readConfig/readDiscovery from ConfigReader.
+// For more information see L2B-2948
+type RawDiscoveryConfig = ConstructorParameters<typeof DiscoveryConfig>[0]
+
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
   private readonly config: DiscoveryConfig
@@ -68,9 +70,6 @@ export class ProjectDiscovery {
     this.config = this.getConfigJson(projectName)
   }
 
-  // TODO(radomski): Replace these with sync verions of
-  // readConfig/readDiscovery from ConfigReader.
-  // For more information see L2B-2948
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(`../backend/discovery/${project}/ethereum/discovered.json`),
