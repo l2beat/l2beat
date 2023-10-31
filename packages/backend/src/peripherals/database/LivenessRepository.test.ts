@@ -4,7 +4,7 @@ import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
 import { LivenessConfigurationRepository } from './LivenessConfigurationRepository'
-import { CONFIG_DATA } from './LivenessConfigurationRepository.test'
+import { LIVENESS_CONFIGS } from './LivenessConfigurationRepository.test'
 import { LivenessRecord, LivenessRepository } from './LivenessRepository'
 
 describe(LivenessRepository.name, () => {
@@ -38,7 +38,7 @@ describe(LivenessRepository.name, () => {
   beforeEach(async function () {
     this.timeout(10000)
     await configRepository.deleteAll()
-    ids = await configRepository.addMany(CONFIG_DATA)
+    ids = await configRepository.addMany(LIVENESS_CONFIGS)
     await repository.deleteAll()
     await repository.addMany(
       DATA.map((e, i) => ({

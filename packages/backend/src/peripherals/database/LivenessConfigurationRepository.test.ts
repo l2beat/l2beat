@@ -11,7 +11,10 @@ import {
 
 const START = UnixTime.now()
 
-export const CONFIG_DATA: Omit<LivenessConfigurationRecord, 'id'>[] = [
+export const LIVENESS_CONFIGS: Omit<
+  LivenessConfigurationRecord,
+  'id' | 'lastSyncedTimestamp'
+>[] = [
   {
     projectId: ProjectId('project1'),
     type: LivenessType('STATE'),
@@ -19,7 +22,6 @@ export const CONFIG_DATA: Omit<LivenessConfigurationRecord, 'id'>[] = [
     params: "{ key1: 'value1', key2: 'value2' }",
     fromTimestamp: START.add(-1, 'hours'),
     toTimestamp: START.add(-2, 'hours'),
-    lastSyncedTimestamp: START.add(-3, 'hours'),
   },
   {
     projectId: ProjectId('project2'),
@@ -28,7 +30,6 @@ export const CONFIG_DATA: Omit<LivenessConfigurationRecord, 'id'>[] = [
     params: "{ key1: 'value3', key2: 'value4' }",
     fromTimestamp: START.add(-4, 'hours'),
     toTimestamp: START.add(-5, 'hours'),
-    lastSyncedTimestamp: START.add(-6, 'hours'),
   },
   {
     projectId: ProjectId('project3'),
@@ -37,7 +38,6 @@ export const CONFIG_DATA: Omit<LivenessConfigurationRecord, 'id'>[] = [
     params: "{ key1: 'value5', key2: 'value6' }",
     fromTimestamp: START.add(-7, 'hours'),
     toTimestamp: START.add(-8, 'hours'),
-    lastSyncedTimestamp: START.add(-9, 'hours'),
   },
 ]
 
@@ -48,34 +48,23 @@ describe(LivenessConfigurationRepository.name, () => {
     Logger.SILENT,
   )
 
-  let ids: number[]
-
   beforeEach(async () => {
     await repository.deleteAll()
-    ids = await repository.addMany(CONFIG_DATA)
   })
 
   describe(LivenessConfigurationRepository.prototype.addMany.name, () => {
     it('should add new rows', async () => {
-      const newRow = [
-        {
-          projectId: ProjectId('project4'),
-          type: LivenessType('DA'),
-          identifier: LivenessConfigurationIdentifier.random(),
-          params: "{ key1: 'value7', key2: 'value8' }",
-          fromTimestamp: START.add(-10, 'hours'),
-          toTimestamp: START.add(-11, 'hours'),
-          lastSyncedTimestamp: START.add(-12, 'hours'),
-        },
-      ]
-      const newIds = await repository.addMany(newRow)
+      const newIds = await repository.addMany(LIVENESS_CONFIGS)
 
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted([
-        ...CONFIG_DATA.map((r, i) => ({ ...r, id: ids[i] })),
-        { ...newRow[0], id: newIds[0] },
-      ])
+      expect(results).toEqualUnsorted(
+        LIVENESS_CONFIGS.map((c, i) => ({
+          ...c,
+          id: newIds[i],
+          lastSyncedTimestamp: undefined,
+        })),
+      )
     })
 
     it('empty array', async () => {
@@ -85,15 +74,26 @@ describe(LivenessConfigurationRepository.name, () => {
 
   describe(LivenessConfigurationRepository.prototype.updateMany.name, () => {
     it('should update records', async () => {
-      const records = await repository.getAll()
-      const record = records[0]
-      const newRecord = {
-        ...record,
-        params: "{ key1: 'value9', key2: 'value10' }",
+      const newIds = await repository.addMany(LIVENESS_CONFIGS)
+
+      const latest = UnixTime.now()
+      const updatedRow: LivenessConfigurationRecord = {
+        ...LIVENESS_CONFIGS[0],
+        id: newIds[0],
+        lastSyncedTimestamp: latest,
       }
-      await repository.updateMany([newRecord])
+
+      await repository.updateMany([updatedRow])
+
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([newRecord, ...records.slice(1)])
+      expect(results).toEqualUnsorted([
+        updatedRow,
+        ...LIVENESS_CONFIGS.slice(1).map((c, i) => ({
+          ...c,
+          id: newIds[i + 1],
+          lastSyncedTimestamp: undefined,
+        })),
+      ])
     })
 
     it('empty array', async () => {
@@ -103,11 +103,17 @@ describe(LivenessConfigurationRepository.name, () => {
 
   describe(LivenessConfigurationRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
+      const newIds = await repository.addMany(LIVENESS_CONFIGS)
+
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted([
-        ...CONFIG_DATA.map((r, i) => ({ ...r, id: ids[i] })),
-      ])
+      expect(results).toEqualUnsorted(
+        LIVENESS_CONFIGS.map((c, i) => ({
+          ...c,
+          id: newIds[i],
+          lastSyncedTimestamp: undefined,
+        })),
+      )
     })
   })
 })

@@ -31,7 +31,7 @@ export class LivenessConfigurationRepository extends BaseRepository {
   }
 
   async addMany(
-    records: Omit<LivenessConfigurationRecord, 'id'>[],
+    records: Omit<LivenessConfigurationRecord, 'id' | 'lastSyncedTimestamp'>[],
   ): Promise<number[]> {
     const knex = await this.knex()
 
@@ -44,7 +44,13 @@ export class LivenessConfigurationRepository extends BaseRepository {
 
   async updateMany(records: LivenessConfigurationRecord[]): Promise<number[]> {
     const knex = await this.knex()
-    const rows = records.map((r) => ({ ...toRow(r), id: r.id }))
+
+    const rows = records.map((r) => ({
+      ...toRow(r),
+      id: r.id,
+      last_synced_timestamp: r.lastSyncedTimestamp?.toDate(),
+    }))
+
     const ids = await knex('liveness_configuration')
       .insert(rows)
       .onConflict('id')
@@ -76,8 +82,8 @@ function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
 }
 
 function toRow(
-  record: Omit<LivenessConfigurationRecord, 'id'>,
-): Omit<LivenessConfigurationRow, 'id'> {
+  record: Omit<LivenessConfigurationRecord, 'id' | 'lastSyncedTimestamp'>,
+): Omit<LivenessConfigurationRow, 'id' | 'last_synced_timestamp'> {
   return {
     project_id: record.projectId.toString(),
     type: record.type,
@@ -85,8 +91,5 @@ function toRow(
     params: record.params,
     from_timestamp: record.fromTimestamp.toDate(),
     to_timestamp: record.toTimestamp.toDate(),
-    last_synced_timestamp: record.lastSyncedTimestamp
-      ? record.lastSyncedTimestamp.toDate()
-      : undefined,
   }
 }
