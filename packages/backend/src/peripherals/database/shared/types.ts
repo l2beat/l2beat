@@ -149,7 +149,7 @@ declare module 'knex/types/tables' {
     identifier: string
     params: string
     from_timestamp: Date
-    to_timestamp: Date
+    to_timestamp: Date | undefined
     last_synced_timestamp: Date | undefined
   }
 

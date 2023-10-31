@@ -21,7 +21,7 @@ export async function up(knex: Knex) {
     table.string('identifier').notNullable()
     table.string('params').notNullable()
     table.dateTime('from_timestamp', { useTz: false }).notNullable()
-    table.dateTime('to_timestamp', { useTz: false }).notNullable()
+    table.dateTime('to_timestamp', { useTz: false })
     table.dateTime('last_synced_timestamp', { useTz: false })
 
     table.primary(['id'])

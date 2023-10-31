@@ -13,7 +13,7 @@ export interface LivenessConfigurationRecord {
   identifier: LivenessConfigurationIdentifier
   params: string
   fromTimestamp: UnixTime
-  toTimestamp: UnixTime
+  toTimestamp: UnixTime | undefined
   lastSyncedTimestamp: UnixTime | undefined
 }
 
@@ -74,7 +74,9 @@ function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
     identifier: LivenessConfigurationIdentifier.unsafe(row.identifier),
     params: row.params,
     fromTimestamp: UnixTime.fromDate(row.from_timestamp),
-    toTimestamp: UnixTime.fromDate(row.to_timestamp),
+    toTimestamp: row.to_timestamp
+      ? UnixTime.fromDate(row.to_timestamp)
+      : undefined,
     lastSyncedTimestamp: row.last_synced_timestamp
       ? UnixTime.fromDate(row.last_synced_timestamp)
       : undefined,
@@ -90,6 +92,6 @@ function toRow(
     identifier: record.identifier.toString(),
     params: record.params,
     from_timestamp: record.fromTimestamp.toDate(),
-    to_timestamp: record.toTimestamp.toDate(),
+    to_timestamp: record.toTimestamp ? record.toTimestamp.toDate() : undefined,
   }
 }

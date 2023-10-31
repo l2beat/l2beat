@@ -11,6 +11,7 @@ import { IndexerStateRepository } from '../../peripherals/database/IndexerStateR
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
+import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 
 export function createLivenessModule(
   config: Config,
@@ -25,6 +26,10 @@ export function createLivenessModule(
 
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
+  const livenessConfigurationRepository = new LivenessConfigurationRepository(
+    database,
+    logger,
+  )
 
   const bigQueryWrapper = new BigQuerySDKWrapper({
     clientEmail: config.liveness.bigQuery.clientEmail,
@@ -42,6 +47,7 @@ export function createLivenessModule(
     livenessClient,
     indexerStateRepository,
     livenessRepository,
+    livenessConfigurationRepository,
     // TODO: figure out from where to start
     UnixTime.now().toStartOf('hour').add(-1, 'days'),
   )
