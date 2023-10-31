@@ -12,7 +12,7 @@ import {
 
 export function ScalingLegend() {
   return (
-    <div className="md:grid-cols-2 mt-4 grid gap-2 text-sm">
+    <div className="mt-4 grid gap-2 text-sm md:grid-cols-2">
       <p className="flex gap-1">
         <StarkWareIcon className="relative -top-0.5 min-w-[24px]" />
         <span>&ndash;</span>

@@ -23,7 +23,7 @@ export function Footer(props: FooterProps) {
       <div
         className={cx(
           props.narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
-          'grid-cols-3 mx-auto flex flex-col gap-4 px-4 md:grid md:px-12',
+          'mx-auto flex grid-cols-3 flex-col gap-4 px-4 md:grid md:px-12',
         )}
       >
         <p className="text-center text-sm font-medium md:text-left">

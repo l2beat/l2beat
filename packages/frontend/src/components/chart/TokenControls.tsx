@@ -64,7 +64,7 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
               </div>
               <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
-                className="grid-cols-1 md:grid-cols-3 grid gap-x-6"
+                className="grid grid-cols-1 gap-x-6 md:grid-cols-3"
                 data-role="chart-token-controls"
               >
                 {p.tokens.map((token, j) => (

@@ -5,7 +5,7 @@ import { PolygonLogo } from './PolygonLogo'
 
 export function ReportBannerWithButton() {
   return (
-    <div className="md:grid-cols-2 my-20 flex max-h-fit flex-col-reverse overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800 md:grid">
+    <div className="my-20 flex max-h-fit flex-col-reverse overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800 md:grid md:grid-cols-2">
       <div className="m-6 flex flex-col justify-center md:m-10">
         <div className="mb-5 flex space-x-4 md:mb-8">
           <Logo className="h-[26px] w-[64px]" />
