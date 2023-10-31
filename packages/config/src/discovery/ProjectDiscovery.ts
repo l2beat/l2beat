@@ -179,7 +179,10 @@ export class ProjectDiscovery {
             r.atName === template.role.contract,
         )
         if (role) {
-          const contractKey = contract.name ?? overrides?.[template.role.value] ?? template.role.value
+          const contractKey =
+            contract.name ??
+            overrides?.[template.role.value] ??
+            template.role.value
           result[contractKey] ??= {}
           result[contractKey][role.name] ??= []
           result[contractKey][role.name].push(

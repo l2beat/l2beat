@@ -259,8 +259,8 @@ export const mantapacific: Layer2 = {
       description: 'Owner of the ProxyAdmin contract.',
     },
     ...discovery.getOpStackPermissions({
-        "batcherHash": "Sequencer",
-        "PROPOSER": "Proposer"
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
     }),
   ],
   contracts: {

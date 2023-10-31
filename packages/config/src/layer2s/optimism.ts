@@ -374,8 +374,8 @@ export const optimism: Layer2 = {
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     ...discovery.getOpStackPermissions({
-        "batcherHash": "Sequencer",
-        "PROPOSER": "Proposer"
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
     }),
     {
       name: 'Challenger',

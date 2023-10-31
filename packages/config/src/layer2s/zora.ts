@@ -258,8 +258,8 @@ export const zora: Layer2 = {
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
     ),
     ...discovery.getOpStackPermissions({
-        "batcherHash": "Sequencer",
-        "PROPOSER": "Proposer"
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
     }),
   ],
   contracts: {

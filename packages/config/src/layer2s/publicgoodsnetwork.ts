@@ -255,8 +255,8 @@ export const publicgoodsnetwork: Layer2 = {
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
     ),
     ...discovery.getOpStackPermissions({
-        "batcherHash": "Sequencer",
-        "PROPOSER": "Proposer"
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
     }),
   ],
   contracts: {
