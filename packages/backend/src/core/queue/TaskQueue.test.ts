@@ -96,7 +96,7 @@ describe(TaskQueue.name, () => {
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
-  it.only('notifies after configured threshold is reached', async () => {
+  it('notifies after configured threshold is reached', async () => {
     const eventTracker = mockObject<EventTracker<string>>({
       record: mockFn().returns(undefined),
     })
