@@ -66,7 +66,7 @@ describe('checkVerifiedContracts:tasks', () => {
           '0x4444444444444444444444444444444444444444',
         ].map(EthereumAddress),
         new Set(),
-        new Set(),
+        {},
         EthereumClientMock as unknown as EtherscanClient,
         2,
         Logger.SILENT,
