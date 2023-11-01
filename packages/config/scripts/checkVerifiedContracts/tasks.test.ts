@@ -30,9 +30,9 @@ describe('checkVerifiedContracts:tasks', () => {
           EthereumAddress('0x3333333333333333333333333333333333333333'),
         ]),
         // manually verified:
-        new Set([
-          EthereumAddress('0x5555555555555555555555555555555555555555'),
-        ]),
+        {
+          '0x5555555555555555555555555555555555555555': 'https://example.com',
+        },
         EthereumClientMock as unknown as EtherscanClient,
         2,
         Logger.SILENT,
