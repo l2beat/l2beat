@@ -37,6 +37,7 @@ export function gatherAddressesFromUpgradeability(
       break
     case 'gnosis safe':
       result.push(item.masterCopy)
+      result.push(...item.modules)
       break
     case 'EIP2535 diamond proxy':
       result.push(...item.facets)
