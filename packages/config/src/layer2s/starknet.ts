@@ -309,7 +309,7 @@ export const starknet: Layer2 = {
       },
     },
     {
-      rollupNodeLink: 'github.com/NethermindEth/juno',
+      rollupNodeLink: 'https://github.com/NethermindEth/juno',
     },
   ),
   technology: {
