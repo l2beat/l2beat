@@ -8,6 +8,7 @@ import {
   OptimismIcon,
   OVMIcon,
   PolygonIcon,
+  StarknetIcon,
   StarkWareIcon,
   ZkSyncIcon,
 } from '../icons'
@@ -79,6 +80,14 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           title="This project is based on Polygon's code base."
         >
           <PolygonIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'Starknet' && (
+        <span
+          className={providerClassName}
+          title="This project is based on Starknet's code base."
+        >
+          <StarknetIcon className={providerIconClassName} />
         </span>
       )}
     </span>
