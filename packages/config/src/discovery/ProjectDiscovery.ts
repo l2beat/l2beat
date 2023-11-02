@@ -1,3 +1,8 @@
+import {
+  calculateInversion,
+  DiscoveryConfig,
+  InvertedAddresses,
+} from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -11,6 +16,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import fs from 'fs'
+import { parse, ParseError } from 'jsonc-parser'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
@@ -25,6 +31,11 @@ import {
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import {
+  OP_STACK_CONTRACT_DESCRIPTION,
+  OP_STACK_PERMISSION_TEMPLATES,
+  OpStackContractName,
+} from './OpStackTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -43,13 +54,20 @@ const filesystem = {
   },
 }
 
+// TODO(radomski): Replace getDiscoveryJson and getConfigJson with sync versions
+// of readConfig/readDiscovery from ConfigReader.
+// For more information see L2B-2948
+type RawDiscoveryConfig = ConstructorParameters<typeof DiscoveryConfig>[0]
+
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
+  private readonly config: DiscoveryConfig
   constructor(
     public readonly projectName: string,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
+    this.config = this.getConfigJson(projectName)
   }
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
@@ -58,6 +76,22 @@ export class ProjectDiscovery {
     )
 
     return JSON.parse(discoveryFile) as DiscoveryOutput
+  }
+
+  private getConfigJson(project: string): DiscoveryConfig {
+    const configFile = this.fs.readFileSync(
+      path.resolve(`../backend/discovery/${project}/ethereum/config.jsonc`),
+    )
+
+    const errors: ParseError[] = []
+    const parsed: unknown = parse(configFile, errors, {
+      allowTrailingComma: true,
+    })
+    if (errors.length !== 0) {
+      throw new Error('Cannot parse file')
+    }
+    const rawConfig = parsed as RawDiscoveryConfig
+    return new DiscoveryConfig(rawConfig)
   }
 
   getContractDetails(
@@ -124,6 +158,56 @@ export class ProjectDiscovery {
         upgradeDelay,
       },
     }
+  }
+
+  getInversion(): InvertedAddresses {
+    return calculateInversion(this.discovery, this.config)
+  }
+
+  getOpStackPermissions(
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ProjectPermission[] {
+    const inversion = this.getInversion()
+
+    const result: Record<string, Record<string, string[]>> = {}
+    const names: Record<string, string> = {}
+    const sources: Record<string, { contract: string; value: string }> = {}
+    for (const template of OP_STACK_PERMISSION_TEMPLATES) {
+      for (const contract of inversion.values()) {
+        const role = contract.roles.find(
+          (r) =>
+            r.name === template.role.value &&
+            r.atName ===
+              (contractOverrides?.[template.role.contract] ??
+                template.role.contract),
+        )
+        if (role) {
+          const contractKey =
+            overrides?.[template.role.value] ??
+            contract.name ??
+            template.role.value
+          result[contractKey] ??= {}
+          result[contractKey][role.name] ??= []
+          result[contractKey][role.name].push(
+            stringFormat(template.description, template.role.contract),
+          )
+          sources[contractKey] ??= template.role
+          names[contractKey] ??=
+            overrides?.[template.role.value] ??
+            contract.name ??
+            template.role.value
+        }
+      }
+    }
+
+    return Object.entries(result).map(([key, roleDescription]) => ({
+      name: names[key],
+      accounts: [
+        this.getPermissionedAccount(sources[key].contract, sources[key].value),
+      ],
+      description: Object.values(roleDescription).flat().join(' '),
+    }))
   }
 
   getMultisigPermission(
@@ -359,6 +443,21 @@ export class ProjectDiscovery {
     return contract
   }
 
+  getOpStackContractDetails(
+    upgradesProxy: Partial<ProjectContractSingleAddress>,
+    overrides?: Partial<Record<OpStackContractName, string>>,
+  ): ProjectContractSingleAddress[] {
+    return OP_STACK_CONTRACT_DESCRIPTION.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
+        ...upgradesProxy,
+      }),
+    )
+  }
+
   private getContractByName(name: string): ContractParameters {
     const contracts = this.discovery.contracts.filter(
       (contract) => contract.name === name,
@@ -380,4 +479,11 @@ function isNonNullable<T>(
   value: T | undefined | null,
 ): value is NonNullable<T> {
   return value !== null && value !== undefined
+}
+
+export function stringFormat(str: string, ...val: string[]) {
+  for (let index = 0; index < val.length; index++) {
+    str = str.replaceAll(`{${index}}`, val[index])
+  }
+  return str
 }

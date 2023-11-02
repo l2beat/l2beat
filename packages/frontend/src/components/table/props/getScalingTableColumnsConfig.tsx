@@ -20,7 +20,7 @@ import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
-export function getActiveScalingTvlColumns() {
+export function getActiveScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -95,7 +95,7 @@ export function getActiveScalingTvlColumns() {
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       minimalWidth: true,
-      headClassName: 'pr-4',
+      headClassName: '!pr-4',
       getValue: (project) =>
         project.tvlBreakdown && (
           <NumberCell className="pr-4">{project.marketShare}</NumberCell>
@@ -106,7 +106,7 @@ export function getActiveScalingTvlColumns() {
   return columns
 }
 
-export function getScalingDetailedTvlColumns() {
+export function getScalingDetailedTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
     {
       name: '#',
@@ -121,17 +121,21 @@ export function getScalingDetailedTvlColumns() {
       getValue: (project) => <ProjectCell project={project} />,
     },
     {
-      name: 'Total',
-      tooltip: 'Total = Canonical + External + Native',
-      alignCenter: true,
-      noPaddingRight: true,
-      highlight: true,
-      getValue: (project) => (
-        <ValueWithPercentageCell
-          value={project.tvl}
-          percentChange={project.tvlChange}
-        />
-      ),
+      type: 'group',
+      columns: [
+        {
+          name: 'Total',
+          tooltip: 'Total = Canonical + External + Native',
+          alignCenter: true,
+          noPaddingRight: true,
+          getValue: (project) => (
+            <ValueWithPercentageCell
+              value={project.tvl}
+              percentChange={project.tvlChange}
+            />
+          ),
+        },
+      ],
     },
     {
       name: (
@@ -195,7 +199,7 @@ export function getScalingDetailedTvlColumns() {
   return columns
 }
 
-export function getUpcomingScalingTvlColumns() {
+export function getUpcomingScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -230,7 +234,7 @@ export function getUpcomingScalingTvlColumns() {
   return columns
 }
 
-export function getArchivedScalingTvlColumns() {
+export function getArchivedScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -295,7 +299,7 @@ export function getArchivedScalingTvlColumns() {
   return columns
 }
 
-export function getScalingRiskColumns() {
+export function getScalingRiskColumnsConfig() {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: '#',
@@ -341,7 +345,7 @@ export function getScalingRiskColumns() {
   return columns
 }
 
-export function getScalingActivityColumns() {
+export function getScalingActivityColumnsConfig() {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
       name: '#',
