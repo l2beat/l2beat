@@ -1,3 +1,31 @@
+# Diff at Wed, 01 Nov 2023 11:26:01 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@d5598e9a46a99374387c1df455805e40f3d361a7
+
+## Description
+
+A new proposal is detected.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      values.getCurrentProposalId:
+-        9
++        10
+      values.getProposedUpgradeHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x306f3cc703e0e1ab18693aab35276f2dbc745f5de480cee904d05de511ca8415"
+      values.getProposedUpgradeTimestamp:
+-        0
++        1698826475
+      values.getUpgradeProposalState:
+-        0
++        1
+    }
+```
+
 # Diff at Fri, 27 Oct 2023 10:26:34 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
