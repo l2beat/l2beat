@@ -329,12 +329,6 @@ export const starknet: Layer2 = {
       description:
         OPERATOR.CENTRALIZED_OPERATOR.description +
         ' Typically, the Operator is the hot wallet of the Starknet service submitting state updates for which proofs have been already submitted and verified.',
-      references: [
-        {
-          text: 'Starknet operator Etherscan address',
-          href: 'https://etherscan.io/address/0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
-        },
-      ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,

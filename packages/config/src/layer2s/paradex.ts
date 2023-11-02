@@ -8,12 +8,17 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
+  DATA_AVAILABILITY,
+  EXITS,
   makeBridgeCompatible,
-  TECHNOLOGY,
-  UNDER_REVIEW_RISK_VIEW,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
 } from './common'
+import { FORCE_TRANSACTIONS } from './common/forceTransactions'
+import { RISK_VIEW } from './common/riskView'
+import { getStage } from './common/stages/getStage'
+import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
-import { RISK_VIEW, STATE_ZKP_ST } from './common/riskView'
 
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
@@ -92,7 +97,68 @@ export const paradex: Layer2 = {
         },
       ],
     },
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+      sources: [
+        {
+          contract: 'Paradex',
+          references: [
+            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L213',
+          ],
+        },
+      ],
+    },
+    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      sources: [
+        {
+          contract: 'Paradex',
+          references: [
+            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L199',
+          ],
+        },
+      ],
+    },
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    destinationToken: RISK_VIEW.CANONICAL_USDC,
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  technology: TECHNOLOGY.UNDER_REVIEW,
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeSourceAvailable: 'UnderReview',
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: false,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
+  }),
+  technology: {
+    stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
+    dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
+    operator: OPERATOR.CENTRALIZED_OPERATOR,
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      references: [
+        {
+          text: 'Censorship resistance of Starknet - Forum Discussion',
+          href: 'https://community.starknet.io/t/censorship-resistance/196',
+        },
+      ],
+    },
+    exitMechanisms: EXITS.STARKNET,
+  },
   contracts: CONTRACTS.UNDER_REVIEW,
 }
