@@ -5,7 +5,7 @@
 
 ## Description
 
-Proposal updates (the upgrade is executed).
+Proposal updates (the upgrade is executed): a verification key has been updated, meaning that the circuit has been updated.
 
 ## Watched changes
 
