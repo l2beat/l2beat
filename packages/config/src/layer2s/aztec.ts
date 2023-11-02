@@ -157,26 +157,32 @@ export const aztec: Layer2 = {
     dataFormat:
       'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol)',
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink:
+        'https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,

@@ -158,26 +158,31 @@ export const kroma: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: false,
+    {
+      rollupNodeLink: 'https://github.com/kroma-network/kroma',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',

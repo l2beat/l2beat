@@ -84,6 +84,7 @@ export interface Layer2Display {
     | 'Arbitrum'
     | 'Polygon'
     | 'OVM'
+    | 'Starknet'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
@@ -103,8 +104,6 @@ export interface Layer2Config {
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
-  /** Text displayed on the TVL number hover */
-  tvlTooltip?: string
   /** Configuration for getting state updates and batch submission */
   liveness?: Layer2LivenessConfig
 }

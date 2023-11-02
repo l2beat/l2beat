@@ -138,6 +138,7 @@ export const starknet: Layer2 = {
   display: {
     name: 'Starknet',
     slug: 'starknet',
+    provider: 'Starknet',
     description:
       'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
       infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
@@ -146,14 +147,17 @@ export const starknet: Layer2 = {
     purpose: 'Universal',
     category: 'ZK Rollup',
     links: {
-      apps: [],
+      apps: [
+        'https://www.dappland.com/',
+        'https://www.starknet-ecosystem.com/',
+      ],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
         'https://starkware.co/ecosystem/',
         'https://community.starknet.io/',
       ],
-      documentation: ['https://starknet.io/what-is-starknet/'],
+      documentation: ['https://starknet.io/learn/what-is-starknet'],
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
@@ -161,6 +165,7 @@ export const starknet: Layer2 = {
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
+        'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -283,26 +288,31 @@ export const starknet: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/NethermindEth/juno',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -337,6 +347,14 @@ export const starknet: Layer2 = {
       ],
     },
     exitMechanisms: EXITS.STARKNET,
+  },
+  stateDerivation: {
+    nodeSoftware:
+      'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
+    compressionScheme: "Starknet doesn't use any compression scheme.",
+    genesisState: 'There is no non-empty genesis state.',
+    dataFormat:
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/).',
   },
   contracts: {
     addresses: [

@@ -1,10 +1,10 @@
-import { DetailedTvlApiCharts } from '@l2beat/shared-pure'
+import { TvlApiCharts } from '@l2beat/shared-pure'
 
 import { AggregateDetailedTvlResponse } from '../../scripts/charts/types'
 import { getPercentageChange } from '../utils'
 
 export function getTvlWithChange(
-  charts: DetailedTvlApiCharts | AggregateDetailedTvlResponse | undefined,
+  charts: TvlApiCharts | AggregateDetailedTvlResponse | undefined,
   currency?: 'usd' | 'eth',
 ) {
   const data = charts?.hourly.data ?? []
@@ -15,9 +15,7 @@ export function getTvlWithChange(
   return { tvl, tvlWeeklyChange }
 }
 
-export function getDetailedTvlWithChange(
-  charts: DetailedTvlApiCharts | undefined,
-) {
+export function getDetailedTvlWithChange(charts: TvlApiCharts | undefined) {
   const data = charts?.hourly.data ?? []
   const parts = {
     tvl: data.at(-1)?.[1] ?? 0,
