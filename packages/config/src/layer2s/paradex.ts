@@ -66,6 +66,7 @@ export const paradex: Layer2 = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
+    provider: 'Starknet',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purpose: 'Exchange',
