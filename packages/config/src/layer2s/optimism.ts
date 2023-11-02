@@ -379,13 +379,6 @@ export const optimism: Layer2 = {
       GUARDIAN: 'Guardian',
       CHALLENGER: 'Challenger',
     }),
-    {
-      name: 'Challenger',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
-      ],
-      description: 'Central actor allowed to challenge L2 state roots.',
-    },
   ],
   contracts: {
     addresses: [
