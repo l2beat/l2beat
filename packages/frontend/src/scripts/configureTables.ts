@@ -13,7 +13,7 @@ function onLoad(table: HTMLElement) {
   const parentElement = table.parentElement
   const isInsideTabs = parentElement?.classList.contains('TabsContent')
 
-  const rows = $$('tbody tr')
+  const rows = $$('tbody tr[data-slug]')
   const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
 
   const visibleRowsLength = rerenderIndexes(visibleRows)
@@ -36,7 +36,7 @@ export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
 
 function rerenderRows(table: HTMLElement, slugs?: string[]) {
   const { $$ } = makeQuery(table)
-  const rows = $$('tbody tr')
+  const rows = $$('tbody tr[data-slug]')
   rows.forEach((row) => manageRowVisiblity(row, slugs))
 
   const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
@@ -47,9 +47,6 @@ function manageRowVisiblity(row: HTMLElement, slugs?: string[]) {
   const slug = row.dataset.slug
   if (!slug) {
     throw new Error('No slug found')
-  }
-  if (row.dataset.nonFilterable) {
-    return
   }
   if (!slugs || slugs.includes(slug)) {
     row.classList.remove('hidden')

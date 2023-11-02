@@ -5,9 +5,9 @@ import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
 import { BridgesFilters } from '../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
 import {
-  getActiveBridgesTvlColumns,
-  getArchivedBridgesTvlColumns,
-} from '../../../components/table/props/getBridgesTableColumns'
+  getActiveBridgesTvlColumnsConfig,
+  getArchivedBridgesTvlColumnsConfig,
+} from '../../../components/table/props/getBridgesTableColumnsConfig'
 import { RowConfig, TableView } from '../../../components/table/TableView'
 import { Tabs } from '../../../components/Tabs'
 import { BridgesTvlViewEntry } from './types'
@@ -38,7 +38,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={activeProjects}
-                columns={getActiveBridgesTvlColumns()}
+                columnsConfig={getActiveBridgesTvlColumnsConfig()}
                 rows={rows}
                 rerenderOnLoad
               />
@@ -53,7 +53,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={archivedProjects}
-                columns={getArchivedBridgesTvlColumns()}
+                columnsConfig={getArchivedBridgesTvlColumnsConfig()}
                 rows={rows}
                 rerenderOnLoad
               />

@@ -1,0 +1,59 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "paradex",
+  "initialAddresses": [
+    "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+    "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+  ],
+  "names": {
+    "0xF338cad020D506e8e3d9B4854986E0EcE6C23640": "Paradex",
+    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
+    "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": "USDC Bridge"
+  },
+  "sharedModules": {
+    "SHARPVerifierProxy": "l2beat-starkware"
+  },
+  "overrides": {
+    "Paradex": {
+      "fields": {
+        "verifier": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_1.0_INIT_VERIFIER_ADDRESS",
+          "returnType": "address"
+        },
+        "governedFinalized": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKWARE_CONTRACTS_GOVERENED_FINALIZABLE_1.0_TAG",
+          "returnType": "number" // boolean
+        },
+        // Responsible for updating the state
+        "operators": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogOperatorAdded(address operator)",
+          "addKey": "operator",
+          "removeEvent": "event LogOperatorRemoved(address operator)",
+          "removeKey": "operator"
+        },
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "starknetIsGovernor"
+        }
+      },
+      "ignoreInWatchMode": [
+        "l1ToL2MessageNonce",
+        "stateBlockNumber",
+        "stateBlockHash",
+        "stateRoot"
+      ]
+    },
+    "USDC Bridge": {
+      "fields": {
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "isGovernor"
+        }
+      }
+    }
+  }
+}
