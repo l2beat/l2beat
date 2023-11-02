@@ -312,52 +312,19 @@ export const base: Layer2 = {
       'OptimismMultisig',
       "Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process. It's also a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
     ),
-    {
-      name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description:
-        "Admin of the OptimismPortal, L1ERC721Bridge, L2OutputOracle, OptimismMintableERC20Factory, L1StandardBridge, AddressManager, SystemConfig proxies. It's controlled by the AdminMultisig.",
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions to L1.',
-    },
-    {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
-      ],
-      description: 'Central actor allowed to post new L2 state roots to L1.',
-    },
+    ...discovery.getOpStackPermissions({
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger',
+    }),
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
-      }),
+      ...discovery.getOpStackContractDetails(upgradesProxy),
       discovery.getContractDetails('L1ERC721Bridge', {
         description:
           'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         ...upgradesProxy,
       }),
       discovery.getContractDetails('Challenger1of2', {
