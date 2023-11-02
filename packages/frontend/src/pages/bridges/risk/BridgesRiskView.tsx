@@ -4,7 +4,7 @@ import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
 import { BridgesFilters } from '../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
-import { getBridgesRiskColumns } from '../../../components/table/props/getBridgesTableColumns'
+import { getBridgesRiskColumnsConfig } from '../../../components/table/props/getBridgesTableColumnsConfig'
 import { RowConfig, TableView } from '../../../components/table/TableView'
 import { Tabs } from '../../../components/Tabs'
 import { BridgesRiskViewEntry } from './types'
@@ -14,7 +14,7 @@ export interface BridgesRiskViewProps {
 }
 
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
-  const columns = getBridgesRiskColumns()
+  const columns = getBridgesRiskColumnsConfig()
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
     getProps: getBridgesRowProps,
@@ -33,7 +33,12 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
             name: 'Active projects',
             shortName: 'Active',
             content: (
-              <TableView items={activeProjects} columns={columns} rows={rows} />
+              <TableView
+                items={activeProjects}
+                columnsConfig={columns}
+                rows={rows}
+                rerenderOnLoad
+              />
             ),
             itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
@@ -45,8 +50,9 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
             content: (
               <TableView
                 items={archivedProjects}
-                columns={columns}
+                columnsConfig={columns}
                 rows={rows}
+                rerenderOnLoad
               />
             ),
             itemsCount: archivedProjects.length,

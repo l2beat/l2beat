@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 18476942,
+  "blockNumber": 18482896,
   "configHash": "0x3f1b488ebb67cf3066bcb401d15c3b47fa258078eeb242070365dec6b4517afa",
   "version": 3,
   "contracts": [
@@ -116,35 +116,35 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 10,
-        "getFirstUnprocessedPriorityTx": 2632859,
+        "getFirstUnprocessedPriorityTx": 2636835,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x0100089b8a2f2e6a20ba28f02c9e0ed0c13d702932364561a0ea61621f65f0a8",
         "getL2DefaultAccountBytecodeHash": "0x0100067d16a5485875b4249040bf421f53e869337fe118ec747cf40a4c777e5f",
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 4712,
+        "getPriorityQueueSize": 2244,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProposedUpgradeHash": "0x306f3cc703e0e1ab18693aab35276f2dbc745f5de480cee904d05de511ca8415",
-        "getProposedUpgradeTimestamp": 1698826475,
-        "getProtocolVersion": 16,
+        "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getProposedUpgradeTimestamp": 0,
+        "getProtocolVersion": 17,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 294767,
-        "getTotalBlocksExecuted": 293622,
-        "getTotalBlocksVerified": 294349,
-        "getTotalPriorityTxs": 2637571,
-        "getUpgradeProposalState": 1,
+        "getTotalBlocksCommitted": 295383,
+        "getTotalBlocksExecuted": 294612,
+        "getTotalBlocksVerified": 295176,
+        "getTotalPriorityTxs": 2639079,
+        "getUpgradeProposalState": 0,
         "getVerifier": "0x3F04F86f14aB74953fDAEde8175e0714eB8e798e",
         "getVerifierParams": [
           "0x1186ec268d49f1905f8d9c1e9d39fc33e98c74f91d91a21b8f7ef78bd09a8db8",
           "0x101e08b00193e529145ee09823378ef51a3bc8966504064f1f6ba3f1ba863210",
-          "0x236c97bfbe75ff507e03909fae32a78be3a70d1b468b183f430010810284ed45"
+          "0x18c1639094f58177409186e8c48d9f577c9410901d2f1d486b3e7d6cf553ae4c"
         ],
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x7ccd84a0525aa2ee5d8009b6490272eb3a6143bb2d141c88b910ab918fb0bf93",
-          1698758255,
+          "0x98b8afac905f32cbfa8fca2f52c5f8c6151c052c7470371b7d7d61b1cf07024a",
+          1698830051,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
@@ -319,7 +319,7 @@
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
         "getThreshold": 4,
-        "nonce": 74,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
