@@ -36,10 +36,12 @@ import { LivenessRepository } from '../peripherals/database/LivenessRepository'
 function getMockLivenessIndexer(
   projects: Project[],
   configHash: Hash256 | undefined,
-  providedLivenessClient?: LivenessClient,
+  mocks?: {
+    livenessClient?: LivenessClient
+    configurationRepository?: LivenessConfigurationRepository
+  },
 ) {
-  const livenessClient =
-    providedLivenessClient ?? mockObject<LivenessClient>({})
+  const livenessClient = mocks?.livenessClient ?? mockObject<LivenessClient>({})
 
   const stateRepository = mockObject<IndexerStateRepository>({
     findSafeHeight() {
@@ -53,15 +55,17 @@ function getMockLivenessIndexer(
     },
   })
 
-  const configurationRepository = mockObject<LivenessConfigurationRepository>({
-    getAll: async () =>
-      CONFIGURATIONS.map((c, i) => ({
-        ...c,
-        id: i,
-        lastSyncedTimestamp: undefined,
-      })),
-    updateMany: async () => [],
-  })
+  const configurationRepository =
+    mocks?.configurationRepository ??
+    mockObject<LivenessConfigurationRepository>({
+      getAll: async () =>
+        CONFIGURATIONS.map((c, i) => ({
+          ...c,
+          id: i,
+          lastSyncedTimestamp: undefined,
+        })),
+      updateMany: async () => [],
+    })
 
   const wrappedLogger = mockObject<Logger>({
     error: () => {},
@@ -195,9 +199,12 @@ const CONFIGURATIONS: LivenessConfigurationRecord[] = [
     identifier: LivenessConfigurationIdentifier(
       PROJECTS[0].livenessConfig!.transfers[0],
     ),
-    params: "{ key1: 'value1', key2: 'value2' }",
-    fromTimestamp: PROJECTS[0].livenessConfig!.transfers[0].sinceTimestamp,
-    toTimestamp: undefined,
+    params: JSON.stringify({
+      from: PROJECTS[0].livenessConfig!.transfers[0].from,
+      to: PROJECTS[0].livenessConfig!.transfers[0].to,
+    }),
+    sinceTimestamp: PROJECTS[0].livenessConfig!.transfers[0].sinceTimestamp,
+    untilTimestamp: FROM.add(2, 'days'),
   },
   {
     id: 1,
@@ -207,9 +214,12 @@ const CONFIGURATIONS: LivenessConfigurationRecord[] = [
     identifier: LivenessConfigurationIdentifier(
       PROJECTS[0].livenessConfig!.functionCalls[0],
     ),
-    params: "{ key1: 'value3', key2: 'value4' }",
-    fromTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].sinceTimestamp,
-    toTimestamp: undefined,
+    params: JSON.stringify({
+      address: PROJECTS[0].livenessConfig!.functionCalls[0].address,
+      selector: PROJECTS[0].livenessConfig!.functionCalls[0].selector,
+    }),
+    sinceTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].sinceTimestamp,
+    untilTimestamp: undefined,
   },
 ]
 

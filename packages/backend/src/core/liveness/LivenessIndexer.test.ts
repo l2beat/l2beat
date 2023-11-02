@@ -2,10 +2,14 @@ import { hashJson } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../model'
+import {
+  LivenessConfigurationRepository,
+  NewLivenessConfigurationRecord,
+} from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LIVENESS_MOCK } from '../../test/mockLiveness'
 import { LivenessClient } from './LivenessClient'
-import { LivenessIndexer } from './LivenessIndexer'
+import { LivenessIndexer, processConfigurations } from './LivenessIndexer'
 import { getLivenessConfigHash } from './utils'
 
 const {
@@ -20,8 +24,6 @@ const {
 
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.start.name, () => {
-    const PROJECTS: Project[] = []
-
     it('undefined config hash', async () => {
       const DB_CONFIG_HASH = undefined
 
@@ -69,6 +71,48 @@ describe(LivenessIndexer.name, () => {
       expect(stateRepository.addOrUpdate).not.toHaveBeenCalled()
       expect(indexerConfigHash).toEqual(DB_CONFIG_HASH)
     })
+
+    it('adds new configurations to the DB', async () => {
+      const configurationRepository =
+        mockObject<LivenessConfigurationRepository>({
+          getAll: async () =>
+            CONFIGURATIONS.slice(0, 1).map((c, i) => ({
+              ...c,
+              id: i,
+              lastSyncedTimestamp: undefined,
+            })),
+          addMany: async () => [],
+        })
+
+      const {
+        livenessIndexer,
+        stateRepository,
+        indexerConfigHash,
+        minTimestamp,
+      } = getMockLivenessIndexer(PROJECTS, undefined, {
+        configurationRepository,
+      })
+      await livenessIndexer.start()
+
+      expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
+        indexerId: 'liveness_indexer',
+        configHash: indexerConfigHash,
+        safeHeight: minTimestamp.toNumber(),
+      })
+
+      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+      expect(configurationRepository.addMany).toHaveBeenNthCalledWith(
+        1,
+        CONFIGURATIONS.slice(1).map((c) => ({
+          identifier: c.identifier,
+          type: c.type,
+          params: c.params,
+          sinceTimestamp: c.sinceTimestamp,
+          untilTimestamp: c.untilTimestamp,
+          projectId: c.projectId,
+        })),
+      )
+    })
   })
 
   describe(LivenessIndexer.prototype.update.name, () => {
@@ -93,7 +137,7 @@ describe(LivenessIndexer.name, () => {
       expect(wrappedLogger.error).toHaveBeenCalled()
     })
 
-    it.only('calls getLivenessData and adds results to database, returns "to"', async () => {
+    it('calls getLivenessData and adds results to database, returns "to"', async () => {
       const expectedToSave: LivenessRecord[] = [
         ...TRANSFERS_EXPECTED,
         ...FUNCTIONS_EXPECTED,
@@ -106,7 +150,7 @@ describe(LivenessIndexer.name, () => {
       })
 
       const { livenessIndexer, livenessRepository, configurationRepository } =
-        getMockLivenessIndexer(PROJECTS, undefined, livenessClient)
+        getMockLivenessIndexer(PROJECTS, undefined, { livenessClient })
 
       const currentTo = await livenessIndexer.update(
         FROM.toNumber(),
@@ -124,7 +168,9 @@ describe(LivenessIndexer.name, () => {
         TO,
       )
       expect(currentTo).toEqual(TO.toNumber())
+      //@ts-expect-error type issue
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+      //@ts-expect-error type issue
       expect(configurationRepository.updateMany).toHaveBeenNthCalledWith(
         1,
         CONFIGURATIONS.map((c, i) => ({
@@ -174,4 +220,43 @@ describe(LivenessIndexer.name, () => {
   })
 })
 
-// MOCKS
+describe(processConfigurations.name, () => {
+  it('no new configs', () => {
+    const result = processConfigurations(PROJECTS, CONFIGURATIONS)
+
+    expect(result.newConfigs).toEqual([])
+  })
+
+  it('returns new configs', () => {
+    const result = processConfigurations(PROJECTS, CONFIGURATIONS.slice(0, 1))
+
+    const expected: NewLivenessConfigurationRecord[] = CONFIGURATIONS.slice(
+      1,
+    ).map((c) => ({
+      identifier: c.identifier,
+      type: c.type,
+      params: c.params,
+      sinceTimestamp: c.sinceTimestamp,
+      untilTimestamp: c.untilTimestamp,
+      projectId: c.projectId,
+    }))
+
+    expect(result.newConfigs).toEqualUnsorted(expected)
+  })
+
+  it('returns unused configs', () => {
+    const project: Project = {
+      projectId: PROJECTS[0].projectId,
+      type: PROJECTS[0].type,
+      escrows: PROJECTS[0].escrows,
+      livenessConfig: {
+        transfers: [],
+        functionCalls: PROJECTS[0].livenessConfig!.functionCalls,
+      },
+    }
+
+    const result = processConfigurations([project], CONFIGURATIONS)
+
+    expect(result.unusedConfigs).toEqualUnsorted(CONFIGURATIONS.slice(0, 1))
+  })
+})

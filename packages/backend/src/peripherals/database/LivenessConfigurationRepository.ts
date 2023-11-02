@@ -12,12 +12,17 @@ export interface LivenessConfigurationRecord {
   type: LivenessType
   identifier: LivenessConfigurationIdentifier
   params: string
-  fromTimestamp: UnixTime
-  toTimestamp: UnixTime | undefined
-  lastSyncedTimestamp: UnixTime | undefined
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  lastSyncedTimestamp?: UnixTime
 }
 
-// TODO: add index when we will write controler
+export type NewLivenessConfigurationRecord = Omit<
+  LivenessConfigurationRecord,
+  'id' | 'lastSyncedTimestamp'
+>
+
+// TODO: add index when we will write controller
 export class LivenessConfigurationRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -30,9 +35,7 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(
-    records: Omit<LivenessConfigurationRecord, 'id' | 'lastSyncedTimestamp'>[],
-  ): Promise<number[]> {
+  async addMany(records: NewLivenessConfigurationRecord[]): Promise<number[]> {
     const knex = await this.knex()
 
     const insertedRows = await knex('liveness_configuration')
@@ -64,6 +67,11 @@ export class LivenessConfigurationRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('liveness_configuration').delete()
   }
+
+  async deleteMany(ids: number[]) {
+    const knex = await this.knex()
+    return knex('liveness_configuration').whereIn('id', ids).delete()
+  }
 }
 
 function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
@@ -73,9 +81,9 @@ function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
     type: LivenessType(row.type),
     identifier: LivenessConfigurationIdentifier.unsafe(row.identifier),
     params: row.params,
-    fromTimestamp: UnixTime.fromDate(row.from_timestamp),
-    toTimestamp: row.to_timestamp
-      ? UnixTime.fromDate(row.to_timestamp)
+    sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
+    untilTimestamp: row.until_timestamp
+      ? UnixTime.fromDate(row.until_timestamp)
       : undefined,
     lastSyncedTimestamp: row.last_synced_timestamp
       ? UnixTime.fromDate(row.last_synced_timestamp)
@@ -84,14 +92,16 @@ function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
 }
 
 function toRow(
-  record: Omit<LivenessConfigurationRecord, 'id' | 'lastSyncedTimestamp'>,
+  record: NewLivenessConfigurationRecord,
 ): Omit<LivenessConfigurationRow, 'id' | 'last_synced_timestamp'> {
   return {
     project_id: record.projectId.toString(),
     type: record.type,
     identifier: record.identifier.toString(),
     params: record.params,
-    from_timestamp: record.fromTimestamp.toDate(),
-    to_timestamp: record.toTimestamp ? record.toTimestamp.toDate() : undefined,
+    since_timestamp: record.sinceTimestamp.toDate(),
+    until_timestamp: record.untilTimestamp
+      ? record.untilTimestamp.toDate()
+      : undefined,
   }
 }
