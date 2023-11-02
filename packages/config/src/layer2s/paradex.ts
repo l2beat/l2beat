@@ -5,6 +5,12 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -12,6 +18,7 @@ import {
   EXITS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
 } from './common'
 import { FORCE_TRANSACTIONS } from './common/forceTransactions'
@@ -19,6 +26,8 @@ import { RISK_VIEW } from './common/riskView'
 import { getStage } from './common/stages/getStage'
 import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
+import { link } from 'fs'
+import { date } from 'zod'
 
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
@@ -52,7 +61,6 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 )
 
 export const paradex: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('paradex'),
   display: {
@@ -71,9 +79,6 @@ export const paradex: Layer2 = {
       socialMedia: ['https://twitter.com/tradeparadex'],
     },
   },
-  stage: {
-    stage: 'UnderReview',
-  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -81,7 +86,8 @@ export const paradex: Layer2 = {
         tokens: ['USDC'],
         upgradableBy: ['USDC Escrow owner'],
         upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
-        description: 'Paradex USDC Escrow.',
+        description:
+          'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
     ],
   },
@@ -160,5 +166,50 @@ export const paradex: Layer2 = {
     },
     exitMechanisms: EXITS.STARKNET,
   },
-  contracts: CONTRACTS.UNDER_REVIEW,
+  contracts: {
+    addresses: [
+      discovery.getContractDetails('Paradex', {
+        description:
+          'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
+        upgradeDelay: upgradeDelaySeconds
+          ? formatSeconds(upgradeDelaySeconds)
+          : 'No delay',
+        upgradableBy: ['Paradex owner'],
+      }),
+      ...getSHARPVerifierContracts(discovery, verifierAddress),
+    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
+  },
+  permissions: [
+    {
+      name: 'Paradex owner',
+      accounts: getProxyGovernance(discovery, 'Paradex'),
+      description:
+        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
+        delayDescriptionFromSeconds(upgradeDelaySeconds),
+    },
+    ...getSHARPVerifierGovernors(discovery, verifierAddress),
+    {
+      name: 'Operators',
+      accounts: discovery.getPermissionedAccounts('Paradex', 'operators'),
+      description:
+        'Allowed to post state updates. When the operator is down the state cannot be updated.',
+    },
+    {
+      name: 'USDC Escrow owner',
+      accounts: getProxyGovernance(discovery, 'USDC Bridge'),
+      description:
+        'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
+    },
+  ],
+  milestones: [
+    {
+      name: 'Open Beta Mainnet Launch',
+      link: 'https://twitter.com/tradeparadex',
+      date: '2023-10-01T00:00:00.00Z',
+      description: 'Paradex launches Open Beta on Mainnet.',
+    },
+  ],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }
