@@ -16,7 +16,7 @@ import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
-import { getCallResultWithRevert } from '../../utils/getCallResult'
+import { getCallResult } from '../../utils/getCallResult'
 
 async function getAddressManager(
   provider: DiscoveryProvider,
@@ -61,7 +61,7 @@ async function getImplementation(
   implementationName: string,
   blockNumber: number,
 ): Promise<EthereumAddress> {
-  const implementation = await getCallResultWithRevert<string>(
+  const implementation = await getCallResult<string>(
     provider,
     addressManager,
     'function getAddress(string implementationName) view returns(address)',

@@ -1,5 +1,16 @@
 # @l2beat/discovery
 
+## 0.22.0
+
+### Minor Changes
+
+- Added discovery support for Gnosis-Safe multisig modules
+
+### Patch Changes
+
+- Updated dependencies
+  - @l2beat/discovery-types@0.5.0
+
 ## 0.21.4
 
 ### Patch Changes

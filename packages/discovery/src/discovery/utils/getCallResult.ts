@@ -12,6 +12,7 @@ export async function getCallResult<T>(
   methodAbi: string,
   values: unknown[],
   blockNumber: number,
+  fullOutput = false,
 ): Promise<T | undefined> {
   try {
     return await getCallResultWithRevert<T>(
@@ -20,6 +21,7 @@ export async function getCallResult<T>(
       methodAbi,
       values,
       blockNumber,
+      fullOutput,
     )
   } catch (e) {
     if (isRevert(e)) {
@@ -35,6 +37,7 @@ export async function getCallResultWithRevert<T>(
   methodAbi: string,
   values: unknown[],
   blockNumber: number,
+  fullOutput: boolean,
 ): Promise<T | undefined> {
   const abi = new utils.Interface([methodAbi])
   const fragment = Object.values(abi.functions)[0]
@@ -42,5 +45,6 @@ export async function getCallResultWithRevert<T>(
   assert(fragment, `Unknown fragment for method: ${methodAbi}`)
   const callData = Bytes.fromHex(abi.encodeFunctionData(fragment, values))
   const result = await provider.call(address, callData, blockNumber)
-  return abi.decodeFunctionResult(fragment, result.toString())[0] as T
+  const decodedResult = abi.decodeFunctionResult(fragment, result.toString())
+  return (fullOutput ? decodedResult : decodedResult[0]) as T
 }

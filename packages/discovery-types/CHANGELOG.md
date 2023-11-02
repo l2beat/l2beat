@@ -1,5 +1,11 @@
 # @l2beat/discovery-types
 
+## 0.5.0
+
+### Minor Changes
+
+- Added discovery support for Gnosis-Safe multisig modules
+
 ## 0.4.1
 
 ### Patch Changes
