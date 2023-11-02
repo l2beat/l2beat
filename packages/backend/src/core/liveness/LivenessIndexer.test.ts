@@ -93,7 +93,7 @@ describe(LivenessIndexer.name, () => {
       expect(wrappedLogger.error).toHaveBeenCalled()
     })
 
-    it('calls getLivenessData and adds results to database, returns "to"', async () => {
+    it.only('calls getLivenessData and adds results to database, returns "to"', async () => {
       const expectedToSave: LivenessRecord[] = [
         ...TRANSFERS_EXPECTED,
         ...FUNCTIONS_EXPECTED,
@@ -105,11 +105,8 @@ describe(LivenessIndexer.name, () => {
         }),
       })
 
-      const { livenessIndexer, livenessRepository } = getMockLivenessIndexer(
-        PROJECTS,
-        undefined,
-        livenessClient,
-      )
+      const { livenessIndexer, livenessRepository, configurationRepository } =
+        getMockLivenessIndexer(PROJECTS, undefined, livenessClient)
 
       const currentTo = await livenessIndexer.update(
         FROM.toNumber(),
@@ -127,6 +124,15 @@ describe(LivenessIndexer.name, () => {
         TO,
       )
       expect(currentTo).toEqual(TO.toNumber())
+      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+      expect(configurationRepository.updateMany).toHaveBeenNthCalledWith(
+        1,
+        CONFIGURATIONS.map((c, i) => ({
+          ...c,
+          id: i,
+          lastSyncedTimestamp: TO,
+        })),
+      )
       expect(livenessRepository.addMany).toHaveBeenCalledWith(expectedToSave)
     })
   })

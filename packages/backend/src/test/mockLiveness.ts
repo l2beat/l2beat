@@ -107,6 +107,7 @@ function getMockLivenessIndexer(
     stateRepository,
     livenessRepository,
     wrappedLogger,
+    configurationRepository,
     indexerConfigHash: getLivenessConfigHash(projects),
     minTimestamp: FROM,
   }

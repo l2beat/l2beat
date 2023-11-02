@@ -85,7 +85,7 @@ export class LivenessIndexer extends ChildIndexer {
         // TODO: fix typescript issue
         assert(data, 'Liveness data should not be undefined there')
 
-        return { ...c, latestSyncedTimestamp: data.to }
+        return { ...c, lastSyncedTimestamp: data.to }
       }),
     )
 
