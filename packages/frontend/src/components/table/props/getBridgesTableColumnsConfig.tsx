@@ -10,7 +10,7 @@ import { RiskCell } from '../RiskCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 
-export function getArchivedBridgesTvlColumns() {
+export function getArchivedBridgesTvlColumnsConfig() {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
       name: '#',
@@ -49,8 +49,8 @@ export function getArchivedBridgesTvlColumns() {
   return columns
 }
 
-export function getActiveBridgesTvlColumns() {
-  const columns = getArchivedBridgesTvlColumns()
+export function getActiveBridgesTvlColumnsConfig() {
+  const columns = getArchivedBridgesTvlColumnsConfig()
 
   columns.splice(
     3,
@@ -90,11 +90,11 @@ export function getActiveBridgesTvlColumns() {
   return columns
 }
 
-export function getCanonicalBridgesTvlColumns() {
-  return getActiveBridgesTvlColumns()
+export function getCanonicalBridgesTvlColumnsConfig() {
+  return getActiveBridgesTvlColumnsConfig()
 }
 
-export function getBridgesRiskColumns() {
+export function getBridgesRiskColumnsConfig() {
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
     {
       name: '#',
