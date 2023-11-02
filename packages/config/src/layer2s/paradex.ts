@@ -26,8 +26,6 @@ import { RISK_VIEW } from './common/riskView'
 import { getStage } from './common/stages/getStage'
 import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
-import { link } from 'fs'
-import { date } from 'zod'
 
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
