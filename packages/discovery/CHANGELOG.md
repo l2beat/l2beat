@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.21.3
+
+### Patch Changes
+
+- Fix dependency error when value is 0
+
 ## 0.21.2
 
 ### Patch Changes

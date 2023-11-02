@@ -27,7 +27,7 @@ export function resolveReference<T extends string | unknown>(
   if (result.error) {
     throw new Error(`Dependency error: ${result.error}`)
   }
-  if (!result.value) {
+  if (result.value === undefined) {
     throw new Error(`Dependency error: missing value`)
   }
   return result.value
