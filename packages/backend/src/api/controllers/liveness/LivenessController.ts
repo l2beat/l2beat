@@ -6,6 +6,7 @@ import {
   LivenessRepository,
 } from '../../../peripherals/database/LivenessRepository'
 import { groupByAndOmit } from '../utils/grouping'
+import { calculateAnomalies } from './calculateAnomalies'
 import { calculateIntervalWithAverages } from './calculateIntervalWithAverages'
 
 export class LivenessController {
@@ -16,9 +17,9 @@ export class LivenessController {
     const groupedByProjectAndType = groupByProjectIdAndType(allRecords)
 
     const intervals = calculateIntervalWithAverages(groupedByProjectAndType)
-    return intervals
+    const withAnomalies = calculateAnomalies(intervals)
 
-    // function for getting anomalies
+    return withAnomalies
   }
 }
 

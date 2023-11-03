@@ -7,6 +7,24 @@ export type LivenessRecordWithInterval = Omit<LivenessRecord, 'projectId'> & {
   previousRecordInterval?: number
 }
 
+export interface LivenessRecordsWithIntervalAndDetails<
+  T = LivenessRecordWithInterval,
+> {
+  records: T[]
+  last30days: {
+    averageInSeconds: number | null
+    maximumInSeconds: number | null
+  }
+  last90days: {
+    averageInSeconds: number | null
+    maximumInSeconds: number | null
+  }
+  max: {
+    averageInSeconds: number | null
+    maximumInSeconds: number | null
+  }
+}
+
 export function calculateIntervalWithAverages(
   records: Record<
     string,
@@ -21,12 +39,8 @@ export function calculateIntervalWithAverages(
   >,
 ) {
   const result: Dictionary<{
-    batchSubmissions: {
-      records: LivenessRecordWithInterval[]
-    }
-    stateUpdates: {
-      records: LivenessRecordWithInterval[]
-    }
+    batchSubmissions: LivenessRecordsWithIntervalAndDetails
+    stateUpdates: LivenessRecordsWithIntervalAndDetails
   }> = {}
   for (const project in records) {
     const projectRecords = records[project]
@@ -37,13 +51,38 @@ export function calculateIntervalWithAverages(
             (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
           ),
         ),
+        last30days: {
+          averageInSeconds: null,
+          maximumInSeconds: null,
+        },
+        last90days: {
+          averageInSeconds: null,
+          maximumInSeconds: null,
+        },
+        max: {
+          averageInSeconds: null,
+          maximumInSeconds: null,
+        },
       },
+
       stateUpdates: {
         records: calculateIntervals(
           projectRecords.stateUpdates.records.sort(
             (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
           ),
         ),
+        last30days: {
+          averageInSeconds: null,
+          maximumInSeconds: null,
+        },
+        last90days: {
+          averageInSeconds: null,
+          maximumInSeconds: null,
+        },
+        max: {
+          averageInSeconds: null,
+          maximumInSeconds: null,
+        },
       },
     }
     const averages = calculateAverages(result[project])
@@ -138,7 +177,7 @@ export function calculateAverages(record: {
 
 export function filterRecords(
   records: LivenessRecordWithInterval[],
-  type: '30d' | '90d' | 'max',
+  type: '30d' | '60d' | '90d' | 'max',
 ) {
   if (type === 'max') {
     return records
@@ -146,10 +185,9 @@ export function filterRecords(
       .filter(notUndefined)
   } else {
     const NOW = UnixTime.now()
+    const timeframe = type === '30d' ? -30 : type === '60d' ? -60 : -90
     return records
-      .filter((record) =>
-        record.timestamp.gte(NOW.add(type === '30d' ? -30 : -90, 'days')),
-      )
+      .filter((record) => record.timestamp.gte(NOW.add(timeframe, 'days')))
       .map((record) => record.previousRecordInterval)
       .filter(notUndefined)
   }
