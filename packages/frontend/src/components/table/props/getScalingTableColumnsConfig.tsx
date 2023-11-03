@@ -4,6 +4,7 @@ import React from 'react'
 import { ActivityViewEntry } from '../../../pages/scaling/activity/view/types'
 import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
 import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
+import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
@@ -456,24 +457,74 @@ export function getScalingLivenessColumnsConfig() {
       title: 'Batch submission interval',
       columns: [
         {
-          name: '30-day avg.',
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day avg.'}
+              last90Days={'90-day avg.'}
+              max={'all-time avg.'}
+            />
+          ),
           tooltip: 'How often transaction batches are submitted to the L1',
           getValue: (project) => (
-            <DurationCell
-              durationInSeconds={
-                project.batchSubmissions?.last30Days.averageInSeconds
+            <LivenessTimeRangeCell
+              last30Days={
+                <DurationCell
+                  durationInSeconds={
+                    project.batchSubmissions?.last30Days.averageInSeconds
+                  }
+                />
+              }
+              last90Days={
+                <DurationCell
+                  durationInSeconds={
+                    project.batchSubmissions?.last90Days.averageInSeconds
+                  }
+                />
+              }
+              max={
+                <DurationCell
+                  durationInSeconds={
+                    project.batchSubmissions?.max.averageInSeconds
+                  }
+                />
               }
             />
           ),
         },
         {
-          name: '30-day max.',
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day max.'}
+              last90Days={'90-day max.'}
+              max={'all-time max.'}
+            />
+          ),
           tooltip: 'The longest period of time between batch submissions',
           getValue: (project) => (
-            <DurationCell
-              withColors
-              durationInSeconds={
-                project.batchSubmissions?.last30Days.maximumInSeconds
+            <LivenessTimeRangeCell
+              last30Days={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.batchSubmissions?.last30Days.maximumInSeconds
+                  }
+                />
+              }
+              last90Days={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.batchSubmissions?.last90Days.maximumInSeconds
+                  }
+                />
+              }
+              max={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.batchSubmissions?.max.maximumInSeconds
+                  }
+                />
               }
             />
           ),
@@ -485,24 +536,70 @@ export function getScalingLivenessColumnsConfig() {
       title: 'State update interval',
       columns: [
         {
-          name: '30-day avg.',
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day avg.'}
+              last90Days={'90-day avg.'}
+              max={'all-time avg.'}
+            />
+          ),
           tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) => (
-            <DurationCell
-              durationInSeconds={
-                project.stateUpdates?.last30Days.averageInSeconds
+            <LivenessTimeRangeCell
+              last30Days={
+                <DurationCell
+                  durationInSeconds={
+                    project.stateUpdates?.last30Days.averageInSeconds
+                  }
+                />
+              }
+              last90Days={
+                <DurationCell
+                  durationInSeconds={
+                    project.stateUpdates?.last90Days.averageInSeconds
+                  }
+                />
+              }
+              max={
+                <DurationCell
+                  durationInSeconds={project.stateUpdates?.max.averageInSeconds}
+                />
               }
             />
           ),
         },
         {
-          name: '30-day max.',
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day max.'}
+              last90Days={'90-day max.'}
+              max={'all-time max.'}
+            />
+          ),
           tooltip: 'The longest period of time between state root submissions',
           getValue: (project) => (
-            <DurationCell
-              withColors
-              durationInSeconds={
-                project.stateUpdates?.last30Days.maximumInSeconds
+            <LivenessTimeRangeCell
+              last30Days={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.stateUpdates?.last30Days.maximumInSeconds
+                  }
+                />
+              }
+              last90Days={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.stateUpdates?.last90Days.maximumInSeconds
+                  }
+                />
+              }
+              max={
+                <DurationCell
+                  withColors
+                  durationInSeconds={project.stateUpdates?.max.maximumInSeconds}
+                />
               }
             />
           ),

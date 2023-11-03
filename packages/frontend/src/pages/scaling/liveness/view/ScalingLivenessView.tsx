@@ -5,6 +5,7 @@ import { getScalingRowProps } from '../../../../components/table/props/getScalin
 import { getScalingLivenessColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { ScalingLivenessViewEntry } from '../types'
+import { LivenessTimeRangeControls } from './LivenessTimeRangeControls'
 
 export interface ScalingLivenessViewProps {
   items: ScalingLivenessViewEntry[]
@@ -18,7 +19,10 @@ export function ScalingLivenessView({ items }: ScalingLivenessViewProps) {
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <ScalingFilters items={items} />
+      <div className="flex justify-between">
+        <ScalingFilters items={items} />
+        <LivenessTimeRangeControls />
+      </div>
       <TableView columnsConfig={columnsConfig} rows={rows} items={items} />
     </section>
   )
