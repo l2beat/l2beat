@@ -32,10 +32,18 @@ export function calculateIntervalWithAverages(
     const projectRecords = records[project]
     result[project] = {
       batchSubmissions: {
-        records: calculateIntervals(projectRecords.batchSubmissions.records),
+        records: calculateIntervals(
+          projectRecords.batchSubmissions.records.sort(
+            (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
+          ),
+        ),
       },
       stateUpdates: {
-        records: calculateIntervals(projectRecords.stateUpdates.records),
+        records: calculateIntervals(
+          projectRecords.stateUpdates.records.sort(
+            (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
+          ),
+        ),
       },
     }
     const averages = calculateAverages(result[project])
@@ -51,21 +59,21 @@ export function calculateIntervalWithAverages(
   return result
 }
 
-function calculateIntervals(
+export function calculateIntervals(
   records: LivenessRecordWithInterval[],
 ): LivenessRecordWithInterval[] {
   records.forEach((record, index) => {
-    if (index === 0) {
+    if (index === records.length - 1) {
       return
     }
-    const previousRecord = records[index - 1]
+    const nextRecord = records[index + 1]
     record.previousRecordInterval =
-      record.timestamp.toNumber() - previousRecord.timestamp.toNumber()
+      record.timestamp.toNumber() - nextRecord.timestamp.toNumber()
   })
   return records
 }
 
-function calculateAverages(record: {
+export function calculateAverages(record: {
   batchSubmissions: {
     records: LivenessRecordWithInterval[]
   }
@@ -128,7 +136,7 @@ function calculateAverages(record: {
   }
 }
 
-function filterRecords(
+export function filterRecords(
   records: LivenessRecordWithInterval[],
   type: '30d' | '90d' | 'max',
 ) {
@@ -147,11 +155,11 @@ function filterRecords(
   }
 }
 
-function calculateAverage(records: number[]) {
+export function calculateAverage(records: number[]) {
   return records.reduce((a, b) => a + b, 0) / records.length || null
 }
 
-function calculateMax(records: number[]) {
+export function calculateMax(records: number[]) {
   const max = Math.max(...records)
   if (max === -Infinity) {
     return null
