@@ -9,6 +9,7 @@ import {
   LivenessConfigurationRepository,
   NewLivenessConfigurationRecord,
 } from './LivenessConfigurationRepository'
+import { LivenessRepository } from './LivenessRepository'
 
 const START = UnixTime.now()
 
@@ -125,6 +126,34 @@ describe(LivenessConfigurationRepository.name, () => {
       const results = await repository.getAll()
 
       expect(results).toEqualUnsorted([all[0]])
+    })
+
+    it.only('should delete from child tables via CASCADE constraint', async () => {
+      const newIds = await repository.addMany(LIVENESS_CONFIGS)
+
+      const childRepository = new LivenessRepository(database, Logger.SILENT)
+      await childRepository.deleteAll()
+      await childRepository.addMany([
+        {
+          timestamp: UnixTime.now(),
+          blockNumber: 0,
+          txHash: '0x',
+          livenessConfigurationId: newIds[1],
+        },
+      ])
+
+      await repository.deleteMany(newIds.slice(1))
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        {
+          ...LIVENESS_CONFIGS[0],
+          id: newIds[0],
+          lastSyncedTimestamp: undefined,
+        },
+      ])
+
+      const childResults = await childRepository.getAll()
+      expect(childResults).toEqualUnsorted([])
     })
   })
 })
