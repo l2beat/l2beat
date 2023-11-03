@@ -28,5 +28,5 @@ export interface ScalingLivenessViewEntry {
         max: DataPoint
       }
     | undefined
-  anomalies: AnomalyIndicatorEntry[]
+  anomalyEntries: AnomalyIndicatorEntry[]
 }

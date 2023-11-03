@@ -1,4 +1,9 @@
-import { LivenessApiResponse, UnixTime } from '@l2beat/shared-pure'
+import {
+  LivenessApiProject,
+  LivenessApiResponse,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { range } from 'lodash'
 
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
@@ -16,48 +21,81 @@ export async function fetchLivenessApi(
 }
 
 function getMockLivenessApiResponse(): LivenessApiResponse {
+  const projects = [
+    'arbitrum',
+    'optimism',
+    'apex',
+    'aevo',
+    'base',
+    'dydx',
+    'brine',
+    'linea',
+    'myria',
+    'scroll',
+  ].reduce<Record<string, LivenessApiProject>>((acc, cur) => {
+    acc[cur] = generateMockData()
+    return acc
+  }, {})
+
   return {
-    projects: {
-      arbitrum: {
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 120,
-            maximumInSeconds: 180,
-          },
-          last90Days: {
-            averageInSeconds: 120,
-            maximumInSeconds: 180,
-          },
-          max: {
-            averageInSeconds: 120,
-            maximumInSeconds: 180,
-          },
-        },
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 120,
-            maximumInSeconds: 180,
-          },
-          last90Days: {
-            averageInSeconds: 120,
-            maximumInSeconds: 180,
-          },
-          max: {
-            averageInSeconds: 120,
-            maximumInSeconds: 180,
-          },
-        },
-        anomalies: [
-          {
-            timestamp: UnixTime.now().add(-3, 'days'),
-            durationInSeconds: 10 * 60,
-          },
-          {
-            timestamp: UnixTime.now().add(-29, 'days'),
-            durationInSeconds: 30 * 60,
-          },
-        ],
+    projects,
+  }
+}
+
+function generateMockData(): LivenessApiProject {
+  const anomaliesCount = Math.round(Math.random() * 15)
+  return {
+    batchSubmissions: {
+      last30Days: {
+        averageInSeconds: generateRandomTime(),
+        maximumInSeconds: generateRandomTime(),
+      },
+      last90Days: {
+        averageInSeconds: generateRandomTime(),
+        maximumInSeconds: generateRandomTime(),
+      },
+      max: {
+        averageInSeconds: generateRandomTime(),
+        maximumInSeconds: generateRandomTime(),
       },
     },
+    stateUpdates: {
+      last30Days: {
+        averageInSeconds: generateRandomTime(),
+        maximumInSeconds: generateRandomTime(),
+      },
+      last90Days: {
+        averageInSeconds: generateRandomTime(),
+        maximumInSeconds: generateRandomTime(),
+      },
+      max: {
+        averageInSeconds: generateRandomTime(),
+        maximumInSeconds: generateRandomTime(),
+      },
+    },
+    anomalies:
+      anomaliesCount !== 0
+        ? range(anomaliesCount).map(() => ({
+            timestamp: UnixTime.now()
+              .add(
+                // TODO: (liveness) should we include current day
+                Math.round(Math.random() * -29) - 1,
+                'days',
+              )
+              .add(Math.round(Math.random() * 172800), 'seconds'),
+            durationInSeconds: generateRandomTime(),
+          }))
+        : [],
   }
+}
+
+function generateRandomTime() {
+  const i = Math.round(Math.random() * 3)
+  if (i < 1) {
+    return Math.round(Math.random() * 3600)
+  }
+  if (i < 2) {
+    return 3600 + Math.round(Math.random() * 82800)
+  }
+  return 86400 + Math.round(Math.random() * 86400 * 5)
 }

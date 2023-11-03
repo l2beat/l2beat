@@ -7,23 +7,25 @@ import { formatTimestamp } from '../utils'
 import { DurationCell } from './table/DurationCell'
 
 interface Props {
-  anomalies: AnomalyIndicatorEntry[]
+  anomalyEntries: AnomalyIndicatorEntry[]
 }
 
 export type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
 
 interface AnomalyEntry {
   isAnomaly: true
-  timestamp: number
-  durationInSeconds: number
+  anomalies: {
+    timestamp: number
+    durationInSeconds: number
+  }[]
 }
 
 interface NonAnomalyEntry {
   isAnomaly: false
 }
 
-export function AnomalyIndicator({ anomalies }: Props) {
-  if (anomalies.length === 0) {
+export function AnomalyIndicator({ anomalyEntries }: Props) {
+  if (anomalyEntries.length === 0) {
     return (
       <div className="w-min select-none text-center">
         <div className="mx-auto text-gray-500 dark:text-gray-50">No data</div>
@@ -35,7 +37,7 @@ export function AnomalyIndicator({ anomalies }: Props) {
       </div>
     )
   }
-  const data = anomalies.filter(
+  const data = anomalyEntries.filter(
     (anomaly) => anomaly.isAnomaly,
   ) as AnomalyEntry[]
 
@@ -49,12 +51,12 @@ export function AnomalyIndicator({ anomalies }: Props) {
       )}
       title={
         shouldShowTooltip
-          ? renderToStaticMarkup(<AnomalyTooltip anomalies={data} />)
+          ? renderToStaticMarkup(<AnomalyTooltip anomalyEntries={data} />)
           : undefined
       }
       data-testid="anomaly-indicator"
     >
-      {anomalies.map((anomaly, i) => (
+      {anomalyEntries.map((anomaly, i) => (
         <div
           key={i}
           className={classNames(
@@ -67,28 +69,30 @@ export function AnomalyIndicator({ anomalies }: Props) {
   )
 }
 
-function AnomalyTooltip(props: { anomalies: AnomalyEntry[] }) {
+function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
   return (
     <div>
       <span>Anomalies from last 30 days:</span>
       <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
-        {props.anomalies.map((anomaly) => (
-          <li key={anomaly.timestamp}>
-            <span>
-              {formatTimestamp(anomaly.timestamp, {
-                withTime: true,
-                longMonthName: true,
-              })}
-            </span>
-            <div className="text-black dark:text-white">
-              Duration:{' '}
-              <DurationCell
-                durationInSeconds={anomaly.durationInSeconds}
-                withColors
-              />
-            </div>
-          </li>
-        ))}
+        {props.anomalyEntries.map((anomalyEntry) =>
+          anomalyEntry.anomalies.map((anomaly) => (
+            <li key={anomaly.timestamp}>
+              <span>
+                {formatTimestamp(anomaly.timestamp, {
+                  withTime: true,
+                  longMonthName: true,
+                })}
+              </span>
+              <div className="text-black dark:text-white">
+                Duration:{' '}
+                <DurationCell
+                  durationInSeconds={anomaly.durationInSeconds}
+                  withColors
+                />
+              </div>
+            </li>
+          )),
+        )}
       </ul>
     </div>
   )

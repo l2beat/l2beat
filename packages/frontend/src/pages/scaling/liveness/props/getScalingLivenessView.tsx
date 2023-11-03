@@ -34,14 +34,14 @@ function getScalingLivenessViewEntry(
     stage: project.stage,
     stateUpdates: liveness?.stateUpdates,
     batchSubmissions: liveness?.batchSubmissions,
-    anomalies:
+    anomalyEntries:
       liveness?.anomalies && liveness.anomalies.length !== 0
-        ? getAnomalies(liveness.anomalies)
+        ? getAnomalyEntries(liveness.anomalies)
         : [],
   }
 }
 
-function getAnomalies(
+function getAnomalyEntries(
   anomalies: LivenessApiProject['anomalies'],
 ): AnomalyIndicatorEntry[] {
   const now = UnixTime.now()
@@ -61,13 +61,13 @@ function getAnomalies(
         isAnomaly: false,
       })
     } else {
-      result.push(
-        ...anomaliesInGivenDay.map((a) => ({
-          isAnomaly: true,
+      result.push({
+        isAnomaly: true,
+        anomalies: anomaliesInGivenDay.map((a) => ({
           timestamp: a.timestamp.toNumber(),
           durationInSeconds: a.durationInSeconds,
         })),
-      )
+      })
     }
 
     dayInLoop = dayInLoop.add(1, 'days')

@@ -94,7 +94,7 @@ const anomalies = [
 
 export const Default: Story = {
   args: {
-    anomalies: anomalies,
+    anomalyEntries: anomalies,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -109,6 +109,6 @@ export const Default: Story = {
 
 export const NoData: Story = {
   args: {
-    anomalies: [],
+    anomalyEntries: [],
   },
 }
