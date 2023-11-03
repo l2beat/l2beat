@@ -3,13 +3,16 @@ import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/view/types'
 import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
+import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
+import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { ComingSoonCell } from '../ComingSoonCell'
+import { DurationCell } from '../DurationCell'
 import { EthereumCell } from '../EthereumCell'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
@@ -420,6 +423,86 @@ export function getScalingActivityColumnsConfig() {
       name: 'Data source',
       tooltip: 'Where is the transaction data coming from.',
       getValue: (project) => project.dataSource,
+    },
+  ]
+  return columns
+}
+
+export function getScalingLivenessColumnsConfig() {
+  const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      minimalWidth: true,
+      getValue: (project) => <ProjectCell project={project} />,
+    },
+    {
+      name: '30-day anomalies',
+      tooltip: 'Placeholder',
+      getValue: (project) => <AnomalyIndicator anomalies={project.anomalies} />,
+    },
+    {
+      type: 'group',
+      title: 'Batch submission interval',
+      columns: [
+        {
+          name: '30-day avg.',
+          tooltip: 'Placeholder',
+          getValue: (project) => (
+            <DurationCell
+              durationInSeconds={
+                project.batchSubmissions?.last30Days.averageInSeconds
+              }
+            />
+          ),
+        },
+        {
+          name: '30-day max.',
+          tooltip: 'Placeholder',
+          getValue: (project) => (
+            <DurationCell
+              durationInSeconds={
+                project.batchSubmissions?.last30Days.maximumInSeconds
+              }
+            />
+          ),
+        },
+      ],
+    },
+    {
+      type: 'group',
+      title: 'State update interval',
+      columns: [
+        {
+          name: '30-day avg.',
+          tooltip: 'Placeholder',
+          getValue: (project) => (
+            <DurationCell
+              durationInSeconds={
+                project.stateUpdates?.last30Days.averageInSeconds
+              }
+            />
+          ),
+        },
+        {
+          name: '30-day max.',
+          tooltip: 'Placeholder',
+          getValue: (project) => (
+            <DurationCell
+              durationInSeconds={
+                project.stateUpdates?.last30Days.maximumInSeconds
+              }
+            />
+          ),
+        },
+      ],
     },
   ]
   return columns

@@ -20,6 +20,7 @@ export interface ScalingDetailedTvlPageProps {
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
+  showLiveness: boolean
   detailedTvlView: ScalingDetailedTvlViewProps
 }
 
@@ -30,6 +31,7 @@ export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
+          showLiveness={props.showLiveness}
           selected="detailed"
         />
         <main className="mt-4 md:mt-12">

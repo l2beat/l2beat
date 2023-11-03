@@ -11,6 +11,7 @@ import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
 import { getDetailedTvlPage } from './scaling/detailed-tvl'
+import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getRiskPage } from './scaling/risk'
@@ -24,6 +25,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     activityApiResponse,
     verificationStatus,
     tvlBreakdownApiResponse,
+    livenessApiResponse,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -58,6 +60,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         tvlBreakdownApiResponse,
       }),
     )
+  }
+
+  if (config.features.liveness && livenessApiResponse) {
+    pages.push(getLivenessPage(config, livenessApiResponse))
   }
 
   outputPages(pages)

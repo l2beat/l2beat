@@ -4,12 +4,13 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { formatTimestamp } from '../utils'
+import { DurationCell } from './table/DurationCell'
 
 interface Props {
   anomalies: AnomalyIndicatorEntry[]
 }
 
-type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
+export type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
 
 interface AnomalyEntry {
   isAnomaly: true
@@ -26,9 +27,9 @@ export function AnomalyIndicator({ anomalies }: Props) {
     return (
       <div className="w-min select-none text-center">
         <div className="mx-auto text-gray-500 dark:text-gray-50">No data</div>
-        <div className="flex h-6 gap-x-0.5">
-          {range(30).map(() => (
-            <div className="h-0.5 w-0.5 rounded-full bg-neutral-700" />
+        <div className="flex gap-x-0.5">
+          {range(30).map((_, i) => (
+            <div key={i} className="h-0.5 w-0.5 rounded-full bg-neutral-700" />
           ))}
         </div>
       </div>
@@ -53,8 +54,9 @@ export function AnomalyIndicator({ anomalies }: Props) {
       }
       data-testid="anomaly-indicator"
     >
-      {anomalies.map((anomaly) => (
+      {anomalies.map((anomaly, i) => (
         <div
+          key={i}
           className={classNames(
             'w-0.5 rounded-full',
             anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
@@ -71,38 +73,20 @@ function AnomalyTooltip(props: { anomalies: AnomalyEntry[] }) {
       <span>Anomalies from last 30 days:</span>
       <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {props.anomalies.map((anomaly) => (
-          <li>
+          <li key={anomaly.timestamp}>
             <span>
               {formatTimestamp(anomaly.timestamp, {
                 withTime: true,
                 longMonthName: true,
               })}
             </span>
-            <DurationRow durationInSeconds={anomaly.durationInSeconds} />
+            <div className="text-black dark:text-white">
+              Duration:{' '}
+              <DurationCell durationInSeconds={anomaly.durationInSeconds} />
+            </div>
           </li>
         ))}
       </ul>
     </div>
   )
-}
-
-function DurationRow(props: { durationInSeconds: number }) {
-  const minutes = Math.floor(props.durationInSeconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
-
-  const duration =
-    days > 0 ? (
-      <span className="text-orange-600 dark:text-orange-500">{days} days</span>
-    ) : hours > 0 ? (
-      <span className="text-yellow-700 dark:text-yellow-100">
-        {hours} hours
-      </span>
-    ) : (
-      <span className="text-green-300 dark:text-green-450">
-        {minutes} minutes
-      </span>
-    )
-
-  return <div className="text-black dark:text-white">Duration: {duration}</div>
 }
