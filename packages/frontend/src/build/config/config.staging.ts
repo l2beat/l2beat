@@ -12,6 +12,7 @@ export function getStagingConfig(): Config {
     backend: {
       apiUrl: 'https://staging.l2beat.com',
       skipCache: false,
+      mock: true,
     },
   }
 }
