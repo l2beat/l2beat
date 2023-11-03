@@ -128,7 +128,7 @@ describe(LivenessConfigurationRepository.name, () => {
       expect(results).toEqualUnsorted([all[0]])
     })
 
-    it.only('should delete from child tables via CASCADE constraint', async () => {
+    it('should delete from child tables via CASCADE constraint', async () => {
       const newIds = await repository.addMany(LIVENESS_CONFIGS)
 
       const childRepository = new LivenessRepository(database, Logger.SILENT)
