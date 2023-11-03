@@ -116,4 +116,39 @@ describe(LivenessRepository.name, () => {
       expect(results).toEqual([])
     })
   })
+
+  describe(LivenessRepository.prototype.deleteAfter.name, () => {
+    it('should delete rows inserted after certain timestamp', async () => {
+      await repository.deleteAll()
+
+      const configurationId = ids[0]
+      const records = [
+        {
+          timestamp: START.add(1, 'hours'),
+          blockNumber: 12345,
+          txHash: '0x1234567890abcdef',
+          livenessConfigurationId: configurationId,
+        },
+        {
+          timestamp: START.add(2, 'hours'),
+          blockNumber: 12346,
+          txHash: '0xabcdef1234567890',
+          livenessConfigurationId: configurationId,
+        },
+        {
+          timestamp: START.add(2, 'hours'),
+          blockNumber: 12346,
+          txHash: '0xabcdef1234567890',
+          livenessConfigurationId: ids[1],
+        },
+      ]
+      await repository.addMany(records)
+
+      await repository.deleteAfter(configurationId, START.add(1, 'hours'))
+
+      const result = await repository.getAll()
+
+      expect(result).toEqual([records[0], records[2]])
+    })
+  })
 })

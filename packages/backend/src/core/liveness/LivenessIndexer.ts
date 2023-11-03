@@ -7,7 +7,6 @@ import { IndexerStateRepository } from '../../peripherals/database/IndexerStateR
 import {
   LivenessConfigurationRecord,
   LivenessConfigurationRepository,
-  NewLivenessConfigurationRecord,
 } from '../../peripherals/database/LivenessConfigurationRepository'
 import {
   LivenessRecord,
@@ -15,8 +14,8 @@ import {
 } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
-import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
 import { getLivenessConfigHash } from './utils'
+import { processLivenessConfigurations } from './utils/processLivenessConfigurations'
 
 export class LivenessIndexer extends ChildIndexer {
   private readonly indexerId = 'liveness_indexer'
@@ -37,26 +36,12 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    // untilTimestamp? -- delete superfluous records so they don't appear in query results
-    // there cannot be two same hashes in one project, write a test for it, this can be solved via including sinceTimestamp probably
     const oldConfigHash = await this.stateRepository.findConfigHash(
       this.indexerId,
     )
 
     if (oldConfigHash === undefined || oldConfigHash !== this.configHash) {
-      const configs = await this.livenessConfigurationRepository.getAll()
-      const { newConfigs, unusedConfigs } = processConfigurations(
-        this.projects,
-        configs,
-      )
-      await this.livenessConfigurationRepository.addMany(newConfigs)
-      await this.livenessConfigurationRepository.deleteMany(
-        unusedConfigs.map((c) => c.id),
-      )
-
-      // get all configs
-      // iterate over them
-      // delete records from liveness table that are older than corresponding config untilTimestamp
+      await this.processConfigurations()
 
       await this.stateRepository.addOrUpdate({
         indexerId: this.indexerId,
@@ -66,6 +51,31 @@ export class LivenessIndexer extends ChildIndexer {
     }
 
     await super.start()
+  }
+
+  private async processConfigurations() {
+    const configurations = await this.livenessConfigurationRepository.getAll()
+    const { added, phasedOut, updated } = processLivenessConfigurations(
+      this.projects,
+      configurations,
+    )
+    await this.livenessConfigurationRepository.addMany(added)
+
+    // this will also delete records from "liveness" using CASCADE constraint
+    await this.livenessConfigurationRepository.deleteMany(
+      phasedOut.map((c) => c.id),
+    )
+
+    await this.livenessConfigurationRepository.updateMany(updated)
+    // there can be a situation where untilTimestamp was set retroactively
+    // in this case we want to delete the liveness records that were added during this "misconfiguration" period
+    await Promise.all(
+      updated.map(async (u) => {
+        const untilTimestamp = u.untilTimestamp
+        assert(untilTimestamp, 'untilTimestamp should not be undefined there')
+        await this.livenessRepository.deleteAfter(u.id, untilTimestamp)
+      }),
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -90,15 +100,13 @@ export class LivenessIndexer extends ChildIndexer {
     }
 
     assert(data, 'Liveness data should not be undefined there')
-    assert(configs, 'Configs should not be undefined there')
-
     // TODO: run in a transaction
     await this.livenessRepository.addMany(data.data)
+
+    assert(configs, 'Configs should not be undefined there')
     await this.livenessConfigurationRepository.updateMany(
       configs.map((c) => {
-        // TODO: fix typescript issue
-        assert(data, 'Liveness data should not be undefined there')
-
+        assert(data, 'Liveness data "to" should not be undefined there')
         return { ...c, lastSyncedTimestamp: data.to }
       }),
     )
@@ -124,58 +132,5 @@ export class LivenessIndexer extends ChildIndexer {
   // that our data will become invalid.
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
-  }
-}
-
-export function processConfigurations(
-  projects: Project[],
-  configs: LivenessConfigurationRecord[],
-): {
-  unusedConfigs: LivenessConfigurationRecord[]
-  newConfigs: NewLivenessConfigurationRecord[]
-} {
-  const usedIdentifiers = new Set<string>()
-  const newConfigs: NewLivenessConfigurationRecord[] = []
-
-  for (const project of projects) {
-    const { livenessConfig } = project
-
-    if (livenessConfig) {
-      const processConfigType = (configType: 'functionCalls' | 'transfers') => {
-        for (const config of livenessConfig[configType]) {
-          const identifier = LivenessConfigurationIdentifier(config)
-
-          if (configType === 'functionCalls') {
-            usedIdentifiers.add(identifier.toString())
-          }
-
-          const isNewConfig = !configs.some((c) => c.identifier === identifier)
-          if (isNewConfig) {
-            newConfigs.push({
-              projectId: config.projectId,
-              type: config.type,
-              identifier,
-              params: JSON.stringify(
-                LivenessConfigurationIdentifier.params(config),
-              ),
-              sinceTimestamp: config.sinceTimestamp,
-              untilTimestamp: config.untilTimestamp,
-            })
-          }
-        }
-      }
-
-      processConfigType('functionCalls')
-      processConfigType('transfers')
-    }
-  }
-
-  const unusedConfigs = configs.filter(
-    (c) => !usedIdentifiers.has(c.identifier.toString()),
-  )
-
-  return {
-    unusedConfigs,
-    newConfigs,
   }
 }

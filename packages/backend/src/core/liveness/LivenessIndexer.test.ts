@@ -1,15 +1,11 @@
 import { hashJson } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Project } from '../../model'
-import {
-  LivenessConfigurationRepository,
-  NewLivenessConfigurationRecord,
-} from '../../peripherals/database/LivenessConfigurationRepository'
+import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LIVENESS_MOCK } from '../../test/mockLiveness'
 import { LivenessClient } from './LivenessClient'
-import { LivenessIndexer, processConfigurations } from './LivenessIndexer'
+import { LivenessIndexer } from './LivenessIndexer'
 import { getLivenessConfigHash } from './utils'
 
 const {
@@ -82,6 +78,8 @@ describe(LivenessIndexer.name, () => {
               lastSyncedTimestamp: undefined,
             })),
           addMany: async () => [],
+          updateMany: async () => [],
+          deleteMany: async () => -1,
         })
 
       const {
@@ -126,7 +124,7 @@ describe(LivenessIndexer.name, () => {
       const { livenessIndexer, wrappedLogger } = getMockLivenessIndexer(
         PROJECTS,
         undefined,
-        livenessClient,
+        { livenessClient },
       )
 
       await expect(
@@ -217,46 +215,5 @@ describe(LivenessIndexer.name, () => {
 
       expect(value).toEqual(1)
     })
-  })
-})
-
-describe(processConfigurations.name, () => {
-  it('no new configs', () => {
-    const result = processConfigurations(PROJECTS, CONFIGURATIONS)
-
-    expect(result.newConfigs).toEqual([])
-  })
-
-  it('returns new configs', () => {
-    const result = processConfigurations(PROJECTS, CONFIGURATIONS.slice(0, 1))
-
-    const expected: NewLivenessConfigurationRecord[] = CONFIGURATIONS.slice(
-      1,
-    ).map((c) => ({
-      identifier: c.identifier,
-      type: c.type,
-      params: c.params,
-      sinceTimestamp: c.sinceTimestamp,
-      untilTimestamp: c.untilTimestamp,
-      projectId: c.projectId,
-    }))
-
-    expect(result.newConfigs).toEqualUnsorted(expected)
-  })
-
-  it('returns unused configs', () => {
-    const project: Project = {
-      projectId: PROJECTS[0].projectId,
-      type: PROJECTS[0].type,
-      escrows: PROJECTS[0].escrows,
-      livenessConfig: {
-        transfers: [],
-        functionCalls: PROJECTS[0].livenessConfig!.functionCalls,
-      },
-    }
-
-    const result = processConfigurations([project], CONFIGURATIONS)
-
-    expect(result.unusedConfigs).toEqualUnsorted(CONFIGURATIONS.slice(0, 1))
   })
 })

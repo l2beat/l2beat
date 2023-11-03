@@ -11,9 +11,13 @@ should create a new migration file that fixes the issue.
 
 */
 
+import { assert } from '@l2beat/backend-tools'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
+  const rows = await knex('liveness')
+  assert(rows.length === 0, 'Table should be empty')
+
   await knex.schema.table('liveness', function (table) {
     table.dropPrimary()
     table.dropColumn('project_id')

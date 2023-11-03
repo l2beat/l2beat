@@ -65,6 +65,8 @@ function getMockLivenessIndexer(
           lastSyncedTimestamp: undefined,
         })),
       updateMany: async () => [],
+      addMany: async () => [],
+      deleteMany: async () => -1,
     })
 
   const wrappedLogger = mockObject<Logger>({

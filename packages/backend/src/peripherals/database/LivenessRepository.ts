@@ -32,6 +32,14 @@ export class LivenessRepository extends BaseRepository {
     return rows.length
   }
 
+  async deleteAfter(livenessConfigurationId: number, after: UnixTime) {
+    const knex = await this.knex()
+    return knex('liveness')
+      .where('liveness_configuration_id', livenessConfigurationId)
+      .andWhere('timestamp', '>', after.toDate())
+      .delete()
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return knex('liveness').delete()
