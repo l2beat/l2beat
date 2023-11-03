@@ -427,7 +427,7 @@ export function getScalingActivityColumnsConfig() {
   ]
   return columns
 }
-
+//TODO: (liveness) consider adding alignCenter:true
 export function getScalingLivenessColumnsConfig() {
   const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
     {
@@ -445,7 +445,8 @@ export function getScalingLivenessColumnsConfig() {
     },
     {
       name: '30-day anomalies',
-      tooltip: 'Placeholder',
+      tooltip:
+        'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
       getValue: (project) => <AnomalyIndicator anomalies={project.anomalies} />,
     },
     {
@@ -454,7 +455,7 @@ export function getScalingLivenessColumnsConfig() {
       columns: [
         {
           name: '30-day avg.',
-          tooltip: 'Placeholder',
+          tooltip: 'How often transaction batches are submitted to the L1',
           getValue: (project) => (
             <DurationCell
               durationInSeconds={
@@ -465,9 +466,10 @@ export function getScalingLivenessColumnsConfig() {
         },
         {
           name: '30-day max.',
-          tooltip: 'Placeholder',
+          tooltip: 'The longest period of time between batch submissions',
           getValue: (project) => (
             <DurationCell
+              withColors
               durationInSeconds={
                 project.batchSubmissions?.last30Days.maximumInSeconds
               }
@@ -482,7 +484,7 @@ export function getScalingLivenessColumnsConfig() {
       columns: [
         {
           name: '30-day avg.',
-          tooltip: 'Placeholder',
+          tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) => (
             <DurationCell
               durationInSeconds={
@@ -493,9 +495,10 @@ export function getScalingLivenessColumnsConfig() {
         },
         {
           name: '30-day max.',
-          tooltip: 'Placeholder',
+          tooltip: 'The longest period of time between state root submissions',
           getValue: (project) => (
             <DurationCell
+              withColors
               durationInSeconds={
                 project.stateUpdates?.last30Days.maximumInSeconds
               }

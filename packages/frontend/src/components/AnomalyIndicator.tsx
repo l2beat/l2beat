@@ -82,7 +82,10 @@ function AnomalyTooltip(props: { anomalies: AnomalyEntry[] }) {
             </span>
             <div className="text-black dark:text-white">
               Duration:{' '}
-              <DurationCell durationInSeconds={anomaly.durationInSeconds} />
+              <DurationCell
+                durationInSeconds={anomaly.durationInSeconds}
+                withColors
+              />
             </div>
           </li>
         ))}

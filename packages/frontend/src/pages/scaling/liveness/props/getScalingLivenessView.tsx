@@ -49,8 +49,9 @@ function getAnomalies(
   let dayInLoop = thirtyDaysAgo
   const result: AnomalyIndicatorEntry[] = []
 
+  // TODO: (liveness) Do we want to include the current day?
   while (dayInLoop.lt(now)) {
-    // Check sorting later
+    // TODO: (liveness) Check sorting later
     const anomaliesInGivenDay = anomalies.filter((a) => {
       return a.timestamp.toYYYYMMDD() === dayInLoop.toYYYYMMDD()
     })
