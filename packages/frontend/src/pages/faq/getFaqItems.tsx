@@ -41,7 +41,7 @@ export function getFaqItems(): FaqItem[] {
             engaged in dApps on specific networks.
           </p>
           <p className="mt-4">
-            Example: Let's assume L2BEAT reports a TVL of 2.5 billion, while
+            Example: let's assume L2BEAT reports a TVL of 2.5 billion, while
             DefiLlama reports a TVL of 1 billion for the same Layer 2 network
             (e.g., Arbitrum). This suggests that 1.5 billion worth of assets
             have been bridged (canonically or externally) or natively minted on
