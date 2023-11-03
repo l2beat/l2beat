@@ -1,6 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectEscrow } from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { assert } from '@l2beat/backend-tools'
 
 export const OMNICHAN_ESCROWS: ProjectEscrow[] = [
   {
@@ -59,3 +61,37 @@ export const OMNICHAN_ESCROWS: ProjectEscrow[] = [
     tokens: ['UNI'],
   },
 ]
+
+const discovery = new ProjectDiscovery('lzomnichain')
+const inactiveChainIds = ['2', '12']
+interface AppConfig {
+  relayer: string
+  oracle: string
+}
+const defaultAppConfigs = discovery.getContractValue(
+  'UltraLightNodeV2',
+  'defaultAppConfig',
+) as unknown as Partial<Record<string, AppConfig>>
+
+const relevantAppConfigs = Object.fromEntries(
+  Object.entries(defaultAppConfigs).filter(
+    ([key]) => !inactiveChainIds.includes(key),
+  ),
+)
+
+export const RELAYERS = Object.values(relevantAppConfigs)
+  .flatMap((x) => (x ? EthereumAddress(x.relayer) : []))
+  .filter((x, i, a) => a.indexOf(x) === i)
+
+assert(
+  RELAYERS.length === 1,
+  'Expected exactly one relayer. Please update the project contracts section. ',
+)
+
+export const ORACLES = Object.values(relevantAppConfigs)
+  .flatMap((x) => (x ? EthereumAddress(x.oracle) : []))
+  .filter((x, i, a) => a.indexOf(x) === i)
+
+export const INBOUND_PROOF_LIBRARIES = discovery
+  .getContractValue<string[]>('UltraLightNodeV2', 'INBOUND_PROOF_LIBRARIES')
+  .map((address) => EthereumAddress(address))
