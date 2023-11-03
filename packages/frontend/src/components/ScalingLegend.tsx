@@ -6,6 +6,7 @@ import {
   OptimismIcon,
   OVMIcon,
   PolygonIcon,
+  StarknetIcon,
   StarkWareIcon,
   ZkSyncIcon,
 } from './icons'
@@ -47,6 +48,11 @@ export function ScalingLegend() {
         <PolygonIcon className="relative -top-0.5 min-w-[24px]" />
         <span>&ndash;</span>
         <span>This project is based on Polygon&apos;s code base.</span>
+      </p>
+      <p className="flex gap-1">
+        <StarknetIcon className="relative -top-0.5 min-w-[24px]" />
+        <span>&ndash;</span>
+        <span>This project is based on Starknet&apos;s code base.</span>
       </p>
     </div>
   )
