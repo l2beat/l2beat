@@ -84,15 +84,22 @@ describe(calculateAverage.name, () => {
 
 describe(filterRecords.name, () => {
   it('30d', () => {
-    const result = filterRecords(RECORDS, '30d')
-    expect(result).toEqual([])
+    const withIntervals = calculateIntervals(RECORDS)
+    const result = filterRecords(withIntervals, '30d')
+    expect(result).toEqual(
+      withIntervals.slice(0, 3).map((r) => r.previousRecordInterval!),
+    )
   })
   it('90d', () => {
-    const result = filterRecords(RECORDS, '90d')
-    expect(result).toEqual([RECORDS[1].previousRecordInterval!])
+    const withIntervals = calculateIntervals(RECORDS)
+    const result = filterRecords(withIntervals, '90d')
+    expect(result).toEqual(
+      withIntervals.slice(0, 5).map((r) => r.previousRecordInterval!),
+    )
   })
   it('max', () => {
-    const result = filterRecords(RECORDS, 'max')
+    const withIntervals = calculateIntervals(RECORDS)
+    const result = filterRecords(withIntervals, 'max')
     expect(result).toEqual(
       RECORDS.map((r) => r.previousRecordInterval!).filter(notUndefined),
     )
