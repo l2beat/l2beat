@@ -1,7 +1,7 @@
 {
   "name": "portal",
   "chain": "ethereum",
-  "blockNumber": 18141935,
+  "blockNumber": 18483329,
   "configHash": "0xb06098fdecc5dea29d970209f0fac063efadb4a4f39c258a87bf8812c6427a05",
   "version": 3,
   "contracts": [
@@ -38,10 +38,10 @@
       "address": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x299b4F6066d231521d11FAE8331fb1A4fe794F58",
+        "implementation": "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e",
         "admin": "0x0000000000000000000000000000000000000000"
       },
-      "implementations": ["0x299b4F6066d231521d11FAE8331fb1A4fe794F58"],
+      "implementations": ["0x381752f5458282d317d12C30D2Bd4D6E1FD8841e"],
       "sinceTimestamp": 1631535967,
       "values": {
         "chainId": 2,
@@ -155,10 +155,11 @@
       "function transferFrom(address sender_, address recipient_, uint256 amount_) returns (bool)",
       "function updateDetails(string name_, string symbol_, uint64 sequence_)"
     ],
-    "0x299b4F6066d231521d11FAE8331fb1A4fe794F58": [
+    "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
+      "event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress, uint64 indexed sequence)",
       "event Upgraded(address indexed implementation)",
       "function WETH() view returns (address)",
       "function _parseTransferCommon(bytes encoded) pure returns (tuple(uint8 payloadID, uint256 amount, bytes32 tokenAddress, uint16 tokenChain, bytes32 to, uint16 toChain, uint256 fee) transfer)",
