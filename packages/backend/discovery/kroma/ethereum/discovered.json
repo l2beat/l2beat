@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 18485745,
-  "configHash": "0xa176216b62559cf43236603990237016d232289badeb85c1e1855b272b96fcd9",
+  "blockNumber": 18490762,
+  "configHash": "0x13c7bf1d2ab989c1a9a395045ce56e85b703629bae8930e6c84245dddec25a23",
   "version": 3,
   "contracts": [
     {
@@ -19,10 +19,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 2530800,
-        "latestOutputIndex": 1406,
-        "nextBlockNumber": 2532600,
-        "nextOutputIndex": 1407,
+        "latestBlockNumber": 2561400,
+        "latestOutputIndex": 1423,
+        "nextBlockNumber": 2563200,
+        "nextOutputIndex": 1424,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -91,7 +91,7 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 18485465],
+        "params": [1000000000, 200000, 18490701],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -299,7 +299,7 @@
       "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 18485745,
+        "clock": 18490762,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -336,7 +336,7 @@
       "implementations": ["0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"],
       "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 18485745,
+        "clock": 18490762,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -384,7 +384,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x5da6d9675f6929A144c22d5Aa5Df6B8f05DcD839",
+        "nextValidator": "0x36cDE8594Ac902F3CEBC9b2159e099A4699395a0",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -392,7 +392,7 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 32,
+        "validatorCount": 31,
         "validators": [
           "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
           "0x81BF552f9Fc83e88012d6C3ab84cF1946Bc55FD0",
@@ -416,7 +416,7 @@
           "0xcfBA39c653cae1C2d8271Ca17752a557335eba3B",
           "0x41852D4F060b7a209FDc073E48fB26eea3D19ca3",
           "0xc1FE32F8127Fd2f198Aa643f748848958a7FF925",
-          "0x9E728Dfe00D6e43f67C5A46e420d655053A7cb5F",
+          "0x7F390C65116A29edEb1663F14aE3947877CbB1aB",
           "0x2E8a03820c77312FE1B189a78963e94553f11b6F",
           "0x7Fb00286be9C3A893D9EF89fB3269eBb057bc04b",
           "0xC63Cc019Bb47A948131891407d1371849B757714",
@@ -424,8 +424,7 @@
           "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
           "0xbDeE962137373A755a71C716E01B9946B1a27686",
           "0xcC2351dEB494557b10c5BC5593022f4b8dE121AE",
-          "0xc931c3C4feBa2b91127bEC5c64c11d78221eD7B7",
-          "0x7F390C65116A29edEb1663F14aE3947877CbB1aB"
+          "0xc931c3C4feBa2b91127bEC5c64c11d78221eD7B7"
         ],
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.0"
@@ -461,7 +460,6 @@
     "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
     "0x91b6178188ccDD1e735F54ba135cd5EcabECdB15",
     "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
-    "0x9E728Dfe00D6e43f67C5A46e420d655053A7cb5F",
     "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081",
     "0xb1cA7c3235E7f76c42515a02378CB23912539f9f",
     "0xbAC64Cbc0915E1f39bdE620fBDFaB0A06D48664A",
