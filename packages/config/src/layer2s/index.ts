@@ -33,6 +33,7 @@ import { metis } from './metis'
 import { mode } from './mode'
 import { morphism } from './morphism'
 import { myria } from './myria'
+import { natanetwork } from './natanetwork'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
@@ -95,6 +96,7 @@ export const layer2s: Layer2[] = [
   mode,
   morphism,
   myria,
+  natanetwork,
   nova,
   obscuro,
   omgnetwork,

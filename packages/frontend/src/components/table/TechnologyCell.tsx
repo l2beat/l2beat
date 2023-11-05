@@ -4,11 +4,11 @@ import React from 'react'
 
 import {
   ArbitrumIcon,
+  AztecIcon,
   LoopringIcon,
   OptimismIcon,
   OVMIcon,
   PolygonIcon,
-  StarknetIcon,
   StarkWareIcon,
   ZkSyncIcon,
 } from '../icons'
@@ -82,12 +82,12 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           <PolygonIcon className={providerIconClassName} />
         </span>
       )}
-      {provider === 'Starknet' && (
+      {provider === 'Aztec' && (
         <span
           className={providerClassName}
-          title="This project is based on Starknet's code base."
+          title="This project is based on Aztec's code base."
         >
-          <StarknetIcon className={providerIconClassName} />
+          <AztecIcon className={providerIconClassName} />
         </span>
       )}
     </span>

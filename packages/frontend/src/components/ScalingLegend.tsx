@@ -2,11 +2,11 @@ import React from 'react'
 
 import {
   ArbitrumIcon,
+  AztecIcon,
   LoopringIcon,
   OptimismIcon,
   OVMIcon,
   PolygonIcon,
-  StarknetIcon,
   StarkWareIcon,
   ZkSyncIcon,
 } from './icons'
@@ -50,9 +50,9 @@ export function ScalingLegend() {
         <span>This project is based on Polygon&apos;s code base.</span>
       </p>
       <p className="flex gap-1">
-        <StarknetIcon className="relative -top-0.5 min-w-[24px]" />
+        <AztecIcon className="relative -top-0.5 min-w-[24px]" />
         <span>&ndash;</span>
-        <span>This project is based on Starknet&apos;s code base.</span>
+        <span>This project is based on Aztec&apos;s code base.</span>
       </p>
     </div>
   )
