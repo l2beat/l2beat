@@ -41,6 +41,17 @@ const timelockDefaultDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
+const SCNumConfirmationsRequired = discovery.getContractValue<number>(
+  'SecurityCouncil',
+  'numConfirmationsRequired',
+)
+
+const SCMembers = discovery.getPermissionedAccounts('SecurityCouncil', 'owners')
+
+const SCMembersSize = SCMembers.length
+
+const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
+
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
@@ -315,9 +326,13 @@ export const kroma: Layer2 = {
       accounts: [
         discovery.getPermissionedAccount('Colosseum', 'SECURITY_COUNCIL'),
       ],
-      description:
-        'MultiSig (currently 1/1) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
-        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.',
+      description: `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
+        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
+    },
+    {
+      name: 'SecurityCouncil members',
+      accounts: SCMembers,
+      description: `Members of the SecurityCouncil.`,
     },
     {
       name: 'SecurityCouncilAdmin',
