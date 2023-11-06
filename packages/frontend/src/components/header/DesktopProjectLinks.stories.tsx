@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { allModes } from '../../../.storybook/modes'
+import { onlyDesktopModes } from '../../../.storybook/modes'
 import { ProjectLink } from '../icons'
 import { DesktopProjectLinks as DesktopProjectLinksComponent } from './DesktopProjectLinks'
 
@@ -8,10 +8,7 @@ const meta: Meta<typeof DesktopProjectLinksComponent> = {
   component: DesktopProjectLinksComponent,
   parameters: {
     chromatic: {
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
+      modes: onlyDesktopModes,
     },
   },
 }
