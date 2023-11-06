@@ -49,13 +49,14 @@ export function processLivenessConfigurations(
               untilTimestamp: config.untilTimestamp,
             })
           } else {
-            if (config.untilTimestamp) {
-              if (!savedConfig.untilTimestamp?.equals(config.untilTimestamp)) {
-                updated.push({
-                  ...savedConfig,
-                  untilTimestamp: config.untilTimestamp,
-                })
-              }
+            if (
+              LivenessConfigurationIdentifier.wasUpdated(savedConfig, config)
+            ) {
+              updated.push({
+                ...savedConfig,
+                untilTimestamp: config.untilTimestamp,
+                lastSyncedTimestamp: config.untilTimestamp,
+              })
             }
           }
         }

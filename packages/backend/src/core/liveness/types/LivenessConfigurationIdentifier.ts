@@ -1,4 +1,4 @@
-import { assert, Hash256, hashJson, json } from '@l2beat/shared-pure'
+import { assert, Hash256, hashJson, json, UnixTime } from '@l2beat/shared-pure'
 
 import { LivenessFunctionCall, LivenessTransfer } from './LivenessConfig'
 
@@ -49,6 +49,20 @@ LivenessConfigurationIdentifier.params = function (value: InputType): json {
   }
 
   assert(false, 'Runtime should not reach here')
+}
+
+LivenessConfigurationIdentifier.wasUpdated = function (
+  before: { untilTimestamp?: UnixTime },
+  after: InputType,
+): boolean {
+  if (after.untilTimestamp) {
+    return !before.untilTimestamp?.equals(after.untilTimestamp)
+  } else {
+    if (before.untilTimestamp) {
+      return true
+    }
+    return false
+  }
 }
 
 LivenessConfigurationIdentifier.unsafe = function unsafe(value: string) {

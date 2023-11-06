@@ -142,7 +142,7 @@ describe(LivenessIndexer.name, () => {
           sinceTimestamp: c.sinceTimestamp,
           untilTimestamp: newUntilTimestamp,
           projectId: c.projectId,
-          lastSyncedTimestamp: undefined,
+          lastSyncedTimestamp: newUntilTimestamp,
         })),
       )
       expect(livenessRepository.deleteAfter).toHaveBeenNthCalledWith(
