@@ -3,15 +3,18 @@
   "chain": "optimism",
   "blockNumber": 107689171,
   "configHash": "0x301d361a066c1d5bdf12bf4e1d7c274c1d0d9cc4065b1d1605f8bd4967a85738",
-  "version": 1,
+  "version": 3,
   "contracts": [
     {
       "name": "GnosisSafeL2",
       "address": "0x2458BAAbfb21aE1da11D9dD6AD4E48aB2fBF9959",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "modules": []
       },
+      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
+      "sinceTimestamp": 1648074334,
       "values": {
         "domainSeparator": "0x3f2a130cb1407023e2fca39835115b4a69b3357e73a73b29fabcb127ee007bd1",
         "getChainId": 10,
@@ -34,6 +37,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528314,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -49,6 +53,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647316965,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 11,
@@ -71,6 +76,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528314,
       "values": {
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -94,6 +100,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661279306,
       "values": {
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
