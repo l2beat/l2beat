@@ -62,7 +62,7 @@ export async function runInversion(
 
 export function calculateInversion(
   discovery: DiscoveryOutput,
-  config: DiscoveryConfig,
+  config?: DiscoveryConfig,
 ): InvertedAddresses {
   const addresses = new Map<string, AddressDetails>()
 
@@ -79,7 +79,9 @@ export function calculateInversion(
       details = {
         name:
           discovery.contracts.find((x) => x.address.toString() === address)
-            ?.name ?? config.names[address],
+            ?.name ??
+          config?.names[address] ??
+          address,
         address,
         roles: [],
       }

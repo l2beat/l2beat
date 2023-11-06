@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.23.0
+
+### Minor Changes
+
+- runInversion now has config optional
+
 ## 0.22.0
 
 ### Minor Changes
