@@ -117,7 +117,7 @@ function printRelations(
     const locations = getAddressLocations(p, address)
     locations.forEach((loc) =>
       console.log(
-        `- in project ${p.name} at ${loc.key} in ${loc.contractName}`,
+        `- in project ${p.name} as ${loc.key} in ${loc.contractName}`,
       ),
     )
   })
