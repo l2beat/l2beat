@@ -18,6 +18,7 @@ const THUMBNAILS = {
   OPTIMISM_02: 'optimism-02.jpg',
   OPTIMISM_03: 'optimism-03.jpg',
   OPTIMISM_04: 'optimism-04.jpg',
+  OPTIMISM_VISION: 'optimism-vision.png',
   STARKWARE_01: 'starkware-01.jpg',
   STARKWARE_02: 'starkware-02.jpg',
   STARKWARE_03: 'starkware-03.jpg',
