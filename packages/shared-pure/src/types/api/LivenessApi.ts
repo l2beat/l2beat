@@ -9,16 +9,20 @@ const DataPoint = z.object({
 })
 
 export const LivenessApiProject = z.object({
-  batchSubmissions: z.object({
-    last30Days: DataPoint,
-    last90Days: DataPoint,
-    max: DataPoint,
-  }),
-  stateUpdates: z.object({
-    last30Days: DataPoint,
-    last90Days: DataPoint,
-    max: DataPoint,
-  }),
+  batchSubmissions: z
+    .object({
+      last30Days: DataPoint,
+      last90Days: DataPoint,
+      max: DataPoint,
+    })
+    .or(z.null()),
+  stateUpdates: z
+    .object({
+      last30Days: DataPoint,
+      last90Days: DataPoint,
+      max: DataPoint,
+    })
+    .or(z.null()),
   anomalies: z.array(
     z.object({
       timestamp: branded(z.number(), (n) => new UnixTime(n)),
