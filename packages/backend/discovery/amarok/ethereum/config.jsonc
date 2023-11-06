@@ -15,7 +15,10 @@
     "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
     "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": "Connext Multisig Member",
     "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": "Connext Multisig 2",
-    "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector"
+    "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector",
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -134,8 +137,19 @@
     "Connext Multisig Member": {
       "ignoreInWatchMode": ["nonce"]
     },
+    "GovernorV2": {
+      "ignoreMethods": ["getProposal", "proposals"]
+    },
+    "ProposerV2": {
+      "ignoreMethods": ["bondedProposals"],
+      "ignoreInWatchMode": ["bond", "getCurrentTime"]
+    },
     //GelatoRelayerHub
     "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": {
+      "ignoreDiscovery": true
+    },
+    "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": {
+      // OptimisticOracleV3 cachedOracle
       "ignoreDiscovery": true
     }
   }

@@ -2,105 +2,9 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 18263156,
-  "configHash": "0x64a51a60e3a989296e82e194d4ed4388fac744b7c54f7e475e2630b868e4d4f1",
+  "configHash": "0x50ccb07592bdc57523bf106e3a1b1f39c8d0d960ae6de33dfaf17c797998aa05",
   "version": 3,
   "contracts": [
-    {
-      "name": "VotingV2",
-      "address": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1677229919,
-      "values": {
-        "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "23151916029510400578238525",
-        "currentActiveRequests": false,
-        "emissionRate": "180000000000000000",
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 9816,
-        "getCurrentTime": 1696253411,
-        "getNumberOfPriceRequests": [0, 65],
-        "getPendingRequests": [],
-        "getRoundEndTime": [172800, 345600, 518400, 691200, 864000],
-        "getVotePhase": 0,
-        "lastRoundIdProcessed": 9816,
-        "lastUpdateTime": 1696249739,
-        "maxRequestsPerRound": 1000,
-        "maxRolls": 4,
-        "migratedAddress": "0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 0,
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "pendingPriceRequestsIds": [],
-        "previousVotingContract": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "requestSlashingTrackers": [
-          [
-            0,
-            1000000000000000,
-            "894122295269549157065",
-            "18617019924951271803176298",
-            9712
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "2627298461910141446152",
-            "17332349229228232282508129",
-            9715
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "547691395181260367025",
-            "19455197208095905107170651",
-            9716
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "7708320665789019986251",
-            "12902557915899573849218434",
-            9720
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "7707999233215283798858",
-            "12902879348473310036611129",
-            9720
-          ]
-        ],
-        "resolvedPriceRequestIds": [
-          "0x84652155397d434717ac79a3360312d09eadd05f03fd7ea849e85d5b499984af",
-          "0xcdbcf6810ad1ca548e3824411ec6fdafe42cee09f1c5624edc2b2a03eee5cf7a",
-          "0x1ebf6f9eb66a2dde4e9c3c8f83aa23bacda5b7438b57778f289a7a2788e51b80",
-          "0x18709d11510a60558eb759461d8bd25f7980d8ea9b5f39bdb412bc68fe23c31b",
-          "0xccb635c902b35077eb61ad4b1cc1028f931df70230263db4beb1e77893174808"
-        ],
-        "rewardPerToken": "148178451845308797",
-        "rewardPerTokenStored": "148149903020271703",
-        "rounds": [
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0]
-        ],
-        "slashingLibrary": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
-        "spat": "500000000000000000",
-        "UINT64_MAX": "18446744073709551615",
-        "unstakeCoolDown": 604800,
-        "voteTiming": 86400,
-        "votingToken": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "errors": {
-        "getRoundEndTime": "Too many values. Update configuration to explore fully",
-        "requestSlashingTrackers": "Too many values. Update configuration to explore fully",
-        "resolvedPriceRequestIds": "Too many values. Update configuration to explore fully",
-        "rounds": "Too many values. Update configuration to explore fully"
-      }
-    },
     {
       "name": "VotingToken",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
@@ -252,22 +156,13 @@
       "sinceTimestamp": 1677231527,
       "values": {
         "bond": "5000000000000000000000",
-        "bondedProposals": [
-          ["0x0000000000000000000000000000000000000000", 0, 0, "0x"],
-          ["0x0000000000000000000000000000000000000000", 0, 0, "0x"],
-          ["0x0000000000000000000000000000000000000000", 0, 0, "0x"],
-          ["0x0000000000000000000000000000000000000000", 0, 0, "0x"],
-          ["0x0000000000000000000000000000000000000000", 0, 0, "0x"]
-        ],
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "getCurrentTime": 1696253411,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
       },
-      "errors": {
-        "bondedProposals": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "ProposerV2"
     },
     {
       "name": "OptimismHubConnector",
@@ -350,26 +245,9 @@
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "getProposal": [
-          [[], 0, "0x"],
-          [[], 0, "0x"],
-          [[], 0, "0x"],
-          [[], 0, "0x"],
-          [[], 0, "0x"]
-        ],
-        "numProposals": 198,
-        "proposals": [
-          [0, "0x"],
-          [0, "0x"],
-          [0, "0x"],
-          [0, "0x"],
-          [0, "0x"]
-        ]
+        "numProposals": 198
       },
-      "errors": {
-        "getProposal": "Too many values. Update configuration to explore fully",
-        "proposals": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "GovernorV2"
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -698,40 +576,6 @@
       "derivedName": "ConnextDiamond"
     },
     {
-      "name": "Voting",
-      "address": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1613597552,
-      "values": {
-        "ancillaryBytesLimit": 8192,
-        "gatPercentage": "50000000000000000",
-        "getCurrentRoundId": 9816,
-        "getCurrentTime": 1696253411,
-        "getPendingRequests": [],
-        "getVotePhase": 0,
-        "inflationRate": 500000000000000,
-        "migratedAddress": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "rewardsExpirationTimeout": 31536000000,
-        "rounds": [
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0]
-        ],
-        "snapshotMessageHash": "0x38b5b145f0c2d3cca373598867950f7f33fe7f7f5dab3f239e2b31966f761859",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "voteTiming": 86400,
-        "votingToken": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "errors": {
-        "rounds": "Too many values. Update configuration to explore fully"
-      }
-    },
-    {
       "name": "EmergencyProposer",
       "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
       "upgradeability": {
@@ -747,18 +591,6 @@
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      }
-    },
-    {
-      "name": "FixedSlashSlashingLibrary",
-      "address": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1677176843,
-      "values": {
-        "baseSlashAmount": 1000000000000000,
-        "governanceSlashAmount": 0
       }
     },
     {
@@ -985,7 +817,8 @@
         "getCurrentTime": 1696253411,
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      }
+      },
+      "derivedName": "OptimisticOracleV3"
     }
   ],
   "eoas": [
@@ -1043,109 +876,6 @@
     "0xFcb19e6a322b27c06842A71e8c725399f049AE3a"
   ],
   "abis": {
-    "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": [
-      "constructor(uint128 _emissionRate, uint64 _unstakeCoolDown, uint64 _phaseLength, uint32 _maxRolls, uint32 _maxRequestsPerRound, uint128 _gat, uint64 _spat, address _votingToken, address _finder, address _slashingLibrary, address _previousVotingContract)",
-      "event DelegateSet(address indexed delegator, address indexed delegate)",
-      "event DelegatorSet(address indexed delegate, address indexed delegator)",
-      "event EncryptedVote(address indexed caller, uint32 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, bytes encryptedVote)",
-      "event ExecutedUnstake(address indexed voter, uint128 tokensSent, uint128 voterStake)",
-      "event GatAndSpatChanged(uint128 newGat, uint64 newSpat)",
-      "event MaxRequestsPerRoundChanged(uint32 newMaxRequestsPerRound)",
-      "event MaxRollsChanged(uint32 newMaxRolls)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RequestAdded(address indexed requester, uint32 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, bool isGovernance)",
-      "event RequestDeleted(bytes32 indexed identifier, uint256 indexed time, bytes ancillaryData, uint32 rollCount)",
-      "event RequestResolved(uint32 indexed roundId, uint256 indexed resolvedPriceRequestIndex, bytes32 indexed identifier, uint256 time, bytes ancillaryData, int256 price)",
-      "event RequestRolled(bytes32 indexed identifier, uint256 indexed time, bytes ancillaryData, uint32 rollCount)",
-      "event RequestedUnstake(address indexed voter, uint128 amount, uint64 unstakeTime, uint128 voterStake)",
-      "event SetNewEmissionRate(uint128 newEmissionRate)",
-      "event SetNewUnstakeCoolDown(uint64 newUnstakeCoolDown)",
-      "event SlashingLibraryChanged(address newAddress)",
-      "event Staked(address indexed voter, address indexed from, uint128 amount, uint128 voterStake, uint128 voterPendingUnstake, uint128 cumulativeStake)",
-      "event UpdatedReward(address indexed voter, uint128 newReward, uint64 lastUpdateTime)",
-      "event VoteCommitted(address indexed voter, address indexed caller, uint32 roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData)",
-      "event VoteRevealed(address indexed voter, address indexed caller, uint32 roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, int256 price, uint128 numTokens)",
-      "event VoterSlashApplied(address indexed voter, int128 slashedTokens, uint128 postStake)",
-      "event VoterSlashed(address indexed voter, uint256 indexed requestIndex, int128 slashedTokens)",
-      "event VotingContractMigrated(address newAddress)",
-      "event WithdrawnRewards(address indexed voter, address indexed delegate, uint128 tokensWithdrawn)",
-      "function ANCILLARY_BYTES_LIMIT() view returns (uint256)",
-      "function UINT64_MAX() view returns (uint64)",
-      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)",
-      "function commitVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash)",
-      "function cumulativeStake() view returns (uint128)",
-      "function currentActiveRequests() view returns (bool)",
-      "function delegateToStaker(address) view returns (address)",
-      "function emissionRate() view returns (uint128)",
-      "function executeUnstake()",
-      "function finder() view returns (address)",
-      "function gat() view returns (uint128)",
-      "function getCurrentRoundId() view returns (uint32)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getNumberOfPriceRequests() view returns (uint256 numberPendingPriceRequests, uint256 numberResolvedPriceRequests)",
-      "function getNumberOfPriceRequestsPostUpdate() returns (uint256 numberPendingPriceRequests, uint256 numberResolvedPriceRequests)",
-      "function getPendingRequests() view returns (tuple(uint32 lastVotingRound, bool isGovernance, uint64 time, uint32 rollCount, bytes32 identifier, bytes ancillaryData)[])",
-      "function getPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (int256)",
-      "function getPrice(bytes32 identifier, uint256 time) view returns (int256)",
-      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] requests) view returns (tuple(uint8 status, uint32 lastVotingRound)[])",
-      "function getRoundEndTime(uint256 roundId) view returns (uint256)",
-      "function getRoundIdToVoteOnRequest(uint32 targetRoundId) view returns (uint32)",
-      "function getVotePhase() view returns (uint8)",
-      "function getVoterFromDelegate(address caller) view returns (address)",
-      "function getVoterParticipation(uint256 requestIndex, uint32 lastVotingRound, address voter) view returns (uint8)",
-      "function getVoterPendingStake(address voter, uint32 roundId) view returns (uint128)",
-      "function getVoterStakePostUpdate(address voter) returns (uint128)",
-      "function hasPrice(bytes32 identifier, uint256 time) view returns (bool)",
-      "function hasPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (bool)",
-      "function lastRoundIdProcessed() view returns (uint32)",
-      "function lastUpdateTime() view returns (uint64)",
-      "function maxRequestsPerRound() view returns (uint32)",
-      "function maxRolls() view returns (uint32)",
-      "function migratedAddress() view returns (address)",
-      "function multicall(bytes[] data) returns (bytes[] results)",
-      "function nextPendingIndexToProcess() view returns (uint64)",
-      "function outstandingRewards(address voter) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingPriceRequestsIds(uint256) view returns (bytes32)",
-      "function previousVotingContract() view returns (address)",
-      "function priceRequests(bytes32) view returns (uint32 lastVotingRound, bool isGovernance, uint64 time, uint32 rollCount, bytes32 identifier, bytes ancillaryData)",
-      "function processResolvablePriceRequests()",
-      "function processResolvablePriceRequestsRange(uint64 maxTraversals)",
-      "function renounceOwnership()",
-      "function requestGovernanceAction(bytes32 identifier, uint256 time, bytes ancillaryData)",
-      "function requestPrice(bytes32 identifier, uint256 time, bytes ancillaryData)",
-      "function requestPrice(bytes32 identifier, uint256 time)",
-      "function requestSlashingTrackers(uint256 requestIndex) view returns (tuple(uint256 wrongVoteSlashPerToken, uint256 noVoteSlashPerToken, uint256 totalSlashed, uint256 totalCorrectVotes, uint32 lastVotingRound))",
-      "function requestUnstake(uint128 amount)",
-      "function resolvedPriceRequestIds(uint256) view returns (bytes32)",
-      "function retrieveRewardsOnMigratedVotingContract(address voter, uint256 roundId, tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] toRetrieve) returns (uint256)",
-      "function revealVote(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)",
-      "function rewardPerToken() view returns (uint256)",
-      "function rewardPerTokenStored() view returns (uint128)",
-      "function rounds(uint256) view returns (address slashingLibrary, uint128 minParticipationRequirement, uint128 minAgreementRequirement, uint128 cumulativeStakeAtRound, uint32 numberOfRequestsToVote)",
-      "function setDelegate(address delegate)",
-      "function setDelegator(address delegator)",
-      "function setEmissionRate(uint128 newEmissionRate)",
-      "function setGatAndSpat(uint128 newGat, uint64 newSpat)",
-      "function setMaxRequestPerRound(uint32 newMaxRequestsPerRound)",
-      "function setMaxRolls(uint32 newMaxRolls)",
-      "function setMigrated(address newVotingAddress)",
-      "function setSlashingLibrary(address _newSlashingLibrary)",
-      "function setUnstakeCoolDown(uint64 newUnstakeCoolDown)",
-      "function slashingLibrary() view returns (address)",
-      "function spat() view returns (uint64)",
-      "function stake(uint128 amount)",
-      "function stakeTo(address recipient, uint128 amount)",
-      "function transferOwnership(address newOwner)",
-      "function unstakeCoolDown() view returns (uint64)",
-      "function updateTrackers(address voter)",
-      "function updateTrackersRange(address voter, uint64 maxTraversals)",
-      "function voteTiming() view returns (uint256 phaseLength)",
-      "function voterStakes(address) view returns (uint128 stake, uint128 pendingUnstake, uint128 rewardsPaidPerToken, uint128 outstandingRewards, int128 unappliedSlash, uint64 nextIndexToProcess, uint64 unstakeTime, address delegate)",
-      "function votingToken() view returns (address)",
-      "function withdrawAndRestake() returns (uint128)",
-      "function withdrawRewards() returns (uint128)"
-    ],
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": [
       "constructor()",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -1719,59 +1449,6 @@
     "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": [
       "constructor(address _contractOwner, tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, tuple(address initContract, bytes initData)[] _initializations) payable"
     ],
-    "0x8B1631ab830d11531aE83725fDa4D86012eCCd77": [
-      "constructor(uint256 _phaseLength, tuple(uint256 rawValue) _gatPercentage, tuple(uint256 rawValue) _inflationRate, uint256 _rewardsExpirationTimeout, address _votingToken, address _finder, address _timerAddress)",
-      "event EncryptedVote(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, bytes encryptedVote)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PriceRequestAdded(uint256 indexed roundId, bytes32 indexed identifier, uint256 time)",
-      "event PriceResolved(uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData)",
-      "event RewardsRetrieved(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, uint256 numTokens)",
-      "event VoteCommitted(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData)",
-      "event VoteRevealed(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData, uint256 numTokens)",
-      "function ancillaryBytesLimit() view returns (uint256)",
-      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)[] commits)",
-      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)[] commits)",
-      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, int256 salt)[] reveals)",
-      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)[] reveals)",
-      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)",
-      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)",
-      "function commitVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash)",
-      "function commitVote(bytes32 identifier, uint256 time, bytes32 hash)",
-      "function gatPercentage() view returns (uint256 rawValue)",
-      "function getCurrentRoundId() view returns (uint256)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getPendingRequests() view returns (tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[])",
-      "function getPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (int256)",
-      "function getPrice(bytes32 identifier, uint256 time) view returns (int256)",
-      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
-      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
-      "function getVotePhase() view returns (uint8)",
-      "function hasPrice(bytes32 identifier, uint256 time) view returns (bool)",
-      "function hasPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (bool)",
-      "function inflationRate() view returns (uint256 rawValue)",
-      "function migratedAddress() view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function requestPrice(bytes32 identifier, uint256 time, bytes ancillaryData)",
-      "function requestPrice(bytes32 identifier, uint256 time)",
-      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] toRetrieve) returns (tuple(uint256 rawValue) totalRewardToIssue)",
-      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time)[] toRetrieve) returns (tuple(uint256 rawValue))",
-      "function revealVote(bytes32 identifier, uint256 time, int256 price, int256 salt)",
-      "function revealVote(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)",
-      "function rewardsExpirationTimeout() view returns (uint256)",
-      "function rounds(uint256) view returns (uint256 snapshotId, tuple(uint256 rawValue) inflationRate, tuple(uint256 rawValue) gatPercentage, uint256 rewardsExpirationTime)",
-      "function setCurrentTime(uint256 time)",
-      "function setGatPercentage(tuple(uint256 rawValue) newGatPercentage)",
-      "function setInflationRate(tuple(uint256 rawValue) newInflationRate)",
-      "function setMigrated(address newVotingAddress)",
-      "function setRewardsExpirationTimeout(uint256 NewRewardsExpirationTimeout)",
-      "function snapshotCurrentRound(bytes signature)",
-      "function snapshotMessageHash() view returns (bytes32)",
-      "function timerAddress() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function voteTiming() view returns (uint256 phaseLength)",
-      "function votingToken() view returns (address)"
-    ],
     "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": [
       "constructor(address _token, uint256 _quorum, address _governor, address _executor, uint64 _minimumWaitTime)",
       "event EmergencyProposalExecuted(uint256 indexed id, address indexed sender, address indexed caller, uint64 expiryTime, uint256 lockedTokens, tuple(address to, uint256 value, bytes data)[] transactions)",
@@ -1800,15 +1477,6 @@
       "function slashProposal(uint256 id)",
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
-    ],
-    "0x9a406ba5a99983250Fd663947b3c968D387ce5cd": [
-      "constructor(uint256 _baseSlashAmount, uint256 _governanceSlashAmount)",
-      "function baseSlashAmount() view returns (uint256)",
-      "function calcNoVoteSlashPerToken(uint256 totalStaked, uint256 totalVotes, uint256 totalCorrectVotes, uint256 priceRequestIndex) view returns (uint256)",
-      "function calcSlashing(uint256 totalStaked, uint256 totalVotes, uint256 totalCorrectVotes, uint256 priceRequestIndex, bool isGovernance) view returns (uint256 wrongVoteSlashPerToken, uint256 noVoteSlashPerToken)",
-      "function calcWrongVoteSlashPerToken(uint256 totalStaked, uint256 totalVotes, uint256 totalCorrectVotes, uint256 priceRequestIndex) view returns (uint256)",
-      "function calcWrongVoteSlashPerTokenGovernance(uint256 totalStaked, uint256 totalVotes, uint256 totalCorrectVotes, uint256 priceRequestIndex) view returns (uint256)",
-      "function governanceSlashAmount() view returns (uint256)"
     ],
     "0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686": [
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
