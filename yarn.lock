@@ -2010,10 +2010,10 @@
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.22.0":
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.22.0.tgz#2f75ccfbb282e3344145af8b64a49f1331321262"
-  integrity sha512-bZWzBnspGDcFKwDLdXkEz4vSQ1+AqLLCfgockDXRHkFfILsUBmr9y41jEgaauVn+/2Ae1j7XS7ZUp9cw1Whr+A==
+"@l2beat/discovery@0.23.0":
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.23.0.tgz#2bfbf6c835024a264c9ac4656500e8750a4412eb"
+  integrity sha512-9QueDwSk8IYQqJ0URfyQOTi3ySFOskPPYN05RUbayd+OupnS/jvA8OFL4lK8CPn2xLdhq48zvYUrlNKHtKYKsg==
   dependencies:
     "@l2beat/backend-tools" "^0.5.0"
     "@l2beat/discovery-types" "^0.5.0"
