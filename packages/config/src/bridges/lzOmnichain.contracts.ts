@@ -1,8 +1,8 @@
+import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectEscrow } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { assert } from '@l2beat/backend-tools'
 
 export const OMNICHAN_ESCROWS: ProjectEscrow[] = [
   {
