@@ -84,6 +84,7 @@ export interface Layer2Display {
     | 'Arbitrum'
     | 'Polygon'
     | 'OVM'
+    | 'Starknet'
     | 'Aztec'
   /** List of links */
   links: ProjectLinks
