@@ -7,9 +7,6 @@ name: "Chromatic"
 
 on:
   push:
-    branches-ignore:
-      # disable for merge queue
-      - "gh-readonly-queue/master/*"
 
 jobs:
   deploy:
