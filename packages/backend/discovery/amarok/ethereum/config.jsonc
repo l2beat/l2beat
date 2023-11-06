@@ -18,7 +18,8 @@
     "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
     "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
-    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -150,6 +151,9 @@
     },
     "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": {
       // OptimisticOracleV3 cachedOracle
+      "ignoreDiscovery": true
+    },
+    "USDC": {
       "ignoreDiscovery": true
     }
   }
