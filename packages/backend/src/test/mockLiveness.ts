@@ -95,6 +95,7 @@ function getMockLivenessIndexer(
     deleteAll() {
       return Promise.resolve(1)
     },
+    deleteAfter: async () => -1,
   })
 
   const livenessIndexer = new LivenessIndexer(

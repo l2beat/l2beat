@@ -1,4 +1,4 @@
-import { hashJson } from '@l2beat/shared-pure'
+import { UnixTime, hashJson } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
@@ -7,6 +7,7 @@ import { LIVENESS_MOCK } from '../../test/mockLiveness'
 import { LivenessClient } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
 import { getLivenessConfigHash } from './utils'
+import { Project } from '../../model'
 
 const {
   getMockLivenessIndexer,
@@ -82,21 +83,10 @@ describe(LivenessIndexer.name, () => {
           deleteMany: async () => -1,
         })
 
-      const {
-        livenessIndexer,
-        stateRepository,
-        indexerConfigHash,
-        minTimestamp,
-      } = getMockLivenessIndexer(PROJECTS, undefined, {
+      const { livenessIndexer } = getMockLivenessIndexer(PROJECTS, undefined, {
         configurationRepository,
       })
       await livenessIndexer.start()
-
-      expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
-        indexerId: 'liveness_indexer',
-        configHash: indexerConfigHash,
-        safeHeight: minTimestamp.toNumber(),
-      })
 
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
       expect(configurationRepository.addMany).toHaveBeenNthCalledWith(
@@ -109,6 +99,61 @@ describe(LivenessIndexer.name, () => {
           untilTimestamp: c.untilTimestamp,
           projectId: c.projectId,
         })),
+      )
+    })
+
+    it('updates configuration in DB when difference detected', async () => {
+      const configurationRepository =
+        mockObject<LivenessConfigurationRepository>({
+          getAll: async () => CONFIGURATIONS,
+          addMany: async () => [],
+          updateMany: async () => [],
+          deleteMany: async () => -1,
+        })
+
+      const newUntilTimestamp = UnixTime.now()
+      const updatedProjects: Project[] = [
+        {
+          ...PROJECTS[0],
+          livenessConfig: {
+            ...PROJECTS[0].livenessConfig!,
+            functionCalls: [
+              {
+                ...PROJECTS[0].livenessConfig!.functionCalls[0],
+                untilTimestamp: newUntilTimestamp,
+              },
+            ],
+          },
+        },
+      ]
+
+      const { livenessIndexer, livenessRepository } = getMockLivenessIndexer(
+        updatedProjects,
+        undefined,
+        {
+          configurationRepository,
+        },
+      )
+      await livenessIndexer.start()
+
+      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+      expect(configurationRepository.updateMany).toHaveBeenNthCalledWith(
+        1,
+        CONFIGURATIONS.slice(1).map((c) => ({
+          id: 1,
+          identifier: c.identifier,
+          type: c.type,
+          params: c.params,
+          sinceTimestamp: c.sinceTimestamp,
+          untilTimestamp: newUntilTimestamp,
+          projectId: c.projectId,
+          lastSyncedTimestamp: undefined,
+        })),
+      )
+      expect(livenessRepository.deleteAfter).toHaveBeenNthCalledWith(
+        1,
+        1,
+        newUntilTimestamp,
       )
     })
   })
