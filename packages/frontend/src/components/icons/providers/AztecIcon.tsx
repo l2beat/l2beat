@@ -4,7 +4,7 @@ import { Icon } from '../Icon'
 
 export function AztecIcon(props: SVGAttributes<SVGElement>) {
   return (
-    <Icon aria-label="Aztec logo" {...props}>
+    <Icon aria-label="Aztec logo" {...props} viewBox="0 0 400 400">
       <path
         fill="#7e798e"
         d="M193.5 60.5c-2.015 1.424-4.348 2.09-7 2 2.015-1.424 4.348-2.09 7-2z"
