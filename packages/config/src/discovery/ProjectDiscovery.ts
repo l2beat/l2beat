@@ -10,6 +10,7 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
+  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -64,6 +65,7 @@ export class ProjectDiscovery {
   private readonly config: DiscoveryConfig
   constructor(
     public readonly projectName: string,
+    public readonly chainId: ChainId = ChainId.ETHEREUM,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
@@ -72,7 +74,11 @@ export class ProjectDiscovery {
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
-      path.resolve(`../backend/discovery/${project}/ethereum/discovered.json`),
+      path.resolve(
+        `../backend/discovery/${project}/${ChainId.getName(
+          this.chainId,
+        )}/discovered.json`,
+      ),
     )
 
     return JSON.parse(discoveryFile) as DiscoveryOutput
@@ -80,7 +86,11 @@ export class ProjectDiscovery {
 
   private getConfigJson(project: string): DiscoveryConfig {
     const configFile = this.fs.readFileSync(
-      path.resolve(`../backend/discovery/${project}/ethereum/config.jsonc`),
+      path.resolve(
+        `../backend/discovery/${project}/${ChainId.getName(
+          this.chainId,
+        )}/config.jsonc`,
+      ),
     )
 
     const errors: ParseError[] = []
