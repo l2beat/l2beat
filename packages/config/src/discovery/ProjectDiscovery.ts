@@ -150,7 +150,7 @@ export class ProjectDiscovery {
 
     const result: Record<string, Record<string, string[]>> = {}
     const names: Record<string, string> = {}
-    const sources: Record<string, { contract: string; value: string }> = {}
+    const sources: Record<string, EthereumAddress> = {}
     for (const template of OP_STACK_PERMISSION_TEMPLATES) {
       for (const contract of inversion.values()) {
         const role = contract.roles.find(
@@ -170,7 +170,7 @@ export class ProjectDiscovery {
           result[contractKey][role.name].push(
             stringFormat(template.description, template.role.contract),
           )
-          sources[contractKey] ??= template.role
+          sources[contractKey] ??= EthereumAddress(contract.address)
           names[contractKey] ??=
             overrides?.[template.role.value] ??
             contract.name ??
@@ -181,9 +181,7 @@ export class ProjectDiscovery {
 
     return Object.entries(result).map(([key, roleDescription]) => ({
       name: names[key],
-      accounts: [
-        this.getPermissionedAccount(sources[key].contract, sources[key].value),
-      ],
+      accounts: [this.formatPermissionedAccount(sources[key])],
       description: Object.values(roleDescription).flat().join(' '),
     }))
   }
