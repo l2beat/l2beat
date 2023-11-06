@@ -35,21 +35,21 @@ export function getFaqItems(): FaqItem[] {
         <div>
           <p className="mt-4">
             L2BEAT and DefiLlama use different methodologies for calculating
-            TVL. L2BEAT accounts for all assets locked in Ethereum contracts,
-            including L2-native governance tokens (ARB, OP), while DefiLlama
-            focuses on assets actively engaged in dApps on specific networks.
+            TVL. The TVL on L2BEAT is a sum of canonically bridged, externally
+            bridged, and natively minted assets (e.g. L2-native governance
+            tokens like ARB and OP), while DefiLlama focuses on assets actively
+            engaged in dApps on specific networks.
           </p>
           <p className="mt-4">
-            Let's assume L2BEAT reports a TVL of 2.5 billion, while DefiLlama
-            reports a TVL of 1 billion for the same Layer 2 network (e.g.,
-            Arbitrum). This suggests that 1.5 billion worth of assets have been
-            bridged to Arbitrum from Layer 1 (Ethereum), but are not yet being
-            used in any dApps listed by DefiLlama. For instance, if you deposit
-            1 ETH to Optimism, L2BEAT would include it in their TVL calculation,
-            but DefiLlama would not. However, if you use that 1 ETH on Optimism
-            to provide liquidity on Uniswap, DefiLlama would then include it in
-            their TVL calculation. Also, at L2BEAT, the value of L2-native
-            governance tokens is included, which adds to the discrepancy.
+            Example: let's assume L2BEAT reports a TVL of 2.5 billion, while
+            DefiLlama reports a TVL of 1 billion for the same Layer 2 network
+            (e.g., Arbitrum). This suggests that 1.5 billion worth of assets
+            have been bridged (canonically or externally) or natively minted on
+            Arbitrum, but are not yet being used in any dApps listed by
+            DefiLlama. For instance, if you deposit 1 ETH to Optimism, L2BEAT
+            would include it in their TVL calculation, but DefiLlama would not.
+            However, if you use that 1 ETH on Optimism to provide liquidity on
+            Uniswap, DefiLlama would then include it in their TVL calculation.
           </p>
           <p className="mt-4">
             The discrepancy in reported TVL between L2BEAT and DefiLlama is due

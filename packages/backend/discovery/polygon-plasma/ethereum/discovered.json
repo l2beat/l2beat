@@ -406,7 +406,8 @@
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "modules": []
       },
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1593593561,
