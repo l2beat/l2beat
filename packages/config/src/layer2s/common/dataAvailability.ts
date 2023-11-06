@@ -36,7 +36,7 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
 const STARKNET_ON_CHAIN: ProjectTechnologyChoice = {
   name: 'All data required to reconstruct rollup state is published on chain',
   description:
-    'State diffs are publish on-chain as calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered.',
+    "State diffs are publish on-chain as calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.",
   risks: [],
   references: [
     {
