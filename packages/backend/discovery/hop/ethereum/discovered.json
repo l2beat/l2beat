@@ -10,7 +10,8 @@
       "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "modules": []
       },
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1625076853,
