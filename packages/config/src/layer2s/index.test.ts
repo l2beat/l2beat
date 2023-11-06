@@ -1,6 +1,7 @@
 import {
   EthereumAddress,
   gatherAddressesFromUpgradeability,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -13,7 +14,13 @@ import {
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
+import {
+  FunctionCallParams,
+  layer2s,
+  Layer2Technology,
+  milestonesLayer2s,
+  NUGGETS,
+} from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -48,6 +55,32 @@ describe('layer2s', () => {
           continue
         }
       }
+    })
+  })
+
+  describe('liveness', () => {
+    it('every functionCall has selector and function signature', () => {
+      const missing: { projectId: ProjectId; missingIn: FunctionCallParams }[] =
+        []
+
+      for (const project of layer2s) {
+        if (project.config.liveness) {
+          const functionCalls = [
+            ...project.config.liveness.batchSubmissions,
+            ...project.config.liveness.stateUpdates,
+          ].filter((x) => x.formula === 'functionCall') as FunctionCallParams[]
+
+          functionCalls.forEach((c) => {
+            if (!c.functionSignature || c.selector) {
+              missing.push({
+                projectId: project.id,
+                missingIn: c,
+              })
+            }
+          })
+        }
+      }
+      expect(missing).toEqual([])
     })
   })
 
