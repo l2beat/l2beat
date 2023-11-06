@@ -1,13 +1,13 @@
-import { UnixTime, hashJson } from '@l2beat/shared-pure'
+import { hashJson, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Project } from '../../model'
 import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LIVENESS_MOCK } from '../../test/mockLiveness'
 import { LivenessClient } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
 import { getLivenessConfigHash } from './utils'
-import { Project } from '../../model'
 
 const {
   getMockLivenessIndexer,
@@ -72,12 +72,7 @@ describe(LivenessIndexer.name, () => {
     it('adds new configurations to the DB', async () => {
       const configurationRepository =
         mockObject<LivenessConfigurationRepository>({
-          getAll: async () =>
-            CONFIGURATIONS.slice(0, 1).map((c, i) => ({
-              ...c,
-              id: i,
-              lastSyncedTimestamp: undefined,
-            })),
+          getAll: async () => CONFIGURATIONS.slice(0, 1),
           addMany: async () => [],
           updateMany: async () => [],
           deleteMany: async () => -1,
@@ -156,6 +151,42 @@ describe(LivenessIndexer.name, () => {
         newUntilTimestamp,
       )
     })
+  })
+
+  it('deletes phasedOut configurations from the DB', async () => {
+    const configurationRepository = mockObject<LivenessConfigurationRepository>(
+      {
+        getAll: async () => CONFIGURATIONS,
+        addMany: async () => [],
+        updateMany: async () => [],
+        deleteMany: async () => -1,
+      },
+    )
+
+    const updatedProjects: Project[] = [
+      {
+        ...PROJECTS[0],
+        livenessConfig: {
+          transfers: [],
+          functionCalls: [],
+        },
+      },
+    ]
+
+    const { livenessIndexer } = getMockLivenessIndexer(
+      updatedProjects,
+      undefined,
+      {
+        configurationRepository,
+      },
+    )
+    await livenessIndexer.start()
+
+    expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+    expect(configurationRepository.deleteMany).toHaveBeenNthCalledWith(
+      1,
+      CONFIGURATIONS.map((c) => c.id),
+    )
   })
 
   describe(LivenessIndexer.prototype.update.name, () => {
