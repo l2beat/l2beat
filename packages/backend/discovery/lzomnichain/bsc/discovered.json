@@ -3,7 +3,7 @@
   "chain": "bsc",
   "blockNumber": 30528470,
   "configHash": "0x711f1ef588bb939adf1ddbe168fb525a6adfe6677e9ffb2b003f353b2093595d",
-  "version": 1,
+  "version": 3,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528757,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -26,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647316942,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 2,
@@ -48,6 +50,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528751,
       "values": {
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -71,6 +74,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661280106,
       "values": {
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
@@ -80,8 +84,11 @@
       "address": "0x8D452629c5FfCDDE407069da48c096e1F8beF22c",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": []
       },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1648073735,
       "values": {
         "domainSeparator": "0x177169efa9840f133f0472583ab7f069e6a611246ecf24092e54d542d6e0f47f",
         "getChainId": 56,
