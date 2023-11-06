@@ -2014,7 +2014,6 @@
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.23.0.tgz#2bfbf6c835024a264c9ac4656500e8750a4412eb"
   integrity sha512-9QueDwSk8IYQqJ0URfyQOTi3ySFOskPPYN05RUbayd+OupnS/jvA8OFL4lK8CPn2xLdhq48zvYUrlNKHtKYKsg==
-
   dependencies:
     "@l2beat/backend-tools" "^0.5.0"
     "@l2beat/discovery-types" "^0.5.0"
