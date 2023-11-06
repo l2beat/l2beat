@@ -21,7 +21,7 @@
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "common-contracts": "ts-node --transpile-only src/tools/commonContracts.ts",
+    "find-common-contracts": "ts-node --transpile-only src/tools/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
   },
   "dependencies": {
