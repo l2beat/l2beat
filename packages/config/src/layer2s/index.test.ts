@@ -1,11 +1,11 @@
 import {
   EthereumAddress,
   gatherAddressesFromUpgradeability,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { startsWith } from 'lodash'
+import { getFunctionSelector } from 'viem'
 
 import {
   ProjectReference,
@@ -59,11 +59,8 @@ describe('layer2s', () => {
   })
 
   describe('liveness', () => {
-    it('every functionCall has selector and function signature', () => {
-      const missing: { projectId: ProjectId; missingIn: FunctionCallParams }[] =
-        []
-
-      for (const project of layer2s) {
+    for (const project of layer2s) {
+      it(`${project.id.toString()} : has valid signatures`, () => {
         if (project.config.liveness) {
           const functionCalls = [
             ...project.config.liveness.batchSubmissions,
@@ -71,17 +68,12 @@ describe('layer2s', () => {
           ].filter((x) => x.formula === 'functionCall') as FunctionCallParams[]
 
           functionCalls.forEach((c) => {
-            if (!c.functionSignature || c.selector) {
-              missing.push({
-                projectId: project.id,
-                missingIn: c,
-              })
-            }
+            const calculatedSignature = getFunctionSelector(c.functionSignature)
+            expect(calculatedSignature).toEqual(c.selector as `0x${string}`)
           })
         }
-      }
-      expect(missing).toEqual([])
-    })
+      })
+    }
   })
 
   describe('activity', () => {
