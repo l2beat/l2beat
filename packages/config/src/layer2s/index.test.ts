@@ -71,7 +71,7 @@ describe('layer2s', () => {
             const i = new utils.Interface([c.functionSignature])
             const fragment = i.fragments[0]
             const calculatedSignature = i.getSighash(fragment)
-            expect(calculatedSignature).toEqual(c.selector as `0x${string}`)
+            expect(calculatedSignature).toEqual(c.selector)
           })
         }
       })

@@ -9,7 +9,7 @@ export interface FunctionCallParams {
   formula: 'functionCall'
   address: EthereumAddress
   selector: string
-  functionSignature: string
+  functionSignature: `0x${string}`
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
 }
