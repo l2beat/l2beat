@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 18519301,
-  "configHash": "0xfea8c5b5d3ae0fce1224aec4dfa5a0b72d6cb62000f141af8ca305a613cf228a",
+  "blockNumber": 18519737,
+  "configHash": "0x16324d5d9b8cb013c6fdd7b591039444fb8b0fac7d1fc64df51c6f14e86b3fa7",
   "version": 3,
   "contracts": [
     {
@@ -134,7 +134,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1699350755,
+        "getCurrentTime": 1699356011,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -498,7 +498,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 13361,
+        "nonce": 13366,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -644,13 +644,13 @@
           1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786
         ],
         "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
-        "getPendingInboundRootsCount": 5,
-        "lastPropagatedRoot": "0x7e7ab60a69e1ae5b50d6ec932e043aaf0e59dc54208c3e4127b028f69f7015d3",
+        "getPendingInboundRootsCount": 0,
+        "lastPropagatedRoot": "0xcb0290eddf18d2a5b56564bb7f16b213d7d34350c699f4fd2d9b108cc11d0240",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [40141, 40145],
+        "pendingInboundRoots": [40146, 40145],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -702,7 +702,7 @@
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xf96537f8a890f81c8c28c3f670ddff6c97b2d9349ef2c2f11986ac49f70a18a7",
+        "outboundRoot": "0x9b6c91c4d63b5f9346b05ba924c54a11e2d7a618393dfad569486f5c2a3444c6",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,

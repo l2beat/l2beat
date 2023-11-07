@@ -138,9 +138,6 @@
     "Connext Multisig 2": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "Connext Multisig Member": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "GovernorV2": {
       "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"]
     },
