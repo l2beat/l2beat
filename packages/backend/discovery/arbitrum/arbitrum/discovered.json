@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 132779316,
   "configHash": "0xc08d885d35ea0932af475be849aa7f6588bcd5ffb197d60ecd502ebf0c66e21b",
-  "version": 2,
+  "version": 3,
   "contracts": [
     {
       "name": "L2CustomGateway",
@@ -13,6 +13,8 @@
         "implementation": "0x190274fEa8f30e3f48CE43aDCBd9a74110118284",
         "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
       },
+      "implementations": ["0x190274fEa8f30e3f48CE43aDCBd9a74110118284"],
+      "sinceTimestamp": 1623867828,
       "values": {
         "counterpartGateway": "0xcEe284F754E854890e311e3280b767F80797180d",
         "exitNum": 13495,
@@ -28,6 +30,8 @@
         "implementation": "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93",
         "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
       },
+      "implementations": ["0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"],
+      "sinceTimestamp": 1623784105,
       "values": {
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
@@ -45,6 +49,8 @@
         "implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x41740588b86B4e0629b83A4e28786FF94361c3A3"],
+      "sinceTimestamp": 1678968508,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -87,6 +93,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1634920833,
       "values": {
         "decimals": 0,
         "DOMAIN_SEPARATOR": "0x60a7ceacab02397e9248573e99be565f18250840b49a2ad0b3475658573dbceb",
@@ -104,6 +111,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1623784070,
       "values": {
         "beacon": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d"
@@ -114,8 +122,11 @@
       "address": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
       },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1692138844,
       "values": {
         "domainSeparator": "0xff371057f6d6cb8316f1509a9cd1073e8f68df0c1330b7437953035fce620bcb",
         "getChainId": 42161,
@@ -147,6 +158,8 @@
         "implementation": "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278",
         "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
       },
+      "implementations": ["0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"],
+      "sinceTimestamp": 1623784105,
       "values": {
         "counterpartGateway": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
@@ -160,6 +173,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692138965,
       "values": {
         "DEFAULT_GOV_ACTION_CALLDATA": "0xb147f40c",
         "DEFAULT_PREDECESSOR": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -178,6 +192,8 @@
         "implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"],
+      "sinceTimestamp": 1678968508,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
@@ -206,6 +222,8 @@
         "implementation": "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"],
+      "sinceTimestamp": 1678968508,
       "values": {
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
@@ -227,6 +245,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692138730,
       "values": {
         "actionContractId": "0x91a027369a797f7b79038b0977234c66212c6a4af81bff02b23b740c8fda9ddc",
         "SENTINEL_OWNERS": "0x0000000000000000000000000000000000000001",
@@ -239,8 +258,11 @@
       "address": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
       },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1692138742,
       "values": {
         "domainSeparator": "0x94e1e735cd2915903c45ecfce1215217a6fdbe2dabda30ee765417b67a52144d",
         "getChainId": 42161,
@@ -272,6 +294,8 @@
         "implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x41740588b86B4e0629b83A4e28786FF94361c3A3"],
+      "sinceTimestamp": 1678968508,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -312,6 +336,8 @@
         "implementation": "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"],
+      "sinceTimestamp": 1678968435,
       "values": {
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
         "exitNum": 885,
@@ -327,6 +353,8 @@
         "implementation": "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"],
+      "sinceTimestamp": 1678968508,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -359,6 +387,8 @@
         "implementation": "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"],
+      "sinceTimestamp": 1692138965,
       "values": {
         "COHORT_REPLACER_ROLE": "0x1b3e51262cf8f48cf0dc9fdd7d86c0378cf467608e72e72cd4da66efe423f195",
         "cohortSize": 6,
@@ -434,6 +464,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1623784105,
       "values": {
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       }
@@ -444,6 +475,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1678968400,
       "values": {
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       }
@@ -454,6 +486,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1623784070,
       "values": {
         "implementation": "0x3f770Ac673856F105b586bb393d122721265aD46",
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
@@ -467,6 +500,8 @@
         "implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"],
+      "sinceTimestamp": 1678968508,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
@@ -495,6 +530,8 @@
         "implementation": "0x9F43ab02cACc8e709b05936a92dC85b76D1523c4",
         "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
       },
+      "implementations": ["0x9F43ab02cACc8e709b05936a92dC85b76D1523c4"],
+      "sinceTimestamp": 1678968508,
       "values": {
         "owner": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
       }
