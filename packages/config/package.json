@@ -28,7 +28,6 @@
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
-    "viem": "^1.18.8",
     "zod": "^3.22.2"
   },
   "devDependencies": {

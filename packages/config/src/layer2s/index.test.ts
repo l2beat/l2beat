@@ -4,8 +4,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { utils } from 'ethers'
 import { startsWith } from 'lodash'
-import { getFunctionSelector } from 'viem'
 
 import {
   ProjectReference,
@@ -68,7 +68,9 @@ describe('layer2s', () => {
           ].filter((x) => x.formula === 'functionCall') as FunctionCallParams[]
 
           functionCalls.forEach((c) => {
-            const calculatedSignature = getFunctionSelector(c.functionSignature)
+            const i = new utils.Interface([c.functionSignature])
+            const fragment = i.fragments[0]
+            const calculatedSignature = i.getSighash(fragment)
             expect(calculatedSignature).toEqual(c.selector as `0x${string}`)
           })
         }
