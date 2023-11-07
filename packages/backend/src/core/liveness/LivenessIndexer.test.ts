@@ -182,7 +182,7 @@ describe(LivenessIndexer.name, () => {
             sinceTimestamp: c.sinceTimestamp,
             untilTimestamp: newUntilTimestamp,
             projectId: c.projectId,
-            lastSyncedTimestamp: newUntilTimestamp,
+            lastSyncedTimestamp: undefined,
           })),
         )
         expect(livenessRepository.deleteAfter).toHaveBeenNthCalledWith(
@@ -228,25 +228,6 @@ describe(LivenessIndexer.name, () => {
   })
 
   describe(LivenessIndexer.prototype.update.name, () => {
-    it('handles error', async () => {
-      const livenessClient = mockObject<LivenessClient>({
-        getTransfers: () => {
-          throw new Error('error')
-        },
-      })
-
-      const { livenessIndexer, wrappedLogger } = getMockLivenessIndexer({
-        livenessClient,
-      })
-
-      await expect(
-        async () =>
-          await livenessIndexer.update(FROM.toNumber(), TO.toNumber()),
-      ).toBeRejected()
-
-      expect(wrappedLogger.error).toHaveBeenCalled()
-    })
-
     it('calls getLivenessData and adds results to database, returns "to"', async () => {
       const expectedToSave: LivenessRecord[] = [
         ...TRANSFERS_EXPECTED,

@@ -26,36 +26,38 @@ export function processLivenessConfigurations(
 
     if (livenessConfig) {
       const processConfigType = (configType: 'functionCalls' | 'transfers') => {
-        for (const config of livenessConfig[configType]) {
-          const identifier = LivenessConfigurationIdentifier(config)
+        for (const runtimeConfig of livenessConfig[configType]) {
+          const identifier = LivenessConfigurationIdentifier(runtimeConfig)
           assert(
             !usedIdentifiers.has(identifier.toString()),
             'There cannot be duplicate identifiers',
           )
           usedIdentifiers.add(identifier.toString())
 
-          const savedConfig = configurations.find(
+          const dbConfig = configurations.find(
             (c) => c.identifier === identifier,
           )
-          if (savedConfig === undefined) {
+          if (dbConfig === undefined) {
             added.push({
-              projectId: config.projectId,
-              type: config.type,
+              projectId: runtimeConfig.projectId,
+              type: runtimeConfig.type,
               identifier,
               params: JSON.stringify(
-                LivenessConfigurationIdentifier.params(config),
+                LivenessConfigurationIdentifier.params(runtimeConfig),
               ),
-              sinceTimestamp: config.sinceTimestamp,
-              untilTimestamp: config.untilTimestamp,
+              sinceTimestamp: runtimeConfig.sinceTimestamp,
+              untilTimestamp: runtimeConfig.untilTimestamp,
             })
           } else {
             if (
-              LivenessConfigurationIdentifier.wasUpdated(savedConfig, config)
+              LivenessConfigurationIdentifier.wasUpdated(
+                dbConfig,
+                runtimeConfig,
+              )
             ) {
               updated.push({
-                ...savedConfig,
-                untilTimestamp: config.untilTimestamp,
-                lastSyncedTimestamp: config.untilTimestamp,
+                ...dbConfig,
+                untilTimestamp: runtimeConfig.untilTimestamp,
               })
             }
           }

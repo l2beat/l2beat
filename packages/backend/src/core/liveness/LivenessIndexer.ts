@@ -7,14 +7,8 @@ import {
   IndexerStateRecord,
   IndexerStateRepository,
 } from '../../peripherals/database/IndexerStateRepository'
-import {
-  LivenessConfigurationRecord,
-  LivenessConfigurationRepository,
-} from '../../peripherals/database/LivenessConfigurationRepository'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from '../../peripherals/database/LivenessRepository'
+import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
+import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
 import { getLivenessConfigHash } from './utils'
@@ -49,34 +43,19 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const fromUnixTime = new UnixTime(from)
-    const toUnixTime = new UnixTime(to)
+    const configs = await this.livenessConfigurationRepository.getAll()
 
-    let configs: LivenessConfigurationRecord[] | undefined
-    let data: { data: LivenessRecord[]; to: UnixTime } | undefined
+    const data = await this.livenessClient.getLivenessData(
+      this.projects,
+      configs,
+      new UnixTime(from),
+      new UnixTime(to),
+    )
 
-    try {
-      configs = await this.livenessConfigurationRepository.getAll()
-
-      data = await this.livenessClient.getLivenessData(
-        this.projects,
-        configs,
-        fromUnixTime,
-        toUnixTime,
-      )
-    } catch (e) {
-      this.logger.error(e)
-      throw e
-    }
-
-    assert(data, 'Liveness data should not be undefined there')
     // TODO: run in a transaction
     await this.livenessRepository.addMany(data.data)
-
-    assert(configs, 'Configs should not be undefined there')
     await this.livenessConfigurationRepository.updateMany(
       configs.map((c) => {
-        assert(data, 'Liveness data "to" should not be undefined there')
         return { ...c, lastSyncedTimestamp: data.to }
       }),
     )
@@ -84,9 +63,7 @@ export class LivenessIndexer extends ChildIndexer {
     return Promise.resolve(data.to.toNumber())
   }
 
-  private async processIndexerConfiguration(
-    indexerState: IndexerStateRecord | undefined,
-  ) {
+  private async processIndexerConfiguration(indexerState?: IndexerStateRecord) {
     if (indexerState === undefined) {
       await this.stateRepository.addOrUpdate({
         indexerId: this.indexerId,
@@ -123,6 +100,7 @@ export class LivenessIndexer extends ChildIndexer {
       this.projects,
       configurations,
     )
+
     await this.livenessConfigurationRepository.addMany(added)
 
     // this will also delete records from "liveness" using CASCADE constraint
