@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
-import { allModes } from '../../../.storybook/modes'
+import { onlyDesktopModes } from '../../../.storybook/modes'
 import { configureCharts } from '../../scripts/charts'
 import { Chart } from './Chart'
 
@@ -208,10 +208,7 @@ export const With90D: Story = {
   },
   parameters: {
     chromatic: {
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
+      modes: onlyDesktopModes,
     },
   },
 }
@@ -223,10 +220,7 @@ export const With180D: Story = {
   },
   parameters: {
     chromatic: {
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
+      modes: onlyDesktopModes,
     },
   },
 }

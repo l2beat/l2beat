@@ -3,7 +3,7 @@
   "chain": "avalanche",
   "blockNumber": 33438441,
   "configHash": "0xf4000b70ed1f1c1395db6500b8f0e4e2ca86f016c57b783fee348d529de944f9",
-  "version": 1,
+  "version": 3,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528728,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -26,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647316999,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 6,
@@ -48,6 +50,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528722,
       "values": {
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -71,6 +74,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661279943,
       "values": {
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
@@ -80,8 +84,11 @@
       "address": "0xcE958C3Fb6fbeCAA5eef1E4dAbD13418bc1ba483",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "modules": []
       },
+      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
+      "sinceTimestamp": 1648072400,
       "values": {
         "domainSeparator": "0x918cfae9e38132ef43ea88064def1289ec19adce0ea6b46d259cea676a3f36c7",
         "getChainId": 43114,
