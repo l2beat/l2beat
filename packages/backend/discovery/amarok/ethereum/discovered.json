@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 18263156,
-  "configHash": "0x9ab95c08de8ef25be12f4ab71e9af863e29b5582f8c49d0b2fbc5327f2d75ca6",
+  "blockNumber": 18519301,
+  "configHash": "0xfea8c5b5d3ae0fce1224aec4dfa5a0b72d6cb62000f141af8ca305a613cf228a",
   "version": 3,
   "contracts": [
     {
@@ -17,7 +17,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "115510381392879791894352896",
+        "totalSupply": "115860845544776900755881804",
         "totalSupplyAt": []
       }
     },
@@ -72,26 +72,6 @@
       "derivedName": "GnosisHubConnector"
     },
     {
-      "name": "Connext Multisig Member",
-      "address": "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1693742291,
-      "values": {
-        "domainSeparator": "0x629aade541ce1b7d73beab1242554404bc43e210de8d86b5a43700596c5cb2b2",
-        "getChainId": 1,
-        "getOwners": ["0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb"],
-        "getThreshold": 1,
-        "nonce": 1,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "UpgradeBeaconProxy",
       "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
       "upgradeability": {
@@ -125,7 +105,7 @@
         "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
         "getChainId": 1,
         "getOwners": [
-          "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e",
+          "0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb",
           "0xc840e73B856f52E5491d6016daf5C7AE5e6beECD",
           "0xaBcC62f573963F0B1aD9334CaEd3f4Acab8d3FEA",
           "0x8D09e20b835009E5320cC11E6a6F00aF451aD669",
@@ -135,14 +115,11 @@
           "0xC832bB8015762B4857459551057EB61c68B93608",
           "0x320CBa820f33251d480Dcb79F7a9b1cc757aC12e",
           "0x1b526192C541DE6E23D73b4Afc4b6B45A75aeAdD",
-          "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
-          "0x3d7dF98257E5CEe5f032fd06a0aA510F89A19A2e",
           "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
-          "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
         ],
         "getThreshold": 8,
-        "nonce": 47,
+        "nonce": 52,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -157,7 +134,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1696253411,
+        "getCurrentTime": 1699350755,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -179,8 +156,8 @@
         "mirrorConnector": "0x32155C9d39084F040Ba17890fE8134dbE2a0453f",
         "OPTIMISM_PORTAL": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "owner": "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
-        "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedTimestamp": 0,
+        "proposed": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "proposedTimestamp": 1699053983,
         "renounced": false,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
       },
@@ -200,9 +177,9 @@
         "MIRROR_DOMAIN": 6450786,
         "MIRROR_WORMHOLE_ID": 4,
         "mirrorConnector": "0xC667DE991c8B40C969f6996b4F6167851527c9f6",
-        "owner": "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
-        "proposed": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-        "proposedTimestamp": 1689103331,
+        "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "proposed": "0x0000000000000000000000000000000000000000",
+        "proposedTimestamp": 0,
         "refundAddress": "0x9435Ba7C661a0Fd477deED640491de8c100325A7",
         "renounced": false,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
@@ -275,7 +252,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 468,
+        "nonce": 497,
         "VERSION": "1.3.0"
       }
     },
@@ -521,7 +498,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 10462,
+        "nonce": 13361,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -667,13 +644,13 @@
           1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786
         ],
         "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
-        "getPendingInboundRootsCount": 6,
-        "lastPropagatedRoot": "0x305832374cb95af7fe009dd685ff330d72057d90c7e01347384e45af684c5257",
+        "getPendingInboundRootsCount": 5,
+        "lastPropagatedRoot": "0x7e7ab60a69e1ae5b50d6ec932e043aaf0e59dc54208c3e4127b028f69f7015d3",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [37353, 37358],
+        "pendingInboundRoots": [40141, 40145],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -702,7 +679,7 @@
           "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
         ],
         "getThreshold": 3,
-        "nonce": 5,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -720,12 +697,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 18263147,
+        "lastSentBlock": 18519181,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xe5b32f4a3f376eb84ac500663cc2177d825c0318c204f42277a3dc2643d700a1",
+        "outboundRoot": "0xf96537f8a890f81c8c28c3f670ddff6c97b2d9349ef2c2f11986ac49f70a18a7",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -984,9 +961,6 @@
       "function setGasCap(uint256 _gasCap)",
       "function setMirrorConnector(address _mirrorConnector)",
       "function verifySender(address _expected) returns (bool)"
-    ],
-    "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": [
-      "constructor(address _singleton)"
     ],
     "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
