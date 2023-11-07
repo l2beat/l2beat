@@ -19,7 +19,7 @@ export class LivenessController {
     const intervals = calculateIntervalWithAverages(groupedByProjectAndType)
     const withAnomalies = calculateAnomalies(intervals)
 
-    return withAnomalies
+    return { projects: withAnomalies }
   }
 }
 
@@ -32,12 +32,12 @@ export function groupByProjectIdAndType(allRecords: LivenessRecord[]) {
       return {
         batchSubmissions: {
           records: value.DA.sort(
-            (a, b) => a.timestamp.toNumber() - b.timestamp.toNumber(),
+            (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
           ),
         },
         stateUpdates: {
           records: value.STATE.sort(
-            (a, b) => a.timestamp.toNumber() - b.timestamp.toNumber(),
+            (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
           ),
         },
       }
