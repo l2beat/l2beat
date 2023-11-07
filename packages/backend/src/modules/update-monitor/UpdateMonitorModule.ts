@@ -14,6 +14,7 @@ import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
+import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -32,7 +33,10 @@ export function createUpdateMonitorModule(
 
   const configReader = new ConfigReader()
 
-  const discoveryLogger = DiscoveryLogger.SERVER
+  const discoveryLogger =
+    config.name === 'Backend/Local'
+      ? DiscoveryLogger.CLI
+      : DiscoveryLogger.SERVER
 
   const discordClient = config.updateMonitor.discord
     ? new DiscordClient(http, config.updateMonitor.discord)
@@ -43,6 +47,11 @@ export function createUpdateMonitorModule(
     logger,
   )
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
+
+  const discoveryCacheRepository = new DiscoveryCacheRepository(
+    database,
+    logger,
+  )
 
   const updateNotifier = new UpdateNotifier(
     updateNotifierRepository,
@@ -57,6 +66,7 @@ export function createUpdateMonitorModule(
     createDiscoveryRunner(
       discoveryHttpClient,
       configReader,
+      discoveryCacheRepository,
       discoveryLogger,
       chainConfig,
     ),
