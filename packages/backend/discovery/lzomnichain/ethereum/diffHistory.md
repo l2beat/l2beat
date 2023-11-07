@@ -1,13 +1,13 @@
-# Diff at Fri, 03 Nov 2023 12:04:13 GMT:
+# Diff at Tue, 07 Nov 2023 10:45:37 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@9e694c14ba2d01ab6869568d59c38988c49f5bbc
+- comparing to: master@1272f95e37268203d1aa19a319b3dff48af9c73c
 
 ## Description
 
 ### Changes to config
 
-Added a `relayer` field in `defaultAppConfig` in `UltraLightNodeV2`
+Added a `relayer` field in `defaultAppConfig` in `UltraLightNodeV2`. Added several new remote chains.
 
 ### Changes on contracts
 
@@ -18,6 +18,8 @@ New Oracle has been added. Several new remote chains have been added. Default or
 ```diff
     contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
       values.chainAddressSizeMap.148:
++        20
+      values.chainAddressSizeMap.182:
 +        20
       values.chainAddressSizeMap.210:
 +        20
@@ -34,6 +36,8 @@ New Oracle has been added. Several new remote chains have been added. Default or
       values.chainAddressSizeMap.216:
 +        20
       values.defaultAdapterParams.148:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAdapterParams.182:
 +        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
       values.defaultAdapterParams.210:
 +        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
@@ -93,6 +97,8 @@ New Oracle has been added. Several new remote chains have been added. Default or
 +        "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
       values.defaultAppConfig.148:
 +        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.defaultAppConfig.182:
++        {"inboundProofLib":2,"inboundBlockConfirm":2,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
       values.defaultAppConfig.210:
 +        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
       values.defaultAppConfig.211:
@@ -108,6 +114,8 @@ New Oracle has been added. Several new remote chains have been added. Default or
       values.defaultAppConfig.216:
 +        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
       values.inboundProofLibrary.148:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.inboundProofLibrary.182:
 +        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
       values.inboundProofLibrary.210:
 +        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
@@ -125,6 +133,8 @@ New Oracle has been added. Several new remote chains have been added. Default or
 +        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
       values.supportedOutboundProof.148:
 +        2
+      values.supportedOutboundProof.182:
++        2
       values.supportedOutboundProof.210:
 +        [1,2]
       values.supportedOutboundProof.211:
@@ -140,6 +150,8 @@ New Oracle has been added. Several new remote chains have been added. Default or
       values.supportedOutboundProof.216:
 +        [1,2]
       values.ulnLookup.148:
++        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+      values.ulnLookup.182:
 +        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
       values.ulnLookup.210:
 +        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
