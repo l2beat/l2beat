@@ -3,7 +3,7 @@
   "chain": "polygon-pos",
   "blockNumber": 45856553,
   "configHash": "0xd000e3e5634b1a1c3a9e6d1fe9c062d9e378058d62c94acec9400de3660d30e3",
-  "version": 1,
+  "version": 3,
   "contracts": [
     {
       "name": "Endpoint",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647316955,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 9,
@@ -33,6 +34,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528377,
       "values": {
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -56,6 +58,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661279759,
       "values": {
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
@@ -66,6 +69,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528687,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -80,8 +84,11 @@
       "address": "0xF1a5F92F5F89e8b539136276f827BF1648375312",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": []
       },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1648074041,
       "values": {
         "domainSeparator": "0x044a8dd59b0665c360d1bb7987292aed8d68479d0d08219d5e3d215b5b1aa4ca",
         "getChainId": 137,

@@ -1,3 +1,4 @@
+import { ChainId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
@@ -8,7 +9,11 @@ describe(ProjectDiscovery.name, () => {
     readFileSync: () => JSON.stringify(discoveredJsonStub),
   })
   const projectName = 'ExampleProject'
-  const discovery = new ProjectDiscovery('ExampleProject', fsMock)
+  const discovery = new ProjectDiscovery(
+    'ExampleProject',
+    ChainId.ETHEREUM,
+    fsMock,
+  )
 
   describe(ProjectDiscovery.prototype.getContract.name, () => {
     it('should return contract for given address', () => {
@@ -103,4 +108,22 @@ describe(ProjectDiscovery.name, () => {
       })
     },
   )
+
+  it('reads configurations for different chainIds', () => {
+    const fsMock = mockObject<Filesystem>({
+      readFileSync: () => JSON.stringify(discoveredJsonStub),
+    })
+    const discovery = new ProjectDiscovery(
+      'ExampleProject',
+      ChainId.ARBITRUM,
+      fsMock,
+    )
+    const contract = discovery.getContract(contractStub.address)
+
+    expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
+    expect(fsMock.readFileSync).toHaveBeenNthCalledWith(
+      1,
+      expect.includes('/ExampleProject/arbitrum/'),
+    )
+  })
 })

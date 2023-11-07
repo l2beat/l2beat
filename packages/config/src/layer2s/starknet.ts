@@ -138,6 +138,7 @@ export const starknet: Layer2 = {
   display: {
     name: 'Starknet',
     slug: 'starknet',
+    provider: 'Starknet',
     description:
       'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
       infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
@@ -329,12 +330,6 @@ export const starknet: Layer2 = {
       description:
         OPERATOR.CENTRALIZED_OPERATOR.description +
         ' Typically, the Operator is the hot wallet of the Starknet service submitting state updates for which proofs have been already submitted and verified.',
-      references: [
-        {
-          text: 'Starknet operator Etherscan address',
-          href: 'https://etherscan.io/address/0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
-        },
-      ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,

@@ -1,3 +1,4 @@
+import { calculateInversion, InvertedAddresses } from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -5,6 +6,7 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
+  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -26,6 +28,11 @@ import {
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import {
+  OP_STACK_CONTRACT_DESCRIPTION,
+  OP_STACK_PERMISSION_TEMPLATES,
+  OpStackContractName,
+} from './OpStackTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -48,6 +55,7 @@ export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
   constructor(
     public readonly projectName: string,
+    public readonly chainId: ChainId = ChainId.ETHEREUM,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
@@ -55,7 +63,11 @@ export class ProjectDiscovery {
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
-      path.resolve(`../backend/discovery/${project}/ethereum/discovered.json`),
+      path.resolve(
+        `../backend/discovery/${project}/${ChainId.getName(
+          this.chainId,
+        )}/discovered.json`,
+      ),
     )
 
     return JSON.parse(discoveryFile) as DiscoveryOutput
@@ -156,6 +168,56 @@ export class ProjectDiscovery {
         references,
       },
     }
+  }
+
+  getInversion(): InvertedAddresses {
+    return calculateInversion(this.discovery)
+  }
+
+  getOpStackPermissions(
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ProjectPermission[] {
+    const inversion = this.getInversion()
+
+    const result: Record<string, Record<string, string[]>> = {}
+    const names: Record<string, string> = {}
+    const sources: Record<string, { contract: string; value: string }> = {}
+    for (const template of OP_STACK_PERMISSION_TEMPLATES) {
+      for (const contract of inversion.values()) {
+        const role = contract.roles.find(
+          (r) =>
+            r.name === template.role.value &&
+            r.atName ===
+              (contractOverrides?.[template.role.contract] ??
+                template.role.contract),
+        )
+        if (role) {
+          const contractKey =
+            overrides?.[template.role.value] ??
+            contract.name ??
+            template.role.value
+          result[contractKey] ??= {}
+          result[contractKey][role.name] ??= []
+          result[contractKey][role.name].push(
+            stringFormat(template.description, template.role.contract),
+          )
+          sources[contractKey] ??= template.role
+          names[contractKey] ??=
+            overrides?.[template.role.value] ??
+            contract.name ??
+            template.role.value
+        }
+      }
+    }
+
+    return Object.entries(result).map(([key, roleDescription]) => ({
+      name: names[key],
+      accounts: [
+        this.getPermissionedAccount(sources[key].contract, sources[key].value),
+      ],
+      description: Object.values(roleDescription).flat().join(' '),
+    }))
   }
 
   getMultisigPermission(
@@ -391,6 +453,21 @@ export class ProjectDiscovery {
     return contract
   }
 
+  getOpStackContractDetails(
+    upgradesProxy: Partial<ProjectContractSingleAddress>,
+    overrides?: Partial<Record<OpStackContractName, string>>,
+  ): ProjectContractSingleAddress[] {
+    return OP_STACK_CONTRACT_DESCRIPTION.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
+        ...upgradesProxy,
+      }),
+    )
+  }
+
   private getContractByName(name: string): ContractParameters {
     const contracts = this.discovery.contracts.filter(
       (contract) => contract.name === name,
@@ -412,4 +489,11 @@ function isNonNullable<T>(
   value: T | undefined | null,
 ): value is NonNullable<T> {
   return value !== null && value !== undefined
+}
+
+export function stringFormat(str: string, ...val: string[]) {
+  for (let index = 0; index < val.length; index++) {
+    str = str.replaceAll(`{${index}}`, val[index])
+  }
+  return str
 }
