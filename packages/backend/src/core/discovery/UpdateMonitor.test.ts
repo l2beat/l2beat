@@ -649,6 +649,7 @@ const mockDiff: DiscoveryDiff[] = [
 ]
 
 const OPTIONS: DiscoveryRunnerOptions = {
+  logger: Logger.SILENT,
   runSanityCheck: true,
   injectInitialAddresses: true,
 }
