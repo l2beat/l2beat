@@ -10,37 +10,29 @@ describe(calculateAnomalies.name, () => {
       project1: {
         batchSubmissions: {
           records: RECORDS,
-          last30days: MOCK_EMPTY_DATA,
-          last90days: MOCK_EMPTY_DATA,
-          max: MOCK_EMPTY_DATA,
+          last30days: undefined,
+          last90days: undefined,
+          max: undefined,
         },
         stateUpdates: {
           records: [],
-          last30days: MOCK_EMPTY_DATA,
-          last90days: MOCK_EMPTY_DATA,
-          max: MOCK_EMPTY_DATA,
+          last30days: undefined,
+          last90days: undefined,
+          max: undefined,
         },
       },
     })
     expect(result.project1.anomalies).toEqual([
       {
         timestamp: NOW,
-        blockNumber: 1,
-        txHash: '0x1234567890abcdef',
         type: 'DA',
-        previousRecordInterval: 4320000,
-        isAnomaly: true,
+        durationInSeconds: 4320000,
       },
     ])
   })
 })
 
 const NOW = UnixTime.now()
-
-const MOCK_EMPTY_DATA = {
-  averageInSeconds: null,
-  maximumInSeconds: null,
-}
 
 const RECORDS: LivenessRecordWithInterval[] = [
   {

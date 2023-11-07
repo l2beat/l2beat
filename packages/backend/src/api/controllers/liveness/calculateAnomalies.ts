@@ -1,4 +1,5 @@
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
+import { LivenessType, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, sum } from 'lodash'
 
 import {
@@ -8,86 +9,89 @@ import {
 
 export function calculateAnomalies(
   projects: Dictionary<{
-    batchSubmissions: LivenessRecordsWithIntervalAndDetails
-    stateUpdates: LivenessRecordsWithIntervalAndDetails
+    batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
+    stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
   }>,
 ) {
   const result: Dictionary<{
-    batchSubmissions: LivenessRecordsWithIntervalAndDetails<
-      LivenessRecordWithInterval & {
-        isAnomaly?: boolean
-      }
-    >
-    stateUpdates: LivenessRecordsWithIntervalAndDetails<
-      LivenessRecordWithInterval & {
-        isAnomaly?: boolean
-      }
-    >
-    anomalies: (LivenessRecordWithInterval & {
-      isAnomaly?: boolean
-    })[]
+    batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
+    stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+    anomalies: {
+      timestamp: UnixTime
+      durationInSeconds: number
+      type: LivenessType
+    }[]
   }> = {}
   for (const p in projects) {
-    result[p] = {
-      batchSubmissions: {
-        ...projects[p].batchSubmissions,
-      },
-      stateUpdates: {
-        ...projects[p].stateUpdates,
-      },
-      anomalies: [],
-    }
-    const NOW = UnixTime.now()
-    const batchSubmissionsLast30Days = result[
-      p
-    ].batchSubmissions.records.filter((record) =>
-      record.timestamp.gte(NOW.add(-30, 'days')),
-    )
-    const stateUpdatesLast30Days = result[p].stateUpdates.records.filter(
-      (record) => record.timestamp.gte(NOW.add(-30, 'days')),
-    )
+    const batchSubmissions = projects[p].batchSubmissions
+    const stateUpdates = projects[p].stateUpdates
+    const anomalies: LivenessRecordWithInterval[] = []
 
-    batchSubmissionsLast30Days.forEach((record, i) => {
-      if (record.previousRecordInterval === undefined) return
-      const timeframe = record.timestamp.add(-30, 'days')
-      const last30days = result[p].batchSubmissions.records.filter(
-        (record) =>
-          record.timestamp.gte(timeframe) &&
-          record.timestamp.lte(record.timestamp),
+    const NOW = UnixTime.now()
+
+    if (batchSubmissions) {
+      const batchSubmissionsLast30Days = batchSubmissions.records.filter(
+        (record) => record.timestamp.gte(NOW.add(-30, 'days')),
       )
-      const intervals = last30days
-        .map((r) => r.previousRecordInterval)
-        .filter(notUndefined)
-      const avg = sum(intervals) / intervals.length
-      const stdDev = standardDeviation(intervals, avg)
-      const z = (record.previousRecordInterval - avg) / stdDev
-      if (z >= 15) {
-        result[p].batchSubmissions.records[i].isAnomaly = true
-      }
-    })
-    stateUpdatesLast30Days.forEach((record, i) => {
-      if (record.previousRecordInterval === undefined) return
-      const timeframe = record.timestamp.add(-30, 'days')
-      const last30days = result[p].stateUpdates.records.filter(
-        (record) =>
-          record.timestamp.gte(timeframe) &&
-          record.timestamp.lte(record.timestamp),
+      batchSubmissionsLast30Days.forEach((record) => {
+        if (record.previousRecordInterval === undefined) return
+        const timeframe = record.timestamp.add(-30, 'days')
+        const last30days = batchSubmissions.records.filter(
+          (record) =>
+            record.timestamp.gte(timeframe) &&
+            record.timestamp.lte(record.timestamp),
+        )
+        const intervals = last30days
+          .map((r) => r.previousRecordInterval)
+          .filter(notUndefined)
+        const avg = sum(intervals) / intervals.length
+        const stdDev = standardDeviation(intervals, avg)
+        const z = (record.previousRecordInterval - avg) / stdDev
+        if (z >= 15) {
+          anomalies.push(record)
+        }
+      })
+    }
+
+    if (stateUpdates) {
+      const stateUpdatesLast30Days = stateUpdates.records.filter((record) =>
+        record.timestamp.gte(NOW.add(-30, 'days')),
       )
-      const intervals = last30days
-        .map((r) => r.previousRecordInterval)
-        .filter(notUndefined)
-      const avg = sum(intervals) / intervals.length
-      const stdDev = standardDeviation(intervals, avg)
-      const z = (record.previousRecordInterval - avg) / stdDev
-      if (z >= 15) {
-        result[p].stateUpdates.records[i].isAnomaly = true
-      }
-    })
-    const anomalies = [
-      ...result[p].batchSubmissions.records.filter((r) => r.isAnomaly),
-      ...result[p].stateUpdates.records.filter((r) => r.isAnomaly),
-    ]
-    result[p].anomalies.push(...anomalies)
+      stateUpdatesLast30Days.forEach((record) => {
+        if (record.previousRecordInterval === undefined) return
+        const timeframe = record.timestamp.add(-30, 'days')
+        const last30days = stateUpdates.records.filter(
+          (record) =>
+            record.timestamp.gte(timeframe) &&
+            record.timestamp.lte(record.timestamp),
+        )
+        const intervals = last30days
+          .map((r) => r.previousRecordInterval)
+          .filter(notUndefined)
+        const avg = sum(intervals) / intervals.length
+        const stdDev = standardDeviation(intervals, avg)
+        const z = (record.previousRecordInterval - avg) / stdDev
+        if (z >= 15) {
+          anomalies.push(record)
+        }
+      })
+    }
+
+    result[p] = {
+      batchSubmissions: batchSubmissions,
+      stateUpdates: stateUpdates,
+      anomalies: anomalies.map((a) => {
+        assert(
+          a.previousRecordInterval !== undefined,
+          'Programmer error: previousRecordInterval should not be undefined',
+        )
+        return {
+          timestamp: a.timestamp,
+          durationInSeconds: a.previousRecordInterval,
+          type: a.type,
+        }
+      }),
+    }
   }
   return result
 }
