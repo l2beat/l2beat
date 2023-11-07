@@ -65,10 +65,6 @@ describe(calculateMax.name, () => {
     const result = calculateMax([1, 2, 3, 4, 1, 5, 7])
     expect(result).toEqual(7)
   })
-  it('return null when empty', () => {
-    const result = calculateMax([])
-    expect(result).toEqual(null)
-  })
 })
 
 describe(calculateAverage.name, () => {
@@ -76,29 +72,25 @@ describe(calculateAverage.name, () => {
     const result = calculateAverage([1, 2, 3, 4])
     expect(result).toEqual(2.5)
   })
-  it('return null when empty', () => {
-    const result = calculateAverage([])
-    expect(result).toEqual(null)
-  })
 })
 
 describe(filterRecords.name, () => {
   it('30d', () => {
-    const withIntervals = calculateIntervals(RECORDS)
+    const withIntervals = calculateIntervals(RECORDS)!
     const result = filterRecords(withIntervals, '30d')
     expect(result).toEqual(
       withIntervals.slice(0, 3).map((r) => r.previousRecordInterval!),
     )
   })
   it('90d', () => {
-    const withIntervals = calculateIntervals(RECORDS)
+    const withIntervals = calculateIntervals(RECORDS)!
     const result = filterRecords(withIntervals, '90d')
     expect(result).toEqual(
       withIntervals.slice(0, 5).map((r) => r.previousRecordInterval!),
     )
   })
   it('max', () => {
-    const withIntervals = calculateIntervals(RECORDS)
+    const withIntervals = calculateIntervals(RECORDS)!
     const result = filterRecords(withIntervals, 'max')
     expect(result).toEqual(
       RECORDS.map((r) => r.previousRecordInterval!).filter(notUndefined),
@@ -128,7 +120,6 @@ describe(calculateIntervals.name, () => {
         blockNumber: 1,
         txHash: '0x1234567890abcdef',
         type: LivenessType('DA'),
-        previousRecordInterval: 2667600,
       },
     ]
     const records = calculateIntervals(RECORDS.slice(0, 3))
@@ -138,27 +129,27 @@ describe(calculateIntervals.name, () => {
 })
 
 describe(calculateAverages.name, () => {
-  it('returns the averages', () => {
-    const records = calculateIntervals(RECORDS)
-    const result = calculateAverages({
-      batchSubmissions: {
-        records: records.filter((r) => r.type === LivenessType('DA')),
-      },
-      stateUpdates: {
-        records: records.filter((r) => r.type === LivenessType('STATE')),
-      },
-    })
+  it('returns the averages for stateUpdates with undefined', () => {
+    const records = calculateIntervals(RECORDS)!
+    const result = calculateAverages(
+      records.filter((r) => r.type === LivenessType('STATE')),
+    )
     const expected = {
-      batchSubmissions: {
-        last30days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
-        last90days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
-        max: { averageInSeconds: 1589760, maximumInSeconds: 5184000 },
-      },
-      stateUpdates: {
-        last30days: { averageInSeconds: null, maximumInSeconds: null },
-        last90days: { averageInSeconds: 2592000, maximumInSeconds: 5180400 },
-        max: { averageInSeconds: 2592000, maximumInSeconds: 5180400 },
-      },
+      last30days: undefined,
+      last90days: { averageInSeconds: 2592000, maximumInSeconds: 5180400 },
+      max: { averageInSeconds: 2592000, maximumInSeconds: 5180400 },
+    }
+    expect(result).toEqual(expected)
+  })
+  it('returns the averages for batchSubmissions', () => {
+    const records = calculateIntervals(RECORDS)!
+    const result = calculateAverages(
+      records.filter((r) => r.type === LivenessType('DA')),
+    )
+    const expected = {
+      last30days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
+      last90days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
+      max: { averageInSeconds: 1589760, maximumInSeconds: 5184000 },
     }
     expect(result).toEqual(expected)
   })
@@ -181,7 +172,7 @@ describe(calculateIntervalWithAverages.name, () => {
         batchSubmissions: {
           records: calculateIntervals(
             RECORDS.filter((r) => r.type === LivenessType('DA')),
-          ),
+          )!,
           last30days: {
             averageInSeconds: 2620800,
             maximumInSeconds: 7851600,
@@ -199,11 +190,8 @@ describe(calculateIntervalWithAverages.name, () => {
         stateUpdates: {
           records: calculateIntervals(
             RECORDS.filter((r) => r.type === LivenessType('STATE')),
-          ),
-          last30days: {
-            averageInSeconds: null,
-            maximumInSeconds: null,
-          },
+          )!,
+          last30days: undefined,
           last90days: {
             averageInSeconds: 3600,
             maximumInSeconds: 3600,
