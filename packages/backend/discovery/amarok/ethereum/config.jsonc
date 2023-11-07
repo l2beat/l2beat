@@ -170,6 +170,14 @@
     },
     "OptimisticOracleV3": {
       "ignoreMethods": ["getCurrentTime"]
+    },
+    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
+      // ProposerV2 Voting Token
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": {
+      // EmergencyProposer Executor
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
