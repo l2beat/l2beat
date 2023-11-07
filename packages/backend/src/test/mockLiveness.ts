@@ -5,7 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from 'earl'
+import { MockObject, mockObject } from 'earl'
 
 import { HourlyIndexer } from '../core/liveness/HourlyIndexer'
 import { LivenessClient, mergeConfigs } from '../core/liveness/LivenessClient'
@@ -26,37 +26,49 @@ import {
   transformTransfersQueryResult,
 } from '../core/liveness/utils'
 import { Project } from '../model'
-import { IndexerStateRepository } from '../peripherals/database/IndexerStateRepository'
+import {
+  IndexerStateRecord,
+  IndexerStateRepository,
+} from '../peripherals/database/IndexerStateRepository'
 import {
   LivenessConfigurationRecord,
   LivenessConfigurationRepository,
 } from '../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../peripherals/database/LivenessRepository'
 
-function getMockLivenessIndexer(
-  projects: Project[],
-  configHash: Hash256 | undefined,
-  mocks?: {
-    livenessClient?: LivenessClient
-    configurationRepository?: LivenessConfigurationRepository
-  },
-) {
-  const livenessClient = mocks?.livenessClient ?? mockObject<LivenessClient>({})
+function getMockLivenessIndexer(mocks: {
+  projects?: Project[]
+  configHash?: Hash256
+  livenessClient?: MockObject<LivenessClient>
+  configurationRepository?: MockObject<LivenessConfigurationRepository>
+  stateRepository?: MockObject<IndexerStateRepository>
+}) {
+  const livenessClient = mocks.livenessClient ?? mockObject<LivenessClient>({})
 
-  const stateRepository = mockObject<IndexerStateRepository>({
-    findSafeHeight() {
-      return Promise.resolve(1)
-    },
-    addOrUpdate() {
-      return Promise.resolve('')
-    },
-    findConfigHash() {
-      return Promise.resolve(configHash)
-    },
-  })
+  const indexerState: IndexerStateRecord | undefined = mocks.configHash
+    ? {
+        indexerId: 'liveness_indexer',
+        configHash: mocks.configHash,
+        safeHeight: 1,
+        minTimestamp: FROM,
+      }
+    : undefined
+
+  const stateRepository =
+    mocks.stateRepository ??
+    mockObject<IndexerStateRepository>({
+      addOrUpdate() {
+        return Promise.resolve('')
+      },
+      findIndexerState() {
+        return Promise.resolve(indexerState)
+      },
+      setSafeHeight: async () => -1,
+      setConfigHash: async () => -1,
+    })
 
   const configurationRepository =
-    mocks?.configurationRepository ??
+    mocks.configurationRepository ??
     mockObject<LivenessConfigurationRepository>({
       getAll: async () =>
         CONFIGURATIONS.map((c, i) => ({
@@ -101,7 +113,7 @@ function getMockLivenessIndexer(
   const livenessIndexer = new LivenessIndexer(
     logger,
     hourlyIndexer,
-    projects,
+    mocks.projects ?? PROJECTS,
     livenessClient,
     stateRepository,
     livenessRepository,
@@ -115,7 +127,7 @@ function getMockLivenessIndexer(
     livenessRepository,
     wrappedLogger,
     configurationRepository,
-    indexerConfigHash: getLivenessConfigHash(projects),
+    indexerConfigHash: getLivenessConfigHash(mocks.projects ?? PROJECTS),
     minTimestamp: FROM,
   }
 }

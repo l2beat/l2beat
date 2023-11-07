@@ -3,7 +3,10 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 
 import { Project } from '../../model'
-import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
+import {
+  IndexerStateRecord,
+  IndexerStateRepository,
+} from '../../peripherals/database/IndexerStateRepository'
 import {
   LivenessConfigurationRecord,
   LivenessConfigurationRepository,
@@ -36,46 +39,13 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    const oldConfigHash = await this.stateRepository.findConfigHash(
+    const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
 
-    if (oldConfigHash === undefined || oldConfigHash !== this.configHash) {
-      await this.processConfigurations()
-
-      await this.stateRepository.addOrUpdate({
-        indexerId: this.indexerId,
-        configHash: this.configHash,
-        safeHeight: this.minTimestamp.toNumber(),
-      })
-    }
+    await this.processIndexerConfiguration(indexerState)
 
     await super.start()
-  }
-
-  private async processConfigurations() {
-    const configurations = await this.livenessConfigurationRepository.getAll()
-    const { added, phasedOut, updated } = processLivenessConfigurations(
-      this.projects,
-      configurations,
-    )
-    await this.livenessConfigurationRepository.addMany(added)
-
-    // this will also delete records from "liveness" using CASCADE constraint
-    await this.livenessConfigurationRepository.deleteMany(
-      phasedOut.map((c) => c.id),
-    )
-
-    await this.livenessConfigurationRepository.updateMany(updated)
-    // there can be a situation where untilTimestamp was set retroactively
-    // in this case we want to delete the liveness records that were added during this "misconfiguration" period
-    await Promise.all(
-      updated.map(async (u) => {
-        const untilTimestamp = u.untilTimestamp
-        assert(untilTimestamp, 'untilTimestamp should not be undefined there')
-        await this.livenessRepository.deleteAfter(u.id, untilTimestamp)
-      }),
-    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -114,8 +84,69 @@ export class LivenessIndexer extends ChildIndexer {
     return Promise.resolve(data.to.toNumber())
   }
 
+  private async processIndexerConfiguration(
+    indexerState: IndexerStateRecord | undefined,
+  ) {
+    if (indexerState === undefined) {
+      await this.stateRepository.addOrUpdate({
+        indexerId: this.indexerId,
+        configHash: this.configHash,
+        safeHeight: this.minTimestamp.toNumber(),
+        minTimestamp: this.minTimestamp,
+      })
+    } else {
+      assert(
+        indexerState.minTimestamp &&
+          this.minTimestamp.equals(indexerState.minTimestamp),
+        'Minimum timestamp of this indexer cannot be updated',
+      )
+
+      if (indexerState.configHash !== this.configHash) {
+        await this.processLivenessConfigurations()
+
+        await this.stateRepository.setConfigHash(
+          this.indexerId,
+          this.configHash,
+        )
+
+        await this.stateRepository.setSafeHeight(
+          this.indexerId,
+          this.minTimestamp,
+        )
+      }
+    }
+  }
+
+  private async processLivenessConfigurations() {
+    const configurations = await this.livenessConfigurationRepository.getAll()
+    const { added, phasedOut, updated } = processLivenessConfigurations(
+      this.projects,
+      configurations,
+    )
+    await this.livenessConfigurationRepository.addMany(added)
+
+    // this will also delete records from "liveness" using CASCADE constraint
+    await this.livenessConfigurationRepository.deleteMany(
+      phasedOut.map((c) => c.id),
+    )
+
+    await this.livenessConfigurationRepository.updateMany(updated)
+    // there can be a situation where untilTimestamp was set retroactively
+    // in this case we want to delete the liveness records that were added during this "misconfiguration" period
+    await Promise.all(
+      updated.map(async (u) => {
+        const untilTimestamp = u.untilTimestamp
+        assert(untilTimestamp, 'untilTimestamp should not be undefined there')
+        await this.livenessRepository.deleteAfter(u.id, untilTimestamp)
+      }),
+    )
+  }
+
   override async getSafeHeight(): Promise<number> {
-    const height = await this.stateRepository.findSafeHeight(this.indexerId)
+    const indexerState = await this.stateRepository.findIndexerState(
+      this.indexerId,
+    )
+    const height = indexerState?.safeHeight
     return height ?? this.minTimestamp.toNumber()
   }
 

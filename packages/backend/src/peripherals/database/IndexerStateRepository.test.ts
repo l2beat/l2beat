@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Hash256 } from '@l2beat/shared-pure'
+import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -13,21 +13,22 @@ describe(IndexerStateRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(IndexerStateRepository.prototype.findSafeHeight.name, () => {
+  describe(IndexerStateRepository.prototype.findIndexerState.name, () => {
     it('returns undefined if no record exists', async () => {
-      const safeHeight = await repository.findSafeHeight('indexer')
-      expect(safeHeight).toEqual(undefined)
+      const indexerState = await repository.findIndexerState('indexer')
+      expect(indexerState).toEqual(undefined)
     })
 
-    it('returns the safe height if a record exists', async () => {
+    it('returns the indexer state if a record exists', async () => {
       const newRecord = {
         indexerId: 'indexer1',
         configHash: Hash256.random(),
         safeHeight: 12345,
+        minTimestamp: UnixTime.now(),
       }
       await repository.addOrUpdate(newRecord)
-      const safeHeight = await repository.findSafeHeight('indexer1')
-      expect(safeHeight).toEqual(newRecord.safeHeight)
+      const indexerState = await repository.findIndexerState('indexer1')
+      expect(indexerState).toEqual(newRecord)
     })
   })
 
@@ -37,6 +38,7 @@ describe(IndexerStateRepository.name, () => {
         indexerId: 'indexer1',
         configHash: Hash256.random(),
         safeHeight: 1,
+        minTimestamp: UnixTime.now(),
       }
 
       await repository.addOrUpdate(newRecord)
@@ -51,6 +53,7 @@ describe(IndexerStateRepository.name, () => {
         indexerId: 'indexer1',
         configHash: Hash256.random(),
         safeHeight: 1,
+        minTimestamp: UnixTime.now(),
       }
       await repository.addOrUpdate(record)
 
@@ -60,6 +63,57 @@ describe(IndexerStateRepository.name, () => {
       const result = await repository.getAll()
 
       expect(result).toEqual([updatedRecord])
+    })
+
+    it('minTimestamp is undefined', async () => {
+      const record = {
+        indexerId: 'indexer1',
+        configHash: Hash256.random(),
+        safeHeight: 1,
+      }
+      await repository.addOrUpdate(record)
+
+      const result = await repository.getAll()
+
+      expect(result).toEqual([{ ...record, minTimestamp: undefined }])
+    })
+  })
+
+  describe(IndexerStateRepository.prototype.setSafeHeight.name, () => {
+    it('updates the safe height of given indexer', async () => {
+      const BEFORE = UnixTime.now()
+      const AFTER = BEFORE.add(1, 'hours')
+      const record = {
+        indexerId: 'indexer1',
+        configHash: Hash256.random(),
+        safeHeight: 12345,
+        minTimestamp: BEFORE,
+      }
+      await repository.addOrUpdate(record)
+
+      const updated = await repository.setSafeHeight('indexer1', AFTER)
+      const indexerState = await repository.findIndexerState('indexer1')
+
+      expect(updated).toEqual(1)
+      expect(indexerState).toEqual({ ...record, safeHeight: AFTER.toNumber() })
+    })
+
+    it('does not update if indexer not found', async () => {
+      const BEFORE = UnixTime.now()
+      const AFTER = BEFORE.add(1, 'hours')
+      const record = {
+        indexerId: 'indexer1',
+        configHash: Hash256.random(),
+        safeHeight: 12345,
+        minTimestamp: BEFORE,
+      }
+      await repository.addOrUpdate(record)
+
+      const updated = await repository.setSafeHeight('indexer2', AFTER)
+      const indexerState = await repository.findIndexerState('indexer1')
+
+      expect(updated).toEqual(0)
+      expect(indexerState).toEqual({ ...record })
     })
   })
 })

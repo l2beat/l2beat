@@ -157,6 +157,7 @@ declare module 'knex/types/tables' {
     indexer_id: string
     config_hash: string
     safe_height: number
+    min_timestamp: Date | undefined
   }
 
   interface Tables {

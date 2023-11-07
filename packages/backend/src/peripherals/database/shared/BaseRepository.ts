@@ -16,6 +16,7 @@ type UpdateManyMethod = (records: any[]) => Promise<IdType[] | number>
 type GetMethod = (...args: any[]) => Promise<{}[]>
 type FindMethod = (...args: any[]) => Promise<{} | undefined>
 type DeleteMethod = (...args: any[]) => Promise<number>
+type SetMethod = (...args: any[]) => Promise<number>
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
 
 type Keys<T, U> = Extract<keyof T, U>
@@ -27,6 +28,7 @@ type UpdateKeys<T> = Exclude<Keys<T, `update${string}`>, UpdateManyKeys<T>>
 type UpdateManyKeys<T> = Keys<T, `updateMany${string}` | `update${string}Many`>
 type FindKeys<T> = Keys<T, `find${string}`>
 type GetKeys<T> = Keys<T, `get${string}`>
+type SetKeys<T> = Keys<T, `set${string}`>
 type DeleteKeys<T> = Keys<T, `delete${string}`>
 
 export type CheckConvention<T extends BaseRepository> = {
@@ -43,6 +45,8 @@ export type CheckConvention<T extends BaseRepository> = {
   [K in GetKeys<T>]: Match<T[K], GetMethod>
 } & {
   [K in DeleteKeys<T>]: Match<T[K], DeleteMethod>
+} & {
+  [K in SetKeys<T>]: Match<T[K], SetMethod>
 }
 
 /* 
@@ -174,6 +178,13 @@ export abstract class BaseRepository {
         continue
       }
 
+      if (methodName.startsWith('set')) {
+        obj[methodName] = this.wrapSet(
+          method as unknown as SetMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
       throw new Error(
         `Wrong repository method naming convention: ${methodName}`,
       )
@@ -208,6 +219,12 @@ export abstract class BaseRepository {
   }
 
   protected wrapDelete<T extends DeleteMethod>(method: T): T {
+    return this.wrap(method, (count) =>
+      this.logger.info({ method: method.name, count }),
+    )
+  }
+
+  protected wrapSet<T extends SetMethod>(method: T): T {
     return this.wrap(method, (count) =>
       this.logger.info({ method: method.name, count }),
     )
