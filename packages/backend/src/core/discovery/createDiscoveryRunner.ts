@@ -3,22 +3,25 @@ import {
   ConfigReader,
   DiscoveryEngine,
   DiscoveryLogger,
-  DiscoveryProvider,
   EtherscanLikeClient,
   HandlerExecutor,
   HttpClient,
   MulticallClient,
+  ProviderWithCache,
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
 import { providers } from 'ethers'
 
 import { UpdateMonitorChainConfig } from '../../config/Config'
+import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
+import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 export function createDiscoveryRunner(
   http: HttpClient,
   configReader: ConfigReader,
+  discoveryCacheRepository: DiscoveryCacheRepository,
   discoveryLogger: DiscoveryLogger,
   chainConfig: UpdateMonitorChainConfig,
 ) {
@@ -29,11 +32,16 @@ export function createDiscoveryRunner(
     chainConfig.etherscanApiKey,
   )
 
-  const discoveryProvider = new DiscoveryProvider(
+  const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
+
+  const discoveryProvider = new ProviderWithCache(
     provider,
     etherscanLikeClient,
-    DiscoveryLogger.CLI,
+    discoveryLogger,
+    chainConfig.chainId,
+    discoveryCache,
     chainConfig.rpcGetLogsMaxRange,
+    chainConfig.reorgSafeDepth,
   )
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)

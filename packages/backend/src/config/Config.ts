@@ -113,6 +113,7 @@ export interface UpdateMonitorChainConfig {
   chainId: ChainId
   rpcUrl: string
   rpcGetLogsMaxRange?: number
+  reorgSafeDepth?: number
   multicall: MulticallConfig
   etherscanApiKey: string
   etherscanUrl: string
