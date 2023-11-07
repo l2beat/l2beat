@@ -19,7 +19,7 @@ export class LivenessController {
     const intervals = calculateIntervalWithAverages(groupedByProjectAndType)
     const withAnomalies = calculateAnomalies(intervals)
 
-    return { projects: withAnomalies }
+    return LivenessApiResponse.parse({ projects: withAnomalies })
   }
 }
 
