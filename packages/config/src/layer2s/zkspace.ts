@@ -69,7 +69,7 @@ export const zkspace: Layer2 = {
           ),
           selector: '0x6898e6fc',
           functionSignature:
-            'verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
+            'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
           sinceTimestamp: new UnixTime(1639569183),
         },
       ],

@@ -89,7 +89,7 @@ export const mantle: Layer2 = {
             '0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93',
           ),
           selector: '0xd0f89344',
-          functionSignature: 'appendSequencerBatch()',
+          functionSignature: 'function appendSequencerBatch()',
           sinceTimestamp: new UnixTime(1687952507),
         },
       ],
@@ -101,7 +101,7 @@ export const mantle: Layer2 = {
           ),
           selector: '0x49cd3004',
           functionSignature:
-            'createAssertionWithStateBatch(bytes32 vmHash,uint256 inboxSize,bytes32[] _batch,uint256 _shouldStartAtElement,bytes _signature)',
+            'function createAssertionWithStateBatch(bytes32 vmHash,uint256 inboxSize,bytes32[] _batch,uint256 _shouldStartAtElement,bytes _signature)',
           sinceTimestamp: new UnixTime(1687961351),
         },
       ],

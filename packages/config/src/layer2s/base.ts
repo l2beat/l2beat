@@ -136,7 +136,7 @@ export const base: Layer2 = {
           ),
           selector: '0x9aaab648',
           functionSignature:
-            'proposeL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
+            'function proposeL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
           sinceTimestamp: new UnixTime(1686793895),
         },
       ],

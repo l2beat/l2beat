@@ -102,6 +102,8 @@ export const loopring: Layer2 = {
             '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
           ),
           selector: '0xdcb2aa31',
+          functionSignature:
+            'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
           sinceTimestamp: new UnixTime(1616396742),
         },
       ],

@@ -73,7 +73,7 @@ export const metis: Layer2 = {
             '0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a',
           ),
           selector: '0xa8cda37b',
-          functionSignature: 'appendSequencerBatchByChainId()',
+          functionSignature: 'function appendSequencerBatchByChainId()',
           sinceTimestamp: new UnixTime(1649638297),
         },
       ],
@@ -85,7 +85,7 @@ export const metis: Layer2 = {
           ),
           selector: '0xd710083f',
           functionSignature:
-            'appendStateBatchByChainId(uint256 _chainId,bytes32[] _batch,uint256 _shouldStartAtElement,string proposer)',
+            'function appendStateBatchByChainId(uint256 _chainId,bytes32[] _batch,uint256 _shouldStartAtElement,string proposer)',
           sinceTimestamp: new UnixTime(1637071157),
         },
       ],

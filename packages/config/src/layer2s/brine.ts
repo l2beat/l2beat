@@ -84,7 +84,7 @@ export const brine: Layer2 = {
           ),
           selector: '0x538f9406',
           functionSignature:
-            'updateState(uint256[] publicInput, uint256[] applicationData)',
+            'function updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1614799636),
         },
       ],

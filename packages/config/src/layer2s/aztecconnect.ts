@@ -113,7 +113,7 @@ export const aztecconnect: Layer2 = {
             '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
           ),
           selector: '0xf81cccbe',
-          functionSignature: 'processRollup(bytes ,bytes _signatures)',
+          functionSignature: 'function processRollup(bytes ,bytes _signatures)',
           sinceTimestamp: new UnixTime(1654638194),
         },
       ],

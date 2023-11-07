@@ -89,7 +89,7 @@ export const aztec: Layer2 = {
           ),
           selector: '0x06011a46',
           functionSignature:
-            'processRollup(bytes proofData, bytes signatures, bytes viewingKeys, bytes providerSignature, address provider, address feeReceiver, uint256 feeLimit)',
+            'function processRollup(bytes proofData, bytes signatures, bytes viewingKeys, bytes providerSignature, address provider, address feeReceiver, uint256 feeLimit)',
           sinceTimestamp: new UnixTime(1614799636),
         },
       ],

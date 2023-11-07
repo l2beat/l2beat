@@ -111,7 +111,7 @@ export const kroma: Layer2 = {
           ),
           selector: '0x5a045f78',
           functionSignature:
-            'submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
+            'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
           sinceTimestamp: new UnixTime(1693880579),
         },
       ],

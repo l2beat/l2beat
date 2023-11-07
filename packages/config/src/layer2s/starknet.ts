@@ -249,7 +249,7 @@ export const starknet: Layer2 = {
           ),
           selector: '0x77552641',
           functionSignature:
-            'updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
+            'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: new UnixTime(1636978914),
         },
       ],

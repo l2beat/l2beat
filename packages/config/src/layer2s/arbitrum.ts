@@ -336,7 +336,7 @@ export const arbitrum: Layer2 = {
           ),
           selector: '0x8f111f3c',
           functionSignature:
-            'addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
           sinceTimestamp: new UnixTime(1661457944),
         },
       ],
