@@ -92,6 +92,8 @@ export const immutablex: Layer2 = {
             '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
           ),
           selector: '0x538f9406',
+          functionSignature:
+            'updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1615389188),
         },
       ],

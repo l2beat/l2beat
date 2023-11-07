@@ -88,6 +88,8 @@ export const apex: Layer2 = {
             '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
           ),
           selector: '0x538f9406',
+          functionSignature:
+            'updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1660252039),
         },
       ],

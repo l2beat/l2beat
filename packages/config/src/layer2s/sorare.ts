@@ -91,6 +91,8 @@ export const sorare: Layer2 = {
             '0xF5C9F957705bea56a7e806943f98F7777B995826',
           ),
           selector: '0x538f9406',
+          functionSignature:
+            'updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1626352527),
         },
       ],

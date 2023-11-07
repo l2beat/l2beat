@@ -89,6 +89,7 @@ export const degate2: Layer2 = {
             '0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215',
           ),
           selector: '0x377bb770',
+          functionSignature: 'submitBlocks(bool isDataCompressed,bytes data)',
           sinceTimestamp: new UnixTime(1693304819),
         },
       ],

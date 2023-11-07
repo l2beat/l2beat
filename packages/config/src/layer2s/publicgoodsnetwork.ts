@@ -90,6 +90,8 @@ export const publicgoodsnetwork: Layer2 = {
             '0xA38d0c4E6319F9045F20318BA5f04CDe94208608',
           ),
           selector: '0x9aaab648',
+          functionSignature:
+            'proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
           sinceTimestamp: new UnixTime(1689106823),
         },
       ],

@@ -100,6 +100,8 @@ export const rhinofi: Layer2 = {
             '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
           ),
           selector: '0x538f9406',
+          functionSignature:
+            'updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1590491810),
         },
       ],

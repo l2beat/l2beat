@@ -139,6 +139,8 @@ export const dydx: Layer2 = {
             '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
           ),
           selector: '0x538f9406',
+          functionSignature:
+            'updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1613033682),
         },
       ],

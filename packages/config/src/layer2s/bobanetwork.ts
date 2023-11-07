@@ -93,6 +93,7 @@ export const bobanetwork: Layer2 = {
             '0xfBd2541e316948B259264c02f370eD088E04c3Db',
           ),
           selector: '0xd0f89344',
+          functionSignature: 'appendSequencerBatch()',
           sinceTimestamp: new UnixTime(1635386025),
         },
       ],
@@ -103,6 +104,8 @@ export const bobanetwork: Layer2 = {
             '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
           ),
           selector: '0x8ca5cbb9',
+          functionSignature:
+            'appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
           sinceTimestamp: new UnixTime(1635386294),
         },
       ],

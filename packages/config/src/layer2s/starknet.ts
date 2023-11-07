@@ -248,6 +248,8 @@ export const starknet: Layer2 = {
             '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
           ),
           selector: '0x77552641',
+          functionSignature:
+            'updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: new UnixTime(1636978914),
         },
       ],

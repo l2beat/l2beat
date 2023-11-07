@@ -52,6 +52,8 @@ export const fuelv1: Layer2 = {
             '0x6880f6Fd960D1581C2730a451A22EED1081cfD72',
           ),
           selector: '0x80b39a1f',
+          functionSignature:
+            'commitBlock(uint32 minimum,bytes32 minimumHash,uint32 height,bytes32[] roots)',
           sinceTimestamp: new UnixTime(1612414780),
         },
       ],

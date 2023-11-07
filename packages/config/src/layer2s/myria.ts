@@ -91,6 +91,8 @@ export const myria: Layer2 = {
             '0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
           ),
           selector: '0x538f9406',
+          functionSignature:
+            'updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1659542607),
         },
       ],

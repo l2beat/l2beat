@@ -135,6 +135,8 @@ export const base: Layer2 = {
             '0x56315b90c40730925ec5485cf004d835058518A0',
           ),
           selector: '0x9aaab648',
+          functionSignature:
+            'proposeL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
           sinceTimestamp: new UnixTime(1686793895),
         },
       ],

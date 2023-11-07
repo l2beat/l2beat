@@ -86,6 +86,8 @@ export const canvasconnect: Layer2 = {
             '0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d',
           ),
           selector: '0x538f9406',
+          functionSignature:
+            'updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1674388691),
         },
       ],
