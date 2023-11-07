@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 18263156,
-  "configHash": "0x2bfa36d344d3bd850c2733a4ba12d879f2ba11d4bfdb410d7be7d02fbd76a3af",
+  "configHash": "0x9ab95c08de8ef25be12f4ab71e9af863e29b5582f8c49d0b2fbc5327f2d75ca6",
   "version": 3,
   "contracts": [
     {
@@ -35,7 +35,6 @@
         "escalationManager": "0x0000000000000000000000000000000000000000",
         "EXPLANATION_KEY": "0x6578706c616e6174696f6e",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1696253411,
         "getGuard": "0x0000000000000000000000000000000000000000",
         "getProposalBond": "5000000000000000000",
         "guard": "0x0000000000000000000000000000000000000000",
@@ -47,7 +46,8 @@
         "rules": "I assert that this transaction proposal is valid according to the following rules: Proposals approved on Snapshot, as verified at https://snapshot.org/#/dao.connext.eth/, are valid as long as there is a minimum quorum of 1 and a minimum voting period of 24 hours and it does not appear that the Snapshot voting system is being exploited or is otherwise unavailable. The quorum and voting period are minimum requirements for a proposal to be valid. Quorum and voting period values set for a specific proposal in Snapshot should be used if they are more strict than the rules parameter. The explanation included with the on-chain proposal must be the unique IPFS identifier for the specific Snapshot proposal that was approved or a unique identifier for a proposal in an alternative voting system approved by DAO social consensus if Snapshot is being exploited or is otherwise unavailable.",
         "RULES_KEY": "0x72756c6573",
         "target": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
-      }
+      },
+      "derivedName": "OptimisticGovernor"
     },
     {
       "name": "GnosisHubConnector",
@@ -239,7 +239,6 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1696253411,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -585,13 +584,13 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1696253411,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      }
+      },
+      "derivedName": "EmergencyProposer"
     },
     {
       "name": "PolygonHubConnector",
@@ -617,20 +616,6 @@
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036"
       },
       "derivedName": "PolygonHubConnector"
-    },
-    {
-      "name": "WETH9",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1513077455,
-      "values": {
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "3094431119828760603901924"
-      }
     },
     {
       "name": "ArbitrumHubConnector",
@@ -768,7 +753,6 @@
         "defaultIdentifier": "0x4153534552545f54525554480000000000000000000000000000000000000000",
         "defaultLiveness": 7200,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1696253411,
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
       },
@@ -1589,23 +1573,6 @@
       "function setRouterRecipient(address _router, address _recipient)",
       "function unapproveRouter(address _router)",
       "function unapproveRouterForPortal(address _router)"
-    ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
     ],
     "0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",

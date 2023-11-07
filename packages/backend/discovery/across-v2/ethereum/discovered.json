@@ -2,7 +2,7 @@
   "name": "across-v2",
   "chain": "ethereum",
   "blockNumber": 18340367,
-  "configHash": "0x8dbad417c0c4435054f5bd69471806a899d46aeaee2f050c6885e5f9a7b73c6a",
+  "configHash": "0xbef5156fb02ece9b784f5927b1ab2df6351f3bb7ab592a3e0f2bcdc3c7574133",
   "version": 3,
   "contracts": [
     {
@@ -213,7 +213,6 @@
         "escalationManager": "0x0000000000000000000000000000000000000000",
         "EXPLANATION_KEY": "0x6578706c616e6174696f6e",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1697186759,
         "getGuard": "0x0000000000000000000000000000000000000000",
         "getProposalBond": "10000000000000000000",
         "guard": "0x0000000000000000000000000000000000000000",
@@ -225,7 +224,8 @@
         "rules": "I assert that this transaction proposal is valid according to the following rules: Proposals approved on Snapshot, as verified at https://snapshot.org/#/acrossprotocol.eth, are valid as long as there is a minimum quorum of 6000000 and a minimum voting period of 72 hours and it does not appear that the Snapshot voting system is being exploited or is otherwise unavailable. The quorum and voting period are minimum requirements for a proposal to be valid. Quorum and voting period values set for a specific proposal in Snapshot should be used if they are more strict than the rules parameter. The explanation included with the on-chain proposal must be the unique IPFS identifier for the specific Snapshot proposal that was approved or a unique identifier for a proposal in an alternative voting system approved by DAO social consensus if Snapshot is being exploited or is otherwise unavailable.",
         "RULES_KEY": "0x72756c6573",
         "target": "0xB524735356985D2f267FA010D681f061DfF03715"
-      }
+      },
+      "derivedName": "OptimisticGovernor"
     },
     {
       "name": "EmergencyProposer",
@@ -418,7 +418,6 @@
         "defaultIdentifier": "0x4153534552545f54525554480000000000000000000000000000000000000000",
         "defaultLiveness": 7200,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1697186759,
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
       },
