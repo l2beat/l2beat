@@ -14,7 +14,8 @@
     "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig",
     "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
-    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC"
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor"
   },
   "overrides": {
     "HubPool": {
@@ -161,6 +162,12 @@
     },
     "USDC": {
       "ignoreDiscovery": true
+    },
+    "OptimisticGovernor": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "OptimisticOracleV3": {
+      "ignoreMethods": ["getCurrentTime"]
     }
   }
 }
