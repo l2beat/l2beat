@@ -8,8 +8,8 @@ export interface Layer2LivenessConfig {
 export interface FunctionCallParams {
   formula: 'functionCall'
   address: EthereumAddress
-  selector: string
-  functionSignature: `0x${string}`
+  selector: `0x${string}`
+  functionSignature: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
 }
