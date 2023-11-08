@@ -31,6 +31,8 @@ import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
+  OpStackTagDescription,
+  OpStackTag,
 } from './OpStackTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
@@ -149,6 +151,7 @@ export class ProjectDiscovery {
     const inversion = this.getInversion()
 
     const result: Record<string, Record<string, string[]>> = {}
+    const tagResult: Record<string, Record<string, string[]>> = {}
     const names: Record<string, string> = {}
     const sources: Record<string, EthereumAddress> = {}
     for (const template of OP_STACK_PERMISSION_TEMPLATES) {
@@ -167,9 +170,17 @@ export class ProjectDiscovery {
             template.role.value
           result[contractKey] ??= {}
           result[contractKey][role.name] ??= []
-          result[contractKey][role.name].push(
-            stringFormat(template.description, template.role.contract),
-          )
+          if (template.description !== undefined) {
+            result[contractKey][role.name].push(
+              stringFormat(template.description, template.role.contract),
+            )
+          } else if (template.tags !== undefined) {
+            tagResult[contractKey] ??= {}
+            tagResult[contractKey][role.name] ??= []
+            tagResult[contractKey][role.name as OpStackTag].push(
+              template.role.contract,
+            )
+          }
           sources[contractKey] ??= EthereumAddress(contract.address)
           names[contractKey] ??=
             overrides?.[template.role.value] ??
@@ -182,7 +193,19 @@ export class ProjectDiscovery {
     return Object.entries(result).map(([key, roleDescription]) => ({
       name: names[key],
       accounts: [this.formatPermissionedAccount(sources[key])],
-      description: Object.values(roleDescription).flat().join(' '),
+      description: Object.values(roleDescription)
+        .flat()
+        .join(' ')
+        .concat(
+          Object.entries(tagResult[key] ?? {})
+            .map(([tag, contracts]) =>
+              stringFormat(
+                OpStackTagDescription[tag as OpStackTag],
+                contracts.join(', '),
+              ),
+            )
+            .join(' '),
+        ),
     }))
   }
 
