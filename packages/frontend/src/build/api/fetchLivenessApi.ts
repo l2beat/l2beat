@@ -43,7 +43,6 @@ function getMockLivenessApiResponse(): LivenessApiResponse {
 }
 
 function generateMockData(): LivenessApiProject {
-  const anomaliesCount = Math.round(Math.random() * 15)
   return {
     batchSubmissions: {
       last30Days: generateDataPoint(),
@@ -55,20 +54,7 @@ function generateMockData(): LivenessApiProject {
       last90Days: generateDataPoint(),
       max: generateDataPoint(),
     },
-    anomalies:
-      anomaliesCount !== 0
-        ? range(anomaliesCount).map(() => ({
-            type: Math.random() > 0.5 ? 'DA' : 'STATE',
-            timestamp: UnixTime.now()
-              .add(
-                // TODO: (liveness) should we include current day
-                Math.round(Math.random() * -29) - 1,
-                'days',
-              )
-              .add(Math.round(Math.random() * 172800), 'seconds'),
-            durationInSeconds: generateRandomTime(),
-          }))
-        : [],
+    anomalies: generateAnomalies(),
   }
 }
 
@@ -83,12 +69,32 @@ function generateDataPoint() {
   }
 }
 
+function generateAnomalies() {
+  const anomaliesCount = Math.round(Math.random() * 15)
+  return anomaliesCount !== 0
+    ? range(anomaliesCount).map(
+        () =>
+          ({
+            type: Math.random() > 0.5 ? 'DA' : 'STATE',
+            timestamp: UnixTime.now()
+              .add(
+                // TODO: (liveness) should we include current day
+                Math.round(Math.random() * -29) - 1,
+                'days',
+              )
+              .add(Math.round(Math.random() * 172800), 'seconds'),
+            durationInSeconds: generateRandomTime(),
+          } as const),
+      )
+    : []
+}
+
 function generateRandomTime() {
   const i = Math.round(Math.random() * 100)
-  if (i < 1) {
+  if (i < 50) {
     return Math.round(Math.random() * 3600)
   }
-  if (i < 2) {
+  if (i < 90) {
     return 3600 + Math.round(Math.random() * 82800)
   }
   return 86400 + Math.round(Math.random() * 86400 * 5)

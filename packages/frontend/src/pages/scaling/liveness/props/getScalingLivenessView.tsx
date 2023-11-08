@@ -13,10 +13,12 @@ export function getScalingLivenessView(
   projects: Layer2[],
   livenessResponse: LivenessApiResponse,
 ): ScalingLivenessViewProps {
+  const included = getIncludedProjects(projects, livenessResponse)
+
   return {
-    items: projects
-      .filter((p) => !p.isUpcoming && !p.isArchived)
-      .map((p) => getScalingLivenessViewEntry(p, livenessResponse)),
+    items: included.map((p) =>
+      getScalingLivenessViewEntry(p, livenessResponse),
+    ),
   }
 }
 
@@ -41,7 +43,7 @@ function getScalingLivenessViewEntry(
 function getAnomalyEntries(
   anomalies: LivenessApiProject['anomalies'],
 ): AnomalyIndicatorEntry[] {
-  if (!anomalies || anomalies.length !== 0) {
+  if (!anomalies || anomalies.length === 0) {
     return []
   }
 
@@ -74,4 +76,16 @@ function getAnomalyEntries(
     dayInLoop = dayInLoop.add(1, 'days')
   }
   return result
+}
+
+function getIncludedProjects(
+  projects: Layer2[],
+  livenessResponse: LivenessApiResponse,
+) {
+  return projects.filter(
+    (p) =>
+      livenessResponse.projects[p.display.slug] &&
+      !p.isUpcoming &&
+      !p.isArchived,
+  )
 }
