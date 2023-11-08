@@ -29,7 +29,12 @@ export function getContractSection(
 ): ContractsSectionProps {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified = isContractUnverified(contract, verificationStatus)
-    return makeTechnologyContract(contract, project, isUnverified)
+    return makeTechnologyContract(
+      contract,
+      project,
+      isUnverified,
+      verificationStatus,
+    )
   })
 
   const escrows = project.config.escrows
@@ -42,7 +47,13 @@ export function getContractSection(
       )
       const contract = escrowToProjectContract(escrow)
 
-      return makeTechnologyContract(contract, project, isUnverified, true)
+      return makeTechnologyContract(
+        contract,
+        project,
+        isUnverified,
+        verificationStatus,
+        true,
+      )
     })
 
   const risks =
@@ -85,6 +96,7 @@ function makeTechnologyContract(
   item: ProjectContract,
   project: Layer2 | Bridge,
   isUnverified: boolean,
+  verificationStatus: VerificationStatus,
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
@@ -315,10 +327,34 @@ function makeTechnologyContract(
   let description = item.description
 
   if (isUnverified) {
-    if (!description) {
-      description = CONTRACTS.UNVERIFIED_DESCRIPTION
+    let unverifiedText = ''
+    if (isSingleAddress(item) || item.multipleAddresses.length === 1) {
+      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
+    } else if (
+      areAllAddressesUnverified(item.multipleAddresses, verificationStatus)
+    ) {
+      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION_ALL
     } else {
-      description += ' ' + CONTRACTS.UNVERIFIED_DESCRIPTION
+      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION_SOME
+    }
+
+    if (!description) {
+      description = unverifiedText
+    } else {
+      description += ' ' + unverifiedText
+    }
+  }
+
+  const areImplementationsUnverified = links
+    .filter((c) => !c.isAdmin)
+    .map((c) => verificationStatus.contracts[c.address])
+    .some((c) => c === false)
+
+  if (areImplementationsUnverified) {
+    if (!description) {
+      description = CONTRACTS.UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION
+    } else {
+      description += ' ' + CONTRACTS.UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION
     }
   }
 
@@ -405,4 +441,13 @@ function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 
   return bTokens - aTokens
+}
+
+function areAllAddressesUnverified(
+  addresses: EthereumAddress[],
+  verificationStatus: VerificationStatus,
+) {
+  return addresses.every((address) => {
+    return verificationStatus.contracts[address.toString()] === false
+  })
 }
