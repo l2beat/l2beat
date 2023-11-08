@@ -14,8 +14,8 @@ export interface OPStackContractTemplate {
 export type OpStackTag = 'admin' | 'owner'
 
 export const OpStackTagDescription: Record<OpStackTag, string> = {
-  admin: 'Admin of {}.',
-  owner: 'Owner of {}.',
+  admin: 'Admin of {0}.',
+  owner: 'Owner of {0}.',
 }
 
 export interface OPStackPermissionTemplate {
