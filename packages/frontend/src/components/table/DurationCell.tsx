@@ -7,7 +7,7 @@ export function DurationCell(props: {
 }) {
   if (props.durationInSeconds === undefined)
     return (
-      <span className="rounded bg-neutral-700 px-1.5 py-px text-center font-medium text-gray-50">
+      <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
         NO DATA
       </span>
     )
