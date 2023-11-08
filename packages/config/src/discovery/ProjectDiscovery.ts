@@ -163,30 +163,32 @@ export class ProjectDiscovery {
               (contractOverrides?.[template.role.contract] ??
                 template.role.contract),
         )
-        if (role) {
-          const contractKey =
-            overrides?.[template.role.value] ??
-            contract.name ??
-            template.role.value
-          result[contractKey] ??= {}
-          result[contractKey][role.name] ??= []
-          if (template.description !== undefined) {
-            result[contractKey][role.name].push(
-              stringFormat(template.description, template.role.contract),
-            )
-          } else if (template.tags !== undefined) {
-            tagResult[contractKey] ??= {}
-            tagResult[contractKey][role.name] ??= []
-            tagResult[contractKey][role.name as OpStackTag].push(
-              template.role.contract,
-            )
-          }
-          sources[contractKey] ??= EthereumAddress(contract.address)
-          names[contractKey] ??=
-            overrides?.[template.role.value] ??
-            contract.name ??
-            template.role.value
+        if (!role) {
+          continue
         }
+
+        const contractKey =
+          overrides?.[template.role.value] ??
+          contract.name ??
+          template.role.value
+        result[contractKey] ??= {}
+        result[contractKey][role.name] ??= []
+        if (template.description !== undefined) {
+          result[contractKey][role.name].push(
+            stringFormat(template.description, template.role.contract),
+          )
+        } else if (template.tags !== undefined) {
+          tagResult[contractKey] ??= {}
+          tagResult[contractKey][role.name] ??= []
+          tagResult[contractKey][role.name as OpStackTag].push(
+            template.role.contract,
+          )
+        }
+        sources[contractKey] ??= EthereumAddress(contract.address)
+        names[contractKey] ??=
+          overrides?.[template.role.value] ??
+          contract.name ??
+          template.role.value
       }
     }
 
@@ -196,14 +198,14 @@ export class ProjectDiscovery {
       description: Object.values(roleDescription)
         .flat()
         .concat(
-          Object.entries(tagResult[key] ?? {})
-            .map(([tag, contracts]) =>
-              stringFormat(
-                OpStackTagDescription[tag as OpStackTag],
-                contracts.join(', '),
-              ),
-            )
-        ).join(' '),
+          Object.entries(tagResult[key] ?? {}).map(([tag, contracts]) =>
+            stringFormat(
+              OpStackTagDescription[tag as OpStackTag],
+              contracts.join(', '),
+            ),
+          ),
+        )
+        .join(' '),
     }))
   }
 
