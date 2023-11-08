@@ -185,7 +185,7 @@ export const pNetwork: Bridge = {
       link: 'https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f',
       date: '2021-09-21T00:00:00Z',
       description:
-        'Due to the the bug in the validators code, unauthorized token transfers were processed on BTC.',
+        'Due to the bug in the validators code, unauthorized token transfers were processed on BTC.',
     },
     {
       name: 'pNetwork rebranding',
