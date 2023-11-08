@@ -1,9 +1,14 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, NUGGETS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
-import { OMNICHAN_ESCROWS } from './lzOmnichain.escrows'
+import {
+  INBOUND_PROOF_LIBRARIES,
+  OMNICHAN_ESCROWS,
+  ORACLES,
+  RELAYERS,
+} from './lzOmnichain.contracts'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('lzomnichain')
@@ -99,39 +104,23 @@ export const lzOmnichain: Bridge = {
         description:
           'Contracts using LayerZero smart contracts to transfer tokens between chains. The implementation details may vary between each individual omnichain token and must be individually assessed. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
       },
+      discovery.getContractDetails(
+        'TSS Oracle',
+        'Contract used to submit source chain block hashes. One of the default Oracles.',
+      ),
+      discovery.getContractDetails(
+        'Google Cloud Oracle',
+        'Contract used to submit source chain block hashes. One of the default Oracles.',
+      ),
+      discovery.getContractDetails(
+        'LayerZero Relayer',
+        'Contract used to provide the merkle proof for the transfers on source chains.',
+      ),
       {
-        address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
-        name: 'Default LayerZero Relayer',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9'),
-          implementation: EthereumAddress(
-            '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0x5a54fe5234E811466D5366846283323c954310B2'),
-        name: 'Default LayerZero Oracle',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8'),
-          implementation: EthereumAddress(
-            '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0x462F7eC57C6492B983a8C8322B4369a7f149B859'),
-        name: 'Default LayerZero Inbound Proof Library v1',
+        multipleAddresses: INBOUND_PROOF_LIBRARIES,
+        name: 'Default LayerZero Inbound Proof Libraries',
         description:
-          'Contract used to validate messages coming from other chains, e.g. Ethereum, Arbitrum, Optimism.',
-      },
-      {
-        address: EthereumAddress('0x07245eea05826f5984c7c3c8f478b04892e4df89'),
-        name: 'Default LayerZero Inbound Proof Library v2',
-        description:
-          'Contract used to validate messages coming from other chains, e.g. Aptos.',
+          'Contracts used to validate messages coming from source chains.',
       },
       discovery.getContractDetails(
         'Endpoint',
@@ -152,30 +141,20 @@ export const lzOmnichain: Bridge = {
   },
   permissions: [
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x902F09715B6303d4173037652FA7377e5b98089E',
-          ),
-          type: 'Contract',
-        },
-      ],
+      accounts: RELAYERS.map((address) =>
+        discovery.formatPermissionedAccount(address),
+      ),
       name: 'Default Relayer',
       description:
         'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
     },
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x5a54fe5234E811466D5366846283323c954310B2',
-          ),
-          type: 'Contract',
-        },
-      ],
-      name: 'Default Oracle',
+      accounts: ORACLES.map((address) =>
+        discovery.formatPermissionedAccount(address),
+      ),
+      name: 'Default Oracles',
       description:
-        'Contract that submits source chain block hashes to the destination chain.',
+        'Contracts that submit source chain block hashes to the destination chain.',
     },
     ...discovery.getMultisigPermission(
       'LayerZero Multisig',
