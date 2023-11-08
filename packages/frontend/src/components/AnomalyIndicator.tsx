@@ -12,12 +12,15 @@ interface Props {
 
 export type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
 
+interface Anomaly {
+  type: 'BATCH SUBMISSION' | 'STATE UPDATE'
+  timestamp: number
+  durationInSeconds: number
+}
+
 interface AnomalyEntry {
   isAnomaly: true
-  anomalies: {
-    timestamp: number
-    durationInSeconds: number
-  }[]
+  anomalies: Anomaly[]
 }
 
 interface NonAnomalyEntry {
@@ -54,6 +57,7 @@ export function AnomalyIndicator({ anomalyEntries }: Props) {
           ? renderToStaticMarkup(<AnomalyTooltip anomalyEntries={data} />)
           : undefined
       }
+      data-tooltip-big={shouldShowTooltip}
       data-testid="anomaly-indicator"
     >
       {anomalyEntries.map((anomaly, i) => (
@@ -83,17 +87,28 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
                   longMonthName: true,
                 })}
               </span>
-              <div className="text-black dark:text-white">
-                Duration:{' '}
-                <DurationCell
-                  durationInSeconds={anomaly.durationInSeconds}
-                  withColors
-                />
+              <div className="mt-2 text-black dark:text-white">
+                <AnomalyTypeBadge type={anomaly.type} />
+                <span className="md:ml-2.5">
+                  Duration:{' '}
+                  <DurationCell
+                    durationInSeconds={anomaly.durationInSeconds}
+                    withColors
+                  />
+                </span>
               </div>
             </li>
           )),
         )}
       </ul>
     </div>
+  )
+}
+
+function AnomalyTypeBadge(props: { type: Anomaly['type'] }) {
+  return (
+    <span className="hidden w-max rounded bg-orange-400 px-1.5 py-0.5 text-black md:inline">
+      {props.type}
+    </span>
   )
 }

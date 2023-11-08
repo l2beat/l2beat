@@ -1,5 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 import {
+  assertUnreachable,
   LivenessApiProject,
   LivenessApiResponse,
   UnixTime,
@@ -67,6 +68,7 @@ function getAnomalyEntries(
       result.push({
         isAnomaly: true,
         anomalies: anomaliesInGivenDay.map((a) => ({
+          type: typeToDisplayType(a),
           timestamp: a.timestamp.toNumber(),
           durationInSeconds: a.durationInSeconds,
         })),
@@ -76,6 +78,19 @@ function getAnomalyEntries(
     dayInLoop = dayInLoop.add(1, 'days')
   }
   return result
+}
+
+function typeToDisplayType(
+  anomaly: NonNullable<LivenessApiProject['anomalies']>[0],
+) {
+  switch (anomaly.type) {
+    case 'DA':
+      return 'BATCH SUBMISSION'
+    case 'STATE':
+      return 'STATE UPDATE'
+    default:
+      assertUnreachable(anomaly.type)
+  }
 }
 
 function getIncludedProjects(
