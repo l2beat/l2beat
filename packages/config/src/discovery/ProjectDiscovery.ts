@@ -31,8 +31,8 @@ import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
-  OpStackTagDescription,
   OpStackTag,
+  OpStackTagDescription,
 } from './OpStackTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
