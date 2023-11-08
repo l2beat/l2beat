@@ -23,15 +23,12 @@ describe('UrlPath', () => {
     expect(result.success).toBeTruthy()
   })
 
-  it('does not accept link with spaces', () => {
-    const result = UrlPath.safeParse(
-      'https://www.google.com/search?q=hello world',
-    )
-    expect(result.success).toBeFalsy()
-  })
-
   it('does not accept random string', () => {
     const result = UrlPath.safeParse('hello world')
+    expect(result.success).toBeFalsy()
+  })
+  it('does not accept incomplete link', () => {
+    const result = UrlPath.safeParse('www.example')
     expect(result.success).toBeFalsy()
   })
 })
