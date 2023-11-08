@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { LivenessRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -25,9 +26,9 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(transactions: LivenessRecord[]) {
+  async addMany(transactions: LivenessRecord[], trx?: Knex.Transaction) {
+    const knex = await this.knex(trx)
     const rows: LivenessRow[] = transactions.map(toRow)
-    const knex = await this.knex()
     await knex.batchInsert('liveness', rows, 10_000)
     return rows.length
   }

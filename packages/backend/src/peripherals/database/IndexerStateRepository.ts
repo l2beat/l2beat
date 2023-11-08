@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { IndexerStateRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -32,8 +33,12 @@ export class IndexerStateRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async setSafeHeight(indexerId: string, safeHeight: UnixTime) {
-    const knex = await this.knex()
+  async setSafeHeight(
+    indexerId: string,
+    safeHeight: UnixTime,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
 
     return await knex('indexer_state')
       .where({
@@ -44,8 +49,12 @@ export class IndexerStateRepository extends BaseRepository {
       })
   }
 
-  async setConfigHash(indexerId: string, configHash: Hash256) {
-    const knex = await this.knex()
+  async setConfigHash(
+    indexerId: string,
+    configHash: Hash256,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
 
     return await knex('indexer_state')
       .where({

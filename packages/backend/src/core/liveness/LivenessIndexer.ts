@@ -53,14 +53,15 @@ export class LivenessIndexer extends ChildIndexer {
       new UnixTime(to),
     )
 
-    // TODO: run in a transaction
-    await this.livenessRepository.addMany(data.data)
-    await this.livenessConfigurationRepository.updateMany(
-      configs.map((c) => {
-        return { ...c, lastSyncedTimestamp: data.to }
-      }),
-    )
-
+    await this.livenessRepository.runInTransaction(async (trx) => {
+      await this.livenessRepository.addMany(data.data, trx)
+      await this.livenessConfigurationRepository.updateMany(
+        configs.map((c) => {
+          return { ...c, lastSyncedTimestamp: data.to }
+        }),
+        trx,
+      )
+    })
     return Promise.resolve(data.to.toNumber())
   }
 
@@ -84,12 +85,18 @@ export class LivenessIndexer extends ChildIndexer {
     )
 
     if (indexerState.configHash !== this.configHash) {
-      await this.stateRepository.setConfigHash(this.indexerId, this.configHash)
-
-      await this.stateRepository.setSafeHeight(
-        this.indexerId,
-        this.minTimestamp,
-      )
+      await this.stateRepository.runInTransaction(async (trx) => {
+        await this.stateRepository.setConfigHash(
+          this.indexerId,
+          this.configHash,
+          trx,
+        )
+        await this.stateRepository.setSafeHeight(
+          this.indexerId,
+          this.minTimestamp,
+          trx,
+        )
+      })
     }
   }
 

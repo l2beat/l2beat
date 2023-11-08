@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { LivenessConfigurationRow } from 'knex/types/tables'
 
 import { LivenessConfigurationIdentifier } from '../../core/liveness/types/LivenessConfigurationIdentifier'
@@ -45,8 +46,11 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return insertedRows.map((row) => row.id)
   }
 
-  async updateMany(records: LivenessConfigurationRecord[]): Promise<number[]> {
-    const knex = await this.knex()
+  async updateMany(
+    records: LivenessConfigurationRecord[],
+    trx?: Knex.Transaction,
+  ): Promise<number[]> {
+    const knex = await this.knex(trx)
 
     const rows = records.map((r) => ({
       ...toRow(r),
