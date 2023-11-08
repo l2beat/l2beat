@@ -91,7 +91,6 @@ export class ProjectDiscovery {
       }
       descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
-
     return {
       name: contract.name,
       address: contract.address,
