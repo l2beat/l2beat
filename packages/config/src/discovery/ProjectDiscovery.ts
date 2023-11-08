@@ -174,8 +174,9 @@ export class ProjectDiscovery {
         }
 
         const contractKey = overrides?.[role.name] ?? contract.name ?? role.name
+
         result[contractKey] ??= {
-          name: overrides?.[role.name] ?? contract.name ?? role.name,
+          name: contractKey,
           address: EthereumAddress(contract.address),
           contractDescription: {},
           taggedNames: {},
@@ -187,9 +188,13 @@ export class ProjectDiscovery {
           entry.contractDescription[role.name].push(
             stringFormat(template.description, role.atName),
           )
-        } else if (template.tags !== undefined) {
-          entry.taggedNames[role.name] ??= []
-          entry.taggedNames[role.name].push(role.atName)
+        }
+
+        if (template.tags !== undefined) {
+          for (const tag of template.tags) {
+            entry.taggedNames[tag] ??= []
+            entry.taggedNames[tag].push(role.atName)
+          }
         }
       }
     }

@@ -11,11 +11,12 @@ export interface OPStackContractTemplate {
   coreDescription: string
 }
 
-export type OpStackTag = 'admin' | 'owner'
+export type OpStackTag = 'admin' | 'owner' | 'owned'
 
 export const OpStackTagDescription: Record<OpStackTag, string> = {
   admin: 'Admin of {0}.',
   owner: 'Owner of {0}.',
+  owned: 'Owned by {0}.',
 }
 
 export interface OPStackPermissionTemplate {
