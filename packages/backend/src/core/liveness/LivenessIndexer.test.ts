@@ -232,6 +232,28 @@ describe(LivenessIndexer.name, () => {
 
         expect(configurationRepository.getAll).not.toHaveBeenCalled()
       })
+
+      it('runs if the config hash is different', async () => {
+        const { livenessIndexer, configurationRepository } =
+          getMockLivenessIndexer({
+            configHash: hashJson('different-config-hash'),
+          })
+
+        await livenessIndexer.start()
+
+        expect(configurationRepository.getAll).toHaveBeenCalled()
+      })
+
+      it('runs if the indexer state is undefined', async () => {
+        const { livenessIndexer, configurationRepository } =
+          getMockLivenessIndexer({
+            configHash: undefined,
+          })
+
+        await livenessIndexer.start()
+
+        expect(configurationRepository.getAll).toHaveBeenCalled()
+      })
     })
   })
 
