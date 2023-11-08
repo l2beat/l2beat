@@ -150,10 +150,16 @@ export class ProjectDiscovery {
   ): ProjectPermission[] {
     const inversion = this.getInversion()
 
-    const result: Record<string, Record<string, string[]>> = {}
-    const tagResult: Record<string, Record<string, string[]>> = {}
-    const names: Record<string, string> = {}
-    const sources: Record<string, EthereumAddress> = {}
+    const result: Record<
+      string,
+      {
+        name: string
+        address: EthereumAddress
+        contractDescription: Record<string, string[]>
+        taggedNames: Record<string, string[]>
+      }
+    > = {}
+
     for (const template of OP_STACK_PERMISSION_TEMPLATES) {
       for (const contract of inversion.values()) {
         const role = contract.roles.find(
@@ -168,30 +174,33 @@ export class ProjectDiscovery {
         }
 
         const contractKey = overrides?.[role.name] ?? contract.name ?? role.name
-        result[contractKey] ??= {}
-        result[contractKey][role.name] ??= []
+        result[contractKey] ??= {
+          name: overrides?.[role.name] ?? contract.name ?? role.name,
+          address: EthereumAddress(contract.address),
+          contractDescription: {},
+          taggedNames: {},
+        }
+        const entry = result[contractKey]
+
         if (template.description !== undefined) {
-          result[contractKey][role.name].push(
+          entry.contractDescription[role.name] ??= []
+          entry.contractDescription[role.name].push(
             stringFormat(template.description, role.atName),
           )
         } else if (template.tags !== undefined) {
-          tagResult[contractKey] ??= {}
-          tagResult[contractKey][role.name] ??= []
-          tagResult[contractKey][role.name as OpStackTag].push(role.atName)
+          entry.taggedNames[role.name] ??= []
+          entry.taggedNames[role.name].push(role.atName)
         }
-        sources[contractKey] ??= EthereumAddress(contract.address)
-        names[contractKey] ??=
-          overrides?.[role.name] ?? contract.name ?? role.name
       }
     }
 
-    return Object.entries(result).map(([key, roleDescription]) => ({
-      name: names[key],
-      accounts: [this.formatPermissionedAccount(sources[key])],
-      description: Object.values(roleDescription)
+    return Object.values(result).map((entry) => ({
+      name: entry.name,
+      accounts: [this.formatPermissionedAccount(entry.address)],
+      description: Object.values(entry.contractDescription)
         .flat()
         .concat(
-          Object.entries(tagResult[key] ?? {}).map(([tag, contracts]) =>
+          Object.entries(entry.taggedNames).map(([tag, contracts]) =>
             stringFormat(
               OpStackTagDescription[tag as OpStackTag],
               contracts.join(', '),
