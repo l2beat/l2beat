@@ -619,7 +619,8 @@
       "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1692138791,

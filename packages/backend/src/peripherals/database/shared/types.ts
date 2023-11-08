@@ -153,6 +153,20 @@ declare module 'knex/types/tables' {
     last_synced_timestamp: Date | undefined
   }
 
+  interface DiscoveryCacheRow {
+    key: string
+    value: string
+    chain_id: number
+    block_number: number
+  }
+
+  interface DiscoveryCacheRow {
+    key: string
+    value: string
+    chain_id: number
+    block_number: number
+  }
+
   interface IndexerStateRow {
     indexer_id: string
     config_hash: string
@@ -181,6 +195,7 @@ declare module 'knex/types/tables' {
     circulating_supplies: CirculatingSupplyRow
     circulating_supplies_status: CirculatingSupplyStatusRow
     liveness: LivenessRow
+    discovery_cache: DiscoveryCacheRow
     liveness_configuration: LivenessConfigurationRow
     indexer_state: IndexerStateRow
   }

@@ -128,6 +128,7 @@ export class UpdateMonitor {
     )
 
     const discovery = await runner.run(projectConfig, blockNumber, {
+      logger: this.logger,
       runSanityCheck: true,
       injectInitialAddresses: true,
     })
@@ -204,6 +205,7 @@ export class UpdateMonitor {
       },
     )
     return await runner.run(projectConfig, previousDiscovery.blockNumber, {
+      logger: this.logger,
       runSanityCheck: true,
       injectInitialAddresses: true,
     })
