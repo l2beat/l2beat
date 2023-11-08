@@ -445,14 +445,6 @@ export function getScalingLivenessColumnsConfig() {
       getValue: (project) => <ProjectCell project={project} />,
     },
     {
-      name: '30-day anomalies',
-      tooltip:
-        'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
-      getValue: (project) => (
-        <AnomalyIndicator anomalyEntries={project.anomalyEntries} />
-      ),
-    },
-    {
       type: 'group',
       title: 'Batch submission interval',
       columns: [
@@ -605,6 +597,15 @@ export function getScalingLivenessColumnsConfig() {
           ),
         },
       ],
+    },
+    {
+      name: '30-day anomalies',
+      tooltip:
+        'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
+      alignCenter: true,
+      getValue: (project) => (
+        <AnomalyIndicator anomalyEntries={project.anomalyEntries} />
+      ),
     },
   ]
   return columns
