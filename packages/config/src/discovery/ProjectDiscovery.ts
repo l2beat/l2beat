@@ -1,8 +1,4 @@
-import {
-  calculateInversion,
-  DiscoveryConfig,
-  InvertedAddresses,
-} from '@l2beat/discovery'
+import { calculateInversion, InvertedAddresses } from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -10,13 +6,13 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
+  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import fs from 'fs'
-import { parse, ParseError } from 'jsonc-parser'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
@@ -54,44 +50,26 @@ const filesystem = {
   },
 }
 
-// TODO(radomski): Replace getDiscoveryJson and getConfigJson with sync versions
-// of readConfig/readDiscovery from ConfigReader.
-// For more information see L2B-2948
-type RawDiscoveryConfig = ConstructorParameters<typeof DiscoveryConfig>[0]
-
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
-  private readonly config: DiscoveryConfig
   constructor(
     public readonly projectName: string,
+    public readonly chainId: ChainId = ChainId.ETHEREUM,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
-    this.config = this.getConfigJson(projectName)
   }
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
-      path.resolve(`../backend/discovery/${project}/ethereum/discovered.json`),
+      path.resolve(
+        `../backend/discovery/${project}/${ChainId.getName(
+          this.chainId,
+        )}/discovered.json`,
+      ),
     )
 
     return JSON.parse(discoveryFile) as DiscoveryOutput
-  }
-
-  private getConfigJson(project: string): DiscoveryConfig {
-    const configFile = this.fs.readFileSync(
-      path.resolve(`../backend/discovery/${project}/ethereum/config.jsonc`),
-    )
-
-    const errors: ParseError[] = []
-    const parsed: unknown = parse(configFile, errors, {
-      allowTrailingComma: true,
-    })
-    if (errors.length !== 0) {
-      throw new Error('Cannot parse file')
-    }
-    const rawConfig = parsed as RawDiscoveryConfig
-    return new DiscoveryConfig(rawConfig)
   }
 
   getContractDetails(
@@ -161,7 +139,7 @@ export class ProjectDiscovery {
   }
 
   getInversion(): InvertedAddresses {
-    return calculateInversion(this.discovery, this.config)
+    return calculateInversion(this.discovery)
   }
 
   getOpStackPermissions(

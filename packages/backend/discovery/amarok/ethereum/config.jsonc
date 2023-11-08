@@ -15,7 +15,14 @@
     "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
     "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": "Connext Multisig Member",
     "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": "Connext Multisig 2",
-    "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector"
+    "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector",
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": "OptimisticGovernor",
+    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer",
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -131,12 +138,43 @@
     "Connext Multisig 2": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "Connext Multisig Member": {
-      "ignoreInWatchMode": ["nonce"]
+    "GovernorV2": {
+      "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"]
+    },
+    "ProposerV2": {
+      "ignoreMethods": ["bondedProposals"],
+      "ignoreInWatchMode": ["bond", "getCurrentTime"]
     },
     //GelatoRelayerHub
     "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": {
       "ignoreDiscovery": true
+    },
+    "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": {
+      // OptimisticOracleV3 cachedOracle
+      "ignoreDiscovery": true
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "OptimisticGovernor": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "EmergencyProposer": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "WETH9": {
+      "ignoreDiscovery": true
+    },
+    "OptimisticOracleV3": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
+      // ProposerV2 Voting Token
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": {
+      // EmergencyProposer Executor
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
