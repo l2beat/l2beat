@@ -9,10 +9,16 @@ import { Database } from './Database'
 type IdType = number | string | String | Number
 
 type AnyMethod = (...args: any[]) => Promise<any>
-type AddMethod = (record: any) => Promise<IdType>
-type AddManyMethod = (records: any[]) => Promise<IdType[] | number>
-type UpdateMethod = (record: any) => Promise<IdType>
-type UpdateManyMethod = (records: any[]) => Promise<IdType[] | number>
+type AddMethod = (record: any, ...args: any[]) => Promise<IdType>
+type AddManyMethod = (
+  records: any[],
+  ...args: any[]
+) => Promise<IdType[] | number>
+type UpdateMethod = (record: any, ...args: any[]) => Promise<IdType>
+type UpdateManyMethod = (
+  records: any[],
+  ...args: any[]
+) => Promise<IdType[] | number>
 type GetMethod = (...args: any[]) => Promise<{}[]>
 type FindMethod = (...args: any[]) => Promise<{} | undefined>
 type DeleteMethod = (...args: any[]) => Promise<number>
@@ -231,11 +237,11 @@ export abstract class BaseRepository {
   }
 
   protected wrapAddMany<T extends AddManyMethod>(method: T): T {
-    const fn = async (records: T[]) => {
+    const fn = async (records: T[], ...args: unknown[]) => {
       if (records.length === 0) {
         return []
       }
-      return method.call(this, records)
+      return method.call(this, records, ...args)
     }
 
     return this.wrap(fn, (result) =>
