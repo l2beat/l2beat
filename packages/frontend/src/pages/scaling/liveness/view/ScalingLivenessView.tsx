@@ -20,7 +20,7 @@ export function ScalingLivenessView({ items }: ScalingLivenessViewProps) {
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
       <div className="flex flex-col justify-between gap-4 md:flex-row">
-        <ScalingFilters items={items} />
+        <ScalingFilters items={items} hideRollupsOnlyCheckbox />
         <LivenessTimeRangeControls />
       </div>
       <TableView columnsConfig={columnsConfig} rows={rows} items={items} />
