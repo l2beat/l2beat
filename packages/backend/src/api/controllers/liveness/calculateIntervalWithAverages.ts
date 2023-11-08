@@ -47,24 +47,29 @@ export function calculateIntervalWithAverages(
     )
 
     result[project] = {
-      batchSubmissions: !batchSubmissionsWithIntervals
-        ? undefined
-        : {
-            records: batchSubmissionsWithIntervals,
-            last30Days: calculateAverages(batchSubmissionsWithIntervals)
-              .last30Days,
-            last90Days: calculateAverages(batchSubmissionsWithIntervals)
-              .last90Days,
-            max: calculateAverages(batchSubmissionsWithIntervals).max,
-          },
-      stateUpdates: !stateUpdatesWithIntervals
-        ? undefined
-        : {
-            records: stateUpdatesWithIntervals,
-            last30Days: calculateAverages(stateUpdatesWithIntervals).last30Days,
-            last90Days: calculateAverages(stateUpdatesWithIntervals).last90Days,
-            max: calculateAverages(stateUpdatesWithIntervals).max,
-          },
+      batchSubmissions:
+        !batchSubmissionsWithIntervals ||
+        batchSubmissionsWithIntervals.length <= 1
+          ? undefined
+          : {
+              records: batchSubmissionsWithIntervals,
+              last30Days: calculateAverages(batchSubmissionsWithIntervals)
+                .last30Days,
+              last90Days: calculateAverages(batchSubmissionsWithIntervals)
+                .last90Days,
+              max: calculateAverages(batchSubmissionsWithIntervals).max,
+            },
+      stateUpdates:
+        !stateUpdatesWithIntervals || stateUpdatesWithIntervals.length <= 1
+          ? undefined
+          : {
+              records: stateUpdatesWithIntervals,
+              last30Days: calculateAverages(stateUpdatesWithIntervals)
+                .last30Days,
+              last90Days: calculateAverages(stateUpdatesWithIntervals)
+                .last90Days,
+              max: calculateAverages(stateUpdatesWithIntervals).max,
+            },
     }
   }
   return result
