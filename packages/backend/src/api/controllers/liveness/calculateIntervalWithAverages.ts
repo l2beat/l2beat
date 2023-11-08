@@ -15,8 +15,8 @@ export interface LivenessRecordsWithIntervalAndDetails<
   T = LivenessRecordWithInterval,
 > {
   records: T[]
-  last30days: AvgAndMax | undefined
-  last90days: AvgAndMax | undefined
+  last30Days: AvgAndMax | undefined
+  last90Days: AvgAndMax | undefined
   max: AvgAndMax | undefined
 }
 
@@ -51,18 +51,18 @@ export function calculateIntervalWithAverages(
         ? undefined
         : {
             records: batchSubmissionsWithIntervals,
-            last30days: calculateAverages(batchSubmissionsWithIntervals)
-              .last30days,
-            last90days: calculateAverages(batchSubmissionsWithIntervals)
-              .last90days,
+            last30Days: calculateAverages(batchSubmissionsWithIntervals)
+              .last30Days,
+            last90Days: calculateAverages(batchSubmissionsWithIntervals)
+              .last90Days,
             max: calculateAverages(batchSubmissionsWithIntervals).max,
           },
       stateUpdates: !stateUpdatesWithIntervals
         ? undefined
         : {
             records: stateUpdatesWithIntervals,
-            last30days: calculateAverages(stateUpdatesWithIntervals).last30days,
-            last90days: calculateAverages(stateUpdatesWithIntervals).last90days,
+            last30Days: calculateAverages(stateUpdatesWithIntervals).last30Days,
+            last90Days: calculateAverages(stateUpdatesWithIntervals).last90Days,
             max: calculateAverages(stateUpdatesWithIntervals).max,
           },
     }
@@ -93,13 +93,13 @@ export function calculateAverages(records: LivenessRecordWithInterval[]) {
   const max = filterRecords(records, 'max')
 
   return {
-    last30days: !last30Days.length
+    last30Days: !last30Days.length
       ? undefined
       : {
           averageInSeconds: calculateAverage(last30Days),
           maximumInSeconds: calculateMax(last30Days),
         },
-    last90days: !last90Days.length
+    last90Days: !last90Days.length
       ? undefined
       : {
           averageInSeconds: calculateAverage(last90Days),

@@ -36,12 +36,12 @@ export function calculateAnomalies(
       batchSubmissionsLast30Days.forEach((record) => {
         if (record.previousRecordInterval === undefined) return
         const timeframe = record.timestamp.add(-30, 'days')
-        const last30days = batchSubmissions.records.filter(
+        const last30Days = batchSubmissions.records.filter(
           (record) =>
             record.timestamp.gte(timeframe) &&
             record.timestamp.lte(record.timestamp),
         )
-        const intervals = last30days
+        const intervals = last30Days
           .map((r) => r.previousRecordInterval)
           .filter(notUndefined)
         const avg = sum(intervals) / intervals.length
@@ -60,12 +60,12 @@ export function calculateAnomalies(
       stateUpdatesLast30Days.forEach((record) => {
         if (record.previousRecordInterval === undefined) return
         const timeframe = record.timestamp.add(-30, 'days')
-        const last30days = stateUpdates.records.filter(
+        const last30Days = stateUpdates.records.filter(
           (record) =>
             record.timestamp.gte(timeframe) &&
             record.timestamp.lte(record.timestamp),
         )
-        const intervals = last30days
+        const intervals = last30Days
           .map((r) => r.previousRecordInterval)
           .filter(notUndefined)
         const avg = sum(intervals) / intervals.length

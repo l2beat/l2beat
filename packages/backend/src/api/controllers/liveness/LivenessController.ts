@@ -28,17 +28,21 @@ export function groupByProjectIdAndType(allRecords: LivenessRecord[]) {
     mapValues(groupByAndOmit(allRecords, 'projectId'), (firstGroupingResult) =>
       groupBy(firstGroupingResult, (item) => item.type),
     ),
-    (value) => {
+    (
+      value: Record<string, Omit<LivenessRecord, 'projectId'>[] | undefined>,
+    ) => {
       return {
         batchSubmissions: {
-          records: value.DA.sort(
-            (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
-          ),
+          records:
+            value.DA?.sort(
+              (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
+            ) ?? [],
         },
         stateUpdates: {
-          records: value.STATE.sort(
-            (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
-          ),
+          records:
+            value.STATE?.sort(
+              (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
+            ) ?? [],
         },
       }
     },

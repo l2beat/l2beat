@@ -135,8 +135,8 @@ describe(calculateAverages.name, () => {
       records.filter((r) => r.type === LivenessType('STATE')),
     )
     const expected = {
-      last30days: undefined,
-      last90days: { averageInSeconds: 2592000, maximumInSeconds: 5180400 },
+      last30Days: undefined,
+      last90Days: { averageInSeconds: 2592000, maximumInSeconds: 5180400 },
       max: { averageInSeconds: 2592000, maximumInSeconds: 5180400 },
     }
     expect(result).toEqual(expected)
@@ -147,8 +147,8 @@ describe(calculateAverages.name, () => {
       records.filter((r) => r.type === LivenessType('DA')),
     )
     const expected = {
-      last30days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
-      last90days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
+      last30Days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
+      last90Days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
       max: { averageInSeconds: 1589760, maximumInSeconds: 5184000 },
     }
     expect(result).toEqual(expected)
@@ -173,11 +173,11 @@ describe(calculateIntervalWithAverages.name, () => {
           records: calculateIntervals(
             RECORDS.filter((r) => r.type === LivenessType('DA')),
           )!,
-          last30days: {
+          last30Days: {
             averageInSeconds: 2620800,
             maximumInSeconds: 7851600,
           },
-          last90days: {
+          last90Days: {
             averageInSeconds: 2620800,
             maximumInSeconds: 7851600,
           },
@@ -191,8 +191,8 @@ describe(calculateIntervalWithAverages.name, () => {
           records: calculateIntervals(
             RECORDS.filter((r) => r.type === LivenessType('STATE')),
           )!,
-          last30days: undefined,
-          last90days: {
+          last30Days: undefined,
+          last90Days: {
             averageInSeconds: 3600,
             maximumInSeconds: 3600,
           },

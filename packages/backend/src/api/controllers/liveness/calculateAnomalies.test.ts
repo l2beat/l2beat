@@ -10,14 +10,14 @@ describe(calculateAnomalies.name, () => {
       project1: {
         batchSubmissions: {
           records: RECORDS,
-          last30days: undefined,
-          last90days: undefined,
+          last30Days: undefined,
+          last90Days: undefined,
           max: undefined,
         },
         stateUpdates: {
           records: [],
-          last30days: undefined,
-          last90days: undefined,
+          last30Days: undefined,
+          last90Days: undefined,
           max: undefined,
         },
       },
