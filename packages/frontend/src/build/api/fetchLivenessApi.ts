@@ -46,36 +46,19 @@ function generateMockData(): LivenessApiProject {
   const anomaliesCount = Math.round(Math.random() * 15)
   return {
     batchSubmissions: {
-      last30Days: {
-        averageInSeconds: generateRandomTime(),
-        maximumInSeconds: generateRandomTime(),
-      },
-      last90Days: {
-        averageInSeconds: generateRandomTime(),
-        maximumInSeconds: generateRandomTime(),
-      },
-      max: {
-        averageInSeconds: generateRandomTime(),
-        maximumInSeconds: generateRandomTime(),
-      },
+      last30Days: generateDataPoint(),
+      last90Days: generateDataPoint(),
+      max: generateDataPoint(),
     },
     stateUpdates: {
-      last30Days: {
-        averageInSeconds: generateRandomTime(),
-        maximumInSeconds: generateRandomTime(),
-      },
-      last90Days: {
-        averageInSeconds: generateRandomTime(),
-        maximumInSeconds: generateRandomTime(),
-      },
-      max: {
-        averageInSeconds: generateRandomTime(),
-        maximumInSeconds: generateRandomTime(),
-      },
+      last30Days: generateDataPoint(),
+      last90Days: generateDataPoint(),
+      max: generateDataPoint(),
     },
     anomalies:
       anomaliesCount !== 0
         ? range(anomaliesCount).map(() => ({
+            type: Math.random() > 0.5 ? 'DA' : 'STATE',
             timestamp: UnixTime.now()
               .add(
                 // TODO: (liveness) should we include current day
@@ -89,8 +72,19 @@ function generateMockData(): LivenessApiProject {
   }
 }
 
+function generateDataPoint() {
+  const i = Math.round(Math.random() * 100)
+  if (i < 10) {
+    return undefined
+  }
+  return {
+    averageInSeconds: generateRandomTime(),
+    maximumInSeconds: generateRandomTime(),
+  }
+}
+
 function generateRandomTime() {
-  const i = Math.round(Math.random() * 3)
+  const i = Math.round(Math.random() * 100)
   if (i < 1) {
     return Math.round(Math.random() * 3600)
   }

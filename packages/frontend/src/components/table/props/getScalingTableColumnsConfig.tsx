@@ -462,21 +462,21 @@ export function getScalingLivenessColumnsConfig() {
               last30Days={
                 <DurationCell
                   durationInSeconds={
-                    project.batchSubmissions?.last30Days.averageInSeconds
+                    project.batchSubmissions?.last30Days?.averageInSeconds
                   }
                 />
               }
               last90Days={
                 <DurationCell
                   durationInSeconds={
-                    project.batchSubmissions?.last90Days.averageInSeconds
+                    project.batchSubmissions?.last90Days?.averageInSeconds
                   }
                 />
               }
               max={
                 <DurationCell
                   durationInSeconds={
-                    project.batchSubmissions?.max.averageInSeconds
+                    project.batchSubmissions?.max?.averageInSeconds
                   }
                 />
               }
@@ -498,7 +498,7 @@ export function getScalingLivenessColumnsConfig() {
                 <DurationCell
                   withColors
                   durationInSeconds={
-                    project.batchSubmissions?.last30Days.maximumInSeconds
+                    project.batchSubmissions?.last30Days?.maximumInSeconds
                   }
                 />
               }
@@ -506,7 +506,7 @@ export function getScalingLivenessColumnsConfig() {
                 <DurationCell
                   withColors
                   durationInSeconds={
-                    project.batchSubmissions?.last90Days.maximumInSeconds
+                    project.batchSubmissions?.last90Days?.maximumInSeconds
                   }
                 />
               }
@@ -514,7 +514,7 @@ export function getScalingLivenessColumnsConfig() {
                 <DurationCell
                   withColors
                   durationInSeconds={
-                    project.batchSubmissions?.max.maximumInSeconds
+                    project.batchSubmissions?.max?.maximumInSeconds
                   }
                 />
               }
@@ -541,20 +541,22 @@ export function getScalingLivenessColumnsConfig() {
               last30Days={
                 <DurationCell
                   durationInSeconds={
-                    project.stateUpdates?.last30Days.averageInSeconds
+                    project.stateUpdates?.last30Days?.averageInSeconds
                   }
                 />
               }
               last90Days={
                 <DurationCell
                   durationInSeconds={
-                    project.stateUpdates?.last90Days.averageInSeconds
+                    project.stateUpdates?.last90Days?.averageInSeconds
                   }
                 />
               }
               max={
                 <DurationCell
-                  durationInSeconds={project.stateUpdates?.max.averageInSeconds}
+                  durationInSeconds={
+                    project.stateUpdates?.max?.averageInSeconds
+                  }
                 />
               }
             />
@@ -575,7 +577,7 @@ export function getScalingLivenessColumnsConfig() {
                 <DurationCell
                   withColors
                   durationInSeconds={
-                    project.stateUpdates?.last30Days.maximumInSeconds
+                    project.stateUpdates?.last30Days?.maximumInSeconds
                   }
                 />
               }
@@ -583,14 +585,16 @@ export function getScalingLivenessColumnsConfig() {
                 <DurationCell
                   withColors
                   durationInSeconds={
-                    project.stateUpdates?.last90Days.maximumInSeconds
+                    project.stateUpdates?.last90Days?.maximumInSeconds
                   }
                 />
               }
               max={
                 <DurationCell
                   withColors
-                  durationInSeconds={project.stateUpdates?.max.maximumInSeconds}
+                  durationInSeconds={
+                    project.stateUpdates?.max?.maximumInSeconds
+                  }
                 />
               }
             />

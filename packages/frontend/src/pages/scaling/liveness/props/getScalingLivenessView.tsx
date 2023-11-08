@@ -34,16 +34,17 @@ function getScalingLivenessViewEntry(
     stage: project.stage,
     stateUpdates: liveness?.stateUpdates,
     batchSubmissions: liveness?.batchSubmissions,
-    anomalyEntries:
-      liveness?.anomalies && liveness.anomalies.length !== 0
-        ? getAnomalyEntries(liveness.anomalies)
-        : [],
+    anomalyEntries: getAnomalyEntries(liveness?.anomalies),
   }
 }
 
 function getAnomalyEntries(
   anomalies: LivenessApiProject['anomalies'],
 ): AnomalyIndicatorEntry[] {
+  if (!anomalies || anomalies.length !== 0) {
+    return []
+  }
+
   const now = UnixTime.now()
   const thirtyDaysAgo = now.add(-30, 'days')
   let dayInLoop = thirtyDaysAgo

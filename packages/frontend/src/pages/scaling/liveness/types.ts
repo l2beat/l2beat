@@ -14,18 +14,18 @@ export interface ScalingLivenessViewEntry {
   provider: Layer2['display']['provider'] | undefined
   warning: string | undefined
   stage: StageConfig
-  batchSubmissions:
+  batchSubmissions?:
     | {
-        last30Days: DataPoint
-        last90Days: DataPoint
-        max: DataPoint
+        last30Days?: DataPoint | undefined
+        last90Days?: DataPoint | undefined
+        max?: DataPoint | undefined
       }
     | undefined
-  stateUpdates:
+  stateUpdates?:
     | {
-        last30Days: DataPoint
-        last90Days: DataPoint
-        max: DataPoint
+        last30Days?: DataPoint | undefined
+        last90Days?: DataPoint | undefined
+        max?: DataPoint | undefined
       }
     | undefined
   anomalyEntries: AnomalyIndicatorEntry[]

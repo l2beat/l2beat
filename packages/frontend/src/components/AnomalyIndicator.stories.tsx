@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../.storybook/modes'
 import { configureTooltips } from '../scripts/configureTooltips'
-import { AnomalyIndicator } from './AnomalyIndicator'
+import { AnomalyIndicator, AnomalyIndicatorEntry } from './AnomalyIndicator'
 import { Tooltip } from './Tooltip'
 
 const meta: Meta<typeof AnomalyIndicator> = {
@@ -31,65 +31,58 @@ const meta: Meta<typeof AnomalyIndicator> = {
 export default meta
 type Story = StoryObj<typeof AnomalyIndicator>
 
-const anomalies = [
+const anomalies: AnomalyIndicatorEntry[] = [
   {
     isAnomaly: true,
-    timestamp: 1696758992,
-    durationInSeconds: 120 * 60,
-  } as const,
+    anomalies: [{ timestamp: 1696758992, durationInSeconds: 120 * 60 }],
+  },
   {
     isAnomaly: true,
-    timestamp: 1697277392,
-    durationInSeconds: 20 * 60,
-  } as const,
-  { isAnomaly: false } as const,
+    anomalies: [{ timestamp: 1697277392, durationInSeconds: 20 * 60 }],
+  },
+  { isAnomaly: false },
   {
     isAnomaly: true,
-    timestamp: 1697363792,
-    durationInSeconds: 1440 * 60,
-  } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
+    anomalies: [{ timestamp: 1697363792, durationInSeconds: 1440 * 60 }],
+  },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
   {
     isAnomaly: true,
-    timestamp: 1697622992,
-    durationInSeconds: 180 * 60,
-  } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
+    anomalies: [{ timestamp: 1697622992, durationInSeconds: 180 * 60 }],
+  },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
   {
     isAnomaly: true,
-    timestamp: 1698054992,
-    durationInSeconds: 45 * 60,
-  } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
+    anomalies: [{ timestamp: 1698054992, durationInSeconds: 45 * 60 }],
+  },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
   {
     isAnomaly: true,
-    timestamp: 1698227792,
-    durationInSeconds: 15 * 60,
-  } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
+    anomalies: [{ timestamp: 1698227792, durationInSeconds: 15 * 60 }],
+  },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
   {
     isAnomaly: true,
-    timestamp: 1698663392,
-    durationInSeconds: 75 * 60,
-  } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
-  { isAnomaly: false } as const,
+    anomalies: [{ timestamp: 1698663392, durationInSeconds: 75 * 60 }],
+  },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
+  { isAnomaly: false },
 ]
 
 export const Default: Story = {
