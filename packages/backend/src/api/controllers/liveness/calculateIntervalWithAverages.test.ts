@@ -70,7 +70,8 @@ describe(calculateMax.name, () => {
 describe(calculateAverage.name, () => {
   it('returns the average', () => {
     const result = calculateAverage([1, 2, 3, 4])
-    expect(result).toEqual(2.5)
+    // 2.5 rounded to 3
+    expect(result).toEqual(3)
   })
 })
 

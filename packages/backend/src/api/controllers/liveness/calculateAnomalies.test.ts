@@ -24,7 +24,7 @@ describe(calculateAnomalies.name, () => {
     })
     expect(result.project1.anomalies).toEqual([
       {
-        timestamp: NOW,
+        timestamp: NOW.toNumber(),
         type: 'DA',
         durationInSeconds: 4320000,
       },

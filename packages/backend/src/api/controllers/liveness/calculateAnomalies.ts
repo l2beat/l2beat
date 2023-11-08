@@ -47,7 +47,7 @@ export function calculateAnomalies(
         const avg = sum(intervals) / intervals.length
         const stdDev = standardDeviation(intervals, avg)
         const z = (record.previousRecordInterval - avg) / stdDev
-        if (z >= 15) {
+        if (z >= 15 && record.previousRecordInterval > avg) {
           anomalies.push(record)
         }
       })
@@ -71,7 +71,7 @@ export function calculateAnomalies(
         const avg = sum(intervals) / intervals.length
         const stdDev = standardDeviation(intervals, avg)
         const z = (record.previousRecordInterval - avg) / stdDev
-        if (z >= 15) {
+        if (z >= 15 && record.previousRecordInterval > avg) {
           anomalies.push(record)
         }
       })
