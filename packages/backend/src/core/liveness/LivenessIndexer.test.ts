@@ -25,7 +25,7 @@ const {
 
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.start.name, () => {
-    describe('process indexer configuration', () => {
+    describe('initialize indexer state', () => {
       it('undefined config hash', async () => {
         const {
           livenessIndexer,
@@ -109,7 +109,7 @@ describe(LivenessIndexer.name, () => {
       })
     })
 
-    describe('process liveness configurations', () => {
+    describe('initialize configurations', () => {
       it('adds new configurations to the DB', async () => {
         const configurationRepository =
           mockObject<LivenessConfigurationRepository>({
@@ -121,7 +121,6 @@ describe(LivenessIndexer.name, () => {
 
         const { livenessIndexer } = getMockLivenessIndexer({
           configurationRepository,
-          configHash: hashJson('different-config-hash'),
         })
         await livenessIndexer.start()
 
@@ -166,7 +165,6 @@ describe(LivenessIndexer.name, () => {
 
         const { livenessIndexer, livenessRepository } = getMockLivenessIndexer({
           projects: updatedProjects,
-          configHash: hashJson('different-config-hash'),
           configurationRepository,
         })
         await livenessIndexer.start()
@@ -213,7 +211,6 @@ describe(LivenessIndexer.name, () => {
 
         const { livenessIndexer } = getMockLivenessIndexer({
           projects: updatedProjects,
-          configHash: hashJson('different-config-hash'),
           configurationRepository,
         })
         await livenessIndexer.start()
@@ -223,6 +220,17 @@ describe(LivenessIndexer.name, () => {
           1,
           CONFIGURATIONS.map((c) => c.id),
         )
+      })
+
+      it('does not run if the config hash is the same', async () => {
+        const { livenessIndexer, configurationRepository } =
+          getMockLivenessIndexer({
+            configHash: getLivenessConfigHash(PROJECTS),
+          })
+
+        await livenessIndexer.start()
+
+        expect(configurationRepository.getAll).not.toHaveBeenCalled()
       })
     })
   })

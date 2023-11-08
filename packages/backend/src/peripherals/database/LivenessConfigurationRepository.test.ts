@@ -155,5 +155,9 @@ describe(LivenessConfigurationRepository.name, () => {
       const childResults = await childRepository.getAll()
       expect(childResults).toEqualUnsorted([])
     })
+
+    it('empty array', async () => {
+      await expect(repository.deleteMany([])).not.toBeRejected()
+    })
   })
 })

@@ -37,7 +37,8 @@ export class LivenessIndexer extends ChildIndexer {
       this.indexerId,
     )
 
-    await this.processIndexerConfiguration(indexerState)
+    await this.initializeIndexerState(indexerState)
+    await this.initializeConfigurations(indexerState)
 
     await super.start()
   }
@@ -63,7 +64,7 @@ export class LivenessIndexer extends ChildIndexer {
     return Promise.resolve(data.to.toNumber())
   }
 
-  private async processIndexerConfiguration(indexerState?: IndexerStateRecord) {
+  private async initializeIndexerState(indexerState?: IndexerStateRecord) {
     if (indexerState === undefined) {
       await this.stateRepository.addOrUpdate({
         indexerId: this.indexerId,
@@ -71,30 +72,31 @@ export class LivenessIndexer extends ChildIndexer {
         safeHeight: this.minTimestamp.toNumber(),
         minTimestamp: this.minTimestamp,
       })
-    } else {
-      assert(
-        indexerState.minTimestamp &&
-          this.minTimestamp.equals(indexerState.minTimestamp),
-        'Minimum timestamp of this indexer cannot be updated',
+      return
+    }
+
+    // We prevent updating the minimum timestamp of the indexer.
+    // This functionality can be added in the future if needed.
+    assert(
+      indexerState.minTimestamp &&
+        this.minTimestamp.equals(indexerState.minTimestamp),
+      'Minimum timestamp of this indexer cannot be updated',
+    )
+
+    if (indexerState.configHash !== this.configHash) {
+      await this.stateRepository.setConfigHash(this.indexerId, this.configHash)
+
+      await this.stateRepository.setSafeHeight(
+        this.indexerId,
+        this.minTimestamp,
       )
-
-      if (indexerState.configHash !== this.configHash) {
-        await this.processLivenessConfigurations()
-
-        await this.stateRepository.setConfigHash(
-          this.indexerId,
-          this.configHash,
-        )
-
-        await this.stateRepository.setSafeHeight(
-          this.indexerId,
-          this.minTimestamp,
-        )
-      }
     }
   }
 
-  private async processLivenessConfigurations() {
+  private async initializeConfigurations(indexerState?: IndexerStateRecord) {
+    if (indexerState && indexerState.configHash === this.configHash) {
+      return
+    }
     const configurations = await this.livenessConfigurationRepository.getAll()
     const { added, phasedOut, updated } = processLivenessConfigurations(
       this.projects,
