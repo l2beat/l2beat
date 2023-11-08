@@ -138,7 +138,7 @@ export function filterRecords(
 }
 
 export function calculateAverage(records: number[]) {
-  return records.reduce((a, b) => a + b, 0) / records.length
+  return Math.ceil(records.reduce((a, b) => a + b, 0) / records.length)
 }
 
 export function calculateMax(records: number[]) {

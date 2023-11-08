@@ -1,81 +1,154 @@
 import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from 'earl'
+import { expect, mockObject } from 'earl'
 
-import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
+import {
+  LivenessRecord,
+  LivenessRepository,
+} from '../../../peripherals/database/LivenessRepository'
+import {
+  calculateAverage,
+  calculateIntervals,
+  calculateMax,
+  filterRecords,
+} from './calculateIntervalWithAverages'
 import { LivenessController } from './LivenessController'
 
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {
-    it('returns the liveness', async () => {
-      const livenessController = new LivenessController(livenessRepository)
+    it('correctly finds anomalies', async () => {
+      const RECORDS: LivenessRecord[] = []
+
+      RECORDS.push(
+        ...Array.from({ length: 500 }).map((_, i) => ({
+          projectId: ProjectId('project1'),
+          timestamp: START.add(-i, 'hours'),
+          blockNumber: i,
+          txHash: '0x1234567890abcdef',
+          type: LivenessType('DA'),
+        })),
+      )
+      RECORDS.push({
+        projectId: ProjectId('project1'),
+        timestamp: START.add(-1000, 'hours'),
+        blockNumber: 501,
+        txHash: '0x1234567890abcdef',
+        type: LivenessType('DA'),
+      })
+
+      const livenessController = new LivenessController(
+        getMockLivenessRepository(RECORDS),
+      )
 
       const result = await livenessController.getLiveness()
-      console.log(result['project1'])
+      const project1Anomalies = result.projects.project1?.anomalies
+
+      expect(project1Anomalies).toEqual([
+        {
+          timestamp: RECORDS.at(-2)!.timestamp,
+          durationInSeconds: 501 * 3600,
+          type: LivenessType('DA'),
+        },
+      ])
+    })
+
+    it('returns empty array if no anomalies', async () => {
+      const RECORDS: LivenessRecord[] = []
+
+      RECORDS.push(
+        ...Array.from({ length: 10 }).map((_, i) => ({
+          projectId: ProjectId('project1'),
+          timestamp: START.add(-i, 'hours'),
+          blockNumber: i,
+          txHash: '0x1234567890abcdef',
+          type: LivenessType('DA'),
+        })),
+      )
+      const livenessController = new LivenessController(
+        getMockLivenessRepository(RECORDS),
+      )
+
+      const result = await livenessController.getLiveness()
+      const project1Anomalies = result.projects.project1?.anomalies
+      expect(project1Anomalies).toEqual([])
+    })
+
+    it('returns empty object if no data', async () => {
+      const livenessController = new LivenessController(
+        getMockLivenessRepository([]),
+      )
+
+      const result = await livenessController.getLiveness()
+      expect(result).toEqual({ projects: {} })
+    })
+
+    it('correctly calculate avg and max', async () => {
+      const RECORDS: LivenessRecord[] = []
+
+      RECORDS.push(
+        ...Array.from({ length: 30 + 60 / 2 + 30 / 3 }).map((_, i) => {
+          let daysToAdd = 0
+          if (i < 30) {
+            daysToAdd = i
+          } else if (i < 30 + 60 / 2) {
+            daysToAdd = 30 + (i - 30) * 2
+          } else {
+            daysToAdd = 30 + 60 + (i - (30 + 60 / 2)) * 3
+          }
+
+          return {
+            projectId: ProjectId('project1'),
+            timestamp: START.add(-daysToAdd, 'days'),
+            blockNumber: i,
+            txHash: '0x1234567890abcdef',
+            type: LivenessType('DA'),
+          }
+        }),
+      )
+      const livenessController = new LivenessController(
+        getMockLivenessRepository(RECORDS),
+      )
+
+      const recordsWithIntervals = calculateIntervals(RECORDS)!
+
+      const last30Days = filterRecords(recordsWithIntervals, '30d')
+      const last90Days = filterRecords(recordsWithIntervals, '90d')
+      const max = filterRecords(recordsWithIntervals, 'max')
+
+      const expected = {
+        last30Days: {
+          averageInSeconds: calculateAverage(last30Days),
+          maximumInSeconds: calculateMax(last30Days),
+        },
+        last90Days: {
+          averageInSeconds: calculateAverage(last90Days),
+          maximumInSeconds: calculateMax(last90Days),
+        },
+        max: {
+          averageInSeconds: calculateAverage(max),
+          maximumInSeconds: calculateMax(max),
+        },
+      }
+
+      const result = await livenessController.getLiveness()
+      const project1BatchSubmissions =
+        result.projects.project1?.batchSubmissions
+      expect(project1BatchSubmissions).toEqual(expected)
     })
   })
 })
 
 const START = UnixTime.now()
-const DATA = [
-  {
-    projectId: ProjectId('project1'),
-    timestamp: START.add(-1, 'hours'),
-    blockNumber: 12345,
-    txHash: '0x1234567890abcdef',
-    type: LivenessType('DA'),
-  },
-  {
-    projectId: ProjectId('project1'),
-    timestamp: START.add(-2, 'hours'),
-    blockNumber: 12345,
-    txHash: '0x1234567890abcdee',
-    type: LivenessType('DA'),
-  },
-  {
-    projectId: ProjectId('project1'),
-    timestamp: START.add(-5, 'hours'),
-    blockNumber: 12345,
-    txHash: '0x1234567890abcded',
-    type: LivenessType('DA'),
-  },
-  {
-    projectId: ProjectId('project1'),
-    timestamp: START.add(-8, 'hours'),
-    blockNumber: 12345,
-    txHash: '0x1234567890abcded',
-    type: LivenessType('DA'),
-  },
-  {
-    projectId: ProjectId('project2'),
-    timestamp: START.add(-2, 'hours'),
-    blockNumber: 12346,
-    txHash: '0xabcdef1234567890',
-    type: LivenessType('STATE'),
-  },
-  {
-    projectId: ProjectId('project1'),
-    timestamp: START.add(-3, 'hours'),
-    blockNumber: 12347,
-    txHash: '0x12345678901abcdef',
-    type: LivenessType('STATE'),
-  },
-  {
-    projectId: ProjectId('project2'),
-    timestamp: START.add(-4, 'hours'),
-    blockNumber: 12348,
-    txHash: '0xabcdef1234567891',
-    type: LivenessType('DA'),
-  },
-]
 
-const livenessRepository = mockObject<LivenessRepository>({
-  getAll() {
-    return Promise.resolve(DATA)
-  },
-  addMany() {
-    return Promise.resolve(1)
-  },
-  deleteAll() {
-    return Promise.resolve(1)
-  },
-})
+function getMockLivenessRepository(records: LivenessRecord[]) {
+  return mockObject<LivenessRepository>({
+    getAll() {
+      return Promise.resolve(records)
+    },
+    addMany() {
+      return Promise.resolve(1)
+    },
+    deleteAll() {
+      return Promise.resolve(1)
+    },
+  })
+}

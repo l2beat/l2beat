@@ -17,7 +17,7 @@ export function calculateAnomalies(
     batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
     stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
     anomalies: {
-      timestamp: UnixTime
+      timestamp: number
       durationInSeconds: number
       type: LivenessType
     }[]
@@ -86,7 +86,7 @@ export function calculateAnomalies(
           'Programmer error: previousRecordInterval should not be undefined',
         )
         return {
-          timestamp: a.timestamp,
+          timestamp: a.timestamp.toNumber(),
           durationInSeconds: a.previousRecordInterval,
           type: a.type,
         }
