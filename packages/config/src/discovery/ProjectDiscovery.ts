@@ -16,7 +16,6 @@ import fs from 'fs'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
-import { getManuallyVerifiedSynced } from '../../scripts/checkVerifiedContracts/manuallyVerified'
 import {
   ProjectEscrow,
   ProjectPermission,
@@ -73,27 +72,6 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as DiscoveryOutput
   }
 
-  private appendManuallyVerifiedReference(
-    address: EthereumAddress,
-    references?: ProjectReference[],
-  ): ProjectReference[] | undefined {
-    const manuallyVerifiedContracts = getManuallyVerifiedSynced()
-    const manuallyVerifiedSourceLink = manuallyVerifiedContracts[
-      address.toString()
-    ] as string | undefined
-
-    if (manuallyVerifiedSourceLink) {
-      const manuallyVerifiedReference: ProjectReference = {
-        text: 'Source code',
-        href: manuallyVerifiedSourceLink,
-      }
-      return references
-        ? [...references, manuallyVerifiedReference]
-        : [manuallyVerifiedReference]
-    }
-    return references
-  }
-
   getContractDetails(
     identifier: string,
     descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
@@ -114,17 +92,11 @@ export class ProjectDiscovery {
       descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
 
-    const references = this.appendManuallyVerifiedReference(
-      contract.address,
-      descriptionOrOptions?.references,
-    )
-
     return {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
       ...descriptionOrOptions,
-      references,
     }
   }
 
@@ -152,8 +124,6 @@ export class ProjectDiscovery {
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
 
-    const references = this.appendManuallyVerifiedReference(address)
-
     return {
       address,
       newVersion: true,
@@ -165,7 +135,6 @@ export class ProjectDiscovery {
         upgradeability: contract.upgradeability,
         upgradableBy,
         upgradeDelay,
-        references,
       },
     }
   }

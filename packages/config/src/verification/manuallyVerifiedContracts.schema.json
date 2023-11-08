@@ -1,5 +1,5 @@
 {
-  "$id": "https://l2beat.com/manuallyVerified.schema.json",
+  "$id": "https://l2beat.com/manuallyVerifiedContracts.schema.json",
   "title": "Manually Verified Contracts",
   "description": "A list of contracts that have been manually verified.",
   "type": "object",

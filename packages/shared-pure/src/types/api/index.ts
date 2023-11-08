@@ -1,4 +1,5 @@
 export * from './ActivityApi'
+export * from './ManuallyVerifiedContrats'
 export * from './TokenTvlApi'
 export * from './TvlApi'
 export * from './VerificationStatus'

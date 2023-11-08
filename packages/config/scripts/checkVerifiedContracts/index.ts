@@ -1,12 +1,12 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 
 import { bridges, layer2s } from '../../src'
+import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
 import {
   areAllProjectContractsVerified,
   getUniqueContractsForAllProjects,
 } from './addresses'
 import { getEtherscanClient } from './etherscan'
-import { getManuallyVerified } from './manuallyVerified'
 import {
   loadPreviouslyVerifiedContracts,
   saveResult,
@@ -20,7 +20,7 @@ export async function main() {
   const logger = new Logger({ logLevel: 'INFO', format: 'pretty' })
   const envWorkersVar = 'ETHERSCAN_WORKERS'
   const workersCount = getEnv().integer(envWorkersVar, 4)
-  const manuallyVerified = await getManuallyVerified()
+  const manuallyVerified = await getManuallyVerifiedContracts()
 
   console.log('Check Verified Contracts.')
   console.log('=========================')

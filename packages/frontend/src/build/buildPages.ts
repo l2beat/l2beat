@@ -9,6 +9,7 @@ import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
+import { getManuallyVerifiedContracts } from './api/getManuallyVerifiedLinks'
 import { getVerificationStatus } from './api/getVerificationStatus'
 import { printActivityInfo, printApiInfo } from './api/printApiInfo'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
@@ -60,11 +61,13 @@ async function main() {
   createApi(config, tvlApiResponse, activityApiResponse)
 
   const verificationStatus = getVerificationStatus()
+  const manuallyVerifiedContracts = getManuallyVerifiedContracts()
 
   const pagesData = {
     tvlApiResponse,
     activityApiResponse,
     verificationStatus,
+    manuallyVerifiedContracts,
     tvlBreakdownApiResponse,
   }
 
