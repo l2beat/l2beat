@@ -19,6 +19,11 @@ import { Retries, RetryStrategy } from './Retries'
 export abstract class BaseIndexer implements Indexer {
   private readonly children: Indexer[] = []
 
+  /**
+   * This can be overridden to provide a custom retry strategy. It will be
+   * used for all indexers in the app that don't specify their own strategy.
+   * @returns A default retry strategy that will be used for all indexers in the app
+   */
   static GET_DEFAULT_RETRY_STRATEGY: () => RetryStrategy = () =>
     Retries.exponentialBackOff({
       initialTimeoutMs: 1000,

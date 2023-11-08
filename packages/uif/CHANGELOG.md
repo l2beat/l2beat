@@ -1,5 +1,11 @@
 # @l2beat/uif
 
+## 0.2.4
+
+### Patch Changes
+
+- Add default retry strategy jsdoc
+
 ## 0.2.3
 
 ### Patch Changes
