@@ -195,7 +195,6 @@ export class ProjectDiscovery {
       accounts: [this.formatPermissionedAccount(sources[key])],
       description: Object.values(roleDescription)
         .flat()
-        .join(' ')
         .concat(
           Object.entries(tagResult[key] ?? {})
             .map(([tag, contracts]) =>
@@ -204,8 +203,7 @@ export class ProjectDiscovery {
                 contracts.join(', '),
               ),
             )
-            .join(' '),
-        ),
+        ).join(' '),
     }))
   }
 
