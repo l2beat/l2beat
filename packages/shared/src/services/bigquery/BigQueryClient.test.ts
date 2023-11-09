@@ -3,17 +3,26 @@ import { expect, mockFn, mockObject } from 'earl'
 import { BigQueryClient } from './BigQueryClient'
 import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
 
+const DRY_RUN_RESPONSE_SAFE = {
+  metadata: {
+    statistics: {
+      query: { totalBytesProcessed: 1 },
+    },
+  },
+}
 describe(BigQueryClient.name, () => {
   describe(BigQueryClient.prototype.query.name, () => {
     it('calls createQueryJob with the passed SQL', async () => {
       const bigQuery = mockObject<BigQuerySDKWrapper>({
-        createQueryJob: mockFn().resolvesToOnce([
-          {
-            getQueryResults: async () => {
-              return [] // it is not important
+        createQueryJob: mockFn()
+          .resolvesToOnce([DRY_RUN_RESPONSE_SAFE])
+          .resolvesToOnce([
+            {
+              getQueryResults: async () => {
+                return [] // it is not important
+              },
             },
-          },
-        ]),
+          ]),
       })
 
       const bigQueryClient = new BigQueryClient(bigQuery)
@@ -28,13 +37,15 @@ describe(BigQueryClient.name, () => {
         key: 'value',
       }
       const bigQuery = mockObject<BigQuerySDKWrapper>({
-        createQueryJob: mockFn().resolvesToOnce([
-          {
-            getQueryResults: async () => {
-              return [response]
+        createQueryJob: mockFn()
+          .resolvesToOnce([DRY_RUN_RESPONSE_SAFE])
+          .resolvesToOnce([
+            {
+              getQueryResults: async () => {
+                return [response]
+              },
             },
-          },
-        ]),
+          ]),
       })
 
       const bigQueryClient = new BigQueryClient(bigQuery)
@@ -46,15 +57,15 @@ describe(BigQueryClient.name, () => {
 
     it('handles error on getQueryResults', async () => {
       const bigQuery = mockObject<BigQuerySDKWrapper>({
-        createQueryJob: async (): Promise<any> => {
-          return [
+        createQueryJob: mockFn()
+          .resolvesToOnce([DRY_RUN_RESPONSE_SAFE])
+          .resolvesToOnce([
             {
               getQueryResults: async () => {
                 throw new Error('BigQuery error')
               },
             },
-          ]
-        },
+          ]),
       })
 
       const bigQueryClient = new BigQueryClient(bigQuery)
@@ -67,9 +78,9 @@ describe(BigQueryClient.name, () => {
 
     it('handles errors', async () => {
       const bigQuery = mockObject<BigQuerySDKWrapper>({
-        createQueryJob: async (): Promise<any> => {
-          throw new Error('BigQuery error')
-        },
+        createQueryJob: mockFn()
+          .resolvesToOnce([DRY_RUN_RESPONSE_SAFE])
+          .rejectsWithOnce(new Error('BigQuery error')),
       })
 
       const bigQueryClient = new BigQueryClient(bigQuery)
