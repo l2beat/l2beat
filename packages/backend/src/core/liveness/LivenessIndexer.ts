@@ -58,6 +58,13 @@ export class LivenessIndexer extends ChildIndexer {
         trx,
       )
     })
+
+    this.logger.debug('Updated liveness data', {
+      from,
+      to,
+      configs: configs.length,
+      dataPoints: data.data.length,
+    })
     return Promise.resolve(data.to.toNumber())
   }
 
@@ -70,6 +77,8 @@ export class LivenessIndexer extends ChildIndexer {
       await this.initializeIndexerState(indexerState, trx)
       await this.initializeConfigurations(indexerState, trx)
     })
+
+    this.logger.debug('Initialized state and configurations')
   }
 
   private async initializeIndexerState(
@@ -86,6 +95,7 @@ export class LivenessIndexer extends ChildIndexer {
         },
         trx,
       )
+      this.logger.debug('Added new indexer state to the database')
       return
     }
 
@@ -108,6 +118,7 @@ export class LivenessIndexer extends ChildIndexer {
         this.minTimestamp,
         trx,
       )
+      this.logger.debug('Updated indexer state')
     }
   }
 
@@ -142,6 +153,12 @@ export class LivenessIndexer extends ChildIndexer {
         await this.livenessRepository.deleteAfter(u.id, untilTimestamp, trx)
       }),
     )
+
+    this.logger.debug('Saved configurations to the database', {
+      added: added.length,
+      phasedOut: phasedOut.length,
+      updated: updated.length,
+    })
   }
 
   override async getSafeHeight(): Promise<number> {
