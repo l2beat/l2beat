@@ -1,5 +1,6 @@
 import { hashJson, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { Knex } from 'knex'
 
 import { Project } from '../../model'
 import {
@@ -21,6 +22,7 @@ const {
   CONFIGURATIONS,
   TRANSFERS_EXPECTED,
   FUNCTIONS_EXPECTED,
+  MOCK_TRX,
 } = LIVENESS_MOCK
 
 describe(LivenessIndexer.name, () => {
@@ -37,12 +39,15 @@ describe(LivenessIndexer.name, () => {
         })
         await livenessIndexer.start()
 
-        expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
-          indexerId: 'liveness_indexer',
-          configHash: indexerConfigHash,
-          safeHeight: minTimestamp.toNumber(),
-          minTimestamp,
-        })
+        expect(stateRepository.addOrUpdate).toHaveBeenCalledWith(
+          {
+            indexerId: 'liveness_indexer',
+            configHash: indexerConfigHash,
+            safeHeight: minTimestamp.toNumber(),
+            minTimestamp,
+          },
+          MOCK_TRX,
+        )
       })
 
       it('different config hash', async () => {
@@ -59,10 +64,12 @@ describe(LivenessIndexer.name, () => {
         expect(stateRepository.setConfigHash).toHaveBeenCalledWith(
           'liveness_indexer',
           indexerConfigHash,
+          MOCK_TRX,
         )
         expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
           'liveness_indexer',
           minTimestamp,
+          MOCK_TRX,
         )
       })
 
@@ -94,6 +101,11 @@ describe(LivenessIndexer.name, () => {
           },
           findIndexerState() {
             return Promise.resolve(indexerState)
+          },
+          runInTransaction: async (
+            fun: (trx: Knex.Transaction) => Promise<void>,
+          ) => {
+            await fun(MOCK_TRX)
           },
         })
 
@@ -135,6 +147,7 @@ describe(LivenessIndexer.name, () => {
             untilTimestamp: c.untilTimestamp,
             projectId: c.projectId,
           })),
+          MOCK_TRX,
         )
       })
 
@@ -182,11 +195,13 @@ describe(LivenessIndexer.name, () => {
             projectId: c.projectId,
             lastSyncedTimestamp: undefined,
           })),
+          MOCK_TRX,
         )
         expect(livenessRepository.deleteAfter).toHaveBeenNthCalledWith(
           1,
           1,
           newUntilTimestamp,
+          MOCK_TRX,
         )
       })
 
@@ -219,6 +234,7 @@ describe(LivenessIndexer.name, () => {
         expect(configurationRepository.deleteMany).toHaveBeenNthCalledWith(
           1,
           CONFIGURATIONS.map((c) => c.id),
+          MOCK_TRX,
         )
       })
 
@@ -297,8 +313,12 @@ describe(LivenessIndexer.name, () => {
           id: i,
           lastSyncedTimestamp: TO,
         })),
+        MOCK_TRX,
       )
-      expect(livenessRepository.addMany).toHaveBeenCalledWith(expectedToSave)
+      expect(livenessRepository.addMany).toHaveBeenCalledWith(
+        expectedToSave,
+        MOCK_TRX,
+      )
     })
   })
 

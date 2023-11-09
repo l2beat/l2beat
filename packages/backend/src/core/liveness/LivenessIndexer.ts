@@ -1,6 +1,7 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
+import { Knex } from 'knex'
 
 import { Project } from '../../model'
 import {
@@ -33,12 +34,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    const indexerState = await this.stateRepository.findIndexerState(
-      this.indexerId,
-    )
-
-    await this.initializeIndexerState(indexerState)
-    await this.initializeConfigurations(indexerState)
+    await this.initialize()
 
     await super.start()
   }
@@ -65,14 +61,31 @@ export class LivenessIndexer extends ChildIndexer {
     return Promise.resolve(data.to.toNumber())
   }
 
-  private async initializeIndexerState(indexerState?: IndexerStateRecord) {
+  private async initialize() {
+    const indexerState = await this.stateRepository.findIndexerState(
+      this.indexerId,
+    )
+
+    await this.stateRepository.runInTransaction(async (trx) => {
+      await this.initializeIndexerState(indexerState, trx)
+      await this.initializeConfigurations(indexerState, trx)
+    })
+  }
+
+  private async initializeIndexerState(
+    indexerState: IndexerStateRecord | undefined,
+    trx: Knex.Transaction,
+  ) {
     if (indexerState === undefined) {
-      await this.stateRepository.addOrUpdate({
-        indexerId: this.indexerId,
-        configHash: this.configHash,
-        safeHeight: this.minTimestamp.toNumber(),
-        minTimestamp: this.minTimestamp,
-      })
+      await this.stateRepository.addOrUpdate(
+        {
+          indexerId: this.indexerId,
+          configHash: this.configHash,
+          safeHeight: this.minTimestamp.toNumber(),
+          minTimestamp: this.minTimestamp,
+        },
+        trx,
+      )
       return
     }
 
@@ -85,22 +98,23 @@ export class LivenessIndexer extends ChildIndexer {
     )
 
     if (indexerState.configHash !== this.configHash) {
-      await this.stateRepository.runInTransaction(async (trx) => {
-        await this.stateRepository.setConfigHash(
-          this.indexerId,
-          this.configHash,
-          trx,
-        )
-        await this.stateRepository.setSafeHeight(
-          this.indexerId,
-          this.minTimestamp,
-          trx,
-        )
-      })
+      await this.stateRepository.setConfigHash(
+        this.indexerId,
+        this.configHash,
+        trx,
+      )
+      await this.stateRepository.setSafeHeight(
+        this.indexerId,
+        this.minTimestamp,
+        trx,
+      )
     }
   }
 
-  private async initializeConfigurations(indexerState?: IndexerStateRecord) {
+  private async initializeConfigurations(
+    indexerState: IndexerStateRecord | undefined,
+    trx: Knex.Transaction,
+  ) {
     if (indexerState && indexerState.configHash === this.configHash) {
       return
     }
@@ -110,21 +124,22 @@ export class LivenessIndexer extends ChildIndexer {
       configurations,
     )
 
-    await this.livenessConfigurationRepository.addMany(added)
+    await this.livenessConfigurationRepository.addMany(added, trx)
 
     // this will also delete records from "liveness" using CASCADE constraint
     await this.livenessConfigurationRepository.deleteMany(
       phasedOut.map((c) => c.id),
+      trx,
     )
 
-    await this.livenessConfigurationRepository.updateMany(updated)
+    await this.livenessConfigurationRepository.updateMany(updated, trx)
     // there can be a situation where untilTimestamp was set retroactively
     // in this case we want to delete the liveness records that were added during this "misconfiguration" period
     await Promise.all(
       updated.map(async (u) => {
         const untilTimestamp = u.untilTimestamp
         assert(untilTimestamp, 'untilTimestamp should not be undefined there')
-        await this.livenessRepository.deleteAfter(u.id, untilTimestamp)
+        await this.livenessRepository.deleteAfter(u.id, untilTimestamp, trx)
       }),
     )
   }

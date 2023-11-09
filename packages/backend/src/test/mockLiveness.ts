@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { MockObject, mockObject } from 'earl'
+import { Knex } from 'knex'
 
 import { HourlyIndexer } from '../core/liveness/HourlyIndexer'
 import { LivenessClient, mergeConfigs } from '../core/liveness/LivenessClient'
@@ -36,6 +37,8 @@ import {
 } from '../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../peripherals/database/LivenessRepository'
 
+const MOCK_TRX = mockObject<Knex.Transaction>({})
+
 function getMockLivenessIndexer(mocks: {
   projects?: Project[]
   configHash?: Hash256
@@ -65,6 +68,11 @@ function getMockLivenessIndexer(mocks: {
       },
       setSafeHeight: async () => -1,
       setConfigHash: async () => -1,
+      runInTransaction: async (
+        fun: (trx: Knex.Transaction) => Promise<void>,
+      ) => {
+        await fun(MOCK_TRX)
+      },
     })
 
   const configurationRepository =
@@ -108,6 +116,9 @@ function getMockLivenessIndexer(mocks: {
       return Promise.resolve(1)
     },
     deleteAfter: async () => -1,
+    runInTransaction: async (fun: (trx: Knex.Transaction) => Promise<void>) => {
+      await fun(MOCK_TRX)
+    },
   })
 
   const livenessIndexer = new LivenessIndexer(
@@ -278,4 +289,5 @@ export const LIVENESS_MOCK = {
   CONFIGURATIONS,
   TRANSFERS_EXPECTED,
   FUNCTIONS_EXPECTED,
+  MOCK_TRX,
 }

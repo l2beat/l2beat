@@ -36,8 +36,11 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: NewLivenessConfigurationRecord[]): Promise<number[]> {
-    const knex = await this.knex()
+  async addMany(
+    records: NewLivenessConfigurationRecord[],
+    trx?: Knex.Transaction,
+  ): Promise<number[]> {
+    const knex = await this.knex(trx)
 
     const insertedRows = await knex('liveness_configuration')
       .insert(records.map(toRow))
@@ -72,8 +75,8 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return knex('liveness_configuration').delete()
   }
 
-  async deleteMany(ids: number[]) {
-    const knex = await this.knex()
+  async deleteMany(ids: number[], trx?: Knex.Transaction) {
+    const knex = await this.knex(trx)
     return knex('liveness_configuration').whereIn('id', ids).delete()
   }
 }

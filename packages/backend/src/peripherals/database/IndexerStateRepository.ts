@@ -65,8 +65,11 @@ export class IndexerStateRepository extends BaseRepository {
       })
   }
 
-  async addOrUpdate(record: IndexerStateRecord): Promise<string> {
-    const knex = await this.knex()
+  async addOrUpdate(
+    record: IndexerStateRecord,
+    trx?: Knex.Transaction,
+  ): Promise<string> {
+    const knex = await this.knex(trx)
 
     await knex('indexer_state')
       .insert(toRow(record))
