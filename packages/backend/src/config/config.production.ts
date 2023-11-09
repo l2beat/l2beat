@@ -3,6 +3,7 @@ import { bridges, layer2s, tokenList } from '@l2beat/config'
 import { multicallConfig } from '@l2beat/discovery'
 import { EtherscanClient } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { getChainConfig } from '@l2beat/discovery'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { getChainMinTimestamp } from './chains'
@@ -210,17 +211,10 @@ export function getProductionConfig(env: Env): Config {
       },
       chains: [
         {
-          chainId: ChainId.ETHEREUM,
-          rpcUrl: env.string('DISCOVERY_ETHEREUM_RPC_URL'),
-          rpcGetLogsMaxRange: env.optionalInteger(
-            'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
-          ),
+          ...getChainConfig(ChainId.ETHEREUM),
           reorgSafeDepth: env.optionalInteger(
             'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
-          multicall: multicallConfig.ethereum,
-          etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
-          etherscanUrl: EtherscanClient.API_URL,
         },
       ],
     },
