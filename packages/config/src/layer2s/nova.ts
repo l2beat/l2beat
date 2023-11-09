@@ -103,6 +103,32 @@ export const nova: Layer2 = {
       assessCount: subtractOne,
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
+          ),
+          selector: '0x8f111f3c',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1656050353),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
+          ),
+          selector: '0xa04cee60',
+          functionSignature:
+            'function updateSendRoot(bytes32 sendRoot, bytes32 l2BlockHash) external',
+          sinceTimestamp: new UnixTime(1691501141),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

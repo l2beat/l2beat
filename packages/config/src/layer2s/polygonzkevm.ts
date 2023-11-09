@@ -104,6 +104,32 @@ export const polygonzkevm: Layer2 = {
       type: 'rpc',
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x5e9145c9',
+          functionSignature:
+            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
+          sinceTimestamp: new UnixTime(1679653163),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x2b0006fa',
+          functionSignature:
+            'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
+          sinceTimestamp: new UnixTime(1679653163),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

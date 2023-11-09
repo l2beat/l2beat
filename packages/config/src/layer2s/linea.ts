@@ -116,6 +116,21 @@ export const linea: Layer2 = {
       type: 'rpc',
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x4165d6dd',
+          functionSignature:
+            'function finalizeBlocks((bytes32, uint32, bytes[], bytes32[], bytes, uint16[])[] _blocksData,bytes _proof,uint256 _proofType,bytes32 _parentStateRootHash)',
+          sinceTimestamp: new UnixTime(1689159923),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
