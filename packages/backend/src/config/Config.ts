@@ -131,5 +131,4 @@ export interface UpdateMonitorChainConfig {
   multicall: MulticallConfig
   etherscanApiKey: string
   etherscanUrl: string
-  minTimestamp: UnixTime
 }

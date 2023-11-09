@@ -221,7 +221,6 @@ export function getProductionConfig(env: Env): Config {
           multicall: multicallConfig.ethereum,
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },
