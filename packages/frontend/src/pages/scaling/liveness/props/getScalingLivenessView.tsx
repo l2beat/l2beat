@@ -12,14 +12,12 @@ import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
 
 export function getScalingLivenessView(
   projects: Layer2[],
-  livenessResponse: LivenessApiResponse,
+  livenessResponse: LivenessApiResponse | undefined,
 ): ScalingLivenessViewProps {
-  const included = getIncludedProjects(projects, livenessResponse)
-
   return {
-    items: included.map((p) =>
-      getScalingLivenessViewEntry(p, livenessResponse),
-    ),
+    items: livenessResponse
+      ? projects.map((p) => getScalingLivenessViewEntry(p, livenessResponse))
+      : [],
   }
 }
 
@@ -91,16 +89,4 @@ function typeToDisplayType(
     default:
       assertUnreachable(anomaly.type)
   }
-}
-
-function getIncludedProjects(
-  projects: Layer2[],
-  livenessResponse: LivenessApiResponse,
-) {
-  return projects.filter(
-    (p) =>
-      livenessResponse.projects[p.display.slug] &&
-      !p.isUpcoming &&
-      !p.isArchived,
-  )
 }

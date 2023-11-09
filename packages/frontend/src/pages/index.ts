@@ -63,7 +63,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   }
 
   if (config.features.liveness && livenessApiResponse) {
-    pages.push(getLivenessPage(config, livenessApiResponse))
+    pages.push(getLivenessPage(config, pagesData))
   }
 
   outputPages(pages)
