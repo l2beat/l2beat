@@ -42,8 +42,7 @@ export function createLivenessModule(
     livenessClient,
     indexerStateRepository,
     livenessRepository,
-    // TODO: figure out from where to start
-    UnixTime.now().toStartOf('hour').add(-1, 'days'),
+    config.liveness.minTimestamp,
   )
 
   const start = async () => {
