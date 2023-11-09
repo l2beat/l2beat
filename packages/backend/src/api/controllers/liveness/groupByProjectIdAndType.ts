@@ -14,13 +14,13 @@ export function groupByProjectIdAndType(allRecords: LivenessRecord[]) {
       return {
         batchSubmissions: {
           records:
-            value.DA?.sort(
+            value.DA?.slice().sort(
               (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
             ) ?? [],
         },
         stateUpdates: {
           records:
-            value.STATE?.sort(
+            value.STATE?.slice().sort(
               (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
             ) ?? [],
         },

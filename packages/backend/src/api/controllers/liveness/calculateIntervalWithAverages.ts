@@ -81,15 +81,22 @@ export function calculateIntervals(
   if (records.length === 0) {
     return undefined
   }
-  records.forEach((record, index) => {
+
+  const r = records.map((record, index) => {
     if (index === records.length - 1) {
-      return
+      return record
     }
     const nextRecord = records[index + 1]
-    record.previousRecordInterval =
+    const previousRecordInterval =
       record.timestamp.toNumber() - nextRecord.timestamp.toNumber()
+
+    return {
+      ...record,
+      previousRecordInterval,
+    }
   })
-  return records
+
+  return r
 }
 
 export function calculateAverages(records: LivenessRecordWithInterval[]) {
@@ -120,7 +127,7 @@ export function calculateAverages(records: LivenessRecordWithInterval[]) {
 }
 
 export function filterRecords(
-  records: LivenessRecordWithInterval[],
+  records: readonly LivenessRecordWithInterval[],
   type: '30d' | '60d' | '90d' | 'max',
 ) {
   if (type === 'max') {
