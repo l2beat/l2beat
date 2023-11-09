@@ -60,7 +60,7 @@ function getMockLivenessIndexer(mocks: {
   const stateRepository =
     mocks.stateRepository ??
     mockObject<IndexerStateRepository>({
-      addOrUpdate() {
+      add() {
         return Promise.resolve('')
       },
       findIndexerState() {

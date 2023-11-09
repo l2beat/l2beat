@@ -65,16 +65,13 @@ export class IndexerStateRepository extends BaseRepository {
       })
   }
 
-  async addOrUpdate(
+  async add(
     record: IndexerStateRecord,
     trx?: Knex.Transaction,
   ): Promise<string> {
     const knex = await this.knex(trx)
 
-    await knex('indexer_state')
-      .insert(toRow(record))
-      .onConflict('indexer_id')
-      .merge()
+    await knex('indexer_state').insert(toRow(record))
 
     return `[${record.indexerId}]: ${record.safeHeight}`
   }

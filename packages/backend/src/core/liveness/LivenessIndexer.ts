@@ -77,7 +77,7 @@ export class LivenessIndexer extends ChildIndexer {
     trx: Knex.Transaction,
   ) {
     if (indexerState === undefined) {
-      await this.stateRepository.addOrUpdate(
+      await this.stateRepository.add(
         {
           indexerId: this.indexerId,
           configHash: this.configHash,
@@ -153,11 +153,10 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(height: number): Promise<void> {
-    await this.stateRepository.addOrUpdate({
-      indexerId: this.indexerId,
-      configHash: this.configHash,
-      safeHeight: height,
-    })
+    await this.stateRepository.setSafeHeight(
+      this.indexerId,
+      new UnixTime(height),
+    )
   }
 
   // This function will not be used, but it is required by the UIF.

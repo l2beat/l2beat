@@ -39,7 +39,7 @@ describe(LivenessIndexer.name, () => {
         })
         await livenessIndexer.start()
 
-        expect(stateRepository.addOrUpdate).toHaveBeenCalledWith(
+        expect(stateRepository.add).toHaveBeenCalledWith(
           {
             indexerId: 'liveness_indexer',
             configHash: indexerConfigHash,
@@ -81,7 +81,7 @@ describe(LivenessIndexer.name, () => {
 
         await livenessIndexer.start()
 
-        expect(stateRepository.addOrUpdate).not.toHaveBeenCalled()
+        expect(stateRepository.add).not.toHaveBeenCalled()
         expect(stateRepository.setConfigHash).not.toHaveBeenCalled()
         expect(stateRepository.setSafeHeight).not.toHaveBeenCalled()
         expect(indexerConfigHash).toEqual(getLivenessConfigHash(PROJECTS))
@@ -96,7 +96,7 @@ describe(LivenessIndexer.name, () => {
         }
 
         const stateRepository = mockObject<IndexerStateRepository>({
-          addOrUpdate() {
+          add() {
             return Promise.resolve('')
           },
           findIndexerState() {
@@ -341,7 +341,7 @@ describe(LivenessIndexer.name, () => {
       const stateRepository = mock.stateRepository
       await livenessIndexer.setSafeHeight(12)
 
-      expect(stateRepository.addOrUpdate).toHaveBeenCalledWith({
+      expect(stateRepository.add).toHaveBeenCalledWith({
         safeHeight: 12,
         indexerId: 'liveness_indexer',
         configHash: mock.indexerConfigHash,

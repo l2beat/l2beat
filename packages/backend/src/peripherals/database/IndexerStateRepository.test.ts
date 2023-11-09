@@ -26,13 +26,13 @@ describe(IndexerStateRepository.name, () => {
         safeHeight: 12345,
         minTimestamp: UnixTime.now(),
       }
-      await repository.addOrUpdate(newRecord)
+      await repository.add(newRecord)
       const indexerState = await repository.findIndexerState('indexer1')
       expect(indexerState).toEqual(newRecord)
     })
   })
 
-  describe(IndexerStateRepository.prototype.addOrUpdate.name, () => {
+  describe(IndexerStateRepository.prototype.add.name, () => {
     it('adds a new record', async () => {
       const newRecord = {
         indexerId: 'indexer1',
@@ -41,28 +41,11 @@ describe(IndexerStateRepository.name, () => {
         minTimestamp: UnixTime.now(),
       }
 
-      await repository.addOrUpdate(newRecord)
+      await repository.add(newRecord)
 
       const result = await repository.getAll()
 
       expect(result).toEqual([newRecord])
-    })
-
-    it('updates an existing record', async () => {
-      const record = {
-        indexerId: 'indexer1',
-        configHash: Hash256.random(),
-        safeHeight: 1,
-        minTimestamp: UnixTime.now(),
-      }
-      await repository.addOrUpdate(record)
-
-      const updatedRecord = { ...record, safeHeight: 2 }
-      await repository.addOrUpdate(updatedRecord)
-
-      const result = await repository.getAll()
-
-      expect(result).toEqual([updatedRecord])
     })
 
     it('minTimestamp is undefined', async () => {
@@ -71,7 +54,7 @@ describe(IndexerStateRepository.name, () => {
         configHash: Hash256.random(),
         safeHeight: 1,
       }
-      await repository.addOrUpdate(record)
+      await repository.add(record)
 
       const result = await repository.getAll()
 
@@ -89,7 +72,7 @@ describe(IndexerStateRepository.name, () => {
         safeHeight: 12345,
         minTimestamp: BEFORE,
       }
-      await repository.addOrUpdate(record)
+      await repository.add(record)
 
       const updated = await repository.setSafeHeight('indexer1', AFTER)
       const indexerState = await repository.findIndexerState('indexer1')
@@ -107,7 +90,7 @@ describe(IndexerStateRepository.name, () => {
         safeHeight: 12345,
         minTimestamp: BEFORE,
       }
-      await repository.addOrUpdate(record)
+      await repository.add(record)
 
       const updated = await repository.setSafeHeight('indexer2', AFTER)
       const indexerState = await repository.findIndexerState('indexer1')
