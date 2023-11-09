@@ -9,12 +9,17 @@ import {
 } from '../../components'
 import { PageContent } from '../../components/PageContent'
 import { DonateDetails, DonationDetailsProps } from './DonateDetails'
+import {
+  DonateFundingSources,
+  DonateFundingSourcesProps,
+} from './DonateFundingSources'
 import { DonateLetter } from './DonateLetter'
 import { GitcoinButton } from './GitcoinButton'
 
 export interface DonatePageProps {
   title: string
   details: DonationDetailsProps
+  fundingSources: DonateFundingSourcesProps
   footer: FooterProps
   showGitcoinButton: boolean
   navbar: NavbarProps
@@ -29,6 +34,7 @@ export function DonatePage(props: DonatePageProps) {
         <DonateLetter />
         {props.showGitcoinButton && <GitcoinButton />}
         <DonateDetails {...props.details} />
+        <DonateFundingSources {...props.fundingSources} />
       </PageContent>
       <Footer narrow {...props.footer} />
     </>
