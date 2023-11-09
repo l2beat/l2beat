@@ -35,7 +35,7 @@ export class IndexerStateRepository extends BaseRepository {
 
   async setSafeHeight(
     indexerId: string,
-    safeHeight: UnixTime,
+    safeHeight: number,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
@@ -45,7 +45,7 @@ export class IndexerStateRepository extends BaseRepository {
         indexer_id: indexerId,
       })
       .update({
-        safe_height: safeHeight.toNumber(),
+        safe_height: safeHeight,
       })
   }
 

@@ -115,7 +115,7 @@ export class LivenessIndexer extends ChildIndexer {
       )
       await this.stateRepository.setSafeHeight(
         this.indexerId,
-        this.minTimestamp,
+        this.minTimestamp.toNumber(),
         trx,
       )
       this.logger.debug('Updated indexer state')
@@ -170,10 +170,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(height: number): Promise<void> {
-    await this.stateRepository.setSafeHeight(
-      this.indexerId,
-      new UnixTime(height),
-    )
+    await this.stateRepository.setSafeHeight(this.indexerId, height)
   }
 
   // This function will not be used, but it is required by the UIF.

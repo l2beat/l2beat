@@ -68,7 +68,7 @@ describe(LivenessIndexer.name, () => {
         )
         expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
           'liveness_indexer',
-          minTimestamp,
+          minTimestamp.toNumber(),
           MOCK_TRX,
         )
       })
@@ -341,11 +341,10 @@ describe(LivenessIndexer.name, () => {
       const stateRepository = mock.stateRepository
       await livenessIndexer.setSafeHeight(12)
 
-      expect(stateRepository.add).toHaveBeenCalledWith({
-        safeHeight: 12,
-        indexerId: 'liveness_indexer',
-        configHash: mock.indexerConfigHash,
-      })
+      expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
+        'liveness_indexer',
+        12,
+      )
     })
   })
 

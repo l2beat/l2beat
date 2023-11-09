@@ -64,13 +64,13 @@ describe(IndexerStateRepository.name, () => {
 
   describe(IndexerStateRepository.prototype.setSafeHeight.name, () => {
     it('updates the safe height of given indexer', async () => {
-      const BEFORE = UnixTime.now()
-      const AFTER = BEFORE.add(1, 'hours')
+      const BEFORE = 12345
+      const AFTER = 54321
       const record = {
         indexerId: 'indexer1',
         configHash: Hash256.random(),
-        safeHeight: 12345,
-        minTimestamp: BEFORE,
+        safeHeight: BEFORE,
+        minTimestamp: UnixTime.now(),
       }
       await repository.add(record)
 
@@ -78,21 +78,60 @@ describe(IndexerStateRepository.name, () => {
       const indexerState = await repository.findIndexerState('indexer1')
 
       expect(updated).toEqual(1)
-      expect(indexerState).toEqual({ ...record, safeHeight: AFTER.toNumber() })
+      expect(indexerState).toEqual({ ...record, safeHeight: AFTER })
     })
 
     it('does not update if indexer not found', async () => {
-      const BEFORE = UnixTime.now()
-      const AFTER = BEFORE.add(1, 'hours')
+      const BEFORE = 12345
+      const AFTER = 54321
       const record = {
         indexerId: 'indexer1',
         configHash: Hash256.random(),
-        safeHeight: 12345,
-        minTimestamp: BEFORE,
+        safeHeight: BEFORE,
+        minTimestamp: UnixTime.now(),
       }
       await repository.add(record)
 
       const updated = await repository.setSafeHeight('indexer2', AFTER)
+      const indexerState = await repository.findIndexerState('indexer1')
+
+      expect(updated).toEqual(0)
+      expect(indexerState).toEqual({ ...record })
+    })
+  })
+
+  describe(IndexerStateRepository.prototype.setConfigHash.name, () => {
+    it('updates the safe height of given indexer', async () => {
+      const BEFORE = Hash256.random()
+      const AFTER = Hash256.random()
+      const record = {
+        indexerId: 'indexer1',
+        configHash: BEFORE,
+        safeHeight: 12345,
+        minTimestamp: UnixTime.now(),
+      }
+      await repository.add(record)
+
+      const updated = await repository.setConfigHash('indexer1', AFTER)
+      const indexerState = await repository.findIndexerState('indexer1')
+
+      expect(updated).toEqual(1)
+      expect(indexerState).toEqual({ ...record, configHash: AFTER })
+    })
+
+    it('does not update if indexer not found', async () => {
+      const BEFORE = Hash256.random()
+      const AFTER = Hash256.random()
+
+      const record = {
+        indexerId: 'indexer1',
+        configHash: BEFORE,
+        safeHeight: 12345,
+        minTimestamp: UnixTime.now(),
+      }
+      await repository.add(record)
+
+      const updated = await repository.setConfigHash('indexer2', AFTER)
       const indexerState = await repository.findIndexerState('indexer1')
 
       expect(updated).toEqual(0)
