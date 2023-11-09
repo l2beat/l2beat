@@ -94,7 +94,7 @@ describe(filterRecords.name, () => {
     const withIntervals = calculateIntervals(RECORDS)!
     const result = filterRecords(withIntervals, 'max')
     expect(result).toEqual(
-      RECORDS.map((r) => r.previousRecordInterval!).filter(notUndefined),
+      withIntervals.map((r) => r.previousRecordInterval!).filter(notUndefined),
     )
   })
 })
