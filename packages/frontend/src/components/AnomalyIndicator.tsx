@@ -89,7 +89,7 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
               </span>
               <div className="mt-2 text-black dark:text-white">
                 <AnomalyTypeBadge type={anomaly.type} />
-                <span className="md:ml-2.5">
+                <span className="ml-2.5">
                   Duration:{' '}
                   <DurationCell
                     durationInSeconds={anomaly.durationInSeconds}
@@ -107,7 +107,7 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
 
 function AnomalyTypeBadge(props: { type: Anomaly['type'] }) {
   return (
-    <span className="hidden w-max rounded bg-orange-400 px-1.5 py-0.5 text-black md:inline">
+    <span className="w-max rounded bg-orange-400 px-1.5 py-0.5 text-black">
       {props.type}
     </span>
   )
