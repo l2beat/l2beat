@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
