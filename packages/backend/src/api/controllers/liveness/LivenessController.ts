@@ -9,9 +9,10 @@ export class LivenessController {
   constructor(private readonly livenessRepository: LivenessRepository) {}
 
   async getLiveness(): Promise<LivenessApiResponse> {
-    const allRecords = await this.livenessRepository.getAll()
-    const groupedByProjectAndType = groupByProjectIdAndType(allRecords)
+    const allRecords =
+      await this.livenessRepository.getAllWithProjectIdAndType()
 
+    const groupedByProjectAndType = groupByProjectIdAndType(allRecords)
     const intervals = calculateIntervalWithAverages(groupedByProjectAndType)
     const withAnomalies = calculateAnomalies(intervals)
 

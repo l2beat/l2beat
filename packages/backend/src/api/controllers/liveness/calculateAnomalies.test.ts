@@ -37,8 +37,6 @@ const NOW = UnixTime.now()
 const RECORDS: LivenessRecordWithInterval[] = [
   {
     timestamp: NOW,
-    blockNumber: 1,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
     previousRecordInterval: 50 * 24 * 3600,
   },
@@ -47,8 +45,6 @@ const RECORDS: LivenessRecordWithInterval[] = [
 RECORDS.push(
   ...Array.from({ length: 500 }).map((_, i) => ({
     timestamp: NOW.add(-i, 'hours'),
-    blockNumber: i,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
     previousRecordInterval: 3600,
   })),

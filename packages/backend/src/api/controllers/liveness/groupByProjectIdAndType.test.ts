@@ -1,7 +1,7 @@
 import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
+import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
 import { groupByProjectIdAndType } from './groupByProjectIdAndType'
 
 describe(groupByProjectIdAndType.name, () => {
@@ -13,21 +13,15 @@ describe(groupByProjectIdAndType.name, () => {
           records: [
             // should be sorted by timestamp descending
             {
-              blockNumber: 1,
               timestamp: NOW.add(-1, 'hours'),
-              txHash: '0x1234567890abcdef',
               type: LivenessType('DA'),
             },
             {
-              blockNumber: 1,
               timestamp: NOW.add(-2, 'hours'),
-              txHash: '0x1234567890abcdef',
               type: LivenessType('DA'),
             },
             {
-              blockNumber: 1,
               timestamp: NOW.add(-3, 'hours'),
-              txHash: '0x1234567890abcdef',
               type: LivenessType('DA'),
             },
           ],
@@ -35,9 +29,7 @@ describe(groupByProjectIdAndType.name, () => {
         stateUpdates: {
           records: [
             {
-              blockNumber: 1,
               timestamp: NOW.add(-1, 'hours'),
-              txHash: '0x1234567890abcdef',
               type: LivenessType('STATE'),
             },
           ],
@@ -47,9 +39,7 @@ describe(groupByProjectIdAndType.name, () => {
         batchSubmissions: {
           records: [
             {
-              blockNumber: 1,
               timestamp: NOW.add(-3, 'hours'),
-              txHash: '0x1234567890abcdef',
               type: LivenessType('DA'),
             },
           ],
@@ -57,9 +47,7 @@ describe(groupByProjectIdAndType.name, () => {
         stateUpdates: {
           records: [
             {
-              blockNumber: 1,
               timestamp: NOW.add(-4, 'hours'),
-              txHash: '0x1234567890abcdef',
               type: LivenessType('STATE'),
             },
           ],
@@ -73,47 +61,35 @@ describe(groupByProjectIdAndType.name, () => {
 
 const NOW = UnixTime.now()
 
-const MOCK_DATA: LivenessRecord[] = [
+const MOCK_DATA: LivenessRecordWithProjectIdAndType[] = [
   {
     projectId: ProjectId('project1'),
-    blockNumber: 1,
     timestamp: NOW.add(-3, 'hours'),
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
   },
   {
     projectId: ProjectId('project1'),
-    blockNumber: 1,
     timestamp: NOW.add(-2, 'hours'),
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
   },
   {
     projectId: ProjectId('project1'),
-    blockNumber: 1,
     timestamp: NOW.add(-1, 'hours'),
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
   },
   {
     projectId: ProjectId('project1'),
-    blockNumber: 1,
     timestamp: NOW.add(-1, 'hours'),
-    txHash: '0x1234567890abcdef',
     type: LivenessType('STATE'),
   },
   {
     projectId: ProjectId('project2'),
-    blockNumber: 1,
     timestamp: NOW.add(-3, 'hours'),
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
   },
   {
     projectId: ProjectId('project2'),
-    blockNumber: 1,
     timestamp: NOW.add(-4, 'hours'),
-    txHash: '0x1234567890abcdef',
     type: LivenessType('STATE'),
   },
 ]

@@ -1,9 +1,12 @@
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 
-import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
+import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
 
-export type LivenessRecordWithInterval = Omit<LivenessRecord, 'projectId'> & {
+export type LivenessRecordWithInterval = Omit<
+  LivenessRecordWithProjectIdAndType,
+  'projectId'
+> & {
   previousRecordInterval?: number
 }
 interface AvgAndMax {
@@ -25,10 +28,10 @@ export function calculateIntervalWithAverages(
     string,
     {
       batchSubmissions: {
-        records: Omit<LivenessRecord, 'projectId'>[]
+        records: Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[]
       }
       stateUpdates: {
-        records: Omit<LivenessRecord, 'projectId'>[]
+        records: Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[]
       }
     }
   >,
@@ -45,7 +48,6 @@ export function calculateIntervalWithAverages(
     const stateUpdatesWithIntervals = calculateIntervals(
       projectRecords.stateUpdates.records,
     )
-
     result[project] = {
       batchSubmissions:
         !batchSubmissionsWithIntervals ||

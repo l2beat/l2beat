@@ -16,45 +16,31 @@ const NOW = UnixTime.now()
 const RECORDS: LivenessRecordWithInterval[] = [
   {
     timestamp: NOW,
-    blockNumber: 1,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
   },
   {
     timestamp: NOW.add(-1, 'hours'),
-    blockNumber: 2,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
   },
   {
     timestamp: NOW.add(-3, 'hours'),
-    blockNumber: 1,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
   },
   {
     timestamp: NOW.add(-31, 'days'),
-    blockNumber: 2,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('STATE'),
   },
   {
     timestamp: NOW.add(-31, 'days').add(-1, 'hours'),
-    blockNumber: 3,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('STATE'),
   },
   {
     timestamp: NOW.add(-91, 'days'),
-    blockNumber: 4,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
     previousRecordInterval: 86_400 * 60,
   },
   {
     timestamp: NOW.add(-92, 'days'),
-    blockNumber: 4,
-    txHash: '0x1234567890abcdef',
     type: LivenessType('DA'),
     previousRecordInterval: 86_400 * 60,
   },
@@ -104,22 +90,16 @@ describe(calculateIntervals.name, () => {
     const expected: LivenessRecordWithInterval[] = [
       {
         timestamp: NOW,
-        blockNumber: 1,
-        txHash: '0x1234567890abcdef',
         type: LivenessType('DA'),
         previousRecordInterval: 3600,
       },
       {
         timestamp: NOW.add(-1, 'hours'),
-        blockNumber: 2,
-        txHash: '0x1234567890abcdef',
         type: LivenessType('DA'),
         previousRecordInterval: 2 * 3600,
       },
       {
         timestamp: NOW.add(-3, 'hours'),
-        blockNumber: 1,
-        txHash: '0x1234567890abcdef',
         type: LivenessType('DA'),
       },
     ]

@@ -2,7 +2,7 @@ import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
-  LivenessRecord,
+  LivenessRecordWithProjectIdAndType,
   LivenessRepository,
 } from '../../../peripherals/database/LivenessRepository'
 import {
@@ -16,22 +16,18 @@ import { LivenessController } from './LivenessController'
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {
     it('correctly finds anomalies', async () => {
-      const RECORDS: LivenessRecord[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
 
       RECORDS.push(
         ...Array.from({ length: 500 }).map((_, i) => ({
           projectId: ProjectId('project1'),
           timestamp: START.add(-i, 'hours'),
-          blockNumber: i,
-          txHash: '0x1234567890abcdef',
           type: LivenessType('DA'),
         })),
       )
       RECORDS.push({
         projectId: ProjectId('project1'),
         timestamp: START.add(-1000, 'hours'),
-        blockNumber: 501,
-        txHash: '0x1234567890abcdef',
         type: LivenessType('DA'),
       })
 
@@ -52,14 +48,12 @@ describe(LivenessController.name, () => {
     })
 
     it('returns empty array if no anomalies', async () => {
-      const RECORDS: LivenessRecord[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
 
       RECORDS.push(
         ...Array.from({ length: 10 }).map((_, i) => ({
           projectId: ProjectId('project1'),
           timestamp: START.add(-i, 'hours'),
-          blockNumber: i,
-          txHash: '0x1234567890abcdef',
           type: LivenessType('DA'),
         })),
       )
@@ -82,7 +76,7 @@ describe(LivenessController.name, () => {
     })
 
     it('correctly calculate avg and max', async () => {
-      const RECORDS: LivenessRecord[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
 
       RECORDS.push(
         ...Array.from({ length: 30 + 60 / 2 + 30 / 3 }).map((_, i) => {
@@ -98,8 +92,6 @@ describe(LivenessController.name, () => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-daysToAdd, 'days'),
-            blockNumber: i,
-            txHash: '0x1234567890abcdef',
             type: LivenessType('DA'),
           }
         }),
@@ -139,9 +131,11 @@ describe(LivenessController.name, () => {
 
 const START = UnixTime.now()
 
-function getMockLivenessRepository(records: LivenessRecord[]) {
+function getMockLivenessRepository(
+  records: LivenessRecordWithProjectIdAndType[],
+) {
   return mockObject<LivenessRepository>({
-    getAll() {
+    getAllWithProjectIdAndType() {
       return Promise.resolve(records)
     },
     addMany() {

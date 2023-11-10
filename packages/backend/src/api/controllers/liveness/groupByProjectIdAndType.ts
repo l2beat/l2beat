@@ -1,15 +1,20 @@
 import { groupBy, mapValues } from 'lodash'
 
-import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
+import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
 import { groupByAndOmit } from '../utils/grouping'
 
-export function groupByProjectIdAndType(allRecords: LivenessRecord[]) {
+export function groupByProjectIdAndType(
+  allRecords: LivenessRecordWithProjectIdAndType[],
+) {
   return mapValues(
     mapValues(groupByAndOmit(allRecords, 'projectId'), (firstGroupingResult) =>
       groupBy(firstGroupingResult, (item) => item.type),
     ),
     (
-      value: Record<string, Omit<LivenessRecord, 'projectId'>[] | undefined>,
+      value: Record<
+        string,
+        Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[] | undefined
+      >,
     ) => {
       return {
         batchSubmissions: {
