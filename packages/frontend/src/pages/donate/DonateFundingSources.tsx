@@ -41,7 +41,7 @@ export function DonateFundingSources(props: DonateFundingSourcesProps) {
           </li>
         </ul>
       </div>
-      <div className="mt-4 w-[calc(100%_+_32px)] overflow-x-auto md:w-[calc(100%_+_96px)]">
+      <div className="mt-4 overflow-x-auto">
         <table>
           <thead>
             <tr className="h-14 border-b">
@@ -58,7 +58,7 @@ export function DonateFundingSources(props: DonateFundingSourcesProps) {
                   <td className="border-r border-l px-4 text-center">
                     {item.tier}
                   </td>
-                  <td className="whitespace-pre pl-4 md:whitespace-normal">
+                  <td className="whitespace-pre px-4 md:whitespace-normal">
                     {item.description}
                   </td>
                 </tr>
