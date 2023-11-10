@@ -7,6 +7,15 @@ import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
 
+const UNVERIFIED_DESCRIPTION_SOME =
+  'The source code of some of these contracts is not verified on Etherscan.'
+
+const UNVERIFIED_DESCRIPTION_ALL =
+  'The source code of these contracts is not verified on Etherscan.'
+
+const UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION =
+  'The source code of some implementations is not verified on Etherscan.'
+
 const UNVERIFIED_RISK: ProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'the source code of unverified contracts contains malicious code.',
@@ -61,6 +70,9 @@ export const CONTRACTS = {
   EMPTY,
   UNDER_REVIEW,
   UNVERIFIED_DESCRIPTION,
+  UNVERIFIED_DESCRIPTION_SOME,
+  UNVERIFIED_DESCRIPTION_ALL,
+  UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION,
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,
   UPGRADE_WITH_DELAY_RISK,

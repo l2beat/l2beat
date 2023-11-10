@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
 
 import { LivenessController } from '../../api/controllers/liveness/LivenessController'
 import { createLivenessRouter } from '../../api/routers/LivenessRouter'
@@ -44,8 +43,7 @@ export function createLivenessModule(
     livenessClient,
     indexerStateRepository,
     livenessRepository,
-    // TODO: figure out from where to start
-    UnixTime.now().toStartOf('hour').add(-1, 'days'),
+    config.liveness.minTimestamp,
   )
 
   const livenessController = new LivenessController(livenessRepository)
