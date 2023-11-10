@@ -67,6 +67,7 @@ export interface LivenessConfig {
     readonly privateKey: string
     readonly projectId: string
   }
+  readonly minTimestamp: UnixTime
 }
 
 export interface ChainTvlConfig {

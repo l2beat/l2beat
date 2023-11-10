@@ -26,10 +26,10 @@
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "ethers": "^5.7.2",
+    "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
-    "zod": "^3.22.2",
-    "jsonc-parser": "^3.2.0"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@l2beat/discovery-types": "^0.5.0"
