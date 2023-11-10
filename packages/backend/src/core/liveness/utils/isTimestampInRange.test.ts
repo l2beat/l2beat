@@ -8,6 +8,7 @@ describe(isTimestampInRange.name, () => {
   const testCases = [
     {
       name: 'since & until smaller than from',
+      latestSynced: undefined, // not relevant
       since: START.add(-2, 'hours'),
       until: START.add(-1, 'hours'),
       from: START,
@@ -16,6 +17,7 @@ describe(isTimestampInRange.name, () => {
     },
     {
       name: 'since smaller than from | until bigger than from & smaller than to',
+      latestSynced: undefined, // not relevant
       since: START.add(-1, 'hours'),
       until: START.add(1, 'hours'),
       from: START,
@@ -24,6 +26,7 @@ describe(isTimestampInRange.name, () => {
     },
     {
       name: 'since smaller than from | until bigger than to',
+      latestSynced: undefined, // not relevant
       since: START.add(-1, 'hours'),
       until: START.add(3, 'hours'),
       from: START,
@@ -32,6 +35,7 @@ describe(isTimestampInRange.name, () => {
     },
     {
       name: 'since bigger than from & smaller than to | until bigger than from & smaller than to',
+      latestSynced: undefined, // not relevant
       since: START.add(1, 'hours'),
       until: START.add(2, 'hours'),
       from: START,
@@ -40,6 +44,7 @@ describe(isTimestampInRange.name, () => {
     },
     {
       name: 'since bigger than from & smaller than to | until bigger than to',
+      latestSynced: undefined, // not relevant
       since: START.add(1, 'hours'),
       until: START.add(3, 'hours'),
       from: START,
@@ -48,10 +53,35 @@ describe(isTimestampInRange.name, () => {
     },
     {
       name: 'since bigger than to | until bigger than to',
+      latestSynced: undefined, // not relevant
       since: START.add(2, 'hours'),
       until: START.add(3, 'hours'),
       from: START,
       to: START.add(1, 'hours'),
+      expected: false,
+    },
+    {
+      name: 'lastSynced smaller than from & to',
+      latestSynced: START.add(-1, 'hours'),
+      since: new UnixTime(0),
+      from: START,
+      to: START.add(3, 'hours'),
+      expected: true,
+    },
+    {
+      name: 'lastSynced bigger than from & smaller than to',
+      latestSynced: START.add(2, 'hours'),
+      since: new UnixTime(0),
+      from: START,
+      to: START.add(3, 'hours'),
+      expected: true,
+    },
+    {
+      name: 'lastSynced bigger than from & to',
+      latestSynced: START.add(4, 'hours'),
+      since: new UnixTime(0),
+      from: START,
+      to: START.add(3, 'hours'),
       expected: false,
     },
   ]
@@ -62,6 +92,7 @@ describe(isTimestampInRange.name, () => {
         isTimestampInRange(
           testCase.since,
           testCase.until,
+          testCase.latestSynced,
           testCase.from,
           testCase.to,
         ),
