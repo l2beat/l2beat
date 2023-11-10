@@ -3,6 +3,7 @@ import React from 'react'
 
 import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
+import { Link } from '../../components/Link'
 import { Wrapped } from '../Page'
 import { DonateFundingSourcesProps } from './DonateFundingSources'
 import { DonatePageProps } from './DonatePage'
@@ -107,17 +108,32 @@ function getFundingSources(): DonateFundingSourcesProps {
       {
         source: 'L2 Amsterdam (2022) conference sponsorships',
         tier: 'Small',
-        description: 'April 2022; covered the costs of the conference',
+        description: (
+          <span>
+            <div>April 2022</div>
+            <div>Covered the costs of the conference</div>
+          </span>
+        ),
       },
       {
         source: 'L2 Warsaw (2023) conference sponsorships',
         tier: 'Small',
-        description: 'August 2023; covered the costs of the conference',
+        description: (
+          <span>
+            <div>August 2023</div>
+            <div>Covered the costs of the conference</div>
+          </span>
+        ),
       },
       {
         source: 'L2DAYS Istanbul (2023) conference sponsorships',
         tier: 'Medium',
-        description: 'November 2023; covered the costs of the conference',
+        description: (
+          <span>
+            <div>November 2023</div>
+            <div>Covered the costs of the conference</div>
+          </span>
+        ),
       },
       {
         source: 'Upgradeability of Ethereum L2s” report',
@@ -129,8 +145,10 @@ function getFundingSources(): DonateFundingSourcesProps {
         tier: 'Medium',
         description: (
           <span>
-            Live at dydx.l2beat.com, view the code here. Funded by StarkWare and
-            dYdX
+            Live at <Link href="https://dydx.l2beat.com">dydx.l2beat.com</Link>,
+            view the code{' '}
+            <Link href="https://github.com/l2beat/starkex-explorer">here</Link>.
+            Funded by StarkWare and dYdX
           </span>
         ),
       },

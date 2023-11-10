@@ -1,11 +1,5 @@
 import React from 'react'
 
-import {
-  ColumnConfig,
-  RowConfig,
-  TableView,
-} from '../../components/table/TableView'
-
 export interface DonateFundingSourcesProps {
   items: DonateFundingSourceEntry[]
 }
@@ -17,34 +11,6 @@ interface DonateFundingSourceEntry {
 }
 
 export function DonateFundingSources(props: DonateFundingSourcesProps) {
-  const columnsConfig: ColumnConfig<DonateFundingSourceEntry>[] = [
-    {
-      name: 'Source / Project',
-      headClassName: 'pl-4',
-      getValue: (x) => <span className="pl-4">{x.source}</span>,
-    },
-    {
-      name: 'Tier',
-      getValue: (x) => x.tier,
-    },
-    {
-      name: 'Description',
-      getValue: (x) => x.description,
-    },
-  ]
-
-  const rows: RowConfig<DonateFundingSourceEntry> = {
-    getProps: (entry) => {
-      return {
-        href:
-          entry.source === 'Open-source explorer for StarkEx deployments'
-            ? 'https://dydx.l2beat.com'
-            : undefined,
-        className: 'cursor-auto',
-      }
-    },
-  }
-
   return (
     <section id="funding-sources" className="mt-8">
       <a
@@ -64,17 +30,44 @@ export function DonateFundingSources(props: DonateFundingSourcesProps) {
           amounts:
         </span>
         <ul className="mt-2 list-inside list-disc">
-          <li>Significant: Above 500,000 USD</li>
-          <li>Medium: Between 100,000 USD and 500,000 USD</li>
-          <li>Small: Below 100.000 USD</li>
+          <li>
+            <strong>Significant</strong>: Above 500,000 USD
+          </li>
+          <li>
+            <strong>Medium</strong>: Between 100,000 USD and 500,000 USD
+          </li>
+          <li>
+            <strong>Small</strong>: Below 100.000 USD
+          </li>
         </ul>
       </div>
-      <TableView
-        columnsConfig={columnsConfig}
-        items={props.items}
-        rows={rows}
-      />
-      <div className="mt-4">Last updated: November 2023</div>
+      <div className="mt-4 w-[calc(100%_+_32px)] overflow-x-auto md:w-[calc(100%_+_96px)]">
+        <table>
+          <thead>
+            <tr className="h-14 border-b">
+              <th className="min-w-[300px]">Source / Project</th>
+              <th className="border-r border-l">Tier</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.items.map((item, i) => {
+              return (
+                <tr className="h-14 border-b last:border-b-0" key={i}>
+                  <td className="px-4">{item.source}</td>
+                  <td className="border-r border-l px-4 text-center">
+                    {item.tier}
+                  </td>
+                  <td className="whitespace-pre pl-4 md:whitespace-normal">
+                    {item.description}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-8 font-bold">Last updated: November 2023</div>
     </section>
   )
 }
