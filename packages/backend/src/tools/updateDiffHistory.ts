@@ -22,9 +22,11 @@ import { rimraf } from 'rimraf'
 void updateDiffHistoryFile()
 
 async function updateDiffHistoryFile() {
-  if(process.argv.filter((v) => v.startsWith('-')).length > 0) {
-      console.log("Discovery run with non-default configuration, skipping updating the diff history file...")
-      process.exit(0)
+  if (process.argv.filter((v) => v.startsWith('-')).length > 0) {
+    console.log(
+      'Discovery run with non-default configuration, skipping updating the diff history file...',
+    )
+    process.exit(0)
   }
 
   console.log('Updating diff history file...')
