@@ -41,6 +41,17 @@ const timelockDefaultDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
+const SCNumConfirmationsRequired = discovery.getContractValue<number>(
+  'SecurityCouncil',
+  'numConfirmationsRequired',
+)
+
+const SCMembers = discovery.getPermissionedAccounts('SecurityCouncil', 'owners')
+
+const SCMembersSize = SCMembers.length
+
+const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
+
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
@@ -180,26 +191,31 @@ export const kroma: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: false,
+    {
+      rollupNodeLink: 'https://github.com/kroma-network/kroma',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',
@@ -332,9 +348,13 @@ export const kroma: Layer2 = {
       accounts: [
         discovery.getPermissionedAccount('Colosseum', 'SECURITY_COUNCIL'),
       ],
-      description:
-        'MultiSig (currently 1/1) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
-        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.',
+      description: `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
+        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
+    },
+    {
+      name: 'SecurityCouncil members',
+      accounts: SCMembers,
+      description: `Members of the SecurityCouncil.`,
     },
     {
       name: 'SecurityCouncilAdmin',

@@ -21,7 +21,6 @@
     "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c": "SecurityCouncilToken",
     "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd": "ProxyAdmin",
     "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Timelock",
-    "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081": "SecurityCouncilOperator",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator",
     "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "SystemConfig",
     "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2"
@@ -54,8 +53,14 @@
         "getConfirmations",
         "isConfirmed",
         "outputsDeleteRequested",
-        "transactions"
-      ]
+        "transactions",
+        "getOwners" // already read from owners array
+      ],
+      "fields": {
+        "owners": {
+          "type": "array"
+        }
+      }
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
@@ -95,7 +100,7 @@
       "ignoreInWatchMode": ["clock"]
     },
     "SecurityCouncilToken": {
-      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreMethods": ["getPastTotalSupply", "tokenByIndex"],
       "ignoreInWatchMode": ["clock"]
     },
     "Timelock": {

@@ -143,6 +143,13 @@ declare module 'knex/types/tables' {
     type: string
   }
 
+  interface DiscoveryCacheRow {
+    key: string
+    value: string
+    chain_id: number
+    block_number: number
+  }
+
   interface IndexerStateRow {
     indexer_id: string
     config_hash: string
@@ -170,6 +177,7 @@ declare module 'knex/types/tables' {
     circulating_supplies: CirculatingSupplyRow
     circulating_supplies_status: CirculatingSupplyStatusRow
     liveness: LivenessRow
+    discovery_cache: DiscoveryCacheRow
     indexer_state: IndexerStateRow
   }
 }

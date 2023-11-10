@@ -26,7 +26,9 @@ export function getTvlRenderParams(
     return {
       series: [state.useAltCurrency ? eth : usd],
       data: {
-        date: formatTimestamp(timestamp, true),
+        date: formatTimestamp(timestamp, {
+          withTime: true,
+        }),
         usd: data[1],
         eth: eth,
       },

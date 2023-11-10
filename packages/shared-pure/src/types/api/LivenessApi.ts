@@ -1,30 +1,40 @@
 import z from 'zod'
 
 import { branded } from '../branded'
+import { LivenessType } from '../LivenessType'
 import { UnixTime } from '../UnixTime'
 
-const DataPoint = z.object({
-  averageInSeconds: z.number().positive().int(),
-  maximumInSeconds: z.number().positive().int(),
-})
+const DataPoint = z
+  .object({
+    averageInSeconds: z.number().positive().int(),
+    maximumInSeconds: z.number().positive().int(),
+  })
+  .or(z.undefined())
 
 export const LivenessApiProject = z.object({
-  batchSubmissions: z.object({
-    last30Days: DataPoint,
-    last90Days: DataPoint,
-    max: DataPoint,
-  }),
-  stateUpdates: z.object({
-    last30Days: DataPoint,
-    last90Days: DataPoint,
-    max: DataPoint,
-  }),
-  anomalies: z.array(
-    z.object({
-      timestamp: branded(z.number(), (n) => new UnixTime(n)),
-      durationInSeconds: z.number().positive().int(),
-    }),
-  ),
+  batchSubmissions: z
+    .object({
+      last30Days: DataPoint,
+      last90Days: DataPoint,
+      max: DataPoint,
+    })
+    .or(z.undefined()),
+  stateUpdates: z
+    .object({
+      last30Days: DataPoint,
+      last90Days: DataPoint,
+      max: DataPoint,
+    })
+    .or(z.undefined()),
+  anomalies: z
+    .array(
+      z.object({
+        timestamp: branded(z.number(), (n) => new UnixTime(n)),
+        durationInSeconds: z.number().positive().int(),
+        type: branded(z.string(), (t) => LivenessType(t)),
+      }),
+    )
+    .or(z.undefined()),
 })
 export type LivenessApiProject = z.infer<typeof LivenessApiProject>
 

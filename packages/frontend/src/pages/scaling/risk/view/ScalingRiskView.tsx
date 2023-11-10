@@ -5,7 +5,7 @@ import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
 import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { getScalingRiskColumns } from '../../../../components/table/props/getScalingTableColumns'
+import { getScalingRiskColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { Tabs } from '../../../../components/Tabs'
 import { ScalingRiskViewEntry } from './types'
@@ -16,7 +16,7 @@ export interface ScalingRiskViewProps {
 }
 
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {
-  const columns = getScalingRiskColumns()
+  const columns = getScalingRiskColumnsConfig()
   const rows: RowConfig<ScalingRiskViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'risks'),
   }
@@ -36,7 +36,11 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
             name: 'Active projects',
             shortName: 'Active',
             content: (
-              <TableView items={activeProjects} columns={columns} rows={rows} />
+              <TableView
+                items={activeProjects}
+                columnsConfig={columns}
+                rows={rows}
+              />
             ),
             itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
@@ -48,7 +52,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
             content: (
               <TableView
                 items={archivedProjects}
-                columns={columns}
+                columnsConfig={columns}
                 rows={rows}
               />
             ),

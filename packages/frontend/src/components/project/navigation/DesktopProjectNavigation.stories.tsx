@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
-import { allModes } from '../../../../.storybook/modes'
+import { onlyDesktopModes } from '../../../../.storybook/modes'
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
@@ -40,10 +40,7 @@ const meta: Meta<typeof DesktopProjectNavigation> = {
   },
   parameters: {
     chromatic: {
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
+      modes: onlyDesktopModes,
     },
   },
 }

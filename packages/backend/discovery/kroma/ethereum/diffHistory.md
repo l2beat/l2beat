@@ -1,3 +1,48 @@
+# Diff at Fri, 03 Nov 2023 09:59:02 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@9fa31f2a6274083dfe7f01b69d1220921459db02
+
+## Description
+
+- Additional 8 EOAs added to the SecurityCouncil (making it a 1/9 multisig).
+- Owner of the SecurityCouncilToken changed from EOA to a Timelock contract
+  (0x2260...FDc1).
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+      values.owners[8]:
++        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+      values.owners[7]:
++        "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
+      values.owners[6]:
++        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
+      values.owners[5]:
++        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      values.owners[4]:
++        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
+      values.owners[3]:
++        "0xbDeE962137373A755a71C716E01B9946B1a27686"
+      values.owners[2]:
++        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+      values.owners[1]:
++        "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851"
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+      values.owner:
+-        "0xA03c13C6597a0716D1525b7fDaD2fD95ECb49081"
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.totalSupply:
+-        1
++        9
+    }
+```
+
 # Diff at Fri, 29 Sep 2023 07:58:06 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)

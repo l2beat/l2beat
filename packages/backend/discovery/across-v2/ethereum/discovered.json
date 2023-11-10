@@ -1,8 +1,8 @@
 {
   "name": "across-v2",
   "chain": "ethereum",
-  "blockNumber": 18340367,
-  "configHash": "0x464a979ad1c5441bd1a1a9b7ee6ea055bc3b9c272403ddb9c0e610587ff3c1d9",
+  "blockNumber": 18519360,
+  "configHash": "0xbef5156fb02ece9b784f5927b1ab2df6351f3bb7ab592a3e0f2bcdc3c7574133",
   "version": 3,
   "contracts": [
     {
@@ -17,7 +17,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "115641395695317769680980735",
+        "totalSupply": "115860845544776900755881804",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -105,7 +105,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1697186759,
+        "getCurrentTime": 1699351475,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -134,10 +134,10 @@
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1697186759,
+        "getCurrentTime": 1699351475,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1043196,
+        "numberOfDeposits": 1058354,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -157,7 +157,7 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1697186759,
+        "getCurrentTime": 1699351475,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -180,7 +180,8 @@
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1597806870,
@@ -193,10 +194,38 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 477,
+        "nonce": 497,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "OptimisticGovernor",
+      "address": "0x8692B776d1Ff0664177c90465038056Dc64f8991",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1683067175,
+      "values": {
+        "avatar": "0xB524735356985D2f267FA010D681f061DfF03715",
+        "bondAmount": "10000000000000000000",
+        "collateral": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "escalationManager": "0x0000000000000000000000000000000000000000",
+        "EXPLANATION_KEY": "0x6578706c616e6174696f6e",
+        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+        "getGuard": "0x0000000000000000000000000000000000000000",
+        "getProposalBond": "10000000000000000000",
+        "guard": "0x0000000000000000000000000000000000000000",
+        "identifier": "0x4153534552545f54525554480000000000000000000000000000000000000000",
+        "liveness": 432000,
+        "optimisticOracleV3": "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+        "owner": "0xB524735356985D2f267FA010D681f061DfF03715",
+        "PROPOSAL_HASH_KEY": "0x70726f706f73616c48617368",
+        "rules": "I assert that this transaction proposal is valid according to the following rules: Proposals approved on Snapshot, as verified at https://snapshot.org/#/acrossprotocol.eth, are valid as long as there is a minimum quorum of 6000000 and a minimum voting period of 72 hours and it does not appear that the Snapshot voting system is being exploited or is otherwise unavailable. The quorum and voting period are minimum requirements for a proposal to be valid. Quorum and voting period values set for a specific proposal in Snapshot should be used if they are more strict than the rules parameter. The explanation included with the on-chain proposal must be the unique IPFS identifier for the specific Snapshot proposal that was approved or a unique identifier for a proposal in an alternative voting system approved by DAO social consensus if Snapshot is being exploited or is otherwise unavailable.",
+        "RULES_KEY": "0x72756c6573",
+        "target": "0xB524735356985D2f267FA010D681f061DfF03715"
+      },
+      "derivedName": "OptimisticGovernor"
     },
     {
       "name": "EmergencyProposer",
@@ -208,7 +237,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1697186759,
+        "getCurrentTime": 1699351475,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -240,7 +269,8 @@
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"]
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1636157803,
@@ -255,7 +285,7 @@
           "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
         ],
         "getThreshold": 3,
-        "nonce": 174,
+        "nonce": 175,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -325,13 +355,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x648a44286c36cad924a640a890239264d3fd739520351c42c7d8fb8c02c4ec18",
-          "0x92294f77a9b718a4fec75dc69c580f294181a52bab4f77e17fd653385f2e821c",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          63,
-          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          "0xb22c5b94d63a08063c1a0de1cc03635e92663e73749f8b06c0240f3d8431086b",
+          "0x99669e96d908b2f8a1c0205b4e35c047f918e3ffb990552f338117acc0390221",
+          "0x9054e0c75965fe919a85b877a36a0005de43e07f75a12051c705f0af623401dd",
           0,
-          1697186171
+          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          6,
+          1699355159
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -373,6 +403,25 @@
         "totalSupply": "27802902467539846062"
       },
       "derivedName": "BondToken"
+    },
+    {
+      "name": "OptimisticOracleV3",
+      "address": "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1676487275,
+      "values": {
+        "burnedBondPercentage": "500000000000000000",
+        "cachedOracle": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
+        "defaultCurrency": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "defaultIdentifier": "0x4153534552545f54525554480000000000000000000000000000000000000000",
+        "defaultLiveness": 7200,
+        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+        "numericalTrue": "1000000000000000000",
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      },
+      "derivedName": "OptimisticOracleV3"
     }
   ],
   "eoas": [
@@ -604,6 +653,63 @@
     "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": [
       "constructor(address _masterCopy)"
     ],
+    "0x8692B776d1Ff0664177c90465038056Dc64f8991": [
+      "constructor(address _finder, address _owner, address _collateral, uint256 _bondAmount, string _rules, bytes32 _identifier, uint64 _liveness)",
+      "error NotIERC165Compliant(address guard_)",
+      "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
+      "event ChangedGuard(address guard)",
+      "event Initialized(uint8 version)",
+      "event OptimisticGovernorDeployed(address indexed owner, address indexed avatar, address target)",
+      "event OptimisticOracleChanged(address indexed newOptimisticOracleV3)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposalDeleted(bytes32 indexed proposalHash, bytes32 indexed assertionId)",
+      "event ProposalExecuted(bytes32 indexed proposalHash, bytes32 indexed assertionId)",
+      "event SetCollateralAndBond(address indexed collateral, uint256 indexed bondAmount)",
+      "event SetEscalationManager(address indexed escalationManager)",
+      "event SetIdentifier(bytes32 indexed identifier)",
+      "event SetLiveness(uint64 indexed liveness)",
+      "event SetRules(string rules)",
+      "event TargetSet(address indexed previousTarget, address indexed newTarget)",
+      "event TransactionExecuted(bytes32 indexed proposalHash, bytes32 indexed assertionId, uint256 indexed transactionIndex)",
+      "event TransactionsProposed(address indexed proposer, uint256 indexed proposalTime, bytes32 indexed assertionId, tuple(tuple(address to, uint8 operation, uint256 value, bytes data)[] transactions, uint256 requestTime) proposal, bytes32 proposalHash, bytes explanation, string rules, uint256 challengeWindowEnds)",
+      "function EXPLANATION_KEY() view returns (bytes)",
+      "function PROPOSAL_HASH_KEY() view returns (bytes)",
+      "function RULES_KEY() view returns (bytes)",
+      "function assertionDisputedCallback(bytes32 assertionId)",
+      "function assertionIds(bytes32) view returns (bytes32)",
+      "function assertionResolvedCallback(bytes32 assertionId, bool assertedTruthfully)",
+      "function avatar() view returns (address)",
+      "function bondAmount() view returns (uint256)",
+      "function collateral() view returns (address)",
+      "function deleteProposalOnUpgrade(bytes32 proposalHash)",
+      "function escalationManager() view returns (address)",
+      "function executeProposal(tuple(address to, uint8 operation, uint256 value, bytes data)[] transactions)",
+      "function finder() view returns (address)",
+      "function getCurrentTime() view returns (uint256)",
+      "function getGuard() view returns (address _guard)",
+      "function getProposalBond() view returns (uint256)",
+      "function guard() view returns (address)",
+      "function identifier() view returns (bytes32)",
+      "function liveness() view returns (uint64)",
+      "function optimisticOracleV3() view returns (address)",
+      "function owner() view returns (address)",
+      "function proposalHashes(bytes32) view returns (bytes32)",
+      "function proposeTransactions(tuple(address to, uint8 operation, uint256 value, bytes data)[] transactions, bytes explanation)",
+      "function renounceOwnership()",
+      "function rules() view returns (string)",
+      "function setAvatar(address _avatar)",
+      "function setCollateralAndBond(address _collateral, uint256 _bondAmount)",
+      "function setEscalationManager(address _escalationManager)",
+      "function setGuard(address _guard)",
+      "function setIdentifier(bytes32 _identifier)",
+      "function setLiveness(uint64 _liveness)",
+      "function setRules(string _rules)",
+      "function setTarget(address _target)",
+      "function setUp(bytes initializeParams)",
+      "function sync()",
+      "function target() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
     "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": [
       "constructor(address _token, uint256 _quorum, address _governor, address _executor, uint64 _minimumWaitTime)",
       "event EmergencyProposalExecuted(uint256 indexed id, address indexed sender, address indexed caller, uint64 expiryTime, uint256 lockedTokens, tuple(address to, uint256 value, bytes data)[] transactions)",
@@ -818,6 +924,40 @@
       "function transferFrom(address src, address dst, uint256 amt) returns (bool)",
       "function transferOwnership(address newOwner)",
       "function withdraw(uint256 wad)"
+    ],
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": [
+      "constructor(address _finder, address _defaultCurrency, uint64 _defaultLiveness)",
+      "event AdminPropertiesSet(address defaultCurrency, uint64 defaultLiveness, uint256 burnedBondPercentage)",
+      "event AssertionDisputed(bytes32 indexed assertionId, address indexed caller, address indexed disputer)",
+      "event AssertionMade(bytes32 indexed assertionId, bytes32 domainId, bytes claim, address indexed asserter, address callbackRecipient, address escalationManager, address caller, uint64 expirationTime, address currency, uint256 bond, bytes32 indexed identifier)",
+      "event AssertionSettled(bytes32 indexed assertionId, address indexed bondRecipient, bool disputed, bool settlementResolution, address settleCaller)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function assertTruth(bytes claim, address asserter, address callbackRecipient, address escalationManager, uint64 liveness, address currency, uint256 bond, bytes32 identifier, bytes32 domainId) returns (bytes32 assertionId)",
+      "function assertTruthWithDefaults(bytes claim, address asserter) returns (bytes32)",
+      "function assertions(bytes32) view returns (tuple(bool arbitrateViaEscalationManager, bool discardOracle, bool validateDisputers, address assertingCaller, address escalationManager) escalationManagerSettings, address asserter, uint64 assertionTime, bool settled, address currency, uint64 expirationTime, bool settlementResolution, bytes32 domainId, bytes32 identifier, uint256 bond, address callbackRecipient, address disputer)",
+      "function burnedBondPercentage() view returns (uint256)",
+      "function cachedCurrencies(address) view returns (bool isWhitelisted, uint256 finalFee)",
+      "function cachedIdentifiers(bytes32) view returns (bool)",
+      "function cachedOracle() view returns (address)",
+      "function defaultCurrency() view returns (address)",
+      "function defaultIdentifier() view returns (bytes32)",
+      "function defaultLiveness() view returns (uint64)",
+      "function disputeAssertion(bytes32 assertionId, address disputer)",
+      "function finder() view returns (address)",
+      "function getAssertion(bytes32 assertionId) view returns (tuple(tuple(bool arbitrateViaEscalationManager, bool discardOracle, bool validateDisputers, address assertingCaller, address escalationManager) escalationManagerSettings, address asserter, uint64 assertionTime, bool settled, address currency, uint64 expirationTime, bool settlementResolution, bytes32 domainId, bytes32 identifier, uint256 bond, address callbackRecipient, address disputer))",
+      "function getAssertionResult(bytes32 assertionId) view returns (bool)",
+      "function getCurrentTime() view returns (uint256)",
+      "function getMinimumBond(address currency) view returns (uint256)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function numericalTrue() view returns (int256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setAdminProperties(address _defaultCurrency, uint64 _defaultLiveness, uint256 _burnedBondPercentage)",
+      "function settleAndGetAssertionResult(bytes32 assertionId) returns (bool)",
+      "function settleAssertion(bytes32 assertionId)",
+      "function stampAssertion(bytes32 assertionId) view returns (bytes)",
+      "function syncUmaParams(bytes32 identifier, address currency)",
+      "function transferOwnership(address newOwner)"
     ]
   }
 }

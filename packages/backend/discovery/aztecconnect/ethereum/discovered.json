@@ -10,7 +10,8 @@
       "address": "0x23f8008159C0427458b948c3DD7795c6DBE8236F",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1653687769,
@@ -45,7 +46,8 @@
       "address": "0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1668605483,
@@ -80,7 +82,8 @@
       "address": "0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1668604175,
@@ -133,7 +136,8 @@
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1610552620,
