@@ -104,6 +104,32 @@ export const polygonzkevm: Layer2 = {
       type: 'rpc',
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x5e9145c9',
+          functionSignature:
+            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
+          sinceTimestamp: new UnixTime(1679653163),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x2b0006fa',
+          functionSignature:
+            'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
+          sinceTimestamp: new UnixTime(1679653163),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -112,7 +138,7 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L817',
+            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L817',
           ],
         },
       ],
@@ -126,7 +152,7 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L186',
+            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L186',
           ],
         },
       ],
@@ -139,7 +165,7 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L243',
+            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L243',
           ],
         },
       ],
@@ -153,8 +179,8 @@ export const polygonzkevm: Layer2 = {
         {
           contract: 'PolygonZkEvm',
           references: [
-            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L636',
-            'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L859',
+            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L636',
+            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L859',
           ],
         },
       ],
@@ -196,7 +222,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L817 - Etherscan source code, _verifyAndRewardBatches function',
-          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F1#L115',
+          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F1#L115',
         },
       ],
     },
@@ -205,7 +231,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L186 - Etherscan source code, sequencedBatches mapping',
-          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L186',
+          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L186',
         },
       ],
     },
@@ -224,7 +250,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L454 - Etherscan source code, onlyTrustedSequencer modifier',
-          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L454',
+          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L454',
         },
       ],
     },
@@ -235,7 +261,7 @@ export const polygonzkevm: Layer2 = {
       references: [
         {
           text: 'PolygonZkEvm.sol#L468 - Etherscan source code, isForceBatchAllowed modifier',
-          href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L468',
+          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L468',
         },
       ],
     },
@@ -245,7 +271,7 @@ export const polygonzkevm: Layer2 = {
         references: [
           {
             text: 'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L311',
+            href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L311',
           },
         ],
       },
@@ -309,7 +335,7 @@ export const polygonzkevm: Layer2 = {
     references: [
       {
         text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        href: 'https://etherscan.io/address/0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F#code#F15#L806',
+        href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L806',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],

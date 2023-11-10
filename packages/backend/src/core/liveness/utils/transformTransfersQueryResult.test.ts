@@ -16,13 +16,14 @@ describe(transformTransfersQueryResult.name, () => {
     const ADDRESS_6 = EthereumAddress.random()
     const sinceTimestamp = UnixTime.now()
 
-    const config: LivenessTransfer[] = [
+    const config: Omit<LivenessTransfer, 'id'>[] = [
       {
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
         type: 'STATE',
         sinceTimestamp,
+        livenessConfigurationId: 1,
       },
       {
         projectId: ProjectId('project1'),
@@ -30,6 +31,7 @@ describe(transformTransfersQueryResult.name, () => {
         to: ADDRESS_4,
         type: 'DA',
         sinceTimestamp,
+        livenessConfigurationId: 2,
       },
       {
         projectId: ProjectId('project2'),
@@ -37,6 +39,7 @@ describe(transformTransfersQueryResult.name, () => {
         to: ADDRESS_6,
         type: 'STATE',
         sinceTimestamp,
+        livenessConfigurationId: 3,
       },
     ]
     const queryResults: BigQueryTransfersResult = [
@@ -64,25 +67,22 @@ describe(transformTransfersQueryResult.name, () => {
     ]
     const expected: LivenessRecord[] = [
       {
-        projectId: ProjectId('project1'),
         blockNumber: 1,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
         txHash: '0x095e4e9ee709e353ad7849cf30e4dc19',
-        type: 'STATE',
+        livenessConfigurationId: 1,
       },
       {
-        projectId: ProjectId('project1'),
         blockNumber: 2,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
         txHash: '0x915d9ed63e196d8c612aad5d6f5cd1ba',
-        type: 'DA',
+        livenessConfigurationId: 2,
       },
       {
-        projectId: ProjectId('project2'),
         blockNumber: 3,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T03:00:00Z')),
         txHash: '0x90d5e81b40d6a6fa6f34b3dc67d3fce6',
-        type: 'STATE',
+        livenessConfigurationId: 3,
       },
     ]
 

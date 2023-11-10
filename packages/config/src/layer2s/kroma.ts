@@ -105,6 +105,28 @@ export const kroma: Layer2 = {
       callsPerMinute: 1500,
       assessCount: subtractOne,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'),
+          to: EthereumAddress('0xfF00000000000000000000000000000000000255'),
+          sinceTimestamp: new UnixTime(1693883663),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6',
+          ),
+          selector: '0x5a045f78',
+          functionSignature:
+            'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1693880579),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
