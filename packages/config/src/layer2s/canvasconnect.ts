@@ -77,6 +77,21 @@ export const canvasconnect: Layer2 = {
         tokens: ['ETH', 'USDC'],
       }),
     ],
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d',
+          ),
+          selector: '0x538f9406',
+          functionSignature:
+            'function updateState(uint256[] publicInput, uint256[] applicationData)',
+          sinceTimestamp: new UnixTime(1674388691),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
