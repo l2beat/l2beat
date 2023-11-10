@@ -5,7 +5,12 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+PolygonZkEVM has changed it's implementation because PolygonZkEVMUpgraded - the
+contract at the implementation address - needed to be redeployed. This is
+because PolygonZkEVMUpgraded has FflonkVerifier hardcoded and because it was
+also redeployed to change two circuit parameters (C_0x and C0y) to update to the
+new address the whole contract needed to be redeployed. We can't peer into the
+actual change that took place because it's around the zk circuit.
 
 ## Watched changes
 
