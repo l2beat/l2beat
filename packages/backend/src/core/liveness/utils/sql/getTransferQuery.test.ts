@@ -6,13 +6,14 @@ import { getTransferQuery } from './getTransferQuery'
 
 describe('getTransferQuery', () => {
   it('should return valid SQL query', () => {
-    const config: LivenessTransfer[] = [
+    const config: Omit<LivenessTransfer, 'id'>[] = [
       {
         projectId: ProjectId('project-1'), // irrelevant
         from: EthereumAddress.random(),
         to: EthereumAddress.random(),
         type: 'DA', // irrelevant
         sinceTimestamp: new UnixTime(0), // irrelevant
+        livenessConfigurationId: 1, // irrelevant
       },
       {
         projectId: ProjectId('project-2'), // irrelevant
@@ -20,6 +21,7 @@ describe('getTransferQuery', () => {
         to: EthereumAddress.random(),
         type: 'DA', // irrelevant
         sinceTimestamp: new UnixTime(0), // irrelevant
+        livenessConfigurationId: 1, // irrelevant
       },
     ]
     const startTimestamp = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
