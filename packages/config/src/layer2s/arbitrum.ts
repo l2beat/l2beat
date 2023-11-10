@@ -339,6 +339,26 @@ export const arbitrum: Layer2 = {
             'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
           sinceTimestamp: new UnixTime(1661457944),
         },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x6f12b0c9',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0xe0bc9729',
+          functionSignature:
+            'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
       ],
       stateUpdates: [
         {
