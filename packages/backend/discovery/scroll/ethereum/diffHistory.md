@@ -1,3 +1,22 @@
+# Diff at Wed, 08 Nov 2023 15:41:27 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@a406ca5120d2111446400f9fd391e501cbd31e52
+
+## Description
+
+One ExecutorMultisig owner has changed.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+      values.getOwners.2:
+-        "0xEbbeeAA424AE904508465a41c927Be594C43Dc68"
++        "0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
 # Diff at Tue, 07 Nov 2023 07:33:37 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

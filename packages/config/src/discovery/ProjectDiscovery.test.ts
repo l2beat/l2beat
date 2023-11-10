@@ -239,7 +239,7 @@ describe(ProjectDiscovery.name, () => {
               type: 'Contract',
             },
           ],
-          description: 'Admin of SystemConfig. Admin of L2OutputOracle.',
+          description: 'Admin of SystemConfig, L2OutputOracle.',
           name: 'ProxyAdmin',
         },
       ])
