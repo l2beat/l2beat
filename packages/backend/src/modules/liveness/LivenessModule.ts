@@ -7,6 +7,7 @@ import { HourlyIndexer } from '../../core/liveness/HourlyIndexer'
 import { LivenessClient } from '../../core/liveness/LivenessClient'
 import { LivenessIndexer } from '../../core/liveness/LivenessIndexer'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
+import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
@@ -24,6 +25,10 @@ export function createLivenessModule(
 
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
+  const livenessConfigurationRepository = new LivenessConfigurationRepository(
+    database,
+    logger,
+  )
 
   const bigQueryWrapper = new BigQuerySDKWrapper({
     clientEmail: config.liveness.bigQuery.clientEmail,
@@ -41,6 +46,7 @@ export function createLivenessModule(
     livenessClient,
     indexerStateRepository,
     livenessRepository,
+    livenessConfigurationRepository,
     config.liveness.minTimestamp,
   )
 
