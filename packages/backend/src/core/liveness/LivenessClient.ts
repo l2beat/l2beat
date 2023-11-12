@@ -1,13 +1,12 @@
+import { assert } from '@l2beat/backend-tools'
 import { BigQueryClient } from '@l2beat/shared'
-import { EthereumAddress, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { Project } from '../../model'
+import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
-import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
+import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
+import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
@@ -21,21 +20,12 @@ import {
   transformTransfersQueryResult,
 } from './utils'
 
-export interface FunctionCallQueryParams {
-  address: EthereumAddress
-  selector: string
-}
-
-export interface TransferQueryParams {
-  from: EthereumAddress
-  to: EthereumAddress
-}
-
 export class LivenessClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
   async getLivenessData(
     projects: Project[],
+    configs: LivenessConfigurationRecord[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<{ data: LivenessRecord[]; to: UnixTime }> {
@@ -43,13 +33,25 @@ export class LivenessClient {
 
     const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
 
-    const config: LivenessConfig = mergeConfigs(projects)
+    const config = mergeConfigs(projects, configs)
 
     const transfersConfig = config.transfers.filter((c) =>
-      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, adjustedTo),
+      isTimestampInRange(
+        c.sinceTimestamp,
+        c.untilTimestamp,
+        c.latestSyncedTimestamp,
+        from,
+        adjustedTo,
+      ),
     )
     const functionCallsConfig = config.functionCalls.filter((c) =>
-      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, adjustedTo),
+      isTimestampInRange(
+        c.sinceTimestamp,
+        c.untilTimestamp,
+        c.latestSyncedTimestamp,
+        from,
+        adjustedTo,
+      ),
     )
 
     const [transfers, functionCalls] = await Promise.all([
@@ -92,13 +94,44 @@ export class LivenessClient {
   }
 }
 
-export function mergeConfigs(projects: Project[]): LivenessConfig {
+export function mergeConfigs(
+  projects: Project[],
+  configs: LivenessConfigurationRecord[],
+): {
+  transfers: LivenessTransfer[]
+  functionCalls: LivenessFunctionCall[]
+} {
+  // add proper values from configs
   return {
     transfers: projects
       .flatMap((p) => p.livenessConfig?.transfers)
-      .filter(notUndefined),
+      .filter(notUndefined)
+      .map((t) => {
+        const config = configs.find(
+          (c) => c.identifier === LivenessConfigurationIdentifier(t),
+        )
+        assert(config, 'Config should not be undefined there')
+
+        return {
+          ...t,
+          latestSyncedTimestamp: config.lastSyncedTimestamp,
+          livenessConfigurationId: config.id,
+        }
+      }),
     functionCalls: projects
       .flatMap((p) => p.livenessConfig?.functionCalls)
-      .filter(notUndefined),
+      .filter(notUndefined)
+      .map((t) => {
+        const config = configs.find(
+          (c) => c.identifier === LivenessConfigurationIdentifier(t),
+        )
+        assert(config, 'Config should not be undefined there')
+
+        return {
+          ...t,
+          latestSyncedTimestamp: config.lastSyncedTimestamp,
+          livenessConfigurationId: config.id,
+        }
+      }),
   }
 }

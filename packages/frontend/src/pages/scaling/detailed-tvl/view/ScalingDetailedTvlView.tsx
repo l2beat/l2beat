@@ -3,7 +3,7 @@ import React from 'react'
 import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { getScalingDetailedTvlColumns } from '../../../../components/table/props/getScalingTableColumns'
+import { getScalingDetailedTvlColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { ScalingDetailedTvlViewEntry } from '../types'
 
@@ -26,7 +26,7 @@ export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
       <TableView
         items={itemsToShow}
         rows={rows}
-        columns={getScalingDetailedTvlColumns()}
+        columnsConfig={getScalingDetailedTvlColumnsConfig()}
       />
       <ScalingLegend />
     </section>

@@ -327,6 +327,52 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x8f111f3c',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x6f12b0c9',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0xe0bc9729',
+          functionSignature:
+            'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
+          ),
+          selector: '0xa04cee60',
+          functionSignature:
+            'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+          sinceTimestamp: new UnixTime(1661455766),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -642,26 +688,31 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: true,
+    {
+      rollupNodeLink: 'https://github.com/OffchainLabs/nitro/',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: false,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   knowledgeNuggets: [
     {
       title: 'Arbitrum update boosts decentralization',

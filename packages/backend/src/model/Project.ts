@@ -14,8 +14,21 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { LivenessConfig } from '../core/liveness/types/LivenessConfig'
+import {
+  LivenessFunctionCall,
+  LivenessTransfer,
+} from '../core/liveness/types/LivenessConfig'
 
+interface LivenessConfig {
+  transfers: Omit<
+    LivenessTransfer,
+    'livenessConfigurationId' | 'latestSyncedTimestamp'
+  >[]
+  functionCalls: Omit<
+    LivenessFunctionCall,
+    'livenessConfigurationId' | 'latestSyncedTimestamp'
+  >[]
+}
 export interface Project {
   projectId: ProjectId
   type: 'layer2' | 'bridge'

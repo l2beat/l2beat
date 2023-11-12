@@ -9,6 +9,7 @@ export function getLivenessConfigHash(projects: Project[]): Hash256 {
 }
 
 // TODO: is JSON.stringify the best way to do this?
+// TODO: write tests
 function getEntries(projects: Project[]) {
   return projects.map(({ projectId, livenessConfig }) => {
     return {

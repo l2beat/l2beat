@@ -41,6 +41,17 @@ const timelockDefaultDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
+const SCNumConfirmationsRequired = discovery.getContractValue<number>(
+  'SecurityCouncil',
+  'numConfirmationsRequired',
+)
+
+const SCMembers = discovery.getPermissionedAccounts('SecurityCouncil', 'owners')
+
+const SCMembersSize = SCMembers.length
+
+const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
+
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
@@ -93,6 +104,28 @@ export const kroma: Layer2 = {
       url: 'https://api.kroma.network',
       callsPerMinute: 1500,
       assessCount: subtractOne,
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'),
+          to: EthereumAddress('0xfF00000000000000000000000000000000000255'),
+          sinceTimestamp: new UnixTime(1693883663),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6',
+          ),
+          selector: '0x5a045f78',
+          functionSignature:
+            'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1693880579),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -158,26 +191,31 @@ export const kroma: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: false,
+    {
+      rollupNodeLink: 'https://github.com/kroma-network/kroma',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',
@@ -310,9 +348,13 @@ export const kroma: Layer2 = {
       accounts: [
         discovery.getPermissionedAccount('Colosseum', 'SECURITY_COUNCIL'),
       ],
-      description:
-        'MultiSig (currently 1/1) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
-        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.',
+      description: `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
+        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
+    },
+    {
+      name: 'SecurityCouncil members',
+      accounts: SCMembers,
+      description: `Members of the SecurityCouncil.`,
     },
     {
       name: 'SecurityCouncilAdmin',
