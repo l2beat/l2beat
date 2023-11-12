@@ -5,7 +5,7 @@
 
 ## Description
 
-DeGate (v1) is going through a redeployment, and for this reason the main ExchangeV3 contract is switched to shutdown mode. 
+DeGate (v1) is going through a redeployment, and for this reason the main ExchangeV3 contract is switched to shutdown mode.
 
 ## Watched changes
 
