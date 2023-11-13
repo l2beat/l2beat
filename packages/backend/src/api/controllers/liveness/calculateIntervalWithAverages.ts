@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 
 import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
+import { GroupedByType } from './groupByProjectIdAndType'
 
 export type LivenessRecordWithInterval = Omit<
   LivenessRecordWithProjectIdAndType,
@@ -59,22 +60,28 @@ export function calculateIntervalWithAverages(
   }> = {}
   for (const project in records) {
     const projectRecords = records[project]
-
-    calculateIntervals(projectRecords.batchSubmissions.records)
-    const batchSubmissionsWithIntervals =
-      projectRecords.batchSubmissions.records
-
-    calculateIntervals(projectRecords.stateUpdates.records)
-    const stateUpdatesWithIntervals = projectRecords.stateUpdates.records
-
-    result[project] = {
-      batchSubmissions: calculateDetailedAverages(
-        batchSubmissionsWithIntervals,
-      ),
-      stateUpdates: calculateDetailedAverages(stateUpdatesWithIntervals),
-    }
+    result[project] = calcIntervalWithAvgsPerProject(projectRecords)
   }
   return result
+}
+
+export function calcIntervalWithAvgsPerProject({
+  batchSubmissions,
+  stateUpdates,
+}: GroupedByType): {
+  batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
+  stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+} {
+  calculateIntervals(batchSubmissions.records)
+  const batchSubmissionsWithIntervals = batchSubmissions.records
+
+  calculateIntervals(stateUpdates.records)
+  const stateUpdatesWithIntervals = stateUpdates.records
+
+  return {
+    batchSubmissions: calculateDetailedAverages(batchSubmissionsWithIntervals),
+    stateUpdates: calculateDetailedAverages(stateUpdatesWithIntervals),
+  }
 }
 
 function calculateDetailedAverages(
