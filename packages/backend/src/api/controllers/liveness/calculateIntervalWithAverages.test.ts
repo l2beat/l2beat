@@ -1,13 +1,11 @@
-import { LivenessType, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { LivenessType, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { cloneDeep } from 'lodash'
 
 import {
-  calculateAverage,
   calculateAverages,
   calculateIntervals,
   calculateIntervalWithAverages,
-  calculateMax,
-  filterRecords,
   LivenessRecordWithInterval,
 } from './calculateIntervalWithAverages'
 
@@ -46,45 +44,6 @@ const RECORDS: LivenessRecordWithInterval[] = [
   },
 ]
 
-describe(calculateMax.name, () => {
-  it('returns the maximum', () => {
-    const result = calculateMax([1, 2, 3, 4, 1, 5, 7])
-    expect(result).toEqual(7)
-  })
-})
-
-describe(calculateAverage.name, () => {
-  it('returns the average', () => {
-    const result = calculateAverage([1, 2, 3, 4])
-    // 2.5 rounded to 3
-    expect(result).toEqual(3)
-  })
-})
-
-describe(filterRecords.name, () => {
-  it('30d', () => {
-    const withIntervals = calculateIntervals(RECORDS)!
-    const result = filterRecords(withIntervals, '30d')
-    expect(result).toEqual(
-      withIntervals.slice(0, 3).map((r) => r.previousRecordInterval!),
-    )
-  })
-  it('90d', () => {
-    const withIntervals = calculateIntervals(RECORDS)!
-    const result = filterRecords(withIntervals, '90d')
-    expect(result).toEqual(
-      withIntervals.slice(0, 5).map((r) => r.previousRecordInterval!),
-    )
-  })
-  it('max', () => {
-    const withIntervals = calculateIntervals(RECORDS)!
-    const result = filterRecords(withIntervals, 'max')
-    expect(result).toEqual(
-      withIntervals.map((r) => r.previousRecordInterval!).filter(notUndefined),
-    )
-  })
-})
-
 describe(calculateIntervals.name, () => {
   it('returns records with intervals', () => {
     const expected: LivenessRecordWithInterval[] = [
@@ -103,17 +62,19 @@ describe(calculateIntervals.name, () => {
         type: LivenessType('DA'),
       },
     ]
-    const records = calculateIntervals(RECORDS.slice(0, 3))
+    const input = cloneDeep(RECORDS).slice(0, 3)
+    calculateIntervals(input)
 
-    expect(records).toEqual(expected)
+    expect(input).toEqual(expected)
   })
 })
 
 describe(calculateAverages.name, () => {
   it('returns the averages for stateUpdates with undefined', () => {
-    const records = calculateIntervals(RECORDS)!
+    const input = cloneDeep(RECORDS).slice(0, 3)
+    calculateIntervals(input)!
     const result = calculateAverages(
-      records.filter((r) => r.type === LivenessType('STATE')),
+      input.filter((r) => r.type === LivenessType('STATE')),
     )
     const expected = {
       last30Days: undefined,
@@ -123,9 +84,10 @@ describe(calculateAverages.name, () => {
     expect(result).toEqual(expected)
   })
   it('returns the averages for batchSubmissions', () => {
-    const records = calculateIntervals(RECORDS)!
+    const input = cloneDeep(RECORDS).slice(0, 3)
+    calculateIntervals(input)!
     const result = calculateAverages(
-      records.filter((r) => r.type === LivenessType('DA')),
+      input.filter((r) => r.type === LivenessType('DA')),
     )
     const expected = {
       last30Days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
