@@ -286,7 +286,7 @@ const meta = {
       {
         name: 'ZKSwap 1.0',
         slug: 'zkswap',
-        provider: 'zkSync',
+        provider: 'zkSync Lite',
         riskValues: {
           dataAvailability: {
             value: 'On chain',
@@ -405,7 +405,7 @@ const meta = {
       {
         name: 'ZKSwap 2.0',
         slug: 'zkswap2',
-        provider: 'zkSync',
+        provider: 'zkSync Lite',
         riskValues: {
           dataAvailability: {
             value: 'On chain',
@@ -842,7 +842,7 @@ const meta = {
       {
         name: 'zkSync Era',
         slug: 'zksync-era',
-        provider: 'zkSync',
+        provider: 'ZK Stack',
         riskValues: {
           dataAvailability: {
             value: 'On chain (SD)',

@@ -44,7 +44,7 @@ export const zksyncera: Layer2 = {
       'zkSync Era is a general-purpose ZK Rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its ZK friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
     purpose: 'Universal',
-    provider: 'zkSync',
+    provider: 'ZK Stack',
     category: 'ZK Rollup',
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],

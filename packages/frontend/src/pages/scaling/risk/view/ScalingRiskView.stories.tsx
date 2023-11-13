@@ -15,7 +15,7 @@ const meta = {
       {
         name: 'ZKSwap 1.0',
         slug: 'zkswap',
-        provider: 'zkSync',
+        provider: 'zkSync Lite',
         category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -99,7 +99,7 @@ const meta = {
       {
         name: 'ZKSwap 2.0',
         slug: 'zkswap2',
-        provider: 'zkSync',
+        provider: 'zkSync Lite',
         category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -396,7 +396,7 @@ const meta = {
         name: 'zkSync Era',
         slug: 'zksync-era',
         category: 'ZK Rollup',
-        provider: 'zkSync',
+        provider: 'ZK Stack',
         warning:
           'Withdrawals are delayed by 1d. The length of the delay can be arbitrarily set by a MultiSig.',
         isArchived: undefined,
