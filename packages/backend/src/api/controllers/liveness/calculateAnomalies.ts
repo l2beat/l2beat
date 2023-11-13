@@ -1,11 +1,7 @@
-import { assert } from '@l2beat/backend-tools'
-import { LivenessType, notUndefined, UnixTime } from '@l2beat/shared-pure'
-import { Dictionary, sum } from 'lodash'
+import { LivenessType } from '@l2beat/shared-pure'
+import { Dictionary } from 'lodash'
 
-import {
-  LivenessRecordsWithIntervalAndDetails,
-  LivenessRecordWithInterval,
-} from './calculateIntervalWithAverages'
+import { LivenessRecordsWithIntervalAndDetails } from './calculateIntervalWithAverages'
 
 export function calculateAnomalies(
   projects: Dictionary<{
@@ -25,77 +21,14 @@ export function calculateAnomalies(
   for (const p in projects) {
     const batchSubmissions = projects[p].batchSubmissions
     const stateUpdates = projects[p].stateUpdates
-    const anomalies: LivenessRecordWithInterval[] = []
 
-    const NOW = UnixTime.now()
-
-    if (batchSubmissions) {
-      const batchSubmissionsLast30Days = batchSubmissions.records.filter(
-        (record) => record.timestamp.gte(NOW.add(-30, 'days')),
-      )
-      batchSubmissionsLast30Days.forEach((record) => {
-        if (record.previousRecordInterval === undefined) return
-        const timeframe = record.timestamp.add(-30, 'days')
-        const last30Days = batchSubmissions.records.filter(
-          (record) =>
-            record.timestamp.gte(timeframe) &&
-            record.timestamp.lte(record.timestamp),
-        )
-        const intervals = last30Days
-          .map((r) => r.previousRecordInterval)
-          .filter(notUndefined)
-        const avg = sum(intervals) / intervals.length
-        const stdDev = standardDeviation(intervals, avg)
-        const z = (record.previousRecordInterval - avg) / stdDev
-        if (z >= 15 && record.previousRecordInterval > avg) {
-          anomalies.push(record)
-        }
-      })
-    }
-
-    if (stateUpdates) {
-      const stateUpdatesLast30Days = stateUpdates.records.filter((record) =>
-        record.timestamp.gte(NOW.add(-30, 'days')),
-      )
-      stateUpdatesLast30Days.forEach((record) => {
-        if (record.previousRecordInterval === undefined) return
-        const timeframe = record.timestamp.add(-30, 'days')
-        const last30Days = stateUpdates.records.filter(
-          (record) =>
-            record.timestamp.gte(timeframe) &&
-            record.timestamp.lte(record.timestamp),
-        )
-        const intervals = last30Days
-          .map((r) => r.previousRecordInterval)
-          .filter(notUndefined)
-        const avg = sum(intervals) / intervals.length
-        const stdDev = standardDeviation(intervals, avg)
-        const z = (record.previousRecordInterval - avg) / stdDev
-        if (z >= 15 && record.previousRecordInterval > avg) {
-          anomalies.push(record)
-        }
-      })
-    }
+    // TODO: implement anomalies calculations
 
     result[p] = {
       batchSubmissions: batchSubmissions,
       stateUpdates: stateUpdates,
-      anomalies: anomalies.map((a) => {
-        assert(
-          a.previousRecordInterval !== undefined,
-          'Programmer error: previousRecordInterval should not be undefined',
-        )
-        return {
-          timestamp: a.timestamp.toNumber(),
-          durationInSeconds: a.previousRecordInterval,
-          type: a.type,
-        }
-      }),
+      anomalies: [],
     }
   }
   return result
-}
-
-function standardDeviation(array: number[], avg: number) {
-  return Math.sqrt(sum(array.map((i) => Math.pow(i - avg, 2))) / array.length)
 }
