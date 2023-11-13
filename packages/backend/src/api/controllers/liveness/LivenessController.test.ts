@@ -1,4 +1,4 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
@@ -6,10 +6,8 @@ import {
   LivenessRepository,
 } from '../../../peripherals/database/LivenessRepository'
 import {
-  calculateAverage,
+  calculateDetailsFor,
   calculateIntervals,
-  calculateMax,
-  filterRecords,
 } from './calculateIntervalWithAverages'
 import { LivenessController } from './LivenessController'
 
@@ -101,24 +99,29 @@ describe(LivenessController.name, () => {
         getMockLivenessRepository(RECORDS),
       )
 
-      const recordsWithIntervals = calculateIntervals(RECORDS)!
+      const records = [...RECORDS]
+      calculateIntervals(records)
 
-      const last30Days = filterRecords(recordsWithIntervals, '30d')
-      const last90Days = filterRecords(recordsWithIntervals, '90d')
-      const max = filterRecords(recordsWithIntervals, 'max')
+      const last30Days = calculateDetailsFor(records, '30d')
+      const last90Days = calculateDetailsFor(records, '90d')
+      const max = calculateDetailsFor(records, 'max')
+
+      assert(last30Days, 'last30Days is undefined')
+      assert(last90Days, 'last90Days is undefined')
+      assert(max, 'max is undefined')
 
       const expected = {
         last30Days: {
-          averageInSeconds: calculateAverage(last30Days),
-          maximumInSeconds: calculateMax(last30Days),
+          averageInSeconds: last30Days.averageInSeconds,
+          maximumInSeconds: last30Days.maximumInSeconds,
         },
         last90Days: {
-          averageInSeconds: calculateAverage(last90Days),
-          maximumInSeconds: calculateMax(last90Days),
+          averageInSeconds: last90Days.averageInSeconds,
+          maximumInSeconds: last90Days.maximumInSeconds,
         },
         max: {
-          averageInSeconds: calculateAverage(max),
-          maximumInSeconds: calculateMax(max),
+          averageInSeconds: max.averageInSeconds,
+          maximumInSeconds: max.maximumInSeconds,
         },
       }
 

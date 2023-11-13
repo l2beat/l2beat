@@ -71,7 +71,7 @@ describe(calculateIntervals.name, () => {
 
 describe(calculateAverages.name, () => {
   it('returns the averages for stateUpdates with undefined', () => {
-    const input = cloneDeep(RECORDS).slice(0, 3)
+    const input = cloneDeep(RECORDS)
     calculateIntervals(input)!
     const result = calculateAverages(
       input.filter((r) => r.type === LivenessType('STATE')),
@@ -84,7 +84,7 @@ describe(calculateAverages.name, () => {
     expect(result).toEqual(expected)
   })
   it('returns the averages for batchSubmissions', () => {
-    const input = cloneDeep(RECORDS).slice(0, 3)
+    const input = cloneDeep(RECORDS)
     calculateIntervals(input)!
     const result = calculateAverages(
       input.filter((r) => r.type === LivenessType('DA')),

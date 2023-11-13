@@ -149,9 +149,9 @@ export function calculateDetailsFor(
     for (const record of records.slice(0, records.length - 1)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       result.averageInSeconds += record.previousRecordInterval!
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       result.maximumInSeconds = Math.max(
         result.maximumInSeconds,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         record.previousRecordInterval!,
       )
     }
@@ -173,9 +173,9 @@ export function calculateDetailsFor(
     for (const record of filtered) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       result.averageInSeconds += record.previousRecordInterval!
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       result.maximumInSeconds = Math.max(
         result.maximumInSeconds,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         record.previousRecordInterval!,
       )
     }
