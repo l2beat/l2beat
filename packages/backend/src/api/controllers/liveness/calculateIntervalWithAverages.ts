@@ -150,6 +150,16 @@ export function calculateAverage(records: number[]) {
   return Math.ceil(records.reduce((a, b) => a + b, 0) / records.length)
 }
 
-export function calculateMax(records: number[]) {
-  return Math.max(...records)
+export function calculateMax(array: number[]): number {
+  let maxElement = -Infinity
+  // eslint-disable-next-line
+  for (let i = 0; i < array.length; ++i) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (array[i]! > maxElement) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      maxElement = array[i]!
+    }
+  }
+
+  return maxElement
 }
