@@ -11,8 +11,8 @@ export const bob: Layer2 = {
     name: 'BOB',
     slug: 'bob',
     description:
-      'BOB ("Build on Bitcoin") is the first EVM rollup stack with native Bitcoin support.',
-    purpose: 'Bitcoin Dapps',
+      'BOB ("Build on Bitcoin") is a layer 2 empowering everyone to build and innovate on Bitcoin. BOB is an OP Stack rollup that natively supports the Bitcoin stack, incl. Ordinals, Lightning and Nostr, powered by the Risc Zero zkVM.',
+    purpose: 'Bitcoin DApps',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
@@ -26,7 +26,7 @@ export const bob: Layer2 = {
       ],
     },
   },
-  stage: {
+  stage: { 
     stage: 'NotApplicable',
   },
   config: {
