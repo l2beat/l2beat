@@ -80,7 +80,7 @@ export const brine: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+            '0x1390f521A79BaBE99b69B37154D63D431da27A07',
           ),
           selector: '0x538f9406',
           functionSignature:
