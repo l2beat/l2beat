@@ -11,6 +11,13 @@ const DataPoint = z
   })
   .or(z.undefined())
 
+export const LivenessAnomaly = z.object({
+  timestamp: branded(z.number(), (n) => new UnixTime(n)),
+  durationInSeconds: z.number().positive().int(),
+  type: branded(z.string(), (t) => LivenessType(t)),
+})
+export type LivenessAnomaly = z.infer<typeof LivenessAnomaly>
+
 export const LivenessApiProject = z.object({
   batchSubmissions: z
     .object({
@@ -26,15 +33,7 @@ export const LivenessApiProject = z.object({
       max: DataPoint,
     })
     .or(z.undefined()),
-  anomalies: z
-    .array(
-      z.object({
-        timestamp: branded(z.number(), (n) => new UnixTime(n)),
-        durationInSeconds: z.number().positive().int(),
-        type: branded(z.string(), (t) => LivenessType(t)),
-      }),
-    )
-    .or(z.undefined()),
+  anomalies: z.array(LivenessAnomaly).or(z.undefined()),
 })
 export type LivenessApiProject = z.infer<typeof LivenessApiProject>
 

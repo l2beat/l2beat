@@ -23,7 +23,7 @@ export function RichSelect(props: Props) {
       data-centered={props.centered}
     >
       <div className="RichSelect-Toggle cursor-pointer select-none rounded-lg bg-gray-200 p-1 text-base font-semibold transition-colors group-data-[state=selected]:group-hover:bg-gray-400 dark:bg-gray-750 dark:group-data-[state=selected]:group-hover:bg-slate-600">
-        <div className="inline-flex items-center gap-1.5 px-2 group-data-[state=selected]:hidden">
+        <div className="inline-flex items-center gap-1.5 whitespace-pre px-2 group-data-[state=selected]:hidden">
           {props.label}
           <ChevronDownIcon className="hidden transition-transform group-data-[state=opened]:-rotate-180 md:block" />
           <ExpandIcon className="md:hidden" />
