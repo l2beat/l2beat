@@ -42,7 +42,7 @@ function getScalingLivenessViewEntry(
 function getAnomalyEntries(
   anomalies: LivenessApiProject['anomalies'],
 ): AnomalyIndicatorEntry[] {
-  if (!anomalies || anomalies.length === 0) {
+  if (!anomalies) {
     return []
   }
 
