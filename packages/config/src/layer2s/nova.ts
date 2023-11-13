@@ -104,38 +104,7 @@ export const nova: Layer2 = {
       startBlock: 1,
     },
     liveness: {
-      batchSubmissions: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
-          ),
-          selector: '0x8f111f3c',
-          functionSignature:
-            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-          sinceTimestamp: new UnixTime(1656050353),
-        },
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
-          ),
-          selector: '0x6f12b0c9',
-          functionSignature:
-            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
-          sinceTimestamp: new UnixTime(1656050353),
-        },
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
-          ),
-          selector: '0xe0bc9729',
-          functionSignature:
-            'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-          sinceTimestamp: new UnixTime(1656050353),
-        },
-      ],
+      batchSubmissions: [],
       stateUpdates: [
         {
           formula: 'functionCall',
