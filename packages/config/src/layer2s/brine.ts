@@ -74,21 +74,6 @@ export const brine: Layer2 = {
         description: "Main entry point for users' deposits.",
       }),
     ],
-    liveness: {
-      batchSubmissions: [],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x1390f521A79BaBE99b69B37154D63D431da27A07',
-          ),
-          selector: '0x538f9406',
-          functionSignature:
-            'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1614799636),
-        },
-      ],
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

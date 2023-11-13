@@ -65,21 +65,6 @@ export const metis: Layer2 = {
       url: 'https://andromeda.metis.io/',
       startBlock: 1,
     },
-    liveness: {
-      batchSubmissions: [],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0xf209815E595Cdf3ed0aAF9665b1772e608AB9380',
-          ),
-          selector: '0xd710083f',
-          functionSignature:
-            'function appendStateBatchByChainId(uint256 _chainId,bytes32[] _batch,uint256 _shouldStartAtElement,string proposer)',
-          sinceTimestamp: new UnixTime(1637071157),
-        },
-      ],
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
