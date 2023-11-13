@@ -1,16 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { LivenessRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface LivenessRecord {
-  projectId: ProjectId
   timestamp: UnixTime
   blockNumber: number
   txHash: string
-  type: LivenessType
+  livenessConfigurationId: number
 }
 
 // TODO: add index when we will write controler
@@ -26,11 +26,23 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(transactions: LivenessRecord[]) {
+  async addMany(transactions: LivenessRecord[], trx?: Knex.Transaction) {
+    const knex = await this.knex(trx)
     const rows: LivenessRow[] = transactions.map(toRow)
-    const knex = await this.knex()
     await knex.batchInsert('liveness', rows, 10_000)
     return rows.length
+  }
+
+  async deleteAfter(
+    livenessConfigurationId: number,
+    after: UnixTime,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+    return knex('liveness')
+      .where('liveness_configuration_id', livenessConfigurationId)
+      .andWhere('timestamp', '>', after.toDate())
+      .delete()
   }
 
   async deleteAll() {
@@ -41,20 +53,18 @@ export class LivenessRepository extends BaseRepository {
 
 function toRecord(row: LivenessRow): LivenessRecord {
   return {
-    projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
     txHash: row.tx_hash,
-    type: LivenessType(row.type),
+    livenessConfigurationId: row.liveness_configuration_id,
   }
 }
 
 function toRow(record: LivenessRecord): LivenessRow {
   return {
-    project_id: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
     tx_hash: record.txHash,
-    type: record.type,
+    liveness_configuration_id: record.livenessConfigurationId,
   }
 }
