@@ -66,17 +66,7 @@ export const metis: Layer2 = {
       startBlock: 1,
     },
     liveness: {
-      batchSubmissions: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a',
-          ),
-          selector: '0xa8cda37b',
-          functionSignature: 'function appendSequencerBatchByChainId()',
-          sinceTimestamp: new UnixTime(1649638297),
-        },
-      ],
+      batchSubmissions: [],
       stateUpdates: [
         {
           formula: 'functionCall',
