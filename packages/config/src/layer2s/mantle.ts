@@ -81,31 +81,6 @@ export const mantle: Layer2 = {
       url: 'https://rpc.mantle.xyz',
       callsPerMinute: 1500,
     },
-    liveness: {
-      batchSubmissions: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93',
-          ),
-          selector: '0xd0f89344',
-          functionSignature: 'function appendSequencerBatch()',
-          sinceTimestamp: new UnixTime(1687952507),
-        },
-      ],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0xD1328C9167e0693B689b5aa5a024379d4e437858',
-          ),
-          selector: '0x49cd3004',
-          functionSignature:
-            'function createAssertionWithStateBatch(bytes32 vmHash,uint256 inboxSize,bytes32[] _batch,uint256 _shouldStartAtElement,bytes _signature)',
-          sinceTimestamp: new UnixTime(1687961351),
-        },
-      ],
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
