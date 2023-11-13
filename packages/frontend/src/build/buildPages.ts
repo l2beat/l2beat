@@ -1,5 +1,6 @@
 import {
   ActivityApiResponse,
+  LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
 
@@ -7,6 +8,7 @@ import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
+import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 import { getVerificationStatus } from './api/getVerificationStatus'
@@ -57,6 +59,11 @@ async function main() {
     // TODO: (maciekzygmunt) print info & Sanity check?
   }
 
+  let livenessApiResponse: LivenessApiResponse | undefined = undefined
+  if (config.features.liveness) {
+    livenessApiResponse = await fetchLivenessApi(config.backend, http)
+  }
+
   createApi(config, tvlApiResponse, activityApiResponse)
 
   const verificationStatus = getVerificationStatus()
@@ -66,6 +73,7 @@ async function main() {
     activityApiResponse,
     verificationStatus,
     tvlBreakdownApiResponse,
+    livenessApiResponse,
   }
 
   await renderPages(config, pagesData)

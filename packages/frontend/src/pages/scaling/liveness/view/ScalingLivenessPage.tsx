@@ -7,33 +7,33 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
-import { RiskHeader } from '../../../../components/header/RiskHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
-import { ScalingRiskView, ScalingRiskViewProps } from './ScalingRiskView'
+import {
+  ScalingLivenessView,
+  ScalingLivenessViewProps,
+} from './ScalingLivenessView'
 
-export interface ScalingRiskPageProps {
-  riskView: ScalingRiskViewProps
+export interface ScalingLivenessPageProps {
+  livenessView: ScalingLivenessViewProps
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
-  showLiveness: boolean
 }
 
-export function ScalingRiskPage(props: ScalingRiskPageProps) {
+export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
-          showLiveness={props.showLiveness}
-          selected="risk"
+          showLiveness
+          selected="liveness"
         />
-        <main>
-          <RiskHeader />
-          <ScalingRiskView {...props.riskView} />
+        <main className="mt-4 md:mt-12">
+          <ScalingLivenessView {...props.livenessView} />
           <OtherSites />
           <About />
         </main>
