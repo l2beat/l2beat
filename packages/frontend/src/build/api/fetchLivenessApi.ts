@@ -7,6 +7,7 @@ import { range } from 'lodash'
 
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
+import { mockLiveness } from './mockLiveness'
 
 export async function fetchLivenessApi(
   backend: Config['backend'],
@@ -21,25 +22,23 @@ export async function fetchLivenessApi(
 }
 
 function getMockLivenessApiResponse(): LivenessApiResponse {
-  const projects = [
-    'arbitrum',
-    'optimism',
-    'apex',
-    'aevo',
-    'base',
-    'dydx',
-    'brine',
-    'linea',
-    'myria',
-    'scroll',
-  ].reduce<Record<string, LivenessApiProject>>((acc, cur) => {
-    acc[cur] = generateMockData()
-    return acc
-  }, {})
+  // const projects = [
+  //   'arbitrum',
+  //   'optimism',
+  //   'apex',
+  //   'aevo',
+  //   'base',
+  //   'dydx',
+  //   'brine',
+  //   'linea',
+  //   'myria',
+  //   'scroll',
+  // ].reduce<Record<string, LivenessApiProject>>((acc, cur) => {
+  //   acc[cur] = generateMockData()
+  //   return acc
+  // }, {})
 
-  return {
-    projects,
-  }
+  return mockLiveness
 }
 
 function generateMockData(): LivenessApiProject {
