@@ -1,4 +1,5 @@
 export * from './ActivityApi'
+export * from './LivenessApi'
 export * from './TokenTvlApi'
 export * from './TvlApi'
 export * from './VerificationStatus'
