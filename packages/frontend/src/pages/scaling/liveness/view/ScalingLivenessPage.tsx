@@ -10,6 +10,7 @@ import { About } from '../../../../components/About'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
+import { LivenessWarning } from './LivenessWarning'
 import {
   ScalingLivenessView,
   ScalingLivenessViewProps,
@@ -33,6 +34,7 @@ export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
           selected="liveness"
         />
         <main className="mt-4 md:mt-12">
+          <LivenessWarning />
           <ScalingLivenessView {...props.livenessView} />
           <OtherSites />
           <About />

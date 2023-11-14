@@ -25,7 +25,7 @@ function getScalingLivenessViewEntry(
   project: Layer2,
   livenessResponse: LivenessApiResponse,
 ): ScalingLivenessViewEntry {
-  const liveness = livenessResponse.projects[project.display.slug]
+  const liveness = livenessResponse.projects[project.id.toString()]
   return {
     name: project.display.name,
     slug: project.display.slug,
