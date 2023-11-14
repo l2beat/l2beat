@@ -169,10 +169,25 @@ export function calculateDetailsFor(
   } else {
     const NOW = UnixTime.now()
     const timeframe = type === '30d' ? -30 : type === '60d' ? -60 : -90
+
+    if (
+      records.length === 0 ||
+      records[0].timestamp.lt(NOW.add(timeframe, 'days'))
+    ) {
+      return undefined
+    }
+
     const lastIndex = records.findIndex((record) =>
       record.timestamp.lte(NOW.add(timeframe, 'days')),
     )
-    const filtered = records.slice(0, lastIndex)
+    const filtered = records.slice(
+      0,
+      lastIndex === -1 ? records.length : lastIndex,
+    )
+    if (filtered[filtered.length - 1].previousRecordInterval === undefined) {
+      filtered.splice(filtered.length - 1, 1)
+    }
+
     if (filtered.length === 0) {
       return undefined
     }

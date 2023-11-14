@@ -30,7 +30,7 @@ export interface LivenessRowWithProjectIdAndType {
   type: string
 }
 
-// TODO: add index when we will write controler
+// TODO: add index when we will write controller
 export class LivenessRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)

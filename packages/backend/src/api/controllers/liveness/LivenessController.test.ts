@@ -1,6 +1,7 @@
 import { assert, LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
+import { Project } from '../../../model'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
@@ -32,6 +33,7 @@ describe(LivenessController.name, () => {
 
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockProjectConfig(RECORDS),
       )
 
       const result = await livenessController.getLiveness()
@@ -58,6 +60,7 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockProjectConfig(RECORDS),
       )
 
       const result = await livenessController.getLiveness()
@@ -68,6 +71,7 @@ describe(LivenessController.name, () => {
     it('returns empty object if no data', async () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository([]),
+        [],
       )
 
       const result = await livenessController.getLiveness()
@@ -97,6 +101,7 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockProjectConfig(RECORDS),
       )
 
       const records = [...RECORDS]
@@ -142,6 +147,9 @@ function getMockLivenessRepository(
     getAllWithProjectIdAndType() {
       return Promise.resolve(records)
     },
+    getWithType(projectId: ProjectId) {
+      return Promise.resolve(records.filter((x) => x.projectId === projectId))
+    },
     addMany() {
       return Promise.resolve(1)
     },
@@ -149,4 +157,18 @@ function getMockLivenessRepository(
       return Promise.resolve(1)
     },
   })
+}
+
+function mockProjectConfig(
+  records: LivenessRecordWithProjectIdAndType[],
+): Project[] {
+  return records
+    .map((x) => x.projectId)
+    .filter((x, i, a) => a.indexOf(x) === i)
+    .map((projectId) =>
+      mockObject<Project>({
+        projectId,
+        livenessConfig: mockObject<Project['livenessConfig']>(),
+      }),
+    )
 }
