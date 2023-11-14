@@ -1,6 +1,9 @@
 import { groupBy, mapValues } from 'lodash'
 
-import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
+import {
+  LivenessRecordWithProjectIdAndType,
+  LivenessRecordWithType,
+} from '../../../peripherals/database/LivenessRepository'
 import { groupByAndOmit } from '../utils/grouping'
 
 export function groupByProjectIdAndType(
@@ -32,4 +35,28 @@ export function groupByProjectIdAndType(
       }
     },
   )
+}
+
+export interface GroupedByType {
+  batchSubmissions: {
+    records: LivenessRecordWithType[]
+  }
+  stateUpdates: {
+    records: LivenessRecordWithType[]
+  }
+}
+
+export function groupByType(records: LivenessRecordWithType[]): GroupedByType {
+  return {
+    batchSubmissions: {
+      records: records
+        .filter((record) => record.type === 'DA')
+        .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
+    },
+    stateUpdates: {
+      records: records
+        .filter((record) => record.type === 'STATE')
+        .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
+    },
+  }
 }
