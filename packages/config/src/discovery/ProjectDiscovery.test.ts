@@ -1,7 +1,11 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
+import {
+  contractStub,
+  discoveredJsonStub,
+  discoveredOpStackJsonStub,
+} from '../test/stubs/discoveredJson'
 import { Filesystem, ProjectDiscovery } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
@@ -108,6 +112,139 @@ describe(ProjectDiscovery.name, () => {
       })
     },
   )
+
+  describe(ProjectDiscovery.prototype.getOpStackContractDetails.name, () => {
+    const fsMock = mockObject<Filesystem>({
+      readFileSync: () => JSON.stringify(discoveredOpStackJsonStub),
+    })
+    const discovery = new ProjectDiscovery(
+      'ExampleProject',
+      ChainId.ETHEREUM,
+      fsMock,
+    )
+
+    const upgradesProxy = {
+      upgradableBy: ['MockAdmin'],
+      upgradeDelay: 'No delay',
+    }
+
+    it('should return all op stack contracts with details and correct overrides', () => {
+      const contractDetails = discovery.getOpStackContractDetails(
+        upgradesProxy,
+        { OptimismPortal: 'MockPortal' },
+      )
+
+      expect(contractDetails).toEqual([
+        {
+          address: EthereumAddress(
+            '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+          ),
+          description:
+            'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
+          name: 'L2OutputOracle',
+          upgradableBy: ['MockAdmin'],
+          upgradeDelay: 'No delay',
+          upgradeability: {
+            admin: EthereumAddress(
+              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
+            ),
+            implementation: EthereumAddress(
+              '0x29510c3ac0248bBE92FDb57bd2cBAF7216cC217a',
+            ),
+            type: 'EIP1967 proxy',
+          },
+        },
+        {
+          address: EthereumAddress(
+            '0x0a2CCDbBD00f61724C485518B940Ab25abe832aA',
+          ),
+          description:
+            'The MockPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
+          name: 'MockPortal',
+          upgradableBy: ['MockAdmin'],
+          upgradeDelay: 'No delay',
+          upgradeability: {
+            admin: EthereumAddress(
+              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
+            ),
+            implementation: EthereumAddress(
+              '0x1b927019071A2a9C2b852Fd36f7238D2376B82FA',
+            ),
+            type: 'EIP1967 proxy',
+          },
+        },
+        {
+          address: EthereumAddress(
+            '0x6Dda3a70B9946fA8C015904d9E2BEC86ecE4E745',
+          ),
+          description:
+            'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
+          name: 'SystemConfig',
+          upgradableBy: ['MockAdmin'],
+          upgradeDelay: 'No delay',
+          upgradeability: {
+            admin: EthereumAddress(
+              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
+            ),
+            implementation: EthereumAddress(
+              '0xeba2dc4CC210e885F60b5feA41FDEab0C6527fdc',
+            ),
+            type: 'EIP1967 proxy',
+          },
+        },
+        {
+          address: EthereumAddress(
+            '0x17bFa0561d9Ae73e05EcEAEB6663aDc85fA1d3E2',
+          ),
+          description:
+            "The L1CrossDomainMessenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+          name: 'L1CrossDomainMessenger',
+          upgradableBy: ['MockAdmin'],
+          upgradeDelay: 'No delay',
+          upgradeability: {
+            addressManager: EthereumAddress(
+              '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
+            ),
+            implementation: EthereumAddress(
+              '0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43',
+            ),
+            implementationName: 'OVM_L1CrossDomainMessenger',
+            type: 'resolved delegate proxy',
+          },
+        },
+      ])
+    })
+  })
+
+  describe(ProjectDiscovery.prototype.getOpStackPermissions.name, () => {
+    const fsMock = mockObject<Filesystem>({
+      readFileSync: () => JSON.stringify(discoveredOpStackJsonStub),
+    })
+    const discovery = new ProjectDiscovery(
+      'ExampleProject',
+      ChainId.ETHEREUM,
+      fsMock,
+    )
+
+    it('should return all op stack permissions with correct overrides', () => {
+      const permissions = discovery.getOpStackPermissions()
+
+      expect(permissions).toEqual([
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
+              ),
+              type: 'Contract',
+            },
+          ],
+          description: 'Admin of SystemConfig, L2OutputOracle.',
+          name: 'ProxyAdmin',
+        },
+      ])
+    })
+  })
 
   it('reads configurations for different chainIds', () => {
     const fsMock = mockObject<Filesystem>({

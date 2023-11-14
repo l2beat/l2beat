@@ -27,6 +27,7 @@ export function getProps(
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
+      showLiveness: config.features.liveness,
       milestones: config.milestones,
     },
     wrapper: {

@@ -19,6 +19,7 @@ export const common: Omit<Config, 'backend'> = {
   features: {
     banner: new Date() <= L2_DAYS_END,
     gitcoinOption: false,
+    liveness: false,
     hiringBadge: false,
     activity: true,
     tvlBreakdown: true,

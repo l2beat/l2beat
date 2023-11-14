@@ -1,13 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
 
+import { LivenessController } from '../../api/controllers/liveness/LivenessController'
+import { createLivenessRouter } from '../../api/routers/LivenessRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { HourlyIndexer } from '../../core/liveness/HourlyIndexer'
 import { LivenessClient } from '../../core/liveness/LivenessClient'
 import { LivenessIndexer } from '../../core/liveness/LivenessIndexer'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
+import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
@@ -25,6 +27,10 @@ export function createLivenessModule(
 
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
+  const livenessConfigurationRepository = new LivenessConfigurationRepository(
+    database,
+    logger,
+  )
 
   const bigQueryWrapper = new BigQuerySDKWrapper({
     clientEmail: config.liveness.bigQuery.clientEmail,
@@ -42,9 +48,15 @@ export function createLivenessModule(
     livenessClient,
     indexerStateRepository,
     livenessRepository,
-    // TODO: figure out from where to start
-    UnixTime.now().toStartOf('hour').add(-1, 'days'),
+    livenessConfigurationRepository,
+    config.liveness.minTimestamp,
   )
+
+  const livenessController = new LivenessController(
+    livenessRepository,
+    config.projects,
+  )
+  const livenessRouter = createLivenessRouter(livenessController)
 
   const start = async () => {
     await hourlyIndexer.start()
@@ -53,5 +65,6 @@ export function createLivenessModule(
 
   return {
     start,
+    routers: [livenessRouter],
   }
 }
