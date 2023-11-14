@@ -18,21 +18,18 @@ export const LivenessAnomaly = z.object({
 })
 export type LivenessAnomaly = z.infer<typeof LivenessAnomaly>
 
+const LivenessDetails = z
+  .object({
+    last30Days: DataPoint,
+    last90Days: DataPoint,
+    max: DataPoint,
+  })
+  .or(z.undefined())
+export type LivenessDetails = z.infer<typeof LivenessDetails>
+
 export const LivenessApiProject = z.object({
-  batchSubmissions: z
-    .object({
-      last30Days: DataPoint,
-      last90Days: DataPoint,
-      max: DataPoint,
-    })
-    .or(z.undefined()),
-  stateUpdates: z
-    .object({
-      last30Days: DataPoint,
-      last90Days: DataPoint,
-      max: DataPoint,
-    })
-    .or(z.undefined()),
+  batchSubmissions: LivenessDetails,
+  stateUpdates: LivenessDetails,
   anomalies: z.array(LivenessAnomaly).or(z.undefined()),
 })
 export type LivenessApiProject = z.infer<typeof LivenessApiProject>
