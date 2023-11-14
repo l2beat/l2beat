@@ -37,7 +37,7 @@ function getIncludedProjects(
 ) {
   return projects.filter(
     (p) =>
-      livenessResponse?.projects[p.display.slug] &&
+      livenessResponse?.projects[p.id.toString()] &&
       !p.isUpcoming &&
       !p.isArchived,
   )
