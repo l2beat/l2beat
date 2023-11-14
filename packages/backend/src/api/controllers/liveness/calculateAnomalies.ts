@@ -2,7 +2,6 @@ import { assert } from '@l2beat/backend-tools'
 import {
   LivenessAnomaly,
   LivenessApiResponse,
-  LivenessDetails,
   notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -20,41 +19,44 @@ export function calculateAnomalies(
     stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
   }>,
 ): LivenessApiResponse {
-  const result: Dictionary<{
-    batchSubmissions: LivenessDetails
-    stateUpdates: LivenessDetails
-    anomalies: LivenessAnomaly[]
-  }> = {}
+  const result: LivenessApiResponse['projects'] = {}
   for (const p in projects) {
-    const batchSubmissions = projects[p].batchSubmissions
-    const stateUpdates = projects[p].stateUpdates
-
-    const lastHour = UnixTime.now().toStartOf('hour')
-    const anomalies: LivenessAnomaly[] = []
-
-    if (batchSubmissions) {
-      anomalies.push(...findAnomalies(batchSubmissions.records, lastHour))
-    }
-
-    if (stateUpdates) {
-      anomalies.push(...findAnomalies(stateUpdates.records, lastHour))
-    }
-
-    result[p] = {
-      batchSubmissions: {
-        last30Days: batchSubmissions?.last30Days,
-        last90Days: batchSubmissions?.last90Days,
-        max: batchSubmissions?.max,
-      },
-      stateUpdates: {
-        last30Days: stateUpdates?.last30Days,
-        last90Days: stateUpdates?.last90Days,
-        max: stateUpdates?.max,
-      },
-      anomalies,
-    }
+    result[p] = calculateAnomaliesPerProject(projects[p])
   }
   return { projects: result }
+}
+
+export function calculateAnomaliesPerProject({
+  batchSubmissions,
+  stateUpdates,
+}: {
+  batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
+  stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+}): LivenessApiResponse['projects'][number] {
+  const lastHour = UnixTime.now().toStartOf('hour')
+  const anomalies: LivenessAnomaly[] = []
+
+  if (batchSubmissions) {
+    anomalies.push(...findAnomalies(batchSubmissions.records, lastHour))
+  }
+
+  if (stateUpdates) {
+    anomalies.push(...findAnomalies(stateUpdates.records, lastHour))
+  }
+
+  return {
+    batchSubmissions: {
+      last30Days: batchSubmissions?.last30Days,
+      last90Days: batchSubmissions?.last90Days,
+      max: batchSubmissions?.max,
+    },
+    stateUpdates: {
+      last30Days: stateUpdates?.last30Days,
+      last90Days: stateUpdates?.last90Days,
+      max: stateUpdates?.max,
+    },
+    anomalies,
+  }
 }
 
 /**
