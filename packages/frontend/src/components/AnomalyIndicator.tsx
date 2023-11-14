@@ -45,20 +45,11 @@ export function AnomalyIndicator({ anomalyEntries }: Props) {
     (anomaly) => anomaly.isAnomaly,
   ) as AnomalyEntry[]
 
-  const shouldShowTooltip = data.length > 0
-
   return (
     <span
-      className={classNames(
-        'flex h-6 w-min gap-x-0.5',
-        shouldShowTooltip && 'Tooltip',
-      )}
-      title={
-        shouldShowTooltip
-          ? renderToStaticMarkup(<AnomalyTooltip anomalyEntries={data} />)
-          : undefined
-      }
-      data-tooltip-big={shouldShowTooltip}
+      className="Tooltip flex h-6 w-min gap-x-0.5"
+      title={renderToStaticMarkup(<AnomalyTooltip anomalyEntries={data} />)}
+      data-tooltip-big={true}
       data-testid="anomaly-indicator"
     >
       {anomalyEntries.map((anomaly, i) => (
@@ -78,6 +69,11 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
   const anomalies = props.anomalyEntries
     .flatMap((anomalyEntry) => anomalyEntry.anomalies)
     .reverse()
+
+  if (anomalies.length === 0) {
+    return <div>No anomalies detected in the last 30 days</div>
+  }
+
   return (
     <div>
       <span>Anomalies from last 30 days:</span>
