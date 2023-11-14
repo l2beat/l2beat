@@ -608,7 +608,12 @@ export function getScalingLivenessColumnsConfig() {
         'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
       alignCenter: true,
       getValue: (project) => (
-        <AnomalyIndicator anomalyEntries={project.anomalyEntries} />
+        <AnomalyIndicator
+          anomalyEntries={project.anomalyEntries}
+          showComingSoon={
+            project.slug === 'starknet' || project.slug === 'zksync-era'
+          }
+        />
       ),
     },
   ]
