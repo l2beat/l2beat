@@ -19,13 +19,18 @@ export interface LivenessRecordWithProjectIdAndType {
   type: LivenessType
 }
 
+export interface LivenessRecordWithType {
+  timestamp: UnixTime
+  type: LivenessType
+}
+
 export interface LivenessRowWithProjectIdAndType {
   timestamp: Date
   project_id: string
   type: string
 }
 
-// TODO: add index when we will write controler
+// TODO: add index when we will write controller
 export class LivenessRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -49,6 +54,20 @@ export class LivenessRepository extends BaseRepository {
         'c.id',
       )
       .select('l.timestamp', 'c.type', 'c.project_id')
+    return rows.map(toRecordWithProjectIdAndType)
+  }
+
+  async getWithType(projectId: ProjectId): Promise<LivenessRecordWithType[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness as l')
+      .join(
+        'liveness_configuration as c',
+        'l.liveness_configuration_id',
+        'c.id',
+      )
+      .select('l.timestamp', 'c.type')
+      .where('c.project_id', projectId.toString())
+
     return rows.map(toRecordWithProjectIdAndType)
   }
 

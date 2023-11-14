@@ -52,7 +52,10 @@ export function createLivenessModule(
     config.liveness.minTimestamp,
   )
 
-  const livenessController = new LivenessController(livenessRepository)
+  const livenessController = new LivenessController(
+    livenessRepository,
+    config.projects,
+  )
   const livenessRouter = createLivenessRouter(livenessController)
 
   const start = async () => {
