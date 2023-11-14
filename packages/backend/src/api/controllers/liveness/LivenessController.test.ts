@@ -1,15 +1,14 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
+import { Project } from '../../../model'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
 } from '../../../peripherals/database/LivenessRepository'
 import {
-  calculateAverage,
+  calculateDetailsFor,
   calculateIntervals,
-  calculateMax,
-  filterRecords,
 } from './calculateIntervalWithAverages'
 import { LivenessController } from './LivenessController'
 
@@ -34,6 +33,7 @@ describe(LivenessController.name, () => {
 
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockProjectConfig(RECORDS),
       )
 
       const result = await livenessController.getLiveness()
@@ -60,6 +60,7 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockProjectConfig(RECORDS),
       )
 
       const result = await livenessController.getLiveness()
@@ -70,6 +71,7 @@ describe(LivenessController.name, () => {
     it('returns empty object if no data', async () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository([]),
+        [],
       )
 
       const result = await livenessController.getLiveness()
@@ -99,26 +101,32 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockProjectConfig(RECORDS),
       )
 
-      const recordsWithIntervals = calculateIntervals(RECORDS)!
+      const records = [...RECORDS]
+      calculateIntervals(records)
 
-      const last30Days = filterRecords(recordsWithIntervals, '30d')
-      const last90Days = filterRecords(recordsWithIntervals, '90d')
-      const max = filterRecords(recordsWithIntervals, 'max')
+      const last30Days = calculateDetailsFor(records, '30d')
+      const last90Days = calculateDetailsFor(records, '90d')
+      const max = calculateDetailsFor(records, 'max')
+
+      assert(last30Days, 'last30Days is undefined')
+      assert(last90Days, 'last90Days is undefined')
+      assert(max, 'max is undefined')
 
       const expected = {
         last30Days: {
-          averageInSeconds: calculateAverage(last30Days),
-          maximumInSeconds: calculateMax(last30Days),
+          averageInSeconds: last30Days.averageInSeconds,
+          maximumInSeconds: last30Days.maximumInSeconds,
         },
         last90Days: {
-          averageInSeconds: calculateAverage(last90Days),
-          maximumInSeconds: calculateMax(last90Days),
+          averageInSeconds: last90Days.averageInSeconds,
+          maximumInSeconds: last90Days.maximumInSeconds,
         },
         max: {
-          averageInSeconds: calculateAverage(max),
-          maximumInSeconds: calculateMax(max),
+          averageInSeconds: max.averageInSeconds,
+          maximumInSeconds: max.maximumInSeconds,
         },
       }
 
@@ -139,6 +147,9 @@ function getMockLivenessRepository(
     getAllWithProjectIdAndType() {
       return Promise.resolve(records)
     },
+    getWithType(projectId: ProjectId) {
+      return Promise.resolve(records.filter((x) => x.projectId === projectId))
+    },
     addMany() {
       return Promise.resolve(1)
     },
@@ -146,4 +157,18 @@ function getMockLivenessRepository(
       return Promise.resolve(1)
     },
   })
+}
+
+function mockProjectConfig(
+  records: LivenessRecordWithProjectIdAndType[],
+): Project[] {
+  return records
+    .map((x) => x.projectId)
+    .filter((x, i, a) => a.indexOf(x) === i)
+    .map((projectId) =>
+      mockObject<Project>({
+        projectId,
+        livenessConfig: mockObject<Project['livenessConfig']>(),
+      }),
+    )
 }

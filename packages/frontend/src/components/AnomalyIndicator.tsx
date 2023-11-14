@@ -40,6 +40,7 @@ export function AnomalyIndicator({ anomalyEntries }: Props) {
       </div>
     )
   }
+
   const data = anomalyEntries.filter(
     (anomaly) => anomaly.isAnomaly,
   ) as AnomalyEntry[]
@@ -74,33 +75,37 @@ export function AnomalyIndicator({ anomalyEntries }: Props) {
 }
 
 function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
+  const anomalies = props.anomalyEntries
+    .flatMap((anomalyEntry) => anomalyEntry.anomalies)
+    .reverse()
   return (
     <div>
       <span>Anomalies from last 30 days:</span>
       <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
-        {props.anomalyEntries.map((anomalyEntry) =>
-          anomalyEntry.anomalies.map((anomaly) => (
-            <li key={anomaly.timestamp}>
-              <span>
-                {formatTimestamp(anomaly.timestamp, {
-                  withTime: true,
-                  longMonthName: true,
-                })}
+        {anomalies.slice(0, 4).map((anomaly) => (
+          <li key={anomaly.timestamp}>
+            <span>
+              {formatTimestamp(anomaly.timestamp, {
+                withTime: true,
+                longMonthName: true,
+              })}
+            </span>
+            <div className="mt-2 text-black dark:text-white">
+              <AnomalyTypeBadge type={anomaly.type} />
+              <span className="ml-2.5">
+                Duration:{' '}
+                <DurationCell
+                  durationInSeconds={anomaly.durationInSeconds}
+                  withColors
+                />
               </span>
-              <div className="mt-2 text-black dark:text-white">
-                <AnomalyTypeBadge type={anomaly.type} />
-                <span className="ml-2.5">
-                  Duration:{' '}
-                  <DurationCell
-                    durationInSeconds={anomaly.durationInSeconds}
-                    withColors
-                  />
-                </span>
-              </div>
-            </li>
-          )),
-        )}
+            </div>
+          </li>
+        ))}
       </ul>
+      {anomalies.length > 4 && (
+        <div className="mt-2.5">And {anomalies.length - 4} more</div>
+      )}
     </div>
   )
 }
