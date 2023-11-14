@@ -62,13 +62,18 @@ function getAnomalyEntries(
         isAnomaly: false,
       })
     } else {
+      const anomalies = anomaliesInGivenDay.map(
+        (a) =>
+          ({
+            type: typeToDisplayType(a),
+            timestamp: a.timestamp.toNumber(),
+            durationInSeconds: a.durationInSeconds,
+          } as const),
+      )
+      anomalies.sort((a, b) => a.timestamp - b.timestamp)
       result.push({
         isAnomaly: true,
-        anomalies: anomaliesInGivenDay.map((a) => ({
-          type: typeToDisplayType(a),
-          timestamp: a.timestamp.toNumber(),
-          durationInSeconds: a.durationInSeconds,
-        })),
+        anomalies: anomalies,
       })
     }
 
