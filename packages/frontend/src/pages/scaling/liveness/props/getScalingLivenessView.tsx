@@ -47,13 +47,12 @@ function getAnomalyEntries(
   }
 
   const now = UnixTime.now()
-  const thirtyDaysAgo = now.add(-30, 'days')
+  // We want to show last 30 days with today included so we start 29 days ago
+  const thirtyDaysAgo = now.add(-29, 'days')
   let dayInLoop = thirtyDaysAgo
   const result: AnomalyIndicatorEntry[] = []
 
-  // TODO: (liveness) Do we want to include the current day?
-  while (dayInLoop.lt(now)) {
-    // TODO: (liveness) Check sorting later
+  while (dayInLoop.lte(now)) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
       return a.timestamp.toYYYYMMDD() === dayInLoop.toYYYYMMDD()
     })
