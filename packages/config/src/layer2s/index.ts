@@ -14,6 +14,7 @@ import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { dydx } from './dydx'
+import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { hermez } from './hermez'
@@ -77,6 +78,7 @@ export const layer2s: Layer2[] = [
   degate,
   degate2,
   dydx,
+  fuel,
   fuelv1,
   gluon,
   hermez,

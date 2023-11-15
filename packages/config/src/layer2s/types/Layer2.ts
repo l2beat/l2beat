@@ -85,6 +85,7 @@ export interface Layer2Display {
     | 'Polygon'
     | 'OVM'
     | 'Starknet'
+    | 'Fuel'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
@@ -131,3 +132,4 @@ export type Layer2Category =
   | 'State Pools'
   | 'Validium'
   | 'ZK Rollup'
+  | 'Optimistic ZK Hybrid Rollup'
