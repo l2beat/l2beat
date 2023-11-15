@@ -611,7 +611,9 @@ export function getScalingLivenessColumnsConfig() {
         <AnomalyIndicator
           anomalyEntries={project.anomalyEntries}
           showComingSoon={
-            project.slug === 'starknet' || project.slug === 'zksync-era'
+            project.slug === 'starknet' ||
+            project.slug === 'zksync-era' ||
+            project.slug === 'linea'
           }
         />
       ),
