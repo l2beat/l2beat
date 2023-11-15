@@ -4,19 +4,11 @@ import React from 'react'
 export function DurationCell(props: {
   durationInSeconds: number | undefined
   withColors?: boolean
-  showNotApplicable?: boolean
 }) {
-  if (props.showNotApplicable) {
-    return (
-      <div className="w-full rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
-        n/a
-      </div>
-    )
-  }
   if (props.durationInSeconds === undefined)
     return (
       <div className="w-full rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
-        NO DATA
+        n/a
       </div>
     )
   const seconds = props.durationInSeconds
