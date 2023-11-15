@@ -457,31 +457,37 @@ export function getScalingLivenessColumnsConfig() {
             />
           ),
           tooltip: 'How often transaction batches are submitted to the L1',
-          getValue: (project) => (
-            <LivenessTimeRangeCell
-              last30Days={
-                <DurationCell
-                  durationInSeconds={
-                    project.batchSubmissions?.last30Days?.averageInSeconds
-                  }
-                />
-              }
-              last90Days={
-                <DurationCell
-                  durationInSeconds={
-                    project.batchSubmissions?.last90Days?.averageInSeconds
-                  }
-                />
-              }
-              max={
-                <DurationCell
-                  durationInSeconds={
-                    project.batchSubmissions?.max?.averageInSeconds
-                  }
-                />
-              }
-            />
-          ),
+          getValue: (project) => {
+            const showNotApplicable = project.category === 'ZK Rollup'
+            return (
+              <LivenessTimeRangeCell
+                last30Days={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.last30Days?.averageInSeconds
+                    }
+                    showNotApplicable={showNotApplicable}
+                  />
+                }
+                last90Days={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.last90Days?.averageInSeconds
+                    }
+                    showNotApplicable={showNotApplicable}
+                  />
+                }
+                max={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.max?.averageInSeconds
+                    }
+                    showNotApplicable={showNotApplicable}
+                  />
+                }
+              />
+            )
+          },
         },
         {
           name: (
@@ -492,34 +498,40 @@ export function getScalingLivenessColumnsConfig() {
             />
           ),
           tooltip: 'The longest period of time between batch submissions',
-          getValue: (project) => (
-            <LivenessTimeRangeCell
-              last30Days={
-                <DurationCell
-                  withColors
-                  durationInSeconds={
-                    project.batchSubmissions?.last30Days?.maximumInSeconds
-                  }
-                />
-              }
-              last90Days={
-                <DurationCell
-                  withColors
-                  durationInSeconds={
-                    project.batchSubmissions?.last90Days?.maximumInSeconds
-                  }
-                />
-              }
-              max={
-                <DurationCell
-                  withColors
-                  durationInSeconds={
-                    project.batchSubmissions?.max?.maximumInSeconds
-                  }
-                />
-              }
-            />
-          ),
+          getValue: (project) => {
+            const showNotApplicable = project.category === 'ZK Rollup'
+            return (
+              <LivenessTimeRangeCell
+                last30Days={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.last30Days?.maximumInSeconds
+                    }
+                    showNotApplicable={showNotApplicable}
+                  />
+                }
+                last90Days={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.last90Days?.maximumInSeconds
+                    }
+                    showNotApplicable={showNotApplicable}
+                  />
+                }
+                max={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.max?.maximumInSeconds
+                    }
+                    showNotApplicable={showNotApplicable}
+                  />
+                }
+              />
+            )
+          },
         },
       ],
     },
