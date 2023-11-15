@@ -4,7 +4,15 @@ import React from 'react'
 export function DurationCell(props: {
   durationInSeconds: number | undefined
   withColors?: boolean
+  showComingSoon?: boolean
 }) {
+  if (props.showComingSoon) {
+    return (
+      <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+        COMING SOON
+      </span>
+    )
+  }
   if (props.durationInSeconds === undefined)
     return (
       <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
