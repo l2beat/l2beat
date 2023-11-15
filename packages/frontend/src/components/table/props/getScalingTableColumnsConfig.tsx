@@ -458,7 +458,7 @@ export function getScalingLivenessColumnsConfig() {
           ),
           tooltip: 'How often transaction batches are submitted to the L1',
           getValue: (project) => {
-            const showComingSoon = project.category === 'ZK Rollup'
+            const showNotApplicable = project.category === 'ZK Rollup'
             return (
               <LivenessTimeRangeCell
                 last30Days={
@@ -466,7 +466,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last30Days?.averageInSeconds
                     }
-                    showComingSoon={showComingSoon}
+                    showNotApplicable={showNotApplicable}
                   />
                 }
                 last90Days={
@@ -474,7 +474,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last90Days?.averageInSeconds
                     }
-                    showComingSoon={showComingSoon}
+                    showNotApplicable={showNotApplicable}
                   />
                 }
                 max={
@@ -482,7 +482,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.max?.averageInSeconds
                     }
-                    showComingSoon={showComingSoon}
+                    showNotApplicable={showNotApplicable}
                   />
                 }
               />
@@ -499,7 +499,7 @@ export function getScalingLivenessColumnsConfig() {
           ),
           tooltip: 'The longest period of time between batch submissions',
           getValue: (project) => {
-            const showComingSoon = project.category === 'ZK Rollup'
+            const showNotApplicable = project.category === 'ZK Rollup'
             return (
               <LivenessTimeRangeCell
                 last30Days={
@@ -508,7 +508,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last30Days?.maximumInSeconds
                     }
-                    showComingSoon={showComingSoon}
+                    showNotApplicable={showNotApplicable}
                   />
                 }
                 last90Days={
@@ -517,7 +517,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last90Days?.maximumInSeconds
                     }
-                    showComingSoon={showComingSoon}
+                    showNotApplicable={showNotApplicable}
                   />
                 }
                 max={
@@ -526,7 +526,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.max?.maximumInSeconds
                     }
-                    showComingSoon={showComingSoon}
+                    showNotApplicable={showNotApplicable}
                   />
                 }
               />
