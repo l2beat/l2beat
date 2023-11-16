@@ -13,6 +13,7 @@ import { capx } from './capx'
 import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
 import { degate2 } from './degate2'
+import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -76,6 +77,7 @@ export const layer2s: Layer2[] = [
   honeypot,
   degate,
   degate2,
+  degate3,
   dydx,
   fuelv1,
   gluon,

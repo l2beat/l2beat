@@ -67,7 +67,7 @@ export const degate: Layer2 = {
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',
-        'https://discord.gg/RFVDKGemJb',
+        'https://discord.gg/degate',
         'https://youtube.com/@degatedex1718',
         'https://medium.com/degate',
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
