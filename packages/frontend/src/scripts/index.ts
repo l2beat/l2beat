@@ -8,6 +8,7 @@ import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureLivenessTimeRangeControls } from './configureLivenessTimeRangeControls'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
+import { configureOverflowWrappers } from './configureOverflowWrappers'
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
@@ -37,3 +38,4 @@ configureMultipleEscrowsButton()
 configureRichSelects()
 configureBridgesAndCombinedOnly()
 configureLivenessTimeRangeControls()
+configureOverflowWrappers()
