@@ -6,6 +6,7 @@ export function getStagingConfig(): Config {
     ...common,
     features: {
       ...common.features,
+      liveness: true,
       buildAllProjectPages: true,
     },
     backend: {

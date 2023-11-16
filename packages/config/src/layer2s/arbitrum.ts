@@ -364,7 +364,7 @@ export const arbitrum: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
+            '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
           ),
           selector: '0xa04cee60',
           functionSignature:

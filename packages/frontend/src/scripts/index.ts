@@ -6,6 +6,7 @@ import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
+import { configureLivenessTimeRangeControls } from './configureLivenessTimeRangeControls'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
@@ -35,3 +36,4 @@ configureTopBars()
 configureMultipleEscrowsButton()
 configureRichSelects()
 configureBridgesAndCombinedOnly()
+configureLivenessTimeRangeControls()
