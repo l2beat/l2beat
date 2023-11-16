@@ -3,7 +3,7 @@ import { makeQuery } from './query'
 
 export function configureFloatingBanner() {
   const { $ } = makeQuery(document.body)
-  const hasClosedBanner = LocalStorage.getItem('l2-days-floating-banner-closed')
+  const hasClosedBanner = LocalStorage.getItem('gg-19-floating-banner-closed')
 
   const banner = $.maybe('.FloatingBanner')
   if (!banner) {
@@ -26,6 +26,6 @@ export function configureFloatingBanner() {
   const closeButton = $('.FloatingBanner-Close')
   closeButton.addEventListener('click', () => {
     setState(null)
-    LocalStorage.setItem('l2-days-floating-banner-closed', true)
+    LocalStorage.setItem('gg-19-floating-banner-closed', true)
   })
 }
