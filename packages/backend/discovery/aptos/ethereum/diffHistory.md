@@ -10,6 +10,8 @@ One EOA owner was replaced in Aptos Multisig:
 - removed: 0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1
 - added: 0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437
 
+The same change was performed on a multisig in the Stargate project.
+
 ## Watched changes
 
 ```diff
