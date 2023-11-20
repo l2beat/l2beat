@@ -40,7 +40,7 @@ function getRollupProviders() {
 export const aztecv1: Layer2 = {
   isArchived: true,
   type: 'layer2',
-  id: ProjectId('aztecv1'),
+  id: ProjectId('aztec'),
   display: {
     name: 'Zk.Money v1 (Aztec v1)',
     slug: 'aztecv1',
