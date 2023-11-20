@@ -3,10 +3,10 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
-export const aztecUpcoming: Layer2 = {
+export const aztecV2: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
-  id: ProjectId('aztecv2'),
+  id: ProjectId('aztec-v2'),
   display: {
     name: 'Aztec',
     slug: 'aztec',
