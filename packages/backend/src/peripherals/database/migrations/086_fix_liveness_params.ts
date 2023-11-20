@@ -36,7 +36,7 @@ export async function up(knex: Knex) {
           return {
             ...c,
             projectId: l2.id,
-            type: LivenessType('DA'),
+            type: LivenessType('STATE'),
           }
         }
       })
@@ -57,4 +57,42 @@ export async function up(knex: Knex) {
   }
 }
 
-export async function down() {}
+export async function down(knex: Knex) {
+  const transfersToUpdate = layer2s.flatMap((l2) => {
+    const batchSubmissions = l2.config.liveness?.batchSubmissions
+      .map((c) => {
+        if (c.formula === 'transfer') {
+          return {
+            ...c,
+            projectId: l2.id,
+            type: LivenessType('DA'),
+          }
+        }
+      })
+      .filter(notUndefined)
+    const stateUpdates = l2.config.liveness?.stateUpdates
+      .map((c) => {
+        if (c.formula === 'transfer') {
+          return {
+            ...c,
+            projectId: l2.id,
+            type: LivenessType('STATE'),
+          }
+        }
+      })
+      .filter(notUndefined)
+    return [...(batchSubmissions ?? []), ...(stateUpdates ?? [])]
+  })
+
+  for (const config of transfersToUpdate) {
+    const identifier = LivenessConfigurationIdentifier(config)
+    await knex('liveness_configuration')
+      .update({
+        params: JSON.stringify({
+          from: config.from.toString(),
+          to: config.from.toString(),
+        }),
+      })
+      .where('identifier', '=', identifier)
+  }
+}
