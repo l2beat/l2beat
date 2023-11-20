@@ -104,7 +104,7 @@ function findAnomalies(
   means.set(timeStart.toNumber(), mean)
   stdDevs.set(timeStart.toNumber(), rollingStdDev.getStandardDeviation())
   while (timeStart.gte(lastHour.add(-30, 'days'))) {
-    timeStart = timeStart.add(-1, 'hours')
+    timeStart = timeStart.add(-1, 'minutes')
     const leftFence = timeStart
     const rightFence = timeStart.add(-30, 'days')
 
@@ -133,8 +133,8 @@ function findAnomalies(
   last30Days.forEach((record) => {
     if (record.previousRecordInterval === undefined) return
 
-    const mean = means.get(record.timestamp.toStartOf('hour').toNumber())
-    const stdDev = stdDevs.get(record.timestamp.toStartOf('hour').toNumber())
+    const mean = means.get(record.timestamp.toStartOf('minute').toNumber())
+    const stdDev = stdDevs.get(record.timestamp.toStartOf('minute').toNumber())
     assert(mean !== undefined, 'mean should not be undefined')
     assert(stdDev !== undefined, 'stdDev should not be undefined')
 
