@@ -2,7 +2,11 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 
-export function TvlHeader({ isBridge = false }) {
+interface TvlHeaderProps {
+  isBridge: boolean
+}
+
+export function TvlHeader({ isBridge }: TvlHeaderProps) {
   return (
     <header
       className="mb-4 flex flex-col justify-between text-base md:flex-row"
