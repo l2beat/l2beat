@@ -15,9 +15,9 @@ export interface MobileTabsProps {
 
 export function MobileTabs({ pages }: MobileTabsProps) {
   return (
-    <OverflowWrapper>
-      <div className="-mx-4 md:hidden">
-        <ul className="mx-auto flex w-min items-center gap-2 border-b border-b-gray-200 bg-gray-100 py-2 px-4 dark:border-b-gray-850 dark:bg-gray-950">
+    <div className="-mx-4 border-b border-b-gray-200 bg-gray-100 dark:border-b-gray-850 dark:bg-gray-950 md:hidden">
+      <OverflowWrapper className="mx-4">
+        <ul className="mx-auto flex w-min items-center gap-2 py-2">
           {pages.map((page, i) => (
             <li
               key={i}
@@ -42,7 +42,7 @@ export function MobileTabs({ pages }: MobileTabsProps) {
             </li>
           ))}
         </ul>
-      </div>
-    </OverflowWrapper>
+      </OverflowWrapper>
+    </div>
   )
 }
