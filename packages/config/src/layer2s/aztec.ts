@@ -1,14 +1,7 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  CONTRACTS, 
-  UPCOMING_RISK_VIEW,
-  TECHNOLOGY,
-} from './common'
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
-
-const discovery = new ProjectDiscovery('aztec')
 
 export const aztec: Layer2 = {
   isUpcoming: true,
@@ -19,7 +12,7 @@ export const aztec: Layer2 = {
     slug: 'aztec',
     description:
       'Aztec is an open source layer 2 network that brings programmable privacy and scalability to Ethereum.',
-    purpose: 'Privacy on Ethereum',
+    purpose: 'Privacy',
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
@@ -47,11 +40,10 @@ export const aztec: Layer2 = {
       date: '2023-09-20T00:00:00Z',
       link: 'https://medium.com/aztec-protocol/announcing-aztec-sandbox-the-endgame-for-smart-contract-privacy-f7f883ae352d',
       description:
-        'Announcing the Aztec Sandbox: The Endgame for Smart Contract Privacy'
+        'Announcing the Aztec Sandbox: The Endgame for Smart Contract Privacy.',
     },
   ],
   riskView: UPCOMING_RISK_VIEW,
   contracts: CONTRACTS.EMPTY,
   technology: TECHNOLOGY.UPCOMING,
-
 }

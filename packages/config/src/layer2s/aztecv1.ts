@@ -14,7 +14,7 @@ import {
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('aztec')
+const discovery = new ProjectDiscovery('aztecv1')
 
 function getRollupProviders() {
   // not getting this from the discovery, because it's the deployer
@@ -37,7 +37,7 @@ function getRollupProviders() {
   return [...providers, deployer]
 }
 
-export const aztec: Layer2 = {
+export const aztecv1: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecv1'),
