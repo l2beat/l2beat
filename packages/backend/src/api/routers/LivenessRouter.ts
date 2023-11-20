@@ -8,10 +8,6 @@ export function createLivenessRouter(livenessController: LivenessController) {
   router.get('/api/liveness', async (ctx) => {
     ctx.body = await livenessController.getLiveness()
   })
-  
-  router.get('/api/liveness', async (ctx) => {
-    ctx.body = await livenessController.getLiveness()
-  })
 
   return router
 }
