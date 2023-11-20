@@ -1,6 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
 
+import { LivenessController } from '../../api/controllers/liveness/LivenessController'
+import { createLivenessRouter } from '../../api/routers/LivenessRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { HourlyIndexer } from '../../core/liveness/HourlyIndexer'
@@ -50,6 +52,12 @@ export function createLivenessModule(
     config.liveness.minTimestamp,
   )
 
+  const livenessController = new LivenessController(
+    livenessRepository,
+    config.projects,
+  )
+  const livenessRouter = createLivenessRouter(livenessController)
+
   const start = async () => {
     await hourlyIndexer.start()
     await liveness.start()
@@ -57,5 +65,6 @@ export function createLivenessModule(
 
   return {
     start,
+    routers: [livenessRouter],
   }
 }

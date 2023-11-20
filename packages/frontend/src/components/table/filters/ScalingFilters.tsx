@@ -10,9 +10,10 @@ import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
 interface Props {
   items: ScalingEntry[]
+  hideRollupsOnlyCheckbox?: boolean
 }
 
-export function ScalingFilters({ items }: Props) {
+export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
   const providers = uniq(items.map((i) => i.provider))
     .sort()
     .map((p) => ({
@@ -38,7 +39,7 @@ export function ScalingFilters({ items }: Props) {
 
   return (
     <FiltersWrapper>
-      <RollupsOnlyCheckbox items={items} />
+      {!hideRollupsOnlyCheckbox && <RollupsOnlyCheckbox items={items} />}
       <RichSelect label="Select technology" id="technology-select">
         {categories.map((category) => (
           <RichSelect.Item

@@ -6,6 +6,7 @@ import { NewItemBadge } from '../badge/NewItemBadge'
 export interface DesktopTabsProps {
   pages: {
     fullTitle: ReactNode
+    shortTitle: ReactNode
     icon?: ReactNode
     link: string
     selected: boolean
@@ -52,7 +53,9 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
               page.selected && 'bg-purple-300 dark:bg-purple-800',
             )}
           >
-            {page.icon} {page.fullTitle}
+            {page.icon}
+            <span className="hidden lg:inline">{page.fullTitle}</span>
+            <span className="lg:hidden">{page.shortTitle}</span>
             {page.new && <NewItemBadge className="-ml-1" />}
           </a>
         </li>
