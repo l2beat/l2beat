@@ -2,7 +2,7 @@ import clamp from 'lodash/clamp'
 
 import { makeQuery } from './query'
 
-const ARROWS_THRESHOLD = 8
+const ARROWS_THRESHOLD = 4
 
 export function configureOverflowWrappers() {
   const { $$ } = makeQuery(document.body)
@@ -59,9 +59,6 @@ function configureOverflowWrapper(wrapper: HTMLElement) {
   showArrows()
   content.addEventListener('scroll', showArrows)
   window.addEventListener('resize', showArrows)
-  content.addEventListener('click', (e) => {
-    console.log(e.target)
-  })
   arrowLeft.addEventListener('click', () => onArrowClick('left'))
   arrowRight.addEventListener('click', () => onArrowClick('right'))
 }
