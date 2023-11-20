@@ -17,8 +17,8 @@ import { AggregatedReportRecord } from '../../../peripherals/database/Aggregated
 import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { groupByAndOmit, nestedGroupBy } from '../utils/grouping'
 import { asNumber } from './asNumber'
-import { groupByAndOmit, nestedGroupBy } from './grouping'
 
 export type ReportsPerProjectIdAndTimestamp = ReturnType<
   typeof groupByProjectIdAndTimestamp

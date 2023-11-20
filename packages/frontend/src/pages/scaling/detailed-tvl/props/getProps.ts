@@ -19,6 +19,7 @@ export function getProps(
   return {
     props: {
       showActivity: config.features.activity,
+      showLiveness: config.features.liveness,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
       detailedTvlView: getScalingDetailedTvlView(tvlApiResponse, ordering),
