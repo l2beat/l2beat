@@ -1,5 +1,3 @@
-import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
-import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureCharts } from './charts'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureDropdowns } from './configureDropdowns'
@@ -11,14 +9,16 @@ import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureSidebarMenu } from './configureSidebarMenu'
 import { configureTables } from './configureTables'
 import { configureTabs } from './configureTabs'
+import { configureThemeToggle } from './configureThemeToggle'
 import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
 
-configureDarkThemeToggle()
+configureThemeToggle()
 configureFloatingBanner()
 configureTables()
 configureProjectFilters()
