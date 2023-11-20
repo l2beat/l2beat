@@ -1,3 +1,5 @@
+import clamp from 'lodash/clamp'
+
 import { makeQuery } from './query'
 
 const ARROWS_THRESHOLD = 8
@@ -33,9 +35,20 @@ function configureOverflowWrapper(wrapper: HTMLElement) {
   }
 
   const onArrowClick = (dir: 'left' | 'right') => {
-    const scrollPosition = content.getBoundingClientRect().width
+    const contentWidth = content.getBoundingClientRect().width
+    let scrollBy
+    if (dir === 'left') {
+      scrollBy = -clamp(contentWidth, 0, content.scrollLeft)
+    } else {
+      scrollBy = clamp(
+        contentWidth,
+        0,
+        content.scrollWidth - contentWidth - content.scrollLeft,
+      )
+    }
+
     content.scrollBy({
-      left: dir === 'left' ? -scrollPosition : scrollPosition,
+      left: scrollBy,
       behavior: 'smooth',
     })
   }
