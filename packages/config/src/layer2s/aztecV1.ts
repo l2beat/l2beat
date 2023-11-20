@@ -43,7 +43,7 @@ export const aztecV1: Layer2 = {
   id: ProjectId('aztec'),
   display: {
     name: 'Zk.Money v1 (Aztec v1)',
-    slug: 'aztec-v1',
+    slug: 'aztecv1',
     warning:
       'EOL: Aztec team announced the intent to shut down the infrastructure for this rollup on Mar 13, 2023. The rollup is still active due to funds locked in, but is not accepting deposits.',
     description:
