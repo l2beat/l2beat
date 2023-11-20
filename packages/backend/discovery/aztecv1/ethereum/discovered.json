@@ -1,7 +1,7 @@
 {
   "name": "aztecv1",
   "chain": "ethereum",
-  "blockNumber": 18611647,
+  "blockNumber": 18612421,
   "configHash": "0xfaee2dc0084087dc76559629cb1148365f1945dbf3ba21894430cd1d4c28dfbf",
   "version": 3,
   "contracts": [
@@ -39,7 +39,7 @@
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
-        "getEscapeHatchStatus": [false, 2513],
+        "getEscapeHatchStatus": [false, 1739],
         "getTotalDeposited": [
           "35761395413451296404343",
           "19481078867265097315675826",
