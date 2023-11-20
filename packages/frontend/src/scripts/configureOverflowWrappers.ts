@@ -41,7 +41,6 @@ function configureOverflowWrapper(wrapper: HTMLElement) {
   }
 
   selectedItem?.scrollIntoView({
-    behavior: 'instant',
     inline: 'center',
   })
   showArrows()
