@@ -16,7 +16,7 @@ export interface MobileTabsProps {
 export function MobileTabs({ pages }: MobileTabsProps) {
   return (
     <div className="-mx-4 border-b border-b-gray-200 bg-gray-100 dark:border-b-gray-850 dark:bg-gray-950 md:hidden">
-      <OverflowWrapper className="mx-4">
+      <OverflowWrapper className="mx-4" within="nav-tabs">
         <ul className="mx-auto flex w-min items-center gap-2 py-2">
           {pages.map((page, i) => (
             <li
