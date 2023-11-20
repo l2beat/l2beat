@@ -3,13 +3,17 @@ import React from 'react'
 
 import { ChevronLeftIcon, ChevronRightIcon } from './icons'
 
-export function OverflowWrapper(props: {
+interface OverflowWrapperProps {
   children: React.ReactNode
+  disableScrollOnLoad?: boolean
   className?: string
-}) {
+}
+
+export function OverflowWrapper(props: OverflowWrapperProps) {
   return (
     <div
       data-role="overflow-wrapper"
+      data-scroll-on-load={!props.disableScrollOnLoad}
       className={classNames('group relative', props.className)}
     >
       <div

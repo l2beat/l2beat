@@ -53,9 +53,11 @@ function configureOverflowWrapper(wrapper: HTMLElement) {
     })
   }
 
-  selectedItem?.scrollIntoView({
-    inline: 'center',
-  })
+  if (wrapper.dataset.scrollOnLoad) {
+    selectedItem?.scrollIntoView({
+      inline: 'center',
+    })
+  }
   showArrows()
   content.addEventListener('scroll', showArrows)
   window.addEventListener('resize', showArrows)
