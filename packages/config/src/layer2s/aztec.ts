@@ -6,7 +6,7 @@ import { Layer2 } from './types'
 export const aztec: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
-  id: ProjectId('aztec'),
+  id: ProjectId('aztecv2'),
   display: {
     name: 'Aztec',
     slug: 'aztec',
