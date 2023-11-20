@@ -92,5 +92,9 @@ export function createStatusRouter(statusController: StatusController) {
     }),
   )
 
+  router.get('/status/liveness', async (ctx) => {
+    ctx.body = await statusController.getLivenessStatus()
+  })
+
   return router
 }
