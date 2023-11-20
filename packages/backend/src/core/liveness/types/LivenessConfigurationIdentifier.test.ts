@@ -1,3 +1,4 @@
+import { layer2s } from '@l2beat/config'
 import {
   EthereumAddress,
   hashJson,
@@ -9,7 +10,10 @@ import { expect } from 'earl'
 
 import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessFunctionCall, LivenessTransfer } from './LivenessConfig'
-import { LivenessConfigurationIdentifier } from './LivenessConfigurationIdentifier'
+import {
+  InputType,
+  LivenessConfigurationIdentifier,
+} from './LivenessConfigurationIdentifier'
 
 describe(LivenessConfigurationIdentifier.name, () => {
   describe('calculates identifier for:', () => {
@@ -65,6 +69,33 @@ describe(LivenessConfigurationIdentifier.name, () => {
       ]) as unknown as LivenessConfigurationIdentifier
 
       expect(LivenessConfigurationIdentifier(config)).toEqual(expected)
+    })
+
+    describe('calculates LivenessConfigurationIdentifier for every project config', () => {
+      const configs: InputType[] = []
+      layer2s.forEach((project) => {
+        if (project.config.liveness) {
+          configs.push(
+            ...project.config.liveness.batchSubmissions.map((x) => ({
+              ...x,
+              projectId: project.id,
+              type: LivenessType('DA'),
+            })),
+          )
+          configs.push(
+            ...project.config.liveness.stateUpdates.map((x) => ({
+              ...x,
+              projectId: project.id,
+              type: LivenessType('STATE'),
+            })),
+          )
+        }
+      })
+      for (const config of configs) {
+        it(`${config.projectId.toString()} ${config.type}`, () => {
+          expect(LivenessConfigurationIdentifier(config)).toBeA(String)
+        })
+      }
     })
   })
 

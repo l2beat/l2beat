@@ -6,7 +6,7 @@ export interface LivenessConfigurationIdentifier extends String {
   _LivenessConfigHashBrand: string
 }
 
-type InputType =
+export type InputType =
   | Omit<LivenessTransfer, 'livenessConfigurationId' | 'latestSyncedTimestamp'>
   | Omit<
       LivenessFunctionCall,
