@@ -1,7 +1,7 @@
 import {
   ActivityApiResponse,
-  ManuallyVerifiedContracts,
   LivenessApiResponse,
+  ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
