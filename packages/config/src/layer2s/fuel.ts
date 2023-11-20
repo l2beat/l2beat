@@ -13,7 +13,7 @@ export const fuel: Layer2 = {
     description:
       'At Fuel we are building the fastest execution layer for the modular blockchain stack.',
     purpose: 'Universal',
-    category: 'Optimistic ZK Hybrid Rollup',
+    category: 'Optimistic Rollup',
     provider: 'Fuel',
     links: {
       websites: ['https://fuel.network/'],
