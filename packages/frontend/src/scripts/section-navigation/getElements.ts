@@ -2,19 +2,16 @@ import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigat
 import { makeQuery } from '../query'
 
 export function getDesktopElements() {
-  const container = document.querySelector<HTMLElement>(
+  const { $, $$ } = makeQuery(document.body)
+  const container = $.maybe<HTMLElement>(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.container}`,
   )
-  const list = container?.querySelector(
-    `#${DESKTOP_PROJECT_NAVIGATION_IDS.list}`,
-  )
-  const listHeader = container?.querySelector(
-    `#${DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}`,
-  )
-  const summaryItem = list?.querySelector<HTMLAnchorElement>(
+  const list = $.maybe(`#${DESKTOP_PROJECT_NAVIGATION_IDS.list}`)
+  const listHeader = $.maybe(`#${DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}`)
+  const summaryItem = $.maybe<HTMLAnchorElement>(
     `a#${DESKTOP_PROJECT_NAVIGATION_IDS.summaryItem}`,
   )
-  const sections = document.querySelectorAll('section')
+  const sections = $$('section')
 
   if (!container || !list || !listHeader || !summaryItem) {
     return
