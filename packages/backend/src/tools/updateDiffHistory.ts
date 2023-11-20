@@ -4,7 +4,12 @@
   Do not INCLUDE this file - it immediately runs `updateDiffHistoryFile()`
 */
 
-import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  diffDiscovery,
+  discover,
+  DiscoveryDiff,
+} from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, ChainId } from '@l2beat/shared-pure'
@@ -96,15 +101,14 @@ async function performDiscoveryOnPreviousBlock(
   await rimraf(`${root}/.code@*`, { glob: true })
 
   const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
-  const cli = [
-    `yarn discover:raw ${chainName} ${projectName}`,
-    `--block-number=${blockNumberFromMainBranch}`,
-    `--sources-folder=.code@${blockNumberFromMainBranch}`,
-    `--discovery-filename=discovered@${blockNumberFromMainBranch}.json`, // we don't need discovered.json
-  ].join(' ')
-  console.log('Downloading sources from main branch:')
-  console.log(cli)
-  execSync(cli, { stdio: 'inherit' })
+
+  await discover({
+    project: projectName,
+    chainId: ChainId.fromName(chainName),
+    blockNumber: blockNumberFromMainBranch,
+    sourcesFolder: `.code@${blockNumberFromMainBranch}`,
+    discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+  })
 
   const prevDiscoveryFile = readFileSync(
     `${root}/discovered@${blockNumberFromMainBranch}.json`,

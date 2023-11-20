@@ -113,6 +113,8 @@ export function getLocalConfig(env: Env): Config {
         privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
         projectId: env.string('LIVENESS_PROJECT_ID'),
       },
+      // TODO: figure out how to set it for local development
+      minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
     activity: activityEnabled && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
@@ -194,6 +196,9 @@ export function getLocalConfig(env: Env): Config {
           rpcUrl: env.string('DISCOVERY_ETHEREUM_RPC_URL'),
           rpcGetLogsMaxRange: env.optionalInteger(
             'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
+          ),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
           multicall: multicallConfig.ethereum,
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),

@@ -67,6 +67,7 @@ export interface LivenessConfig {
     readonly privateKey: string
     readonly projectId: string
   }
+  readonly minTimestamp: UnixTime
 }
 
 export interface ChainTvlConfig {
@@ -113,6 +114,7 @@ export interface UpdateMonitorChainConfig {
   chainId: ChainId
   rpcUrl: string
   rpcGetLogsMaxRange?: number
+  reorgSafeDepth?: number
   multicall: MulticallConfig
   etherscanApiKey: string
   etherscanUrl: string

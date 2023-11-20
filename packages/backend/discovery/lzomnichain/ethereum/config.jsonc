@@ -9,8 +9,9 @@
     "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
     "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": "Endpoint",
     "0x65bb797c2B9830d891D87288F029ed8dACc19705": "Stargate Multisig",
-    "0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero_Relayer",
-    "0x5a54fe5234E811466D5366846283323c954310B2": "LayerZero_Oracle",
+    "0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero Relayer",
+    "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "Google Cloud Oracle",
+    "0x5a54fe5234E811466D5366846283323c954310B2": "TSS Oracle",
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig"
   },
   "overrides": {
@@ -58,7 +59,8 @@
             "inboundBlockConfirm",
             "outboundProofType",
             "outboundBlockConfirm",
-            "oracle"
+            "oracle",
+            "relayer"
           ],
           "groupBy": "chainId",
           "onlyValue": true
@@ -87,7 +89,7 @@
           "onlyValue": true,
           "multipleInGroup": true
         },
-        "INBOUND_LIBRARIES": {
+        "INBOUND_PROOF_LIBRARIES": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
           "valueKey": "lib",

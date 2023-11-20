@@ -3,13 +3,17 @@ import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/view/types'
 import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
+import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
+import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
+import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { ComingSoonCell } from '../ComingSoonCell'
+import { DurationCell } from '../DurationCell'
 import { EthereumCell } from '../EthereumCell'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
@@ -420,6 +424,203 @@ export function getScalingActivityColumnsConfig() {
       name: 'Data source',
       tooltip: 'Where is the transaction data coming from.',
       getValue: (project) => project.dataSource,
+    },
+  ]
+  return columns
+}
+//TODO: (liveness) consider adding alignCenter:true
+export function getScalingLivenessColumnsConfig() {
+  const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      minimalWidth: true,
+      getValue: (project) => <ProjectCell project={project} />,
+    },
+    {
+      type: 'group',
+      title: 'Batch submission interval',
+      columns: [
+        {
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day avg.'}
+              last90Days={'90-day avg.'}
+              max={'all-time avg.'}
+            />
+          ),
+          tooltip: 'How often transaction batches are submitted to the L1',
+          getValue: (project) => {
+            return (
+              <LivenessTimeRangeCell
+                last30Days={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.last30Days?.averageInSeconds
+                    }
+                  />
+                }
+                last90Days={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.last90Days?.averageInSeconds
+                    }
+                  />
+                }
+                max={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.max?.averageInSeconds
+                    }
+                  />
+                }
+              />
+            )
+          },
+        },
+        {
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day max.'}
+              last90Days={'90-day max.'}
+              max={'all-time max.'}
+            />
+          ),
+          tooltip: 'The longest period of time between batch submissions',
+          getValue: (project) => {
+            return (
+              <LivenessTimeRangeCell
+                last30Days={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.last30Days?.maximumInSeconds
+                    }
+                  />
+                }
+                last90Days={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.last90Days?.maximumInSeconds
+                    }
+                  />
+                }
+                max={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.max?.maximumInSeconds
+                    }
+                  />
+                }
+              />
+            )
+          },
+        },
+      ],
+    },
+    {
+      type: 'group',
+      title: 'State update interval',
+      columns: [
+        {
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day avg.'}
+              last90Days={'90-day avg.'}
+              max={'all-time avg.'}
+            />
+          ),
+          tooltip: 'How often state roots are submitted to the L1',
+          getValue: (project) => (
+            <LivenessTimeRangeCell
+              last30Days={
+                <DurationCell
+                  durationInSeconds={
+                    project.stateUpdates?.last30Days?.averageInSeconds
+                  }
+                />
+              }
+              last90Days={
+                <DurationCell
+                  durationInSeconds={
+                    project.stateUpdates?.last90Days?.averageInSeconds
+                  }
+                />
+              }
+              max={
+                <DurationCell
+                  durationInSeconds={
+                    project.stateUpdates?.max?.averageInSeconds
+                  }
+                />
+              }
+            />
+          ),
+        },
+        {
+          name: (
+            <LivenessTimeRangeCell
+              last30Days={'30-day max.'}
+              last90Days={'90-day max.'}
+              max={'all-time max.'}
+            />
+          ),
+          tooltip: 'The longest period of time between state root submissions',
+          getValue: (project) => (
+            <LivenessTimeRangeCell
+              last30Days={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.stateUpdates?.last30Days?.maximumInSeconds
+                  }
+                />
+              }
+              last90Days={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.stateUpdates?.last90Days?.maximumInSeconds
+                  }
+                />
+              }
+              max={
+                <DurationCell
+                  withColors
+                  durationInSeconds={
+                    project.stateUpdates?.max?.maximumInSeconds
+                  }
+                />
+              }
+            />
+          ),
+        },
+      ],
+    },
+    {
+      name: '30-day anomalies',
+      tooltip:
+        'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
+      alignCenter: true,
+      getValue: (project) => (
+        <AnomalyIndicator
+          anomalyEntries={project.anomalyEntries}
+          showComingSoon={
+            project.slug === 'starknet' ||
+            project.slug === 'zksync-era' ||
+            project.slug === 'linea'
+          }
+        />
+      ),
     },
   ]
   return columns

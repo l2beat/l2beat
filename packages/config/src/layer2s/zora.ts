@@ -75,6 +75,28 @@ export const zora: Layer2 = {
       callsPerMinute: 1500,
       assessCount: subtractOne,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x625726c858dBF78c0125436C943Bf4b4bE9d9033'),
+          to: EthereumAddress('0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf'),
+          sinceTimestamp: new UnixTime(1686695915),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x9E6204F750cD866b299594e2aC9eA824E2e5f95c',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1686694007),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,

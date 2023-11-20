@@ -13,13 +13,14 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const ADDRESS_3 = EthereumAddress.random()
     const sinceTimestamp = UnixTime.now()
 
-    const config: LivenessFunctionCall[] = [
+    const config: Omit<LivenessFunctionCall, 'id'>[] = [
       {
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: '0x095e4',
         type: 'STATE',
         sinceTimestamp,
+        livenessConfigurationId: 1,
       },
       {
         projectId: ProjectId('project1'),
@@ -27,6 +28,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         selector: '0x915d9',
         type: 'DA',
         sinceTimestamp,
+        livenessConfigurationId: 2,
       },
       {
         projectId: ProjectId('project2'),
@@ -34,6 +36,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         selector: '0x90d5e',
         type: 'STATE',
         sinceTimestamp,
+        livenessConfigurationId: 3,
       },
     ]
     const queryResults: BigQueryFunctionCallsResult = [
@@ -61,25 +64,22 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ]
     const expected: LivenessRecord[] = [
       {
-        projectId: ProjectId('project1'),
         blockNumber: 1,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
         txHash: '0x09e353ae9ee709e353ad7849cf30e4dc19',
-        type: 'STATE',
+        livenessConfigurationId: 1,
       },
       {
-        projectId: ProjectId('project1'),
         blockNumber: 2,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
         txHash: '0x92b857ae9ee709e353ad7849cf30e4dc19',
-        type: 'DA',
+        livenessConfigurationId: 2,
       },
       {
-        projectId: ProjectId('project2'),
         blockNumber: 3,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T03:00:00Z')),
         txHash: '0xb4858ae9ee709e353ad7849cf30e4dc19',
-        type: 'STATE',
+        livenessConfigurationId: 3,
       },
     ]
 

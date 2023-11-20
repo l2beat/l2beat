@@ -22,11 +22,12 @@ export class BigQuerySDKWrapper {
     })
   }
 
-  createQueryJob(query: string) {
+  createQueryJob(query: string, dryRun = false) {
     return this.bigquery.createQueryJob({
       query,
       // We specify location as US because it is the cheapest location (price depends on location)
       location: 'US',
+      dryRun,
     })
   }
 }
