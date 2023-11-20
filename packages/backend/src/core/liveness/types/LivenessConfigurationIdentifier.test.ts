@@ -68,6 +68,39 @@ describe(LivenessConfigurationIdentifier.name, () => {
     })
   })
 
+  describe(LivenessConfigurationIdentifier.params.name, () => {
+    it('transfer config', () => {
+      const config = {
+        projectId: ProjectId('test'),
+        type: LivenessType('STATE'),
+        sinceTimestamp: new UnixTime(0),
+        from: EthereumAddress.random(),
+        to: EthereumAddress.random(),
+      }
+      const params = LivenessConfigurationIdentifier.params(config)
+
+      expect(params).toEqual({
+        from: config.from.toString(),
+        to: config.to.toString(),
+      })
+    })
+    it('functionCall config', () => {
+      const config = {
+        projectId: ProjectId('test'),
+        type: LivenessType('DA'),
+        sinceTimestamp: new UnixTime(0),
+        address: EthereumAddress.random(),
+        selector: '0x12345678',
+      }
+      const params = LivenessConfigurationIdentifier.params(config)
+
+      expect(params).toEqual({
+        address: config.address.toString(),
+        selector: config.selector,
+      })
+    })
+  })
+
   describe(LivenessConfigurationIdentifier.wasUpdated.name, () => {
     const testCases: {
       name: string
