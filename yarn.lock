@@ -4289,7 +4289,7 @@ acorn@^8.11.2:
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.11.2.tgz"
   integrity sha512-nc0Axzp/0FILLEVsm4fNwLCwMttvhEI263QtVPQcbpfZZ3ts0hLsZGOpE6czNlid7CJ9MlyH8reXkpsf3YUY4w==
 
-acorn@^8.4.1, acorn@^8.8.0, acorn@^8.8.2:
+acorn@^8.4.1, acorn@^8.8.0:
   version "8.8.2"
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.8.2.tgz"
   integrity sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==
@@ -5254,10 +5254,10 @@ chownr@^2.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
-chromatic@^7.4.0:
-  version "7.4.0"
-  resolved "https://registry.npmjs.org/chromatic/-/chromatic-7.4.0.tgz"
-  integrity sha512-ORsoNgXiAxIEvbdVEqOu4lMZuVMGoM3kiO/toTrAEdh0ej9jIMm2VYqvGVdYGgIWO0xOD9Bn6A34gGeqCsZ1lQ==
+chromatic@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/chromatic/-/chromatic-9.1.0.tgz#dfc23ca3b602f7bba29defdf1aeddf8ae8516523"
+  integrity sha512-9ib8k4LIfg/88kKufxz1N8vgCB7nlLhJqmx+Vx55cM/6DCB/M6oqroirVRXfdeC7qaZuhyUemPF2QHxBh7GXtQ==
 
 ci-info@^3.2.0:
   version "3.8.0"
@@ -6389,11 +6389,6 @@ es-module-lexer@^0.9.3:
   version "0.9.3"
   resolved "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-0.9.3.tgz"
   integrity sha512-1HQ2M2sPtxwnvOvT1ZClHyQDiggdNjURWpY2we6aMKCQiUVxTmVs2UYPLIrD84sS+kMdUwfBSylbJPwNnBrnHQ==
-
-es-module-lexer@^1.2.1:
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-1.4.1.tgz"
-  integrity sha512-cXLGjP0c4T3flZJKQSuziYoq7MlT+rnvfZjfp7h+I7K9BNX54kP9nyWvdbwjQ4u1iWbOL4u96fgeZLToQlZC7w==
 
 es-set-tostringtag@^2.0.1:
   version "2.0.1"
@@ -9441,7 +9436,7 @@ magic-string@^0.27.0:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.13"
 
-magic-string@^0.30.0, magic-string@^0.30.1:
+magic-string@^0.30.0:
   version "0.30.5"
   resolved "https://registry.npmjs.org/magic-string/-/magic-string-0.30.5.tgz"
   integrity sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==
@@ -13230,16 +13225,6 @@ vinyl@^2.0.0:
     cloneable-readable "^1.0.0"
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
-
-vite-plugin-dynamic-import@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/vite-plugin-dynamic-import/-/vite-plugin-dynamic-import-1.5.0.tgz"
-  integrity sha512-Qp85c+AVJmLa8MLni74U4BDiWpUeFNx7NJqbGZyR2XJOU7mgW0cb7nwlAMucFyM4arEd92Nfxp4j44xPi6Fu7g==
-  dependencies:
-    acorn "^8.8.2"
-    es-module-lexer "^1.2.1"
-    fast-glob "^3.2.12"
-    magic-string "^0.30.1"
 
 vite-plugin-turbosnap@^1.0.3:
   version "1.0.3"
