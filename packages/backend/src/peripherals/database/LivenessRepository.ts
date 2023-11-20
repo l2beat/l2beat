@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { LivenessRow } from 'knex/types/tables'
 
@@ -13,7 +13,24 @@ export interface LivenessRecord {
   livenessConfigurationId: number
 }
 
-// TODO: add index when we will write controler
+export interface LivenessRecordWithProjectIdAndType {
+  timestamp: UnixTime
+  projectId: ProjectId
+  type: LivenessType
+}
+
+export interface LivenessRecordWithType {
+  timestamp: UnixTime
+  type: LivenessType
+}
+
+export interface LivenessRowWithProjectIdAndType {
+  timestamp: Date
+  project_id: string
+  type: string
+}
+
+// TODO: add index when we will write controller
 export class LivenessRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -24,6 +41,34 @@ export class LivenessRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('liveness')
     return rows.map(toRecord)
+  }
+
+  async getAllWithProjectIdAndType(): Promise<
+    LivenessRecordWithProjectIdAndType[]
+  > {
+    const knex = await this.knex()
+    const rows = await knex('liveness as l')
+      .join(
+        'liveness_configuration as c',
+        'l.liveness_configuration_id',
+        'c.id',
+      )
+      .select('l.timestamp', 'c.type', 'c.project_id')
+    return rows.map(toRecordWithProjectIdAndType)
+  }
+
+  async getWithType(projectId: ProjectId): Promise<LivenessRecordWithType[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness as l')
+      .join(
+        'liveness_configuration as c',
+        'l.liveness_configuration_id',
+        'c.id',
+      )
+      .select('l.timestamp', 'c.type')
+      .where('c.project_id', projectId.toString())
+
+    return rows.map(toRecordWithProjectIdAndType)
   }
 
   async addMany(transactions: LivenessRecord[], trx?: Knex.Transaction) {
@@ -57,6 +102,16 @@ function toRecord(row: LivenessRow): LivenessRecord {
     blockNumber: row.block_number,
     txHash: row.tx_hash,
     livenessConfigurationId: row.liveness_configuration_id,
+  }
+}
+
+function toRecordWithProjectIdAndType(
+  row: LivenessRowWithProjectIdAndType,
+): LivenessRecordWithProjectIdAndType {
+  return {
+    timestamp: UnixTime.fromDate(row.timestamp),
+    projectId: ProjectId(row.project_id),
+    type: LivenessType(row.type),
   }
 }
 
