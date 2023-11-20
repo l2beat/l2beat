@@ -14,6 +14,7 @@ function configureOverflowWrapper(wrapper: HTMLElement) {
   const arrowLeft = $('[data-role=overflow-wrapper-arrow-left]')
   const arrowRight = $('[data-role=overflow-wrapper-arrow-right]')
   const content = $('[data-role=overflow-wrapper-content]')
+  const selectedItem = $.maybe('[data-selected=true]')
 
   const showArrows = () => {
     const isScrolledToStart = content.scrollLeft < ARROWS_THRESHOLD
@@ -39,10 +40,16 @@ function configureOverflowWrapper(wrapper: HTMLElement) {
     })
   }
 
+  selectedItem?.scrollIntoView({
+    behavior: 'instant',
+    inline: 'center',
+  })
   showArrows()
   content.addEventListener('scroll', showArrows)
   window.addEventListener('resize', showArrows)
-
+  content.addEventListener('click', (e) => {
+    console.log(e.target)
+  })
   arrowLeft.addEventListener('click', () => onArrowClick('left'))
   arrowRight.addEventListener('click', () => onArrowClick('right'))
 }
