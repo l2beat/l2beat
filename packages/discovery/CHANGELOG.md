@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.23.1
+
+### Patch Changes
+
+- Improve ChainId error in Discovery
+
 ## 0.23.0
 
 ### Minor Changes
