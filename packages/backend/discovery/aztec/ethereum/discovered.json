@@ -1,8 +1,8 @@
 {
-  "name": "aztecv1",
+  "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 18612421,
-  "configHash": "0xfaee2dc0084087dc76559629cb1148365f1945dbf3ba21894430cd1d4c28dfbf",
+  "configHash": "0xe2a93d58ae1c112d7b8332ec0805a1148e3d5f61c498a0ce0198e92c81db0c82",
   "version": 3,
   "contracts": [
     {
