@@ -38,6 +38,8 @@ function getIncludedProjects(
   return projects.filter(
     (p) =>
       livenessResponse?.projects[p.id.toString()] &&
+      (p.display.category === 'Optimistic Rollup' ||
+        p.display.category === 'ZK Rollup') &&
       !p.isUpcoming &&
       !p.isArchived,
   )
