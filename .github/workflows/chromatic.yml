@@ -6,6 +6,7 @@ name: "Chromatic"
 # https://github.com/IanVS/vite-plugin-turbosnap/issues/13
 
 on:
+  pull_request:
   push:
 
 jobs:
