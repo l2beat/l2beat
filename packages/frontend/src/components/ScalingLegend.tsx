@@ -8,7 +8,8 @@ import {
   PolygonIcon,
   StarknetIcon,
   StarkWareIcon,
-  ZkSyncIcon,
+  ZkSyncLiteIcon,
+  ZKStackIcon,
 } from './icons'
 
 export function ScalingLegend() {
@@ -30,9 +31,14 @@ export function ScalingLegend() {
         <span>This project is based on old OVM&apos;s code base.</span>
       </p>
       <p className="flex gap-1">
-        <ZkSyncIcon className="relative -top-0.5 min-w-[24px]" />
+        <ZkSyncLiteIcon className="relative -top-0.5 min-w-[24px]" />
         <span>&ndash;</span>
-        <span>This project is based on zkSync&apos;s code base.</span>
+        <span>This project is based on zkSync Lite&apos;s code base.</span>
+      </p>
+      <p className="flex gap-1">
+        <ZKStackIcon className="relative -top-0.5 min-w-[24px]" />
+        <span>&ndash;</span>
+        <span>This project is based on ZK Stack&apos;s code base.</span>
       </p>
       <p className="flex gap-1">
         <LoopringIcon className="relative -top-0.5 min-w-[24px]" />
