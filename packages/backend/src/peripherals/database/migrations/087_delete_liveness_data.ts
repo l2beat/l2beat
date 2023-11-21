@@ -11,6 +11,14 @@ should create a new migration file that fixes the issue.
 
 */
 
+/*
+There was a bug causing the liveness indexer to duplicate work.
+Issue was resolved in PR #2220.
+Unfortunately the data in the DB got duplicated, so we decided that the most simple
+approach is to remove all the data and start from scratch.
+The sync process is quick and does not waste many resources.
+*/
+
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -19,4 +27,6 @@ export async function up(knex: Knex) {
   await knex('indexer_state').delete()
 }
 
-export async function down() {}
+export async function down() {
+  // There is nothing to add here. This migrations clear the specified tables.
+}
