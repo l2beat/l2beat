@@ -1,7 +1,7 @@
 interface HighlightCurrentSectionOpts {
   navigationList: Element
   summary: HTMLAnchorElement
-  sections: NodeListOf<HTMLElement>
+  sections: HTMLElement[]
   onHighlight: (item: HTMLAnchorElement) => void
 }
 

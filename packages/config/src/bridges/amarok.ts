@@ -136,6 +136,10 @@ export const amarok: Bridge = {
         'WormholeHubConnector',
         'Contract for sending/receiving messages using Wormhole.',
       ),
+      discovery.getContractDetails(
+        'LineaHubConnector',
+        'Contract for sending/receiving messages from mainnet to Linea via Linea AMB.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

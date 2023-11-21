@@ -2,9 +2,11 @@ import { aevo } from './aevo'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { astarzkevm } from './astarzkevm'
-import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
+import { aztecV1 } from './aztecV1'
+import { aztecV2 } from './aztecV2'
 import { base } from './base'
+import { blast } from './blast'
 import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canto } from './canto'
@@ -16,6 +18,7 @@ import { degate2 } from './degate2'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
+import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { immutablex } from './immutablex'
@@ -65,9 +68,11 @@ export const layer2s: Layer2[] = [
   apex,
   arbitrum,
   astarzkevm,
-  aztec,
+  aztecV1,
   aztecconnect,
+  aztecV2,
   base,
+  blast,
   bobanetwork,
   brine,
   canto,
@@ -79,6 +84,7 @@ export const layer2s: Layer2[] = [
   dydx,
   fuelv1,
   gluon,
+  grvt,
   hermez,
   immutablex,
   immutablezkevm,
