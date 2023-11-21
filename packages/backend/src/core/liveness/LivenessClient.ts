@@ -28,9 +28,11 @@ export class LivenessClient {
     configs: LivenessConfigurationRecord[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<{ data: LivenessRecord[]; to: UnixTime }> {
-    // TODO: find missing data for this range(from,to)
-
+  ): Promise<{
+    data: LivenessRecord[]
+    adjustedTo: UnixTime
+    usedConfigurationsIds: number[]
+  }> {
     const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
 
     const config = mergeConfigs(projects, configs)
@@ -61,7 +63,11 @@ export class LivenessClient {
 
     return {
       data: [...transfers, ...functionCalls],
-      to: adjustedTo,
+      adjustedTo,
+      usedConfigurationsIds: [
+        ...transfersConfig.map((c) => c.livenessConfigurationId),
+        ...functionCallsConfig.map((c) => c.livenessConfigurationId),
+      ],
     }
   }
 

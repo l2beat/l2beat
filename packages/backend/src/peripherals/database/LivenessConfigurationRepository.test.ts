@@ -71,34 +71,96 @@ describe(LivenessConfigurationRepository.name, () => {
     })
   })
 
-  describe(LivenessConfigurationRepository.prototype.updateMany.name, () => {
-    it('should update records', async () => {
-      const newIds = await repository.addMany(LIVENESS_CONFIGS)
+  describe(
+    LivenessConfigurationRepository.prototype.setLastSyncedTimestamp.name,
+    () => {
+      it('updates last synced timestamp of given configuration', async () => {
+        const newIds = await repository.addMany(LIVENESS_CONFIGS)
 
-      const latest = UnixTime.now()
-      const updatedRow: LivenessConfigurationRecord = {
-        ...LIVENESS_CONFIGS[0],
-        id: newIds[0],
-        lastSyncedTimestamp: latest,
-      }
+        const latest = UnixTime.now()
+        const updatedRow: LivenessConfigurationRecord = {
+          ...LIVENESS_CONFIGS[0],
+          id: newIds[0],
+          lastSyncedTimestamp: latest,
+        }
 
-      await repository.updateMany([updatedRow])
+        await repository.setLastSyncedTimestamp(newIds[0], latest)
 
-      const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        updatedRow,
-        ...LIVENESS_CONFIGS.slice(1).map((c, i) => ({
-          ...c,
-          id: newIds[i + 1],
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted([
+          updatedRow,
+          ...LIVENESS_CONFIGS.slice(1).map((c, i) => ({
+            ...c,
+            id: newIds[i + 1],
+            lastSyncedTimestamp: undefined,
+          })),
+        ])
+      })
+
+      it('does not update if configuration not found', async () => {
+        const newIds = await repository.addMany(LIVENESS_CONFIGS)
+
+        const latest = UnixTime.now()
+
+        await repository.setLastSyncedTimestamp(-1, latest)
+
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted([
+          ...LIVENESS_CONFIGS.map((c, i) => ({
+            ...c,
+            id: newIds[i],
+            lastSyncedTimestamp: undefined,
+          })),
+        ])
+      })
+    },
+  )
+
+  describe(
+    LivenessConfigurationRepository.prototype.setUntilTimestamp.name,
+    () => {
+      it('updates last synced timestamp of given configuration', async () => {
+        const newIds = await repository.addMany(LIVENESS_CONFIGS)
+
+        const untilTimestamp = UnixTime.now()
+        const updatedRow: LivenessConfigurationRecord = {
+          ...LIVENESS_CONFIGS[0],
+          id: newIds[0],
+          untilTimestamp: untilTimestamp,
           lastSyncedTimestamp: undefined,
-        })),
-      ])
-    })
+        }
 
-    it('empty array', async () => {
-      await expect(repository.updateMany([])).not.toBeRejected()
-    })
-  })
+        await repository.setUntilTimestamp(newIds[0], untilTimestamp)
+
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted([
+          updatedRow,
+          ...LIVENESS_CONFIGS.slice(1).map((c, i) => ({
+            ...c,
+            id: newIds[i + 1],
+            lastSyncedTimestamp: undefined,
+          })),
+        ])
+      })
+
+      it('does not update if configuration not found', async () => {
+        const newIds = await repository.addMany(LIVENESS_CONFIGS)
+
+        const untilTimestamp = UnixTime.now()
+
+        await repository.setUntilTimestamp(-1, untilTimestamp)
+
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted([
+          ...LIVENESS_CONFIGS.map((c, i) => ({
+            ...c,
+            id: newIds[i],
+            lastSyncedTimestamp: undefined,
+          })),
+        ])
+      })
+    },
+  )
 
   describe(LivenessConfigurationRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
