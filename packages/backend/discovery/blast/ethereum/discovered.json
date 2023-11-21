@@ -1,8 +1,8 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 18618760,
-  "configHash": "0x312ca328537bd91267da29191e1f16c681c1f9774281753241dd56a31fd1188d",
+  "blockNumber": 18618852,
+  "configHash": "0xda2a0607814971e6460ec8d2cfb3952fffbb6d66163fb34eba09eadc1adb0fca",
   "version": 3,
   "contracts": [
     {
@@ -26,10 +26,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "12784087730965898824390",
-        "totalETHShares": "12784087730965929871179",
-        "totalUSDBalanceNoUpdate": "4644552719611578891448988",
-        "totalUSDShares": "4644453476823716734295013",
+        "totalETHBalance": "13246672514596028198483",
+        "totalETHShares": "13246672514596060368405",
+        "totalUSDBalanceNoUpdate": "4710432657630032230201555",
+        "totalUSDShares": "4710325308421320458668589",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
