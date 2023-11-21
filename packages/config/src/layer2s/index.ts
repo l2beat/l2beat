@@ -2,8 +2,9 @@ import { aevo } from './aevo'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { astarzkevm } from './astarzkevm'
-import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
+import { aztecV1 } from './aztecV1'
+import { aztecV2 } from './aztecV2'
 import { base } from './base'
 import { blast } from './blast'
 import { bobanetwork } from './bobanetwork'
@@ -67,8 +68,9 @@ export const layer2s: Layer2[] = [
   apex,
   arbitrum,
   astarzkevm,
-  aztec,
+  aztecV1,
   aztecconnect,
+  aztecV2,
   base,
   blast,
   bobanetwork,
