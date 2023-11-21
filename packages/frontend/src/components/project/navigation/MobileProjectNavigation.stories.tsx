@@ -5,7 +5,6 @@ import React, { useEffect } from 'react'
 import { allModes } from '../../../../.storybook/modes'
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
-import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
 import { MobileProjectNavigation } from './MobileProjectNavigation'
 
 const sections: ScalingDetailsSection[] = range(10).map(() => ({
@@ -50,28 +49,4 @@ const meta: Meta<typeof MobileProjectNavigation> = {
 export default meta
 type Story = StoryObj<typeof MobileProjectNavigation>
 
-export const ScrolledToStart: Story = {}
-
-export const ScrolledToMiddle: Story = {
-  play: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200))
-    const list = document.querySelector(
-      `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
-    )
-    list?.scrollTo(list.scrollWidth / 2, 0)
-  },
-  parameters: {
-    chromatic: {
-      delay: 400,
-    },
-  },
-}
-
-export const ScrolledToEnd: Story = {
-  play: () => {
-    const list = document.querySelector(
-      `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
-    )
-    list?.scrollTo(list.scrollWidth, 0)
-  },
-}
+export const Primary: Story = {}
