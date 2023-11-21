@@ -5,7 +5,7 @@ import { BigQuerySDKWrapper } from './BigQuerySDKWrapper'
 const bytesInGb = 1_000_000_000
 // Currently the biggest query that we do takes around 5.1 GB
 // this limit ensures that there are no surprises and we do not overpay
-const LIMIT = 6 * bytesInGb
+const LIMIT = 7 * bytesInGb
 
 export class BigQueryClient {
   constructor(
