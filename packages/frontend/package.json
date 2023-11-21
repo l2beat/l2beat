@@ -25,7 +25,7 @@
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared-pure,config} -recsm build --module es6) && storybook build",
-    "chromatic": "npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts"
+    "chromatic": "chromatic --project-token chpt_9ae911ea817bd16 --build-script-name ./storybook-static --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts"
   },
   "dependencies": {
     "@l2beat/config": "*",
