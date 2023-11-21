@@ -14,7 +14,7 @@ export const blast: Layer2 = {
     name: 'Blast',
     slug: 'blast',
     description:
-      'Blast is an EVM-compatile Optimistic Rollup supporting native yield.',
+      'Blast is an EVM-compatible Optimistic Rollup supporting native yield.',
     purpose: 'Universal, DeFi',
     category: 'Optimistic Rollup',
     links: {
