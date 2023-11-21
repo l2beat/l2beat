@@ -42,21 +42,22 @@ export class LivenessIndexer extends ChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     const configurations = await this.livenessConfigurationRepository.getAll()
 
-    const data = await this.livenessClient.getLivenessData(
-      this.projects,
-      configurations,
-      new UnixTime(from),
-      new UnixTime(to),
-    )
+    const { data, adjustedTo, usedConfigurationsIds } =
+      await this.livenessClient.getLivenessData(
+        this.projects,
+        configurations,
+        new UnixTime(from),
+        new UnixTime(to),
+      )
 
     await this.livenessRepository.runInTransaction(async (trx) => {
-      await this.livenessRepository.addMany(data.data, trx)
+      await this.livenessRepository.addMany(data, trx)
 
       await Promise.all(
-        data.usedConfigurationsIds.map((id) =>
+        usedConfigurationsIds.map((id) =>
           this.livenessConfigurationRepository.setLastSyncedTimestamp(
             id,
-            new UnixTime(to),
+            adjustedTo,
             trx,
           ),
         ),
@@ -65,11 +66,11 @@ export class LivenessIndexer extends ChildIndexer {
 
     this.logger.info('Updated liveness data', {
       from,
-      adjustedTo: data.adjustedTo,
-      usedConfigurations: data.usedConfigurationsIds.length,
-      fetchedDataPoints: data.data.length,
+      adjustedTo: adjustedTo,
+      usedConfigurations: usedConfigurationsIds.length,
+      fetchedDataPoints: data.length,
     })
-    return Promise.resolve(data.adjustedTo.toNumber())
+    return Promise.resolve(adjustedTo.toNumber())
   }
 
   private async initialize() {

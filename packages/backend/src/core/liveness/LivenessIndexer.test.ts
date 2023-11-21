@@ -269,10 +269,13 @@ describe(LivenessIndexer.name, () => {
         ...TRANSFERS_EXPECTED,
         ...FUNCTIONS_EXPECTED,
       ]
+
+      const adjustedTo = TO.add(1, 'days')
+
       const livenessClient = mockObject<LivenessClient>({
         getLivenessData: mockFn().resolvesTo({
           data: expectedToSave,
-          adjustedTo: TO,
+          adjustedTo,
           usedConfigurationsIds: CONFIGURATIONS.map((c) => c.id),
         }),
       })
@@ -295,13 +298,13 @@ describe(LivenessIndexer.name, () => {
         FROM,
         TO,
       )
-      expect(currentTo).toEqual(TO.toNumber())
+      expect(currentTo).toEqual(adjustedTo.toNumber())
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
 
       CONFIGURATIONS.forEach((c, i) => {
         expect(
           configurationRepository.setLastSyncedTimestamp,
-        ).toHaveBeenNthCalledWith(i + 1, i, TO, MOCK_TRX)
+        ).toHaveBeenNthCalledWith(i + 1, i, adjustedTo, MOCK_TRX)
       })
 
       expect(livenessRepository.addMany).toHaveBeenCalledWith(
