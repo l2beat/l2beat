@@ -315,6 +315,16 @@ export const degate3: Layer2 = {
       description:
         'Actors who can submit new blocks, updating the L2 state on L1.',
     },
+    {
+      name: 'Degate HomeDAO2 Multisig',
+      accounts: [discovery.getPermissionedAccount('TimeLock1', 'admin')],
+      description: (() => {
+        const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
+        const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
+        assert(owner1 === owner2, 'The owners are different')
+        return 'Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts.'
+      })(),
+    },
   ],
   contracts: {
     addresses: [
@@ -340,11 +350,15 @@ export const degate3: Layer2 = {
       ),
       discovery.getContractDetails(
         'TimeLock1',
-        'Timelock contract is set as the proxyOwner of the Exchange contract, so there is at least a 45 day time delay for upgrading the contract.',
+        `This timelock contract is set as the proxyOwner of the ExchangeV3 contract. There is a ${formatSeconds(
+          delay1,
+        )} time delay for upgrading the contract.`,
       ),
       discovery.getContractDetails(
         'TimeLock2',
-        'Timelock contract is set as the proxyOwner of the Deposit contract, so there is at least a 45 day time delay for upgrading the contract.',
+        `This timelock contract is set as the proxyOwner of the DefaultDepositContract contract. There is a ${formatSeconds(
+          delay2,
+        )} time delay for upgrading the contract.`,
       ),
     ],
     risks: [],
