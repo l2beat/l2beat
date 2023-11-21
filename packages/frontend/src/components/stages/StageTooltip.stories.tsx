@@ -57,4 +57,9 @@ export const Tooltip: Story = {
       await userEvent.hover(tooltip)
     })
   },
+  parameters: {
+    chromatic: {
+      delay: 250,
+    },
+  },
 }

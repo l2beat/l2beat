@@ -84,4 +84,9 @@ export const RosetteTooltip: Story = {
       await userEvent.hover(tooltip)
     })
   },
+  parameters: {
+    chromatic: {
+      delay: 250,
+    },
+  },
 }

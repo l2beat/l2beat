@@ -43,4 +43,9 @@ export const Tooltip: Story = {
       await userEvent.hover(canvas.getByText('Element with tooltip'))
     })
   },
+  parameters: {
+    chromatic: {
+      delay: 250,
+    },
+  },
 }

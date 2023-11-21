@@ -140,6 +140,11 @@ export const Default: Story = {
       await userEvent.hover(tooltip)
     })
   },
+  parameters: {
+    chromatic: {
+      delay: 250,
+    },
+  },
 }
 
 export const NoData: Story = {
