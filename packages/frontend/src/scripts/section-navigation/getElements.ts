@@ -1,22 +1,17 @@
-import {
-  DESKTOP_PROJECT_NAVIGATION_IDS,
-  MOBILE_PROJECT_NAVIGATION_IDS,
-} from '../../components/project/navigation/ids'
+import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/ids'
+import { makeQuery } from '../query'
 
 export function getDesktopElements() {
-  const container = document.querySelector<HTMLElement>(
+  const { $, $$ } = makeQuery(document.body)
+  const container = $.maybe<HTMLElement>(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.container}`,
   )
-  const list = container?.querySelector(
-    `#${DESKTOP_PROJECT_NAVIGATION_IDS.list}`,
-  )
-  const listHeader = container?.querySelector(
-    `#${DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}`,
-  )
-  const summaryItem = list?.querySelector<HTMLAnchorElement>(
+  const list = $.maybe(`#${DESKTOP_PROJECT_NAVIGATION_IDS.list}`)
+  const listHeader = $.maybe(`#${DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}`)
+  const summaryItem = $.maybe<HTMLAnchorElement>(
     `a#${DESKTOP_PROJECT_NAVIGATION_IDS.summaryItem}`,
   )
-  const sections = document.querySelectorAll('section')
+  const sections = $$('section')
 
   if (!container || !list || !listHeader || !summaryItem) {
     return
@@ -32,33 +27,20 @@ export function getDesktopElements() {
 }
 
 export function getMobileElements() {
-  const container = document.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.container}`,
+  const { $, $$ } = makeQuery(document.body)
+  const container = $.maybe(`[data-role=overflow-wrapper]`)
+  const content = $.maybe('[data-role=overflow-wrapper-content]')
+  const summaryItem = $.maybe<HTMLAnchorElement>(
+    '[data-role=mobile-project-navigation-summary-item]',
   )
-  const list = container?.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
-  )
-  const summaryItem = container?.querySelector<HTMLAnchorElement>(
-    `a#${MOBILE_PROJECT_NAVIGATION_IDS.summaryItem}`,
-  )
-  const arrowLeft = container?.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowLeft}`,
-  )
-  const arrowRight = container?.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowRight}`,
-  )
-
-  const sections = document.querySelectorAll('section')
-
-  if (!container || !list || !summaryItem || !arrowLeft || !arrowRight) {
+  const sections = $$('section')
+  if (!container || !content || !summaryItem) {
     return
   }
 
   return {
-    list,
+    content,
     summaryItem,
-    arrowLeft,
-    arrowRight,
     sections,
   }
 }
