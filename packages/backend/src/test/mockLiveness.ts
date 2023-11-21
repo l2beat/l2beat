@@ -84,7 +84,8 @@ function getMockLivenessIndexer(mocks: {
           id: i,
           lastSyncedTimestamp: undefined,
         })),
-      updateMany: async () => [],
+      setLastSyncedTimestamp: async () => -1,
+      setUntilTimestamp: async () => -1,
       addMany: async () => [],
       deleteMany: async () => -1,
     })
@@ -93,6 +94,7 @@ function getMockLivenessIndexer(mocks: {
     error: () => {},
     debug: () => {},
     trace: () => {},
+    info: () => {},
   })
 
   const logger = mockObject<Logger>({
