@@ -1,3 +1,70 @@
+# Diff at Tue, 21 Nov 2023 08:12:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@c015d4b43eb67c41a6154fca125e5f7a54a9c15f
+
+## Description
+
+Added a new module to the AdminMultisig called Roles. The owner of this module
+(the AdminMultisig itself) can grant or remove access to given targets (whole
+contracts) or just a certain function in a given contract per role. The module
+checks if the message sender has a given role and checks if the role is allowed
+to execute a given operation. This whole module seems like it solves the same
+issue as AccessControl but with more granularity just like the extended
+AccessControl in Scroll.
+
+## Watched changes
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+      upgradeability.modules[0]:
++        "0xF24f1DC519d88246809B660eb56D94048575d083"
+    }
+```
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+      values.limitInWei:
+-        "6250000000000000000000"
++        "18750000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MultiSend (0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../linea/ethereum/.code/MultiSend/MultiSend.sol   |  66 ++
+ .../linea/ethereum/.code/MultiSend/meta.txt        |   2 +
+ .../safe-contracts/contracts/common/Enum.sol       |   8 +
+ .../contracts/interfaces/IERC165.sol               |  15 +
+ .../@gnosis.pm/zodiac/contracts/core/Modifier.sol  | 134 +++
+ .../@gnosis.pm/zodiac/contracts/core/Module.sol    | 116 +++
+ .../zodiac/contracts/factory/FactoryFriendly.sol   |  10 +
+ .../zodiac/contracts/guard/BaseGuard.sol           |  38 +
+ .../zodiac/contracts/guard/Guardable.sol           |  31 +
+ .../zodiac/contracts/interfaces/IAvatar.sol        |  66 ++
+ .../zodiac/contracts/interfaces/IGuard.sol         |  22 +
+ .../access/OwnableUpgradeable.sol                  |  78 ++
+ .../proxy/utils/Initializable.sol                  |  46 +
+ .../utils/ContextUpgradeable.sol                   |  31 +
+ .../ethereum/.code/Roles/contracts/Permissions.sol | 984 +++++++++++++++++++++
+ .../linea/ethereum/.code/Roles/contracts/Roles.sol | 406 +++++++++
+ .../linea/ethereum/.code/Roles/meta.txt            |   2 +
+ 17 files changed, 2055 insertions(+)
+```
+
 # Diff at Mon, 16 Oct 2023 07:14:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
