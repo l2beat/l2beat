@@ -5,6 +5,7 @@ import { astarzkevm } from './astarzkevm'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { base } from './base'
+import { blast } from './blast'
 import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canto } from './canto'
@@ -68,6 +69,7 @@ export const layer2s: Layer2[] = [
   aztec,
   aztecconnect,
   base,
+  blast,
   bobanetwork,
   brine,
   canto,
