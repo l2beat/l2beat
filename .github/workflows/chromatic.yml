@@ -7,9 +7,6 @@ name: "Chromatic"
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
 
 jobs:
   deploy:
