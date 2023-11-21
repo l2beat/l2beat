@@ -477,7 +477,7 @@ export function getScalingLivenessColumnsConfig() {
                 max={
                   <DurationCell
                     durationInSeconds={
-                      project.batchSubmissions?.max?.averageInSeconds
+                      project.batchSubmissions?.allTime?.averageInSeconds
                     }
                   />
                 }
@@ -517,7 +517,7 @@ export function getScalingLivenessColumnsConfig() {
                   <DurationCell
                     withColors
                     durationInSeconds={
-                      project.batchSubmissions?.max?.maximumInSeconds
+                      project.batchSubmissions?.allTime?.maximumInSeconds
                     }
                   />
                 }
@@ -559,7 +559,7 @@ export function getScalingLivenessColumnsConfig() {
               max={
                 <DurationCell
                   durationInSeconds={
-                    project.stateUpdates?.max?.averageInSeconds
+                    project.stateUpdates?.allTime?.averageInSeconds
                   }
                 />
               }
@@ -597,7 +597,7 @@ export function getScalingLivenessColumnsConfig() {
                 <DurationCell
                   withColors
                   durationInSeconds={
-                    project.stateUpdates?.max?.maximumInSeconds
+                    project.stateUpdates?.allTime?.maximumInSeconds
                   }
                 />
               }
