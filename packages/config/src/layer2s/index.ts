@@ -17,6 +17,7 @@ import { degate2 } from './degate2'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
+import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { immutablex } from './immutablex'
@@ -81,6 +82,7 @@ export const layer2s: Layer2[] = [
   dydx,
   fuelv1,
   gluon,
+  grvt,
   hermez,
   immutablex,
   immutablezkevm,
