@@ -1,20 +1,22 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('blast')
 
 export const blast: Layer2 = {
-  isUnderReview: true,
+  isUpcoming: true,
   type: 'layer2',
   id: ProjectId('blast'),
   display: {
     name: 'Blast',
     slug: 'blast',
+    headerWarning:
+      'The bridge is deposit-only and funds cannot be withdrawn yet.',
     description:
-      'Blast is an EVM-compatible Optimistic Rollup supporting native yield.',
+      'Blast will launch an EVM-compatible Optimistic Rollup supporting native yield. It currently only supports deposits and no withdrawal mechanism is available yet.',
     purpose: 'Universal, DeFi',
     category: 'Optimistic Rollup',
     links: {
@@ -27,7 +29,7 @@ export const blast: Layer2 = {
     },
   },
   stage: {
-    stage: 'UnderReview',
+    stage: 'NotApplicable',
   },
   config: {
     escrows: [
@@ -38,7 +40,7 @@ export const blast: Layer2 = {
       }),
     ],
   },
-  riskView: UNDER_REVIEW_RISK_VIEW,
-  technology: TECHNOLOGY.UNDER_REVIEW,
-  contracts: CONTRACTS.UNDER_REVIEW,
+  riskView: UPCOMING_RISK_VIEW,
+  technology: TECHNOLOGY.UPCOMING,
+  contracts: CONTRACTS.EMPTY,
 }
