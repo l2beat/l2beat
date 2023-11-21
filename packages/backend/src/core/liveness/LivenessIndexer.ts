@@ -40,32 +40,37 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const configs = await this.livenessConfigurationRepository.getAll()
+    const configurations = await this.livenessConfigurationRepository.getAll()
 
-    const data = await this.livenessClient.getLivenessData(
-      this.projects,
-      configs,
-      new UnixTime(from),
-      new UnixTime(to),
-    )
+    const { data, adjustedTo, usedConfigurationsIds } =
+      await this.livenessClient.getLivenessData(
+        this.projects,
+        configurations,
+        new UnixTime(from),
+        new UnixTime(to),
+      )
 
     await this.livenessRepository.runInTransaction(async (trx) => {
-      await this.livenessRepository.addMany(data.data, trx)
-      await this.livenessConfigurationRepository.updateMany(
-        configs.map((c) => {
-          return { ...c, lastSyncedTimestamp: data.to }
-        }),
-        trx,
+      await this.livenessRepository.addMany(data, trx)
+
+      await Promise.all(
+        usedConfigurationsIds.map((id) =>
+          this.livenessConfigurationRepository.setLastSyncedTimestamp(
+            id,
+            adjustedTo,
+            trx,
+          ),
+        ),
       )
     })
 
-    this.logger.debug('Updated liveness data', {
+    this.logger.info('Updated liveness data', {
       from,
-      to,
-      configs: configs.length,
-      dataPoints: data.data.length,
+      adjustedTo: adjustedTo,
+      usedConfigurations: usedConfigurationsIds.length,
+      fetchedDataPoints: data.length,
     })
-    return Promise.resolve(data.to.toNumber())
+    return Promise.resolve(adjustedTo.toNumber())
   }
 
   private async initialize() {
@@ -78,7 +83,7 @@ export class LivenessIndexer extends ChildIndexer {
       await this.initializeConfigurations(indexerState, trx)
     })
 
-    this.logger.debug('Initialized state and configurations')
+    this.logger.info('Initialized state and configurations')
   }
 
   private async initializeIndexerState(
@@ -95,7 +100,7 @@ export class LivenessIndexer extends ChildIndexer {
         },
         trx,
       )
-      this.logger.debug('Added new indexer state to the database')
+      this.logger.info('Added new indexer state to the database')
       return
     }
 
@@ -118,7 +123,7 @@ export class LivenessIndexer extends ChildIndexer {
         this.minTimestamp.toNumber(),
         trx,
       )
-      this.logger.debug('Updated indexer state')
+      this.logger.info('Updated indexer state')
     }
   }
 
@@ -143,18 +148,22 @@ export class LivenessIndexer extends ChildIndexer {
       trx,
     )
 
-    await this.livenessConfigurationRepository.updateMany(updated, trx)
     // there can be a situation where untilTimestamp was set retroactively
     // in this case we want to delete the liveness records that were added during this "misconfiguration" period
     await Promise.all(
       updated.map(async (u) => {
         const untilTimestamp = u.untilTimestamp
         assert(untilTimestamp, 'untilTimestamp should not be undefined there')
+        await this.livenessConfigurationRepository.setUntilTimestamp(
+          u.id,
+          untilTimestamp,
+          trx,
+        )
         await this.livenessRepository.deleteAfter(u.id, untilTimestamp, trx)
       }),
     )
 
-    this.logger.debug('Saved configurations to the database', {
+    this.logger.info('Saved configurations to the database', {
       added: added.length,
       phasedOut: phasedOut.length,
       updated: updated.length,

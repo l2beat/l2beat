@@ -49,25 +49,36 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return insertedRows.map((row) => row.id)
   }
 
-  async updateMany(
-    records: LivenessConfigurationRecord[],
+  async setLastSyncedTimestamp(
+    configurationId: number,
+    lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
-  ): Promise<number[]> {
+  ) {
     const knex = await this.knex(trx)
 
-    const rows = records.map((r) => ({
-      ...toRow(r),
-      id: r.id,
-      last_synced_timestamp: r.lastSyncedTimestamp?.toDate(),
-    }))
+    return await knex('liveness_configuration')
+      .where({
+        id: configurationId,
+      })
+      .update({
+        last_synced_timestamp: lastSyncedTimestamp.toDate(),
+      })
+  }
 
-    const ids = await knex('liveness_configuration')
-      .insert(rows)
-      .onConflict('id')
-      .merge()
-      .returning('id')
+  async setUntilTimestamp(
+    configurationId: number,
+    untilTimestamp: UnixTime,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
 
-    return ids.map((id) => id.id)
+    return await knex('liveness_configuration')
+      .where({
+        id: configurationId,
+      })
+      .update({
+        until_timestamp: untilTimestamp.toDate(),
+      })
   }
 
   async deleteAll() {
