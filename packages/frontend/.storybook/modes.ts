@@ -36,3 +36,12 @@ export const onlyDesktopModes = {
     disable: true,
   },
 }
+
+export const onlyMobileModes = {
+  'light desktop': {
+    disable: true,
+  },
+  'dark desktop': {
+    disable: true,
+  },
+}

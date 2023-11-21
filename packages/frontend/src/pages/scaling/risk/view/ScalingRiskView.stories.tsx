@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { configureOverflowWrappers } from '../../../../scripts/configureOverflowWrappers'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
 import { configureTables } from '../../../../scripts/configureTables'
 import { configureTabs } from '../../../../scripts/configureTabs'
@@ -571,6 +572,7 @@ const meta = {
         configureTables()
         configureTabs()
         configureProjectFilters()
+        configureOverflowWrappers()
       }, [])
       return <Story />
     },
