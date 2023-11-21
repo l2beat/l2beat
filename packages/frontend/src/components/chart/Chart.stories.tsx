@@ -161,6 +161,11 @@ export const EmptyState: Story = {
     chart.dataset.state = 'empty'
     chart.dataset.interactivityDisabled = 'true'
   },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
 }
 
 export const ErrorState: Story = {
@@ -170,6 +175,11 @@ export const ErrorState: Story = {
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'error'
     chart.dataset.interactivityDisabled = 'true'
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
   },
 }
 
