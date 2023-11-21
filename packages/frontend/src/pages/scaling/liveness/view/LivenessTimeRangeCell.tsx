@@ -8,20 +8,20 @@ interface Props {
 
 export function LivenessTimeRangeCell(props: Props) {
   return (
-    <span
+    <div
       data-role="liveness-time-range-cell"
       data-state="30D"
-      className="group"
+      className="group w-full"
     >
-      <span className="hidden group-data-[state='30D']:inline">
+      <div className="hidden w-full group-data-[state='30D']:inline">
         {props.last30Days}
-      </span>
-      <span className="hidden group-data-[state='90D']:inline">
+      </div>
+      <div className="hidden w-full group-data-[state='90D']:inline">
         {props.last90Days}
-      </span>
-      <span className="hidden group-data-[state='MAX']:inline">
+      </div>
+      <div className="hidden w-full group-data-[state='MAX']:inline">
         {props.max}
-      </span>
-    </span>
+      </div>
+    </div>
   )
 }

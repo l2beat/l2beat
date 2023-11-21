@@ -4,9 +4,13 @@ import { expect } from 'earl'
 import { calculateAnomalies } from './calculateAnomalies'
 import { LivenessRecordWithInterval } from './calculateIntervalWithAverages'
 
-// TODO: unskip it
-describe.skip(calculateAnomalies.name, () => {
+describe(calculateAnomalies.name, () => {
   it('returns the anomalies', () => {
+    const RECORDS: LivenessRecordWithInterval[] = [
+      ANOMALY_RECORD,
+      ...GOOD_RECORDS,
+    ]
+
     const result = calculateAnomalies({
       project1: {
         batchSubmissions: {
@@ -23,30 +27,26 @@ describe.skip(calculateAnomalies.name, () => {
         },
       },
     })
-    expect(result.project1.anomalies).toEqual([
+    expect(result.projects.project1?.anomalies).toEqual([
       {
-        timestamp: NOW.toNumber(),
-        type: 'DA',
-        durationInSeconds: 4320000,
+        timestamp: ANOMALY_RECORD.timestamp,
+        durationInSeconds: ANOMALY_RECORD.previousRecordInterval,
+        type: ANOMALY_RECORD.type,
       },
     ])
   })
 })
 
-const NOW = UnixTime.now()
+const lastHour = UnixTime.now().toStartOf('hour')
 
-const RECORDS: LivenessRecordWithInterval[] = [
-  {
-    timestamp: NOW,
-    type: LivenessType('DA'),
-    previousRecordInterval: 50 * 24 * 3600,
-  },
-]
+const ANOMALY_RECORD = {
+  timestamp: lastHour,
+  type: LivenessType('DA'),
+  previousRecordInterval: 50 * 24 * 3600,
+}
 
-RECORDS.push(
-  ...Array.from({ length: 500 }).map((_, i) => ({
-    timestamp: NOW.add(-i, 'hours'),
-    type: LivenessType('DA'),
-    previousRecordInterval: 3600,
-  })),
-)
+const GOOD_RECORDS = Array.from({ length: 4000 }).map((_, i) => ({
+  timestamp: lastHour.add(-i, 'hours'),
+  type: LivenessType('DA'),
+  previousRecordInterval: 3600,
+}))

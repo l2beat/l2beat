@@ -25,7 +25,7 @@ function getScalingLivenessViewEntry(
   project: Layer2,
   livenessResponse: LivenessApiResponse,
 ): ScalingLivenessViewEntry {
-  const liveness = livenessResponse.projects[project.display.slug]
+  const liveness = livenessResponse.projects[project.id.toString()]
   return {
     name: project.display.name,
     slug: project.display.slug,
@@ -42,18 +42,17 @@ function getScalingLivenessViewEntry(
 function getAnomalyEntries(
   anomalies: LivenessApiProject['anomalies'],
 ): AnomalyIndicatorEntry[] {
-  if (!anomalies || anomalies.length === 0) {
+  if (!anomalies) {
     return []
   }
 
   const now = UnixTime.now()
-  const thirtyDaysAgo = now.add(-30, 'days')
+  // We want to show last 30 days with today included so we start 29 days ago
+  const thirtyDaysAgo = now.add(-29, 'days')
   let dayInLoop = thirtyDaysAgo
   const result: AnomalyIndicatorEntry[] = []
 
-  // TODO: (liveness) Do we want to include the current day?
-  while (dayInLoop.lt(now)) {
-    // TODO: (liveness) Check sorting later
+  while (dayInLoop.lte(now)) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
       return a.timestamp.toYYYYMMDD() === dayInLoop.toYYYYMMDD()
     })
@@ -63,13 +62,18 @@ function getAnomalyEntries(
         isAnomaly: false,
       })
     } else {
+      const anomalies = anomaliesInGivenDay.map(
+        (a) =>
+          ({
+            type: typeToDisplayType(a),
+            timestamp: a.timestamp.toNumber(),
+            durationInSeconds: a.durationInSeconds,
+          } as const),
+      )
+      anomalies.sort((a, b) => a.timestamp - b.timestamp)
       result.push({
         isAnomaly: true,
-        anomalies: anomaliesInGivenDay.map((a) => ({
-          type: typeToDisplayType(a),
-          timestamp: a.timestamp.toNumber(),
-          durationInSeconds: a.durationInSeconds,
-        })),
+        anomalies: anomalies,
       })
     }
 

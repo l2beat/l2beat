@@ -1,7 +1,8 @@
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 
 import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
+import { GroupedByType } from './groupByProjectIdAndType'
 
 export type LivenessRecordWithInterval = Omit<
   LivenessRecordWithProjectIdAndType,
@@ -13,6 +14,23 @@ interface AvgAndMax {
   averageInSeconds: number
   maximumInSeconds: number
 }
+
+//
+//
+//
+//
+//
+//
+// WARNING(radomski): This is performance sensitive code, please think twice
+// about changing anything inside it. Everything that seems to be bad practice,
+// risky or just wrong is intended to be here. Any uninformed changes to this
+// code could result in breaking production!
+//
+//
+//
+//
+//
+//
 
 export interface LivenessRecordsWithIntervalAndDetails<
   T = LivenessRecordWithInterval,
@@ -42,124 +60,150 @@ export function calculateIntervalWithAverages(
   }> = {}
   for (const project in records) {
     const projectRecords = records[project]
-    const batchSubmissionsWithIntervals = calculateIntervals(
-      projectRecords.batchSubmissions.records,
-    )
-    const stateUpdatesWithIntervals = calculateIntervals(
-      projectRecords.stateUpdates.records,
-    )
-    result[project] = {
-      batchSubmissions:
-        !batchSubmissionsWithIntervals ||
-        batchSubmissionsWithIntervals.length <= 1
-          ? undefined
-          : {
-              records: batchSubmissionsWithIntervals,
-              last30Days: calculateAverages(batchSubmissionsWithIntervals)
-                .last30Days,
-              last90Days: calculateAverages(batchSubmissionsWithIntervals)
-                .last90Days,
-              max: calculateAverages(batchSubmissionsWithIntervals).max,
-            },
-      stateUpdates:
-        !stateUpdatesWithIntervals || stateUpdatesWithIntervals.length <= 1
-          ? undefined
-          : {
-              records: stateUpdatesWithIntervals,
-              last30Days: calculateAverages(stateUpdatesWithIntervals)
-                .last30Days,
-              last90Days: calculateAverages(stateUpdatesWithIntervals)
-                .last90Days,
-              max: calculateAverages(stateUpdatesWithIntervals).max,
-            },
-    }
+    result[project] = calcIntervalWithAvgsPerProject(projectRecords)
   }
   return result
 }
 
-export function calculateIntervals(
-  records: LivenessRecordWithInterval[],
-): LivenessRecordWithInterval[] | undefined {
-  if (records.length === 0) {
+export function calcIntervalWithAvgsPerProject({
+  batchSubmissions,
+  stateUpdates,
+}: GroupedByType): {
+  batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
+  stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+} {
+  calculateIntervals(batchSubmissions.records)
+  const batchSubmissionsWithIntervals = batchSubmissions.records
+
+  calculateIntervals(stateUpdates.records)
+  const stateUpdatesWithIntervals = stateUpdates.records
+
+  return {
+    batchSubmissions: calculateDetailedAverages(batchSubmissionsWithIntervals),
+    stateUpdates: calculateDetailedAverages(stateUpdatesWithIntervals),
+  }
+}
+
+function calculateDetailedAverages(
+  intervals: LivenessRecordWithInterval[] | undefined,
+): LivenessRecordsWithIntervalAndDetails | undefined {
+  if (!intervals || intervals.length <= 1) {
     return undefined
   }
 
-  const r = records.map((record, index) => {
-    if (index === records.length - 1) {
-      return record
-    }
-    const nextRecord = records[index + 1]
-    const previousRecordInterval =
-      record.timestamp.toNumber() - nextRecord.timestamp.toNumber()
+  const averages = calculateAverages(intervals)
+  return {
+    records: intervals,
+    last30Days: averages.last30Days,
+    last90Days: averages.last90Days,
+    max: averages.max,
+  }
+}
 
-    return {
-      ...record,
-      previousRecordInterval,
-    }
-  })
-
-  return r
+export function calculateIntervals(
+  records: LivenessRecordWithInterval[],
+): void {
+  for (let i = 0; i < records.length - 1; i++) {
+    records[i].previousRecordInterval =
+      records[i].timestamp.toNumber() - records[i + 1].timestamp.toNumber()
+  }
 }
 
 export function calculateAverages(records: LivenessRecordWithInterval[]) {
-  const last30Days = filterRecords(records, '30d')
-  const last90Days = filterRecords(records, '90d')
-  const max = filterRecords(records, 'max')
+  const last30Days = calculateDetailsFor(records, '30d')
+  const last90Days = calculateDetailsFor(records, '90d')
+  const max = calculateDetailsFor(records, 'max')
 
   return {
-    last30Days: !last30Days.length
-      ? undefined
-      : {
-          averageInSeconds: calculateAverage(last30Days),
-          maximumInSeconds: calculateMax(last30Days),
-        },
-    last90Days: !last90Days.length
-      ? undefined
-      : {
-          averageInSeconds: calculateAverage(last90Days),
-          maximumInSeconds: calculateMax(last90Days),
-        },
-    max: !max.length
-      ? undefined
-      : {
-          averageInSeconds: calculateAverage(max),
-          maximumInSeconds: calculateMax(max),
-        },
+    last30Days:
+      last30Days === undefined
+        ? undefined
+        : {
+            averageInSeconds: last30Days.averageInSeconds,
+            maximumInSeconds: last30Days.maximumInSeconds,
+          },
+    last90Days:
+      last90Days === undefined
+        ? undefined
+        : {
+            averageInSeconds: last90Days.averageInSeconds,
+            maximumInSeconds: last90Days.maximumInSeconds,
+          },
+    max:
+      max === undefined
+        ? undefined
+        : {
+            averageInSeconds: max.averageInSeconds,
+            maximumInSeconds: max.maximumInSeconds,
+          },
   }
 }
 
-export function filterRecords(
+export function calculateDetailsFor(
   records: readonly LivenessRecordWithInterval[],
   type: '30d' | '60d' | '90d' | 'max',
-) {
+):
+  | {
+      averageInSeconds: number
+      maximumInSeconds: number
+    }
+  | undefined {
   if (type === 'max') {
-    return records
-      .map((record) => record.previousRecordInterval)
-      .filter(notUndefined)
+    if (records.length === 0) {
+      return undefined
+    }
+    const result = { averageInSeconds: 0, maximumInSeconds: 0 }
+    for (const record of records.slice(0, records.length - 1)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      result.averageInSeconds += record.previousRecordInterval!
+      result.maximumInSeconds = Math.max(
+        result.maximumInSeconds,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        record.previousRecordInterval!,
+      )
+    }
+    result.averageInSeconds = Math.ceil(
+      result.averageInSeconds / (records.length - 1),
+    )
+    return result
   } else {
     const NOW = UnixTime.now()
     const timeframe = type === '30d' ? -30 : type === '60d' ? -60 : -90
-    return records
-      .filter((record) => record.timestamp.gte(NOW.add(timeframe, 'days')))
-      .map((record) => record.previousRecordInterval)
-      .filter(notUndefined)
-  }
-}
 
-export function calculateAverage(records: number[]) {
-  return Math.ceil(records.reduce((a, b) => a + b, 0) / records.length)
-}
-
-export function calculateMax(array: number[]): number {
-  let maxElement = -Infinity
-  // eslint-disable-next-line
-  for (let i = 0; i < array.length; ++i) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (array[i]! > maxElement) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      maxElement = array[i]!
+    if (
+      records.length === 0 ||
+      records[0].timestamp.lt(NOW.add(timeframe, 'days'))
+    ) {
+      return undefined
     }
-  }
 
-  return maxElement
+    const lastIndex = records.findIndex((record) =>
+      record.timestamp.lte(NOW.add(timeframe, 'days')),
+    )
+    const filtered = records.slice(
+      0,
+      lastIndex === -1 ? records.length : lastIndex,
+    )
+    if (filtered[filtered.length - 1].previousRecordInterval === undefined) {
+      filtered.splice(filtered.length - 1, 1)
+    }
+
+    if (filtered.length === 0) {
+      return undefined
+    }
+    const result = { averageInSeconds: 0, maximumInSeconds: 0 }
+    for (const record of filtered) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      result.averageInSeconds += record.previousRecordInterval!
+      result.maximumInSeconds = Math.max(
+        result.maximumInSeconds,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        record.previousRecordInterval!,
+      )
+    }
+    result.averageInSeconds = Math.ceil(
+      result.averageInSeconds / filtered.length,
+    )
+    return result
+  }
 }

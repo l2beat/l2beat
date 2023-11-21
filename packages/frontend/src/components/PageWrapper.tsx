@@ -21,6 +21,7 @@ export function PageWrapper(props: PageWrapperProps) {
     >
       <Head {...props.metadata} preloadApi={props.preloadApi} />
       <body className="bg-white text-black dark:bg-neutral-900 dark:text-white">
+        <script src="/scripts/prerender.js" />
         {props.children}
         <Tooltip />
         {props.banner && <FloatingBanner />}
