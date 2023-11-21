@@ -41,6 +41,7 @@ import {
 } from './view/LivenessStatusPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderStatusPage } from './view/StatusPage'
+import { renderStatusPagesLinksPage } from './view/StatusPagesLinksPage'
 
 // TODO: make it work correctly after "formula" refactor
 export class StatusController {
@@ -253,6 +254,10 @@ export class StatusController {
       })),
     }
     return renderLivenessStatusPage(params)
+  }
+
+  getStatusPagesLinks() {
+    return renderStatusPagesLinksPage()
   }
 
   private getFirstHour(from: UnixTime | undefined) {
