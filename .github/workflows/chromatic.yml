@@ -5,9 +5,7 @@ name: "Chromatic"
 # You can check the issue here:
 # https://github.com/IanVS/vite-plugin-turbosnap/issues/13
 
-on:
-  pull_request:
-  push:
+on: push
 
 jobs:
   deploy:
@@ -30,4 +28,4 @@ jobs:
         run: yarn storybook:build
 
       - name: Publish to Chromatic
-        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts
+        run: yarn chromatic
