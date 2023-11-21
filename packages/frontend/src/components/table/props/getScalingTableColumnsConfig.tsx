@@ -457,31 +457,33 @@ export function getScalingLivenessColumnsConfig() {
             />
           ),
           tooltip: 'How often transaction batches are submitted to the L1',
-          getValue: (project) => (
-            <LivenessTimeRangeCell
-              last30Days={
-                <DurationCell
-                  durationInSeconds={
-                    project.batchSubmissions?.last30Days?.averageInSeconds
-                  }
-                />
-              }
-              last90Days={
-                <DurationCell
-                  durationInSeconds={
-                    project.batchSubmissions?.last90Days?.averageInSeconds
-                  }
-                />
-              }
-              max={
-                <DurationCell
-                  durationInSeconds={
-                    project.batchSubmissions?.max?.averageInSeconds
-                  }
-                />
-              }
-            />
-          ),
+          getValue: (project) => {
+            return (
+              <LivenessTimeRangeCell
+                last30Days={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.last30Days?.averageInSeconds
+                    }
+                  />
+                }
+                last90Days={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.last90Days?.averageInSeconds
+                    }
+                  />
+                }
+                max={
+                  <DurationCell
+                    durationInSeconds={
+                      project.batchSubmissions?.max?.averageInSeconds
+                    }
+                  />
+                }
+              />
+            )
+          },
         },
         {
           name: (
@@ -492,34 +494,36 @@ export function getScalingLivenessColumnsConfig() {
             />
           ),
           tooltip: 'The longest period of time between batch submissions',
-          getValue: (project) => (
-            <LivenessTimeRangeCell
-              last30Days={
-                <DurationCell
-                  withColors
-                  durationInSeconds={
-                    project.batchSubmissions?.last30Days?.maximumInSeconds
-                  }
-                />
-              }
-              last90Days={
-                <DurationCell
-                  withColors
-                  durationInSeconds={
-                    project.batchSubmissions?.last90Days?.maximumInSeconds
-                  }
-                />
-              }
-              max={
-                <DurationCell
-                  withColors
-                  durationInSeconds={
-                    project.batchSubmissions?.max?.maximumInSeconds
-                  }
-                />
-              }
-            />
-          ),
+          getValue: (project) => {
+            return (
+              <LivenessTimeRangeCell
+                last30Days={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.last30Days?.maximumInSeconds
+                    }
+                  />
+                }
+                last90Days={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.last90Days?.maximumInSeconds
+                    }
+                  />
+                }
+                max={
+                  <DurationCell
+                    withColors
+                    durationInSeconds={
+                      project.batchSubmissions?.max?.maximumInSeconds
+                    }
+                  />
+                }
+              />
+            )
+          },
         },
       ],
     },

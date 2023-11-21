@@ -14,8 +14,9 @@ function clean() {
 }
 
 function buildScripts() {
-  return exec(
+  return multipleExec(
     `esbuild --bundle src/scripts/index.ts --outfile=build/scripts/main.js --minify`,
+    'esbuild --bundle src/scripts/prerenderIndex.ts --outfile=build/scripts/prerender.js --minify',
   )
 }
 
@@ -132,6 +133,10 @@ module.exports = {
 }
 
 // Utilities
+
+function multipleExec(...commands) {
+  return Promise.all(commands.map((command) => exec(command)))
+}
 
 function exec(command) {
   const nodeModulesHere = path.join(__dirname, './node_modules/.bin')
