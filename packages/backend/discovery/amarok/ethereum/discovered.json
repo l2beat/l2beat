@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 18519737,
-  "configHash": "0x16324d5d9b8cb013c6fdd7b591039444fb8b0fac7d1fc64df51c6f14e86b3fa7",
+  "blockNumber": 18620064,
+  "configHash": "0x101be10048c72edbeb4021f415fd0f7d091b25e9c7997a6e3d78b25d22c367d9",
   "version": 3,
   "contracts": [
     {
@@ -17,9 +17,30 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "115860845544776900755881804",
+        "totalSupply": "115960790905474999316858446",
         "totalSupplyAt": []
       }
+    },
+    {
+      "name": "LineaHubConnector",
+      "address": "0x076cD2B25cb1Ed7272d716bdeb4A8551CF606a3D",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1698739547,
+      "values": {
+        "AMB": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "delay": 604800,
+        "DOMAIN": 6648936,
+        "MIRROR_DOMAIN": 1818848877,
+        "mirrorConnector": "0xaFb88881e53589f5E6eb1cc27E9207cC7f03023F",
+        "owner": "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
+        "proposed": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "proposedTimestamp": 1699054043,
+        "renounced": false,
+        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
+      },
+      "derivedName": "LineaHubConnector"
     },
     {
       "name": "OptimisticGovernor",
@@ -119,7 +140,7 @@
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
         ],
         "getThreshold": 8,
-        "nonce": 52,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -134,7 +155,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1699356011,
+        "getCurrentTime": 1700568863,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -252,7 +273,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 497,
+        "nonce": 509,
         "VERSION": "1.3.0"
       }
     },
@@ -498,7 +519,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 13366,
+        "nonce": 14064,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -634,23 +655,25 @@
           "0xd151C9ef49cE2d30B829a98A07767E3280F70961",
           "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
           "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-          "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45"
+          "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45",
+          "0x076cD2B25cb1Ed7272d716bdeb4A8551CF606a3D"
         ],
-        "connectorsHash": "0x1ab775b9545e9c3175b57958dc75c2a1cf76c3d166d0527bbf7d51fe434efa00",
+        "connectorsHash": "0x9e95f76ad984f886dd7a8431e8fa5c405fce573b4b2a4671aeb68d7464ab164b",
         "delay": 604800,
         "delayBlocks": 100,
         "DEQUEUE_MAX": 100,
         "domains": [
-          1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786
+          1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786,
+          1818848877
         ],
-        "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
-        "getPendingInboundRootsCount": 0,
-        "lastPropagatedRoot": "0xcb0290eddf18d2a5b56564bb7f16b213d7d34350c699f4fd2d9b108cc11d0240",
+        "domainsHash": "0x01ba100d82d6911b25f7097e36b09348a7040476fa32f3a4f480bc081cfed9f5",
+        "getPendingInboundRootsCount": 5,
+        "lastPropagatedRoot": "0xd75355b41937823cec7571f4eecde02f31e03be621b6ce2d4428fa22aadcdc2c",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [40146, 40145],
+        "pendingInboundRoots": [41076, 41080],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -679,7 +702,7 @@
           "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
         ],
         "getThreshold": 3,
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -697,12 +720,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 18519181,
+        "lastSentBlock": 18619246,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0x9b6c91c4d63b5f9346b05ba924c54a11e2d7a618393dfad569486f5c2a3444c6",
+        "outboundRoot": "0x17de3003165fec33bf1787d0db565ecc0c8a8c850f9a1d7906cbb7882ddd00f4",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -812,6 +835,41 @@
       "function totalSupplyAt(uint256 snapshotId) view returns (uint256)",
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
+    ],
+    "0x076cD2B25cb1Ed7272d716bdeb4A8551CF606a3D": [
+      "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector)",
+      "error Connector__processMessage_notUsed()",
+      "error ProposedOwnable__onlyOwner_notOwner()",
+      "error ProposedOwnable__onlyProposed_notProposedOwner()",
+      "error ProposedOwnable__ownershipDelayElapsed_delayNotElapsed()",
+      "error ProposedOwnable__proposeNewOwner_invalidProposal()",
+      "error ProposedOwnable__proposeNewOwner_noOwnershipChange()",
+      "error ProposedOwnable__renounceOwnership_invalidProposal()",
+      "error ProposedOwnable__renounceOwnership_noProposal()",
+      "event MessageProcessed(bytes data, address caller)",
+      "event MessageSent(bytes data, bytes encodedData, address caller)",
+      "event MirrorConnectorUpdated(address previous, address current)",
+      "event NewConnector(uint32 indexed domain, uint32 indexed mirrorDomain, address amb, address rootManager, address mirrorConnector)",
+      "event OwnershipProposed(address indexed proposedOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function AMB() view returns (address)",
+      "function DOMAIN() view returns (uint32)",
+      "function MIRROR_DOMAIN() view returns (uint32)",
+      "function ROOT_MANAGER() view returns (address)",
+      "function acceptProposedOwner()",
+      "function claimMessage(bytes _calldata, uint256 _nonce)",
+      "function delay() view returns (uint256)",
+      "function mirrorConnector() view returns (address)",
+      "function owner() view returns (address)",
+      "function processMessage(bytes _data)",
+      "function proposeNewOwner(address newlyProposed)",
+      "function proposed() view returns (address)",
+      "function proposedTimestamp() view returns (uint256)",
+      "function renounceOwnership()",
+      "function renounced() view returns (bool)",
+      "function sendMessage(bytes _data, bytes _encodedData) payable",
+      "function setMirrorConnector(address _mirrorConnector)",
+      "function verifySender(address _expected) returns (bool)"
     ],
     "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",

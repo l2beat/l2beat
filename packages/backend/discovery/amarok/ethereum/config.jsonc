@@ -22,7 +22,8 @@
     "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
     "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": "OptimisticGovernor",
     "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer",
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9",
+    "0x076cD2B25cb1Ed7272d716bdeb4A8551CF606a3D": "LineaHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -126,6 +127,10 @@
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "GnosisHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "LineaHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
