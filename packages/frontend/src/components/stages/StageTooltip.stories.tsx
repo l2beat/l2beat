@@ -56,7 +56,7 @@ export const Tooltip: Story = {
   },
   parameters: {
     chromatic: {
-      delay: 300,
+      delay: 500,
     },
   },
 }

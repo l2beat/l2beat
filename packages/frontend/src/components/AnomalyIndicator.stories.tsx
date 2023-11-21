@@ -139,7 +139,7 @@ export const Default: Story = {
   },
   parameters: {
     chromatic: {
-      delay: 300,
+      delay: 500,
     },
   },
 }

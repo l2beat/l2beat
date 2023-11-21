@@ -83,7 +83,7 @@ export const RosetteTooltip: Story = {
   },
   parameters: {
     chromatic: {
-      delay: 300,
+      delay: 500,
     },
   },
 }
