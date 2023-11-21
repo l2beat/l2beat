@@ -7,6 +7,7 @@ import {
 import { utils } from 'ethers'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -20,7 +21,7 @@ import {
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('degate')
+const discovery = new ProjectDiscovery('degate3')
 
 const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
   'ExchangeV3',
@@ -41,19 +42,35 @@ const maxForcedWithdrawalFee = discovery.getContractValue<(number | string)[]>(
   'ExchangeV3',
   'getConstants',
 )[10]
-
 const maxForcedWithdrawalFeeString = `${utils.formatEther(
   maxForcedWithdrawalFee,
 )} ETH`
 
-export const degate: Layer2 = {
-  isArchived: true,
+const delay1 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
+const delay2 = discovery.getContractValue<number>('TimeLock2', 'MINIMUM_DELAY')
+
+const upgradeabilityRisk = RISK_VIEW.UPGRADE_DELAY_SECONDS(
+  Math.min(delay1, delay2),
+)
+
+const timelockUpgrades1 = {
+  upgradableBy: ['Degate HomeDAO2 Multisig'],
+  upgradeDelay: formatSeconds(delay1),
+  upgradeConsiderations: upgradeabilityRisk.description,
+}
+
+const timelockUpgrades2 = {
+  upgradableBy: ['Degate HomeDAO2 Multisig'],
+  upgradeDelay: formatSeconds(delay2),
+  upgradeConsiderations: upgradeabilityRisk.description,
+}
+
+export const degate3: Layer2 = {
   type: 'layer2',
-  id: ProjectId('degate'),
+  id: ProjectId('degate3'),
   display: {
-    name: 'DeGate Legacy',
-    slug: 'degate',
-    headerWarning: 'This project is in shutdown mode and no longer active.',
+    name: 'DeGate V1',
+    slug: 'degate3',
     description:
       'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
@@ -78,8 +95,8 @@ export const degate: Layer2 = {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA'),
-        sinceTimestamp: new UnixTime(1681991243),
+        address: EthereumAddress('0x54D7aE423Edb07282645e740C046B9373970a168'),
+        sinceTimestamp: new UnixTime(1699746983),
         tokens: '*',
       }),
     ],
@@ -89,12 +106,12 @@ export const degate: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83',
+            '0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD',
           ),
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1681993655),
+          sinceTimestamp: new UnixTime(1699747007),
         },
       ],
     },
@@ -102,7 +119,7 @@ export const degate: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_NO,
+    upgradeability: upgradeabilityRisk,
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,
@@ -113,8 +130,8 @@ export const degate: Layer2 = {
         {
           contract: 'ExchangeV3',
           references: [
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F23#L102',
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F35#L162',
+            'https://etherscan.io/address/0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b#code#F23#L102',
+            'https://etherscan.io/address/0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b#code#F35#L162',
           ],
         },
       ],
@@ -125,7 +142,7 @@ export const degate: Layer2 = {
         {
           contract: 'ExchangeV3',
           references: [
-            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+            'https://etherscan.io/address/0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b#code#F1#L420',
           ],
         },
       ],
@@ -133,34 +150,29 @@ export const degate: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: null,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: null,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: [
-          true,
-          'Users have at least 30d to exit as the system cannot be upgraded.',
-        ],
-      },
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeSourceAvailable: true,
     },
-    {
-      rollupNodeLink: 'https://github.com/degatedev/degate-state-recover',
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: null,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
     },
-  ),
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: [
+        true,
+        'Users have at least 30d to exit as the system upgrades have a 45d delay.',
+      ],
+    },
+  }),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -194,11 +206,11 @@ export const degate: Layer2 = {
       references: [
         {
           text: 'ExchangeV3.sol#L341-L348 - DeGate source code',
-          href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L341',
+          href: 'https://etherscan.io/address/0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b#code#F1#L341',
         },
         {
           text: 'LoopringIOExchangeOwner.sol#L98-L101 - DeGate source code',
-          href: 'https://etherscan.io/address/0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83#code#F1#L98',
+          href: 'https://etherscan.io/address/0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD#code#F1#L98',
         },
       ],
     },
@@ -230,7 +242,7 @@ export const degate: Layer2 = {
           },
           {
             text: 'ExchangeV3.sol#L392 - DeGate source code, forceWithdraw function',
-            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L392',
+            href: 'https://etherscan.io/address/0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b#code#F1#L392',
           },
         ],
       },
@@ -248,7 +260,7 @@ export const degate: Layer2 = {
 
           {
             text: 'ExchangeV3.sol#L420 - DeGate source code, withdrawFromMerkleTree function',
-            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+            href: 'https://etherscan.io/address/0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b#code#F1#L420',
           },
         ],
       },
@@ -283,7 +295,7 @@ export const degate: Layer2 = {
         const permissionedAccount = discovery.formatPermissionedAccount(owner1)
 
         // if it was updated, we should add multisig participants
-        assert(permissionedAccount.type === 'Contract', 'DeGate')
+        assert(permissionedAccount.type === 'EOA', 'DeGate')
 
         return [permissionedAccount]
       })(),
@@ -303,18 +315,31 @@ export const degate: Layer2 = {
       description:
         'Actors who can submit new blocks, updating the L2 state on L1.',
     },
+    {
+      name: 'Degate HomeDAO2 Multisig',
+      accounts: [discovery.getPermissionedAccount('TimeLock1', 'admin')],
+      description: (() => {
+        const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
+        const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
+        assert(owner1 === owner2, 'The owners are different')
+        return 'Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts.'
+      })(),
+    },
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
+      discovery.getContractDetails('ExchangeV3', {
+        description: `Main ExchangeV3 contract.`,
+        ...timelockUpgrades1,
+      }),
       discovery.getContractDetails(
         'LoopringIOExchangeOwner',
         'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
       ),
-      discovery.getContractDetails(
-        'DefaultDepositContract',
-        'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-      ),
+      discovery.getContractDetails('DefaultDepositContract', {
+        description: `ERC 20 token basic deposit contract. Handles user deposits and withdrawals.`,
+        ...timelockUpgrades2,
+      }),
       discovery.getContractDetails(
         'LoopringV3',
         'Contract for setting exchange fee parameters.',
@@ -323,16 +348,28 @@ export const degate: Layer2 = {
         'BlockVerifier',
         'zkSNARK Verifier based on ethsnarks library.',
       ),
+      discovery.getContractDetails(
+        'TimeLock1',
+        `This timelock contract is set as the proxyOwner of the ExchangeV3 contract. There is a ${formatSeconds(
+          delay1,
+        )} time delay for upgrading the contract.`,
+      ),
+      discovery.getContractDetails(
+        'TimeLock2',
+        `This timelock contract is set as the proxyOwner of the DefaultDepositContract contract. There is a ${formatSeconds(
+          delay2,
+        )} time delay for upgrading the contract.`,
+      ),
     ],
     risks: [],
   },
   milestones: [
     {
-      name: 'DeGate DEX Launches Mainnet Beta',
-      link: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
-      date: '2023-05-03T00:00:00Z',
+      name: 'DeGate Mainnet Beta Redeploy',
+      link: 'https://medium.com/degate/degate-mainnet-beta-redeployment-oct-2023-e07c8eeaec4c',
+      date: '2023-10-27T00:00:00Z',
       description:
-        'DeGate launches mainnet beta with a deposit cap and a program to recover eventual user losses.',
+        'DeGate redeploy Mainnet Beta with the ability to upgrade the smart contracts, with a time delay.',
     },
   ],
 }
