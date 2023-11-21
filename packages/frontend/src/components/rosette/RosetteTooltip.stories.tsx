@@ -82,8 +82,6 @@ export const RosetteTooltip: Story = {
     })
   },
   parameters: {
-    chromatic: {
-      delay: 500,
-    },
+    chromatic: { pauseAnimationAtEnd: true },
   },
 }
