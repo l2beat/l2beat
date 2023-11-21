@@ -35,8 +35,13 @@ import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
 import { renderAggregatedPage } from './view/AggregatedReportsPage'
+import {
+  LivenessStatusPageProps,
+  renderLivenessStatusPage,
+} from './view/LivenessStatusPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderStatusPage } from './view/StatusPage'
+import { renderStatusPagesLinksPage } from './view/StatusPagesLinksPage'
 
 // TODO: make it work correctly after "formula" refactor
 export class StatusController {
@@ -239,13 +244,20 @@ export class StatusController {
       await this.indexerStateRepository.findIndexerState('liveness_indexer')
     const livenessConfigurations =
       await this.livenessConfigurationRepository.getAll()
-    return {
+
+    const params: LivenessStatusPageProps = {
       ...livenessIndexerState,
+      targetTimestamp: this.clock.getLastHour(),
       configurations: livenessConfigurations.map((c) => ({
         ...c,
         params: JSON.parse(c.params) as json,
       })),
     }
+    return renderLivenessStatusPage(params)
+  }
+
+  getStatusPagesLinks() {
+    return renderStatusPagesLinksPage()
   }
 
   private getFirstHour(from: UnixTime | undefined) {
