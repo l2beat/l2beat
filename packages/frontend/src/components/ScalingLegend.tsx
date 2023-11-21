@@ -5,6 +5,7 @@ import {
   LoopringIcon,
   OptimismIcon,
   OVMIcon,
+  PellarIcon,
   PolygonIcon,
   StarkWareIcon,
   ZkSyncIcon,
@@ -48,6 +49,11 @@ export function ScalingLegend() {
           <PolygonIcon className="relative -top-0.5 min-w-[24px]" />
           <span>&ndash;</span>
           <span>This project is based on Polygon&apos;s code base.</span>
+        </p>
+        <p className="flex gap-1">
+          <PellarIcon className="relative -top-0.5 min-w-[24px]" />
+          <span>&ndash;</span>
+          <span>This project is based on Pellar&apos;s code base.</span>
         </p>
       </div>
     </div>
