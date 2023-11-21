@@ -127,7 +127,6 @@ describe(LivenessIndexer.name, () => {
           mockObject<LivenessConfigurationRepository>({
             getAll: async () => CONFIGURATIONS.slice(0, 1),
             addMany: async () => [],
-            updateMany: async () => [],
             deleteMany: async () => -1,
           })
 
@@ -156,7 +155,8 @@ describe(LivenessIndexer.name, () => {
           mockObject<LivenessConfigurationRepository>({
             getAll: async () => CONFIGURATIONS,
             addMany: async () => [],
-            updateMany: async () => [],
+            setLastSyncedTimestamp: async () => -1,
+            setUntilTimestamp: async () => -1,
             deleteMany: async () => -1,
           })
 
@@ -183,20 +183,9 @@ describe(LivenessIndexer.name, () => {
         await livenessIndexer.start()
 
         expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
-        expect(configurationRepository.updateMany).toHaveBeenNthCalledWith(
-          1,
-          CONFIGURATIONS.slice(1).map((c) => ({
-            id: 1,
-            identifier: c.identifier,
-            type: c.type,
-            params: c.params,
-            sinceTimestamp: c.sinceTimestamp,
-            untilTimestamp: newUntilTimestamp,
-            projectId: c.projectId,
-            lastSyncedTimestamp: undefined,
-          })),
-          MOCK_TRX,
-        )
+        expect(
+          configurationRepository.setUntilTimestamp,
+        ).toHaveBeenNthCalledWith(1, 1, newUntilTimestamp, MOCK_TRX)
         expect(livenessRepository.deleteAfter).toHaveBeenNthCalledWith(
           1,
           1,
@@ -210,7 +199,8 @@ describe(LivenessIndexer.name, () => {
           mockObject<LivenessConfigurationRepository>({
             getAll: async () => CONFIGURATIONS,
             addMany: async () => [],
-            updateMany: async () => [],
+            setLastSyncedTimestamp: async () => -1,
+            setUntilTimestamp: async () => -1,
             deleteMany: async () => -1,
           })
 
@@ -279,10 +269,14 @@ describe(LivenessIndexer.name, () => {
         ...TRANSFERS_EXPECTED,
         ...FUNCTIONS_EXPECTED,
       ]
+
+      const adjustedTo = TO.add(1, 'days')
+
       const livenessClient = mockObject<LivenessClient>({
         getLivenessData: mockFn().resolvesTo({
           data: expectedToSave,
-          to: TO,
+          adjustedTo,
+          usedConfigurationsIds: CONFIGURATIONS.map((c) => c.id),
         }),
       })
 
@@ -304,17 +298,15 @@ describe(LivenessIndexer.name, () => {
         FROM,
         TO,
       )
-      expect(currentTo).toEqual(TO.toNumber())
+      expect(currentTo).toEqual(adjustedTo.toNumber())
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
-      expect(configurationRepository.updateMany).toHaveBeenNthCalledWith(
-        1,
-        CONFIGURATIONS.map((c, i) => ({
-          ...c,
-          id: i,
-          lastSyncedTimestamp: TO,
-        })),
-        MOCK_TRX,
-      )
+
+      CONFIGURATIONS.forEach((c, i) => {
+        expect(
+          configurationRepository.setLastSyncedTimestamp,
+        ).toHaveBeenNthCalledWith(i + 1, i, adjustedTo, MOCK_TRX)
+      })
+
       expect(livenessRepository.addMany).toHaveBeenCalledWith(
         expectedToSave,
         MOCK_TRX,

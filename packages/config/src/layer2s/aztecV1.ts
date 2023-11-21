@@ -37,13 +37,13 @@ function getRollupProviders() {
   return [...providers, deployer]
 }
 
-export const aztec: Layer2 = {
+export const aztecV1: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztec'),
   display: {
     name: 'Zk.Money v1 (Aztec v1)',
-    slug: 'aztec',
+    slug: 'aztecv1',
     warning:
       'EOL: Aztec team announced the intent to shut down the infrastructure for this rollup on Mar 13, 2023. The rollup is still active due to funds locked in, but is not accepting deposits.',
     description:
@@ -78,21 +78,6 @@ export const aztec: Layer2 = {
       type: 'aztec',
       url: 'https://api.aztec.network/falafel-mainnet',
       callsPerMinute: 3_000,
-    },
-    liveness: {
-      batchSubmissions: [],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
-          ),
-          selector: '0x06011a46',
-          functionSignature:
-            'function processRollup(bytes proofData, bytes signatures, bytes viewingKeys, bytes providerSignature, address provider, address feeReceiver, uint256 feeLimit)',
-          sinceTimestamp: new UnixTime(1614799636),
-        },
-      ],
     },
   },
   riskView: makeBridgeCompatible({

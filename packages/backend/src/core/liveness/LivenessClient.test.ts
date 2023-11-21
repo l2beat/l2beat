@@ -28,15 +28,19 @@ describe(LivenessClient.name, () => {
 
       const livenessClient = new LivenessClient(bigquery)
 
-      const { data, to } = await livenessClient.getLivenessData(
-        PROJECTS,
-        LIVENESS_CONFIGURATIONS,
-        FROM,
-        TO,
-      )
+      const { data, adjustedTo, usedConfigurationsIds } =
+        await livenessClient.getLivenessData(
+          PROJECTS,
+          LIVENESS_CONFIGURATIONS,
+          FROM,
+          TO,
+        )
 
       // prepare expected values
-      const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
+      const expectedAdjustedTo = adjustToForBigqueryCall(
+        FROM.toNumber(),
+        TO.toNumber(),
+      )
       const { transfers, functionCalls } = getFilteredConfigs(
         PROJECTS,
         LIVENESS_CONFIGURATIONS,
@@ -45,21 +49,26 @@ describe(LivenessClient.name, () => {
       )
 
       // adjusts "to"
-      expect(to).toEqual(adjustedTo)
+      expect(adjustedTo).toEqual(expectedAdjustedTo)
+
+      // returns used configurations ids
+      expect(usedConfigurationsIds).toEqual(
+        [...transfers, ...functionCalls].map((c) => c.livenessConfigurationId),
+      )
+
+      // returns data returned from internal methods
+      expect(data).toEqual([...TRANSFERS_EXPECTED, ...FUNCTION_EXPECTED])
 
       // calls both internal methods
       expect(bigquery.query).toHaveBeenCalledTimes(2)
       expect(bigquery.query).toHaveBeenNthCalledWith(
         1,
-        getTransferQuery(transfers, FROM, adjustedTo),
+        getTransferQuery(transfers, FROM, expectedAdjustedTo),
       )
       expect(bigquery.query).toHaveBeenNthCalledWith(
         2,
-        getFunctionCallQuery(functionCalls, FROM, adjustedTo),
+        getFunctionCallQuery(functionCalls, FROM, expectedAdjustedTo),
       )
-
-      // returns data returned from internal methods
-      expect(data).toEqual([...TRANSFERS_EXPECTED, ...FUNCTION_EXPECTED])
     })
   })
 
