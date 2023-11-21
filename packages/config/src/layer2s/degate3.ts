@@ -5,9 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { formatSeconds } from '../utils/formatSeconds'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -46,12 +46,11 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
   maxForcedWithdrawalFee,
 )} ETH`
 
-
 const delay1 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
-const delay2 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
+const delay2 = discovery.getContractValue<number>('TimeLock2', 'MINIMUM_DELAY')
 
 const upgradeabilityRisk = RISK_VIEW.UPGRADE_DELAY_SECONDS(
-  Math.min(delay1, delay2)
+  Math.min(delay1, delay2),
 )
 
 const timelockUpgrades1 = {
@@ -156,7 +155,7 @@ export const degate3: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -267,6 +266,15 @@ export const degate3: Layer2 = {
       },
     ],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'Node software source code can be found [here](https://github.com/degatedev/degate-state-recover).',
+    compressionScheme: 'No compression is used.',
+    genesisState:
+      'The system does not begin with a genesis state; instead, it initiates from a zero state, as referenced in [`CreateEmptyState`](https://github.com/degatedev/degate-state-recover/blob/main/statemanager/state.go#L28).',
+    dataFormat:
+      'DeGate bundles off-chain transactions into [zkBlocks](https://github.com/degatedev/protocols/blob/degate_mainnet/Circuit%20Design.md#zkblock) and submits them to the blockchain. zkBlock data definition is documented [here](https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#zkblock-data-definition).',
+  },
   permissions: [
     {
       name: 'DefaultDepositContract Owner',
@@ -346,7 +354,8 @@ export const degate3: Layer2 = {
       name: 'DeGate Mainnet Beta Redeploy',
       link: 'https://medium.com/degate/degate-mainnet-beta-redeployment-oct-2023-e07c8eeaec4c',
       date: '2023-10-27T00:00:00Z',
-      description: 'DeGate redeploy Mainnet Beta with the ability to upgrade the smart contracts, with a time delay.',
+      description:
+        'DeGate redeploy Mainnet Beta with the ability to upgrade the smart contracts, with a time delay.',
     },
   ],
 }

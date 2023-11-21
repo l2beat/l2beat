@@ -29,7 +29,7 @@ export const blast: Layer2 = {
     },
   },
   stage: {
-    stage: 'UnderReview',
+    stage: 'NotApplicable',
   },
   config: {
     escrows: [

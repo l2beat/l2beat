@@ -1,7 +1,7 @@
 {
   "name": "degate3",
   "chain": "ethereum",
-  "blockNumber": 18584907,
+  "blockNumber": 18620373,
   "configHash": "0xded4c746c255d59c4621181ff12d86e8e885c6d0f019340cfe9063fd0e65289e",
   "version": 3,
   "contracts": [
@@ -133,7 +133,7 @@
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x9ebdbab57c486aeff6341b8bb14d59c88c9591e4f510481f065ce0cb288d4f0f",
-        "getBlockHeight": 73,
+        "getBlockHeight": 137,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           1000000,
@@ -153,8 +153,8 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x26aa53213a7396d089a245d3b71a816d264c5553dd7963a77a6206b04abd8a38",
-        "getMerkleRoot": "0x16516568a5dc9b035b6a2f836c1f4c4b77b174d935beaa2628268d823c597f82",
+        "getMerkleAssetRoot": "0x1e7eb03ebd2ad2e4114da9b8a81a3fc048753a92cdf4ee22e958d6a988a8b168",
+        "getMerkleRoot": "0x0aed0a01c51c14615602e924a193aa4456730921a4a6bf7e3e53e46881a8fd4d",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": [0, 18, 18, 0, 18],
         "implementation": "0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b",
@@ -172,10 +172,10 @@
           "0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6",
           "0x0000000000000000000000000000000000000000",
           "0x54D7aE423Edb07282645e740C046B9373970a168",
-          [5000, 4999, 18567402, 1, 4480000000000000],
-          "0x16516568a5dc9b035b6a2f836c1f4c4b77b174d935beaa2628268d823c597f82",
-          "0x26aa53213a7396d089a245d3b71a816d264c5553dd7963a77a6206b04abd8a38",
-          73,
+          [5000, 4999, 18589360, 1, 4480000000000000],
+          "0x0aed0a01c51c14615602e924a193aa4456730921a4a6bf7e3e53e46881a8fd4d",
+          "0x1e7eb03ebd2ad2e4114da9b8a81a3fc048753a92cdf4ee22e958d6a988a8b168",
+          137,
           0,
           [0, 18, 18, 0, 18],
           [0, 0]
