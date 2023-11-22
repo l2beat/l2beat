@@ -16,6 +16,7 @@ import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
+import { deri } from './deri'
 import { dydx } from './dydx'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
@@ -55,6 +56,7 @@ import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { Layer2 } from './types'
+import { xai } from './xai'
 import { xchain } from './xchain'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
@@ -84,6 +86,7 @@ export const layer2s: Layer2[] = [
   degate,
   degate2,
   degate3,
+  deri,
   dydx,
   fuel,
   fuelv1,
@@ -121,6 +124,7 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   taiko,
+  xai,
   xchain,
   zkspace,
   zkswap,
