@@ -55,6 +55,6 @@ export const Tooltip: Story = {
     })
   },
   parameters: {
-    chromatic: { pauseAnimationAtEnd: true },
+    chromatic: { pauseAnimationAtEnd: true, delay: 300 },
   },
 }

@@ -138,7 +138,7 @@ export const Default: Story = {
     })
   },
   parameters: {
-    chromatic: { pauseAnimationAtEnd: true },
+    chromatic: { pauseAnimationAtEnd: true, delay: 300 },
   },
 }
 
