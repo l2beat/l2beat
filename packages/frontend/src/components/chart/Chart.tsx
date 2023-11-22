@@ -1,5 +1,5 @@
 import { Milestone } from '@l2beat/config'
-import cx from 'classnames'
+import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
 import { ChartType } from '../../scripts/charts/types'
@@ -7,12 +7,12 @@ import { ActivityHeader } from '../header/ActivityHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
+import { ChartComingSoonState } from './ChartComingSoonState'
 import { ChartEmptyState } from './ChartEmptyState'
 import { ChartErrorState } from './ChartErrorState'
 import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
-import { ChartUpcoming } from './ChartUpcoming'
 import { CurrencyControls } from './CurrencyControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
 import { RadioChartTypeControl } from './RadioChartTypeControl'
@@ -32,16 +32,12 @@ export interface ChartProps {
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
-  isUpcoming?: boolean
   sectionClassName?: string
   withHeader?: boolean
+  showComingSoon: boolean
 }
 
 export function Chart(props: ChartProps) {
-  if (props.isUpcoming) {
-    return <ChartUpcoming mobileFull />
-  }
-
   const isActivity =
     props.initialType.type === 'layer2-activity' ||
     props.initialType.type === 'project-activity' ||
@@ -55,7 +51,8 @@ export function Chart(props: ChartProps) {
       <section
         id={id}
         data-settings-id={props.settingsId}
-        data-role="chart"
+        data-role={props.showComingSoon ? 'coming-soon-chart' : 'chart'}
+        data-interactivity-disabled={props.showComingSoon}
         data-initial-type={JSON.stringify(props.initialType)}
         data-milestones={JSON.stringify(props.milestones)}
         className={cx(
@@ -66,16 +63,21 @@ export function Chart(props: ChartProps) {
           props.sectionClassName,
         )}
       >
-        {props.withHeader && !props.metaChart && header}
-        {!props.metaChart && props.hasActivity && (
-          <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
-              <a href={`#${id}`}>{title}</a>
-            </h2>
+        <div>
+          {!props.showComingSoon && (
+            <div>{props.withHeader && !props.metaChart && header}</div>
+          )}
+        </div>
+        <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
+          <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
+            <a href={`#${id}`}>{title}</a>
+          </h2>
 
+          {!props.metaChart && props.hasActivity && (
             <RadioChartTypeControl hasActivity={props.hasActivity} />
-          </div>
-        )}
+          )}
+        </div>
+
         <div className="flex flex-col gap-4">
           <div
             className={cx(
@@ -101,13 +103,18 @@ export function Chart(props: ChartProps) {
             />
             <ChartEmptyState />
             <ChartErrorState />
-
+            {props.showComingSoon && <ChartComingSoonState />}
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
               className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
-            <ChartLabels className={props.metaChart ? 'hidden' : undefined} />
+            <ChartLabels
+              className={classNames(
+                props.showComingSoon && 'blur-sm',
+                props.metaChart ? 'hidden' : undefined,
+              )}
+            />
             <div
               data-role="chart-milestones"
               className="absolute bottom-0 z-40 w-[100%] group-data-[interactivity-disabled]/chart:hidden"

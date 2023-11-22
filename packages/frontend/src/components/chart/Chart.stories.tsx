@@ -183,6 +183,12 @@ export const ErrorState: Story = {
   },
 }
 
+export const ComingSoonState: Story = {
+  args: {
+    showComingSoon: true,
+  },
+}
+
 export const WithEth: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -311,11 +317,5 @@ export const ActivityWithHeader: Story = {
   args: {
     initialType: { type: 'storybook-fake-activity' },
     withHeader: true,
-  },
-}
-
-export const Upcoming: Story = {
-  args: {
-    isUpcoming: true,
   },
 }
