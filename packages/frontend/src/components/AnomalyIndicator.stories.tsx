@@ -136,6 +136,8 @@ export const Default: Story = {
     await waitFor(async () => {
       await userEvent.hover(canvas.getByTestId('anomaly-indicator'))
     })
+    // Wait for the tooltip to appear
+    await new Promise((resolve) => setTimeout(resolve, 200))
   },
   parameters: {
     chromatic: { pauseAnimationAtEnd: true, delay: 300 },

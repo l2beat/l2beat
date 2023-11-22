@@ -53,6 +53,8 @@ export const Tooltip: Story = {
     await waitFor(async () => {
       await userEvent.hover(canvas.getByText('Element with tooltip'))
     })
+    // Wait for the tooltip to appear
+    await new Promise((resolve) => setTimeout(resolve, 200))
   },
   parameters: {
     chromatic: { pauseAnimationAtEnd: true, delay: 300 },
