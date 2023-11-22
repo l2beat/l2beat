@@ -16,7 +16,7 @@ export const layer2finance: Layer2 = {
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purpose: 'DeFi aggregation',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'txData',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],

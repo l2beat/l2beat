@@ -14,7 +14,7 @@ export const fuel: Layer2 = {
       'At Fuel we are building the fastest execution layer for the modular blockchain stack.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'txData',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://fuel.network/'],
       apps: ['https://alpha.fuel.network/ecosystem/'],

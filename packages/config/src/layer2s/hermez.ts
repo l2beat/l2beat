@@ -27,7 +27,7 @@ export const hermez: Layer2 = {
     purpose: 'Payments',
     category: 'ZK Rollup',
     // TODO: This is not correct. Research it.
-    dataAvailabilityMode: 'notApplicable',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
       websites: ['https://hermez.io/'],

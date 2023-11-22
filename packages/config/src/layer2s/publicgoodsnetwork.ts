@@ -35,7 +35,7 @@ export const publicgoodsnetwork: Layer2 = {
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'txData',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://publicgoods.network/'],

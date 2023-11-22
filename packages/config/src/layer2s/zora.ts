@@ -36,7 +36,7 @@ export const zora: Layer2 = {
     purpose: 'Universal, NFTs',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'txData',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
       apps: [],

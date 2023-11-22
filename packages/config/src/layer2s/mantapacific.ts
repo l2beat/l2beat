@@ -35,7 +35,7 @@ export const mantapacific: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'txData',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://pacific.manta.network/'],

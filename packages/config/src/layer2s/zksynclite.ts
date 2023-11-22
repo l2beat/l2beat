@@ -55,7 +55,7 @@ export const zksynclite: Layer2 = {
     purpose: 'Payments, Tokens',
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'stateDiff',
+    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://zksync.io/'],

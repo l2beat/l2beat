@@ -92,7 +92,7 @@ export type Layer2Display = {
   | {
       /** Name of the category the rollup layer2 belongs to */
       category: Extract<Layer2Category, 'Optimistic Rollup' | 'ZK Rollup'>
-      dataAvailabilityMode: 'stateDiff' | 'txData' | 'notApplicable'
+      dataAvailabilityMode: 'StateDiffs' | 'TxData' | 'NotApplicable'
     }
   | {
       /** Name of the category the non rollup layer2 belongs to */

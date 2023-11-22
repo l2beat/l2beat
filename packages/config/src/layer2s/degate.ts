@@ -59,7 +59,7 @@ export const degate: Layer2 = {
     purpose: 'Exchange',
     provider: 'Loopring',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'stateDiff',
+    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://degate.com/'],

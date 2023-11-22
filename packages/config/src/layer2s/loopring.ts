@@ -45,7 +45,7 @@ export const loopring: Layer2 = {
     purpose: 'Tokens, NFTs, AMM',
     provider: 'Loopring',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'stateDiff',
+    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://loopring.org'],

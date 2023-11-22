@@ -27,7 +27,7 @@ export const honeypot: Layer2 = {
        and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.',
     purpose: 'Bug bounty',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'txData',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://cartesi.io/'],
       apps: [],
