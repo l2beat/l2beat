@@ -18,7 +18,7 @@ const meta: Meta<typeof TooltipComponent> = {
       return (
         <div>
           <Story />
-          <TooltipComponent />
+          <TooltipComponent withAnimation={false} />
         </div>
       )
     },
@@ -50,11 +50,10 @@ export const Tooltip: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const tooltip = canvas.getByText('Element with tooltip')
     // Wait for the tooltip to appear
     await new Promise((resolve) => setTimeout(resolve, 200))
     await waitFor(async () => {
-      await userEvent.hover(tooltip)
+      await userEvent.hover(canvas.getByText('Element with tooltip'))
     })
   },
 }

@@ -17,7 +17,7 @@ const meta: Meta<typeof AnomalyIndicator> = {
 
       return (
         <>
-          <Story /> <Tooltip />
+          <Story /> <Tooltip withAnimation={false} />
         </>
       )
     },
@@ -133,11 +133,10 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const tooltip = canvas.getByTestId('anomaly-indicator')
     // Wait for the tooltip to appear
     await new Promise((resolve) => setTimeout(resolve, 200))
     await waitFor(async () => {
-      await userEvent.hover(tooltip)
+      await userEvent.hover(canvas.getByTestId('anomaly-indicator'))
     })
   },
 }
