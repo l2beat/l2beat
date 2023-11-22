@@ -23,8 +23,8 @@ export interface FullSummaryStats {
 
 export function Summary(props: SummaryProps) {
   return (
-    <>
-      <div className="my-2 hidden w-full md:block">
+    <div className="flex flex-col gap-4">
+      <div className="hidden w-full md:block">
         <DesktopProjectLinks projectLinks={props.links} />
       </div>
       <div
@@ -49,6 +49,6 @@ export function Summary(props: SummaryProps) {
       <div className="w-full px-4 md:hidden md:px-0">
         <MobileProjectLinks projectLinks={props.links} />
       </div>
-    </>
+    </div>
   )
 }

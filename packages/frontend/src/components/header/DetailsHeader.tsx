@@ -42,8 +42,8 @@ export function DetailsHeader(props: HeaderProps) {
 
   return (
     <>
-      <header className="md:mt-15 mt-6 flex flex-row justify-end gap-3 md:gap-0">
-        <div className="flex w-full flex-wrap gap-6 md:gap-4">
+      <header className="md:mt-15 mt-6">
+        <div className="mb-4 flex w-full flex-wrap gap-3">
           <h1
             className={cx(
               'relative mb-0 flex items-center justify-start gap-3',
@@ -83,6 +83,9 @@ export function DetailsHeader(props: HeaderProps) {
               className="mx-4 w-full items-center justify-center py-2.5 px-2.5 text-xs md:mx-0 md:px-4 md:text-base"
             />
           )}
+        </div>
+
+        <div className="flex flex-row justify-end gap-3 md:gap-0">
           <Summary
             type={props.type}
             stats={props.stats}
@@ -91,27 +94,27 @@ export function DetailsHeader(props: HeaderProps) {
             tvlBreakdownHref={props.tvlBreakdownHref}
             showTvlBreakdown={props.showTvlBreakdown}
           />
+          {props.risks && (
+            <div className="ml-8 mt-auto hidden lg:block">
+              <BigRosette
+                risks={props.risks}
+                isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
+                isUnderReview={props.isUnderReview}
+              />
+              {!props.isUpcoming && !props.isUnderReview && (
+                <Link
+                  href="#risk-analysis"
+                  className="mt-3 block text-center text-sm"
+                  showArrow
+                >
+                  Learn more about Risks analysis
+                </Link>
+              )}
+            </div>
+          )}
         </div>
-        {props.risks && (
-          <div className="ml-8 mt-auto hidden lg:block">
-            <BigRosette
-              risks={props.risks}
-              isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
-              isUnderReview={props.isUnderReview}
-            />
-            {!props.isUpcoming && !props.isUnderReview && (
-              <Link
-                href="#risk-analysis"
-                className="mt-3 block text-center text-sm"
-                showArrow
-              >
-                Learn more about Risks analysis
-              </Link>
-            )}
-          </div>
-        )}
       </header>
-      <HorizontalSeparator className="md:mt-6" />
+      <HorizontalSeparator />
     </>
   )
 }
