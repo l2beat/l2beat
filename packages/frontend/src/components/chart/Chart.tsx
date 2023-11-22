@@ -34,7 +34,7 @@ export interface ChartProps {
   milestones?: Milestone[]
   sectionClassName?: string
   withHeader?: boolean
-  showComingSoon: boolean
+  showComingSoon?: boolean
 }
 
 export function Chart(props: ChartProps) {
