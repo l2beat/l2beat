@@ -39,6 +39,21 @@ describe(ArrayHandler.name, () => {
 
       expect(handler.dependencies).toEqual(['foo'])
     })
+
+    it('detects dependency from the indices field', () => {
+      const handler = new ArrayHandler(
+        'someName',
+        {
+          type: 'array',
+          method: 'function foo(uint i) view returns (uint)',
+          indices: '{{ foo }}',
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+
+      expect(handler.dependencies).toEqual(['foo'])
+    })
   })
 
   describe('getMethod', () => {
@@ -377,6 +392,58 @@ describe(ArrayHandler.name, () => {
         field: 'owners',
         error: 'Too many values. Provide a higher maxLength value',
         value: new Array(15).fill('0x' + '0'.repeat(40)),
+      })
+    })
+
+    it('calls indices if present', async () => {
+      const provider = mockObject<DiscoveryProvider>({
+        async call(passedAddress, data) {
+          expect(passedAddress).toEqual(address)
+          const index = data.get(35)
+          return Bytes.fromHex('00'.repeat(12)).concat(
+            Bytes.fromHex(owners[index]!.toString()),
+          )
+        },
+      })
+
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method, indices: [0, 2] },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      expect(result).toEqual({
+        field: 'owners',
+        value: [owners[0]!.toString(), owners[2]!.toString()],
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('resolves the "indices" field', async () => {
+      const provider = mockObject<DiscoveryProvider>({
+        async call(passedAddress, data) {
+          expect(passedAddress).toEqual(address)
+          const index = data.get(35)
+          return Bytes.fromHex('00'.repeat(12)).concat(
+            Bytes.fromHex(owners[index]!.toString()),
+          )
+        },
+      })
+
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method, indices: '{{ foo }}' },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {
+        foo: { field: 'foo', value: [0, 2] },
+      })
+      expect(result).toEqual({
+        field: 'owners',
+        value: [owners[0]!.toString(), owners[2]!.toString()],
+        ignoreRelative: undefined,
       })
     })
   })

@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.24.0
+
+### Minor Changes
+
+- Add indices field to ArrayHandler
+
 ## 0.23.1
 
 ### Patch Changes
