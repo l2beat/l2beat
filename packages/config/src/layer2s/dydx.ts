@@ -89,6 +89,8 @@ export const dydx: Layer2 = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'stateDiff',
+
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [

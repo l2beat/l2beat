@@ -13,6 +13,7 @@ export const stealthchain: Layer2 = {
     description: 'Degen Stealth Launchpad, Cross Chain Token Bridge & LP Pool.',
     purpose: 'Launchpad',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'txData',
     provider: 'OP Stack',
     links: {
       websites: ['https://stealthchain.org'],

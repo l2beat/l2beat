@@ -14,6 +14,7 @@ export const lyrafinance: Layer2 = {
       'Lyra Chain is a L2 scaling solution build using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals and options trading.',
     purpose: 'Trading',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'txData',
     provider: 'OP Stack',
     links: {
       websites: ['https://lyra.finance/v2'],

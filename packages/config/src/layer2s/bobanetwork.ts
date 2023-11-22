@@ -44,6 +44,7 @@ export const bobanetwork: Layer2 = {
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'txData',
     links: {
       websites: ['https://boba.network'],
       apps: [],

@@ -105,6 +105,7 @@ export const optimism: Layer2 = {
     purpose: 'Universal',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'txData',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
