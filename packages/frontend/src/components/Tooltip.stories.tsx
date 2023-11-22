@@ -3,23 +3,19 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { Tooltip as TooltipComponent } from '../components/Tooltip'
-import {
-  configureTooltips,
-  removeTooltipAnimations,
-} from '../scripts/configureTooltips'
+import { configureTooltips } from '../scripts/configureTooltips'
 
 const meta: Meta<typeof TooltipComponent> = {
   component: TooltipComponent,
   decorators: [
     (Story) => {
       useEffect(() => {
-        removeTooltipAnimations()
         configureTooltips()
       }, [])
       return (
         <div>
           <Story />
-          <TooltipComponent />
+          <TooltipComponent withAnimation={false} />
         </div>
       )
     },

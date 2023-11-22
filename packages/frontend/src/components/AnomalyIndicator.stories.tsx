@@ -3,10 +3,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../.storybook/modes'
-import {
-  configureTooltips,
-  removeTooltipAnimations,
-} from '../scripts/configureTooltips'
+import { configureTooltips } from '../scripts/configureTooltips'
 import { AnomalyIndicator, AnomalyIndicatorEntry } from './AnomalyIndicator'
 import { Tooltip } from './Tooltip'
 
@@ -15,13 +12,12 @@ const meta: Meta<typeof AnomalyIndicator> = {
   decorators: [
     (Story) => {
       useEffect(() => {
-        removeTooltipAnimations()
         configureTooltips()
       })
 
       return (
         <>
-          <Story /> <Tooltip />
+          <Story /> <Tooltip withAnimation={false} />
         </>
       )
     },

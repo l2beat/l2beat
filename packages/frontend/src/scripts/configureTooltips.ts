@@ -122,11 +122,3 @@ export function configureTooltips() {
     })
   }
 }
-
-export function removeTooltipAnimations() {
-  const { $$ } = makeQuery(document.body)
-  const elements = $$('.Tooltip[title]')
-  elements.forEach((element) =>
-    element.classList.remove('animate-quick-fade-in'),
-  )
-}

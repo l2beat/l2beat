@@ -4,10 +4,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import {
-  configureTooltips,
-  removeTooltipAnimations,
-} from '../../scripts/configureTooltips'
+import { configureTooltips } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
 import { StageTooltip as StageTooltipComponent } from './StageTooltip'
 
@@ -16,13 +13,12 @@ const meta: Meta<typeof TooltipComponent> = {
   decorators: [
     (Story) => {
       useEffect(() => {
-        removeTooltipAnimations()
         configureTooltips()
       }, [])
       return (
         <div>
           <Story />
-          <TooltipComponent />
+          <TooltipComponent withAnimation={false} />
         </div>
       )
     },

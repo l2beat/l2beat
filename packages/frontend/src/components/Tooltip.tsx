@@ -1,9 +1,17 @@
+import classNames from 'classnames'
 import React from 'react'
 
-export function Tooltip() {
+interface TooltipProps {
+  withAnimation?: boolean
+}
+
+export function Tooltip({ withAnimation = true }: TooltipProps) {
   return (
     <div
-      className="Tooltip-Popup fixed top-0 left-0 z-110 hidden max-w-[300px] animate-quick-fade-in rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white"
+      className={classNames(
+        'Tooltip-Popup fixed top-0 left-0 z-110 hidden max-w-[300px] rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
+        withAnimation && 'animate-quick-fade-in',
+      )}
       data-testid="tooltip"
     >
       <span />
