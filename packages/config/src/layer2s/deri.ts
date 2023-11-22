@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
+import { arbitrum } from './arbitrum'
 import { CONTRACTS, UPCOMING_RISK_VIEW } from './common'
-import { nova } from './nova'
 import { Layer2 } from './types'
 
 export const deri: Layer2 = {
@@ -11,7 +11,7 @@ export const deri: Layer2 = {
     name: 'Deri',
     slug: 'deri',
     description:
-      'Deri is an Ethereum Layer-3 that leverages Arbitrum AnyTrust to fundamentally change the DeFi space.',
+      'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
     purpose: 'DeFi protocol',
     category: 'Optimium',
     provider: 'Arbitrum',
@@ -36,6 +36,6 @@ export const deri: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: nova.technology,
+  technology: arbitrum.technology,
   contracts: CONTRACTS.EMPTY,
 }
