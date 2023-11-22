@@ -18,8 +18,8 @@ import { TwitterIcon } from './products/TwitterIcon'
 import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
-import { ZkSyncLiteIcon } from './providers/ZkSyncLiteIcon'
 import { ZKStackIcon } from './providers/ZKStackIcon'
+import { ZkSyncLiteIcon } from './providers/ZkSyncLiteIcon'
 import { ActiveIcon } from './symbols/ActiveIcon'
 import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
@@ -100,7 +100,8 @@ export function ProviderIcons() {
     <Template>
       <OptimismIcon />
       <StarkWareIcon />
-      <ZkSyncIcon />
+      <ZKStackIcon />
+      <ZkSyncLiteIcon />
     </Template>
   )
 }

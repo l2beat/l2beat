@@ -10,8 +10,8 @@ import {
   PolygonIcon,
   StarknetIcon,
   StarkWareIcon,
-  ZkSyncLiteIcon,
   ZKStackIcon,
+  ZkSyncLiteIcon,
 } from '../icons'
 
 export interface TechnologyCellProps {
