@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 18626452,
-  "configHash": "0x13c7bf1d2ab989c1a9a395045ce56e85b703629bae8930e6c84245dddec25a23",
+  "blockNumber": 18626971,
+  "configHash": "0x8015fb76c095375e6f7e38041279c702a44ab1e2198d240146c8cac584c049e2",
   "version": 3,
   "contracts": [
     {
@@ -19,10 +19,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 3382200,
-        "latestOutputIndex": 1879,
-        "nextBlockNumber": 3384000,
-        "nextOutputIndex": 1880,
+        "latestBlockNumber": 3384000,
+        "latestOutputIndex": 1880,
+        "nextBlockNumber": 3385800,
+        "nextOutputIndex": 1881,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -91,7 +91,7 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 18626437],
+        "params": [1000000000, 200000, 18626885],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -155,17 +155,11 @@
       "implementations": ["0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"],
       "sinceTimestamp": 1693880627,
       "values": {
-        "clock": 18626452,
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
-        "confirmations": [0, 0, 0, 0, 0],
         "GOVERNOR": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
         "quorum": 4,
         "transactionCount": 0,
         "version": "1.1.0"
-      },
-      "errors": {
-        "confirmations": "Too many values. Update configuration to explore fully",
-        "owners": "Cannot find a matching method for owners"
       },
       "derivedName": "SecurityCouncil"
     },
@@ -294,7 +288,7 @@
       "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 18626452,
+        "clock": 18626971,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -331,7 +325,7 @@
       "implementations": ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"],
       "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 18626452,
+        "clock": 18626971,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -379,7 +373,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x3848517bDC40821f56eb546d53AF61FB80bE6762",
+        "nextValidator": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,

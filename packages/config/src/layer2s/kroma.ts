@@ -43,7 +43,7 @@ const timelockDefaultDelay = discovery.getContractValue<number>(
 
 const SCNumConfirmationsRequired = discovery.getContractValue<number>(
   'SecurityCouncil',
-  'numConfirmationsRequired',
+  'quorum',
 )
 
 const SCMembers = discovery.getPermissionedAccounts('SecurityCouncil', 'owners')

@@ -51,16 +51,13 @@
       "ignoreMethods": [
         "getConfirmationCount",
         "getConfirmations",
+        "confirmations",
         "isConfirmed",
         "outputsDeleteRequested",
         "transactions",
-        "getOwners" // already read from owners array
-      ],
-      "fields": {
-        "owners": {
-          "type": "array"
-        }
-      }
+        "getOwners", // already read from owners array,
+        "clock"
+      ]
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
