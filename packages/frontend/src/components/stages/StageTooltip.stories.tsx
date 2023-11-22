@@ -4,7 +4,10 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { configureTooltips } from '../../scripts/configureTooltips'
+import {
+  configureTooltips,
+  removeTooltipAnimations,
+} from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
 import { StageTooltip as StageTooltipComponent } from './StageTooltip'
 
@@ -13,6 +16,7 @@ const meta: Meta<typeof TooltipComponent> = {
   decorators: [
     (Story) => {
       useEffect(() => {
+        removeTooltipAnimations()
         configureTooltips()
       }, [])
       return (
@@ -53,10 +57,5 @@ export const Tooltip: Story = {
     await waitFor(async () => {
       await userEvent.hover(canvas.getByText('Element with tooltip'))
     })
-    // Wait for the tooltip to appear
-    await new Promise((resolve) => setTimeout(resolve, 200))
-  },
-  parameters: {
-    chromatic: { pauseAnimationAtEnd: true, delay: 300 },
   },
 }

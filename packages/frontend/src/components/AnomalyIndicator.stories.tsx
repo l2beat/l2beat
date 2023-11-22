@@ -3,7 +3,10 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../.storybook/modes'
-import { configureTooltips } from '../scripts/configureTooltips'
+import {
+  configureTooltips,
+  removeTooltipAnimations,
+} from '../scripts/configureTooltips'
 import { AnomalyIndicator, AnomalyIndicatorEntry } from './AnomalyIndicator'
 import { Tooltip } from './Tooltip'
 
@@ -12,6 +15,7 @@ const meta: Meta<typeof AnomalyIndicator> = {
   decorators: [
     (Story) => {
       useEffect(() => {
+        removeTooltipAnimations()
         configureTooltips()
       })
 
@@ -136,11 +140,6 @@ export const Default: Story = {
     await waitFor(async () => {
       await userEvent.hover(canvas.getByTestId('anomaly-indicator'))
     })
-    // Wait for the tooltip to appear
-    await new Promise((resolve) => setTimeout(resolve, 200))
-  },
-  parameters: {
-    chromatic: { pauseAnimationAtEnd: true, delay: 300 },
   },
 }
 
