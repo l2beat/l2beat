@@ -37,6 +37,8 @@ export const Tooltip: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
+    // Wait for the tooltip to appear
+    await new Promise((resolve) => setTimeout(resolve, 200))
     await waitFor(async () => {
       await userEvent.hover(canvas.getByText('Element with tooltip'))
     })
