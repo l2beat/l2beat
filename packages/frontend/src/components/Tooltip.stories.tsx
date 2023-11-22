@@ -15,7 +15,7 @@ const meta: Meta<typeof TooltipComponent> = {
       return (
         <div>
           <Story />
-          <TooltipComponent />
+          <TooltipComponent withAnimation={false} />
         </div>
       )
     },
