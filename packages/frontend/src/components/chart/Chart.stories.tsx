@@ -155,7 +155,7 @@ export const Primary: Story = {}
 
 export const EmptyState: Story = {
   play: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200))
+    await new Promise((resolve) => setTimeout(resolve, 300))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'empty'
@@ -170,7 +170,7 @@ export const EmptyState: Story = {
 
 export const ErrorState: Story = {
   play: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200))
+    await new Promise((resolve) => setTimeout(resolve, 300))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'error'

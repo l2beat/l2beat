@@ -3,6 +3,15 @@ module.exports = {
   content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {
+    keyframes: {
+      'fade-in': {
+        '0%': { opacity: '0' },
+        '100%': { opacity: '1' },
+      },
+    },
+    animation: {
+      'quick-fade-in': 'fade-in 0.1s ease-in-out',
+    },
     fontSize: {
       '3xs': ['8px', '12px'],
       '2xs': ['12px', '16px'],
