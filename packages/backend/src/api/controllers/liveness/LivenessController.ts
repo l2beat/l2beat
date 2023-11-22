@@ -14,31 +14,36 @@ export class LivenessController {
 
   async getLiveness(): Promise<LivenessApiResponse> {
     const projects: LivenessApiResponse['projects'] = {}
-    for (const project of this.projects) {
-      if (project.livenessConfig === undefined) {
-        continue
-      }
-      console.time(`getWithType ${project.projectId.toString()}`)
-      const records = await this.livenessRepository.getWithType(
-        project.projectId,
-      )
-      console.timeEnd(`getWithType ${project.projectId.toString()}`)
+    console.time('getLiveness')
 
-      console.time(`groupedByType ${project.projectId.toString()}`)
-      const groupedByType = groupByType(records)
-      console.timeEnd(`groupedByType ${project.projectId.toString()}`)
+    await Promise.all(
+      this.projects.map(async (project) => {
+        if (project.livenessConfig === undefined) {
+          return
+        }
+        console.time(`getWithType ${project.projectId.toString()}`)
+        const records = await this.livenessRepository.getWithType(
+          project.projectId,
+        )
+        console.timeEnd(`getWithType ${project.projectId.toString()}`)
 
-      console.time(`intervals ${project.projectId.toString()}`)
-      const intervals = calcIntervalWithAvgsPerProject(groupedByType)
-      console.timeEnd(`intervals ${project.projectId.toString()}`)
+        console.time(`groupedByType ${project.projectId.toString()}`)
+        const groupedByType = groupByType(records)
+        console.timeEnd(`groupedByType ${project.projectId.toString()}`)
 
-      console.time(`withAnomalies ${project.projectId.toString()}`)
-      const withAnomalies = calculateAnomaliesPerProject(intervals)
-      console.timeEnd(`withAnomalies ${project.projectId.toString()}`)
+        console.time(`intervals ${project.projectId.toString()}`)
+        const intervals = calcIntervalWithAvgsPerProject(groupedByType)
+        console.timeEnd(`intervals ${project.projectId.toString()}`)
 
-      projects[project.projectId.toString()] = withAnomalies
-    }
+        console.time(`withAnomalies ${project.projectId.toString()}`)
+        const withAnomalies = calculateAnomaliesPerProject(intervals)
+        console.timeEnd(`withAnomalies ${project.projectId.toString()}`)
 
+        projects[project.projectId.toString()] = withAnomalies
+      }),
+    )
+
+    console.timeEnd('getLiveness')
     return { projects }
   }
 }
