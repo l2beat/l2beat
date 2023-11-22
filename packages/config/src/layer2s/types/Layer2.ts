@@ -79,7 +79,8 @@ export interface Layer2Display {
   provider?:
     | 'StarkEx'
     | 'OP Stack'
-    | 'zkSync'
+    | 'zkSync Lite'
+    | 'ZK Stack'
     | 'Loopring'
     | 'Arbitrum'
     | 'Polygon'
