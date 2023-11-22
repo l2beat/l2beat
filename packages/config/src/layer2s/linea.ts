@@ -117,9 +117,12 @@ export const linea: Layer2 = {
       startBlock: 1,
     },
     liveness: {
-      duplicatedData: {
-        batchSubmissions: 'stateUpdates',
-      },
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'batchSubmissions',
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

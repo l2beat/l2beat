@@ -1,5 +1,4 @@
-import { layer2s } from '@l2beat/config'
-import { LivenessApiResponse, LivenessType } from '@l2beat/shared-pure'
+import { LivenessApiResponse } from '@l2beat/shared-pure'
 
 import { Project } from '../../../model'
 import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
@@ -40,30 +39,10 @@ export class LivenessController {
         const withAnomalies = calculateAnomaliesPerProject(intervals)
         console.timeEnd(`withAnomalies ${project.projectId.toString()}`)
 
-        if (withAnomalies) {
-          const l2project = layer2s.find((l) => l.id === project.projectId)
-          const anomalies = withAnomalies.anomalies
-          if (l2project?.config.liveness?.duplicatedData?.batchSubmissions) {
-            withAnomalies.batchSubmissions = { ...withAnomalies.stateUpdates }
-            if (anomalies) {
-              withAnomalies.anomalies = [
-                ...anomalies,
-                ...anomalies.map((a) => ({
-                  ...a,
-                  type: LivenessType('DA'),
-                })),
-              ]
-            }
-          } else if (l2project?.config.liveness?.duplicatedData?.stateUpdates) {
-            withAnomalies.stateUpdates = { ...withAnomalies.batchSubmissions }
-            if (anomalies) {
-              withAnomalies.anomalies = [
-                ...anomalies,
-                ...anomalies.map((a) => ({
-                  ...a,
-                  type: LivenessType('STATE'),
-                })),
-              ]
+        if (withAnomalies && project.livenessConfig.duplicateData) {
+          for (const duplicateData of project.livenessConfig.duplicateData) {
+            withAnomalies[duplicateData.to] = {
+              ...withAnomalies[duplicateData.from],
             }
           }
         }

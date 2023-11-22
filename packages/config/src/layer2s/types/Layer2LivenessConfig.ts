@@ -1,14 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 export interface Layer2LivenessConfig {
-  duplicatedData?: DuplicatedData
+  duplicateData?: DuplicateData[]
   stateUpdates: (FunctionCallParams | TransferParams)[]
   batchSubmissions: (FunctionCallParams | TransferParams)[]
 }
 
-export interface DuplicatedData {
-  stateUpdates?: 'batchSubmissions'
-  batchSubmissions?: 'stateUpdates'
+type DuplicateOption = 'batchSubmissions' | 'stateUpdates'
+
+export interface DuplicateData {
+  from: DuplicateOption
+  to: DuplicateOption
 }
 
 export interface FunctionCallParams {
