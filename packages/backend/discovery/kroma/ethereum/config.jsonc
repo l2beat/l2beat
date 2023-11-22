@@ -98,7 +98,18 @@
     },
     "SecurityCouncilToken": {
       "ignoreMethods": ["getPastTotalSupply", "tokenByIndex"],
-      "ignoreInWatchMode": ["clock"]
+      "ignoreInWatchMode": ["clock"],
+      "fields": {
+        "tokens": {
+          "type": "array",
+          "method": "tokenByIndex"
+        },
+        "tokenOwners": {
+          "type": "array",
+          "method": "ownerOf",
+          "indices": "{{ tokens }}"
+        }
+      }
     },
     "Timelock": {
       "fields": {
