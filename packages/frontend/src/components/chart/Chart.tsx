@@ -64,19 +64,19 @@ export function Chart(props: ChartProps) {
         )}
       >
         <div>
-          {!props.showComingSoon && (
-            <div>{props.withHeader && !props.metaChart && header}</div>
-          )}
+          {props.withHeader && !props.metaChart && !props.showComingSoon
+            ? header
+            : null}
         </div>
-        <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
-          <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
-            <a href={`#${id}`}>{title}</a>
-          </h2>
+        {!props.metaChart && props.hasActivity && (
+          <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
+            <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
+              <a href={`#${id}`}>{title}</a>
+            </h2>
 
-          {!props.metaChart && props.hasActivity && (
             <RadioChartTypeControl hasActivity={props.hasActivity} />
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="flex flex-col gap-4">
           <div
