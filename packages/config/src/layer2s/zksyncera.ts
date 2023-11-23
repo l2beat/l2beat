@@ -46,6 +46,8 @@ export const zksyncera: Layer2 = {
     purpose: 'Universal',
     provider: 'ZK Stack',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],

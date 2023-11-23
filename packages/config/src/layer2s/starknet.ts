@@ -146,6 +146,8 @@ export const starknet: Layer2 = {
       with a single Sequencer.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       apps: [
         'https://www.dappland.com/',
