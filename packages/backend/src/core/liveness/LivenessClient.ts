@@ -24,51 +24,17 @@ export class LivenessClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
   async getLivenessData(
-    projects: Project[],
-    configs: LivenessConfigurationRecord[],
+    transfersConfig: LivenessTransfer[],
+    functionCallsConfig: LivenessFunctionCall[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<{
-    data: LivenessRecord[]
-    adjustedTo: UnixTime
-    usedConfigurationsIds: number[]
-  }> {
-    const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
-
-    const config = mergeConfigs(projects, configs)
-
-    const transfersConfig = config.transfers.filter((c) =>
-      isTimestampInRange(
-        c.sinceTimestamp,
-        c.untilTimestamp,
-        c.latestSyncedTimestamp,
-        from,
-        adjustedTo,
-      ),
-    )
-    const functionCallsConfig = config.functionCalls.filter((c) =>
-      isTimestampInRange(
-        c.sinceTimestamp,
-        c.untilTimestamp,
-        c.latestSyncedTimestamp,
-        from,
-        adjustedTo,
-      ),
-    )
-
+  ): Promise<LivenessRecord[]> {
     const [transfers, functionCalls] = await Promise.all([
-      this.getTransfers(transfersConfig, from, adjustedTo),
-      this.getFunctionCalls(functionCallsConfig, from, adjustedTo),
+      this.getTransfers(transfersConfig, from, to),
+      this.getFunctionCalls(functionCallsConfig, from, to),
     ])
 
-    return {
-      data: [...transfers, ...functionCalls],
-      adjustedTo,
-      usedConfigurationsIds: [
-        ...transfersConfig.map((c) => c.livenessConfigurationId),
-        ...functionCallsConfig.map((c) => c.livenessConfigurationId),
-      ],
-    }
+    return [...transfers, ...functionCalls]
   }
 
   async getTransfers(

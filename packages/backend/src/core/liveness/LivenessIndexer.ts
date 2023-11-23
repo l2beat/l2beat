@@ -1,5 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { Hash256, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
@@ -8,11 +8,20 @@ import {
   IndexerStateRecord,
   IndexerStateRepository,
 } from '../../peripherals/database/IndexerStateRepository'
-import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
+import {
+  LivenessConfigurationRecord,
+  LivenessConfigurationRepository,
+} from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
-import { getLivenessConfigHash } from './utils'
+import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
+import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
+import {
+  adjustToForBigqueryCall,
+  getLivenessConfigHash,
+  isTimestampInRange,
+} from './utils'
 import { processLivenessConfigurations } from './utils/processLivenessConfigurations'
 
 export class LivenessIndexer extends ChildIndexer {
@@ -40,23 +49,24 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const configurations = await this.livenessConfigurationRepository.getAll()
+    const { transfersConfig, functionCallsConfig, adjustedTo } =
+      await this.getConfiguration(from, to)
+    //
 
-    const { data, adjustedTo, usedConfigurationsIds } =
-      await this.livenessClient.getLivenessData(
-        this.projects,
-        configurations,
-        new UnixTime(from),
-        new UnixTime(to),
-      )
+    const data = await this.livenessClient.getLivenessData(
+      transfersConfig,
+      functionCallsConfig,
+      new UnixTime(from),
+      adjustedTo,
+    )
 
     await this.livenessRepository.runInTransaction(async (trx) => {
       await this.livenessRepository.addMany(data, trx)
 
       await Promise.all(
-        usedConfigurationsIds.map((id) =>
+        [...transfersConfig, ...functionCallsConfig].map((c) =>
           this.livenessConfigurationRepository.setLastSyncedTimestamp(
-            id,
+            c.livenessConfigurationId,
             adjustedTo,
             trx,
           ),
@@ -71,6 +81,38 @@ export class LivenessIndexer extends ChildIndexer {
       fetchedDataPoints: data.length,
     })
     return Promise.resolve(adjustedTo.toNumber())
+  }
+
+  // TODO: add tests
+  private async getConfiguration(from: number, to: number) {
+    const configurations = await this.livenessConfigurationRepository.getAll()
+
+    const adjustedTo = adjustToForBigqueryCall(
+      new UnixTime(from).toNumber(),
+      new UnixTime(to).toNumber(),
+    )
+
+    const config = mergeConfigs(this.projects, configurations)
+
+    const transfersConfig = config.transfers.filter((c) =>
+      isTimestampInRange(
+        c.sinceTimestamp,
+        c.untilTimestamp,
+        c.latestSyncedTimestamp,
+        new UnixTime(from),
+        adjustedTo,
+      ),
+    )
+    const functionCallsConfig = config.functionCalls.filter((c) =>
+      isTimestampInRange(
+        c.sinceTimestamp,
+        c.untilTimestamp,
+        c.latestSyncedTimestamp,
+        new UnixTime(from),
+        adjustedTo,
+      ),
+    )
+    return { transfersConfig, functionCallsConfig, adjustedTo }
   }
 
   private async initialize() {
@@ -192,5 +234,48 @@ export class LivenessIndexer extends ChildIndexer {
   // and the data will not be fetched again
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
+  }
+}
+
+// TODO: move to separate file
+export function mergeConfigs(
+  projects: Project[],
+  configs: LivenessConfigurationRecord[],
+): {
+  transfers: LivenessTransfer[]
+  functionCalls: LivenessFunctionCall[]
+} {
+  // add proper values from configs
+  return {
+    transfers: projects
+      .flatMap((p) => p.livenessConfig?.transfers)
+      .filter(notUndefined)
+      .map((t) => {
+        const config = configs.find(
+          (c) => c.identifier === LivenessConfigurationIdentifier(t),
+        )
+        assert(config, 'Config should not be undefined there')
+
+        return {
+          ...t,
+          latestSyncedTimestamp: config.lastSyncedTimestamp,
+          livenessConfigurationId: config.id,
+        }
+      }),
+    functionCalls: projects
+      .flatMap((p) => p.livenessConfig?.functionCalls)
+      .filter(notUndefined)
+      .map((t) => {
+        const config = configs.find(
+          (c) => c.identifier === LivenessConfigurationIdentifier(t),
+        )
+        assert(config, 'Config should not be undefined there')
+
+        return {
+          ...t,
+          latestSyncedTimestamp: config.lastSyncedTimestamp,
+          livenessConfigurationId: config.id,
+        }
+      }),
   }
 }
