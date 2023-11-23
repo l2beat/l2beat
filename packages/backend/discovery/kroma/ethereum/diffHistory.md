@@ -5,7 +5,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+The Security Council is now the only actor that can upgrade the contracts. The method to bypass the delay has been removed. The delay has been decreased from 30 days to 7 days. Some simplifications in the code have been made.
 
 ## Watched changes
 
