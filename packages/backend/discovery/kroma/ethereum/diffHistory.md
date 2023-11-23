@@ -1,4 +1,4 @@
-# Diff at Wed, 22 Nov 2023 14:57:30 GMT:
+# Diff at Thu, 23 Nov 2023 10:41:14 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@4c7175133fcba5685ddf8bf8d42acc70413b9b0c
@@ -12,25 +12,28 @@ Provide description of changes. This section will be preserved.
 ```diff
     contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
       values.tokenOwners.8:
--        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
-+        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
-      values.tokenOwners.7:
--        "0xbDeE962137373A755a71C716E01B9946B1a27686"
-+        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
-      values.tokenOwners.6:
--        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
+-        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
 +        "0xbDeE962137373A755a71C716E01B9946B1a27686"
-      values.tokenOwners.4:
--        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      values.tokenOwners.7:
+-        "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851"
++        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+      values.tokenOwners.6:
+-        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
 +        "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
-      values.tokenOwners.3:
+      values.tokenOwners.5:
+-        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
++        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
+      values.tokenOwners.4:
 -        "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
 +        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      values.tokenOwners.3:
+-        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
++        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
       values.tokenOwners.2:
--        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
 +        "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851"
       values.tokenOwners.1:
--        "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851"
+-        "0xbDeE962137373A755a71C716E01B9946B1a27686"
 +        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
     }
 ```

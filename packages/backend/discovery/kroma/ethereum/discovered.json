@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 18628011,
-  "configHash": "0xb1485048421f2310214dad7b58f44d8b288e398d41eda746d3ab74639a8f8781",
+  "blockNumber": 18633895,
+  "configHash": "0xc6540caf9913086007e0012168f226eae74899c5ed0c0801bbf273384045476b",
   "version": 3,
   "contracts": [
     {
@@ -19,10 +19,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 3391200,
-        "latestOutputIndex": 1884,
-        "nextBlockNumber": 3393000,
-        "nextOutputIndex": 1885,
+        "latestBlockNumber": 3425400,
+        "latestOutputIndex": 1903,
+        "nextBlockNumber": 3427200,
+        "nextOutputIndex": 1904,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -91,7 +91,7 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 18626885],
+        "params": [1000000000, 200000, 18633206],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -175,7 +175,7 @@
       "sinceTimestamp": 1693880591,
       "values": {
         "MESSAGE_VERSION": 0,
-        "messageNonce": 46,
+        "messageNonce": 49,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -288,7 +288,7 @@
       "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 18628011,
+        "clock": 18633895,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -325,7 +325,7 @@
       "implementations": ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"],
       "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 18628011,
+        "clock": 18633895,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -348,12 +348,12 @@
           "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
           "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
           "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
+          "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
           "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
+          "0x7B3225ADc5D908668FaA050246680CBE4e75A93f",
           "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
           "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
-          "0xbDeE962137373A755a71C716E01B9946B1a27686",
-          "0x7B3225ADc5D908668FaA050246680CBE4e75A93f",
-          "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
+          "0xbDeE962137373A755a71C716E01B9946B1a27686"
         ],
         "tokens": [0, 3, 4, 5, 6, 7, 8, 9, 10],
         "tokenURI": ["https://nft.kroma.network/sc/1.png"],
@@ -385,7 +385,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x41852D4F060b7a209FDc073E48fB26eea3D19ca3",
+        "nextValidator": "0x8E71b8194C9F5781b0099d29ca18A24272837a6f",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -425,8 +425,8 @@
           "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
           "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
           "0x2E8a03820c77312FE1B189a78963e94553f11b6F",
-          "0x4660cf1d89C31C07C2b405b05a1024ad44c4Aca0",
-          "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+          "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
+          "0xbDeE962137373A755a71C716E01B9946B1a27686"
         ],
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.1"
@@ -451,7 +451,6 @@
     "0x420000000000000000000000000000000000000A",
     "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
     "0x4576481b914FE9FCA4Bbe6A85aB1A409124Ef9A7",
-    "0x4660cf1d89C31C07C2b405b05a1024ad44c4Aca0",
     "0x5da6d9675f6929A144c22d5Aa5Df6B8f05DcD839",
     "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
     "0x7B3225ADc5D908668FaA050246680CBE4e75A93f",
