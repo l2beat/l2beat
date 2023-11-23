@@ -2,7 +2,7 @@ import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
 import { multicallConfig } from '@l2beat/discovery'
 import { EtherscanClient } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { getChainMinTimestamp } from './chains'
@@ -123,6 +123,7 @@ export function getProductionConfig(env: Env): Config {
         privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
         projectId: env.string('LIVENESS_PROJECT_ID'),
       },
+      minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
     activity: {
       starkexApiKey: env.string('STARKEX_API_KEY'),
@@ -188,6 +189,9 @@ export function getProductionConfig(env: Env): Config {
           rpcUrl: env.string('DISCOVERY_ETHEREUM_RPC_URL'),
           rpcGetLogsMaxRange: env.optionalInteger(
             'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
+          ),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
           multicall: multicallConfig.ethereum,
           etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),

@@ -136,6 +136,10 @@ export const amarok: Bridge = {
         'WormholeHubConnector',
         'Contract for sending/receiving messages using Wormhole.',
       ),
+      discovery.getContractDetails(
+        'LineaHubConnector',
+        'Contract for sending/receiving messages from mainnet to Linea via Linea AMB.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -143,10 +147,6 @@ export const amarok: Bridge = {
     ...discovery.getMultisigPermission(
       'Connext Multisig',
       'Owner of the main Connext Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
-    ),
-    ...discovery.getMultisigPermission(
-      'Connext Multisig Member',
-      'Multisig member, itself a multisig.',
     ),
     ...discovery.getMultisigPermission(
       'Connext Multisig 2',

@@ -78,6 +78,7 @@ export const base: Layer2 = {
       'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://base.org/'],
@@ -118,6 +119,28 @@ export const base: Layer2 = {
       url: 'https://developer-access-mainnet.base.org',
       callsPerMinute: 1500,
       assessCount: subtractOne,
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x5050F69a9786F081509234F1a7F4684b5E5b76C9'),
+          to: EthereumAddress('0xFf00000000000000000000000000000000008453'),
+          sinceTimestamp: new UnixTime(1686796655),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x56315b90c40730925ec5485cf004d835058518A0',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1686793895),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({

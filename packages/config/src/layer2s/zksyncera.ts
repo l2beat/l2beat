@@ -44,8 +44,10 @@ export const zksyncera: Layer2 = {
       'zkSync Era is a general-purpose ZK Rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its ZK friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
     purpose: 'Universal',
-    provider: 'zkSync',
+    provider: 'ZK Stack',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
@@ -85,6 +87,21 @@ export const zksyncera: Layer2 = {
       startBlock: 1,
       url: 'https://mainnet.era.zksync.io',
       callsPerMinute: 1500,
+    },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+          ),
+          selector: '0x7739cbe7',
+          functionSignature:
+            'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[], (uint256[],uint256[]) )',
+          sinceTimestamp: new UnixTime(1679602559),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({

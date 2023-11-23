@@ -81,6 +81,7 @@ export const aztecconnect: Layer2 = {
       'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
     purpose: 'Private DeFi',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
@@ -104,6 +105,20 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
+          ),
+          selector: '0xf81cccbe',
+          functionSignature: 'function processRollup(bytes ,bytes _signatures)',
+          sinceTimestamp: new UnixTime(1654638194),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

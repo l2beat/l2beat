@@ -146,6 +146,8 @@ export const starknet: Layer2 = {
       with a single Sequencer.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       apps: [
         'https://www.dappland.com/',
@@ -161,7 +163,7 @@ export const starknet: Layer2 = {
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
-        'https://discord.gg/uJ9HZTUk2Y',
+        'https://discord.com/invite/qypnmzkhbc',
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
@@ -239,6 +241,21 @@ export const starknet: Layer2 = {
     ],
     transactionApi: {
       type: 'starknet',
+    },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0x77552641',
+          functionSignature:
+            'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
+          sinceTimestamp: new UnixTime(1636978914),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({

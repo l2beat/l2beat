@@ -18,6 +18,7 @@ export interface ScalingRiskPageProps {
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
+  showLiveness: boolean
 }
 
 export function ScalingRiskPage(props: ScalingRiskPageProps) {
@@ -27,6 +28,7 @@ export function ScalingRiskPage(props: ScalingRiskPageProps) {
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
+          showLiveness={props.showLiveness}
           selected="risk"
         />
         <main>

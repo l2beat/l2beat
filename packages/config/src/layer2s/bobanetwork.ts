@@ -44,6 +44,7 @@ export const bobanetwork: Layer2 = {
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://boba.network'],
       apps: [],
@@ -84,6 +85,31 @@ export const bobanetwork: Layer2 = {
       url: 'https://mainnet.boba.network/',
       callsPerMinute: 200,
       startBlock: 1,
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xfBd2541e316948B259264c02f370eD088E04c3Db',
+          ),
+          selector: '0xd0f89344',
+          functionSignature: 'function appendSequencerBatch()',
+          sinceTimestamp: new UnixTime(1635386025),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
+          ),
+          selector: '0x8ca5cbb9',
+          functionSignature:
+            'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
+          sinceTimestamp: new UnixTime(1635386294),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({

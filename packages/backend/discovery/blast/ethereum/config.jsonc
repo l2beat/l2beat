@@ -1,0 +1,52 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "blast",
+  "initialAddresses": ["0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d"],
+  "names": {
+    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": "Bridge",
+    "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": "Lido",
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+    "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7": "CURVE_3POOL",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
+    "0x373238337Bfe1146fb49989fc222523f83081dDb": "DsrManager",
+    "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A": "PSM",
+    "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": "BridgeOwner"
+  },
+  "overrides": {
+    "Lido": {
+      "ignoreDiscovery": true
+    },
+    "DAI": {
+      "ignoreDiscovery": true
+    },
+    "CURVE_3POOL": {
+      "ignoreDiscovery": true
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "USDT": {
+      "ignoreDiscovery": true
+    },
+    "DsrManager": {
+      "ignoreDiscovery": true
+    },
+    "PSM": {
+      "ignoreDiscovery": true
+    },
+    "Bridge": {
+      "ignoreMethods": ["getMainnetBridge", "proxiableUUID"],
+      "ignoreInWatchMode": [
+        "totalETHBalance",
+        "totalETHShares",
+        "totalUSDBalanceNoUpdate",
+        "totalUSDShares"
+      ]
+    },
+    "BridgeOwner": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}

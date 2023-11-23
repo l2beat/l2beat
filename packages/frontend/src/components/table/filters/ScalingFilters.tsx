@@ -4,15 +4,17 @@ import React from 'react'
 
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
+import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
 interface Props {
   items: ScalingEntry[]
+  hideRollupsOnlyCheckbox?: boolean
 }
 
-export function ScalingFilters({ items }: Props) {
+export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
   const providers = uniq(items.map((i) => i.provider))
     .sort()
     .map((p) => ({
@@ -37,42 +39,44 @@ export function ScalingFilters({ items }: Props) {
     }))
 
   return (
-    <FiltersWrapper>
-      <RollupsOnlyCheckbox items={items} />
-      <RichSelect label="Select technology" id="technology-select">
-        {categories.map((category) => (
-          <RichSelect.Item
-            selectedLabel={category.label}
-            key={category.label}
-            value={category.value}
-          >
-            {category.label}
-          </RichSelect.Item>
-        ))}
-      </RichSelect>
-      <RichSelect label="Select stack" id="stack-select">
-        {providers.map((da) => (
-          <RichSelect.Item
-            selectedLabel={da.label}
-            key={da.label}
-            value={da.value}
-          >
-            {da.label}
-          </RichSelect.Item>
-        ))}
-      </RichSelect>
-      <RichSelect label="Select stage" id="stage-select">
-        {stages.map((stage) => (
-          <RichSelect.Item
-            selectedLabel={stage.label}
-            key={stage.label}
-            value={stage.value}
-          >
-            {stage.label}
-          </RichSelect.Item>
-        ))}
-      </RichSelect>
-    </FiltersWrapper>
+    <OverflowWrapper>
+      <FiltersWrapper>
+        {!hideRollupsOnlyCheckbox && <RollupsOnlyCheckbox items={items} />}
+        <RichSelect label="Select technology" id="technology-select">
+          {categories.map((category) => (
+            <RichSelect.Item
+              selectedLabel={category.label}
+              key={category.label}
+              value={category.value}
+            >
+              {category.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+        <RichSelect label="Select stack" id="stack-select">
+          {providers.map((da) => (
+            <RichSelect.Item
+              selectedLabel={da.label}
+              key={da.label}
+              value={da.value}
+            >
+              {da.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+        <RichSelect label="Select stage" id="stage-select">
+          {stages.map((stage) => (
+            <RichSelect.Item
+              selectedLabel={stage.label}
+              key={stage.label}
+              value={stage.value}
+            >
+              {stage.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+      </FiltersWrapper>
+    </OverflowWrapper>
   )
 }
 

@@ -105,6 +105,7 @@ export const optimism: Layer2 = {
     purpose: 'Universal',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
@@ -176,6 +177,28 @@ export const optimism: Layer2 = {
       type: 'rpc',
       startBlock: 1,
       assessCount: subtractOneAfterBlockInclusive(105235064),
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x6887246668a3b87F54DeB3b94Ba47a6f63F32985'),
+          to: EthereumAddress('0xFF00000000000000000000000000000000000010'),
+          sinceTimestamp: new UnixTime(1686074603),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xdfe97868233d1aa22e815a266982f2cf17685a27',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1685377367),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({

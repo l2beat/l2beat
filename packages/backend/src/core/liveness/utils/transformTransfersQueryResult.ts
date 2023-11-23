@@ -16,11 +16,10 @@ export function transformTransfersQueryResult(
     assert(config, 'Programmer error: config should not be undefined there')
 
     return {
-      projectId: config.projectId,
       timestamp: r.block_timestamp,
       blockNumber: r.block_number,
       txHash: r.transaction_hash,
-      type: config.type,
+      livenessConfigurationId: config.livenessConfigurationId,
     }
   })
   return results

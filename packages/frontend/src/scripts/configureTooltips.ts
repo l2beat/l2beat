@@ -38,7 +38,10 @@ export function configureTooltips() {
       window.innerWidth - 10 - tooltipWidth,
     )
     tooltip.style.left = `${left}px`
-    if (rect.y + rect.height + 7 + tooltipHeight < window.innerHeight) {
+    const isOverflowingOnBottom =
+      rect.y + rect.height + 7 + tooltipHeight >= window.innerHeight
+    const isOverflowingOnTop = rect.top - tooltipHeight <= 7
+    if (!isOverflowingOnBottom || isOverflowingOnTop) {
       tooltip.style.top = `${rect.bottom + 7}px`
       tooltipTriangle.style.top = `${rect.bottom}px`
       tooltipTriangle.classList.remove('rotate-180')
