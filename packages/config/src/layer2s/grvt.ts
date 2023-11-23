@@ -14,7 +14,8 @@ export const grvt: Layer2 = {
       'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being decentralized, featuring self-custodial funds and wallets.',
     purpose: 'DeFi',
     category: 'ZK Rollup',
-    provider: 'zkSync',
+    dataAvailabilityMode: 'NotApplicable',
+    provider: 'ZK Stack',
     links: {
       websites: ['https://grvt.io'],
       apps: [],

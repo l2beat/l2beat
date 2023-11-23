@@ -14,7 +14,8 @@ export const kinto: Layer2 = {
       'Kinto is the first KYCed Layer 2 capable of supporting both modern financial institutions and decentralized protocols.',
     purpose: 'DeFi',
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    dataAvailabilityMode: 'TxData',
+    provider: 'Arbitrum',
     links: {
       websites: ['https://kinto.xyz'],
       apps: [],

@@ -59,6 +59,8 @@ export const degate: Layer2 = {
     purpose: 'Exchange',
     provider: 'Loopring',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
