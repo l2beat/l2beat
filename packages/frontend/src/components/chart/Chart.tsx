@@ -47,11 +47,7 @@ export function Chart(props: ChartProps) {
 
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
-  const header = isActivity ? (
-    <ActivityHeader />
-  ) : (
-    <TvlHeader isBridge={isBridge} />
-  )
+
   return (
     <>
       <section
@@ -75,6 +71,7 @@ export function Chart(props: ChartProps) {
           hasActivity={props.hasActivity}
           metaChart={props.metaChart}
           header={props.header}
+          isBridge={isBridge}
         />
 
         <div className="flex flex-col gap-4">
@@ -143,38 +140,35 @@ export function Chart(props: ChartProps) {
   )
 }
 
-function ChartHeader({
-  id,
-  title,
-  hasActivity,
-  metaChart,
-  header,
-}: {
+function ChartHeader(props: {
   id: string
   title: string
   hasActivity: boolean | undefined
   metaChart: boolean | undefined
   header: ChartProps['header'] | undefined
+  isBridge: boolean
 }) {
-  if (!header || metaChart) {
+  if (!props.header || props.metaChart) {
     return null
   }
 
-  if (header === 'tvl') {
-    return <TvlHeader />
+  if (props.header === 'tvl') {
+    return <TvlHeader isBridge={props.isBridge} />
   }
 
-  if (header === 'activity') {
+  if (props.header === 'activity') {
     return <ActivityHeader />
   }
 
   return (
     <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
       <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
-        <a href={`#${id}`}>{title}</a>
+        <a href={`#${props.id}`}>{props.title}</a>
       </h2>
 
-      {hasActivity && <RadioChartTypeControl hasActivity={hasActivity} />}
+      {props.hasActivity && (
+        <RadioChartTypeControl hasActivity={props.hasActivity} />
+      )}
     </div>
   )
 }
