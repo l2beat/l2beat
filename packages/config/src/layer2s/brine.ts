@@ -14,11 +14,11 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  makeBridgeCompatible,
 } from './common'
 import { Layer2 } from './types'
 
@@ -49,6 +49,7 @@ export const brine: Layer2 = {
     description: 'Brine is a DEX powered by StarkEx.',
     purpose: 'Exchange',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
     links: {
       websites: ['https://www.brine.fi/'],

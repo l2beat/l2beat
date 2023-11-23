@@ -14,12 +14,12 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  makeBridgeCompatible,
 } from './common'
 import { Layer2 } from './types'
 
@@ -51,6 +51,7 @@ export const immutablex: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://www.immutable.com/'],
       apps: ['https://market.x.immutable.com/'],

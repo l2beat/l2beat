@@ -14,12 +14,12 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  makeBridgeCompatible,
 } from './common'
 import { Layer2 } from './types'
 
@@ -52,6 +52,7 @@ export const canvasconnect: Layer2 = {
     purpose: 'Privacy, Finance',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://canvas.co/'],
       apps: [],
