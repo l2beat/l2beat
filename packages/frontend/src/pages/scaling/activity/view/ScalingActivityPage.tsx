@@ -41,7 +41,7 @@ export function ActivityPage(props: ActivityPageProps) {
             settingsId="scaling-activity"
             initialType={{ type: 'layer2-activity' }}
             milestones={props.milestones}
-            withHeader
+            header="activity"
           />
           <ScalingActivityView {...props.activityView} />
           <OtherSites />
