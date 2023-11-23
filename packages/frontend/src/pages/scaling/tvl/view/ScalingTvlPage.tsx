@@ -38,7 +38,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
             settingsId="scaling-summary"
             initialType={{ type: 'layer2-tvl' }}
             milestones={props.milestones}
-            withHeader
+            header="tvl"
           />
           <ScalingTvlView {...props.tvlView} />
           <OtherSites />

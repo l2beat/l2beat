@@ -76,6 +76,7 @@ export const apex: Layer2 = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://apex.exchange/'],
       apps: ['https://pro.apex.exchange/'],

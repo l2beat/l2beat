@@ -1,8 +1,8 @@
-import { BigQueryClient } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../model'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessClient, mergeConfigs } from './LivenessClient'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
@@ -418,7 +418,7 @@ const FUNCTION_EXPECTED = [
   },
 ]
 
-function getMockBiqQuery(response: unknown) {
+function getMockBiqQuery(response: unknown[]) {
   return mockObject<BigQueryClient>({
     query: async () => response,
   })

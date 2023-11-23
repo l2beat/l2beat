@@ -50,6 +50,7 @@ export const rhinofi: Layer2 = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],

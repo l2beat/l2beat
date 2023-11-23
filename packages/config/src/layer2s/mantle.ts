@@ -47,6 +47,7 @@ export const mantle: Layer2 = {
       intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
     purpose: 'Universal',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',
     links: {
       websites: ['https://www.mantle.xyz/'],
