@@ -3,8 +3,9 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../.storybook/modes'
+import { AnomalyIndicatorEntry } from '../pages/scaling/liveness/types'
 import { configureTooltips } from '../scripts/configureTooltips'
-import { AnomalyIndicator, AnomalyIndicatorEntry } from './AnomalyIndicator'
+import { AnomalyIndicator } from './AnomalyIndicator'
 import { Tooltip } from './Tooltip'
 
 const meta: Meta<typeof AnomalyIndicator> = {
