@@ -15,7 +15,9 @@ export function StateDerivationSection(props: StateDerivationSectionProps) {
     <ProjectDetailsSection title={props.title} id={props.id}>
       <div className="flex flex-col gap-6">
         <Item title="Node software">{props.nodeSoftware}</Item>
-        <Item title="Compression scheme">{props.compressionScheme}</Item>
+        {props.compressionScheme && (
+          <Item title="Compression scheme">{props.compressionScheme}</Item>
+        )}
         <Item title="Genesis state">{props.genesisState}</Item>
         <Item title="Data format">{props.dataFormat}</Item>
       </div>
