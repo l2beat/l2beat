@@ -14,11 +14,11 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  makeBridgeCompatible,
 } from './common'
 import { Layer2 } from './types'
 
