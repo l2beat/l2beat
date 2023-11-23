@@ -4,7 +4,9 @@
   "name": "apex",
   "initialAddresses": [
     "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-    "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
+    "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+    "0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE",
+    "0x379c15156B527D6E693bED60d1FBb44CE46046b8"
   ],
   "names": {
     "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb": "StarkExchangeUSDC",
@@ -14,7 +16,14 @@
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b": "StarkExchangeUSDT",
     "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800": "CommitteeUSDT",
-    "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22": "FinalizableGpsFactAdapterUSDT"
+    "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22": "FinalizableGpsFactAdapterUSDT",
+    "0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE": "MultiSigPoolUSDC",
+    "0x379c15156B527D6E693bED60d1FBb44CE46046b8": "MultiSigPoolUSDT",
+    "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1": "AggregationRouterV4Owner",
+    // Other
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "l2beat-starkware"
@@ -109,6 +118,18 @@
           "type": "constructorArgs"
         }
       }
+    },
+    "AggregationRouterV4Owner": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "USDT": {
+      "ignoreDiscovery": true
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "DAI": {
+      "ignoreDiscovery": true
     }
   }
 }

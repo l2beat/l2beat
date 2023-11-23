@@ -177,12 +177,14 @@ export const apex: Layer2 = {
         'CommitteeUSDT',
         'Data Availability Committee (DAC) contract for USDT StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
       ),
-      {
-        name: 'MultiSigPool',
-        address: EthereumAddress('0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE'),
+      discovery.getContractDetails('MultiSigPoolUSDC', {
         description:
           'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
-      },
+      }),
+      discovery.getContractDetails('MultiSigPoolUSDT', {
+        description:
+          'Allows deposits in different tokens and swaps them to USDT. Allows fast withdrawals after the agreement of at least 2 designated signers.',
+      }),
       discovery.getContractDetails('PerpetualEscapeVerifier', {
         description:
           'Contract responsible for validating force withdrawal requests. Used by both USDC and USDT StarkEx instances.',

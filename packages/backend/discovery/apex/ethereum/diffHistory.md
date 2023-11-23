@@ -1,7 +1,7 @@
-# Diff at Thu, 23 Nov 2023 13:36:48 GMT:
+# Diff at Thu, 23 Nov 2023 15:27:54 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@4304ed68128a97a7eba668ee4c17dbf9088dd3e5
+- comparing to: master@2ff45714640abe4c50d283967078888d4af81d78
 
 ## Description
 
@@ -13,6 +13,12 @@ between them and between -USDC and -USDT perpetual pairs. Also parameters
 of each system can differ.
 
 ## Watched changes
+
+```diff
++   Status: CREATED
+    contract MultiSigPoolUSDT (0x379c15156B527D6E693bED60d1FBb44CE46046b8) {
+    }
+```
 
 ```diff
 +   Status: CREATED
@@ -50,6 +56,24 @@ of each system can differ.
  .../FinalizableGpsFactAdapterUSDT/Identity.sol     |  24 ++
  .../SimpleAdminable.sol                            |  71 ++++
  .../.code/FinalizableGpsFactAdapterUSDT/meta.txt   |   2 +
+ .../@openzeppelin/contracts/interfaces/IERC20.sol  |   6 +
+ .../contracts/security/ReentrancyGuard.sol         |  77 ++++
+ .../@openzeppelin/contracts/token/ERC20/IERC20.sol |  78 ++++
+ .../token/ERC20/extensions/IERC20Permit.sol        |  60 +++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      | 143 +++++++
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++++++
+ .../@openzeppelin/contracts/utils/Strings.sol      |  85 ++++
+ .../contracts/utils/cryptography/ECDSA.sol         | 217 ++++++++++
+ .../@openzeppelin/contracts/utils/math/Math.sol    | 339 +++++++++++++++
+ .../contracts/utils/math/SafeMath.sol              | 215 ++++++++++
+ .../contracts/utils/math/SignedMath.sol            |  43 ++
+ .../contracts/core/MultiSigPool.sol                | 380 +++++++++++++++++
+ .../contracts/interfaces/IAggregationExecutor.sol  |   5 +
+ .../contracts/interfaces/IAggregationRouterV4.sol  |  31 ++
+ .../contracts/interfaces/IFactRegister.sol         |  13 +
+ .../contracts/interfaces/IStarkEx.sol              |  44 ++
+ .../contracts/interfaces/IWETH.sol                 |   9 +
+ .../apex/ethereum/.code/MultiSigPoolUSDT/meta.txt  |   2 +
  .../implementation-1/Addresses.sol                 |  58 +++
  .../implementation-1/BlockDirectCall.sol           |  36 ++
  .../implementation-1/Governance.sol                | 123 ++++++
@@ -198,5 +222,5 @@ of each system can differ.
  .../.code/StarkExchangeUSDT/proxy/ProxyStorage.sol |  38 ++
  .../.code/StarkExchangeUSDT/proxy/StorageSlots.sol |  52 +++
  .../.code/StarkExchangeUSDT/proxy/meta.txt         |   2 +
- 163 files changed, 11523 insertions(+)
+ 181 files changed, 13514 insertions(+)
 ```

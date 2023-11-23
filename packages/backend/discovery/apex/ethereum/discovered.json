@@ -1,10 +1,23 @@
 {
   "name": "apex",
   "chain": "ethereum",
-  "blockNumber": 18634769,
-  "configHash": "0x77b6baacec939bb2eacd82f17d21f1bf0b95b69e92a1d6c2072d40512b6fd3cf",
+  "blockNumber": 18635323,
+  "configHash": "0x0d3e86b7502d0c3d45b9d17b7acfc99b7fcec53a8f5c4121175149b491cfb667",
   "version": 3,
   "contracts": [
+    {
+      "name": "AggregationRouterV4",
+      "address": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1636107489,
+      "values": {
+        "DOMAIN_SEPARATOR": "0x39821575e26f6b451072044840d9a68b6718f7a7770887d2b17a3b48f7147ca3",
+        "LIMIT_ORDER_RFQ_TYPEHASH": "0x74ab4f0cde46aaf927859983f7d04002116dd057d4c4941f6dbfb775c3e31f45",
+        "owner": "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1"
+      }
+    },
     {
       "name": "CommitteeUSDC",
       "address": "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4",
@@ -31,6 +44,27 @@
       "derivedName": "Committee"
     },
     {
+      "name": "MultiSigPoolUSDT",
+      "address": "0x379c15156B527D6E693bED60d1FBb44CE46046b8",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1698822623,
+      "values": {
+        "AGGREGATION_ROUTER_V4_ADDRESS": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
+        "ASSET_TYPE": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
+        "FACT_ADDRESS": "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A",
+        "signers": [
+          "0x04b4B6f7a61B121Cb4913871e3aB52Ce77589128",
+          "0x467c78EF773C91836ccFdafd8Ed0be12a64476d3",
+          "0x22c89137525b593Dd2A18434348b550ffA5984Fe"
+        ],
+        "STARKEX_ADDRESS": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+        "USDC_ADDRESS": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      },
+      "derivedName": "MultiSigPool"
+    },
+    {
       "name": "FinalizableGpsFactAdapterUSDT",
       "address": "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
       "upgradeability": {
@@ -45,6 +79,30 @@
         "programHash": "770346231394331402493200980986217737662224545740427952627288191358999988146"
       },
       "derivedName": "FinalizableGpsFactAdapter"
+    },
+    {
+      "name": "AggregationRouterV4Owner",
+      "address": "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1608623778,
+      "values": {
+        "domainSeparator": "0xb2a122829c88bf9bb3f25990d266e007c3961f0f8e7b7808ee3c3ae2c98f4c33",
+        "getChainId": 1,
+        "getOwners": [
+          "0xB1A308e7F02798377b7acF685E997E3D774c5863",
+          "0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8",
+          "0x2BB718a3986C36c6E02D8d15cdA4370820D08169"
+        ],
+        "getThreshold": 2,
+        "nonce": 446,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "CommitteeUSDT",
@@ -103,7 +161,7 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 5725,
+        "getLastBatchId": 5726,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -114,7 +172,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 5605,
+        "getSequenceNumber": 5606,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -150,6 +208,18 @@
       "values": {
         "hasRegisteredFact": false,
         "identify": "StarkWare_PerpetualEscapeVerifier_2021_2"
+      }
+    },
+    {
+      "name": "TransferRegistry",
+      "address": "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1613903192,
+      "values": {
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_TransferRegistry_2020_1"
       }
     },
     {
@@ -205,7 +275,7 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 203,
+        "getLastBatchId": 204,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -216,7 +286,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 203,
+        "getSequenceNumber": 204,
         "getSystemAssetType": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -258,12 +328,39 @@
         "programHash": "3114724292040200590153042023978438629733352741898912919152162079752811928849"
       },
       "derivedName": "FinalizableGpsFactAdapter"
+    },
+    {
+      "name": "MultiSigPoolUSDC",
+      "address": "0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1661502844,
+      "values": {
+        "AGGREGATION_ROUTER_V4_ADDRESS": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
+        "ASSET_TYPE": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
+        "FACT_ADDRESS": "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A",
+        "signers": [
+          "0x015155D9f7bb601FbF25084C106531c759c05379",
+          "0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92",
+          "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81"
+        ],
+        "STARKEX_ADDRESS": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+        "USDC_ADDRESS": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "derivedName": "MultiSigPool"
     }
   ],
   "eoas": [
+    "0x015155D9f7bb601FbF25084C106531c759c05379",
+    "0x04b4B6f7a61B121Cb4913871e3aB52Ce77589128",
     "0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
     "0x17094A7Cc09686787E0dF95604fd1F9da94B9501",
     "0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+    "0x2BB718a3986C36c6E02D8d15cdA4370820D08169",
+    "0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92",
+    "0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8",
+    "0x467c78EF773C91836ccFdafd8Ed0be12a64476d3",
     "0x4F753A937318A64b2867b16a55f5aea83A4C44dB",
     "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
     "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169",
@@ -274,10 +371,39 @@
     "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c",
     "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A",
     "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D",
+    "0xB1A308e7F02798377b7acF685E997E3D774c5863",
     "0xb557219DC53Af7Da9777540426DEe9c196842420",
-    "0xef75e1199B0599BA823b7770AcE8eb34864a1D55"
+    "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+    "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81"
   ],
   "abis": {
+    "0x1111111254fb6c44bAC0beD2854e76F90643097d": [
+      "constructor(address weth, address _clipperExchange)",
+      "event OrderFilledRFQ(bytes32 orderHash, uint256 makingAmount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function LIMIT_ORDER_RFQ_TYPEHASH() view returns (bytes32)",
+      "function cancelOrderRFQ(uint256 orderInfo)",
+      "function clipperSwap(address srcToken, address dstToken, uint256 amount, uint256 minReturn) payable returns (uint256 returnAmount)",
+      "function clipperSwapTo(address recipient, address srcToken, address dstToken, uint256 amount, uint256 minReturn) payable returns (uint256 returnAmount)",
+      "function clipperSwapToWithPermit(address recipient, address srcToken, address dstToken, uint256 amount, uint256 minReturn, bytes permit) returns (uint256 returnAmount)",
+      "function destroy()",
+      "function fillOrderRFQ(tuple(uint256 info, address makerAsset, address takerAsset, address maker, address allowedSender, uint256 makingAmount, uint256 takingAmount) order, bytes signature, uint256 makingAmount, uint256 takingAmount) payable returns (uint256, uint256)",
+      "function fillOrderRFQTo(tuple(uint256 info, address makerAsset, address takerAsset, address maker, address allowedSender, uint256 makingAmount, uint256 takingAmount) order, bytes signature, uint256 makingAmount, uint256 takingAmount, address target) payable returns (uint256, uint256)",
+      "function fillOrderRFQToWithPermit(tuple(uint256 info, address makerAsset, address takerAsset, address maker, address allowedSender, uint256 makingAmount, uint256 takingAmount) order, bytes signature, uint256 makingAmount, uint256 takingAmount, address target, bytes permit) returns (uint256, uint256)",
+      "function invalidatorForOrderRFQ(address maker, uint256 slot) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function rescueFunds(address token, uint256 amount)",
+      "function swap(address caller, tuple(address srcToken, address dstToken, address srcReceiver, address dstReceiver, uint256 amount, uint256 minReturnAmount, uint256 flags, bytes permit) desc, bytes data) payable returns (uint256 returnAmount, uint256 spentAmount, uint256 gasLeft)",
+      "function transferOwnership(address newOwner)",
+      "function uniswapV3Swap(uint256 amount, uint256 minReturn, uint256[] pools) payable returns (uint256 returnAmount)",
+      "function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes)",
+      "function uniswapV3SwapTo(address recipient, uint256 amount, uint256 minReturn, uint256[] pools) payable returns (uint256 returnAmount)",
+      "function uniswapV3SwapToWithPermit(address recipient, address srcToken, uint256 amount, uint256 minReturn, uint256[] pools, bytes permit) returns (uint256 returnAmount)",
+      "function unoswap(address srcToken, uint256 amount, uint256 minReturn, bytes32[] pools) payable returns (uint256 returnAmount)",
+      "function unoswapWithPermit(address srcToken, uint256 amount, uint256 minReturn, bytes32[] pools, bytes permit) returns (uint256 returnAmount)"
+    ],
     "0x229BbdF97eBc4993efe1433c0ae4A0bE79A4fe21": [
       "event LogForcedTradeRequest(uint256 starkKeyA, uint256 starkKeyB, uint256 vaultIdA, uint256 vaultIdB, uint256 collateralAssetId, uint256 syntheticAssetId, uint256 amountCollateral, uint256 amountSynthetic, bool aIsBuyingSynthetic, uint256 nonce)",
       "event LogForcedWithdrawalRequest(uint256 starkKey, uint256 vaultId, uint256 quantizedAmount)",
@@ -381,6 +507,24 @@
       "function registerSender(uint256 starkKey, bytes starkSignature)",
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
+    ],
+    "0x379c15156B527D6E693bED60d1FBb44CE46046b8": [
+      "constructor(address[] allowedSigners, address usdc, address aggregationRouterV4, address starkex, address fact, uint256 assetType)",
+      "event Deposit(address from, address token, uint256 spentAmount, uint256 swapReturnAmount, uint256 starkKey, uint256 positionId)",
+      "event WithdrawERC20(uint256 orderId, address token, address to, uint256 amount)",
+      "event WithdrawETH(uint256 orderId, address to, uint256 amount)",
+      "function AGGREGATION_ROUTER_V4_ADDRESS() view returns (address)",
+      "function ASSET_TYPE() view returns (uint256)",
+      "function FACT_ADDRESS() view returns (address)",
+      "function STARKEX_ADDRESS() view returns (address)",
+      "function USDC_ADDRESS() view returns (address)",
+      "function calcSigHash(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, bool isFact, uint256 salt) view returns (bytes32)",
+      "function deposit(address token, uint256 amount, uint256 starkKey, uint256 positionId, bytes exchangeData) payable returns (uint256)",
+      "function factTransferErc20(address to, address token, uint256 amount, uint256 salt, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
+      "function isAllowedSigner(address signer) view returns (bool)",
+      "function signers(uint256) view returns (address)",
+      "function withdrawETH(address to, uint256 amount, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
+      "function withdrawErc20(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)"
     ],
     "0x3F3A131caB7eb5b4EAE9497Bebb9E06bE80F2809": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
@@ -708,6 +852,9 @@
       "function updateState(uint256[] programOutput, uint256[] applicationData)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
+    "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1": [
+      "constructor(address _masterCopy)"
+    ],
     "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800": [
       "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
       "function hasRegisteredFact() view returns (bool)",
@@ -750,6 +897,14 @@
       "function identify() pure returns (string)",
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyEscape(uint256[] merkleProof, uint256 nAssets, uint256[] sharedState)"
+    ],
+    "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A": [
+      "event LogRegisteredTransfer(address recipient, address token, uint256 amount, uint256 salt)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function transfer(address recipient, uint256 salt) payable",
+      "function transferERC20(address recipient, address erc20, uint256 amount, uint256 salt)"
     ],
     "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6": [
       "constructor(address _singleton)"
@@ -924,6 +1079,24 @@
       "function registerAdmin(address newAdmin)",
       "function removeAdmin(address removedAdmin)",
       "function setProgramHash(uint256 newProgramHash)"
+    ],
+    "0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE": [
+      "constructor(address[] allowedSigners, address usdc, address aggregationRouterV4, address starkex, address fact, uint256 assetType)",
+      "event Deposit(address from, address token, uint256 spentAmount, uint256 swapReturnAmount, uint256 starkKey, uint256 positionId)",
+      "event WithdrawERC20(uint256 orderId, address token, address to, uint256 amount)",
+      "event WithdrawETH(uint256 orderId, address to, uint256 amount)",
+      "function AGGREGATION_ROUTER_V4_ADDRESS() view returns (address)",
+      "function ASSET_TYPE() view returns (uint256)",
+      "function FACT_ADDRESS() view returns (address)",
+      "function STARKEX_ADDRESS() view returns (address)",
+      "function USDC_ADDRESS() view returns (address)",
+      "function calcSigHash(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, bool isFact, uint256 salt) view returns (bytes32)",
+      "function deposit(address token, uint256 amount, uint256 starkKey, uint256 positionId, bytes exchangeData) payable returns (uint256)",
+      "function factTransferErc20(address to, address token, uint256 amount, uint256 salt, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
+      "function isAllowedSigner(address signer) view returns (bool)",
+      "function signers(uint256) view returns (address)",
+      "function withdrawETH(address to, uint256 amount, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
+      "function withdrawErc20(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)"
     ]
   }
 }
