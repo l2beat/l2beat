@@ -1,13 +1,6 @@
 import { Layer2, StageConfig } from '@l2beat/config'
 import { LivenessDataPoint } from '@l2beat/shared-pure'
 
-import { AnomalyIndicatorEntry } from '../../../components/AnomalyIndicator'
-
-interface DataPoint {
-  averageInSeconds: number
-  maximumInSeconds: number
-}
-
 export interface ScalingLivenessViewEntry {
   name: string
   slug: string
