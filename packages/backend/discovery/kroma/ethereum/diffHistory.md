@@ -5,7 +5,7 @@
 
 ## Description
 
-The Security Council is now the only actor that can upgrade the contracts. The method to bypass the delay has been removed. The delay has been decreased from 30 days to 7 days. Some simplifications in the code have been made.
+Not sure what's going on here. Look at the description below this one.
 
 ## Watched changes
 
@@ -45,7 +45,30 @@ The Security Council is now the only actor that can upgrade the contracts. The m
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+### Timelock
+
+![image](https://github.com/l2beat/l2beat/assets/30298476/ead78084-4fb9-4567-b8b1-3e8ba8928205)
+Removed the possibility to bypass the timelock delay. Also, the delay has been reduced from 30 days to 7 days.
+
+### SystemConfig
+
+Updated the reward scalar, doesn't affect security.
+
+### SecurityCouncil
+
+The Security Council now inherits from `TokenMultisigWallet` instead of `MultiSigWallet`. There is no particular change, the contract is much cleaner now and when a deletion is requested it gets also auto-confirmed by the sender. The role of this contrc
+
+### UpgradeGovernor
+
+Removed the function that allowed to bypass the timelock delay since it's not possible anymore. The UpgradeGovernor logic is based on the SecurityCouncilToken ownership.
+
+### SecurityCouncilToken
+
+Added self-delegation by default.
+
+### ValidatorPool
+
+Slightly tweaked the logic to select the next proposer, related to some small changes in the unbound mechanism.
 
 ## Watched changes
 
