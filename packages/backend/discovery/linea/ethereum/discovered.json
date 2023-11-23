@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 18618865,
-  "configHash": "0x13c73103706023eb384134690698592a2aba7fc2a8a1a78ebfb4215a5c85f9f9",
+  "configHash": "0x32afc6b115e3f460d66d7650302ece2ff7e5dd478565b934dc21e0e75963d04c",
   "version": 3,
   "contracts": [
     {
@@ -270,7 +270,11 @@
       "name": "Roles",
       "address": "0xF24f1DC519d88246809B660eb56D94048575d083",
       "upgradeability": {
-        "type": "immutable"
+        "type": "gnosis safe zodiac module",
+        "avatar": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+        "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+        "guard": "0x0000000000000000000000000000000000000000",
+        "modules": []
       },
       "sinceTimestamp": 1700506439,
       "values": {
@@ -279,8 +283,13 @@
         "guard": "0x0000000000000000000000000000000000000000",
         "multisend": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+        "roles": {
+          "defaultRoles": {},
+          "roles": {}
+        },
         "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
-      }
+      },
+      "derivedName": "Roles"
     },
     {
       "name": "ProxyAdmin",
