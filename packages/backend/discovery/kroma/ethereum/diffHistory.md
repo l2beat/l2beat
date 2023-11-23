@@ -1,3 +1,40 @@
+# Diff at Wed, 22 Nov 2023 14:57:30 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@4c7175133fcba5685ddf8bf8d42acc70413b9b0c
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+      values.tokenOwners.8:
+-        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
++        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
+      values.tokenOwners.7:
+-        "0xbDeE962137373A755a71C716E01B9946B1a27686"
++        "0x7B3225ADc5D908668FaA050246680CBE4e75A93f"
+      values.tokenOwners.6:
+-        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
++        "0xbDeE962137373A755a71C716E01B9946B1a27686"
+      values.tokenOwners.4:
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
++        "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
+      values.tokenOwners.3:
+-        "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
++        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      values.tokenOwners.2:
+-        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
++        "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851"
+      values.tokenOwners.1:
+-        "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851"
++        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+    }
+```
+
 # Diff at Wed, 22 Nov 2023 09:43:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
@@ -5,30 +42,7 @@
 
 ## Description
 
-### Timelock
-
-![image](https://github.com/l2beat/l2beat/assets/30298476/ead78084-4fb9-4567-b8b1-3e8ba8928205)
-Removed the possibility to bypass the timelock delay. Also, the delay has been reduced from 30 days to 7 days.
-
-### SystemConfig
-
-Updated the reward scalar, doesn't affect security.
-
-### SecurityCouncil
-
-The Security Council now inherits from `TokenMultisigWallet` instead of `MultiSigWallet`. There is no particular change, the contract is much cleaner now and when a deletion is requested it gets also auto-confirmed by the sender. The role of this contrc
-
-### UpgradeGovernor
-
-Removed the function that allowed to bypass the timelock delay since it's not possible anymore. The UpgradeGovernor logic is based on the SecurityCouncilToken ownership.
-
-### SecurityCouncilToken
-
-Added self-delegation by default.
-
-### ValidatorPool
-
-Slightly tweaked the logic to select the next proposer, related to some small changes in the unbound mechanism.
+Provide description of changes. This section will be preserved.
 
 ## Watched changes
 
@@ -86,7 +100,7 @@ Slightly tweaked the logic to select the next proposer, related to some small ch
 ```diff
     contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
       upgradeability.implementation:
--        "di"
+-        "0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"
 +        "0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"
       implementations.0:
 -        "0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"

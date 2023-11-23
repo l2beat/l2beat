@@ -163,12 +163,17 @@ export function UPGRADABLE_ZKSYNC(
 export function UPGRADE_DELAY(
   upgradeDelay: number,
   canExit?: boolean,
+  isOptimisticDelay?: boolean,
 ): ProjectRiskViewEntry {
   const upgradeDelayString = formatSeconds(upgradeDelay)
   const canReactString =
     canExit === false
-      ? "and users don't have enough time to react if the permissioned operator is censoring"
-      : 'but users have some time to react even if the permissioned operator is censoring'
+      ? isOptimisticDelay === false
+        ? "and users don't have enough time to react if the permissioned operator is censoring"
+        : "and users don't have enough time to react because of the challenge period delay"
+      : isOptimisticDelay === false
+      ? 'but users have some time to react even if the permissioned operator is censoring'
+      : 'but users have some time to react even with the challenge period delay'
   return {
     value: `${upgradeDelayString} delay`,
     description:
@@ -182,6 +187,7 @@ export function UPGRADE_DELAY(
 function UPGRADE_DELAY_SECONDS(
   upgradeDelay: number,
   exitDelay?: number,
+  isOptimisticDelay?: boolean,
 ): ProjectRiskViewEntry {
   if (upgradeDelay < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADABLE_YES
@@ -192,7 +198,7 @@ function UPGRADE_DELAY_SECONDS(
   ) {
     return UPGRADE_DELAY(upgradeDelay, false)
   }
-  return UPGRADE_DELAY(upgradeDelay, true)
+  return UPGRADE_DELAY(upgradeDelay, true, isOptimisticDelay)
 }
 
 export const UPGRADABLE_NO: ProjectRiskViewEntry = {
