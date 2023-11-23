@@ -1,16 +1,37 @@
 import classNames from 'classnames'
 import React from 'react'
 
+import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
+
 export function DurationCell(props: {
   durationInSeconds: number | undefined
   withColors?: boolean
+  project?: ScalingLivenessViewEntry
 }) {
-  if (props.durationInSeconds === undefined)
+  if (
+    !props.durationInSeconds &&
+    props.project?.dataAvailabilityMode === 'TxData'
+  ) {
     return (
       <div className="w-full rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+        Coming soon
+      </div>
+    )
+  }
+
+  if (!props.durationInSeconds)
+    return (
+      <div
+        className={classNames(
+          'w-full rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50',
+          props.project?.dataAvailabilityMode === 'StateDiffs' && 'Tooltip',
+        )}
+        title="State diff rollups do not post batches of transactions to the L1."
+      >
         n/a
       </div>
     )
+
   const seconds = props.durationInSeconds
   const minutes = Math.floor(props.durationInSeconds / 60)
   const hours = Math.floor(minutes / 60)
