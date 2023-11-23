@@ -18,6 +18,7 @@ export const layer2aWithDups: Layer2 = {
     purpose: 'Universal',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: [],
       apps: [],

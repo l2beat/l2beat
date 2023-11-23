@@ -43,8 +43,15 @@ export function Chart(props: ChartProps) {
     props.initialType.type === 'project-activity' ||
     props.initialType.type === 'storybook-fake-activity'
 
+  const isBridge = props.initialType.type === 'bridges-tvl'
+
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
+  const header = isActivity ? (
+    <ActivityHeader />
+  ) : (
+    <TvlHeader isBridge={isBridge} />
+  )
   return (
     <>
       <section

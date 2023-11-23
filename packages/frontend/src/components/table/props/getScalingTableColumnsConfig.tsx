@@ -446,7 +446,7 @@ export function getScalingLivenessColumnsConfig() {
     },
     {
       type: 'group',
-      title: 'Batch submission interval',
+      title: 'Tx data submission interval',
       columns: [
         {
           name: (
