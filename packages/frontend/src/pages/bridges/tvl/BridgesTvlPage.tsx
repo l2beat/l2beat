@@ -30,7 +30,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
           <Chart
             settingsId="bridges-tvl"
             initialType={{ type: 'bridges-tvl', includeCanonical: false }}
-            withHeader
+            header="tvl"
           />
           <BridgesTvlView {...props.tvlView} />
           <About />

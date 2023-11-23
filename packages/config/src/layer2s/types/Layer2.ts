@@ -53,11 +53,15 @@ export interface Layer2 {
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
-export type Layer2Display = {
+export interface Layer2Display {
   /** Name of the layer2, will be used as a display name on the website */
   name: string
   /** Url friendly layer2 name, will be used in website urls */
   slug: string
+  /** Name of the category the layer2 belongs to */
+  category: Layer2Category
+  /** Data availability mode of layer2 project */
+  dataAvailabilityMode: 'StateDiffs' | 'TxData' | 'NotApplicable'
   /** A warning displayed in the header of the project */
   headerWarning?:
     | {
@@ -88,18 +92,7 @@ export type Layer2Display = {
   links: ProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
-} & (
-  | {
-      /** Name of the category the rollup layer2 belongs to */
-      category: Extract<Layer2Category, 'Optimistic Rollup' | 'ZK Rollup'>
-      dataAvailabilityMode: 'StateDiffs' | 'TxData' | 'NotApplicable'
-    }
-  | {
-      /** Name of the category the non rollup layer2 belongs to */
-      category: Exclude<Layer2Category, 'Optimistic Rollup' | 'ZK Rollup'>
-    }
-)
-
+}
 export interface Layer2Config {
   /** List of native and external tokens */
   tokenList?: Token[]
@@ -137,6 +130,5 @@ export type Layer2Category =
   | 'Optimistic Rollup'
   | 'ZK Rollup'
   | 'Plasma'
-  | 'State Pools'
   | 'Validium'
   | 'Optimium'

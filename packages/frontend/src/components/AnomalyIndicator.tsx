@@ -3,29 +3,17 @@ import range from 'lodash/range'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
+import {
+  Anomaly,
+  AnomalyEntry,
+  AnomalyIndicatorEntry,
+} from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
 import { DurationCell } from './table/DurationCell'
 
 interface Props {
   anomalyEntries: AnomalyIndicatorEntry[]
   showComingSoon?: boolean
-}
-
-export type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
-
-interface Anomaly {
-  type: 'BATCH SUBMISSION' | 'STATE UPDATE'
-  timestamp: number
-  durationInSeconds: number
-}
-
-interface AnomalyEntry {
-  isAnomaly: true
-  anomalies: Anomaly[]
-}
-
-interface NonAnomalyEntry {
-  isAnomaly: false
 }
 
 export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
