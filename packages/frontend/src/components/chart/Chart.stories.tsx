@@ -257,7 +257,7 @@ export const WithMax: Story = {
 
 export const TvlWithHeader: Story = {
   args: {
-    withHeader: true,
+    header: true,
   },
 }
 
@@ -283,7 +283,7 @@ export const DetailedTvlWithActivity: Story = {
 export const DetailedTvlWithHeader: Story = {
   args: {
     initialType: { type: 'storybook-fake-detailed-tvl' },
-    withHeader: true,
+    header: true,
   },
 }
 
@@ -316,6 +316,6 @@ export const ActivityWithoutEthTxs: Story = {
 export const ActivityWithHeader: Story = {
   args: {
     initialType: { type: 'storybook-fake-activity' },
-    withHeader: true,
+    header: true,
   },
 }

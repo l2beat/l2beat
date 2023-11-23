@@ -33,7 +33,7 @@ export interface ChartProps {
   mobileFull?: boolean
   milestones?: Milestone[]
   sectionClassName?: string
-  withHeader?: boolean
+  header?: 'tvl' | 'activity' | 'project'
   showComingSoon?: boolean
 }
 
@@ -45,7 +45,6 @@ export function Chart(props: ChartProps) {
 
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
-  const header = isActivity ? <ActivityHeader /> : <TvlHeader />
   return (
     <>
       <section
@@ -63,20 +62,13 @@ export function Chart(props: ChartProps) {
           props.sectionClassName,
         )}
       >
-        <div>
-          {props.withHeader && !props.metaChart && !props.showComingSoon
-            ? header
-            : null}
-        </div>
-        {!props.metaChart && props.hasActivity && (
-          <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
-            <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
-              <a href={`#${id}`}>{title}</a>
-            </h2>
-
-            <RadioChartTypeControl hasActivity={props.hasActivity} />
-          </div>
-        )}
+        <ChartHeader
+          title={title}
+          id={id}
+          hasActivity={props.hasActivity}
+          metaChart={props.metaChart}
+          header={props.header}
+        />
 
         <div className="flex flex-col gap-4">
           <div
@@ -141,5 +133,41 @@ export function Chart(props: ChartProps) {
       </section>
       <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
     </>
+  )
+}
+
+function ChartHeader({
+  id,
+  title,
+  hasActivity,
+  metaChart,
+  header,
+}: {
+  id: string
+  title: string
+  hasActivity: boolean | undefined
+  metaChart: boolean | undefined
+  header: ChartProps['header'] | undefined
+}) {
+  if (!header || metaChart) {
+    return null
+  }
+
+  if (header === 'tvl') {
+    return <TvlHeader />
+  }
+
+  if (header === 'activity') {
+    return <ActivityHeader />
+  }
+
+  return (
+    <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
+      <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
+        <a href={`#${id}`}>{title}</a>
+      </h2>
+
+      {hasActivity && <RadioChartTypeControl hasActivity={hasActivity} />}
+    </div>
   )
 }
