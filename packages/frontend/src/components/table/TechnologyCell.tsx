@@ -7,7 +7,6 @@ import {
   LoopringIcon,
   OptimismIcon,
   OVMIcon,
-  PellarIcon,
   PolygonIcon,
   StarkWareIcon,
   ZkSyncIcon,
@@ -80,14 +79,6 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           title="This project is based on Polygon's code base."
         >
           <PolygonIcon className={providerIconClassName} />
-        </span>
-      )}
-      {provider === 'Pellar' && (
-        <span
-          className={providerClassName}
-          title="This project is based on Pellar's code base."
-        >
-          <PellarIcon className={providerIconClassName} />
         </span>
       )}
     </span>
