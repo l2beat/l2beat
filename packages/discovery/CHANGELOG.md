@@ -1,5 +1,16 @@
 # @l2beat/discovery
 
+## 0.25.0
+
+### Minor Changes
+
+- Added LineaRolesHandler and automatic detection of Zodiac Gnosis Modules
+
+### Patch Changes
+
+- Updated dependencies
+  - @l2beat/discovery-types@0.6.0
+
 ## 0.24.0
 
 ### Minor Changes

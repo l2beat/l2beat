@@ -23,6 +23,7 @@ export const ManualProxyType = z.enum([
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | GnosisSafeUpgradeability
+  | GnosisSafeZodiacModuleUpgradeability
   | EIP1967ProxyUpgradeability
   | PolygonProxyUpgradeability
   | ZeppelinOSProxyUpgradeability
@@ -48,6 +49,14 @@ export interface ImmutableUpgradeability {
 export interface GnosisSafeUpgradeability {
   type: 'gnosis safe'
   masterCopy: EthereumAddress
+  modules: EthereumAddress[]
+}
+
+export interface GnosisSafeZodiacModuleUpgradeability {
+  type: 'gnosis safe zodiac module'
+  avatar: EthereumAddress
+  target: EthereumAddress
+  guard: EthereumAddress
   modules: EthereumAddress[]
 }
 

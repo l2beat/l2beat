@@ -9,6 +9,7 @@ import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
+import { detectGnosisSafeZodiacModule } from './auto/GnosisSafeModule'
 import { detectPolygonProxy } from './auto/PolygonProxy'
 import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
 import { detectStarkWareProxy } from './auto/StarkWareProxy'
@@ -36,6 +37,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectPolygonProxy,
   detectStarkWareProxy,
   detectGnosisSafe,
+  detectGnosisSafeZodiacModule,
   detectEip897Proxy,
   detectZeppelinOSProxy,
   detectEip2535proxy,

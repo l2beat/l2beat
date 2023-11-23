@@ -27,7 +27,7 @@ async function getMasterCopy(
   }
 }
 
-async function getModules(
+export async function getModules(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   blockNumber: number,
