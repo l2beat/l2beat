@@ -23,6 +23,10 @@ const paramsParser = z.object({
 export function createStatusRouter(statusController: StatusController) {
   const router = new Router()
 
+  router.get('/status', (ctx) => {
+    ctx.body = statusController.getStatusPagesLinks()
+  })
+
   router.get(
     '/status/prices',
     withTypedContext(queryParser, async (ctx) => {

@@ -146,6 +146,8 @@ export const starknet: Layer2 = {
       with a single Sequencer.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       apps: [
         'https://www.dappland.com/',
@@ -161,7 +163,7 @@ export const starknet: Layer2 = {
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
-        'https://discord.gg/uJ9HZTUk2Y',
+        'https://discord.com/invite/qypnmzkhbc',
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',

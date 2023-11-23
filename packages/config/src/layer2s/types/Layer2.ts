@@ -53,7 +53,7 @@ export interface Layer2 {
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
-export interface Layer2Display {
+export type Layer2Display = {
   /** Name of the layer2, will be used as a display name on the website */
   name: string
   /** Url friendly layer2 name, will be used in website urls */
@@ -73,13 +73,12 @@ export interface Layer2Display {
   description: string
   /** A short (<20 characters) description of the use case */
   purpose: string
-  /** Name of the category the layer2 belongs to */
-  category: Layer2Category
   /** Technology provider */
   provider?:
     | 'StarkEx'
     | 'OP Stack'
-    | 'zkSync'
+    | 'zkSync Lite'
+    | 'ZK Stack'
     | 'Loopring'
     | 'Arbitrum'
     | 'Polygon'
@@ -89,7 +88,17 @@ export interface Layer2Display {
   links: ProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
-}
+} & (
+  | {
+      /** Name of the category the rollup layer2 belongs to */
+      category: Extract<Layer2Category, 'Optimistic Rollup' | 'ZK Rollup'>
+      dataAvailabilityMode: 'StateDiffs' | 'TxData' | 'NotApplicable'
+    }
+  | {
+      /** Name of the category the non rollup layer2 belongs to */
+      category: Exclude<Layer2Category, 'Optimistic Rollup' | 'ZK Rollup'>
+    }
+)
 
 export interface Layer2Config {
   /** List of native and external tokens */
@@ -126,8 +135,8 @@ export interface Layer2ExternalAssets {
 
 export type Layer2Category =
   | 'Optimistic Rollup'
-  | 'Optimium'
+  | 'ZK Rollup'
   | 'Plasma'
   | 'State Pools'
   | 'Validium'
-  | 'ZK Rollup'
+  | 'Optimium'
