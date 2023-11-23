@@ -3,7 +3,10 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LivenessFunctionCall } from '../../types/LivenessConfig'
 
 export function getFunctionCallQuery(
-  functionCallsConfig: LivenessFunctionCall[],
+  functionCallsConfig: Omit<
+    LivenessFunctionCall,
+    'id' | 'livenessConfigurationId'
+  >[],
   from: UnixTime,
   to: UnixTime,
 ) {

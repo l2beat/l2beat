@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 117399533,
   "configHash": "0x80824bcb8a13f42065a2790ec72284bce732e7b16c1b95ca660f264d0f384d1e",
-  "version": 1,
+  "version": 3,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528311,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -26,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647317293,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 10,
@@ -48,6 +50,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528311,
       "values": {
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -71,6 +74,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661279392,
       "values": {
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
@@ -80,8 +84,11 @@
       "address": "0xFE22f5D2755b06b9149656C5793Cb15A08d09847",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": []
       },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1648074158,
       "values": {
         "domainSeparator": "0xcfc294a2c02372706806eb29a13d1934f3093bc91064c5c73d0c38cd87b3d57c",
         "getChainId": 42161,

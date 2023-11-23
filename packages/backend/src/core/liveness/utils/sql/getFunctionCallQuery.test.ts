@@ -6,7 +6,10 @@ import { getFunctionCallQuery } from './getFunctionCallQuery'
 
 describe(getFunctionCallQuery.name, () => {
   it('should return valid SQL query', () => {
-    const config: LivenessFunctionCall[] = [
+    const config: Omit<
+      LivenessFunctionCall,
+      'id' | 'livenessConfigurationId'
+    >[] = [
       {
         projectId: ProjectId('project-1'), // irrelevant
         address: EthereumAddress.random(),

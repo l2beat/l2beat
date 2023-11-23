@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { allModes } from '../../../.storybook/modes'
+import { onlyDesktopModes } from '../../../.storybook/modes'
 import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
@@ -18,7 +18,8 @@ import { TwitterIcon } from './products/TwitterIcon'
 import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
-import { ZkSyncIcon } from './providers/ZkSyncIcon'
+import { ZKStackIcon } from './providers/ZKStackIcon'
+import { ZkSyncLiteIcon } from './providers/ZkSyncLiteIcon'
 import { ActiveIcon } from './symbols/ActiveIcon'
 import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
@@ -46,10 +47,7 @@ const meta = {
   title: 'Other/Icons',
   parameters: {
     chromatic: {
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
+      modes: onlyDesktopModes,
     },
   },
 }
@@ -102,7 +100,8 @@ export function ProviderIcons() {
     <Template>
       <OptimismIcon />
       <StarkWareIcon />
-      <ZkSyncIcon />
+      <ZKStackIcon />
+      <ZkSyncLiteIcon />
     </Template>
   )
 }

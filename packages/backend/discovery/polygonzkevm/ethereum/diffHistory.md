@@ -1,3 +1,66 @@
+# Diff at Fri, 10 Nov 2023 10:41:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@8c81bbc286f1a0d260de84887d123cd5eda48a86
+
+## Description
+
+PolygonZkEVM has changed it's implementation because PolygonZkEVMUpgraded - the
+contract at the implementation address - needed to be redeployed. This is
+because PolygonZkEVMUpgraded has FflonkVerifier hardcoded and because it was
+also redeployed to change two circuit parameters (C_0x and C0y) to update to the
+new address the whole contract needed to be redeployed. We can't peer into the
+actual change that took place because it's around the zk circuit.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x21f65deadb3b85082BA99766f323bEA90eb5a3D6) {
+    }
+```
+
+```diff
+    contract PolygonZkEvm (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+      upgradeability.implementation:
+-        "0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"
++        "0xb1585916487AcEdD99952086f2950763D253b923"
+      implementations.0:
+-        "0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"
++        "0xb1585916487AcEdD99952086f2950763D253b923"
+      values.forkID:
+-        5
++        6
+      values.lastVerifiedBatchBeforeUpgrade:
+-        813266
++        1228916
+      values.rollupVerifier:
+-        "0x21f65deadb3b85082BA99766f323bEA90eb5a3D6"
++        "0x5F411584E02964a028E3123C833c352Cd2F5cBD5"
+      values.version:
+-        1
++        2
+      values.VERSION_BEFORE_UPGRADE:
+-        0
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FflonkVerifier (0x5F411584E02964a028E3123C833c352Cd2F5cBD5) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.code@18263277 => .code}/FflonkVerifier/FflonkVerifier.sol       | 4 ++--
+ .../ethereum/{.code@18263277 => .code}/FflonkVerifier/meta.txt        | 2 +-
+ .../{.code@18263277 => .code}/PolygonZkEvm/implementation/meta.txt    | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+```
+
 # Diff at Mon, 02 Oct 2023 13:55:19 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

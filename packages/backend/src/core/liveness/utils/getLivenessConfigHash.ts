@@ -5,10 +5,12 @@ import { Project } from '../../../model'
 const LIVENESS_LOGIC_VERSION = 0
 
 export function getLivenessConfigHash(projects: Project[]): Hash256 {
-  return hashJson([getEntries(projects), LIVENESS_LOGIC_VERSION])
+  const projectsWithLiveness = projects.filter((p) => p.livenessConfig)
+  return hashJson([getEntries(projectsWithLiveness), LIVENESS_LOGIC_VERSION])
 }
 
 // TODO: is JSON.stringify the best way to do this?
+// TODO: write tests
 function getEntries(projects: Project[]) {
   return projects.map(({ projectId, livenessConfig }) => {
     return {

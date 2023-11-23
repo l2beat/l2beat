@@ -7,9 +7,6 @@ name: "Chromatic"
 
 on:
   push:
-    branches-ignore:
-      # disable for merge queue
-      - "gh-readonly-queue/master/*"
 
 jobs:
   deploy:
@@ -32,4 +29,4 @@ jobs:
         run: yarn storybook:build
 
       - name: Publish to Chromatic
-        run: npx chromatic -d ./storybook-static --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts
+        run: npx chromatic --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --storybook-build-dir ./storybook-static --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts

@@ -1,3 +1,81 @@
+# Diff at Tue, 21 Nov 2023 15:32:06 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@c91f8874e3c01dd4c477491e11cff7b3c664ef34
+
+## Description
+
+Change in the zkSync Era Multisig owners - one address is removed and another is added.
+
+## Watched changes
+
+```diff
+    contract zkSync Era Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+      values.getOwners.7:
+-        "0xa265146cA40F52cfC439888D0b4291b5440e6769"
++        "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
+    }
+```
+
+# Diff at Thu, 02 Nov 2023 07:24:20 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@9b49ec4aa1d93626f3f30c0e914cb12bb6670dbd
+
+## Description
+
+Proposal updates (the upgrade is executed): a verification key has been updated, meaning that the circuit has been updated.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      values.getProposedUpgradeHash:
+-        "0x306f3cc703e0e1ab18693aab35276f2dbc745f5de480cee904d05de511ca8415"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.getProposedUpgradeTimestamp:
+-        1698826475
++        0
+      values.getProtocolVersion:
+-        16
++        17
+      values.getUpgradeProposalState:
+-        1
++        0
+      values.getVerifierParams.2:
+-        "0x236c97bfbe75ff507e03909fae32a78be3a70d1b468b183f430010810284ed45"
++        "0x18c1639094f58177409186e8c48d9f577c9410901d2f1d486b3e7d6cf553ae4c"
+    }
+```
+
+# Diff at Wed, 01 Nov 2023 11:26:01 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@d5598e9a46a99374387c1df455805e40f3d361a7
+
+## Description
+
+A new proposal is detected.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      values.getCurrentProposalId:
+-        9
++        10
+      values.getProposedUpgradeHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x306f3cc703e0e1ab18693aab35276f2dbc745f5de480cee904d05de511ca8415"
+      values.getProposedUpgradeTimestamp:
+-        0
++        1698826475
+      values.getUpgradeProposalState:
+-        0
++        1
+    }
+```
+
 # Diff at Fri, 27 Oct 2023 10:26:34 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

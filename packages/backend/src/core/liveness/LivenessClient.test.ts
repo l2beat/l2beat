@@ -1,19 +1,12 @@
 import { BigQueryClient } from '@l2beat/shared'
-import {
-  EthereumAddress,
-  LivenessType,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../model'
+import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessClient, mergeConfigs } from './LivenessClient'
-import {
-  LivenessConfig,
-  LivenessFunctionCall,
-  LivenessTransfer,
-} from './types/LivenessConfig'
+import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
+import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
 import {
   adjustToForBigqueryCall,
   getFunctionCallQuery,
@@ -35,36 +28,47 @@ describe(LivenessClient.name, () => {
 
       const livenessClient = new LivenessClient(bigquery)
 
-      const { data, to } = await livenessClient.getLivenessData(
-        PROJECTS,
-        FROM,
-        TO,
-      )
+      const { data, adjustedTo, usedConfigurationsIds } =
+        await livenessClient.getLivenessData(
+          PROJECTS,
+          LIVENESS_CONFIGURATIONS,
+          FROM,
+          TO,
+        )
 
       // prepare expected values
-      const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
+      const expectedAdjustedTo = adjustToForBigqueryCall(
+        FROM.toNumber(),
+        TO.toNumber(),
+      )
       const { transfers, functionCalls } = getFilteredConfigs(
         PROJECTS,
+        LIVENESS_CONFIGURATIONS,
         FROM,
         adjustedTo,
       )
 
       // adjusts "to"
-      expect(to).toEqual(adjustedTo)
+      expect(adjustedTo).toEqual(expectedAdjustedTo)
+
+      // returns used configurations ids
+      expect(usedConfigurationsIds).toEqual(
+        [...transfers, ...functionCalls].map((c) => c.livenessConfigurationId),
+      )
+
+      // returns data returned from internal methods
+      expect(data).toEqual([...TRANSFERS_EXPECTED, ...FUNCTION_EXPECTED])
 
       // calls both internal methods
       expect(bigquery.query).toHaveBeenCalledTimes(2)
       expect(bigquery.query).toHaveBeenNthCalledWith(
         1,
-        getTransferQuery(transfers, FROM, adjustedTo),
+        getTransferQuery(transfers, FROM, expectedAdjustedTo),
       )
       expect(bigquery.query).toHaveBeenNthCalledWith(
         2,
-        getFunctionCallQuery(functionCalls, FROM, adjustedTo),
+        getFunctionCallQuery(functionCalls, FROM, expectedAdjustedTo),
       )
-
-      // returns data returned from internal methods
-      expect(data).toEqual([...TRANSFERS_EXPECTED, ...FUNCTION_EXPECTED])
     })
   })
 
@@ -73,7 +77,12 @@ describe(LivenessClient.name, () => {
       const bigquery = getMockBiqQuery(TRANSFER_RESPONSE)
 
       const to = FROM.add(1, 'hours')
-      const { transfers } = getFilteredConfigs(PROJECTS, FROM, to)
+      const { transfers } = getFilteredConfigs(
+        PROJECTS,
+        LIVENESS_CONFIGURATIONS,
+        FROM,
+        to,
+      )
 
       const livenessClient = new LivenessClient(bigquery)
       const result = await livenessClient.getTransfers(transfers, FROM, to)
@@ -100,7 +109,12 @@ describe(LivenessClient.name, () => {
       const bigquery = getMockBiqQuery(FUNCTIONS_RESPONSE)
 
       const to = FROM.add(1, 'hours')
-      const { functionCalls } = getFilteredConfigs(PROJECTS, FROM, to)
+      const { functionCalls } = getFilteredConfigs(
+        PROJECTS,
+        LIVENESS_CONFIGURATIONS,
+        FROM,
+        to,
+      )
 
       const livenessClient = new LivenessClient(bigquery)
       const result = await livenessClient.getFunctionCalls(
@@ -142,6 +156,14 @@ const PROJECTS: Project[] = [
     type: 'layer2',
     livenessConfig: {
       transfers: [
+        // this one should not be used
+        {
+          projectId: ProjectId('project1'),
+          from: EthereumAddress.random(),
+          to: EthereumAddress.random(),
+          type: 'DA',
+          sinceTimestamp: FROM.add(-360, 'days'),
+        },
         // this one should not be used
         {
           projectId: ProjectId('project1'),
@@ -222,6 +244,108 @@ const PROJECTS: Project[] = [
   },
 ]
 
+const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.transfers[0].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[0].livenessConfig!.transfers[0],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[0].livenessConfig!.transfers[0].sinceTimestamp,
+    untilTimestamp: PROJECTS[0].livenessConfig!.transfers[0].untilTimestamp,
+    lastSyncedTimestamp: FROM.add(1, 'days'),
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.transfers[1].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[0].livenessConfig!.transfers[1],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[0].livenessConfig!.transfers[1].sinceTimestamp,
+    untilTimestamp: PROJECTS[0].livenessConfig!.transfers[1].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.transfers[2].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[0].livenessConfig!.transfers[2],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[0].livenessConfig!.transfers[2].sinceTimestamp,
+    untilTimestamp: PROJECTS[0].livenessConfig!.transfers[2].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.functionCalls[0].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[0].livenessConfig!.functionCalls[0],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].sinceTimestamp,
+    untilTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[0].projectId,
+    type: PROJECTS[0].livenessConfig!.functionCalls[1].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[0].livenessConfig!.functionCalls[1],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[0].livenessConfig!.functionCalls[1].sinceTimestamp,
+    untilTimestamp: PROJECTS[0].livenessConfig!.functionCalls[1].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.transfers[0].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[1].livenessConfig!.transfers[0],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[1].livenessConfig!.transfers[0].sinceTimestamp,
+    untilTimestamp: PROJECTS[1].livenessConfig!.transfers[0].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.transfers[1].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[1].livenessConfig!.transfers[1],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[1].livenessConfig!.transfers[1].sinceTimestamp,
+    untilTimestamp: PROJECTS[1].livenessConfig!.transfers[1].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.functionCalls[0].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[1].livenessConfig!.functionCalls[0],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[1].livenessConfig!.functionCalls[0].sinceTimestamp,
+    untilTimestamp: PROJECTS[1].livenessConfig!.functionCalls[0].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+  {
+    projectId: PROJECTS[1].projectId,
+    type: PROJECTS[1].livenessConfig!.functionCalls[1].type,
+    identifier: LivenessConfigurationIdentifier(
+      PROJECTS[1].livenessConfig!.functionCalls[1],
+    ),
+    params: '',
+    sinceTimestamp: PROJECTS[1].livenessConfig!.functionCalls[1].sinceTimestamp,
+    untilTimestamp: PROJECTS[1].livenessConfig!.functionCalls[1].untilTimestamp,
+    lastSyncedTimestamp: undefined,
+  },
+].map((c, i) => ({ ...c, id: i }))
+
 const TRANSFER_RESPONSE = [
   {
     block_number: 1,
@@ -245,18 +369,16 @@ const TRANSFER_RESPONSE = [
 
 const TRANSFERS_EXPECTED = [
   {
-    projectId: ProjectId('project1'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 1,
     txHash: '0x123456',
-    type: LivenessType('DA'),
+    livenessConfigurationId: 2,
   },
   {
-    projectId: ProjectId('project2'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 2,
     txHash: '0x123456',
-    type: LivenessType('STATE'),
+    livenessConfigurationId: 5,
   },
 ]
 
@@ -283,18 +405,16 @@ const FUNCTIONS_RESPONSE = [
 
 const FUNCTION_EXPECTED = [
   {
-    projectId: ProjectId('project1'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 1,
     txHash: '0x123456',
-    type: LivenessType('DA'),
+    livenessConfigurationId: 4,
   },
   {
-    projectId: ProjectId('project2'),
     timestamp: new UnixTime(1640995200),
     blockNumber: 2,
     txHash: '0x123456',
-    type: LivenessType('STATE'),
+    livenessConfigurationId: 8,
   },
 ]
 
@@ -306,20 +426,33 @@ function getMockBiqQuery(response: unknown) {
 
 function getFilteredConfigs(
   projects: Project[],
+  configs: LivenessConfigurationRecord[],
   from: UnixTime,
   to: UnixTime,
 ): {
   transfers: LivenessTransfer[]
   functionCalls: LivenessFunctionCall[]
 } {
-  const config: LivenessConfig = mergeConfigs(projects)
+  const config = mergeConfigs(projects, configs)
 
   const transfers = config.transfers.filter((c) =>
-    isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
+    isTimestampInRange(
+      c.sinceTimestamp,
+      c.untilTimestamp,
+      c.latestSyncedTimestamp,
+      from,
+      to,
+    ),
   )
 
   const functionCalls = config.functionCalls.filter((c) =>
-    isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, to),
+    isTimestampInRange(
+      c.sinceTimestamp,
+      c.untilTimestamp,
+      c.latestSyncedTimestamp,
+      from,
+      to,
+    ),
   )
 
   return {

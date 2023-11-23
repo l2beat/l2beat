@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
-import { allModes } from '../../../.storybook/modes'
+import { onlyDesktopModes } from '../../../.storybook/modes'
 import { configureCharts } from '../../scripts/charts'
 import { Chart } from './Chart'
 
@@ -155,21 +155,31 @@ export const Primary: Story = {}
 
 export const EmptyState: Story = {
   play: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200))
+    await new Promise((resolve) => setTimeout(resolve, 300))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'empty'
     chart.dataset.interactivityDisabled = 'true'
   },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
 }
 
 export const ErrorState: Story = {
   play: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200))
+    await new Promise((resolve) => setTimeout(resolve, 300))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'error'
     chart.dataset.interactivityDisabled = 'true'
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
   },
 }
 
@@ -208,10 +218,7 @@ export const With90D: Story = {
   },
   parameters: {
     chromatic: {
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
+      modes: onlyDesktopModes,
     },
   },
 }
@@ -223,10 +230,7 @@ export const With180D: Story = {
   },
   parameters: {
     chromatic: {
-      modes: {
-        'light desktop': allModes['light desktop'],
-        'dark desktop': allModes['dark desktop'],
-      },
+      modes: onlyDesktopModes,
     },
   },
 }

@@ -27,7 +27,7 @@ export function getTokenTvlRenderParams(
       return {
         series: [token],
         data: {
-          date: formatTimestamp(timestamp, true),
+          date: formatTimestamp(timestamp, { withTime: true }),
           token,
           usd,
         },

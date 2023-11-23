@@ -7,10 +7,10 @@ import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import {
-  getActiveScalingTvlColumns,
-  getArchivedScalingTvlColumns,
-  getUpcomingScalingTvlColumns,
-} from '../../../../components/table/props/getScalingTableColumns'
+  getActiveScalingTvlColumnsConfig,
+  getArchivedScalingTvlColumnsConfig,
+  getUpcomingScalingTvlColumnsConfig,
+} from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { Tabs } from '../../../../components/Tabs'
 import { ScalingTvlViewEntry } from '../types'
@@ -43,7 +43,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
               <TableView
                 items={activeProjects}
                 rows={rows}
-                columns={getActiveScalingTvlColumns()}
+                columnsConfig={getActiveScalingTvlColumnsConfig()}
               />
             ),
             itemsCount: activeProjects.length,
@@ -57,7 +57,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
               <TableView
                 items={upcomingProjects}
                 rows={rows}
-                columns={getUpcomingScalingTvlColumns()}
+                columnsConfig={getUpcomingScalingTvlColumnsConfig()}
               />
             ),
             itemsCount: upcomingProjects.length,
@@ -71,7 +71,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
               <TableView
                 items={archivedProjects}
                 rows={rows}
-                columns={getArchivedScalingTvlColumns()}
+                columnsConfig={getArchivedScalingTvlColumnsConfig()}
               />
             ),
             itemsCount: archivedProjects.length,

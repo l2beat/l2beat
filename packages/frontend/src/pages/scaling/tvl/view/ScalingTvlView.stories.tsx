@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { configureOverflowWrappers } from '../../../../scripts/configureOverflowWrappers'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
 import { configureTables } from '../../../../scripts/configureTables'
 import { configureTabs } from '../../../../scripts/configureTabs'
@@ -286,7 +287,7 @@ const meta = {
       {
         name: 'ZKSwap 1.0',
         slug: 'zkswap',
-        provider: 'zkSync',
+        provider: 'zkSync Lite',
         riskValues: {
           dataAvailability: {
             value: 'On chain',
@@ -405,7 +406,7 @@ const meta = {
       {
         name: 'ZKSwap 2.0',
         slug: 'zkswap2',
-        provider: 'zkSync',
+        provider: 'zkSync Lite',
         riskValues: {
           dataAvailability: {
             value: 'On chain',
@@ -596,7 +597,7 @@ const meta = {
           sequencerFailure: {
             value: 'Force exit to L1',
             description:
-              'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
+              'The user can force the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
             sentiment: 'good',
           },
           stateValidation: {
@@ -842,7 +843,7 @@ const meta = {
       {
         name: 'zkSync Era',
         slug: 'zksync-era',
-        provider: 'zkSync',
+        provider: 'ZK Stack',
         riskValues: {
           dataAvailability: {
             value: 'On chain (SD)',
@@ -906,7 +907,7 @@ const meta = {
           dataAvailability: {
             value: 'Optimistic (MEMO)',
             description:
-              'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.     Challenge mechanizm is not yet fully implemented.',
+              'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.     Challenge mechanism is not yet fully implemented.',
             sentiment: 'warning',
           },
           sequencerFailure: {
@@ -1033,7 +1034,7 @@ const meta = {
           sequencerFailure: {
             value: 'Force exit to L1',
             description:
-              'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
+              'The user can force the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
             sentiment: 'good',
           },
           stateValidation: {
@@ -1087,6 +1088,7 @@ const meta = {
         configureTables()
         configureTabs()
         configureProjectFilters()
+        configureOverflowWrappers()
       }, [])
       return <Story />
     },

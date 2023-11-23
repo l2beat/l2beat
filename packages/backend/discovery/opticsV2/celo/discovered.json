@@ -2,16 +2,18 @@
   "name": "opticsV2",
   "chain": "celo",
   "blockNumber": 21838858,
-  "configHash": "0xf210e1f4ce814cc6f7c02fc696dbf6ca8b767563f5f8368c959080b65e9e0905",
-  "version": 2,
+  "configHash": "0x8a8425359a9f5c6186565a7a30a18777abb4bed82b7ac60c07c702c0efb7d0d9",
+  "version": 3,
   "contracts": [
     {
       "name": "OpticsV2Governor",
       "address": "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938"
+        "masterCopy": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
+        "modules": []
       },
+      "implementations": ["0x69f4D1788e39c87893C980c06EdF4b7f686e2938"],
       "values": {
         "domainSeparator": "0xa09dad24d0e83f30bd361282eab054d588307b177292bdf93e5b9b4b45ce864d",
         "getChainId": 42220,
@@ -29,6 +31,14 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "UpgradeBeacon",
+      "address": "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "derivedName": "UpgradeBeacon"
     },
     {
       "name": "UpgradeBeaconController",
@@ -75,6 +85,7 @@
         "beaconController": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
         "implementation": "0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"
       },
+      "implementations": ["0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"],
       "values": {
         "domains": [1886350457, 1635148152, 6648936],
         "governor": "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509",
@@ -102,6 +113,10 @@
   "abis": {
     "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509": [
       "constructor(address _singleton)"
+    ],
+    "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010": [
+      "constructor(address _initialImplementation, address _controller) payable",
+      "event Upgrade(address indexed implementation)"
     ],
     "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee": [
       "event BeaconUpgraded(address indexed beacon, address implementation)",

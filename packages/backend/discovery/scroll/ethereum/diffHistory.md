@@ -1,3 +1,71 @@
+# Diff at Wed, 08 Nov 2023 15:41:27 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@a406ca5120d2111446400f9fd391e501cbd31e52
+
+## Description
+
+One ExecutorMultisig owner has changed.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+      values.getOwners.2:
+-        "0xEbbeeAA424AE904508465a41c927Be594C43Dc68"
++        "0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
+# Diff at Tue, 07 Nov 2023 07:33:37 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@6187ae3e2b0d528e37e7073fbd31c8970daac97d
+
+## Description
+
+New owner added to FeeVaultMultisig.
+
+## Watched changes
+
+```diff
+    contract FeeVaultMultisig (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+      values.getOwners[3]:
++        "0xfc31892C5500AbE00974280b28907BaA9190E384"
+      values.getOwners.2:
+-        "0xfc31892C5500AbE00974280b28907BaA9190E384"
++        "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0"
+      values.getOwners.1:
+-        "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0"
++        "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402"
+      values.getOwners.0:
+-        "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402"
++        "0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
+# Diff at Fri, 03 Nov 2023 07:55:41 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@ea6f863a22bc8316d333ca3f270fcd47113758cb
+
+## Description
+
+Two ScrollMultisig owners are changed.
+
+## Watched changes
+
+```diff
+    contract ScrollMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+      values.getOwners.4:
+-        "0x9FB9ff268B89Fb22aDe61fbE1B938F5C72D3CC59"
++        "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0"
+      values.getOwners.0:
+-        "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "0xFCf6364F5157901f533DD3615A5d8c375F13c072"
+    }
+```
+
 # Diff at Tue, 31 Oct 2023 07:30:26 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
