@@ -11,7 +11,7 @@ export const x1: Layer2 = {
     name: 'X1',
     slug: 'x1',
     description:
-      'X1 is an upcoming Validium by OKX. It is powered by the Polygon CDK. ',
+      'X1 is an upcoming Validium by OKX. It is powered by the Polygon CDK.',
     purpose: 'Universal',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
