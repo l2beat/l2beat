@@ -12,11 +12,11 @@ import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
-const TWO_HOURS = 2 * 60 * 60000
+const ONE_HOUR = 1 * 60 * 60000
 const DEFAULT_RETRY = Retries.exponentialBackOff({
   stepMs: 1000, // 2s 4s 8s 16s 32s 64s 128s 256s 512s 1024s...
   maxAttempts: Infinity, // never stop the queue
-  maxDistanceMs: TWO_HOURS,
+  maxDistanceMs: ONE_HOUR,
   notifyAfterAttempts: 10, // sum = 2046s minutes = 34 minutes
 })
 
@@ -211,13 +211,13 @@ export class TaskQueue<T> {
     }
   }
 
-  // WARNING: this method clears the queue, be cautious when using it
-  // some Updaters will not function properly after you unhalt them using this method
-  // because they rely on the start() function which is called only once
-  // so use it only in Updaters with generic (updating all the missing data) update() function
-  // or rewrite the logic of your updater
-  restart() {
+  // WARNING: this method should be used only in tests
+  stop() {
+    this.stopped = true
+  }
+
+  // WARNING: this method should be used only in tests
+  clear() {
     this.queue.splice(0, this.queue.length)
-    this.stopped = false
   }
 }

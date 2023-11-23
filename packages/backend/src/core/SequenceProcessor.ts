@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EventTracker } from '@l2beat/shared'
-import { assert, json, Retries } from '@l2beat/shared-pure'
+import { assert, json } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
@@ -93,12 +93,6 @@ export class SequenceProcessor extends EventEmitter {
       this.logger.for('updateQueue'),
       {
         metricsId: `${SequenceProcessor.name}_${id}`,
-        shouldRetry: Retries.exponentialBackOff({
-          stepMs: 1000,
-          maxAttempts: 10,
-          maxDistanceMs: 60_000,
-          notifyAfterAttempts: 10,
-        }),
       },
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
@@ -118,9 +112,6 @@ export class SequenceProcessor extends EventEmitter {
     await this.loadState()
     this.processQueue.addIfEmpty()
     this.refreshId = setInterval(() => {
-      if (this.processQueue.isStopped()) {
-        this.processQueue.restart()
-      }
       this.processQueue.addIfEmpty()
     }, this.scheduleInterval)
   }
@@ -226,5 +217,11 @@ export class SequenceProcessor extends EventEmitter {
     activityLast.labels({ project: this.id }).set(state.lastProcessed)
     activityLatest.labels({ project: this.id }).set(state.latest)
     this.state = state
+  }
+
+  // WARNING: this method should be used only in tests
+  stopQueue(): void {
+    this.processQueue.stop()
+    this.processQueue.clear()
   }
 }
