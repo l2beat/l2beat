@@ -1,62 +1,53 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessFunctionCall } from '../../types/LivenessConfig'
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 
 describe(getFunctionCallQuery.name, () => {
   it('should return valid SQL query', () => {
-    const config: Omit<
-      LivenessFunctionCall,
-      'id' | 'livenessConfigurationId'
-    >[] = [
-      {
-        projectId: ProjectId('project-1'), // irrelevant
-        address: EthereumAddress.random(),
-        selector: '0x12345678',
-        type: 'DA', // irrelevant
-        sinceTimestamp: new UnixTime(0), // irrelevant
-      },
-      {
-        projectId: ProjectId('project-2'), // irrelevant
-        address: EthereumAddress.random(),
-        selector: '0x23456789',
-        type: 'DA', // irrelevant
-        sinceTimestamp: new UnixTime(0), // irrelevant
-      },
-    ]
-    const startTimestamp = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
-    const endTimestamp = UnixTime.fromDate(new Date('2022-01-02T00:00:00Z'))
-    const expectedQuery = [
-      'SELECT',
-      'block_number,',
-      'LEFT(input, 10) AS input,',
-      'to_address,',
-      'block_timestamp,',
-      'transaction_hash,',
-      'FROM',
-      'bigquery-public-data.crypto_ethereum.traces',
-      'WHERE',
-      "call_type = 'call'",
-      'AND status = 1',
-      `AND block_timestamp >= TIMESTAMP("${startTimestamp
-        .toDate()
-        .toISOString()}")`,
-      `AND block_timestamp < TIMESTAMP("${endTimestamp
-        .toDate()
-        .toISOString()}")`,
-      'AND',
-      '(',
-      `(to_address = LOWER('${config[0].address.toLocaleLowerCase()}')`,
-      `AND input LIKE '${config[0].selector.toLocaleLowerCase()}%')`,
-      'OR',
-      `(to_address = LOWER('${config[1].address.toLocaleLowerCase()}')`,
-      `AND input LIKE '${config[1].selector.toLocaleLowerCase()}%')`,
-      ')',
-      'ORDER BY',
-      'block_timestamp ASC;',
-    ].join('\n')
-    const result = getFunctionCallQuery(config, startTimestamp, endTimestamp)
-    expect(result).toEqual(expectedQuery)
+    const ADDRESS_1 = EthereumAddress.random()
+    const ADDRESS_2 = EthereumAddress.random()
+    const query = getFunctionCallQuery(
+      [
+        {
+          address: ADDRESS_1,
+          selector: '0x' + 'A'.repeat(8),
+        },
+        {
+          address: ADDRESS_2,
+          selector: '0x' + 'B'.repeat(8),
+        },
+      ],
+      UnixTime.fromDate(new Date('2021-01-01Z')),
+      UnixTime.fromDate(new Date('2021-01-02Z')),
+    )
+
+    expect(query.query).toEqual(`
+    SELECT
+      block_number,
+      LEFT(input, 10) AS input,
+      to_address,
+      block_timestamp,
+      transaction_hash,
+    FROM
+      bigquery-public-data.crypto_ethereum.traces
+    WHERE call_type = 'call'
+    AND status = 1
+    AND block_timestamp >= TIMESTAMP(?)
+    AND block_timestamp < TIMESTAMP(?)
+    AND (
+      ${Array.from({ length: 2 })
+        .map(() => `(to_address = ? AND input LIKE ?)`)
+        .join(' OR ')}
+    )
+  `)
+    expect(query.params).toEqual([
+      new Date('2021-01-01Z').toISOString(),
+      new Date('2021-01-02Z').toISOString(),
+      ADDRESS_1.toLowerCase(),
+      '0x' + 'a'.repeat(8) + '%',
+      ADDRESS_2.toLowerCase(),
+      '0x' + 'b'.repeat(8) + '%',
+    ])
   })
 })

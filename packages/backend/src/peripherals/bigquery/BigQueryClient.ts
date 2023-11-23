@@ -27,7 +27,11 @@ export class BigQueryClient {
   }
 
   async query(query: Query | string): Promise<unknown[]> {
-    const [job] = await this.bigquery.createQueryJob(query)
+    const [job] = await this.bigquery.createQueryJob(
+      typeof query === 'string'
+        ? { query, location: 'US' }
+        : { ...query, location: 'US' },
+    )
     const [rows] = await job.getQueryResults()
     return rows as unknown[]
   }
