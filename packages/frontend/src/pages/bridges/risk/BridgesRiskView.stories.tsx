@@ -164,7 +164,6 @@ const meta = {
         isArchived: true,
         isVerified: true,
         category: 'Plasma',
-        dataAvailabilityMode: 'NotApplicable',
         destination: { value: 'Gluon', description: '', sentiment: 'neutral' },
 
         destinationToken: {
@@ -194,7 +193,6 @@ const meta = {
         isArchived: true,
         isVerified: false,
         category: 'Plasma',
-        dataAvailabilityMode: 'NotApplicable',
         destination: {
           value: 'OMG Network',
           description: '',
@@ -299,7 +297,6 @@ const meta = {
         isArchived: true,
         isVerified: false,
         category: 'Validium',
-        dataAvailabilityMode: 'NotApplicable',
         destination: {
           value: 'L2.Finance-zk',
           description: '',
@@ -821,7 +818,7 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Optimium',
-        dataAvailabilityMode: 'NotApplicable',
+
         destination: {
           value: 'Metis Andromeda',
           description: '',

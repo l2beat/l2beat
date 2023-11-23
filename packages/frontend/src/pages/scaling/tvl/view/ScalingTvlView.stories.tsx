@@ -174,7 +174,6 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         category: 'Optimium',
-        dataAvailabilityMode: 'NotApplicable',
         stage: {
           stage: 'NotApplicable',
         },
@@ -523,7 +522,6 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Exchange',
         category: 'Plasma',
-        dataAvailabilityMode: 'NotApplicable',
         stage: { stage: 'NotApplicable' },
       },
       {
@@ -583,7 +581,6 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments',
         category: 'Plasma',
-        dataAvailabilityMode: 'NotApplicable',
         stage: { stage: 'NotApplicable' },
       },
       {
@@ -643,7 +640,6 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'DeFi protocols',
         category: 'Validium',
-        dataAvailabilityMode: 'NotApplicable',
         stage: { stage: 'NotApplicable' },
       },
       {
@@ -962,7 +958,6 @@ const meta = {
         marketShare: '1.27%',
         purpose: 'Universal',
         category: 'Optimium',
-        dataAvailabilityMode: 'NotApplicable',
         stage: { stage: 'NotApplicable' },
       },
       {
@@ -1083,7 +1078,6 @@ const meta = {
         marketShare: '1.12%',
         purpose: 'NFT, Exchange',
         category: 'Validium',
-        dataAvailabilityMode: 'NotApplicable',
         stage: { stage: 'NotApplicable' },
       },
     ],

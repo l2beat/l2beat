@@ -108,7 +108,6 @@ const meta = {
           sentiment: 'good',
         },
         category: 'Optimium',
-        dataAvailabilityMode: 'NotApplicable',
       },
 
       {
@@ -510,7 +509,6 @@ const meta = {
           sentiment: 'good',
         },
         category: 'Plasma',
-        dataAvailabilityMode: 'NotApplicable',
       },
       {
         type: 'layer2',
@@ -542,7 +540,6 @@ const meta = {
           sentiment: 'good',
         },
         category: 'Plasma',
-        dataAvailabilityMode: 'NotApplicable',
       },
       {
         type: 'bridge',
@@ -634,7 +631,6 @@ const meta = {
           sentiment: 'good',
         },
         category: 'Validium',
-        dataAvailabilityMode: 'NotApplicable',
       },
       {
         type: 'bridge',
