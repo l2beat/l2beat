@@ -55,6 +55,7 @@ import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { Layer2 } from './types'
+import { x1 } from './x1'
 import { xchain } from './xchain'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
@@ -121,6 +122,7 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   taiko,
+  x1,
   xchain,
   zkspace,
   zkswap,
