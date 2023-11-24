@@ -12,6 +12,7 @@ import { LivenessConfigurationRepository } from '../../peripherals/database/Live
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
+import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
 import {
   adjustToForBigqueryCall,
   getLivenessConfigHash,
@@ -48,6 +49,11 @@ export class LivenessIndexer extends ChildIndexer {
     const { transfersConfig, functionCallsConfig, adjustedTo } =
       await this.getConfiguration(from, to)
 
+    if (transfersConfig.length === 0 && functionCallsConfig.length === 0) {
+      this.logger.info('Update skipped', { from, to: adjustedTo })
+      return Promise.resolve(adjustedTo.toNumber())
+    }
+
     const data = await this.livenessClient.getLivenessData(
       transfersConfig,
       functionCallsConfig,
@@ -69,22 +75,27 @@ export class LivenessIndexer extends ChildIndexer {
       )
     })
 
-    const usedConfigurationsIds = [
-      ...transfersConfig.map((c) => c.livenessConfigurationId),
-      ...functionCallsConfig.map((c) => c.livenessConfigurationId),
-    ]
+    const usedConfigurationsLength =
+      transfersConfig.length + functionCallsConfig.length
 
-    this.logger.info('Updated liveness data', {
+    this.logger.info('Updated', {
       from,
       adjustedTo: adjustedTo,
-      usedConfigurations: usedConfigurationsIds.length,
+      usedConfigurations: usedConfigurationsLength,
       fetchedDataPoints: data.length,
     })
     return Promise.resolve(adjustedTo.toNumber())
   }
 
   // TODO: add tests
-  private async getConfiguration(from: number, to: number) {
+  async getConfiguration(
+    from: number,
+    to: number,
+  ): Promise<{
+    transfersConfig: LivenessTransfer[]
+    functionCallsConfig: LivenessFunctionCall[]
+    adjustedTo: UnixTime
+  }> {
     const configurations = await this.livenessConfigurationRepository.getAll()
 
     const adjustedTo = adjustToForBigqueryCall(
