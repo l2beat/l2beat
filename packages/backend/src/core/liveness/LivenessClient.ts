@@ -1,21 +1,15 @@
-import { assert } from '@l2beat/backend-tools'
 import { BigQueryClient } from '@l2beat/shared'
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
-import { Project } from '../../model'
-import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
-import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
 } from './types/model'
 import {
-  adjustToForBigqueryCall,
   getFunctionCallQuery,
   getTransferQuery,
-  isTimestampInRange,
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
@@ -63,47 +57,5 @@ export class LivenessClient {
     const queryResult = await this.bigquery.query(query)
     const parsedResult = BigQueryFunctionCallsResult.parse(queryResult)
     return transformFunctionCallsQueryResult(functionCallsConfig, parsedResult)
-  }
-}
-
-export function mergeConfigs(
-  projects: Project[],
-  configs: LivenessConfigurationRecord[],
-): {
-  transfers: LivenessTransfer[]
-  functionCalls: LivenessFunctionCall[]
-} {
-  // add proper values from configs
-  return {
-    transfers: projects
-      .flatMap((p) => p.livenessConfig?.transfers)
-      .filter(notUndefined)
-      .map((t) => {
-        const config = configs.find(
-          (c) => c.identifier === LivenessConfigurationIdentifier(t),
-        )
-        assert(config, 'Config should not be undefined there')
-
-        return {
-          ...t,
-          latestSyncedTimestamp: config.lastSyncedTimestamp,
-          livenessConfigurationId: config.id,
-        }
-      }),
-    functionCalls: projects
-      .flatMap((p) => p.livenessConfig?.functionCalls)
-      .filter(notUndefined)
-      .map((t) => {
-        const config = configs.find(
-          (c) => c.identifier === LivenessConfigurationIdentifier(t),
-        )
-        assert(config, 'Config should not be undefined there')
-
-        return {
-          ...t,
-          latestSyncedTimestamp: config.lastSyncedTimestamp,
-          livenessConfigurationId: config.id,
-        }
-      }),
   }
 }

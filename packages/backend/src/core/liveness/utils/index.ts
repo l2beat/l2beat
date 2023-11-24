@@ -1,6 +1,7 @@
 export * from './adjustToForBigqueryCall'
 export * from './getLivenessConfigHash'
 export * from './isTimestampInRange'
+export * from './mergeConfigs'
 export * from './sql'
 export * from './transformFunctionCallsQueryResult'
 export * from './transformTransfersQueryResult'
