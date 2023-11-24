@@ -14,6 +14,7 @@ export const aztecV2: Layer2 = {
       'Aztec is an open source layer 2 network that brings programmable privacy and scalability to Ethereum.',
     purpose: 'Privacy',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://aztec.network/'],
       apps: [],

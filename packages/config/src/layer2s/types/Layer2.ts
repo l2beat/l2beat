@@ -58,6 +58,10 @@ export interface Layer2Display {
   name: string
   /** Url friendly layer2 name, will be used in website urls */
   slug: string
+  /** Name of the category the layer2 belongs to */
+  category: Layer2Category
+  /** Data availability mode of layer2 project */
+  dataAvailabilityMode: 'StateDiffs' | 'TxData' | 'NotApplicable'
   /** A warning displayed in the header of the project */
   headerWarning?:
     | {
@@ -73,13 +77,12 @@ export interface Layer2Display {
   description: string
   /** A short (<20 characters) description of the use case */
   purpose: string
-  /** Name of the category the layer2 belongs to */
-  category: Layer2Category
   /** Technology provider */
   provider?:
     | 'StarkEx'
     | 'OP Stack'
-    | 'zkSync'
+    | 'zkSync Lite'
+    | 'ZK Stack'
     | 'Loopring'
     | 'Arbitrum'
     | 'Polygon'
@@ -90,7 +93,6 @@ export interface Layer2Display {
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
 }
-
 export interface Layer2Config {
   /** List of native and external tokens */
   tokenList?: Token[]
@@ -126,8 +128,7 @@ export interface Layer2ExternalAssets {
 
 export type Layer2Category =
   | 'Optimistic Rollup'
-  | 'Optimium'
-  | 'Plasma'
-  | 'State Pools'
-  | 'Validium'
   | 'ZK Rollup'
+  | 'Plasma'
+  | 'Validium'
+  | 'Optimium'

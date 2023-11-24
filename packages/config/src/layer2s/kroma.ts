@@ -64,6 +64,7 @@ export const kroma: Layer2 = {
             Kroma's goal is to eventually transition to a ZK Rollup once the generation of ZK proofs becomes more cost-efficient and faster.",
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],

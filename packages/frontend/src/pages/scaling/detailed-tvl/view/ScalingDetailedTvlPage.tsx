@@ -38,7 +38,7 @@ export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
           <Chart
             settingsId="scaling-tvl"
             initialType={{ type: 'layer2-detailed-tvl' }}
-            withHeader
+            header="tvl"
           />
           <ScalingDetailedTvlView {...props.detailedTvlView} />
           <OtherSites />

@@ -25,11 +25,12 @@
     "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
   },
   "dependencies": {
+    "@google-cloud/bigquery": "^7.3.0",
     "@koa/router": "^12.0.0",
     "@l2beat/discovery-types": "^0.5.0",
     "@l2beat/backend-tools": "^0.4.0",
     "@l2beat/config": "*",
-    "@l2beat/discovery": "0.23.0",
+    "@l2beat/discovery": "0.24.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@l2beat/uif": "^0.2.2",
