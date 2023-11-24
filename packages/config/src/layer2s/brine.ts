@@ -77,7 +77,7 @@ export const brine: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'brine',
+      product: ['brine'],
       sinceTimestamp: new UnixTime(1657453320),
       resyncLastDays: 7,
     },
