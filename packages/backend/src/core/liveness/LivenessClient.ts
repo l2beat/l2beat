@@ -1,6 +1,6 @@
-import { BigQueryClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
 import {

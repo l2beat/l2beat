@@ -35,6 +35,7 @@ export const aevo: Layer2 = {
     purpose: 'DEX',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://www.aevo.xyz/'],
       apps: ['https://app.aevo.xyz/'],
