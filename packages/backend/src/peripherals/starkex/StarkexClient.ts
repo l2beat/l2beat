@@ -70,16 +70,16 @@ export class StarkexClient {
       throw error
     }
 
-    const text = await httpResponse.text()
+    const responseText = await httpResponse.text()
 
     if (!httpResponse.ok) {
-      this.recordError(timeMs, text)
+      this.recordError(timeMs, responseText)
       throw new Error(
-        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}`,
+        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}: ${responseText}`,
       )
     }
 
-    const starkexApiResponse = parseStarkexApiResponse(text)
+    const starkexApiResponse = parseStarkexApiResponse(responseText)
 
     this.logger.debug({ type: 'success', timeMs })
 
