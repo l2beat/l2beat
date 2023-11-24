@@ -1,0 +1,39 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "lightlink",
+  "initialAddresses": [
+    "0x99eae1b4c6159c4835da1cd86a2542dea70536bb",
+    "0x3ca373f5ecb92ac762f9876f6e773082a4589995",
+    "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
+  ],
+  "names": {
+    "0x99eae1B4c6159C4835DA1Cd86A2542DEA70536bb": "PrimeAnchor",
+    "0x3ca373F5ecB92ac762f9876f6e773082A4589995": "L1NativeTokenPredicate",
+    "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9": "L1ERC20Predicate",
+    "0x624631881655a310adcF0d1336658Cc977609b72": "L1BridgeRegistry",
+    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": "Multisig"
+  },
+  "overrides": {
+    "PrimeAnchor": {
+      "ignoreMethods": ["proofs"],
+      "ignoreInWatchMode": ["proofs"]
+    },
+    "L1NativeTokenPredicate": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["proxiableUUID"]
+    },
+    "L1ERC20Predicate": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["proxiableUUID"]
+    },
+    "L1BridgeRegistry": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["proxiableUUID"]
+    },
+    "Multisig": {
+      "ignoreMethods": ["transactions", "getTransaction"],
+      "ignoreInWatchMode": ["transactions", "getTransaction"]
+    }
+  }
+}
