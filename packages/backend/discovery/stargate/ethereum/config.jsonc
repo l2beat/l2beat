@@ -57,6 +57,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -77,6 +78,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -97,6 +99,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -117,6 +120,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -137,6 +141,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -157,6 +162,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -177,6 +183,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -197,6 +204,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -217,6 +225,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -237,6 +246,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -257,6 +267,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
@@ -277,6 +288,7 @@
         "totalLiquidity",
         "totalSupply",
         "chainPaths",
+        "getChainPathsLength",
         "totalWeight"
       ],
       "fields": {
