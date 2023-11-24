@@ -21,7 +21,14 @@ const config: StorybookConfig = {
   async viteFinal(config, { configType }) {
     return mergeConfig(config, {
       optimizeDeps: {
+        exclude: ['@l2beat/discovery'],
         include: ['@l2beat/config', '@l2beat/shared-pure'],
+        esbuildOptions: {
+          target: 'es2020',
+        },
+      },
+      build: {
+        target: 'es2020',
       },
       plugins:
         configType === 'PRODUCTION'

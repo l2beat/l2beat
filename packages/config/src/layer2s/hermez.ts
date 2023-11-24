@@ -26,6 +26,8 @@ export const hermez: Layer2 = {
       'Hermez is an open-source ZK Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
     purpose: 'Payments',
     category: 'ZK Rollup',
+    // TODO: This is not correct. Research it.
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
       websites: ['https://hermez.io/'],

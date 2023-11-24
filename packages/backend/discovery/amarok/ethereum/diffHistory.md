@@ -1,3 +1,46 @@
+# Diff at Tue, 21 Nov 2023 12:24:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@9f0318505c4ed8d37a7f843ad157191e2e5c6ee2
+
+## Description
+
+Added connector for Linea.
+
+## Watched changes
+
+```diff
+    contract RootManager (0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1) {
+      values.connectors[6]:
++        "0x076cD2B25cb1Ed7272d716bdeb4A8551CF606a3D"
+      values.connectorsHash:
+-        "0x1ab775b9545e9c3175b57958dc75c2a1cf76c3d166d0527bbf7d51fe434efa00"
++        "0x9e95f76ad984f886dd7a8431e8fa5c405fce573b4b2a4671aeb68d7464ab164b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LineaHubConnector (0x076cD2B25cb1Ed7272d716bdeb4A8551CF606a3D) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../messaging/connectors/Connector.sol             | 193 +++++++++++++++++++++
+ .../messaging/connectors/HubConnector.sol          |  44 +++++
+ .../messaging/connectors/linea/LineaBase.sol       |  16 ++
+ .../connectors/linea/LineaHubConnector.sol         |  73 ++++++++
+ .../messaging/interfaces/IConnector.sol            |  64 +++++++
+ .../messaging/interfaces/IRootManager.sol          |  22 +++
+ .../messaging/interfaces/ambs/LineaAmb.sol         |  88 ++++++++++
+ .../ethereum/.code/LineaHubConnector/meta.txt      |   2 +
+ .../LineaHubConnector/shared/ProposedOwnable.sol   | 172 ++++++++++++++++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 +++++
+ 10 files changed, 716 insertions(+)
+```
+
 # Diff at Tue, 07 Nov 2023 11:21:30 GMT:
 
 - author: Amin Latifi (<a.latifi.al@gmail.com>)

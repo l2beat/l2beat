@@ -155,21 +155,37 @@ export const Primary: Story = {}
 
 export const EmptyState: Story = {
   play: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200))
+    await new Promise((resolve) => setTimeout(resolve, 300))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'empty'
     chart.dataset.interactivityDisabled = 'true'
   },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
 }
 
 export const ErrorState: Story = {
   play: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200))
+    await new Promise((resolve) => setTimeout(resolve, 300))
     const chart = document.querySelector<HTMLElement>('[data-role="chart"]')
     if (!chart) throw new Error('Chart not found')
     chart.dataset.state = 'error'
     chart.dataset.interactivityDisabled = 'true'
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
+}
+
+export const ComingSoonState: Story = {
+  args: {
+    showComingSoon: true,
   },
 }
 
@@ -241,7 +257,7 @@ export const WithMax: Story = {
 
 export const TvlWithHeader: Story = {
   args: {
-    withHeader: true,
+    header: 'tvl',
   },
 }
 
@@ -254,6 +270,7 @@ export const TvlWithTokens: Story = {
 export const TvlWithActivity: Story = {
   args: {
     hasActivity: true,
+    header: 'project',
   },
 }
 
@@ -261,13 +278,14 @@ export const DetailedTvlWithActivity: Story = {
   args: {
     initialType: { type: 'storybook-fake-detailed-tvl' },
     hasActivity: true,
+    header: 'project',
   },
 }
 
 export const DetailedTvlWithHeader: Story = {
   args: {
     initialType: { type: 'storybook-fake-detailed-tvl' },
-    withHeader: true,
+    header: 'tvl',
   },
 }
 
@@ -300,12 +318,12 @@ export const ActivityWithoutEthTxs: Story = {
 export const ActivityWithHeader: Story = {
   args: {
     initialType: { type: 'storybook-fake-activity' },
-    withHeader: true,
+    header: 'activity',
   },
 }
 
-export const Upcoming: Story = {
+export const WithProjectHeader: Story = {
   args: {
-    isUpcoming: true,
+    header: 'project',
   },
 }

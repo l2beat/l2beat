@@ -31,6 +31,7 @@ export const layer2financezk: Layer2 = {
     purpose: 'DeFi protocols',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://layer2.finance/'],
       apps: [],

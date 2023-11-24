@@ -32,6 +32,7 @@ export const metis: Layer2 = {
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://www.metis.io'],
       apps: [],

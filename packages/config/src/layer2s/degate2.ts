@@ -46,16 +46,20 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 )} ETH`
 
 export const degate2: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('degate2'),
   display: {
-    name: 'DeGate V1',
+    name: 'DeGate V1 Legacy',
     slug: 'degate2',
+    headerWarning: 'This project is in shutdown mode and no longer active.',
     description:
       'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
     provider: 'Loopring',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
@@ -64,7 +68,7 @@ export const degate2: Layer2 = {
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',
-        'https://discord.gg/RFVDKGemJb',
+        'https://discord.gg/degate',
         'https://youtube.com/@degatedex1718',
         'https://medium.com/degate',
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',

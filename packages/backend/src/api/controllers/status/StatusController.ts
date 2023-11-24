@@ -4,6 +4,7 @@ import {
   ChainId,
   getHourlyTimestamps,
   Hash256,
+  json,
   ReportType,
   Token,
   UnixTime,
@@ -20,6 +21,8 @@ import {
   BalanceStatusRepository,
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
+import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
+import { LivenessConfigurationRepository } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import {
   ReportStatusRecord,
@@ -32,8 +35,13 @@ import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
 import { renderAggregatedPage } from './view/AggregatedReportsPage'
+import {
+  LivenessStatusPageProps,
+  renderLivenessStatusPage,
+} from './view/LivenessStatusPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderStatusPage } from './view/StatusPage'
+import { renderStatusPagesLinksPage } from './view/StatusPagesLinksPage'
 
 // TODO: make it work correctly after "formula" refactor
 export class StatusController {
@@ -48,6 +56,8 @@ export class StatusController {
     private readonly tokens: Token[],
     private readonly projects: Project[],
     private readonly configReader: ConfigReader,
+    private readonly indexerStateRepository: IndexerStateRepository,
+    private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
   ) {}
 
   async getDiscoveryDashboard(chainId: ChainId): Promise<string> {
@@ -227,6 +237,27 @@ export class StatusController {
       statuses: reports,
       uniqueHashes: Array.from(uniqueHashes),
     })
+  }
+
+  async getLivenessStatus() {
+    const livenessIndexerState =
+      await this.indexerStateRepository.findIndexerState('liveness_indexer')
+    const livenessConfigurations =
+      await this.livenessConfigurationRepository.getAll()
+
+    const params: LivenessStatusPageProps = {
+      ...livenessIndexerState,
+      targetTimestamp: this.clock.getLastHour(),
+      configurations: livenessConfigurations.map((c) => ({
+        ...c,
+        params: JSON.parse(c.params) as json,
+      })),
+    }
+    return renderLivenessStatusPage(params)
+  }
+
+  getStatusPagesLinks() {
+    return renderStatusPagesLinksPage()
   }
 
   private getFirstHour(from: UnixTime | undefined) {

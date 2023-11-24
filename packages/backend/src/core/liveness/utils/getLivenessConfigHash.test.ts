@@ -64,4 +64,46 @@ describe(getLivenessConfigHash.name, () => {
 
     expect(hash1).not.toEqual(hash2)
   })
+
+  it('does not change hash when project without liveness is added', () => {
+    const projects: Project[] = [
+      {
+        projectId: ProjectId('project1'),
+        type: 'layer2',
+        escrows: [],
+        livenessConfig: {
+          transfers: [
+            {
+              projectId: ProjectId('project1'),
+              from: EthereumAddress.random(),
+              to: EthereumAddress.random(),
+              sinceTimestamp: UnixTime.now(),
+              type: LivenessType('DA'),
+            },
+          ],
+          functionCalls: [
+            {
+              projectId: ProjectId('project1'),
+              address: EthereumAddress.random(),
+              selector: '0x12345678',
+              sinceTimestamp: UnixTime.now(),
+              type: LivenessType('DA'),
+            },
+          ],
+        },
+      },
+    ]
+
+    const hash1 = getLivenessConfigHash(projects)
+
+    projects.push({
+      projectId: ProjectId('project2'),
+      type: 'layer2',
+      escrows: [],
+    })
+
+    const hash2 = getLivenessConfigHash(projects)
+
+    expect(hash1).toEqual(hash2)
+  })
 })

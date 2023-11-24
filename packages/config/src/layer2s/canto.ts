@@ -14,6 +14,7 @@ export const canto: Layer2 = {
       "Canto is the L1 which will migrate to a Ethereum L2 scaling solution powered by Polygon's CDK dedicated to Real World Assets.",
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
       websites: ['https://canto.io'],

@@ -446,7 +446,7 @@ export function getScalingLivenessColumnsConfig() {
     },
     {
       type: 'group',
-      title: 'Batch submission interval',
+      title: 'Tx data submission interval',
       columns: [
         {
           name: (
@@ -465,6 +465,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last30Days?.averageInSeconds
                     }
+                    project={project}
                   />
                 }
                 last90Days={
@@ -472,6 +473,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last90Days?.averageInSeconds
                     }
+                    project={project}
                   />
                 }
                 max={
@@ -479,6 +481,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.max?.averageInSeconds
                     }
+                    project={project}
                   />
                 }
               />
@@ -503,6 +506,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last30Days?.maximumInSeconds
                     }
+                    project={project}
                   />
                 }
                 last90Days={
@@ -511,6 +515,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.last90Days?.maximumInSeconds
                     }
+                    project={project}
                   />
                 }
                 max={
@@ -519,6 +524,7 @@ export function getScalingLivenessColumnsConfig() {
                     durationInSeconds={
                       project.batchSubmissions?.max?.maximumInSeconds
                     }
+                    project={project}
                   />
                 }
               />
@@ -547,6 +553,7 @@ export function getScalingLivenessColumnsConfig() {
                   durationInSeconds={
                     project.stateUpdates?.last30Days?.averageInSeconds
                   }
+                  project={project}
                 />
               }
               last90Days={
@@ -554,6 +561,7 @@ export function getScalingLivenessColumnsConfig() {
                   durationInSeconds={
                     project.stateUpdates?.last90Days?.averageInSeconds
                   }
+                  project={project}
                 />
               }
               max={
@@ -561,6 +569,7 @@ export function getScalingLivenessColumnsConfig() {
                   durationInSeconds={
                     project.stateUpdates?.max?.averageInSeconds
                   }
+                  project={project}
                 />
               }
             />
@@ -583,6 +592,7 @@ export function getScalingLivenessColumnsConfig() {
                   durationInSeconds={
                     project.stateUpdates?.last30Days?.maximumInSeconds
                   }
+                  project={project}
                 />
               }
               last90Days={
@@ -591,6 +601,7 @@ export function getScalingLivenessColumnsConfig() {
                   durationInSeconds={
                     project.stateUpdates?.last90Days?.maximumInSeconds
                   }
+                  project={project}
                 />
               }
               max={
@@ -599,6 +610,7 @@ export function getScalingLivenessColumnsConfig() {
                   durationInSeconds={
                     project.stateUpdates?.max?.maximumInSeconds
                   }
+                  project={project}
                 />
               }
             />

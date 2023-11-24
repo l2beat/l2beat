@@ -3,8 +3,9 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../.storybook/modes'
+import { AnomalyIndicatorEntry } from '../pages/scaling/liveness/types'
 import { configureTooltips } from '../scripts/configureTooltips'
-import { AnomalyIndicator, AnomalyIndicatorEntry } from './AnomalyIndicator'
+import { AnomalyIndicator } from './AnomalyIndicator'
 import { Tooltip } from './Tooltip'
 
 const meta: Meta<typeof AnomalyIndicator> = {
@@ -17,7 +18,7 @@ const meta: Meta<typeof AnomalyIndicator> = {
 
       return (
         <>
-          <Story /> <Tooltip />
+          <Story /> <Tooltip withAnimation={false} />
         </>
       )
     },
@@ -133,11 +134,10 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const tooltip = canvas.getByTestId('anomaly-indicator')
     // Wait for the tooltip to appear
     await new Promise((resolve) => setTimeout(resolve, 200))
     await waitFor(async () => {
-      await userEvent.hover(tooltip)
+      await userEvent.hover(canvas.getByTestId('anomaly-indicator'))
     })
   },
 }

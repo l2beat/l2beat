@@ -6,7 +6,7 @@ export interface LivenessConfigurationIdentifier extends String {
   _LivenessConfigHashBrand: string
 }
 
-type InputType =
+export type InputType =
   | Omit<LivenessTransfer, 'livenessConfigurationId' | 'latestSyncedTimestamp'>
   | Omit<
       LivenessFunctionCall,
@@ -37,7 +37,7 @@ LivenessConfigurationIdentifier.params = function (value: InputType): json {
   if ('from' in value && 'to' in value) {
     return {
       from: value.from.toString(),
-      to: value.from.toString(),
+      to: value.to.toString(),
     }
   }
 
