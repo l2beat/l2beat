@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "^0.4.0",
+    "@l2beat/discovery-types": "^0.6.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@l2beat/discovery": "0.25.0",
@@ -30,8 +31,5 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "zod": "^3.22.2"
-  },
-  "devDependencies": {
-    "@l2beat/discovery-types": "^0.6.0"
   }
 }
