@@ -39,8 +39,6 @@ export class StarkexClient {
       day_start: day,
       day_end: day + 1,
       product,
-      tx_type: '_all',
-      token_id: '_all',
     }
 
     const response = await this.call('/aggregations/count', body)
