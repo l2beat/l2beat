@@ -8,7 +8,6 @@ import { LivenessClient } from './LivenessClient'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
 import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
 import {
-  adjustToForBigqueryCall,
   getFunctionCallQuery,
   getTransferQuery,
   isTimestampInRange,
@@ -29,26 +28,22 @@ describe(LivenessClient.name, () => {
 
       const livenessClient = new LivenessClient(bigquery)
 
-      const config = mergeConfigs(PROJECTS, LIVENESS_CONFIGURATIONS)
-
-      const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
-
-      const transfersConfig = config.transfers.filter((c) =>
+      const transfersConfig = MERGED_CONFIGS.transfers.filter((c) =>
         isTimestampInRange(
           c.sinceTimestamp,
           c.untilTimestamp,
           c.latestSyncedTimestamp,
           FROM,
-          adjustedTo,
+          TO,
         ),
       )
-      const functionCallsConfig = config.functionCalls.filter((c) =>
+      const functionCallsConfig = MERGED_CONFIGS.functionCalls.filter((c) =>
         isTimestampInRange(
           c.sinceTimestamp,
           c.untilTimestamp,
           c.latestSyncedTimestamp,
           FROM,
-          adjustedTo,
+          TO,
         ),
       )
 
@@ -56,19 +51,14 @@ describe(LivenessClient.name, () => {
         transfersConfig,
         functionCallsConfig,
         FROM,
-        adjustedTo,
+        TO,
       )
 
-      // prepare expected values
-      const expectedAdjustedTo = adjustToForBigqueryCall(
-        FROM.toNumber(),
-        TO.toNumber(),
-      )
       const { transfers, functionCalls } = getFilteredConfigs(
         PROJECTS,
         LIVENESS_CONFIGURATIONS,
         FROM,
-        adjustedTo,
+        TO,
       )
 
       // returns data returned from internal methods
@@ -78,11 +68,11 @@ describe(LivenessClient.name, () => {
       expect(bigquery.query).toHaveBeenCalledTimes(2)
       expect(bigquery.query).toHaveBeenNthCalledWith(
         1,
-        getTransferQuery(transfers, FROM, expectedAdjustedTo),
+        getTransferQuery(transfers, FROM, TO),
       )
       expect(bigquery.query).toHaveBeenNthCalledWith(
         2,
-        getFunctionCallQuery(functionCalls, FROM, expectedAdjustedTo),
+        getFunctionCallQuery(functionCalls, FROM, TO),
       )
     })
   })
@@ -432,6 +422,8 @@ const FUNCTION_EXPECTED = [
     livenessConfigurationId: 8,
   },
 ]
+
+const MERGED_CONFIGS = mergeConfigs(PROJECTS, LIVENESS_CONFIGURATIONS)
 
 function getMockBiqQuery(response: unknown[]) {
   return mockObject<BigQueryClient>({

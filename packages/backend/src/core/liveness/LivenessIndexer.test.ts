@@ -338,6 +338,17 @@ describe(LivenessIndexer.name, () => {
         MOCK_TRX,
       )
     })
+    it('does not run getLivenessData when configs are empty', async () => {
+      const livenessClient = mockObject<LivenessClient>({
+        getLivenessData: mockFn().resolvesTo([]),
+      })
+      const { livenessIndexer } = getMockLivenessIndexer({
+        livenessClient,
+        projects: [],
+      })
+      await livenessIndexer.update(FROM.toNumber(), TO.toNumber())
+      expect(livenessClient.getLivenessData).not.toHaveBeenCalled()
+    })
   })
 
   describe(LivenessIndexer.prototype.getSafeHeight.name, () => {

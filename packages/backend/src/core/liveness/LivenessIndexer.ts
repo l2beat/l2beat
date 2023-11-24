@@ -75,13 +75,10 @@ export class LivenessIndexer extends ChildIndexer {
       )
     })
 
-    const usedConfigurationsLength =
-      transfersConfig.length + functionCallsConfig.length
-
     this.logger.info('Updated', {
       from,
       adjustedTo: adjustedTo,
-      usedConfigurations: usedConfigurationsLength,
+      usedConfigurations: transfersConfig.length + functionCallsConfig.length,
       fetchedDataPoints: data.length,
     })
     return Promise.resolve(adjustedTo.toNumber())

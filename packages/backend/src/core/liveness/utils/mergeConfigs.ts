@@ -21,6 +21,7 @@ export function mergeConfigs(
         const config = configs.find(
           (c) => c.identifier === LivenessConfigurationIdentifier(t),
         )
+
         assert(config, 'Config should not be undefined there')
 
         return {
