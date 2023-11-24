@@ -46,6 +46,7 @@ export type StarkexProduct =
   | 'myria'
   | 'deversifi'
   | 'apex'
+  | 'brine'
 
 export interface StarkexTransactionApi {
   type: 'starkex'
