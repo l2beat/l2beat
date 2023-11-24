@@ -1,14 +1,12 @@
 import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { PageMetadata } from '../pages/Page'
+import { WrapperProps } from '../pages/Page'
 import { Head } from './head'
+import { FloatingBanner } from './l2warsaw/FloatingBanner'
 import { Tooltip } from './Tooltip'
 
-export interface PageWrapperProps {
-  htmlClassName?: string
-  metadata: PageMetadata
-  preloadApi?: string
+export interface PageWrapperProps extends WrapperProps {
   children: ReactNode
 }
 
@@ -22,9 +20,11 @@ export function PageWrapper(props: PageWrapperProps) {
       )}
     >
       <Head {...props.metadata} preloadApi={props.preloadApi} />
-      <body className="bg-white text-black dark:bg-black dark:text-white">
+      <body className="bg-white text-black dark:bg-neutral-900 dark:text-white">
+        <script src="/scripts/prerender.js" />
         {props.children}
         <Tooltip />
+        {props.banner && <FloatingBanner />}
         <script src="/scripts/main.js" />
       </body>
     </html>

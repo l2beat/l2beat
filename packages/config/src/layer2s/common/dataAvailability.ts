@@ -19,7 +19,7 @@ const ON_CHAIN_CANONICAL: ProjectTechnologyChoice = {
 const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   name: 'All data required for proofs is published on chain',
   description:
-    "All the relevant data that is used to recover the L2 balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
+    "All the relevant data that is used to recover the balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
   risks: [],
   references: [
     {
@@ -27,7 +27,7 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
       href: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
     },
     {
-      text: 'ZK-Rollup - StarkEx documentation',
+      text: 'ZK Rollup - StarkEx documentation',
       href: 'https://docs.starkware.co/starkex/con_data_availability.html#zk_rollup',
     },
   ],
@@ -36,7 +36,7 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
 const STARKNET_ON_CHAIN: ProjectTechnologyChoice = {
   name: 'All data required to reconstruct rollup state is published on chain',
   description:
-    'State diffs are publish on-chain as calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered.',
+    "State diffs are publish on-chain as calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.",
   risks: [],
   references: [
     {

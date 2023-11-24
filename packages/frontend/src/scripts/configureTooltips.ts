@@ -1,6 +1,6 @@
-import { isMobile } from '../components/chart/configure/render/isMobile'
 import { clamp } from '../utils'
 import { makeQuery } from './query'
+import { isMobile } from './utils/isMobile'
 
 export function configureTooltips() {
   const { $, $$ } = makeQuery(document.body)
@@ -38,7 +38,10 @@ export function configureTooltips() {
       window.innerWidth - 10 - tooltipWidth,
     )
     tooltip.style.left = `${left}px`
-    if (rect.y + rect.height + 7 + tooltipHeight < window.innerHeight) {
+    const isOverflowingOnBottom =
+      rect.y + rect.height + 7 + tooltipHeight >= window.innerHeight
+    const isOverflowingOnTop = rect.top - tooltipHeight <= 7
+    if (!isOverflowingOnBottom || isOverflowingOnTop) {
       tooltip.style.top = `${rect.bottom + 7}px`
       tooltipTriangle.style.top = `${rect.bottom}px`
       tooltipTriangle.classList.remove('rotate-180')
@@ -117,46 +120,5 @@ export function configureTooltips() {
         show(element, title, isDisabledOnMobile)
       }
     })
-  }
-}
-
-export function testConfigureTooltipsAndShow() {
-  const { $, $$ } = makeQuery(document.body)
-
-  if (!document.querySelector('.Tooltip-Popup')) {
-    return
-  }
-
-  const elements = $$('.Tooltip[title]')
-
-  const tooltip = $('.Tooltip-Popup')
-  const tooltipText = $('.Tooltip-Popup span')
-  const tooltipTriangle = $('.Tooltip-Triangle')
-
-  function show(element: HTMLElement, title: string) {
-    if (element.dataset.tooltipBig && isMobile()) return
-    tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
-    tooltipText.innerHTML = title
-    tooltip.style.display = 'block'
-
-    const left = 48
-    tooltip.style.left = `${left}px`
-
-    tooltip.style.top = `${48 + 7}px`
-    tooltipTriangle.style.top = `${48}px`
-    tooltipTriangle.classList.remove('rotate-180')
-
-    tooltip.style.textAlign =
-      element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
-
-    const triangleLeft = 48 + 48 / 2 - 8
-    tooltipTriangle.style.left = `${triangleLeft}px`
-  }
-
-  for (const element of elements) {
-    const title = element.getAttribute('title') ?? ''
-    element.removeAttribute('title')
-    element.setAttribute('tabindex', '0')
-    show(element, title)
   }
 }

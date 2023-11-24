@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "loopring",
-  "blockNumber": 17372169,
-  "configHash": "0x71c69dca4c3c23fc3f8221dd539a87e439d2df4d316861c926c5424356e7524e",
-  "version": 1,
+  "chain": "ethereum",
+  "blockNumber": 18219921,
+  "configHash": "0xa806b78a9521ade554d961d2ccf5acc52b4e04286bc04d424df821ea66b8d49b",
+  "version": 3,
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -13,11 +13,13 @@
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
       },
+      "implementations": ["0x26d8Ba776a067C5928841985bCe342f75BAE7E82"],
+      "sinceTimestamp": 1603950102,
       "values": {
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 41239,
+        "getBlockHeight": 44965,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -34,9 +36,9 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x088f8b7091167ba0eeddd4fab81459aeb612ccafd5dd4c3a24daf7623f026fea",
+        "getMerkleRoot": "0x0920c629c2d5c89d34d50d2239b9c65cbedd4693714dd5e639e0836be83fc7e5",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [1685191319, 0, 0, 0, 0],
+        "getProtocolFeeValues": [1695498167, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,
@@ -44,6 +46,7 @@
         "owner": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxyOwner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "shutdownTriggered": [],
         "version": "3.6.0"
       },
       "derivedName": "ExchangeV3"
@@ -54,6 +57,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1616396742,
       "values": {
         "blockSubmitters": [
           "0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46",
@@ -84,6 +88,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603946693,
       "values": {
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -96,6 +101,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1583852946,
       "values": {
         "DAO_PERDENTAGE": 20,
         "daoAddress": "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
@@ -123,6 +129,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603946469,
       "values": {
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -134,6 +141,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603949642,
       "values": {
         "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
@@ -147,6 +155,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1554948637,
       "values": {
         "decimals": 18,
         "name": "LoopringCoin V2",
@@ -160,8 +169,11 @@
       "address": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1606289169,
       "values": {
         "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
         "getChainId": 1,
@@ -175,7 +187,7 @@
           "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
         ],
         "getThreshold": 4,
-        "nonce": 160,
+        "nonce": 171,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -186,6 +198,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603955371,
       "values": {
         "blockVerifierAddress": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
         "forcedWithdrawalFee": "20000000000000000",
@@ -207,16 +220,17 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1574241665,
       "values": {
-        "getTotalStaking": "606431271716973870704527",
+        "getTotalStaking": "586717821734903870704527",
         "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
         "MIN_CLAIM_DELAY": 7776000,
         "MIN_WITHDRAW_DELAY": 7776000,
-        "numAddresses": 974,
+        "numAddresses": 969,
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "protocolFeeVaultAddress": "0x0000000000000000000000000000000000000000",
-        "total": ["606431271716973870704527", 0, 1615975878]
+        "total": ["586717821734903870704527", 0, 1615975878]
       },
       "derivedName": "UserStakingPool"
     }

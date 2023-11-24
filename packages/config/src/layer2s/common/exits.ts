@@ -13,7 +13,7 @@ function REGULAR(
       : ''
   return {
     name: 'Regular exit',
-    description: `The user initiates the withdrawal by submitting a transaction on L2. When the block containing that transaction is ${finalized} the funds become available for withdrawal on L1.${time} Finally the user submits an L1 transaction to claim the funds. This transaction ${requires} a merkle proof.`,
+    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is ${finalized} the funds become available for withdrawal on L1.${time} Finally the user submits an L1 transaction to claim the funds. This transaction ${requires} a merkle proof.`,
     risks: [],
     references: [],
   }
@@ -37,14 +37,14 @@ function EMERGENCY(
       ? [
           {
             category: 'Funds can be lost if',
-            text: 'the user is unable to generate the non-trivial zk proof for exodus withdraw.',
+            text: 'the user is unable to generate the non-trivial ZK proof for exodus withdraw.',
           },
         ]
       : []
   const delayString = delay !== undefined ? formatSeconds(delay) : 'enough time'
   return {
     name: 'Emergency exit',
-    description: `If ${delayString} passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
+    description: `If the ${delayString} deadline passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
     risks,
     references: [],
   }

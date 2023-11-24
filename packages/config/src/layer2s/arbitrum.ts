@@ -135,6 +135,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Layer Zero',
+      slug: 'omnichain',
+    },
   },
   {
     id: AssetId('joe-joe-token'),
@@ -149,6 +153,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Layer Zero',
+      slug: 'omnichain',
+    },
   },
   {
     id: AssetId('bifi-beefy-finance'),
@@ -163,6 +171,10 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Multichain',
+      slug: 'multichain',
+    },
   },
   {
     id: AssetId('arbitrum:sdex-smardex'),
@@ -177,6 +189,52 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Wormhole',
+      slug: 'portal',
+    },
+  },
+  {
+    id: AssetId('arbitrum:gmx-gmx'),
+    name: 'GMX',
+    symbol: 'GMX',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/18323/large/arbit.png?1631532468',
+    address: EthereumAddress('0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a'),
+    coingeckoId: CoingeckoId('gmx'),
+    sinceTimestamp: new UnixTime(1626958493),
+    category: 'stablecoin',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId('arbitrum:dmt-dream-machine-token'),
+    name: 'Dream Machine Token',
+    symbol: 'DMT',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/30505/large/dmt.png?1684821418',
+    address: EthereumAddress('0x8b0e6f19ee57089f7649a455d89d7bc6314d04e8'),
+    coingeckoId: CoingeckoId('dream-machine-token'),
+    sinceTimestamp: new UnixTime(1684901612),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId('arbitrum:hdn-hydranet'),
+    name: 'Hydranet',
+    symbol: 'HDN',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/25177/large/HDXdarkblueInv.png?1652694650',
+    address: EthereumAddress('0x3404149e9ee6f17fb41db1ce593ee48fbdcd9506'),
+    coingeckoId: CoingeckoId('hydranet'),
+    sinceTimestamp: new UnixTime(1687566748),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
   },
 ]
 
@@ -200,6 +258,7 @@ export const arbitrum: Layer2 = {
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -225,12 +284,9 @@ export const arbitrum: Layer2 = {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
     associatedTokens: ['ARB'],
     nativeL2TokensIncludedInTVL: ['ARB'],
-    tvlTooltip:
-      'TVL includes canonically bridged assets, native ARB and USDC directly minted on Arbitrum',
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
-        sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
@@ -238,7 +294,6 @@ export const arbitrum: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
-        sinceTimestamp: new UnixTime(1623867835),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
@@ -246,7 +301,6 @@ export const arbitrum: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
-        sinceTimestamp: new UnixTime(1623784100),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
@@ -254,7 +308,6 @@ export const arbitrum: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
-        sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
         description:
           'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
@@ -274,6 +327,52 @@ export const arbitrum: Layer2 = {
       // after the block of the update
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x8f111f3c',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x6f12b0c9',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0xe0bc9729',
+          functionSignature:
+            'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
+          ),
+          selector: '0xa04cee60',
+          functionSignature:
+            'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+          sinceTimestamp: new UnixTime(1661455766),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -466,6 +565,13 @@ export const arbitrum: Layer2 = {
       l2TimelockDelay,
     ),
   },
+  stateDerivation: {
+    nodeSoftware: `The rollup node (Arbitrum Nitro) consists of three parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
+    compressionScheme: `The Sequencer's batches are compressed using a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli), configured to its highest compression setting.`,
+    genesisState:
+      'They performed a regenesis from Classic to Nitro, and that file represents the [last Classic state](https://snapshot.arbitrum.foundation/arb1/nitro-genesis.tar). To sync from the initial Classic state, instructions can be found [here](https://docs.arbitrum.io/migration/state-migration).',
+    dataFormat: `Nitro supports Ethereum's data structures and formats by incorporating the core code of the popular go-ethereum ("Geth") Ethereum node software. The batch is composed of a header and a compressed blob, which results from compressing concatenated RLP-encoded transactions using the standard RLP encoding.`,
+  },
   permissions: [
     ...discovery.getMultisigPermission(
       'SecurityCouncil',
@@ -483,7 +589,7 @@ export const arbitrum: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
-      'This contract is an admin of the UpgradeExecutor contract, but is also owned by it.',
+      "This contract is an admin of the UpgradeExecutor contract, but is also owned by it. Can cancel Timelock's proposals.",
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
@@ -583,26 +689,31 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: true,
+    {
+      rollupNodeLink: 'https://github.com/OffchainLabs/nitro/',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: false,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   knowledgeNuggets: [
     {
       title: 'Arbitrum update boosts decentralization',

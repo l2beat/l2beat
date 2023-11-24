@@ -12,8 +12,8 @@ export interface Config {
     multisigReport: string
   }
   features: {
-    detailedTvl: boolean
     activity: boolean
+    liveness: boolean
     banner: boolean
     tvlBreakdown: boolean
     gitcoinOption: boolean

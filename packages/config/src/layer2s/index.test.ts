@@ -4,6 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
 import {
@@ -13,7 +14,13 @@ import {
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
+import {
+  FunctionCallParams,
+  layer2s,
+  Layer2Technology,
+  milestonesLayer2s,
+  NUGGETS,
+} from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -49,6 +56,26 @@ describe('layer2s', () => {
         }
       }
     })
+  })
+
+  describe('liveness', () => {
+    for (const project of layer2s) {
+      it(`${project.id.toString()} : has valid signatures`, () => {
+        if (project.config.liveness) {
+          const functionCalls = [
+            ...project.config.liveness.batchSubmissions,
+            ...project.config.liveness.stateUpdates,
+          ].filter((x) => x.formula === 'functionCall') as FunctionCallParams[]
+
+          functionCalls.forEach((c) => {
+            const i = new utils.Interface([c.functionSignature])
+            const fragment = i.fragments[0]
+            const calculatedSignature = i.getSighash(fragment)
+            expect(calculatedSignature).toEqual(c.selector)
+          })
+        }
+      })
+    }
   })
 
   describe('activity', () => {
@@ -365,6 +392,9 @@ describe('layer2s', () => {
         }
         for (const item of layer2.stage.summary) {
           for (const req of item.requirements) {
+            if (req.description.includes('[View code]')) {
+              continue
+            }
             it(req.description, () => {
               expect(req.description.endsWith('.')).toEqual(true)
             })

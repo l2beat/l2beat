@@ -1,5 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { Logger } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { UpdateNotifierRow } from 'knex/types/tables'
 
@@ -54,7 +54,7 @@ export class UpdateNotifierRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('update_notifier').delete()
+    return knex('update_notifier').delete()
   }
 }
 

@@ -1,23 +1,20 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { Footer as FooterComponent } from './Footer'
-import { PageContent } from './PageContent'
 
-export default {
-  title: 'Components/Footer',
+const meta: Meta<typeof FooterComponent> = {
+  component: FooterComponent,
 }
+export default meta
+type Story = StoryObj<typeof FooterComponent>
 
-export function Footer() {
-  return (
-    <PageContent>
-      <FooterComponent
-        twitterLink="#"
-        discordLink="#"
-        githubLink="#"
-        linkedinLink="#"
-        mediumLink="#"
-        youTubeLink="#"
-      />
-    </PageContent>
-  )
+export const Footer: Story = {
+  args: {
+    twitterLink: '#',
+    discordLink: '#',
+    githubLink: '#',
+    linkedinLink: '#',
+    mediumLink: '#',
+    youTubeLink: '#',
+  },
 }

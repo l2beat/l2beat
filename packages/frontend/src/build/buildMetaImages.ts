@@ -27,6 +27,7 @@ async function main() {
     const server = app.listen(1234, () => resolve(server))
   })
 
+  //TODO: Check this
   const slugs = [...layer2s, ...bridges]
     .map((x) => x.display.slug)
     .filter((slug) =>
@@ -35,18 +36,16 @@ async function main() {
     )
     .concat('overview-scaling', 'overview-bridges')
 
-  if (config.features.detailedTvl) {
-    slugs.push('overview-detailed-scaling')
+  slugs.push('overview-detailed-scaling')
 
-    slugs.push(
-      ...[...layer2s, ...bridges]
-        .map((x) => `${x.display.slug}-detailed`)
-        .filter((slug) =>
-          // only screenshot those that were actually generated
-          existsSync(path.join('build/meta-images', slug, 'index.html')),
-        ),
-    )
-  }
+  slugs.push(
+    ...[...layer2s, ...bridges]
+      .map((x) => `${x.display.slug}-detailed`)
+      .filter((slug) =>
+        // only screenshot those that were actually generated
+        existsSync(path.join('build/meta-images', slug, 'index.html')),
+      ),
+  )
 
   if (config.features.activity) {
     slugs.push('overview-scaling-activity')

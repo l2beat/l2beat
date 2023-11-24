@@ -14,8 +14,9 @@ function clean() {
 }
 
 function buildScripts() {
-  return exec(
+  return multipleExec(
     `esbuild --bundle src/scripts/index.ts --outfile=build/scripts/main.js --minify`,
+    'esbuild --bundle src/scripts/prerenderIndex.ts --outfile=build/scripts/prerender.js --minify',
   )
 }
 
@@ -68,6 +69,12 @@ function generateMetaImages() {
   return exec('node -r esbuild-register src/build/buildMetaImages.ts')
 }
 
+const proxyUrls = [
+  '/api/projects',
+  '/api/tvl/aggregate',
+  '/api/activity/aggregate',
+]
+
 function serve() {
   const app = express()
   app.use(express.static('build'))
@@ -86,13 +93,16 @@ function serve() {
     throw new Error('Unknown environment: ' + deploymentEnvironment)
   }
 
-  app.use(
-    '/api/projects',
-    createProxyMiddleware({
-      target: apiUrl,
-      changeOrigin: true,
-    }),
-  )
+  for (const proxyUrl of proxyUrls) {
+    app.use(
+      proxyUrl,
+      createProxyMiddleware({
+        target: apiUrl,
+        changeOrigin: true,
+      }),
+    )
+  }
+
   const server = app.listen(8080, '0.0.0.0')
   console.log('Listening on http://localhost:8080')
   return server
@@ -123,6 +133,10 @@ module.exports = {
 }
 
 // Utilities
+
+function multipleExec(...commands) {
+  return Promise.all(commands.map((command) => exec(command)))
+}
 
 function exec(command) {
   const nodeModulesHere = path.join(__dirname, './node_modules/.bin')

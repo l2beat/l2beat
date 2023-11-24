@@ -60,6 +60,34 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'totalSupply',
   },
+  {
+    id: AssetId('optimism:kwenta-kwenta'),
+    name: 'Kwenta',
+    symbol: 'KWENTA',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/27409/large/kwenta.png?1668768595',
+    address: EthereumAddress('0x920cf626a271321c151d027030d5d08af699456b'),
+    coingeckoId: CoingeckoId('kwenta'),
+    sinceTimestamp: new UnixTime(1668733200),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId('optimism:velo-velodrome-finance'),
+    name: 'Velodrome Finance',
+    symbol: 'VELO',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/25783/large/velo.png?1653817876',
+    address: EthereumAddress('0x9560e827af36c94d2ac33a39bce1fe78631088db'),
+    coingeckoId: CoingeckoId('velodrome-finance'),
+    sinceTimestamp: new UnixTime(1687392369),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
 ]
 
 export const optimism: Layer2 = {
@@ -77,6 +105,7 @@ export const optimism: Layer2 = {
     purpose: 'Universal',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
@@ -100,7 +129,6 @@ export const optimism: Layer2 = {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],
-    tvlTooltip: 'TVL includes canonically bridged assets and native OP',
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),
@@ -149,6 +177,28 @@ export const optimism: Layer2 = {
       type: 'rpc',
       startBlock: 1,
       assessCount: subtractOneAfterBlockInclusive(105235064),
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x6887246668a3b87F54DeB3b94Ba47a6f63F32985'),
+          to: EthereumAddress('0xFF00000000000000000000000000000000000010'),
+          sinceTimestamp: new UnixTime(1686074603),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xdfe97868233d1aa22e815a266982f2cf17685a27',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1685377367),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -202,26 +252,32 @@ export const optimism: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink:
+        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
@@ -325,60 +381,32 @@ export const optimism: Layer2 = {
       ],
     },
   },
+  stateDerivation: {
+    nodeSoftware:
+      'The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file for OP Mainnet can be found [here](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/deploy-config/mainnet.json).',
+    compressionScheme:
+      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+    genesisState:
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+    dataFormat:
+      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
+  },
   permissions: [
     ...discovery.getMultisigPermission(
       'OptimismMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
-    {
-      name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description:
-        'Admin of the OptimismPortal, L2OutputOracle, SystemConfig contract, L1StandardBridge, AddressManager proxies. It’s controlled by the OptimismMultisig.',
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions to L1.',
-    },
-    {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
-      ],
-      description: 'Central actor allowed to post new L2 state roots to L1.',
-    },
-    {
-      name: 'Challenger',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
-      ],
-      description: 'Central actor allowed to challenge L2 state roots.',
-    },
+    ...discovery.getOpStackPermissions({
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger',
+    }),
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessengerProxy', {
-        description:
-          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
+      ...discovery.getOpStackContractDetails(upgradesProxy, {
+        L1CrossDomainMessenger: 'L1CrossDomainMessengerProxy',
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -452,6 +480,11 @@ export const optimism: Layer2 = {
       title: 'Modular Rollup Theory',
       url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
       thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
+    {
+      title: 'The Optimistic Vision',
+      url: 'https://www.optimism.io/vision',
+      thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_VISION,
     },
   ],
 }

@@ -27,22 +27,27 @@ export const zora: Layer2 = {
   type: 'layer2',
   id: ProjectId('zora'),
   display: {
-    name: 'Zora Network',
+    name: 'Zora',
     slug: 'zora',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'The Zora Network is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
+      'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     purpose: 'Universal, NFTs',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
       apps: [],
       documentation: ['https://docs.zora.co/docs/zora-network/intro'],
       explorers: ['https://explorer.zora.energy/'],
       repositories: ['https://github.com/ourzora/optimism'],
-      socialMedia: ['https://twitter.com/ourZORA'],
+      socialMedia: [
+        'https://twitter.com/ourZORA',
+        'https://instagram.com/our.zora',
+        'https://zora.community',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },
@@ -70,6 +75,28 @@ export const zora: Layer2 = {
       url: 'https://rpc.zora.co',
       callsPerMinute: 1500,
       assessCount: subtractOne,
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x625726c858dBF78c0125436C943Bf4b4bE9d9033'),
+          to: EthereumAddress('0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf'),
+          sinceTimestamp: new UnixTime(1686695915),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x9E6204F750cD866b299594e2aC9eA824E2e5f95c',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1686694007),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -253,52 +280,19 @@ export const zora: Layer2 = {
       'ChallengerMultisig',
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
     ),
-    {
-      name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description:
-        'Admin of the OptimismPortal, L1ERC721Bridge, L2OutputOracle, SystemConfig, OptimismMintableERC20Factory, L1StandardBridge, AddressManager proxies. It’s controlled by the ZoraMultisig.',
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions to L1',
-    },
-    {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
-      ],
-      description: 'Central actor allowed to post new L2 state roots to L1',
-    },
+    ...discovery.getOpStackPermissions({
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger',
+    }),
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
-      }),
+      ...discovery.getOpStackContractDetails(upgradesProxy),
       discovery.getContractDetails('L1ERC721Bridge', {
         description:
           'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         ...upgradesProxy,
       }),
     ],

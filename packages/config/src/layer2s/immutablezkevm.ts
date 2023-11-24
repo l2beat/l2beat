@@ -11,9 +11,11 @@ export const immutablezkevm: Layer2 = {
     name: 'Immutable zkEVM',
     slug: 'immutablezkevm',
     description:
-      'Immutable zkEVM is an upcoming ZK Rollup focused on gaming and powered by Polygon.',
+      "Immutable zkEVM is an upcoming ZK Rollup focused on gaming and powered by Polygon's CDK.",
     purpose: 'Universal, Gaming',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'NotApplicable',
+    provider: 'Polygon',
     links: {
       websites: ['https://www.immutable.com/products/immutable-zkevm'],
       apps: [],

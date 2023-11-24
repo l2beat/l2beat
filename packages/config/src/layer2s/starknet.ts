@@ -138,29 +138,36 @@ export const starknet: Layer2 = {
   display: {
     name: 'Starknet',
     slug: 'starknet',
+    provider: 'Starknet',
     description:
-      'Starknet is a general purpose ZK-Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
+      'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
       infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
       is available and contracts are fully composable. It is currently launched \
       with a single Sequencer.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
-      apps: [],
+      apps: [
+        'https://www.dappland.com/',
+        'https://www.starknet-ecosystem.com/',
+      ],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
         'https://starkware.co/ecosystem/',
         'https://community.starknet.io/',
       ],
-      documentation: ['https://starknet.io/what-is-starknet/'],
+      documentation: ['https://starknet.io/learn/what-is-starknet'],
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
-        'https://discord.gg/uJ9HZTUk2Y',
+        'https://discord.com/invite/qypnmzkhbc',
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
+        'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -235,6 +242,21 @@ export const starknet: Layer2 = {
     transactionApi: {
       type: 'starknet',
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0x77552641',
+          functionSignature:
+            'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
+          sinceTimestamp: new UnixTime(1636978914),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -283,26 +305,31 @@ export const starknet: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/NethermindEth/juno',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -320,12 +347,6 @@ export const starknet: Layer2 = {
       description:
         OPERATOR.CENTRALIZED_OPERATOR.description +
         ' Typically, the Operator is the hot wallet of the Starknet service submitting state updates for which proofs have been already submitted and verified.',
-      references: [
-        {
-          text: 'Starknet operator Etherscan address',
-          href: 'https://etherscan.io/address/0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
-        },
-      ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
@@ -337,6 +358,14 @@ export const starknet: Layer2 = {
       ],
     },
     exitMechanisms: EXITS.STARKNET,
+  },
+  stateDerivation: {
+    nodeSoftware:
+      'The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
+    compressionScheme: "Starknet doesn't use any compression scheme.",
+    genesisState: 'There is no non-empty genesis state.',
+    dataFormat:
+      'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/).',
   },
   contracts: {
     addresses: [
@@ -447,7 +476,7 @@ export const starknet: Layer2 = {
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: '2021-11-29T00:00:00Z',
       description:
-        'Rollup is live on mainnet, enabling general computation using zkRollup technology.',
+        'Rollup is live on mainnet, enabling general computation using ZK Rollup technology.',
     },
     {
       name: 'StarkGate Alpha',

@@ -4,6 +4,7 @@ import React from 'react'
 import { ExpandableContainer } from '../ExpandableContainer'
 import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 import { Link } from '../Link'
+import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
 
@@ -41,9 +42,9 @@ export function MilestonesSection({
                 </p>
                 <div className="mt-3">
                   {milestone.description && (
-                    <p className="text-sm leading-none dark:text-gray-400">
+                    <Markdown className="text-sm leading-none dark:text-gray-400">
                       {milestone.description}
-                    </p>
+                    </Markdown>
                   )}
                   <Link className="text-sm" href={milestone.link} showArrow>
                     Learn more

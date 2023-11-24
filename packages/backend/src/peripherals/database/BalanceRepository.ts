@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   AssetId,
   ChainId,
@@ -75,7 +75,7 @@ export class BalanceRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('balances').delete()
+    return knex('balances').delete()
   }
 }
 

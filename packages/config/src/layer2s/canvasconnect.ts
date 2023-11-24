@@ -52,6 +52,7 @@ export const canvasconnect: Layer2 = {
     purpose: 'Privacy, Finance',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://canvas.co/'],
       apps: [],

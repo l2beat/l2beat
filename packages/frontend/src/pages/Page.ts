@@ -1,6 +1,6 @@
 import {
   ActivityApiResponse,
-  DetailedTvlApiResponse,
+  LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
@@ -21,8 +21,8 @@ export interface WrapperProps {
   htmlClassName?: string
   metadata: PageMetadata
   preloadApi?: string
+  banner: boolean | undefined
 }
-
 export interface PageMetadata {
   title: string
   description: string
@@ -31,8 +31,9 @@ export interface PageMetadata {
 }
 
 export interface PagesData {
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse
+  tvlApiResponse: TvlApiResponse
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
+  livenessApiResponse: LivenessApiResponse | undefined
 }

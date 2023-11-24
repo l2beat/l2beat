@@ -1,8 +1,7 @@
 import { bridges as allBridges, layer2s as allLayer2s } from '@l2beat/config'
 import {
-  ActivityApiChart,
+  ActivityApiCharts,
   ActivityApiResponse,
-  DetailedTvlApiResponse,
   ProjectId,
   TvlApiCharts,
   TvlApiResponse,
@@ -18,9 +17,7 @@ const layer2s = allLayer2s
 
 export type TvlProjectData = [string, TvlApiCharts]
 
-export function tvlSanityCheck(
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-) {
+export function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
   const projectsInApi = Object.keys(tvlApiResponse.projects).map(ProjectId)
 
   const bridgesInApi = bridges.filter((x) => projectsInApi.includes(x.id))
@@ -95,7 +92,7 @@ export function checkIfDelayedTvl(
   }
 }
 
-export type ActivityProjectData = [string, ActivityApiChart['data']]
+export type ActivityProjectData = [string, ActivityApiCharts]
 
 export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
   const projectsInApiActivity = Object.keys(activityApiResponse.projects).map(
@@ -121,20 +118,13 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 
   const allProjects = [
     ['combined', activityApiResponse.combined],
-    ['ethereum', activityApiResponse.ethereum],
     ...filteredProjectsCharts,
-  ] as [string, ActivityApiChart][]
+  ] as [string, ActivityApiCharts][]
   const allProjectsData = allProjects.map(
-    ([name, chart]) => [name, chart.data] as ActivityProjectData,
+    ([name, chart]) => [name, chart] as ActivityProjectData,
   )
 
-  const importantProjects = [
-    'ethereum',
-    'dydx',
-    'arbitrum',
-    'optimism',
-    'starknet',
-  ]
+  const importantProjects = ['dydx', 'arbitrum', 'optimism', 'starknet']
 
   checkIfEmptyActivityCharts(allProjectsData)
   checkIfZeroTpsProjects(allProjectsData, importantProjects)
@@ -143,7 +133,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 
 export function checkIfEmptyActivityCharts(allProjects: ActivityProjectData[]) {
   const emptyActivityCharts = allProjects.filter(
-    ([_, data]) => data.length === 0,
+    ([_, data]) => data.daily.data.length === 0,
   )
   if (emptyActivityCharts.length > 0) {
     throw new Error(
@@ -175,7 +165,7 @@ export function checkIfZeroTpsProjects(
     .map(([name, data]) => {
       // can we assume here that data is always sorted?
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return [name, data.at(-1)!] as const
+      return [name, data.daily.data.at(-1)!] as const
     })
     .filter(([_, lastValue]) => lastValue[1] === 0)
 
@@ -202,7 +192,7 @@ export function checkIfDelayedActivity(
   const delayedProjects = allProjects
     .map(([name, data]) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const lastValue = data.at(-1)!
+      const lastValue = data.daily.data.at(-1)!
       const lastTimestamp = lastValue[0]
       const delay = now.toNumber() - lastTimestamp.toNumber()
       return { name, delay }

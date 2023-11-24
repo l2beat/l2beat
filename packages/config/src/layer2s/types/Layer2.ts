@@ -15,6 +15,7 @@ import {
   ProjectPermission,
 } from '../../common'
 import { StageConfig } from '../common/stages/types'
+import { Layer2LivenessConfig } from './Layer2LivenessConfig'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2StateDerivation } from './Layer2StateDerivation'
 import { Layer2Technology } from './Layer2Technology'
@@ -57,6 +58,10 @@ export interface Layer2Display {
   name: string
   /** Url friendly layer2 name, will be used in website urls */
   slug: string
+  /** Name of the category the layer2 belongs to */
+  category: Layer2Category
+  /** Data availability mode of layer2 project */
+  dataAvailabilityMode: 'StateDiffs' | 'TxData' | 'NotApplicable'
   /** A warning displayed in the header of the project */
   headerWarning?:
     | {
@@ -72,30 +77,29 @@ export interface Layer2Display {
   description: string
   /** A short (<20 characters) description of the use case */
   purpose: string
-  /** Name of the category the layer2 belongs to */
-  category: Layer2Category
   /** Technology provider */
   provider?:
     | 'StarkEx'
     | 'OP Stack'
-    | 'zkSync'
-    | 'loopring'
+    | 'zkSync Lite'
+    | 'ZK Stack'
+    | 'Loopring'
     | 'Arbitrum'
     | 'Polygon'
     | 'OVM'
     | 'Pellar'
+    | 'Starknet'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
 }
-
 export interface Layer2Config {
   /** List of native and external tokens */
   tokenList?: Token[]
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
   associatedTokens?: string[]
-  /** Native L2 tokens should be also marked as associated tokens, however often associated tokens are not native L2 tokens. This has to be kept manually in sync with code executed in CBVUpdater.update.  */
+  /** Native tokens should be also marked as associated tokens, however often associated tokens are not native tokens. This has to be kept manually in sync with code executed in CBVUpdater.update.  */
   nativeL2TokensIncludedInTVL?: string[]
   /** Assets external to L1 which should be incorporated into the aggregated TVL report for a given project.  */
   externalAssets?: Layer2ExternalAssets
@@ -103,8 +107,8 @@ export interface Layer2Config {
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
-  /** Text displayed on the TVL number hover */
-  tvlTooltip?: string
+  /** Configuration for getting state updates and batch submission */
+  liveness?: Layer2LivenessConfig
 }
 
 export interface Layer2ExternalAssets {
@@ -125,8 +129,7 @@ export interface Layer2ExternalAssets {
 
 export type Layer2Category =
   | 'Optimistic Rollup'
-  | 'Optimium'
-  | 'Plasma'
-  | 'State Pools'
-  | 'Validium'
   | 'ZK Rollup'
+  | 'Plasma'
+  | 'Validium'
+  | 'Optimium'

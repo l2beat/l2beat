@@ -8,8 +8,10 @@ import {
   OptimismIcon,
   OVMIcon,
   PolygonIcon,
+  StarknetIcon,
   StarkWareIcon,
-  ZkSyncIcon,
+  ZKStackIcon,
+  ZkSyncLiteIcon,
 } from '../icons'
 
 export interface TechnologyCellProps {
@@ -49,18 +51,26 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           <OVMIcon className={providerIconClassName} />
         </span>
       )}
-      {provider === 'zkSync' && (
+      {provider === 'zkSync Lite' && (
         <span
           className={providerClassName}
-          title="This project is based on zkSync's code base."
+          title="This project is based on zkSync Lite's code base."
         >
-          <ZkSyncIcon className={providerIconClassName} />
+          <ZkSyncLiteIcon className={providerIconClassName} />
         </span>
       )}
-      {provider === 'loopring' && (
+      {provider === 'ZK Stack' && (
         <span
           className={providerClassName}
-          title="This project is based on loopring's code base."
+          title="This project is based on ZK Stack's code base."
+        >
+          <ZKStackIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'Loopring' && (
+        <span
+          className={providerClassName}
+          title="This project is based on Loopring's code base."
         >
           <LoopringIcon className={providerIconClassName} />
         </span>
@@ -79,6 +89,14 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           title="This project is based on Polygon's code base."
         >
           <PolygonIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'Starknet' && (
+        <span
+          className={providerClassName}
+          title="This project is based on Starknet's code base."
+        >
+          <StarknetIcon className={providerIconClassName} />
         </span>
       )}
     </span>

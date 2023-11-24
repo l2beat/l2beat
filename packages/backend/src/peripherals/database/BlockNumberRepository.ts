@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { BlockNumberRow } from 'knex/types/tables'
 
@@ -48,7 +48,7 @@ export class BlockNumberRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('block_numbers').delete()
+    return knex('block_numbers').delete()
   }
 }
 

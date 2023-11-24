@@ -28,48 +28,18 @@ const getTestStage = createGetStage({
 })
 
 describe(createGetStage.name, () => {
-  it('No stage', () => {
-    const result = getTestStage({
-      stage0: {
-        callsItselfRollup: [false, 'The project calls itself a chicken.'],
-      },
-      stage1: {
-        hasEscapeHatch: false,
-        isCouncil8Members: false,
-      },
-    })
-
-    expect(result).toEqual({
-      stage: undefined,
-      missing: {
-        nextStage: 'Stage 0',
-        requirements: ['The project calls itself a chicken.'],
-      },
-      summary: [
-        {
-          stage: 'Stage 0',
-          requirements: [
-            {
-              satisfied: false,
-              description: 'The project calls itself a chicken.',
-            },
-          ],
+  it('Throw an error if no stage', () => {
+    expect(() =>
+      getTestStage({
+        stage0: {
+          callsItselfRollup: [false, 'The project calls itself a chicken.'],
         },
-        {
-          stage: 'Stage 1',
-          requirements: [
-            {
-              satisfied: false,
-              description: "The project doesn't have an escape hatch.",
-            },
-            {
-              satisfied: false,
-              description: "The project doesn't have 8 council members.",
-            },
-          ],
+        stage1: {
+          hasEscapeHatch: false,
+          isCouncil8Members: false,
         },
-      ],
-    })
+      }),
+    ).toThrow()
   })
 
   it('Stage 0', () => {

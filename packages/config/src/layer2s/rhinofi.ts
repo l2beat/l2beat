@@ -50,6 +50,7 @@ export const rhinofi: Layer2 = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -68,6 +69,7 @@ export const rhinofi: Layer2 = {
         'https://twitter.com/rhinofi',
         'https://linkedin.com/company/rhinofi/',
         'https://youtube.com/c/rhinofi',
+        'https://discord.com/invite/26sXx2KAhy',
       ],
     },
     activityDataSource: 'Closed API',
@@ -89,6 +91,21 @@ export const rhinofi: Layer2 = {
       product: 'deversifi',
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
+    },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+          ),
+          selector: '0x538f9406',
+          functionSignature:
+            'function updateState(uint256[] publicInput, uint256[] applicationData)',
+          sinceTimestamp: new UnixTime(1590491810),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({

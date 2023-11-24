@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   ChainId,
@@ -9,6 +9,8 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
+import { getChainMinTimestamp } from '../../config/chains'
 import {
   ReportRecord,
   ReportRepository,
@@ -18,11 +20,12 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createFormulaReports } from '../reports/createFormulaReports'
+import { getStatus } from '../reports/getStatus'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
-import { AssetUpdater } from './AssetUpdater'
+import { ReportUpdater } from './Updater'
 
-export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
+export class CirculatingSupplyFormulaUpdater implements ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -47,7 +50,9 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
       ),
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
+    )
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
@@ -69,6 +74,16 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+      getChainMinTimestamp(this.chainId),
+    )
   }
 
   async start() {
@@ -104,7 +119,6 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
       this.priceUpdater.getPricesWhenReady(timestamp),
       this.circulatingSupplyUpdater.getCirculatingSuppliesWhenReady(timestamp),
     ])
-    this.logger.debug('Prices and supplies ready')
     const reports = createFormulaReports(
       prices,
       circulatingSupplies,
@@ -121,7 +135,7 @@ export class CirculatingSupplyFormulaUpdater implements AssetUpdater {
     })
 
     this.knownSet.add(timestamp.toNumber())
-    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+    this.logger.info('Update finished', { timestamp: timestamp.toNumber() })
   }
 
   async getReportsWhenReady(

@@ -1,4 +1,6 @@
-import { indexOf, max, sum } from 'lodash'
+import indexOf from 'lodash/indexOf'
+import max from 'lodash/max'
+import sum from 'lodash/sum'
 
 export function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value))

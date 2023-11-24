@@ -80,13 +80,17 @@ export const dydx: Layer2 = {
   type: 'layer2',
   id: ProjectId('dydx'),
   display: {
-    name: 'dYdX',
+    name: 'dYdX v3',
     slug: 'dydx',
+    warning:
+      'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
     description:
-      'dYdX aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
+      'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [
@@ -129,6 +133,21 @@ export const dydx: Layer2 = {
       product: 'dydx',
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
+    },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+          ),
+          selector: '0x538f9406',
+          functionSignature:
+            'function updateState(uint256[] publicInput, uint256[] applicationData)',
+          sinceTimestamp: new UnixTime(1613033682),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -229,26 +248,31 @@ export const dydx: Layer2 = {
     },
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/l2beat/starkex-explorer',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   contracts: {
     addresses: [
       discovery.getContractDetails('StarkPerpetual', {
@@ -309,11 +333,11 @@ export const dydx: Layer2 = {
       discovery.getContractDetails('DydxGovernor', {
         description: 'Contract storing dYdX Governance logic.',
       }),
-      discovery.getContractDetails('GovernanceStrategy', {
+      discovery.getContractDetails('GovernanceStrategyV2', {
         description:
           'Contract storing logic for votes counting in dYdX Governance.',
         upgradeConsiderations:
-          'This contract is not upgradeable, although the address of the GovernanceStrategy can be changed by the owner of DydxGovernor contract.',
+          'This contract is not upgradeable, although the address of the GovernanceStrategyV2 can be changed by the owner of DydxGovernor contract.',
       }),
       discovery.getContractDetails('DydxToken', {
         description: 'Token used by the dYdX Governance for voting.',
@@ -427,6 +451,16 @@ export const dydx: Layer2 = {
       ],
     },
   ],
+  stateDerivation: {
+    nodeSoftware:
+      'State can be independently derived from data (state updates) published on Ethereum by running an open-source [StarkEx Explorer](https://github.com/l2beat/starkex-explorer). The explorer, once fully synced, provides UI interface to perform forced actions, trigger rollup freeze and withdraw funds using escape hatch.',
+    compressionScheme:
+      'No compression is used, state updates and other metadata are simply serialized for L1',
+    genesisState:
+      'There is no genesis file for dYdX. By default, all accounts were empty at the beginning.',
+    dataFormat:
+      "dYdX doesn't publish transactions. Balances of user positions are stored in a Merkle Tree and updates to that tree are published on Ethereum, together with Merkle Root and a ZK proof. Deserialization of that data is implemented [here](https://github.com/l2beat/starkex-explorer/blob/59e5c744cd3a1103c01893881a40492a817f13bd/packages/encoding/src/decoding/decodeOnChainData.ts#L6). Generating Merkle Proof is implemented [here](https://github.com/l2beat/starkex-explorer/blob/d957fe5ed3b8f6590a84507655eb76c7b2876e67/packages/state/src/MerkleTree.ts#L92).",
+  },
   milestones: [
     {
       name: 'Public launch',

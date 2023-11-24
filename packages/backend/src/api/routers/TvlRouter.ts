@@ -8,146 +8,123 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { DetailedTvlController } from '../controllers/tvl/DetailedTvlController'
 import { TvlController } from '../controllers/tvl/TvlController'
 import { withTypedContext } from './types'
 
-export function createTvlRouter(
-  tvlController: TvlController,
-  detailedTvlController: DetailedTvlController,
-  features: {
-    detailedTvlEnabled: boolean
-  },
-) {
+export function createTvlRouter(tvlController: TvlController) {
   const router = new Router()
 
   router.get('/api/tvl', async (ctx) => {
-    const tvlResponse = await tvlController.getTvlApiResponse()
-    if (tvlResponse.result === 'error') {
-      if (tvlResponse.error === 'DATA_NOT_FULLY_SYNCED') {
+    const tvlResult = await tvlController.getTvlApiResponse()
+
+    if (tvlResult.result === 'error') {
+      if (tvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
         ctx.status = 422
       }
 
-      if (tvlResponse.error === 'NO_DATA') {
+      if (tvlResult.error === 'NO_DATA') {
         ctx.status = 404
       }
 
       return
     }
 
-    ctx.body = tvlResponse.data
+    ctx.body = tvlResult.data
   })
 
   router.get(
-    '/api/projects/:projectId/tvl/assets/:assetId',
+    '/api/tvl/aggregate',
     withTypedContext(
       z.object({
-        params: z.object({
-          projectId: branded(z.string(), ProjectId),
-          assetId: branded(z.string(), AssetId),
+        query: z.object({
+          projectSlugs: z.string(),
         }),
       }),
       async (ctx) => {
-        const { projectId, assetId } = ctx.params
-        const chartResponse = await tvlController.getProjectAssetChart(
-          projectId,
-          assetId,
-        )
-        if (chartResponse.result === 'error') {
-          if (chartResponse.error === 'NO_DATA') {
+        console.time('[Aggregate endpoint]: runtime')
+        const projectSlugs = ctx.query.projectSlugs
+
+        const tvlProjectsResponse =
+          await tvlController.getAggregatedTvlApiResponse(
+            projectSlugs.split(',').map((slug) => slug.trim()),
+          )
+
+        if (tvlProjectsResponse.result === 'error') {
+          if (tvlProjectsResponse.error === 'DATA_NOT_FULLY_SYNCED') {
+            ctx.status = 422
+          }
+
+          if (tvlProjectsResponse.error === 'NO_DATA') {
             ctx.status = 404
           }
 
-          if (chartResponse.error === 'INVALID_PROJECT_OR_ASSET') {
+          return
+        }
+
+        ctx.body = tvlProjectsResponse.data
+
+        console.timeEnd('[Aggregate endpoint]: runtime')
+      },
+    ),
+  )
+
+  router.get(
+    '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
+
+    withTypedContext(
+      z.object({
+        params: z.object({
+          chainId: z.string(),
+          projectId: branded(z.string(), ProjectId),
+          assetId: branded(z.string(), AssetId),
+          assetType: branded(z.string(), AssetType),
+        }),
+      }),
+      async (ctx) => {
+        const { assetId, chainId, assetType, projectId } = ctx.params
+
+        const assetData = await tvlController.getAssetTvlApiResponse(
+          projectId,
+          ChainId(+chainId),
+          assetId,
+          assetType,
+        )
+
+        if (assetData.result === 'error') {
+          if (assetData.error === 'NO_DATA') {
+            ctx.status = 404
+          }
+
+          if (assetData.error === 'INVALID_PROJECT_OR_ASSET') {
             ctx.status = 400
           }
 
           return
         }
-        ctx.body = chartResponse.data
+
+        ctx.body = assetData.data
       },
     ),
   )
 
-  if (features.detailedTvlEnabled) {
-    router.get('/api/detailed-tvl', async (ctx) => {
-      const detailedTvlResult =
-        await detailedTvlController.getDetailedTvlApiResponse()
+  router.get('/api/project-assets-breakdown', async (ctx) => {
+    const projectAssetsBreakdown =
+      await tvlController.getProjectTokenBreakdownApiResponse()
 
-      if (detailedTvlResult.result === 'error') {
-        if (detailedTvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
-          ctx.status = 422
-        }
-
-        if (detailedTvlResult.error === 'NO_DATA') {
-          ctx.status = 404
-        }
-
-        return
+    if (projectAssetsBreakdown.result === 'error') {
+      if (projectAssetsBreakdown.error === 'NO_DATA') {
+        ctx.status = 404
       }
 
-      ctx.body = detailedTvlResult.data
-    })
-
-    router.get(
-      '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
-
-      withTypedContext(
-        z.object({
-          params: z.object({
-            chainId: z.string(),
-            projectId: branded(z.string(), ProjectId),
-            assetId: branded(z.string(), AssetId),
-            assetType: branded(z.string(), AssetType),
-          }),
-        }),
-        async (ctx) => {
-          const { assetId, chainId, assetType, projectId } = ctx.params
-
-          const detailedAssetData =
-            await detailedTvlController.getDetailedAssetTvlApiResponse(
-              projectId,
-              ChainId(+chainId),
-              assetId,
-              assetType,
-            )
-
-          if (detailedAssetData.result === 'error') {
-            if (detailedAssetData.error === 'NO_DATA') {
-              ctx.status = 404
-            }
-
-            if (detailedAssetData.error === 'INVALID_PROJECT_OR_ASSET') {
-              ctx.status = 400
-            }
-
-            return
-          }
-
-          ctx.body = detailedAssetData.data
-        },
-      ),
-    )
-
-    router.get('/api/project-assets-breakdown', async (ctx) => {
-      const projectAssetsBreakdown =
-        await detailedTvlController.getProjectTokenBreakdownApiResponse()
-
-      if (projectAssetsBreakdown.result === 'error') {
-        if (projectAssetsBreakdown.error === 'NO_DATA') {
-          ctx.status = 404
-        }
-
-        if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
-          ctx.status = 422
-        }
-
-        return
+      if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
+        ctx.status = 422
       }
 
-      ctx.body = projectAssetsBreakdown.data
-    })
-  }
+      return
+    }
+
+    ctx.body = projectAssetsBreakdown.data
+  })
 
   return router
 }

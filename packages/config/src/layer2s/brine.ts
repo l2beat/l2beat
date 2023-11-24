@@ -49,6 +49,7 @@ export const brine: Layer2 = {
     description: 'Brine is a DEX powered by StarkEx.',
     purpose: 'Exchange',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
     links: {
       websites: ['https://www.brine.fi/'],

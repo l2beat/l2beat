@@ -1,5 +1,5 @@
+import { Logger } from '@l2beat/backend-tools'
 import { RpcTransactionApi } from '@l2beat/config'
-import { Logger } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { range } from 'lodash'

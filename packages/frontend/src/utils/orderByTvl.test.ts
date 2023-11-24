@@ -12,13 +12,63 @@ describe(orderByTvl.name, () => {
     ]
 
     const projectWithHourlyUsd = (values: number[]): TvlApiProject => ({
-      tokens: [],
+      tokens: {
+        CBV: [],
+        EBV: [],
+        NMV: [],
+      },
       charts: {
-        daily: { types: ['timestamp', 'usd', 'eth'], data: [] },
-        sixHourly: { types: ['timestamp', 'usd', 'eth'], data: [] },
+        daily: {
+          types: [
+            'timestamp',
+            'valueUsd',
+            'cbvUsd',
+            'ebvUsd',
+            'nmvUsd',
+            'valueEth',
+            'cbvEth',
+            'ebvEth',
+            'nmvEth',
+          ],
+          data: [],
+        },
+        sixHourly: {
+          types: [
+            'timestamp',
+            'valueUsd',
+            'cbvUsd',
+            'ebvUsd',
+            'nmvUsd',
+            'valueEth',
+            'cbvEth',
+            'ebvEth',
+            'nmvEth',
+          ],
+          data: [],
+        },
         hourly: {
-          types: ['timestamp', 'usd', 'eth'],
-          data: values.map((usd) => [new UnixTime(0), usd, 0]),
+          types: [
+            'timestamp',
+            'valueUsd',
+            'cbvUsd',
+            'ebvUsd',
+            'nmvUsd',
+            'valueEth',
+            'cbvEth',
+            'ebvEth',
+            'nmvEth',
+          ],
+          data: values.map((usd) => [
+            new UnixTime(0),
+            usd,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+          ]),
         },
       },
     })

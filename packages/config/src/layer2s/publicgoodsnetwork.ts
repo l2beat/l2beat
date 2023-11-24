@@ -35,6 +35,7 @@ export const publicgoodsnetwork: Layer2 = {
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://publicgoods.network/'],
@@ -73,6 +74,28 @@ export const publicgoodsnetwork: Layer2 = {
       url: 'https://rpc.publicgoods.network',
       callsPerMinute: 1500,
       assessCount: subtractOne,
+    },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167'),
+          to: EthereumAddress('0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5'),
+          sinceTimestamp: new UnixTime(1689108083),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xA38d0c4E6319F9045F20318BA5f04CDe94208608',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1689106823),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -254,50 +277,15 @@ export const publicgoodsnetwork: Layer2 = {
       'GuardianMultisig',
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
     ),
-    {
-      name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description:
-        "Admin of the AddressManager, SystemConfig, L2OutputOracle, OptimismPortal, L1StandardBridge proxies. It's controlled by the PGNMultisig.",
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions to L1',
-    },
-    {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
-      ],
-      description: 'Central actor allowed to post new L2 state roots to L1',
-    },
+    ...discovery.getOpStackPermissions({
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger',
+    }),
   ],
   contracts: {
-    addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        ...upgradesProxy,
-      }),
-    ],
+    addresses: [...discovery.getOpStackContractDetails(upgradesProxy)],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [

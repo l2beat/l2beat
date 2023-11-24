@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   diffDiscovery,
@@ -13,14 +14,16 @@ import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
+  logger: Logger
   injectInitialAddresses: boolean
   runSanityCheck: boolean
   maxRetries?: number
   retryDelayMs?: number
 }
 
-const MAX_RETRIES = 6
-const RETRY_DELAY_MS = 10_000
+// 10 minutes
+const MAX_RETRIES = 30
+const RETRY_DELAY_MS = 20_000
 
 export class DiscoveryRunner {
   constructor(
@@ -50,18 +53,19 @@ export class DiscoveryRunner {
     const discovery = await this.discoverWithRetry(
       config,
       blockNumber,
+      options.logger,
       options.maxRetries,
       options.retryDelayMs,
     )
 
     if (options.runSanityCheck) {
-      await this.sanityCheck(discovery, config, blockNumber)
+      await this.sanityCheck(discovery, config, blockNumber, options)
     }
 
     return discovery
   }
 
-  async discover(
+  private async discover(
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<DiscoveryOutput> {
@@ -84,6 +88,7 @@ export class DiscoveryRunner {
   async discoverWithRetry(
     config: DiscoveryConfig,
     blockNumber: number,
+    logger: Logger,
     maxRetries = MAX_RETRIES,
     delayMs = RETRY_DELAY_MS,
   ): Promise<DiscoveryOutput> {
@@ -98,7 +103,7 @@ export class DiscoveryRunner {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
       }
 
-      console.log(
+      logger.warn(
         `DiscoveryRunner: Retrying ${config.name} (chain: ${ChainId.getName(
           config.chainId,
         )}) | attempt:${i}`,
@@ -124,8 +129,15 @@ export class DiscoveryRunner {
     discovery: DiscoveryOutput,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
+    options: DiscoveryRunnerOptions,
   ) {
-    const secondDiscovery = await this.discover(projectConfig, blockNumber)
+    const secondDiscovery = await this.discoverWithRetry(
+      projectConfig,
+      blockNumber,
+      options.logger,
+      options.maxRetries,
+      options.retryDelayMs,
+    )
 
     if (!isEqual(discovery, secondDiscovery)) {
       const diff = diffDiscovery(

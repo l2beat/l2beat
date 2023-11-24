@@ -77,9 +77,10 @@ export const linea: Layer2 = {
     slug: 'linea',
     warning: 'The circuit of the program being proven is not public.',
     description:
-      'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
+      'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://linea.build/'],
       apps: [],
@@ -116,6 +117,21 @@ export const linea: Layer2 = {
       type: 'rpc',
       startBlock: 1,
     },
+    liveness: {
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x4165d6dd',
+          functionSignature:
+            'function finalizeBlocks((bytes32, uint32, bytes[], bytes32[], bytes, uint16[])[] _blocksData,bytes _proof,uint256 _proofType,bytes32 _parentStateRootHash)',
+          sinceTimestamp: new UnixTime(1689159923),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -133,7 +149,7 @@ export const linea: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       description:
         RISK_VIEW.DATA_ON_CHAIN.description +
-        ' Unlike most zk rollups, transaction data is posted instead of state diffs.',
+        ' Unlike most ZK rollups, transaction data is posted instead of state diffs.',
       sources: [
         {
           contract: 'zkEVM',
@@ -259,10 +275,6 @@ export const linea: Layer2 = {
       }),
       discovery.getContractDetails(
         'PlonkVerifierFull',
-        'Plonk verifier contract used by the Linea zkEVM rollup.',
-      ),
-      discovery.getContractDetails(
-        'PlonkVerifierFull2',
         'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
       discovery.getContractDetails(

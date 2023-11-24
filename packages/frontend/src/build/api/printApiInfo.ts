@@ -1,13 +1,7 @@
 import { bridges, layer2s } from '@l2beat/config'
-import {
-  ActivityApiResponse,
-  DetailedTvlApiResponse,
-  TvlApiResponse,
-} from '@l2beat/shared-pure'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
-export function printApiInfo(
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-) {
+export function printApiInfo(tvlApiResponse: TvlApiResponse) {
   console.debug('\n', 'TVL')
   printTvl('combined', tvlApiResponse.combined)
   printTvl('layer2s', tvlApiResponse.layers2s)
@@ -21,10 +15,7 @@ export function printApiInfo(
     }
   }
 
-  function printTvl(
-    label: string,
-    charts: TvlApiResponse['combined'] | DetailedTvlApiResponse['combined'],
-  ) {
+  function printTvl(label: string, charts: TvlApiResponse['combined']) {
     const tvl = (charts.hourly.data.at(-1)?.[1] ?? 0).toFixed(2)
     const hourly = charts.hourly.data.length.toString()
     const sixHourly = charts.sixHourly.data.length.toString()
@@ -43,7 +34,6 @@ export function printApiInfo(
 export function printActivityInfo(activityApiResponse: ActivityApiResponse) {
   console.debug('\n', 'ACTIVITY')
   printActivity('combined', activityApiResponse.combined)
-  printActivity('ethereum', activityApiResponse.ethereum)
   for (const project of [...layer2s]) {
     const chart = activityApiResponse.projects[project.id.toString()]
     printActivity(project.id.toString(), chart)
@@ -59,8 +49,8 @@ export function printActivityInfo(activityApiResponse: ActivityApiResponse) {
       return
     }
 
-    const tps = (chart.data.at(-1)?.[1] ?? 0).toFixed(2)
-    const daily = chart.data.length.toString()
+    const tps = (chart.daily.data.at(-1)?.[1] ?? 0).toFixed(2)
+    const daily = chart.daily.data.length.toString()
     console.debug(
       label,
       '.'.repeat(30 - label.length - tps.length),

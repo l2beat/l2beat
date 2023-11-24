@@ -1,9 +1,9 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 18090837,
-  "configHash": "0x627a0258043ca5b596fa864a6d69bdf9d0aa5e4517f11743cfaa5ea98d9e9b64",
-  "version": 2,
+  "blockNumber": 18621048,
+  "configHash": "0x3f1b488ebb67cf3066bcb401d15c3b47fa258078eeb242070365dec6b4517afa",
+  "version": 3,
   "contracts": [
     {
       "name": "zkSync",
@@ -18,6 +18,14 @@
           "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
         ]
       },
+      "implementations": [
+        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4",
+        "0x7444DE636699F080cA1C033528D2bB3705B391Ce",
+        "0x62aA95ac4740A367746A664C4C69034d52E968EF",
+        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b",
+        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      ],
+      "sinceTimestamp": 1676315375,
       "values": {
         "facetAddresses": [
           "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4",
@@ -107,36 +115,36 @@
           ]
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
-        "getCurrentProposalId": 7,
-        "getFirstUnprocessedPriorityTx": 2111871,
+        "getCurrentProposalId": 10,
+        "getFirstUnprocessedPriorityTx": 2694124,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x0100089b8a2f2e6a20ba28f02c9e0ed0c13d702932364561a0ea61621f65f0a8",
         "getL2DefaultAccountBytecodeHash": "0x0100067d16a5485875b4249040bf421f53e869337fe118ec747cf40a4c777e5f",
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 9108,
+        "getPriorityQueueSize": 1578,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
-        "getProtocolVersion": 14,
+        "getProtocolVersion": 17,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 201038,
-        "getTotalBlocksExecuted": 199526,
-        "getTotalBlocksVerified": 200372,
-        "getTotalPriorityTxs": 2120979,
+        "getTotalBlocksCommitted": 316597,
+        "getTotalBlocksExecuted": 315771,
+        "getTotalBlocksVerified": 316196,
+        "getTotalPriorityTxs": 2695702,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x3F04F86f14aB74953fDAEde8175e0714eB8e798e",
         "getVerifierParams": [
           "0x1186ec268d49f1905f8d9c1e9d39fc33e98c74f91d91a21b8f7ef78bd09a8db8",
           "0x101e08b00193e529145ee09823378ef51a3bc8966504064f1f6ba3f1ba863210",
-          "0x0a3657f884af32d3a573c5fdb3440c9ac45271ede8c982faeaae7434d032ab3e"
+          "0x18c1639094f58177409186e8c48d9f577c9410901d2f1d486b3e7d6cf553ae4c"
         ],
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0xbe3e83e7c4560855455fc356d0764dcd811d2f6261ced7b1aa25b700befba045",
-          1694086883,
+          "0x37f00dac6277e88d2edc198131384d990a8dba5f2e8a6fc49cb19fbc1387066f",
+          1700498339,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
@@ -149,10 +157,12 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1679602559,
       "values": {
         "executionDelay": 75600,
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "revertedBlocks": [],
         "validator": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
         "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
@@ -164,6 +174,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692018551,
       "values": {
         "get_verification_key": [
           67108864,
@@ -290,23 +301,26 @@
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1666872275,
       "values": {
         "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
         "getChainId": 1,
         "getOwners": [
           "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
-          "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F",
+          "0xe79af29d618141Ffef951B240b250d47030D56d7",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
           "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
           "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
-          "0xa265146cA40F52cfC439888D0b4291b5440e6769"
+          "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
         ],
         "getThreshold": 4,
-        "nonce": 67,
+        "nonce": 76,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -319,6 +333,8 @@
         "implementation": "0x7FB17101A744e156e63d5fF6A4775fb48756577c",
         "admin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       },
+      "implementations": ["0x7FB17101A744e156e63d5fF6A4775fb48756577c"],
+      "sinceTimestamp": 1676370683,
       "values": {
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
@@ -332,6 +348,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1679581139,
       "values": {
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -343,11 +360,11 @@
     "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
     "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
     "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
+    "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df",
     "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
     "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
     "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
-    "0xa265146cA40F52cfC439888D0b4291b5440e6769",
-    "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F"
+    "0xe79af29d618141Ffef951B240b250d47030D56d7"
   ],
   "abis": {
     "0x2E64926BE35412f7710A3E097Ba076740bF97CC0": [

@@ -51,6 +51,7 @@ export const immutablex: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://www.immutable.com/'],
       apps: ['https://market.x.immutable.com/'],

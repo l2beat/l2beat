@@ -21,6 +21,10 @@ export interface Token {
 
   type: AssetType
   formula: 'totalSupply' | 'locked' | 'circulatingSupply'
+  bridgedUsing?: {
+    bridge: string
+    slug?: string
+  }
 
   /** @deprecated */
   category: 'ether' | 'stablecoin' | 'other'
