@@ -1,20 +1,45 @@
 import { LivenessApiResponse } from '@l2beat/shared-pure'
 
+import { Clock } from '../../../core/Clock'
 import { Project } from '../../../model'
+import { LivenessConfigurationRepository } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'
 import { calcIntervalWithAvgsPerProject } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByProjectIdAndType'
 
+type LivenessResult =
+  | {
+      type: 'success'
+      data: LivenessApiResponse
+    }
+  | {
+      type: 'error'
+      error: 'DATA_NOT_FULLY_SYNCED'
+    }
+
 export class LivenessController {
   constructor(
     private readonly livenessRepository: LivenessRepository,
     private readonly projects: Project[],
+    private readonly clock: Clock,
+    private readonly configurationRepository: LivenessConfigurationRepository,
   ) {}
 
-  async getLiveness(): Promise<LivenessApiResponse> {
+  async getLiveness(): Promise<LivenessResult> {
     const projects: LivenessApiResponse['projects'] = {}
     console.time('getLiveness')
+
+    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
+    const configurations = await this.configurationRepository.getAll()
+    const areAllSynced = configurations.every((config) =>
+      config.lastSyncedTimestamp?.gte(requiredTimestamp),
+    )
+
+    if (!areAllSynced) {
+      console.timeEnd('getLiveness')
+      return { type: 'error', error: 'DATA_NOT_FULLY_SYNCED' }
+    }
 
     await Promise.all(
       this.projects.map(async (project) => {
@@ -52,6 +77,6 @@ export class LivenessController {
     )
 
     console.timeEnd('getLiveness')
-    return { projects }
+    return { type: 'success', data: { projects } }
   }
 }

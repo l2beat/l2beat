@@ -54,6 +54,8 @@ export function createLivenessModule(
   const livenessController = new LivenessController(
     livenessRepository,
     config.projects,
+    clock,
+    livenessConfigurationRepository,
   )
   const livenessRouter = createLivenessRouter(livenessController)
 

@@ -6,7 +6,14 @@ export function createLivenessRouter(livenessController: LivenessController) {
   const router = new Router()
 
   router.get('/api/liveness', async (ctx) => {
-    ctx.body = await livenessController.getLiveness()
+    const result = await livenessController.getLiveness()
+
+    if (result.type === 'error') {
+      ctx.status = 422
+      ctx.body = result.error
+      return
+    }
+    ctx.body = result.data
   })
 
   return router

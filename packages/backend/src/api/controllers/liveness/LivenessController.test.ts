@@ -1,7 +1,20 @@
-import { assert, LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  LivenessType,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
+import { Clock } from '../../../core/Clock'
+import { LivenessTransfer } from '../../../core/liveness/types/LivenessConfig'
+import { LivenessConfigurationIdentifier } from '../../../core/liveness/types/LivenessConfigurationIdentifier'
 import { Project } from '../../../model'
+import {
+  LivenessConfigurationRecord,
+  LivenessConfigurationRepository,
+} from '../../../peripherals/database/LivenessConfigurationRepository'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
@@ -34,18 +47,22 @@ describe(LivenessController.name, () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
         mockProjectConfig(RECORDS),
+        getMockClock(),
+        getMockLivenessConfigurationRepository(),
       )
 
       const result = await livenessController.getLiveness()
-      const project1Anomalies = result.projects.project1?.anomalies
+      if (result.type === 'success') {
+        const project1Anomalies = result.data.projects.project1?.anomalies
 
-      expect(project1Anomalies).toEqual([
-        {
-          timestamp: RECORDS.at(-2)!.timestamp,
-          durationInSeconds: 501 * 3600,
-          type: LivenessType('DA'),
-        },
-      ])
+        expect(project1Anomalies).toEqual([
+          {
+            timestamp: RECORDS.at(-2)!.timestamp,
+            durationInSeconds: 501 * 3600,
+            type: LivenessType('DA'),
+          },
+        ])
+      }
     })
 
     it('returns empty array if no anomalies', async () => {
@@ -61,21 +78,29 @@ describe(LivenessController.name, () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
         mockProjectConfig(RECORDS),
+        getMockClock(),
+        getMockLivenessConfigurationRepository(),
       )
 
       const result = await livenessController.getLiveness()
-      const project1Anomalies = result.projects.project1?.anomalies
-      expect(project1Anomalies).toEqual([])
+      if (result.type === 'success') {
+        const project1Anomalies = result.data.projects.project1?.anomalies
+        expect(project1Anomalies).toEqual([])
+      }
     })
 
     it('returns empty object if no data', async () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository([]),
         [],
+        getMockClock(),
+        getMockLivenessConfigurationRepository(),
       )
 
       const result = await livenessController.getLiveness()
-      expect(result).toEqual({ projects: {} })
+      if (result.type === 'success') {
+        expect(result.data).toEqual({ projects: {} })
+      }
     })
 
     it('correctly calculate avg and max', async () => {
@@ -102,6 +127,8 @@ describe(LivenessController.name, () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
         mockProjectConfig(RECORDS),
+        getMockClock(),
+        getMockLivenessConfigurationRepository(),
       )
 
       const records = [...RECORDS]
@@ -131,14 +158,75 @@ describe(LivenessController.name, () => {
       }
 
       const result = await livenessController.getLiveness()
-      const project1BatchSubmissions =
-        result.projects.project1?.batchSubmissions
-      expect(project1BatchSubmissions).toEqual(expected)
+      if (result.type === 'success') {
+        const project1BatchSubmissions =
+          result.data.projects.project1?.batchSubmissions
+        expect(project1BatchSubmissions).toEqual(expected)
+      }
     })
+  })
+
+  it('return error when data is not fully synced', async () => {
+    const projectId = ProjectId('test')
+    const type = LivenessType('STATE')
+    const sinceTimestamp = new UnixTime(0)
+    const from = EthereumAddress.random()
+    const to = EthereumAddress.random()
+
+    const config: LivenessTransfer = {
+      livenessConfigurationId: Math.floor(Math.random() * 100),
+      projectId,
+      type,
+      sinceTimestamp,
+      from,
+      to,
+    }
+    const clock = getMockClock()
+
+    const livenessController = new LivenessController(
+      getMockLivenessRepository([]),
+      mockProjectConfig([]),
+      clock,
+      getMockLivenessConfigurationRepository([
+        {
+          id: 1,
+          projectId,
+          type,
+          identifier: LivenessConfigurationIdentifier(config),
+          params: JSON.stringify(
+            LivenessConfigurationIdentifier.params(config),
+          ),
+          sinceTimestamp,
+          lastSyncedTimestamp: clock.getLastHour().add(-3, 'hours'),
+        },
+      ]),
+    )
+    const result = await livenessController.getLiveness()
+
+    expect(result.type).toEqual('error')
+    if (result.type === 'error') {
+      expect(result.error).toEqual('DATA_NOT_FULLY_SYNCED')
+    }
   })
 })
 
 const START = UnixTime.now()
+
+function getMockClock() {
+  return mockObject<Clock>({
+    getLastHour: () => UnixTime.now().toStartOf('hour').add(-1, 'hours'),
+  })
+}
+
+function getMockLivenessConfigurationRepository(
+  data?: LivenessConfigurationRecord[],
+) {
+  return mockObject<LivenessConfigurationRepository>({
+    getAll: async () => data ?? [],
+    addMany: async () => [],
+    deleteMany: async () => -1,
+  })
+}
 
 function getMockLivenessRepository(
   records: LivenessRecordWithProjectIdAndType[],
