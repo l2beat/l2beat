@@ -20,7 +20,7 @@ const TO = FROM.add(2, 'days')
 
 describe(LivenessClient.name, () => {
   describe(LivenessClient.prototype.getLivenessData.name, () => {
-    it('adjust "to", merges and filters configs, calls and returns valid data', async () => {
+    it('calls and returns valid data', async () => {
       const bigquery = mockObject<BigQueryClient>({
         query: mockFn()
           .resolvesToOnce(TRANSFER_RESPONSE)
@@ -69,19 +69,6 @@ describe(LivenessClient.name, () => {
         LIVENESS_CONFIGURATIONS,
         FROM,
         adjustedTo,
-      )
-
-      // adjusts "to"
-      expect(adjustedTo).toEqual(expectedAdjustedTo)
-
-      const usedConfigurationsIds = [
-        ...transfersConfig.map((c) => c.livenessConfigurationId),
-        ...functionCallsConfig.map((c) => c.livenessConfigurationId),
-      ]
-
-      // returns used configurations ids
-      expect(usedConfigurationsIds).toEqual(
-        [...transfers, ...functionCalls].map((c) => c.livenessConfigurationId),
       )
 
       // returns data returned from internal methods

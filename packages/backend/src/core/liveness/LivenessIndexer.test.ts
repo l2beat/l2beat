@@ -375,4 +375,40 @@ describe(LivenessIndexer.name, () => {
       expect(value).toEqual(1)
     })
   })
+
+  describe(LivenessIndexer.prototype.getConfiguration.name, () => {
+    it('should return configurations and adjustedTo', async () => {
+      const { livenessIndexer } = getMockLivenessIndexer({})
+      const { CONFIGURATIONS, PROJECTS } = LIVENESS_MOCK
+      const { functionCallsConfig, transfersConfig, adjustedTo } =
+        await livenessIndexer.getConfiguration(FROM.toNumber(), TO.toNumber())
+
+      const config = mergeConfigs(PROJECTS, CONFIGURATIONS)
+
+      const expectedTransfersConfig = config.transfers.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
+          FROM,
+          adjustedTo,
+        ),
+      )
+      const expectedFunctionCallsConfig = config.functionCalls.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
+          FROM,
+          adjustedTo,
+        ),
+      )
+
+      expect(transfersConfig).toEqual(expectedTransfersConfig)
+      expect(functionCallsConfig).toEqual(expectedFunctionCallsConfig)
+      expect(adjustedTo).toEqual(
+        adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber()),
+      )
+    })
+  })
 })

@@ -87,7 +87,6 @@ export class LivenessIndexer extends ChildIndexer {
     return Promise.resolve(adjustedTo.toNumber())
   }
 
-  // TODO: add tests
   async getConfiguration(
     from: number,
     to: number,
