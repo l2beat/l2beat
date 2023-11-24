@@ -4,7 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Project } from '../../model'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
-import { LivenessClient, mergeConfigs } from './LivenessClient'
+import { LivenessClient } from './LivenessClient'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
 import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
 import {
@@ -12,6 +12,7 @@ import {
   getFunctionCallQuery,
   getTransferQuery,
   isTimestampInRange,
+  mergeConfigs,
 } from './utils'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
@@ -28,13 +29,35 @@ describe(LivenessClient.name, () => {
 
       const livenessClient = new LivenessClient(bigquery)
 
-      const { data, adjustedTo, usedConfigurationsIds } =
-        await livenessClient.getLivenessData(
-          PROJECTS,
-          LIVENESS_CONFIGURATIONS,
+      const config = mergeConfigs(PROJECTS, LIVENESS_CONFIGURATIONS)
+
+      const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
+
+      const transfersConfig = config.transfers.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
           FROM,
-          TO,
-        )
+          adjustedTo,
+        ),
+      )
+      const functionCallsConfig = config.functionCalls.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
+          FROM,
+          adjustedTo,
+        ),
+      )
+
+      const data = await livenessClient.getLivenessData(
+        transfersConfig,
+        functionCallsConfig,
+        FROM,
+        adjustedTo,
+      )
 
       // prepare expected values
       const expectedAdjustedTo = adjustToForBigqueryCall(
@@ -50,6 +73,11 @@ describe(LivenessClient.name, () => {
 
       // adjusts "to"
       expect(adjustedTo).toEqual(expectedAdjustedTo)
+
+      const usedConfigurationsIds = [
+        ...transfersConfig.map((c) => c.livenessConfigurationId),
+        ...functionCallsConfig.map((c) => c.livenessConfigurationId),
+      ]
 
       // returns used configurations ids
       expect(usedConfigurationsIds).toEqual(

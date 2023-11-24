@@ -12,7 +12,12 @@ import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LIVENESS_MOCK } from '../../test/mockLiveness'
 import { LivenessClient } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
-import { getLivenessConfigHash } from './utils'
+import {
+  adjustToForBigqueryCall,
+  getLivenessConfigHash,
+  isTimestampInRange,
+  mergeConfigs,
+} from './utils'
 
 const {
   getMockLivenessIndexer,
@@ -270,14 +275,10 @@ describe(LivenessIndexer.name, () => {
         ...FUNCTIONS_EXPECTED,
       ]
 
-      const adjustedTo = TO.add(1, 'days')
+      const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
 
       const livenessClient = mockObject<LivenessClient>({
-        getLivenessData: mockFn().resolvesTo({
-          data: expectedToSave,
-          adjustedTo,
-          usedConfigurationsIds: CONFIGURATIONS.map((c) => c.id),
-        }),
+        getLivenessData: mockFn().resolvesTo(expectedToSave),
       })
 
       const { livenessIndexer, livenessRepository, configurationRepository } =
@@ -285,18 +286,43 @@ describe(LivenessIndexer.name, () => {
 
       const currentTo = await livenessIndexer.update(
         FROM.toNumber(),
-        TO.toNumber(),
+        adjustedTo.toNumber(),
       )
 
-      expect(livenessClient.getLivenessData).toHaveBeenCalledWith(
+      const config = mergeConfigs(
         PROJECTS,
         CONFIGURATIONS.map((c, i) => ({
           ...c,
           id: i,
           lastSyncedTimestamp: undefined,
         })),
+      )
+
+      const transfersConfig = config.transfers.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
+          FROM,
+          adjustedTo,
+        ),
+      )
+      const functionCallsConfig = config.functionCalls.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
+          FROM,
+          adjustedTo,
+        ),
+      )
+
+      expect(livenessClient.getLivenessData).toHaveBeenNthCalledWith(
+        1,
+        transfersConfig,
+        functionCallsConfig,
         FROM,
-        TO,
+        adjustedTo,
       )
       expect(currentTo).toEqual(adjustedTo.toNumber())
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
