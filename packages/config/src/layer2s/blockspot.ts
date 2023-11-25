@@ -24,7 +24,7 @@ export const blockspot: Layer2 = {
       ],
       repositories: ['https://github.com/BlockSpotL2'],
       socialMedia: [
-        'https://twitter.com/L2_BlockSpot',
+        'https://twitter.com/BlockSpotL22',
         'https://discord.gg/4mVtZrKCeS',
         'https://mirror.xyz/0x28100FB105bc41766A09C7cd02f7f1875f061E87',
       ],
