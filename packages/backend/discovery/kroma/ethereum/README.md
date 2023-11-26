@@ -17,6 +17,11 @@ Foundry scripting is very limiting and I suggest using TypeScript (with
 ethers/viem and e.g. TypeChain). Otherwise you won't be able to use loops with
 delays, polling, integration with 3rd party systems (Discord message) etc.
 
+See documentation here:
+
+- https://book.getfoundry.sh/tutorials/solidity-scripting
+- https://book.getfoundry.sh/reference/forge/forge-script
+
 - `export RPC_URL=<your rpc url>`
 - `export MY_PRIVATE_KEY=0x.....`
 - `export MY_ADDRESS=0x.....`
