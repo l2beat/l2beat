@@ -425,7 +425,7 @@
       "symbol": "BRKL",
       "decimals": 18,
       "sinceTimestamp": 1632392796,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18763/large/brkl.png?1696518228",
       "chainId": 1,
       "type": "CBV"
@@ -503,7 +503,7 @@
       "symbol": "PORTX",
       "decimals": 18,
       "sinceTimestamp": 1642426683,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24490/large/VE-tUL-q_400x400.png?1696523670",
       "chainId": 1,
       "type": "CBV"
@@ -698,7 +698,7 @@
       "symbol": "COPI",
       "decimals": 18,
       "sinceTimestamp": 1638465752,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21452/large/g56WwJDA_400x400.jpg?1696520814",
       "chainId": 1,
       "type": "CBV"
@@ -737,7 +737,7 @@
       "symbol": "CREDI",
       "decimals": 18,
       "sinceTimestamp": 1638200996,
-      "category": "ether",
+      "category": "other",
       "chainId": 1,
       "iconUrl": "https://assets.coingecko.com/coins/images/21396/large/e1QbZ4qQ_400x400.jpg?1696520760",
       "type": "CBV"
@@ -958,7 +958,7 @@
       "symbol": "EPIK",
       "decimals": 18,
       "sinceTimestamp": 1629214979,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17907/large/EPIK_Prime_LOGO.jpg?1696517427",
       "chainId": 1,
       "type": "CBV"
@@ -1139,7 +1139,7 @@
       "symbol": "GAINS",
       "decimals": 18,
       "sinceTimestamp": 1694551427,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/14681/large/200x200.png?1696514354",
       "chainId": 1,
       "type": "CBV"
@@ -1165,7 +1165,7 @@
       "symbol": "GAME",
       "decimals": 5,
       "sinceTimestamp": 1626767324,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17604/large/gpMi14-r_400x400.jpg?1696517136",
       "chainId": 1,
       "type": "CBV"
@@ -1620,7 +1620,7 @@
       "symbol": "MELD",
       "decimals": 18,
       "sinceTimestamp": 1682506271,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/30170/large/Twitter.jpg?1696529090",
       "chainId": 1,
       "type": "CBV"
@@ -1711,7 +1711,7 @@
       "symbol": "NFTD",
       "decimals": 18,
       "sinceTimestamp": 1632080742,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18578/large/nftrade.png?1696518055",
       "chainId": 1,
       "type": "CBV"
@@ -1737,7 +1737,7 @@
       "symbol": "NUM",
       "decimals": 18,
       "sinceTimestamp": 1636099301,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/20495/large/NP_Social_media_profile_pic.png?1696519902",
       "chainId": 1,
       "type": "CBV"
@@ -1828,7 +1828,7 @@
       "symbol": "OBI",
       "decimals": 18,
       "sinceTimestamp": 1684836239,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/30216/large/new_V_test2.png?1696529127",
       "chainId": 1,
       "type": "CBV"
@@ -1867,7 +1867,7 @@
       "symbol": "ORION",
       "decimals": 18,
       "sinceTimestamp": 1632669013,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18630/large/YtrqPIWc.png?1696518102",
       "chainId": 1,
       "type": "CBV"
@@ -1880,7 +1880,7 @@
       "symbol": "PBX",
       "decimals": 18,
       "sinceTimestamp": 1630072657,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18410/large/paribus.PNG?1696517900",
       "chainId": 1,
       "type": "CBV"
@@ -2647,7 +2647,7 @@
       "symbol": "VENT",
       "decimals": 18,
       "sinceTimestamp": 1630951226,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17925/large/Artboard_29.png?1696517445",
       "chainId": 1,
       "type": "CBV"
@@ -2816,7 +2816,7 @@
       "symbol": "XCAD",
       "decimals": 18,
       "sinceTimestamp": 1620952873,
-      "category": "ether",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/15857/large/logoWhiteX.jpg?1696515473",
       "chainId": 1,
       "type": "CBV"
