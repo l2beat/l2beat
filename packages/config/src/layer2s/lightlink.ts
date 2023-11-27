@@ -21,7 +21,6 @@ const upgradesProxy = {
   upgradeDelay: 'No delay',
 }
 
-
 export const lightlink: Layer2 = {
   type: 'layer2',
   id: ProjectId('lightlink'), // This is a simple identifier, you can use a UUID or another unique string if preferred.
@@ -84,11 +83,12 @@ export const lightlink: Layer2 = {
         {
           contract: 'PrimeAnchor',
           references: [
-           'https://etherscan.io/address/0x99eae1b4c6159c4835da1cd86a2542dea70536bb#code#F4#L8',
+            'https://etherscan.io/address/0x99eae1b4c6159c4835da1cd86a2542dea70536bb#code#F4#L8',
           ],
         },
       ],
-      description: 'Transaction is currently stored on IPFS with the IPFS CID, transaction roots and state roots being posted to L1. The LightLink team is working on moving DA to Celestia.',
+      description:
+        'Transaction is currently stored on IPFS with the IPFS CID, transaction roots and state roots being posted to L1. The LightLink team is working on moving DA to Celestia.',
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
@@ -96,8 +96,9 @@ export const lightlink: Layer2 = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
       value: '',
-      description: 'At the present time, there is no mechanism to prevent the sequencer from censoring transactions. Allowing transactions to be enqueued via L1 is on the LightLink roadmap.',
-      sentiment: 'UnderReview'
+      description:
+        'At the present time, there is no mechanism to prevent the sequencer from censoring transactions. Allowing transactions to be enqueued via L1 is on the LightLink roadmap.',
+      sentiment: 'UnderReview',
     },
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
@@ -137,8 +138,7 @@ export const lightlink: Layer2 = {
           isCritical: true,
         },
       ],
-      references: [
-      ],
+      references: [],
     },
     dataAvailability: {
       ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
@@ -154,14 +154,13 @@ export const lightlink: Layer2 = {
       references: [
         {
           text: 'LightLink operates the only "Sequencer" node.',
-          href: 'https://docs.lightlink.io/lightlink-protocol/achitecture-and-design/protocol-design'
+          href: 'https://docs.lightlink.io/lightlink-protocol/achitecture-and-design/protocol-design',
         },
       ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-      references: [
-      ],
+      references: [],
     },
     exitMechanisms: [
       {
@@ -180,39 +179,41 @@ export const lightlink: Layer2 = {
       description:
         'LightLink has an EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on LightLink Network.',
       risks: [],
-      references: [
-      ],
+      references: [],
     },
   },
   contracts: {
     addresses: [
       discovery.getContractDetails('PrimeAnchor', {
-          description: 'PrimeAnchor is a smart contract on L1 that stores information about the rollup batches and state. It is used to prove the state of the rollup to L1.',
+        description:
+          'PrimeAnchor is a smart contract on L1 that stores information about the rollup batches and state. It is used to prove the state of the rollup to L1.',
       }),
       discovery.getContractDetails('L1NativeTokenPredicate', {
-          description: 'L1NativeTokenPredicate is a proxied smart contract that manages initializing deposits and finalizing withdrawals of native Ether on L1.',
-          ...upgradesProxy,
+        description:
+          'L1NativeTokenPredicate is a proxied smart contract that manages initializing deposits and finalizing withdrawals of native Ether on L1.',
+        ...upgradesProxy,
       }),
       discovery.getContractDetails('L1ERC20Predicate', {
-          description: 'L1ERC20Predicate is a proxied smart contract that manages initializing deposits and finalizing withdrawals of ERC20 tokens on L1.',
-          ...upgradesProxy,
+        description:
+          'L1ERC20Predicate is a proxied smart contract that manages initializing deposits and finalizing withdrawals of ERC20 tokens on L1.',
+        ...upgradesProxy,
       }),
       discovery.getContractDetails('L1BridgeRegistry', {
-        description: 'L1BridgeRegistry controls the PoA bridge validators and consensus thresholds.',
+        description:
+          'L1BridgeRegistry controls the PoA bridge validators and consensus thresholds.',
         ...upgradesProxy,
       }),
       discovery.getContractDetails('Multisig', {
-        description: 'Multisig is a smart contract that require multiple signatures to execute a transaction. It is used to manage the L1BridgeRegistry contract.',
+        description:
+          'Multisig is a smart contract that require multiple signatures to execute a transaction. It is used to manage the L1BridgeRegistry contract.',
       }),
-  ],
+    ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
       name: 'State Root Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('PrimeAnchor', 'owner'),
-      ],
+      accounts: [discovery.getPermissionedAccount('PrimeAnchor', 'owner')],
       description: 'Central actor to post new L2 state roots to L1.',
     },
   ],
