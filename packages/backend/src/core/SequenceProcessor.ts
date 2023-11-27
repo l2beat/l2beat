@@ -112,7 +112,6 @@ export class SequenceProcessor extends EventEmitter {
     await this.loadState()
     this.processQueue.addIfEmpty()
     this.refreshId = setInterval(() => {
-      this.processQueue.unhaltIfNeeded()
       this.processQueue.addIfEmpty()
     }, this.scheduleInterval)
   }
@@ -218,5 +217,13 @@ export class SequenceProcessor extends EventEmitter {
     activityLast.labels({ project: this.id }).set(state.lastProcessed)
     activityLatest.labels({ project: this.id }).set(state.latest)
     this.state = state
+  }
+
+  /**
+   * WARNING: this method should be used only in tests
+   */
+  _TEST_ONLY_stopQueue(): void {
+    this.processQueue._TEST_ONLY_stop()
+    this.processQueue._TEST_ONLY_clear()
   }
 }
