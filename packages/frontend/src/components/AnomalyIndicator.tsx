@@ -96,7 +96,6 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
                 Duration:{' '}
                 <LivenessDurationCell
                   durationInSeconds={anomaly.durationInSeconds}
-                  withColors
                 />
               </span>
             </div>

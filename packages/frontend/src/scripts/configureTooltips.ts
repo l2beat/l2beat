@@ -4,7 +4,6 @@ import { isMobile } from './utils/isMobile'
 
 export function configureTooltips() {
   const { $, $$ } = makeQuery(document.body)
-
   if (!document.querySelector('.Tooltip-Popup')) {
     return
   }
