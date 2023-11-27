@@ -77,7 +77,13 @@ export function DashboardPage(props: DashboardPageProps) {
         <tbody>
           {Object.entries(props.projects).map(([chainName, projects]) => (
             <>
-              <tr style={{ padding: '0px', textAlign: 'left', background: '#363636' }}>
+              <tr
+                style={{
+                  padding: '0px',
+                  textAlign: 'left',
+                  background: '#363636',
+                }}
+              >
                 <th
                   colSpan={12}
                   scope="colgroup"
