@@ -168,6 +168,7 @@ function mockProjectConfig(
     .map((projectId) =>
       mockObject<Project>({
         projectId,
+        isArchived: false,
         livenessConfig: mockObject<Project['livenessConfig']>({
           duplicateData: [],
           functionCalls: [],
