@@ -220,8 +220,8 @@ export class SequenceProcessor extends EventEmitter {
   }
 
   /**
-  WARNING: this method should be used only in tests
-  **/
+   * WARNING: this method should be used only in tests
+   */
   _TEST_ONLY_stopQueue(): void {
     this.processQueue._TEST_ONLY_stop()
     this.processQueue._TEST_ONLY_clear()

@@ -212,15 +212,15 @@ export class TaskQueue<T> {
   }
 
   /**
-  WARNING: this method should be used only in tests
-  **/
+   * WARNING: this method should be used only in tests
+   */
   _TEST_ONLY_stop() {
     this.stopped = true
   }
 
   /**
-  WARNING: this method should be used only in tests
-  **/
+   * WARNING: this method should be used only in tests
+   */
   _TEST_ONLY_clear() {
     this.queue.splice(0, this.queue.length)
   }
