@@ -428,7 +428,7 @@ export function getScalingActivityColumnsConfig() {
   ]
   return columns
 }
-//TODO: (liveness) consider adding alignCenter:true
+
 export function getScalingLivenessColumnsConfig() {
   const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
     {
@@ -479,6 +479,17 @@ export function getScalingLivenessColumnsConfig() {
           },
         },
       ],
+    },
+    {
+      name: 'Technology',
+      tooltip:
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      shortName: 'Tech',
+      getValue: (project) => (
+        <TechnologyCell provider={project.provider} disableColors>
+          {project.category}
+        </TechnologyCell>
+      ),
     },
     {
       name: '30-day anomalies',
