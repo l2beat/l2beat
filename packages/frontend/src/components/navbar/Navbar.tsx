@@ -20,6 +20,7 @@ import { VerticalBar } from './VerticalBar'
 export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
+  showLiveness: boolean
   showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -35,6 +36,7 @@ export function getNavbarProps(
     forumLink: config.links.forum,
     showHiringBadge: config.features.hiringBadge,
     showActivity: config.features.activity,
+    showLiveness: config.features.liveness,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -46,6 +48,7 @@ export function Navbar(props: NavbarProps) {
       <SidebarMenu
         selectedPage={props.selectedPage}
         showActivity={props.showActivity}
+        showLiveness={props.showLiveness}
         showHiringBadge={props.showHiringBadge}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}

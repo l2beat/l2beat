@@ -1,3 +1,22 @@
+# Diff at Thu, 23 Nov 2023 13:31:10 GMT:
+
+- author: Amin Latifi (<a.latifi.al@gmail.com>)
+- comparing to: master@2ff45714640abe4c50d283967078888d4af81d78
+
+## Description
+
+StarGateFeeLibrary7 owner was replaced: 0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d -> 0x65bb797c2B9830d891D87288F029ed8dACc19705
+
+## Watched changes
+
+```diff
+    contract StarGateFeeLibrary7 (0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F) {
+      values.owner:
+-        "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
++        "0x65bb797c2B9830d891D87288F029ed8dACc19705"
+    }
+```
+
 # Diff at Fri, 17 Nov 2023 12:24:03 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)

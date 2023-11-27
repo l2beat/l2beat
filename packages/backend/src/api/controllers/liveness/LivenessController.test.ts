@@ -159,7 +159,11 @@ function mockProjectConfig(
     .map((projectId) =>
       mockObject<Project>({
         projectId,
-        livenessConfig: mockObject<Project['livenessConfig']>(),
+        livenessConfig: mockObject<Project['livenessConfig']>({
+          duplicateData: [],
+          functionCalls: [],
+          transfers: [],
+        }),
       }),
     )
 }
