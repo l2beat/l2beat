@@ -12,51 +12,51 @@ import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
 interface Props {
   data: LivenessData | undefined
   project: ScalingLivenessViewEntry
+  dataType: 'txDataSubmissions' | 'stateUpdates'
 }
 
-export function LivenessDurationTimeRangeCell({ data, project }: Props) {
+export function LivenessDurationTimeRangeCell({
+  data,
+  project,
+  dataType,
+}: Props) {
+  const showOptimisticRollupWarning =
+    project.category === 'Optimistic Rollup' && dataType === 'stateUpdates'
   return (
-    <LivenessTimeRangeCell
-      last30Days={
-        <div
-          className="Tooltip"
-          title={renderToStaticMarkup(
-            <Tooltip label="30-day intervals" data={data?.last30Days} />,
-          )}
-        >
+    <div>
+      <LivenessTimeRangeCell
+        last30Days={
           <LivenessDurationCell
             durationInSeconds={data?.last30Days?.averageInSeconds}
             project={project}
+            tooltip={renderToStaticMarkup(
+              <Tooltip label="30-day intervals" data={data?.last30Days} />,
+            )}
+            showOptimisticRollupWarning={showOptimisticRollupWarning}
           />
-        </div>
-      }
-      last90Days={
-        <div
-          className="Tooltip"
-          title={renderToStaticMarkup(
-            <Tooltip label="90-day intervals" data={data?.last90Days} />,
-          )}
-        >
+        }
+        last90Days={
           <LivenessDurationCell
             durationInSeconds={data?.last90Days?.averageInSeconds}
             project={project}
+            tooltip={renderToStaticMarkup(
+              <Tooltip label="90-day intervals" data={data?.last90Days} />,
+            )}
+            showOptimisticRollupWarning={showOptimisticRollupWarning}
           />
-        </div>
-      }
-      max={
-        <div
-          className="Tooltip"
-          title={renderToStaticMarkup(
-            <Tooltip label="Max-day intervals" data={data?.max} />,
-          )}
-        >
+        }
+        max={
           <LivenessDurationCell
             durationInSeconds={data?.max?.averageInSeconds}
             project={project}
+            tooltip={renderToStaticMarkup(
+              <Tooltip label="Max-day intervals" data={data?.max} />,
+            )}
+            showOptimisticRollupWarning={showOptimisticRollupWarning}
           />
-        </div>
-      }
-    />
+        }
+      />
+    </div>
   )
 }
 

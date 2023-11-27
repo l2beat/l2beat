@@ -2,10 +2,13 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
+import { InfoIcon } from '../icons'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
   project?: ScalingLivenessViewEntry
+  tooltip?: string
+  showOptimisticRollupWarning?: boolean
 }) {
   if (
     !props.durationInSeconds &&
@@ -55,7 +58,25 @@ export function LivenessDurationCell(props: {
       </span>
     )
 
-  return duration
+  return (
+    <div
+      className={classNames(
+        'flex items-center gap-1.5',
+        props.tooltip && 'Tooltip',
+      )}
+      title={props.tooltip}
+    >
+      {duration}
+      {props.showOptimisticRollupWarning && (
+        <div
+          className="Tooltip"
+          title="Please note, for Optimistic rollups the state is not finalized until the challenge period passes."
+        >
+          <InfoIcon className="fill-yellow-700 dark:fill-yellow-300" />
+        </div>
+      )}
+    </div>
+  )
 }
 
 function addPlural(s: string, n: number) {
