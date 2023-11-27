@@ -67,8 +67,12 @@ export class StatusController {
       this.updateMonitorRepository,
       chainId,
     )
+
     return renderDashboardPage({
-      projects,
+      projects: {
+        [ChainId.getName(ChainId.ETHEREUM)]: projects,
+        [ChainId.getName(ChainId.ARBITRUM)]: [],
+      },
     })
   }
 
