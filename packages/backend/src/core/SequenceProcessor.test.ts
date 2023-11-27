@@ -230,7 +230,7 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
-      sequenceProcessor.stopQueue()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
         error: new Error(
@@ -266,7 +266,7 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
-      sequenceProcessor.stopQueue()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
         error: new Error('Force-failing during tests!'),
