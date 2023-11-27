@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
-import { InfoIcon } from '../icons'
+import { RoundedWarningIcon } from '../icons/symbols/RoundedWarningIcon'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
@@ -72,7 +72,7 @@ export function LivenessDurationCell(props: {
           className="Tooltip"
           title="Please note, for Optimistic rollups the state is not finalized until the challenge period passes."
         >
-          <InfoIcon className="fill-yellow-700 dark:fill-yellow-300" />
+          <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
         </div>
       )}
     </div>
