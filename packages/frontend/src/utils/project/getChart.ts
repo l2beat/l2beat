@@ -35,7 +35,7 @@ export function getChart(
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
     milestones: project.milestones,
-    isUpcoming: project.isUpcoming ?? project.config.escrows.length === 0,
+    showComingSoon: project.config.escrows.length === 0,
   }
 }
 

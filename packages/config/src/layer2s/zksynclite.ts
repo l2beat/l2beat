@@ -55,6 +55,8 @@ export const zksynclite: Layer2 = {
     purpose: 'Payments, Tokens',
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -91,9 +93,9 @@ export const zksynclite: Layer2 = {
           address: EthereumAddress(
             '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
           ),
-          selector: '0x83981808',
+          selector: '0xb0705b42',
           functionSignature:
-            'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
+            'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
           sinceTimestamp: new UnixTime(1592218707),
         },
       ],

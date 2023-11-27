@@ -3,29 +3,26 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
-export const canto: Layer2 = {
+export const x1: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
-  id: ProjectId('canto'),
+  id: ProjectId('x1'),
   display: {
-    name: 'Canto',
-    slug: 'canto',
+    name: 'X1',
+    slug: 'x1',
     description:
-      "Canto is the L1 which will migrate to a Ethereum L2 scaling solution powered by Polygon's CDK dedicated to Real World Assets.",
+      'X1 is an upcoming Validium by OKX. It is powered by the Polygon CDK.',
     purpose: 'Universal',
-    category: 'ZK Rollup',
+    category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
-      websites: ['https://canto.io'],
+      websites: ['https://www.okx.com/x1'],
       apps: [],
-      documentation: ['https://docs.canto.io'],
+      documentation: ['https://www.okx.com/x1/docs'],
       explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://twitter.com/CantoPublic',
-        'https://discord.gg/canto',
-      ],
+      socialMedia: ['https://twitter.com/X1_Network'],
     },
   },
   stage: {

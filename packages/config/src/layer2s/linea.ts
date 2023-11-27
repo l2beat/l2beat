@@ -80,6 +80,7 @@ export const linea: Layer2 = {
       'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://linea.build/'],
       apps: [],
@@ -117,6 +118,12 @@ export const linea: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'batchSubmissions',
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

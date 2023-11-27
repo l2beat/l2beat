@@ -46,6 +46,8 @@ export const zksyncera: Layer2 = {
     purpose: 'Universal',
     provider: 'ZK Stack',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
@@ -94,9 +96,9 @@ export const zksyncera: Layer2 = {
           address: EthereumAddress(
             '0x3dB52cE065f728011Ac6732222270b3F2360d919',
           ),
-          selector: '0x7739cbe7',
+          selector: '0xce9dcf16',
           functionSignature:
-            'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[], (uint256[],uint256[]) )',
+            'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
           sinceTimestamp: new UnixTime(1679602559),
         },
       ],
