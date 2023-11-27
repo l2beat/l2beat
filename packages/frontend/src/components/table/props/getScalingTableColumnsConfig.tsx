@@ -455,7 +455,7 @@ export function getScalingLivenessColumnsConfig() {
       ),
       columns: [
         {
-          name: 'tx data submissions',
+          name: 'Tx data submissions',
           tooltip: 'How often transaction batches are submitted to the L1',
           getValue: (project) => {
             return (

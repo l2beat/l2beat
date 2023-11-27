@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { Tooltip } from '../../../../components/Tooltip'
 import { configureLivenessTimeRangeControls } from '../../../../scripts/configureLivenessTimeRangeControls'
 import { configureTooltips } from '../../../../scripts/configureTooltips'
@@ -4007,6 +4008,11 @@ const meta: Meta<typeof ScalingLivenessView> = {
       )
     },
   ],
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 }
 export default meta
 type Story = StoryObj<typeof ScalingLivenessView>
