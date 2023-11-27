@@ -65,17 +65,17 @@ function Tooltip(props: {
   label: string
 }) {
   return (
-    <div>
+    <div className="font-medium">
       <span>{props.label}:</span>
       <ul className="mt-1 list-inside list-disc">
-        <li>
-          Average:{' '}
+        <li className="flex gap-1">
+          Average:
           <LivenessDurationCell
             durationInSeconds={props.data?.averageInSeconds}
           />
         </li>
-        <li>
-          Maximum:{' '}
+        <li className="flex gap-1">
+          Maximum:
           <LivenessDurationCell
             durationInSeconds={props.data?.maximumInSeconds}
           />

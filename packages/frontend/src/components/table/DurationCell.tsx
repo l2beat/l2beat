@@ -59,12 +59,13 @@ export function LivenessDurationCell(props: {
     )
 
   return (
-    <div
+    <span
       className={classNames(
         'flex items-center gap-1.5',
         props.tooltip && 'Tooltip',
       )}
       title={props.tooltip}
+      data-tooltip-big={true}
     >
       {duration}
       {props.showOptimisticRollupWarning && (
@@ -75,7 +76,7 @@ export function LivenessDurationCell(props: {
           <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
         </div>
       )}
-    </div>
+    </span>
   )
 }
 
