@@ -1,9 +1,9 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 18622543,
-  "configHash": "0xf1dfde065899a9e38d1356f7e81f7081d5dc25ecdb6dee24090b0bc459514c50",
-  "version": 2,
+  "blockNumber": 18663285,
+  "configHash": "0xe3a6dc1c8d1b6b1f2216231e936bdc7a0b1e136ff2566d1069d82bf9caa760af",
+  "version": 3,
   "contracts": [
     {
       "name": "Multisig",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692154319,
       "values": {
         "getMemberByIndex": [
           "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
@@ -20,7 +21,7 @@
           "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
           "0x26623571D709862776a0E061617634e6474393F2"
         ],
-        "getTransactionCount": 14,
+        "getTransactionCount": 15,
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "derivedName": "Multisig"
@@ -34,6 +35,8 @@
         "implementation": "0x468b89D930ca7974196D7195033600B658011756",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "implementations": ["0x468b89D930ca7974196D7195033600B658011756"],
+      "sinceTimestamp": 1692155207,
       "values": {
         "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
         "isPaused": false,
@@ -48,7 +51,8 @@
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1692216287
     },
     {
       "name": "L1BridgeRegistry",
@@ -59,6 +63,8 @@
         "implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "implementations": ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"],
+      "sinceTimestamp": 1692154667,
       "values": {
         "consensusPowerThreshold": 80,
         "getMultisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
@@ -66,7 +72,9 @@
         "getValidators": [
           ["0x12eCE4AA73ee8ea958bE327daE41Dd785c997118", 40],
           ["0x6f933814903561F79137099587737DFB24c6E86D", 20],
-          ["0xB44C32Dd1ec374224eED43FD827EBE64db16b0df", 20]
+          ["0xB44C32Dd1ec374224eED43FD827EBE64db16b0df", 20],
+          ["0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9", 40],
+          ["0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938", 40]
         ],
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "systemVerifier": "0x0000000000000000000000000000000000000000"
@@ -82,6 +90,8 @@
         "implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "implementations": ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"],
+      "sinceTimestamp": 1692155531,
       "values": {
         "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
         "isPaused": false,
@@ -96,9 +106,10 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1692217031,
       "values": {
         "accessControlProvider": "0x4b04016b8910Db8CAE1471bCE25B9D086019c34B",
-        "currentIndex": 68,
+        "currentIndex": 92,
         "owner": "0xF6A2AccBe2e02C5a255c955a775b686fD6285D49"
       },
       "derivedName": "PrimeAnchor"
@@ -109,7 +120,9 @@
     "0x26623571D709862776a0E061617634e6474393F2",
     "0x6f933814903561F79137099587737DFB24c6E86D",
     "0x7F17A74942c5b22b340688f099c99A79426447e1",
+    "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
     "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+    "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
     "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
     "0xF6A2AccBe2e02C5a255c955a775b686fD6285D49"
   ],

@@ -16,24 +16,19 @@
   },
   "overrides": {
     "PrimeAnchor": {
-      "ignoreMethods": ["proofs"],
-      "ignoreInWatchMode": ["proofs"]
+      "ignoreMethods": ["proofs"]
     },
     "L1NativeTokenPredicate": {
-      "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"]
     },
     "L1ERC20Predicate": {
-      "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"]
     },
     "L1BridgeRegistry": {
-      "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"]
     },
     "Multisig": {
-      "ignoreMethods": ["transactions", "getTransaction"],
-      "ignoreInWatchMode": ["transactions", "getTransaction"]
+      "ignoreMethods": ["transactions", "getTransaction"]
     }
   }
 }

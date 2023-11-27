@@ -16,11 +16,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
 
-const upgradesProxy = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const lightlink: Layer2 = {
   type: 'layer2',
   id: ProjectId('lightlink'), // This is a simple identifier, you can use a UUID or another unique string if preferred.
@@ -55,7 +50,6 @@ export const lightlink: Layer2 = {
         sinceTimestamp: new UnixTime(1692155207),
         tokens: ['ETH'],
         description: 'Holds Ether',
-        ...upgradesProxy,
         // Add any other relevant details for the escrow contract.
       }),
       discovery.getEscrowDetails({
@@ -63,7 +57,6 @@ export const lightlink: Layer2 = {
         sinceTimestamp: new UnixTime(1692155531),
         tokens: '*',
         description: 'Holds ERC20 tokens',
-        ...upgradesProxy,
         // Add any other relevant details for the escrow contract.
       }),
     ],
@@ -191,17 +184,14 @@ export const lightlink: Layer2 = {
       discovery.getContractDetails('L1NativeTokenPredicate', {
         description:
           'L1NativeTokenPredicate is a proxied smart contract that manages initializing deposits and finalizing withdrawals of native Ether on L1.',
-        ...upgradesProxy,
       }),
       discovery.getContractDetails('L1ERC20Predicate', {
         description:
           'L1ERC20Predicate is a proxied smart contract that manages initializing deposits and finalizing withdrawals of ERC20 tokens on L1.',
-        ...upgradesProxy,
       }),
       discovery.getContractDetails('L1BridgeRegistry', {
         description:
           'L1BridgeRegistry controls the PoA bridge validators and consensus thresholds.',
-        ...upgradesProxy,
       }),
       discovery.getContractDetails('Multisig', {
         description:
