@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { UrlPath } from '../UrlPath'
-
 const ETHEREUM_ADDRESS_REGEX = /0x[a-fA-F0-9]{40}/
 
 const ethereumAddressSchema = z
@@ -12,7 +10,7 @@ const ethereumAddressSchema = z
 
 export const ManuallyVerifiedContracts = z.record(
   ethereumAddressSchema,
-  UrlPath,
+  z.string().url(),
 )
 export type ManuallyVerifiedContracts = z.infer<
   typeof ManuallyVerifiedContracts

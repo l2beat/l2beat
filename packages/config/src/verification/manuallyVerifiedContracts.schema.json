@@ -11,7 +11,8 @@
   "patternProperties": {
     "^0x[a-fA-F0-9]{40}$": {
       "type": "string",
-      "format": "uri"
+      "format": "uri",
+      "pattern": "^https://"
     }
   },
   "additionalProperties": false
