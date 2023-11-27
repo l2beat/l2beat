@@ -9,7 +9,7 @@ import {
   AnomalyIndicatorEntry,
 } from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
-import { DurationCell } from './table/DurationCell'
+import { LivenessDurationCell } from './table/DurationCell'
 
 interface Props {
   anomalyEntries: AnomalyIndicatorEntry[]
@@ -94,7 +94,7 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
               <AnomalyTypeBadge type={anomaly.type} />
               <span className="ml-2.5">
                 Duration:{' '}
-                <DurationCell
+                <LivenessDurationCell
                   durationInSeconds={anomaly.durationInSeconds}
                   withColors
                 />
