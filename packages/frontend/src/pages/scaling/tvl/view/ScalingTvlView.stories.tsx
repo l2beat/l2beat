@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { configureOverflowWrappers } from '../../../../scripts/configureOverflowWrappers'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
 import { configureTables } from '../../../../scripts/configureTables'
@@ -1093,6 +1094,11 @@ const meta = {
       return <Story />
     },
   ],
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 } satisfies Meta<typeof ScalingTvlView>
 export default meta
 
