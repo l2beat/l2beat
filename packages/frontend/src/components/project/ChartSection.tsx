@@ -10,6 +10,11 @@ export interface ChartSectionProps extends ChartProps {
 
 export function ChartSection(props: ChartSectionProps) {
   return (
-    <Chart {...props} mobileFull sectionClassName="-mx-4 md:mx-0 md:mt-16" />
+    <Chart
+      {...props}
+      mobileFull
+      sectionClassName="-mx-4 md:mx-0 md:mt-16"
+      header="project"
+    />
   )
 }

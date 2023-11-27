@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
-import { BigQueryClient } from '@l2beat/shared'
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { Project } from '../../model'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
