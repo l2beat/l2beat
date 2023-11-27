@@ -39,6 +39,14 @@ export class LivenessController {
         const withAnomalies = calculateAnomaliesPerProject(intervals)
         console.timeEnd(`withAnomalies ${project.projectId.toString()}`)
 
+        if (withAnomalies && project.livenessConfig.duplicateData) {
+          for (const duplicateData of project.livenessConfig.duplicateData) {
+            withAnomalies[duplicateData.to] = {
+              ...withAnomalies[duplicateData.from],
+            }
+          }
+        }
+
         projects[project.projectId.toString()] = withAnomalies
       }),
     )

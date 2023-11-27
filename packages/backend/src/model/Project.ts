@@ -1,5 +1,6 @@
 import {
   Bridge,
+  DuplicateData,
   getCanonicalTokenBySymbol,
   Layer2,
   Layer2LivenessConfig,
@@ -28,6 +29,7 @@ interface LivenessConfig {
     LivenessFunctionCall,
     'livenessConfigurationId' | 'latestSyncedTimestamp'
   >[]
+  duplicateData?: DuplicateData[]
 }
 export interface Project {
   projectId: ProjectId
@@ -84,6 +86,7 @@ function toBackendLivenessConfig(
   const livenessConfig: LivenessConfig = {
     transfers: [],
     functionCalls: [],
+    duplicateData: config.duplicateData,
   }
 
   config.stateUpdates.forEach((param) => {

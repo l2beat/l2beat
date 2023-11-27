@@ -48,6 +48,7 @@ export const nova: Layer2 = {
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
     links: {
       websites: [
