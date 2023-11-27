@@ -58,6 +58,23 @@ describe(ReportRepository.name, () => {
         ]),
       ).toBeRejectedWith('Assertion Error: Timestamps must match')
     })
+
+    it('batches insert', async () => {
+      const records: ReportRecord[] = []
+      for (let i = 1; i < 10_000; i++) {
+        records.push(
+          fakeReport({
+            asset: AssetId('asset' + i.toString()),
+            timestamp: TIME_0,
+            amount: 1n,
+          }),
+        )
+      }
+      await repository.addOrUpdateMany(records)
+      const expected = await repository.getAll()
+
+      expect(expected).toEqualUnsorted(records)
+    })
   })
 
   describe(ReportRepository.prototype.getAll.name, () => {
