@@ -61,7 +61,7 @@ export function LivenessDurationCell(props: {
   return (
     <span
       className={classNames(
-        'flex items-center gap-1.5',
+        'inline-flex items-center gap-1.5',
         props.tooltip && 'Tooltip',
       )}
       title={props.tooltip}

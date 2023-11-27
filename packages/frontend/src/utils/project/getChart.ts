@@ -28,7 +28,7 @@ export function getChart(
         : { type: 'project-tvl', slug: project.display.slug },
     tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
     tvlBreakdownHref:
-      project.type === 'layer2'
+      project.type === 'layer2' && !project.isUpcoming
         ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
         : undefined,
     hasActivity:
