@@ -1,12 +1,14 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId } from '@l2beat/shared-pure'
 
+import { Project } from '../../../../../model'
 import { UpdateMonitorRepository } from '../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
 import { getDiff } from './utils/getDiff'
 
 export interface DashboardProject {
   name: string
+  configured: boolean
   diff?: DiscoveryDiff[]
   discoveredCount?: number
   initialAddressesCount?: number
@@ -18,13 +20,14 @@ export interface DashboardProject {
 }
 
 export async function getDashboardProjects(
+  projects: Project[],
   configReader: ConfigReader,
   updateMonitorRepository: UpdateMonitorRepository,
   chainId: ChainId,
 ): Promise<DashboardProject[]> {
   const configs = await configReader.readAllConfigsForChain(chainId)
 
-  const projects: DashboardProject[] = []
+  const configuredProjects: DashboardProject[] = []
 
   for (const config of configs) {
     const discovery = await configReader.readDiscovery(
@@ -41,6 +44,7 @@ export async function getDashboardProjects(
 
     const project: DashboardProject = {
       name: config.name,
+      configured: true,
       diff,
       discoveredCount: contracts.length,
       initialAddressesCount: contracts.filter((c) => c.isInitial).length,
@@ -62,8 +66,19 @@ export async function getDashboardProjects(
           : undefined,
     }
 
-    projects.push(project)
+    configuredProjects.push(project)
   }
 
-  return projects
+  const projectsList = projects.map((p) => p.projectId.toString())
+  const result = configuredProjects
+    .concat(
+      projectsList
+        .filter(
+          (project) => !configuredProjects.map((x) => x.name).includes(project),
+        )
+        .map((p) => ({ name: p, configured: false })),
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  return result
 }

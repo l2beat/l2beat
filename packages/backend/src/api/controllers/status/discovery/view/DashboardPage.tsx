@@ -1,3 +1,4 @@
+import { ChainId } from '@l2beat/shared-pure'
 import React, { ReactNode } from 'react'
 
 import { Page } from '../../view/Page'
@@ -8,35 +9,26 @@ import { DASHBOARD_COLORS } from './constants'
 
 interface DashboardPageProps {
   projects: DashboardProject[]
-  projectsList: string[]
 }
 
 export function DashboardPage(props: DashboardPageProps) {
   const hardcoded = getHardcoded()
 
   const projects = props.projects
-    .concat(
-      props.projectsList
-        .filter(
-          (project) => !props.projects.map((x) => x.name).includes(project),
-        )
-        .map((p) => ({ name: p })),
-    )
-    .sort((a, b) => a.name.localeCompare(b.name))
-
+  const configuredProjects = props.projects.filter((p) => p.configured)
   return (
     <Page title="Discovery">
       <meter
         id="configs-created"
         min={0}
-        max={props.projectsList.length}
-        low={props.projectsList.length}
-        high={props.projectsList.length}
-        optimum={props.projectsList.length}
-        value={props.projects.length}
+        max={props.projects.length}
+        low={props.projects.length}
+        high={props.projects.length}
+        optimum={props.projects.length}
+        value={configuredProjects.length}
       />
       <label style={{ marginLeft: '8px' }} htmlFor="configs-created">
-        {props.projects.length}/{props.projectsList.length} configs created
+        {configuredProjects.length}/{props.projects.length} configs created
       </label>
       <table>
         <thead>
@@ -80,6 +72,17 @@ export function DashboardPage(props: DashboardPageProps) {
           </tr>
         </thead>
         <tbody>
+          <tr style={{ padding: '0px', textAlign: 'left' }}>
+            <th
+              colSpan={12}
+              scope="colgroup"
+              style={{ padding: '0px', textAlign: 'left' }}
+            >
+              {`Chain ${ChainId.getName(
+                ChainId.ETHEREUM,
+              )}@${ChainId.ETHEREUM.toString()}`}
+            </th>
+          </tr>
           {projects.map((project, index) => (
             <tr key={index} style={{ padding: '0px', textAlign: 'left' }}>
               <TableData

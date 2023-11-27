@@ -62,15 +62,13 @@ export class StatusController {
 
   async getDiscoveryDashboard(chainId: ChainId): Promise<string> {
     const projects = await getDashboardProjects(
+      this.projects,
       this.configReader,
       this.updateMonitorRepository,
       chainId,
     )
-    const projectsList = this.projects.map((p) => p.projectId.toString())
-
     return renderDashboardPage({
       projects,
-      projectsList,
     })
   }
 
