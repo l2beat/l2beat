@@ -1,8 +1,14 @@
 import { Layer2, StageConfig } from '@l2beat/config'
 
-interface DataPoint {
+export interface LivenessDataPoint {
   averageInSeconds: number
   maximumInSeconds: number
+}
+
+export interface LivenessData {
+  last30Days?: LivenessDataPoint | undefined
+  last90Days?: LivenessDataPoint | undefined
+  max?: LivenessDataPoint | undefined
 }
 
 export interface ScalingLivenessViewEntry {
@@ -14,20 +20,8 @@ export interface ScalingLivenessViewEntry {
   warning: string | undefined
   stage: StageConfig
   explanation: string | undefined
-  batchSubmissions?:
-    | {
-        last30Days?: DataPoint | undefined
-        last90Days?: DataPoint | undefined
-        max?: DataPoint | undefined
-      }
-    | undefined
-  stateUpdates?:
-    | {
-        last30Days?: DataPoint | undefined
-        last90Days?: DataPoint | undefined
-        max?: DataPoint | undefined
-      }
-    | undefined
+  batchSubmissions?: LivenessData | undefined
+  stateUpdates?: LivenessData | undefined
   anomalyEntries: AnomalyIndicatorEntry[]
 }
 

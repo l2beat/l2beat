@@ -33,7 +33,7 @@ interface SingleColumnConfig<T> {
 export interface GroupedColumnConfig<T> {
   type: 'group'
   columns: SingleColumnConfig<T>[]
-  title?: string
+  title?: React.ReactNode
 }
 
 export interface RowConfig<T> {
@@ -345,7 +345,7 @@ type GroupedColumn =
   | {
       type: 'group'
       span: number
-      title?: string
+      title?: React.ReactNode
     }
   | {
       type: 'single'
