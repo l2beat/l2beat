@@ -29,6 +29,7 @@ export const xai: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    dataAvailabilityMode: 'NotApplicable',
   },
   stage: {
     stage: 'NotApplicable',

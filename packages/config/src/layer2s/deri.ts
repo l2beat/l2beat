@@ -28,6 +28,7 @@ export const deri: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    dataAvailabilityMode: 'NotApplicable',
   },
   stage: {
     stage: 'NotApplicable',
