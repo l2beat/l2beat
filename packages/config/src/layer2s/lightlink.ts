@@ -32,6 +32,7 @@ export const lightlink: Layer2 = {
       'LightLink is a high-performance, secure, and scalable network, built on Ethereum. The network leverages the power of layer 2 scaling solutions to provide fast and low-cost transactions. Built to onboard new users, LightLink supports both Enterprise mode and standard transacting, unlocking the power of gasless execution with optionality to pay fees in either ETH or its native token, LL. Combined with LightLinks highly composable nature, these features render the network suitable for a wide range of applications, including enterprise ecosystems, gaming and metaverse projects, ticketing, and identity management.',
     purpose: 'Optimistic Rollup',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'Pellar',
     links: {
       websites: ['https://lightlink.io'],
@@ -108,8 +109,8 @@ export const lightlink: Layer2 = {
     stage0: {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: false,
-      rollupNodeSourceAvailable: false,
+      dataAvailabilityOnL1: null,
+      rollupNodeSourceAvailable: null,
     },
     stage1: {
       stateVerificationOnL1: false,
