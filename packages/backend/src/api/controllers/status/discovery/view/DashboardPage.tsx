@@ -75,7 +75,7 @@ export function DashboardPage(props: DashboardPageProps) {
           </tr>
         </thead>
         <tbody>
-          {Object.entries(props.projects).map(([chainId, projects]) => (
+          {Object.entries(props.projects).map(([chainName, projects]) => (
             <>
               <tr style={{ padding: '0px', textAlign: 'left' }}>
                 <th
@@ -83,7 +83,7 @@ export function DashboardPage(props: DashboardPageProps) {
                   scope="colgroup"
                   style={{ padding: '0px', textAlign: 'left' }}
                 >
-                  {`Chain ${chainId}@${+ChainId.fromName(chainId)}`}
+                  {`Chain ${chainName}@${+ChainId.fromName(chainName)}`}
                 </th>
               </tr>
               {projects.map((project, index) => (
@@ -100,7 +100,11 @@ export function DashboardPage(props: DashboardPageProps) {
                               .join('\n')
                           }
                         >
-                          <a href={`/status/discovery/${project.name}`}>⚠️</a>
+                          <a
+                            href={`/status/discovery/${chainName}/${project.name}`}
+                          >
+                            ⚠️
+                          </a>
                         </span>
                       ) : (
                         ''
@@ -110,7 +114,9 @@ export function DashboardPage(props: DashboardPageProps) {
                   <TableData
                     value={
                       project.discoveredCount !== undefined ? (
-                        <a href={`/status/discovery/${project.name}`}>
+                        <a
+                          href={`/status/discovery/${chainName}/${project.name}`}
+                        >
                           {project.name}
                         </a>
                       ) : (

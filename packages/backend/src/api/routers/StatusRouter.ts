@@ -16,6 +16,7 @@ const queryParser = z.object({
 
 const paramsParser = z.object({
   params: z.object({
+    chainId: stringAs((s) => ChainId.fromName(s)),
     project: z.string(),
   }),
 })
@@ -82,16 +83,16 @@ export function createStatusRouter(statusController: StatusController) {
   )
 
   router.get('/status/discovery', async (ctx) => {
-    ctx.body = await statusController.getDiscoveryDashboard(ChainId.ETHEREUM)
+    ctx.body = await statusController.getDiscoveryDashboard()
   })
 
   router.get(
-    '/status/discovery/:project',
+    '/status/discovery/:chainId/:project',
     withTypedContext(paramsParser, async (ctx) => {
-      const { project } = ctx.params
+      const { chainId, project } = ctx.params
       ctx.body = await statusController.getDiscoveryDashboardProject(
         project,
-        ChainId.ETHEREUM,
+        chainId,
       )
     }),
   )
