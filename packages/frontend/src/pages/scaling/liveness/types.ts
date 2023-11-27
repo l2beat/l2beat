@@ -13,6 +13,7 @@ export interface ScalingLivenessViewEntry {
   provider: Layer2['display']['provider'] | undefined
   warning: string | undefined
   stage: StageConfig
+  explanation: string | undefined
   batchSubmissions?:
     | {
         last30Days?: DataPoint | undefined
