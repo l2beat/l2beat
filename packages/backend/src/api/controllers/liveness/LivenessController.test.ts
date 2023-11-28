@@ -78,7 +78,7 @@ describe(LivenessController.name, () => {
       expect(result).toEqual({ projects: {} })
     })
 
-    it('correctly calculate avg and max', async () => {
+    it('correctly calculate avg, min and max', async () => {
       const RECORDS: LivenessRecordWithProjectIdAndType[] = []
 
       RECORDS.push(
@@ -109,25 +109,16 @@ describe(LivenessController.name, () => {
 
       const last30Days = calculateDetailsFor(records, '30d')
       const last90Days = calculateDetailsFor(records, '90d')
-      const max = calculateDetailsFor(records, 'max')
+      const allTime = calculateDetailsFor(records, 'allTime')
 
       assert(last30Days, 'last30Days is undefined')
       assert(last90Days, 'last90Days is undefined')
-      assert(max, 'max is undefined')
+      assert(allTime, 'allTime is undefined')
 
       const expected = {
-        last30Days: {
-          averageInSeconds: last30Days.averageInSeconds,
-          maximumInSeconds: last30Days.maximumInSeconds,
-        },
-        last90Days: {
-          averageInSeconds: last90Days.averageInSeconds,
-          maximumInSeconds: last90Days.maximumInSeconds,
-        },
-        max: {
-          averageInSeconds: max.averageInSeconds,
-          maximumInSeconds: max.maximumInSeconds,
-        },
+        last30Days,
+        last90Days,
+        allTime,
       }
 
       const result = await livenessController.getLiveness()

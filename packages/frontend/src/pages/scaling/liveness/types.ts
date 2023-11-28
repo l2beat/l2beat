@@ -1,14 +1,10 @@
 import { Layer2, StageConfig } from '@l2beat/config'
-
-export interface LivenessDataPoint {
-  averageInSeconds: number
-  maximumInSeconds: number
-}
+import { LivenessDataPoint } from '@l2beat/shared-pure'
 
 export interface LivenessData {
   last30Days?: LivenessDataPoint | undefined
   last90Days?: LivenessDataPoint | undefined
-  max?: LivenessDataPoint | undefined
+  allTime?: LivenessDataPoint | undefined
 }
 
 export interface ScalingLivenessViewEntry {
