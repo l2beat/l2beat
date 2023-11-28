@@ -57,7 +57,9 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecordWithProjectIdAndType)
   }
 
-  async getWithType(projectId: ProjectId): Promise<LivenessRecordWithType[]> {
+  async getWithTypeDistinctTimestamp(
+    projectId: ProjectId,
+  ): Promise<LivenessRecordWithType[]> {
     const knex = await this.knex()
     const rows = await knex('liveness as l')
       .join(
@@ -65,8 +67,9 @@ export class LivenessRepository extends BaseRepository {
         'l.liveness_configuration_id',
         'c.id',
       )
-      .select('l.timestamp', 'c.type')
+      .select('l.timestamp', 'c.type', 'c.project_id')
       .where('c.project_id', projectId.toString())
+      .distinct('l.timestamp')
 
     return rows.map(toRecordWithProjectIdAndType)
   }
