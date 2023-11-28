@@ -22,7 +22,6 @@ export interface LivenessRecordWithProjectIdAndType {
 export interface LivenessRecordWithType {
   timestamp: UnixTime
   type: LivenessType
-  projectId: ProjectId
 }
 
 export interface LivenessRowWithProjectIdAndType {
@@ -69,7 +68,7 @@ export class LivenessRepository extends BaseRepository {
       .select('l.timestamp', 'c.type', 'c.project_id')
       .where('c.project_id', projectId.toString())
 
-    return rows.map(toRecordWithProjectIdAndType)
+    return rows.map(toRecordWithTimestampAndType)
   }
 
   async getByProjectIdAndType(
@@ -90,7 +89,7 @@ export class LivenessRepository extends BaseRepository {
       .andWhere('l.timestamp', '>=', since.toDate())
       .distinct('l.timestamp')
 
-    return rows.map(toRecordWithProjectIdAndType)
+    return rows.map(toRecordWithTimestampAndType)
   }
 
   async addMany(transactions: LivenessRecord[], trx?: Knex.Transaction) {
@@ -124,6 +123,15 @@ function toRecord(row: LivenessRow): LivenessRecord {
     blockNumber: row.block_number,
     txHash: row.tx_hash,
     livenessConfigurationId: row.liveness_configuration_id,
+  }
+}
+
+function toRecordWithTimestampAndType(
+  row: LivenessRowWithProjectIdAndType,
+): Omit<LivenessRecordWithProjectIdAndType, 'projectId'> {
+  return {
+    timestamp: UnixTime.fromDate(row.timestamp),
+    type: LivenessType(row.type),
   }
 }
 

@@ -162,7 +162,6 @@ describe(LivenessRepository.name, () => {
 
       expect(results).toEqual([
         {
-          projectId: LIVENESS_CONFIGS[0].projectId,
           timestamp: DATA[0].timestamp,
           type: LIVENESS_CONFIGS[0].type,
         },
