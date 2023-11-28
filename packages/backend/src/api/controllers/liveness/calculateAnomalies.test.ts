@@ -25,6 +25,12 @@ describe(calculateAnomalies.name, () => {
           last90Days: undefined,
           allTime: undefined,
         },
+        proofSubmissions: {
+          records: [],
+          last30Days: undefined,
+          last90Days: undefined,
+          allTime: undefined,
+        },
       },
     })
     expect(result.projects.project1?.anomalies).toEqual([

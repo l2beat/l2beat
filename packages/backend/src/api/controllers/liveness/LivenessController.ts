@@ -9,7 +9,7 @@ import { Project } from '../../../model'
 import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'
 import { calcIntervalWithAvgsPerProject } from './calculateIntervalWithAverages'
-import { groupByType } from './groupByProjectIdAndType'
+import { groupByType } from './groupByType'
 
 export class LivenessController {
   constructor(

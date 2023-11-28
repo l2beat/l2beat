@@ -2,7 +2,7 @@ import { LivenessDataPoint, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 
 import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
-import { GroupedByType } from './groupByProjectIdAndType'
+import { GroupedByType } from './groupByType'
 
 export type LivenessRecordWithInterval = Omit<
   LivenessRecordWithProjectIdAndType,
