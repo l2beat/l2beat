@@ -95,7 +95,7 @@ export function calculateAnomaliesPerProject({
     proofSubmissions: {
       last30Days: proofSubmissions?.last30Days,
       last90Days: proofSubmissions?.last90Days,
-      max: proofSubmissions?.max,
+      allTime: proofSubmissions?.allTime,
     },
     anomalies,
   }
