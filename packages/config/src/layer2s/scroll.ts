@@ -295,12 +295,6 @@ export const scroll: Layer2 = {
       }),
       discovery.getContractDetails('PlonkVerifier', {
         description: 'Plonk verifier used to verify the ZK proof.',
-        references: [
-          {
-            text: 'evm_verifier.yul source code',
-            href: 'https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul',
-          },
-        ],
       }),
       discovery.getContractDetails('L1ETHGateway', {
         description: 'Contract used to bridge ETH from L1 to L2.',

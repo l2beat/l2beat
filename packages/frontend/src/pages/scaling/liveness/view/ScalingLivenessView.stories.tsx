@@ -16,6 +16,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Arbitrum One',
         slug: 'arbitrum',
+        explanation: 'Placeholder for explanation',
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
         category: 'Optimistic Rollup',
@@ -110,28 +111,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3651,
             maximumInSeconds: 12612,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 3626,
             maximumInSeconds: 12612,
+            minimumInSeconds: 2010,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3621,
             maximumInSeconds: 12612,
+            minimumInSeconds: 2020,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 70,
             maximumInSeconds: 768,
+            minimumInSeconds: 10,
           },
           last90Days: {
             averageInSeconds: 83,
             maximumInSeconds: 828,
+            minimumInSeconds: 20,
           },
-          max: {
+          allTime: {
             averageInSeconds: 75,
             maximumInSeconds: 6348,
+            minimumInSeconds: 15,
           },
         },
         anomalyEntries: [
@@ -251,6 +258,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'OP Mainnet',
         slug: 'optimism',
+        explanation: undefined,
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -325,28 +333,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3600,
             maximumInSeconds: 3888,
+            minimumInSeconds: 3400,
           },
           last90Days: {
             averageInSeconds: 3600,
             maximumInSeconds: 4128,
+            minimumInSeconds: 3300,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3600,
             maximumInSeconds: 6156,
+            minimumInSeconds: 3100,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 127,
             maximumInSeconds: 396,
+            minimumInSeconds: 60,
           },
           last90Days: {
             averageInSeconds: 139,
             maximumInSeconds: 420,
+            minimumInSeconds: 70,
           },
-          max: {
+          allTime: {
             averageInSeconds: 114,
             maximumInSeconds: 1032,
+            minimumInSeconds: 50,
           },
         },
         anomalyEntries: [
@@ -445,6 +459,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Base',
         slug: 'base',
+        explanation: 'Placeholder for explanation',
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -519,28 +534,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3601,
             maximumInSeconds: 4212,
+            minimumInSeconds: 3400,
           },
           last90Days: {
             averageInSeconds: 3601,
             maximumInSeconds: 9156,
+            minimumInSeconds: 1400,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3592,
             maximumInSeconds: 9156,
+            minimumInSeconds: 1100,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 60,
             maximumInSeconds: 1536,
+            minimumInSeconds: 30,
           },
           last90Days: {
             averageInSeconds: 58,
             maximumInSeconds: 2832,
+            minimumInSeconds: 29,
           },
-          max: {
+          allTime: {
             averageInSeconds: 64,
             maximumInSeconds: 2832,
+            minimumInSeconds: 25,
           },
         },
         anomalyEntries: [
@@ -653,6 +674,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'zkSync Era',
         slug: 'zksync-era',
+        explanation: 'Placeholder for explanation',
         warning:
           'Withdrawals are delayed by 21h. The length of the delay can be arbitrarily set by a MultiSig.',
         category: 'ZK Rollup',
@@ -727,14 +749,17 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3313,
             maximumInSeconds: 10164,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 2486,
             maximumInSeconds: 10164,
+            minimumInSeconds: 1800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 2537,
             maximumInSeconds: 49644,
+            minimumInSeconds: 1500,
           },
         },
         batchSubmissions: {},
@@ -834,6 +859,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'dYdX v3',
         slug: 'dydx',
+        explanation: 'Placeholder for explanation',
         warning:
           'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
         category: 'ZK Rollup',
@@ -907,14 +933,17 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 2363,
             maximumInSeconds: 12180,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 3496,
             maximumInSeconds: 18264,
+            minimumInSeconds: 1800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3860,
             maximumInSeconds: 22872,
+            minimumInSeconds: 1500,
           },
         },
         batchSubmissions: {},
@@ -1014,6 +1043,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Linea',
         slug: 'linea',
+        explanation: undefined,
         provider: undefined,
         warning: 'The circuit of the program being proven is not public.',
         category: 'ZK Rollup',
@@ -1098,28 +1128,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 47,
             maximumInSeconds: 69408,
+            minimumInSeconds: 30,
           },
           last90Days: {
             averageInSeconds: 55,
             maximumInSeconds: 80340,
+            minimumInSeconds: 20,
           },
-          max: {
+          allTime: {
             averageInSeconds: 60,
             maximumInSeconds: 213168,
+            minimumInSeconds: 10,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 120,
             maximumInSeconds: 69408,
+            minimumInSeconds: 30,
           },
           last90Days: {
             averageInSeconds: 55,
             maximumInSeconds: 80340,
+            minimumInSeconds: 20,
           },
-          max: {
+          allTime: {
             averageInSeconds: 60,
             maximumInSeconds: 213168,
+            minimumInSeconds: 10,
           },
         },
         anomalyEntries: [
@@ -1344,6 +1380,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Starknet',
         slug: 'starknet',
+        explanation: 'Placeholder for explanation',
         warning: undefined,
         category: 'ZK Rollup',
         dataAvailabilityMode: 'StateDiffs',
@@ -1417,14 +1454,17 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 32,
             maximumInSeconds: 15336,
+            minimumInSeconds: 10,
           },
           last90Days: {
             averageInSeconds: 30,
             maximumInSeconds: 22440,
+            minimumInSeconds: 8,
           },
-          max: {
+          allTime: {
             averageInSeconds: 65,
             maximumInSeconds: 49764,
+            minimumInSeconds: 7,
           },
         },
         batchSubmissions: {},
@@ -2064,6 +2104,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Polygon zkEVM',
         slug: 'polygonzkevm',
+        explanation: undefined,
         warning: 'The forced transaction mechanism is currently disabled.',
         category: 'ZK Rollup',
         dataAvailabilityMode: 'TxData',
@@ -2148,28 +2189,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 1653,
             maximumInSeconds: 2856,
+            minimumInSeconds: 1000,
           },
           last90Days: {
             averageInSeconds: 1651,
             maximumInSeconds: 3612,
+            minimumInSeconds: 800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 1651,
             maximumInSeconds: 3612,
+            minimumInSeconds: 800,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 289,
             maximumInSeconds: 1416,
+            minimumInSeconds: 200,
           },
           last90Days: {
             averageInSeconds: 413,
             maximumInSeconds: 8556,
+            minimumInSeconds: 180,
           },
-          max: {
+          allTime: {
             averageInSeconds: 457,
             maximumInSeconds: 25380,
+            minimumInSeconds: 150,
           },
         },
         anomalyEntries: [
@@ -2275,6 +2322,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Loopring',
         slug: 'loopring',
+        explanation: undefined,
         warning: undefined,
         category: 'ZK Rollup',
         dataAvailabilityMode: 'StateDiffs',
@@ -2347,14 +2395,17 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 2996,
             maximumInSeconds: 21660,
+            minimumInSeconds: 2100,
           },
           last90Days: {
             averageInSeconds: 2917,
             maximumInSeconds: 21660,
+            minimumInSeconds: 2000,
           },
-          max: {
+          allTime: {
             averageInSeconds: 2841,
             maximumInSeconds: 21660,
+            minimumInSeconds: 2000,
           },
         },
         batchSubmissions: {},
@@ -2454,6 +2505,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'zkSync Lite',
         slug: 'zksync-lite',
+        explanation: undefined,
         warning: undefined,
         category: 'ZK Rollup',
         dataAvailabilityMode: 'StateDiffs',
@@ -2536,14 +2588,17 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 2273,
             maximumInSeconds: 17340,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 1461,
             maximumInSeconds: 17340,
+            minimumInSeconds: 2000,
           },
-          max: {
+          allTime: {
             averageInSeconds: 1180,
             maximumInSeconds: 17724,
+            minimumInSeconds: 1800,
           },
         },
         batchSubmissions: {},
@@ -2643,6 +2698,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Aevo',
         slug: 'aevo',
+        explanation: 'Placeholder for explanation',
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -2717,28 +2773,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 6006,
             maximumInSeconds: 18048,
+            minimumInSeconds: 4000,
           },
           last90Days: {
             averageInSeconds: 6001,
             maximumInSeconds: 18048,
+            minimumInSeconds: 3800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 6001,
             maximumInSeconds: 18048,
+            minimumInSeconds: 3800,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 2358,
             maximumInSeconds: 12156,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 2940,
             maximumInSeconds: 12156,
+            minimumInSeconds: 1800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3558,
             maximumInSeconds: 12156,
+            minimumInSeconds: 1300,
           },
         },
         anomalyEntries: [
@@ -2837,6 +2899,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Boba Network',
         slug: 'bobanetwork',
+        explanation: 'Placeholder for explanation',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -2916,28 +2979,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3611,
             maximumInSeconds: 6708,
+            minimumInSeconds: 3000,
           },
           last90Days: {
             averageInSeconds: 3672,
             maximumInSeconds: 15096,
+            minimumInSeconds: 2800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3682,
             maximumInSeconds: 15096,
+            minimumInSeconds: 2800,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 3466,
             maximumInSeconds: 6660,
+            minimumInSeconds: 3000,
           },
           last90Days: {
             averageInSeconds: 3570,
             maximumInSeconds: 15096,
+            minimumInSeconds: 2500,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3628,
             maximumInSeconds: 15096,
+            minimumInSeconds: 2000,
           },
         },
         anomalyEntries: [
@@ -3036,6 +3105,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Zora',
         slug: 'zora',
+        explanation: undefined,
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -3110,28 +3180,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3600,
             maximumInSeconds: 4416,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 3600,
             maximumInSeconds: 5760,
+            minimumInSeconds: 1800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3409,
             maximumInSeconds: 5760,
+            minimumInSeconds: 1800,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 596,
             maximumInSeconds: 2004,
+            minimumInSeconds: 400,
           },
           last90Days: {
             averageInSeconds: 572,
             maximumInSeconds: 2556,
+            minimumInSeconds: 380,
           },
-          max: {
+          allTime: {
             averageInSeconds: 576,
             maximumInSeconds: 2556,
+            minimumInSeconds: 350,
           },
         },
         anomalyEntries: [
@@ -3237,6 +3313,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'ZKSpace',
         slug: 'zkspace',
+        explanation: undefined,
         warning: undefined,
         category: 'ZK Rollup',
         dataAvailabilityMode: 'StateDiffs',
@@ -3309,14 +3386,17 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 31049,
             maximumInSeconds: 112104,
+            minimumInSeconds: 20000,
           },
           last90Days: {
             averageInSeconds: 31803,
             maximumInSeconds: 182760,
+            minimumInSeconds: 19000,
           },
-          max: {
+          allTime: {
             averageInSeconds: 10312,
             maximumInSeconds: 182760,
+            minimumInSeconds: 20000,
           },
         },
         batchSubmissions: {},
@@ -3416,6 +3496,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'DeGate V1',
         slug: 'degate3',
+        explanation: 'Placeholder for explanation',
         warning: undefined,
         category: 'ZK Rollup',
         dataAvailabilityMode: 'StateDiffs',
@@ -3477,14 +3558,17 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 9559,
             maximumInSeconds: 28704,
+            minimumInSeconds: 8000,
           },
           last90Days: {
             averageInSeconds: 9559,
             maximumInSeconds: 28704,
+            minimumInSeconds: 8000,
           },
-          max: {
+          allTime: {
             averageInSeconds: 9559,
             maximumInSeconds: 28704,
+            minimumInSeconds: 8000,
           },
         },
         batchSubmissions: {},
@@ -3584,6 +3668,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Public Goods Network',
         slug: 'publicgoodsnetwork',
+        explanation: 'Placeholder for explanation',
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -3658,28 +3743,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3601,
             maximumInSeconds: 4236,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 3601,
             maximumInSeconds: 5520,
+            minimumInSeconds: 1800,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3601,
             maximumInSeconds: 5520,
+            minimumInSeconds: 1800,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 595,
             maximumInSeconds: 2004,
+            minimumInSeconds: 400,
           },
           last90Days: {
             averageInSeconds: 595,
             maximumInSeconds: 2736,
+            minimumInSeconds: 380,
           },
-          max: {
+          allTime: {
             averageInSeconds: 595,
             maximumInSeconds: 2736,
+            minimumInSeconds: 380,
           },
         },
         anomalyEntries: [
@@ -3785,6 +3876,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       {
         name: 'Kroma',
         slug: 'kroma',
+        explanation: 'Placeholder for explanation',
         warning: undefined,
         category: 'Optimistic Rollup',
         dataAvailabilityMode: 'TxData',
@@ -3876,28 +3968,34 @@ const meta: Meta<typeof ScalingLivenessView> = {
           last30Days: {
             averageInSeconds: 3601,
             maximumInSeconds: 5688,
+            minimumInSeconds: 2000,
           },
           last90Days: {
             averageInSeconds: 3600,
             maximumInSeconds: 7644,
+            minimumInSeconds: 2000,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3600,
             maximumInSeconds: 7644,
+            minimumInSeconds: 2000,
           },
         },
         batchSubmissions: {
           last30Days: {
             averageInSeconds: 620,
             maximumInSeconds: 696,
+            minimumInSeconds: 500,
           },
           last90Days: {
             averageInSeconds: 616,
             maximumInSeconds: 1140,
+            minimumInSeconds: 480,
           },
-          max: {
+          allTime: {
             averageInSeconds: 616,
             maximumInSeconds: 1140,
+            minimumInSeconds: 480,
           },
         },
         anomalyEntries: [

@@ -1,12 +1,9 @@
+import { LivenessDataPoint } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { LivenessDurationCell } from '../../../../components/table/DurationCell'
-import {
-  LivenessData,
-  LivenessDataPoint,
-  ScalingLivenessViewEntry,
-} from '../types'
+import { LivenessData, ScalingLivenessViewEntry } from '../types'
 import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
 
 interface Props {
@@ -47,10 +44,10 @@ export function LivenessDurationTimeRangeCell({
         }
         max={
           <LivenessDurationCell
-            durationInSeconds={data?.max?.averageInSeconds}
+            durationInSeconds={data?.allTime?.averageInSeconds}
             project={project}
             tooltip={renderToStaticMarkup(
-              <Tooltip label="Max-day intervals" data={data?.max} />,
+              <Tooltip label="Max-day intervals" data={data?.allTime} />,
             )}
             showOptimisticRollupWarning={showOptimisticRollupWarning}
           />

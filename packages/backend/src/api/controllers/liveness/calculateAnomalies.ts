@@ -85,12 +85,12 @@ export function calculateAnomaliesPerProject({
     batchSubmissions: {
       last30Days: batchSubmissions?.last30Days,
       last90Days: batchSubmissions?.last90Days,
-      max: batchSubmissions?.max,
+      allTime: batchSubmissions?.allTime,
     },
     stateUpdates: {
       last30Days: stateUpdates?.last30Days,
       last90Days: stateUpdates?.last90Days,
-      max: stateUpdates?.max,
+      allTime: stateUpdates?.allTime,
     },
     proofSubmissions: {
       last30Days: proofSubmissions?.last30Days,
