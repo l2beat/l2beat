@@ -20,7 +20,6 @@ export function createMantaTvlSubmodule(
   http: HttpClient,
   clock: Clock,
 ): TvlSubmodule | undefined {
-  console.log('Creating a Manta Pacfic detailed TVL Updater')
   return chainTvlSubmodule(
     ChainId.MANTA_PACIFIC,
     ProjectId.MANTA_PACIFIC,
