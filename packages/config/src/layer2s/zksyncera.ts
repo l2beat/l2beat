@@ -9,10 +9,10 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
-  MILESTONES,
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
