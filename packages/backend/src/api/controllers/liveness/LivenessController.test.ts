@@ -138,7 +138,7 @@ function getMockLivenessRepository(
     getAllWithProjectIdAndType() {
       return Promise.resolve(records)
     },
-    getWithType(projectId: ProjectId) {
+    getWithTypeDistinctTimestamp(projectId: ProjectId) {
       return Promise.resolve(records.filter((x) => x.projectId === projectId))
     },
     addMany() {
