@@ -29,9 +29,10 @@ export class LivenessController {
             return
           }
           console.time(`getWithType ${project.projectId.toString()}`)
-          const records = await this.livenessRepository.getWithType(
-            project.projectId,
-          )
+          const records =
+            await this.livenessRepository.getWithTypeDistinctTimestamp(
+              project.projectId,
+            )
           console.timeEnd(`getWithType ${project.projectId.toString()}`)
 
           console.time(`groupedByType ${project.projectId.toString()}`)

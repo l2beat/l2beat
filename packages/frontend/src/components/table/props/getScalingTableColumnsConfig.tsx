@@ -11,7 +11,7 @@ import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
-import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../icons'
+import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { ComingSoonCell } from '../ComingSoonCell'
 import { EthereumCell } from '../EthereumCell'
@@ -508,6 +508,17 @@ export function getScalingLivenessColumnsConfig() {
           }
         />
       ),
+    },
+    {
+      name: '',
+      getValue: (project) =>
+        project.explanation ? (
+          <div className="pr-4">
+            <div className="Tooltip" title={project.explanation}>
+              <InfoIcon className="fill-blue-550" />
+            </div>
+          </div>
+        ) : null,
     },
   ]
   return columns
