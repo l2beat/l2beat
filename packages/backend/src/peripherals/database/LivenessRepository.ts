@@ -71,6 +71,26 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecordWithProjectIdAndType)
   }
 
+  async getByProjectIdAndType(
+    projectId: ProjectId,
+    type: LivenessType,
+    since: UnixTime,
+  ): Promise<LivenessRecordWithType[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness as l')
+      .join(
+        'liveness_configuration as c',
+        'l.liveness_configuration_id',
+        'c.id',
+      )
+      .select('l.timestamp', 'c.type')
+      .where('c.project_id', projectId.toString())
+      .andWhere('c.type', type)
+      .andWhere('l.timestamp', '>=', since.toDate())
+
+    return rows.map(toRecordWithProjectIdAndType)
+  }
+
   async addMany(transactions: LivenessRecord[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     const rows: LivenessRow[] = transactions.map(toRow)
