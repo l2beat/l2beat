@@ -47,7 +47,7 @@ export function aggregateReports(
   return aggregatedReports
 }
 
-function buildReportTree(
+export function buildReportTree(
   reports: ReportRecord[],
   projects: ReportProject[],
 ): NotAggregatedReportTree {
