@@ -413,16 +413,17 @@ export const optimism: Layer2 = {
   },
   milestones: [
     {
+      name: 'Fault Proof System is live on OP Goerli',
+      link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      date: '2023-10-03T00:00:00Z',
+      description:
+        'Fraud Proof system is live on Goerli including FPP (Fault Proof Program), FPVM  (Fault Proof Virtual Machine) and dispute game protocol.',
+    },
+    {
       name: 'Mainnet migration to Bedrock',
       link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
       date: '2023-06-06T00:00:00Z',
       description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
-    },
-    {
-      name: 'Goerli testnet migration to Bedrock',
-      link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
-      date: '2023-01-13T00:00:00Z',
-      description: 'OP Mainnet on Goerli, since Jan 2023 is running Bedrock.',
     },
     {
       name: 'OP Stack Introduced',
