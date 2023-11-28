@@ -44,7 +44,7 @@ export type StarkexProduct =
   | 'sorare'
   | 'immutable'
   | 'myria'
-  | 'deversifi'
+  | 'rhinofi'
   | 'apex_usdt'
   | 'apex_usdc'
   | 'brine'
