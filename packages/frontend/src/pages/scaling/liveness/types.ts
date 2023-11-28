@@ -31,7 +31,7 @@ export interface NonAnomalyEntry {
   isAnomaly: false
 }
 export interface Anomaly {
-  type: 'BATCH SUBMISSION' | 'STATE UPDATE'
+  type: 'BATCH SUBMISSION' | 'STATE UPDATE' | 'PROOF SUBMISSION'
   timestamp: number
   durationInSeconds: number
 }
