@@ -46,14 +46,13 @@ export class StarkexClient {
 
   async call(apiUrl: string, path: string, body: json) {
     const start = Date.now()
-    const url = apiUrl + path
+    const url = apiUrl + path + `?key=${this.apiKey}`
     const { httpResponse, error } = await this.httpClient
       .fetch(url, {
         method: 'POST',
         headers: {
           accept: 'application/json',
           'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
         },
         body: JSON.stringify(body),
         timeout: this.timeout,
