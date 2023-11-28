@@ -416,8 +416,7 @@ export const optimism: Layer2 = {
       name: 'Fault Proof System is live on OP Goerli',
       link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
       date: '2023-10-03T00:00:00Z',
-      description:
-        'Fraud Proof system is live on Goerli including FPP (Fault Proof Program), FPVM  (Fault Proof Virtual Machine) and dispute game protocol.',
+      description: 'Fraud Proof system is live on Goerli.',
     },
     {
       name: 'Mainnet migration to Bedrock',
