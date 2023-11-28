@@ -19,12 +19,14 @@ function REGULAR(
   }
 }
 
-const FORCED: ProjectTechnologyChoice = {
-  name: 'Forced exit',
-  description:
-    'If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular exit.',
-  risks: [],
-  references: [],
+function FORCED(orHalt?: 'deposits' | 'withdrawals'): ProjectTechnologyChoice {
+  const orHaltString = orHalt !== undefined ? ` or halt all ${orHalt}` : ''
+  return {
+    name: 'Forced exit',
+    description: `If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request${orHaltString}. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular exit.`,
+    risks: [],
+    references: [],
+  }
 }
 
 function EMERGENCY(
@@ -74,7 +76,7 @@ const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
-  ...FORCED,
+  ...FORCED(),
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
@@ -92,7 +94,7 @@ const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
-  ...FORCED,
+  ...FORCED(),
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',

@@ -277,7 +277,7 @@ export const zksynclite: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
