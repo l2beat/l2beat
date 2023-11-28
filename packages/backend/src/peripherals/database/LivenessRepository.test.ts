@@ -171,7 +171,13 @@ describe(LivenessRepository.name, () => {
       })
 
       it('filters out transactions with the same timestamp', async () => {
+        await repository.deleteAll()
         const NEW_DATA = [
+          {
+            timestamp: START.add(-3, 'hours'),
+            blockNumber: 12347,
+            txHash: '0xabcdef1234567890',
+          },
           {
             timestamp: START.add(-3, 'hours'),
             blockNumber: 12347,
@@ -195,12 +201,12 @@ describe(LivenessRepository.name, () => {
 
         const expected = [
           {
-            timestamp: DATA[2].timestamp,
+            timestamp: NEW_DATA[1].timestamp,
             projectId: LIVENESS_CONFIGS[2].projectId,
             type: LIVENESS_CONFIGS[2].type,
           },
           {
-            timestamp: NEW_DATA[1].timestamp,
+            timestamp: NEW_DATA[2].timestamp,
             projectId: LIVENESS_CONFIGS[2].projectId,
             type: LIVENESS_CONFIGS[2].type,
           },
