@@ -15,6 +15,7 @@ export interface ScalingLivenessViewEntry {
   provider: Layer2['display']['provider'] | undefined
   warning: string | undefined
   stage: StageConfig
+  explanation: string | undefined
   batchSubmissions?: LivenessData | undefined
   stateUpdates?: LivenessData | undefined
   anomalyEntries: AnomalyIndicatorEntry[]
