@@ -10,6 +10,7 @@ import {
   assert,
   assertUnreachable,
   EthereumAddress,
+  ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
@@ -24,6 +25,7 @@ import { hasArchitectureImage } from './hasArchitectureImage'
 export function getContractSection(
   project: Layer2 | Bridge,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): ContractsSectionProps {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified = isContractUnverified(contract, verificationStatus)
@@ -82,6 +84,7 @@ export function getContractSection(
     isIncomplete: project.contracts?.isIncomplete,
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
+    manuallyVerifiedContracts,
     nativeL2TokensIncludedInTVL:
       project.type === 'layer2'
         ? project.config.nativeL2TokensIncludedInTVL ?? []

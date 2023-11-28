@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { onlyDesktopModes } from '../../../../.storybook/modes'
 import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
 import { configureTables } from '../../../scripts/configureTables'
 import { configureTabs } from '../../../scripts/configureTabs'
@@ -675,6 +676,11 @@ const meta = {
       return <Story />
     },
   ],
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 } satisfies Meta<typeof BridgesTvlView>
 export default meta
 

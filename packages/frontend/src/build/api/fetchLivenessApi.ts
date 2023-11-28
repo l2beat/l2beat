@@ -1,6 +1,7 @@
 import {
   LivenessApiProject,
   LivenessApiResponse,
+  LivenessDataPoint,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { range } from 'lodash'
@@ -47,24 +48,25 @@ function generateMockData(): LivenessApiProject {
     batchSubmissions: {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
-      max: generateDataPoint(),
+      allTime: generateDataPoint(),
     },
     stateUpdates: {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
-      max: generateDataPoint(),
+      allTime: generateDataPoint(),
     },
     anomalies: generateAnomalies(),
   }
 }
 
-function generateDataPoint() {
+function generateDataPoint(): LivenessDataPoint | undefined {
   const i = Math.round(Math.random() * 100)
   if (i < 10) {
     return undefined
   }
   return {
     averageInSeconds: generateRandomTime(),
+    minimumInSeconds: generateRandomTime(),
     maximumInSeconds: generateRandomTime(),
   }
 }
