@@ -1,6 +1,6 @@
 export * from './coingecko'
 export * from './etherscan'
 export * from './etherscanlike'
-export * from './routescan'
 export * from './HttpClient'
 export * from './providers'
+export * from './routescan'

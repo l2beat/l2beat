@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   BlockNumberProvider,
   HttpClient,
-  RoutescanLikeClient,
   UniversalEtherscanClient,
   UniversalRoutescanClient,
 } from '@l2beat/shared'

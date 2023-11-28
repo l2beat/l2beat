@@ -1,17 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  EthereumAddress,
-  getErrorMessage,
-  Hash256,
-  RateLimiter,
-  stringAsInt,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { getErrorMessage, RateLimiter, UnixTime } from '@l2beat/shared-pure'
 
-import {
-  ContractCreatorAndCreationTxHashResult,
-  ContractSourceResult,
-} from '../etherscan/model'
 import { HttpClient } from '../HttpClient'
 import { parseRoutescanResponse, RoutescanGetBlockNoByTime } from './model'
 

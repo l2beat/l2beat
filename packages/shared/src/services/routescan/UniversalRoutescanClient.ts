@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { RoutescanLikeClient } from '../routescan/RoutescanLikeClient'
 import { HttpClient } from '../HttpClient'
 import { BlockNumberProvider } from '../providers/BlockNumberProvider'
+import { RoutescanLikeClient } from '../routescan/RoutescanLikeClient'
 
 export class UniversalRoutescanClient
   extends RoutescanLikeClient
