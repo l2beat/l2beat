@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
@@ -115,6 +115,32 @@ export const scroll: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
+    },
+    liveness: {
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x31fa742d',
+          functionSignature:
+            'function finalizeBatchWithProof(bytes _batchHeader,bytes32 _prevStateRoot,bytes32 _postStateRoot,bytes32 _withdrawRoot,bytes _aggrProof)',
+          sinceTimestamp: new UnixTime(1696782323),
+        },
+      ],
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x1325aca0',
+          functionSignature:
+            'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
+          sinceTimestamp: new UnixTime(1696782323),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
