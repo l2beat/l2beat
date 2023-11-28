@@ -10,6 +10,7 @@ remappings = [
     "@harness/=../../_testHarness/",
     "test/KromaPortal/:@code/=.code/KromaPortal/implementation/",
     "test/Colosseum/:@code/=.code/Colosseum/implementation/",
+    "script/:@code/=.code/Colosseum/implementation/",
     ".code/KromaPortal:@openzeppelin/=.code/KromaPortal/implementation/node_modules/@openzeppelin/",
     ".code/KromaPortal:@rari-capital/=.code/KromaPortal/implementation/node_modules/@rari-capital/",
     ".code/Colosseum:@openzeppelin/=.code/Colosseum/implementation/node_modules/@openzeppelin/",
