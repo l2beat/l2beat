@@ -89,7 +89,18 @@ export const zksyncera: Layer2 = {
       callsPerMinute: 1500,
     },
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+          ),
+          selector: '0x7739cbe7',
+          functionSignature:
+            'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256) calldata)',
+          sinceTimestamp: new UnixTime(1679602559),
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

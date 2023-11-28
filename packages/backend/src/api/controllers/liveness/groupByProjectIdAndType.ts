@@ -44,6 +44,9 @@ export interface GroupedByType {
   stateUpdates: {
     records: LivenessRecordWithType[]
   }
+  proofSubmissions: {
+    records: LivenessRecordWithType[]
+  }
 }
 
 export function groupByType(records: LivenessRecordWithType[]): GroupedByType {
@@ -56,6 +59,11 @@ export function groupByType(records: LivenessRecordWithType[]): GroupedByType {
     stateUpdates: {
       records: records
         .filter((record) => record.type === 'STATE')
+        .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
+    },
+    proofSubmissions: {
+      records: records
+        .filter((record) => record.type === 'PROOF')
         .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
     },
   }

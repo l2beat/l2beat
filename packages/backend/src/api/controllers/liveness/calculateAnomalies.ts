@@ -17,6 +17,7 @@ export function calculateAnomalies(
   projects: Dictionary<{
     batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
     stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+    proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
   }>,
 ): LivenessApiResponse {
   const result: LivenessApiResponse['projects'] = {}
@@ -29,9 +30,11 @@ export function calculateAnomalies(
 export function calculateAnomaliesPerProject({
   batchSubmissions,
   stateUpdates,
+  proofSubmissions,
 }: {
   batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
   stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+  proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
 }): LivenessApiResponse['projects'][number] {
   const lastHour = UnixTime.now().toStartOf('hour')
 
@@ -51,15 +54,30 @@ export function calculateAnomaliesPerProject({
     }
   }
 
+  let proofSubmissionsAnomalies: LivenessAnomaly[] | undefined = undefined
+  if (proofSubmissions) {
+    const anomalies = findAnomalies(proofSubmissions.records, lastHour)
+    if (anomalies) {
+      proofSubmissionsAnomalies = anomalies
+    }
+  }
+
   let anomalies: LivenessAnomaly[] | undefined = undefined
 
-  if (batchSubmissionAnomalies || stateUpdatesAnomalies) {
+  if (
+    batchSubmissionAnomalies ||
+    stateUpdatesAnomalies ||
+    proofSubmissionsAnomalies
+  ) {
     anomalies = []
     if (batchSubmissionAnomalies) {
       anomalies = anomalies.concat(batchSubmissionAnomalies)
     }
     if (stateUpdatesAnomalies) {
       anomalies = anomalies.concat(stateUpdatesAnomalies)
+    }
+    if (proofSubmissionsAnomalies) {
+      anomalies = anomalies.concat(proofSubmissionsAnomalies)
     }
   }
 
@@ -73,6 +91,11 @@ export function calculateAnomaliesPerProject({
       last30Days: stateUpdates?.last30Days,
       last90Days: stateUpdates?.last90Days,
       max: stateUpdates?.max,
+    },
+    proofSubmissions: {
+      last30Days: proofSubmissions?.last30Days,
+      last90Days: proofSubmissions?.last90Days,
+      max: proofSubmissions?.max,
     },
     anomalies,
   }

@@ -30,6 +30,7 @@ export type LivenessDetails = z.infer<typeof LivenessDetails>
 export const LivenessApiProject = z.object({
   batchSubmissions: LivenessDetails,
   stateUpdates: LivenessDetails,
+  proofSubmissions: LivenessDetails,
   anomalies: z.array(LivenessAnomaly).or(z.undefined()),
 })
 export type LivenessApiProject = z.infer<typeof LivenessApiProject>
@@ -58,6 +59,20 @@ const example: LivenessApiResponse = {
         },
       },
       stateUpdates: {
+        last30Days: {
+          averageInSeconds: 60 * 60 * 22,
+          maximumInSeconds: 60 * 60 * 44,
+        },
+        last90Days: {
+          averageInSeconds: 60 * 60 * 33,
+          maximumInSeconds: 60 * 60 * 55,
+        },
+        max: {
+          averageInSeconds: 60 * 60 * 33.5,
+          maximumInSeconds: 60 * 60 * 55.2,
+        },
+      },
+      proofSubmissions: {
         last30Days: {
           averageInSeconds: 60 * 60 * 22,
           maximumInSeconds: 60 * 60 * 44,
