@@ -69,12 +69,13 @@ async function simulateChallenge(
     .map((x: string) => ethers.utils.hexZeroPad(x, 32))
   segments[0] = output.outputRoot
 
-  await contracts.colosseum.createChallenge(
+  const tx = await contracts.colosseum.createChallenge(
     outputIndex,
     blockHash,
     blockNumber,
     segments,
   )
+  await tx.wait()
   process.exit(0)
 }
 
