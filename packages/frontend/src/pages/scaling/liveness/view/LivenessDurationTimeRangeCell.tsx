@@ -47,10 +47,10 @@ export function LivenessDurationTimeRangeCell({
         }
         max={
           <LivenessDurationCell
-            durationInSeconds={data?.max?.averageInSeconds}
+            durationInSeconds={data?.allTime?.averageInSeconds}
             project={project}
             tooltip={renderToStaticMarkup(
-              <Tooltip label="Max-day intervals" data={data?.max} />,
+              <Tooltip label="Max-day intervals" data={data?.allTime} />,
             )}
             showOptimisticRollupWarning={showOptimisticRollupWarning}
           />
