@@ -1,11 +1,13 @@
 import {
   Bridge,
   DuplicateData,
+  FunctionCallParams,
   getCanonicalTokenBySymbol,
   Layer2,
   Layer2LivenessConfig,
   Layer2TransactionApi,
   tokenList,
+  TransferParams,
 } from '@l2beat/config'
 import {
   EthereumAddress,
@@ -93,47 +95,67 @@ function toBackendLivenessConfig(
 
   config.stateUpdates.forEach((param) => {
     if (param.formula === 'functionCall') {
-      livenessConfig.functionCalls.push({
-        address: param.address,
-        projectId,
-        selector: param.selector,
-        type: LivenessType('STATE'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
+      livenessConfig.functionCalls.push(
+        getFunctionCallRecord(param, projectId, 'STATE'),
+      )
     } else {
-      livenessConfig.transfers.push({
-        from: param.from,
-        projectId,
-        to: param.to,
-        type: LivenessType('STATE'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
+      livenessConfig.transfers.push(
+        getTransferRecord(param, projectId, 'STATE'),
+      )
     }
   })
 
   config.batchSubmissions.forEach((param) => {
     if (param.formula === 'functionCall') {
-      livenessConfig.functionCalls.push({
-        address: param.address,
-        projectId,
-        selector: param.selector,
-        type: LivenessType('DA'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
+      livenessConfig.functionCalls.push(
+        getFunctionCallRecord(param, projectId, 'DA'),
+      )
     } else {
-      livenessConfig.transfers.push({
-        from: param.from,
-        projectId,
-        to: param.to,
-        type: LivenessType('DA'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
+      livenessConfig.transfers.push(getTransferRecord(param, projectId, 'DA'))
+    }
+  })
+
+  config.proofSubmissions.forEach((param) => {
+    if (param.formula === 'functionCall') {
+      livenessConfig.functionCalls.push(
+        getFunctionCallRecord(param, projectId, 'PROOF'),
+      )
+    } else {
+      livenessConfig.transfers.push(
+        getTransferRecord(param, projectId, 'PROOF'),
+      )
     }
   })
 
   return livenessConfig
+}
+
+function getFunctionCallRecord(
+  param: FunctionCallParams,
+  projectId: ProjectId,
+  type: LivenessType,
+) {
+  return {
+    address: param.address,
+    projectId,
+    selector: param.selector,
+    type: LivenessType(type),
+    sinceTimestamp: param.sinceTimestamp,
+    untilTimestamp: param.untilTimestamp,
+  }
+}
+
+function getTransferRecord(
+  param: TransferParams,
+  projectId: ProjectId,
+  type: LivenessType,
+) {
+  return {
+    from: param.from,
+    projectId,
+    to: param.to,
+    type: LivenessType(type),
+    sinceTimestamp: param.sinceTimestamp,
+    untilTimestamp: param.untilTimestamp,
+  }
 }
