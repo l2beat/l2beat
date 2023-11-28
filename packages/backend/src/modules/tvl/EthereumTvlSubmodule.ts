@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { EtherscanClient, HttpClient } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -38,9 +38,11 @@ export function createEthereumTvlSubmodule(
     config.tvl.ethereum.providerUrl,
   )
 
+  assert(config.tvl.ethereum.blockNumberProviderConfig.type === 'EtherscanLike')
+
   const etherscanClient = new EtherscanClient(
     http,
-    config.tvl.ethereum.etherscanApiKey,
+    config.tvl.ethereum.blockNumberProviderConfig.etherscanApiKey,
     config.tvl.ethereum.minBlockTimestamp,
     logger,
   )
