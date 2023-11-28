@@ -16,7 +16,7 @@ export function getLocalConfig(env: Env): Config {
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
-  const mantaTvlEnabled = env.boolean('MANTA_BASE_ENABLED', false)
+  const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
@@ -119,7 +119,7 @@ export function getLocalConfig(env: Env): Config {
         },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
-      mantapacific: mantaTvlEnabled && {
+      mantapacific: mantapacificTvlEnabled && {
         providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
           'TVL_MANTA_PACIFIC_RPC_CALLS_PER_MINUTE',
