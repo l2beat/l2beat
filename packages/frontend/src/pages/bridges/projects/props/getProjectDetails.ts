@@ -1,5 +1,8 @@
 import { Bridge } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
@@ -21,11 +24,16 @@ import { getTechnologyOverview } from './getTechnologyOverview'
 export function getProjectDetails(
   bridge: Bridge,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   chart: ChartProps,
 ) {
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(bridge)
-  const permissionsSection = getPermissionsSection(bridge, verificationStatus)
+  const permissionsSection = getPermissionsSection(
+    bridge,
+    verificationStatus,
+    manuallyVerifiedContracts,
+  )
 
   const items: BridgeDetailsItem[] = []
   items.push({
@@ -89,7 +97,11 @@ export function getProjectDetails(
   if (bridge.contracts)
     items.push({
       type: 'ContractsSection',
-      props: getContractSection(bridge, verificationStatus),
+      props: getContractSection(
+        bridge,
+        verificationStatus,
+        manuallyVerifiedContracts,
+      ),
     })
 
   if (bridge.knowledgeNuggets && !isEmpty(bridge.knowledgeNuggets)) {

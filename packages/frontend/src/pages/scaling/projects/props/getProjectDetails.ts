@@ -1,5 +1,8 @@
 import { Layer2 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
@@ -23,12 +26,17 @@ import { getTechnologyOverview } from './getTechnologyOverview'
 export function getProjectDetails(
   project: Layer2,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   chart: ChartProps,
 ) {
   const isUpcoming = project.isUpcoming
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(project)
-  const permissionsSection = getPermissionsSection(project, verificationStatus)
+  const permissionsSection = getPermissionsSection(
+    project,
+    verificationStatus,
+    manuallyVerifiedContracts,
+  )
   const items: ScalingDetailsItem[] = []
 
   items.push({
@@ -136,7 +144,11 @@ export function getProjectDetails(
 
     items.push({
       type: 'ContractsSection',
-      props: getContractSection(project, verificationStatus),
+      props: getContractSection(
+        project,
+        verificationStatus,
+        manuallyVerifiedContracts,
+      ),
     })
 
     if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {

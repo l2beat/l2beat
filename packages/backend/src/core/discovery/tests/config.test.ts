@@ -1,6 +1,6 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
-import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 
