@@ -22,6 +22,7 @@ export interface LivenessRecordWithProjectIdAndType {
 export interface LivenessRecordWithType {
   timestamp: UnixTime
   type: LivenessType
+  projectId: ProjectId
 }
 
 export interface LivenessRowWithProjectIdAndType {
@@ -65,7 +66,7 @@ export class LivenessRepository extends BaseRepository {
         'l.liveness_configuration_id',
         'c.id',
       )
-      .select('l.timestamp', 'c.type')
+      .select('l.timestamp', 'c.type', 'c.project_id')
       .where('c.project_id', projectId.toString())
 
     return rows.map(toRecordWithProjectIdAndType)
@@ -83,10 +84,11 @@ export class LivenessRepository extends BaseRepository {
         'l.liveness_configuration_id',
         'c.id',
       )
-      .select('l.timestamp', 'c.type')
+      .select('l.timestamp', 'c.type', 'c.project_id')
       .where('c.project_id', projectId.toString())
       .andWhere('c.type', type)
       .andWhere('l.timestamp', '>=', since.toDate())
+      .distinct('l.timestamp')
 
     return rows.map(toRecordWithProjectIdAndType)
   }
