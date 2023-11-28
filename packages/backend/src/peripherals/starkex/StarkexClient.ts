@@ -11,11 +11,11 @@ interface StarkexClientOpts {
   timeout?: number
 }
 
-const API_URL = 'https://bi-cf-v3-ddper8ah.uc.gateway.dev'
+const API_URL_V2 = 'https://bi-cf-v2-gw-ddper8ah.uc.gateway.dev'
+const API_URL_V3 = 'https://bi-cf-v3-ddper8ah.uc.gateway.dev'
 
 export class StarkexClient {
   timeout: number
-  apiUrl: string
 
   constructor(
     private readonly apiKey: string,
@@ -25,7 +25,6 @@ export class StarkexClient {
   ) {
     this.logger = this.logger.for(this)
     this.timeout = opts?.timeout ?? 10_000
-    this.apiUrl = opts?.apiUrl ?? API_URL
     if (opts?.callsPerMinute) {
       const rateLimiter = new RateLimiter({
         callsPerMinute: opts.callsPerMinute,
@@ -35,20 +34,21 @@ export class StarkexClient {
   }
 
   async getDailyCount(day: number, product: StarkexProduct): Promise<number> {
-    const body = {
-      day_start: day,
-      day_end: day + 1,
-      product,
-    }
+    const body = getBody(day, product)
 
-    const response = await this.call('/aggregations/count', body)
+    const response =
+      product === 'dydx'
+        ? await this.call(API_URL_V2, '/aggregations/count', body)
+        : await this.call(API_URL_V3, '/aggregations/count', body)
+
     return response.count
   }
 
-  async call(path: string, body: json) {
+  async call(apiUrl: string, path: string, body: json) {
     const start = Date.now()
+    const url = apiUrl + path
     const { httpResponse, error } = await this.httpClient
-      .fetch(this.apiUrl + path, {
+      .fetch(url, {
         method: 'POST',
         headers: {
           accept: 'application/json',
@@ -88,5 +88,20 @@ export class StarkexClient {
 
   private recordError(timeMs: number, message: string) {
     this.logger.debug({ type: 'error', message, timeMs })
+  }
+}
+function getBody(day: number, product: string) {
+  const bodyV3 = {
+    day_start: day,
+    day_end: day + 1,
+    product,
+  }
+
+  if (product !== 'dydx') return bodyV3
+
+  return {
+    ...bodyV3,
+    tx_type: '_all',
+    token_id: '_all',
   }
 }
