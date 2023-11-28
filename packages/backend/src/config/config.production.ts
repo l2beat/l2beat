@@ -133,11 +133,11 @@ export function getProductionConfig(env: Env): Config {
         providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
           'TVL_MANTA_PACIFIC_RPC_CALLS_PER_MINUTE',
-          500,
+          100,
         ),
         blockNumberProviderConfig: {
           type: 'RoutescanLike',
-          routescanApiUrl: 'https://manta-pacific.calderaexplorer.xyz',
+          routescanApiUrl: 'https://manta-pacific.calderaexplorer.xyz/api',
         },
         minBlockTimestamp: getChainMinTimestamp(ChainId.MANTA_PACIFIC),
       },
