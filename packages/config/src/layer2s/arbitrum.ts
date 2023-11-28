@@ -329,6 +329,7 @@ export const arbitrum: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'functionCall',

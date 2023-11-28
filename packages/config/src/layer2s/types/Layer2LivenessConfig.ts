@@ -4,9 +4,10 @@ export interface Layer2LivenessConfig {
   duplicateData?: DuplicateData[]
   stateUpdates: (FunctionCallParams | TransferParams)[]
   batchSubmissions: (FunctionCallParams | TransferParams)[]
+  proofSubmissions: (FunctionCallParams | TransferParams)[]
 }
 
-type DuplicateOption = 'batchSubmissions' | 'stateUpdates'
+type DuplicateOption = 'batchSubmissions' | 'stateUpdates' | 'proofSubmissions'
 
 export interface DuplicateData {
   from: DuplicateOption

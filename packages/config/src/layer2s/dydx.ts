@@ -135,6 +135,7 @@ export const dydx: Layer2 = {
       resyncLastDays: 7,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {

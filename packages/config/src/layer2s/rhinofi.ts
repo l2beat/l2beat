@@ -93,6 +93,7 @@ export const rhinofi: Layer2 = {
       resyncLastDays: 7,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {

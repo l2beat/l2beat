@@ -106,6 +106,7 @@ export const aztecconnect: Layer2 = {
       },
     ],
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {

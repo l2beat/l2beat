@@ -89,6 +89,7 @@ export const zksyncera: Layer2 = {
       callsPerMinute: 1500,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {

@@ -86,6 +86,7 @@ export const zksynclite: Layer2 = {
       callsPerMinute: 3_000,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {

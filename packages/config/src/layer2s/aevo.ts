@@ -85,6 +85,7 @@ export const aevo: Layer2 = {
           sinceTimestamp: new UnixTime(1679193083),
         },
       ],
+      proofSubmissions: [],
     },
   },
   riskView: makeBridgeCompatible({

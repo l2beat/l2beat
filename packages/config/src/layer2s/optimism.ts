@@ -179,6 +179,7 @@ export const optimism: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(105235064),
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'transfer',

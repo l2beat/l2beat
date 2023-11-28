@@ -118,6 +118,7 @@ export const linea: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      proofSubmissions: [],
       duplicateData: [
         {
           from: 'stateUpdates',

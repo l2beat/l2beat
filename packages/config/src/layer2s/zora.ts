@@ -77,6 +77,7 @@ export const zora: Layer2 = {
       assessCount: subtractOne,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'transfer',

@@ -243,6 +243,7 @@ export const starknet: Layer2 = {
       type: 'starknet',
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {
