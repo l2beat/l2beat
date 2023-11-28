@@ -32,13 +32,6 @@ export class RoutescanLikeClient {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
-  /**
-   * Creates a client that can be used for discovery so does not need a minTimestamp.
-   */
-  static createForDiscovery(httpClient: HttpClient, url: string) {
-    return new RoutescanLikeClient(httpClient, url, new UnixTime(0))
-  }
-
   // Etherscan API is not stable enough to trust it to return "closest" block.
   // There is a case when there is not enough activity on a given chain
   // so that blocks come in a greater than 10 minutes intervals,
@@ -76,21 +69,6 @@ export class RoutescanLikeClient {
     }
 
     throw new Error('Could not fetch block number')
-  }
-
-  async getContractSource(address: EthereumAddress) {
-    const response = await this.call('contract', 'getsourcecode', {
-      address: address.toString(),
-    })
-    return ContractSourceResult.parse(response)[0]
-  }
-
-  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
-    const response = await this.call('contract', 'getcontractcreation', {
-      contractaddresses: address.toString(),
-    })
-
-    return ContractCreatorAndCreationTxHashResult.parse(response)[0].txHash
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
