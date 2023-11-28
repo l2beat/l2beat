@@ -179,7 +179,6 @@ describe(LivenessRepository.name, () => {
         const expected = [
           {
             timestamp: DATA[0].timestamp,
-            projectId: LIVENESS_CONFIGS[0].projectId,
             type: LIVENESS_CONFIGS[0].type,
           },
         ]
@@ -219,12 +218,10 @@ describe(LivenessRepository.name, () => {
         const expected = [
           {
             timestamp: NEW_DATA[1].timestamp,
-            projectId: LIVENESS_CONFIGS[2].projectId,
             type: LIVENESS_CONFIGS[2].type,
           },
           {
             timestamp: NEW_DATA[2].timestamp,
-            projectId: LIVENESS_CONFIGS[2].projectId,
             type: LIVENESS_CONFIGS[2].type,
           },
         ]
