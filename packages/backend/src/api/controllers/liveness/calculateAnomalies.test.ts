@@ -17,13 +17,13 @@ describe(calculateAnomalies.name, () => {
           records: RECORDS,
           last30Days: undefined,
           last90Days: undefined,
-          max: undefined,
+          allTime: undefined,
         },
         stateUpdates: {
           records: [],
           last30Days: undefined,
           last90Days: undefined,
-          max: undefined,
+          allTime: undefined,
         },
       },
     })
