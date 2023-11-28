@@ -152,6 +152,14 @@ const PLASMA: ProjectTechnologyChoice = {
   references: [],
 }
 
+export const AUTONOMOUS: ProjectTechnologyChoice = {
+  name: 'Autonomous exit',
+  description:
+    'Users can (eventually) exit the system by pushing the transaction on L1 and providing the corresponding state root. The only way to prevent such withdrawal is via an upgrade.',
+  risks: [],
+  references: [],
+}
+
 export const RISK_CENTRALIZED_VALIDATOR: ProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the centralized validator goes down. Users cannot produce blocks themselves and exiting the system requires new block production.',
@@ -162,6 +170,7 @@ export const EXITS = {
   REGULAR,
   FORCED,
   EMERGENCY,
+  AUTONOMOUS,
   STARKEX_PERPETUAL: [
     STARKEX_REGULAR_PERPETUAL,
     STARKEX_FORCED_PERPETUAL,
