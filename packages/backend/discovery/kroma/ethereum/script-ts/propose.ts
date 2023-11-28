@@ -40,10 +40,83 @@ async function performNextAction(
     await proposeRoot(contracts)
   } else {
     console.log(`I have proposed output index: ${proposedOutputIndex}`)
+    await handleChallenges(proposedOutputIndex, contracts)
     return 'stop'
   }
 
   return 'continue'
+}
+
+async function simulateChallenge(
+  outputIndex: number,
+  contracts: KromaContracts,
+) {
+  console.log(`Simulating challenge for output index ${outputIndex}`)
+  const provider = contracts.validatorPool.provider
+  const block = await provider.getBlock('latest')
+  const blockNumber = block.number
+  const blockHash = block.hash
+  const output = await contracts.l2OutputOracle.getL2Output(outputIndex - 1)
+  console.log('Root:', output.outputRoot)
+
+  const requiredSegmentsLength = (
+    await contracts.colosseum.getSegmentsLength(1)
+  ).toNumber()
+  console.log('Required segments length:', requiredSegmentsLength)
+
+  const segments = Array(requiredSegmentsLength)
+    .fill('0x0')
+    .map((x: string) => ethers.utils.hexZeroPad(x, 32))
+  segments[0] = output.outputRoot
+
+  await contracts.colosseum.createChallenge(
+    outputIndex,
+    blockHash,
+    blockNumber,
+    segments,
+  )
+  process.exit(0)
+}
+
+async function handleChallenges(
+  outputIndex: number,
+  contracts: KromaContracts,
+) {
+  console.log('Finding all challenges by looking at ChallengeCreated events.')
+  const challenges = await getLogsInBatches(
+    contracts.colosseum,
+    contracts.colosseum.filters.ChallengeCreated(outputIndex),
+    GET_LOGS_MAX_RANGE,
+    EARLIEST_BLOCK,
+    'latest',
+  )
+
+  for (const challenge of challenges) {
+    const challenger = challenge.args!.challenger as string
+    await handleChallenge(outputIndex, challenger, contracts)
+  }
+}
+
+async function handleChallenge(
+  outputIndex: number,
+  challenger: string,
+  contracts: KromaContracts,
+) {
+  console.log(`Handling challenge from ${challenger}`)
+  // TODO:
+  // const output = await contracts.l2OutputOracle.getL2Output(outputIndex - 1)
+
+  // const requiredSegmentsLength = (
+  //   await contracts.colosseum.getSegmentsLength(2)
+  // ).toNumber()
+  // console.log('Required segments length:', requiredSegmentsLength)
+
+  // const segments = Array(requiredSegmentsLength)
+  //   .fill('0x0')
+  //   .map((x: string) => ethers.utils.hexZeroPad(x, 32))
+  // segments[0] = output.outputRoot
+  // segments[requiredSegmentsLength - 1] = ethers.utils.hexZeroPad('0x111', 32)
+  // await contracts.colosseum.bisect(outputIndex, challenger, 0, segments)
 }
 
 async function showBasicKromaInfo(contracts: KromaContracts) {
@@ -136,7 +209,7 @@ async function submitOutputRoot(contracts: KromaContracts) {
     await sleep(1 * 1000)
   }
 
-  const dummyOutputRoot = ethers.utils.formatBytes32String('0x1234567890')
+  const dummyOutputRoot = ethers.utils.hexZeroPad('0x1234567890', 32)
 
   console.log('Submitting output...')
   const tx = await contracts.l2OutputOracle.submitL2Output(
@@ -147,9 +220,6 @@ async function submitOutputRoot(contracts: KromaContracts) {
   )
   console.log('Done! Waiting until transaction is mined...')
   await tx.wait()
-  console.log('Mined')
-
-  await sleep(20 * 1000) // just to make sure we will get the Bonded event
 }
 
 run().catch((e) => {
