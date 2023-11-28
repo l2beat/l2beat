@@ -16,16 +16,25 @@ import {
 
 export interface TechnologyCellProps {
   children: string
+  disableColors?: boolean
   provider?: Layer2['display']['provider']
 }
 
-export function TechnologyCell({ provider, children }: TechnologyCellProps) {
+export function TechnologyCell({
+  provider,
+  children,
+  disableColors,
+}: TechnologyCellProps) {
   const isRollup = children.includes('Rollup')
   const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
   const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
 
   return (
-    <span className={cx(isRollup && 'text-green-300 dark:text-green-450')}>
+    <span
+      className={cx(
+        isRollup && !disableColors && 'text-green-300 dark:text-green-450',
+      )}
+    >
       {children}
       {provider === 'StarkEx' && (
         <span
