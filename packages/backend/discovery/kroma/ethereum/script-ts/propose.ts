@@ -155,7 +155,7 @@ async function getProposedOutputIndex(
 
 async function proposeRoot(contracts: KromaContracts) {
   await addMyselfToProposerList(contracts)
-  await waitToBecomeProposer(contracts)
+  await waitToBecomeProposerOrPublicRound(contracts)
   await submitOutputRoot(contracts)
 }
 
@@ -172,7 +172,7 @@ async function addMyselfToProposerList(contracts: KromaContracts) {
   }
 }
 
-async function waitToBecomeProposer(contracts: KromaContracts) {
+async function waitToBecomeProposerOrPublicRound(contracts: KromaContracts) {
   console.log('Waiting to become proposer or a public round...')
   let proposer = await contracts.validatorPool.nextValidator()
 
