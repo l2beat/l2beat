@@ -11,8 +11,8 @@ interface StarkexClientOpts {
   timeout?: number
 }
 
-const API_URL_V2 = 'https://bi-cf-v2-gw-ddper8ah.uc.gateway.dev'
-const API_URL_V3 = 'https://bi-cf-v3-ddper8ah.uc.gateway.dev'
+export const STARKEX_BI_API_V2 = 'https://bi-cf-v2-gw-ddper8ah.uc.gateway.dev'
+export const STARKEX_BI_API_V3 = 'https://bi-cf-v3-ddper8ah.uc.gateway.dev'
 
 export class StarkexClient {
   timeout: number
@@ -38,8 +38,8 @@ export class StarkexClient {
 
     const response =
       product === 'dydx'
-        ? await this.call(API_URL_V2, '/aggregations/count', body)
-        : await this.call(API_URL_V3, '/aggregations/count', body)
+        ? await this.call(STARKEX_BI_API_V2, '/aggregations/count', body)
+        : await this.call(STARKEX_BI_API_V3, '/aggregations/count', body)
 
     return response.count
   }
