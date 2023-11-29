@@ -71,7 +71,28 @@ export class LivenessRepository extends BaseRepository {
       .where('c.project_id', projectId.toString())
       .distinct('l.timestamp')
 
-    return rows.map(toRecordWithProjectIdAndType)
+    return rows.map(toRecordWithTimestampAndType)
+  }
+
+  async getByProjectIdAndType(
+    projectId: ProjectId,
+    type: LivenessType,
+    since: UnixTime,
+  ): Promise<LivenessRecordWithType[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness as l')
+      .join(
+        'liveness_configuration as c',
+        'l.liveness_configuration_id',
+        'c.id',
+      )
+      .select('l.timestamp', 'c.type', 'c.project_id')
+      .where('c.project_id', projectId.toString())
+      .andWhere('c.type', type)
+      .andWhere('l.timestamp', '>=', since.toDate())
+      .distinct('l.timestamp')
+
+    return rows.map(toRecordWithTimestampAndType)
   }
 
   async addMany(transactions: LivenessRecord[], trx?: Knex.Transaction) {
@@ -105,6 +126,15 @@ function toRecord(row: LivenessRow): LivenessRecord {
     blockNumber: row.block_number,
     txHash: row.tx_hash,
     livenessConfigurationId: row.liveness_configuration_id,
+  }
+}
+
+function toRecordWithTimestampAndType(
+  row: LivenessRowWithProjectIdAndType,
+): Omit<LivenessRecordWithProjectIdAndType, 'projectId'> {
+  return {
+    timestamp: UnixTime.fromDate(row.timestamp),
+    type: LivenessType(row.type),
   }
 }
 
