@@ -75,6 +75,12 @@ export const brine: Layer2 = {
         description: "Main entry point for users' deposits.",
       }),
     ],
+    transactionApi: {
+      type: 'starkex',
+      product: ['brine'],
+      sinceTimestamp: new UnixTime(1657453320),
+      resyncLastDays: 7,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

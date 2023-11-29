@@ -2,7 +2,6 @@ import React from 'react'
 
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
-import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingRiskColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
@@ -61,7 +60,6 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
           },
         ]}
       />
-      <ScalingLegend />
     </section>
   )
 }
