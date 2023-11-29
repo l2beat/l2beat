@@ -22,6 +22,7 @@ const item: StageConfig = {
     nextStage: 'Stage 2',
     requirements: ['C requirement'],
   },
+  warnings: [],
   summary: [
     {
       stage: 'Stage 0',
@@ -63,10 +64,10 @@ const item: StageConfig = {
 
 export const StageSection: Story = {
   args: {
-    stage: item,
+    stageConfig: item,
   },
 }
 
 export const StageSectionUnderReview: Story = {
-  args: { stage: { stage: 'UnderReview' } },
+  args: { stageConfig: { stage: 'UnderReview' } },
 }

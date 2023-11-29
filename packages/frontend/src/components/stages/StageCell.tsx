@@ -6,22 +6,29 @@ import { StageBadge } from './StageBadge'
 import { StageTooltip } from './StageTooltip'
 
 export interface StageCellProps {
-  item: StageConfig
+  stageConfig: StageConfig
 }
 
-export function StageCell({ item }: StageCellProps) {
-  if (item.stage === 'NotApplicable') {
-    return <StageBadge stage={item.stage} oneSize />
+export function StageCell({ stageConfig }: StageCellProps) {
+  if (stageConfig.stage === 'NotApplicable') {
+    return <StageBadge stage={stageConfig.stage} oneSize />
   }
 
   return (
     <div
       className="Tooltip"
-      title={renderToStaticMarkup(<StageTooltip item={item} />)}
+      title={renderToStaticMarkup(<StageTooltip item={stageConfig} />)}
       data-tooltip-big
       data-tooltip-mobile-disabled
     >
-      <StageBadge stage={item.stage} oneSize />
+      <StageBadge
+        stage={stageConfig.stage}
+        showWarning={
+          stageConfig.stage !== 'UnderReview' &&
+          stageConfig.warnings.length !== 0
+        }
+        oneSize
+      />
     </div>
   )
 }

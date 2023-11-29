@@ -1,7 +1,8 @@
 import { Stage, StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { MissingIcon } from '../icons'
+import { MissingIcon, RoundedWarningIcon } from '../icons'
+import { WarningBar } from '../project/WarningBar'
 import { StageBadge } from './StageBadge'
 import { StageDisclaimer } from './StageDisclaimer'
 
@@ -15,7 +16,13 @@ export function StageTooltip({ item }: StageTooltipProps) {
   return (
     <div className="flex max-w-[300px] flex-col gap-4 py-1">
       <span>
-        <StageBadge stage={item.stage} className="font-medium" />
+        <StageBadge
+          stage={item.stage}
+          showWarning={
+            item.stage !== 'UnderReview' && item.warnings.length !== 0
+          }
+          className="font-medium"
+        />
         <span className="ml-2 inline-block font-medium">
           {getStageName(item.stage)}
         </span>
@@ -28,24 +35,34 @@ export function StageTooltip({ item }: StageTooltipProps) {
           publishing.
         </>
       ) : (
-        item.missing && (
-          <div className="text-sm">
-            <span className="mb-2 block leading-tight">
-              Items missing for{' '}
-              <span className={getColorClassName(item.missing.nextStage)}>
-                {item.missing.nextStage}
+        <>
+          {item.warnings.length !== 0 &&
+            item.warnings.map((warning) => (
+              <WarningBar
+                color="yellow"
+                icon={RoundedWarningIcon}
+                text={warning}
+              />
+            ))}
+          {item.missing && (
+            <div className="text-sm">
+              <span className="mb-2 block leading-tight">
+                Items missing for{' '}
+                <span className={getColorClassName(item.missing.nextStage)}>
+                  {item.missing.nextStage}
+                </span>
               </span>
-            </span>
-            <ul className="list-none space-y-2">
-              {item.missing.requirements.map((requirement, i) => (
-                <li className="flex gap-1.5" key={i}>
-                  <MissingIcon className="relative top-0.5 inline-block shrink-0" />
-                  {requirement}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
+              <ul className="list-none space-y-2">
+                {item.missing.requirements.map((requirement, i) => (
+                  <li className="flex gap-1.5" key={i}>
+                    <MissingIcon className="relative top-0.5 inline-block shrink-0" />
+                    {requirement}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
       )}
       <StageDisclaimer
         text="Please mind, stages do not reflect rollup security"

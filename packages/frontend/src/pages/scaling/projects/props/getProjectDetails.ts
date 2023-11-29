@@ -67,7 +67,7 @@ export function getProjectDetails(
       items.push({
         type: 'StageSection',
         props: {
-          stage: project.stage,
+          stageConfig: project.stage,
           name: project.display.name,
           icon: `/icons/${project.display.slug}.png`,
           type: project.display.category,

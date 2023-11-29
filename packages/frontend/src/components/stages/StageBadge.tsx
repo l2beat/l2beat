@@ -1,9 +1,12 @@
 import { Stage } from '@l2beat/config'
-import cx from 'classnames'
+import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
+
+import { RoundedWarningIcon } from '../icons'
 
 export interface StageBadgeProps {
   stage: Stage | 'UnderReview' | 'NotApplicable'
+  showWarning?: boolean
   oneSize?: boolean
   big?: boolean
   className?: string
@@ -11,6 +14,7 @@ export interface StageBadgeProps {
 
 export function StageBadge({
   stage,
+  showWarning,
   oneSize,
   big,
   className,
@@ -22,18 +26,22 @@ export function StageBadge({
       ? undefined
       : stage
   return (
-    <span
-      className={cx(
-        getColorClassName(stage),
-        'inline-block rounded px-1.5 text-center font-medium !leading-none',
-        oneSize && 'w-20',
-        big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
-        value && 'uppercase',
-        className,
+    <div className={classNames('inline-flex items-center gap-1.5', className)}>
+      <span
+        className={cx(
+          getColorClassName(stage),
+          'inline-block h-min rounded px-1.5 text-center font-medium !leading-none',
+          oneSize && 'w-20',
+          big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
+          value && 'uppercase',
+        )}
+      >
+        <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
+      </span>
+      {showWarning && (
+        <RoundedWarningIcon className="h-4 w-4 fill-yellow-300" />
       )}
-    >
-      <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
-    </span>
+    </div>
   )
 }
 

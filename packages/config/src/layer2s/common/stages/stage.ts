@@ -1,3 +1,5 @@
+import console from 'console'
+
 import {
   ChecklistTemplate,
   ChecklistValue,
@@ -11,10 +13,12 @@ import {
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
+  debug?: boolean,
 ): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
-    let lastStage: Stage | undefined = undefined
+    let lastStage: Stage = 'Stage 0'
     let missing: MissingStageRequirements | undefined = undefined
+    const warnings: string[] = []
     const summary: StageSummary[] = []
 
     for (const [key, blueprintStage] of Object.entries(blueprint)) {
@@ -28,13 +32,20 @@ export function createGetStage<T extends StageBlueprint>(
       for (const [key, blueprintItem] of Object.entries(blueprintStage.items)) {
         const checklistItem = checklistStage[key]
 
-        const [satisfied, description] = normalizeKeyChecklist(
+        const [satisfied, description, warning] = normalizeKeyChecklist(
           blueprintItem,
           checklistItem,
         )
-
+        if (debug) {
+          console.log(key, satisfied, description, warning)
+        }
         if (satisfied !== null) {
           summaryStage.requirements.push({ satisfied, description })
+        }
+
+        if (!satisfied && satisfied !== null && warning) {
+          warnings.push(warning)
+          continue
         }
 
         if (!satisfied && satisfied !== null) {
@@ -47,25 +58,21 @@ export function createGetStage<T extends StageBlueprint>(
         }
       }
 
-      if (missing === undefined) {
+      if (missing === undefined && warnings.length === 0) {
         lastStage = blueprintStage.name
       }
     }
-
-    if (lastStage === undefined) {
-      throw new Error(
-        'Project with stage lower than Stage 0 appeared in config, we do not support it yet and we need to think how to handle it.',
-      )
+    if (debug) {
+      console.log({ stage: lastStage, missing, summary, warnings })
     }
-
-    return { stage: lastStage, missing, summary }
+    return { stage: lastStage, missing, summary, warnings }
   }
 }
 
 function normalizeKeyChecklist(
   stageKeyBlueprint: { positive: string; negative: string },
   stageKeyChecklist: ChecklistValue,
-): [Satisfied | null, string] {
+): [Satisfied | null, string, string | undefined] {
   const satisfied = isSatisfied(stageKeyChecklist)
 
   const description = getDescription(
@@ -74,7 +81,9 @@ function normalizeKeyChecklist(
     stageKeyChecklist,
   )
 
-  return [satisfied, description]
+  const warning = getWarning(satisfied, stageKeyBlueprint)
+
+  return [satisfied, description, warning]
 }
 
 function getDescription(
@@ -89,6 +98,13 @@ function getDescription(
   return satisfied === 'UnderReview' || satisfied
     ? stageKeyBlueprint.positive
     : stageKeyBlueprint.negative
+}
+
+function getWarning(
+  satisfied: Satisfied | null,
+  stageKeyBlueprint: { positive: string; warning?: string; negative: string },
+) {
+  return satisfied === false ? stageKeyBlueprint.warning : undefined
 }
 
 function isSatisfied(stageKeyChecklist: ChecklistValue): Satisfied | null {

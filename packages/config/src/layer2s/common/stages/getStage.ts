@@ -4,6 +4,7 @@ import { ChecklistTemplate } from './types'
 export type StageChecklist = Parameters<typeof getStage>[0]
 interface GetStageOptions {
   rollupNodeLink?: string
+  debug?: boolean
 }
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
@@ -13,7 +14,7 @@ export const getStage = (
   opts?: GetStageOptions,
 ) => {
   const blueprint = getBlueprint(opts)
-  return createGetStage(blueprint)(blueprintChecklist)
+  return createGetStage(blueprint, opts?.debug)(blueprintChecklist)
 }
 
 const getBlueprint = (opts?: GetStageOptions) =>
@@ -41,6 +42,8 @@ const getBlueprint = (opts?: GetStageOptions) =>
             (opts?.rollupNodeLink
               ? ` [View code](${opts.rollupNodeLink})`
               : ''),
+          warning:
+            'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           negative:
             'No source-available node exists that can recreate the state from L1 data.',
         },
