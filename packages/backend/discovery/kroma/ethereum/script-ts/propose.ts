@@ -119,8 +119,17 @@ async function handleChallenge(
   )
   const weBisectedFirstTime =
     bisects.find((b) => b.args!.turn === 2) !== undefined
+  const weBisectedSecondTime =
+    bisects.find((b) => b.args!.turn === 4) !== undefined
   const challengerBisected =
     bisects.find((b) => b.args!.turn === 3) !== undefined
+
+  if (weBisectedSecondTime) {
+    console.log(
+      "We have bisected two times, now it's their turn to provide the proof",
+    )
+    process.exit(0)
+  }
 
   console.log(`We bisected first time: ${weBisectedFirstTime.toString()}`)
   console.log(`Challenger bisected: ${challengerBisected.toString()}`)
@@ -132,6 +141,8 @@ async function handleChallenge(
   }
 
   const currentTurn = challengerBisected ? 4 : 2
+  // const currentTurn = 3
+  console.log(`Current turn: ${currentTurn}`)
 
   const requiredSegmentsLength = (
     await contracts.colosseum.getSegmentsLength(currentTurn)
@@ -145,7 +156,10 @@ async function handleChallenge(
   segments[0] = output.outputRoot
   // This assumes that the challenge was for between elements 0 and 1
   // TODO: make this bisect at the place they actually challenged
-  const dummyValue = currentTurn === 2 ? '0x111' : '0x222'
+
+  // const dummyValue = '0x222'
+  const dummyValue = currentTurn === 2 ? '0x111' : '0x333'
+
   segments[requiredSegmentsLength - 1] = ethers.utils.hexZeroPad(dummyValue, 32)
 
   const tx = await contracts.colosseum.bisect(
@@ -155,6 +169,7 @@ async function handleChallenge(
     segments,
   )
   await tx.wait()
+  await sleep(20 * 1000)
 }
 
 async function showBasicKromaInfo(contracts: KromaContracts) {
@@ -258,6 +273,7 @@ async function submitOutputRoot(contracts: KromaContracts) {
   )
   console.log('Done! Waiting until transaction is mined...')
   await tx.wait()
+  await sleep(20 * 1000)
 }
 
 run().catch((e) => {
