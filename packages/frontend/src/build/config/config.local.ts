@@ -2,18 +2,20 @@ import { common } from './common'
 import { Config } from './Config'
 
 export function getLocalConfig(): Config {
+  const useMock = process.env.MOCK === 'true'
   return {
     ...common,
     features: {
       ...common.features,
       // The local backend doesn't support activity
-      liveness: false,
-      activity: false,
+      liveness: useMock,
+      activity: useMock,
       buildAllProjectPages: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',
       skipCache: true,
+      mock: process.env.MOCK === 'true',
     },
   }
 }
