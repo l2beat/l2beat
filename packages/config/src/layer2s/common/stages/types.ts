@@ -47,6 +47,7 @@ export type UsableStageConfig = StageUnderReview | StageConfigured
 export interface StageConfigured {
   stage: Stage
   missing?: MissingStageRequirements
+  showWarning: boolean
   warnings: string[]
   summary: StageSummary[]
 }

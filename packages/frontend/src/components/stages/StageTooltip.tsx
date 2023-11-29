@@ -18,9 +18,7 @@ export function StageTooltip({ item }: StageTooltipProps) {
       <span>
         <StageBadge
           stage={item.stage}
-          showWarning={
-            item.stage !== 'UnderReview' && item.warnings.length !== 0
-          }
+          showWarning={item.stage !== 'UnderReview' && item.showWarning}
           className="font-medium"
         />
         <span className="ml-2 inline-block font-medium">
@@ -36,7 +34,7 @@ export function StageTooltip({ item }: StageTooltipProps) {
         </>
       ) : (
         <>
-          {item.warnings.length !== 0 &&
+          {item.showWarning &&
             item.warnings.map((warning) => (
               <WarningBar
                 color="yellow"

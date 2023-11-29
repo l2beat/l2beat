@@ -61,13 +61,13 @@ export function StageSection(props: StageSectionProps) {
         {props.name} is a{' '}
         <StageBadge
           stage={props.stageConfig.stage}
-          showWarning={props.stageConfig.warnings.length !== 0}
+          showWarning={props.stageConfig.showWarning}
           big
           className="mx-1"
         />
         <span className="lowercase"> {props.type}</span>.
       </div>
-      {props.stageConfig.warnings.length !== 0 &&
+      {props.stageConfig.showWarning &&
         props.stageConfig.warnings.map((warning) => (
           <WarningBar
             color="yellow"

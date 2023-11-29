@@ -18,37 +18,46 @@ export function createGetStage<T extends StageBlueprint>(
   return function getStage(checklist) {
     let lastStage: Stage = 'Stage 0'
     let missing: MissingStageRequirements | undefined = undefined
+    let showWarning = false
     const warnings: string[] = []
     const summary: StageSummary[] = []
 
-    for (const [key, blueprintStage] of Object.entries(blueprint)) {
-      const checklistStage = checklist[key]
+    for (const [blueprintStageKey, blueprintStage] of Object.entries(
+      blueprint,
+    )) {
+      const checklistStage = checklist[blueprintStageKey]
       const summaryStage: StageSummary = {
         stage: blueprintStage.name,
         requirements: [],
       }
       summary.push(summaryStage)
 
-      for (const [key, blueprintItem] of Object.entries(blueprintStage.items)) {
-        const checklistItem = checklistStage[key]
+      for (const [blueprintItemKey, blueprintItem] of Object.entries(
+        blueprintStage.items,
+      )) {
+        const checklistItem = checklistStage[blueprintItemKey]
 
         const [satisfied, description, warning] = normalizeKeyChecklist(
           blueprintItem,
           checklistItem,
         )
         if (debug) {
-          console.log(key, satisfied, description, warning)
+          console.log(blueprintItemKey, satisfied, description, warning)
         }
         if (satisfied !== null) {
           summaryStage.requirements.push({ satisfied, description })
         }
 
-        if (!satisfied && satisfied !== null && warning) {
-          warnings.push(warning)
+        if (
+          (satisfied === false || satisfied === 'UnderReview') &&
+          blueprintStage.name === 'Stage 0'
+        ) {
+          if (warning) warnings.push(warning)
+          showWarning = true
           continue
         }
 
-        if (!satisfied && satisfied !== null) {
+        if (satisfied === false || satisfied === 'UnderReview') {
           if (missing === undefined) {
             missing = { nextStage: blueprintStage.name, requirements: [] }
           }
@@ -65,7 +74,13 @@ export function createGetStage<T extends StageBlueprint>(
     if (debug) {
       console.log({ stage: lastStage, missing, summary, warnings })
     }
-    return { stage: lastStage, missing, summary, warnings }
+    return {
+      stage: lastStage,
+      missing,
+      summary,
+      showWarning,
+      warnings,
+    }
   }
 }
 

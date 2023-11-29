@@ -39,7 +39,7 @@ export function StageBadge({
         <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
       </span>
       {showWarning && (
-        <RoundedWarningIcon className="h-4 w-4 fill-yellow-300" />
+        <RoundedWarningIcon className="h-5 w-5 fill-yellow-300" />
       )}
     </div>
   )

@@ -24,8 +24,7 @@ export function StageCell({ stageConfig }: StageCellProps) {
       <StageBadge
         stage={stageConfig.stage}
         showWarning={
-          stageConfig.stage !== 'UnderReview' &&
-          stageConfig.warnings.length !== 0
+          stageConfig.stage !== 'UnderReview' && stageConfig.showWarning
         }
         oneSize
       />
