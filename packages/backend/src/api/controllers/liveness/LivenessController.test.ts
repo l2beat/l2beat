@@ -204,7 +204,7 @@ describe(LivenessController.name, () => {
 
     expect(result.type).toEqual('error')
     if (result.type === 'error') {
-      expect(result.error).toEqual('DATA_NOT_FULLY_SYNCED')
+      expect(result.error).toEqual('DATA_NOT_SYNCED')
       expect(logger.error).toHaveBeenCalled()
     }
   })

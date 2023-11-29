@@ -21,7 +21,7 @@ type LivenessResult =
     }
   | {
       type: 'error'
-      error: 'DATA_NOT_FULLY_SYNCED'
+      error: 'DATA_NOT_SYNCED'
     }
 
 export class LivenessController {
