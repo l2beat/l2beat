@@ -87,7 +87,12 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
           </p>
         </div>
       </div>
-      <div style={{ fontSize: '20px' }}>Configurations</div>
+      <div
+        style={{ fontSize: '20px' }}
+        data-tooltip="Configurations currently used to fetch liveness data"
+      >
+        Configurations
+      </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {configurations
           .filter((c) => !c.untilTimestamp)
@@ -97,8 +102,11 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
           )}
       </div>
 
-      <div style={{ fontSize: '20px' }}>
-        Configurations with "empty" liveness
+      <div
+        style={{ fontSize: '20px' }}
+        data-tooltip="Configurations which do not have any datapoint saved in liveness table. If a configuration is there, that should be an expected behavior. Right now we have 2 arbitrum DA configurations there, which serve as a backup for the situation when arbitrum decides to use other function to post DA."
+      >
+        Empty
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {configurations
@@ -109,8 +117,11 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
           )}
       </div>
 
-      <div style={{ fontSize: '20px' }}>
-        Configurations with untilTimestamp set
+      <div
+        style={{ fontSize: '20px' }}
+        data-tooltip="Configurations that have 'untilTimestamp' param set, which means they are no longer being fetched. In most cases that is because of the project upgrade."
+      >
+        Archived
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {configurations
