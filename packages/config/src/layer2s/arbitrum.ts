@@ -695,7 +695,7 @@ export const arbitrum: Layer2 = {
         callsItselfRollup: true,
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: false,
+        rollupNodeSourceAvailable: true,
       },
       stage1: {
         stateVerificationOnL1: true,
