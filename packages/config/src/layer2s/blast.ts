@@ -38,6 +38,7 @@ export const blast: Layer2 = {
         address: EthereumAddress('0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d'),
         tokens: '*',
         description: 'Blast bridge.',
+        isUpcoming: true,
       }),
     ],
   },
