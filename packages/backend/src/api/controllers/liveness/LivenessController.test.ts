@@ -1,6 +1,6 @@
 import {
   assert,
-  EthereumAddress,
+  Hash256,
   LivenessType,
   ProjectId,
   UnixTime,
@@ -8,13 +8,8 @@ import {
 import { expect, mockObject } from 'earl'
 
 import { Clock } from '../../../core/Clock'
-import { LivenessTransfer } from '../../../core/liveness/types/LivenessConfig'
-import { LivenessConfigurationIdentifier } from '../../../core/liveness/types/LivenessConfigurationIdentifier'
 import { Project } from '../../../model'
-import {
-  LivenessConfigurationRecord,
-  LivenessConfigurationRepository,
-} from '../../../peripherals/database/LivenessConfigurationRepository'
+import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
@@ -27,6 +22,8 @@ import { LivenessController } from './LivenessController'
 
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {
+    const CLOCK = getMockClock()
+
     // TODO: unskip it
     it.skip('correctly finds anomalies', async () => {
       const RECORDS: LivenessRecordWithProjectIdAndType[] = []
@@ -46,9 +43,9 @@ describe(LivenessController.name, () => {
 
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
-        getMockClock(),
-        getMockLivenessConfigurationRepository(),
+        CLOCK,
       )
 
       const result = await livenessController.getLiveness()
@@ -77,9 +74,9 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
-        getMockClock(),
-        getMockLivenessConfigurationRepository(),
+        CLOCK,
       )
 
       const result = await livenessController.getLiveness()
@@ -92,9 +89,9 @@ describe(LivenessController.name, () => {
     it('returns empty object if no data', async () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository([]),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         [],
-        getMockClock(),
-        getMockLivenessConfigurationRepository(),
+        CLOCK,
       )
 
       const result = await livenessController.getLiveness()
@@ -126,9 +123,9 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
         getMockClock(),
-        getMockLivenessConfigurationRepository(),
       )
 
       const records = [...RECORDS]
@@ -155,49 +152,24 @@ describe(LivenessController.name, () => {
         expect(project1BatchSubmissions).toEqual(expected)
       }
     })
-  })
 
-  it('return error when data is not fully synced', async () => {
-    const projectId = ProjectId('test')
-    const type = LivenessType('STATE')
-    const sinceTimestamp = new UnixTime(0)
-    const from = EthereumAddress.random()
-    const to = EthereumAddress.random()
+    it('return error when data is not fully synced', async () => {
+      const clock = getMockClock()
 
-    const config: LivenessTransfer = {
-      livenessConfigurationId: Math.floor(Math.random() * 100),
-      projectId,
-      type,
-      sinceTimestamp,
-      from,
-      to,
-    }
-    const clock = getMockClock()
+      const outOfSyncTimestamp = CLOCK.getLastHour().add(-2, 'hours')
+      const livenessController = new LivenessController(
+        getMockLivenessRepository([]),
+        getMockIndexerStateRepository(outOfSyncTimestamp),
+        mockProjectConfig([]),
+        clock,
+      )
+      const result = await livenessController.getLiveness()
 
-    const livenessController = new LivenessController(
-      getMockLivenessRepository([]),
-      mockProjectConfig([]),
-      clock,
-      getMockLivenessConfigurationRepository([
-        {
-          id: 1,
-          projectId,
-          type,
-          identifier: LivenessConfigurationIdentifier(config),
-          params: JSON.stringify(
-            LivenessConfigurationIdentifier.params(config),
-          ),
-          sinceTimestamp,
-          lastSyncedTimestamp: clock.getLastHour().add(-3, 'hours'),
-        },
-      ]),
-    )
-    const result = await livenessController.getLiveness()
-
-    expect(result.type).toEqual('error')
-    if (result.type === 'error') {
-      expect(result.error).toEqual('DATA_NOT_SYNCED')
-    }
+      expect(result.type).toEqual('error')
+      if (result.type === 'error') {
+        expect(result.error).toEqual('DATA_NOT_SYNCED')
+      }
+    })
   })
 })
 
@@ -209,13 +181,16 @@ function getMockClock() {
   })
 }
 
-function getMockLivenessConfigurationRepository(
-  data?: LivenessConfigurationRecord[],
-) {
-  return mockObject<LivenessConfigurationRepository>({
-    getAll: async () => data ?? [],
-    addMany: async () => [],
-    deleteMany: async () => -1,
+function getMockIndexerStateRepository(data: UnixTime) {
+  return mockObject<IndexerStateRepository>({
+    findIndexerState: async () => {
+      return {
+        id: 1,
+        configHash: Hash256.random(),
+        indexerId: 'liveness_indexer',
+        safeHeight: data.toNumber(),
+      }
+    },
   })
 }
 
