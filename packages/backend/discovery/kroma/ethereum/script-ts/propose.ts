@@ -20,6 +20,7 @@ async function run() {
   const rpcHost = getRcpHostFromArgs()
   const provider = new ethers.providers.JsonRpcProvider(rpcHost)
   const wallet = new ethers.Wallet(process.env.MY_PRIVATE_KEY!, provider)
+  // const wallet = new ethers.Wallet(process.env.CHALLENGER_PRIVATE_KEY!, provider)
   const contracts = getContracts(KROMA_NETWORK, wallet)
 
   await showBasicKromaInfo(contracts)
@@ -41,7 +42,6 @@ async function performNextAction(
   } else {
     console.log(`I have proposed output index: ${proposedOutputIndex}`)
     await handleChallenges(proposedOutputIndex, contracts)
-    return 'stop'
   }
 
   return 'continue'
@@ -51,6 +51,9 @@ async function simulateChallenge(
   outputIndex: number,
   contracts: KromaContracts,
 ) {
+  console.log('Adding challenger to proposers list')
+  await addMyselfToProposerList(contracts)
+
   console.log(`Simulating challenge for output index ${outputIndex}`)
   const provider = contracts.validatorPool.provider
   const block = await provider.getBlock('latest')
@@ -104,20 +107,54 @@ async function handleChallenge(
   contracts: KromaContracts,
 ) {
   console.log(`Handling challenge from ${challenger}`)
-  // TODO:
-  // const output = await contracts.l2OutputOracle.getL2Output(outputIndex - 1)
+  const output = await contracts.l2OutputOracle.getL2Output(outputIndex - 1)
 
-  // const requiredSegmentsLength = (
-  //   await contracts.colosseum.getSegmentsLength(2)
-  // ).toNumber()
-  // console.log('Required segments length:', requiredSegmentsLength)
+  console.log('Getting all Bisected events...')
+  const bisects = await getLogsInBatches(
+    contracts.colosseum,
+    contracts.colosseum.filters.Bisected(outputIndex, challenger),
+    GET_LOGS_MAX_RANGE,
+    EARLIEST_BLOCK,
+    'latest',
+  )
+  const weBisectedFirstTime =
+    bisects.find((b) => b.args!.turn === 2) !== undefined
+  const challengerBisected =
+    bisects.find((b) => b.args!.turn === 3) !== undefined
 
-  // const segments = Array(requiredSegmentsLength)
-  //   .fill('0x0')
-  //   .map((x: string) => ethers.utils.hexZeroPad(x, 32))
-  // segments[0] = output.outputRoot
-  // segments[requiredSegmentsLength - 1] = ethers.utils.hexZeroPad('0x111', 32)
-  // await contracts.colosseum.bisect(outputIndex, challenger, 0, segments)
+  console.log(`We bisected first time: ${weBisectedFirstTime.toString()}`)
+  console.log(`Challenger bisected: ${challengerBisected.toString()}`)
+
+  if (weBisectedFirstTime && !challengerBisected) {
+    console.log('Sleeping...')
+    await sleep(10 * 1000)
+    return
+  }
+
+  const currentTurn = challengerBisected ? 4 : 2
+
+  const requiredSegmentsLength = (
+    await contracts.colosseum.getSegmentsLength(currentTurn)
+  ).toNumber()
+  console.log('Required segments length:', requiredSegmentsLength)
+
+  const segments = Array(requiredSegmentsLength)
+    .fill('0x0')
+    .map((x: string) => ethers.utils.hexZeroPad(x, 32))
+
+  segments[0] = output.outputRoot
+  // This assumes that the challenge was for between elements 0 and 1
+  // TODO: make this bisect at the place they actually challenged
+  const dummyValue = currentTurn === 2 ? '0x111' : '0x222'
+  segments[requiredSegmentsLength - 1] = ethers.utils.hexZeroPad(dummyValue, 32)
+
+  const tx = await contracts.colosseum.bisect(
+    outputIndex,
+    challenger,
+    0,
+    segments,
+  )
+  await tx.wait()
 }
 
 async function showBasicKromaInfo(contracts: KromaContracts) {

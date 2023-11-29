@@ -7,6 +7,7 @@ export async function getLogsInBatches(
   fromBlock: number,
   toBlock: number | 'latest',
 ): Promise<ethers.Event[]> {
+  console.log('Querying logs from', fromBlock, 'to', toBlock)
   const _toBlock =
     toBlock === 'latest' ? await contract.provider.getBlockNumber() : toBlock
 
@@ -24,7 +25,6 @@ export async function getLogsInBatches(
     const curBoundaryStart = Math.floor(start / maxRange) * maxRange
     const curBoundaryEnd = curBoundaryStart + maxRange - 1 // getLogs 'to' is inclusive!
     const end = Math.min(curBoundaryEnd, _toBlock)
-    console.log('Querying logs from', start, 'to', end)
     const logs = await contract.queryFilter(eventFilter, start, end)
     allLogs.push(logs)
     start = end + 1
