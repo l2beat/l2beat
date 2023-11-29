@@ -248,6 +248,8 @@ export class StatusController {
       await this.indexerStateRepository.findIndexerState('liveness_indexer')
     const livenessConfigurations =
       await this.livenessConfigurationRepository.getAll()
+    const unusedConfigurations =
+      await this.livenessConfigurationRepository.findUnusedConfigurationsIds()
 
     const params: LivenessStatusPageProps = {
       ...livenessIndexerState,
@@ -256,6 +258,7 @@ export class StatusController {
         ...c,
         params: JSON.parse(c.params) as json,
       })),
+      unusedConfigurations,
     }
     return renderLivenessStatusPage(params)
   }

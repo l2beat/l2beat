@@ -27,6 +27,7 @@ export interface LivenessStatusPageProps {
     untilTimestamp?: UnixTime
     lastSyncedTimestamp?: UnixTime
   }[]
+  unusedConfigurations: number[]
 }
 
 export function LivenessStatusPage(props: LivenessStatusPageProps) {
@@ -90,14 +91,31 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {configurations
           .filter((c) => !c.untilTimestamp)
+          .filter((c) => !props.unusedConfigurations.includes(c.id))
           .map((c) =>
             getConfigCell(c, props.targetTimestamp, props.minTimestamp),
           )}
       </div>
-      <div style={{ fontSize: '20px' }}>With untilTimestamp</div>
+
+      <div style={{ fontSize: '20px' }}>
+        Configurations with "empty" liveness
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {configurations
+          .filter((c) => !c.untilTimestamp)
+          .filter((c) => props.unusedConfigurations.includes(c.id))
+          .map((c) =>
+            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+          )}
+      </div>
+
+      <div style={{ fontSize: '20px' }}>
+        Configurations with untilTimestamp set
+      </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {configurations
           .filter((c) => c.untilTimestamp)
+          .filter((c) => !props.unusedConfigurations.includes(c.id))
           .map((c) =>
             getConfigCell(c, props.targetTimestamp, props.minTimestamp),
           )}
