@@ -51,6 +51,7 @@ import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
+import { stablenet } from './stablenet'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
@@ -119,6 +120,7 @@ export const layer2s: Layer2[] = [
   rhinofi,
   scroll,
   sorare,
+  stablenet,
   starknet,
   stealthchain,
   taiko,
