@@ -1,5 +1,8 @@
 import { Bridge, Layer2, ProjectPermission } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 import { TechnologyContract } from '../../components/project/ContractEntry'
 import { PermissionsSectionProps } from '../../components/project/PermissionsSection'
@@ -7,11 +10,13 @@ import { PermissionsSectionProps } from '../../components/project/PermissionsSec
 export function getPermissionsSection(
   project: Layer2 | Bridge,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): PermissionsSectionProps | undefined {
   const section: PermissionsSectionProps = {
     id: 'permissions',
     title: 'Permissions',
     verificationStatus,
+    manuallyVerifiedContracts,
     permissions: [],
   }
 

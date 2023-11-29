@@ -79,7 +79,7 @@ export const sorare: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'sorare',
+      product: ['sorare'],
       sinceTimestamp: new UnixTime(1626352527),
       resyncLastDays: 7,
     },

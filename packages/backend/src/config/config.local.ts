@@ -16,6 +16,7 @@ export function getLocalConfig(env: Env): Config {
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
+  const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
@@ -70,10 +71,13 @@ export function getLocalConfig(env: Env): Config {
           'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey:
-          env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
-          env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api.etherscan.io/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey:
+            env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
+            env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.etherscan.io/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       arbitrum: arbitrumTvlEnabled && {
@@ -82,8 +86,11 @@ export function getLocalConfig(env: Env): Config {
           'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api.arbiscan.io/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.arbiscan.io/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       optimism: optimismTvlEnabled && {
@@ -92,8 +99,11 @@ export function getLocalConfig(env: Env): Config {
           'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       base: baseTvlEnabled && {
@@ -102,8 +112,23 @@ export function getLocalConfig(env: Env): Config {
           'TVL_BASE_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api.basescan.org/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.basescan.org/api',
+        },
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+      mantapacific: mantapacificTvlEnabled && {
+        providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
+          'TVL_MANTA_PACIFIC_RPC_CALLS_PER_MINUTE',
+          25,
+        ),
+        blockNumberProviderConfig: {
+          type: 'RoutescanLike',
+          routescanApiUrl: 'https://manta-pacific.calderaexplorer.xyz/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },

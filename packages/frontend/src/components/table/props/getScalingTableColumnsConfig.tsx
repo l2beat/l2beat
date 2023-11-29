@@ -450,7 +450,7 @@ export function getScalingLivenessColumnsConfig() {
         <LivenessTimeRangeCell
           last30Days={'30-day average intervals'}
           last90Days={'90-day average intervals'}
-          max={'max-day average intervals'}
+          max={'all-time average intervals'}
         />
       ),
       columns: [
