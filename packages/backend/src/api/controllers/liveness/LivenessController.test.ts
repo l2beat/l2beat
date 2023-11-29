@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   EthereumAddress,
@@ -50,7 +49,6 @@ describe(LivenessController.name, () => {
         mockProjectConfig(RECORDS),
         getMockClock(),
         getMockLivenessConfigurationRepository(),
-        getMockLogger(),
       )
 
       const result = await livenessController.getLiveness()
@@ -82,7 +80,6 @@ describe(LivenessController.name, () => {
         mockProjectConfig(RECORDS),
         getMockClock(),
         getMockLivenessConfigurationRepository(),
-        getMockLogger(),
       )
 
       const result = await livenessController.getLiveness()
@@ -98,7 +95,6 @@ describe(LivenessController.name, () => {
         [],
         getMockClock(),
         getMockLivenessConfigurationRepository(),
-        getMockLogger(),
       )
 
       const result = await livenessController.getLiveness()
@@ -133,7 +129,6 @@ describe(LivenessController.name, () => {
         mockProjectConfig(RECORDS),
         getMockClock(),
         getMockLivenessConfigurationRepository(),
-        getMockLogger(),
       )
 
       const records = [...RECORDS]
@@ -179,8 +174,6 @@ describe(LivenessController.name, () => {
     }
     const clock = getMockClock()
 
-    const logger = getMockLogger()
-
     const livenessController = new LivenessController(
       getMockLivenessRepository([]),
       mockProjectConfig([]),
@@ -198,14 +191,12 @@ describe(LivenessController.name, () => {
           lastSyncedTimestamp: clock.getLastHour().add(-3, 'hours'),
         },
       ]),
-      logger,
     )
     const result = await livenessController.getLiveness()
 
     expect(result.type).toEqual('error')
     if (result.type === 'error') {
       expect(result.error).toEqual('DATA_NOT_SYNCED')
-      expect(logger.error).toHaveBeenCalled()
     }
   })
 })
@@ -216,21 +207,6 @@ function getMockClock() {
   return mockObject<Clock>({
     getLastHour: () => UnixTime.now().toStartOf('hour').add(-1, 'hours'),
   })
-}
-
-function getMockLogger() {
-  const wrappedLogger = mockObject<Logger>({
-    error: () => {},
-    debug: () => {},
-    trace: () => {},
-    info: () => {},
-  })
-
-  const logger = mockObject<Logger>({
-    for: () => wrappedLogger,
-    error: () => {},
-  })
-  return logger
 }
 
 function getMockLivenessConfigurationRepository(
