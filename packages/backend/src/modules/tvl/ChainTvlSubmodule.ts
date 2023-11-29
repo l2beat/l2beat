@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient, UniversalEtherscanClient } from '@l2beat/shared'
+import {
+  BlockNumberProvider,
+  HttpClient,
+  UniversalEtherscanClient,
+  UniversalRoutescanClient,
+} from '@l2beat/shared'
 import {
   capitalizeFirstLetter,
   ChainId,
@@ -46,14 +51,23 @@ export function chainTvlSubmodule(
   // #region peripherals
   const provider = new providers.JsonRpcProvider(chainTvlConfig.providerUrl)
 
-  const etherscanClient = new UniversalEtherscanClient(
-    http,
-    chainTvlConfig.etherscanApiUrl,
-    chainTvlConfig.etherscanApiKey,
-    chainTvlConfig.minBlockTimestamp,
-    chainId,
-    logger,
-  )
+  const blockNumberProvider: BlockNumberProvider =
+    chainTvlConfig.blockNumberProviderConfig.type === 'RoutescanLike'
+      ? new UniversalRoutescanClient(
+          http,
+          chainTvlConfig.blockNumberProviderConfig.routescanApiUrl,
+          chainTvlConfig.minBlockTimestamp,
+          chainId,
+          logger,
+        )
+      : new UniversalEtherscanClient(
+          http,
+          chainTvlConfig.blockNumberProviderConfig.etherscanApiUrl,
+          chainTvlConfig.blockNumberProviderConfig.etherscanApiKey,
+          chainTvlConfig.minBlockTimestamp,
+          chainId,
+          logger,
+        )
 
   const ethereumClient = new EthereumClient(
     provider,
@@ -69,7 +83,7 @@ export function chainTvlSubmodule(
   // #region updaters
 
   const blockNumberUpdater = new BlockNumberUpdater(
-    etherscanClient,
+    blockNumberProvider,
     db.blockNumberRepository,
     clock,
     logger,
