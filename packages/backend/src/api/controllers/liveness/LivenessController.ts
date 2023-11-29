@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { LivenessApiResponse } from '@l2beat/shared-pure'
+import {
+  LivenessApiResponse,
+  LivenessType,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { Clock } from '../../../core/Clock'
 import { Project } from '../../../model'
@@ -45,41 +50,65 @@ export class LivenessController {
     }
 
     await Promise.all(
-      this.projects.map(async (project) => {
-        if (project.livenessConfig === undefined) {
-          return
-        }
-        console.time(`getWithType ${project.projectId.toString()}`)
-        const records = await this.livenessRepository.getWithType(
-          project.projectId,
-        )
-        console.timeEnd(`getWithType ${project.projectId.toString()}`)
+      this.projects
+        .filter((p) => !p.isArchived)
+        .map(async (project) => {
+          if (project.livenessConfig === undefined) {
+            return
+          }
+          console.time(`getWithType ${project.projectId.toString()}`)
+          const records =
+            await this.livenessRepository.getWithTypeDistinctTimestamp(
+              project.projectId,
+            )
+          console.timeEnd(`getWithType ${project.projectId.toString()}`)
 
-        console.time(`groupedByType ${project.projectId.toString()}`)
-        const groupedByType = groupByType(records)
-        console.timeEnd(`groupedByType ${project.projectId.toString()}`)
+          console.time(`groupedByType ${project.projectId.toString()}`)
+          const groupedByType = groupByType(records)
+          console.timeEnd(`groupedByType ${project.projectId.toString()}`)
 
-        console.time(`intervals ${project.projectId.toString()}`)
-        const intervals = calcIntervalWithAvgsPerProject(groupedByType)
-        console.timeEnd(`intervals ${project.projectId.toString()}`)
+          console.time(`intervals ${project.projectId.toString()}`)
+          const intervals = calcIntervalWithAvgsPerProject(groupedByType)
+          console.timeEnd(`intervals ${project.projectId.toString()}`)
 
-        console.time(`withAnomalies ${project.projectId.toString()}`)
-        const withAnomalies = calculateAnomaliesPerProject(intervals)
-        console.timeEnd(`withAnomalies ${project.projectId.toString()}`)
+          console.time(`withAnomalies ${project.projectId.toString()}`)
+          const withAnomalies = calculateAnomaliesPerProject(intervals)
+          console.timeEnd(`withAnomalies ${project.projectId.toString()}`)
 
-        if (withAnomalies && project.livenessConfig.duplicateData) {
-          for (const duplicateData of project.livenessConfig.duplicateData) {
-            withAnomalies[duplicateData.to] = {
-              ...withAnomalies[duplicateData.from],
+          if (withAnomalies && project.livenessConfig.duplicateData) {
+            for (const duplicateData of project.livenessConfig.duplicateData) {
+              withAnomalies[duplicateData.to] = {
+                ...withAnomalies[duplicateData.from],
+              }
             }
           }
-        }
 
-        projects[project.projectId.toString()] = withAnomalies
-      }),
+          projects[project.projectId.toString()] = withAnomalies
+        }),
     )
 
     console.timeEnd('getLiveness')
     return { type: 'success', data: { projects } }
+  }
+
+  async getLivenessPerProjectAndType(
+    projectId: ProjectId,
+    livenessType: LivenessType,
+  ): Promise<{
+    projectId: ProjectId
+    type: LivenessType
+    data: UnixTime[]
+  }> {
+    const records = await this.livenessRepository.getByProjectIdAndType(
+      projectId,
+      livenessType,
+      UnixTime.now().add(-30, 'days'),
+    )
+
+    return {
+      projectId: projectId,
+      type: livenessType,
+      data: records.map((r) => r.timestamp).sort(),
+    }
   }
 }

@@ -34,26 +34,45 @@ export function calculateAnomaliesPerProject({
   stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
 }): LivenessApiResponse['projects'][number] {
   const lastHour = UnixTime.now().toStartOf('hour')
-  const anomalies: LivenessAnomaly[] = []
 
+  let batchSubmissionAnomalies: LivenessAnomaly[] | undefined = undefined
   if (batchSubmissions) {
-    anomalies.push(...findAnomalies(batchSubmissions.records, lastHour))
+    const anomalies = findAnomalies(batchSubmissions.records, lastHour)
+    if (anomalies) {
+      batchSubmissionAnomalies = anomalies
+    }
   }
 
+  let stateUpdatesAnomalies: LivenessAnomaly[] | undefined = undefined
   if (stateUpdates) {
-    anomalies.push(...findAnomalies(stateUpdates.records, lastHour))
+    const anomalies = findAnomalies(stateUpdates.records, lastHour)
+    if (anomalies) {
+      stateUpdatesAnomalies = anomalies
+    }
+  }
+
+  let anomalies: LivenessAnomaly[] | undefined = undefined
+
+  if (batchSubmissionAnomalies || stateUpdatesAnomalies) {
+    anomalies = []
+    if (batchSubmissionAnomalies) {
+      anomalies = anomalies.concat(batchSubmissionAnomalies)
+    }
+    if (stateUpdatesAnomalies) {
+      anomalies = anomalies.concat(stateUpdatesAnomalies)
+    }
   }
 
   return {
     batchSubmissions: {
       last30Days: batchSubmissions?.last30Days,
       last90Days: batchSubmissions?.last90Days,
-      max: batchSubmissions?.max,
+      allTime: batchSubmissions?.allTime,
     },
     stateUpdates: {
       last30Days: stateUpdates?.last30Days,
       last90Days: stateUpdates?.last90Days,
-      max: stateUpdates?.max,
+      allTime: stateUpdates?.allTime,
     },
     anomalies,
   }
@@ -68,7 +87,7 @@ export function calculateAnomaliesPerProject({
 function findAnomalies(
   records: LivenessRecordWithInterval[],
   lastHour: UnixTime,
-): LivenessAnomaly[] {
+): LivenessAnomaly[] | undefined {
   const lastRecord = records.at(-1)
   if (lastRecord === undefined) return []
   if (lastRecord.timestamp.gt(lastHour.add(-60, 'days'))) return []
@@ -77,6 +96,7 @@ function findAnomalies(
   const last60Days = records.filter((record) =>
     record.timestamp.gte(timestamp60daysAgo),
   )
+  if (last60Days.length === 0) return undefined
 
   const means = new Map<number, number>()
   const stdDevs = new Map<number, number>()

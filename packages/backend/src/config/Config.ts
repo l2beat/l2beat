@@ -59,6 +59,7 @@ export interface TvlConfig {
   readonly arbitrum: ChainTvlConfig | false
   readonly optimism: ChainTvlConfig | false
   readonly base: ChainTvlConfig | false
+  readonly mantapacific: ChainTvlConfig | false
 }
 
 export interface LivenessConfig {
@@ -70,12 +71,24 @@ export interface LivenessConfig {
   readonly minTimestamp: UnixTime
 }
 
+export interface RoutescanChainConfig {
+  readonly type: 'RoutescanLike'
+  readonly routescanApiUrl: string
+}
+
+export interface EtherscanChainConfig {
+  readonly type: 'EtherscanLike'
+  readonly etherscanApiKey: string
+  readonly etherscanApiUrl: string
+}
+
 export interface ChainTvlConfig {
   readonly providerUrl: string
   readonly providerCallsPerMinute: number
-  readonly etherscanApiKey: string
-  readonly etherscanApiUrl: string
   readonly minBlockTimestamp: UnixTime
+  readonly blockNumberProviderConfig:
+    | EtherscanChainConfig
+    | RoutescanChainConfig
 }
 
 export interface HealthConfig {
