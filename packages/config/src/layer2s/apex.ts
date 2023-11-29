@@ -104,7 +104,7 @@ export const apex: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'apex',
+      product: ['apex_usdc', 'apex_usdt'],
       sinceTimestamp: new UnixTime(1660252039),
       resyncLastDays: 7,
     },

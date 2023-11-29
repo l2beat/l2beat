@@ -30,6 +30,15 @@ export interface LivenessStatusPageProps {
 }
 
 export function LivenessStatusPage(props: LivenessStatusPageProps) {
+  const configurations = props.configurations.sort((a, b) => {
+    if (a.projectId.toString() < b.projectId.toString()) {
+      return -1
+    }
+    if (a.projectId.toString() > b.projectId.toString()) {
+      return 1
+    }
+    return 0
+  })
   return (
     <Page title="Liveness module status">
       <div
@@ -77,87 +86,103 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
           </p>
         </div>
       </div>
-      <div>Configurations</div>
+      <div style={{ fontSize: '20px' }}>Configurations</div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {props.configurations
-          .sort((a, b) => {
-            if (a.projectId.toString() < b.projectId.toString()) {
-              return -1
-            }
-            if (a.projectId.toString() > b.projectId.toString()) {
-              return 1
-            }
-            return 0
-          })
-          .map((config) => {
-            const type =
-              config.lastSyncedTimestamp?.toNumber() ===
-              props.targetTimestamp.toNumber()
-                ? 'hint'
-                : 'warn'
-
-            return (
-              <details className={`card ${type}`} style={{ maxWidth: '300px' }}>
-                <summary>
-                  <p style={{ fontWeight: 'bold' }}>
-                    {config.projectId.toString()}
-                  </p>
-                  {` - ${config.type}`}
-                </summary>
-                <p>
-                  <div style={{ display: 'flex', gap: '1rem' }}>
-                    <p style={{ fontWeight: 'bold' }}>Since:</p>
-                    <p style={{ fontWeight: 'normal' }}>
-                      {new Date(
-                        Number(config.sinceTimestamp) * 1000,
-                      ).toLocaleString('en-GB', {
-                        timeZone: 'UTC',
-                      })}
-                    </p>
-                  </div>
-                  {config.untilTimestamp && (
-                    <div style={{ display: 'flex', gap: '1rem' }}>
-                      <p style={{ fontWeight: 'bold' }}>Until:</p>
-
-                      <p style={{ fontWeight: 'normal' }}>
-                        {new Date(
-                          Number(config.untilTimestamp) * 1000,
-                        ).toLocaleString('en-GB', {
-                          timeZone: 'UTC',
-                        })}
-                      </p>
-                    </div>
-                  )}
-                  <div style={{ display: 'flex', gap: '1rem' }}>
-                    <p style={{ fontWeight: 'bold' }}>Last synced:</p>
-                    {props.minTimestamp && (
-                      <p style={{ fontWeight: 'normal' }}>
-                        {new Date(
-                          Number(config.lastSyncedTimestamp) * 1000,
-                        ).toLocaleString('en-GB', {
-                          timeZone: 'UTC',
-                        })}
-                      </p>
-                    )}
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      gap: '1rem',
-                      overflowX: 'scroll',
-                    }}
-                  >
-                    <p style={{ fontWeight: 'bold' }}>Params:</p>
-                    <p style={{ fontWeight: 'normal' }}>
-                      {JSON.stringify(config.params)}
-                    </p>
-                  </div>
-                </p>
-              </details>
-            )
-          })}
+        {configurations
+          .filter((c) => !c.untilTimestamp)
+          .map((c) =>
+            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+          )}
+      </div>
+      <div>With untilTimestamp</div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {configurations
+          .filter((c) => c.untilTimestamp)
+          .map((c) =>
+            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+          )}
       </div>
     </Page>
+  )
+}
+
+function getConfigCell(
+  config: {
+    params: json
+    id: number
+    projectId: ProjectId
+    type: LivenessType
+    identifier: LivenessConfigurationIdentifier
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime | undefined
+    lastSyncedTimestamp?: UnixTime | undefined
+  },
+  targetTimestamp: UnixTime,
+  minTimestamp: UnixTime | undefined,
+) {
+  const type =
+    config.lastSyncedTimestamp?.toNumber() === targetTimestamp.toNumber()
+      ? 'hint'
+      : 'warn'
+
+  return (
+    <details className={`card ${type}`} style={{ maxWidth: '300px' }}>
+      <summary>
+        <p style={{ fontWeight: 'bold' }}>{config.projectId.toString()}</p>
+        {` - ${config.type}`}
+      </summary>
+      <p>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <p style={{ fontWeight: 'bold' }}>Since:</p>
+          <p style={{ fontWeight: 'normal' }}>
+            {new Date(Number(config.sinceTimestamp) * 1000).toLocaleString(
+              'en-GB',
+              {
+                timeZone: 'UTC',
+              },
+            )}
+          </p>
+        </div>
+        {config.untilTimestamp && (
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <p style={{ fontWeight: 'bold' }}>Until:</p>
+
+            <p style={{ fontWeight: 'normal' }}>
+              {new Date(Number(config.untilTimestamp) * 1000).toLocaleString(
+                'en-GB',
+                {
+                  timeZone: 'UTC',
+                },
+              )}
+            </p>
+          </div>
+        )}
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <p style={{ fontWeight: 'bold' }}>Last synced:</p>
+          {minTimestamp && (
+            <p style={{ fontWeight: 'normal' }}>
+              {new Date(
+                Number(config.lastSyncedTimestamp) * 1000,
+              ).toLocaleString('en-GB', {
+                timeZone: 'UTC',
+              })}
+            </p>
+          )}
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            gap: '1rem',
+            overflowX: 'scroll',
+          }}
+        >
+          <p style={{ fontWeight: 'bold' }}>Params:</p>
+          <p style={{ fontWeight: 'normal' }}>
+            {JSON.stringify(config.params)}
+          </p>
+        </div>
+      </p>
+    </details>
   )
 }
 
