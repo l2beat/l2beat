@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { LivenessApiResponse } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../core/Clock'
@@ -24,6 +25,7 @@ export class LivenessController {
     private readonly projects: Project[],
     private readonly clock: Clock,
     private readonly configurationRepository: LivenessConfigurationRepository,
+    private readonly logger: Logger,
   ) {}
 
   async getLiveness(): Promise<LivenessResult> {
@@ -38,6 +40,7 @@ export class LivenessController {
 
     if (!areAllSynced) {
       console.timeEnd('getLiveness')
+      this.logger.error('[LIVENESS]: DATA_NOT_FULLY_SYNCED')
       return { type: 'error', error: 'DATA_NOT_FULLY_SYNCED' }
     }
 
