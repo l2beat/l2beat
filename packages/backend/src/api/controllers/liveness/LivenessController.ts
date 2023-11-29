@@ -46,7 +46,7 @@ export class LivenessController {
     if (!areAllSynced) {
       console.timeEnd('getLiveness')
       this.logger.error('[API]: Liveness data is not synced')
-      return { type: 'error', error: 'DATA_NOT_FULLY_SYNCED' }
+      return { type: 'error', error: 'DATA_NOT_SYNCED' }
     }
 
     await Promise.all(
