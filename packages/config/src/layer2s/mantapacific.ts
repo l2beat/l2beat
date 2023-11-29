@@ -1,4 +1,12 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -22,6 +30,26 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId('mantapacific:tia-celestia'),
+    name: 'Celestia',
+    symbol: 'TIA',
+    decimals: 6,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/31967/large/tia.jpg?1696530772',
+    address: EthereumAddress('0x6Fae4D9935E2fcb11fC79a64e917fb2BF14DaFaa'),
+    coingeckoId: CoingeckoId('celestia'),
+    sinceTimestamp: new UnixTime(1698782429),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Hyperlane Nexus',
+    },
+  },
+]
 
 export const mantapacific: Layer2 = {
   type: 'layer2',
@@ -52,6 +80,7 @@ export const mantapacific: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.MANTA_PACIFIC })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622'),

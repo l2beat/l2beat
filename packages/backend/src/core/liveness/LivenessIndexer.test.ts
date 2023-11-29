@@ -1,4 +1,4 @@
-import { hashJson, UnixTime } from '@l2beat/shared-pure'
+import { hashJson, LivenessType, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
@@ -12,7 +12,12 @@ import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import { LIVENESS_MOCK } from '../../test/mockLiveness'
 import { LivenessClient } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
-import { getLivenessConfigHash } from './utils'
+import {
+  adjustToForBigqueryCall,
+  getLivenessConfigHash,
+  isTimestampInRange,
+  mergeConfigs,
+} from './utils'
 
 const {
   getMockLivenessIndexer,
@@ -270,14 +275,10 @@ describe(LivenessIndexer.name, () => {
         ...FUNCTIONS_EXPECTED,
       ]
 
-      const adjustedTo = TO.add(1, 'days')
+      const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
 
       const livenessClient = mockObject<LivenessClient>({
-        getLivenessData: mockFn().resolvesTo({
-          data: expectedToSave,
-          adjustedTo,
-          usedConfigurationsIds: CONFIGURATIONS.map((c) => c.id),
-        }),
+        getLivenessData: mockFn().resolvesTo(expectedToSave),
       })
 
       const { livenessIndexer, livenessRepository, configurationRepository } =
@@ -285,18 +286,43 @@ describe(LivenessIndexer.name, () => {
 
       const currentTo = await livenessIndexer.update(
         FROM.toNumber(),
-        TO.toNumber(),
+        adjustedTo.toNumber(),
       )
 
-      expect(livenessClient.getLivenessData).toHaveBeenCalledWith(
+      const config = mergeConfigs(
         PROJECTS,
         CONFIGURATIONS.map((c, i) => ({
           ...c,
           id: i,
           lastSyncedTimestamp: undefined,
         })),
+      )
+
+      const transfersConfig = config.transfers.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
+          FROM,
+          adjustedTo,
+        ),
+      )
+      const functionCallsConfig = config.functionCalls.filter((c) =>
+        isTimestampInRange(
+          c.sinceTimestamp,
+          c.untilTimestamp,
+          c.latestSyncedTimestamp,
+          FROM,
+          adjustedTo,
+        ),
+      )
+
+      expect(livenessClient.getLivenessData).toHaveBeenNthCalledWith(
+        1,
+        transfersConfig,
+        functionCallsConfig,
         FROM,
-        TO,
+        adjustedTo,
       )
       expect(currentTo).toEqual(adjustedTo.toNumber())
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
@@ -311,6 +337,17 @@ describe(LivenessIndexer.name, () => {
         expectedToSave,
         MOCK_TRX,
       )
+    })
+    it('does not run getLivenessData when configs are empty', async () => {
+      const livenessClient = mockObject<LivenessClient>({
+        getLivenessData: mockFn().resolvesTo([]),
+      })
+      const { livenessIndexer } = getMockLivenessIndexer({
+        livenessClient,
+        projects: [],
+      })
+      await livenessIndexer.update(FROM.toNumber(), TO.toNumber())
+      expect(livenessClient.getLivenessData).not.toHaveBeenCalled()
     })
   })
 
@@ -347,6 +384,43 @@ describe(LivenessIndexer.name, () => {
       const value = await livenessIndexer.invalidate(1)
 
       expect(value).toEqual(1)
+    })
+  })
+
+  describe(LivenessIndexer.prototype.getConfiguration.name, () => {
+    it('should return configurations and adjustedTo', async () => {
+      const { livenessIndexer } = getMockLivenessIndexer({})
+
+      const { functionCallsConfig, transfersConfig, adjustedTo } =
+        await livenessIndexer.getConfiguration(FROM.toNumber(), TO.toNumber())
+
+      const expectedTransfersConfig = [
+        {
+          projectId: PROJECTS[0].projectId,
+          from: PROJECTS[0].livenessConfig!.transfers[0].from,
+          to: PROJECTS[0].livenessConfig!.transfers[0].to,
+          type: LivenessType(PROJECTS[0].livenessConfig!.transfers[0].type),
+          sinceTimestamp: CONFIGURATIONS[0].sinceTimestamp,
+          untilTimestamp: CONFIGURATIONS[0].untilTimestamp,
+          latestSyncedTimestamp: undefined,
+          livenessConfigurationId: 0,
+        },
+      ]
+      const expectedFunctionCallsConfig = [
+        {
+          projectId: PROJECTS[0].projectId,
+          address: PROJECTS[0].livenessConfig!.functionCalls[0].address,
+          selector: PROJECTS[0].livenessConfig!.functionCalls[0].selector,
+          sinceTimestamp: CONFIGURATIONS[1].sinceTimestamp,
+          type: LivenessType(PROJECTS[0].livenessConfig!.functionCalls[0].type),
+          latestSyncedTimestamp: undefined,
+          livenessConfigurationId: 1,
+        },
+      ]
+
+      expect(transfersConfig).toEqual(expectedTransfersConfig)
+      expect(functionCallsConfig).toEqual(expectedFunctionCallsConfig)
+      expect(adjustedTo).toEqual(TO)
     })
   })
 })

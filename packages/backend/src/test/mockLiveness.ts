@@ -9,7 +9,7 @@ import { MockObject, mockObject } from 'earl'
 import { Knex } from 'knex'
 
 import { HourlyIndexer } from '../core/liveness/HourlyIndexer'
-import { LivenessClient, mergeConfigs } from '../core/liveness/LivenessClient'
+import { LivenessClient } from '../core/liveness/LivenessClient'
 import { LivenessIndexer } from '../core/liveness/LivenessIndexer'
 import {
   LivenessFunctionCall,
@@ -23,6 +23,7 @@ import {
 import {
   getLivenessConfigHash,
   isTimestampInRange,
+  mergeConfigs,
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from '../core/liveness/utils'

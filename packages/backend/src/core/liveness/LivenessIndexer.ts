@@ -12,7 +12,13 @@ import { LivenessConfigurationRepository } from '../../peripherals/database/Live
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
-import { getLivenessConfigHash } from './utils'
+import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
+import {
+  adjustToForBigqueryCall,
+  getLivenessConfigHash,
+  isTimestampInRange,
+  mergeConfigs,
+} from './utils'
 import { processLivenessConfigurations } from './utils/processLivenessConfigurations'
 
 export class LivenessIndexer extends ChildIndexer {
@@ -40,23 +46,28 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const configurations = await this.livenessConfigurationRepository.getAll()
+    const { transfersConfig, functionCallsConfig, adjustedTo } =
+      await this.getConfiguration(from, to)
 
-    const { data, adjustedTo, usedConfigurationsIds } =
-      await this.livenessClient.getLivenessData(
-        this.projects,
-        configurations,
-        new UnixTime(from),
-        new UnixTime(to),
-      )
+    if (transfersConfig.length === 0 && functionCallsConfig.length === 0) {
+      this.logger.info('Update skipped', { from, to: adjustedTo })
+      return Promise.resolve(adjustedTo.toNumber())
+    }
+
+    const data = await this.livenessClient.getLivenessData(
+      transfersConfig,
+      functionCallsConfig,
+      new UnixTime(from),
+      adjustedTo,
+    )
 
     await this.livenessRepository.runInTransaction(async (trx) => {
       await this.livenessRepository.addMany(data, trx)
 
       await Promise.all(
-        usedConfigurationsIds.map((id) =>
+        [...transfersConfig, ...functionCallsConfig].map((c) =>
           this.livenessConfigurationRepository.setLastSyncedTimestamp(
-            id,
+            c.livenessConfigurationId,
             adjustedTo,
             trx,
           ),
@@ -64,13 +75,51 @@ export class LivenessIndexer extends ChildIndexer {
       )
     })
 
-    this.logger.info('Updated liveness data', {
+    this.logger.info('Updated', {
       from,
       adjustedTo: adjustedTo,
-      usedConfigurations: usedConfigurationsIds.length,
+      usedConfigurations: transfersConfig.length + functionCallsConfig.length,
       fetchedDataPoints: data.length,
     })
     return Promise.resolve(adjustedTo.toNumber())
+  }
+
+  async getConfiguration(
+    from: number,
+    to: number,
+  ): Promise<{
+    transfersConfig: LivenessTransfer[]
+    functionCallsConfig: LivenessFunctionCall[]
+    adjustedTo: UnixTime
+  }> {
+    const configurations = await this.livenessConfigurationRepository.getAll()
+
+    const adjustedTo = adjustToForBigqueryCall(
+      new UnixTime(from).toNumber(),
+      new UnixTime(to).toNumber(),
+    )
+
+    const config = mergeConfigs(this.projects, configurations)
+
+    const transfersConfig = config.transfers.filter((c) =>
+      isTimestampInRange(
+        c.sinceTimestamp,
+        c.untilTimestamp,
+        c.latestSyncedTimestamp,
+        new UnixTime(from),
+        adjustedTo,
+      ),
+    )
+    const functionCallsConfig = config.functionCalls.filter((c) =>
+      isTimestampInRange(
+        c.sinceTimestamp,
+        c.untilTimestamp,
+        c.latestSyncedTimestamp,
+        new UnixTime(from),
+        adjustedTo,
+      ),
+    )
+    return { transfersConfig, functionCallsConfig, adjustedTo }
   }
 
   private async initialize() {
