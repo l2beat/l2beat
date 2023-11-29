@@ -6,12 +6,12 @@ import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
-import { BASE_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
+import { MANTA_PACIFIC_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { chainTvlSubmodule } from './ChainTvlSubmodule'
 import { TvlDatabase } from './types'
 
-export function createBaseTvlSubmodule(
+export function createMantaTvlSubmodule(
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   coingeckoQueryService: CoingeckoQueryService,
@@ -21,11 +21,11 @@ export function createBaseTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   return chainTvlSubmodule(
-    ChainId.BASE,
-    ProjectId.BASE,
-    config.tvl.base,
+    ChainId.MANTA_PACIFIC,
+    ProjectId.MANTA_PACIFIC,
+    config.tvl.mantapacific,
     config.tokens,
-    BASE_MULTICALL_CONFIG,
+    MANTA_PACIFIC_MULTICALL_CONFIG,
     db,
     priceUpdater,
     coingeckoQueryService,

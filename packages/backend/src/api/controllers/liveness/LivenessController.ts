@@ -1,4 +1,9 @@
-import { LivenessApiResponse } from '@l2beat/shared-pure'
+import {
+  LivenessApiResponse,
+  LivenessType,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { Project } from '../../../model'
 import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
@@ -56,5 +61,26 @@ export class LivenessController {
 
     console.timeEnd('getLiveness')
     return { projects }
+  }
+
+  async getLivenessPerProjectAndType(
+    projectId: ProjectId,
+    livenessType: LivenessType,
+  ): Promise<{
+    projectId: ProjectId
+    type: LivenessType
+    data: UnixTime[]
+  }> {
+    const records = await this.livenessRepository.getByProjectIdAndType(
+      projectId,
+      livenessType,
+      UnixTime.now().add(-30, 'days'),
+    )
+
+    return {
+      projectId: projectId,
+      type: livenessType,
+      data: records.map((r) => r.timestamp).sort(),
+    }
   }
 }

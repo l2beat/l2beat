@@ -152,6 +152,23 @@ describe(LivenessRepository.name, () => {
     })
   })
 
+  describe(LivenessRepository.prototype.getByProjectIdAndType.name, () => {
+    it('should return rows with given project id and type', async () => {
+      const results = await repository.getByProjectIdAndType(
+        LIVENESS_CONFIGS[0].projectId,
+        LIVENESS_CONFIGS[0].type,
+        START.add(-1, 'hours'),
+      )
+
+      expect(results).toEqual([
+        {
+          timestamp: DATA[0].timestamp,
+          type: LIVENESS_CONFIGS[0].type,
+        },
+      ])
+    })
+  })
+
   describe(
     LivenessRepository.prototype.getWithTypeDistinctTimestamp.name,
     () => {
@@ -162,7 +179,6 @@ describe(LivenessRepository.name, () => {
         const expected = [
           {
             timestamp: DATA[0].timestamp,
-            projectId: LIVENESS_CONFIGS[0].projectId,
             type: LIVENESS_CONFIGS[0].type,
           },
         ]
@@ -202,12 +218,10 @@ describe(LivenessRepository.name, () => {
         const expected = [
           {
             timestamp: NEW_DATA[1].timestamp,
-            projectId: LIVENESS_CONFIGS[2].projectId,
             type: LIVENESS_CONFIGS[2].type,
           },
           {
             timestamp: NEW_DATA[2].timestamp,
-            projectId: LIVENESS_CONFIGS[2].projectId,
             type: LIVENESS_CONFIGS[2].type,
           },
         ]
