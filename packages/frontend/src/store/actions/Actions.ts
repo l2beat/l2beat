@@ -1,4 +1,5 @@
 import { SimpleNode } from '../../api/SimpleNode'
+import { NodeLocations } from '../utils/storageParsing'
 
 export interface Actions {
   onKeyDown: (event: KeyboardEvent) => void
@@ -9,4 +10,6 @@ export interface Actions {
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
   updateNodes: (nodes: SimpleNode[]) => void
+  updateNodeLocations: (locations: NodeLocations) => void
+  setProjectId: (projectId: string) => void
 }

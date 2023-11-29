@@ -1,5 +1,6 @@
 import { Box, Connection, State } from '../State'
 import { BORDER_WIDTH, FIELD_HEIGHT, HEADER_HEIGHT } from '../utils/constants'
+import { encodeNodeLocations, getLayoutStorageKey } from './storageParsing'
 
 export function updateNodePositions(state: State): State {
   let dx = state.mouseMove.currentX - state.mouseMove.startX
@@ -23,7 +24,7 @@ export function updateNodePositions(state: State): State {
     }
   }
 
-  return {
+  const newState = {
     ...state,
     nodes: state.nodes.map((node) => {
       const box = nodeDimensions[node.simpleNode.id]
@@ -53,6 +54,13 @@ export function updateNodePositions(state: State): State {
       }
     }),
   }
+
+  clearTimeout(newState.saveLayoutStartTime)
+  newState.saveLayoutStartTime = setTimeout(() => {
+    localPersistCallback(newState)
+  }, 250)
+
+  return newState
 }
 
 function processConnection(
@@ -97,4 +105,15 @@ function processConnection(
   }
 
   throw new Error('impossible min result')
+}
+
+function localPersistCallback(state: State): void {
+  if (state.nodes.length <= 0) {
+    return
+  }
+  const locations = encodeNodeLocations(state)
+  localStorage.setItem(
+    getLayoutStorageKey(state.projectId),
+    JSON.stringify(locations),
+  )
 }

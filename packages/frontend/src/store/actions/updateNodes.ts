@@ -1,6 +1,11 @@
 import { SimpleNode } from '../../api/SimpleNode'
 import { Connection, Node, State } from '../State'
 import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
+import {
+  decodeNodeLocations,
+  getLayoutStorageKey,
+  NodeLocations,
+} from '../utils/storageParsing'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
@@ -28,14 +33,47 @@ export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
 
   const addedNodes = nodes
     .filter((node) => !oldNodes.has(node.id))
-    .map((node, i) =>
-      simpleNodeToNode(node, startX + (NODE_WIDTH + NODE_SPACING) * i, 0),
-    )
+    .map((node, i) => {
+      const box = getNodeBoxFromStorage(state.projectId, node)
+      const x = box?.x ?? startX + (NODE_WIDTH + NODE_SPACING) * i
+      const y = box?.y ?? 0
+      return simpleNodeToNode(node, x, y)
+    })
 
   return updateNodePositions({
     ...state,
     nodes: updatedNodes.concat(addedNodes),
   })
+}
+
+export function updateNodeLocations(
+  state: State,
+  locations: NodeLocations,
+): Partial<State> {
+  const movedNodes = state.nodes.map((n) => ({
+    ...n,
+    box: locations[n.simpleNode.id] ?? n.box,
+  }))
+
+  return updateNodePositions({
+    ...state,
+    nodes: movedNodes,
+  })
+}
+
+function getNodeBoxFromStorage(
+  projectId: string,
+  node: SimpleNode,
+): Node['box'] | undefined {
+  const storage = localStorage.getItem(getLayoutStorageKey(projectId))
+  if (storage === null) {
+    return undefined
+  }
+
+  const locations = decodeNodeLocations(storage)
+  const location = locations.locations[node.id]
+
+  return location
 }
 
 function simpleNodeToNode(node: SimpleNode, x: number, y: number): Node {

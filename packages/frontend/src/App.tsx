@@ -11,12 +11,19 @@ import { SimpleNode } from './api/SimpleNode'
 import { transformContracts } from './api/transform'
 import { nodeToSimpleNode } from './store/actions/updateNodes'
 import { useStore } from './store/store'
+import {
+  decodeNodeLocations,
+  getLayoutStorageKey,
+} from './store/utils/storageParsing'
 import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
 
 export function App() {
   // load the initial nodes from the store that gets rehydrated from local storage at startup
   const initialNodes = useStore((state) => state.nodes)
+  const projectId = useStore((state) => state.projectId)
+  const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  const setProjectId = useStore((state) => state.setProjectId)
   const [nodes, setNodes] = useState<SimpleNode[]>(
     initialNodes.map(nodeToSimpleNode),
   )
@@ -42,6 +49,21 @@ export function App() {
     setNodes([])
   }
 
+  function save() {
+    const data = localStorage.getItem(getLayoutStorageKey(projectId))
+    if (data === null) {
+      return
+    }
+
+    const blob = new Blob([data], { type: 'application/json' })
+    const downloadLink = document.createElement('a')
+    downloadLink.href = URL.createObjectURL(blob)
+    downloadLink.download = `${projectId}-layout.json`
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+    document.body.removeChild(downloadLink)
+  }
+
   async function discoverContract(address: string) {
     console.log('DISCOVERING', address)
 
@@ -51,18 +73,31 @@ export function App() {
     setNodes((nodes) => merge(nodes, result))
   }
 
-  async function discoverFromFile(discoveredFile: File) {
+  async function loadFromFile(file: File) {
     console.log('LOADING')
 
-    markLoading('Discovery.json parse', true)
+    markLoading(`${file.name} parse`, true)
 
-    const contents = await discoveredFile.text()
-    const parsed: unknown = JSON.parse(contents)
-    const discovery = parsed as DiscoveryOutput
-    const result = transformContracts(discovery)
+    const contents = await file.text()
+    try {
+      const locations = decodeNodeLocations(contents)
+      if (locations.projectId !== projectId) {
+        console.error(
+          `Location data is for ${locations.projectId} but ${projectId} is loaded`,
+        )
+        return
+      }
 
-    markLoading('Discovery.json parse', false)
-    setNodes((nodes) => merge(nodes, result))
+      updateNodeLocations(locations.locations)
+    } catch (_) {
+      const parsed: unknown = JSON.parse(contents)
+      const discovery = parsed as DiscoveryOutput
+      const result = transformContracts(discovery)
+
+      setNodes((nodes) => merge(nodes, result))
+      setProjectId(`${discovery.name}@${discovery.chain}`)
+    }
+    markLoading(`${file.name} parse`, false)
   }
 
   function deleteNodeAction(id: string[]) {
@@ -84,7 +119,7 @@ export function App() {
           if (item.kind === 'file') {
             const file = item.getAsFile()
             if (file) {
-              discoverFromFile(file).catch((e) => {
+              loadFromFile(file).catch((e) => {
                 throw e
               })
             }
@@ -130,13 +165,22 @@ export function App() {
 
               <div>
                 <button
-                  className="ml-2 text-2xl"
+                  className="px-1 text-2xl hover:bg-gray-300"
                   type="button"
                   disabled={loading.global}
                   onClick={clear}
                   title="Clear"
                 >
                   🚮
+                </button>
+                <button
+                  className="px-1 text-2xl hover:bg-gray-300"
+                  type="button"
+                  disabled={loading.global}
+                  onClick={save}
+                  title="save"
+                >
+                  💾
                 </button>
               </div>
             </div>

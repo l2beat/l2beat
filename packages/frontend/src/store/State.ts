@@ -23,10 +23,12 @@ export interface State {
     readonly currentX: number
     readonly currentY: number
   }
+  readonly projectId: string
   readonly mouseSelection?: Box
   readonly selectedPositions: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
+  readonly saveLayoutStartTime?: ReturnType<typeof setTimeout>
 }
 
 export interface Node {
