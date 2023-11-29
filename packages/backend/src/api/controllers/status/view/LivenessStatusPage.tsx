@@ -94,7 +94,7 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
             getConfigCell(c, props.targetTimestamp, props.minTimestamp),
           )}
       </div>
-      <div>With untilTimestamp</div>
+      <div style={{ fontSize: '20px' }}>With untilTimestamp</div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {configurations
           .filter((c) => c.untilTimestamp)
@@ -120,8 +120,10 @@ function getConfigCell(
   targetTimestamp: UnixTime,
   minTimestamp: UnixTime | undefined,
 ) {
+  const target = config.untilTimestamp ?? targetTimestamp
+
   const type =
-    config.lastSyncedTimestamp?.toNumber() === targetTimestamp.toNumber()
+    config.lastSyncedTimestamp?.toNumber() === target.toNumber()
       ? 'hint'
       : 'warn'
 
