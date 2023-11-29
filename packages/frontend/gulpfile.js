@@ -103,8 +103,8 @@ function serve() {
     )
   }
 
-  const server = app.listen(10004, '0.0.0.0')
-  console.log('Listening on http://localhost:10004')
+  const server = app.listen(8080, '0.0.0.0')
+  console.log('Listening on http://localhost:8080')
   return server
 }
 
