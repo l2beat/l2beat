@@ -92,6 +92,8 @@ export interface Layer2Display {
   links: ProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
+  /** Explanation on how liveness data is gathered for given project */
+  livenessExplanation?: string
 }
 export interface Layer2Config {
   /** List of native and external tokens */

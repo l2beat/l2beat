@@ -1,4 +1,7 @@
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
@@ -30,12 +33,14 @@ export interface TechnologyContractLinks {
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
 }
 
 export function ContractEntry({
   contract,
   verificationStatus,
+  manuallyVerifiedContracts,
   className,
 }: ContractEntryProps) {
   const areLinksUnverified = contract.links
@@ -43,7 +48,10 @@ export function ContractEntry({
     .map((c) => verificationStatus.contracts[c.address])
     .some((c) => c === false)
 
-  const areAddressesUnverified = (contract.addresses ?? [])
+  const addresses = contract.addresses ?? []
+  const references = contract.references ?? []
+
+  const areAddressesUnverified = addresses
     .map((c) => verificationStatus.contracts[c])
     .some((c) => c === false)
 
@@ -57,6 +65,15 @@ export function ContractEntry({
     ) : (
       <BulletIcon className="h-6 md:h-[27px]" />
     )
+
+  addresses.forEach((address) => {
+    if (manuallyVerifiedContracts[address]) {
+      references.push({
+        text: 'Source code',
+        href: manuallyVerifiedContracts[address],
+      })
+    }
+  })
 
   return (
     <Callout
@@ -128,8 +145,8 @@ export function ContractEntry({
               </Markdown>
             </>
           )}
-          {contract.references && (
-            <ReferenceList references={contract.references} tight />
+          {references.length > 0 && (
+            <ReferenceList references={references} tight />
           )}
         </>
       }

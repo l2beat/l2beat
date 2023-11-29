@@ -1,4 +1,7 @@
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
@@ -21,6 +24,7 @@ export interface ContractsSectionProps {
   isIncomplete?: boolean
   isUnderReview?: boolean
   verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
   nativeL2TokensIncludedInTVL: string[]
 }
 
@@ -60,6 +64,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
+                  manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="mt-4 mb-4"
                 />
               </React.Fragment>
@@ -80,6 +85,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
+                  manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="mt-4 mb-4"
                 />
               </React.Fragment>
