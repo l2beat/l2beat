@@ -19,8 +19,22 @@ function REGULAR(
   }
 }
 
-function FORCED(orHalt?: 'deposits' | 'withdrawals'): ProjectTechnologyChoice {
-  const orHaltString = orHalt !== undefined ? ` or halt all ${orHalt}` : ''
+function FORCED(
+  orHalt?: 'forced-withdrawals' | 'all-withdrawals',
+): ProjectTechnologyChoice {
+  let orHaltString = ''
+  if (orHalt) {
+    switch (orHalt) {
+      case 'forced-withdrawals':
+        orHaltString =
+          ' or halt all messages from L1, including all forced withdrawals and deposits'
+        break
+      case 'all-withdrawals':
+        orHaltString =
+          ' or halt all withdrawals, including forced withdrawals from L1 and regular withdrawals initated on L2'
+        break
+    }
+  }
   return {
     name: 'Forced exit',
     description: `If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request${orHaltString}. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular exit.`,

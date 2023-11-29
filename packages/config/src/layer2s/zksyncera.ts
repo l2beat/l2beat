@@ -274,7 +274,7 @@ export const zksyncera: Layer2 = {
           },
         ],
       },
-      EXITS.FORCED('deposits'),
+      EXITS.FORCED('forced-withdrawals'),
     ],
   },
   contracts: {

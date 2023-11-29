@@ -234,7 +234,7 @@ export const mantapacific: Layer2 = {
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
       {
-        ...EXITS.FORCED('withdrawals'),
+        ...EXITS.FORCED('all-withdrawals'),
         references: [
           {
             text: 'Forced withdrawal from an OP Stack blockchain',

@@ -154,7 +154,7 @@ export const metis: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
-      EXITS.FORCED('deposits'),
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
