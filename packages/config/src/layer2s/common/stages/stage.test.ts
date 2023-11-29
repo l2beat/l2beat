@@ -8,6 +8,7 @@ const getTestStage = createGetStage({
     items: {
       callsItselfRollup: {
         positive: 'The project calls itself a rollup.',
+        warning: 'Warning: The project calls itself a rollup.',
         negative: "The project doesn't call itself a rollup.",
       },
     },
@@ -28,18 +29,53 @@ const getTestStage = createGetStage({
 })
 
 describe(createGetStage.name, () => {
-  it('Throw an error if no stage', () => {
-    expect(() =>
-      getTestStage({
-        stage0: {
-          callsItselfRollup: [false, 'The project calls itself a chicken.'],
+  it('Returns Stage 0 with showWarning if project does not fulfill stage 0 requirements', () => {
+    const x = getTestStage({
+      stage0: {
+        callsItselfRollup: [false, 'The project calls itself a chicken.'],
+      },
+      stage1: {
+        hasEscapeHatch: false,
+        isCouncil8Members: false,
+      },
+    })
+
+    expect(x).toEqual({
+      stage: 'Stage 0',
+      showWarning: true,
+      warnings: ['Warning: The project calls itself a rollup.'],
+      missing: {
+        nextStage: 'Stage 1',
+        requirements: [
+          "The project doesn't have an escape hatch.",
+          "The project doesn't have 8 council members.",
+        ],
+      },
+      summary: [
+        {
+          requirements: [
+            {
+              description: 'The project calls itself a chicken.',
+              satisfied: false,
+            },
+          ],
+          stage: 'Stage 0',
         },
-        stage1: {
-          hasEscapeHatch: false,
-          isCouncil8Members: false,
+        {
+          requirements: [
+            {
+              description: "The project doesn't have an escape hatch.",
+              satisfied: false,
+            },
+            {
+              description: "The project doesn't have 8 council members.",
+              satisfied: false,
+            },
+          ],
+          stage: 'Stage 1',
         },
-      }),
-    ).toThrow()
+      ],
+    })
   })
 
   it('Stage 0', () => {
@@ -59,6 +95,8 @@ describe(createGetStage.name, () => {
         nextStage: 'Stage 1',
         requirements: ["The project doesn't have 8 council members."],
       },
+      showWarning: false,
+      warnings: [],
       summary: [
         {
           stage: 'Stage 0',
@@ -100,6 +138,8 @@ describe(createGetStage.name, () => {
     expect(result).toEqual({
       stage: 'Stage 1',
       missing: undefined,
+      showWarning: false,
+      warnings: [],
       summary: [
         {
           stage: 'Stage 0',
@@ -141,6 +181,8 @@ describe(createGetStage.name, () => {
     expect(result).toEqual({
       stage: 'Stage 1',
       missing: undefined,
+      showWarning: false,
+      warnings: [],
       summary: [
         {
           stage: 'Stage 0',
@@ -180,8 +222,13 @@ describe(createGetStage.name, () => {
       })
 
       expect(result).toEqual({
-        stage: 'Stage 1',
-        missing: undefined,
+        stage: 'Stage 0',
+        missing: {
+          nextStage: 'Stage 1',
+          requirements: ['Escape hatch requirement is under review.'],
+        },
+        showWarning: false,
+        warnings: [],
         summary: [
           {
             stage: 'Stage 0',
@@ -221,8 +268,13 @@ describe(createGetStage.name, () => {
       })
 
       expect(result).toEqual({
-        stage: 'Stage 1',
-        missing: undefined,
+        stage: 'Stage 0',
+        missing: {
+          nextStage: 'Stage 1',
+          requirements: ['The project has an escape hatch.'],
+        },
+        showWarning: false,
+        warnings: [],
         summary: [
           {
             stage: 'Stage 0',
