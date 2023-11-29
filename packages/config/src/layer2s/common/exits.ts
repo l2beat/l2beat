@@ -19,12 +19,28 @@ function REGULAR(
   }
 }
 
-const FORCED: ProjectTechnologyChoice = {
-  name: 'Forced exit',
-  description:
-    'If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular exit.',
-  risks: [],
-  references: [],
+function FORCED(
+  orHalt?: 'forced-withdrawals' | 'all-withdrawals',
+): ProjectTechnologyChoice {
+  let orHaltString = ''
+  if (orHalt) {
+    switch (orHalt) {
+      case 'forced-withdrawals':
+        orHaltString =
+          ' or halt all messages from L1, including all forced withdrawals and deposits'
+        break
+      case 'all-withdrawals':
+        orHaltString =
+          ' or halt all withdrawals, including forced withdrawals from L1 and regular withdrawals initated on L2'
+        break
+    }
+  }
+  return {
+    name: 'Forced exit',
+    description: `If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request${orHaltString}. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular exit.`,
+    risks: [],
+    references: [],
+  }
 }
 
 function EMERGENCY(
@@ -74,7 +90,7 @@ const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
-  ...FORCED,
+  ...FORCED(),
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
@@ -92,7 +108,7 @@ const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
-  ...FORCED,
+  ...FORCED(),
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
@@ -150,6 +166,14 @@ const PLASMA: ProjectTechnologyChoice = {
   references: [],
 }
 
+export const AUTONOMOUS: ProjectTechnologyChoice = {
+  name: 'Autonomous exit',
+  description:
+    'Users can (eventually) exit the system by pushing the transaction on L1 and providing the corresponding state root. The only way to prevent such withdrawal is via an upgrade.',
+  risks: [],
+  references: [],
+}
+
 export const RISK_CENTRALIZED_VALIDATOR: ProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the centralized validator goes down. Users cannot produce blocks themselves and exiting the system requires new block production.',
@@ -160,6 +184,7 @@ export const EXITS = {
   REGULAR,
   FORCED,
   EMERGENCY,
+  AUTONOMOUS,
   STARKEX_PERPETUAL: [
     STARKEX_REGULAR_PERPETUAL,
     STARKEX_FORCED_PERPETUAL,

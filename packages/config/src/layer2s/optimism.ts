@@ -367,6 +367,15 @@ export const optimism: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
+      },
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
@@ -413,16 +422,16 @@ export const optimism: Layer2 = {
   },
   milestones: [
     {
+      name: 'Fault Proof System is live on OP Goerli',
+      link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      date: '2023-10-03T00:00:00Z',
+      description: 'Fraud Proof system is live on Goerli.',
+    },
+    {
       name: 'Mainnet migration to Bedrock',
       link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
       date: '2023-06-06T00:00:00Z',
       description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
-    },
-    {
-      name: 'Goerli testnet migration to Bedrock',
-      link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
-      date: '2023-01-13T00:00:00Z',
-      description: 'OP Mainnet on Goerli, since Jan 2023 is running Bedrock.',
     },
     {
       name: 'OP Stack Introduced',
