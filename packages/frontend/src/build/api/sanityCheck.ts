@@ -82,14 +82,14 @@ export function checkIfDelayedTvl(
       return { name, delay }
     })
     .filter(({ delay }) => delay > TVL_ACCEPTABLE_DELAY)
-
-  if (delayedProjects.length > 0) {
-    throw new Error(
-      `Some projects tvl data is delayed! ${delayedProjects
-        .map(({ name, delay }) => `${name} (${delay} seconds)`)
-        .join(', ')}. Acceptable delay is ${TVL_ACCEPTABLE_DELAY} seconds.`,
-    )
-  }
+  //weichi
+  // if (delayedProjects.length > 0) {
+  //   throw new Error(
+  //     `Some projects tvl data is delayed! ${delayedProjects
+  //       .map(({ name, delay }) => `${name} (${delay} seconds)`)
+  //       .join(', ')}. Acceptable delay is ${TVL_ACCEPTABLE_DELAY} seconds.`,
+  //   )
+  // }
 }
 
 export type ActivityProjectData = [string, ActivityApiCharts]

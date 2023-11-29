@@ -61,6 +61,7 @@ async function main() {
   }
 
   let livenessApiResponse: LivenessApiResponse | undefined = undefined
+  //weichi
   // if (config.features.liveness) {
   //   livenessApiResponse = await fetchLivenessApi(config.backend, http)
   // }
