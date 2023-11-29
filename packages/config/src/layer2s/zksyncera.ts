@@ -260,7 +260,7 @@ export const zksyncera: Layer2 = {
       risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
       references: [
         {
-          text: "L1 - L2 interoperability - Developer's documentation'",
+          text: "L1 - L2 interoperability - Developer's documentation",
           href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
         },
       ],
@@ -275,6 +275,7 @@ export const zksyncera: Layer2 = {
           },
         ],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
   },
   contracts: {
