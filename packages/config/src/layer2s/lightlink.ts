@@ -18,7 +18,7 @@ const discovery = new ProjectDiscovery('lightlink')
 
 export const lightlink: Layer2 = {
   type: 'layer2',
-  id: ProjectId('lightlink'), // This is a simple identifier, you can use a UUID or another unique string if preferred.
+  id: ProjectId('lightlink'),
   display: {
     name: 'LightLink',
     slug: 'lightlink',
@@ -39,9 +39,8 @@ export const lightlink: Layer2 = {
         'https://discord.gg/lightlinkchain',
         'https://blog.lightlink.io',
       ],
-      // Add other links as needed
     },
-    activityDataSource: 'Blockchain RPC', // If you have any warnings or additional display info, add them here.
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -50,14 +49,12 @@ export const lightlink: Layer2 = {
         sinceTimestamp: new UnixTime(1692155207),
         tokens: ['ETH'],
         description: 'Holds Ether',
-        // Add any other relevant details for the escrow contract.
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9'),
         sinceTimestamp: new UnixTime(1692155531),
         tokens: '*',
         description: 'Holds ERC20 tokens',
-        // Add any other relevant details for the escrow contract.
       }),
     ],
     transactionApi: {
@@ -66,7 +63,7 @@ export const lightlink: Layer2 = {
       url: 'https://replicator.phoenix.lightlink.io/rpc/v1',
       callsPerMinute: 1500,
       assessCount: subtractOne,
-    }, // If you have token details, transaction API info, or other config details, add them here.
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
