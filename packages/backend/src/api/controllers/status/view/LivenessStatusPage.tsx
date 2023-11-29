@@ -40,6 +40,16 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
     }
     return 0
   })
+  const liveConfigurations = configurations
+    .filter((c) => !c.untilTimestamp)
+    .filter((c) => !props.unusedConfigurations.includes(c.id))
+
+  const emptyConfigurations = liveConfigurations.filter((c) =>
+    props.unusedConfigurations.includes(c.id),
+  )
+
+  const archivedConfigurations = configurations.filter((c) => c.untilTimestamp)
+
   return (
     <Page title="Liveness module status">
       <div
@@ -94,12 +104,9 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
         Configurations
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {configurations
-          .filter((c) => !c.untilTimestamp)
-          .filter((c) => !props.unusedConfigurations.includes(c.id))
-          .map((c) =>
-            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
-          )}
+        {liveConfigurations.map((c) =>
+          getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+        )}
       </div>
 
       <div
@@ -109,12 +116,9 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
         Empty
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {configurations
-          .filter((c) => !c.untilTimestamp)
-          .filter((c) => props.unusedConfigurations.includes(c.id))
-          .map((c) =>
-            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
-          )}
+        {emptyConfigurations.map((c) =>
+          getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+        )}
       </div>
 
       <div
@@ -124,12 +128,9 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
         Archived
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {configurations
-          .filter((c) => c.untilTimestamp)
-          .filter((c) => !props.unusedConfigurations.includes(c.id))
-          .map((c) =>
-            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
-          )}
+        {archivedConfigurations.map((c) =>
+          getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+        )}
       </div>
     </Page>
   )
