@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { arbitrum } from './arbitrum'
-import { CONTRACTS, UPCOMING_RISK_VIEW } from './common'
+import { CONTRACTS, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 export const deri: Layer2 = {
@@ -36,7 +36,7 @@ export const deri: Layer2 = {
   config: {
     escrows: [],
   },
-  riskView: UPCOMING_RISK_VIEW,
+  riskView: UNDER_REVIEW_RISK_VIEW,
   technology: arbitrum.technology,
   contracts: CONTRACTS.EMPTY,
 }
