@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { onlyDesktopModes } from '../../../.storybook/modes'
 import { StageBadge } from './StageBadge'
 
 const meta: Meta<typeof StageBadge> = {
@@ -20,6 +21,11 @@ const meta: Meta<typeof StageBadge> = {
     oneSize: {
       control: 'radio',
       options: [true, false],
+    },
+  },
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
     },
   },
 }
