@@ -17,14 +17,16 @@ export function StageCell({ stageConfig }: StageCellProps) {
   return (
     <div
       className="Tooltip"
-      title={renderToStaticMarkup(<StageTooltip item={stageConfig} />)}
+      title={renderToStaticMarkup(<StageTooltip stageConfig={stageConfig} />)}
       data-tooltip-big
       data-tooltip-mobile-disabled
     >
       <StageBadge
         stage={stageConfig.stage}
-        showWarning={
-          stageConfig.stage !== 'UnderReview' && stageConfig.showWarning
+        icon={
+          stageConfig.stage !== 'UnderReview'
+            ? stageConfig.message?.icon
+            : undefined
         }
         oneSize
       />

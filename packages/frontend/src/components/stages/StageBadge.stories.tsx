@@ -37,8 +37,14 @@ export const Stage2: Story = {
     stage: 'Stage 2',
   },
 }
-export const WithWarning: Story = {
+export const WithWarningIcon: Story = {
   args: {
-    showWarning: true,
+    icon: 'warning',
+  },
+}
+
+export const WithUnderReviewIcon: Story = {
+  args: {
+    icon: 'underReview',
   },
 }

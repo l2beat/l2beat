@@ -15,8 +15,13 @@ export function createGetStage<T extends StageBlueprint>(
   return function getStage(checklist) {
     let lastStage: Stage = 'Stage 0'
     let missing: MissingStageRequirements | undefined = undefined
-    let showWarning = false
-    const warnings: string[] = []
+    let message:
+      | {
+          icon: 'underReview' | 'warning' | undefined
+          content: string
+        }
+      | undefined = undefined
+    const messages: string[] = []
     const summary: StageSummary[] = []
 
     for (const [blueprintStageKey, blueprintStage] of Object.entries(
@@ -34,7 +39,7 @@ export function createGetStage<T extends StageBlueprint>(
       )) {
         const checklistItem = checklistStage[blueprintItemKey]
 
-        const [satisfied, description, warning] = normalizeKeyChecklist(
+        const [satisfied, description, messageContent] = normalizeKeyChecklist(
           blueprintItem,
           checklistItem,
         )
@@ -45,10 +50,16 @@ export function createGetStage<T extends StageBlueprint>(
 
         if (
           (satisfied === false || satisfied === 'UnderReview') &&
-          blueprintStage.name === 'Stage 0'
+          blueprintStage.name === 'Stage 0' &&
+          messageContent
         ) {
-          if (warning) warnings.push(warning)
-          showWarning = true
+          if (message !== undefined) {
+            throw new Error('We are currently not handling multiple messages')
+          }
+          message = {
+            icon: satisfied === 'UnderReview' ? 'underReview' : 'warning',
+            content: messageContent,
+          }
           continue
         }
 
@@ -62,7 +73,7 @@ export function createGetStage<T extends StageBlueprint>(
         }
       }
 
-      if (missing === undefined && warnings.length === 0) {
+      if (missing === undefined && messages.length === 0) {
         lastStage = blueprintStage.name
       }
     }
@@ -71,8 +82,7 @@ export function createGetStage<T extends StageBlueprint>(
       stage: lastStage,
       missing,
       summary,
-      showWarning,
-      warnings,
+      message,
     }
   }
 }
@@ -89,9 +99,9 @@ function normalizeKeyChecklist(
     stageKeyChecklist,
   )
 
-  const warning = getWarning(satisfied, stageKeyBlueprint)
+  const message = getWarning(satisfied, stageKeyBlueprint)
 
-  return [satisfied, description, warning]
+  return [satisfied, description, message]
 }
 
 function getDescription(
@@ -110,9 +120,20 @@ function getDescription(
 
 function getWarning(
   satisfied: Satisfied | null,
-  stageKeyBlueprint: { positive: string; warning?: string; negative: string },
+  stageKeyBlueprint: {
+    positive: string
+    warningMessage?: string
+    underReviewMessage?: string
+    negative: string
+  },
 ) {
-  return satisfied === false ? stageKeyBlueprint.warning : undefined
+  if (satisfied === null || satisfied === true) return undefined
+
+  if (satisfied === 'UnderReview') {
+    return stageKeyBlueprint.underReviewMessage
+  }
+
+  return stageKeyBlueprint.warningMessage
 }
 
 function isSatisfied(stageKeyChecklist: ChecklistValue): Satisfied | null {

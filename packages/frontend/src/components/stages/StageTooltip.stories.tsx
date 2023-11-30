@@ -33,6 +33,7 @@ const item: StageConfig = {
     nextStage: 'Stage 2',
     requirements: ['A requirement'],
   },
+  message: undefined,
   summary: [],
 }
 
@@ -41,7 +42,9 @@ export const Tooltip: Story = {
     <div className="m-4 ml-32">
       <span
         className="Tooltip inline-block"
-        title={renderToStaticMarkup(<StageTooltipComponent item={item} />)}
+        title={renderToStaticMarkup(
+          <StageTooltipComponent stageConfig={item} />,
+        )}
         data-tooltip-big
       >
         <span>Element with tooltip</span>

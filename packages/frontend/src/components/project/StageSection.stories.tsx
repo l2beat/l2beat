@@ -19,12 +19,11 @@ export const Primary: Story = {
   args: {
     stageConfig: {
       stage: 'Stage 1',
-      showWarning: false,
+      message: undefined,
       missing: {
         nextStage: 'Stage 2',
         requirements: ['C requirement'],
       },
-      warnings: [],
       summary: [
         {
           stage: 'Stage 0',
@@ -66,18 +65,20 @@ export const Primary: Story = {
   },
 }
 
-export const WithWarning: Story = {
+export const WithWarningIcon: Story = {
   args: {
     stageConfig: {
       stage: 'Stage 0',
-      showWarning: true,
+      message: {
+        icon: 'warning',
+        content:
+          'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
+      },
       missing: {
         nextStage: 'Stage 1',
         requirements: ['B requirement'],
       },
-      warnings: [
-        'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
-      ],
+
       summary: [
         {
           stage: 'Stage 0',
@@ -88,6 +89,61 @@ export const WithWarning: Story = {
             },
             {
               satisfied: false,
+              description: 'AA requirement',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: false,
+              description: 'B requirement',
+            },
+            {
+              satisfied: true,
+              description: 'BB requirement',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 2',
+          requirements: [
+            {
+              satisfied: false,
+              description: 'C requirement',
+            },
+          ],
+        },
+      ],
+    },
+  },
+}
+
+export const WithUnderReviewIcon: Story = {
+  args: {
+    stageConfig: {
+      stage: 'Stage 0',
+      message: {
+        icon: 'underReview',
+        content:
+          'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
+      },
+      missing: {
+        nextStage: 'Stage 1',
+        requirements: ['B requirement'],
+      },
+
+      summary: [
+        {
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'A requirement',
+            },
+            {
+              satisfied: 'UnderReview',
               description: 'AA requirement',
             },
           ],

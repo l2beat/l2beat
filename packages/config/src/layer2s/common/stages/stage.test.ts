@@ -8,8 +8,20 @@ const getTestStage = createGetStage({
     items: {
       callsItselfRollup: {
         positive: 'The project calls itself a rollup.',
-        warning: 'Warning: The project calls itself a rollup.',
         negative: "The project doesn't call itself a rollup.",
+        warningMessage: 'Warning: The project calls itself a rollup.',
+        underReviewMessage:
+          'We are reviewing if the project calls itself a rollup.',
+      },
+      rollupNodeSourceAvailable: {
+        positive:
+          'A source-available node exists that can recreate the state from L1 data.',
+        negative:
+          'No source-available node exists that can recreate the state from L1 data.',
+        underReviewMessage:
+          'The requirement for available node software is under review',
+        warningMessage:
+          'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
       },
     },
   },
@@ -28,11 +40,27 @@ const getTestStage = createGetStage({
   },
 })
 
-describe(createGetStage.name, () => {
-  it('Returns Stage 0 with showWarning if project does not fulfill stage 0 requirements', () => {
+describe.only(createGetStage.name, () => {
+  it('Throws error if more than one message should be returned', () => {
+    expect(() =>
+      getTestStage({
+        stage0: {
+          callsItselfRollup: false,
+          rollupNodeSourceAvailable: false,
+        },
+        stage1: {
+          hasEscapeHatch: true,
+          isCouncil8Members: true,
+        },
+      }),
+    ).toThrow('We are currently not handling multiple messages')
+  })
+
+  it('Returns Stage 0 with warning message if project does not fulfill stage 0 requirements', () => {
     const x = getTestStage({
       stage0: {
         callsItselfRollup: [false, 'The project calls itself a chicken.'],
+        rollupNodeSourceAvailable: true,
       },
       stage1: {
         hasEscapeHatch: false,
@@ -42,8 +70,10 @@ describe(createGetStage.name, () => {
 
     expect(x).toEqual({
       stage: 'Stage 0',
-      showWarning: true,
-      warnings: ['Warning: The project calls itself a rollup.'],
+      message: {
+        icon: 'warning',
+        content: 'Warning: The project calls itself a rollup.',
+      },
       missing: {
         nextStage: 'Stage 1',
         requirements: [
@@ -57,6 +87,71 @@ describe(createGetStage.name, () => {
             {
               description: 'The project calls itself a chicken.',
               satisfied: false,
+            },
+            {
+              description:
+                'A source-available node exists that can recreate the state from L1 data.',
+              satisfied: true,
+            },
+          ],
+          stage: 'Stage 0',
+        },
+        {
+          requirements: [
+            {
+              description: "The project doesn't have an escape hatch.",
+              satisfied: false,
+            },
+            {
+              description: "The project doesn't have 8 council members.",
+              satisfied: false,
+            },
+          ],
+          stage: 'Stage 1',
+        },
+      ],
+    })
+  })
+
+  it('Returns Stage 0 with under review message if stage 0 requirement is being reviewed', () => {
+    const x = getTestStage({
+      stage0: {
+        callsItselfRollup: [
+          'UnderReview',
+          'The project calls itself a chicken.',
+        ],
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        hasEscapeHatch: false,
+        isCouncil8Members: false,
+      },
+    })
+
+    expect(x).toEqual({
+      stage: 'Stage 0',
+      message: {
+        icon: 'underReview',
+        content: 'We are reviewing if the project calls itself a rollup.',
+      },
+      missing: {
+        nextStage: 'Stage 1',
+        requirements: [
+          "The project doesn't have an escape hatch.",
+          "The project doesn't have 8 council members.",
+        ],
+      },
+      summary: [
+        {
+          requirements: [
+            {
+              description: 'The project calls itself a chicken.',
+              satisfied: 'UnderReview',
+            },
+            {
+              description:
+                'A source-available node exists that can recreate the state from L1 data.',
+              satisfied: true,
             },
           ],
           stage: 'Stage 0',
@@ -82,6 +177,7 @@ describe(createGetStage.name, () => {
     const result = getTestStage({
       stage0: {
         callsItselfRollup: true,
+        rollupNodeSourceAvailable: true,
       },
       stage1: {
         hasEscapeHatch: true,
@@ -95,8 +191,7 @@ describe(createGetStage.name, () => {
         nextStage: 'Stage 1',
         requirements: ["The project doesn't have 8 council members."],
       },
-      showWarning: false,
-      warnings: [],
+      message: undefined,
       summary: [
         {
           stage: 'Stage 0',
@@ -104,6 +199,11 @@ describe(createGetStage.name, () => {
             {
               satisfied: true,
               description: 'The project calls itself a rollup.',
+            },
+            {
+              description:
+                'A source-available node exists that can recreate the state from L1 data.',
+              satisfied: true,
             },
           ],
         },
@@ -128,6 +228,7 @@ describe(createGetStage.name, () => {
     const result = getTestStage({
       stage0: {
         callsItselfRollup: true,
+        rollupNodeSourceAvailable: true,
       },
       stage1: {
         hasEscapeHatch: true,
@@ -138,8 +239,7 @@ describe(createGetStage.name, () => {
     expect(result).toEqual({
       stage: 'Stage 1',
       missing: undefined,
-      showWarning: false,
-      warnings: [],
+      message: undefined,
       summary: [
         {
           stage: 'Stage 0',
@@ -147,6 +247,11 @@ describe(createGetStage.name, () => {
             {
               satisfied: true,
               description: 'The project calls itself a rollup.',
+            },
+            {
+              description:
+                'A source-available node exists that can recreate the state from L1 data.',
+              satisfied: true,
             },
           ],
         },
@@ -171,6 +276,7 @@ describe(createGetStage.name, () => {
     const result = getTestStage({
       stage0: {
         callsItselfRollup: true,
+        rollupNodeSourceAvailable: true,
       },
       stage1: {
         hasEscapeHatch: true,
@@ -181,8 +287,7 @@ describe(createGetStage.name, () => {
     expect(result).toEqual({
       stage: 'Stage 1',
       missing: undefined,
-      showWarning: false,
-      warnings: [],
+      message: undefined,
       summary: [
         {
           stage: 'Stage 0',
@@ -190,6 +295,11 @@ describe(createGetStage.name, () => {
             {
               satisfied: true,
               description: 'The project calls itself a rollup.',
+            },
+            {
+              description:
+                'A source-available node exists that can recreate the state from L1 data.',
+              satisfied: true,
             },
           ],
         },
@@ -211,6 +321,7 @@ describe(createGetStage.name, () => {
       const result = getTestStage({
         stage0: {
           callsItselfRollup: true,
+          rollupNodeSourceAvailable: true,
         },
         stage1: {
           hasEscapeHatch: [
@@ -227,8 +338,7 @@ describe(createGetStage.name, () => {
           nextStage: 'Stage 1',
           requirements: ['Escape hatch requirement is under review.'],
         },
-        showWarning: false,
-        warnings: [],
+        message: undefined,
         summary: [
           {
             stage: 'Stage 0',
@@ -236,6 +346,11 @@ describe(createGetStage.name, () => {
               {
                 satisfied: true,
                 description: 'The project calls itself a rollup.',
+              },
+              {
+                description:
+                  'A source-available node exists that can recreate the state from L1 data.',
+                satisfied: true,
               },
             ],
           },
@@ -260,6 +375,7 @@ describe(createGetStage.name, () => {
       const result = getTestStage({
         stage0: {
           callsItselfRollup: true,
+          rollupNodeSourceAvailable: true,
         },
         stage1: {
           hasEscapeHatch: 'UnderReview',
@@ -273,8 +389,7 @@ describe(createGetStage.name, () => {
           nextStage: 'Stage 1',
           requirements: ['The project has an escape hatch.'],
         },
-        showWarning: false,
-        warnings: [],
+        message: undefined,
         summary: [
           {
             stage: 'Stage 0',
@@ -282,6 +397,11 @@ describe(createGetStage.name, () => {
               {
                 satisfied: true,
                 description: 'The project calls itself a rollup.',
+              },
+              {
+                description:
+                  'A source-available node exists that can recreate the state from L1 data.',
+                satisfied: true,
               },
             ],
           },

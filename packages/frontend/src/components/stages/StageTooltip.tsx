@@ -1,31 +1,35 @@
 import { Stage, StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { MissingIcon, RoundedWarningIcon } from '../icons'
+import { MissingIcon, RoundedWarningIcon, UnderReviewIcon } from '../icons'
 import { WarningBar } from '../project/WarningBar'
 import { StageBadge } from './StageBadge'
 import { StageDisclaimer } from './StageDisclaimer'
 
 export interface StageTooltipProps {
-  item: StageConfig
+  stageConfig: StageConfig
 }
 
-export function StageTooltip({ item }: StageTooltipProps) {
-  if (item.stage === 'NotApplicable') return null
+export function StageTooltip({ stageConfig }: StageTooltipProps) {
+  if (stageConfig.stage === 'NotApplicable') return null
 
   return (
     <div className="flex max-w-[300px] flex-col gap-4 py-1">
       <span>
         <StageBadge
-          stage={item.stage}
-          showWarning={item.stage !== 'UnderReview' && item.showWarning}
+          stage={stageConfig.stage}
+          icon={
+            stageConfig.stage !== 'UnderReview'
+              ? stageConfig.message?.icon
+              : undefined
+          }
           className="font-medium"
         />
         <span className="ml-2 inline-block font-medium">
-          {getStageName(item.stage)}
+          {getStageName(stageConfig.stage)}
         </span>
       </span>
-      {item.stage === 'UnderReview' ? (
+      {stageConfig.stage === 'UnderReview' ? (
         <>
           Projects under review might present uncompleted information & data.
           <br />
@@ -34,25 +38,29 @@ export function StageTooltip({ item }: StageTooltipProps) {
         </>
       ) : (
         <>
-          {item.showWarning &&
-            item.warnings.map((warning, i) => (
-              <WarningBar
-                color="yellow"
-                icon={RoundedWarningIcon}
-                text={warning}
-                key={i}
-              />
-            ))}
-          {item.missing && (
+          {stageConfig.message && (
+            <WarningBar
+              color="yellow"
+              icon={
+                stageConfig.message.icon === 'warning'
+                  ? RoundedWarningIcon
+                  : UnderReviewIcon
+              }
+              text={stageConfig.message.content}
+            />
+          )}
+          {stageConfig.missing && (
             <div className="text-sm">
               <span className="mb-2 block leading-tight">
                 Items missing for{' '}
-                <span className={getColorClassName(item.missing.nextStage)}>
-                  {item.missing.nextStage}
+                <span
+                  className={getColorClassName(stageConfig.missing.nextStage)}
+                >
+                  {stageConfig.missing.nextStage}
                 </span>
               </span>
               <ul className="list-none space-y-2">
-                {item.missing.requirements.map((requirement, i) => (
+                {stageConfig.missing.requirements.map((requirement, i) => (
                   <li className="flex gap-1.5" key={i}>
                     <MissingIcon className="relative top-0.5 inline-block shrink-0" />
                     {requirement}

@@ -50,6 +50,11 @@ export function StageSection(props: StageSectionProps) {
     )
   }
 
+  const warningBarIcon =
+    props.stageConfig.message?.icon === 'warning'
+      ? RoundedWarningIcon
+      : UnderReviewIcon
+
   return (
     <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
       <div className="mb-6 font-medium">
@@ -61,22 +66,20 @@ export function StageSection(props: StageSectionProps) {
         {props.name} is a{' '}
         <StageBadge
           stage={props.stageConfig.stage}
-          showWarning={props.stageConfig.showWarning}
+          icon={props.stageConfig.message?.icon}
           big
           className="mx-1"
         />
         <span className="lowercase"> {props.type}</span>.
       </div>
-      {props.stageConfig.showWarning &&
-        props.stageConfig.warnings.map((warning, i) => (
-          <WarningBar
-            color="yellow"
-            className="mb-6"
-            icon={RoundedWarningIcon}
-            text={warning}
-            key={i}
-          />
-        ))}
+      {props.stageConfig.message && (
+        <WarningBar
+          color="yellow"
+          className="mb-6"
+          icon={warningBarIcon}
+          text={props.stageConfig.message.content}
+        />
+      )}
       {props.stageConfig.summary.map((stage) => {
         const satisfied = stage.requirements.filter((r) => r.satisfied === true)
         const missing = stage.requirements.filter((r) => r.satisfied === false)

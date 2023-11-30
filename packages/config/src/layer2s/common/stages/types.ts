@@ -6,8 +6,9 @@ export type StageBlueprint = Record<
       string,
       {
         positive: string
-        warning?: string
         negative: string
+        negativeMessage?: string
+        underReviewMessage?: string
       }
     >
   }
@@ -47,8 +48,12 @@ export type UsableStageConfig = StageUnderReview | StageConfigured
 export interface StageConfigured {
   stage: Stage
   missing?: MissingStageRequirements
-  showWarning: boolean
-  warnings: string[]
+  message:
+    | {
+        icon: 'underReview' | 'warning' | undefined
+        content: string
+      }
+    | undefined
   summary: StageSummary[]
 }
 
