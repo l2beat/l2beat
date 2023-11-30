@@ -116,10 +116,8 @@ LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
 TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 DATABASE_URL=
 
-ETHERSCAN_API_KEY=
-ETHEREUM_PROVIDER_URL=
-
-ETHEREUM_ALCHEMY_API_KEY=
+TVL_ETHEREUM_ETHERSCAN_API_KEY=
+TVL_ETHEREUM_PROVIDER_URL=
 
 #-----OPTIONAL-----
 # STARKEX_API_KEY=

@@ -30,7 +30,10 @@ import {
 } from '../../../peripherals/database/ReportStatusRepository'
 import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
-import { getDashboardProjects } from './discovery/props/getDashboardProjects'
+import {
+  DashboardProject,
+  getDashboardProjects,
+} from './discovery/props/getDashboardProjects'
 import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
@@ -60,18 +63,22 @@ export class StatusController {
     private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
   ) {}
 
-  async getDiscoveryDashboard(chainId: ChainId): Promise<string> {
-    const projects = await getDashboardProjects(
-      this.configReader,
-      this.updateMonitorRepository,
-      chainId,
-    )
-    const projectsList = this.projects.map((p) => p.projectId.toString())
+  async getDiscoveryDashboard(): Promise<string> {
+    const projects: Record<string, DashboardProject[]> = {}
 
-    return renderDashboardPage({
-      projects,
-      projectsList,
-    })
+    console.log('getDiscoveryDashboard: before loop')
+    for (const chainId of ChainId.getAll()) {
+      const projectsToFill = chainId === ChainId.ETHEREUM ? this.projects : []
+      projects[ChainId.getName(chainId)] = await getDashboardProjects(
+        projectsToFill,
+        this.configReader,
+        this.updateMonitorRepository,
+        chainId,
+      )
+    }
+    console.log('getDiscoveryDashboard: after loop')
+
+    return renderDashboardPage({ projects })
   }
 
   async getDiscoveryDashboardProject(
