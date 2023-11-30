@@ -70,9 +70,8 @@ export const WithWarningIcon: Story = {
     stageConfig: {
       stage: 'Stage 0',
       message: {
-        icon: 'warning',
-        content:
-          'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
+        type: 'warning',
+        text: 'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
       },
       missing: {
         nextStage: 'Stage 1',
@@ -125,9 +124,8 @@ export const WithUnderReviewIcon: Story = {
     stageConfig: {
       stage: 'Stage 0',
       message: {
-        icon: 'underReview',
-        content:
-          'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
+        type: 'underReview',
+        text: 'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
       },
       missing: {
         nextStage: 'Stage 1',

@@ -20,7 +20,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
           stage={stageConfig.stage}
           icon={
             stageConfig.stage !== 'UnderReview'
-              ? stageConfig.message?.icon
+              ? stageConfig.message?.type
               : undefined
           }
           className="font-medium"
@@ -42,11 +42,11 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
             <WarningBar
               color="yellow"
               icon={
-                stageConfig.message.icon === 'warning'
+                stageConfig.message.type === 'warning'
                   ? RoundedWarningIcon
                   : UnderReviewIcon
               }
-              text={stageConfig.message.content}
+              text={stageConfig.message.text}
             />
           )}
           {stageConfig.missing && (

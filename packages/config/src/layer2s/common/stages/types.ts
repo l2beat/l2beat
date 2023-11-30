@@ -48,15 +48,14 @@ export type UsableStageConfig = StageUnderReview | StageConfigured
 export interface StageConfigured {
   stage: Stage
   missing?: MissingStageRequirements
-  message:
-    | {
-        icon: 'underReview' | 'warning' | undefined
-        content: string
-      }
-    | undefined
+  message: StageConfiguredMessage | undefined
   summary: StageSummary[]
 }
 
+export interface StageConfiguredMessage {
+  type: 'underReview' | 'warning' | undefined
+  text: string
+}
 interface StageUnderReview {
   stage: 'UnderReview'
 }

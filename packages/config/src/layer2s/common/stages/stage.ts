@@ -6,6 +6,7 @@ import {
   Stage,
   StageBlueprint,
   StageConfigured,
+  StageConfiguredMessage,
   StageSummary,
 } from './types'
 
@@ -15,12 +16,7 @@ export function createGetStage<T extends StageBlueprint>(
   return function getStage(checklist) {
     let lastStage: Stage = 'Stage 0'
     let missing: MissingStageRequirements | undefined = undefined
-    let message:
-      | {
-          icon: 'underReview' | 'warning' | undefined
-          content: string
-        }
-      | undefined = undefined
+    let message: StageConfiguredMessage | undefined = undefined
     const messages: string[] = []
     const summary: StageSummary[] = []
 
@@ -39,7 +35,7 @@ export function createGetStage<T extends StageBlueprint>(
       )) {
         const checklistItem = checklistStage[blueprintItemKey]
 
-        const [satisfied, description, messageContent] = normalizeKeyChecklist(
+        const [satisfied, description, messageText] = normalizeKeyChecklist(
           blueprintItem,
           checklistItem,
         )
@@ -51,14 +47,14 @@ export function createGetStage<T extends StageBlueprint>(
         if (
           (satisfied === false || satisfied === 'UnderReview') &&
           blueprintStage.name === 'Stage 0' &&
-          messageContent
+          messageText
         ) {
           if (message !== undefined) {
             throw new Error('We are currently not handling multiple messages')
           }
           message = {
-            icon: satisfied === 'UnderReview' ? 'underReview' : 'warning',
-            content: messageContent,
+            type: satisfied === 'UnderReview' ? 'underReview' : 'warning',
+            text: messageText,
           }
           continue
         }

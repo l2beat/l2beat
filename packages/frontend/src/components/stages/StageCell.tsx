@@ -25,7 +25,7 @@ export function StageCell({ stageConfig }: StageCellProps) {
         stage={stageConfig.stage}
         icon={
           stageConfig.stage !== 'UnderReview'
-            ? stageConfig.message?.icon
+            ? stageConfig.message?.type
             : undefined
         }
         oneSize

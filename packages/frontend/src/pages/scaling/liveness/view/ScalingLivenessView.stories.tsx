@@ -24,6 +24,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'Arbitrum',
         stage: {
           stage: 'Stage 1',
+          message: undefined,
           missing: {
             nextStage: 'Stage 2',
             requirements: [
@@ -266,6 +267,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -467,6 +469,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -682,6 +685,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'ZK Stack',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -867,6 +871,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'StarkEx',
         stage: {
           stage: 'Stage 1',
+          message: undefined,
           missing: {
             nextStage: 'Stage 2',
             requirements: [
@@ -1050,6 +1055,10 @@ const meta: Meta<typeof ScalingLivenessView> = {
         dataAvailabilityMode: 'TxData',
         stage: {
           stage: 'Stage 0',
+          message: {
+            text: 'The circuit of the program being proven is not public.',
+            type: 'warning',
+          },
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -1387,6 +1396,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'Starknet',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -2111,6 +2121,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'Polygon',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -2329,6 +2340,10 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'Loopring',
         stage: {
           stage: 'Stage 0',
+          message: {
+            text: 'Item under review',
+            type: 'underReview',
+          },
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -2512,6 +2527,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'zkSync Lite',
         stage: {
           stage: 'Stage 1',
+          message: undefined,
           missing: {
             nextStage: 'Stage 2',
             requirements: [
@@ -2706,6 +2722,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -2907,6 +2924,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'OVM',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -3113,6 +3131,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -3320,6 +3339,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'zkSync Lite',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -3503,6 +3523,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'Loopring',
         stage: {
           stage: 'Stage 2',
+          message: undefined,
           summary: [
             {
               stage: 'Stage 0',
@@ -3676,6 +3697,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -3883,6 +3905,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
+          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [

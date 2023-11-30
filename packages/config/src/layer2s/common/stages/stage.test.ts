@@ -71,8 +71,8 @@ describe(createGetStage.name, () => {
     expect(x).toEqual({
       stage: 'Stage 0',
       message: {
-        icon: 'warning',
-        content: 'Warning: The project calls itself a rollup.',
+        type: 'warning',
+        text: 'Warning: The project calls itself a rollup.',
       },
       missing: {
         nextStage: 'Stage 1',
@@ -131,8 +131,8 @@ describe(createGetStage.name, () => {
     expect(x).toEqual({
       stage: 'Stage 0',
       message: {
-        icon: 'underReview',
-        content: 'We are reviewing if the project calls itself a rollup.',
+        type: 'underReview',
+        text: 'We are reviewing if the project calls itself a rollup.',
       },
       missing: {
         nextStage: 'Stage 1',

@@ -51,7 +51,7 @@ export function StageSection(props: StageSectionProps) {
   }
 
   const warningBarIcon =
-    props.stageConfig.message?.icon === 'warning'
+    props.stageConfig.message?.type === 'warning'
       ? RoundedWarningIcon
       : UnderReviewIcon
 
@@ -66,7 +66,7 @@ export function StageSection(props: StageSectionProps) {
         {props.name} is a{' '}
         <StageBadge
           stage={props.stageConfig.stage}
-          icon={props.stageConfig.message?.icon}
+          icon={props.stageConfig.message?.type}
           big
           className="mx-1"
         />
@@ -77,7 +77,7 @@ export function StageSection(props: StageSectionProps) {
           color="yellow"
           className="mb-6"
           icon={warningBarIcon}
-          text={props.stageConfig.message.content}
+          text={props.stageConfig.message.text}
         />
       )}
       {props.stageConfig.summary.map((stage) => {
