@@ -76,8 +76,9 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
         Configurations
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {usedConfigurations.map((c) => (
+        {usedConfigurations.map((c, i) => (
           <LivenessConfigurationCard
+            key={i}
             config={c}
             targetTimestamp={props.targetTimestamp}
             minTimestamp={props.indexerState?.minTimestamp}
@@ -92,8 +93,9 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
         Empty
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {emptyConfigurations.map((c) => (
+        {emptyConfigurations.map((c, i) => (
           <LivenessConfigurationCard
+            key={i}
             config={c}
             targetTimestamp={props.targetTimestamp}
             minTimestamp={props.indexerState?.minTimestamp}
@@ -108,8 +110,9 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
         Archived
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {archivedConfigurations.map((c) => (
+        {archivedConfigurations.map((c, i) => (
           <LivenessConfigurationCard
+            key={i}
             config={c}
             targetTimestamp={props.targetTimestamp}
             minTimestamp={props.indexerState?.minTimestamp}
