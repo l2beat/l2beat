@@ -68,12 +68,13 @@ export function StageSection(props: StageSectionProps) {
         <span className="lowercase"> {props.type}</span>.
       </div>
       {props.stageConfig.showWarning &&
-        props.stageConfig.warnings.map((warning) => (
+        props.stageConfig.warnings.map((warning, i) => (
           <WarningBar
             color="yellow"
             className="mb-6"
             icon={RoundedWarningIcon}
             text={warning}
+            key={i}
           />
         ))}
       {props.stageConfig.summary.map((stage) => {

@@ -35,11 +35,12 @@ export function StageTooltip({ item }: StageTooltipProps) {
       ) : (
         <>
           {item.showWarning &&
-            item.warnings.map((warning) => (
+            item.warnings.map((warning, i) => (
               <WarningBar
                 color="yellow"
                 icon={RoundedWarningIcon}
                 text={warning}
+                key={i}
               />
             ))}
           {item.missing && (
