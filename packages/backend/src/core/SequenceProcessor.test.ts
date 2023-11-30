@@ -230,14 +230,15 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
-        error: undefined,
-        message: 'Halting queue because of error',
-        parameters: {
-          error: expect.a(Error),
-          job: expect.a(String),
-        },
+        error: new Error(
+          'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
+        ),
+        message:
+          'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
+        parameters: undefined,
       })
     })
 
@@ -265,14 +266,12 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
       expect(reportErrorMock).toHaveBeenOnlyCalledWith({
-        error: undefined,
-        message: 'Halting queue because of error',
-        parameters: {
-          error: expect.a(Error),
-          job: expect.a(String),
-        },
+        error: new Error('Force-failing during tests!'),
+        message: 'Force-failing during tests!',
+        parameters: undefined,
       })
     })
 

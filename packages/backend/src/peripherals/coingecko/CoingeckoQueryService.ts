@@ -110,7 +110,9 @@ export class CoingeckoQueryService {
       if (noData) {
         assert(
           !adjustedFrom,
-          `No data received for coin: ${coingeckoId.toString()}`,
+          `No data received for coin: ${coingeckoId.toString()} from ${currentFrom
+            .toDate()
+            .toISOString()} to ${currentTo.toDate().toISOString()}`,
         )
         break
       }
