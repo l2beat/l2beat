@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -11,7 +11,6 @@ import {
   RISK_VIEW,
   subtractOne,
 } from './common'
-import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
@@ -23,10 +22,10 @@ export const lightlink: Layer2 = {
     name: 'LightLink',
     slug: 'lightlink',
     description:
-      'LightLink is a high-performance, secure, and scalable network, built on Ethereum. The network leverages the power of layer 2 scaling solutions to provide fast and low-cost transactions. Built to onboard new users, LightLink supports both Enterprise mode and standard transacting, unlocking the power of gasless execution with optionality to pay fees in either ETH or its native token, LL. Combined with LightLinks highly composable nature, these features render the network suitable for a wide range of applications, including enterprise ecosystems, gaming and metaverse projects, ticketing, and identity management.',
-    purpose: 'Optimistic Rollup',
-    category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
+      'LightLink is a high-performance network, built on Ethereum. Built to onboard new users, LightLink supports both Enterprise mode and standard transacting, unlocking the power of gasless execution with optionality to pay fees in either ETH or its native token, LL.',
+    purpose: 'Universal',
+    category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Pellar',
     links: {
       websites: ['https://lightlink.io'],
@@ -46,15 +45,13 @@ export const lightlink: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x3ca373f5ecb92ac762f9876f6e773082a4589995'),
-        sinceTimestamp: new UnixTime(1692155207),
         tokens: ['ETH'],
-        description: 'Holds Ether',
+        description: 'Escrow holding ETH',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9'),
-        sinceTimestamp: new UnixTime(1692155531),
         tokens: '*',
-        description: 'Holds ERC20 tokens',
+        description: 'Escrow holding ERC20 tokens',
       }),
     ],
     transactionApi: {
@@ -68,7 +65,7 @@ export const lightlink: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
-      ...RISK_VIEW.DATA_MIXED,
+      ...RISK_VIEW.DATA_EXTERNAL,
       sources: [
         {
           contract: 'PrimeAnchor',
@@ -77,45 +74,19 @@ export const lightlink: Layer2 = {
           ],
         },
       ],
-      description:
-        'Transaction is currently stored on IPFS with the IPFS CID, transaction roots and state roots being posted to L1. The LightLink team is working on moving DA to Celestia.',
+      description: 'Transaction data is currently stored on IPFS.',
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
     },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
-      value: '',
-      description:
-        'At the present time, there is no mechanism to prevent the sequencer from censoring transactions. Allowing transactions to be enqueued via L1 is on the LightLink roadmap.',
-      sentiment: 'UnderReview',
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('ETH', 'is'),
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: null,
-      rollupNodeSourceAvailable: null,
-    },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
-    },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: false,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  stage: {
+    stage: 'NotApplicable',
+  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
