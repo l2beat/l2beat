@@ -66,9 +66,8 @@ export function getActiveScalingTvlColumnsConfig() {
       name: 'Stage',
       idHref: 'stage' as const,
       tooltip: 'Rollup stage based on its features and maturity.',
-      alignCenter: true as const,
       getValue: (project: ScalingTvlViewEntry) => (
-        <StageCell item={project.stage} />
+        <StageCell stageConfig={project.stage} />
       ),
     },
     {
