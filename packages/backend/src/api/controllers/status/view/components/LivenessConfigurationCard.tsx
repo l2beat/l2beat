@@ -17,7 +17,8 @@ export function LivenessConfigurationCard({
   const target = config.untilTimestamp ?? targetTimestamp
 
   const type =
-    config.lastSyncedTimestamp?.toNumber() === target.toNumber()
+    config.lastSyncedTimestamp &&
+    config.lastSyncedTimestamp.toNumber() >= target.toNumber()
       ? 'hint'
       : 'warn'
 
