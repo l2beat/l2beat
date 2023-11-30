@@ -5,6 +5,9 @@ import { CONTRACTS, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 export const deri: Layer2 = {
+  isUpcoming: false,
+  isUnderReview: true,
+  isArchived: false,
   type: 'layer2',
   id: ProjectId('deri'),
   display: {
@@ -31,7 +34,7 @@ export const deri: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
   },
   stage: {
-    stage: 'NotApplicable',
+    stage: 'UnderReview',
   },
   config: {
     escrows: [],
