@@ -1,5 +1,3 @@
-import console from 'console'
-
 import {
   ChecklistTemplate,
   ChecklistValue,
@@ -13,7 +11,6 @@ import {
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
-  debug?: boolean,
 ): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
     let lastStage: Stage = 'Stage 0'
@@ -41,9 +38,7 @@ export function createGetStage<T extends StageBlueprint>(
           blueprintItem,
           checklistItem,
         )
-        if (debug) {
-          console.log(blueprintItemKey, satisfied, description, warning)
-        }
+
         if (satisfied !== null) {
           summaryStage.requirements.push({ satisfied, description })
         }
@@ -71,9 +66,7 @@ export function createGetStage<T extends StageBlueprint>(
         lastStage = blueprintStage.name
       }
     }
-    if (debug) {
-      console.log({ stage: lastStage, missing, summary, warnings })
-    }
+
     return {
       stage: lastStage,
       missing,
