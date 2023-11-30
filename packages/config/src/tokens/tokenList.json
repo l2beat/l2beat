@@ -301,19 +301,6 @@
       "type": "CBV"
     },
     {
-      "id": "bezoge-bezoge-earth",
-      "name": "Bezoge Earth",
-      "coingeckoId": "bezoge-earth",
-      "address": "0xDC349913d53b446485E98b76800b6254f43Df695",
-      "symbol": "BEZOGE",
-      "decimals": 9,
-      "sinceTimestamp": 1620993315,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/15639/large/token-logo.png?1621408212",
-      "chainId": 1,
-      "type": "CBV"
-    },
-    {
       "id": "bico-biconomy-token",
       "name": "Biconomy Token",
       "coingeckoId": "biconomy",
@@ -1427,19 +1414,6 @@
       "sinceTimestamp": 1618218294,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/14899/large/RwdVsGcw_400x400.jpg?1618923851",
-      "chainId": 1,
-      "type": "CBV"
-    },
-    {
-      "id": "l2-leverj-gluon",
-      "name": "Leverj Gluon",
-      "coingeckoId": "leverj-gluon",
-      "address": "0xBbff34E47E559ef680067a6B1c980639EEb64D24",
-      "symbol": "L2",
-      "decimals": 18,
-      "sinceTimestamp": 1603238349,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12950/large/Gluon256x256.png?1604048379",
       "chainId": 1,
       "type": "CBV"
     },

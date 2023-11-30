@@ -309,6 +309,7 @@ export const kroma: Layer2 = {
           },
         ],
       },
+      EXITS.AUTONOMOUS,
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

@@ -237,7 +237,7 @@ export const degate3: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Forced Request Handling - DeGate design doc',

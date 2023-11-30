@@ -272,6 +272,7 @@ export const bobanetwork: Layer2 = {
         ],
         risks: [],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

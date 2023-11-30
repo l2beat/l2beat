@@ -1,13 +1,13 @@
-import { LivenessDataPoint } from '@l2beat/shared-pure'
+import { LivenessDataPoint, LivenessDetails } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { LivenessDurationCell } from '../../../../components/table/DurationCell'
-import { LivenessData, ScalingLivenessViewEntry } from '../types'
+import { ScalingLivenessViewEntry } from '../types'
 import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
 
 interface Props {
-  data: LivenessData | undefined
+  data: LivenessDetails | undefined
   project: ScalingLivenessViewEntry
   dataType: 'txDataSubmissions' | 'stateUpdates'
 }
@@ -65,6 +65,12 @@ function Tooltip(props: {
     <div className="font-medium">
       <span>{props.label}:</span>
       <ul className="mt-1 list-inside list-disc">
+        <li className="flex gap-1">
+          Minimum:
+          <LivenessDurationCell
+            durationInSeconds={props.data?.minimumInSeconds}
+          />
+        </li>
         <li className="flex gap-1">
           Average:
           <LivenessDurationCell
