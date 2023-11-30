@@ -223,12 +223,5 @@ function TableHead(props: {
 }
 
 export function renderDashboardPage(props: DashboardPageProps) {
-  console.log('renderDashboardPage: rendering')
-  try {
-    const result = reactToHtml(<DashboardPage {...props} />)
-    return result
-  } catch (e) {
-    console.log(e)
-    throw e
-  }
+  return reactToHtml(<DashboardPage {...props} />)
 }
