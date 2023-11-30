@@ -4,7 +4,6 @@ import {
   ChainId,
   getHourlyTimestamps,
   Hash256,
-  json,
   ReportType,
   Token,
   UnixTime,
@@ -250,21 +249,20 @@ export class StatusController {
   }
 
   async getLivenessStatus() {
-    const livenessIndexerState =
-      await this.indexerStateRepository.findIndexerState('liveness_indexer')
-    const livenessConfigurations =
-      await this.livenessConfigurationRepository.getAll()
-    const unusedConfigurations =
+    const indexerState = await this.indexerStateRepository.findIndexerState(
+      'liveness_indexer',
+    )
+    const targetTimestamp = this.clock.getLastHour()
+
+    const configurations = await this.livenessConfigurationRepository.getAll()
+    const unusedConfigurationsIds =
       await this.livenessConfigurationRepository.findUnusedConfigurationsIds()
 
     const params: LivenessStatusPageProps = {
-      ...livenessIndexerState,
-      targetTimestamp: this.clock.getLastHour(),
-      configurations: livenessConfigurations.map((c) => ({
-        ...c,
-        params: JSON.parse(c.params) as json,
-      })),
-      unusedConfigurations,
+      indexerState,
+      targetTimestamp,
+      configurations,
+      unusedConfigurationsIds,
     }
     return renderLivenessStatusPage(params)
   }
