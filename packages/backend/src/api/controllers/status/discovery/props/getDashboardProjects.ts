@@ -25,7 +25,6 @@ export async function getDashboardProjects(
   updateMonitorRepository: UpdateMonitorRepository,
   chainId: ChainId,
 ): Promise<DashboardProject[]> {
-  console.log(`getDashboardProjects: ${chainId.toString()} before`)
   const configs = await configReader.readAllConfigsForChain(chainId)
 
   const configuredProjects: DashboardProject[] = []
@@ -33,7 +32,7 @@ export async function getDashboardProjects(
   for (const config of configs) {
     const discovery = await configReader.readDiscovery(
       config.name,
-      ChainId.ETHEREUM,
+      chainId,
     )
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
@@ -81,6 +80,5 @@ export async function getDashboardProjects(
     )
     .sort((a, b) => a.name.localeCompare(b.name))
 
-  console.log(`getDashboardProjects: ${chainId.toString()} after`)
   return result
 }
