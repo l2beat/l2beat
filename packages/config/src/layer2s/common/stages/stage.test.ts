@@ -40,7 +40,7 @@ const getTestStage = createGetStage({
   },
 })
 
-describe.only(createGetStage.name, () => {
+describe(createGetStage.name, () => {
   it('Throws error if more than one message should be returned', () => {
     expect(() =>
       getTestStage({
