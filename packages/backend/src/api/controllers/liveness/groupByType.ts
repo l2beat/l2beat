@@ -13,21 +13,27 @@ export interface GroupedByType {
 }
 
 export function groupByType(records: LivenessRecordWithType[]): GroupedByType {
-  return {
+  const result: GroupedByType = {
     batchSubmissions: {
-      records: records
-        .filter((record) => record.type === 'DA')
-        .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
+      records: [],
     },
     stateUpdates: {
-      records: records
-        .filter((record) => record.type === 'STATE')
-        .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
+      records: [],
     },
     proofSubmissions: {
-      records: records
-        .filter((record) => record.type === 'PROOF')
-        .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
+      records: [],
     },
   }
+
+  records.forEach((record) => {
+    if (record.type === 'DA') {
+      result.batchSubmissions.records.push(record)
+    } else if (record.type === 'STATE') {
+      result.stateUpdates.records.push(record)
+    } else {
+      result.proofSubmissions.records.push(record)
+    }
+  })
+
+  return result
 }
