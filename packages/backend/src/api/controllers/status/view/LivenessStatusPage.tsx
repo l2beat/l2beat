@@ -27,6 +27,7 @@ export interface LivenessStatusPageProps {
     untilTimestamp?: UnixTime
     lastSyncedTimestamp?: UnixTime
   }[]
+  unusedConfigurations: number[]
 }
 
 export function LivenessStatusPage(props: LivenessStatusPageProps) {
@@ -39,6 +40,16 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
     }
     return 0
   })
+  const liveConfigurations = configurations
+    .filter((c) => !c.untilTimestamp)
+    .filter((c) => !props.unusedConfigurations.includes(c.id))
+
+  const emptyConfigurations = liveConfigurations.filter((c) =>
+    props.unusedConfigurations.includes(c.id),
+  )
+
+  const archivedConfigurations = configurations.filter((c) => c.untilTimestamp)
+
   return (
     <Page title="Liveness module status">
       <div
@@ -86,21 +97,40 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
           </p>
         </div>
       </div>
-      <div style={{ fontSize: '20px' }}>Configurations</div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {configurations
-          .filter((c) => !c.untilTimestamp)
-          .map((c) =>
-            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
-          )}
+      <div
+        style={{ fontSize: '20px' }}
+        data-tooltip="Configurations currently used to fetch liveness data"
+      >
+        Configurations
       </div>
-      <div>With untilTimestamp</div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {configurations
-          .filter((c) => c.untilTimestamp)
-          .map((c) =>
-            getConfigCell(c, props.targetTimestamp, props.minTimestamp),
-          )}
+        {liveConfigurations.map((c) =>
+          getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+        )}
+      </div>
+
+      <div
+        style={{ fontSize: '20px' }}
+        data-tooltip="Configurations which do not have any datapoint saved in liveness table. If a configuration is there, that should be an expected behavior. Right now we have 2 arbitrum DA configurations there, which serve as a backup for the situation when arbitrum decides to use other function to post DA."
+      >
+        Empty
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {emptyConfigurations.map((c) =>
+          getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+        )}
+      </div>
+
+      <div
+        style={{ fontSize: '20px' }}
+        data-tooltip="Configurations that have 'untilTimestamp' param set, which means they are no longer being fetched. In most cases that is because of the project upgrade."
+      >
+        Archived
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {archivedConfigurations.map((c) =>
+          getConfigCell(c, props.targetTimestamp, props.minTimestamp),
+        )}
       </div>
     </Page>
   )
@@ -120,8 +150,10 @@ function getConfigCell(
   targetTimestamp: UnixTime,
   minTimestamp: UnixTime | undefined,
 ) {
+  const target = config.untilTimestamp ?? targetTimestamp
+
   const type =
-    config.lastSyncedTimestamp?.toNumber() === targetTimestamp.toNumber()
+    config.lastSyncedTimestamp?.toNumber() === target.toNumber()
       ? 'hint'
       : 'warn'
 
