@@ -65,6 +65,8 @@ export class StatusController {
 
   async getDiscoveryDashboard(): Promise<string> {
     const projects: Record<string, DashboardProject[]> = {}
+
+    console.log('getDiscoveryDashboard: before loop')
     for (const chainId of ChainId.getAll()) {
       const projectsToFill = chainId === ChainId.ETHEREUM ? this.projects : []
       projects[ChainId.getName(chainId)] = await getDashboardProjects(
@@ -74,6 +76,7 @@ export class StatusController {
         chainId,
       )
     }
+    console.log('getDiscoveryDashboard: after loop')
 
     return renderDashboardPage({ projects })
   }
