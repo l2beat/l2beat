@@ -468,7 +468,7 @@ export function getScalingLivenessColumnsConfig() {
         },
         {
           name: 'State updates',
-          tooltip: 'The longest period of time between batch submissions',
+          tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) => {
             return (
               <LivenessDurationTimeRangeCell
