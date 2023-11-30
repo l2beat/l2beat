@@ -66,11 +66,11 @@ export class StatusController {
   async getDiscoveryDashboard(): Promise<string> {
     const projects: Record<string, DashboardProject[]> = {}
     for (const chainId of ChainId.getAll()) {
-        // TODO(radomski): This issue is because there is a disconnect between
-        // the ChainId in L2BEAT and in discovery. See L2B-3202
-        if(chainId === ChainId.MANTA_PACIFIC) {
-            continue
-        }
+      // TODO(radomski): This issue is because there is a disconnect between
+      // the ChainId in L2BEAT and in discovery. See L2B-3202
+      if (chainId === ChainId.MANTA_PACIFIC) {
+        continue
+      }
 
       const projectsToFill = chainId === ChainId.ETHEREUM ? this.projects : []
       projects[ChainId.getName(chainId)] = await getDashboardProjects(

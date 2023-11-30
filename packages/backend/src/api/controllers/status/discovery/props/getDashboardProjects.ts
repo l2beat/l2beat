@@ -30,10 +30,7 @@ export async function getDashboardProjects(
   const configuredProjects: DashboardProject[] = []
 
   for (const config of configs) {
-    const discovery = await configReader.readDiscovery(
-      config.name,
-      chainId,
-    )
+    const discovery = await configReader.readDiscovery(config.name, chainId)
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
       discovery,
