@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 18691334,
-  "configHash": "0x3bb790680976773e01566da2af85299f1d98db6666d6fbea1e3b2b6baa369233",
+  "blockNumber": 18691511,
+  "configHash": "0x53010612f9b92eb4439bf77543a627568d15aae65fa3553f9853f079250a2c75",
   "version": 3,
   "contracts": [
     {
@@ -109,7 +109,7 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 426366,
+        "batchCount": 426390,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -117,7 +117,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1215634
+        "totalDelayedMessagesRead": 1215681
       },
       "derivedName": "SequencerInbox"
     },
@@ -267,11 +267,11 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 9951,
+        "firstUnresolvedNode": 9952,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 9950,
+        "latestConfirmed": 9951,
         "latestNodeCreated": 10103,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
@@ -341,32 +341,6 @@
       }
     },
     {
-      "name": "LidoEmergencyBrakeMultisig",
-      "address": "0x73b047fe6337183A454c5217241D780a932777bD",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1637746112,
-      "values": {
-        "domainSeparator": "0x04b3963f2168fbce5c17534f14f66399908ec958bec7acbec51f88d822eaf32b",
-        "getChainId": 1,
-        "getOwners": [
-          "0xCFfE0F3B089e46D8212408Ba061c425776E64322",
-          "0xdd19274b614b5ecAcf493Bc43C380ef6B8dfB56c",
-          "0x59F8D74Fe49d5ebEAc069E3baf07eB4b614BD5A7",
-          "0x6f5c9B92DC47C89155930E708fBc305b55A5519A",
-          "0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d"
-        ],
-        "getThreshold": 3,
-        "nonce": 9,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "OutboxV1",
       "address": "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
       "upgradeability": {
@@ -412,11 +386,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1215653,
+        "delayedMessageCount": 1215698,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 426366,
-        "sequencerReportedSubMessageCount": 133632585
+        "sequencerMessageCount": 426390,
+        "sequencerReportedSubMessageCount": 133640295
       },
       "derivedName": "Bridge"
     },
@@ -770,23 +744,18 @@
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
     "0x07D4692291B9E30E326fd31706f686f83f331B82",
-    "0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d",
     "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
     "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
     "0x3fE38087A94903A9D946fa1915e1772fe611000f",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
     "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
-    "0x59F8D74Fe49d5ebEAc069E3baf07eB4b614BD5A7",
     "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
     "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
-    "0x6f5c9B92DC47C89155930E708fBc305b55A5519A",
     "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
     "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
     "0xb07dc9103328A51128bC6Cc1049d1137035f5E28",
     "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
-    "0xCFfE0F3B089e46D8212408Ba061c425776E64322",
-    "0xdd19274b614b5ecAcf493Bc43C380ef6B8dfB56c",
     "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
     "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
   ],
@@ -1301,9 +1270,6 @@
       "function zombieAddress(uint256 zombieNum) view returns (address)",
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
-    ],
-    "0x73b047fe6337183A454c5217241D780a932777bD": [
-      "constructor(address _singleton)"
     ],
     "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": [
       "constructor(address _logic, address admin_, bytes _data) payable",

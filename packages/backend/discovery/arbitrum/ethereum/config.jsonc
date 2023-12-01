@@ -180,6 +180,9 @@
     },
     "wstETHEscrowAdmin": {
       "ignoreDiscovery": true
+    },
+    "LidoEmergencyBrakeMultisig": {
+      "ignoreDiscovery": true
     }
   }
 }
