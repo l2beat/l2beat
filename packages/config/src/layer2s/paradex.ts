@@ -93,7 +93,20 @@ export const paradex: Layer2 = {
       }),
     ],
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
+          ),
+          selector: '0x9b3b76cc',
+          functionSignature:
+            'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
+          sinceTimestamp: new UnixTime(1636978914),
+          programHash:
+            '3258367057337572248818716706664617507069572185152472699066582725377748079373',
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

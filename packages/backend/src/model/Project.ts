@@ -144,6 +144,7 @@ function getFunctionCallRecord(
     type: LivenessType(type),
     sinceTimestamp: param.sinceTimestamp,
     untilTimestamp: param.untilTimestamp,
+    programHash: param.programHash,
   }
 }
 

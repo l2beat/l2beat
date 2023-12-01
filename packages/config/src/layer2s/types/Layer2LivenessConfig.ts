@@ -22,6 +22,8 @@ export interface FunctionCallParams {
   functionSignature: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
+  /** Program hash used by Starkware: SHARP Verifier */
+  programHash?: string
 }
 
 export interface TransferParams {

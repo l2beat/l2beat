@@ -243,7 +243,20 @@ export const starknet: Layer2 = {
       type: 'starknet',
     },
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
+          ),
+          selector: '0x9b3b76cc',
+          functionSignature:
+            'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
+          sinceTimestamp: new UnixTime(1636978914),
+          programHash:
+            '1865367024509426979036104162713508294334262484507712987283009063059134893433',
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -254,7 +267,7 @@ export const starknet: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestamp: new UnixTime(1636978914),
+          sinceTimestamp: new UnixTime(1635077695),
         },
       ],
     },
