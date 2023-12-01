@@ -172,6 +172,12 @@ export const optimism: Layer2 = {
         tokens: ['SNX'],
         isHistorical: true,
       },
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
