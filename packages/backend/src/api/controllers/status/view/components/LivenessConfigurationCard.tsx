@@ -17,7 +17,8 @@ export function LivenessConfigurationCard({
   const target = config.untilTimestamp ?? targetTimestamp
 
   const type =
-    config.lastSyncedTimestamp?.toNumber() === target.toNumber()
+    config.lastSyncedTimestamp &&
+    config.lastSyncedTimestamp.toNumber() >= target.toNumber()
       ? 'hint'
       : 'warn'
 
@@ -73,9 +74,7 @@ export function LivenessConfigurationCard({
           }}
         >
           <p style={{ fontWeight: 'bold' }}>Params:</p>
-          <p style={{ fontWeight: 'normal' }}>
-            {JSON.stringify(config.params)}
-          </p>
+          <p style={{ fontWeight: 'normal' }}>{config.params}</p>
         </div>
       </p>
     </details>

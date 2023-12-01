@@ -24,7 +24,7 @@ export interface NonAnomalyEntry {
   isAnomaly: false
 }
 export interface Anomaly {
-  type: 'BATCH SUBMISSION' | 'STATE UPDATE' | 'PROOF SUBMISSION'
+  type: 'TX DATA SUBMISSION' | 'STATE UPDATE' | 'PROOF SUBMISSION'
   timestamp: number
   durationInSeconds: number
 }

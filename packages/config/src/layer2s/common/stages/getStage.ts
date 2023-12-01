@@ -43,6 +43,10 @@ const getBlueprint = (opts?: GetStageOptions) =>
               : ''),
           negative:
             'No source-available node exists that can recreate the state from L1 data.',
+          underReviewMessage:
+            'The requirement for available node software is under review',
+          warningMessage:
+            'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
         },
       },
     },
