@@ -112,6 +112,12 @@ export const base: Layer2 = {
           'Main entry point for users depositing ERC20 token that do not require custom gateway.',
         ...upgradesProxy,
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',

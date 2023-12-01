@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 18691511,
+  "blockNumber": 18691623,
   "configHash": "0x53010612f9b92eb4439bf77543a627568d15aae65fa3553f9853f079250a2c75",
   "version": 3,
   "contracts": [
@@ -109,7 +109,7 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 426390,
+        "batchCount": 426409,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -117,7 +117,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1215681
+        "totalDelayedMessagesRead": 1215711
       },
       "derivedName": "SequencerInbox"
     },
@@ -272,7 +272,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
         "latestConfirmed": 9951,
-        "latestNodeCreated": 10103,
+        "latestNodeCreated": 10104,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -386,11 +386,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1215698,
+        "delayedMessageCount": 1215724,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 426390,
-        "sequencerReportedSubMessageCount": 133640295
+        "sequencerMessageCount": 426409,
+        "sequencerReportedSubMessageCount": 133645665
       },
       "derivedName": "Bridge"
     },
