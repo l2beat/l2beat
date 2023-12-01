@@ -1,7 +1,7 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 18663285,
+  "blockNumber": 18684476,
   "configHash": "0xe3a6dc1c8d1b6b1f2216231e936bdc7a0b1e136ff2566d1069d82bf9caa760af",
   "version": 3,
   "contracts": [
@@ -109,7 +109,7 @@
       "sinceTimestamp": 1692217031,
       "values": {
         "accessControlProvider": "0x4b04016b8910Db8CAE1471bCE25B9D086019c34B",
-        "currentIndex": 92,
+        "currentIndex": 98,
         "owner": "0xF6A2AccBe2e02C5a255c955a775b686fD6285D49"
       },
       "derivedName": "PrimeAnchor"
