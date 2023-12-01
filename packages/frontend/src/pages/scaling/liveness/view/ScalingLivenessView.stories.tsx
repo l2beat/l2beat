@@ -599,7 +599,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             isAnomaly: true,
             anomalies: [
               {
-                type: 'BATCH SUBMISSION',
+                type: 'TX DATA SUBMISSION',
                 timestamp: 1699397243,
                 durationInSeconds: 1536,
               },
@@ -651,7 +651,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             isAnomaly: true,
             anomalies: [
               {
-                type: 'BATCH SUBMISSION',
+                type: 'TX DATA SUBMISSION',
                 timestamp: 1700661779,
                 durationInSeconds: 216,
               },
@@ -3309,7 +3309,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             isAnomaly: true,
             anomalies: [
               {
-                type: 'BATCH SUBMISSION',
+                type: 'TX DATA SUBMISSION',
                 timestamp: 1700745107,
                 durationInSeconds: 2004,
               },
@@ -3875,7 +3875,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             isAnomaly: true,
             anomalies: [
               {
-                type: 'BATCH SUBMISSION',
+                type: 'TX DATA SUBMISSION',
                 timestamp: 1700745107,
                 durationInSeconds: 2004,
               },
