@@ -2,11 +2,19 @@ import { Query } from '@google-cloud/bigquery'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 export function getFunctionCallQuery(
-  functionCallsConfig: { address: EthereumAddress; selector: string }[],
+  functionCallsConfig: {
+    address: EthereumAddress
+    selector: string
+    programHash?: string
+  }[],
   from: UnixTime,
   to: UnixTime,
 ): Query {
+  const functionCallsWithProgramHash = functionCallsConfig.filter(
+    (c) => c.programHash,
+  )
   const params = [
+    ...functionCallsWithProgramHash.map((c) => c.address.toLowerCase()),
     from.toDate().toISOString(),
     to.toDate().toISOString(),
     ...functionCallsConfig.flatMap((c) => [
@@ -18,7 +26,16 @@ export function getFunctionCallQuery(
   const query = `
     SELECT
       block_number,
-      LEFT(input, 10) AS input,
+      ${
+        functionCallsWithProgramHash.length > 0
+          ? `CASE
+        WHEN to_address IN (${functionCallsWithProgramHash
+          .map(() => ' ? ')
+          .join(',')}) THEN input
+        ELSE LEFT(input, 10)
+      END AS input,`
+          : `LEFT(input, 10) AS input,`
+      }
       to_address,
       block_timestamp,
       transaction_hash,
