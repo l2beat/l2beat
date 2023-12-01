@@ -78,6 +78,7 @@ export const base: Layer2 = {
       'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://base.org/'],
@@ -294,6 +295,15 @@ export const base: Layer2 = {
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
       },
     ],
     smartContracts: {

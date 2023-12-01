@@ -35,6 +35,7 @@ export const publicgoodsnetwork: Layer2 = {
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://publicgoods.network/'],
@@ -252,6 +253,15 @@ export const publicgoodsnetwork: Layer2 = {
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
       },
     ],
     smartContracts: {

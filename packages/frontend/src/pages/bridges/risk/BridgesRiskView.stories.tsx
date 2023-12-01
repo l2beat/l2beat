@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { onlyDesktopModes } from '../../../../.storybook/modes'
 import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
 import { configureTables } from '../../../scripts/configureTables'
 import { configureTabs } from '../../../scripts/configureTabs'
@@ -818,6 +819,7 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Optimium',
+
         destination: {
           value: 'Metis Andromeda',
           description: '',
@@ -877,6 +879,11 @@ const meta = {
         },
       },
     ],
+  },
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
   },
 } satisfies Meta<typeof BridgesRiskView>
 export default meta

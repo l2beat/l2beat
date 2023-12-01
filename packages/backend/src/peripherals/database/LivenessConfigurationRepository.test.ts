@@ -46,6 +46,7 @@ describe(LivenessConfigurationRepository.name, () => {
     database,
     Logger.SILENT,
   )
+  const livenessRepository = new LivenessRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -70,6 +71,27 @@ describe(LivenessConfigurationRepository.name, () => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
   })
+
+  describe(
+    LivenessConfigurationRepository.prototype.findUnusedConfigurationsIds.name,
+    () => {
+      it('should return ids of unused configurations', async () => {
+        const newIds = await repository.addMany(LIVENESS_CONFIGS)
+        await livenessRepository.addMany([
+          {
+            timestamp: UnixTime.now(),
+            blockNumber: 0,
+            txHash: '0x',
+            livenessConfigurationId: newIds[0],
+          },
+        ])
+
+        const unusedIds = await repository.findUnusedConfigurationsIds()
+
+        expect(unusedIds).toEqualUnsorted(newIds.slice(1))
+      })
+    },
+  )
 
   describe(
     LivenessConfigurationRepository.prototype.setLastSyncedTimestamp.name,

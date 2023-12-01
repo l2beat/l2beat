@@ -36,6 +36,7 @@ export const zora: Layer2 = {
     purpose: 'Universal, NFTs',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
       apps: [],
@@ -255,6 +256,15 @@ export const zora: Layer2 = {
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
       },
     ],
     smartContracts: {

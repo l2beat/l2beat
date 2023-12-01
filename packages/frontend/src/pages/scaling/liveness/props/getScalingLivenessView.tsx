@@ -6,8 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { AnomalyIndicatorEntry } from '../../../../components/AnomalyIndicator'
-import { ScalingLivenessViewEntry } from '../types'
+import { AnomalyIndicatorEntry, ScalingLivenessViewEntry } from '../types'
 import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
 
 export function getScalingLivenessView(
@@ -31,8 +30,10 @@ function getScalingLivenessViewEntry(
     slug: project.display.slug,
     warning: project.display.warning,
     category: project.display.category,
+    dataAvailabilityMode: project.display.dataAvailabilityMode,
     provider: project.display.provider,
     stage: project.stage,
+    explanation: project.display.livenessExplanation,
     stateUpdates: liveness?.stateUpdates,
     batchSubmissions: liveness?.batchSubmissions,
     anomalyEntries: getAnomalyEntries(liveness?.anomalies),

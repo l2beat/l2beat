@@ -30,6 +30,7 @@ export const zkswap: Layer2 = {
     purpose: 'Payments, AMM',
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -125,7 +126,7 @@ export const zkswap: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'ZkSync.sol#L404 - ZKSwap source code',

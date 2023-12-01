@@ -19,6 +19,7 @@ export const blast: Layer2 = {
       'Blast will launch an EVM-compatible Optimistic Rollup supporting native yield. It currently only supports deposits and no withdrawal mechanism is available yet.',
     purpose: 'Universal, DeFi',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://blast.io/en'],
       apps: ['https://blast.io/en/airdrop/early-access'],
@@ -37,6 +38,7 @@ export const blast: Layer2 = {
         address: EthereumAddress('0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d'),
         tokens: '*',
         description: 'Blast bridge.',
+        isUpcoming: true,
       }),
     ],
   },

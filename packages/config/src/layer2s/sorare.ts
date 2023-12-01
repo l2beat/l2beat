@@ -50,6 +50,7 @@ export const sorare: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://sorare.com/'],
       apps: [],
@@ -78,7 +79,7 @@ export const sorare: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'sorare',
+      product: ['sorare'],
       sinceTimestamp: new UnixTime(1626352527),
       resyncLastDays: 7,
     },

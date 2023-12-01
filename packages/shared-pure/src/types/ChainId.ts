@@ -111,6 +111,10 @@ const CHAIN_IDS: Record<number, { name: string; explorer: string }> = {
     name: 'gnosis',
     explorer: 'https://gnosisscan.io',
   },
+  169: {
+    name: 'manta-pacific',
+    explorer: 'https://pacific-explorer.manta.network',
+  },
 } as const
 
 ChainId.ETHEREUM = chainIdFromName('ethereum')
@@ -124,3 +128,4 @@ ChainId.LINEA = chainIdFromName('linea')
 ChainId.BASE = chainIdFromName('base')
 ChainId.POLYGON_ZKEVM = chainIdFromName('polygon-zkevm')
 ChainId.GNOSIS = chainIdFromName('gnosis')
+ChainId.MANTA_PACIFIC = chainIdFromName('manta-pacific')

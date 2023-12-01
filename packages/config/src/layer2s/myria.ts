@@ -52,6 +52,7 @@ export const myria: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://myria.com/'],
       apps: ['https://market.x.immutable.com/'],
@@ -78,7 +79,7 @@ export const myria: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'myria',
+      product: ['myria'],
       sinceTimestamp: new UnixTime(1659542607),
       resyncLastDays: 7,
     },

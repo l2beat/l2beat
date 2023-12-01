@@ -89,6 +89,8 @@ export const dydx: Layer2 = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [
@@ -128,7 +130,7 @@ export const dydx: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'dydx',
+      product: ['dydx'],
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
     },

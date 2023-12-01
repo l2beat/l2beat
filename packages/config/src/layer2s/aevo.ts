@@ -35,6 +35,7 @@ export const aevo: Layer2 = {
     purpose: 'DEX',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://www.aevo.xyz/'],
       apps: ['https://app.aevo.xyz/'],
@@ -239,6 +240,15 @@ export const aevo: Layer2 = {
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
       },
     ],
     smartContracts: {

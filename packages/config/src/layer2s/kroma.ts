@@ -72,6 +72,7 @@ export const kroma: Layer2 = {
             Kroma's goal is to eventually transition to a ZK Rollup once the generation of ZK proofs becomes more cost-efficient and faster.",
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],
@@ -312,6 +313,7 @@ export const kroma: Layer2 = {
           },
         ],
       },
+      EXITS.AUTONOMOUS,
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
@@ -440,12 +442,6 @@ export const kroma: Layer2 = {
       discovery.getContractDetails('Poseidon2', {
         description:
           'Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.',
-        references: [
-          {
-            text: 'poseidon_gencontract.js - circomlibjs source code',
-            href: 'https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js',
-          },
-        ],
       }),
     ],
     risks: [

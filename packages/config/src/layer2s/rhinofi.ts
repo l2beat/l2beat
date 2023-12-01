@@ -50,6 +50,7 @@ export const rhinofi: Layer2 = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -87,7 +88,7 @@ export const rhinofi: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'deversifi',
+      product: ['rhinofi'],
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },

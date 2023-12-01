@@ -51,6 +51,7 @@ export const immutablex: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://www.immutable.com/'],
       apps: ['https://market.x.immutable.com/'],
@@ -79,7 +80,7 @@ export const immutablex: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'immutable',
+      product: ['immutable'],
       sinceTimestamp: new UnixTime(1615389188),
       resyncLastDays: 7,
     },

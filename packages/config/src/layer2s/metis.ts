@@ -32,6 +32,7 @@ export const metis: Layer2 = {
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://www.metis.io'],
       apps: [],
@@ -153,6 +154,7 @@ export const metis: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

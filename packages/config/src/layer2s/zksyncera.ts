@@ -9,6 +9,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
@@ -46,6 +47,8 @@ export const zksyncera: Layer2 = {
     purpose: 'Universal',
     provider: 'ZK Stack',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
@@ -94,9 +97,9 @@ export const zksyncera: Layer2 = {
           address: EthereumAddress(
             '0x3dB52cE065f728011Ac6732222270b3F2360d919',
           ),
-          selector: '0x7739cbe7',
+          selector: '0xce9dcf16',
           functionSignature:
-            'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[], (uint256[],uint256[]) )',
+            'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
           sinceTimestamp: new UnixTime(1679602559),
         },
       ],
@@ -257,7 +260,7 @@ export const zksyncera: Layer2 = {
       risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
       references: [
         {
-          text: "L1 - L2 interoperability - Developer's documentation'",
+          text: "L1 - L2 interoperability - Developer's documentation",
           href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
         },
       ],
@@ -272,6 +275,7 @@ export const zksyncera: Layer2 = {
           },
         ],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
   },
   contracts: {
@@ -322,6 +326,19 @@ export const zksyncera: Layer2 = {
     VALUES.ZKSYNC_2.SECURITY_COUNCIL,
   ],
   milestones: [
+    {
+      name: 'Introduction of Boojum prover',
+      link: 'https://zksync.mirror.xyz/HJ2Pj45EJkRdt5Pau-ZXwkV2ctPx8qFL19STM5jdYhc',
+      date: '2023-07-17T00:00:00Z',
+      description: 'Deployment of Boojum - new high-performance proof system.',
+    },
+    {
+      ...MILESTONES.MAINNET_OPEN,
+      link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
+      date: '2022-03-24T00:00:00Z',
+      description:
+        'Whitelist got removed, there are no restrictions on who can transact with the network.',
+    },
     {
       name: 'zkSync 2.0 baby alpha launch',
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',

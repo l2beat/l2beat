@@ -82,7 +82,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                 <span
                   className="Tooltip inline-block px-2"
                   title={renderToStaticMarkup(
-                    <StageTooltip item={props.stage} />,
+                    <StageTooltip stageConfig={props.stage} />,
                   )}
                 >
                   <InfoIcon />

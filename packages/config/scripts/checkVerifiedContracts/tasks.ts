@@ -8,7 +8,7 @@ import { VerificationMap } from './output'
 export async function verifyContracts(
   addresses: EthereumAddress[],
   previouslyVerified: Set<EthereumAddress>,
-  manuallyVerified: Set<EthereumAddress>,
+  manuallyVerified: Record<string, string>,
   etherscanClient: EtherscanClient,
   workersCount: number,
   logger: Logger,
@@ -17,7 +17,10 @@ export async function verifyContracts(
 
   const getVerificationPromises = (addresses: EthereumAddress[]) =>
     addresses.map(async (address): Promise<[string, boolean]> => {
-      if (previouslyVerified.has(address) || manuallyVerified.has(address)) {
+      if (
+        previouslyVerified.has(address) ||
+        manuallyVerified[address.toString()]
+      ) {
         return [address.toString(), true]
       }
 

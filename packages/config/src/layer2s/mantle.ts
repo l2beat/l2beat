@@ -47,6 +47,7 @@ export const mantle: Layer2 = {
       intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
     purpose: 'Universal',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',
     links: {
       websites: ['https://www.mantle.xyz/'],
@@ -230,6 +231,7 @@ export const mantle: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
