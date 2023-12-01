@@ -1,5 +1,3 @@
-import { groupBy } from 'lodash'
-
 import { LivenessRecordWithType } from '../../../peripherals/database/LivenessRepository'
 
 export interface GroupedByType {
@@ -15,17 +13,27 @@ export interface GroupedByType {
 }
 
 export function groupByType(records: LivenessRecordWithType[]): GroupedByType {
-  const grouped = groupBy(records, 'type')
-
-  return {
+  const result: GroupedByType = {
     batchSubmissions: {
-      records: grouped.DA,
+      records: [],
     },
     stateUpdates: {
-      records: grouped.STATE,
+      records: [],
     },
     proofSubmissions: {
-      records: grouped.PROOF,
+      records: [],
     },
   }
+
+  records.forEach((record) => {
+    if (record.type === 'DA') {
+      result.batchSubmissions.records.push(record)
+    } else if (record.type === 'STATE') {
+      result.stateUpdates.records.push(record)
+    } else {
+      result.proofSubmissions.records.push(record)
+    }
+  })
+
+  return result
 }
