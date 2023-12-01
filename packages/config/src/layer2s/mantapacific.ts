@@ -87,7 +87,7 @@ export const mantapacific: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x853bDfF715eFeDc280C16241dD30A6d651f90aCa',
+            '0x30c789674ad3B458886BBC9abf42EEe19EA05C1D',
           ),
           selector: '0x9aaab648',
           functionSignature:
