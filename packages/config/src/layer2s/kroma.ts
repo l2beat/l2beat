@@ -160,6 +160,7 @@ export const kroma: Layer2 = {
       ...RISK_VIEW.UPGRADE_DELAY_SECONDS(
         timelockDefaultDelay,
         finalizationPeriod,
+        true,
       ),
       sources: [
         {

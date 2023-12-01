@@ -166,18 +166,18 @@ export function UPGRADE_DELAY(
   isOptimisticDelay?: boolean,
 ): ProjectRiskViewEntry {
   const upgradeDelayString = formatSeconds(upgradeDelay)
-  const canReactString =
-    canExit === false
-      ? isOptimisticDelay === false
-        ? "and users don't have enough time to react if the permissioned operator is censoring"
-        : "and users don't have enough time to react because of the challenge period delay"
-      : isOptimisticDelay === false
-      ? 'but users have some time to react even if the permissioned operator is censoring'
-      : 'but users have some time to react even with the challenge period delay'
+  const canReactString = canExit
+    ? isOptimisticDelay === true
+      ? ' but users have some time to react even with the challenge period delay'
+      : ' but users have some time to react even if the permissioned operator is censoring'
+    : isOptimisticDelay === true
+    ? " and users don't have enough time to react because of the challenge period delay"
+    : " and users don't have enough time to react if the permissioned operator is censoring"
+  console.log('canReactString', canReactString)
   return {
     value: `${upgradeDelayString} delay`,
     description:
-      'The code that secures the system can be changed arbitrarily ' +
+      'The code that secures the system can be changed arbitrarily' +
       canReactString +
       '.',
     sentiment: canExit === false ? 'bad' : 'warning',
@@ -196,7 +196,7 @@ function UPGRADE_DELAY_SECONDS(
     exitDelay !== undefined &&
     upgradeDelay - exitDelay < DANGER_DELAY_THRESHOLD_SECONDS
   ) {
-    return UPGRADE_DELAY(upgradeDelay, false)
+    return UPGRADE_DELAY(upgradeDelay, false, isOptimisticDelay)
   }
   return UPGRADE_DELAY(upgradeDelay, true, isOptimisticDelay)
 }
