@@ -54,7 +54,8 @@
         "isConfirmed",
         "outputsDeleteRequested",
         "transactions",
-        "getOwners" // already read from owners array
+        "getOwners", // already read from owners array
+        "clock"
       ],
       "fields": {
         "owners": {
