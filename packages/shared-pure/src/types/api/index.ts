@@ -1,5 +1,6 @@
 export * from './ActivityApi'
 export * from './LivenessApi'
+export * from './ManuallyVerifiedContrats'
 export * from './TokenTvlApi'
 export * from './TvlApi'
 export * from './VerificationStatus'

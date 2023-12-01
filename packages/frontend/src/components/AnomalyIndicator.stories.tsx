@@ -49,7 +49,7 @@ const anomalies: AnomalyIndicatorEntry[] = [
       {
         timestamp: 1697277392,
         durationInSeconds: 20 * 60,
-        type: 'BATCH SUBMISSION',
+        type: 'TX DATA SUBMISSION',
       },
     ],
   },
@@ -86,7 +86,7 @@ const anomalies: AnomalyIndicatorEntry[] = [
       {
         timestamp: 1698054992,
         durationInSeconds: 45 * 60,
-        type: 'BATCH SUBMISSION',
+        type: 'TX DATA SUBMISSION',
       },
     ],
   },

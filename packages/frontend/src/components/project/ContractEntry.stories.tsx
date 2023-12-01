@@ -51,6 +51,7 @@ export const SingleAddress: Story = {
       projects: {},
       contracts: VERIFICATION_STATUS,
     },
+    manuallyVerifiedContracts: {},
   },
 }
 
@@ -84,6 +85,7 @@ export const UpgradeDetails: Story = {
       projects: {},
       contracts: VERIFICATION_STATUS,
     },
+    manuallyVerifiedContracts: {},
   },
 }
 
@@ -100,5 +102,6 @@ export const MultipleAddresses: Story = {
       projects: {},
       contracts: VERIFICATION_STATUS,
     },
+    manuallyVerifiedContracts: {},
   },
 }

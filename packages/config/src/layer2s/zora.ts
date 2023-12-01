@@ -257,6 +257,15 @@ export const zora: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
+      },
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

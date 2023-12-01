@@ -1,7 +1,15 @@
-import { assert, LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  Hash256,
+  LivenessType,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
+import { Clock } from '../../../core/Clock'
 import { Project } from '../../../model'
+import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
@@ -14,6 +22,8 @@ import { LivenessController } from './LivenessController'
 
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {
+    const CLOCK = getMockClock()
+
     // TODO: unskip it
     it.skip('correctly finds anomalies', async () => {
       const RECORDS: LivenessRecordWithProjectIdAndType[] = []
@@ -33,19 +43,23 @@ describe(LivenessController.name, () => {
 
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
+        CLOCK,
       )
 
       const result = await livenessController.getLiveness()
-      const project1Anomalies = result.projects.project1?.anomalies
+      if (result.type === 'success') {
+        const project1Anomalies = result.data.projects.project1?.anomalies
 
-      expect(project1Anomalies).toEqual([
-        {
-          timestamp: RECORDS.at(-2)!.timestamp,
-          durationInSeconds: 501 * 3600,
-          type: LivenessType('DA'),
-        },
-      ])
+        expect(project1Anomalies).toEqual([
+          {
+            timestamp: RECORDS.at(-2)!.timestamp,
+            durationInSeconds: 501 * 3600,
+            type: LivenessType('DA'),
+          },
+        ])
+      }
     })
 
     it('returns empty array if no anomalies', async () => {
@@ -60,22 +74,30 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
+        CLOCK,
       )
 
       const result = await livenessController.getLiveness()
-      const project1Anomalies = result.projects.project1?.anomalies
-      expect(project1Anomalies).toEqual([])
+      if (result.type === 'success') {
+        const project1Anomalies = result.data.projects.project1?.anomalies
+        expect(project1Anomalies).toEqual([])
+      }
     })
 
     it('returns empty object if no data', async () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository([]),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         [],
+        CLOCK,
       )
 
       const result = await livenessController.getLiveness()
-      expect(result).toEqual({ projects: {} })
+      if (result.type === 'success') {
+        expect(result.data).toEqual({ projects: {} })
+      }
     })
 
     it('correctly calculate avg, min and max', async () => {
@@ -101,7 +123,9 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
+        getMockClock(),
       )
 
       const records = [...RECORDS]
@@ -122,14 +146,53 @@ describe(LivenessController.name, () => {
       }
 
       const result = await livenessController.getLiveness()
-      const project1BatchSubmissions =
-        result.projects.project1?.batchSubmissions
-      expect(project1BatchSubmissions).toEqual(expected)
+      if (result.type === 'success') {
+        const project1BatchSubmissions =
+          result.data.projects.project1?.batchSubmissions
+        expect(project1BatchSubmissions).toEqual(expected)
+      }
+    })
+
+    it('return error when data is not fully synced', async () => {
+      const clock = getMockClock()
+
+      const outOfSyncTimestamp = CLOCK.getLastHour().add(-2, 'hours')
+      const livenessController = new LivenessController(
+        getMockLivenessRepository([]),
+        getMockIndexerStateRepository(outOfSyncTimestamp),
+        mockProjectConfig([]),
+        clock,
+      )
+      const result = await livenessController.getLiveness()
+
+      expect(result.type).toEqual('error')
+      if (result.type === 'error') {
+        expect(result.error).toEqual('DATA_NOT_SYNCED')
+      }
     })
   })
 })
 
 const START = UnixTime.now()
+
+function getMockClock() {
+  return mockObject<Clock>({
+    getLastHour: () => UnixTime.now().toStartOf('hour').add(-1, 'hours'),
+  })
+}
+
+function getMockIndexerStateRepository(data: UnixTime) {
+  return mockObject<IndexerStateRepository>({
+    findIndexerState: async () => {
+      return {
+        id: 1,
+        configHash: Hash256.random(),
+        indexerId: 'liveness_indexer',
+        safeHeight: data.toNumber(),
+      }
+    },
+  })
+}
 
 function getMockLivenessRepository(
   records: LivenessRecordWithProjectIdAndType[],
@@ -138,7 +201,7 @@ function getMockLivenessRepository(
     getAllWithProjectIdAndType() {
       return Promise.resolve(records)
     },
-    getWithType(projectId: ProjectId) {
+    getWithTypeDistinctTimestamp(projectId: ProjectId) {
       return Promise.resolve(records.filter((x) => x.projectId === projectId))
     },
     addMany() {

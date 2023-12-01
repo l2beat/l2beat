@@ -14,6 +14,8 @@ interface OldProjectEscrow {
   isHistorical?: boolean
   /** Temporary flag meaning that escrow config was migrated to new format */
   newVersion?: false
+  /** Upcoming projects needs upcoming escrows (needed for TVL) */
+  isUpcoming?: boolean
 }
 
 interface NewProjectEscrow {
@@ -29,4 +31,6 @@ interface NewProjectEscrow {
   isHistorical?: boolean
   /** Temporary flag meaning that escrow config was migrated to new format */
   newVersion?: true
+  /** Upcoming projects needs upcoming escrows (needed for TVL) */
+  isUpcoming?: boolean
 }

@@ -49,6 +49,17 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return insertedRows.map((row) => row.id)
   }
 
+  async findUnusedConfigurationsIds(): Promise<number[]> {
+    const knex = await this.knex()
+    const rows = (await knex('liveness_configuration as c')
+      .select('c.id')
+      .leftJoin('liveness as l', 'c.id', 'l.liveness_configuration_id')
+      .groupBy('c.id')
+      .havingRaw('count(l.liveness_configuration_id) = 0')) as { id: number }[]
+
+    return rows.map((row) => row.id)
+  }
+
   async setLastSyncedTimestamp(
     configurationId: number,
     lastSyncedTimestamp: UnixTime,

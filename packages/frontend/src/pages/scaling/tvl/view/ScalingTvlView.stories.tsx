@@ -48,7 +48,7 @@ const meta = {
         warning: undefined,
         isVerified: true,
         isArchived: undefined,
-        isUpcoming: true,
+        isUpcoming: false,
         tvl: '$0.00',
         tvlBreakdown: {
           empty: true,
@@ -66,7 +66,27 @@ const meta = {
         purpose: 'Universal',
         category: 'Optimistic Rollup',
         stage: {
-          stage: 'NotApplicable',
+          stage: 'Stage 0',
+          missing: {
+            nextStage: 'Stage 1',
+            requirements: ['B requirement'],
+          },
+          message: {
+            type: 'underReview',
+            text: 'Projects under review might present uncompleted information & data.',
+          },
+          summary: [
+            {
+              stage: 'Stage 0',
+              requirements: [{ satisfied: true, description: 'A requirement' }],
+            },
+            {
+              stage: 'Stage 1',
+              requirements: [
+                { satisfied: false, description: 'B requirement' },
+              ],
+            },
+          ],
         },
       },
       {
@@ -708,6 +728,10 @@ const meta = {
             nextStage: 'Stage 1',
             requirements: ['B requirement'],
           },
+          message: {
+            type: 'warning',
+            text: 'Projects under review might present uncompleted information & data.',
+          },
           summary: [
             {
               stage: 'Stage 0',
@@ -1019,7 +1043,26 @@ const meta = {
         marketShare: '1.25%',
         purpose: 'Tokens, NFTs, AMM',
         category: 'ZK Rollup',
-        stage: { stage: 'NotApplicable' },
+        stage: {
+          stage: 'Stage 1',
+          missing: {
+            nextStage: 'Stage 2',
+            requirements: ['B requirement'],
+          },
+          message: undefined,
+          summary: [
+            {
+              stage: 'Stage 0',
+              requirements: [{ satisfied: true, description: 'A requirement' }],
+            },
+            {
+              stage: 'Stage 1',
+              requirements: [
+                { satisfied: false, description: 'B requirement' },
+              ],
+            },
+          ],
+        },
       },
       {
         name: 'Immutable X',

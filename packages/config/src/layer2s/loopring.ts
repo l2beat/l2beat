@@ -237,7 +237,7 @@ export const loopring: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Forced Request Handling - Loopring design doc',

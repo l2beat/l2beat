@@ -56,6 +56,26 @@ describe('layer2s', () => {
         }
       }
     })
+
+    it('every escrow of upcoming project has isUpcoming flag', () => {
+      for (const layer2 of layer2s) {
+        if (!layer2.isUpcoming) continue
+
+        for (const escrow of layer2.config.escrows) {
+          expect(escrow.isUpcoming).toEqual(true)
+        }
+      }
+    })
+
+    it('every not upcoming project does not have isUpcoming flag', () => {
+      for (const layer2 of layer2s) {
+        if (layer2.isUpcoming) continue
+
+        for (const escrow of layer2.config.escrows) {
+          expect([false, undefined]).toInclude(escrow.isUpcoming)
+        }
+      }
+    })
   })
 
   describe('liveness', () => {

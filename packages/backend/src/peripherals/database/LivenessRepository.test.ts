@@ -151,4 +151,82 @@ describe(LivenessRepository.name, () => {
       expect(result).toEqual([records[0], records[2]])
     })
   })
+
+  describe(LivenessRepository.prototype.getByProjectIdAndType.name, () => {
+    it('should return rows with given project id and type', async () => {
+      const results = await repository.getByProjectIdAndType(
+        LIVENESS_CONFIGS[0].projectId,
+        LIVENESS_CONFIGS[0].type,
+        START.add(-1, 'hours'),
+      )
+
+      expect(results).toEqual([
+        {
+          timestamp: DATA[0].timestamp,
+          type: LIVENESS_CONFIGS[0].type,
+        },
+      ])
+    })
+  })
+
+  describe(
+    LivenessRepository.prototype.getWithTypeDistinctTimestamp.name,
+    () => {
+      it('join and returns data with type', async () => {
+        const result = await repository.getWithTypeDistinctTimestamp(
+          LIVENESS_CONFIGS[0].projectId,
+        )
+        const expected = [
+          {
+            timestamp: DATA[0].timestamp,
+            type: LIVENESS_CONFIGS[0].type,
+          },
+        ]
+
+        expect(result).toEqual(expected)
+      })
+
+      it('filters out transactions with the same timestamp', async () => {
+        await repository.deleteAll()
+        const NEW_DATA = [
+          {
+            timestamp: START.add(-3, 'hours'),
+            blockNumber: 12347,
+            txHash: '0xabcdef1234567890',
+          },
+          {
+            timestamp: START.add(-3, 'hours'),
+            blockNumber: 12347,
+            txHash: '0xabcdef1234567891',
+          },
+          {
+            timestamp: START.add(-4, 'hours'),
+            blockNumber: 12348,
+            txHash: '0xabcdef1234567892',
+          },
+        ]
+        await repository.addMany(
+          NEW_DATA.map((e) => ({
+            ...e,
+            livenessConfigurationId: ids[2],
+          })),
+        )
+        const result = await repository.getWithTypeDistinctTimestamp(
+          LIVENESS_CONFIGS[2].projectId,
+        )
+
+        const expected = [
+          {
+            timestamp: NEW_DATA[1].timestamp,
+            type: LIVENESS_CONFIGS[2].type,
+          },
+          {
+            timestamp: NEW_DATA[2].timestamp,
+            type: LIVENESS_CONFIGS[2].type,
+          },
+        ]
+        expect(result).toEqualUnsorted(expected)
+      })
+    },
+  )
 })

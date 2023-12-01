@@ -33,6 +33,7 @@ function getScalingLivenessViewEntry(
     dataAvailabilityMode: project.display.dataAvailabilityMode,
     provider: project.display.provider,
     stage: project.stage,
+    explanation: project.display.livenessExplanation,
     stateUpdates: liveness?.stateUpdates,
     batchSubmissions: liveness?.batchSubmissions,
     anomalyEntries: getAnomalyEntries(liveness?.anomalies),
@@ -87,7 +88,7 @@ function typeToDisplayType(
 ) {
   switch (anomaly.type) {
     case 'DA':
-      return 'BATCH SUBMISSION'
+      return 'TX DATA SUBMISSION'
     case 'STATE':
       return 'STATE UPDATE'
     default:

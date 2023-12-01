@@ -541,6 +541,7 @@ export const arbitrum: Layer2 = {
           },
         ],
       },
+      EXITS.AUTONOMOUS,
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

@@ -11,7 +11,7 @@ import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
-import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../icons'
+import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { ComingSoonCell } from '../ComingSoonCell'
 import { EthereumCell } from '../EthereumCell'
@@ -66,9 +66,8 @@ export function getActiveScalingTvlColumnsConfig() {
       name: 'Stage',
       idHref: 'stage' as const,
       tooltip: 'Rollup stage based on its features and maturity.',
-      alignCenter: true as const,
       getValue: (project: ScalingTvlViewEntry) => (
-        <StageCell item={project.stage} />
+        <StageCell stageConfig={project.stage} />
       ),
     },
     {
@@ -450,7 +449,7 @@ export function getScalingLivenessColumnsConfig() {
         <LivenessTimeRangeCell
           last30Days={'30-day average intervals'}
           last90Days={'90-day average intervals'}
-          max={'max-day average intervals'}
+          max={'all-time average intervals'}
         />
       ),
       columns: [
@@ -469,7 +468,7 @@ export function getScalingLivenessColumnsConfig() {
         },
         {
           name: 'State updates',
-          tooltip: 'The longest period of time between batch submissions',
+          tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) => {
             return (
               <LivenessDurationTimeRangeCell
@@ -508,6 +507,17 @@ export function getScalingLivenessColumnsConfig() {
           }
         />
       ),
+    },
+    {
+      name: '',
+      getValue: (project) =>
+        project.explanation ? (
+          <div className="pr-4">
+            <div className="Tooltip" title={project.explanation}>
+              <InfoIcon className="fill-blue-550" />
+            </div>
+          </div>
+        ) : null,
     },
   ]
   return columns
