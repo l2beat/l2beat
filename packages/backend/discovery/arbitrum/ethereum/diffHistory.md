@@ -1,3 +1,22 @@
+# Diff at Fri, 24 Nov 2023 10:04:53 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@34d3533152f3f3d3d80344ca84d4d9a3744c3f17
+
+## Description
+
+New scheduled transaction - there is a DAC update about to be executed by the Upgrade Executer with a delay of 72 hours. It will call the perform() function of the AddNovaKeysetAction (0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E) contract to add a new keyset as valid batch submitter for Arbitrum Nova. That's related to Security Council's decision to remove Reddit from the Data Availability Committee (DAC) since they plan on winding down their Arbitrum Nova DAC infrastructure, and also remove Offchain Labs secondary key from the DAC.
+
+## Watched changes
+
+```diff
+    contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+      values.scheduledTransactions[12]:
++        {"id":"0x492a8fccff029378b8566bdb6157123d1626cbfe2530a9b1f0ad5df688c10471","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd000000000000000000000000def5cfe3246882bc7f65f9346a8b974ba27d3f4e00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+
 # Diff at Mon, 13 Nov 2023 15:23:11 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
