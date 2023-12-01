@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 18690689,
-  "configHash": "0x4c7562fbc2372ea0bf74d90a296b9f2f90adde970624ec59a839daf514ba4e8c",
+  "blockNumber": 18691334,
+  "configHash": "0x3bb790680976773e01566da2af85299f1d98db6666d6fbea1e3b2b6baa369233",
   "version": 3,
   "contracts": [
     {
@@ -29,7 +29,7 @@
       "derivedName": "Outbox"
     },
     {
-      "name": "stETHEscrow",
+      "name": "wstETHEscrow",
       "address": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -109,7 +109,7 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 426267,
+        "batchCount": 426366,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -117,7 +117,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1215458
+        "totalDelayedMessagesRead": 1215634
       },
       "derivedName": "SequencerInbox"
     },
@@ -267,12 +267,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 9949,
+        "firstUnresolvedNode": 9951,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 9948,
-        "latestNodeCreated": 10101,
+        "latestConfirmed": 9950,
+        "latestNodeCreated": 10103,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -341,7 +341,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "LidoEmergencyBrakeMultisig",
       "address": "0x73b047fe6337183A454c5217241D780a932777bD",
       "upgradeability": {
         "type": "gnosis safe",
@@ -363,7 +363,8 @@
         "getThreshold": 3,
         "nonce": 9,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OutboxV1",
@@ -411,11 +412,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1215483,
+        "delayedMessageCount": 1215653,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 426267,
-        "sequencerReportedSubMessageCount": 133603321
+        "sequencerMessageCount": 426366,
+        "sequencerReportedSubMessageCount": 133632585
       },
       "derivedName": "Bridge"
     },

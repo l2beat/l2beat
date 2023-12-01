@@ -27,8 +27,9 @@
     "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway",
     "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils",
     "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager",
-    "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": "stETHEscrow",
-    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "stETHEscrowAdmin"
+    "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": "wstETHEscrow",
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
+    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig"
   },
   "overrides": {
     "ArbitrumOneBridge": {
@@ -169,7 +170,7 @@
     "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
       "ignoreRelatives": ["counterpartGateway"]
     },
-    "stETHEscrow": {
+    "wstETHEscrow": {
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": {
         "accessControl": {
@@ -177,7 +178,7 @@
         }
       }
     },
-    "stETHEscrowAdmin": {
+    "wstETHEscrowAdmin": {
       "ignoreDiscovery": true
     }
   }
