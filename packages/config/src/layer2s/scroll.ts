@@ -117,6 +117,13 @@ export const scroll: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
       stateUpdates: [
         {
           formula: 'functionCall',

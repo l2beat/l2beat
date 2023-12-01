@@ -86,7 +86,18 @@ export const zksynclite: Layer2 = {
       callsPerMinute: 3_000,
     },
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+          ),
+          selector: '0x83981808',
+          functionSignature:
+            'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
+          sinceTimestamp: new UnixTime(1592218707),
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

@@ -124,6 +124,10 @@ export const linea: Layer2 = {
           from: 'stateUpdates',
           to: 'batchSubmissions',
         },
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
       ],
       batchSubmissions: [],
       stateUpdates: [

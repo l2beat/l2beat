@@ -135,7 +135,18 @@ export const dydx: Layer2 = {
       resyncLastDays: 7,
     },
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
+          ),
+          selector: '0x9b3b76cc',
+          functionSignature:
+            'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
+          sinceTimestamp: new UnixTime(1615417556),
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

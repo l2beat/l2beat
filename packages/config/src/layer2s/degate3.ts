@@ -103,6 +103,12 @@ export const degate3: Layer2 = {
       }),
     ],
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
       proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [

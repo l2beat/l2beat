@@ -104,6 +104,7 @@ export const mantapacific: Layer2 = {
       assessCount: subtractOne,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'transfer',

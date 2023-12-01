@@ -93,6 +93,7 @@ export const paradex: Layer2 = {
       }),
     ],
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {
