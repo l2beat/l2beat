@@ -16,7 +16,6 @@ New scheduled transaction - there is a DAC update about to be executed by the Up
     }
 ```
 
-
 # Diff at Mon, 13 Nov 2023 15:23:11 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
