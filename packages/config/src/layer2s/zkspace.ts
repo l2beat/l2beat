@@ -61,6 +61,13 @@ export const zkspace: Layer2 = {
       }),
     ],
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {

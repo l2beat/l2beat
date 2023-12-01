@@ -47,6 +47,14 @@ const RECORDS: LivenessRecordWithInterval[] = [
     timestamp: NOW.add(-93, 'days'),
     type: LivenessType('DA'),
   },
+  {
+    timestamp: NOW.add(-93, 'days'),
+    type: LivenessType('PROOF'),
+  },
+  {
+    timestamp: NOW.add(-94, 'days'),
+    type: LivenessType('PROOF'),
+  },
 ]
 
 describe(calculateIntervals.name, () => {
@@ -134,6 +142,9 @@ describe(calculateIntervalWithAverages.name, () => {
         stateUpdates: {
           records: RECORDS.filter((r) => r.type === LivenessType('STATE')),
         },
+        proofSubmissions: {
+          records: RECORDS.filter((r) => r.type === LivenessType('PROOF')),
+        },
       },
     })
 
@@ -145,6 +156,10 @@ describe(calculateIntervalWithAverages.name, () => {
       (r) => r.type === LivenessType('STATE'),
     )
     calculateIntervals(stateUpdateRecords)
+    const proofSubmissionsRecords = cloneDeep(RECORDS).filter(
+      (r) => r.type === LivenessType('PROOF'),
+    )
+    calculateIntervals(proofSubmissionsRecords)
 
     const expected = {
       project1: {
@@ -179,6 +194,16 @@ describe(calculateIntervalWithAverages.name, () => {
             averageInSeconds: 3600,
             minimumInSeconds: 3600,
             maximumInSeconds: 3600,
+          },
+        },
+        proofSubmissions: {
+          records: proofSubmissionsRecords,
+          last30Days: undefined,
+          last90Days: undefined,
+          allTime: {
+            averageInSeconds: 86400,
+            minimumInSeconds: 86400,
+            maximumInSeconds: 86400,
           },
         },
       },

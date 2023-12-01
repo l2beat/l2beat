@@ -121,6 +121,7 @@ export const base: Layer2 = {
       assessCount: subtractOne,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'transfer',

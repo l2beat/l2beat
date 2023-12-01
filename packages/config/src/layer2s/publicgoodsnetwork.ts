@@ -76,6 +76,7 @@ export const publicgoodsnetwork: Layer2 = {
       assessCount: subtractOne,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'transfer',

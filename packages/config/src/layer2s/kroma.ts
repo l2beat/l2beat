@@ -110,6 +110,7 @@ export const kroma: Layer2 = {
       assessCount: subtractOne,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'transfer',

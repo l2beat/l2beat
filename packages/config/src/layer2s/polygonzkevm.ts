@@ -106,6 +106,13 @@ export const polygonzkevm: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'functionCall',
@@ -127,6 +134,16 @@ export const polygonzkevm: Layer2 = {
           selector: '0x2b0006fa',
           functionSignature:
             'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
+          sinceTimestamp: new UnixTime(1679653163),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x621dd411',
+          functionSignature:
+            'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
           sinceTimestamp: new UnixTime(1679653163),
         },
       ],

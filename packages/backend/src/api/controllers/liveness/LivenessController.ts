@@ -11,7 +11,7 @@ import { IndexerStateRepository } from '../../../peripherals/database/IndexerSta
 import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'
 import { calcIntervalWithAvgsPerProject } from './calculateIntervalWithAverages'
-import { groupByType } from './groupByProjectIdAndType'
+import { groupByType } from './groupByType'
 
 type LivenessResult =
   | {

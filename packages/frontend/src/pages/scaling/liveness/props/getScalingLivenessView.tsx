@@ -91,6 +91,8 @@ function typeToDisplayType(
       return 'TX DATA SUBMISSION'
     case 'STATE':
       return 'STATE UPDATE'
+    case 'PROOF':
+      return 'PROOF SUBMISSION'
     default:
       assertUnreachable(anomaly.type)
   }
