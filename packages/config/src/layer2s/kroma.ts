@@ -73,7 +73,10 @@ export const kroma: Layer2 = {
         'https://docs.kroma.network/',
         'https://github.com/kroma-network/kroma/tree/dev/specs',
       ],
-      explorers: ['https://blockscout.kroma.network/'],
+      explorers: [
+        'https://kromascan.com/',
+        'https://blockscout.kroma.network/',
+      ],
       repositories: ['https://github.com/kroma-network/'],
       socialMedia: [
         'https://discord.gg/kroma',

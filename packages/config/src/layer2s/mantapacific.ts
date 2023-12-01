@@ -103,6 +103,28 @@ export const mantapacific: Layer2 = {
       callsPerMinute: 1500,
       assessCount: subtractOne,
     },
+    liveness: {
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0xa76e31d8471d569efdd3d95d1b11ce6710f4533f'),
+          to: EthereumAddress('0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe'),
+          sinceTimestamp: new UnixTime(1694225435),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x30c789674ad3B458886BBC9abf42EEe19EA05C1D',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1694221607),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
