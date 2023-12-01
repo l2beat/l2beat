@@ -20,6 +20,7 @@ interface LivenessConfig {
 export interface LivenessFunctionCall extends LivenessConfig {
   address: EthereumAddress
   selector: string
+  programHash?: string
 }
 
 export interface LivenessTransfer extends LivenessConfig {
