@@ -5,6 +5,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 import { InfoIcon } from '../icons'
 import { Link } from '../Link'
 import { SectionId } from '../project/sectionId'
+import { SortingArrows } from './SortingArrows'
 
 interface Props<T> {
   items: T[]
@@ -18,7 +19,8 @@ export type ColumnConfig<T> =
   | GroupedColumnConfig<T>
 
 interface SingleColumnConfig<T> {
-  name: ReactNode
+  name: string
+  icon?: ReactNode
   shortName?: ReactNode
   alignRight?: true
   alignCenter?: true
@@ -28,6 +30,7 @@ interface SingleColumnConfig<T> {
   idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
+  sortBy?: string[]
 }
 
 export interface GroupedColumnConfig<T> {
@@ -195,12 +198,22 @@ function ColumnHeader<T>(props: {
             props.column.alignCenter && 'justify-center',
           )}
         >
-          <span className={cx(props.column.shortName && 'hidden md:block')}>
-            {props.column.name}
-          </span>
-          {props.column.shortName && (
-            <span className="md:hidden">{props.column.shortName}</span>
+          {props.column.sortBy && props.column.sortBy.length !== 0 && (
+            <SortingArrows
+              order={props.column.sortBy}
+              name={props.column.name}
+            />
           )}
+          <div className="flex items-center gap-1">
+            {props.column.icon}
+            <span className={cx(props.column.shortName && 'hidden md:block')}>
+              {props.column.name}
+            </span>
+            {props.column.shortName && (
+              <span className="md:hidden">{props.column.shortName}</span>
+            )}{' '}
+          </div>
+
           {props.column.tooltip && (
             <span
               className="Tooltip -translate-y-px md:translate-y-0"

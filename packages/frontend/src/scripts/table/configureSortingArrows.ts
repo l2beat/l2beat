@@ -1,0 +1,165 @@
+import { makeQuery } from '../query'
+import { setQueryParams } from '../utils/setQueryParams'
+
+type State = 'asc' | 'desc' | null
+
+interface SortingArrowsElement {
+  node: HTMLElement
+  order: string[]
+  name: string
+  state: State
+  setState: (state: State) => void
+  toggleState: () => State
+}
+
+let previousSelected: SortingArrowsElement | null = null
+
+export function configureSortingArrows() {
+  const { $$ } = makeQuery(document.body)
+  const tables = $$('[data-role="table"]')
+  const searchParams = new URLSearchParams(window.location.search)
+  const sortBy = searchParams.get('sortBy')
+  const sortOrder = searchParams.get('sortOrder')
+  const queryParams =
+    sortBy && sortOrder ? { sortBy, state: sortOrder as State } : undefined
+
+  tables.forEach((table) => {
+    const { $$ } = makeQuery(table)
+    const sortingArrowsElements = $$('[data-role="sorting-arrows"]')
+    const defaultOrder = $$('tr[data-slug]').map((row) => {
+      const slug = row.getAttribute('data-slug')
+      if (!slug) {
+        throw new Error('No slug found')
+      }
+
+      return slug
+    })
+    sortingArrowsElements.forEach((sortingArrowsElement) => {
+      const sortingArrows = getSortingArrowsElement(sortingArrowsElement)
+      configureSortingArrowsElement(
+        table,
+        sortingArrows,
+        defaultOrder,
+        queryParams,
+      )
+    })
+  })
+
+  return
+}
+
+function configureSortingArrowsElement(
+  table: HTMLElement,
+  sortingArrows: SortingArrowsElement,
+  defaultOrder: string[],
+  queryParams?: {
+    name: string
+    state: State
+  },
+) {
+  if (sortingArrows.name === queryParams?.name) {
+    orderRows(table, sortingArrows.order, queryParams.state, defaultOrder)
+    sortingArrows.setState(queryParams.state)
+    previousSelected = sortingArrows
+  }
+
+  sortingArrows.node.addEventListener('click', () => {
+    const currentState = sortingArrows.toggleState()
+    orderRows(table, sortingArrows.order, currentState, defaultOrder)
+
+    if (previousSelected && previousSelected !== sortingArrows) {
+      previousSelected.setState(null)
+    }
+    previousSelected = sortingArrows
+  })
+}
+
+function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
+  const name = element.getAttribute('data-name')
+  const order = element.getAttribute('data-order')
+  const state = element.getAttribute('data-state')
+
+  if (!name || !order) {
+    throw new Error('No name or order found')
+  }
+  const setState = (state: State) => {
+    if (!state) {
+      element.removeAttribute('data-state')
+      return
+    }
+    element.setAttribute('data-state', state)
+  }
+
+  const getNextState = (currentState: State): State => {
+    if (currentState === 'desc') {
+      return null
+    }
+
+    if (currentState === 'asc') {
+      return 'desc'
+    }
+
+    return 'asc'
+  }
+
+  const toggleState = () => {
+    const searchParams = new URLSearchParams(window.location.search)
+    const name = element.getAttribute('data-name')
+    const currentState = element.getAttribute('data-state') as State
+    if (!name) {
+      throw new Error('No name found')
+    }
+    const nextState = getNextState(currentState)
+
+    if (nextState) {
+      searchParams.set('sortBy', name)
+      searchParams.set('sortOrder', nextState)
+    } else {
+      searchParams.delete('sortBy')
+      searchParams.delete('sortOrder')
+    }
+
+    setQueryParams(searchParams)
+    setState(nextState)
+    return nextState
+  }
+
+  return {
+    node: element,
+    name,
+    order: order.split(','),
+    state: state as State,
+    setState,
+    toggleState,
+  }
+}
+
+function orderRows(
+  table: HTMLElement,
+  order: string[],
+  state: State,
+  defaultOrder: string[],
+) {
+  const { $, $$ } = makeQuery(table)
+
+  const rows = $$('tbody tr[data-slug]')
+  const sortedOrder =
+    state === 'asc'
+      ? order
+      : state === 'desc'
+      ? [...order].reverse()
+      : defaultOrder
+
+  const sortedRows = sortedOrder
+    .map((slug) => {
+      const row = rows.find((r) => r.getAttribute('data-slug') === slug)
+      if (!row) {
+        return undefined
+      }
+      return row
+    })
+    .filter(Boolean) as HTMLElement[]
+
+  const tableBody = $('tbody')
+  tableBody.replaceChildren(...sortedRows)
+}

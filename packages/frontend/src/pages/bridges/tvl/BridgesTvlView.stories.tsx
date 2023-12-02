@@ -4,8 +4,8 @@ import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../.storybook/modes'
 import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
-import { configureTables } from '../../../scripts/configureTables'
 import { configureTabs } from '../../../scripts/configureTabs'
+import { configureTables } from '../../../scripts/table/configureTables'
 import { BridgesTvlView } from './BridgesTvlView'
 
 const meta = {

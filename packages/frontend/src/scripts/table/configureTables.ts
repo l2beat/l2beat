@@ -1,4 +1,5 @@
-import { makeQuery } from './query'
+import { makeQuery } from '../query'
+import { reorderIndexes } from './rerenderIndexes'
 
 type TableState = 'empty' | null
 
@@ -16,7 +17,7 @@ function onLoad(table: HTMLElement) {
   const rows = $$('tbody tr[data-slug]')
   const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
 
-  const visibleRowsLength = rerenderIndexes(visibleRows)
+  const visibleRowsLength = reorderIndexes(visibleRows)
   if (parentElement && isInsideTabs) {
     rerenderTabCountBadge(parentElement.id, visibleRowsLength)
   }
@@ -40,7 +41,7 @@ function rerenderRows(table: HTMLElement, slugs?: string[]) {
   rows.forEach((row) => manageRowVisiblity(row, slugs))
 
   const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
-  return rerenderIndexes(visibleRows)
+  return reorderIndexes(visibleRows)
 }
 
 function manageRowVisiblity(row: HTMLElement, slugs?: string[]) {
@@ -63,19 +64,6 @@ function rerenderTabCountBadge(tabId: string, visibleRowsLength: number) {
     throw new Error('No tabBadgeCount found')
   }
   tabBadgeCount.innerHTML = `${visibleRowsLength}`
-}
-
-function rerenderIndexes(visibleRows: HTMLElement[]) {
-  visibleRows.forEach((r, index) => {
-    const indexCell = r.querySelector('[data-role="index-cell"]')
-    if (!indexCell) {
-      console.error('Programming error: no index cell found', r)
-      return
-    }
-    indexCell.innerHTML = `${index + 1}`
-  })
-
-  return visibleRows.length
 }
 
 function setTableState(table: HTMLElement, state: TableState) {

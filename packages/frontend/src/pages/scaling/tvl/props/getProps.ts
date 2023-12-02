@@ -20,7 +20,10 @@ export function getProps(
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
-
+  const x = [...included]
+    .sort((a, b) => a.display.name.localeCompare(b.display.name))
+    .map((x) => x.display.slug)
+  console.log(x)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
