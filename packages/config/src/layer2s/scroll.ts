@@ -403,6 +403,18 @@ export const scroll: Layer2 = {
   ],
   milestones: [
     {
+      name: 'Bridged USDC Standard for Scroll',
+      link: 'https://twitter.com/Scroll_ZKP/status/1726965200556044402',
+      date: '2023-11-21T00:00:00.00Z',
+      description: 'This new contract standard introduces a significant composability upgrade that enhances user security and removes liquidity fragmentation for USDC on Scroll.',
+    },
+    {
+      name: 'Scroll Origin NFT',
+      link: 'https://twitter.com/scroll_zkp/status/1717527880539000849',
+      date: '2023-10-26T00:00:00.00Z',
+      description: 'Scroll Origins, an NFT mint to celebrate our earliest builders who have been a part of our journey from the beginning.',
+    },
+    {
       name: 'Scroll official launch',
       link: 'https://x.com/Scroll_ZKP/status/1714286874020528554',
       date: '2023-10-17T00:00:00.00Z',
