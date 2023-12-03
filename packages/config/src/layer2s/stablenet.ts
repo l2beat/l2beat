@@ -11,7 +11,7 @@ export const stablenet: Layer2 = {
     name: 'StableNet',
     slug: 'stablenet',
     description:
-      "StableNet is an Ethereum L2 network powered by Lumoz utilizing Polygon CDK & Celestia DA.",
+      'StableNet is an Ethereum L2 network powered by Lumoz utilizing Polygon CDK & Celestia DA.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'NotApplicable',
