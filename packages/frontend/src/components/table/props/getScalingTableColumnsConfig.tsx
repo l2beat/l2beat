@@ -461,7 +461,7 @@ export function getScalingLivenessColumnsConfig() {
               <LivenessDurationTimeRangeCell
                 data={project.batchSubmissions}
                 project={project}
-                dataType="txDataSubmissions"
+                dataType="batchSubmissions"
               />
             )
           },
