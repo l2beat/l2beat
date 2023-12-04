@@ -4,7 +4,8 @@
   "name": "base",
   "initialAddresses": [
     "0x608d94945A64503E642E6370Ec598e519a2C1E53",
-    "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+    "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84",
+    "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72"
   ],
   "names": {
     "0x3154Cf16ccdb4C6d922629664174b904d80F2C35": "L1StandardBridge",
@@ -18,7 +19,10 @@
     "0x73a79Fab69143498Ed3712e519A88a918e1f4072": "SystemConfig",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig",
     "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": "GnosisSafe", // member of OptimismMultisig
-    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "AdminMultisig"
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "AdminMultisig",
+    "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72": "wstETHEscrow",
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
+    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig"
   },
   "overrides": {
     "OptimismPortal": {
@@ -73,6 +77,20 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "GnosisSafe": {
+      "ignoreDiscovery": true
+    },
+    "wstETHEscrow": {
+      "ignoreRelatives": ["l2Token", "l1Token"],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "wstETHEscrowAdmin": {
+      "ignoreDiscovery": true
+    },
+    "LidoEmergencyBrakeMultisig": {
       "ignoreDiscovery": true
     }
   }
