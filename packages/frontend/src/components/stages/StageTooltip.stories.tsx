@@ -1,4 +1,3 @@
-import { StageConfig } from '@l2beat/config'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
@@ -27,21 +26,98 @@ const meta: Meta<typeof TooltipComponent> = {
 export default meta
 type Story = StoryObj<typeof TooltipComponent>
 
-const item: StageConfig = {
-  stage: 'Stage 1',
-  missing: {
-    nextStage: 'Stage 2',
-    requirements: ['A requirement'],
-  },
-  summary: [],
-}
-
-export const Tooltip: Story = {
+export const Primary: Story = {
   render: () => (
     <div className="m-4 ml-32">
       <span
         className="Tooltip inline-block"
-        title={renderToStaticMarkup(<StageTooltipComponent item={item} />)}
+        title={renderToStaticMarkup(
+          <StageTooltipComponent
+            stageConfig={{
+              stage: 'Stage 1',
+              missing: {
+                nextStage: 'Stage 2',
+                requirements: ['A requirement'],
+              },
+              message: undefined,
+              summary: [],
+            }}
+          />,
+        )}
+        data-tooltip-big
+      >
+        <span>Element with tooltip</span>
+      </span>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    // Wait for the tooltip to appear
+    await new Promise((resolve) => setTimeout(resolve, 200))
+    await waitFor(async () => {
+      await userEvent.hover(canvas.getByText('Element with tooltip'))
+    })
+  },
+}
+
+export const WithWarning: Story = {
+  render: () => (
+    <div className="m-4 ml-32">
+      <span
+        className="Tooltip inline-block"
+        title={renderToStaticMarkup(
+          <StageTooltipComponent
+            stageConfig={{
+              stage: 'Stage 0',
+              missing: {
+                nextStage: 'Stage 1',
+                requirements: ['A requirement'],
+              },
+              message: {
+                type: 'warning',
+                text: 'Warning text',
+              },
+              summary: [],
+            }}
+          />,
+        )}
+        data-tooltip-big
+      >
+        <span>Element with tooltip</span>
+      </span>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    // Wait for the tooltip to appear
+    await new Promise((resolve) => setTimeout(resolve, 200))
+    await waitFor(async () => {
+      await userEvent.hover(canvas.getByText('Element with tooltip'))
+    })
+  },
+}
+
+export const WithUnderReview: Story = {
+  render: () => (
+    <div className="m-4 ml-32">
+      <span
+        className="Tooltip inline-block"
+        title={renderToStaticMarkup(
+          <StageTooltipComponent
+            stageConfig={{
+              stage: 'Stage 0',
+              missing: {
+                nextStage: 'Stage 1',
+                requirements: ['A requirement'],
+              },
+              message: {
+                type: 'underReview',
+                text: 'Under review text',
+              },
+              summary: [],
+            }}
+          />,
+        )}
         data-tooltip-big
       >
         <span>Element with tooltip</span>

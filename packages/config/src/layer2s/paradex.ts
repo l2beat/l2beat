@@ -2,6 +2,7 @@ import {
   EthereumAddress,
   formatLargeNumberShared,
   ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -91,6 +92,22 @@ export const paradex: Layer2 = {
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
     ],
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+          ),
+          selector: '0x77552641',
+          functionSignature:
+            'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
+          sinceTimestamp: new UnixTime(1689850631),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

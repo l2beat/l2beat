@@ -88,9 +88,11 @@ function typeToDisplayType(
 ) {
   switch (anomaly.type) {
     case 'DA':
-      return 'BATCH SUBMISSION'
+      return 'TX DATA SUBMISSION'
     case 'STATE':
       return 'STATE UPDATE'
+    case 'PROOF':
+      return 'PROOF SUBMISSION'
     default:
       assertUnreachable(anomaly.type)
   }

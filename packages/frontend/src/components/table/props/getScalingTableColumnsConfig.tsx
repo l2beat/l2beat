@@ -66,9 +66,8 @@ export function getActiveScalingTvlColumnsConfig() {
       name: 'Stage',
       idHref: 'stage' as const,
       tooltip: 'Rollup stage based on its features and maturity.',
-      alignCenter: true as const,
       getValue: (project: ScalingTvlViewEntry) => (
-        <StageCell item={project.stage} />
+        <StageCell stageConfig={project.stage} />
       ),
     },
     {
@@ -469,7 +468,7 @@ export function getScalingLivenessColumnsConfig() {
         },
         {
           name: 'State updates',
-          tooltip: 'The longest period of time between batch submissions',
+          tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) => {
             return (
               <LivenessDurationTimeRangeCell

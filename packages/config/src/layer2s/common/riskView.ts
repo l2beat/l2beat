@@ -162,17 +162,24 @@ export function UPGRADABLE_ZKSYNC(
 
 export function UPGRADE_DELAY(
   upgradeDelay: number,
+  exitDelay?: number,
   canExit?: boolean,
+  isOptimisticDelay?: boolean,
 ): ProjectRiskViewEntry {
   const upgradeDelayString = formatSeconds(upgradeDelay)
-  const canReactString =
-    canExit === false
-      ? "and users don't have enough time to react if the permissioned operator is censoring"
-      : 'but users have some time to react even if the permissioned operator is censoring'
+  const exitDelayString =
+    exitDelay !== undefined ? formatSeconds(exitDelay) : ''
+  const canReactString = canExit
+    ? isOptimisticDelay === true
+      ? ` but users have some time to react even with the challenge period delay`
+      : ' but users have some time to react even if the permissioned operator is censoring'
+    : isOptimisticDelay === true
+    ? ` and users don't have enough time to react because of the ${exitDelayString} challenge period delay`
+    : " and users don't have enough time to react if the permissioned operator is censoring"
   return {
     value: `${upgradeDelayString} delay`,
     description:
-      'The code that secures the system can be changed arbitrarily ' +
+      'The code that secures the system can be changed arbitrarily' +
       canReactString +
       '.',
     sentiment: canExit === false ? 'bad' : 'warning',
@@ -182,6 +189,7 @@ export function UPGRADE_DELAY(
 function UPGRADE_DELAY_SECONDS(
   upgradeDelay: number,
   exitDelay?: number,
+  isOptimisticDelay?: boolean,
 ): ProjectRiskViewEntry {
   if (upgradeDelay < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADABLE_YES
@@ -190,9 +198,9 @@ function UPGRADE_DELAY_SECONDS(
     exitDelay !== undefined &&
     upgradeDelay - exitDelay < DANGER_DELAY_THRESHOLD_SECONDS
   ) {
-    return UPGRADE_DELAY(upgradeDelay, false)
+    return UPGRADE_DELAY(upgradeDelay, exitDelay, false, isOptimisticDelay)
   }
-  return UPGRADE_DELAY(upgradeDelay, true)
+  return UPGRADE_DELAY(upgradeDelay, exitDelay, true, isOptimisticDelay)
 }
 
 export const UPGRADABLE_NO: ProjectRiskViewEntry = {

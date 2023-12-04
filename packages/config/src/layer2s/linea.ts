@@ -118,10 +118,15 @@ export const linea: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      proofSubmissions: [],
       duplicateData: [
         {
           from: 'stateUpdates',
           to: 'batchSubmissions',
+        },
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
         },
       ],
       batchSubmissions: [],
@@ -176,7 +181,7 @@ export const linea: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,

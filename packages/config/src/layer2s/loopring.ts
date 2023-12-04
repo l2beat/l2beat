@@ -96,6 +96,13 @@ export const loopring: Layer2 = {
       callsPerMinute: 240,
     },
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {

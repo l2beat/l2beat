@@ -227,6 +227,66 @@ describe(LivenessRepository.name, () => {
         ]
         expect(result).toEqualUnsorted(expected)
       })
+
+      it('return filtered records', async () => {
+        await repository.deleteAll()
+        const NEW_DATA = [
+          {
+            timestamp: START.add(-4, 'hours'),
+            blockNumber: 12347,
+            txHash: '0xabcdef1234567890',
+          },
+          {
+            timestamp: START.add(-3, 'hours'),
+            blockNumber: 12347,
+            txHash: '0xabcdef1234567891',
+          },
+          {
+            timestamp: START.add(-2, 'hours'),
+            blockNumber: 12348,
+            txHash: '0xabcdef1234567892',
+          },
+          {
+            timestamp: START.add(-5, 'hours'),
+            blockNumber: 12348,
+            txHash: '0xabcdef1234567893',
+          },
+        ]
+
+        await repository.addMany(
+          NEW_DATA.map((e) => ({
+            ...e,
+            livenessConfigurationId: ids[2],
+          })),
+        )
+
+        const result = await repository.getWithTypeDistinctTimestamp(
+          LIVENESS_CONFIGS[2].projectId,
+        )
+
+        const type = LIVENESS_CONFIGS[2].type
+
+        const expected = [
+          {
+            timestamp: NEW_DATA[2].timestamp,
+            type,
+          },
+          {
+            timestamp: NEW_DATA[1].timestamp,
+            type,
+          },
+          {
+            timestamp: NEW_DATA[0].timestamp,
+            type,
+          },
+          {
+            timestamp: NEW_DATA[3].timestamp,
+            type,
+          },
+        ]
+
+        expect(result).toEqual(expected)
+      })
     },
   )
 })

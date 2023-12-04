@@ -70,6 +70,7 @@ export class LivenessRepository extends BaseRepository {
       .select('l.timestamp', 'c.type', 'c.project_id')
       .where('c.project_id', projectId.toString())
       .distinct('l.timestamp')
+      .orderBy('l.timestamp', 'desc')
 
     return rows.map(toRecordWithTimestampAndType)
   }

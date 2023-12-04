@@ -312,6 +312,12 @@ export const arbitrum: Layer2 = {
         description:
           'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+      }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
@@ -329,6 +335,7 @@ export const arbitrum: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'functionCall',

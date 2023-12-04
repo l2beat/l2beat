@@ -2,7 +2,7 @@ import { LivenessDataPoint, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 
 import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
-import { GroupedByType } from './groupByProjectIdAndType'
+import { GroupedByType } from './groupByType'
 
 export type LivenessRecordWithInterval = Omit<
   LivenessRecordWithProjectIdAndType,
@@ -49,12 +49,16 @@ export function calculateIntervalWithAverages(
       stateUpdates: {
         records: Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[]
       }
+      proofSubmissions: {
+        records: Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[]
+      }
     }
   >,
 ) {
   const result: Dictionary<{
     batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
     stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+    proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
   }> = {}
   for (const project in records) {
     const projectRecords = records[project]
@@ -66,9 +70,11 @@ export function calculateIntervalWithAverages(
 export function calcIntervalWithAvgsPerProject({
   batchSubmissions,
   stateUpdates,
+  proofSubmissions,
 }: GroupedByType): {
   batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
   stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+  proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
 } {
   calculateIntervals(batchSubmissions.records)
   const batchSubmissionsWithIntervals = batchSubmissions.records
@@ -76,9 +82,13 @@ export function calcIntervalWithAvgsPerProject({
   calculateIntervals(stateUpdates.records)
   const stateUpdatesWithIntervals = stateUpdates.records
 
+  calculateIntervals(proofSubmissions.records)
+  const proofSubmissionsWithIntervals = proofSubmissions.records
+
   return {
     batchSubmissions: calculateDetailedAverages(batchSubmissionsWithIntervals),
     stateUpdates: calculateDetailedAverages(stateUpdatesWithIntervals),
+    proofSubmissions: calculateDetailedAverages(proofSubmissionsWithIntervals),
   }
 }
 

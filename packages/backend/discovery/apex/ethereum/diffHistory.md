@@ -1,3 +1,25 @@
+# Diff at Thu, 30 Nov 2023 16:11:29 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: master@86509954e727fb4deae9efbdf805e6bb714a43c5
+
+## Description
+
+Upgrade delay for USDT StarkEx has been changed from 0 to 14 days.
+
+## Watched changes
+
+```diff
+    contract StarkExchangeUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+      upgradeability.upgradeDelay:
+-        0
++        1209600
+      values.getUpgradeActivationDelay:
+-        0
++        1209600
+    }
+```
+
 # Diff at Thu, 23 Nov 2023 15:27:54 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
