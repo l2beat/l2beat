@@ -1,4 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
+
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
