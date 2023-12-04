@@ -85,7 +85,7 @@ export const linea: Layer2 = {
       websites: ['https://linea.build/'],
       apps: [],
       documentation: ['https://docs.linea.build/'],
-      explorers: ['https://explorer.linea.build/'],
+      explorers: ['https://explorer.linea.build/', 'https://linea.l2scan.co/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/LineaBuild',
