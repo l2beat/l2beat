@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.25.1
+
+### Patch Changes
+
+- Fix array handler undetermistic indices
+
 ## 0.25.0
 
 ### Minor Changes

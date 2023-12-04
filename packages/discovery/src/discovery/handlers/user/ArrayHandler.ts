@@ -87,13 +87,18 @@ export class ArrayHandler implements ClassicHandler {
             }
           }
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          value.push(current.value!)
+          return { field: this.field, value: current.value! }
         }),
       )
-      if (results.some((r) => r?.error)) {
+      if (results.some((r) => r.error)) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const errors = results.filter((r) => r?.error).map((r) => r!.error)
+        const errors = results.filter((r) => r.error).map((r) => r.error)
         return { field: this.field, error: errors.join(',') }
+      }
+
+      for (const result of results) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        value.push(result.value!)
       }
     } else {
       for (let i = startIndex; i < maxLength + startIndex; i++) {

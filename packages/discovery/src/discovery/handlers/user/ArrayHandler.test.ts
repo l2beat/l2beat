@@ -419,6 +419,43 @@ describe(ArrayHandler.name, () => {
         ignoreRelative: undefined,
       })
     })
+    it('returns correct order of indices', async () => {
+      const owners = new Array(10).fill(0).map(() => EthereumAddress.random())
+
+      const provider = mockObject<DiscoveryProvider>({
+        async call(passedAddress, data) {
+          expect(passedAddress).toEqual(address)
+          // simulate random order of responses
+          if (Math.random() > 0.5) {
+            await new Promise((resolve) => setTimeout(resolve, 0))
+          }
+          const index = data.get(35)
+          return Bytes.fromHex('00'.repeat(12)).concat(
+            Bytes.fromHex(owners[index]!.toString()),
+          )
+        },
+      })
+
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method, indices: [0, 2, 3, 4, 5, 6] },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      expect(result).toEqual({
+        field: 'owners',
+        value: [
+          owners[0],
+          owners[2],
+          owners[3],
+          owners[4],
+          owners[5],
+          owners[6],
+        ].map((x) => x!.toString()),
+        ignoreRelative: undefined,
+      })
+    })
 
     it('resolves the "indices" field', async () => {
       const provider = mockObject<DiscoveryProvider>({
