@@ -1,4 +1,5 @@
 import { Layer2, StageConfig } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 
 import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
@@ -14,6 +15,8 @@ export interface ScalingTvlViewEntry {
   isVerified?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
+  isLayer3?: boolean
+  hostChain?: ProjectId
   tvl?: string
   tvlTooltip?: string
   tvlBreakdown?: TVLBreakdownProps

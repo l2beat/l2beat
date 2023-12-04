@@ -1,6 +1,4 @@
+import { Layer2 } from '../layer2s'
 import { deri } from './deri'
-import { Layer3 } from './types'
 
-export * from './types'
-
-export const layer3s: Layer3[] = [deri]
+export const layer3s: Layer2[] = [deri]

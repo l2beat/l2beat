@@ -39,7 +39,7 @@ function getScalingTvlViewEntry(
   let stats: TvlStats | undefined
 
   if (!apiProject) {
-    if (!project.isUpcoming) {
+    if (!project.isUpcoming && !project.isLayer3) {
       throw new Error(`Project ${project.display.name} is missing in api`)
     }
   } else {
@@ -57,6 +57,8 @@ function getScalingTvlViewEntry(
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
+    isLayer3: project.isLayer3,
+    hostChain: project.hostChain,
     tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     tvlBreakdown:
