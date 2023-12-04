@@ -53,6 +53,7 @@ export const scroll: Layer2 = {
         'https://blockscout.scroll.io',
         'https://scroll.unifra.xyz/',
         'https://www.ondora.xyz/network/scroll',
+        'https://scroll.l2scan.co/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',
