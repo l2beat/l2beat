@@ -19,18 +19,18 @@ export interface EtherscanUnsupportedMethods {
 }
 
 export class EtherscanLikeClient {
-  private readonly rateLimiter = new RateLimiter({
+  protected readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
-  private readonly timeoutMs = 20_000
+  protected readonly timeoutMs = 20_000
 
   constructor(
-    private readonly httpClient: HttpClient,
-    private readonly url: string,
-    private readonly apiKey: string,
-    private readonly minTimestamp: UnixTime,
-    private readonly unsupportedMethods: EtherscanUnsupportedMethods = {},
-    private readonly logger = Logger.SILENT,
+    protected readonly httpClient: HttpClient,
+    protected readonly url: string,
+    protected readonly apiKey: string,
+    protected readonly minTimestamp: UnixTime,
+    protected readonly unsupportedMethods: EtherscanUnsupportedMethods = {},
+    protected readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
@@ -190,7 +190,7 @@ export class EtherscanLikeClient {
     return etherscanResponse.result
   }
 
-  private recordError(
+  protected recordError(
     module: string,
     action: string,
     timeMs: number,
@@ -200,7 +200,7 @@ export class EtherscanLikeClient {
   }
 }
 
-function tryParseEtherscanResponse(
+export function tryParseEtherscanResponse(
   text: string,
 ): EtherscanResponse | undefined {
   try {

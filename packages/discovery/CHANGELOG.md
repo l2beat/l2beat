@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.26.0
+
+### Minor Changes
+
+- Downgrade Etherscanlike Client's props privacy scope to enable easy class extension
+
 ## 0.25.1
 
 ### Patch Changes
