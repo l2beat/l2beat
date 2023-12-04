@@ -1,3 +1,4 @@
+import { LivenessApiProject } from '@l2beat/shared-pure'
 import classNames from 'classnames'
 import React from 'react'
 
@@ -6,7 +7,7 @@ import { RoundedWarningIcon } from '../icons/symbols/RoundedWarningIcon'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
-  dataType?: 'txDataSubmissions' | 'proofSubmissions' | 'stateUpdates'
+  dataType?: Exclude<keyof LivenessApiProject, 'anomalies'>
   project?: ScalingLivenessViewEntry
   tooltip?: string
   showOptimisticRollupWarning?: boolean
@@ -25,7 +26,7 @@ export function LivenessDurationCell(props: {
 
   if (!props.durationInSeconds) {
     const tooltipText =
-      props.dataType === 'txDataSubmissions' &&
+      props.dataType === 'batchSubmissions' &&
       props.project?.dataAvailabilityMode === 'StateDiffs'
         ? 'State diff rollups do not post batches of transactions to the L1.'
         : props.dataType === 'proofSubmissions' &&

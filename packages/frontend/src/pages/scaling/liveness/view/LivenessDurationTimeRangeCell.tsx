@@ -1,4 +1,8 @@
-import { LivenessDataPoint, LivenessDetails } from '@l2beat/shared-pure'
+import {
+  LivenessApiProject,
+  LivenessDataPoint,
+  LivenessDetails,
+} from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -9,7 +13,7 @@ import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
 interface Props {
   data: LivenessDetails | undefined
   project: ScalingLivenessViewEntry
-  dataType: 'txDataSubmissions' | 'proofSubmissions' | 'stateUpdates'
+  dataType: Exclude<keyof LivenessApiProject, 'anomalies'>
 }
 
 export function LivenessDurationTimeRangeCell({
