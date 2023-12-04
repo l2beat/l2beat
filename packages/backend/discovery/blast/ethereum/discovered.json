@@ -1,7 +1,7 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 18618852,
+  "blockNumber": 18713779,
   "configHash": "0xda2a0607814971e6460ec8d2cfb3952fffbb6d66163fb34eba09eadc1adb0fca",
   "version": 3,
   "contracts": [
@@ -26,10 +26,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "13246672514596028198483",
-        "totalETHShares": "13246672514596060368405",
-        "totalUSDBalanceNoUpdate": "4710432657630032230201555",
-        "totalUSDShares": "4710325308421320458668589",
+        "totalETHBalance": "286395065405752297873364",
+        "totalETHShares": "285989722046565587161831",
+        "totalUSDBalanceNoUpdate": "90091490395226940198432923",
+        "totalUSDShares": "89930253867303394596970752",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -49,14 +49,14 @@
         "domainSeparator": "0x47ef22e6b97dff365f80f221989a28eb2d460c7c9933f9980ba4327ce2dad7d3",
         "getChainId": 1,
         "getOwners": [
-          "0x59cDa1e234505D460c972e58452c0A6d8e14a5Ce",
+          "0x49d495DE356259458120bfd7bCB463CFb6D6c6BA",
           "0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8",
           "0x1f97306039530ADB4173C3786e86fab5e6b90F41",
           "0x6a356C0EAA560f00127Adf5108FfAf503b9f1e11",
           "0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF"
         ],
         "getThreshold": 3,
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -65,7 +65,7 @@
   "eoas": [
     "0x1f97306039530ADB4173C3786e86fab5e6b90F41",
     "0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF",
-    "0x59cDa1e234505D460c972e58452c0A6d8e14a5Ce",
+    "0x49d495DE356259458120bfd7bCB463CFb6D6c6BA",
     "0x6a356C0EAA560f00127Adf5108FfAf503b9f1e11",
     "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
     "0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8"
