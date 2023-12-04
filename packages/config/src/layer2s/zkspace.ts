@@ -149,7 +149,7 @@ export const zkspace: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,
