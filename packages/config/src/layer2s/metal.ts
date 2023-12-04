@@ -5,10 +5,10 @@ import { Layer2 } from './types'
 export const metal: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
-  id: ProjectId('Metal'),
+  id: ProjectId('metal'),
   display: {
     name: 'Metal',
-    slug: 'Metal',
+    slug: 'metal',
     description:
       'Metal L2 is an upcoming scalling solution by Metallicus. It is powered by the OP Stack.',
     purpose: 'Universal',
