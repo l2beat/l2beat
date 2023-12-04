@@ -96,7 +96,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
-        selector: '0x0000',
+        selector: '0x9b3b76cc',
         type: 'STATE',
         sinceTimestamp,
         livenessConfigurationId: 1,
@@ -106,7 +106,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         projectId: ProjectId('project2'),
         address: ADDRESS_1,
-        selector: '0x0000',
+        selector: '0x9b3b76cc',
         type: 'DA',
         sinceTimestamp,
         livenessConfigurationId: 2,

@@ -27,16 +27,22 @@ export function transformFunctionCallsQueryResult(
         livenessConfigurationId: config.livenessConfigurationId,
       })
     } else {
-      // Should be it hardcoded here?
       const fnSignature =
         'verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)'
       const i = new utils.Interface([`function ${fnSignature}`])
       const decodedInput = i.decodeFunctionData(fnSignature, r.input)
       const hashes = (decodedInput[2] as bigint[]).map((n) => n.toString())
 
+      const foundConfigs: LivenessRecord[] = []
+
       configsWithProgramHash.forEach((config) => {
-        if (config.programHash && hashes.includes(config.programHash)) {
-          results.push({
+        if (
+          r.to_address === config.address &&
+          r.input.startsWith(config.selector) &&
+          config.programHash &&
+          hashes.includes(config.programHash)
+        ) {
+          foundConfigs.push({
             timestamp: r.block_timestamp,
             blockNumber: r.block_number,
             txHash: r.transaction_hash,
@@ -44,6 +50,13 @@ export function transformFunctionCallsQueryResult(
           })
         }
       })
+
+      assert(
+        foundConfigs.length > 0,
+        'Programmer error: foundConfigs should not be empty',
+      )
+
+      results.push(...foundConfigs)
     }
   })
   return results
