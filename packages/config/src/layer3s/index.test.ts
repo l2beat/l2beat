@@ -13,8 +13,9 @@ import {
   ProjectTechnologyChoice,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { FunctionCallParams, Layer2Technology, NUGGETS } from '../layer2s'
 import { checkRisk } from '../test/helpers'
-import { FunctionCallParams, layer3s, Layer3Technology, NUGGETS } from './index'
+import { layer3s } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -221,7 +222,7 @@ describe('layer2s', () => {
       for (const layer3 of layer3s) {
         describe(layer3.display.name, () => {
           type Key = Exclude<
-            keyof Layer3Technology,
+            keyof Layer2Technology,
             'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 

@@ -1,18 +1,19 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../layer2s'
 import { Layer3 } from './types'
 
 export const deri: Layer3 = {
   isUpcoming: false,
   isUnderReview: true,
   isArchived: false,
-  type: 'layer3',
+  type: 'layer2',
+  isLayer3: true,
   id: ProjectId('deri'),
+  hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Deri',
     slug: 'deri',
-    hostChain: ProjectId('arbitrum'),
     description:
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
     purpose: 'DeFi protocol',
