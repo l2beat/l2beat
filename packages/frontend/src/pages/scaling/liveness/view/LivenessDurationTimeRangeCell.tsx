@@ -9,7 +9,7 @@ import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
 interface Props {
   data: LivenessDetails | undefined
   project: ScalingLivenessViewEntry
-  dataType: 'txDataSubmissions' | 'stateUpdates'
+  dataType: 'txDataSubmissions' | 'proofSubmissions' | 'stateUpdates'
 }
 
 export function LivenessDurationTimeRangeCell({
@@ -30,6 +30,7 @@ export function LivenessDurationTimeRangeCell({
               <Tooltip label="30-day intervals" data={data?.last30Days} />,
             )}
             showOptimisticRollupWarning={showOptimisticRollupWarning}
+            dataType={dataType}
           />
         }
         last90Days={
@@ -40,6 +41,7 @@ export function LivenessDurationTimeRangeCell({
               <Tooltip label="90-day intervals" data={data?.last90Days} />,
             )}
             showOptimisticRollupWarning={showOptimisticRollupWarning}
+            dataType={dataType}
           />
         }
         max={
@@ -50,6 +52,7 @@ export function LivenessDurationTimeRangeCell({
               <Tooltip label="Max-day intervals" data={data?.allTime} />,
             )}
             showOptimisticRollupWarning={showOptimisticRollupWarning}
+            dataType={dataType}
           />
         }
       />

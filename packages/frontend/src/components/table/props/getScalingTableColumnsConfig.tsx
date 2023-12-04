@@ -454,7 +454,7 @@ export function getScalingLivenessColumnsConfig() {
       ),
       columns: [
         {
-          name: 'Tx data submissions',
+          name: 'Tx data\nsubmissions',
           tooltip: 'How often transaction batches are submitted to the L1',
           getValue: (project) => {
             return (
@@ -467,7 +467,20 @@ export function getScalingLivenessColumnsConfig() {
           },
         },
         {
-          name: 'State updates',
+          name: 'Proof\nsubmissions',
+          tooltip: 'How often validity proofs are submitted to the L1',
+          getValue: (project) => {
+            return (
+              <LivenessDurationTimeRangeCell
+                data={project.proofSubmissions}
+                project={project}
+                dataType="proofSubmissions"
+              />
+            )
+          },
+        },
+        {
+          name: 'State\nupdates',
           tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) => {
             return (
