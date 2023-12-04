@@ -351,7 +351,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         },
         batchSubmissions: {
           last30Days: {
-            averageInSeconds: 125,
+            averageInSeconds: 47,
             minimumInSeconds: 12,
             maximumInSeconds: 396,
           },
