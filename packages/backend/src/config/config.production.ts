@@ -214,6 +214,58 @@ export function getProductionConfig(env: Env): Config {
             'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
         },
+        {
+          ...getChainConfig(ChainId.ARBITRUM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ARBITRUM_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.AVALANCHE),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_AVALANCHE_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.BSC),
+          reorgSafeDepth: env.optionalInteger('DISCOVERY_BSC_REORG_SAFE_DEPTH'),
+        },
+        {
+          ...getChainConfig(ChainId.CELO),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_CELO_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.GNOSIS),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_GNOSIS_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.LINEA),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_LINEA_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.OPTIMISM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_OPTIMISM_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.POLYGON_POS),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_POLYGON_POS_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.POLYGON_ZKEVM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
+          ),
+        },
       ],
     },
   }
