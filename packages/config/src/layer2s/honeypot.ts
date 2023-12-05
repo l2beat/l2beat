@@ -86,7 +86,7 @@ export const honeypot: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_NO,
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(0),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
