@@ -58,6 +58,7 @@ import { taiko } from './taiko'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
+import { zkfair } from './zkfair'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -126,6 +127,7 @@ export const layer2s: Layer2[] = [
   taiko,
   x1,
   xchain,
+  zkfair,
   zkspace,
   zkswap,
   zkswap2,
