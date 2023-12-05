@@ -1,3 +1,5 @@
+import { setSortingQueryParamsByTabId } from './table/configureSortingArrows'
+
 interface TabWithContent {
   tab: HTMLAnchorElement
   content: HTMLElement
@@ -59,6 +61,7 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
       e.preventDefault()
       history.replaceState({}, '', tab.href)
       onTabClick(tab.id)
+      setSortingQueryParamsByTabId(tab.id)
     })
   })
 

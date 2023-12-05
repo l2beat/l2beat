@@ -12,18 +12,12 @@ interface SortingArrowsElement {
   toggleState: () => State
 }
 
-let previousSelected: SortingArrowsElement | null = null
+const tabState: Record<string, UrlState['queryParams']> = {}
 
 export function configureSortingArrows() {
   const { $$ } = makeQuery(document.body)
   const tables = $$('[data-role="table"]')
-  const searchParams = new URLSearchParams(window.location.search)
-  const sortBy = searchParams.get('sort-by')
-  const sortOrder = searchParams.get('sort-order')
-  const queryParams =
-    sortBy && sortOrder
-      ? { name: sortBy, state: sortOrder as State }
-      : undefined
+  const urlState = getUrlState()
 
   tables.forEach((table) => {
     const { $$ } = makeQuery(table)
@@ -42,7 +36,7 @@ export function configureSortingArrows() {
         table,
         sortingArrows,
         defaultOrder,
-        queryParams,
+        urlState,
       )
     })
   })
@@ -54,25 +48,33 @@ function configureSortingArrowsElement(
   table: HTMLElement,
   sortingArrows: SortingArrowsElement,
   defaultOrder: string[],
-  queryParams?: {
-    name: string
-    state: State
-  },
+  urlState: UrlState,
 ) {
-  if (sortingArrows.name === queryParams?.name) {
+  const { $$ } = makeQuery(table)
+  const otherSortingArrows = $$(
+    '[data-role="sorting-arrows"]:not([data-name="' +
+      sortingArrows.name +
+      '"])',
+  ).map((element) => getSortingArrowsElement(element))
+  const { queryParams, hash } = urlState
+  const parentElement = table.parentElement
+  const isInsideTabs = parentElement?.classList.contains('TabsContent')
+  if (sortingArrows.name === queryParams?.name && parentElement?.id === hash) {
     orderRows(table, sortingArrows.order, queryParams.state, defaultOrder)
     sortingArrows.setState(queryParams.state)
-    previousSelected = sortingArrows
+    tabState[parentElement.id] = queryParams
   }
 
   sortingArrows.node.addEventListener('click', () => {
     const currentState = sortingArrows.toggleState()
     orderRows(table, sortingArrows.order, currentState, defaultOrder)
-
-    if (previousSelected && previousSelected !== sortingArrows) {
-      previousSelected.setState(null)
+    otherSortingArrows.forEach((sortingArrow) => sortingArrow.setState(null))
+    if (isInsideTabs && parentElement) {
+      tabState[parentElement.id] = {
+        name: sortingArrows.name,
+        state: currentState,
+      }
     }
-    previousSelected = sortingArrows
   })
 }
 
@@ -164,4 +166,40 @@ function orderRows(
 
   const tableBody = $('tbody')
   tableBody.replaceChildren(...sortedRows)
+}
+
+interface UrlState {
+  queryParams?: {
+    name: string
+    state: State
+  }
+  hash: string
+}
+
+function getUrlState(): UrlState {
+  const searchParams = new URLSearchParams(window.location.search)
+  const sortBy = searchParams.get('sort-by')
+  const sortOrder = searchParams.get('sort-order')
+  const queryParams =
+    sortBy && sortOrder
+      ? { name: sortBy, state: sortOrder as State }
+      : undefined
+  return {
+    queryParams,
+    hash: window.location.hash.slice(1),
+  }
+}
+
+export function setSortingQueryParamsByTabId(tabId: string) {
+  const searchParams = new URLSearchParams(window.location.search)
+  const queryParams = tabState[tabId]
+  if (!queryParams || queryParams.state === null) {
+    searchParams.delete('sort-by')
+    searchParams.delete('sort-order')
+  } else {
+    searchParams.set('sort-by', queryParams.name)
+    searchParams.set('sort-order', queryParams.state)
+  }
+
+  setQueryParams(searchParams)
 }
