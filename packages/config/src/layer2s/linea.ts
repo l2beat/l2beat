@@ -1,4 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ContractValue } from '@l2beat/discovery-types'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { ProjectPermissionedAccount } from '../common'
@@ -85,7 +91,7 @@ export const linea: Layer2 = {
       websites: ['https://linea.build/'],
       apps: [],
       documentation: ['https://docs.linea.build/'],
-      explorers: ['https://explorer.linea.build/'],
+      explorers: ['https://explorer.linea.build/', 'https://linea.l2scan.co/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/LineaBuild',
@@ -259,6 +265,19 @@ export const linea: Layer2 = {
     ...discovery.getMultisigPermission(
       'AdminMultisig',
       'Admin of the Linea rollup. It can upgrade core contracts, bridges, change the verifier address, and publish blocks by effectively overriding the proof system.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('Roles'),
+      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles. ${(() => {
+        const roles = discovery.getContract('Roles')
+        assert(roles.values !== undefined)
+        const rolesCount = Object.entries(
+          roles.values.roles['roles' as keyof ContractValue],
+        ).length
+        assert(rolesCount === 0)
+
+        return 'Currently there are no additional members.'
+      })()}`,
     ),
     {
       accounts: operators,

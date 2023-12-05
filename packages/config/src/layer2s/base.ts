@@ -21,6 +21,7 @@ import {
   RISK_VIEW,
   subtractOne,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -84,7 +85,11 @@ export const base: Layer2 = {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
-      explorers: ['https://basescan.org/', 'https://base.blockscout.com/'],
+      explorers: [
+        'https://basescan.org/',
+        'https://base.blockscout.com/',
+        'https://base.l2scan.co/',
+      ],
       repositories: ['https://github.com/base-org'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',
@@ -93,6 +98,11 @@ export const base: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+    },
   },
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.BASE })),

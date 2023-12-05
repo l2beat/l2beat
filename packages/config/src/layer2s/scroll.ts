@@ -53,6 +53,7 @@ export const scroll: Layer2 = {
         'https://blockscout.scroll.io',
         'https://scroll.unifra.xyz/',
         'https://www.ondora.xyz/network/scroll',
+        'https://scroll.l2scan.co/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',
@@ -72,6 +73,12 @@ export const scroll: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        batchSubmissions:
+          'Transaction data batches that are not proven yet can be reverted.',
+      },
+    },
   },
   stage: getStage({
     stage0: {

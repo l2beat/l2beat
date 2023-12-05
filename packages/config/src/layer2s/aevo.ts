@@ -12,6 +12,7 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -45,6 +46,11 @@ export const aevo: Layer2 = {
       socialMedia: ['https://twitter.com/aevoxyz'],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+    },
   },
   config: {
     escrows: [
