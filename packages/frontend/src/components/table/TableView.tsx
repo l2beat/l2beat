@@ -169,6 +169,18 @@ function ColumnHeader<T>(props: {
     noGroupTitle: boolean
   }
 }) {
+  const title = (
+    <div className="flex items-center gap-1">
+      {props.column.icon}
+      <span className={cx(props.column.shortName && 'hidden md:block')}>
+        {props.column.name}
+      </span>
+      {props.column.shortName && (
+        <span className="md:hidden">{props.column.shortName}</span>
+      )}
+    </div>
+  )
+
   const hasPaddingRight = !props.column.noPaddingRight
   return (
     <>
@@ -198,21 +210,16 @@ function ColumnHeader<T>(props: {
             props.column.alignCenter && 'justify-center',
           )}
         >
-          {props.column.sortBy && props.column.sortBy.length !== 0 && (
+          {props.column.sortBy && props.column.sortBy.length !== 0 ? (
             <SortingArrows
               sortingOrder={props.column.sortBy}
               name={props.column.name}
-            />
+            >
+              {title}
+            </SortingArrows>
+          ) : (
+            title
           )}
-          <div className="flex items-center gap-1">
-            {props.column.icon}
-            <span className={cx(props.column.shortName && 'hidden md:block')}>
-              {props.column.name}
-            </span>
-            {props.column.shortName && (
-              <span className="md:hidden">{props.column.shortName}</span>
-            )}{' '}
-          </div>
 
           {props.column.tooltip && (
             <span
