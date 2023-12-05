@@ -1,7 +1,7 @@
 import { getSortingOrder } from '../../../../components/table/props/getSortingOrder'
 import { ActivityViewEntry, ActivityViewSortingOrder } from '../view/types'
 
-export function getScalingActivityViewOrder(
+export function getScalingActivityViewSortingOrder(
   entries: ActivityViewEntry[],
 ): ActivityViewSortingOrder {
   return {

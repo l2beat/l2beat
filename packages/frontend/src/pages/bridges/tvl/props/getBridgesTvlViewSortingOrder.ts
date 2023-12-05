@@ -1,7 +1,7 @@
 import { getSortingOrder } from '../../../../components/table/props/getSortingOrder'
 import { BridgesTvlViewEntry, BridgesTvlViewSortingOrder } from '../view/types'
 
-export function getBridgesTvlViewOrder(
+export function getBridgesTvlViewSortingOrder(
   entries: BridgesTvlViewEntry[],
 ): BridgesTvlViewSortingOrder {
   return {

@@ -6,7 +6,7 @@ import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { BridgesTvlViewProps } from '../view/BridgesTvlView'
 import { BridgesTvlViewEntry } from '../view/types'
-import { getBridgesTvlViewOrder } from './getBridgesTvlViewOrder'
+import { getBridgesTvlViewSortingOrder } from './getBridgesTvlViewSortingOrder'
 
 export function getBridgesTvlView(
   projects: (Bridge | Layer2)[],
@@ -27,7 +27,7 @@ export function getBridgesTvlView(
 
   return {
     items,
-    sortingOrder: getBridgesTvlViewOrder(items),
+    sortingOrder: getBridgesTvlViewSortingOrder(items),
   }
 }
 

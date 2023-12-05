@@ -8,7 +8,7 @@ import {
 
 import { AnomalyIndicatorEntry, ScalingLivenessViewEntry } from '../types'
 import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
-import { getScalingLivenessViewSortingOrder } from './getScalingLivenessViewOrder'
+import { getScalingLivenessViewSortingOrder } from './getScalingLivenessViewSortingOrder'
 
 export function getScalingLivenessView(
   projects: Layer2[],

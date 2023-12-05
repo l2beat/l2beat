@@ -10,7 +10,7 @@ import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange
 import { formatUSD } from '../../../../utils/utils'
 import { ScalingDetailedTvlViewEntry } from '../types'
 import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
-import { getScalingDetailedTvlViewSortingOrder } from './getScalingDetailedTvlViewOrder'
+import { getScalingDetailedTvlViewSortingOrder } from './getScalingDetailedTvlViewSortingOrder'
 
 export function getScalingDetailedTvlView(
   projects: Layer2[],

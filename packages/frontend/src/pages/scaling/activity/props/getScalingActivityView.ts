@@ -13,7 +13,7 @@ import { getTransactionCount } from '../../../../utils/activity/getTransactionCo
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { ScalingActivityViewProps } from '../view/ScalingActivityView'
 import { ActivityViewEntry } from '../view/types'
-import { getScalingActivityViewOrder } from './getScalingActivityViewOrder'
+import { getScalingActivityViewSortingOrder } from './getScalingActivityViewSortingOrder'
 
 export function getScalingActivityView(
   projects: Layer2[],
@@ -33,7 +33,7 @@ export function getScalingActivityView(
 
   return {
     items: orderedItems,
-    sortingOrder: getScalingActivityViewOrder(orderedItems),
+    sortingOrder: getScalingActivityViewSortingOrder(orderedItems),
   }
 }
 
