@@ -3,7 +3,7 @@ import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { LivenessConfigurationRow } from 'knex/types/tables'
 
-import { LivenessConfigurationIdentifier } from '../../core/liveness/types/LivenessConfigurationIdentifier'
+import { LivenessId } from '../../core/liveness/types/LivenessId'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -11,7 +11,7 @@ export interface LivenessConfigurationRecord {
   id: number
   projectId: ProjectId
   type: LivenessType
-  identifier: LivenessConfigurationIdentifier
+  identifier: LivenessId
   params: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
@@ -108,7 +108,7 @@ function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
     id: row.id,
     projectId: ProjectId(row.project_id),
     type: LivenessType(row.type),
-    identifier: LivenessConfigurationIdentifier.unsafe(row.identifier),
+    identifier: LivenessId.unsafe(row.identifier),
     params: row.params,
     sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
     untilTimestamp: row.until_timestamp

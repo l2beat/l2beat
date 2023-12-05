@@ -6,7 +6,7 @@ import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessConfigurationRecord } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessClient } from './LivenessClient'
 import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
-import { LivenessConfigurationIdentifier } from './types/LivenessConfigurationIdentifier'
+import { LivenessId } from './types/LivenessId'
 import {
   getFunctionCallQuery,
   getTransferQuery,
@@ -253,9 +253,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[0].projectId,
     type: PROJECTS[0].livenessConfig!.transfers[0].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[0].livenessConfig!.transfers[0],
-    ),
+    identifier: LivenessId(PROJECTS[0].livenessConfig!.transfers[0]),
     params: '',
     sinceTimestamp: PROJECTS[0].livenessConfig!.transfers[0].sinceTimestamp,
     untilTimestamp: PROJECTS[0].livenessConfig!.transfers[0].untilTimestamp,
@@ -264,9 +262,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[0].projectId,
     type: PROJECTS[0].livenessConfig!.transfers[1].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[0].livenessConfig!.transfers[1],
-    ),
+    identifier: LivenessId(PROJECTS[0].livenessConfig!.transfers[1]),
     params: '',
     sinceTimestamp: PROJECTS[0].livenessConfig!.transfers[1].sinceTimestamp,
     untilTimestamp: PROJECTS[0].livenessConfig!.transfers[1].untilTimestamp,
@@ -275,9 +271,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[0].projectId,
     type: PROJECTS[0].livenessConfig!.transfers[2].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[0].livenessConfig!.transfers[2],
-    ),
+    identifier: LivenessId(PROJECTS[0].livenessConfig!.transfers[2]),
     params: '',
     sinceTimestamp: PROJECTS[0].livenessConfig!.transfers[2].sinceTimestamp,
     untilTimestamp: PROJECTS[0].livenessConfig!.transfers[2].untilTimestamp,
@@ -286,9 +280,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[0].projectId,
     type: PROJECTS[0].livenessConfig!.functionCalls[0].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[0].livenessConfig!.functionCalls[0],
-    ),
+    identifier: LivenessId(PROJECTS[0].livenessConfig!.functionCalls[0]),
     params: '',
     sinceTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].sinceTimestamp,
     untilTimestamp: PROJECTS[0].livenessConfig!.functionCalls[0].untilTimestamp,
@@ -297,9 +289,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[0].projectId,
     type: PROJECTS[0].livenessConfig!.functionCalls[1].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[0].livenessConfig!.functionCalls[1],
-    ),
+    identifier: LivenessId(PROJECTS[0].livenessConfig!.functionCalls[1]),
     params: '',
     sinceTimestamp: PROJECTS[0].livenessConfig!.functionCalls[1].sinceTimestamp,
     untilTimestamp: PROJECTS[0].livenessConfig!.functionCalls[1].untilTimestamp,
@@ -308,9 +298,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[1].projectId,
     type: PROJECTS[1].livenessConfig!.transfers[0].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[1].livenessConfig!.transfers[0],
-    ),
+    identifier: LivenessId(PROJECTS[1].livenessConfig!.transfers[0]),
     params: '',
     sinceTimestamp: PROJECTS[1].livenessConfig!.transfers[0].sinceTimestamp,
     untilTimestamp: PROJECTS[1].livenessConfig!.transfers[0].untilTimestamp,
@@ -319,9 +307,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[1].projectId,
     type: PROJECTS[1].livenessConfig!.transfers[1].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[1].livenessConfig!.transfers[1],
-    ),
+    identifier: LivenessId(PROJECTS[1].livenessConfig!.transfers[1]),
     params: '',
     sinceTimestamp: PROJECTS[1].livenessConfig!.transfers[1].sinceTimestamp,
     untilTimestamp: PROJECTS[1].livenessConfig!.transfers[1].untilTimestamp,
@@ -330,9 +316,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[1].projectId,
     type: PROJECTS[1].livenessConfig!.functionCalls[0].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[1].livenessConfig!.functionCalls[0],
-    ),
+    identifier: LivenessId(PROJECTS[1].livenessConfig!.functionCalls[0]),
     params: '',
     sinceTimestamp: PROJECTS[1].livenessConfig!.functionCalls[0].sinceTimestamp,
     untilTimestamp: PROJECTS[1].livenessConfig!.functionCalls[0].untilTimestamp,
@@ -341,9 +325,7 @@ const LIVENESS_CONFIGURATIONS: LivenessConfigurationRecord[] = [
   {
     projectId: PROJECTS[1].projectId,
     type: PROJECTS[1].livenessConfig!.functionCalls[1].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[1].livenessConfig!.functionCalls[1],
-    ),
+    identifier: LivenessId(PROJECTS[1].livenessConfig!.functionCalls[1]),
     params: '',
     sinceTimestamp: PROJECTS[1].livenessConfig!.functionCalls[1].sinceTimestamp,
     untilTimestamp: PROJECTS[1].livenessConfig!.functionCalls[1].untilTimestamp,

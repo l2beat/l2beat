@@ -10,12 +10,9 @@ import { expect } from 'earl'
 
 import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessFunctionCall, LivenessTransfer } from './LivenessConfig'
-import {
-  InputType,
-  LivenessConfigurationIdentifier,
-} from './LivenessConfigurationIdentifier'
+import { InputType, LivenessId } from './LivenessId'
 
-describe(LivenessConfigurationIdentifier.name, () => {
+describe(LivenessId.name, () => {
   describe('calculates identifier for:', () => {
     it('transfer config', () => {
       const projectId = ProjectId('test')
@@ -39,9 +36,9 @@ describe(LivenessConfigurationIdentifier.name, () => {
         sinceTimestamp.toString(),
         from.toString(),
         to.toString(),
-      ]) as unknown as LivenessConfigurationIdentifier
+      ]) as unknown as LivenessId
 
-      expect(LivenessConfigurationIdentifier(config)).toEqual(expected)
+      expect(LivenessId(config)).toEqual(expected)
     })
 
     it('functionCall config', () => {
@@ -66,12 +63,12 @@ describe(LivenessConfigurationIdentifier.name, () => {
         sinceTimestamp.toString(),
         address.toString(),
         selector,
-      ]) as unknown as LivenessConfigurationIdentifier
+      ]) as unknown as LivenessId
 
-      expect(LivenessConfigurationIdentifier(config)).toEqual(expected)
+      expect(LivenessId(config)).toEqual(expected)
     })
 
-    describe('calculates LivenessConfigurationIdentifier for every project config', () => {
+    describe('calculates LivenessId for every project config', () => {
       const configs: InputType[] = []
       layer2s.forEach((project) => {
         if (project.config.liveness) {
@@ -93,13 +90,13 @@ describe(LivenessConfigurationIdentifier.name, () => {
       })
       for (const config of configs) {
         it(`${config.projectId.toString()} ${config.type}`, () => {
-          expect(LivenessConfigurationIdentifier(config)).toBeA(String)
+          expect(LivenessId(config)).toBeA(String)
         })
       }
     })
   })
 
-  describe(LivenessConfigurationIdentifier.params.name, () => {
+  describe(LivenessId.params.name, () => {
     it('transfer config', () => {
       const config = {
         projectId: ProjectId('test'),
@@ -108,7 +105,7 @@ describe(LivenessConfigurationIdentifier.name, () => {
         from: EthereumAddress.random(),
         to: EthereumAddress.random(),
       }
-      const params = LivenessConfigurationIdentifier.params(config)
+      const params = LivenessId.params(config)
 
       expect(params).toEqual({
         from: config.from.toString(),
@@ -123,7 +120,7 @@ describe(LivenessConfigurationIdentifier.name, () => {
         address: EthereumAddress.random(),
         selector: '0x12345678',
       }
-      const params = LivenessConfigurationIdentifier.params(config)
+      const params = LivenessId.params(config)
 
       expect(params).toEqual({
         address: config.address.toString(),
@@ -132,7 +129,7 @@ describe(LivenessConfigurationIdentifier.name, () => {
     })
   })
 
-  describe(LivenessConfigurationIdentifier.wasUpdated.name, () => {
+  describe(LivenessId.wasUpdated.name, () => {
     const testCases: {
       name: string
       before: UnixTime | undefined
@@ -176,7 +173,7 @@ describe(LivenessConfigurationIdentifier.name, () => {
       lastSyncedTimestamp: undefined,
       projectId: ProjectId('test'),
       type: LivenessType('STATE'),
-      identifier: LivenessConfigurationIdentifier.unsafe('test'),
+      identifier: LivenessId.unsafe('test'),
       params: JSON.stringify({}),
       sinceTimestamp: new UnixTime(0),
     }
@@ -202,9 +199,7 @@ describe(LivenessConfigurationIdentifier.name, () => {
           untilTimestamp: testCase.after,
         }
 
-        expect(
-          LivenessConfigurationIdentifier.wasUpdated(before, after),
-        ).toEqual(testCase.expected)
+        expect(LivenessId.wasUpdated(before, after)).toEqual(testCase.expected)
       })
     }
   })

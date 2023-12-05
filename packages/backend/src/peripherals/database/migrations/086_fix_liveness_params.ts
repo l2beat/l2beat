@@ -15,7 +15,7 @@ import { layer2s } from '@l2beat/config'
 import { LivenessType, notUndefined } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { LivenessConfigurationIdentifier } from '../../../core/liveness/types/LivenessConfigurationIdentifier'
+import { LivenessId } from '../../../core/liveness/types/LivenessId'
 
 export async function up(knex: Knex) {
   const transfersToUpdate = layer2s.flatMap((l2) => {
@@ -45,7 +45,7 @@ export async function up(knex: Knex) {
   })
 
   for (const config of transfersToUpdate) {
-    const identifier = LivenessConfigurationIdentifier(config)
+    const identifier = LivenessId(config)
     await knex('liveness_configuration')
       .update({
         params: JSON.stringify({
@@ -85,7 +85,7 @@ export async function down(knex: Knex) {
   })
 
   for (const config of transfersToUpdate) {
-    const identifier = LivenessConfigurationIdentifier(config)
+    const identifier = LivenessId(config)
     await knex('liveness_configuration')
       .update({
         params: JSON.stringify({

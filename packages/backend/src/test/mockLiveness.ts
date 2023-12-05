@@ -15,7 +15,7 @@ import {
   LivenessFunctionCall,
   LivenessTransfer,
 } from '../core/liveness/types/LivenessConfig'
-import { LivenessConfigurationIdentifier } from '../core/liveness/types/LivenessConfigurationIdentifier'
+import { LivenessId } from '../core/liveness/types/LivenessId'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
@@ -225,9 +225,7 @@ const CONFIGURATIONS: LivenessConfigurationRecord[] = [
     lastSyncedTimestamp: undefined,
     projectId: PROJECTS[0].projectId,
     type: PROJECTS[0].livenessConfig!.transfers[0].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[0].livenessConfig!.transfers[0],
-    ),
+    identifier: LivenessId(PROJECTS[0].livenessConfig!.transfers[0]),
     params: JSON.stringify({
       from: PROJECTS[0].livenessConfig!.transfers[0].from,
       to: PROJECTS[0].livenessConfig!.transfers[0].to,
@@ -240,9 +238,7 @@ const CONFIGURATIONS: LivenessConfigurationRecord[] = [
     lastSyncedTimestamp: undefined,
     projectId: PROJECTS[0].projectId,
     type: PROJECTS[0].livenessConfig!.functionCalls[0].type,
-    identifier: LivenessConfigurationIdentifier(
-      PROJECTS[0].livenessConfig!.functionCalls[0],
-    ),
+    identifier: LivenessId(PROJECTS[0].livenessConfig!.functionCalls[0]),
     params: JSON.stringify({
       address: PROJECTS[0].livenessConfig!.functionCalls[0].address,
       selector: PROJECTS[0].livenessConfig!.functionCalls[0].selector,

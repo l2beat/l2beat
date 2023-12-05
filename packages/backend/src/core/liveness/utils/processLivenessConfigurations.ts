@@ -5,7 +5,7 @@ import {
   LivenessConfigurationRecord,
   NewLivenessConfigurationRecord,
 } from '../../../peripherals/database/LivenessConfigurationRepository'
-import { LivenessConfigurationIdentifier } from '../types/LivenessConfigurationIdentifier'
+import { LivenessId } from '../types/LivenessId'
 
 export function processLivenessConfigurations(
   projects: Project[],
@@ -27,7 +27,7 @@ export function processLivenessConfigurations(
     if (livenessConfig) {
       const processConfigType = (configType: 'functionCalls' | 'transfers') => {
         for (const runtimeConfig of livenessConfig[configType]) {
-          const identifier = LivenessConfigurationIdentifier(runtimeConfig)
+          const identifier = LivenessId(runtimeConfig)
           assert(
             !usedIdentifiers.has(identifier.toString()),
             'There cannot be duplicate identifiers',
@@ -42,19 +42,12 @@ export function processLivenessConfigurations(
               projectId: runtimeConfig.projectId,
               type: runtimeConfig.type,
               identifier,
-              params: JSON.stringify(
-                LivenessConfigurationIdentifier.params(runtimeConfig),
-              ),
+              params: JSON.stringify(LivenessId.params(runtimeConfig)),
               sinceTimestamp: runtimeConfig.sinceTimestamp,
               untilTimestamp: runtimeConfig.untilTimestamp,
             })
           } else {
-            if (
-              LivenessConfigurationIdentifier.wasUpdated(
-                dbConfig,
-                runtimeConfig,
-              )
-            ) {
+            if (LivenessId.wasUpdated(dbConfig, runtimeConfig)) {
               updated.push({
                 ...dbConfig,
                 untilTimestamp: runtimeConfig.untilTimestamp,

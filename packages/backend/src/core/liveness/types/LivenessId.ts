@@ -2,8 +2,8 @@ import { assert, Hash256, hashJson, json, UnixTime } from '@l2beat/shared-pure'
 
 import { LivenessFunctionCall, LivenessTransfer } from './LivenessConfig'
 
-export interface LivenessConfigurationIdentifier extends String {
-  _LivenessConfigHashBrand: string
+export interface LivenessId extends String {
+  _LivenessIdBrand: string
 }
 
 export type InputType =
@@ -13,7 +13,7 @@ export type InputType =
       'livenessConfigurationId' | 'latestSyncedTimestamp'
     >
 
-export function LivenessConfigurationIdentifier(value: InputType) {
+export function LivenessId(value: InputType) {
   const hashInputs: string[] = []
 
   hashInputs.push(value.projectId.toString())
@@ -30,10 +30,10 @@ export function LivenessConfigurationIdentifier(value: InputType) {
     hashInputs.push(value.selector.toString())
   }
 
-  return hashJson(hashInputs) as unknown as LivenessConfigurationIdentifier
+  return hashJson(hashInputs) as unknown as LivenessId
 }
 
-LivenessConfigurationIdentifier.params = function (value: InputType): json {
+LivenessId.params = function (value: InputType): json {
   if ('from' in value && 'to' in value) {
     return {
       from: value.from.toString(),
@@ -51,7 +51,7 @@ LivenessConfigurationIdentifier.params = function (value: InputType): json {
   assert(false, 'Runtime should not reach here')
 }
 
-LivenessConfigurationIdentifier.wasUpdated = function (
+LivenessId.wasUpdated = function (
   before: { untilTimestamp?: UnixTime },
   after: InputType,
 ): boolean {
@@ -65,10 +65,10 @@ LivenessConfigurationIdentifier.wasUpdated = function (
   }
 }
 
-LivenessConfigurationIdentifier.unsafe = function unsafe(value: string) {
-  return value as unknown as LivenessConfigurationIdentifier
+LivenessId.unsafe = function unsafe(value: string) {
+  return value as unknown as LivenessId
 }
 
-LivenessConfigurationIdentifier.random = function unsafe() {
-  return Hash256.random() as unknown as LivenessConfigurationIdentifier
+LivenessId.random = function unsafe() {
+  return Hash256.random() as unknown as LivenessId
 }

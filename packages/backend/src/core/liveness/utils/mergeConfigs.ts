@@ -4,7 +4,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import { Project } from '../../../model'
 import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessFunctionCall, LivenessTransfer } from '../types/LivenessConfig'
-import { LivenessConfigurationIdentifier } from '../types/LivenessConfigurationIdentifier'
+import { LivenessId } from '../types/LivenessId'
 
 export function mergeConfigs(
   projects: Project[],
@@ -18,9 +18,7 @@ export function mergeConfigs(
       .flatMap((p) => p.livenessConfig?.transfers)
       .filter(notUndefined)
       .map((t) => {
-        const config = configs.find(
-          (c) => c.identifier === LivenessConfigurationIdentifier(t),
-        )
+        const config = configs.find((c) => c.identifier === LivenessId(t))
 
         assert(config, 'Config should not be undefined there')
 
@@ -34,9 +32,7 @@ export function mergeConfigs(
       .flatMap((p) => p.livenessConfig?.functionCalls)
       .filter(notUndefined)
       .map((t) => {
-        const config = configs.find(
-          (c) => c.identifier === LivenessConfigurationIdentifier(t),
-        )
+        const config = configs.find((c) => c.identifier === LivenessId(t))
         assert(config, 'Config should not be undefined there')
 
         return {
