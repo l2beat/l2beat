@@ -1,13 +1,25 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { ActivityViewEntry } from '../../../pages/scaling/activity/view/types'
-import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
-import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
+import {
+  ActivityViewEntry,
+  ActivityViewSortingOrder,
+} from '../../../pages/scaling/activity/view/types'
+import {
+  ScalingDetailedTvlViewEntry,
+  ScalingDetailedTvlViewSortingOrder,
+} from '../../../pages/scaling/detailed-tvl/types'
+import {
+  ScalingLivenessViewEntry,
+  ScalingLivenessViewSortingOrder,
+} from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/view/types'
-import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
+import {
+  ScalingTvlViewEntry,
+  ScalingTvlViewSortingOrder,
+} from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
@@ -24,7 +36,9 @@ import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
-export function getActiveScalingTvlColumnsConfig() {
+export function getActiveScalingTvlColumnsConfig(
+  sortingOrder: ScalingTvlViewSortingOrder,
+) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -36,72 +50,8 @@ export function getActiveScalingTvlColumnsConfig() {
     {
       name: 'Name',
       headClassName: 'pl-8',
-      sortBy: [
-        'aevo',
-        'apex',
-        'nova',
-        'arbitrum',
-        'astarzkevm',
-        'aztec',
-        'base',
-        'blast',
-        'bobanetwork',
-        'brine',
-        'canto',
-        'canvasconnect',
-        'capx',
-        'degate',
-        'degate3',
-        'degate2',
-        'dydx',
-        'fuel',
-        'fuelv1',
-        'gluon',
-        'grvt',
-        'cartesi-honeypot',
-        'immutablex',
-        'immutablezkevm',
-        'kinto',
-        'kroma',
-        'layer2financezk',
-        'layer2finance',
-        'linea',
-        'loopring',
-        'lyrafinance',
-        'mantapacific',
-        'mantle',
-        'metis',
-        'mode',
-        'morphism',
-        'myria',
-        'obscuro',
-        'omgnetwork',
-        'optimism',
-        'palm',
-        'paradex',
-        'hermez',
-        'polygon-miden',
-        'polygon-pos-2',
-        'polygonzkevm',
-        'publicgoodsnetwork',
-        'rhinofi',
-        'scroll',
-        'sorare',
-        'starknet',
-        'stealthchain',
-        'taiko',
-        'x1',
-        'xchain',
-        'aztecv1',
-        'aztecconnect',
-        'zkspace',
-        'zkswap',
-        'zkswap2',
-        'zksync-era',
-        'zksync-lite',
-        'zora',
-      ],
       getValue: (project) => <ProjectCell project={project} />,
+      sortBy: sortingOrder.name,
     },
     {
       name: 'Risks',
@@ -134,6 +84,7 @@ export function getActiveScalingTvlColumnsConfig() {
       getValue: (project: ScalingTvlViewEntry) => (
         <StageCell stageConfig={project.stage} />
       ),
+      sortBy: sortingOrder.stage,
     },
     {
       name: 'Purpose',
@@ -147,71 +98,6 @@ export function getActiveScalingTvlColumnsConfig() {
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
-      sortBy: [
-        'arbitrum',
-        'optimism',
-        'base',
-        'zksync-era',
-        'dydx',
-        'mantle',
-        'immutablex',
-        'starknet',
-        'linea',
-        'polygonzkevm',
-        'loopring',
-        'metis',
-        'zksync-lite',
-        'apex',
-        'scroll',
-        'mantapacific',
-        'rhinofi',
-        'nova',
-        'sorare',
-        'aevo',
-        'bobanetwork',
-        'zora',
-        'zkspace',
-        'degate3',
-        'paradex',
-        'publicgoodsnetwork',
-        'kroma',
-        'brine',
-        'myria',
-        'cartesi-honeypot',
-        'canvasconnect',
-        'fuelv1',
-        'astarzkevm',
-        'aztec',
-        'blast',
-        'canto',
-        'capx',
-        'fuel',
-        'grvt',
-        'immutablezkevm',
-        'kinto',
-        'lyrafinance',
-        'mode',
-        'morphism',
-        'obscuro',
-        'palm',
-        'polygon-miden',
-        'polygon-pos-2',
-        'stealthchain',
-        'taiko',
-        'x1',
-        'xchain',
-        'aztecconnect',
-        'zkswap',
-        'aztecv1',
-        'zkswap2',
-        'hermez',
-        'layer2finance',
-        'omgnetwork',
-        'gluon',
-        'degate2',
-        'layer2financezk',
-        'degate',
-      ],
       getValue: (project) => (
         <>
           <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
@@ -222,6 +108,7 @@ export function getActiveScalingTvlColumnsConfig() {
           </NumberCell>
         </>
       ),
+      sortBy: sortingOrder.tvl,
     },
     {
       name: 'Mkt share',
@@ -239,7 +126,9 @@ export function getActiveScalingTvlColumnsConfig() {
   return columns
 }
 
-export function getScalingDetailedTvlColumnsConfig() {
+export function getScalingDetailedTvlColumnsConfig(
+  sortingOrder: ScalingDetailedTvlViewSortingOrder,
+) {
   const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
     {
       name: '#',
@@ -252,6 +141,7 @@ export function getScalingDetailedTvlColumnsConfig() {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
+      sortBy: sortingOrder.name,
     },
     {
       type: 'group',
@@ -267,6 +157,7 @@ export function getScalingDetailedTvlColumnsConfig() {
               percentChange={project.tvlChange}
             />
           ),
+          sortBy: sortingOrder.total,
         },
       ],
     },
@@ -284,6 +175,7 @@ export function getScalingDetailedTvlColumnsConfig() {
           tokens={project.tokens.filter((t) => t.info.type === 'CBV')}
         />
       ),
+      sortBy: sortingOrder.canonical,
     },
     {
       name: 'External',
@@ -299,6 +191,7 @@ export function getScalingDetailedTvlColumnsConfig() {
           tokens={project.tokens.filter((t) => t.info.type === 'EBV')}
         />
       ),
+      sortBy: sortingOrder.external,
     },
     {
       name: 'Native',
@@ -314,13 +207,16 @@ export function getScalingDetailedTvlColumnsConfig() {
           tokens={project.tokens.filter((t) => t.info.type === 'NMV')}
         />
       ),
+      sortBy: sortingOrder.native,
     },
   ]
 
   return columns
 }
 
-export function getUpcomingScalingTvlColumnsConfig() {
+export function getUpcomingScalingTvlColumnsConfig(
+  sortingOrder: ScalingTvlViewSortingOrder,
+) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -333,6 +229,7 @@ export function getUpcomingScalingTvlColumnsConfig() {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
+      sortBy: sortingOrder.name,
     },
     {
       name: 'Technology',
@@ -355,7 +252,9 @@ export function getUpcomingScalingTvlColumnsConfig() {
   return columns
 }
 
-export function getArchivedScalingTvlColumnsConfig() {
+export function getArchivedScalingTvlColumnsConfig(
+  sortingOrder: ScalingTvlViewSortingOrder,
+) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -368,6 +267,7 @@ export function getArchivedScalingTvlColumnsConfig() {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
+      sortBy: sortingOrder.name,
     },
     {
       name: 'Risks',
@@ -466,7 +366,9 @@ export function getScalingRiskColumnsConfig() {
   return columns
 }
 
-export function getScalingActivityColumnsConfig() {
+export function getScalingActivityColumnsConfig(
+  sortingOrder: ActivityViewSortingOrder,
+) {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
       name: '#',
@@ -485,6 +387,7 @@ export function getScalingActivityColumnsConfig() {
         ) : (
           <EthereumCell project={project} />
         ),
+      sortBy: sortingOrder.name,
     },
     {
       name: 'Past day TPS',
@@ -496,6 +399,7 @@ export function getScalingActivityColumnsConfig() {
         ) : (
           <ComingSoonCell />
         ),
+      sortBy: sortingOrder.pastDayTps,
     },
     {
       name: '7d Change',
@@ -505,6 +409,7 @@ export function getScalingActivityColumnsConfig() {
       getValue: (project) => (
         <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
       ),
+      sortBy: sortingOrder.sevenDayChange,
     },
     {
       name: 'Max daily TPS',
@@ -525,6 +430,7 @@ export function getScalingActivityColumnsConfig() {
             </span>
           </span>
         ),
+      sortBy: sortingOrder.maxDailyTps,
     },
     {
       name: '30D Count',
@@ -536,6 +442,7 @@ export function getScalingActivityColumnsConfig() {
             {formatLargeNumber(project.transactionsMonthlyCount)}
           </NumberCell>
         ) : undefined,
+      sortBy: sortingOrder.thirtyDayTxCount,
     },
     {
       name: 'Data source',
@@ -546,7 +453,9 @@ export function getScalingActivityColumnsConfig() {
   return columns
 }
 
-export function getScalingLivenessColumnsConfig() {
+export function getScalingLivenessColumnsConfig(
+  sortingOrder: ScalingLivenessViewSortingOrder,
+) {
   const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
     {
       name: '#',
@@ -560,6 +469,7 @@ export function getScalingLivenessColumnsConfig() {
       headClassName: 'pl-8',
       minimalWidth: true,
       getValue: (project) => <ProjectCell project={project} />,
+      sortBy: sortingOrder.name,
     },
     {
       type: 'group',
@@ -583,6 +493,7 @@ export function getScalingLivenessColumnsConfig() {
               />
             )
           },
+          sortBy: sortingOrder.txDataSubmissions,
         },
         {
           name: 'State updates',
@@ -596,6 +507,7 @@ export function getScalingLivenessColumnsConfig() {
               />
             )
           },
+          sortBy: sortingOrder.stateUpdates,
         },
       ],
     },
@@ -609,6 +521,7 @@ export function getScalingLivenessColumnsConfig() {
           {project.category}
         </TechnologyCell>
       ),
+      sortBy: sortingOrder.technology,
     },
     {
       name: '30-day anomalies',

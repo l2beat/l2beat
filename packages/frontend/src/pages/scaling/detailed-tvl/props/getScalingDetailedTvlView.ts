@@ -1,6 +1,8 @@
 import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse } from '@l2beat/shared-pure'
 
+import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTokens } from '../../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
@@ -8,15 +10,20 @@ import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange
 import { formatUSD } from '../../../../utils/utils'
 import { ScalingDetailedTvlViewEntry } from '../types'
 import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
+import { getScalingDetailedTvlViewSortingOrder } from './getScalingDetailedTvlViewOrder'
 
 export function getScalingDetailedTvlView(
-  tvlApiResponse: TvlApiResponse,
   projects: Layer2[],
+  tvlApiResponse: TvlApiResponse,
 ): ScalingDetailedTvlViewProps {
+  const included = getIncludedProjects(projects, tvlApiResponse)
+  const orderedProjects = orderByTvl(included, tvlApiResponse)
+  const items = orderedProjects.map((project) =>
+    getScalingDetailedTvlViewEntry(tvlApiResponse, project),
+  )
   return {
-    items: projects.map((project) =>
-      getScalingDetailedTvlViewEntry(tvlApiResponse, project),
-    ),
+    items,
+    sortingOrder: getScalingDetailedTvlViewSortingOrder(items),
   }
 }
 

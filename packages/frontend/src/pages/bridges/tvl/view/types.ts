@@ -1,6 +1,6 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 
-import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
+import { TVLBreakdownProps } from '../../../../components/TVLBreakdown'
 
 export interface BridgesTvlViewEntry {
   type: 'bridge' | 'layer2'
@@ -19,4 +19,12 @@ export interface BridgesTvlViewEntry {
   combinedMarketShare?: string
   validatedBy?: ProjectRiskViewEntry
   category: string
+}
+
+export interface BridgesTvlViewSortingOrder {
+  name: string[]
+  tvl: string[]
+  sevenDayChange: string[]
+  validatedBy: string[]
+  type: string[]
 }

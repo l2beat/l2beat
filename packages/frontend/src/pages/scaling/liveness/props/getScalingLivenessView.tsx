@@ -8,15 +8,18 @@ import {
 
 import { AnomalyIndicatorEntry, ScalingLivenessViewEntry } from '../types'
 import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
+import { getScalingLivenessViewSortingOrder } from './getScalingLivenessViewOrder'
 
 export function getScalingLivenessView(
   projects: Layer2[],
   livenessResponse: LivenessApiResponse | undefined,
 ): ScalingLivenessViewProps {
+  const items = livenessResponse
+    ? projects.map((p) => getScalingLivenessViewEntry(p, livenessResponse))
+    : []
   return {
-    items: livenessResponse
-      ? projects.map((p) => getScalingLivenessViewEntry(p, livenessResponse))
-      : [],
+    items,
+    sortingOrder: getScalingLivenessViewSortingOrder(items),
   }
 }
 

@@ -200,7 +200,7 @@ function ColumnHeader<T>(props: {
         >
           {props.column.sortBy && props.column.sortBy.length !== 0 && (
             <SortingArrows
-              order={props.column.sortBy}
+              sortingOrder={props.column.sortBy}
               name={props.column.name}
             />
           )}

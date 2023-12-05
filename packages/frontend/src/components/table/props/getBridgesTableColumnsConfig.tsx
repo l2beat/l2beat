@@ -1,7 +1,13 @@
 import React from 'react'
 
-import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
-import { BridgesTvlViewEntry } from '../../../pages/bridges/tvl/types'
+import {
+  BridgesRiskViewEntry,
+  BridgesRiskViewSortingOrder,
+} from '../../../pages/bridges/risk/view/types'
+import {
+  BridgesTvlViewEntry,
+  BridgesTvlViewSortingOrder,
+} from '../../../pages/bridges/tvl/view/types'
 import { TVLBreakdown } from '../../TVLBreakdown'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
@@ -10,7 +16,9 @@ import { RiskCell } from '../RiskCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 
-export function getArchivedBridgesTvlColumnsConfig() {
+export function getArchivedBridgesTvlColumnsConfig(
+  sortingOrder: BridgesTvlViewSortingOrder,
+) {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
       name: '#',
@@ -23,6 +31,7 @@ export function getArchivedBridgesTvlColumnsConfig() {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (entry) => <ProjectCell project={entry} />,
+      sortBy: sortingOrder.name,
     },
     {
       name: 'Total',
@@ -32,25 +41,30 @@ export function getArchivedBridgesTvlColumnsConfig() {
       getValue: (entry) =>
         !entry.isUpcoming &&
         entry.tvlBreakdown && <NumberCell>{entry.tvl}</NumberCell>,
+      sortBy: sortingOrder.tvl,
     },
     {
       name: 'Validated by',
       tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
+      sortBy: sortingOrder.validatedBy,
     },
     {
       name: 'Type',
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
       getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
+      sortBy: sortingOrder.type,
     },
   ]
 
   return columns
 }
 
-export function getActiveBridgesTvlColumnsConfig() {
-  const columns = getArchivedBridgesTvlColumnsConfig()
+export function getActiveBridgesTvlColumnsConfig(
+  sortingOrder: BridgesTvlViewSortingOrder,
+) {
+  const columns = getArchivedBridgesTvlColumnsConfig(sortingOrder)
 
   columns.splice(
     3,
@@ -63,6 +77,7 @@ export function getActiveBridgesTvlColumnsConfig() {
         entry.tvlBreakdown && (
           <NumberCell signed>{entry.sevenDayChange}</NumberCell>
         ),
+      sortBy: sortingOrder.sevenDayChange,
     },
     {
       name: 'Breakdown',
@@ -90,11 +105,9 @@ export function getActiveBridgesTvlColumnsConfig() {
   return columns
 }
 
-export function getCanonicalBridgesTvlColumnsConfig() {
-  return getActiveBridgesTvlColumnsConfig()
-}
-
-export function getBridgesRiskColumnsConfig() {
+export function getBridgesRiskColumnsConfig(
+  sortingOrder: BridgesRiskViewSortingOrder,
+) {
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
     {
       name: '#',
@@ -107,6 +120,7 @@ export function getBridgesRiskColumnsConfig() {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (entry) => <ProjectCell project={entry} />,
+      sortBy: sortingOrder.name,
     },
     {
       name: 'Destination',
@@ -117,6 +131,7 @@ export function getBridgesRiskColumnsConfig() {
       name: 'Validated by',
       tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
+      sortBy: sortingOrder.validatedBy,
     },
     {
       name: 'Type',
@@ -125,6 +140,7 @@ export function getBridgesRiskColumnsConfig() {
       getValue: (entry) => (
         <span className="sm:text-xs md:text-base">{entry.category}</span>
       ),
+      sortBy: sortingOrder.type,
     },
     {
       name: 'Source\nUpgradeability',

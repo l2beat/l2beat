@@ -14,6 +14,13 @@ export interface ScalingLivenessViewEntry {
   anomalyEntries: AnomalyIndicatorEntry[]
 }
 
+export interface ScalingLivenessViewSortingOrder {
+  name: string[]
+  txDataSubmissions: string[]
+  stateUpdates: string[]
+  technology: string[]
+}
+
 export type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
 export interface AnomalyEntry {
   isAnomaly: true

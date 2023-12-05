@@ -13,6 +13,7 @@ import { getTransactionCount } from '../../../../utils/activity/getTransactionCo
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { ScalingActivityViewProps } from '../view/ScalingActivityView'
 import { ActivityViewEntry } from '../view/types'
+import { getScalingActivityViewOrder } from './getScalingActivityViewOrder'
 
 export function getScalingActivityView(
   projects: Layer2[],
@@ -20,13 +21,19 @@ export function getScalingActivityView(
   verificationStatus: VerificationStatus,
 ): ScalingActivityViewProps {
   const included = getIncludedProjects(projects, activityApiResponse, [])
-  const items = included.map((x) =>
-    getScalingActivityViewEntry(x, activityApiResponse, verificationStatus),
+  const items = [
+    ...included.map((x) =>
+      getScalingActivityViewEntry(x, activityApiResponse, verificationStatus),
+    ),
+    getEthereumActivityViewEntry(activityApiResponse),
+  ]
+  const orderedItems = items.sort(
+    (a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1),
   )
-  items.push(getEthereumActivityViewEntry(activityApiResponse))
 
   return {
-    items: items.sort((a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1)),
+    items: orderedItems,
+    sortingOrder: getScalingActivityViewOrder(orderedItems),
   }
 }
 

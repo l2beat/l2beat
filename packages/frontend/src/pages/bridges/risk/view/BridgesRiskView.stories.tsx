@@ -2,10 +2,10 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
-import { onlyDesktopModes } from '../../../../.storybook/modes'
-import { configureProjectFilters } from '../../../scripts/configureProjectFilters'
-import { configureTabs } from '../../../scripts/configureTabs'
-import { configureTables } from '../../../scripts/table/configureTables'
+import { onlyDesktopModes } from '../../../../../.storybook/modes'
+import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
+import { configureTabs } from '../../../../scripts/configureTabs'
+import { configureTables } from '../../../../scripts/table/configureTables'
 import { BridgesRiskView } from './BridgesRiskView'
 
 const meta = {

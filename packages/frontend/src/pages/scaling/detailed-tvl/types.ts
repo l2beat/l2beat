@@ -25,3 +25,11 @@ export interface ScalingDetailedTvlViewEntry {
   tokens: TokenControl[]
   stage: StageConfig
 }
+
+export interface ScalingDetailedTvlViewSortingOrder {
+  name: string[]
+  total: string[]
+  canonical: string[]
+  external: string[]
+  native: string[]
+}

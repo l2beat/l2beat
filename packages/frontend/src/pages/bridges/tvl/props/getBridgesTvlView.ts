@@ -4,7 +4,9 @@ import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
-import { BridgesTvlViewEntry } from '../types'
+import { BridgesTvlViewProps } from '../view/BridgesTvlView'
+import { BridgesTvlViewEntry } from '../view/types'
+import { getBridgesTvlViewOrder } from './getBridgesTvlViewOrder'
 
 export function getBridgesTvlView(
   projects: (Bridge | Layer2)[],
@@ -12,8 +14,8 @@ export function getBridgesTvlView(
   bridgesTvl: number,
   combinedTvl: number,
   verificationStatus: VerificationStatus,
-): BridgesTvlViewEntry[] {
-  return projects.map((project) =>
+): BridgesTvlViewProps {
+  const items = projects.map((project) =>
     getBridgesTvlViewEntry(
       project,
       tvlApiResponse,
@@ -22,9 +24,14 @@ export function getBridgesTvlView(
       verificationStatus,
     ),
   )
+
+  return {
+    items,
+    sortingOrder: getBridgesTvlViewOrder(items),
+  }
 }
 
-function getBridgesTvlViewEntry(
+export function getBridgesTvlViewEntry(
   project: Bridge | Layer2,
   tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,

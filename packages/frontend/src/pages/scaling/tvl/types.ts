@@ -15,11 +15,19 @@ export interface ScalingTvlViewEntry {
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
   tvl?: string
+  tvlValue?: number
   tvlTooltip?: string
   tvlBreakdown?: TVLBreakdownProps
   oneDayChange?: string
   sevenDayChange?: string
   marketShare?: string
+  marketShareValue?: number
   purpose: string
   stage: StageConfig
+}
+
+export interface ScalingTvlViewSortingOrder {
+  name: string[]
+  stage: string[]
+  tvl: string[]
 }

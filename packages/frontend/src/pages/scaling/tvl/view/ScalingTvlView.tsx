@@ -13,13 +13,14 @@ import {
 } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { Tabs } from '../../../../components/Tabs'
-import { ScalingTvlViewEntry } from '../types'
+import { ScalingTvlViewEntry, ScalingTvlViewSortingOrder } from '../types'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
+  sortingOrder: ScalingTvlViewSortingOrder
 }
 
-export function ScalingTvlView({ items }: ScalingTvlViewProps) {
+export function ScalingTvlView({ items, sortingOrder }: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
@@ -43,7 +44,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
               <TableView
                 items={activeProjects}
                 rows={rows}
-                columnsConfig={getActiveScalingTvlColumnsConfig()}
+                columnsConfig={getActiveScalingTvlColumnsConfig(sortingOrder)}
               />
             ),
             itemsCount: activeProjects.length,
@@ -57,7 +58,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
               <TableView
                 items={upcomingProjects}
                 rows={rows}
-                columnsConfig={getUpcomingScalingTvlColumnsConfig()}
+                columnsConfig={getUpcomingScalingTvlColumnsConfig(sortingOrder)}
               />
             ),
             itemsCount: upcomingProjects.length,
@@ -71,7 +72,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
               <TableView
                 items={archivedProjects}
                 rows={rows}
-                columnsConfig={getArchivedScalingTvlColumnsConfig()}
+                columnsConfig={getArchivedScalingTvlColumnsConfig(sortingOrder)}
               />
             ),
             itemsCount: archivedProjects.length,

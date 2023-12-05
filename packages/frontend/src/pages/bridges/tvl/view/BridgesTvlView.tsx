@@ -1,22 +1,23 @@
 import React from 'react'
 
-import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
-import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
-import { BridgesFilters } from '../../../components/table/filters/BridgesFilters'
-import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
+import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
+import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { BridgesFilters } from '../../../../components/table/filters/BridgesFilters'
+import { getBridgesRowProps } from '../../../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesTvlColumnsConfig,
   getArchivedBridgesTvlColumnsConfig,
-} from '../../../components/table/props/getBridgesTableColumnsConfig'
-import { RowConfig, TableView } from '../../../components/table/TableView'
-import { Tabs } from '../../../components/Tabs'
-import { BridgesTvlViewEntry } from './types'
+} from '../../../../components/table/props/getBridgesTableColumnsConfig'
+import { RowConfig, TableView } from '../../../../components/table/TableView'
+import { Tabs } from '../../../../components/Tabs'
+import { BridgesTvlViewEntry, BridgesTvlViewSortingOrder } from './types'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]
+  sortingOrder: BridgesTvlViewSortingOrder
 }
 
-export function BridgesTvlView({ items }: BridgesTvlViewProps) {
+export function BridgesTvlView({ items, sortingOrder }: BridgesTvlViewProps) {
   const rows: RowConfig<BridgesTvlViewEntry> = {
     getProps: getBridgesRowProps,
   }
@@ -38,7 +39,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={activeProjects}
-                columnsConfig={getActiveBridgesTvlColumnsConfig()}
+                columnsConfig={getActiveBridgesTvlColumnsConfig(sortingOrder)}
                 rows={rows}
                 rerenderOnLoad
               />
@@ -53,7 +54,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={archivedProjects}
-                columnsConfig={getArchivedBridgesTvlColumnsConfig()}
+                columnsConfig={getArchivedBridgesTvlColumnsConfig(sortingOrder)}
                 rows={rows}
                 rerenderOnLoad
               />

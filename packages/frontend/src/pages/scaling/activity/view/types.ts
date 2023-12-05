@@ -16,3 +16,11 @@ export interface ActivityViewEntry {
   maxTpsDate: string | undefined
   stage: StageConfig | undefined
 }
+
+export interface ActivityViewSortingOrder {
+  name: string[]
+  pastDayTps: string[]
+  sevenDayChange: string[]
+  maxDailyTps: string[]
+  thirtyDayTxCount: string[]
+}

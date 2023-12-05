@@ -18,10 +18,12 @@ export function configureSortingArrows() {
   const { $$ } = makeQuery(document.body)
   const tables = $$('[data-role="table"]')
   const searchParams = new URLSearchParams(window.location.search)
-  const sortBy = searchParams.get('sortBy')
-  const sortOrder = searchParams.get('sortOrder')
+  const sortBy = searchParams.get('sort-by')
+  const sortOrder = searchParams.get('sort-order')
   const queryParams =
-    sortBy && sortOrder ? { sortBy, state: sortOrder as State } : undefined
+    sortBy && sortOrder
+      ? { name: sortBy, state: sortOrder as State }
+      : undefined
 
   tables.forEach((table) => {
     const { $$ } = makeQuery(table)
@@ -112,11 +114,11 @@ function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
     const nextState = getNextState(currentState)
 
     if (nextState) {
-      searchParams.set('sortBy', name)
-      searchParams.set('sortOrder', nextState)
+      searchParams.set('sort-by', name)
+      searchParams.set('sort-order', nextState)
     } else {
-      searchParams.delete('sortBy')
-      searchParams.delete('sortOrder')
+      searchParams.delete('sort-by')
+      searchParams.delete('sort-order')
     }
 
     setQueryParams(searchParams)
