@@ -1,6 +1,5 @@
 export * from './bridges'
 export * from './common'
 export * from './layer2s'
-export * from './layer3s'
 export * from './tokens'
 export * from './verification'

@@ -29,6 +29,7 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { deri, xai } from './layer3s'
 import { linea } from './linea'
 import { loopring } from './loopring'
 import { lyrafinance } from './lyrafinance'
@@ -85,6 +86,7 @@ export const layer2s: Layer2[] = [
   degate,
   degate2,
   degate3,
+  deri,
   dydx,
   fuel,
   fuelv1,
@@ -123,6 +125,7 @@ export const layer2s: Layer2[] = [
   stealthchain,
   taiko,
   x1,
+  xai,
   xchain,
   zkspace,
   zkswap,

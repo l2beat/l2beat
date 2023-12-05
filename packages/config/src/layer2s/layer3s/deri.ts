@@ -1,11 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import {
-  CONTRACTS,
-  Layer2,
-  TECHNOLOGY,
-  UNDER_REVIEW_RISK_VIEW,
-} from '../layer2s'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
+import { Layer2 } from '../types'
 
 export const deri: Layer2 = {
   isUpcoming: false,
