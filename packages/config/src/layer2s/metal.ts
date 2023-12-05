@@ -11,7 +11,7 @@ export const metal: Layer2 = {
     name: 'Metal',
     slug: 'metal',
     description:
-      'Metal L2 is an upcoming scalling solution by Metallicus. It is powered by the OP Stack.',
+      'Metal L2 is an upcoming scaling solution by Metallicus. It is powered by the OP Stack.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
