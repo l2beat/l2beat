@@ -43,7 +43,7 @@ export function gatherAddressesFromUpgradeability(
       result.push(item.guard)
       result.push(item.avatar)
       result.push(item.target)
-      result.push(...item.modules)
+      result.push(...(item.modules ?? []))
       break
     case 'EIP2535 diamond proxy':
       result.push(...item.facets)
