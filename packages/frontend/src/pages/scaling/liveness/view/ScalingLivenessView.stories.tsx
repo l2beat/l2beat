@@ -141,6 +141,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 12,
             maximumInSeconds: 6348,
           },
+          warning: 'Some warning',
         },
         proofSubmissions: {},
         anomalyEntries: [
@@ -1200,6 +1201,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 12,
             maximumInSeconds: 213168,
           },
+          warning: 'Some warning',
         },
         batchSubmissions: {
           last30Days: {

@@ -73,6 +73,12 @@ export const scroll: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        batchSubmissions:
+          'Transaction data batches that are not proven yet can be reverted.',
+      },
+    },
   },
   stage: getStage({
     stage0: {

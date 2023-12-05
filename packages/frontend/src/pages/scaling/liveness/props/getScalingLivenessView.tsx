@@ -33,10 +33,19 @@ function getScalingLivenessViewEntry(
     dataAvailabilityMode: project.display.dataAvailabilityMode,
     provider: project.display.provider,
     stage: project.stage,
-    explanation: project.display.livenessExplanation,
-    stateUpdates: liveness?.stateUpdates,
-    batchSubmissions: liveness?.batchSubmissions,
-    proofSubmissions: liveness?.proofSubmissions,
+    explanation: project.display.liveness?.explanation,
+    stateUpdates: {
+      ...liveness?.stateUpdates,
+      warning: project.display.liveness?.warnings?.stateUpdates,
+    },
+    batchSubmissions: {
+      ...liveness?.batchSubmissions,
+      warning: project.display.liveness?.warnings?.batchSubmissions,
+    },
+    proofSubmissions: {
+      ...liveness?.proofSubmissions,
+      warning: project.display.liveness?.warnings?.proofSubmissions,
+    },
     anomalyEntries: getAnomalyEntries(liveness?.anomalies),
   }
 }
