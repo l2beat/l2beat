@@ -9,8 +9,9 @@ export interface ScalingLivenessViewEntry {
   warning: string | undefined
   stage: StageConfig
   explanation: string | undefined
-  batchSubmissions?: LivenessDetails | undefined
-  stateUpdates?: LivenessDetails | undefined
+  batchSubmissions: LivenessDetails | undefined
+  stateUpdates: LivenessDetails | undefined
+  proofSubmissions: LivenessDetails | undefined
   anomalyEntries: AnomalyIndicatorEntry[]
 }
 

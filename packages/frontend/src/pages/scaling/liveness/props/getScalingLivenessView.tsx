@@ -39,6 +39,7 @@ function getScalingLivenessViewEntry(
     explanation: project.display.livenessExplanation,
     stateUpdates: liveness?.stateUpdates,
     batchSubmissions: liveness?.batchSubmissions,
+    proofSubmissions: liveness?.proofSubmissions,
     anomalyEntries: getAnomalyEntries(liveness?.anomalies),
   }
 }

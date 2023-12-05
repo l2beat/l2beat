@@ -174,7 +174,7 @@ function ColumnHeader<T>(props: {
     <>
       <th
         className={cx(
-          'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
+          'whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
           props.column.minimalWidth && 'w-0',
           hasPaddingRight &&
             !props.groupOptions?.isLast &&

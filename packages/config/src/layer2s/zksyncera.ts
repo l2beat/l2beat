@@ -53,7 +53,10 @@ export const zksyncera: Layer2 = {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
       documentation: ['https://era.zksync.io/docs/'],
-      explorers: ['https://explorer.zksync.io/'],
+      explorers: [
+        'https://explorer.zksync.io/',
+        'https://zksync-era.l2scan.co/',
+      ],
       repositories: ['https://github.com/matter-labs/zksync-era'],
       socialMedia: [
         'https://zksync.mirror.xyz/',

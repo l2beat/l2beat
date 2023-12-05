@@ -2003,20 +2003,20 @@
     dotenv "^16.3.1"
     error-stack-parser "^2.1.4"
 
-"@l2beat/discovery-types@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.5.0.tgz#a1e84c060397b05a273eb99380e22951b1d1681e"
-  integrity sha512-R90CBX94VwT3O7D731/LQEjAbNZ8L5JsGZm4wD8A3tmN+6z0zt81oX/YFPSLAUVpgzN2+hs96pN6jfCsR9K8Cw==
+"@l2beat/discovery-types@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.7.0.tgz#e6d90cd4fcb68d36d0f296eb82975c0344f1576f"
+  integrity sha512-GP2fM2NOZQzZPvm8PlYyBFVyrx8fZK8P3CVfGy4TkuXFlE4342e2ZQ3cZ507MHZkGrWE3zYOqR2MfFpH1beSMg==
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.24.0.tgz#ff977c13c466d08876292ca97bac68dc517238f6"
-  integrity sha512-sa+n9i3WzrNblwQOKtqnomWIEh1Ah5VbHIg8erMQkWJNI2jU8YhgBaAo10q5Ew+hdPZ3FIfy7vmKda7DBMk/6Q==
+"@l2beat/discovery@0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.27.0.tgz#dbfce736dd874107dc914e923aa6dc1bc578c5f9"
+  integrity sha512-sUTMb5mwCWrsRny/KRbWDtcOoHSZgZt3foMdshJZxgnmgiLKJFG1Z3pi3uv3QsjBPKpqLNfIzoJwjH+FstszIQ==
   dependencies:
     "@l2beat/backend-tools" "^0.5.0"
-    "@l2beat/discovery-types" "^0.5.0"
+    "@l2beat/discovery-types" "^0.7.0"
     chalk "^4.1.2"
     deep-diff "^1.0.2"
     dotenv "^16.0.3"

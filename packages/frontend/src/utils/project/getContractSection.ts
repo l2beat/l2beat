@@ -315,6 +315,7 @@ function makeTechnologyContract(
         // Ignore types
         case 'immutable':
         case 'gnosis safe':
+        case 'gnosis safe zodiac module':
         case 'EIP2535 diamond proxy':
           break
 
