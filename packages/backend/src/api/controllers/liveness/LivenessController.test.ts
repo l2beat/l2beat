@@ -224,9 +224,8 @@ function mockProjectConfig(
         projectId,
         isArchived: false,
         livenessConfig: mockObject<Project['livenessConfig']>({
+          entries: [],
           duplicateData: [],
-          functionCalls: [],
-          transfers: [],
         }),
       }),
     )

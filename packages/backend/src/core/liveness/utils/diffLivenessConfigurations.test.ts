@@ -7,14 +7,14 @@ import {
   NewLivenessConfigurationRecord,
 } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { LIVENESS_MOCK } from '../../../test/mockLiveness'
-import { processLivenessConfigurations } from './processLivenessConfigurations'
+import { diffLivenessConfigurations } from './processLivenessConfigurations'
 
 const { PROJECTS, CONFIGURATIONS } = LIVENESS_MOCK
 
-describe(processLivenessConfigurations.name, () => {
+describe(diffLivenessConfigurations.name, () => {
   describe('added', () => {
     it('finds configs not saved in the DB', () => {
-      const result = processLivenessConfigurations(
+      const result = diffLivenessConfigurations(
         PROJECTS,
         CONFIGURATIONS.slice(0, 1),
       )
@@ -30,13 +30,13 @@ describe(processLivenessConfigurations.name, () => {
         projectId: c.projectId,
       }))
 
-      expect(result.added).toEqualUnsorted(added)
+      expect(result.toAdd).toEqualUnsorted(added)
     })
 
     it('no configs to add', () => {
-      const result = processLivenessConfigurations(PROJECTS, CONFIGURATIONS)
+      const result = diffLivenessConfigurations(PROJECTS, CONFIGURATIONS)
 
-      expect(result.added).toEqual([])
+      expect(result.toAdd).toEqual([])
     })
   })
 
@@ -44,7 +44,7 @@ describe(processLivenessConfigurations.name, () => {
     it('finds configs which untilTimestamp have changed', () => {
       const changedUntilTimestamp = UnixTime.now()
 
-      const result = processLivenessConfigurations(
+      const result = diffLivenessConfigurations(
         [
           {
             ...PROJECTS[0],
@@ -75,13 +75,13 @@ describe(processLivenessConfigurations.name, () => {
         lastSyncedTimestamp: undefined,
       }))
 
-      expect(result.updated).toEqualUnsorted(updated)
+      expect(result.toTrim).toEqualUnsorted(updated)
     })
 
     it('no configs to update', () => {
-      const result = processLivenessConfigurations(PROJECTS, CONFIGURATIONS)
+      const result = diffLivenessConfigurations(PROJECTS, CONFIGURATIONS)
 
-      expect(result.added).toEqual([])
+      expect(result.toAdd).toEqual([])
     })
   })
 
@@ -97,15 +97,15 @@ describe(processLivenessConfigurations.name, () => {
         },
       }
 
-      const result = processLivenessConfigurations([project], CONFIGURATIONS)
+      const result = diffLivenessConfigurations([project], CONFIGURATIONS)
 
-      expect(result.phasedOut).toEqualUnsorted(CONFIGURATIONS.slice(0, 1))
+      expect(result.toRemove).toEqualUnsorted(CONFIGURATIONS.slice(0, 1))
     })
 
     it('no configs to phase out', () => {
-      const result = processLivenessConfigurations(PROJECTS, CONFIGURATIONS)
+      const result = diffLivenessConfigurations(PROJECTS, CONFIGURATIONS)
 
-      expect(result.phasedOut).toEqual([])
+      expect(result.toRemove).toEqual([])
     })
   })
 
@@ -124,7 +124,7 @@ describe(processLivenessConfigurations.name, () => {
     }
 
     expect(() =>
-      processLivenessConfigurations([project], CONFIGURATIONS),
+      diffLivenessConfigurations([project], CONFIGURATIONS),
     ).toThrow()
   })
 })

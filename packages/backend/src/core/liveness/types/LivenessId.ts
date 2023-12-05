@@ -1,74 +1,19 @@
-import { assert, Hash256, hashJson, json, UnixTime } from '@l2beat/shared-pure'
+import { hashJson } from '@l2beat/shared-pure'
 
-import { LivenessFunctionCall, LivenessTransfer } from './LivenessConfig'
-
-export interface LivenessId extends String {
-  _LivenessIdBrand: string
+export interface LivenessId extends Number {
+  _LivenessIdBrand: number
 }
 
-export type InputType =
-  | Omit<LivenessTransfer, 'livenessConfigurationId' | 'latestSyncedTimestamp'>
-  | Omit<
-      LivenessFunctionCall,
-      'livenessConfigurationId' | 'latestSyncedTimestamp'
-    >
-
-export function LivenessId(value: InputType) {
-  const hashInputs: string[] = []
-
-  hashInputs.push(value.projectId.toString())
-  hashInputs.push(value.type)
-  hashInputs.push(value.sinceTimestamp.toString())
-
-  if ('from' in value && 'to' in value) {
-    hashInputs.push(value.from.toString())
-    hashInputs.push(value.to.toString())
-  }
-
-  if ('address' in value && 'selector' in value) {
-    hashInputs.push(value.address.toString())
-    hashInputs.push(value.selector.toString())
-  }
-
-  return hashJson(hashInputs) as unknown as LivenessId
+export function LivenessId(values: string[]) {
+  const hash = hashJson(values)
+  const first32BitsAsNumber = parseInt(hash.slice(2, 10), 16)
+  return first32BitsAsNumber as unknown as LivenessId
 }
 
-LivenessId.params = function (value: InputType): json {
-  if ('from' in value && 'to' in value) {
-    return {
-      from: value.from.toString(),
-      to: value.to.toString(),
-    }
-  }
-
-  if ('address' in value && 'selector' in value) {
-    return {
-      address: value.address.toString(),
-      selector: value.selector.toString(),
-    }
-  }
-
-  assert(false, 'Runtime should not reach here')
-}
-
-LivenessId.wasUpdated = function (
-  before: { untilTimestamp?: UnixTime },
-  after: InputType,
-): boolean {
-  if (after.untilTimestamp) {
-    return !before.untilTimestamp?.equals(after.untilTimestamp)
-  } else {
-    if (before.untilTimestamp) {
-      return true
-    }
-    return false
-  }
-}
-
-LivenessId.unsafe = function unsafe(value: string) {
+LivenessId.unsafe = function unsafe(value: number) {
   return value as unknown as LivenessId
 }
 
-LivenessId.random = function unsafe() {
-  return Hash256.random() as unknown as LivenessId
+LivenessId.random = function random() {
+  return Math.floor(Math.random() * 2 ** 32) as unknown as LivenessId
 }

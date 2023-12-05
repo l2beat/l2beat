@@ -70,19 +70,19 @@ describe(transformTransfersQueryResult.name, () => {
         blockNumber: 1,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
         txHash: '0x095e4e9ee709e353ad7849cf30e4dc19',
-        livenessConfigurationId: 1,
+        livenessId: 1,
       },
       {
         blockNumber: 2,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
         txHash: '0x915d9ed63e196d8c612aad5d6f5cd1ba',
-        livenessConfigurationId: 2,
+        livenessId: 2,
       },
       {
         blockNumber: 3,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T03:00:00Z')),
         txHash: '0x90d5e81b40d6a6fa6f34b3dc67d3fce6',
-        livenessConfigurationId: 3,
+        livenessId: 3,
       },
     ]
 

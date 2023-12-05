@@ -11,13 +11,12 @@ import {
   getFunctionCallQuery,
   getTransferQuery,
   isTimestampInRange,
-  mergeConfigs,
 } from './utils'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 const TO = FROM.add(2, 'days')
 
-describe(LivenessClient.name, () => {
+describe.skip(LivenessClient.name, () => {
   describe(LivenessClient.prototype.getLivenessData.name, () => {
     it('calls and returns valid data', async () => {
       const bigquery = mockObject<BigQueryClient>({

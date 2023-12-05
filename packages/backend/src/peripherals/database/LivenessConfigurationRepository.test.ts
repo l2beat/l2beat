@@ -82,7 +82,7 @@ describe(LivenessConfigurationRepository.name, () => {
             timestamp: UnixTime.now(),
             blockNumber: 0,
             txHash: '0x',
-            livenessConfigurationId: newIds[0],
+            livenessId: newIds[0],
           },
         ])
 
@@ -222,7 +222,7 @@ describe(LivenessConfigurationRepository.name, () => {
           timestamp: UnixTime.now(),
           blockNumber: 0,
           txHash: '0x',
-          livenessConfigurationId: newIds[1],
+          livenessId: newIds[1],
         },
       ])
 

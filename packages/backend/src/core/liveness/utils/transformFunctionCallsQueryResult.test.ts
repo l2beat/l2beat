@@ -67,19 +67,19 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockNumber: 1,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
         txHash: '0x09e353ae9ee709e353ad7849cf30e4dc19',
-        livenessConfigurationId: 1,
+        livenessId: 1,
       },
       {
         blockNumber: 2,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
         txHash: '0x92b857ae9ee709e353ad7849cf30e4dc19',
-        livenessConfigurationId: 2,
+        livenessId: 2,
       },
       {
         blockNumber: 3,
         timestamp: UnixTime.fromDate(new Date('2022-01-01T03:00:00Z')),
         txHash: '0xb4858ae9ee709e353ad7849cf30e4dc19',
-        livenessConfigurationId: 3,
+        livenessId: 3,
       },
     ]
 

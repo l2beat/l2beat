@@ -3,25 +3,20 @@ import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { LivenessConfigurationRow } from 'knex/types/tables'
 
+import { LivenessConfigEntry } from '../../core/liveness/types/LivenessConfig'
 import { LivenessId } from '../../core/liveness/types/LivenessId'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
 export interface LivenessConfigurationRecord {
-  id: number
+  id: LivenessId
   projectId: ProjectId
   type: LivenessType
-  identifier: LivenessId
-  params: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
   lastSyncedTimestamp?: UnixTime
+  debugInfo: string
 }
-
-export type NewLivenessConfigurationRecord = Omit<
-  LivenessConfigurationRecord,
-  'id' | 'lastSyncedTimestamp'
->
 
 // TODO: add index when we will write controller
 export class LivenessConfigurationRepository extends BaseRepository {
@@ -37,19 +32,19 @@ export class LivenessConfigurationRepository extends BaseRepository {
   }
 
   async addMany(
-    records: NewLivenessConfigurationRecord[],
+    records: LivenessConfigEntry[],
     trx?: Knex.Transaction,
-  ): Promise<number[]> {
+  ): Promise<LivenessId[]> {
     const knex = await this.knex(trx)
 
     const insertedRows = await knex('liveness_configuration')
-      .insert(records.map(toRow))
+      .insert(records.map(toNewRow))
       .returning('id')
 
-    return insertedRows.map((row) => row.id)
+    return insertedRows.map((row) => LivenessId.unsafe(row.id))
   }
 
-  async findUnusedConfigurationsIds(): Promise<number[]> {
+  async findUnusedConfigurationsIds(): Promise<LivenessId[]> {
     const knex = await this.knex()
     const rows = (await knex('liveness_configuration as c')
       .select('c.id')
@@ -57,39 +52,31 @@ export class LivenessConfigurationRepository extends BaseRepository {
       .groupBy('c.id')
       .havingRaw('count(l.liveness_configuration_id) = 0')) as { id: number }[]
 
-    return rows.map((row) => row.id)
+    return rows.map((row) => LivenessId.unsafe(row.id))
   }
 
   async setLastSyncedTimestamp(
-    configurationId: number,
+    id: LivenessId,
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('liveness_configuration')
-      .where({
-        id: configurationId,
-      })
-      .update({
-        last_synced_timestamp: lastSyncedTimestamp.toDate(),
-      })
+      .where({ id: id.valueOf() })
+      .update({ last_synced_timestamp: lastSyncedTimestamp.toDate() })
   }
 
   async setUntilTimestamp(
-    configurationId: number,
+    id: LivenessId,
     untilTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('liveness_configuration')
-      .where({
-        id: configurationId,
-      })
-      .update({
-        until_timestamp: untilTimestamp.toDate(),
-      })
+      .where({ id: id.valueOf() })
+      .update({ until_timestamp: untilTimestamp.toDate() })
   }
 
   async deleteAll() {
@@ -97,40 +84,47 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return knex('liveness_configuration').delete()
   }
 
-  async deleteMany(ids: number[], trx?: Knex.Transaction) {
+  async deleteMany(ids: LivenessId[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    return knex('liveness_configuration').whereIn('id', ids).delete()
+    return knex('liveness_configuration')
+      .whereIn(
+        'id',
+        ids.map((id) => id.valueOf()),
+      )
+      .delete()
   }
 }
 
 function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
   return {
-    id: row.id,
+    id: LivenessId.unsafe(row.id),
     projectId: ProjectId(row.project_id),
     type: LivenessType(row.type),
-    identifier: LivenessId.unsafe(row.identifier),
-    params: row.params,
     sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
-    untilTimestamp: row.until_timestamp
-      ? UnixTime.fromDate(row.until_timestamp)
-      : undefined,
-    lastSyncedTimestamp: row.last_synced_timestamp
-      ? UnixTime.fromDate(row.last_synced_timestamp)
-      : undefined,
+    untilTimestamp:
+      row.until_timestamp && UnixTime.fromDate(row.until_timestamp),
+    lastSyncedTimestamp:
+      row.last_synced_timestamp && UnixTime.fromDate(row.last_synced_timestamp),
+    debugInfo: row.debug_info,
   }
 }
 
-function toRow(
-  record: NewLivenessConfigurationRecord,
-): Omit<LivenessConfigurationRow, 'id' | 'last_synced_timestamp'> {
+function toNewRow(entry: LivenessConfigEntry): LivenessConfigurationRow {
   return {
-    project_id: record.projectId.toString(),
-    type: record.type,
-    identifier: record.identifier.toString(),
-    params: record.params,
-    since_timestamp: record.sinceTimestamp.toDate(),
-    until_timestamp: record.untilTimestamp
-      ? record.untilTimestamp.toDate()
-      : undefined,
+    id: entry.id.valueOf(),
+    project_id: entry.projectId.toString(),
+    type: entry.type,
+    since_timestamp: entry.sinceTimestamp.toDate(),
+    until_timestamp: entry.untilTimestamp?.toDate(),
+    last_synced_timestamp: undefined,
+    debug_info: toDebugInfo(entry),
+  }
+}
+
+function toDebugInfo(value: LivenessConfigEntry): string {
+  if (value.formula === 'transfer') {
+    return `Transfer: ${value.from.toString()} -> ${value.to.toString()}`
+  } else {
+    return `Function call: ${value.address.toString()} : ${value.selector.toString()}}`
   }
 }

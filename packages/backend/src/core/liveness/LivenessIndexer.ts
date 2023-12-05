@@ -1,5 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
@@ -12,18 +12,14 @@ import { LivenessConfigurationRepository } from '../../peripherals/database/Live
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
-import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
-import {
-  adjustToForBigqueryCall,
-  getLivenessConfigHash,
-  isTimestampInRange,
-  mergeConfigs,
-} from './utils'
-import { processLivenessConfigurations } from './utils/processLivenessConfigurations'
+import { LivenessConfigEntry } from './types/LivenessConfig'
+import { LivenessId } from './types/LivenessId'
+import { adjustToForBigqueryCall, isTimestampInRange } from './utils'
+import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
 
+// TODO: add logs?
 export class LivenessIndexer extends ChildIndexer {
-  private readonly indexerId = 'liveness_indexer'
-  private readonly configHash: Hash256
+  readonly indexerId = 'liveness_indexer'
 
   constructor(
     logger: Logger,
@@ -32,31 +28,27 @@ export class LivenessIndexer extends ChildIndexer {
     private readonly livenessClient: LivenessClient,
     private readonly stateRepository: IndexerStateRepository,
     private readonly livenessRepository: LivenessRepository,
-    private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
+    private readonly configurationRepository: LivenessConfigurationRepository,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
-    this.configHash = getLivenessConfigHash(this.projects)
   }
 
   override async start(): Promise<void> {
     await this.initialize()
-
     await super.start()
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const { transfersConfig, functionCallsConfig, adjustedTo } =
-      await this.getConfiguration(from, to)
+    const [configurations, adjustedTo] = await this.getConfiguration(from, to)
 
-    if (transfersConfig.length === 0 && functionCallsConfig.length === 0) {
+    if (configurations.length === 0) {
       this.logger.info('Update skipped', { from, to: adjustedTo })
-      return Promise.resolve(adjustedTo.toNumber())
+      return adjustedTo.toNumber()
     }
 
     const data = await this.livenessClient.getLivenessData(
-      transfersConfig,
-      functionCallsConfig,
+      configurations,
       new UnixTime(from),
       adjustedTo,
     )
@@ -65,9 +57,9 @@ export class LivenessIndexer extends ChildIndexer {
       await this.livenessRepository.addMany(data, trx)
 
       await Promise.all(
-        [...transfersConfig, ...functionCallsConfig].map((c) =>
-          this.livenessConfigurationRepository.setLastSyncedTimestamp(
-            c.livenessConfigurationId,
+        configurations.map((c) =>
+          this.configurationRepository.setLastSyncedTimestamp(
+            c.id,
             adjustedTo,
             trx,
           ),
@@ -78,58 +70,66 @@ export class LivenessIndexer extends ChildIndexer {
     this.logger.info('Updated', {
       from,
       adjustedTo: adjustedTo,
-      usedConfigurations: transfersConfig.length + functionCallsConfig.length,
+      usedConfigurations: configurations.length,
       fetchedDataPoints: data.length,
     })
-    return Promise.resolve(adjustedTo.toNumber())
+    return adjustedTo.toNumber()
   }
 
   async getConfiguration(
     from: number,
     to: number,
-  ): Promise<{
-    transfersConfig: LivenessTransfer[]
-    functionCallsConfig: LivenessFunctionCall[]
-    adjustedTo: UnixTime
-  }> {
-    const configurations = await this.livenessConfigurationRepository.getAll()
+  ): Promise<[LivenessConfigEntry[], UnixTime]> {
+    const databaseEntries = await this.configurationRepository.getAll()
 
     const adjustedTo = adjustToForBigqueryCall(
       new UnixTime(from).toNumber(),
       new UnixTime(to).toNumber(),
     )
 
-    const config = mergeConfigs(this.projects, configurations)
+    const runtimeEntries = this.projects.flatMap(
+      (p) => p.livenessConfig?.entries ?? [],
+    )
 
-    const transfersConfig = config.transfers.filter((c) =>
-      isTimestampInRange(
-        c.sinceTimestamp,
-        c.untilTimestamp,
-        c.latestSyncedTimestamp,
+    const filteredConfigurations = runtimeEntries.filter((entry) => {
+      const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === entry.id)
+      assert(dbEntry, 'Database entry should not be undefined here!')
+
+      return isTimestampInRange(
+        entry.sinceTimestamp,
+        entry.untilTimestamp,
+        dbEntry.lastSyncedTimestamp,
         new UnixTime(from),
         adjustedTo,
-      ),
-    )
-    const functionCallsConfig = config.functionCalls.filter((c) =>
-      isTimestampInRange(
-        c.sinceTimestamp,
-        c.untilTimestamp,
-        c.latestSyncedTimestamp,
-        new UnixTime(from),
-        adjustedTo,
-      ),
-    )
-    return { transfersConfig, functionCallsConfig, adjustedTo }
+      )
+    })
+
+    return [filteredConfigurations, adjustedTo]
   }
 
   private async initialize() {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
+    const databaseConfigurations = await this.configurationRepository.getAll()
+    const { toAdd, toRemove, toTrim } = diffLivenessConfigurations(
+      this.projects,
+      databaseConfigurations,
+    )
+
+    const syncedTimestamps = databaseConfigurations
+      .map((c) => c.lastSyncedTimestamp)
+      .filter(notUndefined)
+
+    // TODO: test
+    const syncStatus =
+      toAdd.length > 0 || syncedTimestamps.length === 0
+        ? this.minTimestamp
+        : syncedTimestamps.reduce((min, value) => (min.lt(value) ? min : value))
 
     await this.stateRepository.runInTransaction(async (trx) => {
-      await this.initializeIndexerState(indexerState, trx)
-      await this.initializeConfigurations(indexerState, trx)
+      await this.initializeIndexerState(indexerState, syncStatus, trx)
+      await this.initializeConfigurations(toAdd, toTrim, toRemove, trx)
     })
 
     this.logger.info('Initialized state and configurations')
@@ -137,19 +137,18 @@ export class LivenessIndexer extends ChildIndexer {
 
   private async initializeIndexerState(
     indexerState: IndexerStateRecord | undefined,
+    status: UnixTime,
     trx: Knex.Transaction,
   ) {
     if (indexerState === undefined) {
       await this.stateRepository.add(
         {
           indexerId: this.indexerId,
-          configHash: this.configHash,
           safeHeight: this.minTimestamp.toNumber(),
           minTimestamp: this.minTimestamp,
         },
         trx,
       )
-      this.logger.info('Added new indexer state to the database')
       return
     }
 
@@ -161,49 +160,31 @@ export class LivenessIndexer extends ChildIndexer {
       'Minimum timestamp of this indexer cannot be updated',
     )
 
-    if (indexerState.configHash !== this.configHash) {
-      await this.stateRepository.setConfigHash(
-        this.indexerId,
-        this.configHash,
-        trx,
-      )
-      await this.stateRepository.setSafeHeight(
-        this.indexerId,
-        this.minTimestamp.toNumber(),
-        trx,
-      )
-      this.logger.info('Updated indexer state')
-    }
+    await this.stateRepository.setSafeHeight(
+      this.indexerId,
+      status.toNumber(),
+      trx,
+    )
   }
 
   private async initializeConfigurations(
-    indexerState: IndexerStateRecord | undefined,
+    toAdd: LivenessConfigEntry[],
+    toTrim: { id: LivenessId; untilTimestamp: UnixTime }[],
+    toRemove: LivenessId[],
     trx: Knex.Transaction,
   ) {
-    if (indexerState && indexerState.configHash === this.configHash) {
-      return
-    }
-    const configurations = await this.livenessConfigurationRepository.getAll()
-    const { added, phasedOut, updated } = processLivenessConfigurations(
-      this.projects,
-      configurations,
-    )
-
-    await this.livenessConfigurationRepository.addMany(added, trx)
+    await this.configurationRepository.addMany(toAdd, trx)
 
     // this will also delete records from "liveness" using CASCADE constraint
-    await this.livenessConfigurationRepository.deleteMany(
-      phasedOut.map((c) => c.id),
-      trx,
-    )
+    await this.configurationRepository.deleteMany(toRemove, trx)
 
     // there can be a situation where untilTimestamp was set retroactively
     // in this case we want to delete the liveness records that were added during this "misconfiguration" period
     await Promise.all(
-      updated.map(async (u) => {
+      toTrim.map(async (u) => {
         const untilTimestamp = u.untilTimestamp
         assert(untilTimestamp, 'untilTimestamp should not be undefined there')
-        await this.livenessConfigurationRepository.setUntilTimestamp(
+        await this.configurationRepository.setUntilTimestamp(
           u.id,
           untilTimestamp,
           trx,
@@ -213,9 +194,9 @@ export class LivenessIndexer extends ChildIndexer {
     )
 
     this.logger.info('Saved configurations to the database', {
-      added: added.length,
-      phasedOut: phasedOut.length,
-      updated: updated.length,
+      added: toAdd.length,
+      phasedOut: toRemove.length,
+      updated: toTrim.length,
     })
   }
 
@@ -223,8 +204,7 @@ export class LivenessIndexer extends ChildIndexer {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
-    const height = indexerState?.safeHeight
-    return height ?? this.minTimestamp.toNumber()
+    return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
   }
 
   override async setSafeHeight(height: number): Promise<void> {

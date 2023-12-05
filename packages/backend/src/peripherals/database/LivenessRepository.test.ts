@@ -38,7 +38,7 @@ describe(LivenessRepository.name, () => {
   beforeEach(async function () {
     this.timeout(10000)
     await configRepository.deleteAll()
-    ids = await configRepository.addMany(LIVENESS_CONFIGS)
+    await configRepository.addMany(LIVENESS_CONFIGS)
     await repository.deleteAll()
     await repository.addMany(
       DATA.map((e, i) => ({
@@ -87,7 +87,7 @@ describe(LivenessRepository.name, () => {
           timestamp: START.add(-i, 'hours'),
           blockNumber: i,
           txHash: `0xabcdef1234567892${i}`,
-          livenessConfigurationId: ids[0],
+          livenessId: ids[0],
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()
