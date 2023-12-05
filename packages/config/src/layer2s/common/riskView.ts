@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { ProjectRiskViewEntry } from '../../common'
+import { ProjectRiskViewEntry, Sentiment } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
 import { roundSeconds } from '../../utils/roundSeconds'
 import { Layer2RiskView } from '../types'
@@ -11,7 +11,7 @@ export function makeBridgeCompatible(
 ): Layer2RiskView {
   return {
     ...entry,
-    sourceUpgradeability: entry.upgradeability,
+    sourceUpgradeability: entry.exitWindow,
   }
 }
 
@@ -251,7 +251,7 @@ export const UPCOMING_RISK: ProjectRiskViewEntry = {
 export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   stateValidation: UPCOMING_RISK,
   dataAvailability: UPCOMING_RISK,
-  upgradeability: UPCOMING_RISK,
+  exitWindow: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
   proposerFailure: UPCOMING_RISK,
   destinationToken: UPCOMING_RISK,
@@ -267,7 +267,7 @@ export const UNDER_REVIEW_RISK: ProjectRiskViewEntry = {
 export const UNDER_REVIEW_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   stateValidation: UNDER_REVIEW_RISK,
   dataAvailability: UNDER_REVIEW_RISK,
-  upgradeability: UNDER_REVIEW_RISK,
+  exitWindow: UNDER_REVIEW_RISK,
   sequencerFailure: UNDER_REVIEW_RISK,
   proposerFailure: UNDER_REVIEW_RISK,
   destinationToken: UNDER_REVIEW_RISK,
@@ -428,6 +428,27 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
+export function EXIT_WINDOW(
+  upgradeDelay: number,
+  exitDelay: number,
+): ProjectRiskViewEntry {
+  const window: number = upgradeDelay - exitDelay
+  const windowString = window < 0 ? 'None' : formatSeconds(window)
+  let sentiment: Sentiment
+  if (window < 7 * 24 * 60 * 60) {
+    sentiment = 'bad'
+  } else if (window < 30 * 24 * 60 * 60) {
+    sentiment = 'warning'
+  } else {
+    sentiment = 'good'
+  }
+  return {
+    value: windowString,
+    description: `Users have ${windowString} to exit funds in case of an unwanted upgrade.`,
+    sentiment,
+  }
+}
+
 export const RISK_VIEW = {
   STATE_NONE,
   STATE_FP,
@@ -470,4 +491,5 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
   UNDER_REVIEW_RISK,
+  EXIT_WINDOW,
 }

@@ -414,8 +414,8 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(totalDelay, challengeWindow),
       sources: [
         {
           contract: 'OutboxV2',
