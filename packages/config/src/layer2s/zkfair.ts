@@ -22,7 +22,7 @@ export const zkfair: Layer2 = {
       documentation: ['https://docs.zkfair.io/'],
       explorers: [],
       repositories: [],
-      socialMedia: ['https://twitter.com/ZK_fair'],
+      socialMedia: ['https://twitter.com/ZK_fair/'],
     },
   },
   stage: {
