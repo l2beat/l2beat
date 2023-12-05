@@ -232,17 +232,15 @@ export function getLocalConfig(env: Env): Config {
             'DISCOVERY_AVALANCHE_REORG_SAFE_DEPTH',
           ),
         },
-//        {
-//          ...getChainConfig(ChainId.BASE),
-//          reorgSafeDepth: env.optionalInteger(
-//            'DISCOVERY_BASE_REORG_SAFE_DEPTH',
-//          ),
-//        },
+        //        {
+        //          ...getChainConfig(ChainId.BASE),
+        //          reorgSafeDepth: env.optionalInteger(
+        //            'DISCOVERY_BASE_REORG_SAFE_DEPTH',
+        //          ),
+        //        },
         {
           ...getChainConfig(ChainId.BSC),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_BSC_REORG_SAFE_DEPTH',
-          ),
+          reorgSafeDepth: env.optionalInteger('DISCOVERY_BSC_REORG_SAFE_DEPTH'),
         },
         {
           ...getChainConfig(ChainId.CELO),

@@ -1,9 +1,7 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { multicallConfig } from '@l2beat/discovery'
-import { EtherscanClient } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { getChainConfig } from '@l2beat/discovery'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { getChainMinTimestamp } from './chains'
