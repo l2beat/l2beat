@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "wsrun -recsm clean",
     "build": "wsrun -recsm build",
+    "build:dependencies": "wsrun -p @l2beat/{backend-tools,discovery-types} -recsm build",
     "test": "wsrun -ecam test",
     "format:fix": "wsrun -ecam format:fix",
     "format": "wsrun -ecam format",

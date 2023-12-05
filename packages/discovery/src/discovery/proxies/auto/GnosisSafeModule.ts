@@ -4,11 +4,9 @@ import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
-import { getModules } from './GnosisSafe'
+import { getCallResult } from '../../utils/getCallResult'
+import { getModules } from '../../utils/getSafeModules'
 
-const GUARD_SLOT = Bytes.fromHex(
-  '0x0000000000000000000000000000000000000000000000000000000000000065',
-)
 const AVATAR_SLOT = Bytes.fromHex(
   '0x0000000000000000000000000000000000000000000000000000000000000066',
 )
@@ -40,9 +38,13 @@ async function getGuard(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   blockNumber: number,
-): Promise<EthereumAddress> {
-  return bytes32ToAddress(
-    await provider.getStorage(address, GUARD_SLOT, blockNumber),
+): Promise<EthereumAddress | undefined> {
+  return await getCallResult<EthereumAddress>(
+    provider,
+    address,
+    'function getGuard() external view returns (address _guard)',
+    [],
+    blockNumber,
   )
 }
 
@@ -51,22 +53,24 @@ export async function detectGnosisSafeZodiacModule(
   address: EthereumAddress,
   blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const { avatar, target } = await getAvatarAndTarget(
-    provider,
-    address,
-    blockNumber,
-  )
-  if (avatar === EthereumAddress.ZERO || target === EthereumAddress.ZERO) {
+  const [guard, { avatar, target }] = await Promise.all([
+    getGuard(provider, address, blockNumber),
+    getAvatarAndTarget(provider, address, blockNumber),
+  ])
+
+  if (
+    guard === undefined ||
+    avatar === EthereumAddress.ZERO ||
+    target === EthereumAddress.ZERO
+  ) {
     return
   }
-  const [guard, modules] = await Promise.all([
-    getGuard(provider, address, blockNumber),
-    getModules(provider, address, blockNumber),
-  ])
+
+  const modules = await getModules(provider, address, blockNumber)
 
   return {
     implementations: [],
-    relatives: modules,
+    relatives: modules ?? [],
     upgradeability: {
       type: 'gnosis safe zodiac module',
       avatar,

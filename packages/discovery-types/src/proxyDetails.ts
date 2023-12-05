@@ -57,7 +57,7 @@ export interface GnosisSafeZodiacModuleUpgradeability {
   avatar: EthereumAddress
   target: EthereumAddress
   guard: EthereumAddress
-  modules: EthereumAddress[]
+  modules?: EthereumAddress[]
 }
 
 export interface EIP1967ProxyUpgradeability {

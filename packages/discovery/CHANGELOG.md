@@ -1,5 +1,16 @@
 # @l2beat/discovery
 
+## 0.27.0
+
+### Minor Changes
+
+- Improve Zodiac Module detection heuristic
+
+### Patch Changes
+
+- Updated dependencies
+  - @l2beat/discovery-types@0.7.0
+
 ## 0.26.0
 
 ### Minor Changes

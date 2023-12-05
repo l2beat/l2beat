@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/discovery",
   "description": "L2Beat discovery - engine & tooling utilized for keeping an eye on L2s",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf dist",
     "format:fix": "prettier --write .",
     "format": "prettier --check .",
@@ -19,7 +20,7 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "^0.5.0",
-    "@l2beat/discovery-types": "^0.6.0",
+    "@l2beat/discovery-types": "^0.7.0",
     "chalk": "^4.1.2",
     "deep-diff": "^1.0.2",
     "dotenv": "^16.0.3",
