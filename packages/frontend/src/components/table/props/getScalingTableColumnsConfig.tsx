@@ -1,4 +1,3 @@
-import { layer2s } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
@@ -331,8 +330,7 @@ export function getLayer3sScalingTvlColumnsConfig() {
     {
       name: 'Host Chain',
       tooltip: 'Name of host chain.',
-      getValue: (project) =>
-        layer2s.find((l) => l.id === project.hostChain)?.display.name,
+      getValue: (project) => project.hostChainName,
     },
     {
       name: 'Purpose',

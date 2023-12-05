@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, layer2s } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
@@ -58,7 +58,8 @@ function getScalingTvlViewEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     isLayer3: project.isLayer3,
-    hostChain: project.hostChain,
+    hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
+      .name,
     tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     tvlBreakdown:
