@@ -1,3 +1,4 @@
+import { layer2s } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
@@ -296,6 +297,47 @@ export function getArchivedScalingTvlColumnsConfig() {
           )}
         </>
       ),
+    },
+  ]
+
+  return columns
+}
+
+export function getLayer3sScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      getValue: (project) => <ProjectCell project={project} />,
+    },
+    {
+      name: 'Type',
+      tooltip:
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      shortName: 'Tech',
+      getValue: (project) => (
+        <TechnologyCell provider={project.provider}>
+          {project.category}
+        </TechnologyCell>
+      ),
+    },
+    {
+      name: 'Host Chain',
+      tooltip: 'Name of host chain.',
+      getValue: (project) =>
+        layer2s.find((l) => l.id === project.hostChain)?.display.name,
+    },
+    {
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this project.',
+      getValue: (project) => project.purpose,
     },
   ]
 

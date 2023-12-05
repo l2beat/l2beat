@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Layer3sIcon } from '../../../../components/icons'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
 import { UpcomingIcon } from '../../../../components/icons/symbols/UpcomingIcon'
@@ -9,6 +10,7 @@ import { getScalingRowProps } from '../../../../components/table/props/getScalin
 import {
   getActiveScalingTvlColumnsConfig,
   getArchivedScalingTvlColumnsConfig,
+  getLayer3sScalingTvlColumnsConfig,
   getUpcomingScalingTvlColumnsConfig,
 } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
@@ -25,10 +27,13 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   }
 
   const activeProjects = items.filter(
-    (item) => !item.isArchived && !item.isUpcoming,
+    (item) => !item.isArchived && !item.isUpcoming && !item.isLayer3,
   )
   const upcomingProjects = items.filter((item) => item.isUpcoming)
   const archivedProjects = items.filter((item) => item.isArchived)
+  const layers3Projects = items.filter(
+    (item) => item.isLayer3 && !item.isArchived && !item.isUpcoming,
+  )
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
@@ -76,6 +81,20 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
             ),
             itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
+          },
+          {
+            id: 'layers3',
+            name: 'Layer 3 projects',
+            shortName: 'Layers 3',
+            content: (
+              <TableView
+                items={layers3Projects}
+                rows={rows}
+                columnsConfig={getLayer3sScalingTvlColumnsConfig()}
+              />
+            ),
+            itemsCount: layers3Projects.length,
+            icon: <Layer3sIcon />,
           },
         ]}
       />
