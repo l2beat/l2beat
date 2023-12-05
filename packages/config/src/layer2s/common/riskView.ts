@@ -431,9 +431,16 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
 export function EXIT_WINDOW(
   upgradeDelay: number,
   exitDelay: number,
+  upgradeDelay2?: number,
 ): ProjectRiskViewEntry {
-  const window: number = upgradeDelay - exitDelay
-  const windowString = window < 0 ? 'None' : formatSeconds(window)
+  let window: number = upgradeDelay - exitDelay
+  let windowString = window < 0 ? 'None' : formatSeconds(window)
+  if (upgradeDelay2 !== undefined) {
+    const window2: number = upgradeDelay2 - exitDelay
+    const windowString2 = window2 < 0 ? 'None' : formatSeconds(window2)
+    windowString = `${windowString} or ${windowString2}`
+    window = Math.min(window, window2)
+  }
   let sentiment: Sentiment
   if (window < 7 * 24 * 60 * 60) {
     sentiment = 'bad'
@@ -447,6 +454,13 @@ export function EXIT_WINDOW(
     description: `Users have ${windowString} to exit funds in case of an unwanted upgrade.`,
     sentiment,
   }
+}
+
+export const EXIT_WINDOW_NON_UPGRADABLE: ProjectRiskViewEntry = {
+  value: '∞',
+  description:
+    'Users can exit funds at any time because contracts are not upgradeable.',
+  sentiment: 'good',
 }
 
 export const RISK_VIEW = {
@@ -492,4 +506,5 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_ROOTS,
   UNDER_REVIEW_RISK,
   EXIT_WINDOW,
+  EXIT_WINDOW_NON_UPGRADABLE,
 }

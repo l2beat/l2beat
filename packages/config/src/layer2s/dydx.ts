@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectRiskViewEntry } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getCommittee } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
@@ -31,17 +30,6 @@ const priorityPeriod = discovery.getContractValue<number>(
 )
 const minPriorityDelay = maxPriorityDelay - priorityPeriod
 
-const upgradeRisk: ProjectRiskViewEntry = {
-  value: `${formatSeconds(maxPriorityDelay)} or ${formatSeconds(
-    minPriorityDelay,
-  )} delay`,
-  description: `There is a ${formatSeconds(
-    maxPriorityDelay,
-  )} delay, although this time can be shortened to ${formatSeconds(
-    minPriorityDelay,
-  )} by the Priority Controller.`,
-  sentiment: 'warning',
-}
 const shortTimelockDelay = discovery.getContractValue<number>(
   'ShortTimelockExecutor',
   'getDelay',
@@ -185,7 +173,18 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    upgradeability: upgradeRisk,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(
+        maxPriorityDelay,
+        freezeGracePeriod,
+        minPriorityDelay,
+      ),
+      description: `There is a ${formatSeconds(
+        maxPriorityDelay,
+      )} delay, although this time can be shortened to ${formatSeconds(
+        minPriorityDelay,
+      )} by the Priority Controller.`,
+    },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
       sources: [
