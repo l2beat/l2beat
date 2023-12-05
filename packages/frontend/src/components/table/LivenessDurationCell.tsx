@@ -10,7 +10,7 @@ export function LivenessDurationCell(props: {
   dataType?: Exclude<keyof LivenessApiProject, 'anomalies'>
   project?: ScalingLivenessViewEntry
   tooltip?: string
-  showOptimisticRollupWarning?: boolean
+  warning?: string
 }) {
   if (
     !props.durationInSeconds &&
@@ -79,11 +79,8 @@ export function LivenessDurationCell(props: {
       data-tooltip-big={true}
     >
       {duration}
-      {props.showOptimisticRollupWarning && (
-        <div
-          className="Tooltip"
-          title="Please note, for Optimistic rollups the state is not finalized until the challenge period passes."
-        >
+      {props.warning && (
+        <div className="Tooltip" title={props.warning}>
           <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
         </div>
       )}

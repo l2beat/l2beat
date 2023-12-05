@@ -1,17 +1,13 @@
-import {
-  LivenessApiProject,
-  LivenessDataPoint,
-  LivenessDetails,
-} from '@l2beat/shared-pure'
+import { LivenessApiProject, LivenessDataPoint } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { LivenessDurationCell } from '../../../../components/table/DurationCell'
-import { ScalingLivenessViewEntry } from '../types'
+import { LivenessDurationCell } from '../../../../components/table/LivenessDurationCell'
+import { LivenessDetailsWithWarning, ScalingLivenessViewEntry } from '../types'
 import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
 
 interface Props {
-  data: LivenessDetails | undefined
+  data: LivenessDetailsWithWarning | undefined
   project: ScalingLivenessViewEntry
   dataType: Exclude<keyof LivenessApiProject, 'anomalies'>
 }
@@ -21,8 +17,6 @@ export function LivenessDurationTimeRangeCell({
   project,
   dataType,
 }: Props) {
-  const showOptimisticRollupWarning =
-    project.category === 'Optimistic Rollup' && dataType === 'stateUpdates'
   return (
     <div>
       <LivenessTimeRangeCell
@@ -33,7 +27,7 @@ export function LivenessDurationTimeRangeCell({
             tooltip={renderToStaticMarkup(
               <Tooltip label="30-day intervals" data={data?.last30Days} />,
             )}
-            showOptimisticRollupWarning={showOptimisticRollupWarning}
+            warning={data?.warning}
             dataType={dataType}
           />
         }
@@ -44,7 +38,7 @@ export function LivenessDurationTimeRangeCell({
             tooltip={renderToStaticMarkup(
               <Tooltip label="90-day intervals" data={data?.last90Days} />,
             )}
-            showOptimisticRollupWarning={showOptimisticRollupWarning}
+            warning={data?.warning}
             dataType={dataType}
           />
         }
@@ -53,9 +47,9 @@ export function LivenessDurationTimeRangeCell({
             durationInSeconds={data?.allTime?.averageInSeconds}
             project={project}
             tooltip={renderToStaticMarkup(
-              <Tooltip label="Max-day intervals" data={data?.allTime} />,
+              <Tooltip label="All-time intervals" data={data?.allTime} />,
             )}
-            showOptimisticRollupWarning={showOptimisticRollupWarning}
+            warning={data?.warning}
             dataType={dataType}
           />
         }
