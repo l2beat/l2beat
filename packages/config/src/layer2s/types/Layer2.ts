@@ -93,8 +93,17 @@ export interface Layer2Display {
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
   /** Explanation on how liveness data is gathered for given project */
-  livenessExplanation?: string
+  liveness?: Layer2LivenessDisplay
 }
+export interface Layer2LivenessDisplay {
+  explanation?: string
+  warnings?: {
+    stateUpdates?: string
+    batchSubmissions?: string
+    proofSubmissions?: string
+  }
+}
+
 export interface Layer2Config {
   /** List of native and external tokens */
   tokenList?: Token[]

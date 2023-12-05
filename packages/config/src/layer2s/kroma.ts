@@ -13,6 +13,7 @@ import {
   OPERATOR,
   subtractOne,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { RISK_VIEW } from './common/riskView'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -93,6 +94,11 @@ export const kroma: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+    },
   },
   config: {
     escrows: [

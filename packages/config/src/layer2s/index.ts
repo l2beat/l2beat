@@ -34,6 +34,7 @@ import { loopring } from './loopring'
 import { lyrafinance } from './lyrafinance'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
+import { metal } from './metal'
 import { metis } from './metis'
 import { mode } from './mode'
 import { morphism } from './morphism'
@@ -102,6 +103,7 @@ export const layer2s: Layer2[] = [
   lyrafinance,
   mantapacific,
   mantle,
+  metal,
   metis,
   mode,
   morphism,
