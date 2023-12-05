@@ -6,7 +6,7 @@ import {
   getSortingOrderByTvl,
 } from '../../../../utils/getOrder'
 import { getTvlRangeData } from '../../../../utils/tvl/getTvlStats'
-import { BridgesTvlViewSortingOrder } from '../view/types'
+import { BridgesTvlViewSortingOrder } from '../types'
 
 export function getBridgesTvlViewSortingOrder(
   projects: (Layer2 | Bridge)[],

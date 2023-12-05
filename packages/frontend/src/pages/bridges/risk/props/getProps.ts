@@ -1,23 +1,21 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { PagesData, Wrapped } from '../../../Page'
+import { Wrapped } from '../../../Page'
+import { BridgesTvlPagesData } from '../types'
 import { BridgesRiskPageProps } from '../view/BridgesRiskPage'
 import { getBridgesRiskView } from './getBridgesRiskView'
 import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  pagesData: PagesData,
+  pagesData: BridgesTvlPagesData,
 ): Wrapped<BridgesRiskPageProps> {
-  const { tvlApiResponse, verificationStatus } = pagesData
-
   return {
     props: {
       navbar: getNavbarProps(config, 'bridges'),
       riskView: getBridgesRiskView(
         [...config.bridges, ...config.layer2s],
-        tvlApiResponse,
-        verificationStatus,
+        pagesData,
       ),
       footer: getFooterProps(config),
     },

@@ -1,21 +1,25 @@
 import { Layer2 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
 
+import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { ScalingRiskPagesData, ScalingRiskViewEntry } from '../types'
 import { ScalingRiskViewProps } from '../view/ScalingRiskView'
-import { ScalingRiskViewEntry } from '../view/types'
 
 export function getScalingRiskView(
   projects: Layer2[],
-  verificationStatus: VerificationStatus,
+  pagesData: ScalingRiskPagesData,
 ): ScalingRiskViewProps {
+  const included = getIncludedProjects(projects, pagesData.tvlApiResponse)
+  const ordered = orderByTvl(included, pagesData.tvlApiResponse)
+
   return {
-    items: projects
+    items: ordered
       .filter((p) => !p.isUpcoming)
       .map((p) =>
         getScalingRiskViewEntry(
           p,
-          verificationStatus.projects[p.id.toString()],
+          pagesData.verificationStatus.projects[p.id.toString()],
         ),
       ),
   }

@@ -4,7 +4,7 @@ import { ScalingFilters } from '../../../../components/table/filters/ScalingFilt
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingActivityColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
-import { ActivityViewEntry, ActivityViewSortingOrder } from './types'
+import { ActivityViewEntry, ActivityViewSortingOrder } from '../types'
 export interface ScalingActivityViewProps {
   items: ActivityViewEntry[]
   sortingOrder: ActivityViewSortingOrder

@@ -1,4 +1,4 @@
-import { BridgesRiskViewEntry } from './risk/view/types'
-import { BridgesTvlViewEntry } from './tvl/view/types'
+import { BridgesRiskViewEntry } from './risk/types'
+import { BridgesTvlViewEntry } from './tvl/types'
 
 export type BridgesEntry = BridgesTvlViewEntry | BridgesRiskViewEntry

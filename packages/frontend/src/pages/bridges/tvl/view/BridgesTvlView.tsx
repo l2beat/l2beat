@@ -10,7 +10,7 @@ import {
 } from '../../../../components/table/props/getBridgesTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { Tabs } from '../../../../components/Tabs'
-import { BridgesTvlViewEntry, BridgesTvlViewSortingOrder } from './types'
+import { BridgesTvlViewEntry, BridgesTvlViewSortingOrder } from '../types'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]

@@ -4,7 +4,7 @@ import React from 'react'
 import {
   ActivityViewEntry,
   ActivityViewSortingOrder,
-} from '../../../pages/scaling/activity/view/types'
+} from '../../../pages/scaling/activity/types'
 import {
   ScalingDetailedTvlViewEntry,
   ScalingDetailedTvlViewSortingOrder,
@@ -15,7 +15,7 @@ import {
 } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
-import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/view/types'
+import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
 import {
   ScalingTvlViewEntry,
   ScalingTvlViewSortingOrder,

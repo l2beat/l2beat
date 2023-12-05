@@ -7,7 +7,7 @@ import { getBridgesRowProps } from '../../../../components/table/props/getBridge
 import { getBridgesRiskColumnsConfig } from '../../../../components/table/props/getBridgesTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { Tabs } from '../../../../components/Tabs'
-import { BridgesRiskViewEntry, BridgesRiskViewSortingOrder } from './types'
+import { BridgesRiskViewEntry, BridgesRiskViewSortingOrder } from '../types'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]

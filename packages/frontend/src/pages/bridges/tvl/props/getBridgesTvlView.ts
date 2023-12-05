@@ -1,11 +1,13 @@
 import { Bridge, Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
+import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
+import { BridgesTvlViewEntry } from '../types'
 import { BridgesTvlViewProps } from '../view/BridgesTvlView'
-import { BridgesTvlViewEntry } from '../view/types'
 import { getBridgesTvlViewSortingOrder } from './getBridgesTvlViewSortingOrder'
 
 export function getBridgesTvlView(
@@ -15,7 +17,10 @@ export function getBridgesTvlView(
   combinedTvl: number,
   verificationStatus: VerificationStatus,
 ): BridgesTvlViewProps {
-  const items = projects.map((project) =>
+  const included = getIncludedProjects(projects, tvlApiResponse)
+  const ordered = orderByTvl(included, tvlApiResponse)
+
+  const items = ordered.map((project) =>
     getBridgesTvlViewEntry(
       project,
       tvlApiResponse,

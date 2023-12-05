@@ -1,6 +1,6 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 
-import { TVLBreakdownProps } from '../../../../components/TVLBreakdown'
+import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 
 export interface BridgesTvlViewEntry {
   type: 'bridge' | 'layer2'

@@ -1,18 +1,20 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { getDestination } from '../../../../utils/getDestination'
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { BridgesTvlPagesData } from '../types'
 import { BridgesRiskViewProps } from '../view/BridgesRiskView'
 import { getBridgesRiskViewSortingOrder } from './getBridgesRiskViewSortingOrder'
 
 export function getBridgesRiskView(
   projects: (Layer2 | Bridge)[],
-  tvlApiResponse: TvlApiResponse,
-  verificationStatus: VerificationStatus,
+  pagesData: BridgesTvlPagesData,
 ): BridgesRiskViewProps {
+  const { tvlApiResponse, verificationStatus } = pagesData
+
   const included = getIncludedProjects(projects, tvlApiResponse)
   const orderedProjects = orderByTvl(included, tvlApiResponse)
 

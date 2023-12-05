@@ -7,7 +7,7 @@ import { getScalingRowProps } from '../../../../components/table/props/getScalin
 import { getScalingRiskColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { RowConfig, TableView } from '../../../../components/table/TableView'
 import { Tabs } from '../../../../components/Tabs'
-import { ScalingRiskViewEntry } from './types'
+import { ScalingRiskViewEntry } from '../types'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]

@@ -1,8 +1,5 @@
 import { getEntrySortingOrder } from '../../../../utils/getOrder'
-import {
-  BridgesRiskViewEntry,
-  BridgesRiskViewSortingOrder,
-} from '../view/types'
+import { BridgesRiskViewEntry, BridgesRiskViewSortingOrder } from '../types'
 
 export function getBridgesRiskViewSortingOrder(
   items: BridgesRiskViewEntry[],

@@ -1,5 +1,5 @@
 import { getEntrySortingOrder } from '../../../../utils/getOrder'
-import { ActivityViewEntry, ActivityViewSortingOrder } from '../view/types'
+import { ActivityViewEntry, ActivityViewSortingOrder } from '../types'
 
 export function getScalingActivityViewSortingOrder(
   entries: ActivityViewEntry[],

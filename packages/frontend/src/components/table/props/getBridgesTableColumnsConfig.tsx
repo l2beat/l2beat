@@ -3,11 +3,11 @@ import React from 'react'
 import {
   BridgesRiskViewEntry,
   BridgesRiskViewSortingOrder,
-} from '../../../pages/bridges/risk/view/types'
+} from '../../../pages/bridges/risk/types'
 import {
   BridgesTvlViewEntry,
   BridgesTvlViewSortingOrder,
-} from '../../../pages/bridges/tvl/view/types'
+} from '../../../pages/bridges/tvl/types'
 import { TVLBreakdown } from '../../TVLBreakdown'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
