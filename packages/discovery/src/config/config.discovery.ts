@@ -48,7 +48,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   }
 }
 
-function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
+export function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
   const env = getEnv()
 
   switch (chainId) {
@@ -177,6 +177,9 @@ function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
         multicall: multicallConfig.gnosis,
         etherscanApiKey: env.string('DISCOVERY_GNOSIS_ETHERSCAN_API_KEY'),
         etherscanUrl: 'https://api.gnosisscan.io/api',
+        etherscanUnsupported: {
+          getContractCreation: true,
+        },
       }
     case ChainId.NMV:
       throw new Error('NMV is not supported')

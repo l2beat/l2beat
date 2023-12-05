@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.27.1
+
+### Patch Changes
+
+- Export additional types
+
 ## 0.27.0
 
 ### Minor Changes

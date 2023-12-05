@@ -1,4 +1,8 @@
 export { discover } from './cli/discoverCommand'
+export {
+  type DiscoveryChainConfig,
+  getChainConfig,
+} from './config/config.discovery'
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
