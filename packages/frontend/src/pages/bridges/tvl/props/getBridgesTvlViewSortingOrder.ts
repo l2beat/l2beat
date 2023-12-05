@@ -1,38 +1,56 @@
-import { getSortingOrder } from '../../../../components/table/props/getSortingOrder'
-import { BridgesTvlViewEntry, BridgesTvlViewSortingOrder } from '../view/types'
+import { Bridge, Layer2 } from '@l2beat/config'
+import { TvlApiResponse } from '@l2beat/shared-pure'
+
+import {
+  getProjectSortingOrder,
+  getSortingOrderByTvl,
+} from '../../../../utils/getOrder'
+import { getTvlRangeData } from '../../../../utils/tvl/getTvlStats'
+import { BridgesTvlViewSortingOrder } from '../view/types'
 
 export function getBridgesTvlViewSortingOrder(
-  entries: BridgesTvlViewEntry[],
+  projects: (Layer2 | Bridge)[],
+  tvlApiResponse: TvlApiResponse,
 ): BridgesTvlViewSortingOrder {
   return {
-    name: getSortingOrder(entries, (a, b) =>
-      a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+    name: getProjectSortingOrder(projects, (a, b) =>
+      a.display.name.toLowerCase().localeCompare(b.display.name.toLowerCase()),
     ),
-    tvl: getSortingOrder(entries, (a, b) => {
-      const aTvl = parseFloat(a.tvl ?? '0')
-      const bTvl = parseFloat(b.tvl ?? '0')
-      return bTvl - aTvl
-    }),
-    sevenDayChange: getSortingOrder(entries, (a, b) => {
-      const aChange = parseFloat(a.sevenDayChange ?? '0')
-      const bChange = parseFloat(b.sevenDayChange ?? '0')
+    tvl: getSortingOrderByTvl(projects, tvlApiResponse, 'valueUsd'),
+    sevenDayChange: getProjectSortingOrder(projects, (a, b) => {
+      const aProject = tvlApiResponse.projects[a.id.toString()]
+      const bProject = tvlApiResponse.projects[b.id.toString()]
+      if (!aProject || !bProject) {
+        throw new Error('Only included projects should be sorted')
+      }
+
+      const { latestTvl: aLatestTvl, sevenDaysAgo: aSevenDaysAgo } =
+        getTvlRangeData(aProject)
+      const { latestTvl: bLatestTvl, sevenDaysAgo: bSevenDaysAgo } =
+        getTvlRangeData(bProject)
+
+      const aChange = aLatestTvl / aSevenDaysAgo - 1
+      const bChange = bLatestTvl / bSevenDaysAgo - 1
+
       return bChange - aChange
     }),
-    validatedBy: getSortingOrder(entries, (a, b) => {
-      if (b.validatedBy?.value === undefined) {
+    validatedBy: getProjectSortingOrder(projects, (a, b) => {
+      if (b.riskView?.validatedBy?.value === undefined) {
         return 1
       }
 
-      if (a.validatedBy?.value === undefined) {
+      if (a.riskView?.validatedBy?.value === undefined) {
         return -1
       }
 
-      return a.validatedBy.value
+      return a.riskView.validatedBy.value
         .toLowerCase()
-        .localeCompare(b.validatedBy.value.toLowerCase())
+        .localeCompare(b.riskView.validatedBy.value.toLowerCase())
     }),
-    type: getSortingOrder(entries, (a, b) =>
-      a.category.toLowerCase().localeCompare(b.category.toLowerCase()),
+    type: getProjectSortingOrder(projects, (a, b) =>
+      a.display.category
+        .toLowerCase()
+        .localeCompare(b.display.category.toLowerCase()),
     ),
   }
 }

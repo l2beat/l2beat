@@ -1,29 +1,29 @@
-import { getSortingOrder } from '../../../../components/table/props/getSortingOrder'
+import { getEntrySortingOrder } from '../../../../utils/getOrder'
 import { ActivityViewEntry, ActivityViewSortingOrder } from '../view/types'
 
 export function getScalingActivityViewSortingOrder(
   entries: ActivityViewEntry[],
 ): ActivityViewSortingOrder {
   return {
-    name: getSortingOrder(entries, (a, b) =>
+    name: getEntrySortingOrder(entries, (a, b) =>
       a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
     ),
-    maxDailyTps: getSortingOrder(entries, (a, b) => {
+    maxDailyTps: getEntrySortingOrder(entries, (a, b) => {
       const aTps = a.maxTps ?? 0
       const bTps = b.maxTps ?? 0
       return bTps - aTps
     }),
-    pastDayTps: getSortingOrder(entries, (a, b) => {
+    pastDayTps: getEntrySortingOrder(entries, (a, b) => {
       const aTps = a.tpsDaily ?? -1
       const bTps = b.tpsDaily ?? -1
       return bTps - aTps
     }),
-    sevenDayChange: getSortingOrder(entries, (a, b) => {
+    sevenDayChange: getEntrySortingOrder(entries, (a, b) => {
       const aChange = parseFloat(a.tpsWeeklyChange)
       const bChange = parseFloat(b.tpsWeeklyChange)
       return bChange - aChange
     }),
-    thirtyDayTxCount: getSortingOrder(entries, (a, b) => {
+    thirtyDayTxCount: getEntrySortingOrder(entries, (a, b) => {
       const aTxCount = a.transactionsMonthlyCount ?? 0
       const bTxCount = b.transactionsMonthlyCount ?? 0
       return bTxCount - aTxCount

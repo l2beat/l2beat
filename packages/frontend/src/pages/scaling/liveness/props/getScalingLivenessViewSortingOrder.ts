@@ -1,31 +1,50 @@
-import { getSortingOrder } from '../../../../utils/getOrder'
-import {
-  ScalingLivenessViewEntry,
-  ScalingLivenessViewSortingOrder,
-} from '../types'
+import { Layer2 } from '@l2beat/config'
+import { LivenessApiProject, LivenessApiResponse } from '@l2beat/shared-pure'
+
+import { getProjectSortingOrder } from '../../../../utils/getOrder'
+import { ScalingLivenessViewSortingOrder } from '../types'
 
 export function getScalingLivenessViewSortingOrder(
-  entries: ScalingLivenessViewEntry[],
+  projects: Layer2[],
+  livenessApiResponse: LivenessApiResponse,
 ): ScalingLivenessViewSortingOrder {
   return {
-    name: getSortingOrder(entries, (a, b) =>
-      a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+    name: getProjectSortingOrder(projects, (a, b) =>
+      a.display.name.toLowerCase().localeCompare(b.display.name.toLowerCase()),
     ),
-    stateUpdates: orderByLiveness(entries, 'stateUpdates'),
-    txDataSubmissions: orderByLiveness(entries, 'batchSubmissions'),
-    technology: getSortingOrder(entries, (a, b) =>
-      a.category.toLowerCase().localeCompare(b.category.toLowerCase()),
+    stateUpdates: orderByLiveness(
+      projects,
+      livenessApiResponse,
+      'stateUpdates',
+    ),
+    proofSubmissions: orderByLiveness(
+      projects,
+      livenessApiResponse,
+      'proofSubmissions',
+    ),
+    txDataSubmissions: orderByLiveness(
+      projects,
+      livenessApiResponse,
+      'batchSubmissions',
+    ),
+    technology: getProjectSortingOrder(projects, (a, b) =>
+      a.display.category
+        .toLowerCase()
+        .localeCompare(b.display.category.toLowerCase()),
     ),
   }
 }
 
 function orderByLiveness(
-  projects: ScalingLivenessViewEntry[],
-  type: 'stateUpdates' | 'batchSubmissions',
+  projects: Layer2[],
+  livenessApiResponse: LivenessApiResponse,
+  type: Exclude<keyof LivenessApiProject, 'anomalies'>,
 ) {
-  return getSortingOrder(projects, (a, b) => {
-    const averageA = a[type]?.last30Days?.averageInSeconds
-    const averageB = b[type]?.last30Days?.averageInSeconds
+  return getProjectSortingOrder(projects, (a, b) => {
+    const averageA =
+      livenessApiResponse.projects[a.id.toString()]?.[type]?.last30Days
+    const averageB =
+      livenessApiResponse.projects[b.id.toString()]?.[type]?.last30Days
 
     if (averageA === undefined && averageB === undefined) {
       return 0

@@ -1,35 +1,23 @@
-import { getSortingOrder } from '../../../../utils/getOrder'
+import { Layer2 } from '@l2beat/config'
+import { TvlApiResponse } from '@l2beat/shared-pure'
+
 import {
-  ScalingDetailedTvlViewEntry,
-  ScalingDetailedTvlViewSortingOrder,
-} from '../types'
+  getProjectSortingOrder,
+  getSortingOrderByTvl,
+} from '../../../../utils/getOrder'
+import { ScalingDetailedTvlViewSortingOrder } from '../types'
 
 export function getScalingDetailedTvlViewSortingOrder(
-  entries: ScalingDetailedTvlViewEntry[],
+  projects: Layer2[],
+  tvlApiResponse: TvlApiResponse,
 ): ScalingDetailedTvlViewSortingOrder {
   return {
-    name: getSortingOrder(entries, (a, b) =>
-      a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+    name: getProjectSortingOrder(projects, (a, b) =>
+      a.display.name.toLowerCase().localeCompare(b.display.name.toLowerCase()),
     ),
-    total: getSortingOrder(entries, (a, b) => {
-      const aTvl = parseFloat(a.tvl ?? '0')
-      const bTvl = parseFloat(b.tvl ?? '0')
-      return bTvl - aTvl
-    }),
-    external: getSortingOrder(entries, (a, b) => {
-      const aExternal = parseFloat(a.ebv ?? '0')
-      const bExternal = parseFloat(b.ebv ?? '0')
-      return bExternal - aExternal
-    }),
-    canonical: getSortingOrder(entries, (a, b) => {
-      const aCanonical = parseFloat(a.cbv ?? '0')
-      const bCanonical = parseFloat(b.cbv ?? '0')
-      return bCanonical - aCanonical
-    }),
-    native: getSortingOrder(entries, (a, b) => {
-      const aNative = parseFloat(a.nmv ?? '0')
-      const bNative = parseFloat(b.nmv ?? '0')
-      return bNative - aNative
-    }),
+    total: getSortingOrderByTvl(projects, tvlApiResponse, 'valueUsd'),
+    external: getSortingOrderByTvl(projects, tvlApiResponse, 'ebvUsd'),
+    canonical: getSortingOrderByTvl(projects, tvlApiResponse, 'cbvUsd'),
+    native: getSortingOrderByTvl(projects, tvlApiResponse, 'nmvUsd'),
   }
 }

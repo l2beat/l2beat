@@ -30,7 +30,7 @@ export function getScalingTvlView(
   )
   return {
     items,
-    sortingOrder: getScalingTvlViewSortingOrder(items),
+    sortingOrder: getScalingTvlViewSortingOrder(projects, tvlApiResponse),
   }
 }
 
@@ -64,8 +64,11 @@ function getScalingTvlViewEntry(
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
-    tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
-    tvlValue: stats?.tvl,
+    tvl:
+      stats && escrowsConfigured(project)
+        ? formatUSD(stats.latestTvl)
+        : undefined,
+    tvlValue: stats?.latestTvl,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     tvlBreakdown:
       stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
@@ -75,9 +78,9 @@ function getScalingTvlViewEntry(
       stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
     marketShare:
       stats && escrowsConfigured(project)
-        ? formatPercent(stats.tvl / aggregateTvl)
+        ? formatPercent(stats.latestTvl / aggregateTvl)
         : undefined,
-    marketShareValue: stats?.tvl && stats.tvl / aggregateTvl,
+    marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
     purpose: project.display.purpose,
     stage: project.stage,
   }

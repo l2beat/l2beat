@@ -1,4 +1,4 @@
-import { getSortingOrder } from '../../../../utils/getOrder'
+import { getEntrySortingOrder } from '../../../../utils/getOrder'
 import {
   BridgesRiskViewEntry,
   BridgesRiskViewSortingOrder,
@@ -8,10 +8,10 @@ export function getBridgesRiskViewSortingOrder(
   items: BridgesRiskViewEntry[],
 ): BridgesRiskViewSortingOrder {
   return {
-    name: getSortingOrder(items, (a, b) =>
+    name: getEntrySortingOrder(items, (a, b) =>
       a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
     ),
-    validatedBy: getSortingOrder(items, (a, b) => {
+    validatedBy: getEntrySortingOrder(items, (a, b) => {
       if (b.validatedBy?.value === undefined) {
         return 1
       }
@@ -24,7 +24,7 @@ export function getBridgesRiskViewSortingOrder(
         .toLowerCase()
         .localeCompare(b.validatedBy.value.toLowerCase())
     }),
-    type: getSortingOrder(items, (a, b) =>
+    type: getEntrySortingOrder(items, (a, b) =>
       a.category.toLowerCase().localeCompare(b.category.toLowerCase()),
     ),
   }

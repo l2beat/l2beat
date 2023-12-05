@@ -18,6 +18,7 @@ export interface ScalingLivenessViewEntry {
 export interface ScalingLivenessViewSortingOrder {
   name: string[]
   txDataSubmissions: string[]
+  proofSubmissions: string[]
   stateUpdates: string[]
   technology: string[]
 }

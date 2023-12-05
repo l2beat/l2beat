@@ -23,7 +23,10 @@ export function getScalingDetailedTvlView(
   )
   return {
     items,
-    sortingOrder: getScalingDetailedTvlViewSortingOrder(items),
+    sortingOrder: getScalingDetailedTvlViewSortingOrder(
+      projects,
+      tvlApiResponse,
+    ),
   }
 }
 

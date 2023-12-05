@@ -27,7 +27,7 @@ export function getBridgesTvlView(
 
   return {
     items,
-    sortingOrder: getBridgesTvlViewSortingOrder(items),
+    sortingOrder: getBridgesTvlViewSortingOrder(projects, tvlApiResponse),
   }
 }
 
@@ -59,15 +59,15 @@ export function getBridgesTvlViewEntry(
     isArchived: project.isArchived,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
-    tvl: stats ? formatUSD(stats.tvl) : undefined,
+    tvl: stats ? formatUSD(stats.latestTvl) : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
     oneDayChange: stats ? stats.oneDayChange : undefined,
     sevenDayChange: stats ? stats.sevenDayChange : undefined,
     bridgesMarketShare: stats
-      ? formatPercent(stats.tvl / bridgesTvl)
+      ? formatPercent(stats.latestTvl / bridgesTvl)
       : undefined,
     combinedMarketShare: stats
-      ? formatPercent(stats.tvl / combinedTvl)
+      ? formatPercent(stats.latestTvl / combinedTvl)
       : undefined,
     validatedBy: project.riskView?.validatedBy,
     category: project.display.category,

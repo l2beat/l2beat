@@ -1,20 +1,23 @@
-import { getSortingOrder } from '../../../../utils/getOrder'
-import { ScalingTvlViewEntry, ScalingTvlViewSortingOrder } from '../types'
+import { Layer2 } from '@l2beat/config'
+import { TvlApiResponse } from '@l2beat/shared-pure'
+
+import {
+  getProjectSortingOrder,
+  getSortingOrderByTvl,
+} from '../../../../utils/getOrder'
+import { ScalingTvlViewSortingOrder } from '../types'
 
 export function getScalingTvlViewSortingOrder(
-  entry: ScalingTvlViewEntry[],
+  projects: Layer2[],
+  tvlApiResponse: TvlApiResponse,
 ): ScalingTvlViewSortingOrder {
   return {
-    name: getSortingOrder(entry, (a, b) =>
-      a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+    name: getProjectSortingOrder(projects, (a, b) =>
+      a.display.name.toLowerCase().localeCompare(b.display.name.toLowerCase()),
     ),
-    stage: getSortingOrder(entry, (a, b) =>
+    stage: getProjectSortingOrder(projects, (a, b) =>
       a.stage.stage.toLowerCase().localeCompare(b.stage.stage.toLowerCase()),
     ),
-    tvl: getSortingOrder(entry, (a, b) => {
-      const aTvl = parseFloat(a.tvl ?? '0')
-      const bTvl = parseFloat(b.tvl ?? '0')
-      return bTvl - aTvl
-    }),
+    tvl: getSortingOrderByTvl(projects, tvlApiResponse, 'valueUsd'),
   }
 }
