@@ -147,8 +147,8 @@ declare module 'knex/types/tables' {
     project_id: string
     type: string
     since_timestamp: Date
-    until_timestamp: Date | undefined
-    last_synced_timestamp: Date | undefined
+    until_timestamp: Date | null
+    last_synced_timestamp: Date | null
     debug_info: string
   }
 

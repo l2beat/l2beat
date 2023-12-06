@@ -48,9 +48,9 @@ export class LivenessConfigurationRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = (await knex('liveness_configuration as c')
       .select('c.id')
-      .leftJoin('liveness as l', 'c.id', 'l.liveness_configuration_id')
+      .leftJoin('liveness as l', 'c.id', 'l.liveness_id')
       .groupBy('c.id')
-      .havingRaw('count(l.liveness_configuration_id) = 0')) as { id: number }[]
+      .havingRaw('count(l.liveness_id) = 0')) as { id: string }[]
 
     return rows.map((row) => LivenessId.unsafe(row.id))
   }
@@ -96,15 +96,21 @@ export class LivenessConfigurationRepository extends BaseRepository {
 }
 
 function toRecord(row: LivenessConfigurationRow): LivenessConfigurationRecord {
+  const untilTimestamp = row.until_timestamp
+    ? UnixTime.fromDate(row.until_timestamp)
+    : undefined
+
+  const lastSyncedTimestamp = row.last_synced_timestamp
+    ? UnixTime.fromDate(row.last_synced_timestamp)
+    : undefined
+
   return {
     id: LivenessId.unsafe(row.id),
     projectId: ProjectId(row.project_id),
     type: LivenessType(row.type),
     sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
-    untilTimestamp:
-      row.until_timestamp && UnixTime.fromDate(row.until_timestamp),
-    lastSyncedTimestamp:
-      row.last_synced_timestamp && UnixTime.fromDate(row.last_synced_timestamp),
+    untilTimestamp,
+    lastSyncedTimestamp,
     debugInfo: row.debug_info,
   }
 }
@@ -115,8 +121,8 @@ function toNewRow(entry: LivenessConfigEntry): LivenessConfigurationRow {
     project_id: entry.projectId.toString(),
     type: entry.type,
     since_timestamp: entry.sinceTimestamp.toDate(),
-    until_timestamp: entry.untilTimestamp?.toDate(),
-    last_synced_timestamp: undefined,
+    until_timestamp: entry.untilTimestamp?.toDate() ?? null,
+    last_synced_timestamp: null,
     debug_info: toDebugInfo(entry),
   }
 }
