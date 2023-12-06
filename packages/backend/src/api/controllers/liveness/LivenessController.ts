@@ -104,13 +104,13 @@ export class LivenessController {
     calculateIntervals(records)
 
     const lastRecord = records.at(-1)
-    assert(!(lastRecord === undefined))
+    assert(lastRecord !== undefined)
 
     const timestamp60daysAgo = lastHour.add(-60, 'days')
     const last60Days = records.filter((record) =>
       record.timestamp.gte(timestamp60daysAgo),
     )
-    assert(!(last60Days.length === 0))
+    assert(last60Days.length !== 0)
 
     const startIndex = last60Days.findIndex((record) =>
       record.timestamp.lte(lastHour),
