@@ -14,16 +14,13 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.alterTable('liveness_configurations', (table) => {
-    table.dropPrimary()
-    table.dropColumn('id')
-    table.renameColumn('identifier', 'id')
-    table.primary(['id'])
+  await knex.schema.alterTable('indexer_state', (table) => {
+    table.dropColumn('config_hash')
   })
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.alterTable('liveness_configurations', () => {
-    // TODO: write me!
+  await knex.schema.alterTable('indexer_state', (table) => {
+    table.string('config_hash').notNullable()
   })
 }

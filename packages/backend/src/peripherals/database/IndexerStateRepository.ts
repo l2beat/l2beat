@@ -12,7 +12,6 @@ export interface IndexerStateRecord {
   minTimestamp?: UnixTime
 }
 
-// TODO: migrate the database
 export class IndexerStateRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
