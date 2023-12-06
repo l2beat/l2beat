@@ -139,11 +139,11 @@ declare module 'knex/types/tables' {
     timestamp: Date
     block_number: number
     tx_hash: string
-    liveness_configuration_id: number
+    liveness_id: string
   }
 
   interface LivenessConfigurationRow {
-    id: number
+    id: string
     project_id: string
     type: string
     since_timestamp: Date

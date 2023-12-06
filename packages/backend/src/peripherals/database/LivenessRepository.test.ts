@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessId } from '../../core/liveness/types/LivenessId'
 import { setupDatabaseTestSuite } from '../../test/database'
 import { LivenessConfigurationRepository } from './LivenessConfigurationRepository'
 import { LIVENESS_CONFIGS } from './LivenessConfigurationRepository.test'
@@ -83,12 +82,12 @@ describe(LivenessRepository.name, () => {
 
     it('big query', async () => {
       const records: LivenessRecord[] = []
-      for (let i = 5; i < 15_000; i++) {
+      for (let i = 0; i < 15_000; i++) {
         records.push({
           timestamp: START.add(-i, 'hours'),
           blockNumber: i,
           txHash: `0xabcdef1234567892${i}`,
-          livenessId: LivenessId.random(),
+          livenessId: LIVENESS_CONFIGS[0].id,
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()

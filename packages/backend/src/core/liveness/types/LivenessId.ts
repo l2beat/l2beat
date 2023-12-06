@@ -1,19 +1,21 @@
 import { hashJson } from '@l2beat/shared-pure'
 
-export interface LivenessId extends Number {
-  _LivenessIdBrand: number
+export interface LivenessId extends String {
+  _LivenessIdBrand: string
 }
 
 export function LivenessId(values: string[]) {
   const hash = hashJson(values)
-  const first32BitsAsNumber = parseInt(hash.slice(2, 10), 16)
-  return first32BitsAsNumber as unknown as LivenessId
+  const first4bytes = hash.slice(2, 10)
+  return first4bytes as unknown as LivenessId
 }
 
-LivenessId.unsafe = function unsafe(value: number) {
+LivenessId.unsafe = function unsafe(value: string) {
   return value as unknown as LivenessId
 }
 
 LivenessId.random = function random() {
-  return Math.floor(Math.random() * 2 ** 32) as unknown as LivenessId
+  const letter = () =>
+    'abcdefghijklmnopqrstuvwxyz'[Math.floor(Math.random() * 26)]
+  return LivenessId(Array.from({ length: 40 }).map(letter))
 }
