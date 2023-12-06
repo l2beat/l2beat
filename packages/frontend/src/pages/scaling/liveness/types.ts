@@ -26,9 +26,22 @@ export interface ScalingLivenessViewEntry {
 
 export interface ScalingLivenessViewSortingOrder {
   name: string[]
-  txDataSubmissions: string[]
-  proofSubmissions: string[]
-  stateUpdates: string[]
+  txDataSubmissions: {
+    '30D': string[]
+    '90D': string[]
+    MAX: string[]
+  }
+  proofSubmissions: {
+    '30D': string[]
+    '90D': string[]
+    MAX: string[]
+  }
+  stateUpdates: {
+    '30D': string[]
+    '90D': string[]
+    MAX: string[]
+  }
+
   technology: string[]
 }
 

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { makeQuery } from './query'
+import { setSortingArrowsOrderKey } from './table/configureSortingArrows'
 import { setQueryParams } from './utils/setQueryParams'
 
 const LivenessTimeRangeControlsValues = z.enum(['30D', '90D', 'MAX'])
@@ -22,11 +23,22 @@ export function configureLivenessTimeRangeControls() {
     if (control.value === preselectedTimeRange) {
       const parsedValue = LivenessTimeRangeControlsValues.parse(control.value)
       control.checked = true
+
+      setSortingArrowsOrderKey('tx-data-submissions', control.value)
+      setSortingArrowsOrderKey('proof-submissions', control.value)
+      setSortingArrowsOrderKey('state-updates', control.value)
+
       manageCellVisibility(parsedValue)
     }
     control.addEventListener('change', () => {
+      const searchParams = new URLSearchParams(window.location.search)
+
       const parsedValue = LivenessTimeRangeControlsValues.parse(control.value)
       manageCellVisibility(parsedValue)
+
+      setSortingArrowsOrderKey('tx-data-submissions', control.value)
+      setSortingArrowsOrderKey('proof-submissions', control.value)
+      setSortingArrowsOrderKey('state-updates', control.value)
 
       searchParams.set('time-range', parsedValue)
       setQueryParams(searchParams)

@@ -12,21 +12,67 @@ export function getScalingLivenessViewSortingOrder(
     name: getProjectSortingOrder(projects, (a, b) =>
       a.display.name.toLowerCase().localeCompare(b.display.name.toLowerCase()),
     ),
-    stateUpdates: orderByLiveness(
-      projects,
-      livenessApiResponse,
-      'stateUpdates',
-    ),
-    proofSubmissions: orderByLiveness(
-      projects,
-      livenessApiResponse,
-      'proofSubmissions',
-    ),
-    txDataSubmissions: orderByLiveness(
-      projects,
-      livenessApiResponse,
-      'batchSubmissions',
-    ),
+    stateUpdates: {
+      '30D': orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'stateUpdates',
+        'last30Days',
+      ),
+      '90D': orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'stateUpdates',
+        'last90Days',
+      ),
+      MAX: orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'stateUpdates',
+        'allTime',
+      ),
+    },
+    proofSubmissions: {
+      '30D': orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'proofSubmissions',
+        'last30Days',
+      ),
+      '90D': orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'proofSubmissions',
+        'last90Days',
+      ),
+      MAX: orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'proofSubmissions',
+        'allTime',
+      ),
+    },
+    txDataSubmissions: {
+      '30D': orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'batchSubmissions',
+        'last30Days',
+      ),
+      '90D': orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'batchSubmissions',
+        'last90Days',
+      ),
+      MAX: orderByLiveness(
+        projects,
+        livenessApiResponse,
+        'batchSubmissions',
+        'allTime',
+      ),
+    },
+
     technology: getProjectSortingOrder(projects, (a, b) =>
       a.display.category
         .toLowerCase()
@@ -39,13 +85,14 @@ function orderByLiveness(
   projects: Layer2[],
   livenessApiResponse: LivenessApiResponse,
   type: Exclude<keyof LivenessApiProject, 'anomalies'>,
+  range: 'last30Days' | 'last90Days' | 'allTime',
 ) {
   return getProjectSortingOrder(projects, (a, b) => {
     const averageA =
-      livenessApiResponse.projects[a.id.toString()]?.[type]?.last30Days
+      livenessApiResponse.projects[a.id.toString()]?.[type]?.[range]
         ?.averageInSeconds
     const averageB =
-      livenessApiResponse.projects[b.id.toString()]?.[type]?.last30Days
+      livenessApiResponse.projects[b.id.toString()]?.[type]?.[range]
         ?.averageInSeconds
 
     if (averageA === undefined && averageB === undefined) {

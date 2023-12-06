@@ -1,13 +1,22 @@
+import isArray from 'lodash/isArray'
+
 import { makeQuery } from '../query'
 import { setQueryParams } from '../utils/setQueryParams'
 
 type State = 'asc' | 'desc' | null
 
+interface UrlState {
+  queryParams?: {
+    name: string
+    state: State
+  }
+  hash: string
+}
 interface SortingArrowsElement {
   node: HTMLElement
-  order: string[]
   name: string
-  state: State
+  getOrder: () => string[] | undefined
+  setOrderKey: (orderKey: string) => void
   setState: (state: State) => void
   toggleState: () => State
 }
@@ -59,15 +68,16 @@ function configureSortingArrowsElement(
   const { queryParams, hash } = urlState
   const parentElement = table.parentElement
   const isInsideTabs = parentElement?.classList.contains('TabsContent')
+
   if (sortingArrows.name === queryParams?.name && parentElement?.id === hash) {
-    orderRows(table, sortingArrows.order, queryParams.state, defaultOrder)
     sortingArrows.setState(queryParams.state)
+    orderRows(table, sortingArrows, defaultOrder)
     tabState[parentElement.id] = queryParams
   }
 
   sortingArrows.node.addEventListener('click', () => {
     const currentState = sortingArrows.toggleState()
-    orderRows(table, sortingArrows.order, currentState, defaultOrder)
+    orderRows(table, sortingArrows, defaultOrder)
     otherSortingArrows.forEach((sortingArrow) => sortingArrow.setState(null))
     if (isInsideTabs && parentElement) {
       tabState[parentElement.id] = {
@@ -81,17 +91,18 @@ function configureSortingArrowsElement(
 function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
   const name = element.getAttribute('data-name')
   const order = element.getAttribute('data-order')
-  const state = element.getAttribute('data-state')
 
   if (!name || !order) {
     throw new Error('No name or order found')
   }
-  const setState = (state: State) => {
-    if (!state) {
+  const getState = () => element.getAttribute('data-state') as State
+
+  const setState = (stateToSet: State) => {
+    if (!stateToSet) {
       element.removeAttribute('data-state')
       return
     }
-    element.setAttribute('data-state', state)
+    element.setAttribute('data-state', stateToSet)
   }
 
   const getNextState = (currentState: State): State => {
@@ -108,11 +119,7 @@ function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
 
   const toggleState = () => {
     const searchParams = new URLSearchParams(window.location.search)
-    const name = element.getAttribute('data-name')
-    const currentState = element.getAttribute('data-state') as State
-    if (!name) {
-      throw new Error('No name found')
-    }
+    const currentState = getState()
     const nextState = getNextState(currentState)
 
     if (nextState) {
@@ -128,11 +135,35 @@ function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
     return nextState
   }
 
+  const getOrder = () => {
+    const currentState = getState()
+    if (currentState === null) {
+      return undefined
+    }
+
+    const ordering = JSON.parse(order) as string[] | Record<string, string[]>
+    if (isArray(ordering)) {
+      return currentState === 'asc' ? ordering : [...ordering].reverse()
+    }
+    const orderKey = element.getAttribute('data-order-key')
+    if (!orderKey) {
+      throw new Error('No order key found')
+    }
+
+    return currentState === 'asc'
+      ? ordering[orderKey]
+      : [...ordering[orderKey]].reverse()
+  }
+
+  const setOrderKey = (orderKey: string) => {
+    element.setAttribute('data-order-key', orderKey)
+  }
+
   return {
     node: element,
     name,
-    order: order.split(','),
-    state: state as State,
+    getOrder,
+    setOrderKey,
     setState,
     toggleState,
   }
@@ -140,21 +171,16 @@ function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
 
 function orderRows(
   table: HTMLElement,
-  order: string[],
-  state: State,
-  defaultOrder: string[],
+  sortingArrows: SortingArrowsElement,
+  defaultOrder?: string[],
 ) {
   const { $, $$ } = makeQuery(table)
-
   const rows = $$('tbody tr[data-slug]')
-  const sortedOrder =
-    state === 'asc'
-      ? order
-      : state === 'desc'
-      ? [...order].reverse()
-      : defaultOrder
-
-  const sortedRows = sortedOrder
+  const order = sortingArrows.getOrder() ?? defaultOrder
+  if (!order) {
+    return
+  }
+  const sortedRows = order
     .map((slug) => {
       const row = rows.find((r) => r.getAttribute('data-slug') === slug)
       if (!row) {
@@ -166,14 +192,6 @@ function orderRows(
 
   const tableBody = $('tbody')
   tableBody.replaceChildren(...sortedRows)
-}
-
-interface UrlState {
-  queryParams?: {
-    name: string
-    state: State
-  }
-  hash: string
 }
 
 function getUrlState(): UrlState {
@@ -202,4 +220,19 @@ export function setSortingQueryParamsByTabId(tabId: string) {
   }
 
   setQueryParams(searchParams)
+}
+
+export function setSortingArrowsOrderKey(name: string, orderKey: string) {
+  const { $$ } = makeQuery(document.body)
+  const tables = $$('[data-role="table"]')
+  tables.forEach((table) => {
+    const { $ } = makeQuery(table)
+    const sortingArrowsElement = $(
+      '[data-role="sorting-arrows"][data-name="' + name + '"]',
+    )
+    const sortingArrows = getSortingArrowsElement(sortingArrowsElement)
+    sortingArrows.setOrderKey(orderKey)
+
+    orderRows(table, sortingArrows)
+  })
 }

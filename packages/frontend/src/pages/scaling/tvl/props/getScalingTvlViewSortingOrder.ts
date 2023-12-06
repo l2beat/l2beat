@@ -16,7 +16,7 @@ export function getScalingTvlViewSortingOrder(
       a.display.name.toLowerCase().localeCompare(b.display.name.toLowerCase()),
     ),
     stage: getProjectSortingOrder(projects, (a, b) =>
-      a.stage.stage.toLowerCase().localeCompare(b.stage.stage.toLowerCase()),
+      b.stage.stage.toLowerCase().localeCompare(a.stage.stage.toLowerCase()),
     ),
     tvl: getSortingOrderByTvl(projects, tvlApiResponse, 'valueUsd'),
   }

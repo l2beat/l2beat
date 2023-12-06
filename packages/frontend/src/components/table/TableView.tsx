@@ -30,7 +30,7 @@ interface SingleColumnConfig<T> {
   idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
-  sortBy?: string[]
+  sortBy?: string[] | Record<string, string[]>
 }
 
 export interface GroupedColumnConfig<T> {
