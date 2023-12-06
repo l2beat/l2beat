@@ -11,9 +11,9 @@ export const zkfair: Layer2 = {
     name: 'ZKFair',
     slug: 'zkfair',
     description:
-      'ZKFair is the first community ZK-L2 based on Polygon CDK and Celestia DA, championing fairness.',
+      'ZKFair is the first community Validium based on Polygon CDK and Celestia DA, championing fairness.',
     purpose: 'Universal',
-    category: 'ZK Rollup',
+    category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
