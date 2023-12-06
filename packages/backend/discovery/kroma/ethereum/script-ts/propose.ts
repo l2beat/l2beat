@@ -94,11 +94,14 @@ async function handleChallenges(
     EARLIEST_BLOCK,
     'latest',
   )
+  console.log(`Found ${challenges.length} challenges.`)
 
   for (const challenge of challenges) {
     const challenger = challenge.args!.challenger as string
     await handleChallenge(outputIndex, challenger, contracts)
   }
+
+  await sleep(60 * 1000)
 }
 
 async function handleChallenge(
@@ -162,6 +165,7 @@ async function handleChallenge(
 
   segments[requiredSegmentsLength - 1] = ethers.utils.hexZeroPad(dummyValue, 32)
 
+  console.log('Bisecting!')
   const tx = await contracts.colosseum.bisect(
     outputIndex,
     challenger,
@@ -219,7 +223,8 @@ async function addMyselfToProposerList(contracts: KromaContracts) {
   }
   console.log('Adding myself to proposer list.')
   const value = PROPOSER_DEPOSIT[KROMA_NETWORK]
-  await contracts.validatorPool.deposit({ value })
+  const tx = await contracts.validatorPool.deposit({ value })
+  await tx.wait()
   if (!(await contracts.validatorPool.isValidator(myAddr))) {
     throw new Error('Failed to add myself to proposer list')
   }
@@ -270,6 +275,9 @@ async function submitOutputRoot(contracts: KromaContracts) {
     nextL2BlockNumber,
     blockHash,
     blockNumber,
+    {
+      gasLimit: 300000, // to not run out of gas
+    },
   )
   console.log('Done! Waiting until transaction is mined...')
   await tx.wait()
