@@ -2,84 +2,99 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
-import { LivenessFunctionCall } from '../types/LivenessConfig'
+import {
+  LivenessFunctionCall,
+  makeLivenessFunctionCall,
+} from '../types/LivenessConfig'
 import { BigQueryFunctionCallsResult } from '../types/model'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 describe(transformFunctionCallsQueryResult.name, () => {
   it('should transform results', () => {
     const ADDRESS_1 = EthereumAddress.random()
+    const SELECTOR_1 = '0x095e4'
     const ADDRESS_2 = EthereumAddress.random()
+    const SELECTOR_2 = '0x915d9'
     const ADDRESS_3 = EthereumAddress.random()
+    const SELECTOR_3 = '0x90d5e'
     const sinceTimestamp = UnixTime.now()
 
-    const config: Omit<LivenessFunctionCall, 'id'>[] = [
-      {
+    const config: LivenessFunctionCall[] = [
+      makeLivenessFunctionCall({
+        formula: 'functionCall',
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
-        selector: '0x095e4',
+        selector: SELECTOR_1,
         type: 'STATE',
         sinceTimestamp,
-        livenessConfigurationId: 1,
-      },
-      {
+      }),
+      makeLivenessFunctionCall({
+        formula: 'functionCall',
         projectId: ProjectId('project1'),
         address: ADDRESS_2,
-        selector: '0x915d9',
+        selector: SELECTOR_2,
         type: 'DA',
         sinceTimestamp,
-        livenessConfigurationId: 2,
-      },
-      {
+      }),
+      makeLivenessFunctionCall({
+        formula: 'functionCall',
         projectId: ProjectId('project2'),
         address: ADDRESS_3,
-        selector: '0x90d5e',
+        selector: SELECTOR_3,
         type: 'STATE',
         sinceTimestamp,
-        livenessConfigurationId: 3,
-      },
+      }),
     ]
+
+    const timestamp = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
+    const block = 1
+    const txHashes = [
+      '0x095e4e9ee709e353ad7849cf30e4dc19',
+      '0x915d9ed63e196d8c612aad5d6f5cd1ba',
+      '0x90d5e81b40d6a6fa6f34b3dc67d3fce6',
+    ]
+
     const queryResults: BigQueryFunctionCallsResult = [
       {
-        transaction_hash: '0x09e353ae9ee709e353ad7849cf30e4dc19',
-        block_number: 1,
-        block_timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
-        input: '0x095e44fa24d87dedd2d351b485868bff700e0',
+        transaction_hash: txHashes[0],
+        block_number: block,
+        block_timestamp: timestamp,
+        input: SELECTOR_1,
         to_address: ADDRESS_1,
       },
       {
-        transaction_hash: '0x92b857ae9ee709e353ad7849cf30e4dc19',
-        block_number: 2,
-        block_timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
-        input: '0x915d9fa24d87dedd2d351b485868bff700e0',
+        transaction_hash: txHashes[1],
+        block_number: block,
+        block_timestamp: timestamp,
+        input: SELECTOR_2,
         to_address: ADDRESS_2,
       },
       {
-        transaction_hash: '0xb4858ae9ee709e353ad7849cf30e4dc19',
-        block_number: 3,
-        block_timestamp: UnixTime.fromDate(new Date('2022-01-01T03:00:00Z')),
-        input: '0x90d5efa24d87dedd2d351b485868bff700e0',
+        transaction_hash: txHashes[2],
+        block_number: block,
+        block_timestamp: timestamp,
+        input: SELECTOR_3,
         to_address: ADDRESS_3,
       },
     ]
     const expected: LivenessRecord[] = [
       {
-        blockNumber: 1,
-        timestamp: UnixTime.fromDate(new Date('2022-01-01T01:00:00Z')),
-        txHash: '0x09e353ae9ee709e353ad7849cf30e4dc19',
-        livenessId: 1,
+        txHash: txHashes[0],
+        livenessId: config[0].id,
+        blockNumber: block,
+        timestamp: timestamp,
       },
       {
-        blockNumber: 2,
-        timestamp: UnixTime.fromDate(new Date('2022-01-01T02:00:00Z')),
-        txHash: '0x92b857ae9ee709e353ad7849cf30e4dc19',
-        livenessId: 2,
+        txHash: txHashes[1],
+        livenessId: config[1].id,
+        blockNumber: block,
+        timestamp: timestamp,
       },
       {
-        blockNumber: 3,
-        timestamp: UnixTime.fromDate(new Date('2022-01-01T03:00:00Z')),
-        txHash: '0xb4858ae9ee709e353ad7849cf30e4dc19',
-        livenessId: 3,
+        txHash: txHashes[2],
+        livenessId: config[2].id,
+        blockNumber: block,
+        timestamp: timestamp,
       },
     ]
 
