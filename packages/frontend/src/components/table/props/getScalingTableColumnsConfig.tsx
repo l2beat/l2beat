@@ -329,7 +329,7 @@ export function getScalingRiskColumnsConfig() {
     {
       name: 'Exit window',
       tooltip:
-        'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
+        'How much time do users have to exit the system in case of an unwanted upgrade?',
       getValue: (project) => <RiskCell item={project.exitWindow} />,
     },
     {
