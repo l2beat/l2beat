@@ -13,6 +13,7 @@ import {
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
+import { EXIT_WINDOW_UNKNOWN } from './common/riskView'
 
 const discovery = new ProjectDiscovery('zkswap')
 
@@ -63,7 +64,7 @@ export const zkswap: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY(691200),
+    exitWindow: RISK_VIEW.EXIT_WINDOW_UNKNOWN,
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),

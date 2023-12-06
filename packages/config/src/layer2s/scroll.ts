@@ -27,8 +27,10 @@ const timelockFastDelay = discovery.getContractValue<number>(
 
 const upgradesScrollMultisig = {
   upgradableBy: ['ScrollMultisig'],
-  upgradeDelay: 'None',
+  upgradeDelay: 'No delay',
 }
+
+const upgradeDelay = 0
 
 export const scroll: Layer2 = {
   type: 'layer2',
@@ -180,8 +182,8 @@ export const scroll: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
       sources: [
         {
           contract: 'ScrollChain',

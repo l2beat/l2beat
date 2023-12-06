@@ -18,23 +18,32 @@ import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
-const delay = formatSeconds(
-  discovery.getContractValue<number>('Timelock', 'getMinDelay'),
+const upgradeDelay = discovery.getContractValue<number>(
+  'Timelock',
+  'getMinDelay',
 )
-const trustedAggregatorTimeout = formatSeconds(
-  discovery.getContractValue<number>(
-    'PolygonZkEvm',
-    'trustedAggregatorTimeout',
-  ),
+const upgradeDelayString = formatSeconds(upgradeDelay)
+const trustedAggregatorTimeout = discovery.getContractValue<number>(
+  'PolygonZkEvm',
+  'trustedAggregatorTimeout',
 )
-const pendingStateTimeout = formatSeconds(
-  discovery.getContractValue<number>('PolygonZkEvm', 'pendingStateTimeout'),
+const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
+
+const pendingStateTimeout = discovery.getContractValue<number>(
+  'PolygonZkEvm',
+  'pendingStateTimeout',
 )
+const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
 const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
   discovery.getContractValue<number>(
     'PolygonZkEvm',
     '_HALT_AGGREGATION_TIMEOUT',
   ),
+)
+
+const forceBatchTimeout = discovery.getContractValue<number>(
+  'PolygonZkEvm',
+  'forceBatchTimeout',
 )
 
 const bridgeEmergencyState = discovery.getContractValue<boolean>(
@@ -45,15 +54,19 @@ const rollupEmergencyState = discovery.getContractValue<boolean>(
   'PolygonZkEvm',
   'isEmergencyState',
 )
-const upgradeabilityRisk = RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(
-  delay,
-  rollupEmergencyState,
-  bridgeEmergencyState,
-)
+const exitWindowRisk = {
+  ...RISK_VIEW.EXIT_WINDOW(
+    upgradeDelay,
+    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+    0,
+  ),
+  description: `There is a ${upgradeDelayString} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay. Currently rollup emergency state is set to ${rollupEmergencyState.toString()}, bridge emergency state is set to ${bridgeEmergencyState.toString()}.`,
+}
+
 const timelockUpgrades = {
   upgradableBy: ['AdminMultisig'],
-  upgradeDelay: upgradeabilityRisk.value,
-  upgradeConsiderations: upgradeabilityRisk.description,
+  upgradeDelay: exitWindowRisk.value,
+  upgradeConsiderations: exitWindowRisk.description,
 }
 
 const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
@@ -175,7 +188,7 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
-    upgradeability: upgradeabilityRisk,
+    exitWindow: exitWindowRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
       ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
@@ -192,7 +205,7 @@ export const polygonzkevm: Layer2 = {
       ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
       description:
         RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
-        ` There is a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+        ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
       sources: [
         {
           contract: 'PolygonZkEvm',
@@ -322,7 +335,7 @@ export const polygonzkevm: Layer2 = {
       accounts: [
         discovery.getPermissionedAccount('PolygonZkEvm', 'trustedAggregator'),
       ],
-      description: `The trusted proposer (called Aggregator) provides the PolygonZkEvm contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+      description: `The trusted proposer (called Aggregator) provides the PolygonZkEvm contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(
       'SecurityCouncil',
@@ -356,7 +369,7 @@ export const polygonzkevm: Layer2 = {
         href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L806',
       },
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   milestones: [
     {

@@ -106,8 +106,8 @@ export const zkspace: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADE_DELAY_SECONDS(upgradeDelay, forcedWithdrawalDelay),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
       sources: [
         {
           contract: 'ZkSync',

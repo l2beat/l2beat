@@ -2,9 +2,7 @@ import { utils } from 'ethers'
 
 import { ProjectRiskViewEntry, Sentiment } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
-import { roundSeconds } from '../../utils/roundSeconds'
 import { Layer2RiskView } from '../types'
-import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
 export function makeBridgeCompatible(
   entry: Omit<Layer2RiskView, 'sourceUpgradeability'>,
@@ -118,36 +116,7 @@ export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-// Upgradable
-
-export const UPGRADABLE_YES: ProjectRiskViewEntry = {
-  value: 'Yes',
-  description:
-    'The code that secures the system can be changed arbitrarily and without notice.',
-  sentiment: 'bad',
-}
-
-export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
-  const delayString = formatSeconds(delay)
-  const delayStringRounded = '~' + formatSeconds(roundSeconds(delay, 60 * 60)) // round to nearest hour
-  return {
-    value: `${delayStringRounded} or no delay`,
-    description: `There is a ${delayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
-    sentiment: 'warning',
-  }
-}
-
-export function UPGRADABLE_POLYGON_ZKEVM(
-  delay: string,
-  rollupEmergencyState: boolean,
-  bridgeEmergencyState: boolean,
-): ProjectRiskViewEntry {
-  return {
-    value: `${delay} or no delay`,
-    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay. Currently rollup emergency state is set to ${rollupEmergencyState.toString()}, bridge emergency state is set to ${bridgeEmergencyState.toString()}.`,
-    sentiment: 'warning',
-  }
-}
+// Upgradability
 
 export function UPGRADABLE_ZKSYNC(
   delay: string,
@@ -158,55 +127,6 @@ export function UPGRADABLE_ZKSYNC(
     description: `There is ${delay} for upgrades initiated by ZkSync Multisig. The ${securityCouncil} Security Council can override the delay and allow instant upgrade. Some system components can be changed with no delay but that do not impede the ability for users to withdraw permissionlessly.`,
     sentiment: 'warning',
   }
-}
-
-export function UPGRADE_DELAY(
-  upgradeDelay: number,
-  exitDelay?: number,
-  canExit?: boolean,
-  isOptimisticDelay?: boolean,
-): ProjectRiskViewEntry {
-  const upgradeDelayString = formatSeconds(upgradeDelay)
-  const exitDelayString =
-    exitDelay !== undefined ? formatSeconds(exitDelay) : ''
-  const canReactString = canExit
-    ? isOptimisticDelay === true
-      ? ` but users have some time to react even with the challenge period delay`
-      : ' but users have some time to react even if the permissioned operator is censoring'
-    : isOptimisticDelay === true
-    ? ` and users don't have enough time to react because of the ${exitDelayString} challenge period delay`
-    : " and users don't have enough time to react if the permissioned operator is censoring"
-  return {
-    value: `${upgradeDelayString} delay`,
-    description:
-      'The code that secures the system can be changed arbitrarily' +
-      canReactString +
-      '.',
-    sentiment: canExit === false ? 'bad' : 'warning',
-  }
-}
-
-function UPGRADE_DELAY_SECONDS(
-  upgradeDelay: number,
-  exitDelay?: number,
-  isOptimisticDelay?: boolean,
-): ProjectRiskViewEntry {
-  if (upgradeDelay < DANGER_DELAY_THRESHOLD_SECONDS) {
-    return UPGRADABLE_YES
-  }
-  if (
-    exitDelay !== undefined &&
-    upgradeDelay - exitDelay < DANGER_DELAY_THRESHOLD_SECONDS
-  ) {
-    return UPGRADE_DELAY(upgradeDelay, exitDelay, false, isOptimisticDelay)
-  }
-  return UPGRADE_DELAY(upgradeDelay, exitDelay, true, isOptimisticDelay)
-}
-
-export const UPGRADABLE_NO: ProjectRiskViewEntry = {
-  value: 'No',
-  description: 'The code that secures the system can never change.',
-  sentiment: 'good',
 }
 
 // bridges
@@ -463,6 +383,13 @@ export const EXIT_WINDOW_NON_UPGRADABLE: ProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
+export const EXIT_WINDOW_UNKNOWN: ProjectRiskViewEntry = {
+  value: 'Unknown',
+  description:
+    'Some contracts are not verified, so there is no way to assess the exit window.',
+  sentiment: 'bad',
+}
+
 export const RISK_VIEW = {
   STATE_NONE,
   STATE_FP,
@@ -478,13 +405,6 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
-  UPGRADABLE_YES,
-  UPGRADABLE_ARBITRUM,
-  UPGRADABLE_POLYGON_ZKEVM,
-  UPGRADABLE_ZKSYNC,
-  UPGRADE_DELAY,
-  UPGRADE_DELAY_SECONDS,
-  UPGRADABLE_NO,
   VALIDATED_BY_ETHEREUM,
   NATIVE_AND_CANONICAL,
   CANONICAL,
@@ -507,4 +427,5 @@ export const RISK_VIEW = {
   UNDER_REVIEW_RISK,
   EXIT_WINDOW,
   EXIT_WINDOW_NON_UPGRADABLE,
+  EXIT_WINDOW_UNKNOWN,
 }
