@@ -60,7 +60,9 @@ const exitWindowRisk = {
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
     0,
   ),
-  description: `There is a ${upgradeDelayString} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay. Currently rollup emergency state is set to ${rollupEmergencyState.toString()}, bridge emergency state is set to ${bridgeEmergencyState.toString()}.`,
+  description: `There is a ${upgradeDelayString} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay. Currently rollup emergency state is set to ${rollupEmergencyState.toString()}, bridge emergency state is set to ${bridgeEmergencyState.toString()}. If forced withdrawals were to be enabled, they could be delayed by up to ${formatSeconds(
+    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+  )}.`,
 }
 
 const timelockUpgrades = {

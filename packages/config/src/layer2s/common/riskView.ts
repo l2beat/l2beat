@@ -371,10 +371,16 @@ export function EXIT_WINDOW(
   } else {
     sentiment = 'good'
   }
+  const instantlyUpgradable =
+    upgradeDelay === 0 ? ' since contracts are instantly upgradable' : ''
   const description =
     windowString === 'None'
-      ? 'There is no window for users to exit in case of an unwanted upgrade.'
-      : `Users have ${windowString} to exit funds in case of an unwanted upgrade.`
+      ? `There is no window for users to exit in case of an unwanted upgrade${instantlyUpgradable}.`
+      : `Users have ${windowString} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
+          upgradeDelay,
+        )} delay before an upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
+          exitDelay,
+        )} to be processed.`
   return {
     value: windowString,
     description,

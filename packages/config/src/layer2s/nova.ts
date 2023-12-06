@@ -119,9 +119,15 @@ export const nova: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengeWindowSeconds, 0),
+      ...RISK_VIEW.EXIT_WINDOW(
+        upgradeDelay,
+        challengeWindowSeconds + selfSequencingDelay,
+        0,
+      ),
       sentiment: 'bad',
-      description: `There is a ${upgradeDelayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
+      description: `There is a ${upgradeDelayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay. Withdrawals can be censored for up to ${formatSeconds(
+        selfSequencingDelay,
+      )}.`,
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
