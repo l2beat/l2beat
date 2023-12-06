@@ -157,7 +157,7 @@ export const aztecconnect: Layer2 = {
         },
       ],
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, escapeHatchDelaySeconds),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, escapeHatchDelayApprox),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [

@@ -13,7 +13,6 @@ import {
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
-import { EXIT_WINDOW_UNKNOWN } from './common/riskView'
 
 const discovery = new ProjectDiscovery('zkswap')
 
