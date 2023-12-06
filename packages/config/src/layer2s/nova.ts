@@ -26,6 +26,7 @@ const challengeWindow = discovery.getContractValue<number>(
   'ArbitrumProxy',
   'confirmPeriodBlocks',
 )
+const challengeWindowSeconds = challengeWindow * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
   'L1ArbitrumTimelock',
   'getMinDelay',
@@ -37,6 +38,8 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
   'maxTimeVariation',
 )
 const selfSequencingDelay = maxTimeVariation[2]
+
+const upgradeDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 export const nova: Layer2 = {
   type: 'layer2',
@@ -113,9 +116,10 @@ export const nova: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(
-      l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
-    ),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengeWindowSeconds, 0),
+      description: `There is a ${upgradeDelay} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
+    },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
       validatorAfkBlocks * assumedBlockTime,

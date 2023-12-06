@@ -415,7 +415,8 @@ export const arbitrum: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(totalDelay, challengeWindow),
+      ...RISK_VIEW.EXIT_WINDOW(totalDelay, challengeWindow, 0),
+      description: `There is a ${totalDelay} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
       sources: [
         {
           contract: 'OutboxV2',
