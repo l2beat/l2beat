@@ -14,7 +14,9 @@ export function getViewABI(
     return new ethers.utils.Interface([])
   }
 
-  const addresses = getAddresses(contract).filter(addr => addr !== EthereumAddress.ZERO)
+  const addresses = getAddresses(contract).filter(
+    (addr) => addr !== EthereumAddress.ZERO,
+  )
 
   const abis = addresses
     .map((address) => {
