@@ -327,10 +327,10 @@ export function getScalingRiskColumnsConfig() {
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
     },
     {
-      name: 'Upgradeability',
+      name: 'Exit window',
       tooltip:
         'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
-      getValue: (project) => <RiskCell item={project.upgradeability} />,
+      getValue: (project) => <RiskCell item={project.exitWindow} />,
     },
     {
       name: 'Sequencer failure',

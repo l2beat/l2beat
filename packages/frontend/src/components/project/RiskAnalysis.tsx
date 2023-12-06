@@ -43,7 +43,7 @@ export function RiskAnalysis({
         name="Data availability"
         riskValue={riskValues.dataAvailability}
       />
-      <SingleRisk name="Exit Window" riskValue={riskValues.exitWindow} />
+      <SingleRisk name="Exit window" riskValue={riskValues.exitWindow} />
       <SingleRisk
         name="Sequencer failure"
         riskValue={riskValues.sequencerFailure}

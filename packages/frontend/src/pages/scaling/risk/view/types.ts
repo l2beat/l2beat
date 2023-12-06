@@ -12,7 +12,7 @@ export interface ScalingRiskViewEntry {
   isUpcoming?: boolean
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
-  upgradeability: ProjectRiskViewEntry
+  exitWindow: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
   proposerFailure: ProjectRiskViewEntry
   stage: StageConfig

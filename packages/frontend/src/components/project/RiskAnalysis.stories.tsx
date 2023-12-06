@@ -22,7 +22,7 @@ export const Configured: Story = {
         description: 'The data availability risk is warning',
       },
       exitWindow: {
-        value: 'Exit Window risk',
+        value: 'Exit window risk',
         sentiment: 'good',
         description: 'The exit window risk is good',
       },
@@ -54,7 +54,7 @@ export const UnderReview: Story = {
         description: 'The data availability risk is warning',
       },
       exitWindow: {
-        value: 'Exit Window risk',
+        value: 'Exit window risk',
         sentiment: 'UnderReview',
         description: 'The exit window risk is good',
       },

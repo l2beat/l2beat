@@ -34,7 +34,7 @@ const meta = {
             description: 'No information available.',
             sentiment: 'neutral',
           },
-          upgradeability: {
+          exitWindow: {
             value: '',
             description: 'No information available.',
             sentiment: 'neutral',
@@ -109,7 +109,7 @@ const meta = {
             description: 'No information available.',
             sentiment: 'neutral',
           },
-          upgradeability: {
+          exitWindow: {
             value: '',
             description: 'No information available.',
             sentiment: 'neutral',
@@ -164,7 +164,7 @@ const meta = {
             description: 'No information available.',
             sentiment: 'neutral',
           },
-          upgradeability: {
+          exitWindow: {
             value: '',
             description: 'No information available.',
             sentiment: 'neutral',
@@ -219,7 +219,7 @@ const meta = {
             description: 'No information available.',
             sentiment: 'neutral',
           },
-          upgradeability: {
+          exitWindow: {
             value: '',
             description: 'No information available.',
             sentiment: 'neutral',
@@ -272,7 +272,7 @@ const meta = {
             description: 'No information available.',
             sentiment: 'neutral',
           },
-          upgradeability: {
+          exitWindow: {
             value: '',
             description: 'No information available.',
             sentiment: 'neutral',
@@ -328,7 +328,7 @@ const meta = {
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: '8 days delay',
             description:
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
@@ -388,7 +388,7 @@ const meta = {
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: '7 days delay',
             description:
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
@@ -447,7 +447,7 @@ const meta = {
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: '8 days delay',
             description:
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
@@ -508,7 +508,7 @@ const meta = {
               'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Because the data is not present on chain the security of fraud proofs is severely weakened.',
             sentiment: 'warning',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice.',
@@ -568,7 +568,7 @@ const meta = {
               'Exits from the network are subject to a period when they can be challenged. The internal network state is left unchecked.',
             sentiment: 'bad',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice.',
@@ -627,7 +627,7 @@ const meta = {
               'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice.',
@@ -686,7 +686,7 @@ const meta = {
               'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
             sentiment: 'warning',
           },
-          upgradeability: {
+          exitWindow: {
             value: '13d or no delay',
             description:
               'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
@@ -769,7 +769,7 @@ const meta = {
               'Currently the system permits invalid state roots. More details in project overview.',
             sentiment: 'bad',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice.',
@@ -830,7 +830,7 @@ const meta = {
               'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice.',
@@ -888,7 +888,7 @@ const meta = {
               'Uses PLONK zero-knowledge proof system with KZG commitments.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a 4 / 7 Multisig.',
@@ -947,7 +947,7 @@ const meta = {
               'Currently the system permits invalid state roots. More details in project overview.',
             sentiment: 'bad',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice.',
@@ -1008,7 +1008,7 @@ const meta = {
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: 'Yes',
             description:
               'The code that secures the system can be changed arbitrarily and without notice.',
@@ -1087,7 +1087,7 @@ const meta = {
               'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
             sentiment: 'good',
           },
-          upgradeability: {
+          exitWindow: {
             value: '14d delay',
             description:
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
