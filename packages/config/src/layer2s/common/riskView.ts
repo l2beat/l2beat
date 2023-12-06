@@ -402,6 +402,13 @@ export const EXIT_WINDOW_UNKNOWN: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const UPGRADABLE_YES: ProjectRiskViewEntry = {
+  value: 'Yes',
+  description:
+    'The code that secures the system can be changed arbitrarily and without notice.',
+  sentiment: 'bad',
+}
+
 export const RISK_VIEW = {
   STATE_NONE,
   STATE_FP,
@@ -440,4 +447,5 @@ export const RISK_VIEW = {
   EXIT_WINDOW,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,
+  UPGRADABLE_YES,
 }
