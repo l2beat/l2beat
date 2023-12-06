@@ -6,7 +6,7 @@
 
 # To run the state root propose script, do:
 
-By default the script runs against Sepolia testnet. Please consult the source code to run 
+By default the script runs against Sepolia testnet. Please consult the source code to run
 against mainnet.
 
 - `export MY_PRIVATE_KEY=0x.....`
@@ -44,4 +44,3 @@ See documentation here:
 - `anvil --fork-url <RPC_URL>`
   - it will start and show address and port it's listening on
 - when running `forge script` pass the anvil's address:port, usually `127.0.0.1:8545`
-
