@@ -50,20 +50,15 @@ const delay1 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
 const delay2 = discovery.getContractValue<number>('TimeLock2', 'MINIMUM_DELAY')
 
 const upgradeDelay = Math.min(delay1, delay2)
-const upgradeabilityRisk = RISK_VIEW.UPGRADE_DELAY_SECONDS(
-  Math.min(delay1, delay2),
-)
 
 const timelockUpgrades1 = {
   upgradableBy: ['Degate HomeDAO2 Multisig'],
   upgradeDelay: formatSeconds(delay1),
-  upgradeConsiderations: upgradeabilityRisk.description,
 }
 
 const timelockUpgrades2 = {
   upgradableBy: ['Degate HomeDAO2 Multisig'],
   upgradeDelay: formatSeconds(delay2),
-  upgradeConsiderations: upgradeabilityRisk.description,
 }
 
 export const degate3: Layer2 = {
