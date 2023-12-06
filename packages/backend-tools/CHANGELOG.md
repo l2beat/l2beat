@@ -1,5 +1,11 @@
 # @l2beat/backend-tools
 
+## 0.5.1
+
+### Patch Changes
+
+- Pretty format does not add an extra new line
+
 ## 0.5.0
 
 ### Minor Changes

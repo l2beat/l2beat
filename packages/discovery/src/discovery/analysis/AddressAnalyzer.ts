@@ -52,10 +52,11 @@ export class AddressAnalyzer {
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
     blockNumber: number,
+    logger: DiscoveryLogger,
   ): Promise<{ analysis: Analysis; relatives: EthereumAddress[] }> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
-      this.logger.logEoa()
+      logger.logEoa()
       return { analysis: { type: 'EOA', address }, relatives: [] }
     }
 
@@ -64,6 +65,7 @@ export class AddressAnalyzer {
     const proxy = await this.proxyDetector.detectProxy(
       address,
       blockNumber,
+      logger,
       overrides?.proxyType,
     )
 
@@ -72,13 +74,14 @@ export class AddressAnalyzer {
       proxy?.implementations,
     )
 
-    this.logger.logName(sources.name)
+    logger.logName(sources.name)
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
       sources.abi,
       overrides,
       blockNumber,
+      logger,
     )
 
     return {
@@ -133,6 +136,7 @@ export class AddressAnalyzer {
       abi,
       overrides,
       blockNumber,
+      this.logger,
     )
 
     assert(

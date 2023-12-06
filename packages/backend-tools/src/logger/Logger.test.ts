@@ -57,11 +57,11 @@ describe(Logger.name, () => {
 
     logger.info({ foo: 123n, bar: [4n, 56n] })
     const lines = [
-      '00:00:00.000Z INFO',
+      '00:00:00.000Z INFO\n',
       "    { foo: '123', bar: [ '4', '56' ] }",
       '',
     ]
-    expect(backend.log).toHaveBeenOnlyCalledWith(lines.join('\n'))
+    expect(backend.log).toHaveBeenOnlyCalledWith(lines.join(''))
   })
 
   describe('for', () => {
@@ -84,7 +84,7 @@ describe(Logger.name, () => {
       logger.info('hello')
 
       expect(backend.log).toHaveBeenOnlyCalledWith(
-        '00:00:00.000Z INFO [ FooService ] hello\n',
+        '00:00:00.000Z INFO [ FooService ] hello',
       )
     })
 
@@ -98,7 +98,7 @@ describe(Logger.name, () => {
       logger.info('hello')
 
       expect(backend.log).toHaveBeenOnlyCalledWith(
-        '00:00:00.000Z INFO [ FooService ] hello\n',
+        '00:00:00.000Z INFO [ FooService ] hello',
       )
     })
 
@@ -109,7 +109,7 @@ describe(Logger.name, () => {
       logger.info('hello')
 
       expect(backend.log).toHaveBeenOnlyCalledWith(
-        '00:00:00.000Z INFO [ FooService.queue ] hello\n',
+        '00:00:00.000Z INFO [ FooService.queue ] hello',
       )
     })
 
@@ -120,7 +120,7 @@ describe(Logger.name, () => {
       logger.info('hello')
 
       expect(backend.log).toHaveBeenOnlyCalledWith(
-        '00:00:00.000Z INFO [ FooService:Red ] hello\n',
+        '00:00:00.000Z INFO [ FooService:Red ] hello',
       )
     })
 
@@ -131,7 +131,7 @@ describe(Logger.name, () => {
       logger.info('hello')
 
       expect(backend.log).toHaveBeenOnlyCalledWith(
-        '00:00:00.000Z INFO [ FooService.queue:Red ] hello\n',
+        '00:00:00.000Z INFO [ FooService.queue:Red ] hello',
       )
     })
 
@@ -142,7 +142,7 @@ describe(Logger.name, () => {
       logger.info('hello')
 
       expect(backend.log).toHaveBeenOnlyCalledWith(
-        '00:00:00.000Z INFO [ :Red ] hello\n',
+        '00:00:00.000Z INFO [ :Red ] hello',
       )
     })
   })

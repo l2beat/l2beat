@@ -23,7 +23,7 @@ describe(DiscoveryEngine.name, () => {
     })
 
     const discoveryLogger = mockObject<DiscoveryLogger>({
-      flush: () => {},
+      flushServer: () => {},
       log: () => {},
       logSkip: () => {},
       logRelatives: () => {},
@@ -33,17 +33,14 @@ describe(DiscoveryEngine.name, () => {
       analyze: mockFn(),
     })
     addressAnalyzer.analyze
-      .given(A, config.overrides.get(A), BLOCK_NUMBER)
       .resolvesToOnce({
         analysis: { type: 'EOA', address: A },
         relatives: [B, C],
       })
-      .given(C, config.overrides.get(C), BLOCK_NUMBER)
       .resolvesToOnce({
         analysis: { type: 'EOA', address: C },
         relatives: [B, D],
       })
-      .given(D, config.overrides.get(D), BLOCK_NUMBER)
       .resolvesToOnce({
         analysis: { type: 'EOA', address: D },
         relatives: [],
@@ -58,9 +55,9 @@ describe(DiscoveryEngine.name, () => {
       { type: 'EOA', address: D },
     ])
 
-    expect(discoveryLogger.log).toHaveBeenCalledTimes(3)
+    expect(discoveryLogger.log).toHaveBeenCalledTimes(4)
     expect(discoveryLogger.logSkip).toHaveBeenCalledTimes(1)
-    expect(discoveryLogger.logRelatives).toHaveBeenCalledTimes(3)
-    expect(discoveryLogger.flush).toHaveBeenCalledTimes(1)
+    expect(discoveryLogger.logRelatives).toHaveBeenCalledTimes(0)
+    expect(discoveryLogger.flushServer).toHaveBeenCalledTimes(1)
   })
 })

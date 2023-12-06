@@ -52,7 +52,7 @@ export async function discoverCommand(
   }
 
   logger = logger.for('Discovery')
-  logger.info('Starting discovery...\n')
+  logger.info('Starting discovery...')
   logger.info(`Project: ${discoverConfig.project}`)
   logger.info(`Chain: ${ChainId.getName(discoverConfig.chainId)}\n`)
   await runDiscovery(

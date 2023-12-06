@@ -39,6 +39,7 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
 
     expect(result).toEqual(undefined)
@@ -56,6 +57,7 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
 
     expect(result).toEqual(FIRST_DETAILS)
@@ -77,6 +79,7 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
       'call implementation proxy',
     )
 

@@ -66,6 +66,7 @@ export class ProxyDetector {
   async detectProxy(
     address: EthereumAddress,
     blockNumber: number,
+    logger: DiscoveryLogger,
     manualProxyType?: ManualProxyType,
   ): Promise<ProxyDetails | undefined> {
     const proxy = manualProxyType
@@ -73,9 +74,9 @@ export class ProxyDetector {
       : await this.getAutoProxy(address, blockNumber)
 
     if (proxy) {
-      this.logger.logProxyDetected(proxy.upgradeability.type)
+      logger.logProxyDetected(proxy.upgradeability.type)
     } else if (manualProxyType) {
-      this.logger.logProxyDetectionFailed(manualProxyType)
+      logger.logProxyDetectionFailed(manualProxyType)
     }
 
     return proxy

@@ -153,6 +153,7 @@ export class ScrollAccessControlHandler implements ClassicHandler {
      * Resolves all metadata for the contracts that are involved in the access
      * modification events.
      */
+    const logger = this.logger
     async function resolveMetaDatas(): Promise<void> {
       const accessChangeLogs = logs
         .map(parseRoleLog)
@@ -167,7 +168,11 @@ export class ScrollAccessControlHandler implements ClassicHandler {
       // Find all proxy contracts and their implementations
       await Promise.all(
         [...contracts].map(async (address) => {
-          const proxy = await proxyDetector.detectProxy(address, blockNumber)
+          const proxy = await proxyDetector.detectProxy(
+            address,
+            blockNumber,
+            logger,
+          )
           if (proxy) {
             proxyContractToImplementations[address.toString()] =
               proxy.implementations

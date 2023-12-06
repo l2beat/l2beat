@@ -1,5 +1,13 @@
 # @l2beat/discovery
 
+## 0.27.2
+
+### Patch Changes
+
+- Pretty format does not add an extra new line
+- Updated dependencies
+  - @l2beat/backend-tools@0.5.1
+
 ## 0.27.1
 
 ### Patch Changes

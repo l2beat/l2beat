@@ -250,7 +250,7 @@ export class Logger {
       this.options.colors,
     )
 
-    return `${timeOut} ${levelOut}${serviceOut}${messageOut}${paramsOut}\n`
+    return `${timeOut} ${levelOut}${serviceOut}${messageOut}${paramsOut}`
   }
 }
 

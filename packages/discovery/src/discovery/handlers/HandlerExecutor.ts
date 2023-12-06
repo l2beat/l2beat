@@ -22,19 +22,20 @@ export class HandlerExecutor {
     abi: string[],
     overrides: ContractOverrides | undefined,
     blockNumber: number,
+    logger: DiscoveryLogger,
   ): Promise<{
     results: HandlerResult[]
     values: Record<string, ContractValue> | undefined
     errors: Record<string, string> | undefined
   }> {
-    const handlers = getHandlers(abi, overrides, this.logger)
+    const handlers = getHandlers(abi, overrides, logger)
     const results = await executeHandlers(
       this.provider,
       this.multicallClient,
       handlers,
       address,
       blockNumber,
-      this.logger,
+      logger,
     )
     const { values, errors } = getValuesAndErrors(results)
     return { results, values, errors }
