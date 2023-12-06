@@ -4,7 +4,7 @@ import { expect } from 'earl'
 import { LivenessId } from './LivenessId'
 
 describe(LivenessId.name, () => {
-  it('generates unique LivenessId', () => {
+  it('generates unique strings', () => {
     const input = ['a', 'b', 'c']
 
     const id = LivenessId(input)
@@ -16,5 +16,11 @@ describe(LivenessId.name, () => {
     const id = LivenessId([])
     const expected = hashJson([]).slice(2, 10)
     expect(id.toString()).toEqual(expected)
+  })
+
+  it('generates random string', () => {
+    const first = LivenessId.random()
+    const second = LivenessId.random()
+    expect(first).not.toEqual(second)
   })
 })
