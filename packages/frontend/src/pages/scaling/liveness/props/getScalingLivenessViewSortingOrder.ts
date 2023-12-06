@@ -43,8 +43,10 @@ function orderByLiveness(
   return getProjectSortingOrder(projects, (a, b) => {
     const averageA =
       livenessApiResponse.projects[a.id.toString()]?.[type]?.last30Days
+        ?.averageInSeconds
     const averageB =
       livenessApiResponse.projects[b.id.toString()]?.[type]?.last30Days
+        ?.averageInSeconds
 
     if (averageA === undefined && averageB === undefined) {
       return 0

@@ -9,11 +9,17 @@ interface Props {
 }
 
 export function SortingArrows(props: Props) {
+  const name = props.name
+    .split(' ')
+    .join('-')
+    .split('\n')
+    .join('-')
+    .toLowerCase()
   return (
     <div
-      className="group/sorting-arrows flex cursor-pointer select-none items-center gap-1.5"
+      className="group/sorting-arrows flex cursor-pointer items-center gap-1.5"
       data-role="sorting-arrows"
-      data-name={props.name.split(' ').join('-').toLowerCase()}
+      data-name={name}
       data-order={props.sortingOrder}
     >
       <div className="flex flex-col gap-[1.5px]">

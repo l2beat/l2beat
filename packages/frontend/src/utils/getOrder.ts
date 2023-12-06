@@ -2,9 +2,7 @@ import { ProjectId, TvlApiChart, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { orderByTvl } from './orderByTvl'
 
-export function getProjectSortingOrder<
-  T extends { id: ProjectId; display: { slug: string } },
->(items: T[], check: (a: T, b: T) => boolean | number) {
+function getOrder<T>(items: T[], check: (a: T, b: T) => boolean | number) {
   const order = [...items]
   order.sort((a, b) => {
     const result = check(a, b)
@@ -13,22 +11,20 @@ export function getProjectSortingOrder<
     }
     return result
   })
-  return order.map((item) => item.display.slug)
+  return order
+}
+
+export function getProjectSortingOrder<
+  T extends { id: ProjectId; display: { slug: string } },
+>(items: T[], check: (a: T, b: T) => boolean | number) {
+  return getOrder(items, check).map((item) => item.display.slug)
 }
 
 export function getEntrySortingOrder<T extends { slug: string }>(
   items: T[],
   check: (a: T, b: T) => boolean | number,
 ) {
-  const order = [...items]
-  order.sort((a, b) => {
-    const result = check(a, b)
-    if (typeof result === 'boolean') {
-      return result ? -1 : 1
-    }
-    return result
-  })
-  return order.map((item) => item.slug)
+  return getOrder(items, check).map((item) => item.slug)
 }
 
 export function getSortingOrderByTvl<

@@ -507,6 +507,7 @@ export function getScalingLivenessColumnsConfig(
               />
             )
           },
+          sortBy: sortingOrder.proofSubmissions,
         },
         {
           name: 'State\nupdates',
