@@ -26,6 +26,13 @@ const regularUpgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
+const challengePeriod = discovery.getContractValue<number>(
+  'StateCommitmentChain',
+  'FRAUD_PROOF_WINDOW',
+)
+
 const TssThreshold = discovery.getContractValue<
   [number, number, string, string[]]
 >('TssGroupManager', 'getTssGroupInfo')
@@ -101,8 +108,8 @@ export const mantle: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'L1CrossDomainMessenger',

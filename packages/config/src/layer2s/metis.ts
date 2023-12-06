@@ -13,6 +13,8 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metis')
 
+const upgradeDelay = 0
+
 export const metis: Layer2 = {
   type: 'layer2',
   id: ProjectId('metis'),
@@ -70,7 +72,7 @@ export const metis: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
