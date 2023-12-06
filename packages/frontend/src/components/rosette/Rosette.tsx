@@ -183,7 +183,7 @@ export function BigRosette({
         Data availability
       </span>
       <span
-        className="Rosette-Text absolute top-[94px] left-[184px] rotate-[68deg] text-xs font-medium uppercase leading-tight"
+        className="Rosette-Text absolute top-[94px] left-[184px] rotate-[68deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="exit-window"
       >
         Exit window
