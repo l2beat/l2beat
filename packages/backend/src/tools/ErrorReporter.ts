@@ -49,7 +49,11 @@ export async function flushErrors(): Promise<void> {
 export function handleServerError(logger: Logger, error: Error, ctx: Context) {
   Sentry.withScope((scope) => {
     scope.setSDKProcessingMetadata({ request: ctx.request })
-    const errorString = JSON.stringify(error, Object.getOwnPropertyNames(error), 2)
+    const errorString = JSON.stringify(
+      error,
+      Object.getOwnPropertyNames(error),
+      2,
+    )
     logger.error({ path: ctx.path, error: errorString }) // logging error eventually calls reportError
   })
 }
