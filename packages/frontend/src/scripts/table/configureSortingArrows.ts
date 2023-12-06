@@ -18,7 +18,7 @@ interface SortingArrowsElement {
   getOrder: () => string[] | undefined
   setOrderKey: (orderKey: string) => void
   setState: (state: State) => void
-  toggleState: () => State
+  toggleState: (tabId?: string) => State
 }
 
 const tabState: Record<string, UrlState['queryParams']> = {}
@@ -76,7 +76,7 @@ function configureSortingArrowsElement(
   }
 
   sortingArrows.node.addEventListener('click', () => {
-    const currentState = sortingArrows.toggleState()
+    const currentState = sortingArrows.toggleState(parentElement?.id)
     orderRows(table, sortingArrows, defaultOrder)
     otherSortingArrows.forEach((sortingArrow) => sortingArrow.setState(null))
     if (isInsideTabs && parentElement) {
@@ -117,7 +117,7 @@ function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
     return 'asc'
   }
 
-  const toggleState = () => {
+  const toggleState = (tabId?: string) => {
     const searchParams = new URLSearchParams(window.location.search)
     const currentState = getState()
     const nextState = getNextState(currentState)
@@ -130,7 +130,7 @@ function getSortingArrowsElement(element: HTMLElement): SortingArrowsElement {
       searchParams.delete('sort-order')
     }
 
-    setQueryParams(searchParams)
+    setQueryParams(searchParams, tabId)
     setState(nextState)
     return nextState
   }
