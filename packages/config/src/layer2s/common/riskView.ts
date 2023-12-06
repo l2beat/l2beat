@@ -354,12 +354,14 @@ export function EXIT_WINDOW(
   upgradeDelay2?: number,
 ): ProjectRiskViewEntry {
   let window: number = upgradeDelay - exitDelay
-  let windowString = window < 0 ? 'None' : formatSeconds(window)
+  let windowString = window <= 0 ? 'None' : formatSeconds(window)
   if (upgradeDelay2 !== undefined) {
     const window2: number = upgradeDelay2 - exitDelay
-    const windowString2 = window2 < 0 ? 'None' : formatSeconds(window2)
-    windowString = `${windowString} or ${windowString2}`
-    window = Math.min(window, window2)
+    const windowString2 = window2 <= 0 ? 'None' : formatSeconds(window2)
+    if (windowString !== windowString2) {
+      windowString = `${windowString} or ${windowString2}`
+      window = Math.min(window, window2)
+    }
   }
   let sentiment: Sentiment
   if (window < 7 * 24 * 60 * 60) {
@@ -369,9 +371,13 @@ export function EXIT_WINDOW(
   } else {
     sentiment = 'good'
   }
+  const description =
+    windowString === 'None'
+      ? 'There is no window for users to exit in case of an unwanted upgrade.'
+      : `Users have ${windowString} to exit funds in case of an unwanted upgrade.`
   return {
     value: windowString,
-    description: `Users have ${windowString} to exit funds in case of an unwanted upgrade.`,
+    description,
     sentiment,
   }
 }

@@ -145,6 +145,8 @@ export const zksynclite: Layer2 = {
     },
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
+      sentiment: 'warning',
+      description: `There is a ${upgradeDelayString} delay for upgrades initiated by ZkSync Multisig. The 9 of 15 Security Council can override the delay and allow instant upgrade. Some system components can be changed with no delay but that do not impede the ability for users to withdraw permissionlessly.`,
       sources: [
         {
           contract: 'Governance',

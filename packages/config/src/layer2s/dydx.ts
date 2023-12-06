@@ -183,7 +183,9 @@ export const dydx: Layer2 = {
         maxPriorityDelay,
       )} delay, although this time can be shortened to ${formatSeconds(
         minPriorityDelay,
-      )} by the Priority Controller.`,
+      )} by the Priority Controller. Withdrawals can be censored for up to ${formatSeconds(
+        freezeGracePeriod,
+      )}.`,
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),

@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -40,6 +41,7 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 const upgradeDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
+const upgradeDelayString = formatSeconds(upgradeDelay)
 
 export const nova: Layer2 = {
   type: 'layer2',
@@ -118,7 +120,8 @@ export const nova: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengeWindowSeconds, 0),
-      description: `There is a ${upgradeDelay} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
+      sentiment: 'bad',
+      description: `There is a ${upgradeDelayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(

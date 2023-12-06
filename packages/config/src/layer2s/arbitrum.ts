@@ -44,8 +44,10 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
-const totalDelay =
-  l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
+const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
+
+const totalDelayString = formatSeconds(totalDelay)
 
 const upgradesExecutor = {
   upgradableBy: ['UpgradeExecutorAdmin'],
@@ -415,8 +417,9 @@ export const arbitrum: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(totalDelay, challengeWindow, 0),
-      description: `There is a ${totalDelay} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
+      ...RISK_VIEW.EXIT_WINDOW(totalDelay, challengeWindowSeconds, 0),
+      sentiment: 'bad',
+      description: `There is a ${totalDelayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
       sources: [
         {
           contract: 'OutboxV2',
