@@ -32,6 +32,8 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
@@ -173,8 +175,8 @@ export const zksyncera: Layer2 = {
         'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
       ],
     },
-    upgradeability: {
-      ...VALUES.ZKSYNC_2.UPGRADEABILITY,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelay),
       sources: [
         {
           contract: 'zkSync',

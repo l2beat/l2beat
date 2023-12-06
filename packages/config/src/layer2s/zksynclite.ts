@@ -19,9 +19,11 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
 
-const upgradeDelay = formatSeconds(
-  discovery.getContractValue<number>('ZkSync', 'UPGRADE_NOTICE_PERIOD'),
+const upgradeDelay = discovery.getContractValue<number>(
+  'ZkSync',
+  'UPGRADE_NOTICE_PERIOD',
 )
+const upgradeDelayString = formatSeconds(upgradeDelay)
 
 const securityCouncilThreshold = discovery.getContractValue<number>(
   'ZkSync',
@@ -37,7 +39,7 @@ const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers
 
 const upgrades = {
   upgradableBy: ['ZkSync Multisig'],
-  upgradeDelay: `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradeDelay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
   upgradeConsiderations:
     'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
 }
@@ -141,8 +143,8 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_ZKSYNC(upgradeDelay, securityCouncil),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
       sources: [
         {
           contract: 'Governance',
