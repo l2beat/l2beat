@@ -1,7 +1,6 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { multicallConfig } from '@l2beat/discovery'
-import { EtherscanClient } from '@l2beat/shared'
+import { getChainConfig } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -210,18 +209,62 @@ export function getProductionConfig(env: Env): Config {
       },
       chains: [
         {
-          chainId: ChainId.ETHEREUM,
-          rpcUrl: env.string('DISCOVERY_ETHEREUM_RPC_URL'),
-          rpcGetLogsMaxRange: env.optionalInteger(
-            'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
-          ),
+          ...getChainConfig(ChainId.ETHEREUM),
           reorgSafeDepth: env.optionalInteger(
             'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
-          multicall: multicallConfig.ethereum,
-          etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
-          etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
+        },
+        {
+          ...getChainConfig(ChainId.ARBITRUM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ARBITRUM_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.AVALANCHE),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_AVALANCHE_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.BSC),
+          reorgSafeDepth: env.optionalInteger('DISCOVERY_BSC_REORG_SAFE_DEPTH'),
+        },
+        {
+          ...getChainConfig(ChainId.CELO),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_CELO_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.GNOSIS),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_GNOSIS_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.LINEA),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_LINEA_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.OPTIMISM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_OPTIMISM_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.POLYGON_POS),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_POLYGON_POS_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.POLYGON_ZKEVM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
+          ),
         },
       ],
     },
