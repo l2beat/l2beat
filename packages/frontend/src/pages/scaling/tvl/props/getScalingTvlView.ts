@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, layer2s } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
@@ -39,7 +39,7 @@ function getScalingTvlViewEntry(
   let stats: TvlStats | undefined
 
   if (!apiProject) {
-    if (!project.isUpcoming) {
+    if (!project.isUpcoming && !project.isLayer3) {
       throw new Error(`Project ${project.display.name} is missing in api`)
     }
   } else {
@@ -57,6 +57,9 @@ function getScalingTvlViewEntry(
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
+    isLayer3: project.isLayer3,
+    hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
+      .name,
     tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     tvlBreakdown:

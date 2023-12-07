@@ -1,7 +1,12 @@
 import { ProjectId, TvlApiResponse } from '@l2beat/shared-pure'
 
 export function getIncludedProjects<
-  T extends { id: ProjectId; isUpcoming?: boolean; type: 'bridge' | 'layer2' },
+  T extends {
+    id: ProjectId
+    isUpcoming?: boolean
+    isLayer3?: boolean
+    type: 'bridge' | 'layer2'
+  },
 >(projects: T[], tvlApiResponse: TvlApiResponse, buildAllProjectPages = false) {
   if (buildAllProjectPages) {
     return projects
@@ -13,6 +18,7 @@ export function getIncludedProjects<
 
   if (projects.every((x) => x.type === 'layer2')) {
     included.push(...projects.filter((x) => x.isUpcoming))
+    included.push(...projects.filter((x) => !x.isUpcoming && x.isLayer3))
   }
 
   return included

@@ -14,17 +14,13 @@ import {
   ZkSyncLiteIcon,
 } from '../icons'
 
-export interface TechnologyCellProps {
+export interface TypeCellProps {
   children: string
   disableColors?: boolean
   provider?: Layer2['display']['provider']
 }
 
-export function TechnologyCell({
-  provider,
-  children,
-  disableColors,
-}: TechnologyCellProps) {
+export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
   const isRollup = children.includes('Rollup')
   const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
   const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
