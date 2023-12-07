@@ -3,7 +3,6 @@ import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
-import { Project } from '../../model'
 import {
   IndexerStateRecord,
   IndexerStateRepository,
@@ -24,11 +23,11 @@ export class LivenessIndexer extends ChildIndexer {
   constructor(
     logger: Logger,
     parentIndexer: HourlyIndexer,
-    private readonly projects: Project[],
     private readonly livenessClient: LivenessClient,
     private readonly stateRepository: IndexerStateRepository,
     private readonly livenessRepository: LivenessRepository,
     private readonly configurationRepository: LivenessConfigurationRepository,
+    private readonly runtimeConfigurations: LivenessConfigEntry[],
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
@@ -87,22 +86,22 @@ export class LivenessIndexer extends ChildIndexer {
       new UnixTime(to).toNumber(),
     )
 
-    const runtimeEntries = this.projects.flatMap(
-      (p) => p.livenessConfig?.entries ?? [],
+    const filteredConfigurations = this.runtimeConfigurations.filter(
+      (entry) => {
+        const dbEntry = databaseEntries.find(
+          (dbEntry) => dbEntry.id === entry.id,
+        )
+        assert(dbEntry, 'Database entry should not be undefined here!')
+
+        return isTimestampInRange(
+          entry.sinceTimestamp,
+          entry.untilTimestamp,
+          dbEntry.lastSyncedTimestamp,
+          new UnixTime(from),
+          adjustedTo,
+        )
+      },
     )
-
-    const filteredConfigurations = runtimeEntries.filter((entry) => {
-      const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === entry.id)
-      assert(dbEntry, 'Database entry should not be undefined here!')
-
-      return isTimestampInRange(
-        entry.sinceTimestamp,
-        entry.untilTimestamp,
-        dbEntry.lastSyncedTimestamp,
-        new UnixTime(from),
-        adjustedTo,
-      )
-    })
 
     return [filteredConfigurations, adjustedTo]
   }
@@ -111,13 +110,14 @@ export class LivenessIndexer extends ChildIndexer {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
-    const databaseConfigurations = await this.configurationRepository.getAll()
+    const databaseEntries = await this.configurationRepository.getAll()
+
     const { toAdd, toRemove, toTrim } = diffLivenessConfigurations(
-      this.projects,
-      databaseConfigurations,
+      this.runtimeConfigurations,
+      databaseEntries,
     )
 
-    const syncedTimestamps = databaseConfigurations
+    const syncedTimestamps = databaseEntries
       .map((c) => c.lastSyncedTimestamp)
       .filter(notUndefined)
 
