@@ -21,7 +21,7 @@ import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
 import { ColumnConfig } from '../TableView'
-import { TechnologyCell } from '../TechnologyCell'
+import { TypeCell } from '../TypeCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
 export function getActiveScalingTvlColumnsConfig() {
@@ -52,14 +52,12 @@ export function getActiveScalingTvlColumnsConfig() {
       ),
     },
     {
-      name: 'Technology',
+      name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
     },
     {
@@ -217,14 +215,12 @@ export function getUpcomingScalingTvlColumnsConfig() {
       getValue: (project) => <ProjectCell project={project} />,
     },
     {
-      name: 'Technology',
+      name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
     },
     {
@@ -259,14 +255,12 @@ export function getArchivedScalingTvlColumnsConfig() {
       getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
     },
     {
-      name: 'Technology',
+      name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
     },
     {
@@ -321,14 +315,12 @@ export function getLayer3sScalingTvlColumnsConfig() {
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Type',
-      getValue: (project) => (
-        <TechnologyCell>{project.category}</TechnologyCell>
-      ),
+      getValue: (project) => <TypeCell>{project.category}</TypeCell>,
     },
     {
-      name: 'Technology',
-      tooltip: 'The technology stack used.',
-      shortName: 'Tech',
+      name: 'Type',
+      tooltip: 'The type stack used.',
+      shortName: 'Type',
       getValue: (project) => project.provider,
     },
     {
@@ -526,14 +518,14 @@ export function getScalingLivenessColumnsConfig() {
       ],
     },
     {
-      name: 'Technology',
+      name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider} disableColors>
+        <TypeCell provider={project.provider} disableColors>
           {project.category}
-        </TechnologyCell>
+        </TypeCell>
       ),
     },
     {

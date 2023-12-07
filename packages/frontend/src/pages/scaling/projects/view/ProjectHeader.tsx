@@ -10,7 +10,7 @@ import { TvlStats } from '../../../../components/header/TvlSummary'
 import { InfoIcon, ProjectLink } from '../../../../components/icons'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
-import { TechnologyCell } from '../../../../components/table/TechnologyCell'
+import { TypeCell } from '../../../../components/table/TypeCell'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
@@ -94,8 +94,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
         ]
       : []),
     {
-      title: 'Technology',
-      value: <TechnologyCell>{props.technology}</TechnologyCell>,
+      title: 'Type',
+      value: <TypeCell>{props.technology}</TypeCell>,
     },
     {
       title: 'Purpose',
