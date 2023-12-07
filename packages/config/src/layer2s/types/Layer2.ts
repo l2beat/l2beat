@@ -92,6 +92,7 @@ export interface Layer2Display {
     | 'Polygon'
     | 'OVM'
     | 'Starknet'
+    | 'Arbitrum Orbit'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */

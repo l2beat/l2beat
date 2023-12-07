@@ -320,12 +320,16 @@ export function getLayer3sScalingTvlColumnsConfig() {
       name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TechnologyCell>{project.category}</TechnologyCell>
       ),
+    },
+    {
+      name: 'Technology',
+      tooltip: 'The technology stack used.',
+      shortName: 'Tech',
+      getValue: (project) => project.provider,
     },
     {
       name: 'Host Chain',
