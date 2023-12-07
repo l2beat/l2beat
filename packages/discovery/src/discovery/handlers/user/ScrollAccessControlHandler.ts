@@ -1,14 +1,10 @@
-import { assert } from '@l2beat/backend-tools'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import {
-  ContractMetadata,
-  DiscoveryProvider,
-} from '../../provider/DiscoveryProvider'
-import { ProxyDetector } from '../../proxies/ProxyDetector'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
 import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type ScrollAccessControlHandlerDefinition = z.infer<
@@ -88,12 +84,6 @@ export class ScrollAccessControlHandler implements ClassicHandler {
     > = {}
     const targets: Record<string, Record<string, Set<string>>> = {}
 
-    // Metadatas of all contracts that are involved in the access modification events
-    const contractToMetadata: Record<string, ContractMetadata> = {}
-    // Proxy contracts to their implementations mapping.
-    // (i.e. for contracts involved in the access modification events)
-    const proxyContractToImplementations: Record<string, EthereumAddress[]> = {}
-
     getRole('DEFAULT_ADMIN_ROLE')
 
     function getRole(role: string): {
@@ -123,94 +113,18 @@ export class ScrollAccessControlHandler implements ClassicHandler {
       return value
     }
 
-    const proxyDetector = new ProxyDetector(provider, DiscoveryLogger.SILENT)
-    function decodeSelectors(
-      target: EthereumAddress,
-      encodedSelectors: string[],
-      metadatas: ContractMetadata[],
-    ): string[] {
-      const ifaces = metadatas.map((m) => new utils.Interface(m.abi))
-      const abiSelectors = ifaces.flatMap((iface) =>
-        Object.entries(iface.functions).map(([functionName, fragment]) => [
-          functionName,
-          iface.getSighash(fragment),
-        ]),
-      )
+    const accessChangeLogs = logs
+      .map(parseRoleLog)
+      .filter((parsed) =>
+        ['GrantAccess', 'RevokeAccess'].includes(parsed.type),
+      ) as AccessChangeLog[]
 
-      return encodedSelectors.map((s) => {
-        const decoded = abiSelectors.find(
-          ([_, abiSelector]) => abiSelector === s,
-        )
-        if (decoded) {
-          assert(decoded[0])
-          return decoded[0]
-        }
-        return s
-      })
-    }
+    const contracts = new Set<EthereumAddress>(
+      accessChangeLogs.map((parsed) => parsed.target),
+    )
 
-    /**
-     * Resolves all metadata for the contracts that are involved in the access
-     * modification events.
-     */
-    const logger = this.logger
-    async function resolveMetaDatas(): Promise<void> {
-      const accessChangeLogs = logs
-        .map(parseRoleLog)
-        .filter((parsed) =>
-          ['GrantAccess', 'RevokeAccess'].includes(parsed.type),
-        ) as AccessChangeLog[]
-
-      const contracts = new Set<EthereumAddress>(
-        accessChangeLogs.map((parsed) => parsed.target),
-      )
-
-      // Find all proxy contracts and their implementations
-      await Promise.all(
-        [...contracts].map(async (address) => {
-          const proxy = await proxyDetector.detectProxy(
-            address,
-            blockNumber,
-            logger,
-          )
-          if (proxy) {
-            proxyContractToImplementations[address.toString()] =
-              proxy.implementations
-          }
-        }),
-      )
-      const implementationContracts = new Set<EthereumAddress>(
-        Object.values(proxyContractToImplementations).flat(),
-      )
-
-      // Resovle all metadata for the contracts
-      await Promise.all(
-        [...contracts, ...implementationContracts].map(async (address) => {
-          contractToMetadata[address.toString()] =
-            await provider.getMetadata(address)
-        }),
-      )
-    }
-
-    await resolveMetaDatas()
-
-    /**
-     * @param address
-     * @returns Metadata of the contract and all its implementations
-     */
-    function getMetadatas(address: EthereumAddress): ContractMetadata[] {
-      const contractMetadata = contractToMetadata[address.toString()]
-      const implementationsMetaData = (
-        proxyContractToImplementations[address.toString()] ?? []
-      ).map(
-        (implementationAddress) =>
-          contractToMetadata[implementationAddress.toString()],
-      )
-
-      return [contractMetadata, ...implementationsMetaData].filter(
-        (metadata) => metadata !== undefined,
-      ) as ContractMetadata[]
-    }
+    const decoder = new FunctionSelectorDecoder(provider, blockNumber)
+    await decoder.fetchTargets([...contracts])
 
     for (const log of logs) {
       const parsed = parseRoleLog(log)
@@ -223,10 +137,8 @@ export class ScrollAccessControlHandler implements ClassicHandler {
         role.members.delete(parsed.account)
       } else if (parsed.type === 'GrantAccess') {
         const target = getTarget(parsed.target)
-        const decoded = decodeSelectors(
-          parsed.target,
-          parsed.selectors,
-          getMetadatas(parsed.target),
+        const decoded = await Promise.all(
+          parsed.selectors.map((s) => decoder.decodeSelector(parsed.target, s)),
         )
         decoded.forEach((s) => {
           if (target[s] === undefined) {
@@ -239,10 +151,8 @@ export class ScrollAccessControlHandler implements ClassicHandler {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       } else if (parsed.type === 'RevokeAccess') {
         const target = getTarget(parsed.target)
-        const decoded = decodeSelectors(
-          parsed.target,
-          parsed.selectors,
-          getMetadatas(parsed.target),
+        const decoded = await Promise.all(
+          parsed.selectors.map((s) => decoder.decodeSelector(parsed.target, s)),
         )
         decoded.forEach((s) => {
           const selector = getSelector(target, s)

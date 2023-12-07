@@ -5,11 +5,8 @@ import * as z from 'zod'
 
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import {
-  ContractMetadata,
-  DiscoveryProvider,
-} from '../../provider/DiscoveryProvider'
-import { ProxyDetector } from '../../proxies/ProxyDetector'
+import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
 import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type LineaRolesModuleHandlerDefinition = z.infer<
@@ -108,8 +105,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
     const roles: Record<number, Role> = {}
     const defaultRoles: Record<string, number> = {}
 
-    // TODO(radomski): This should be moved to a class this will handle the
-    // selector decoding logic. This will be done together with L2B-2940.
     const targets = [
       ...new Set(
         events
@@ -123,54 +118,9 @@ export class LineaRolesModuleHandler implements ClassicHandler {
           .filter(notUndefined),
       ),
     ]
-    const proxyDetector = new ProxyDetector(provider, DiscoveryLogger.SILENT)
-    const implementations: Record<string, EthereumAddress[]> = {}
-    const contractMetadata: Record<string, ContractMetadata> = {}
-    await Promise.all(
-      [...targets].map(async (address) => {
-        const proxy = await proxyDetector.detectProxy(
-          address,
-          blockNumber,
-          this.logger,
-        )
-        if (proxy) {
-          implementations[address.toString()] = proxy.implementations
-        }
-      }),
-    )
-    const implementationContracts = new Set<EthereumAddress>(
-      Object.values(implementations).flat(),
-    )
-    await Promise.all(
-      [...targets, ...implementationContracts].map(async (address) => {
-        contractMetadata[address.toString()] =
-          await provider.getMetadata(address)
-      }),
-    )
 
-    function decodeSelector(target: EthereumAddress, selector: string): string {
-      const metadata = contractMetadata[target.toString()]
-      if (metadata === undefined) {
-        return selector
-      }
-
-      const iface = new utils.Interface(metadata.abi)
-      const abiSelectors = Object.entries(iface.functions).map(
-        ([functionName, fragment]) => [
-          functionName,
-          iface.getSighash(fragment),
-        ],
-      )
-
-      const decoded = abiSelectors.find(
-        ([_, abiSelector]) => abiSelector === selector,
-      )
-      if (decoded) {
-        assert(decoded[0])
-        return decoded[0]
-      }
-      return selector
-    }
+    const decoder = new FunctionSelectorDecoder(provider, blockNumber)
+    await decoder.fetchTargets(targets)
 
     for (const event of events) {
       if (event.type === 'AssignRoles') {
@@ -237,23 +187,28 @@ export class LineaRolesModuleHandler implements ClassicHandler {
         case 'ScopeAllowFunction':
         case 'ScopeFunctionExecutionOptions': {
           const func = getFunction(role, event)
-          func[decodeSelector(event.targetAddress, event.functionSig)] =
-            decodeScopeConfig(event.resultingScopeConfig)
+          func[
+            await decoder.decodeSelector(event.targetAddress, event.functionSig)
+          ] = decodeScopeConfig(event.resultingScopeConfig)
           break
         }
         case 'UnscopeParameter': {
           const func = getFunction(role, event)
           const compKey = compValueKey(
             event,
-            decodeSelector(event.targetAddress, event.functionSig),
+            await decoder.decodeSelector(
+              event.targetAddress,
+              event.functionSig,
+            ),
             event.index,
           )
           // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.compValues[compKey]
           // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.compValuesOneOf[compKey]
-          func[decodeSelector(event.targetAddress, event.functionSig)] =
-            decodeScopeConfig(event.resultingScopeConfig)
+          func[
+            await decoder.decodeSelector(event.targetAddress, event.functionSig)
+          ] = decodeScopeConfig(event.resultingScopeConfig)
           break
         }
         case 'ScopeRevokeFunction': {
@@ -264,7 +219,7 @@ export class LineaRolesModuleHandler implements ClassicHandler {
         }
         case 'ScopeFunction': {
           const func = getFunction(role, event)
-          const selector = decodeSelector(
+          const selector = await decoder.decodeSelector(
             event.targetAddress,
             event.functionSig,
           )
@@ -281,7 +236,7 @@ export class LineaRolesModuleHandler implements ClassicHandler {
         }
         case 'ScopeParameter': {
           const func = getFunction(role, event)
-          const selector = decodeSelector(
+          const selector = await decoder.decodeSelector(
             event.targetAddress,
             event.functionSig,
           )
@@ -294,7 +249,7 @@ export class LineaRolesModuleHandler implements ClassicHandler {
         }
         case 'ScopeParameterAsOneOf': {
           const func = getFunction(role, event)
-          const selector = decodeSelector(
+          const selector = await decoder.decodeSelector(
             event.targetAddress,
             event.functionSig,
           )
@@ -690,6 +645,6 @@ function parseRoleLog(
   assert(false)
 }
 
-export function notUndefined<T>(value: T | undefined): value is T {
+function notUndefined<T>(value: T | undefined): value is T {
   return value !== undefined
 }
