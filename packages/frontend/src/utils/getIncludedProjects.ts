@@ -18,7 +18,6 @@ export function getIncludedProjects<
 
   if (projects.every((x) => x.type === 'layer2')) {
     included.push(...projects.filter((x) => x.isUpcoming))
-    included.push(...projects.filter((x) => !x.isUpcoming && x.isLayer3))
   }
 
   return included
