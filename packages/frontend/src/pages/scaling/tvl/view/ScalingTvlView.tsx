@@ -45,11 +45,14 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
             name: 'Active projects',
             shortName: 'Active',
             content: (
-              <TableView
-                items={activeProjects}
-                rows={rows}
-                columnsConfig={getActiveScalingTvlColumnsConfig()}
-              />
+              <div className="flex flex-col gap-y-2">
+                <TableView
+                  items={activeProjects}
+                  rows={rows}
+                  columnsConfig={getActiveScalingTvlColumnsConfig()}
+                />
+                <ScalingLegend />
+              </div>
             ),
             itemsCount: activeProjects.length,
             icon: <ActiveIcon />,
@@ -59,11 +62,14 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
             name: 'Upcoming projects',
             shortName: 'Upcoming',
             content: (
-              <TableView
-                items={upcomingProjects}
-                rows={rows}
-                columnsConfig={getUpcomingScalingTvlColumnsConfig()}
-              />
+              <div className="flex flex-col gap-y-2">
+                <TableView
+                  items={upcomingProjects}
+                  rows={rows}
+                  columnsConfig={getUpcomingScalingTvlColumnsConfig()}
+                />
+                <ScalingLegend />
+              </div>
             ),
             itemsCount: upcomingProjects.length,
             icon: <UpcomingIcon />,
@@ -73,11 +79,14 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
             name: 'Archived projects',
             shortName: 'Archived',
             content: (
-              <TableView
-                items={archivedProjects}
-                rows={rows}
-                columnsConfig={getArchivedScalingTvlColumnsConfig()}
-              />
+              <div className="flex flex-col gap-y-2">
+                <TableView
+                  items={archivedProjects}
+                  rows={rows}
+                  columnsConfig={getArchivedScalingTvlColumnsConfig()}
+                />
+                <ScalingLegend />
+              </div>
             ),
             itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
@@ -98,7 +107,6 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
           },
         ]}
       />
-      <ScalingLegend />
     </section>
   )
 }
