@@ -29,6 +29,14 @@ export class UpdateNotifier {
     diff: DiscoveryDiff[],
     metadata: UpdateMetadata,
   ) {
+    // TODO(radomski): Discord notifications for chains different than
+    // Ethereum are for now disabled. We still want to update the database
+    // with the newest discovery but we don't want to notify about changes on
+    // for example Arbitrum chain since there are a lot of changes that we
+    // have not yet looked at.
+    if (metadata.chainId !== ChainId.ETHEREUM) {
+      return
+    }
     const nonce = await this.getInternalMessageNonce()
     const messages = diffToMessages(name, diff, {
       dependents: metadata.dependents,
