@@ -31,7 +31,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   )
   const upcomingProjects = items.filter((item) => item.isUpcoming)
   const archivedProjects = items.filter((item) => item.isArchived)
-  const layers3Projects = items.filter(
+  const layer3sProjects = items.filter(
     (item) => item.isLayer3 && !item.isArchived && !item.isUpcoming,
   )
 
@@ -83,17 +83,17 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
             icon: <ArchivedIcon />,
           },
           {
-            id: 'layers3',
+            id: 'layer3s',
             name: 'Layer 3 projects',
-            shortName: 'Layers 3',
+            shortName: 'Layer 3s',
             content: (
               <TableView
-                items={layers3Projects}
+                items={layer3sProjects}
                 rows={rows}
                 columnsConfig={getLayer3sScalingTvlColumnsConfig()}
               />
             ),
-            itemsCount: layers3Projects.length,
+            itemsCount: layer3sProjects.length,
             icon: <Layer3sIcon />,
           },
         ]}

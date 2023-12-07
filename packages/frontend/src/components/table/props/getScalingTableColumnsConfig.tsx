@@ -318,14 +318,14 @@ export function getLayer3sScalingTvlColumnsConfig() {
       getValue: (project) => <TypeCell>{project.category}</TypeCell>,
     },
     {
-      name: 'Type',
-      tooltip: 'The type stack used.',
-      shortName: 'Type',
+      name: 'Technology',
+      tooltip: 'The technology stack used.',
+      shortName: 'Tech',
       getValue: (project) => project.provider,
     },
     {
       name: 'Host Chain',
-      tooltip: 'Name of host chain.',
+      tooltip: 'The chain, on top of which the L3 is built.',
       getValue: (project) => project.hostChainName,
     },
     {
