@@ -110,6 +110,7 @@ export class ProjectDiscovery {
     upgradableBy,
     upgradeDelay,
     isUpcoming,
+    isLayer3,
   }: {
     address: EthereumAddress
     name?: string
@@ -119,6 +120,7 @@ export class ProjectDiscovery {
     upgradableBy?: string[]
     upgradeDelay?: string
     isUpcoming?: boolean
+    isLayer3?: boolean
   }): ProjectEscrow {
     const contract = this.getContractByAddress(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contract.sinceTimestamp
@@ -140,6 +142,7 @@ export class ProjectDiscovery {
         upgradeDelay,
       },
       isUpcoming,
+      isLayer3,
     }
   }
 
