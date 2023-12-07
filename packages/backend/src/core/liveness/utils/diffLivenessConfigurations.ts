@@ -1,22 +1,17 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model'
 import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessConfigEntry } from '../types/LivenessConfig'
 import { LivenessId } from '../types/LivenessId'
 
 export function diffLivenessConfigurations(
-  projects: Project[],
+  runtimeEntries: LivenessConfigEntry[],
   databaseEntries: LivenessConfigurationRecord[],
 ): {
   toAdd: LivenessConfigEntry[]
   toTrim: { id: LivenessId; untilTimestamp: UnixTime }[]
   toRemove: LivenessId[]
 } {
-  const runtimeEntries = projects.flatMap(
-    (project) => project.livenessConfig?.entries ?? [],
-  )
-
   const toAdd: LivenessConfigEntry[] = []
   const toTrim: { id: LivenessId; untilTimestamp: UnixTime }[] = []
   for (const entry of runtimeEntries) {

@@ -1,40 +1,30 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { Project } from '../../../model'
-import {
-  LivenessConfigurationRecord,
-  NewLivenessConfigurationRecord,
-} from '../../../peripherals/database/LivenessConfigurationRepository'
 import { LIVENESS_MOCK } from '../../../test/mockLiveness'
-import { diffLivenessConfigurations } from './processLivenessConfigurations'
+import { LivenessConfigEntry } from '../types/LivenessConfig'
+import { diffLivenessConfigurations } from './diffLivenessConfigurations'
 
-const { PROJECTS, CONFIGURATIONS } = LIVENESS_MOCK
+const { CONFIGURATIONS, DB_CONFIGURATIONS } = LIVENESS_MOCK
 
 describe(diffLivenessConfigurations.name, () => {
   describe('added', () => {
     it('finds configs not saved in the DB', () => {
       const result = diffLivenessConfigurations(
-        PROJECTS,
-        CONFIGURATIONS.slice(0, 1),
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS.slice(0, 1),
       )
 
-      const added: NewLivenessConfigurationRecord[] = CONFIGURATIONS.slice(
-        1,
-      ).map((c) => ({
-        identifier: c.identifier,
-        type: c.type,
-        params: c.params,
-        sinceTimestamp: c.sinceTimestamp,
-        untilTimestamp: c.untilTimestamp,
-        projectId: c.projectId,
-      }))
+      const added: LivenessConfigEntry[] = CONFIGURATIONS.slice(1)
 
       expect(result.toAdd).toEqualUnsorted(added)
     })
 
     it('no configs to add', () => {
-      const result = diffLivenessConfigurations(PROJECTS, CONFIGURATIONS)
+      const result = diffLivenessConfigurations(
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS,
+      )
 
       expect(result.toAdd).toEqual([])
     })
@@ -44,42 +34,26 @@ describe(diffLivenessConfigurations.name, () => {
     it('finds configs which untilTimestamp have changed', () => {
       const changedUntilTimestamp = UnixTime.now()
 
+      const updated = {
+        ...CONFIGURATIONS[1],
+        untilTimestamp: changedUntilTimestamp,
+      }
+
       const result = diffLivenessConfigurations(
-        [
-          {
-            ...PROJECTS[0],
-            livenessConfig: {
-              transfers: PROJECTS[0].livenessConfig!.transfers,
-              functionCalls: [
-                {
-                  ...PROJECTS[0].livenessConfig!.functionCalls[0],
-                  untilTimestamp: changedUntilTimestamp,
-                },
-              ],
-            },
-          },
-        ],
-        CONFIGURATIONS,
+        [...CONFIGURATIONS.slice(0, 1), updated],
+        DB_CONFIGURATIONS,
       )
 
-      const updated: LivenessConfigurationRecord[] = CONFIGURATIONS.slice(
-        1,
-      ).map((c) => ({
-        id: c.id,
-        identifier: c.identifier,
-        type: c.type,
-        params: c.params,
-        sinceTimestamp: c.sinceTimestamp,
-        untilTimestamp: changedUntilTimestamp,
-        projectId: c.projectId,
-        lastSyncedTimestamp: undefined,
-      }))
-
-      expect(result.toTrim).toEqualUnsorted(updated)
+      expect(result.toTrim).toEqualUnsorted([
+        { id: updated.id, untilTimestamp: changedUntilTimestamp },
+      ])
     })
 
     it('no configs to update', () => {
-      const result = diffLivenessConfigurations(PROJECTS, CONFIGURATIONS)
+      const result = diffLivenessConfigurations(
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS,
+      )
 
       expect(result.toAdd).toEqual([])
     })
@@ -87,44 +61,23 @@ describe(diffLivenessConfigurations.name, () => {
 
   describe('phased out', () => {
     it("finds configs present in the DB but not included in any project's config", () => {
-      const project: Project = {
-        projectId: PROJECTS[0].projectId,
-        type: PROJECTS[0].type,
-        escrows: PROJECTS[0].escrows,
-        livenessConfig: {
-          transfers: [],
-          functionCalls: PROJECTS[0].livenessConfig!.functionCalls,
-        },
-      }
+      const result = diffLivenessConfigurations(
+        CONFIGURATIONS.slice(1),
+        DB_CONFIGURATIONS,
+      )
 
-      const result = diffLivenessConfigurations([project], CONFIGURATIONS)
-
-      expect(result.toRemove).toEqualUnsorted(CONFIGURATIONS.slice(0, 1))
+      expect(result.toRemove).toEqualUnsorted(
+        CONFIGURATIONS.slice(0, 1).map((c) => c.id),
+      )
     })
 
     it('no configs to phase out', () => {
-      const result = diffLivenessConfigurations(PROJECTS, CONFIGURATIONS)
+      const result = diffLivenessConfigurations(
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS,
+      )
 
       expect(result.toRemove).toEqual([])
     })
-  })
-
-  it('throws when duplicate identifiers detected', () => {
-    const project: Project = {
-      projectId: PROJECTS[0].projectId,
-      type: PROJECTS[0].type,
-      escrows: PROJECTS[0].escrows,
-      livenessConfig: {
-        transfers: [],
-        functionCalls: [
-          PROJECTS[0].livenessConfig!.functionCalls[0],
-          PROJECTS[0].livenessConfig!.functionCalls[0],
-        ],
-      },
-    }
-
-    expect(() =>
-      diffLivenessConfigurations([project], CONFIGURATIONS),
-    ).toThrow()
   })
 })
