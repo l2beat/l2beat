@@ -32,7 +32,8 @@ export function ContractsSection(props: ContractsSectionProps) {
   if (
     props.contracts.length === 0 &&
     props.escrows.length === 0 &&
-    props.risks.length === 0
+    props.risks.length === 0 &&
+    !props.isUnderReview
   ) {
     return null
   }

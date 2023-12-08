@@ -3,7 +3,7 @@ import React from 'react'
 
 import { formatLargeNumber } from '../../utils'
 import { ProjectLink } from '../icons'
-import { TechnologyCell } from '../table/TechnologyCell'
+import { TypeCell } from '../table/TypeCell'
 import { DetailsHeader as DetailsHeaderComponent } from './DetailsHeader'
 import { StatWithChange } from './stats/StatWithChange'
 
@@ -44,8 +44,8 @@ const stats = [
     value: project.display.purpose,
   },
   {
-    title: 'Technology',
-    value: <TechnologyCell>{project.technology.category}</TechnologyCell>,
+    title: 'Type',
+    value: <TypeCell>{project.technology.category}</TypeCell>,
   },
 ]
 
