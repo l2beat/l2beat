@@ -56,14 +56,14 @@ export class LivenessConfigurationRepository extends BaseRepository {
   }
 
   async setLastSyncedTimestamp(
-    id: LivenessId,
+    ids: LivenessId[],
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('liveness_configuration')
-      .where({ id: id.valueOf() })
+      .whereIn('id', ids)
       .update({ last_synced_timestamp: lastSyncedTimestamp.toDate() })
   }
 

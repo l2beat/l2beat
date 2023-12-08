@@ -105,7 +105,10 @@ describe(LivenessConfigurationRepository.name, () => {
 
         const latest = UnixTime.now()
 
-        await repository.setLastSyncedTimestamp(LIVENESS_CONFIGS[0].id, latest)
+        await repository.setLastSyncedTimestamp(
+          [LIVENESS_CONFIGS[0].id, LIVENESS_CONFIGS[1].id],
+          latest,
+        )
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
@@ -113,7 +116,11 @@ describe(LivenessConfigurationRepository.name, () => {
             ...toRecord(LIVENESS_CONFIGS[0]),
             lastSyncedTimestamp: latest,
           },
-          ...LIVENESS_CONFIGS.slice(1).map(toRecord),
+          {
+            ...toRecord(LIVENESS_CONFIGS[1]),
+            lastSyncedTimestamp: latest,
+          },
+          ...LIVENESS_CONFIGS.slice(2).map(toRecord),
         ])
       })
 
@@ -122,7 +129,7 @@ describe(LivenessConfigurationRepository.name, () => {
 
         const latest = UnixTime.now()
 
-        await repository.setLastSyncedTimestamp(LivenessId.random(), latest)
+        await repository.setLastSyncedTimestamp([LivenessId.random()], latest)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([...LIVENESS_CONFIGS.map(toRecord)])
