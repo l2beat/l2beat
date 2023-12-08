@@ -23,7 +23,7 @@ export const morph: Layer2 = {
       repositories: ['https://github.com/morph-l2'],
       socialMedia: [
         'https://twitter.com/MorphL2',
-        'https://medium.com/@Morphism_xyz',
+        'https://medium.com/@morphlayer2',
         'https://discord.gg/5SmG4yhzVZ',
         'https://facebook.com/profile.php?id=61554448708419',
         'https://youtube.com/channel/UCZW6iBpnbpCzYOrMY-RtDOw',
