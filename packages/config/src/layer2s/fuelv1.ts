@@ -33,6 +33,9 @@ export const fuelv1: Layer2 = {
       socialMedia: [
         'https://discord.gg/xfpK4Pe',
         'https://twitter.com/fuellabs_',
+        'https://www.linkedin.com/company/fuel-labs',
+        'https://www.youtube.com/@fuelnetwork',
+        'https://hey.xyz/u/fuelnetwork',
       ],
     },
   },
