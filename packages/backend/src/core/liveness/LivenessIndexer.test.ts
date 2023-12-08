@@ -19,6 +19,7 @@ import {
 import { LivenessId } from './types/LivenessId'
 import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
 import { getSyncStatus } from './utils/getSyncStatus'
+import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})
@@ -26,7 +27,42 @@ const TRX = mockObject<Knex.Transaction>({})
 describe(LivenessIndexer.name, () => {
   describe(LivenessIndexer.prototype.update.name, () => {})
 
-  describe(LivenessIndexer.prototype.getConfiguration.name, () => {})
+  describe(LivenessIndexer.prototype.getConfiguration.name, () => {
+    it('adjusts to and finds configurations to sync', async () => {
+      const from = MIN_TIMESTAMP
+      const to = from.add(365, 'days')
+
+      const runtimeEntries = getMockRuntimeConfigurations()
+      const databaseEntries = runtimeEntries.map(toRecordWithUntilTimestamp)
+      const configurationRepository = getMockConfigRepository(databaseEntries)
+
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        runtimeEntries,
+      })
+
+      const [configurationsToSync, adjustedTo] =
+        await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
+
+      const expectedAdjustedTo = adjustToForBigqueryCall(
+        from.toNumber(),
+        to.toNumber(),
+      )
+
+      expect(adjustedTo).toEqual(expectedAdjustedTo)
+
+      const expectedConfigurationsToSync = findConfigurationsToSync(
+        runtimeEntries,
+        databaseEntries,
+        from,
+        adjustedTo,
+      )
+
+      expect(configurationsToSync).toEqual(expectedConfigurationsToSync)
+
+      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+    })
+  })
 
   describe(LivenessIndexer.prototype.start.name, () => {
     it('initializes configurations and indexer state', async () => {
@@ -38,7 +74,10 @@ describe(LivenessIndexer.name, () => {
 
       const databaseEntries: LivenessConfigurationRecord[] = [
         removedConfig,
-        toRecordWithUntilTimestamp(runtimeEntries[1], undefined),
+        {
+          ...toRecordWithUntilTimestamp(runtimeEntries[1]),
+          untilTimestamp: undefined,
+        },
         // rest of the configurations would be considered "toAdd"
       ]
 
@@ -284,14 +323,13 @@ function getMockLivenessIndexer(params: {
 
 function toRecordWithUntilTimestamp(
   entry: LivenessConfigEntry,
-  untilTimestamp: UnixTime | undefined,
 ): LivenessConfigurationRecord {
   return {
     id: entry.id,
     projectId: entry.projectId,
     type: entry.type,
     sinceTimestamp: entry.sinceTimestamp,
-    untilTimestamp,
+    untilTimestamp: entry.untilTimestamp,
     debugInfo: '',
   }
 }

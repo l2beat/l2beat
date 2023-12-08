@@ -73,21 +73,18 @@ export class LivenessIndexer extends ChildIndexer {
     from: number,
     to: number,
   ): Promise<[LivenessConfigEntry[], UnixTime]> {
-    const adjustedTo = adjustToForBigqueryCall(
-      new UnixTime(from).toNumber(),
-      new UnixTime(to).toNumber(),
-    )
+    const adjustedTo = adjustToForBigqueryCall(from, to)
 
     const databaseEntries = await this.configurationRepository.getAll()
 
-    const filteredConfigurations = findConfigurationsToSync(
+    const configurationsToSync = findConfigurationsToSync(
       this.runtimeConfigurations,
       databaseEntries,
       new UnixTime(from),
       adjustedTo,
     )
 
-    return [filteredConfigurations, adjustedTo]
+    return [configurationsToSync, adjustedTo]
   }
 
   private async initialize() {
@@ -170,7 +167,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   /**
-   * WARNING: this method should not be used, it is only required by the UIF
+   * WARNING: this method does not do anything
    * 
     In our case there is no re-org handling so we do not have to worry
     that our data will become invalid.
