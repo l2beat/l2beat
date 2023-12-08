@@ -10,7 +10,16 @@ import {
   makeLivenessFunctionCall,
   makeLivenessTransfer,
 } from './types/LivenessConfig'
-import { getFunctionCallQuery, getTransferQuery } from './utils'
+import {
+  BigQueryFunctionCallsResult,
+  BigQueryTransfersResult,
+} from './types/model'
+import {
+  getFunctionCallQuery,
+  getTransferQuery,
+  transformFunctionCallsQueryResult,
+  transformTransfersQueryResult,
+} from './utils'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
@@ -96,6 +105,11 @@ const TRANSFERS_RESPONSE = [
     transaction_hash: TX_HASH,
   },
 ]
+const parsedTransfers = BigQueryTransfersResult.parse(TRANSFERS_RESPONSE)
+const TRANSFERS_RESULT = transformTransfersQueryResult(
+  [CONFIGURATIONS[0] as LivenessTransfer],
+  parsedTransfers,
+)
 
 const FUNCTIONS_RESPONSE = [
   {
@@ -107,23 +121,12 @@ const FUNCTIONS_RESPONSE = [
   },
 ]
 
-const TRANSFERS_RESULT = [
-  {
-    timestamp: FROM,
-    blockNumber: BLOCK,
-    txHash: TX_HASH,
-    livenessId: CONFIGURATIONS[0].id,
-  },
-]
-
-const FUNCTIONS_RESULT = [
-  {
-    timestamp: FROM,
-    blockNumber: BLOCK,
-    txHash: TX_HASH,
-    livenessId: CONFIGURATIONS[1].id,
-  },
-]
+const parsedFunctionCalls =
+  BigQueryFunctionCallsResult.parse(FUNCTIONS_RESPONSE)
+const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
+  [CONFIGURATIONS[1] as LivenessFunctionCall],
+  parsedFunctionCalls,
+)
 
 const TRANSFERS_SQL = getTransferQuery(
   [CONFIGURATIONS[0] as LivenessTransfer],
