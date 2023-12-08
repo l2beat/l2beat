@@ -67,7 +67,8 @@ export async function down(knex: Knex) {
     table.dropPrimary()
     table.dropColumn('liveness_id')
     table.integer('liveness_configuration_id').notNullable()
-    table.primary(['liveness_configuration_id', 'tx_hash'])
+    table.primary(['tx_hash', 'liveness_configuration_id'])
+    table.index('liveness_configuration_id')
   })
 
   await addForeign(
