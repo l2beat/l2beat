@@ -26,7 +26,7 @@ export const morph: Layer2 = {
         'https://medium.com/@Morphism_xyz',
         'https://discord.gg/5SmG4yhzVZ',
         'https://www.facebook.com/profile.php?id=61554448708419',
-        'https://www.youtube.com/channel/UCZW6iBpnbpCzYOrMY-RtDOw'
+        'https://www.youtube.com/channel/UCZW6iBpnbpCzYOrMY-RtDOw',
       ],
     },
   },
