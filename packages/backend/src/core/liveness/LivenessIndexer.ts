@@ -1,5 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
@@ -16,6 +16,7 @@ import { LivenessId } from './types/LivenessId'
 import { adjustToForBigqueryCall } from './utils'
 import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
+import { getSyncStatus } from './utils/getSyncStatus'
 
 export class LivenessIndexer extends ChildIndexer {
   readonly indexerId = 'liveness_indexer'
@@ -103,15 +104,7 @@ export class LivenessIndexer extends ChildIndexer {
       databaseEntries,
     )
 
-    const syncedTimestamps = databaseEntries
-      .map((c) => c.lastSyncedTimestamp)
-      .filter(notUndefined)
-
-    // TODO: test
-    const syncStatus =
-      toAdd.length > 0 || syncedTimestamps.length === 0
-        ? this.minTimestamp
-        : syncedTimestamps.reduce((min, value) => (min.lt(value) ? min : value))
+    const syncStatus = getSyncStatus(databaseEntries, toAdd, this.minTimestamp)
 
     await this.stateRepository.runInTransaction(async (trx) => {
       await this.initializeIndexerState(indexerState, syncStatus, trx)
@@ -165,15 +158,13 @@ export class LivenessIndexer extends ChildIndexer {
     // there can be a situation where untilTimestamp was set retroactively
     // in this case we want to delete the liveness records that were added during this "misconfiguration" period
     await Promise.all(
-      toTrim.map(async (u) => {
-        const untilTimestamp = u.untilTimestamp
-        assert(untilTimestamp, 'untilTimestamp should not be undefined there')
+      toTrim.map(async (c) => {
         await this.configurationRepository.setUntilTimestamp(
-          u.id,
-          untilTimestamp,
+          c.id,
+          c.untilTimestamp,
           trx,
         )
-        await this.livenessRepository.deleteAfter(u.id, untilTimestamp, trx)
+        await this.livenessRepository.deleteAfter(c.id, c.untilTimestamp, trx)
       }),
     )
   }
