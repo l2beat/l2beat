@@ -1,11 +1,12 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LIVENESS_MOCK } from '../../../test/mockLiveness'
-import { LivenessConfigEntry } from '../types/LivenessConfig'
+import {
+  LivenessConfigEntry,
+  makeLivenessFunctionCall,
+  makeLivenessTransfer,
+} from '../types/LivenessConfig'
 import { diffLivenessConfigurations } from './diffLivenessConfigurations'
-
-const { CONFIGURATIONS, DB_CONFIGURATIONS } = LIVENESS_MOCK
 
 describe(diffLivenessConfigurations.name, () => {
   describe('added', () => {
@@ -81,3 +82,31 @@ describe(diffLivenessConfigurations.name, () => {
     })
   })
 })
+
+const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+
+const CONFIGURATIONS: LivenessConfigEntry[] = [
+  makeLivenessTransfer({
+    projectId: ProjectId('project1'),
+    formula: 'transfer',
+    from: EthereumAddress.random(),
+    to: EthereumAddress.random(),
+    type: 'DA',
+    sinceTimestamp: FROM,
+    untilTimestamp: FROM.add(2, 'days'),
+  }),
+  makeLivenessFunctionCall({
+    projectId: ProjectId('project1'),
+    formula: 'functionCall',
+    address: EthereumAddress.random(),
+    selector: '0x9aaab648',
+    sinceTimestamp: FROM,
+    type: 'STATE',
+  }),
+]
+
+const DB_CONFIGURATIONS = CONFIGURATIONS.map((c) => ({
+  ...c,
+  lastSyncedTimestamp: undefined,
+  debugInfo: '',
+}))

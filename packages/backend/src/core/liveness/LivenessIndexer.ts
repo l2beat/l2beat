@@ -180,14 +180,17 @@ export class LivenessIndexer extends ChildIndexer {
     await this.stateRepository.setSafeHeight(this.indexerId, height)
   }
 
-  // This function will not be used, but it is required by the UIF.
-  // In our case there is no re-org handling so we do not have to worry
-  // that our data will become invalid.
-  // Also there is no need to handle the case when the server is randomly shut down during update,
-  // liveness configurations are storing the latest synced timestamp, so even if the server is shut down
-  // without setting new safeHeight. And although the next update will run on the already processed timestamp,
-  // the configuration's lastSyncedTimestamp will filter out already processed configurations
-  // and the data will not be fetched again
+  /**
+   * WARNING: this method should not be used, it is only required by the UIF
+   * 
+    In our case there is no re-org handling so we do not have to worry
+    that our data will become invalid.
+    Also there is no need to handle the case when the server is randomly shut down during update,
+    liveness configurations are storing the latest synced timestamp, so even if the server is shut down
+    without setting new safeHeight. And although the next update will run on the already processed timestamp,
+    the configuration's lastSyncedTimestamp will filter out already processed configurations
+    and the data will not be fetched again
+  **/
   override async invalidate(targetHeight: number): Promise<number> {
     return Promise.resolve(targetHeight)
   }
