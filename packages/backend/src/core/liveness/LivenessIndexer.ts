@@ -13,10 +13,10 @@ import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
 import { LivenessConfigEntry } from './types/LivenessConfig'
 import { LivenessId } from './types/LivenessId'
-import { adjustToForBigqueryCall, isTimestampInRange } from './utils'
+import { adjustToForBigqueryCall } from './utils'
 import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
+import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 
-// TODO: add logs?
 export class LivenessIndexer extends ChildIndexer {
   readonly indexerId = 'liveness_indexer'
 
@@ -55,14 +55,10 @@ export class LivenessIndexer extends ChildIndexer {
     await this.livenessRepository.runInTransaction(async (trx) => {
       await this.livenessRepository.addMany(data, trx)
 
-      await Promise.all(
-        configurations.map((c) =>
-          this.configurationRepository.setLastSyncedTimestamp(
-            c.id,
-            adjustedTo,
-            trx,
-          ),
-        ),
+      await this.configurationRepository.setLastSyncedTimestamp(
+        configurations.map((c) => c.id),
+        adjustedTo,
+        trx,
       )
     })
 
@@ -79,28 +75,18 @@ export class LivenessIndexer extends ChildIndexer {
     from: number,
     to: number,
   ): Promise<[LivenessConfigEntry[], UnixTime]> {
-    const databaseEntries = await this.configurationRepository.getAll()
-
     const adjustedTo = adjustToForBigqueryCall(
       new UnixTime(from).toNumber(),
       new UnixTime(to).toNumber(),
     )
 
-    const filteredConfigurations = this.runtimeConfigurations.filter(
-      (entry) => {
-        const dbEntry = databaseEntries.find(
-          (dbEntry) => dbEntry.id === entry.id,
-        )
-        assert(dbEntry, 'Database entry should not be undefined here!')
+    const databaseEntries = await this.configurationRepository.getAll()
 
-        return isTimestampInRange(
-          entry.sinceTimestamp,
-          entry.untilTimestamp,
-          dbEntry.lastSyncedTimestamp,
-          new UnixTime(from),
-          adjustedTo,
-        )
-      },
+    const filteredConfigurations = findConfigurationsToSync(
+      this.runtimeConfigurations,
+      databaseEntries,
+      new UnixTime(from),
+      adjustedTo,
     )
 
     return [filteredConfigurations, adjustedTo]
@@ -131,8 +117,6 @@ export class LivenessIndexer extends ChildIndexer {
       await this.initializeIndexerState(indexerState, syncStatus, trx)
       await this.initializeConfigurations(toAdd, toTrim, toRemove, trx)
     })
-
-    this.logger.info('Initialized state and configurations')
   }
 
   private async initializeIndexerState(
@@ -192,12 +176,6 @@ export class LivenessIndexer extends ChildIndexer {
         await this.livenessRepository.deleteAfter(u.id, untilTimestamp, trx)
       }),
     )
-
-    this.logger.info('Saved configurations to the database', {
-      added: toAdd.length,
-      phasedOut: toRemove.length,
-      updated: toTrim.length,
-    })
   }
 
   override async getSafeHeight(): Promise<number> {

@@ -1,4 +1,5 @@
 export * from './adjustToForBigqueryCall'
+export * from './findConfigurationsToSync'
 export * from './isTimestampInRange'
 export * from './sql'
 export * from './transformFunctionCallsQueryResult'
