@@ -1,23 +1,23 @@
 import React from 'react'
 
+import { Tabs } from '../../../../components/Tabs'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { TableView } from '../../../../components/table/TableView'
 import { BridgesFilters } from '../../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesTvlColumnsConfig,
   getArchivedBridgesTvlColumnsConfig,
 } from '../../../../components/table/props/getBridgesTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
-import { Tabs } from '../../../../components/Tabs'
-import { BridgesTvlViewEntry, BridgesTvlViewSortingOrder } from '../types'
+import { RowConfig } from '../../../../components/table/types'
+import { BridgesTvlViewEntry } from '../types'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]
-  sortingOrder: BridgesTvlViewSortingOrder
 }
 
-export function BridgesTvlView({ items, sortingOrder }: BridgesTvlViewProps) {
+export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   const rows: RowConfig<BridgesTvlViewEntry> = {
     getProps: getBridgesRowProps,
   }
@@ -39,7 +39,7 @@ export function BridgesTvlView({ items, sortingOrder }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={activeProjects}
-                columnsConfig={getActiveBridgesTvlColumnsConfig(sortingOrder)}
+                columnsConfig={getActiveBridgesTvlColumnsConfig()}
                 rows={rows}
                 rerenderOnLoad
               />
@@ -54,7 +54,7 @@ export function BridgesTvlView({ items, sortingOrder }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={archivedProjects}
-                columnsConfig={getArchivedBridgesTvlColumnsConfig(sortingOrder)}
+                columnsConfig={getArchivedBridgesTvlColumnsConfig()}
                 rows={rows}
                 rerenderOnLoad
               />

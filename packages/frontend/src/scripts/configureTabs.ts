@@ -1,4 +1,4 @@
-import { setSortingQueryParamsByTabId } from './table/configureSortingArrows'
+import { setSortingQueryParamsByTabId } from './table/configureSorting'
 
 interface TabWithContent {
   tab: HTMLAnchorElement

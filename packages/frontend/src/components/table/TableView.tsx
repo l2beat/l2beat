@@ -1,50 +1,18 @@
 import { default as classNames, default as cx } from 'classnames'
+import isObject from 'lodash/isObject'
 import range from 'lodash/range'
-import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
+import React from 'react'
 
 import { InfoIcon } from '../icons'
 import { Link } from '../Link'
-import { SectionId } from '../project/sectionId'
 import { SortingArrows } from './SortingArrows'
+import { ColumnConfig, RowConfig, SingleColumnConfig } from './types'
 
 interface Props<T> {
   items: T[]
   columnsConfig: ColumnConfig<T>[]
   rows?: RowConfig<T>
   rerenderOnLoad?: boolean
-}
-
-export type ColumnConfig<T> =
-  | (SingleColumnConfig<T> & { type?: never })
-  | GroupedColumnConfig<T>
-
-interface SingleColumnConfig<T> {
-  name: string
-  icon?: ReactNode
-  shortName?: ReactNode
-  alignRight?: true
-  alignCenter?: true
-  minimalWidth?: true
-  headClassName?: string
-  noPaddingRight?: true
-  idHref?: SectionId
-  getValue: (value: T, index: number) => ReactNode
-  tooltip?: string
-  sortBy?: string[] | Record<string, string[]>
-}
-
-export interface GroupedColumnConfig<T> {
-  type: 'group'
-  columns: SingleColumnConfig<T>[]
-  title?: React.ReactNode
-}
-
-export interface RowConfig<T> {
-  getProps: (
-    value: T,
-    index: number,
-  ) => HTMLAttributes<HTMLTableRowElement> &
-    Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
 export function TableView<T>({
@@ -210,10 +178,12 @@ function ColumnHeader<T>(props: {
             props.column.alignCenter && 'justify-center',
           )}
         >
-          {props.column.sortBy && props.column.sortBy.length !== 0 ? (
+          {props.column.sorting ? (
             <SortingArrows
-              sortingOrder={props.column.sortBy}
               name={props.column.name}
+              rule={props.column.sorting.rule}
+              defaultState={props.column.sorting.defaultState}
+              orderKey={props.column.sorting.defaultOrderKey}
             >
               {title}
             </SortingArrows>
@@ -254,7 +224,30 @@ function DataCell<T>(props: {
     props.columnConfig.idHref && props.href
       ? `${props.href}#${props.columnConfig.idHref}`
       : props.href
+  const orderValue = props.columnConfig.sorting?.getOrderValue(
+    props.item,
+    props.rowIndex,
+  )
 
+  const orderAttributes =
+    orderValue !== undefined
+      ? {
+          ...(isObject(orderValue)
+            ? Object.entries(orderValue).reduce<Record<string, string>>(
+                (acc, [key, value]) => {
+                  if (value) {
+                    acc[`data-order-value-${key.toLowerCase()}`] =
+                      value.toString()
+                  }
+                  return acc
+                },
+                {},
+              )
+            : {
+                'data-order-value': orderValue.toString(),
+              }),
+        }
+      : undefined
   return (
     <>
       <td
@@ -264,6 +257,7 @@ function DataCell<T>(props: {
           props.groupOptions?.isFirst && '!pl-6',
           props.groupOptions?.isLast && '!pr-6',
         )}
+        {...orderAttributes}
       >
         <a
           href={idHref}

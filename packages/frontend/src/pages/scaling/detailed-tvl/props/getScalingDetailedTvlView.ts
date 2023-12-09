@@ -10,7 +10,6 @@ import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange
 import { formatUSD } from '../../../../utils/utils'
 import { ScalingDetailedTvlViewEntry } from '../types'
 import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
-import { getScalingDetailedTvlViewSortingOrder } from './getScalingDetailedTvlViewSortingOrder'
 
 export function getScalingDetailedTvlView(
   projects: Layer2[],
@@ -18,14 +17,10 @@ export function getScalingDetailedTvlView(
 ): ScalingDetailedTvlViewProps {
   const included = getIncludedProjects(projects, tvlApiResponse)
   const orderedProjects = orderByTvl(included, tvlApiResponse)
-  const items = orderedProjects.map((project) =>
-    getScalingDetailedTvlViewEntry(tvlApiResponse, project),
-  )
+
   return {
-    items,
-    sortingOrder: getScalingDetailedTvlViewSortingOrder(
-      projects,
-      tvlApiResponse,
+    items: orderedProjects.map((project) =>
+      getScalingDetailedTvlViewEntry(tvlApiResponse, project),
     ),
   }
 }
@@ -50,10 +45,22 @@ function getScalingDetailedTvlViewEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     isVerified,
-    tvl: formatUSD(parts.tvl),
-    cbv: formatUSD(parts.canonical),
-    ebv: formatUSD(parts.external),
-    nmv: formatUSD(parts.native),
+    tvl: {
+      value: parts.tvl,
+      displayValue: formatUSD(parts.tvl),
+    },
+    cbv: {
+      value: parts.canonical,
+      displayValue: formatUSD(parts.canonical),
+    },
+    ebv: {
+      value: parts.external,
+      displayValue: formatUSD(parts.external),
+    },
+    nmv: {
+      value: parts.native,
+      displayValue: formatUSD(parts.native),
+    },
     tvlChange: partsWeeklyChange.tvl,
     ebvChange: partsWeeklyChange.external,
     cbvChange: partsWeeklyChange.canonical,

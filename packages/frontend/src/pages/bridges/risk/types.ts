@@ -20,9 +20,3 @@ export interface BridgesRiskViewEntry {
   sourceUpgradeability?: ProjectRiskViewEntry
   destinationToken?: ProjectRiskViewEntry
 }
-
-export interface BridgesRiskViewSortingOrder {
-  name: string[]
-  validatedBy: string[]
-  type: string[]
-}

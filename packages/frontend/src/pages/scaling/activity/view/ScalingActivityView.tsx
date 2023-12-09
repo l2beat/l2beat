@@ -1,20 +1,17 @@
 import React from 'react'
 
+import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingActivityColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
-import { ActivityViewEntry, ActivityViewSortingOrder } from '../types'
+import { RowConfig } from '../../../../components/table/types'
+import { ActivityViewEntry } from '../types'
 export interface ScalingActivityViewProps {
   items: ActivityViewEntry[]
-  sortingOrder: ActivityViewSortingOrder
 }
 
-export function ScalingActivityView({
-  items,
-  sortingOrder,
-}: ScalingActivityViewProps) {
-  const columns = getScalingActivityColumnsConfig(sortingOrder)
+export function ScalingActivityView({ items }: ScalingActivityViewProps) {
+  const columns = getScalingActivityColumnsConfig()
   const rows: RowConfig<ActivityViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'activity'),
   }

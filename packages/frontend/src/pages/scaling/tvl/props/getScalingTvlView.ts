@@ -2,7 +2,6 @@ import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
-import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
@@ -10,7 +9,6 @@ import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { ScalingTvlViewEntry } from '../types'
 import { ScalingTvlViewProps } from '../view/ScalingTvlView'
-import { getScalingTvlViewSortingOrder } from './getScalingTvlViewSortingOrder'
 
 export function getScalingTvlView(
   projects: Layer2[],
@@ -19,18 +17,16 @@ export function getScalingTvlView(
   verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
   const included = getIncludedProjects(projects, tvlApiResponse)
-  const orderedProjects = orderByTvl(included, tvlApiResponse)
-  const items = orderedProjects.map((project) =>
-    getScalingTvlViewEntry(
-      project,
-      tvlApiResponse,
-      tvl,
-      verificationStatus.projects[project.id.toString()],
-    ),
-  )
+
   return {
-    items,
-    sortingOrder: getScalingTvlViewSortingOrder(projects, tvlApiResponse),
+    items: included.map((project) =>
+      getScalingTvlViewEntry(
+        project,
+        tvlApiResponse,
+        tvl,
+        verificationStatus.projects[project.id.toString()],
+      ),
+    ),
   }
 }
 
@@ -66,7 +62,10 @@ function getScalingTvlViewEntry(
     isUpcoming: project.isUpcoming,
     tvl:
       stats && escrowsConfigured(project)
-        ? formatUSD(stats.latestTvl)
+        ? {
+            value: stats.latestTvl,
+            displayValue: formatUSD(stats.latestTvl),
+          }
         : undefined,
     tvlValue: stats?.latestTvl,
     tvlTooltip: getProjectTvlTooltipText(project.config),
@@ -78,7 +77,10 @@ function getScalingTvlViewEntry(
       stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
     marketShare:
       stats && escrowsConfigured(project)
-        ? formatPercent(stats.latestTvl / aggregateTvl)
+        ? {
+            value: stats.latestTvl / aggregateTvl,
+            displayValue: formatPercent(stats.latestTvl / aggregateTvl),
+          }
         : undefined,
     marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
     purpose: project.display.purpose,

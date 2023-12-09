@@ -1,12 +1,15 @@
-import isArray from 'lodash/isArray'
+import classNames from 'classnames'
 import React from 'react'
 
 import { ArrowDownIcon, ArrowUpIcon } from '../icons'
+import { SortingRule, SortingState } from './types'
 
 interface Props {
   children?: React.ReactNode
   name: string
-  sortingOrder: string[] | Record<string, string[]>
+  rule: SortingRule
+  orderKey: string | undefined
+  defaultState?: SortingState
 }
 
 export function SortingArrows(props: Props) {
@@ -21,17 +24,25 @@ export function SortingArrows(props: Props) {
       className="group/sorting-arrows flex cursor-pointer select-none items-center gap-1.5"
       data-role="sorting-arrows"
       data-name={name}
-      data-order={JSON.stringify(props.sortingOrder)}
-      // If object is passed as sorting order, then we need to get the first key
-      data-order-key={
-        isArray(props.sortingOrder)
-          ? undefined
-          : Object.keys(props.sortingOrder)[0]
-      }
+      data-rule={props.rule}
+      data-state={props.defaultState}
+      data-order-key={props.orderKey}
     >
       <div className="flex flex-col gap-[1.5px]">
-        <ArrowUpIcon className="w-2.5 fill-gray-650 transition-colors group-data-[state=asc]/sorting-arrows:fill-black dark:fill-gray-650 dark:group-data-[state=asc]/sorting-arrows:fill-white" />
-        <ArrowDownIcon className="w-2.5 fill-gray-650 transition-colors group-data-[state=desc]/sorting-arrows:fill-black dark:fill-gray-650 dark:group-data-[state=desc]/sorting-arrows:fill-white" />
+        <ArrowUpIcon
+          className={classNames(
+            'w-2.5 fill-gray-650 transition-all dark:fill-gray-650',
+            'group-data-[state=asc]/sorting-arrows:fill-black dark:group-data-[state=asc]/sorting-arrows:fill-white',
+            'dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-white dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
+          )}
+        />
+        <ArrowDownIcon
+          className={classNames(
+            'w-2.5 fill-gray-650 transition-all dark:fill-gray-650',
+            'group-data-[state=desc]/sorting-arrows:fill-black dark:group-data-[state=desc]/sorting-arrows:fill-white',
+            'group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-60 dark:group-hover/sorting-arrows:fill-white',
+          )}
+        />
       </div>
       {props.children}
     </div>

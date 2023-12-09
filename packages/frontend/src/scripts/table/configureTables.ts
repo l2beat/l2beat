@@ -10,14 +10,10 @@ export function configureTables() {
 }
 
 function onLoad(table: HTMLElement) {
-  const { $$ } = makeQuery(table)
   const parentElement = table.parentElement
   const isInsideTabs = parentElement?.classList.contains('TabsContent')
 
-  const rows = $$('tbody tr[data-slug]')
-  const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
-
-  const visibleRowsLength = reorderIndexes(visibleRows)
+  const visibleRowsLength = reorderIndexes(table)
   if (parentElement && isInsideTabs) {
     rerenderTabCountBadge(parentElement.id, visibleRowsLength)
   }
@@ -40,8 +36,7 @@ function rerenderRows(table: HTMLElement, slugs?: string[]) {
   const rows = $$('tbody tr[data-slug]')
   rows.forEach((row) => manageRowVisiblity(row, slugs))
 
-  const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
-  return reorderIndexes(visibleRows)
+  return reorderIndexes(table)
 }
 
 function manageRowVisiblity(row: HTMLElement, slugs?: string[]) {

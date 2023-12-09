@@ -8,7 +8,6 @@ import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { BridgesTvlViewEntry } from '../types'
 import { BridgesTvlViewProps } from '../view/BridgesTvlView'
-import { getBridgesTvlViewSortingOrder } from './getBridgesTvlViewSortingOrder'
 
 export function getBridgesTvlView(
   projects: (Bridge | Layer2)[],
@@ -20,19 +19,16 @@ export function getBridgesTvlView(
   const included = getIncludedProjects(projects, tvlApiResponse)
   const ordered = orderByTvl(included, tvlApiResponse)
 
-  const items = ordered.map((project) =>
-    getBridgesTvlViewEntry(
-      project,
-      tvlApiResponse,
-      bridgesTvl,
-      combinedTvl,
-      verificationStatus,
-    ),
-  )
-
   return {
-    items,
-    sortingOrder: getBridgesTvlViewSortingOrder(projects, tvlApiResponse),
+    items: ordered.map((project) =>
+      getBridgesTvlViewEntry(
+        project,
+        tvlApiResponse,
+        bridgesTvl,
+        combinedTvl,
+        verificationStatus,
+      ),
+    ),
   }
 }
 
@@ -64,7 +60,12 @@ export function getBridgesTvlViewEntry(
     isArchived: project.isArchived,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
-    tvl: stats ? formatUSD(stats.latestTvl) : undefined,
+    tvl: stats
+      ? {
+          displayValue: formatUSD(stats.latestTvl),
+          value: stats.latestTvl,
+        }
+      : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
     oneDayChange: stats ? stats.oneDayChange : undefined,
     sevenDayChange: stats ? stats.sevenDayChange : undefined,
@@ -72,7 +73,10 @@ export function getBridgesTvlViewEntry(
       ? formatPercent(stats.latestTvl / bridgesTvl)
       : undefined,
     combinedMarketShare: stats
-      ? formatPercent(stats.latestTvl / combinedTvl)
+      ? {
+          displayValue: formatPercent(stats.latestTvl / combinedTvl),
+          value: stats.latestTvl / combinedTvl,
+        }
       : undefined,
     validatedBy: project.riskView?.validatedBy,
     category: project.display.category,

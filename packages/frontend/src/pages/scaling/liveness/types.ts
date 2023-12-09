@@ -24,27 +24,6 @@ export interface ScalingLivenessViewEntry {
   anomalyEntries: AnomalyIndicatorEntry[]
 }
 
-export interface ScalingLivenessViewSortingOrder {
-  name: string[]
-  txDataSubmissions: {
-    '30D': string[]
-    '90D': string[]
-    MAX: string[]
-  }
-  proofSubmissions: {
-    '30D': string[]
-    '90D': string[]
-    MAX: string[]
-  }
-  stateUpdates: {
-    '30D': string[]
-    '90D': string[]
-    MAX: string[]
-  }
-
-  technology: string[]
-}
-
 export type LivenessDetailsWithWarning = LivenessDetails & {
   warning?: string
 }

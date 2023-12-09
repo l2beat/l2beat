@@ -17,7 +17,7 @@ import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
-import { configureSortingArrows } from './table/configureSortingArrows'
+import { configureSorting } from './table/configureSorting'
 import { configureTables } from './table/configureTables'
 
 configureThemeToggle()
@@ -40,4 +40,4 @@ configureRichSelects()
 configureBridgesAndCombinedOnly()
 configureLivenessTimeRangeControls()
 configureOverflowWrappers()
-configureSortingArrows()
+configureSorting()

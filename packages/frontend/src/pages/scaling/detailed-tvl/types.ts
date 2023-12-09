@@ -2,6 +2,7 @@ import { Layer2, StageConfig } from '@l2beat/config'
 
 import { TokenControl } from '../../../components/chart/TokenControls'
 import { RiskValues } from '../../../utils/risks/types'
+import { ValueWithDisplayValue } from '../../types'
 
 export interface ScalingDetailedTvlViewEntry {
   name: string
@@ -14,22 +15,14 @@ export interface ScalingDetailedTvlViewEntry {
   isVerified?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
-  tvl?: string
-  cbv?: string
-  ebv?: string
-  nmv?: string
+  tvl?: ValueWithDisplayValue
+  cbv?: ValueWithDisplayValue
+  ebv?: ValueWithDisplayValue
+  nmv?: ValueWithDisplayValue
   tvlChange?: string
   ebvChange?: string
   cbvChange?: string
   nmvChange?: string
   tokens: TokenControl[]
   stage: StageConfig
-}
-
-export interface ScalingDetailedTvlViewSortingOrder {
-  name: string[]
-  total: string[]
-  canonical: string[]
-  external: string[]
-  native: string[]
 }

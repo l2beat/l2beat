@@ -13,7 +13,6 @@ import {
   ScalingLivenessViewEntry,
 } from '../types'
 import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
-import { getScalingLivenessViewSortingOrder } from './getScalingLivenessViewSortingOrder'
 
 export function getScalingLivenessView(
   projects: Layer2[],
@@ -23,14 +22,9 @@ export function getScalingLivenessView(
   const included = getIncludedProjects(projects, livenessApiResponse)
   const ordered = orderByTvl(included, tvlApiResponse)
 
-  const items = ordered.map((p) =>
-    getScalingLivenessViewEntry(p, livenessApiResponse),
-  )
   return {
-    items,
-    sortingOrder: getScalingLivenessViewSortingOrder(
-      projects,
-      livenessApiResponse,
+    items: ordered.map((p) =>
+      getScalingLivenessViewEntry(p, livenessApiResponse),
     ),
   }
 }

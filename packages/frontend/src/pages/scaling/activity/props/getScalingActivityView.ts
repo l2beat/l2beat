@@ -13,7 +13,6 @@ import { getTransactionCount } from '../../../../utils/activity/getTransactionCo
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { ActivityPagesData, ActivityViewEntry } from '../types'
 import { ScalingActivityViewProps } from '../view/ScalingActivityView'
-import { getScalingActivityViewSortingOrder } from './getScalingActivityViewSortingOrder'
 
 export function getScalingActivityView(
   projects: Layer2[],
@@ -28,13 +27,9 @@ export function getScalingActivityView(
     ),
     getEthereumActivityViewEntry(activityApiResponse),
   ]
-  const orderedItems = items.sort(
-    (a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1),
-  )
 
   return {
-    items: orderedItems,
-    sortingOrder: getScalingActivityViewSortingOrder(orderedItems),
+    items: items.sort((a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1)),
   }
 }
 

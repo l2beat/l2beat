@@ -1,24 +1,18 @@
 import React from 'react'
 
+import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingDetailedTvlColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
-import {
-  ScalingDetailedTvlViewEntry,
-  ScalingDetailedTvlViewSortingOrder,
-} from '../types'
+import { RowConfig } from '../../../../components/table/types'
+import { ScalingDetailedTvlViewEntry } from '../types'
 
 export interface ScalingDetailedTvlViewProps {
   items: ScalingDetailedTvlViewEntry[]
-  sortingOrder: ScalingDetailedTvlViewSortingOrder
   upcomingEnabled?: boolean
 }
 
-export function ScalingDetailedTvlView({
-  items,
-  sortingOrder,
-}: ScalingDetailedTvlViewProps) {
+export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
   const rows: RowConfig<ScalingDetailedTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'detailedTvl'),
   }
@@ -32,7 +26,7 @@ export function ScalingDetailedTvlView({
       <TableView
         items={itemsToShow}
         rows={rows}
-        columnsConfig={getScalingDetailedTvlColumnsConfig(sortingOrder)}
+        columnsConfig={getScalingDetailedTvlColumnsConfig()}
       />
     </section>
   )

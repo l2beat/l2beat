@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { makeQuery } from './query'
-import { setSortingArrowsOrderKey } from './table/configureSortingArrows'
+import { setSortingArrowsOrderKey } from './table/configureSorting'
 import { setQueryParams } from './utils/setQueryParams'
 
 const LivenessTimeRangeControlsValues = z.enum(['30D', '90D', 'MAX'])

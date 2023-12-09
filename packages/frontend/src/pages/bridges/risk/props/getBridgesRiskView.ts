@@ -7,7 +7,6 @@ import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { BridgesTvlPagesData } from '../types'
 import { BridgesRiskViewProps } from '../view/BridgesRiskView'
-import { getBridgesRiskViewSortingOrder } from './getBridgesRiskViewSortingOrder'
 
 export function getBridgesRiskView(
   projects: (Layer2 | Bridge)[],
@@ -18,12 +17,10 @@ export function getBridgesRiskView(
   const included = getIncludedProjects(projects, tvlApiResponse)
   const orderedProjects = orderByTvl(included, tvlApiResponse)
 
-  const items = orderedProjects.map((project) =>
-    getBridgesRiskViewEntry(project, verificationStatus),
-  )
   return {
-    items,
-    sortingOrder: getBridgesRiskViewSortingOrder(items),
+    items: orderedProjects.map((project) =>
+      getBridgesRiskViewEntry(project, verificationStatus),
+    ),
   }
 }
 

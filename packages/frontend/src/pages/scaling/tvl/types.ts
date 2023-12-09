@@ -2,6 +2,7 @@ import { Layer2, StageConfig } from '@l2beat/config'
 
 import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
+import { ValueWithDisplayValue } from '../../types'
 
 export interface ScalingTvlViewEntry {
   name: string
@@ -14,20 +15,14 @@ export interface ScalingTvlViewEntry {
   isVerified?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
-  tvl?: string
+  tvl?: ValueWithDisplayValue
   tvlValue?: number
   tvlTooltip?: string
   tvlBreakdown?: TVLBreakdownProps
   oneDayChange?: string
   sevenDayChange?: string
-  marketShare?: string
+  marketShare?: ValueWithDisplayValue
   marketShareValue?: number
   purpose: string
   stage: StageConfig
-}
-
-export interface ScalingTvlViewSortingOrder {
-  name: string[]
-  stage: string[]
-  tvl: string[]
 }

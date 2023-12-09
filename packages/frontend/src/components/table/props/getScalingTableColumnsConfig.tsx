@@ -1,25 +1,13 @@
 import cx from 'classnames'
 import React from 'react'
 
-import {
-  ActivityViewEntry,
-  ActivityViewSortingOrder,
-} from '../../../pages/scaling/activity/types'
-import {
-  ScalingDetailedTvlViewEntry,
-  ScalingDetailedTvlViewSortingOrder,
-} from '../../../pages/scaling/detailed-tvl/types'
-import {
-  ScalingLivenessViewEntry,
-  ScalingLivenessViewSortingOrder,
-} from '../../../pages/scaling/liveness/types'
+import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
+import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
+import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
-import {
-  ScalingTvlViewEntry,
-  ScalingTvlViewSortingOrder,
-} from '../../../pages/scaling/tvl/types'
+import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
@@ -32,13 +20,11 @@ import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
-import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
+import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
-export function getActiveScalingTvlColumnsConfig(
-  sortingOrder: ScalingTvlViewSortingOrder,
-) {
+export function getActiveScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -51,7 +37,10 @@ export function getActiveScalingTvlColumnsConfig(
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
-      sortBy: sortingOrder.name,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Risks',
@@ -84,7 +73,30 @@ export function getActiveScalingTvlColumnsConfig(
       getValue: (project: ScalingTvlViewEntry) => (
         <StageCell stageConfig={project.stage} />
       ),
-      sortBy: sortingOrder.stage,
+      sorting: {
+        getOrderValue: (project) => {
+          const stage = project.stage.stage
+          if (stage === 'NotApplicable' || stage === 'UnderReview') {
+            return undefined
+          }
+          if (stage === 'Stage 0') {
+            if (project.stage.message?.type === 'warning') {
+              return 0
+            }
+
+            if (project.stage.message?.type === 'underReview') {
+              return 1
+            }
+
+            return 2
+          }
+          if (stage === 'Stage 1') {
+            return 3
+          }
+          return 4
+        },
+        rule: 'numeric',
+      },
     },
     {
       name: 'Purpose',
@@ -101,14 +113,18 @@ export function getActiveScalingTvlColumnsConfig(
       getValue: (project) => (
         <>
           <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-            {project.tvl}
+            {project.tvl?.displayValue}
           </NumberCell>
           <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
             {project.sevenDayChange}
           </NumberCell>
         </>
       ),
-      sortBy: sortingOrder.tvl,
+      sorting: {
+        getOrderValue: (project) => project.tvl?.value,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
     },
     {
       name: 'Mkt share',
@@ -118,17 +134,22 @@ export function getActiveScalingTvlColumnsConfig(
       headClassName: '!pr-4',
       getValue: (project) =>
         project.tvlBreakdown && (
-          <NumberCell className="pr-4">{project.marketShare}</NumberCell>
+          <NumberCell className="pr-4">
+            {project.marketShare?.displayValue}
+          </NumberCell>
         ),
+      //TODO: (Radina) do we need this sorting? its the same as TVL
+      sorting: {
+        getOrderValue: (project) => project.marketShare?.value,
+        rule: 'numeric',
+      },
     },
   ]
 
   return columns
 }
 
-export function getScalingDetailedTvlColumnsConfig(
-  sortingOrder: ScalingDetailedTvlViewSortingOrder,
-) {
+export function getScalingDetailedTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
     {
       name: '#',
@@ -141,7 +162,10 @@ export function getScalingDetailedTvlColumnsConfig(
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
-      sortBy: sortingOrder.name,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       type: 'group',
@@ -153,11 +177,16 @@ export function getScalingDetailedTvlColumnsConfig(
           noPaddingRight: true,
           getValue: (project) => (
             <ValueWithPercentageCell
-              value={project.tvl}
+              value={project.tvl?.displayValue}
               percentChange={project.tvlChange}
             />
           ),
-          sortBy: sortingOrder.total,
+          sorting: {
+            getOrderValue: (project) =>
+              project.tvl?.value !== 0 ? project.tvl?.value : undefined,
+            rule: 'numeric',
+            defaultState: 'desc',
+          },
         },
       ],
     },
@@ -170,12 +199,16 @@ export function getScalingDetailedTvlColumnsConfig(
       noPaddingRight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
-          value={project.cbv}
+          value={project.cbv?.displayValue}
           percentChange={project.cbvChange}
           tokens={project.tokens.filter((t) => t.info.type === 'CBV')}
         />
       ),
-      sortBy: sortingOrder.canonical,
+      sorting: {
+        getOrderValue: (project) =>
+          project.cbv?.value !== 0 ? project.cbv?.value : undefined,
+        rule: 'numeric',
+      },
     },
     {
       name: 'External',
@@ -186,12 +219,16 @@ export function getScalingDetailedTvlColumnsConfig(
       noPaddingRight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
-          value={project.ebv}
+          value={project.ebv?.displayValue}
           percentChange={project.ebvChange}
           tokens={project.tokens.filter((t) => t.info.type === 'EBV')}
         />
       ),
-      sortBy: sortingOrder.external,
+      sorting: {
+        getOrderValue: (project) =>
+          project.ebv?.value !== 0 ? project.ebv?.value : undefined,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Native',
@@ -202,21 +239,23 @@ export function getScalingDetailedTvlColumnsConfig(
       noPaddingRight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
-          value={project.nmv}
+          value={project.nmv?.displayValue}
           percentChange={project.nmvChange}
           tokens={project.tokens.filter((t) => t.info.type === 'NMV')}
         />
       ),
-      sortBy: sortingOrder.native,
+      sorting: {
+        getOrderValue: (project) =>
+          project.nmv?.value !== 0 ? project.nmv?.value : undefined,
+        rule: 'numeric',
+      },
     },
   ]
 
   return columns
 }
 
-export function getUpcomingScalingTvlColumnsConfig(
-  sortingOrder: ScalingTvlViewSortingOrder,
-) {
+export function getUpcomingScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -229,7 +268,6 @@ export function getUpcomingScalingTvlColumnsConfig(
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
-      sortBy: sortingOrder.name,
     },
     {
       name: 'Technology',
@@ -252,9 +290,7 @@ export function getUpcomingScalingTvlColumnsConfig(
   return columns
 }
 
-export function getArchivedScalingTvlColumnsConfig(
-  sortingOrder: ScalingTvlViewSortingOrder,
-) {
+export function getArchivedScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -267,7 +303,6 @@ export function getArchivedScalingTvlColumnsConfig(
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
-      sortBy: sortingOrder.name,
     },
     {
       name: 'Risks',
@@ -301,7 +336,9 @@ export function getArchivedScalingTvlColumnsConfig(
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <>
-          <NumberCell className="font-bold">{project.tvl}</NumberCell>
+          <NumberCell className="font-bold">
+            {project.tvl?.displayValue}
+          </NumberCell>
           {!project.isArchived ? (
             <NumberCell
               signed
@@ -366,9 +403,7 @@ export function getScalingRiskColumnsConfig() {
   return columns
 }
 
-export function getScalingActivityColumnsConfig(
-  sortingOrder: ActivityViewSortingOrder,
-) {
+export function getScalingActivityColumnsConfig() {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
       name: '#',
@@ -387,7 +422,10 @@ export function getScalingActivityColumnsConfig(
         ) : (
           <EthereumCell project={project} />
         ),
-      sortBy: sortingOrder.name,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Past day TPS',
@@ -399,7 +437,11 @@ export function getScalingActivityColumnsConfig(
         ) : (
           <ComingSoonCell />
         ),
-      sortBy: sortingOrder.pastDayTps,
+      sorting: {
+        getOrderValue: (project) => project.tpsDaily,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
     },
     {
       name: '7d Change',
@@ -409,7 +451,10 @@ export function getScalingActivityColumnsConfig(
       getValue: (project) => (
         <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
       ),
-      sortBy: sortingOrder.sevenDayChange,
+      sorting: {
+        getOrderValue: (project) => project.tpsWeeklyChange,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Max daily TPS',
@@ -430,7 +475,10 @@ export function getScalingActivityColumnsConfig(
             </span>
           </span>
         ),
-      sortBy: sortingOrder.maxDailyTps,
+      sorting: {
+        getOrderValue: (project) => project.maxTps,
+        rule: 'numeric',
+      },
     },
     {
       name: '30D Count',
@@ -442,7 +490,10 @@ export function getScalingActivityColumnsConfig(
             {formatLargeNumber(project.transactionsMonthlyCount)}
           </NumberCell>
         ) : undefined,
-      sortBy: sortingOrder.thirtyDayTxCount,
+      sorting: {
+        getOrderValue: (project) => project.transactionsMonthlyCount,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Data source',
@@ -453,9 +504,7 @@ export function getScalingActivityColumnsConfig(
   return columns
 }
 
-export function getScalingLivenessColumnsConfig(
-  sortingOrder: ScalingLivenessViewSortingOrder,
-) {
+export function getScalingLivenessColumnsConfig() {
   const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
     {
       name: '#',
@@ -463,13 +512,21 @@ export function getScalingLivenessColumnsConfig(
       minimalWidth: true,
       headClassName: 'pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
     },
     {
       name: 'Name',
       headClassName: 'pl-8',
       minimalWidth: true,
       getValue: (project) => <ProjectCell project={project} />,
-      sortBy: sortingOrder.name,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       type: 'group',
@@ -493,7 +550,15 @@ export function getScalingLivenessColumnsConfig(
               />
             )
           },
-          sortBy: sortingOrder.txDataSubmissions,
+          sorting: {
+            getOrderValue: (project) => ({
+              '30D': project.batchSubmissions?.last30Days?.averageInSeconds,
+              '90D': project.batchSubmissions?.last90Days?.averageInSeconds,
+              MAX: project.batchSubmissions?.allTime?.averageInSeconds,
+            }),
+            defaultOrderKey: '30D',
+            rule: 'numeric',
+          },
         },
         {
           name: 'Proof\nsubmissions',
@@ -507,7 +572,15 @@ export function getScalingLivenessColumnsConfig(
               />
             )
           },
-          sortBy: sortingOrder.proofSubmissions,
+          sorting: {
+            getOrderValue: (project) => ({
+              '30D': project.proofSubmissions?.last30Days?.averageInSeconds,
+              '90D': project.proofSubmissions?.last90Days?.averageInSeconds,
+              MAX: project.proofSubmissions?.allTime?.averageInSeconds,
+            }),
+            defaultOrderKey: '30D',
+            rule: 'numeric',
+          },
         },
         {
           name: 'State\nupdates',
@@ -521,7 +594,15 @@ export function getScalingLivenessColumnsConfig(
               />
             )
           },
-          sortBy: sortingOrder.stateUpdates,
+          sorting: {
+            getOrderValue: (project) => ({
+              '30D': project.stateUpdates?.last30Days?.averageInSeconds,
+              '90D': project.stateUpdates?.last90Days?.averageInSeconds,
+              MAX: project.stateUpdates?.allTime?.averageInSeconds,
+            }),
+            defaultOrderKey: '30D',
+            rule: 'numeric',
+          },
         },
       ],
     },
@@ -535,7 +616,10 @@ export function getScalingLivenessColumnsConfig(
           {project.category}
         </TechnologyCell>
       ),
-      sortBy: sortingOrder.technology,
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: '30-day anomalies',

@@ -1,21 +1,21 @@
 import React from 'react'
 
+import { Tabs } from '../../../../components/Tabs'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { TableView } from '../../../../components/table/TableView'
 import { BridgesFilters } from '../../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../../components/table/props/getBridgesRowProps'
 import { getBridgesRiskColumnsConfig } from '../../../../components/table/props/getBridgesTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
-import { Tabs } from '../../../../components/Tabs'
-import { BridgesRiskViewEntry, BridgesRiskViewSortingOrder } from '../types'
+import { RowConfig } from '../../../../components/table/types'
+import { BridgesRiskViewEntry } from '../types'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
-  sortingOrder: BridgesRiskViewSortingOrder
 }
 
-export function BridgesRiskView({ items, sortingOrder }: BridgesRiskViewProps) {
-  const columns = getBridgesRiskColumnsConfig(sortingOrder)
+export function BridgesRiskView({ items }: BridgesRiskViewProps) {
+  const columns = getBridgesRiskColumnsConfig()
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
     getProps: getBridgesRowProps,
