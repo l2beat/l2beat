@@ -60,6 +60,7 @@ export const brine: Layer2 = {
       socialMedia: [
         'https://twitter.com/BrineFinance',
         'https://discord.gg/wMAnf3gVTh',
+        'https://linkedin.com/company/brine-fi-dex',
       ],
     },
   },
