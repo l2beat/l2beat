@@ -37,7 +37,7 @@ export const honeypot: Layer2 = {
         'https://twitter.com/cartesiproject',
         'https://discord.gg/G2tCH5KkcM',
         'https://cartesi.io/blog/',
-        'https://youtube.com/@Cartesiproject/featured',
+        'https://youtube.com/@Cartesiproject/',
         'https://instagram.com/cartesiproject/',
       ],
     },
