@@ -72,6 +72,9 @@ export const zksynclite: Layer2 = {
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation: `zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is a {THERE SHOULD BE A VARIABLE NO CLUE WHICH} [LUCA CHECK THIS VARIABLE] delay between state diffs verification and the execution of the corresponding state actions.`,
+    },
   },
   config: {
     escrows: [

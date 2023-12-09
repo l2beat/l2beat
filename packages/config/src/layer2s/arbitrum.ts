@@ -284,6 +284,11 @@ export const arbitrum: Layer2 = {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation: `Arbitrum One is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to ${formatSeconds(
+        validatorAfkTime,
+      )}. [LUCA CHECK THIS VARIABLE] The state root gets finalized ${formatSeconds(
+        challengeWindow,
+      )} after it has been posted.`,
     },
   },
   config: {
