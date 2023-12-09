@@ -62,7 +62,7 @@ export const myria: Layer2 = {
       socialMedia: [
         'https://medium.com/@myriagames',
         'https://twitter.com/myria',
-        'http://discord.gg/myria',
+        'https://discord.gg/myria',
         'https://t.me/myriaofficialgroup',
       ],
     },
