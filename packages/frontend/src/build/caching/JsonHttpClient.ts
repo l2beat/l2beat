@@ -33,7 +33,7 @@ export class JsonHttpClient {
   }
 }
 
-const TEN_MINUTES_IN_MS = 10 * 60 * 1000
+const THIRTY_MINUTES_IN_MS = 30 * 60 * 1000
 async function read(url: string): Promise<string | undefined> {
   const hash = getUrlHash(url)
   const now = Date.now()
@@ -46,7 +46,7 @@ async function read(url: string): Promise<string | undefined> {
   for (const file of files) {
     if (file.startsWith(hash)) {
       const timestamp = Number(file.slice(9, -5))
-      if (now - timestamp <= TEN_MINUTES_IN_MS) {
+      if (now - timestamp <= THIRTY_MINUTES_IN_MS) {
         return await readFile(`cache/${file}`, 'utf-8')
       }
     }
