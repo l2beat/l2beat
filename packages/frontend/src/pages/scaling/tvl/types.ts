@@ -16,7 +16,8 @@ export interface ScalingTvlViewEntry {
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
   tvl?: ValueWithDisplayValue
-  tvlValue?: number
+  isLayer3?: boolean
+  hostChainName?: string
   tvlTooltip?: string
   tvlBreakdown?: TVLBreakdownProps
   oneDayChange?: string

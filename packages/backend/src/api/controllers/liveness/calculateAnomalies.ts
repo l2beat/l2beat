@@ -121,58 +121,21 @@ function findAnomalies(
   )
   if (last60Days.length === 0) return undefined
 
-  const means = new Map<number, number>()
-  const stdDevs = new Map<number, number>()
-
-  let timeStart = lastHour
-  let startIndex = last60Days.findIndex((record) =>
+  const startIndex = last60Days.findIndex((record) =>
     record.timestamp.lte(lastHour),
   )
-  let lastIndex = last60Days.findIndex((record) =>
+  const lastIndex = last60Days.findIndex((record) =>
     record.timestamp.lte(lastHour.add(-30, 'days')),
   )
 
-  const last30Days = last60Days.slice(startIndex, lastIndex)
-  let sum = last30Days.reduce(
-    (prev, curr) => prev + (curr.previousRecordInterval ?? 0),
-    0,
+  const { means, stdDevs } = calculate30DayRollingStats(
+    last60Days,
+    startIndex,
+    lastIndex,
+    lastHour,
   )
-
-  // special handling for the first loop iteration
-  const mean = sum / (lastIndex - startIndex)
-  const rollingStdDev = new RunningStatistics(
-    last30Days.map((r) => r.previousRecordInterval).filter(notUndefined),
-  )
-
-  means.set(timeStart.toNumber(), mean)
-  stdDevs.set(timeStart.toNumber(), rollingStdDev.getStandardDeviation())
-  while (timeStart.gte(lastHour.add(-30, 'days'))) {
-    timeStart = timeStart.add(-1, 'minutes')
-    const leftFence = timeStart
-    const rightFence = timeStart.add(-30, 'days')
-
-    while (last60Days[startIndex].timestamp.gte(leftFence)) {
-      sum -= last60Days[startIndex].previousRecordInterval ?? 0
-      rollingStdDev.removeValue(
-        last60Days[startIndex].previousRecordInterval ?? 0,
-      )
-      startIndex++
-    }
-    while (
-      lastIndex < last60Days.length &&
-      last60Days[lastIndex].timestamp.gte(rightFence)
-    ) {
-      sum += last60Days[lastIndex].previousRecordInterval ?? 0
-      rollingStdDev.addValue(last60Days[lastIndex].previousRecordInterval ?? 0)
-      lastIndex++
-    }
-
-    const mean = sum / (lastIndex - startIndex)
-    means.set(timeStart.toNumber(), mean)
-    stdDevs.set(timeStart.toNumber(), rollingStdDev.getStandardDeviation())
-  }
-
   const anomalies: LivenessAnomaly[] = []
+  const last30Days = last60Days.slice(startIndex, lastIndex)
   last30Days.forEach((record) => {
     if (record.previousRecordInterval === undefined) return
 
@@ -191,4 +154,71 @@ function findAnomalies(
     }
   })
   return anomalies
+}
+
+// TODO(radomski): Make this more generic, the only thing to figure out is how to pass the time intervals.
+// Remember to enforce the fact that if you have a rolling sum that takes into consideration the last 30 days you need to pass to this function the last 60 days.
+// So for any rolling window of n days you need to ensure that the entireScope is at least 2n days.
+export function calculate30DayRollingStats(
+  entireScope: LivenessRecordWithInterval[],
+  windowStartIndex: number,
+  windowEndIndex: number,
+  lastHour: UnixTime,
+): {
+  means: Map<number, number>
+  stdDevs: Map<number, number>
+} {
+  const result = {
+    means: new Map<number, number>(),
+    stdDevs: new Map<number, number>(),
+  }
+
+  let timeStart = lastHour
+
+  const initialWindow = entireScope.slice(windowStartIndex, windowEndIndex)
+  let sum = initialWindow.reduce(
+    (prev, curr) => prev + (curr.previousRecordInterval ?? 0),
+    0,
+  )
+
+  // special handling for the first loop iteration
+  const mean = sum / (windowEndIndex - windowStartIndex)
+  const rollingStdDev = new RunningStatistics(
+    initialWindow.map((r) => r.previousRecordInterval).filter(notUndefined),
+  )
+
+  result.means.set(timeStart.toNumber(), mean)
+  result.stdDevs.set(timeStart.toNumber(), rollingStdDev.getStandardDeviation())
+  while (timeStart.gte(lastHour.add(-30, 'days'))) {
+    timeStart = timeStart.add(-1, 'minutes')
+    const leftFence = timeStart
+    const rightFence = timeStart.add(-30, 'days')
+
+    while (entireScope[windowStartIndex].timestamp.gte(leftFence)) {
+      sum -= entireScope[windowStartIndex].previousRecordInterval ?? 0
+      rollingStdDev.removeValue(
+        entireScope[windowStartIndex].previousRecordInterval ?? 0,
+      )
+      windowStartIndex++
+    }
+    while (
+      windowEndIndex < entireScope.length &&
+      entireScope[windowEndIndex].timestamp.gte(rightFence)
+    ) {
+      sum += entireScope[windowEndIndex].previousRecordInterval ?? 0
+      rollingStdDev.addValue(
+        entireScope[windowEndIndex].previousRecordInterval ?? 0,
+      )
+      windowEndIndex++
+    }
+
+    const mean = sum / (windowEndIndex - windowStartIndex)
+    result.means.set(timeStart.toNumber(), mean)
+    result.stdDevs.set(
+      timeStart.toNumber(),
+      rollingStdDev.getStandardDeviation(),
+    )
+  }
+
+  return result
 }

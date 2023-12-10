@@ -92,6 +92,7 @@ export class LivenessRepository extends BaseRepository {
       .andWhere('c.type', type)
       .andWhere('l.timestamp', '>=', since.toDate())
       .distinct('l.timestamp')
+      .orderBy('l.timestamp', 'desc')
 
     return rows.map(toRecordWithTimestampAndType)
   }

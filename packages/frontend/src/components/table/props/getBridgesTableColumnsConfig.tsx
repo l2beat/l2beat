@@ -7,7 +7,7 @@ import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
-import { TechnologyCell } from '../TechnologyCell'
+import { TypeCell } from '../TypeCell'
 import { ColumnConfig } from '../types'
 
 export function getArchivedBridgesTvlColumnsConfig() {
@@ -57,7 +57,7 @@ export function getArchivedBridgesTvlColumnsConfig() {
       name: 'Type',
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
-      getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
+      getValue: (entry) => <TypeCell>{entry.category}</TypeCell>,
       sorting: {
         getOrderValue: (project) => project.category,
         rule: 'alphabetical',
