@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingActivityColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
+import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
 import { ActivityViewEntry } from '../types'
 export interface ScalingActivityViewProps {

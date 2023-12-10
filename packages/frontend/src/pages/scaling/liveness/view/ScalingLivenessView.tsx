@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { ScalingLegend } from '../../../../components/ScalingLegend'
-import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingLivenessColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
+import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
 import { ScalingLivenessViewEntry } from '../types'
 import { LivenessTimeRangeControls } from './LivenessTimeRangeControls'
