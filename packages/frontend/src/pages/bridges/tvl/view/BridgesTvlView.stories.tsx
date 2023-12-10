@@ -21,7 +21,10 @@ const meta = {
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
         isArchived: undefined,
         isVerified: true,
-        tvl: '$5.68 B',
+        tvl: {
+          displayValue: '$5.68 B',
+          value: 5680000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.25000137161168967,
@@ -37,7 +40,10 @@ const meta = {
         oneDayChange: '-2.44%',
         sevenDayChange: '-7.73%',
         bridgesMarketShare: '102.12%',
-        combinedMarketShare: '40.37%',
+        combinedMarketShare: {
+          displayValue: '40.30%',
+          value: 40.3,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -53,7 +59,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: true,
-        tvl: '$2.16 B',
+        tvl: {
+          displayValue: '$2.16 B',
+          value: 2160000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -67,7 +76,10 @@ const meta = {
         oneDayChange: '-1.41%',
         sevenDayChange: '-3.88%',
         bridgesMarketShare: '38.86%',
-        combinedMarketShare: '15.36%',
+        combinedMarketShare: {
+          displayValue: '15.36%',
+          value: 15.36,
+        },
         validatedBy: {
           value: 'Destination Chain',
           description:
@@ -85,7 +97,10 @@ const meta = {
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
         isArchived: undefined,
         isVerified: true,
-        tvl: '$108 M',
+        tvl: {
+          displayValue: '$108 M',
+          value: 108000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.5396893906261344,
@@ -101,7 +116,10 @@ const meta = {
         oneDayChange: '-3.15%',
         sevenDayChange: '-10.62%',
         bridgesMarketShare: '1.95%',
-        combinedMarketShare: '0.77%',
+        combinedMarketShare: {
+          displayValue: '0.77%',
+          value: 0.77,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -119,7 +137,10 @@ const meta = {
           'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are are in the early stages of development, use at your own risk.',
         isArchived: undefined,
         isVerified: false,
-        tvl: '$72.31 M',
+        tvl: {
+          displayValue: '$72.31 M',
+          value: 72310000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -133,7 +154,10 @@ const meta = {
         oneDayChange: '-6.08%',
         sevenDayChange: '-16.94%',
         bridgesMarketShare: '1.30%',
-        combinedMarketShare: '0.51%',
+        combinedMarketShare: {
+          displayValue: '0.51%',
+          value: 0.51,
+        },
         validatedBy: {
           value: 'Third Party',
           description:
@@ -149,7 +173,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: true,
-        tvl: '$58.35 M',
+        tvl: {
+          displayValue: '$58.35 M',
+          value: 58350000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -163,7 +190,10 @@ const meta = {
         oneDayChange: '-1.56%',
         sevenDayChange: '-5.59%',
         bridgesMarketShare: '1.05%',
-        combinedMarketShare: '0.41%',
+        combinedMarketShare: {
+          displayValue: '0.41%',
+          value: 0.41,
+        },
         validatedBy: {
           value: 'Optimistically',
           description:
@@ -179,7 +209,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: true,
-        tvl: '$57.59 M',
+        tvl: {
+          displayValue: '$57.59 M',
+          value: 57590000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -193,7 +226,10 @@ const meta = {
         oneDayChange: '-1.46%',
         sevenDayChange: '-2.60%',
         bridgesMarketShare: '1.03%',
-        combinedMarketShare: '0.41%',
+        combinedMarketShare: {
+          displayValue: '0.41%',
+          value: 0.41,
+        },
         validatedBy: {
           value: 'Third Party',
           description: 'Withdraws are validated by EOA.',
@@ -208,7 +244,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: true,
-        tvl: '$46.84 M',
+        tvl: {
+          displayValue: '$46.84 M',
+          value: 46840000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -222,7 +261,10 @@ const meta = {
         oneDayChange: '-0.31%',
         sevenDayChange: '+14.64%',
         bridgesMarketShare: '0.84%',
-        combinedMarketShare: '0.33%',
+        combinedMarketShare: {
+          displayValue: '0.33%',
+          value: 0.33,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -238,7 +280,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: true,
-        tvl: '$46.46 M',
+        tvl: {
+          displayValue: '$46.46 M',
+          value: 46460000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.2067512215833826,
@@ -254,7 +299,10 @@ const meta = {
         oneDayChange: '-3.81%',
         sevenDayChange: '-7.23%',
         bridgesMarketShare: '0.83%',
-        combinedMarketShare: '0.33%',
+        combinedMarketShare: {
+          displayValue: '0.33%',
+          value: 0.33,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -270,7 +318,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: true,
-        tvl: '$42.56 M',
+        tvl: {
+          displayValue: '$42.56 M',
+          value: 42560000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.9881005600854719,
@@ -285,7 +336,10 @@ const meta = {
         oneDayChange: '-4.68%',
         sevenDayChange: '-4.20%',
         bridgesMarketShare: '0.76%',
-        combinedMarketShare: '0.30%',
+        combinedMarketShare: {
+          displayValue: '0.30%',
+          value: 0.3,
+        },
         validatedBy: {
           value: 'Third Party',
           description: '4/6 Validator MultiSig',
@@ -300,7 +354,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: true,
-        tvl: '$33.01 M',
+        tvl: {
+          displayValue: '$33.01 M',
+          value: 33010000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -314,7 +371,10 @@ const meta = {
         oneDayChange: '-0.02%',
         sevenDayChange: '+2.07%',
         bridgesMarketShare: '0.59%',
-        combinedMarketShare: '0.23%',
+        combinedMarketShare: {
+          displayValue: '0.23%',
+          value: 0.23,
+        },
         validatedBy: {
           value: 'Third Party',
           description: '4/6 Validator MultiSig',
@@ -329,7 +389,10 @@ const meta = {
         warning: undefined,
         isArchived: undefined,
         isVerified: false,
-        tvl: '$19.74 M',
+        tvl: {
+          displayValue: '$19.74 M',
+          value: 19740000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -343,7 +406,10 @@ const meta = {
         oneDayChange: '-1.59%',
         sevenDayChange: '-4.98%',
         bridgesMarketShare: '0.35%',
-        combinedMarketShare: '0.14%',
+        combinedMarketShare: {
+          displayValue: '0.14%',
+          value: 0.14,
+        },
         validatedBy: {
           value: 'Third Party',
           description:
@@ -361,7 +427,10 @@ const meta = {
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
         isArchived: true,
         isVerified: false,
-        tvl: '$2.10 M',
+        tvl: {
+          displayValue: '$2.10 M',
+          value: 2100000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.0853887859117437,
@@ -376,7 +445,10 @@ const meta = {
         oneDayChange: '-3.28%',
         sevenDayChange: '-6.69%',
         bridgesMarketShare: '0.04%',
-        combinedMarketShare: '0.01%',
+        combinedMarketShare: {
+          displayValue: '0.01%',
+          value: 0.01,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -393,7 +465,10 @@ const meta = {
           'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
         isArchived: true,
         isVerified: true,
-        tvl: '$318 K',
+        tvl: {
+          displayValue: '$318 K',
+          value: 318000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -407,7 +482,10 @@ const meta = {
         oneDayChange: '-0.63%',
         sevenDayChange: '-2.40%',
         bridgesMarketShare: '0.01%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -423,7 +501,10 @@ const meta = {
         warning: undefined,
         isArchived: true,
         isVerified: true,
-        tvl: '$312 K',
+        tvl: {
+          displayValue: '$312 K',
+          value: 312000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -437,7 +518,10 @@ const meta = {
         oneDayChange: '-1.49%',
         sevenDayChange: '-6.61%',
         bridgesMarketShare: '0.01%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Third Party',
           description:
@@ -454,7 +538,10 @@ const meta = {
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
         isArchived: true,
         isVerified: false,
-        tvl: '$238 K',
+        tvl: {
+          displayValue: '$238 K',
+          value: 238000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.4465246475306472,
@@ -470,7 +557,10 @@ const meta = {
         oneDayChange: '-2.67%',
         sevenDayChange: '-4.12%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -487,7 +577,10 @@ const meta = {
           'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
         isArchived: true,
         isVerified: true,
-        tvl: '$65.60 K',
+        tvl: {
+          displayValue: '$65.60 K',
+          value: 65600,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.5028382192182544,
@@ -502,7 +595,10 @@ const meta = {
         oneDayChange: '+27.17%',
         sevenDayChange: '-32.13%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -518,7 +614,10 @@ const meta = {
         warning: undefined,
         isArchived: true,
         isVerified: false,
-        tvl: '$42.92 K',
+        tvl: {
+          displayValue: '$42.92 K',
+          value: 42920,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.06320958328246715,
@@ -533,7 +632,10 @@ const meta = {
         oneDayChange: '-3.48%',
         sevenDayChange: '-7.42%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -549,7 +651,10 @@ const meta = {
         warning: undefined,
         isArchived: true,
         isVerified: true,
-        tvl: '$5.87 K',
+        tvl: {
+          displayValue: '$5.87 K',
+          value: 5870,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -563,7 +668,10 @@ const meta = {
         oneDayChange: '-0.03%',
         sevenDayChange: '-0.01%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'User',
           sentiment: 'good',
@@ -579,7 +687,10 @@ const meta = {
           'The Nomad token bridge contract has recently been exploited and currently is not operational.',
         isArchived: true,
         isVerified: true,
-        tvl: '$4.70 K',
+        tvl: {
+          displayValue: '$4.70 K',
+          value: 4700,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -593,7 +704,10 @@ const meta = {
         oneDayChange: '-0.90%',
         sevenDayChange: '-1.80%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Optimistically',
           description:
@@ -610,7 +724,10 @@ const meta = {
           'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
         isArchived: true,
         isVerified: false,
-        tvl: '$3.80 K',
+        tvl: {
+          displayValue: '$3.80 K',
+          value: 3800,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -624,7 +741,10 @@ const meta = {
         oneDayChange: '-1.46%',
         sevenDayChange: '-2.76%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -641,7 +761,10 @@ const meta = {
           'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
         isArchived: true,
         isVerified: true,
-        tvl: '$2.31 K',
+        tvl: {
+          displayValue: '$2.31 K',
+          value: 2310,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.000008627941588835443,
@@ -656,7 +779,10 @@ const meta = {
         oneDayChange: '-3.81%',
         sevenDayChange: '-6.96%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: '0.00%',
+        combinedMarketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         validatedBy: {
           value: 'Third Party',
           description: 'Withdrawals need to be signed by an EOA account.',

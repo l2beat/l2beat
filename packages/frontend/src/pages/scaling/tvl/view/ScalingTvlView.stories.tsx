@@ -49,7 +49,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: false,
-        tvl: '$0.00',
+        tvl: {
+          displayValue: '$0.00',
+          value: 0,
+        },
         tvlBreakdown: {
           empty: true,
           associated: 0,
@@ -62,7 +65,10 @@ const meta = {
         },
         oneDayChange: '+0.00%',
         sevenDayChange: '+0.00%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Universal',
         category: 'Optimistic Rollup',
         stage: {
@@ -124,7 +130,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: true,
-        tvl: '$0.00',
+        tvl: {
+          displayValue: '$0.00',
+          value: 0,
+        },
         tvlBreakdown: {
           empty: true,
           associated: 0,
@@ -137,7 +146,10 @@ const meta = {
         },
         oneDayChange: '+0.00%',
         sevenDayChange: '+0.00%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Universal',
         category: 'ZK Rollup',
         stage: {
@@ -179,7 +191,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: true,
-        tvl: '$0.00',
+        tvl: {
+          displayValue: '$0.00',
+          value: 0,
+        },
         tvlBreakdown: {
           empty: true,
           associated: 0,
@@ -192,7 +207,10 @@ const meta = {
         },
         oneDayChange: '+0.00%',
         sevenDayChange: '+0.00%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Universal',
         category: 'Optimium',
         stage: {
@@ -234,7 +252,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: true,
-        tvl: '$0.00',
+        tvl: {
+          displayValue: '$0.00',
+          value: 0,
+        },
         tvlBreakdown: {
           empty: true,
           associated: 0,
@@ -247,7 +268,10 @@ const meta = {
         },
         oneDayChange: '+0.00%',
         sevenDayChange: '+0.00%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Universal',
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
@@ -287,7 +311,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: true,
-        tvl: '$0.00',
+        tvl: {
+          displayValue: '$0.00',
+          value: 0,
+        },
         tvlBreakdown: {
           empty: true,
           associated: 0,
@@ -300,7 +327,10 @@ const meta = {
         },
         oneDayChange: '+0.00%',
         sevenDayChange: '+0.00%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Universal',
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
@@ -346,7 +376,10 @@ const meta = {
         isVerified: false,
         isArchived: true,
         isUpcoming: undefined,
-        tvl: '$2.10 M',
+        tvl: {
+          displayValue: '$2.10 M',
+          value: 2100000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.0853887859117437,
@@ -360,7 +393,10 @@ const meta = {
         },
         oneDayChange: '-3.28%',
         sevenDayChange: '-6.69%',
-        marketShare: '0.02%',
+        marketShare: {
+          displayValue: '0.02%',
+          value: 2,
+        },
         purpose: 'Payments, AMM',
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
@@ -406,7 +442,10 @@ const meta = {
         isVerified: true,
         isArchived: true,
         isUpcoming: undefined,
-        tvl: '$318 K',
+        tvl: {
+          displayValue: '$318 K',
+          value: 318000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -419,7 +458,10 @@ const meta = {
         },
         oneDayChange: '-0.63%',
         sevenDayChange: '-2.40%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Payments',
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
@@ -465,7 +507,10 @@ const meta = {
         isVerified: false,
         isArchived: true,
         isUpcoming: undefined,
-        tvl: '$238 K',
+        tvl: {
+          displayValue: '$238 K',
+          value: 238000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.4465246475306472,
@@ -480,7 +525,10 @@ const meta = {
         },
         oneDayChange: '-2.67%',
         sevenDayChange: '-4.12%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Payments, AMM',
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
@@ -526,7 +574,10 @@ const meta = {
         isVerified: true,
         isArchived: true,
         isUpcoming: undefined,
-        tvl: '$65.60 K',
+        tvl: {
+          displayValue: '$65.60 K',
+          value: 65600,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.5028382192182544,
@@ -540,7 +591,10 @@ const meta = {
         },
         oneDayChange: '+27.17%',
         sevenDayChange: '-32.13%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Exchange',
         category: 'Plasma',
         stage: { stage: 'NotApplicable' },
@@ -585,7 +639,10 @@ const meta = {
         isVerified: false,
         isArchived: true,
         isUpcoming: undefined,
-        tvl: '$42.92 K',
+        tvl: {
+          displayValue: '$42.92 K',
+          value: 42920,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.06320958328246715,
@@ -599,7 +656,10 @@ const meta = {
         },
         oneDayChange: '-3.48%',
         sevenDayChange: '-7.42%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'Payments',
         category: 'Plasma',
         stage: { stage: 'NotApplicable' },
@@ -645,7 +705,10 @@ const meta = {
         isVerified: false,
         isArchived: true,
         isUpcoming: undefined,
-        tvl: '$3.80 K',
+        tvl: {
+          displayValue: '$3.80 K',
+          value: 3800,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -658,7 +721,10 @@ const meta = {
         },
         oneDayChange: '-1.46%',
         sevenDayChange: '-2.76%',
-        marketShare: '0.00%',
+        marketShare: {
+          displayValue: '0.00%',
+          value: 0,
+        },
         purpose: 'DeFi protocols',
         category: 'Validium',
         stage: { stage: 'NotApplicable' },
@@ -704,7 +770,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: undefined,
-        tvl: '$5.68 B',
+        tvl: {
+          displayValue: '$5.68 B',
+          value: 5680000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.25000137161168967,
@@ -719,7 +788,10 @@ const meta = {
         },
         oneDayChange: '-2.44%',
         sevenDayChange: '-7.73%',
-        marketShare: '66.75%',
+        marketShare: {
+          displayValue: '66.75%',
+          value: 6675,
+        },
         purpose: 'Universal',
         category: 'Optimistic Rollup',
         stage: {
@@ -787,7 +859,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: undefined,
-        tvl: '$1.65 B',
+        tvl: {
+          displayValue: '$1.65 B',
+          value: 1650000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.20059416417864723,
@@ -802,7 +877,10 @@ const meta = {
         },
         oneDayChange: '-3.42%',
         sevenDayChange: '-10.76%',
-        marketShare: '19.46%',
+        marketShare: {
+          displayValue: '19.46%',
+          value: 1946,
+        },
         purpose: 'Universal',
         category: 'Optimistic Rollup',
         stage: { stage: 'NotApplicable' },
@@ -847,7 +925,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: undefined,
-        tvl: '$347 M',
+        tvl: {
+          displayValue: '$347 M',
+          value: 347000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -860,7 +941,10 @@ const meta = {
         },
         oneDayChange: '+0.49%',
         sevenDayChange: '+3.96%',
-        marketShare: '4.08%',
+        marketShare: {
+          displayValue: '4.08%',
+          value: 408,
+        },
         purpose: 'Exchange',
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
@@ -906,7 +990,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: undefined,
-        tvl: '$236 M',
+        tvl: {
+          displayValue: '$236 M',
+          value: 236000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0,
@@ -919,7 +1006,10 @@ const meta = {
         },
         oneDayChange: '-2.25%',
         sevenDayChange: '-8.56%',
-        marketShare: '2.77%',
+        marketShare: {
+          displayValue: '2.77%',
+          value: 277,
+        },
         purpose: 'Universal',
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
@@ -965,7 +1055,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: undefined,
-        tvl: '$108 M',
+        tvl: {
+          displayValue: '$108 M',
+          value: 108000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.5396893906261344,
@@ -980,7 +1073,10 @@ const meta = {
         },
         oneDayChange: '-3.15%',
         sevenDayChange: '-10.62%',
-        marketShare: '1.27%',
+        marketShare: {
+          displayValue: '1.27%',
+          value: 127,
+        },
         purpose: 'Universal',
         category: 'Optimium',
         stage: { stage: 'NotApplicable' },
@@ -1025,7 +1121,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: undefined,
-        tvl: '$106 M',
+        tvl: {
+          displayValue: '$106 M',
+          value: 106000000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.5495338969521688,
@@ -1040,7 +1139,10 @@ const meta = {
         },
         oneDayChange: '-2.30%',
         sevenDayChange: '-10.45%',
-        marketShare: '1.25%',
+        marketShare: {
+          displayValue: '1.25%',
+          value: 125,
+        },
         purpose: 'Tokens, NFTs, AMM',
         category: 'ZK Rollup',
         stage: {
@@ -1104,7 +1206,10 @@ const meta = {
         isVerified: true,
         isArchived: undefined,
         isUpcoming: undefined,
-        tvl: '$95.74 M',
+        tvl: {
+          displayValue: '$95.74 M',
+          value: 95740000,
+        },
         tvlBreakdown: {
           empty: false,
           associated: 0.6996537656690529,
@@ -1119,7 +1224,10 @@ const meta = {
         },
         oneDayChange: '-0.37%',
         sevenDayChange: '-13.36%',
-        marketShare: '1.12%',
+        marketShare: {
+          displayValue: '1.12%',
+          value: 112,
+        },
         purpose: 'NFT, Exchange',
         category: 'Validium',
         stage: { stage: 'NotApplicable' },

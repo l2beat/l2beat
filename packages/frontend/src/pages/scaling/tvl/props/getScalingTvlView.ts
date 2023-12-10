@@ -70,7 +70,6 @@ function getScalingTvlViewEntry(
             displayValue: formatUSD(stats.latestTvl),
           }
         : undefined,
-    tvlValue: stats?.latestTvl,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     tvlBreakdown:
       stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
