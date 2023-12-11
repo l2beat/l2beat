@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
-export const stealthchain: Layer2 = {
+export const orb3: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
   id: ProjectId('orb3'),
@@ -13,7 +13,7 @@ export const stealthchain: Layer2 = {
     description: 'SocialFi & GameFI Blockchain Built for Gaming Industry',
     purpose: 'SocialFi,GameFi,Defi,Universal',
     category: 'Optimium',
-    dataAvailabilityMode: 'TxData',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
     links: {
       websites: ['https://orb3.tech'],
