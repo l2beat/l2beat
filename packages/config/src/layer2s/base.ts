@@ -23,6 +23,7 @@ import {
 } from './common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('base')
@@ -343,14 +344,7 @@ export const base: Layer2 = {
       ],
     },
   },
-  stateDerivation: {
-    nodeSoftware: `Base [node](https://github.com/base-org/node) is open-sourced and built on Optimism’s open-source [OP Stack](https://stack.optimism.io/) with no modification. The configuration file for Base Mainnet can be found [here](https://github.com/base-org/node/blob/main/mainnet/rollup.json).`,
-    compressionScheme:
-      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
-    genesisState:
-      'The genesis file can be found [here](https://raw.githubusercontent.com/base-org/node/main/mainnet/genesis-l2.json).',
-    dataFormat: `Batch submission format can be found [here](https://github.com/ethereum-optimism/optimism/blob/33741760adce92c8bdf61f693058144bb6986e30/specs/derivation.md#batch-submission-wire-format).`,
-  },
+  stateDerivation: DERIVATION.OPSTACK('BASE'),
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
