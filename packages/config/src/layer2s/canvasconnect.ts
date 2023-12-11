@@ -64,6 +64,7 @@ export const canvasconnect: Layer2 = {
         'https://canvasdefi.medium.com/',
         'https://linkedin.com/company/canvasblockchaingroup',
         'https://canvas.co/content',
+        'https://youtube.com/@canvas_defi',
       ],
     },
   },
