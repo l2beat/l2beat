@@ -29,7 +29,12 @@ export const fuelv1: Layer2 = {
       apps: [],
       documentation: ['https://docs.fuel.sh/'],
       explorers: ['https://mainnet.fuel.sh/network/'],
-      repositories: ['https://github.com/FuelLabs/fuel-v1-contracts'],
+      repositories: [
+        'https://github.com/FuelLabs/fuel-core',
+        'https://github.com/FuelLabs/fuels-rs',
+        'https://github.com/FuelLabs/fuels-ts',
+        'https://github.com/FuelLabs/fuel-v1-contracts',
+      ],
       socialMedia: [
         'https://discord.gg/xfpK4Pe',
         'https://twitter.com/fuellabs_',
