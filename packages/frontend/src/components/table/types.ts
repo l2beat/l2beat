@@ -33,7 +33,7 @@ export type ColumnConfig<T> =
   | (SingleColumnConfig<T> & { type?: never })
   | GroupedColumnConfig<T>
 
-type SortingConfig<T> = {
+export type SortingConfig<T> = {
   defaultState?: SortingState
   rule: SortingRule
 } & (

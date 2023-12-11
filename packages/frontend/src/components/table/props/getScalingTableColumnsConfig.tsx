@@ -23,6 +23,7 @@ import { RosetteCell } from '../RosetteCell'
 import { TypeCell } from '../TypeCell'
 import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
+import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
 export function getActiveScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
@@ -459,29 +460,54 @@ export function getScalingRiskColumnsConfig() {
       name: 'State validation',
       tooltip: 'How is the validity of the system state checked?',
       getValue: (project) => <RiskCell item={project.stateValidation} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.stateValidation),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Data availability',
       tooltip: 'Is the data needed to reconstruct the state available?',
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.dataAvailability),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Upgradeability',
       tooltip:
         'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.upgradeability),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Sequencer failure',
       tooltip:
         "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.sequencerFailure),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Proposer failure',
       tooltip:
         'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.proposerFailure} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.proposerFailure),
+        rule: 'numeric',
+      },
     },
   ]
   return columns

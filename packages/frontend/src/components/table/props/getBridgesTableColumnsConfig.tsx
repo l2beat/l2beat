@@ -9,6 +9,7 @@ import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { TypeCell } from '../TypeCell'
 import { ColumnConfig } from '../types'
+import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
 export function getArchivedBridgesTvlColumnsConfig() {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
@@ -54,8 +55,9 @@ export function getArchivedBridgesTvlColumnsConfig() {
       tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
       sorting: {
-        getOrderValue: (project) => project.validatedBy?.value,
-        rule: 'alphabetical',
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.validatedBy),
+        rule: 'numeric',
       },
     },
     {
@@ -155,8 +157,9 @@ export function getBridgesRiskColumnsConfig() {
       tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
       sorting: {
-        getOrderValue: (project) => project.validatedBy?.value,
-        rule: 'alphabetical',
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.validatedBy),
+        rule: 'numeric',
       },
     },
     {
@@ -176,11 +179,21 @@ export function getBridgesRiskColumnsConfig() {
       tooltip:
         'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
       getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.sourceUpgradeability),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Destination\nToken',
       tooltip: 'What is the token that you receive from this bridge?',
       getValue: (entry) => <RiskCell item={entry.destinationToken} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.destinationToken),
+        rule: 'numeric',
+      },
     },
   ]
 
