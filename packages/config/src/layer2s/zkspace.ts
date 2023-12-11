@@ -50,6 +50,10 @@ export const zkspace: Layer2 = {
         'https://reddit.com/r/ZKSwap_Official/',
       ],
     },
+    liveness: {
+      explanation:
+        'ZK Space is a ZK rollup based on zkSync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
   },
   config: {
     associatedTokens: ['ZKS'],
