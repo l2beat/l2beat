@@ -179,8 +179,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4#code#F1#L121',
-            'https://etherscan.io/address/0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4#code#F7#L54',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F1#L100',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F7#L58',
           ],
         },
       ],
