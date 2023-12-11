@@ -14,7 +14,12 @@
   },
   "overrides": {
     "zkSync": {
-      "ignoreMethods": ["l2LogsRootHash", "storedBlockHash", "storedBatchHash", "getName"],
+      "ignoreMethods": [
+        "l2LogsRootHash",
+        "storedBlockHash",
+        "storedBatchHash",
+        "getName"
+      ],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -37,7 +42,10 @@
       }
     },
     "ValidatorTimelock": {
-      "ignoreMethods": ["committedBlockTimestamp", "getCommittedBatchTimestamp"],
+      "ignoreMethods": [
+        "committedBlockTimestamp",
+        "getCommittedBatchTimestamp"
+      ],
       "fields": {
         "revertedBlocks": {
           "type": "stateFromEvent",
