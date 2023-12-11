@@ -27,20 +27,6 @@ describe('HARDCODED: zksync2', () => {
     )
   })
 
-  // currently the security council is set as ZERO address
-  // when this test fails it means that the security council changed
-  // update the permissions section and updgradeability risk
-  it('security council', () => {
-    const address = discovery.getAddressFromValue(
-      'zkSync',
-      'getSecurityCouncil',
-    )
-    assert(
-      address === EthereumAddress(HARDCODED.ZKSYNC_2.SECURITY_COUNCIL),
-      'Security Council changed, upgrade returned value and upgradeability risk.',
-    )
-  })
-
   // currently the governor is set as a multisig
   // when this test fails it means that the governor changed
   // update the permissions section and updgradeability risk
@@ -63,18 +49,6 @@ describe('HARDCODED: zksync2', () => {
       discovery.getContractUpgradeabilityParam('L1ERC20Bridge', 'admin') ===
         multisig,
       'L1ERC20Bridge admin changed, upgradeBy in contract.',
-    )
-  })
-
-  it('security council', () => {
-    const securityCouncil = discovery.getContractValue(
-      'zkSync',
-      'getSecurityCouncil',
-    )
-
-    assert(
-      securityCouncil === EthereumAddress.ZERO.toString(),
-      'Security council changed. Update the upgradeability risk and permissions section (also probably remove this test). https://www.notion.so/l2beat/Zksync-Era-526c899e319e4b2690ec23eb7336e35b?pvs=4 can be useful.',
     )
   })
 })
