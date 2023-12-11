@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
+import { mkdir, readdir, readFile, rm, stat, writeFile } from 'fs/promises'
 
 import { HttpClient } from '../../../../shared/build'
 
@@ -10,13 +10,14 @@ export class JsonHttpClient {
   ) {}
 
   async fetchJson(url: string): Promise<unknown> {
-    console.log(`Fetching ${url} ...`)
     if (!this.skipCache) {
       const cached = await read(url)
       if (cached) {
+        console.log(`\nUsing cached data for ${url}`)
         return JSON.parse(cached) as unknown
       }
     }
+    console.log(`\nFetching ${url} ...`)
 
     const response = await this.http.fetch(url)
     if (!response.ok) {

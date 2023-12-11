@@ -37,38 +37,39 @@ async function main() {
 
   const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
-  console.time('[TVL] Fetching data')
+  console.time('[TVL]')
   const tvlApiResponse = await fetchTvlApi(config.backend, http)
-  console.timeEnd('[TVL] Fetching data')
+  console.timeEnd('[TVL]')
   tvlSanityCheck(tvlApiResponse)
 
   let activityApiResponse: ActivityApiResponse | undefined = undefined
   if (config.features.activity) {
-    console.time('[ACTIVITY] Fetching data')
+    console.time('[ACTIVITY]')
     activityApiResponse = await fetchActivityApi(config.backend, http)
-    console.timeEnd('[ACTIVITY] Fetching data')
+    console.timeEnd('[ACTIVITY]')
     activitySanityCheck(activityApiResponse)
   }
 
   let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
     undefined
   if (config.features.tvlBreakdown) {
-    console.time('[TVL BREAKDOWN] Fetching data')
+    console.time('[TVL BREAKDOWN]')
     tvlBreakdownApiResponse = await fetchTvlBreakdownApi(
       config.backend,
       config.backend.apiUrl,
       http,
     )
-    console.timeEnd('[TVL BREAKDOWN] Fetching data')
+    console.timeEnd('[TVL BREAKDOWN]')
     // TODO: (maciekzygmunt) Sanity check?
   }
 
   let livenessApiResponse: LivenessApiResponse | undefined = undefined
   if (config.features.liveness) {
-    console.time('[LIVENESS] Fetching data')
+    console.time('[LIVENESS]')
     livenessApiResponse = await fetchLivenessApi(config.backend, http)
-    console.timeEnd('[LIVENESS] Fetching data')
+    console.timeEnd('[LIVENESS]')
   }
+  console.log('\n')
 
   createApi(config, tvlApiResponse, activityApiResponse)
 
