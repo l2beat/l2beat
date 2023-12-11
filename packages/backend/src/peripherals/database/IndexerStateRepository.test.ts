@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
