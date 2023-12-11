@@ -2,6 +2,7 @@ import { Layer2, layer2s } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
@@ -17,9 +18,9 @@ export function getScalingTvlView(
   verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
   const included = getIncludedProjects(projects, tvlApiResponse)
-
+  const ordered = orderByTvl(included, tvlApiResponse)
   return {
-    items: included.map((project) =>
+    items: ordered.map((project) =>
       getScalingTvlViewEntry(
         project,
         tvlApiResponse,

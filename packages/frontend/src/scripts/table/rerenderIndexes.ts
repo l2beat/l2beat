@@ -2,18 +2,22 @@ import { makeQuery } from '../query'
 
 export function reorderIndexes(table: HTMLElement) {
   const { $$ } = makeQuery(table)
+  const visibleRows = $$('tbody tr[data-slug]:not(.hidden)')
+  visibleRows
+    .map((row) => getIndexOrder(row))
+    .sort((a, b) => a.order - b.order)
+    .forEach(({ cell }, i) => {
+      cell.innerHTML = (i + 1).toString()
+    })
 
-  const rows = $$('tbody tr[data-slug]')
-  const visibleRows = rows.filter((r) => !r.classList.contains('hidden'))
+  return visibleRows.length
+}
 
-  visibleRows.forEach((r, index) => {
-    const indexCell = r.querySelector('[data-role="index-cell"]')
-    if (!indexCell) {
-      console.error('Programming error: no index cell found', r)
-      return
-    }
-    indexCell.innerHTML = `${index + 1}`
-  })
-
-  return rows.length
+function getIndexOrder(row: HTMLElement) {
+  const indexCell = row.querySelector('[data-role="index-cell"]')
+  const orderValue = indexCell?.closest('td')?.getAttribute('data-order-value')
+  if (!orderValue || !indexCell) {
+    throw new Error('No order value found')
+  }
+  return { cell: indexCell, order: Number(orderValue) }
 }

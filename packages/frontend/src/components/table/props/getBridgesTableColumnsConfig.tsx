@@ -18,6 +18,11 @@ export function getArchivedBridgesTvlColumnsConfig() {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
     },
     {
       name: 'Name',

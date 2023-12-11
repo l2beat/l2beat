@@ -32,6 +32,10 @@ export function getActiveScalingTvlColumnsConfig() {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Name',
@@ -147,6 +151,114 @@ export function getActiveScalingTvlColumnsConfig() {
   return columns
 }
 
+export function getUpcomingScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      getValue: (project) => <ProjectCell project={project} />,
+    },
+    {
+      name: 'Type',
+      tooltip:
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
+      ),
+    },
+    {
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this project.',
+      getValue: (project) => project.purpose,
+    },
+  ]
+
+  return columns
+}
+
+export function getArchivedScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      getValue: (project) => <ProjectCell project={project} />,
+    },
+    {
+      name: 'Risks',
+      tooltip: 'Risks associated with this project.',
+      minimalWidth: true,
+      alignCenter: true,
+      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
+    },
+    {
+      name: 'Type',
+      tooltip:
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
+      ),
+    },
+    {
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this project.',
+      getValue: (project) => project.purpose,
+    },
+    {
+      name: 'Total',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
+      alignRight: true,
+      noPaddingRight: true,
+      headClassName: '-translate-x-[72px]',
+      getValue: (project) => (
+        <>
+          <NumberCell className="font-bold">
+            {project.tvl?.displayValue}
+          </NumberCell>
+          {!project.isArchived ? (
+            <NumberCell
+              signed
+              className="ml-1 w-[72px] !text-base font-medium "
+            >
+              {project.sevenDayChange}
+            </NumberCell>
+          ) : (
+            <span className="w-[72px]" />
+          )}
+        </>
+      ),
+    },
+  ]
+
+  return columns
+}
+
 export function getScalingDetailedTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
     {
@@ -155,6 +267,10 @@ export function getScalingDetailedTvlColumnsConfig() {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Name',
@@ -252,105 +368,6 @@ export function getScalingDetailedTvlColumnsConfig() {
 
   return columns
 }
-
-export function getUpcomingScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
-    {
-      name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Type',
-      getValue: (project) => (
-        <TypeCell provider={project.provider}>{project.category}</TypeCell>
-      ),
-    },
-    {
-      name: 'Purpose',
-      tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
-    },
-  ]
-
-  return columns
-}
-
-export function getArchivedScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
-    {
-      name: 'Risks',
-      tooltip: 'Risks associated with this project.',
-      minimalWidth: true,
-      alignCenter: true,
-      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
-    },
-    {
-      name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Type',
-      getValue: (project) => (
-        <TypeCell provider={project.provider}>{project.category}</TypeCell>
-      ),
-    },
-    {
-      name: 'Purpose',
-      tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
-    },
-    {
-      name: 'Total',
-      tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-      alignRight: true,
-      noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
-      getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">
-            {project.tvl?.displayValue}
-          </NumberCell>
-          {!project.isArchived ? (
-            <NumberCell
-              signed
-              className="ml-1 w-[72px] !text-base font-medium "
-            >
-              {project.sevenDayChange}
-            </NumberCell>
-          ) : (
-            <span className="w-[72px]" />
-          )}
-        </>
-      ),
-    },
-  ]
-
-  return columns
-}
-
 export function getLayer3sScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
@@ -359,6 +376,11 @@ export function getLayer3sScalingTvlColumnsConfig() {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
     },
     {
       name: 'Name',
@@ -401,6 +423,11 @@ export function getScalingRiskColumnsConfig() {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
     },
     {
       name: 'Name',
