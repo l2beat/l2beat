@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React from 'react'
 
-import { ArrowDownIcon, ArrowUpIcon } from '../icons'
+import { SortingArrowDownIcon, SortingArrowUpIcon } from '../icons'
 import { SortingRule, SortingState } from './types'
 
 interface Props {
@@ -29,18 +29,18 @@ export function SortingArrows(props: Props) {
       data-order-key={props.orderKey}
     >
       <div className="flex flex-col gap-[1.5px]">
-        <ArrowUpIcon
+        <SortingArrowUpIcon
           className={classNames(
-            'w-2.5 fill-gray-650 transition-all dark:fill-gray-650',
+            'fill-gray-550 transition-all dark:fill-gray-650',
             'group-data-[state=asc]/sorting-arrows:fill-black dark:group-data-[state=asc]/sorting-arrows:fill-white',
-            'dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-white dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
+            'group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-black group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-70 dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-white dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
           )}
         />
-        <ArrowDownIcon
+        <SortingArrowDownIcon
           className={classNames(
-            'w-2.5 fill-gray-650 transition-all dark:fill-gray-650',
+            'fill-gray-550 transition-all dark:fill-gray-650',
             'group-data-[state=desc]/sorting-arrows:fill-black dark:group-data-[state=desc]/sorting-arrows:fill-white',
-            'group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-60 dark:group-hover/sorting-arrows:fill-white',
+            'group-hover/sorting-arrows:fill-black group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-70 dark:group-hover/sorting-arrows:fill-white dark:group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
           )}
         />
       </div>
