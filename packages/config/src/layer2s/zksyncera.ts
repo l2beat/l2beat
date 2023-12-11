@@ -114,7 +114,7 @@ export const zksyncera: Layer2 = {
           ),
           selector: '0xc3d93e7c',
           functionSignature:
-              'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
+            'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
           sinceTimestamp: new UnixTime(1701258299),
         },
       ],
