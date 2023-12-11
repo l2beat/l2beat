@@ -287,7 +287,7 @@ export const arbitrum: Layer2 = {
       explanation: `Arbitrum One is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to ${formatSeconds(
         selfSequencingDelay,
       )}. The state root gets finalized ${formatSeconds(
-        challengeWindow,
+        challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
   },
