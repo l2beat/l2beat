@@ -49,6 +49,7 @@ async function read(url: string): Promise<string | undefined> {
       if (now - timestamp <= ONE_HOUR_IN_MS) {
         return await readFile(`cache/${file}`, 'utf-8')
       }
+      await rm(`cache/${file}`)
     }
   }
   return undefined
