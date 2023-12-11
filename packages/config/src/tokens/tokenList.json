@@ -1627,7 +1627,7 @@
     },
     {
       "id": "usdm-mountain-protocol-usd",
-      "name": "Mountain-Protocol-USD",
+      "name": "Mountain Protocol USD",
       "coingeckoId": "mountain-protocol-usdm",
       "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
       "symbol": "USDM",
