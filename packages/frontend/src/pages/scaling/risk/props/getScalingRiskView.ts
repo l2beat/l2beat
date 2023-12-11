@@ -10,14 +10,9 @@ export function getScalingRiskView(
   verificationStatus: VerificationStatus,
 ): ScalingRiskViewProps {
   return {
-    items: projects
-      .filter((p) => !p.isUpcoming)
-      .map((p) =>
-        getScalingRiskViewEntry(
-          p,
-          verificationStatus.projects[p.id.toString()],
-        ),
-      ),
+    items: projects.map((p) =>
+      getScalingRiskViewEntry(p, verificationStatus.projects[p.id.toString()]),
+    ),
   }
 }
 
