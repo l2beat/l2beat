@@ -97,7 +97,7 @@ export const zksyncera: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
           ),
           selector: '0x7739cbe7',
           functionSignature:
@@ -110,7 +110,7 @@ export const zksyncera: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
           ),
           selector: '0xce9dcf16',
           functionSignature:
@@ -130,7 +130,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L89',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L89',
           ],
         },
         {
@@ -158,7 +158,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L71',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L71',
             'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b', // example tx (see calldata)
           ],
         },
