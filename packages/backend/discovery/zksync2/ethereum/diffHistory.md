@@ -42,11 +42,11 @@ Reverts in `_initializeDiamondCut()` will now revert with decoded calldata if it
 
 Extracted an interface into IVerifier.
 Verifier now a single file contract, where before it included `PairingsBn254.sol`, `TranscriptLib.sol`, `Plonk4VerifierWithAccessToDNext.sol`.
-It was flattened and refactored for readability, but I'm unable to verify that this is the same verification algorithm. 
+It was flattened and refactored for readability, but I'm unable to verify that this is the same verification algorithm.
 
 ### Storage
 
-`UpgradeStorage upgrades` is  now deprecated.
+`UpgradeStorage upgrades` is now deprecated.
 A new role, called `admin` and `pendingAdmin`.
 
 ### Base
@@ -60,21 +60,24 @@ New event
 ```
 event UpdateDepositLimit(address indexed l1Token, bool depositLimitation, uint256 depositCap);
 ```
+
 that is emitted in the call to this function - that is in AllowList.sol:
+
 ```
 function setDepositLimit(address _l1Token, bool _depositLimitation, uint256 _depositCap) external onlyOwner
 ```
 
 ### zkSync
 
-Facets: 
+Facets:
+
 - changed from DiamondCut => Admin (0x409560DE546e057ce5bD5dB487EdF2bB5E785baB)
-- same => Getters (0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4) 
+- same => Getters (0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4)
 - same => Mailbox (0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08)
 - same => Executor (0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269)
 
 The 5th facet was Governance facet, it was removed so we now have 4 facets instead of 5.
-The first facet (DiamondCut) has been replaced with Admin.  
+The first facet (DiamondCut) has been replaced with Admin.
 
 #### Admin
 
@@ -94,7 +97,7 @@ The legacy interface is still supported, but it just returns the values in batch
 
 #### Mailbox
 
-Variable renaming to move to batches instead of blocks 
+Variable renaming to move to batches instead of blocks
 
 #### Executor
 
