@@ -38,7 +38,7 @@ import { mantle } from './mantle'
 import { metal } from './metal'
 import { metis } from './metis'
 import { mode } from './mode'
-import { morphism } from './morphism'
+import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
@@ -109,7 +109,7 @@ export const layer2s: Layer2[] = [
   metal,
   metis,
   mode,
-  morphism,
+  morph,
   myria,
   nova,
   obscuro,
