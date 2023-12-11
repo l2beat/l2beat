@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 18740832,
-  "configHash": "0x3f1b488ebb67cf3066bcb401d15c3b47fa258078eeb242070365dec6b4517afa",
+  "configHash": "0x8b06d114a346b6a1894b2f71543a23be1cbe549c14d391e670865208a01697b9",
   "version": 3,
   "contracts": [
     {
@@ -145,17 +145,7 @@
           1701951983,
           0
         ],
-        "storedBatchHash": [
-          "0x0ac272ab86763ec2bc093492128eb0bb7afac0ddb385e4ceb2fdb107f2946f2b",
-          "0x476876ca9c9fa49b1390ae47a04f7434936b77c22af7a055077f2e3486e6fb65",
-          "0x41de068e7043f90c7a5b6c9c80251979c333dc931859a2ec10ef17c9032db250",
-          "0x545ada4b4f784c3a471137da517a9f99ae401c7daa63d951a20222605b12ccbf",
-          "0xdf353be1f590760d533530c19b53309dde820f3c962a5317c89bcd299130c834"
-        ],
         "validators": ["0xa0425d71cB1D6fb80E65a5361a04096E0672De03"]
-      },
-      "errors": {
-        "storedBatchHash": "Too many values. Update configuration to explore fully"
       },
       "derivedName": "DiamondProxy"
     },
@@ -214,16 +204,14 @@
       "sinceTimestamp": 1701258299,
       "values": {
         "executionDelay": 75600,
-        "getCommittedBatchTimestamp": [0, 0, 0, 0, 0],
         "getName": "ValidatorTimelock",
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "revertedBlocks": [],
         "validator": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
         "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
-      "errors": {
-        "getCommittedBatchTimestamp": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "ValidatorTimelock"
     },
     {
       "name": "Verifier",
