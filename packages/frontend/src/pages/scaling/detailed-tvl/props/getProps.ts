@@ -9,8 +9,6 @@ export function getProps(
   config: Config,
   pagesData: PagesData,
 ): Wrapped<ScalingDetailedTvlPageProps> {
-  const { tvlApiResponse } = pagesData
-
   return {
     props: {
       showActivity: config.features.activity,
@@ -19,7 +17,7 @@ export function getProps(
       footer: getFooterProps(config),
       detailedTvlView: getScalingDetailedTvlView(
         config.layer2s,
-        tvlApiResponse,
+        pagesData.tvlApiResponse,
       ),
     },
     wrapper: {

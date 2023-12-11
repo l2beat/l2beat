@@ -78,6 +78,8 @@ export const scroll: Layer2 = {
         batchSubmissions:
           'Transaction data batches that are not proven yet can be reverted.',
       },
+      explanation:
+        'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
     },
   },
   stage: getStage({
@@ -85,7 +87,7 @@ export const scroll: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,

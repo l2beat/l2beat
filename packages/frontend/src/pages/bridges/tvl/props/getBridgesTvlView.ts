@@ -5,19 +5,25 @@ import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
+import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
+import { PagesData } from '../../../Page'
 import { BridgesTvlViewEntry } from '../types'
 import { BridgesTvlViewProps } from '../view/BridgesTvlView'
 
 export function getBridgesTvlView(
   projects: (Bridge | Layer2)[],
-  tvlApiResponse: TvlApiResponse,
-  bridgesTvl: number,
-  combinedTvl: number,
-  verificationStatus: VerificationStatus,
+  pagesData: PagesData,
 ): BridgesTvlViewProps {
-  const included = getIncludedProjects(projects, tvlApiResponse)
+  const { tvlApiResponse, verificationStatus } = pagesData
+
+  const included = getIncludedProjects(projects, tvlApiResponse).filter(
+    (project) => project.type === 'bridge' || !project.isLayer3,
+  )
   const ordered = orderByTvl(included, tvlApiResponse)
+
+  const { tvl: bridgesTvl } = getTvlWithChange(tvlApiResponse.bridges)
+  const { tvl: combinedTvl } = getTvlWithChange(tvlApiResponse.combined)
 
   return {
     items: ordered.map((project) =>
