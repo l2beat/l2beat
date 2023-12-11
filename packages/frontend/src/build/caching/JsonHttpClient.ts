@@ -10,6 +10,7 @@ export class JsonHttpClient {
   ) {}
 
   async fetchJson(url: string): Promise<unknown> {
+    console.log(`Fetching ${url} ...`)
     if (!this.skipCache) {
       const cached = await read(url)
       if (cached) {
