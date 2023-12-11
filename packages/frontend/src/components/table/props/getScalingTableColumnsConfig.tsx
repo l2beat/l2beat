@@ -162,7 +162,6 @@ export function getUpcomingScalingTvlColumnsConfig() {
       sorting: {
         getOrderValue: (_, index) => index,
         rule: 'numeric',
-        defaultState: 'asc',
       },
     },
     {
@@ -172,6 +171,7 @@ export function getUpcomingScalingTvlColumnsConfig() {
       sorting: {
         getOrderValue: (project) => project.name,
         rule: 'alphabetical',
+        defaultState: 'asc',
       },
     },
     {
