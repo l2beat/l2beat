@@ -338,7 +338,6 @@ export const zksyncera: Layer2 = {
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
     },
-    VALUES.ZKSYNC_2.SECURITY_COUNCIL,
   ],
   milestones: [
     {
