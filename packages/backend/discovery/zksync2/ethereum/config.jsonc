@@ -20,6 +20,9 @@
         "getTotalBlocksCommitted",
         "getTotalBlocksExecuted",
         "getTotalBlocksVerified",
+        "getTotalBatchesExecuted",
+        "getTotalBatchesVerified",
+        "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
         "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
