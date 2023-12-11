@@ -100,6 +100,10 @@ export const linea: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
+    },
   },
   config: {
     escrows: [

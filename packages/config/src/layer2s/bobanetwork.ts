@@ -73,6 +73,8 @@ export const bobanetwork: Layer2 = {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation:
+        'Boba Network is an Optimistic rollup based on Optimism’s OVM that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner is always allowed to delete them.',
     },
   },
   config: {

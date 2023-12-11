@@ -171,6 +171,10 @@ export const starknet: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+    },
   },
   config: {
     escrows: [
