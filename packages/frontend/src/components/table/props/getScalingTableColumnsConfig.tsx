@@ -169,6 +169,10 @@ export function getUpcomingScalingTvlColumnsConfig() {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Type',
@@ -200,13 +204,16 @@ export function getArchivedScalingTvlColumnsConfig() {
       sorting: {
         getOrderValue: (_, index) => index,
         rule: 'numeric',
-        defaultState: 'asc',
       },
     },
     {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Risks',
@@ -253,6 +260,62 @@ export function getArchivedScalingTvlColumnsConfig() {
           )}
         </>
       ),
+      sorting: {
+        getOrderValue: (project) => project.tvl?.value,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
+    },
+  ]
+
+  return columns
+}
+
+export function getLayer3sScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      getValue: (project) => <ProjectCell project={project} />,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
+    },
+    {
+      name: 'Type',
+      tooltip:
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      shortName: 'Type',
+      getValue: (project) => <TypeCell>{project.category}</TypeCell>,
+    },
+    {
+      name: 'Technology',
+      tooltip: 'The technology stack used.',
+      shortName: 'Tech',
+      getValue: (project) => project.provider,
+    },
+    {
+      name: 'Host Chain',
+      tooltip: 'The chain, on top of which the L3 is built.',
+      getValue: (project) => project.hostChainName,
+    },
+    {
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this project.',
+      getValue: (project) => project.purpose,
     },
   ]
 
@@ -368,52 +431,6 @@ export function getScalingDetailedTvlColumnsConfig() {
 
   return columns
 }
-export function getLayer3sScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-        defaultState: 'asc',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
-    {
-      name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Type',
-      getValue: (project) => <TypeCell>{project.category}</TypeCell>,
-    },
-    {
-      name: 'Technology',
-      tooltip: 'The technology stack used.',
-      shortName: 'Tech',
-      getValue: (project) => project.provider,
-    },
-    {
-      name: 'Host Chain',
-      tooltip: 'The chain, on top of which the L3 is built.',
-      getValue: (project) => project.hostChainName,
-    },
-    {
-      name: 'Purpose',
-      tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
-    },
-  ]
-
-  return columns
-}
 
 export function getScalingRiskColumnsConfig() {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
@@ -433,6 +450,10 @@ export function getScalingRiskColumnsConfig() {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (project) => <ProjectCell project={project} />,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'State validation',
@@ -474,6 +495,10 @@ export function getScalingActivityColumnsConfig() {
       minimalWidth: true,
       headClassName: 'pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Name',
