@@ -148,6 +148,10 @@ export class TvlController {
     console.time('[Aggregate endpoint]: setup')
 
     const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => !project.isUpcoming)
+      .filter((project) =>
+        project.type === 'layer2' ? !project.isLayer3 : true,
+      )
       .filter((project) => slugs.includes(project.display.slug))
       .map((project) => project.id)
 

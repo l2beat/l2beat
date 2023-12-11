@@ -1,3 +1,4 @@
+import { LivenessApiProject } from '@l2beat/shared-pure'
 import classNames from 'classnames'
 import React from 'react'
 
@@ -6,13 +7,15 @@ import { RoundedWarningIcon } from '../icons/symbols/RoundedWarningIcon'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
+  dataType?: Exclude<keyof LivenessApiProject, 'anomalies'>
   project?: ScalingLivenessViewEntry
   tooltip?: string
-  showOptimisticRollupWarning?: boolean
+  warning?: string
 }) {
   if (
     !props.durationInSeconds &&
-    props.project?.dataAvailabilityMode === 'TxData'
+    props.project?.category === 'ZK Rollup' &&
+    props.dataType === 'proofSubmissions'
   ) {
     return (
       <div className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
@@ -21,18 +24,26 @@ export function LivenessDurationCell(props: {
     )
   }
 
-  if (!props.durationInSeconds)
+  if (!props.durationInSeconds) {
+    const tooltipText =
+      props.dataType === 'batchSubmissions' &&
+      props.project?.dataAvailabilityMode === 'StateDiffs'
+        ? 'State diff rollups do not post batches of transactions to the L1.'
+        : props.dataType === 'proofSubmissions' &&
+          props.project?.category === 'Optimistic Rollup'
+        ? 'Optimistic rollups do not post validity proofs to the L1.'
+        : undefined
     return (
       <div
-        className={classNames(
-          'rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50',
-          props.project?.dataAvailabilityMode === 'StateDiffs' && 'Tooltip',
-        )}
-        title="State diff rollups do not post batches of transactions to the L1."
+        className={
+          'Tooltip rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50'
+        }
+        title={tooltipText}
       >
         n/a
       </div>
     )
+  }
 
   const seconds = props.durationInSeconds
   const minutes = Math.floor(props.durationInSeconds / 60)
@@ -68,11 +79,8 @@ export function LivenessDurationCell(props: {
       data-tooltip-big={true}
     >
       {duration}
-      {props.showOptimisticRollupWarning && (
-        <div
-          className="Tooltip"
-          title="Please note, for Optimistic rollups the state is not finalized until the challenge period passes."
-        >
+      {props.warning && (
+        <div className="Tooltip" title={props.warning}>
           <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
         </div>
       )}

@@ -1,3 +1,37 @@
+# Diff at Mon, 04 Dec 2023 12:52:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@11f81c3217315242a2af781f1c2528aa4938b44c
+
+## Description
+
+A new upgrade proposal has been detected.
+Implementations:
+DefaultUpgrade: 0x567e1B57A80a7F048A7402191F96C62730e30dB2
+AdminFacet: 0x409560DE546e057ce5bD5dB487EdF2bB5E785baB
+GettersFacet: 0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4
+MailboxFacet: 0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08
+ExecutorFacet: 0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      values.getCurrentProposalId:
+-        10
++        11
+      values.getProposedUpgradeHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x31e9893a0c33de66bfd89adc9068af6500d315f89c83cb52f018b8dd002faa6c"
+      values.getProposedUpgradeTimestamp:
+-        0
++        1701681527
+      values.getUpgradeProposalState:
+-        0
++        1
+    }
+```
+
 # Diff at Tue, 21 Nov 2023 15:32:06 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
