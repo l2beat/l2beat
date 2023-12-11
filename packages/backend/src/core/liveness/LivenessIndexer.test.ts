@@ -8,7 +8,10 @@ import {
   LivenessConfigurationRecord,
   LivenessConfigurationRepository,
 } from '../../peripherals/database/LivenessConfigurationRepository'
-import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
+import {
+  LivenessRecord,
+  LivenessRepository,
+} from '../../peripherals/database/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
@@ -17,15 +20,77 @@ import {
   makeLivenessFunctionCall,
 } from './types/LivenessConfig'
 import { LivenessId } from './types/LivenessId'
+import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
 import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
 import { getSyncStatus } from './utils/getSyncStatus'
-import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})
 
 describe(LivenessIndexer.name, () => {
-  describe(LivenessIndexer.prototype.update.name, () => {})
+  describe(LivenessIndexer.prototype.update.name, () => {
+    it('updates liveness data', async () => {
+      const from = MIN_TIMESTAMP.add(365, 'days')
+      const to = from.add(1, 'hours')
+      const runtimeEntries = getMockRuntimeConfigurations()
+      const databaseEntries = runtimeEntries.map((r) => toRecord(r, from))
+      const configurationRepository = getMockConfigRepository(databaseEntries)
+      const livenessRepository = getMockLivenessRepository()
+      const livenessResults = getMockLivenessResults()
+      const livenessClient = mockObject<LivenessClient>({
+        getLivenessData: async () => livenessResults,
+      })
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        livenessRepository,
+        runtimeEntries,
+        livenessClient,
+      })
+      const [configurationsToSync, adjustedTo] =
+        await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
+
+      const value = await livenessIndexer.update(from.toNumber(), to.toNumber())
+
+      expect(value).toEqual(adjustedTo.toNumber())
+      expect(livenessClient.getLivenessData).toHaveBeenOnlyCalledWith(
+        configurationsToSync,
+        from,
+        adjustedTo,
+      )
+      expect(livenessRepository.addMany).toHaveBeenOnlyCalledWith(
+        livenessResults,
+        TRX,
+      )
+      expect(
+        configurationRepository.setLastSyncedTimestamp,
+      ).toHaveBeenOnlyCalledWith(
+        runtimeEntries.map((r) => r.id),
+        adjustedTo,
+        TRX,
+      )
+    })
+
+    it('skips update if there are no configurations to sync', async () => {
+      const from = MIN_TIMESTAMP
+      const to = from.add(365, 'days')
+      const runtimeEntries = getMockRuntimeConfigurations()
+      const databaseEntries = runtimeEntries.map((r) => toRecord(r, to))
+      const configurationRepository = getMockConfigRepository(databaseEntries)
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        runtimeEntries,
+      })
+      const livenessClient = mockObject<LivenessClient>({
+        getLivenessData: async () => [],
+      })
+      const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
+
+      const value = await livenessIndexer.update(from.toNumber(), to.toNumber())
+
+      expect(value).toEqual(adjustedTo.toNumber())
+      expect(livenessClient.getLivenessData).not.toHaveBeenCalled()
+    })
+  })
 
   describe(LivenessIndexer.prototype.getConfiguration.name, () => {
     it('adjusts to and finds configurations to sync', async () => {
@@ -33,7 +98,7 @@ describe(LivenessIndexer.name, () => {
       const to = from.add(365, 'days')
 
       const runtimeEntries = getMockRuntimeConfigurations()
-      const databaseEntries = runtimeEntries.map(toRecordWithUntilTimestamp)
+      const databaseEntries = runtimeEntries.map((r) => toRecord(r))
       const configurationRepository = getMockConfigRepository(databaseEntries)
 
       const livenessIndexer = getMockLivenessIndexer({
@@ -66,7 +131,13 @@ describe(LivenessIndexer.name, () => {
 
   describe(LivenessIndexer.prototype.start.name, () => {
     it('initializes configurations and indexer state', async () => {
-      const runtimeEntries = getMockRuntimeConfigurations()
+      const runtimeEntries = [
+        getMockRuntimeConfigurations()[0],
+        {
+          ...getMockRuntimeConfigurations()[1],
+          untilTimestamp: MIN_TIMESTAMP.add(1, 'days'),
+        },
+      ]
 
       const removedConfig = mockObject<LivenessConfigurationRecord>({
         id: LivenessId.random(),
@@ -75,7 +146,7 @@ describe(LivenessIndexer.name, () => {
       const databaseEntries: LivenessConfigurationRecord[] = [
         removedConfig,
         {
-          ...toRecordWithUntilTimestamp(runtimeEntries[1]),
+          ...toRecord(runtimeEntries[1]),
           untilTimestamp: undefined,
         },
         // rest of the configurations would be considered "toAdd"
@@ -236,9 +307,42 @@ describe(LivenessIndexer.name, () => {
   })
 })
 
+function getMockLivenessIndexer(params: {
+  stateRepository?: IndexerStateRepository
+  configurationRepository?: LivenessConfigurationRepository
+  livenessRepository?: LivenessRepository
+  runtimeEntries?: LivenessConfigEntry[]
+  livenessClient?: LivenessClient
+}) {
+  const {
+    stateRepository,
+    configurationRepository,
+    livenessRepository,
+    runtimeEntries,
+    livenessClient,
+  } = params
+
+  return new LivenessIndexer(
+    Logger.SILENT,
+    mockObject<HourlyIndexer>({
+      start: async () => {},
+      tick: async () => 1,
+      subscribe: () => {},
+    }),
+    livenessClient ?? mockObject<LivenessClient>({}),
+    stateRepository ?? mockObject<IndexerStateRepository>({}),
+    livenessRepository ?? mockObject<LivenessRepository>({}),
+    configurationRepository ?? mockObject<LivenessConfigurationRepository>({}),
+    runtimeEntries ?? [],
+    MIN_TIMESTAMP,
+  )
+}
+
 function getMockLivenessRepository() {
   return mockObject<LivenessRepository>({
     deleteAfter: async () => 0,
+    runInTransaction: async (fn) => fn(TRX),
+    addMany: async () => 0,
   })
 }
 
@@ -250,6 +354,7 @@ function getMockConfigRepository(
     deleteMany: async () => 0,
     setUntilTimestamp: async () => 0,
     getAll: async () => databaseEntries,
+    setLastSyncedTimestamp: async () => 0,
   })
 }
 
@@ -287,42 +392,30 @@ function getMockRuntimeConfigurations() {
       address: EthereumAddress.random(),
       selector: '0x',
       sinceTimestamp: MIN_TIMESTAMP,
-      untilTimestamp: MIN_TIMESTAMP.add(1, 'days'),
     }),
   ]
 }
 
-function getMockLivenessIndexer(params: {
-  stateRepository?: IndexerStateRepository
-  configurationRepository?: LivenessConfigurationRepository
-  livenessRepository?: LivenessRepository
-  runtimeEntries?: LivenessConfigEntry[]
-}) {
-  const {
-    stateRepository,
-    configurationRepository,
-    livenessRepository,
-    runtimeEntries,
-  } = params
-
-  return new LivenessIndexer(
-    Logger.SILENT,
-    mockObject<HourlyIndexer>({
-      start: async () => {},
-      tick: async () => 1,
-      subscribe: () => {},
-    }),
-    mockObject<LivenessClient>({}),
-    stateRepository ?? mockObject<IndexerStateRepository>({}),
-    livenessRepository ?? mockObject<LivenessRepository>({}),
-    configurationRepository ?? mockObject<LivenessConfigurationRepository>({}),
-    runtimeEntries ?? [],
-    MIN_TIMESTAMP,
-  )
+function getMockLivenessResults(): LivenessRecord[] {
+  return [
+    {
+      livenessId: getMockRuntimeConfigurations()[0].id,
+      blockNumber: 1,
+      timestamp: UnixTime.now(),
+      txHash: '',
+    },
+    {
+      livenessId: getMockRuntimeConfigurations()[1].id,
+      blockNumber: 1,
+      timestamp: UnixTime.now(),
+      txHash: '',
+    },
+  ]
 }
 
-function toRecordWithUntilTimestamp(
+function toRecord(
   entry: LivenessConfigEntry,
+  lastSyncedTimestamp?: UnixTime,
 ): LivenessConfigurationRecord {
   return {
     id: entry.id,
@@ -331,5 +424,6 @@ function toRecordWithUntilTimestamp(
     sinceTimestamp: entry.sinceTimestamp,
     untilTimestamp: entry.untilTimestamp,
     debugInfo: '',
+    lastSyncedTimestamp,
   }
 }
