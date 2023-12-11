@@ -102,7 +102,7 @@ export const kroma: Layer2 = {
         HARDCODED.KROMA.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets finalized ${formatSeconds(
         finalizationPeriod,
-      )} [LUCA CHECK THIS VARIABLE] after it has been posted.`,
+      )} after it has been posted.`,
     },
   },
   config: {
