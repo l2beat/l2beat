@@ -131,6 +131,6 @@ function toDebugInfo(value: LivenessConfigEntry): string {
   if (value.formula === 'transfer') {
     return `Transfer: ${value.from.toString()} -> ${value.to.toString()}`
   } else {
-    return `Function call: ${value.address.toString()} : ${value.selector.toString()}}`
+    return `Function call: ${value.address.toString()} : ${value.selector.toString()}`
   }
 }
