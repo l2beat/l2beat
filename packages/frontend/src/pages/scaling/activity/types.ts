@@ -1,4 +1,10 @@
 import { Layer2, StageConfig } from '@l2beat/config'
+import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+
+export interface ActivityPagesData {
+  activityApiResponse: ActivityApiResponse
+  verificationStatus: VerificationStatus
+}
 
 export interface ActivityViewEntry {
   name: string

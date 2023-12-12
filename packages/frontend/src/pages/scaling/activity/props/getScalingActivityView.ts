@@ -11,19 +11,22 @@ import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { ActivityPagesData, ActivityViewEntry } from '../types'
 import { ScalingActivityViewProps } from '../view/ScalingActivityView'
-import { ActivityViewEntry } from '../view/types'
 
 export function getScalingActivityView(
   projects: Layer2[],
-  activityApiResponse: ActivityApiResponse,
-  verificationStatus: VerificationStatus,
+  pagesData: ActivityPagesData,
 ): ScalingActivityViewProps {
+  const { activityApiResponse, verificationStatus } = pagesData
+
   const included = getIncludedProjects(projects, activityApiResponse, [])
-  const items = included.map((x) =>
-    getScalingActivityViewEntry(x, activityApiResponse, verificationStatus),
-  )
-  items.push(getEthereumActivityViewEntry(activityApiResponse))
+  const items = [
+    ...included.map((x) =>
+      getScalingActivityViewEntry(x, activityApiResponse, verificationStatus),
+    ),
+    getEthereumActivityViewEntry(activityApiResponse),
+  ]
 
   return {
     items: items.sort((a, b) => (b.tpsDaily ?? -1) - (a.tpsDaily ?? -1)),

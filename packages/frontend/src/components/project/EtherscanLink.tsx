@@ -4,12 +4,14 @@ import { Link } from '../Link'
 
 interface EtherscanLinkProps {
   address: string
+  url?: string
   children?: ReactNode
   className?: string
 }
 
 export function EtherscanLink(props: EtherscanLinkProps) {
-  const link = `https://etherscan.io/address/${props.address}`
+  const explorerUrl = props.url ?? 'https://etherscan.io'
+  const link = `${explorerUrl}/address/${props.address}`
   return (
     <Link href={link} className={props.className}>
       {props.address.slice(0, 6)}…{props.address.slice(38, 42)}
