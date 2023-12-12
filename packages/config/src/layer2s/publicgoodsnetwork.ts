@@ -49,7 +49,10 @@ export const publicgoodsnetwork: Layer2 = {
       websites: ['https://publicgoods.network/'],
       apps: ['https://bridge.publicgoods.network/'],
       documentation: ['https://docs.publicgoods.network/'],
-      explorers: ['https://explorer.publicgoods.network'],
+      explorers: [
+        'https://explorer.publicgoods.network',
+        'https://pgn.superscan.network',
+      ],
       repositories: [
         'https://github.com/supermodularxyz/pgn-monorepo',
         'https://github.com/supermodularxyz/pgn-docs',
