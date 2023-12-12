@@ -11,7 +11,7 @@ export const mint: Layer2 = {
     name: 'Mint',
     slug: 'mint',
     description:
-      'Mint Blockchain is a Layer 2 network for NFTS.',
+      'Mint Blockchain is a Layer2 network for NFTS.',
     purpose: 'Universal, NFT',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
