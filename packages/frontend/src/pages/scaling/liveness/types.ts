@@ -1,5 +1,13 @@
 import { Layer2Display, StageConfig } from '@l2beat/config'
-import { LivenessDetails } from '@l2beat/shared-pure'
+import {
+  LivenessApiResponse,
+  LivenessDetails,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
+export interface LivenessPagesData {
+  tvlApiResponse: TvlApiResponse
+  livenessApiResponse: LivenessApiResponse
+}
 
 export interface ScalingLivenessViewEntry {
   name: string

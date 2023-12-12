@@ -5,8 +5,8 @@ import React, { useEffect } from 'react'
 import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { configureOverflowWrappers } from '../../../../scripts/configureOverflowWrappers'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
-import { configureTables } from '../../../../scripts/configureTables'
 import { configureTabs } from '../../../../scripts/configureTabs'
+import { configureTables } from '../../../../scripts/table/configureTables'
 import { ScalingRiskView } from './ScalingRiskView'
 
 const meta = {
