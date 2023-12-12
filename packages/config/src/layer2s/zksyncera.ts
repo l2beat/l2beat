@@ -67,6 +67,7 @@ export const zksyncera: Layer2 = {
         'https://twitter.com/zksync',
         'https://twitter.com/zkSyncDevs',
       ],
+      rollupCodes: 'https://rollup.codes/zksync-era',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

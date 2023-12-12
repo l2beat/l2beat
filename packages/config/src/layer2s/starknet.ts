@@ -149,10 +149,7 @@ export const starknet: Layer2 = {
     dataAvailabilityMode: 'StateDiffs',
 
     links: {
-      apps: [
-        'https://www.dappland.com/',
-        'https://www.starknet-ecosystem.com/',
-      ],
+      apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',

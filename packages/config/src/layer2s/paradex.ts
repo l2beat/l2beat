@@ -73,7 +73,7 @@ export const paradex: Layer2 = {
     dataAvailabilityMode: 'StateDiffs',
 
     links: {
-      websites: ['https://www.paradex.trade/'],
+      websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade'],
       documentation: ['https://docs.paradex.trade/'],
       explorers: [],

@@ -16,7 +16,7 @@ export const morph: Layer2 = {
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     links: {
-      websites: ['https://www.morphl2.io'],
+      websites: ['https://morphl2.io'],
       apps: ['https://bridge-testnet.morphl2.io'],
       documentation: ['https://docs.morphl2.io'],
       explorers: ['https://explorer-testnet.morphl2.io'],
