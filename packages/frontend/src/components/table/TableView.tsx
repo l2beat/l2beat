@@ -385,8 +385,8 @@ function getOrderValueAttributes(
     | Record<string, string | number | undefined>
     | undefined,
 ) {
-  if (!orderValue) {
-    return undefined
+  if (orderValue === undefined) {
+    return
   }
 
   return {
