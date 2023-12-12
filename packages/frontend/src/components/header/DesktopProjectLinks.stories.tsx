@@ -41,6 +41,10 @@ const links: ProjectLink[] = [
       'https://t.me/gnosischain',
     ],
   },
+  {
+    name: 'rollup.codes',
+    links: ['https://rollup.codes/arbitrum-one'],
+  },
 ]
 
 export const DesktopProjectLinks: Story = {
