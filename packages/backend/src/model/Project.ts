@@ -108,7 +108,5 @@ function toBackendLivenessConfig(
   config.batchSubmissions.forEach((param) => addEntry(param, 'DA'))
   config.proofSubmissions.forEach((param) => addEntry(param, 'PROOF'))
 
-  // TODO: assert unique ids for entries. Probably in tests for backend
-
   return livenessConfig
 }
