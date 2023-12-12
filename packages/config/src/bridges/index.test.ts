@@ -24,6 +24,16 @@ describe('bridges', () => {
         })
       }
     })
+    describe('do not include www part', () => {
+      for (const bridge of bridges) {
+        it(bridge.display.name, () => {
+          const links = Object.values(bridge.display.links).flat()
+          for (const link of links) {
+            expect(link).not.toInclude('www')
+          }
+        })
+      }
+    })
   })
   describe('references', () => {
     describe('points to an existing implementation', () => {

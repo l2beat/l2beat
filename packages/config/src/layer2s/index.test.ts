@@ -34,6 +34,16 @@ describe('layer2s', () => {
         })
       }
     })
+    describe('do not include www part', () => {
+      for (const layer2 of layer2s) {
+        it(layer2.display.name, () => {
+          const links = Object.values(layer2.display.links).flat()
+          for (const link of links) {
+            expect(link).not.toInclude('www')
+          }
+        })
+      }
+    })
   })
 
   describe('escrows', () => {
