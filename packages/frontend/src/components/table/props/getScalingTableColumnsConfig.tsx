@@ -68,6 +68,10 @@ export function getActiveScalingTvlColumnsConfig() {
       getValue: (project) => (
         <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Stage',
@@ -183,6 +187,10 @@ export function getUpcomingScalingTvlColumnsConfig() {
       getValue: (project) => (
         <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Purpose',
@@ -231,6 +239,10 @@ export function getArchivedScalingTvlColumnsConfig() {
       getValue: (project) => (
         <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Purpose',
@@ -301,6 +313,10 @@ export function getLayer3sScalingTvlColumnsConfig() {
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Type',
       getValue: (project) => <TypeCell>{project.category}</TypeCell>,
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Technology',
