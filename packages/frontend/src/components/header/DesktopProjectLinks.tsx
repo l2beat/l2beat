@@ -17,7 +17,7 @@ interface LinkSectionProps {
 
 export function DesktopProjectLinks(props: LinkSectionProps) {
   return (
-    <div className="flex flex-row gap-1.5">
+    <div className="flex flex-row flex-wrap gap-1.5">
       {props.projectLinks.map((link) => {
         return <ProjectLinkItem key={link.name} projectLink={link} />
       })}

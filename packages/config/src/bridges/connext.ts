@@ -16,10 +16,7 @@ export const connext: Bridge = {
     slug: 'connext-legacy',
     category: 'Liquidity Network',
     links: {
-      websites: [
-        'https://bridge.connext.network/',
-        'https://www.connext.network/',
-      ],
+      websites: ['https://bridge.connext.network/', 'https://connext.network/'],
       apps: ['https://bridge.connext.network/'],
       explorers: ['https://connextscan.io/'],
       socialMedia: [
