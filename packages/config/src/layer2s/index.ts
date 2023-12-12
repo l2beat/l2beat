@@ -109,6 +109,7 @@ export const layer2s: Layer2[] = [
   mantle,
   metal,
   metis,
+  mint,
   mode,
   morph,
   myria,
