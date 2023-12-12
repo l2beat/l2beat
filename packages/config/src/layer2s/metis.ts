@@ -37,7 +37,7 @@ export const metis: Layer2 = {
       websites: ['https://www.metis.io'],
       apps: [],
       documentation: ['https://docs.metis.io'],
-      explorers: ['https://andromeda-explorer.metis.io'],
+      explorers: ['https://explorer.metis.io'],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
         'https://medium.com/@MetisDAO',
