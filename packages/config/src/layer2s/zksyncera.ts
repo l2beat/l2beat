@@ -97,6 +97,16 @@ export const zksyncera: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
+            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+          ),
+          selector: '0x7739cbe7',
+          functionSignature:
+            'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
+          sinceTimestamp: new UnixTime(1679602559),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
             '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
           ),
           selector: '0x7f61885c',
@@ -107,6 +117,16 @@ export const zksyncera: Layer2 = {
       ],
       batchSubmissions: [],
       stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+          ),
+          selector: '0xce9dcf16',
+          functionSignature:
+            'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
+          sinceTimestamp: new UnixTime(1679602559),
+        },
         {
           formula: 'functionCall',
           address: EthereumAddress(
