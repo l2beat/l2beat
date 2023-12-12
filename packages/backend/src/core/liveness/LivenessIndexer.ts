@@ -97,22 +97,18 @@ export class LivenessIndexer extends ChildIndexer {
     const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
 
     await this.stateRepository.runInTransaction(async (trx) => {
-      await this.initializeConfigurations(toAdd, toRemove, toTrim, trx)
+      await this.configurationRepository.addMany(toAdd, trx)
+      // this will also delete records from "liveness" using CASCADE constraint
+      await this.configurationRepository.deleteMany(toRemove, trx)
+      await this.trimConfigurations(toTrim, trx)
       await this.initializeIndexerState(safeHeight, trx)
     })
   }
 
-  private async initializeConfigurations(
-    toAdd: LivenessConfigEntry[],
-    toRemove: LivenessId[],
+  private async trimConfigurations(
     toTrim: { id: LivenessId; untilTimestamp: UnixTime }[],
     trx: Knex.Transaction,
   ) {
-    await this.configurationRepository.addMany(toAdd, trx)
-
-    // this will also delete records from "liveness" using CASCADE constraint
-    await this.configurationRepository.deleteMany(toRemove, trx)
-
     // there can be a situation where untilTimestamp was set retroactively
     // in this case we want to delete the liveness records that were added during this "misconfiguration" period
     await Promise.all(
