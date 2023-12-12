@@ -202,7 +202,31 @@ describe(LivenessIndexer.name, () => {
     })
 
     it('indexer state undefined', async () => {
-      throw new Error('not implemented')
+      const configurationRepository = getMockConfigRepository([])
+      const livenessRepository = getMockLivenessRepository()
+      const stateRepository = mockObject<IndexerStateRepository>({
+        findIndexerState: async () => undefined,
+        add: async () => '',
+        setSafeHeight: async () => 0,
+        runInTransaction: async (fn) => fn(TRX),
+      })
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        livenessRepository,
+        stateRepository,
+        runtimeEntries: [],
+      })
+
+      await livenessIndexer.start()
+
+      expect(stateRepository.add).toHaveBeenOnlyCalledWith(
+        {
+          indexerId: livenessIndexer.indexerId,
+          safeHeight: MIN_TIMESTAMP.toNumber(),
+          minTimestamp: MIN_TIMESTAMP,
+        },
+        TRX,
+      )
     })
   })
 
@@ -338,7 +362,7 @@ function getMockConfigRepository(
 function getMockStateRepository(
   indexerState = {
     indexerId: 'liveness_indexer',
-    safeHeight: 1,
+    safeHeight: MIN_TIMESTAMP.toNumber(),
     minTimestamp: MIN_TIMESTAMP,
   },
 ) {
