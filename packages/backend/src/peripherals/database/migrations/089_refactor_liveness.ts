@@ -19,28 +19,29 @@ export async function up(knex: Knex) {
   await dropForeign(knex, 'liveness', 'liveness_configuration_id')
 
   // CONFIGURATIONS
-  await knex.schema
-    .alterTable('liveness_configuration', (table) => {
-      table.dropPrimary()
-      table.dropColumn('id')
-      table.dropColumn('identifier')
-      table.renameColumn('params', 'debug_info')
-    })
-    .then(() => {
-      return knex.schema.alterTable('liveness_configuration', (table) => {
-        table.string('id', 8).primary()
-      })
-    })
+  await knex.schema.alterTable('liveness_configuration', (table) => {
+    table.dropPrimary()
+    table.dropColumn('id')
+    table.dropColumn('identifier')
+    table.renameColumn('params', 'debug_info')
+  })
+  await knex.schema.alterTable('liveness_configuration', (table) => {
+    table.string('id', 8).primary()
+  })
 
   // LIVENESS
   await knex.schema.alterTable('liveness', (table) => {
     table.dropPrimary()
     table.dropColumn('liveness_configuration_id')
     table.string('liveness_id', 8).notNullable()
-    table.primary(['liveness_id', 'tx_hash'])
+    table.index('liveness_id')
   })
 
   await addForeign(knex, 'liveness', 'liveness_id', 'liveness_configuration')
+
+  await knex.schema.alterTable('indexer_state', (table) => {
+    table.dropColumn('config_hash')
+  })
 }
 
 export async function down(knex: Knex) {
@@ -49,22 +50,18 @@ export async function down(knex: Knex) {
   await dropForeign(knex, 'liveness', 'liveness_id')
 
   // CONFIGURATIONS
-  await knex.schema
-    .alterTable('liveness_configuration', (table) => {
-      table.dropPrimary()
-      table.dropColumn('id')
-      table.string('identifier').notNullable()
-      table.renameColumn('debug_info', 'params')
-    })
-    .then(() => {
-      return knex.schema.alterTable('liveness_configuration', (table) => {
-        table.increments('id').primary()
-      })
-    })
+  await knex.schema.alterTable('liveness_configuration', (table) => {
+    table.dropPrimary()
+    table.dropColumn('id')
+    table.string('identifier').notNullable()
+    table.renameColumn('debug_info', 'params')
+  })
+  await knex.schema.alterTable('liveness_configuration', (table) => {
+    table.increments('id').primary()
+  })
 
   // LIVENESS
   await knex.schema.alterTable('liveness', (table) => {
-    table.dropPrimary()
     table.dropColumn('liveness_id')
     table.integer('liveness_configuration_id').notNullable()
     table.primary(['tx_hash', 'liveness_configuration_id'])
@@ -77,6 +74,10 @@ export async function down(knex: Knex) {
     'liveness_configuration_id',
     'liveness_configuration',
   )
+
+  await knex.schema.alterTable('indexer_state', (table) => {
+    table.string('config_hash').notNullable()
+  })
 }
 
 async function addForeign(
