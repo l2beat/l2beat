@@ -53,8 +53,7 @@ export const mantle: Layer2 = {
       websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs.mantle.xyz/'],
-      explorers: ['https://explorer.mantle.xyz/',
-                 'https://mantlescan.info'],
+      explorers: ['https://explorer.mantle.xyz/', 'https://mantlescan.info'],
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
