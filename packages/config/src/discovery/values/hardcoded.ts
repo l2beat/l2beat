@@ -31,16 +31,6 @@ export const HARDCODED = {
     // https://github.com/kroma-network/kroma/blob/dev/packages/contracts/deploy-config/mainnet.json#L9C30-L9C30
     SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
   },
-  ZKSYNC_2: {
-    FACETS: [
-      '0x409560DE546e057ce5bD5dB487EdF2bB5E785baB',
-      '0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4',
-      '0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08',
-      '0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269',
-    ],
-    SECURITY_COUNCIL: '0x0000000000000000000000000000000000000000',
-    GOVERNOR: '0x4e4943346848c4867F81dFb37c4cA9C5715A7828',
-  },
   ZKSYNC: {
     PRIORITY_EXPIRATION_PERIOD: 1209600, // 14 days
   },
