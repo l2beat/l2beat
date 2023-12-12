@@ -15,7 +15,6 @@ LivenessId.unsafe = function unsafe(value: string) {
 }
 
 LivenessId.random = function random() {
-  const letter = () =>
-    'abcdefghijklmnopqrstuvwxyz'[Math.floor(Math.random() * 26)]
-  return LivenessId(Array.from({ length: 40 }).map(letter))
+  const letter = () => '0123456789abcdef'[Math.floor(Math.random() * 16)]
+  return LivenessId.unsafe(Array.from({ length: 8 }).map(letter).join(''))
 }
