@@ -5,7 +5,7 @@
 
 ## Description
 
-Change in the Bridge implementation. A 24h timelock is introduced on Admin Proxy updates and Bridge Transition updates. The update proposals can be created by the owner and cancelled by the owner if not executed yet. Updates that do not go through the timelock will now revert.
+Change in the Bridge implementation. A 24h timelock is introduced on Admin Proxy updates and Bridge Transition updates. The update proposals can be created by the owner and canceled by the owner if not executed yet. Updates that do not go through the timelock will now revert.
 
 Users can now withdraw in two cases:
 
