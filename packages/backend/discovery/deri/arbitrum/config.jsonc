@@ -1,0 +1,63 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "arbitrum",
+  "name": "deri",
+  "initialAddresses": [
+    "0x846387C3D6001F74170455B1074D01f05eB3067a",
+    "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
+  ],
+  "names": {
+    "0x846387C3D6001F74170455B1074D01f05eB3067a": "RollupProxy",
+    "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0": "Bridge",
+    "0x383eFE8D410285c5CbE1B4F296022640759aA834": "ChallengeManager",
+    "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": "Outbox",
+    "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "Inbox"
+  },
+  "overrides": {
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "ignoreMethods": [
+        // Execution reverted
+        "proxiableUUID"
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
+          ]
+        }
+      }
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"]
+    },
+    "Inbox": {
+      "ignoreMethods": ["inboxAccs"]
+    }
+  }
+}
