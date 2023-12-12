@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -9,6 +9,7 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -40,6 +41,11 @@ export const honeypot: Layer2 = {
         'https://cartesi.io/blog/',
       ],
     },
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+    },
   },
   stage: getStage({
     stage0: {
@@ -69,6 +75,22 @@ export const honeypot: Layer2 = {
         description: 'Contract storing bounty funds.',
       }),
     ],
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
+          ),
+          selector: '0xddfdfbb0',
+          functionSignature:
+            'function submitClaim(bytes calldata _claimData) external onlyOwner',
+          sinceTimestamp: new UnixTime(1694467715),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
