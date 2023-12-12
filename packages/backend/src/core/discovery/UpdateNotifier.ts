@@ -4,6 +4,7 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { DiscoveryRunner } from './DiscoveryRunner'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
@@ -75,14 +76,6 @@ export class UpdateNotifier {
     if (!isNineAM(timestamp, 'CET')) {
       return
     }
-
-    await this.notify(
-      getDailyReminderMessage(notUpdatedProjects, timestamp),
-      'INTERNAL',
-    )
-    this.logger.info('Daily reminder sent', {
-      projects: notUpdatedProjects,
-    })
   }
 
   async getInternalMessageNonce() {
@@ -118,18 +111,69 @@ export class UpdateNotifier {
     await this.notify('UpdateMonitor started.', 'PUBLIC')
     this.logger.info('Initial notifications sent')
   }
+
+  async sendDailyReminder(runners: DiscoveryRunner[], timestamp: UnixTime): Promise<void> {
+    if (!isNineAM(timestamp, 'CET')) {
+      return
+    }
+
+    const messages = []
+    for(const runner of runners) {
+    const chainId = runner.getChainId()
+    const projectConfigs = await this.configReader.readAllConfigsForChain(
+      chainId,
+    )
+
+    const notUpdatedProjects: string[] = []
+    for (const projectConfig of projectConfigs) {
+        const discovery = this.cachedDiscovery.get(projectConfig.name)
+
+        if (!discovery) {
+            continue
+        }
+
+        const committed = await this.configReader.readDiscovery(
+            projectConfig.name,
+            chainId,
+        )
+
+        const diff = diffDiscovery(
+            committed.contracts,
+            discovery.contracts,
+            projectConfig,
+        )
+
+        if (diff.length > 0) {
+            notUpdatedProjects.push(projectConfig.name)
+        }
+    }
+
+    messages.push(getDailyReminderMessageForChainId(notUpdatedProjects, chainId, timestamp))
+    }
+
+    await this.updateNotifier.sendMessage(
+        messages.join('\n')
+        'INTERNAL',
+    )
+    this.logger.info('Daily reminder sent', {
+        projects: notUpdatedProjects,
+    })
+  }
 }
 
-function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
-  const dailyReportMessage = `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n`
+
+
+export function getDailyReminderMessageForChainId(projects: string[], chainId: ChainId, timestamp: UnixTime) {
+  const header = `chainId: ${chainId.toString()}\n`
   if (projects.length > 0) {
-    return `${dailyReportMessage}${projects
+    return `${header}${projects
       .map((p) => `:x: ${p}`)
-      .join('\n\n')}`
+      .join('\n')}`
   }
 
-  return `${dailyReportMessage}:white_check_mark: everything is up to date`
+  return `${header}:white_check_mark: everything is up to date`
 }
+
 function countDiff(diff: DiscoveryDiff[]): number {
   let count = 0
 

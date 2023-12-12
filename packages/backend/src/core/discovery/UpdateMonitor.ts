@@ -13,9 +13,10 @@ import { UpdateMonitorRepository } from '../../peripherals/database/discovery/Up
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { UpdateNotifier } from './UpdateNotifier'
+import { getDailyReminderMessageForChainId, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
+import { isNineAM } from './utils/isNineAM'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -56,6 +57,8 @@ export class UpdateMonitor {
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
+
+    await this.updateNotifier.sendDailyReminder(this.discoveryRunners, timestamp)
   }
 
   async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
@@ -104,8 +107,6 @@ export class UpdateMonitor {
         project: projectConfig.name,
       })
     }
-
-    await this.findUnresolvedProjects(projectConfigs, timestamp)
 
     metricsDone()
     this.logger.info('Update finished', {
@@ -306,3 +307,4 @@ const errorsCount = new Gauge({
   name: 'discovery_watcher_errors',
   help: 'Value showing amount of errors in the update cycle',
 })
+
