@@ -22,6 +22,7 @@ export interface TechnologyContract {
   upgradeDelay?: string
   upgradeConsiderations?: string
   references?: TechnologyReference[]
+  etherscanUrl?: string
 }
 
 export interface TechnologyContractLinks {
@@ -87,6 +88,7 @@ export function ContractEntry({
             {(contract.addresses ?? []).map((address, i) => (
               <EtherscanLink
                 address={address}
+                url={contract.etherscanUrl}
                 key={i}
                 className={cx(
                   verificationStatus.contracts[address] === false
