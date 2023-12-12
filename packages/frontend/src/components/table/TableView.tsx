@@ -229,25 +229,7 @@ function DataCell<T>(props: {
     props.rowIndex,
   )
 
-  const orderAttributes =
-    orderValue !== undefined
-      ? {
-          ...(isObject(orderValue)
-            ? Object.entries(orderValue).reduce<Record<string, string>>(
-                (acc, [key, value]) => {
-                  if (value) {
-                    acc[`data-order-value-${key.toLowerCase()}`] =
-                      value.toString()
-                  }
-                  return acc
-                },
-                {},
-              )
-            : {
-                'data-order-value': orderValue.toString(),
-              }),
-        }
-      : undefined
+  const orderAttributes = getOrderValueAttributes(orderValue)
   return (
     <>
       <td
@@ -394,4 +376,32 @@ function getGroupedColumns<T>(
       type: 'single',
     } as const
   })
+}
+
+function getOrderValueAttributes(
+  orderValue:
+    | string
+    | number
+    | Record<string, string | number | undefined>
+    | undefined,
+) {
+  if (!orderValue) {
+    return undefined
+  }
+
+  return {
+    ...(isObject(orderValue)
+      ? Object.entries(orderValue).reduce<Record<string, string>>(
+          (acc, [key, value]) => {
+            if (value) {
+              acc[`data-order-value-${key.toLowerCase()}`] = value.toString()
+            }
+            return acc
+          },
+          {},
+        )
+      : {
+          'data-order-value': orderValue.toString(),
+        }),
+  }
 }
