@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
@@ -197,6 +197,7 @@ describe(UpdateNotifier.name, () => {
     })
   })
 
+  /*
   describe(UpdateNotifier.prototype.handleUnresolved.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
@@ -250,4 +251,5 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })
   })
+  */
 })

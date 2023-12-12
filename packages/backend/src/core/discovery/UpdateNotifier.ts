@@ -4,7 +4,6 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { DiscoveryRunner } from './DiscoveryRunner'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
@@ -72,12 +71,6 @@ export class UpdateNotifier {
     })
   }
 
-  async handleUnresolved(notUpdatedProjects: string[], timestamp: UnixTime) {
-    if (!isNineAM(timestamp, 'CET')) {
-      return
-    }
-  }
-
   async getInternalMessageNonce() {
     const latestId = await this.updateNotifierRepository.findLatestId()
 
@@ -112,66 +105,46 @@ export class UpdateNotifier {
     this.logger.info('Initial notifications sent')
   }
 
-  async sendDailyReminder(runners: DiscoveryRunner[], timestamp: UnixTime): Promise<void> {
+  async sendDailyReminder(
+    reminders: Record<string, string[]>,
+    timestamp: UnixTime,
+  ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
       return
     }
 
-    const messages = []
-    for(const runner of runners) {
-    const chainId = runner.getChainId()
-    const projectConfigs = await this.configReader.readAllConfigsForChain(
-      chainId,
+    const messages = Object.entries(reminders).map(
+      ([chainIdString, notUpdatedProjects]) =>
+        getDailyReminderMessageForChainId(
+          notUpdatedProjects,
+          ChainId.fromName(chainIdString),
+        ),
     )
 
-    const notUpdatedProjects: string[] = []
-    for (const projectConfig of projectConfigs) {
-        const discovery = this.cachedDiscovery.get(projectConfig.name)
-
-        if (!discovery) {
-            continue
-        }
-
-        const committed = await this.configReader.readDiscovery(
-            projectConfig.name,
-            chainId,
-        )
-
-        const diff = diffDiscovery(
-            committed.contracts,
-            discovery.contracts,
-            projectConfig,
-        )
-
-        if (diff.length > 0) {
-            notUpdatedProjects.push(projectConfig.name)
-        }
-    }
-
-    messages.push(getDailyReminderMessageForChainId(notUpdatedProjects, chainId, timestamp))
-    }
-
-    await this.updateNotifier.sendMessage(
-        messages.join('\n')
-        'INTERNAL',
+    await this.notify(
+      getDailyReminderHeader(timestamp) + messages.join('\n'),
+      'INTERNAL',
     )
     this.logger.info('Daily reminder sent', {
-        projects: notUpdatedProjects,
+      reminders: reminders,
     })
   }
 }
 
-
-
-export function getDailyReminderMessageForChainId(projects: string[], chainId: ChainId, timestamp: UnixTime) {
+function getDailyReminderMessageForChainId(
+  projects: string[],
+  chainId: ChainId,
+) {
   const header = `chainId: ${chainId.toString()}\n`
   if (projects.length > 0) {
-    return `${header}${projects
-      .map((p) => `:x: ${p}`)
-      .join('\n')}`
+    return `${header}${projects.map((p) => `:x: ${p}`).join('\n')}`
   }
 
   return `${header}:white_check_mark: everything is up to date`
+}
+
+function getDailyReminderHeader(timestamp: UnixTime): string {
+  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n`
 }
 
 function countDiff(diff: DiscoveryDiff[]): number {

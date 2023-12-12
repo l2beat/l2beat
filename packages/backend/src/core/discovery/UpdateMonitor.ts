@@ -13,10 +13,9 @@ import { UpdateMonitorRepository } from '../../peripherals/database/discovery/Up
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { getDailyReminderMessageForChainId, UpdateNotifier } from './UpdateNotifier'
+import { UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
-import { isNineAM } from './utils/isNineAM'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -58,7 +57,47 @@ export class UpdateMonitor {
       await this.updateChain(runner, timestamp)
     }
 
-    await this.updateNotifier.sendDailyReminder(this.discoveryRunners, timestamp)
+    const reminders = await this.generateDailyReminder()
+    await this.updateNotifier.sendDailyReminder(reminders, timestamp)
+  }
+
+  async generateDailyReminder(): Promise<Record<string, string[]>> {
+    const result: Record<string, string[]> = {}
+
+    for (const runner of this.discoveryRunners) {
+      const chainId = runner.getChainId()
+      const projectConfigs = await this.configReader.readAllConfigsForChain(
+        chainId,
+      )
+
+      const notUpdatedProjects: string[] = []
+      for (const projectConfig of projectConfigs) {
+        const discovery = this.cachedDiscovery.get(projectConfig.name)
+
+        if (!discovery) {
+          continue
+        }
+
+        const committed = await this.configReader.readDiscovery(
+          projectConfig.name,
+          chainId,
+        )
+
+        const diff = diffDiscovery(
+          committed.contracts,
+          discovery.contracts,
+          projectConfig,
+        )
+
+        if (diff.length > 0) {
+          notUpdatedProjects.push(projectConfig.name)
+        }
+      }
+
+      result[chainId.toString()] = notUpdatedProjects
+    }
+
+    return result
   }
 
   async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
@@ -240,41 +279,6 @@ export class UpdateMonitor {
     }
   }
 
-  // this function gets a diff between current discovery and committed discovery
-  // and checks if there are any changes that are not yet resolved
-  // sends the results to the notification manager
-  async findUnresolvedProjects(
-    projectConfigs: DiscoveryConfig[],
-    timestamp: UnixTime,
-  ) {
-    const notUpdatedProjects: string[] = []
-
-    for (const projectConfig of projectConfigs) {
-      const discovery = this.cachedDiscovery.get(projectConfig.name)
-
-      if (!discovery) {
-        continue
-      }
-
-      const committed = await this.configReader.readDiscovery(
-        projectConfig.name,
-        ChainId.ETHEREUM,
-      )
-
-      const diff = diffDiscovery(
-        committed.contracts,
-        discovery.contracts,
-        projectConfig,
-      )
-
-      if (diff.length > 0) {
-        notUpdatedProjects.push(projectConfig.name)
-      }
-    }
-
-    await this.updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
-  }
-
   initMetrics(blockNumber: number): () => void {
     const histogramDone = syncHistogram.startTimer()
     changesDetected.set(0)
@@ -307,4 +311,3 @@ const errorsCount = new Gauge({
   name: 'discovery_watcher_errors',
   help: 'Value showing amount of errors in the update cycle',
 })
-
