@@ -119,7 +119,7 @@ function getLinks(links: ProjectLinks): ProjectLink[] {
       links: links.apps,
     },
     {
-      name: 'Documentation',
+      name: 'Docs',
       links: links.documentation,
     },
     {

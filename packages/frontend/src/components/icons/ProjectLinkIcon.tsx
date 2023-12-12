@@ -16,7 +16,7 @@ export interface ProjectLink {
   name:
     | 'Website'
     | 'App'
-    | 'Documentation'
+    | 'Docs'
     | 'Explorer'
     | 'Repository'
     | 'Social'
@@ -30,7 +30,7 @@ export function ProjectLinkIcon({ name }: LinkNameIconProps) {
       return <GlobeIcon />
     case 'App':
       return <AppsIcon />
-    case 'Documentation':
+    case 'Docs':
       return <DocumentIcon />
     case 'Explorer':
       return <SearchIcon />
