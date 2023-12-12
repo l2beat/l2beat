@@ -49,7 +49,8 @@ export const zora: Layer2 = {
       websites: ['https://zora.energy/', 'https://zora.co/'],
       apps: [],
       documentation: ['https://docs.zora.co/docs/zora-network/intro'],
-      explorers: ['https://explorer.zora.energy/'],
+      explorers: ['https://explorer.zora.energy/',
+                 'https://zora.superscan.network'],
       repositories: ['https://github.com/ourzora/optimism'],
       socialMedia: [
         'https://twitter.com/ourZORA',
