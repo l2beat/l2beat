@@ -21,7 +21,7 @@ import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
 import { ColumnConfig } from '../TableView'
-import { TechnologyCell } from '../TechnologyCell'
+import { TypeCell } from '../TypeCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
 export function getActiveScalingTvlColumnsConfig() {
@@ -52,14 +52,12 @@ export function getActiveScalingTvlColumnsConfig() {
       ),
     },
     {
-      name: 'Technology',
+      name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
     },
     {
@@ -217,14 +215,12 @@ export function getUpcomingScalingTvlColumnsConfig() {
       getValue: (project) => <ProjectCell project={project} />,
     },
     {
-      name: 'Technology',
+      name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
     },
     {
@@ -259,14 +255,12 @@ export function getArchivedScalingTvlColumnsConfig() {
       getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
     },
     {
-      name: 'Technology',
+      name: 'Type',
       tooltip:
         'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
     },
     {
@@ -296,6 +290,48 @@ export function getArchivedScalingTvlColumnsConfig() {
           )}
         </>
       ),
+    },
+  ]
+
+  return columns
+}
+
+export function getLayer3sScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      getValue: (project) => <ProjectCell project={project} />,
+    },
+    {
+      name: 'Type',
+      tooltip:
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      shortName: 'Type',
+      getValue: (project) => <TypeCell>{project.category}</TypeCell>,
+    },
+    {
+      name: 'Technology',
+      tooltip: 'The technology stack used.',
+      shortName: 'Tech',
+      getValue: (project) => project.provider,
+    },
+    {
+      name: 'Host Chain',
+      tooltip: 'The chain, on top of which the L3 is built.',
+      getValue: (project) => project.hostChainName,
+    },
+    {
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this project.',
+      getValue: (project) => project.purpose,
     },
   ]
 
@@ -495,17 +531,6 @@ export function getScalingLivenessColumnsConfig() {
       ],
     },
     {
-      name: 'Technology',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
-      getValue: (project) => (
-        <TechnologyCell provider={project.provider} disableColors>
-          {project.category}
-        </TechnologyCell>
-      ),
-    },
-    {
       name: '30-day anomalies',
       tooltip:
         'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
@@ -519,6 +544,17 @@ export function getScalingLivenessColumnsConfig() {
             project.slug === 'linea'
           }
         />
+      ),
+    },
+    {
+      name: 'Type',
+      tooltip:
+        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider} disableColors>
+          {project.category}
+        </TypeCell>
       ),
     },
     {
