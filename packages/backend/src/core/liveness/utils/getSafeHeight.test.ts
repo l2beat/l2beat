@@ -6,17 +6,17 @@ import {
   LivenessConfigEntry,
   makeLivenessTransfer,
 } from '../types/LivenessConfig'
-import { getSyncStatus } from './getSyncStatus'
+import { getSafeHeight } from './getSafeHeight'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2021-01-01'))
 const NOW = UnixTime.fromDate(new Date('2023-01-01'))
 
-describe(getSyncStatus.name, () => {
+describe(getSafeHeight.name, () => {
   it('database and toAdd are empty', () => {
     const databaseEntries: LivenessConfigurationRecord[] = []
     const toAdd: LivenessConfigEntry[] = []
 
-    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
 
     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
@@ -26,7 +26,7 @@ describe(getSyncStatus.name, () => {
     const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
     const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
 
     expect(result).toEqual(sinceTimestamp.toNumber())
   })
@@ -37,7 +37,7 @@ describe(getSyncStatus.name, () => {
     ]
     const toAdd: LivenessConfigEntry[] = []
 
-    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
 
     expect(result).toEqual(NOW.toNumber())
   })
@@ -49,7 +49,7 @@ describe(getSyncStatus.name, () => {
     const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
     const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
 
     expect(result).toEqual(sinceTimestamp.toNumber())
   })
@@ -62,7 +62,7 @@ describe(getSyncStatus.name, () => {
     ]
     const toAdd: LivenessConfigEntry[] = []
 
-    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
 
     expect(result).toEqual(sinceTimestamp.toNumber())
   })
@@ -74,7 +74,7 @@ describe(getSyncStatus.name, () => {
     const sinceTimestamp = MIN_TIMESTAMP.add(-1, 'hours')
     const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
 
     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })

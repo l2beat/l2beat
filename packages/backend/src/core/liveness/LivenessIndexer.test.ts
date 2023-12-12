@@ -22,7 +22,7 @@ import {
 import { LivenessId } from './types/LivenessId'
 import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
 import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
-import { getSyncStatus } from './utils/getSyncStatus'
+import { getSafeHeight } from './utils/getSafeHeight'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})
@@ -189,7 +189,7 @@ describe(LivenessIndexer.name, () => {
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
       expect(stateRepository.runInTransaction).toHaveBeenCalledTimes(1)
 
-      const syncStatus = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+      const syncStatus = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
         livenessIndexer.indexerId,
         syncStatus,

@@ -13,7 +13,7 @@ import { LivenessId } from './types/LivenessId'
 import { adjustToForBigqueryCall } from './utils'
 import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
-import { getSyncStatus } from './utils/getSyncStatus'
+import { getSafeHeight } from './utils/getSafeHeight'
 
 export class LivenessIndexer extends ChildIndexer {
   readonly indexerId = 'liveness_indexer'
@@ -94,11 +94,11 @@ export class LivenessIndexer extends ChildIndexer {
       databaseEntries,
     )
 
-    const syncStatus = getSyncStatus(databaseEntries, toAdd, this.minTimestamp)
+    const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
 
     await this.stateRepository.runInTransaction(async (trx) => {
       await this.initializeConfigurations(toAdd, toRemove, toTrim, trx)
-      await this.initializeIndexerState(syncStatus, trx)
+      await this.initializeIndexerState(safeHeight, trx)
     })
   }
 
@@ -127,7 +127,7 @@ export class LivenessIndexer extends ChildIndexer {
     )
   }
 
-  async initializeIndexerState(height: number, trx?: Knex.Transaction) {
+  async initializeIndexerState(safeHeight: number, trx?: Knex.Transaction) {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -136,7 +136,7 @@ export class LivenessIndexer extends ChildIndexer {
       await this.stateRepository.add(
         {
           indexerId: this.indexerId,
-          safeHeight: height,
+          safeHeight,
           minTimestamp: this.minTimestamp,
         },
         trx,
@@ -152,7 +152,7 @@ export class LivenessIndexer extends ChildIndexer {
       'Minimum timestamp of this indexer cannot be updated',
     )
 
-    await this.setSafeHeight(height, trx)
+    await this.setSafeHeight(safeHeight, trx)
   }
 
   override async getSafeHeight(): Promise<number> {
@@ -163,15 +163,15 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(
-    height: number,
+    safeHeight: number,
     trx?: Knex.Transaction,
   ): Promise<void> {
     assert(
-      height >= this.minTimestamp.toNumber(),
+      safeHeight >= this.minTimestamp.toNumber(),
       'Cannot set height to be lower than the minimum timestamp',
     )
 
-    await this.stateRepository.setSafeHeight(this.indexerId, height, trx)
+    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
   }
 
   /**
