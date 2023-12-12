@@ -109,6 +109,17 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
           sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701258299),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0x7f61885c',
+          functionSignature:
+            'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
+          sinceTimestamp: new UnixTime(1701258299),
         },
       ],
       batchSubmissions: [],
@@ -122,6 +133,17 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
           sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701258299),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0xc3d93e7c',
+          functionSignature:
+            'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
+          sinceTimestamp: new UnixTime(1701258299),
         },
       ],
     },
@@ -136,20 +158,20 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L89',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L89',
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F1#L352',
-            'https://etherscan.io/address/0x7444DE636699F080cA1C033528D2bB3705B391Ce#code#F7#L24',
+            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L365',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F7#L26',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0x3F04F86f14aB74953fDAEde8175e0714eB8e798e#code#F1#L227',
+            'https://etherscan.io/address/0xB465882F67d236DcC0D090F78ebb0d838e9719D8#code#F1#L348',
           ],
         },
       ],
@@ -164,14 +186,14 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L71',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L71',
             'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b', // example tx (see calldata)
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7444DE636699F080cA1C033528D2bB3705B391Ce#code#F1#L151',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F1#L128',
           ],
         },
       ],
@@ -185,8 +207,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4#code#F1#L121',
-            'https://etherscan.io/address/0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4#code#F7#L54',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F1#L100',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F7#L58',
           ],
         },
       ],
@@ -197,8 +219,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F14#L56',
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F14#L73',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L56',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L73',
           ],
         },
       ],
@@ -213,7 +235,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F1#L186',
+            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L186',
           ],
         },
       ],
@@ -344,7 +366,6 @@ export const zksyncera: Layer2 = {
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
     },
-    VALUES.ZKSYNC_2.SECURITY_COUNCIL,
   ],
   milestones: [
     {
