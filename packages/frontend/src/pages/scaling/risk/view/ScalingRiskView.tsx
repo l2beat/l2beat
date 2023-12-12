@@ -5,9 +5,10 @@ import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingRiskColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
+import { TableView } from '../../../../components/table/TableView'
+import { RowConfig } from '../../../../components/table/types'
 import { Tabs } from '../../../../components/Tabs'
-import { ScalingRiskViewEntry } from './types'
+import { ScalingRiskViewEntry } from '../types'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]

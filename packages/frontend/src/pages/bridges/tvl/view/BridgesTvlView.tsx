@@ -1,16 +1,17 @@
 import React from 'react'
 
-import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
-import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
-import { BridgesFilters } from '../../../components/table/filters/BridgesFilters'
-import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
+import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
+import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { BridgesFilters } from '../../../../components/table/filters/BridgesFilters'
+import { getBridgesRowProps } from '../../../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesTvlColumnsConfig,
   getArchivedBridgesTvlColumnsConfig,
-} from '../../../components/table/props/getBridgesTableColumnsConfig'
-import { RowConfig, TableView } from '../../../components/table/TableView'
-import { Tabs } from '../../../components/Tabs'
-import { BridgesTvlViewEntry } from './types'
+} from '../../../../components/table/props/getBridgesTableColumnsConfig'
+import { TableView } from '../../../../components/table/TableView'
+import { RowConfig } from '../../../../components/table/types'
+import { Tabs } from '../../../../components/Tabs'
+import { BridgesTvlViewEntry } from '../types'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]

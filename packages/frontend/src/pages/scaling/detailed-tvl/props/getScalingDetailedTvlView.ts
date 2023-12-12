@@ -1,6 +1,8 @@
 import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse } from '@l2beat/shared-pure'
 
+import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTokens } from '../../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
@@ -10,11 +12,16 @@ import { ScalingDetailedTvlViewEntry } from '../types'
 import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
 
 export function getScalingDetailedTvlView(
-  tvlApiResponse: TvlApiResponse,
   projects: Layer2[],
+  tvlApiResponse: TvlApiResponse,
 ): ScalingDetailedTvlViewProps {
+  const included = getIncludedProjects(projects, tvlApiResponse).filter(
+    (project) => !project.isLayer3,
+  )
+  const orderedProjects = orderByTvl(included, tvlApiResponse)
+
   return {
-    items: projects.map((project) =>
+    items: orderedProjects.map((project) =>
       getScalingDetailedTvlViewEntry(tvlApiResponse, project),
     ),
   }
@@ -40,10 +47,22 @@ function getScalingDetailedTvlViewEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     isVerified,
-    tvl: formatUSD(parts.tvl),
-    cbv: formatUSD(parts.canonical),
-    ebv: formatUSD(parts.external),
-    nmv: formatUSD(parts.native),
+    tvl: {
+      value: parts.tvl,
+      displayValue: formatUSD(parts.tvl),
+    },
+    cbv: {
+      value: parts.canonical,
+      displayValue: formatUSD(parts.canonical),
+    },
+    ebv: {
+      value: parts.external,
+      displayValue: formatUSD(parts.external),
+    },
+    nmv: {
+      value: parts.native,
+      displayValue: formatUSD(parts.native),
+    },
     tvlChange: partsWeeklyChange.tvl,
     ebvChange: partsWeeklyChange.external,
     cbvChange: partsWeeklyChange.canonical,

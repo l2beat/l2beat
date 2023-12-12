@@ -3,7 +3,8 @@ import React from 'react'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingDetailedTvlColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
+import { TableView } from '../../../../components/table/TableView'
+import { RowConfig } from '../../../../components/table/types'
 import { ScalingDetailedTvlViewEntry } from '../types'
 
 export interface ScalingDetailedTvlViewProps {

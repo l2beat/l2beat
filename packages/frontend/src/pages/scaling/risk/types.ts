@@ -1,4 +1,10 @@
 import { Layer2, ProjectRiskViewEntry, StageConfig } from '@l2beat/config'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+
+export interface ScalingRiskPagesData {
+  verificationStatus: VerificationStatus
+  tvlApiResponse: TvlApiResponse
+}
 
 export interface ScalingRiskViewEntry {
   name: string

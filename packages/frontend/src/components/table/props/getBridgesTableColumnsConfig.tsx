@@ -7,8 +7,9 @@ import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
-import { ColumnConfig } from '../TableView'
 import { TypeCell } from '../TypeCell'
+import { ColumnConfig } from '../types'
+import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
 export function getArchivedBridgesTvlColumnsConfig() {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
@@ -18,11 +19,20 @@ export function getArchivedBridgesTvlColumnsConfig() {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
     },
     {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (entry) => <ProjectCell project={entry} />,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Total',
@@ -31,18 +41,34 @@ export function getArchivedBridgesTvlColumnsConfig() {
       alignRight: true,
       getValue: (entry) =>
         !entry.isUpcoming &&
-        entry.tvlBreakdown && <NumberCell>{entry.tvl}</NumberCell>,
+        entry.tvlBreakdown && (
+          <NumberCell>{entry.tvl?.displayValue}</NumberCell>
+        ),
+      sorting: {
+        getOrderValue: (project) => project.tvl?.value,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
     },
     {
       name: 'Validated by',
       tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.validatedBy),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Type',
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
       getValue: (entry) => <TypeCell>{entry.category}</TypeCell>,
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
   ]
 
@@ -63,6 +89,10 @@ export function getActiveBridgesTvlColumnsConfig() {
         entry.tvlBreakdown && (
           <NumberCell signed>{entry.sevenDayChange}</NumberCell>
         ),
+      sorting: {
+        getOrderValue: (project) => project.sevenDayChange,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Breakdown',
@@ -80,18 +110,18 @@ export function getActiveBridgesTvlColumnsConfig() {
           <NumberCell>
             <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
             <span data-combined-only-cell className="hidden">
-              {entry.combinedMarketShare}
+              {entry.combinedMarketShare?.displayValue}
             </span>
           </NumberCell>
         ),
+      sorting: {
+        getOrderValue: (project) => project.combinedMarketShare?.value,
+        rule: 'numeric',
+      },
     },
   )
 
   return columns
-}
-
-export function getCanonicalBridgesTvlColumnsConfig() {
-  return getActiveBridgesTvlColumnsConfig()
 }
 
 export function getBridgesRiskColumnsConfig() {
@@ -102,11 +132,20 @@ export function getBridgesRiskColumnsConfig() {
       minimalWidth: true,
       headClassName: 'md:pl-4',
       getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+      sorting: {
+        getOrderValue: (_, index) => index,
+        rule: 'numeric',
+        defaultState: 'asc',
+      },
     },
     {
       name: 'Name',
       headClassName: 'pl-8',
       getValue: (entry) => <ProjectCell project={entry} />,
+      sorting: {
+        getOrderValue: (project) => project.name,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Destination',
@@ -117,6 +156,11 @@ export function getBridgesRiskColumnsConfig() {
       name: 'Validated by',
       tooltip: 'How are the messages sent via this bridge checked?',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.validatedBy),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Type',
@@ -125,17 +169,31 @@ export function getBridgesRiskColumnsConfig() {
       getValue: (entry) => (
         <span className="sm:text-xs md:text-base">{entry.category}</span>
       ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Source\nUpgradeability',
       tooltip:
         'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
       getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.sourceUpgradeability),
+        rule: 'numeric',
+      },
     },
     {
       name: 'Destination\nToken',
       tooltip: 'What is the token that you receive from this bridge?',
       getValue: (entry) => <RiskCell item={entry.destinationToken} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.destinationToken),
+        rule: 'numeric',
+      },
     },
   ]
 
