@@ -26,6 +26,7 @@ export const taiko: Layer2 = {
         'https://discord.gg/taikoxyz',
         'https://taiko.mirror.xyz',
       ],
+      rollupCodes: 'https://www.rollup.codes/taiko',
     },
   },
   stage: {

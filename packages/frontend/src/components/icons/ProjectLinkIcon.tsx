@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { RollupCodesIcon } from './products/RollupCodesIcon'
 import { AppsIcon } from './symbols/AppsIcon'
 import { CodeIcon } from './symbols/CodeIcon'
 import { DocumentIcon } from './symbols/DocumentIcon'
@@ -19,6 +20,7 @@ export interface ProjectLink {
     | 'Explorer'
     | 'Repository'
     | 'Social'
+    | 'rollup.codes'
   links: string[]
 }
 
@@ -36,6 +38,8 @@ export function ProjectLinkIcon({ name }: LinkNameIconProps) {
       return <CodeIcon />
     case 'Social':
       return <UserIcon />
+    case 'rollup.codes':
+      return <RollupCodesIcon />
     default:
       throw Error('Invalid link name')
   }

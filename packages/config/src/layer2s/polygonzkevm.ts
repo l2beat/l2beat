@@ -90,6 +90,7 @@ export const polygonzkevm: Layer2 = {
         'https://discord.gg/XvpHAxZ',
         'https://polygon.technology/blog-tags/polygon-zk',
       ],
+      rollupCodes: 'https://www.rollup.codes/polygon-zkevm',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

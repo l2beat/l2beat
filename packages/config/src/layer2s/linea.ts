@@ -98,6 +98,7 @@ export const linea: Layer2 = {
         'https://discord.gg/consensys',
         'https://linea.mirror.xyz/',
       ],
+      rollupCodes: 'https://www.rollup.codes/linea',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

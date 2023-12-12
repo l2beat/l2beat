@@ -71,6 +71,7 @@ export const scroll: Layer2 = {
         'https://twitter.com/Scroll_ZKP',
         'https://youtube.com/@Scroll_ZKP',
       ],
+      rollupCodes: 'https://www.rollup.codes/scroll',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {
