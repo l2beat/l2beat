@@ -34,7 +34,7 @@ export const metis: Layer2 = {
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.metis.io'],
+      websites: ['https://metis.io'],
       apps: [],
       documentation: ['https://docs.metis.io'],
       explorers: ['https://andromeda-explorer.metis.io'],

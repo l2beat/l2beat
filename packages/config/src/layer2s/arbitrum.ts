@@ -278,12 +278,18 @@ export const arbitrum: Layer2 = {
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
       ],
+      rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation: `Arbitrum One is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to ${formatSeconds(
+        selfSequencingDelay,
+      )}. The state root gets finalized ${formatSeconds(
+        challengeWindow * assumedBlockTime,
+      )} after it has been posted.`,
     },
   },
   config: {

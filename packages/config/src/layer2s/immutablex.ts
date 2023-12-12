@@ -53,7 +53,7 @@ export const immutablex: Layer2 = {
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.immutable.com/'],
+      websites: ['https://immutable.com/'],
       apps: ['https://market.x.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
       explorers: ['https://immutascan.io/'],

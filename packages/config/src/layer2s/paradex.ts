@@ -73,12 +73,16 @@ export const paradex: Layer2 = {
     dataAvailabilityMode: 'StateDiffs',
 
     links: {
-      websites: ['https://www.paradex.trade/'],
+      websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade'],
       documentation: ['https://docs.paradex.trade/'],
       explorers: [],
       repositories: ['https://github.com/tradeparadex'],
       socialMedia: ['https://twitter.com/tradeparadex'],
+    },
+    liveness: {
+      explanation:
+        'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
   },
   config: {

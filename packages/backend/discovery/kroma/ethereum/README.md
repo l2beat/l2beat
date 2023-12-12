@@ -4,6 +4,15 @@
 - `export RPC_URL=<your rpc url>`
 - `forge test`
 
+# To run the state root propose script, do:
+
+By default the script runs against Sepolia testnet. Please consult the source code to run
+against mainnet.
+
+- `export MY_PRIVATE_KEY=0x.....`
+- `export MY_ADDRESS=0x.....`
+- `yarn run-kroma-propose-script <RPC_URL>` - make sure RPC_URL is for the network you're running it on
+
 # To run the ProposeRoot.s.sol script:
 
 As per [documentation](https://book.getfoundry.sh/tutorials/solidity-scripting):
