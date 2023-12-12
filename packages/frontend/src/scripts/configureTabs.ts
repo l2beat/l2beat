@@ -1,3 +1,5 @@
+import { setSortingQueryParamsByTabId } from './table/configureSorting'
+
 interface TabWithContent {
   tab: HTMLAnchorElement
   content: HTMLElement
@@ -16,9 +18,7 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
   }
   const { tabsWithContent, tabsContainer, tabs, underline } = elements
 
-  let selectedId =
-    tabs.find((tab) => tab.href.endsWith(window.location.hash))?.id ??
-    tabs[0].id
+  let selectedId = tabs[0].id
 
   const highlightTab = (tab: HTMLAnchorElement) => {
     tabsWithContent[selectedId].tab.classList.remove(
@@ -66,12 +66,16 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
   }
 
   onTabClick(selectedId)
+  if (window.location.hash) {
+    onTabClick(window.location.hash.slice(1))
+  }
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', (e) => {
       e.preventDefault()
       history.replaceState({}, '', tab.href)
       onTabClick(tab.id)
+      setSortingQueryParamsByTabId(tab.id)
     })
   })
 

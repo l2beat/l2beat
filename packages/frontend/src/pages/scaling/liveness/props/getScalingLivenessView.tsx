@@ -6,17 +6,26 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { AnomalyIndicatorEntry, ScalingLivenessViewEntry } from '../types'
+import { orderByTvl } from '../../../../utils/orderByTvl'
+import {
+  AnomalyIndicatorEntry,
+  LivenessPagesData,
+  ScalingLivenessViewEntry,
+} from '../types'
 import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
 
 export function getScalingLivenessView(
   projects: Layer2[],
-  livenessResponse: LivenessApiResponse | undefined,
+  pagesData: LivenessPagesData,
 ): ScalingLivenessViewProps {
+  const { tvlApiResponse, livenessApiResponse } = pagesData
+  const included = getIncludedProjects(projects, livenessApiResponse)
+  const ordered = orderByTvl(included, tvlApiResponse)
+
   return {
-    items: livenessResponse
-      ? projects.map((p) => getScalingLivenessViewEntry(p, livenessResponse))
-      : [],
+    items: ordered.map((p) =>
+      getScalingLivenessViewEntry(p, livenessApiResponse),
+    ),
   }
 }
 
@@ -48,6 +57,20 @@ function getScalingLivenessViewEntry(
     },
     anomalyEntries: getAnomalyEntries(liveness?.anomalies),
   }
+}
+
+function getIncludedProjects(
+  projects: Layer2[],
+  livenessResponse: LivenessApiResponse | undefined,
+) {
+  return projects.filter(
+    (p) =>
+      livenessResponse?.projects[p.id.toString()] &&
+      (p.display.category === 'Optimistic Rollup' ||
+        p.display.category === 'ZK Rollup') &&
+      !p.isUpcoming &&
+      !p.isArchived,
+  )
 }
 
 function getAnomalyEntries(

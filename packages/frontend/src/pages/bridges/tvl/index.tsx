@@ -3,8 +3,8 @@ import React from 'react'
 import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
 import { PagesData } from '../../Page'
-import { BridgesTvlPage } from './BridgesTvlPage'
 import { getProps } from './props'
+import { BridgesTvlPage } from './view/BridgesTvlPage'
 
 export function getBridgesTvlPage(config: Config, pagesData: PagesData) {
   const { props, wrapper } = getProps(config, pagesData)

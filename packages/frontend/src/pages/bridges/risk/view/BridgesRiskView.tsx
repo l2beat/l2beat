@@ -1,13 +1,14 @@
 import React from 'react'
 
-import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
-import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
-import { BridgesFilters } from '../../../components/table/filters/BridgesFilters'
-import { getBridgesRowProps } from '../../../components/table/props/getBridgesRowProps'
-import { getBridgesRiskColumnsConfig } from '../../../components/table/props/getBridgesTableColumnsConfig'
-import { RowConfig, TableView } from '../../../components/table/TableView'
-import { Tabs } from '../../../components/Tabs'
-import { BridgesRiskViewEntry } from './types'
+import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
+import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { BridgesFilters } from '../../../../components/table/filters/BridgesFilters'
+import { getBridgesRowProps } from '../../../../components/table/props/getBridgesRowProps'
+import { getBridgesRiskColumnsConfig } from '../../../../components/table/props/getBridgesTableColumnsConfig'
+import { TableView } from '../../../../components/table/TableView'
+import { RowConfig } from '../../../../components/table/types'
+import { Tabs } from '../../../../components/Tabs'
+import { BridgesRiskViewEntry } from '../types'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
