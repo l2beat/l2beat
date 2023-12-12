@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
+import { mkdir, readdir, readFile, rm, stat, writeFile } from 'fs/promises'
 
 import { HttpClient } from '../../../../shared/build'
 
@@ -13,9 +13,11 @@ export class JsonHttpClient {
     if (!this.skipCache) {
       const cached = await read(url)
       if (cached) {
+        console.log(`\nUsing cached data for ${url}`)
         return JSON.parse(cached) as unknown
       }
     }
+    console.log(`\nFetching ${url} ...`)
 
     const response = await this.http.fetch(url)
     if (!response.ok) {
@@ -33,7 +35,7 @@ export class JsonHttpClient {
   }
 }
 
-const TEN_MINUTES_IN_MS = 10 * 60 * 1000
+const ONE_HOUR_IN_MS = 60 * 60 * 1000
 async function read(url: string): Promise<string | undefined> {
   const hash = getUrlHash(url)
   const now = Date.now()
@@ -46,9 +48,10 @@ async function read(url: string): Promise<string | undefined> {
   for (const file of files) {
     if (file.startsWith(hash)) {
       const timestamp = Number(file.slice(9, -5))
-      if (now - timestamp <= TEN_MINUTES_IN_MS) {
+      if (now - timestamp <= ONE_HOUR_IN_MS) {
         return await readFile(`cache/${file}`, 'utf-8')
       }
+      await rm(`cache/${file}`)
     }
   }
   return undefined
