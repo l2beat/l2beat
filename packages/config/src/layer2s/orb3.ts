@@ -10,7 +10,7 @@ export const orb3: Layer2 = {
   display: {
     name: 'ORB3 Protocol',
     slug: 'orb3',
-    description: 'SocialFi & GameFI Blockchain Built for Gaming Industry',
+    description: 'SocialFi & GameFI Blockchain Built for Gaming Industry.',
     purpose: 'SocialFi,GameFi,Defi,Universal',
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
