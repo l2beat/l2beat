@@ -17,6 +17,7 @@
     "invert": "discovery invert",
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
     "lint:fix": "yarn lint --fix",
+    "run-kroma-propose-script": "ts-node ./discovery/kroma/ethereum/script-ts/propose.ts",
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "mocha",
