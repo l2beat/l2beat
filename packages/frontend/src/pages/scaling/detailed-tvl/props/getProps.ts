@@ -13,7 +13,9 @@ export function getProps(
 ): Wrapped<ScalingDetailedTvlPageProps> {
   const { tvlApiResponse } = pagesData
 
-  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse).filter(
+    (project) => !project.isLayer3,
+  )
   const ordering = orderByTvl(included, tvlApiResponse)
 
   return {

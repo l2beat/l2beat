@@ -13,7 +13,9 @@ export function getProps(
 ): Wrapped<ScalingRiskPageProps> {
   const { tvlApiResponse, verificationStatus } = pagesData
 
-  const included = getIncludedProjects(config.layer2s, tvlApiResponse)
+  const included = getIncludedProjects(config.layer2s, tvlApiResponse).filter(
+    (p) => !p.isUpcoming && !p.isLayer3,
+  )
   const ordering = orderByTvl(included, tvlApiResponse)
 
   return {

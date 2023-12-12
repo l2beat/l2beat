@@ -21,7 +21,7 @@ export function getProps(
   const included = getIncludedProjects(
     [...config.bridges, ...config.layer2s],
     tvlApiResponse,
-  )
+  ).filter((project) => project.type === 'bridge' || !project.isLayer3)
   const ordering = orderByTvl(included, tvlApiResponse)
 
   return {

@@ -98,6 +98,11 @@ export const kroma: Layer2 = {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation: `Kroma is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.KROMA.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        finalizationPeriod,
+      )} after it has been posted.`,
     },
   },
   config: {
