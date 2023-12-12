@@ -42,7 +42,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
     <OverflowWrapper>
       <FiltersWrapper>
         {!hideRollupsOnlyCheckbox && <RollupsOnlyCheckbox items={items} />}
-        <RichSelect label="Select technology" id="technology-select">
+        <RichSelect label="Select type" id="technology-select">
           {categories.map((category) => (
             <RichSelect.Item
               selectedLabel={category.label}
