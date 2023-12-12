@@ -55,7 +55,7 @@ export const bobanetwork: Layer2 = {
       socialMedia: [
         'https://boba.network/#news',
         'https://boba.network/blog/',
-        'https://www.enya.ai/company/media',
+        'https://enya.ai/company/media',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
         'https://discord.gg/m7NysJjKhm',

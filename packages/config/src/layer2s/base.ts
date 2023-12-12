@@ -104,6 +104,7 @@ export const base: Layer2 = {
         'https://discord.gg/buildonbase',
         'https://base.mirror.xyz/',
       ],
+      rollupCodes: 'https://rollup.codes/base',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

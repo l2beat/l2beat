@@ -44,7 +44,7 @@ export const aevo: Layer2 = {
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     links: {
-      websites: ['https://www.aevo.xyz/'],
+      websites: ['https://aevo.xyz/'],
       apps: ['https://app.aevo.xyz/'],
       documentation: ['https://docs.aevo.xyz/'],
       explorers: ['https://explorer.aevo.xyz/'],
