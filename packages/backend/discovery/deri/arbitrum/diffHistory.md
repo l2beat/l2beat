@@ -1,4 +1,4 @@
-# Diff at Tue, 12 Dec 2023 12:42:22 GMT:
+# Diff at Tue, 12 Dec 2023 13:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@
@@ -101,7 +101,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    contract Inbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
     }
 ```
 

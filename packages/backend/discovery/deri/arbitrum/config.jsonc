@@ -11,7 +11,8 @@
     "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0": "Bridge",
     "0x383eFE8D410285c5CbE1B4F296022640759aA834": "ChallengeManager",
     "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": "Outbox",
-    "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "Inbox"
+    "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "Inbox",
+    "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "UpgradeExecutor"
   },
   "overrides": {
     "ChallengeManager": {
@@ -57,7 +58,35 @@
       "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"]
     },
     "Inbox": {
-      "ignoreMethods": ["inboxAccs"]
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "fields": {
+        // getting sequencers from the contract is too complex at the moment
+        // so we hardcode it in config .ts
+        // this field will notify us in case of changes
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "type": "call",
+          "method": "function isBatchPoster(address) external view returns (bool)",
+          "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
+        },
+        // when this changes, it means the sequencers have changed
+        "setIsBatchPosterCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        }
+      }
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
     }
   }
 }

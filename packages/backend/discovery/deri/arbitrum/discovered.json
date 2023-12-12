@@ -1,8 +1,8 @@
 {
   "name": "deri",
   "chain": "arbitrum",
-  "blockNumber": 159384522,
-  "configHash": "0xc97b9ed32dc1aceafcc44f37968281fea8b0a36bd529325e212ee947ab99342a",
+  "blockNumber": 159392469,
+  "configHash": "0x125bd4177ce8fbf911cba86253380c494fe840b3a62670ffe77209c356f39675",
   "version": 3,
   "contracts": [
     {
@@ -16,10 +16,25 @@
       "implementations": ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"],
       "sinceTimestamp": 1700367819,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "ADMIN_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"]
+          }
+        },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
-      }
+      },
+      "derivedName": "UpgradeExecutor"
     },
     {
       "name": "RollupEventInbox",
@@ -130,6 +145,7 @@
         "bridge": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
         "chainId": 20231119,
         "challengeManager": "0x383eFE8D410285c5CbE1B4F296022640759aA834",
+        "challenges": [],
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
@@ -138,7 +154,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 18603821,
         "latestConfirmed": 191,
-        "latestNodeCreated": 211,
+        "latestNodeCreated": 212,
         "loserStakeEscrow": "0xE6Deca8779AAd0F8C96Dd843F77BF2a55ea2F402",
         "minimumAssertionPeriod": 75,
         "outbox": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -147,6 +163,7 @@
         "rollupDeploymentBlock": 18603453,
         "rollupEventInbox": "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+        "setValidatorCount": 1,
         "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
@@ -158,10 +175,6 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
-      },
-      "errors": {
-        "challenges": "bad response (status=413, headers={\"access-control-allow-credentials\":\"true\",\"access-control-allow-headers\":\"Content-Type,Authorization,User-Agent\",\"access-control-allow-methods\":\"GET, POST, OPTIONS\",\"access-control-allow-origin\":\"\",\"content-type\":\"application/json\",\"vary\":\"Accept-Encoding\",\"x-node-id\":\"08777362-575c-4584-aa42-4f09eb19af92\",\"date\":\"Tue, 12 Dec 2023 12:53:06 GMT\",\"content-length\":\"142\",\"connection\":\"close\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":43,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"getMultipleAccounts, eth_getLogs, and eth_newFilter are limited to a 10000 range\\\"}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x98003ca\\\",\\\"address\\\":\\\"0x846387c3d6001f74170455b1074d01f05eb3067a\\\",\\\"topics\\\":[\\\"0x6db7dc2f507647d135035469b27aa79cea90582779d084a7821d6cd092cbd873\\\"]}],\\\"id\\\":43,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://winter-powerful-shadow.arbitrum-mainnet.quiknode.pro/c0bf29d765e9354114e6b17ccb993848e4483df9/\", code=SERVER_ERROR, version=web/5.7.1)",
-        "setValidatorCount": "bad response (status=413, headers={\"access-control-allow-credentials\":\"true\",\"access-control-allow-headers\":\"Content-Type,Authorization,User-Agent\",\"access-control-allow-methods\":\"GET, POST, OPTIONS\",\"access-control-allow-origin\":\"\",\"content-type\":\"application/json\",\"vary\":\"Accept-Encoding\",\"x-node-id\":\"08777362-575c-4584-aa42-4f09eb19af92\",\"date\":\"Tue, 12 Dec 2023 12:53:06 GMT\",\"content-length\":\"142\",\"connection\":\"close\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":44,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"getMultipleAccounts, eth_getLogs, and eth_newFilter are limited to a 10000 range\\\"}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x98003ca\\\",\\\"address\\\":\\\"0x846387c3d6001f74170455b1074d01f05eb3067a\\\",\\\"topics\\\":[\\\"0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e\\\",\\\"0x0000000000000000000000000000000000000000000000000000000000000006\\\"]}],\\\"id\\\":44,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://winter-powerful-shadow.arbitrum-mainnet.quiknode.pro/c0bf29d765e9354114e6b17ccb993848e4483df9/\", code=SERVER_ERROR, version=web/5.7.1)"
       },
       "derivedName": "RollupProxy"
     },
@@ -227,11 +240,11 @@
           "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
         ],
         "allowedOutboxList": ["0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"],
-        "delayedMessageCount": 260,
+        "delayedMessageCount": 261,
         "rollup": "0x846387C3D6001F74170455B1074D01f05eB3067a",
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 213,
-        "sequencerReportedSubMessageCount": 36437
+        "sequencerMessageCount": 214,
+        "sequencerReportedSubMessageCount": 36742
       },
       "derivedName": "Bridge"
     },
@@ -254,14 +267,16 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1700367819,
       "values": {
-        "batchCount": 213,
+        "batchCount": 214,
         "bridge": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": true,
         "maxDataSize": 104857,
         "maxTimeVariation": [5760, 48, 86400, 3600],
         "rollup": "0x846387C3D6001F74170455B1074D01f05eB3067a",
-        "totalDelayedMessagesRead": 259
+        "setIsBatchPosterCount": 1,
+        "totalDelayedMessagesRead": 260
       },
       "derivedName": "SequencerInbox"
     },
@@ -287,6 +302,7 @@
   ],
   "eoas": [
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
+    "0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
     "0xE6Deca8779AAd0F8C96Dd843F77BF2a55ea2F402"
   ],
   "abis": {
