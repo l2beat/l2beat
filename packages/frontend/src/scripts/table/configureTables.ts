@@ -1,5 +1,5 @@
 import { makeQuery } from '../query'
-import { reorderIndexes } from './rerenderIndexes'
+import { reorderIndexes } from './reorderIndexes'
 
 type TableState = 'empty' | null
 
