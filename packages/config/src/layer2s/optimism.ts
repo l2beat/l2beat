@@ -130,7 +130,7 @@ export const optimism: Layer2 = {
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
       ],
-      rollupCodes: 'https://www.rollup.codes/optimism',
+      rollupCodes: 'https://rollup.codes/optimism',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

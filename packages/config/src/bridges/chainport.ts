@@ -22,7 +22,7 @@ export const chainport: Bridge = {
     description: 'ChainPort Cross-Chain Bridge: Port across 15+ Chains.',
     category: 'Token Bridge',
     links: {
-      websites: ['https://www.chainport.io/'],
+      websites: ['https://chainport.io/'],
       documentation: ['https://docs.chainport.io/'],
       socialMedia: ['https://twitter.com/chain_port'],
     },

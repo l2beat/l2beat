@@ -52,7 +52,7 @@ export const scroll: Layer2 = {
         'https://scrollscan.com/',
         'https://blockscout.scroll.io',
         'https://scroll.unifra.xyz/',
-        'https://www.ondora.xyz/network/scroll',
+        'https://ondora.xyz/network/scroll',
         'https://scroll.l2scan.co/',
       ],
       repositories: [
@@ -71,7 +71,7 @@ export const scroll: Layer2 = {
         'https://twitter.com/Scroll_ZKP',
         'https://youtube.com/@Scroll_ZKP',
       ],
-      rollupCodes: 'https://www.rollup.codes/scroll',
+      rollupCodes: 'https://rollup.codes/scroll',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

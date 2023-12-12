@@ -278,7 +278,7 @@ export const arbitrum: Layer2 = {
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
       ],
-      rollupCodes: 'https://www.rollup.codes/arbitrum-one',
+      rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

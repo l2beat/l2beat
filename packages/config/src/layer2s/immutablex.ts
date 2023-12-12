@@ -14,12 +14,12 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  makeBridgeCompatible,
 } from './common'
 import { Layer2 } from './types'
 
@@ -53,7 +53,7 @@ export const immutablex: Layer2 = {
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.immutable.com/'],
+      websites: ['https://immutable.com/'],
       apps: ['https://market.x.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
       explorers: ['https://immutascan.io/'],
