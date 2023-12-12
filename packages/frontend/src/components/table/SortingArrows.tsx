@@ -9,6 +9,8 @@ interface Props {
   name: string
   rule: SortingRule
   orderKey: string | undefined
+  // Please keep in mind that defaultState does not affect the on load state of the table.
+  // If you want to change default sorting do this in getProps file of given page.
   defaultState?: SortingState
 }
 
