@@ -89,7 +89,6 @@ export class LivenessIndexer extends ChildIndexer {
 
   private async initialize() {
     const databaseEntries = await this.configurationRepository.getAll()
-
     const { toAdd, toRemove, toTrim } = diffLivenessConfigurations(
       this.runtimeConfigurations,
       databaseEntries,
@@ -99,7 +98,7 @@ export class LivenessIndexer extends ChildIndexer {
 
     await this.stateRepository.runInTransaction(async (trx) => {
       await this.initializeConfigurations(toAdd, toRemove, toTrim, trx)
-      await this.setSafeHeight(syncStatus.toNumber(), trx)
+      await this.initializeIndexerState(syncStatus, trx)
     })
   }
 
@@ -128,17 +127,7 @@ export class LivenessIndexer extends ChildIndexer {
     )
   }
 
-  override async getSafeHeight(): Promise<number> {
-    const indexerState = await this.stateRepository.findIndexerState(
-      this.indexerId,
-    )
-    return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
-  }
-
-  override async setSafeHeight(
-    height: number,
-    trx?: Knex.Transaction,
-  ): Promise<void> {
+  async initializeIndexerState(height: number, trx?: Knex.Transaction) {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -163,7 +152,26 @@ export class LivenessIndexer extends ChildIndexer {
       'Minimum timestamp of this indexer cannot be updated',
     )
 
-    await this.stateRepository.setSafeHeight(this.indexerId, height)
+    await this.setSafeHeight(height, trx)
+  }
+
+  override async getSafeHeight(): Promise<number> {
+    const indexerState = await this.stateRepository.findIndexerState(
+      this.indexerId,
+    )
+    return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
+  }
+
+  override async setSafeHeight(
+    height: number,
+    trx?: Knex.Transaction,
+  ): Promise<void> {
+    assert(
+      height >= this.minTimestamp.toNumber(),
+      'Cannot set height to be lower than the minimum timestamp',
+    )
+
+    await this.stateRepository.setSafeHeight(this.indexerId, height, trx)
   }
 
   /**

@@ -7,18 +7,27 @@ export function getSyncStatus(
   databaseEntries: LivenessConfigurationRecord[],
   toAdd: LivenessConfigEntry[],
   minTimestamp: UnixTime,
-) {
-  if (toAdd.length > 0) {
-    return minTimestamp
+): number {
+  if (databaseEntries.length === 0 && toAdd.length === 0) {
+    return minTimestamp.toNumber()
   }
 
-  const syncedTimestamps = databaseEntries.map(
-    (c) => c.lastSyncedTimestamp ?? minTimestamp,
+  const databaseTimestamps = databaseEntries.map(
+    (c) => c.lastSyncedTimestamp ?? c.sinceTimestamp,
   )
 
-  const syncStatus = syncedTimestamps.reduce((min, value) =>
-    min.lt(value) ? min : value,
-  )
+  const newEntryTimestamps = toAdd.map((c) => c.sinceTimestamp)
 
-  return syncStatus
+  const earliestTimestamp = findEarliestTimestamp([
+    ...databaseTimestamps,
+    ...newEntryTimestamps,
+  ])
+
+  return earliestTimestamp.lt(minTimestamp)
+    ? minTimestamp.toNumber()
+    : earliestTimestamp.toNumber()
+}
+
+function findEarliestTimestamp(timestamps: UnixTime[]): UnixTime {
+  return timestamps.reduce((min, current) => (min.lt(current) ? min : current))
 }

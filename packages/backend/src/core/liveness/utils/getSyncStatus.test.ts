@@ -2,91 +2,108 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
-import { makeLivenessTransfer } from '../types/LivenessConfig'
+import {
+  LivenessConfigEntry,
+  makeLivenessTransfer,
+} from '../types/LivenessConfig'
 import { getSyncStatus } from './getSyncStatus'
 
-const MIN_TIMESTAMP = UnixTime.fromDate(new Date(0))
-const NOW = UnixTime.now()
+const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2021-01-01'))
+const NOW = UnixTime.fromDate(new Date('2023-01-01'))
 
 describe(getSyncStatus.name, () => {
-  it('new entries to add to the DB', () => {
-    const toAdd = [getMockConfiguration()]
+  it('database and toAdd are empty', () => {
+    const databaseEntries: LivenessConfigurationRecord[] = []
+    const toAdd: LivenessConfigEntry[] = []
 
-    const syncStatus = getSyncStatus([], toAdd, MIN_TIMESTAMP)
-    expect(syncStatus).toEqual(MIN_TIMESTAMP)
+    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+
+    expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
 
-  it('some configurations in DB have undefined lastSyncedTimestamp', () => {
-    const databaseEntries: LivenessConfigurationRecord[] = [
-      {
-        ...getMockRecord(),
-        lastSyncedTimestamp: NOW,
-      },
-      {
-        ...getMockRecord(),
-        lastSyncedTimestamp: undefined,
-      },
-    ]
+  it('database is empty, toAdd has one entries', () => {
+    const databaseEntries: LivenessConfigurationRecord[] = []
+    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
+    const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-    const syncStatus = getSyncStatus(databaseEntries, [], MIN_TIMESTAMP)
-    expect(syncStatus).toEqual(MIN_TIMESTAMP)
+    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+
+    expect(result).toEqual(sinceTimestamp.toNumber())
   })
 
-  it('some configs are out of sync', () => {
+  it('database has entries, toAdd is empty', () => {
     const databaseEntries: LivenessConfigurationRecord[] = [
-      {
-        ...getMockRecord(),
-        lastSyncedTimestamp: NOW.add(-2, 'hours'),
-      },
-      {
-        ...getMockRecord(),
-        lastSyncedTimestamp: NOW.add(-1, 'hours'),
-      },
-      {
-        ...getMockRecord(),
-        lastSyncedTimestamp: NOW,
-      },
+      getMockRecord(MIN_TIMESTAMP, NOW),
     ]
+    const toAdd: LivenessConfigEntry[] = []
 
-    const syncStatus = getSyncStatus(databaseEntries, [], MIN_TIMESTAMP)
-    expect(syncStatus).toEqual(NOW.add(-2, 'hours'))
+    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+
+    expect(result).toEqual(NOW.toNumber())
   })
 
-  it('everything is synced', () => {
+  it('database & toAdd have entries', () => {
     const databaseEntries: LivenessConfigurationRecord[] = [
-      {
-        ...getMockRecord(),
-        lastSyncedTimestamp: NOW,
-      },
-      {
-        ...getMockRecord(),
-        lastSyncedTimestamp: NOW,
-      },
+      getMockRecord(MIN_TIMESTAMP, NOW),
     ]
+    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
+    const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-    const syncStatus = getSyncStatus(databaseEntries, [], MIN_TIMESTAMP)
-    expect(syncStatus).toEqual(NOW)
+    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+
+    expect(result).toEqual(sinceTimestamp.toNumber())
+  })
+
+  it('database entries with undefined lastSyncedTimestamp use sinceTimestamp', () => {
+    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
+
+    const databaseEntries: LivenessConfigurationRecord[] = [
+      getMockRecord(sinceTimestamp, undefined),
+    ]
+    const toAdd: LivenessConfigEntry[] = []
+
+    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+
+    expect(result).toEqual(sinceTimestamp.toNumber())
+  })
+
+  it('earliest timestamp is older than minimum timestamp', () => {
+    const databaseEntries: LivenessConfigurationRecord[] = [
+      getMockRecord(MIN_TIMESTAMP, NOW),
+    ]
+    const sinceTimestamp = MIN_TIMESTAMP.add(-1, 'hours')
+    const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
+
+    const result = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
+
+    expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
 })
 
-function getMockConfiguration() {
+function getMockConfiguration(sinceTimestamp: UnixTime) {
   return makeLivenessTransfer({
+    sinceTimestamp,
+    // the rest of params are irrelevant to the tests
     projectId: ProjectId('project1'),
     type: 'DA',
     formula: 'transfer',
     from: EthereumAddress.random(),
     to: EthereumAddress.random(),
-    sinceTimestamp: new UnixTime(0),
   })
 }
 
-const getMockRecord = (): LivenessConfigurationRecord => {
-  const { id, projectId, type, sinceTimestamp } = getMockConfiguration()
+const getMockRecord = (
+  sinceTimestamp: UnixTime,
+  lastSyncedTimestamp: UnixTime | undefined,
+): LivenessConfigurationRecord => {
+  const { id, projectId, type } = getMockConfiguration(sinceTimestamp)
   return {
+    sinceTimestamp,
+    lastSyncedTimestamp,
+    // the rest of params are irrelevant to the tests
     id,
     projectId,
     type,
-    sinceTimestamp,
     debugInfo: '',
   }
 }

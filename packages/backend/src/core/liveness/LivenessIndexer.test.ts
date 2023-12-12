@@ -139,12 +139,12 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const removedConfig = mockObject<LivenessConfigurationRecord>({
-        id: LivenessId.random(),
-      })
-
       const databaseEntries: LivenessConfigurationRecord[] = [
-        removedConfig,
+        mockObject<LivenessConfigurationRecord>({
+          id: LivenessId.random(),
+          lastSyncedTimestamp: undefined,
+          sinceTimestamp: MIN_TIMESTAMP,
+        }),
         {
           ...toRecord(runtimeEntries[1]),
           untilTimestamp: undefined,
@@ -192,12 +192,17 @@ describe(LivenessIndexer.name, () => {
       const syncStatus = getSyncStatus(databaseEntries, toAdd, MIN_TIMESTAMP)
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
         livenessIndexer.indexerId,
-        syncStatus.toNumber(),
+        syncStatus,
+        TRX,
       )
 
       // 1st during this.initialize() -> this.setSafeHeight()
       // 2nd during super.start() -> this.getSafeHeight()
       expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(2)
+    })
+
+    it('indexer state undefined', async () => {
+      throw new Error('not implemented')
     })
   })
 
@@ -237,61 +242,33 @@ describe(LivenessIndexer.name, () => {
 
   describe(LivenessIndexer.prototype.setSafeHeight.name, () => {
     it('saves safe height in the database', async () => {
-      const indexerState = {
-        indexerId: 'liveness_indexer',
-        safeHeight: 1,
-        minTimestamp: MIN_TIMESTAMP,
-      }
       const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => indexerState,
         setSafeHeight: async () => 0, // return value is not important
       })
       const livenessIndexer = getMockLivenessIndexer({ stateRepository })
 
-      const safeHeight = 123
-      await livenessIndexer.setSafeHeight(safeHeight)
+      const safeHeight = MIN_TIMESTAMP.add(1, 'hours').toNumber()
+      await livenessIndexer.setSafeHeight(safeHeight, TRX)
 
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
         'liveness_indexer',
         safeHeight,
-      )
-    })
-
-    it('adds state to DB if undefined', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => undefined,
-        add: async () => '',
-      })
-      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
-
-      const safeHeight = MIN_TIMESTAMP.toNumber()
-      await livenessIndexer.setSafeHeight(safeHeight, TRX)
-
-      expect(stateRepository.add).toHaveBeenOnlyCalledWith(
-        {
-          indexerId: livenessIndexer.indexerId,
-          safeHeight: MIN_TIMESTAMP.toNumber(),
-          minTimestamp: MIN_TIMESTAMP,
-        },
         TRX,
       )
     })
 
-    it('throws if minTimestamp is different than the one from DB', async () => {
-      const indexerState = {
-        indexerId: 'liveness_indexer',
-        safeHeight: 1,
-        minTimestamp: new UnixTime(0),
-      }
+    it('throws if height is lower than minimum timestamp', async () => {
       const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => indexerState,
         setSafeHeight: async () => 0, // return value is not important
       })
       const livenessIndexer = getMockLivenessIndexer({ stateRepository })
 
+      const incorrectHeight = MIN_TIMESTAMP.add(-1, 'hours').toNumber()
       await expect(
-        async () => await livenessIndexer.setSafeHeight(111, TRX),
-      ).toBeRejectedWith('Minimum timestamp of this indexer cannot be updated')
+        async () => await livenessIndexer.setSafeHeight(incorrectHeight, TRX),
+      ).toBeRejectedWith(
+        'Cannot set height to be lower than the minimum timestamp',
+      )
     })
   })
 
