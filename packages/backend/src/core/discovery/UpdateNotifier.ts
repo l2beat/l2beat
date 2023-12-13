@@ -71,20 +71,6 @@ export class UpdateNotifier {
     })
   }
 
-  async handleUnresolved(notUpdatedProjects: string[], timestamp: UnixTime) {
-    if (!isNineAM(timestamp, 'CET')) {
-      return
-    }
-
-    await this.notify(
-      getDailyReminderMessage(notUpdatedProjects, timestamp),
-      'INTERNAL',
-    )
-    this.logger.info('Daily reminder sent', {
-      projects: notUpdatedProjects,
-    })
-  }
-
   async getInternalMessageNonce() {
     const latestId = await this.updateNotifierRepository.findLatestId()
 
@@ -118,18 +104,49 @@ export class UpdateNotifier {
     await this.notify('UpdateMonitor started.', 'PUBLIC')
     this.logger.info('Initial notifications sent')
   }
+
+  async sendDailyReminder(
+    reminders: Record<string, string[]>,
+    timestamp: UnixTime,
+  ): Promise<void> {
+    if (!isNineAM(timestamp, 'CET')) {
+      return
+    }
+
+    const messages = Object.entries(reminders).map(
+      ([chainIdString, notUpdatedProjects]) =>
+        getDailyReminderMessageForChainId(
+          notUpdatedProjects,
+          ChainId.fromName(chainIdString),
+        ),
+    )
+
+    await this.notify(
+      getDailyReminderHeader(timestamp) + messages.join('\n'),
+      'INTERNAL',
+    )
+    this.logger.info('Daily reminder sent', {
+      reminders: reminders,
+    })
+  }
 }
 
-function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
-  const dailyReportMessage = `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n`
+function getDailyReminderMessageForChainId(
+  projects: string[],
+  chainId: ChainId,
+) {
+  const header = `chainId: ${ChainId.getName(chainId)}\n`
   if (projects.length > 0) {
-    return `${dailyReportMessage}${projects
-      .map((p) => `:x: ${p}`)
-      .join('\n\n')}`
+    return `${header}${projects.map((p) => `:x: ${p}`).join('\n')}`
   }
 
-  return `${dailyReportMessage}:white_check_mark: everything is up to date`
+  return `${header}:white_check_mark: everything is up to date`
 }
+
+function getDailyReminderHeader(timestamp: UnixTime): string {
+  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n`
+}
+
 function countDiff(diff: DiscoveryDiff[]): number {
   let count = 0
 

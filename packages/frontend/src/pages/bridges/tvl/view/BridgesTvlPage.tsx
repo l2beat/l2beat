@@ -6,11 +6,11 @@ import {
   FooterProps,
   Navbar,
   NavbarProps,
-} from '../../../components'
-import { About } from '../../../components/About'
-import { BridgesMvpWarning } from '../../../components/BridgesMvpWarning'
-import { BridgesNavigationTabs } from '../../../components/navigation-tabs/BridgesNavigationTabs'
-import { PageContent } from '../../../components/PageContent'
+} from '../../../../components'
+import { About } from '../../../../components/About'
+import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
+import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
+import { PageContent } from '../../../../components/PageContent'
 import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
 
 export interface BridgesTvlPageProps {

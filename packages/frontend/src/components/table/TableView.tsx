@@ -1,47 +1,18 @@
 import { default as classNames, default as cx } from 'classnames'
+import isObject from 'lodash/isObject'
 import range from 'lodash/range'
-import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
+import React from 'react'
 
 import { InfoIcon } from '../icons'
 import { Link } from '../Link'
-import { SectionId } from '../project/sectionId'
+import { SortingArrows } from './SortingArrows'
+import { ColumnConfig, RowConfig, SingleColumnConfig } from './types'
 
 interface Props<T> {
   items: T[]
   columnsConfig: ColumnConfig<T>[]
   rows?: RowConfig<T>
   rerenderOnLoad?: boolean
-}
-
-export type ColumnConfig<T> =
-  | (SingleColumnConfig<T> & { type?: never })
-  | GroupedColumnConfig<T>
-
-interface SingleColumnConfig<T> {
-  name: ReactNode
-  shortName?: ReactNode
-  alignRight?: true
-  alignCenter?: true
-  minimalWidth?: true
-  headClassName?: string
-  noPaddingRight?: true
-  idHref?: SectionId
-  getValue: (value: T, index: number) => ReactNode
-  tooltip?: string
-}
-
-export interface GroupedColumnConfig<T> {
-  type: 'group'
-  columns: SingleColumnConfig<T>[]
-  title?: React.ReactNode
-}
-
-export interface RowConfig<T> {
-  getProps: (
-    value: T,
-    index: number,
-  ) => HTMLAttributes<HTMLTableRowElement> &
-    Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
 export function TableView<T>({
@@ -166,6 +137,18 @@ function ColumnHeader<T>(props: {
     noGroupTitle: boolean
   }
 }) {
+  const title = (
+    <div className="flex items-center gap-1">
+      {props.column.icon}
+      <span className={cx(props.column.shortName && 'hidden md:block')}>
+        {props.column.name}
+      </span>
+      {props.column.shortName && (
+        <span className="md:hidden">{props.column.shortName}</span>
+      )}
+    </div>
+  )
+
   const hasPaddingRight = !props.column.noPaddingRight
   return (
     <>
@@ -195,12 +178,19 @@ function ColumnHeader<T>(props: {
             props.column.alignCenter && 'justify-center',
           )}
         >
-          <span className={cx(props.column.shortName && 'hidden md:block')}>
-            {props.column.name}
-          </span>
-          {props.column.shortName && (
-            <span className="md:hidden">{props.column.shortName}</span>
+          {props.column.sorting ? (
+            <SortingArrows
+              name={props.column.name}
+              rule={props.column.sorting.rule}
+              defaultState={props.column.sorting.defaultState}
+              orderKey={props.column.sorting.defaultOrderKey}
+            >
+              {title}
+            </SortingArrows>
+          ) : (
+            title
           )}
+
           {props.column.tooltip && (
             <span
               className="Tooltip -translate-y-px md:translate-y-0"
@@ -234,7 +224,12 @@ function DataCell<T>(props: {
     props.columnConfig.idHref && props.href
       ? `${props.href}#${props.columnConfig.idHref}`
       : props.href
+  const orderValue = props.columnConfig.sorting?.getOrderValue(
+    props.item,
+    props.rowIndex,
+  )
 
+  const orderAttributes = getOrderValueAttributes(orderValue)
   return (
     <>
       <td
@@ -244,6 +239,7 @@ function DataCell<T>(props: {
           props.groupOptions?.isFirst && '!pl-6',
           props.groupOptions?.isLast && '!pr-6',
         )}
+        {...orderAttributes}
       >
         <a
           href={idHref}
@@ -380,4 +376,32 @@ function getGroupedColumns<T>(
       type: 'single',
     } as const
   })
+}
+
+function getOrderValueAttributes(
+  orderValue:
+    | string
+    | number
+    | Record<string, string | number | undefined>
+    | undefined,
+) {
+  if (orderValue === undefined) {
+    return
+  }
+
+  return {
+    ...(isObject(orderValue)
+      ? Object.entries(orderValue).reduce<Record<string, string>>(
+          (acc, [key, value]) => {
+            if (value) {
+              acc[`data-order-value-${key.toLowerCase()}`] = value.toString()
+            }
+            return acc
+          },
+          {},
+        )
+      : {
+          'data-order-value': orderValue.toString(),
+        }),
+  }
 }

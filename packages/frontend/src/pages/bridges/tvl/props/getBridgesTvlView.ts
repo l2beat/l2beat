@@ -1,30 +1,44 @@
 import { Bridge, Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
+import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
+import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
+import { PagesData } from '../../../Page'
 import { BridgesTvlViewEntry } from '../types'
+import { BridgesTvlViewProps } from '../view/BridgesTvlView'
 
 export function getBridgesTvlView(
   projects: (Bridge | Layer2)[],
-  tvlApiResponse: TvlApiResponse,
-  bridgesTvl: number,
-  combinedTvl: number,
-  verificationStatus: VerificationStatus,
-): BridgesTvlViewEntry[] {
-  return projects.map((project) =>
-    getBridgesTvlViewEntry(
-      project,
-      tvlApiResponse,
-      bridgesTvl,
-      combinedTvl,
-      verificationStatus,
-    ),
+  pagesData: PagesData,
+): BridgesTvlViewProps {
+  const { tvlApiResponse, verificationStatus } = pagesData
+
+  const included = getIncludedProjects(projects, tvlApiResponse).filter(
+    (project) => project.type === 'bridge' || !project.isLayer3,
   )
+  const ordered = orderByTvl(included, tvlApiResponse)
+
+  const { tvl: bridgesTvl } = getTvlWithChange(tvlApiResponse.bridges)
+  const { tvl: combinedTvl } = getTvlWithChange(tvlApiResponse.combined)
+
+  return {
+    items: ordered.map((project) =>
+      getBridgesTvlViewEntry(
+        project,
+        tvlApiResponse,
+        bridgesTvl,
+        combinedTvl,
+        verificationStatus,
+      ),
+    ),
+  }
 }
 
-function getBridgesTvlViewEntry(
+export function getBridgesTvlViewEntry(
   project: Bridge | Layer2,
   tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,
@@ -52,15 +66,23 @@ function getBridgesTvlViewEntry(
     isArchived: project.isArchived,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
-    tvl: stats ? formatUSD(stats.tvl) : undefined,
+    tvl: stats
+      ? {
+          displayValue: formatUSD(stats.latestTvl),
+          value: stats.latestTvl,
+        }
+      : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
     oneDayChange: stats ? stats.oneDayChange : undefined,
     sevenDayChange: stats ? stats.sevenDayChange : undefined,
     bridgesMarketShare: stats
-      ? formatPercent(stats.tvl / bridgesTvl)
+      ? formatPercent(stats.latestTvl / bridgesTvl)
       : undefined,
     combinedMarketShare: stats
-      ? formatPercent(stats.tvl / combinedTvl)
+      ? {
+          displayValue: formatPercent(stats.latestTvl / combinedTvl),
+          value: stats.latestTvl / combinedTvl,
+        }
       : undefined,
     validatedBy: project.riskView?.validatedBy,
     category: project.display.category,

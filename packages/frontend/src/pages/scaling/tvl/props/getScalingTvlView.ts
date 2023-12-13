@@ -1,6 +1,8 @@
 import { Layer2, layer2s } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
+import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
@@ -15,8 +17,10 @@ export function getScalingTvlView(
   tvl: number,
   verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
+  const included = getIncludedProjects(projects, tvlApiResponse)
+  const ordered = orderByTvl(included, tvlApiResponse)
   return {
-    items: projects.map((project) =>
+    items: ordered.map((project) =>
       getScalingTvlViewEntry(
         project,
         tvlApiResponse,
@@ -60,7 +64,13 @@ function getScalingTvlViewEntry(
     isLayer3: project.isLayer3,
     hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
       .name,
-    tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
+    tvl:
+      stats && escrowsConfigured(project)
+        ? {
+            value: stats.latestTvl,
+            displayValue: formatUSD(stats.latestTvl),
+          }
+        : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     tvlBreakdown:
       stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
@@ -70,8 +80,12 @@ function getScalingTvlViewEntry(
       stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
     marketShare:
       stats && escrowsConfigured(project)
-        ? formatPercent(stats.tvl / aggregateTvl)
+        ? {
+            value: stats.latestTvl / aggregateTvl,
+            displayValue: formatPercent(stats.latestTvl / aggregateTvl),
+          }
         : undefined,
+    marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
     purpose: project.display.purpose,
     stage: project.stage,
   }

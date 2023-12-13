@@ -13,7 +13,8 @@ import {
   getLayer3sScalingTvlColumnsConfig,
   getUpcomingScalingTvlColumnsConfig,
 } from '../../../../components/table/props/getScalingTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
+import { TableView } from '../../../../components/table/TableView'
+import { RowConfig } from '../../../../components/table/types'
 import { Tabs } from '../../../../components/Tabs'
 import { ScalingTvlViewEntry } from '../types'
 
