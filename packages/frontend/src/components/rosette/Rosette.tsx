@@ -126,7 +126,7 @@ export function MediumRosette({ risks, isUnderReview }: RosetteProps) {
       <span className="absolute top-0.5 left-1/2 w-[10ch] -translate-x-1/2 text-center text-[10px] font-medium uppercase leading-tight">
         Data availability
       </span>
-      <span className="absolute top-[69px] left-[138px] rotate-[68deg] text-[10px] font-medium uppercase leading-tight">
+      <span className="absolute top-[58px] left-[160px] rotate-[68deg] text-center text-[10px] font-medium uppercase leading-tight">
         Exit window
       </span>
       <span className="absolute bottom-[20px] right-[19px] w-[10ch] -rotate-[36deg] text-center text-[10px] font-medium uppercase leading-tight">
@@ -183,7 +183,7 @@ export function BigRosette({
         Data availability
       </span>
       <span
-        className="Rosette-Text absolute top-[94px] left-[184px] rotate-[68deg] text-center text-xs font-medium uppercase leading-tight"
+        className="Rosette-Text absolute top-[72px] left-[207px] rotate-[64deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="exit-window"
       >
         Exit window
