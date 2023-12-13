@@ -97,6 +97,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => undefined,
         addOrUpdate: async () => '',
       })
+      const timestamp = new UnixTime(0)
 
       const updateMonitor = new UpdateMonitor(
         runners,
@@ -109,7 +110,7 @@ describe(UpdateMonitor.name, () => {
         0,
       )
 
-      await updateMonitor.update(new UnixTime(0))
+      await updateMonitor.update(timestamp)
 
       // gets block number
       expect(discoveryRunnerEth.getBlockNumber).toHaveBeenCalledTimes(1)
@@ -130,6 +131,15 @@ describe(UpdateMonitor.name, () => {
       // runs discovery for every project
       expect(discoveryRunnerEth.run).toHaveBeenCalledTimes(1)
       expect(discoveryRunnerEth.run).toHaveBeenCalledTimes(1)
+
+      expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
+        {
+          [ChainId.getName(ChainId.ETHEREUM)]: ['project-a'],
+          [ChainId.getName(ChainId.ARBITRUM)]: ['project-a'],
+        },
+        timestamp,
+      )
     })
   })
 

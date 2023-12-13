@@ -94,7 +94,7 @@ export class UpdateMonitor {
         }
       }
 
-      result[chainId.toString()] = notUpdatedProjects
+      result[ChainId.getName(chainId)] = notUpdatedProjects
     }
 
     return result
