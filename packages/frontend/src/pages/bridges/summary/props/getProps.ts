@@ -1,19 +1,20 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
-import { PagesData, Wrapped } from '../../../Page'
-import { BridgesTvlPageProps } from '../view/BridgesTvlPage'
-import { getBridgesTvlView } from './getBridgesTvlView'
+import { Wrapped } from '../../../Page'
+import { BridgesPagesData } from '../../types'
+import { BridgesSummaryPageProps } from '../view/BridgesSummaryPage'
+import { getBridgesSummaryView } from './getBridgesSummaryView'
 import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  pagesData: PagesData,
-): Wrapped<BridgesTvlPageProps> {
+  pagesData: BridgesPagesData,
+): Wrapped<BridgesSummaryPageProps> {
   return {
     props: {
       navbar: getNavbarProps(config, 'bridges'),
-      tvlView: getBridgesTvlView(
+      tvlView: getBridgesSummaryView(
         [...config.bridges, ...config.layer2s],
         pagesData,
       ),

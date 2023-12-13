@@ -24,7 +24,7 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
     fullTitle: 'Value Locked',
     shortTitle: 'Value',
     icon: <TvlIcon />,
-    link: '/scaling/detailedTvl',
+    link: '/scaling/tvl',
     selected: props.selected === 'detailed',
   })
 

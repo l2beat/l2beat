@@ -2,11 +2,11 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
-import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
 import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
+import { ScalingSummaryViewEntry } from '../../../pages/scaling/summary/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
@@ -25,8 +25,8 @@ import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
-export function getActiveScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+export function getActiveScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -77,7 +77,7 @@ export function getActiveScalingTvlColumnsConfig() {
       name: 'Stage',
       idHref: 'stage' as const,
       tooltip: 'Rollup stage based on its features and maturity.',
-      getValue: (project: ScalingTvlViewEntry) => (
+      getValue: (project: ScalingSummaryViewEntry) => (
         <StageCell stageConfig={project.stage} />
       ),
       sorting: {
@@ -156,8 +156,8 @@ export function getActiveScalingTvlColumnsConfig() {
   return columns
 }
 
-export function getUpcomingScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+export function getUpcomingScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -202,8 +202,8 @@ export function getUpcomingScalingTvlColumnsConfig() {
   return columns
 }
 
-export function getArchivedScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+export function getArchivedScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -284,8 +284,8 @@ export function getArchivedScalingTvlColumnsConfig() {
   return columns
 }
 
-export function getLayer3sScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+export function getLayer3sScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -339,8 +339,8 @@ export function getLayer3sScalingTvlColumnsConfig() {
   return columns
 }
 
-export function getScalingDetailedTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
+export function getScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,

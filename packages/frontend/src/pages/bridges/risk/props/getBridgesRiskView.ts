@@ -5,12 +5,12 @@ import { getDestination } from '../../../../utils/getDestination'
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
-import { BridgesTvlPagesData } from '../types'
+import { BridgesPagesData } from '../../types'
 import { BridgesRiskViewProps } from '../view/BridgesRiskView'
 
 export function getBridgesRiskView(
   projects: (Layer2 | Bridge)[],
-  pagesData: BridgesTvlPagesData,
+  pagesData: BridgesPagesData,
 ): BridgesRiskViewProps {
   const { tvlApiResponse, verificationStatus } = pagesData
 
