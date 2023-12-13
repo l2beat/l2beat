@@ -2,7 +2,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
-import { LivenessFunctionCall, LivenessTransfer } from './types/LivenessConfig'
+import {
+  LivenessConfigEntry,
+  LivenessFunctionCall,
+  LivenessTransfer,
+} from './types/LivenessConfig'
 import {
   BigQueryFunctionCallsResult,
   BigQueryTransfersResult,
@@ -18,11 +22,17 @@ export class LivenessClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
   async getLivenessData(
-    transfersConfig: LivenessTransfer[],
-    functionCallsConfig: LivenessFunctionCall[],
+    configurations: LivenessConfigEntry[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
+    const transfersConfig = configurations.filter(
+      (c): c is LivenessTransfer => c.formula === 'transfer',
+    )
+    const functionCallsConfig = configurations.filter(
+      (c): c is LivenessFunctionCall => c.formula === 'functionCall',
+    )
+
     const [transfers, functionCalls] = await Promise.all([
       this.getTransfers(transfersConfig, from, to),
       this.getFunctionCalls(functionCallsConfig, from, to),
