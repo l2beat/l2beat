@@ -2,12 +2,12 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
-import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
 import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
 import { ScalingSummaryViewEntry } from '../../../pages/scaling/summary/types'
+import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
@@ -339,8 +339,8 @@ export function getLayer3sScalingSummaryColumnsConfig() {
   return columns
 }
 
-export function getScalingDetailedTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
+export function getScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,

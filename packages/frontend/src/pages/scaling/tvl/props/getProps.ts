@@ -1,21 +1,21 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { PagesData, Wrapped } from '../../../Page'
-import { ScalingDetailedTvlPageProps } from '../view/ScalingDetailedTvlPage'
+import { ScalingTvlPageProps } from '../view/ScalingTvlPage'
 import { getPageMetadata } from './getPageMetadata'
-import { getScalingDetailedTvlView } from './getScalingDetailedTvlView'
+import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
   config: Config,
   pagesData: PagesData,
-): Wrapped<ScalingDetailedTvlPageProps> {
+): Wrapped<ScalingTvlPageProps> {
   return {
     props: {
       showActivity: config.features.activity,
       showLiveness: config.features.liveness,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
-      detailedTvlView: getScalingDetailedTvlView(
+      detailedTvlView: getScalingTvlView(
         config.layer2s,
         pagesData.tvlApiResponse,
       ),

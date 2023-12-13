@@ -11,20 +11,17 @@ import { About } from '../../../../components/About'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
-import {
-  ScalingDetailedTvlView,
-  ScalingDetailedTvlViewProps,
-} from './ScalingDetailedTvlView'
+import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
-export interface ScalingDetailedTvlPageProps {
+export interface ScalingTvlPageProps {
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
   showLiveness: boolean
-  detailedTvlView: ScalingDetailedTvlViewProps
+  detailedTvlView: ScalingTvlViewProps
 }
 
-export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
+export function ScalingTvlPage(props: ScalingTvlPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -40,7 +37,7 @@ export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
             initialType={{ type: 'layer2-detailed-tvl' }}
             header="tvl"
           />
-          <ScalingDetailedTvlView {...props.detailedTvlView} />
+          <ScalingTvlView {...props.detailedTvlView} />
           <OtherSites />
           <About />
         </main>

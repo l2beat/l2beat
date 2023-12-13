@@ -4,7 +4,7 @@ import { TokenControl } from '../../../components/chart/TokenControls'
 import { RiskValues } from '../../../utils/risks/types'
 import { ValueWithDisplayValue } from '../../types'
 
-export interface ScalingDetailedTvlViewEntry {
+export interface ScalingTvlViewEntry {
   name: string
   slug: string
   riskValues: RiskValues

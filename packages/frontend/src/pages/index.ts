@@ -1,4 +1,5 @@
 import { Config } from '../build/config'
+import { Page, PagesData } from './Page'
 import { getBridgeProjectPages } from './bridges/projects'
 import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesTvlPage } from './bridges/tvl'
@@ -8,14 +9,13 @@ import { getL2DaysPage } from './l2days'
 import { getMetaImagePages } from './meta-images'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
-import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
-import { getDetailedTvlPage } from './scaling/detailed-tvl'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getRiskPage } from './scaling/risk'
 import { getTvlPage } from './scaling/summary'
+import { getDetailedTvlPage } from './scaling/tvl'
 
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []

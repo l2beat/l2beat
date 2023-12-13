@@ -8,13 +8,13 @@ import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionU
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
-import { ScalingDetailedTvlViewEntry } from '../types'
-import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
+import { ScalingTvlViewEntry } from '../types'
+import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 
-export function getScalingDetailedTvlView(
+export function getScalingTvlView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
-): ScalingDetailedTvlViewProps {
+): ScalingTvlViewProps {
   const included = getIncludedProjects(projects, tvlApiResponse).filter(
     (project) => !project.isLayer3,
   )
@@ -22,16 +22,16 @@ export function getScalingDetailedTvlView(
 
   return {
     items: orderedProjects.map((project) =>
-      getScalingDetailedTvlViewEntry(tvlApiResponse, project),
+      getScalingTvlViewEntry(tvlApiResponse, project),
     ),
   }
 }
 
-function getScalingDetailedTvlViewEntry(
+function getScalingTvlViewEntry(
   tvlApiResponse: TvlApiResponse,
   project: Layer2,
   isVerified?: boolean,
-): ScalingDetailedTvlViewEntry {
+): ScalingTvlViewEntry {
   const projectData = tvlApiResponse.projects[project.id.toString()]
   const charts = projectData?.charts
   const { parts, partsWeeklyChange } = getDetailedTvlWithChange(charts)
