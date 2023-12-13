@@ -8,20 +8,20 @@ import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionU
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
-import { ScalingTvlViewEntry } from '../types'
-import { ScalingTvlViewProps } from '../view/ScalingTvlView'
+import { ScalingSummaryViewEntry } from '../types'
+import { ScalingSummaryViewProps } from '../view/ScalingSummaryView'
 
-export function getScalingTvlView(
+export function getScalingSummaryView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
   tvl: number,
   verificationStatus: VerificationStatus,
-): ScalingTvlViewProps {
+): ScalingSummaryViewProps {
   const included = getIncludedProjects(projects, tvlApiResponse)
   const ordered = orderByTvl(included, tvlApiResponse)
   return {
     items: ordered.map((project) =>
-      getScalingTvlViewEntry(
+      getScalingSummarySummaryEntry(
         project,
         tvlApiResponse,
         tvl,
@@ -31,12 +31,12 @@ export function getScalingTvlView(
   }
 }
 
-function getScalingTvlViewEntry(
+function getScalingSummarySummaryEntry(
   project: Layer2,
   tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
   isVerified?: boolean,
-): ScalingTvlViewEntry {
+): ScalingSummaryViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
 

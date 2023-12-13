@@ -3,9 +3,9 @@ import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { PagesData, Wrapped } from '../../../Page'
-import { TvlPageProps } from '../view/ScalingTvlPage'
+import { TvlPageProps } from '../view/ScalingSummaryPage'
 import { getPageMetadata } from './getPageMetadata'
-import { getScalingTvlView } from './getScalingTvlView'
+import { getScalingSummaryView } from './getScalingSummaryView'
 
 export function getProps(
   config: Config,
@@ -19,7 +19,7 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      tvlView: getScalingTvlView(
+      tvlView: getScalingSummaryView(
         config.layer2s,
         tvlApiResponse,
         tvl,

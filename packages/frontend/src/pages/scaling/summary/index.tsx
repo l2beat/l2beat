@@ -4,7 +4,7 @@ import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
 import { PagesData } from '../../Page'
 import { getProps } from './props'
-import { ScalingTvlPage } from './view/ScalingTvlPage'
+import { ScalingSummaryPage } from './view/ScalingSummaryPage'
 
 export function getTvlPage(config: Config, pagesData: PagesData) {
   const { props, wrapper } = getProps(config, pagesData)
@@ -12,7 +12,7 @@ export function getTvlPage(config: Config, pagesData: PagesData) {
     slug: '/scaling/summary',
     page: (
       <PageWrapper {...wrapper}>
-        <ScalingTvlPage {...props} />
+        <ScalingSummaryPage {...props} />
       </PageWrapper>
     ),
   }

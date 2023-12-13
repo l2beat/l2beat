@@ -12,10 +12,13 @@ import { About } from '../../../../components/About'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
-import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
+import {
+  ScalingSummaryView,
+  ScalingSummaryViewProps,
+} from './ScalingSummaryView'
 
 export interface TvlPageProps {
-  tvlView: ScalingTvlViewProps
+  tvlView: ScalingSummaryViewProps
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
@@ -23,7 +26,7 @@ export interface TvlPageProps {
   milestones?: Milestone[]
 }
 
-export function ScalingTvlPage(props: TvlPageProps) {
+export function ScalingSummaryPage(props: TvlPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -40,7 +43,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
             milestones={props.milestones}
             header="tvl"
           />
-          <ScalingTvlView {...props.tvlView} />
+          <ScalingSummaryView {...props.tvlView} />
           <OtherSites />
           <About />
         </main>

@@ -8,22 +8,22 @@ import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import {
-  getActiveScalingTvlColumnsConfig,
-  getArchivedScalingTvlColumnsConfig,
-  getLayer3sScalingTvlColumnsConfig,
-  getUpcomingScalingTvlColumnsConfig,
+  getActiveScalingSummaryColumnsConfig,
+  getArchivedScalingSummaryColumnsConfig,
+  getLayer3sScalingSummaryColumnsConfig,
+  getUpcomingScalingSummaryColumnsConfig,
 } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
 import { Tabs } from '../../../../components/Tabs'
-import { ScalingTvlViewEntry } from '../types'
+import { ScalingSummaryViewEntry } from '../types'
 
-export interface ScalingTvlViewProps {
-  items: ScalingTvlViewEntry[]
+export interface ScalingSummaryViewProps {
+  items: ScalingSummaryViewEntry[]
 }
 
-export function ScalingTvlView({ items }: ScalingTvlViewProps) {
-  const rows: RowConfig<ScalingTvlViewEntry> = {
+export function ScalingSummaryView({ items }: ScalingSummaryViewProps) {
+  const rows: RowConfig<ScalingSummaryViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
 
@@ -50,7 +50,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
                 <TableView
                   items={activeProjects}
                   rows={rows}
-                  columnsConfig={getActiveScalingTvlColumnsConfig()}
+                  columnsConfig={getActiveScalingSummaryColumnsConfig()}
                 />
                 <ScalingLegend />
               </>
@@ -67,7 +67,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
                 <TableView
                   items={upcomingProjects}
                   rows={rows}
-                  columnsConfig={getUpcomingScalingTvlColumnsConfig()}
+                  columnsConfig={getUpcomingScalingSummaryColumnsConfig()}
                 />
                 <ScalingLegend />
               </>
@@ -84,7 +84,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
                 <TableView
                   items={archivedProjects}
                   rows={rows}
-                  columnsConfig={getArchivedScalingTvlColumnsConfig()}
+                  columnsConfig={getArchivedScalingSummaryColumnsConfig()}
                 />
                 <ScalingLegend />
               </>
@@ -100,7 +100,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
               <TableView
                 items={layer3sProjects}
                 rows={rows}
-                columnsConfig={getLayer3sScalingTvlColumnsConfig()}
+                columnsConfig={getLayer3sScalingSummaryColumnsConfig()}
               />
             ),
             itemsCount: layer3sProjects.length,

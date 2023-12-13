@@ -4,7 +4,7 @@ import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
 import { ValueWithDisplayValue } from '../../types'
 
-export interface ScalingTvlViewEntry {
+export interface ScalingSummaryViewEntry {
   name: string
   slug: string
   riskValues: RiskValues
