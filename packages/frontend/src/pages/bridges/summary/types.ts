@@ -3,7 +3,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { ValueWithDisplayValue } from '../../types'
 
-export interface BridgesTvlViewEntry {
+export interface BridgesSummaryViewEntry {
   type: 'bridge' | 'layer2'
   name: string
   slug: string

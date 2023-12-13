@@ -6,11 +6,11 @@ import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
 import { configureTabs } from '../../../../scripts/configureTabs'
 import { configureTables } from '../../../../scripts/table/configureTables'
-import { BridgesTvlView } from './BridgesTvlView'
+import { BridgesSummaryView } from './BridgesSummaryView'
 
 const meta = {
   title: 'Pages/Bridges/TvlView',
-  component: BridgesTvlView,
+  component: BridgesSummaryView,
   args: {
     items: [
       {
@@ -807,10 +807,10 @@ const meta = {
       modes: onlyDesktopModes,
     },
   },
-} satisfies Meta<typeof BridgesTvlView>
+} satisfies Meta<typeof BridgesSummaryView>
 export default meta
 
-type Story = StoryObj<typeof BridgesTvlView>
+type Story = StoryObj<typeof BridgesSummaryView>
 
 export const Active: Story = {
   play: async ({ canvasElement }) => {

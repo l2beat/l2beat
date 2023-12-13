@@ -1,10 +1,10 @@
 import { Layer2, StageConfig } from '@l2beat/config'
 
-import { TokenControl } from '../../../components/chart/TokenControls'
+import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
 import { ValueWithDisplayValue } from '../../types'
 
-export interface ScalingDetailedTvlViewEntry {
+export interface ScalingSummaryViewEntry {
   name: string
   slug: string
   riskValues: RiskValues
@@ -16,13 +16,14 @@ export interface ScalingDetailedTvlViewEntry {
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
   tvl?: ValueWithDisplayValue
-  cbv?: ValueWithDisplayValue
-  ebv?: ValueWithDisplayValue
-  nmv?: ValueWithDisplayValue
-  tvlChange?: string
-  ebvChange?: string
-  cbvChange?: string
-  nmvChange?: string
-  tokens: TokenControl[]
+  isLayer3?: boolean
+  hostChainName?: string
+  tvlTooltip?: string
+  tvlBreakdown?: TVLBreakdownProps
+  oneDayChange?: string
+  sevenDayChange?: string
+  marketShare?: ValueWithDisplayValue
+  marketShareValue?: number
+  purpose: string
   stage: StageConfig
 }
