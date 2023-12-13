@@ -52,7 +52,10 @@ export function updateNodeLocations(
 ): Partial<State> {
   const movedNodes = state.nodes.map((n) => ({
     ...n,
-    box: locations[n.simpleNode.id] ?? n.box,
+    box: {
+      ...n.box,
+      ...locations[n.simpleNode.id],
+    },
   }))
 
   return updateNodePositions({
@@ -61,10 +64,7 @@ export function updateNodeLocations(
   })
 }
 
-function getNodeBoxFromStorage(
-  projectId: string,
-  node: SimpleNode,
-): Node['box'] | undefined {
+function getNodeBoxFromStorage(projectId: string, node: SimpleNode) {
   const storage = localStorage.getItem(getLayoutStorageKey(projectId))
   if (storage === null) {
     return undefined

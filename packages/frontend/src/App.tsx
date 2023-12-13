@@ -15,6 +15,7 @@ import {
   decodeNodeLocations,
   getLayoutStorageKey,
 } from './store/utils/storageParsing'
+import { AutoLayoutButton } from './view/AutoLayoutButton'
 import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
 
@@ -151,7 +152,7 @@ export function App() {
               <div>
                 <button
                   className={cx(
-                    'rounded bg-blue-500 py-2 px-4 font-bold text-white',
+                    'rounded bg-blue-500 px-4 py-2 font-bold text-white',
                     !loading.global && 'hover:bg-blue-700',
                   )}
                   type="button"
@@ -163,7 +164,8 @@ export function App() {
                 </button>
               </div>
 
-              <div>
+              <div className="flex items-center">
+                <AutoLayoutButton />
                 <button
                   className="px-1 text-2xl hover:bg-gray-300"
                   type="button"

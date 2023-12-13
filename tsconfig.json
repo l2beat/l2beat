@@ -5,6 +5,7 @@
     "module": "CommonJS",
     "sourceMap": true,
     "strict": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,

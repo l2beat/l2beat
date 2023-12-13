@@ -35,7 +35,7 @@ export const ScalableView = forwardRef(
               props.transform.scale,
           }}
         >
-          <div className="pointer-events-none absolute top-[-220%] left-[-220%] h-[440%] w-[440%] bg-[url(/grid.svg)] bg-center" />
+          <div className="pointer-events-none absolute left-[-220%] top-[-220%] h-[440%] w-[440%] bg-[url(/grid.svg)] bg-center" />
         </div>
 
         {props.children}
