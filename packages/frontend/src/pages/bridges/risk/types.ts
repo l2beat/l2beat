@@ -1,10 +1,4 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
-
-export interface BridgesTvlPagesData {
-  tvlApiResponse: TvlApiResponse
-  verificationStatus: VerificationStatus
-}
 
 export interface BridgesRiskViewEntry {
   name: string

@@ -2,7 +2,7 @@ import { Config } from '../build/config'
 import { Page, PagesData } from './Page'
 import { getBridgeProjectPages } from './bridges/projects'
 import { getBridgesRiskPage } from './bridges/risk'
-import { getBridgesTvlPage } from './bridges/tvl'
+import { getBridgesSummaryPage } from './bridges/summary'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
 import { getL2DaysPage } from './l2days'
@@ -36,7 +36,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
 
-  pages.push(getBridgesTvlPage(config, pagesData))
+  pages.push(getBridgesSummaryPage(config, pagesData))
   pages.push(getBridgesRiskPage(config, pagesData))
   pages.push(...getBridgeProjectPages(config, pagesData))
 
