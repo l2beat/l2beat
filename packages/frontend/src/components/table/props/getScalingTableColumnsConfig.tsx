@@ -473,7 +473,7 @@ export function getScalingRiskColumnsConfig() {
       },
     },
     {
-      name: 'State validation',
+      name: 'State\nvalidation',
       tooltip: 'How is the validity of the system state checked?',
       getValue: (project) => <RiskCell item={project.stateValidation} />,
       sorting: {
@@ -483,7 +483,7 @@ export function getScalingRiskColumnsConfig() {
       },
     },
     {
-      name: 'Data availability',
+      name: 'Data\navailability',
       tooltip: 'Is the data needed to reconstruct the state available?',
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
       sorting: {
@@ -504,7 +504,7 @@ export function getScalingRiskColumnsConfig() {
       },
     },
     {
-      name: 'Sequencer failure',
+      name: 'Sequencer\nfailure',
       tooltip:
         "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
@@ -515,10 +515,11 @@ export function getScalingRiskColumnsConfig() {
       },
     },
     {
-      name: 'Proposer failure',
+      name: 'Proposer\nfailure',
       tooltip:
         'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.proposerFailure} />,
+      headClassName: '!pr-4',
       sorting: {
         getOrderValue: (project) =>
           getOrderValueBySentiment(project.proposerFailure),
@@ -752,7 +753,7 @@ export function getScalingLivenessColumnsConfig() {
       },
     },
     {
-      name: '30-day anomalies',
+      name: '30-day\nanomalies',
       tooltip:
         'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
       alignCenter: true,
