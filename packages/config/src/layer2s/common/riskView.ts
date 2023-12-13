@@ -354,12 +354,13 @@ export function EXIT_WINDOW(
   upgradeDelay2?: number,
 ): ProjectRiskViewEntry {
   let window: number = upgradeDelay - exitDelay
-  let windowString = window <= 0 ? 'None' : formatSeconds(window)
+  const windowText = window <= 0 ? 'None' : formatSeconds(window)
+  let showWarning = false
   if (upgradeDelay2 !== undefined) {
     const window2: number = upgradeDelay2 - exitDelay
     const windowString2 = window2 <= 0 ? 'None' : formatSeconds(window2)
-    if (windowString !== windowString2) {
-      windowString = `${windowString} or ${windowString2}`
+    if (windowText !== windowString2) {
+      showWarning = true
       window = Math.min(window, window2)
     }
   }
@@ -374,17 +375,18 @@ export function EXIT_WINDOW(
   const instantlyUpgradable =
     upgradeDelay === 0 ? ' since contracts are instantly upgradable' : ''
   const description =
-    windowString === 'None'
+    windowText === 'None'
       ? `There is no window for users to exit in case of an unwanted upgrade${instantlyUpgradable}.`
-      : `Users have ${windowString} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
+      : `Users have ${windowText} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
           upgradeDelay,
         )} delay before an upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
           exitDelay,
         )} to be processed.`
   return {
-    value: windowString,
+    value: windowText,
     description,
     sentiment,
+    showWarning,
   }
 }
 
