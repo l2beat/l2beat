@@ -9,7 +9,7 @@ import { ScalingDetailedTvlPage } from './view/ScalingDetailedTvlPage'
 export function getDetailedTvlPage(config: Config, pagesData: PagesData) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
-    slug: '/scaling/detailedTvl',
+    slug: '/scaling/tvl',
     page: (
       <PageWrapper {...wrapper}>
         <ScalingDetailedTvlPage {...props} />

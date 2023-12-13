@@ -14,7 +14,7 @@ export interface ScalingDetailedTvlViewProps {
 
 export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
   const rows: RowConfig<ScalingDetailedTvlViewEntry> = {
-    getProps: (entry) => getScalingRowProps(entry, 'detailedTvl'),
+    getProps: (entry) => getScalingRowProps(entry, 'tvl'),
   }
   const itemsToShow = items.filter(
     (item) => !item.isArchived && !item.isUpcoming,
