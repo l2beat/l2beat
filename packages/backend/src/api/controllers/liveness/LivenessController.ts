@@ -10,7 +10,10 @@ import { Project } from '../../../model'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'
-import { calcIntervalWithAvgsPerProject } from './calculateIntervalWithAverages'
+import {
+  calcIntervalWithAvgsPerProject,
+  LivenessRecordWithInterval,
+} from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
 
 type LivenessResult =
@@ -86,16 +89,18 @@ export class LivenessController {
     type: LivenessType
     data: UnixTime[]
   }> {
-    const records = await this.livenessRepository.getByProjectIdAndType(
-      projectId,
-      livenessType,
-      UnixTime.now().add(-30, 'days'),
-    )
+    const lastHour = UnixTime.now().toStartOf('hour')
+    const records: LivenessRecordWithInterval[] =
+      await this.livenessRepository.getByProjectIdAndType(
+        projectId,
+        livenessType,
+        lastHour.add(-60, 'days'),
+      )
 
     return {
-      projectId: projectId,
+      projectId,
       type: livenessType,
-      data: records.map((r) => r.timestamp).sort(),
+      data: records.map((r) => r.timestamp),
     }
   }
 }

@@ -10,6 +10,7 @@ import {
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,6 +22,7 @@ import {
   RISK_VIEW,
   subtractOne,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -30,6 +32,11 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
 
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
@@ -78,6 +85,16 @@ export const mantapacific: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Manta Pacific is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        FINALIZATION_PERIOD_SECONDS,
+      )} after it has been posted.`,
+    },
   },
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.MANTA_PACIFIC })),

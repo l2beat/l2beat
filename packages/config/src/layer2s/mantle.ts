@@ -50,10 +50,10 @@ export const mantle: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',
     links: {
-      websites: ['https://www.mantle.xyz/'],
+      websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs.mantle.xyz/'],
-      explorers: ['https://explorer.mantle.xyz/'],
+      explorers: ['https://explorer.mantle.xyz/', 'https://mantlescan.info'],
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',

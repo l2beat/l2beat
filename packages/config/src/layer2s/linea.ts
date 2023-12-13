@@ -98,8 +98,13 @@ export const linea: Layer2 = {
         'https://discord.gg/consensys',
         'https://linea.mirror.xyz/',
       ],
+      rollupCodes: 'https://rollup.codes/linea',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
+    },
   },
   config: {
     escrows: [

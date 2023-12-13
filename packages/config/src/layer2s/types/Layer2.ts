@@ -31,6 +31,10 @@ export interface Layer2 {
   isUpcoming?: boolean
   /** Has this layer2 changed and is under review? */
   isUnderReview?: boolean
+  /** Is this a layer3? */
+  isLayer3?: boolean
+  /** ProjectId of hostChain */
+  hostChain?: ProjectId
   /** Information displayed about the layer2 on the frontend */
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
@@ -88,13 +92,23 @@ export interface Layer2Display {
     | 'Polygon'
     | 'OVM'
     | 'Starknet'
+    | 'Arbitrum Orbit'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
   /** Explanation on how liveness data is gathered for given project */
-  livenessExplanation?: string
+  liveness?: Layer2LivenessDisplay
 }
+export interface Layer2LivenessDisplay {
+  explanation?: string
+  warnings?: {
+    stateUpdates?: string
+    batchSubmissions?: string
+    proofSubmissions?: string
+  }
+}
+
 export interface Layer2Config {
   /** List of native and external tokens */
   tokenList?: Token[]

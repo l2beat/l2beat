@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -13,10 +14,17 @@ import {
   RISK_VIEW,
   subtractOne,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
+
+const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
 
 const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
@@ -41,7 +49,10 @@ export const publicgoodsnetwork: Layer2 = {
       websites: ['https://publicgoods.network/'],
       apps: ['https://bridge.publicgoods.network/'],
       documentation: ['https://docs.publicgoods.network/'],
-      explorers: ['https://explorer.publicgoods.network'],
+      explorers: [
+        'https://explorer.publicgoods.network',
+        'https://pgn.superscan.network',
+      ],
       repositories: [
         'https://github.com/supermodularxyz/pgn-monorepo',
         'https://github.com/supermodularxyz/pgn-docs',
@@ -49,6 +60,16 @@ export const publicgoodsnetwork: Layer2 = {
       socialMedia: ['https://twitter.com/pgn_eth'],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Public Goods Network is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.PUBLICGOODSNETWORK.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        FINALIZATION_PERIOD_SECONDS,
+      )} after it has been posted.`,
+    },
   },
   config: {
     escrows: [
@@ -150,26 +171,33 @@ export const publicgoodsnetwork: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink:
+        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
+  stateDerivation: DERIVATION.OPSTACK('PGN'),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',

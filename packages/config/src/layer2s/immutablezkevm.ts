@@ -17,7 +17,7 @@ export const immutablezkevm: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
-      websites: ['https://www.immutable.com/products/immutable-zkevm'],
+      websites: ['https://immutable.com/products/immutable-zkevm'],
       apps: [],
       documentation: ['https://docs.x.immutable.com/docs/zkEVM/overview'],
       explorers: [],

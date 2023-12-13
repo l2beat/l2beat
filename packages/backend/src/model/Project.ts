@@ -33,6 +33,7 @@ export interface Project {
   isArchived?: boolean
   type: 'layer2' | 'bridge'
   isUpcoming?: boolean
+  isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
   livenessConfig?: LivenessConfig
@@ -49,6 +50,7 @@ export function layer2ToProject(layer2: Layer2): Project {
     projectId: layer2.id,
     type: 'layer2',
     isUpcoming: layer2.isUpcoming,
+    isLayer3: layer2.isLayer3,
     isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map((escrow) => ({
       address: escrow.address,

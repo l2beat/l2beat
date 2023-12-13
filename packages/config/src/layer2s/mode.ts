@@ -17,7 +17,7 @@ export const mode: Layer2 = {
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.mode.network/'],
+      websites: ['https://mode.network/'],
       apps: [],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://sepolia.explorer.mode.network/'],

@@ -34,6 +34,16 @@ describe('layer2s', () => {
         })
       }
     })
+    describe('do not include www part', () => {
+      for (const layer2 of layer2s) {
+        it(layer2.display.name, () => {
+          const links = Object.values(layer2.display.links).flat()
+          for (const link of links) {
+            expect(link).not.toInclude('www')
+          }
+        })
+      }
+    })
   })
 
   describe('escrows', () => {
@@ -422,6 +432,17 @@ describe('layer2s', () => {
         }
       }
     })
+  })
+})
+
+describe('layer3s', () => {
+  const layer3s = layer2s.filter((x) => x.isLayer3)
+  it('every layer3 has a valid host chain', () => {
+    for (const layer3 of layer3s) {
+      expect(layer3.hostChain).not.toBeNullish()
+      const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
+      expect(hostChain).not.toBeNullish()
+    }
   })
 })
 

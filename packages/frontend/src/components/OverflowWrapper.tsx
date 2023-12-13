@@ -7,6 +7,7 @@ interface OverflowWrapperProps {
   children: React.ReactNode
   disableScrollOnLoad?: boolean
   within?: 'nav-tabs'
+  childrenClassName?: string
   className?: string
 }
 
@@ -15,11 +16,11 @@ export function OverflowWrapper(props: OverflowWrapperProps) {
     <div
       data-role="overflow-wrapper"
       data-scroll-on-load={!props.disableScrollOnLoad}
-      className={classNames('group relative', props.className)}
+      className={classNames('group/overflow-wrapper relative', props.className)}
     >
       <div
         className={classNames(
-          'absolute inset-y-0 left-0 w-6 bg-gradient-to-r opacity-0 transition-opacity group-data-[arrow-left-visible=true]:opacity-100',
+          'absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity group-data-[arrow-left-visible=true]/overflow-wrapper:opacity-100',
           !props.within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',
           props.within === 'nav-tabs' &&
@@ -32,14 +33,17 @@ export function OverflowWrapper(props: OverflowWrapperProps) {
         </div>
       </div>
       <div
-        className="scrollbar-hide overflow-x-auto"
+        className={classNames(
+          'scrollbar-hide overflow-x-auto',
+          props.childrenClassName,
+        )}
         data-role="overflow-wrapper-content"
       >
         {props.children}
       </div>
       <div
         className={classNames(
-          'absolute inset-y-0 right-0 w-6 bg-gradient-to-l opacity-0 transition-opacity group-data-[arrow-right-visible=true]:opacity-100',
+          'absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity group-data-[arrow-right-visible=true]/overflow-wrapper:opacity-100',
           !props.within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',
           props.within === 'nav-tabs' &&

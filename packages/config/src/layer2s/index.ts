@@ -29,19 +29,22 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { deri, xai } from './layer3s'
 import { linea } from './linea'
 import { loopring } from './loopring'
 import { lyrafinance } from './lyrafinance'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
+import { metal } from './metal'
 import { metis } from './metis'
 import { mode } from './mode'
-import { morphism } from './morphism'
+import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { orb3 } from './orb3'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { polygonmiden } from './polygonmiden'
@@ -57,6 +60,7 @@ import { taiko } from './taiko'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
+import { zkfair } from './zkfair'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -85,6 +89,7 @@ export const layer2s: Layer2[] = [
   degate,
   degate2,
   degate3,
+  deri,
   dydx,
   fuel,
   fuelv1,
@@ -102,14 +107,16 @@ export const layer2s: Layer2[] = [
   lyrafinance,
   mantapacific,
   mantle,
+  metal,
   metis,
   mode,
-  morphism,
+  morph,
   myria,
   nova,
   obscuro,
   omgnetwork,
   optimism,
+  orb3,
   palm,
   paradex,
   polygonmiden,
@@ -123,7 +130,9 @@ export const layer2s: Layer2[] = [
   stealthchain,
   taiko,
   x1,
+  xai,
   xchain,
+  zkfair,
   zkspace,
   zkswap,
   zkswap2,
