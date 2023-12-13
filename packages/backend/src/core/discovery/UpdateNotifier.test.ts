@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
@@ -197,8 +197,7 @@ describe(UpdateNotifier.name, () => {
     })
   })
 
-  /*
-  describe(UpdateNotifier.prototype.handleUnresolved.name, () => {
+  describe(UpdateNotifier.prototype.sendDailyReminder.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
@@ -214,17 +213,23 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
       )
 
-      const notUpdatedProjects = ['project-a', 'project-b']
+      const reminders = {
+          [ChainId.getName(ChainId.ETHEREUM)]: ['project-a', 'project-b'],
+          [ChainId.getName(ChainId.ARBITRUM)]: ['project-a'],
+          [ChainId.getName(ChainId.OPTIMISM)]: ['project-b']
+      }
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
-      await updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
+      await updateNotifier.sendDailyReminder(reminders, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '```Daily bot report @ ' +
+        '# Daily bot report @ ' +
           timestamp.toYYYYMMDD() +
-          '```\n:x: project-a\n\n:x: project-b',
+          '\n\nchainId: ethereum\n:x: project-a\n:x: project-b' + 
+          '\nchainId: arbitrum\n:x: project-a' +
+          '\nchainId: optimism\n:x: project-b',
         'INTERNAL',
       )
     })
@@ -243,13 +248,12 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
       )
 
-      const notUpdatedProjects = ['project-a', 'project-b']
+      const reminders = {[ChainId.getName(ChainId.ETHEREUM)]: ['project-a', 'project-b']}
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
-      await updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
+      await updateNotifier.sendDailyReminder(reminders, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })
   })
-  */
 })

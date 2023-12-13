@@ -135,7 +135,7 @@ function getDailyReminderMessageForChainId(
   projects: string[],
   chainId: ChainId,
 ) {
-  const header = `chainId: ${chainId.toString()}\n`
+  const header = `chainId: ${ChainId.getName(chainId)}\n`
   if (projects.length > 0) {
     return `${header}${projects.map((p) => `:x: ${p}`).join('\n')}`
   }
