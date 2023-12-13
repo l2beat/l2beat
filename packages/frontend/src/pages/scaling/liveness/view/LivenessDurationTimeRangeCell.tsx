@@ -2,6 +2,7 @@ import { LivenessApiProject, LivenessDataPoint } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
+import { RoundedWarningIcon } from '../../../../components/icons'
 import { LivenessDurationCell } from '../../../../components/table/LivenessDurationCell'
 import { LivenessDetailsWithWarning, ScalingLivenessViewEntry } from '../types'
 import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
@@ -21,37 +22,55 @@ export function LivenessDurationTimeRangeCell({
     <div>
       <LivenessTimeRangeCell
         last30Days={
-          <LivenessDurationCell
-            durationInSeconds={data?.last30Days?.averageInSeconds}
-            project={project}
-            tooltip={renderToStaticMarkup(
-              <Tooltip label="30-day intervals" data={data?.last30Days} />,
+          <div className="flex items-center gap-1.5">
+            <LivenessDurationCell
+              durationInSeconds={data?.last30Days?.averageInSeconds}
+              project={project}
+              tooltip={renderToStaticMarkup(
+                <Tooltip label="30-day intervals" data={data?.last30Days} />,
+              )}
+              dataType={dataType}
+            />
+            {data?.warning && (
+              <div className="Tooltip" title={data.warning}>
+                <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+              </div>
             )}
-            warning={data?.warning}
-            dataType={dataType}
-          />
+          </div>
         }
         last90Days={
-          <LivenessDurationCell
-            durationInSeconds={data?.last90Days?.averageInSeconds}
-            project={project}
-            tooltip={renderToStaticMarkup(
-              <Tooltip label="90-day intervals" data={data?.last90Days} />,
+          <div className="flex items-center gap-1.5">
+            <LivenessDurationCell
+              durationInSeconds={data?.last90Days?.averageInSeconds}
+              project={project}
+              tooltip={renderToStaticMarkup(
+                <Tooltip label="90-day intervals" data={data?.last90Days} />,
+              )}
+              dataType={dataType}
+            />
+            {data?.warning && (
+              <div className="Tooltip" title={data.warning}>
+                <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+              </div>
             )}
-            warning={data?.warning}
-            dataType={dataType}
-          />
+          </div>
         }
         max={
-          <LivenessDurationCell
-            durationInSeconds={data?.allTime?.averageInSeconds}
-            project={project}
-            tooltip={renderToStaticMarkup(
-              <Tooltip label="All-time intervals" data={data?.allTime} />,
+          <div className="flex items-center gap-1.5">
+            <LivenessDurationCell
+              durationInSeconds={data?.allTime?.averageInSeconds}
+              project={project}
+              tooltip={renderToStaticMarkup(
+                <Tooltip label="All-time intervals" data={data?.allTime} />,
+              )}
+              dataType={dataType}
+            />
+            {data?.warning && (
+              <div className="Tooltip" title={data.warning}>
+                <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+              </div>
             )}
-            warning={data?.warning}
-            dataType={dataType}
-          />
+          </div>
         }
       />
     </div>
