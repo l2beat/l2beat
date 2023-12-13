@@ -214,9 +214,9 @@ describe(UpdateNotifier.name, () => {
       )
 
       const reminders = {
-          [ChainId.getName(ChainId.ETHEREUM)]: ['project-a', 'project-b'],
-          [ChainId.getName(ChainId.ARBITRUM)]: ['project-a'],
-          [ChainId.getName(ChainId.OPTIMISM)]: ['project-b']
+        [ChainId.getName(ChainId.ETHEREUM)]: ['project-a', 'project-b'],
+        [ChainId.getName(ChainId.ARBITRUM)]: ['project-a'],
+        [ChainId.getName(ChainId.OPTIMISM)]: ['project-b'],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
@@ -227,7 +227,7 @@ describe(UpdateNotifier.name, () => {
         1,
         '# Daily bot report @ ' +
           timestamp.toYYYYMMDD() +
-          '\n\nchainId: ethereum\n:x: project-a\n:x: project-b' + 
+          '\n\nchainId: ethereum\n:x: project-a\n:x: project-b' +
           '\nchainId: arbitrum\n:x: project-a' +
           '\nchainId: optimism\n:x: project-b',
         'INTERNAL',
@@ -248,7 +248,9 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
       )
 
-      const reminders = {[ChainId.getName(ChainId.ETHEREUM)]: ['project-a', 'project-b']}
+      const reminders = {
+        [ChainId.getName(ChainId.ETHEREUM)]: ['project-a', 'project-b'],
+      }
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
