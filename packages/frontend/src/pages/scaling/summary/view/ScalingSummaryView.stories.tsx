@@ -7,11 +7,11 @@ import { configureOverflowWrappers } from '../../../../scripts/configureOverflow
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
 import { configureTabs } from '../../../../scripts/configureTabs'
 import { configureTables } from '../../../../scripts/table/configureTables'
-import { ScalingTvlView } from './ScalingTvlView'
+import { ScalingSummaryView } from './ScalingSummaryView'
 
 const meta = {
   title: 'Pages/Scaling/TvlView',
-  component: ScalingTvlView,
+  component: ScalingSummaryView,
   args: {
     items: [
       {
@@ -1250,10 +1250,10 @@ const meta = {
       modes: onlyDesktopModes,
     },
   },
-} satisfies Meta<typeof ScalingTvlView>
+} satisfies Meta<typeof ScalingSummaryView>
 export default meta
 
-type Story = StoryObj<typeof ScalingTvlView>
+type Story = StoryObj<typeof ScalingSummaryView>
 
 export const Active: Story = {
   play: async ({ canvasElement }) => {

@@ -1,14 +1,14 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
-import { BridgesTvlPagesData } from '../types'
+import { BridgesPagesData } from '../../types'
 import { BridgesRiskPageProps } from '../view/BridgesRiskPage'
 import { getBridgesRiskView } from './getBridgesRiskView'
 import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  pagesData: BridgesTvlPagesData,
+  pagesData: BridgesPagesData,
 ): Wrapped<BridgesRiskPageProps> {
   return {
     props: {

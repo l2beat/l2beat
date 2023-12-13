@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
-import { BridgesTvlViewEntry } from '../../../pages/bridges/tvl/types'
+import { BridgesSummaryViewEntry } from '../../../pages/bridges/summary/types'
 import { TVLBreakdown } from '../../TVLBreakdown'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
@@ -11,8 +11,8 @@ import { TypeCell } from '../TypeCell'
 import { ColumnConfig } from '../types'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
-export function getArchivedBridgesTvlColumnsConfig() {
-  const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
+export function getArchivedBridgesSummaryColumnsConfig() {
+  const columns: ColumnConfig<BridgesSummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -75,8 +75,8 @@ export function getArchivedBridgesTvlColumnsConfig() {
   return columns
 }
 
-export function getActiveBridgesTvlColumnsConfig() {
-  const columns = getArchivedBridgesTvlColumnsConfig()
+export function getActiveBridgesSummaryColumnsConfig() {
+  const columns = getArchivedBridgesSummaryColumnsConfig()
 
   columns.splice(
     3,
