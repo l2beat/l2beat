@@ -11,8 +11,8 @@
       "permanent": true
     },
     {
-      "source": "/scaling/tvl",
-      "destination": "/scaling/summary",
+      "source": "/scaling/detailedTvl",
+      "destination": "/scaling/tvl",
       "permanent": true
     },
     {

@@ -21,29 +21,30 @@ describe(LivenessRepository.name, () => {
       timestamp: START.add(-1, 'hours'),
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
+      livenessId: LIVENESS_CONFIGS[0].id,
     },
     {
       timestamp: START.add(-2, 'hours'),
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
+      livenessId: LIVENESS_CONFIGS[1].id,
     },
     {
       timestamp: START.add(-3, 'hours'),
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
+      livenessId: LIVENESS_CONFIGS[2].id,
     },
   ]
-  let ids: number[]
 
   beforeEach(async function () {
     this.timeout(10000)
     await configRepository.deleteAll()
-    ids = await configRepository.addMany(LIVENESS_CONFIGS)
+    await configRepository.addMany(LIVENESS_CONFIGS)
     await repository.deleteAll()
     await repository.addMany(
-      DATA.map((e, i) => ({
+      DATA.map((e) => ({
         ...e,
-        livenessConfigurationId: ids[i],
       })),
     )
   })
@@ -55,22 +56,21 @@ describe(LivenessRepository.name, () => {
           timestamp: START.add(-5, 'hours'),
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
-          livenessConfigurationId: ids[0],
+          livenessId: LIVENESS_CONFIGS[0].id,
         },
         {
           timestamp: START.add(-6, 'hours'),
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
-          livenessConfigurationId: ids[1],
+          livenessId: LIVENESS_CONFIGS[0].id,
         },
       ]
       await repository.addMany(newRows)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        ...DATA.map((e, i) => ({
+        ...DATA.map((e) => ({
           ...e,
-          livenessConfigurationId: ids[i],
         })),
         ...newRows,
       ])
@@ -82,12 +82,12 @@ describe(LivenessRepository.name, () => {
 
     it('big query', async () => {
       const records: LivenessRecord[] = []
-      for (let i = 5; i < 15_000; i++) {
+      for (let i = 0; i < 15_000; i++) {
         records.push({
           timestamp: START.add(-i, 'hours'),
           blockNumber: i,
           txHash: `0xabcdef1234567892${i}`,
-          livenessConfigurationId: ids[0],
+          livenessId: LIVENESS_CONFIGS[0].id,
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()
@@ -99,9 +99,8 @@ describe(LivenessRepository.name, () => {
       const results = await repository.getAll()
 
       expect(results).toEqualUnsorted(
-        DATA.map((e, i) => ({
+        DATA.map((e) => ({
           ...e,
-          livenessConfigurationId: ids[i],
         })),
       )
     })
@@ -118,28 +117,28 @@ describe(LivenessRepository.name, () => {
   })
 
   describe(LivenessRepository.prototype.deleteAfter.name, () => {
-    it('should delete rows inserted after certain timestamp', async () => {
+    it('should delete rows inserted after certain timestamp for given configuration id', async () => {
       await repository.deleteAll()
 
-      const configurationId = ids[0]
+      const configurationId = LIVENESS_CONFIGS[0].id
       const records = [
         {
           timestamp: START.add(1, 'hours'),
           blockNumber: 12345,
           txHash: '0x1234567890abcdef',
-          livenessConfigurationId: configurationId,
+          livenessId: configurationId,
         },
         {
           timestamp: START.add(2, 'hours'),
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
-          livenessConfigurationId: configurationId,
+          livenessId: configurationId,
         },
         {
           timestamp: START.add(2, 'hours'),
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
-          livenessConfigurationId: ids[1],
+          livenessId: LIVENESS_CONFIGS[1].id,
         },
       ]
       await repository.addMany(records)
@@ -208,7 +207,7 @@ describe(LivenessRepository.name, () => {
         await repository.addMany(
           NEW_DATA.map((e) => ({
             ...e,
-            livenessConfigurationId: ids[2],
+            livenessId: LIVENESS_CONFIGS[2].id,
           })),
         )
         const result = await repository.getWithTypeDistinctTimestamp(
@@ -228,7 +227,7 @@ describe(LivenessRepository.name, () => {
         expect(result).toEqualUnsorted(expected)
       })
 
-      it('return filtered records', async () => {
+      it('returns filtered records', async () => {
         await repository.deleteAll()
         const NEW_DATA = [
           {
@@ -256,7 +255,7 @@ describe(LivenessRepository.name, () => {
         await repository.addMany(
           NEW_DATA.map((e) => ({
             ...e,
-            livenessConfigurationId: ids[2],
+            livenessId: LIVENESS_CONFIGS[2].id,
           })),
         )
 

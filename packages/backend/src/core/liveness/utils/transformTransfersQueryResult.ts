@@ -19,7 +19,7 @@ export function transformTransfersQueryResult(
       timestamp: r.block_timestamp,
       blockNumber: r.block_number,
       txHash: r.transaction_hash,
-      livenessConfigurationId: config.livenessConfigurationId,
+      livenessId: config.id,
     }
   })
   return results

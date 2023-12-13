@@ -161,7 +161,7 @@ export class DiscoveryRunner {
   async updateInitialAddresses(config: DiscoveryConfig) {
     const discovery = await this.configReader.readDiscovery(
       config.name,
-      ChainId.ETHEREUM,
+      this.getChainId(),
     )
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({

@@ -40,14 +40,18 @@ export function createLivenessModule(
   const livenessClient = new LivenessClient(bigQueryClient)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
+
+  const runtimeConfigurations = config.projects.flatMap(
+    (project) => project.livenessConfig?.entries ?? [],
+  )
   const liveness = new LivenessIndexer(
     logger,
     hourlyIndexer,
-    config.projects,
     livenessClient,
     indexerStateRepository,
     livenessRepository,
     livenessConfigurationRepository,
+    runtimeConfigurations,
     config.liveness.minTimestamp,
   )
 
