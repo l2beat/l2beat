@@ -111,7 +111,7 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
           sinceTimestamp: new UnixTime(1679602559),
-          untilTimestamp: new UnixTime(1701258299),
+          untilTimestamp: new UnixTime(1701718427),
         },
         {
           formula: 'functionCall',
@@ -135,7 +135,7 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
           sinceTimestamp: new UnixTime(1679602559),
-          untilTimestamp: new UnixTime(1701258299),
+          untilTimestamp: new UnixTime(1701719687),
         },
         {
           formula: 'functionCall',
