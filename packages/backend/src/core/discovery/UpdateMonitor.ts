@@ -261,6 +261,7 @@ export class UpdateMonitor {
     if (diff.length > 0) {
       const dependents = await findDependents(
         projectConfig.name,
+        chainId,
         this.configReader,
       )
       const unknownContracts = await findUnknownContracts(
