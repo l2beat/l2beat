@@ -198,9 +198,6 @@ function getMockLivenessRepository(
   records: LivenessRecordWithProjectIdAndType[],
 ) {
   return mockObject<LivenessRepository>({
-    getAllWithProjectIdAndType() {
-      return Promise.resolve(records)
-    },
     getWithTypeDistinctTimestamp(projectId: ProjectId) {
       return Promise.resolve(records.filter((x) => x.projectId === projectId))
     },
@@ -224,9 +221,8 @@ function mockProjectConfig(
         projectId,
         isArchived: false,
         livenessConfig: mockObject<Project['livenessConfig']>({
+          entries: [],
           duplicateData: [],
-          functionCalls: [],
-          transfers: [],
         }),
       }),
     )

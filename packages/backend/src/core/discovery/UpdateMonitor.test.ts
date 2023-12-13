@@ -62,7 +62,7 @@ describe(UpdateMonitor.name, () => {
   beforeEach(() => {
     updateNotifier = mockObject<UpdateNotifier>({
       handleUpdate: async () => {},
-      handleUnresolved: async () => {},
+      sendDailyReminder: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       run: async () => DISCOVERY_RESULT,
@@ -97,6 +97,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => undefined,
         addOrUpdate: async () => '',
       })
+      const timestamp = new UnixTime(0)
 
       const updateMonitor = new UpdateMonitor(
         runners,
@@ -109,14 +110,14 @@ describe(UpdateMonitor.name, () => {
         0,
       )
 
-      await updateMonitor.update(new UnixTime(0))
+      await updateMonitor.update(timestamp)
 
       // gets block number
       expect(discoveryRunnerEth.getBlockNumber).toHaveBeenCalledTimes(1)
       expect(discoveryRunnerArb.getBlockNumber).toHaveBeenCalledTimes(1)
 
       // reads all the configs
-      expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(2)
+      expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(4)
       expect(configReader.readAllConfigsForChain).toHaveBeenNthCalledWith(
         1,
         ChainId.ETHEREUM,
@@ -130,6 +131,15 @@ describe(UpdateMonitor.name, () => {
       // runs discovery for every project
       expect(discoveryRunnerEth.run).toHaveBeenCalledTimes(1)
       expect(discoveryRunnerEth.run).toHaveBeenCalledTimes(1)
+
+      expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
+        {
+          [ChainId.getName(ChainId.ETHEREUM)]: ['project-a'],
+          [ChainId.getName(ChainId.ARBITRUM)]: ['project-a'],
+        },
+        timestamp,
+      )
     })
   })
 
@@ -186,7 +196,7 @@ describe(UpdateMonitor.name, () => {
       expect(repository.findLatest).toHaveBeenCalledTimes(2)
       // reads committed discovery.json, 2 + 2 for findUnresolvedProjects() + 2 for findUnknown contracts()
       // and + 2 for finding unverifiedContracts
-      expect(configReader.readDiscovery).toHaveBeenCalledTimes(4 * 2)
+      expect(configReader.readDiscovery).toHaveBeenCalledTimes(3 * 2)
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
@@ -202,12 +212,6 @@ describe(UpdateMonitor.name, () => {
         PROJECT_B,
         mockDiff,
         UPDATE_METADATA,
-      )
-      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
-        1,
-        [PROJECT_A, PROJECT_B],
-        TIMESTAMP,
       )
     })
 
@@ -252,12 +256,6 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
-      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
-        1,
-        [PROJECT_A],
-        TIMESTAMP,
-      )
     })
 
     it('does not send notification if discovery throws', async () => {
@@ -296,12 +294,6 @@ describe(UpdateMonitor.name, () => {
 
       // send notification about the error of discovery
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
-      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
-        1,
-        [],
-        TIMESTAMP,
-      )
     })
 
     it('uses discovery on previous block number if version changes', async () => {
@@ -417,12 +409,6 @@ describe(UpdateMonitor.name, () => {
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
-      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
-        1,
-        [],
-        TIMESTAMP,
-      )
     })
   })
 
