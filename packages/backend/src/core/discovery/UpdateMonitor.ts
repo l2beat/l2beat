@@ -230,7 +230,7 @@ export class UpdateMonitor {
       })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
-        ChainId.ETHEREUM,
+        runner.getChainId(),
       )
     }
 
@@ -267,7 +267,7 @@ export class UpdateMonitor {
         discovery.name,
         discovery.contracts,
         this.configReader,
-        ChainId.ETHEREUM,
+        chainId,
       )
       await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,
