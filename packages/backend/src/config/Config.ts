@@ -67,6 +67,7 @@ export interface LivenessConfig {
     readonly clientEmail: string
     readonly privateKey: string
     readonly projectId: string
+    readonly queryLimitGB: number
   }
   readonly minTimestamp: UnixTime
 }

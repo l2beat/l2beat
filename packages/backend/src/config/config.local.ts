@@ -135,6 +135,7 @@ export function getLocalConfig(env: Env): Config {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
         privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
         projectId: env.string('LIVENESS_PROJECT_ID'),
+        queryLimitGB: env.integer('LIVENESS_BIGQUERY_LIMIT_GB', 8),
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
