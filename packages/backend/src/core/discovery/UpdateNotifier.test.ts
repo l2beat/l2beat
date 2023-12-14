@@ -70,6 +70,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
 
@@ -142,6 +143,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
 
@@ -193,6 +195,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
   })

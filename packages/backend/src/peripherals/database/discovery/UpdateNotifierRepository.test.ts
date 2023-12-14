@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
@@ -60,5 +60,6 @@ function mockRecord(
         ],
       },
     ],
+    chainId: ChainId.ETHEREUM,
   }
 }

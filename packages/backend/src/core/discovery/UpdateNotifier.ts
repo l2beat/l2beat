@@ -47,6 +47,7 @@ export class UpdateNotifier {
       projectName: name,
       diff,
       blockNumber: metadata.blockNumber,
+      chainId: metadata.chainId,
     })
 
     const throttled = this.throttler.filterDiff(diff)
