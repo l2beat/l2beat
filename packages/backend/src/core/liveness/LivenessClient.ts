@@ -75,8 +75,7 @@ export class LivenessClient {
 
     // function calls and sharp submissions will be batched into one query to save costs
     const query = getFunctionCallQuery(
-      functionCallsConfig,
-      sharpSubmissionsConfig,
+      combineCalls(functionCallsConfig, sharpSubmissionsConfig),
       from,
       to,
     )
@@ -94,4 +93,15 @@ export class LivenessClient {
       parsedResult,
     )
   }
+}
+
+function combineCalls(
+  functionCallsConfig: LivenessFunctionCall[],
+  sharpSubmissionsConfig: LivenessSharpSubmission[],
+) {
+  // TODO: unique
+  return [
+    ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
+    ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
+  ]
 }

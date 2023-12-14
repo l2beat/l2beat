@@ -160,8 +160,16 @@ const TRANSFERS_SQL = getTransferQuery(
   TO,
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
-  [CONFIGURATIONS[1] as LivenessFunctionCall],
-  [CONFIGURATIONS[2] as LivenessSharpSubmission],
+  (
+    CONFIGURATIONS.slice(1) as (
+      | LivenessFunctionCall
+      | LivenessSharpSubmission
+    )[]
+  ).map((c) => ({
+    address: c.address,
+    selector: c.selector,
+    getFullInput: c.formula === 'sharpSubmission',
+  })),
   FROM,
   TO,
 )
