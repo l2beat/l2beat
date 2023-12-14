@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { UpdateNotifierRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
@@ -48,6 +48,22 @@ export class UpdateNotifierRepository extends BaseRepository {
   async getAll(): Promise<UpdateNotifierRecord[]> {
     const knex = await this.knex()
     const rows = await knex('update_notifier')
+
+    return rows.map(toRecord)
+  }
+
+  async getNewerThan(
+    from: UnixTime,
+    projectName: string,
+    chainId: ChainId,
+  ): Promise<UpdateNotifierRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('update_notifier')
+      .where('unix_timestamp', '>=', from.toDate())
+      .andWhere({ project_name: projectName })
+
+    // .andWhere({ project_name: projectName, chain_id: Number(chainId) })
 
     return rows.map(toRecord)
   }
