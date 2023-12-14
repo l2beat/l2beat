@@ -16,8 +16,6 @@ const ADDRESS_1 = EthereumAddress.random()
 const SELECTOR_1 = '0x095e4'
 const ADDRESS_2 = EthereumAddress.random()
 const SELECTOR_2 = '0x915d9'
-const ADDRESS_3 = EthereumAddress.random()
-const SELECTOR_3 = '0x9b3b76cc' // verifyProofAndRegister
 const SINCE_TIMESTAMP = UnixTime.now()
 
 const timestamp = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
@@ -84,7 +82,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: block,
         block_timestamp: timestamp,
         input: sharpInput,
-        to_address: ADDRESS_3,
+        to_address: sharpSubmissions[0].address,
       },
     ]
     const expected: LivenessRecord[] = [
@@ -163,7 +161,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     const queryResults: BigQueryFunctionCallsResult = [
       {
-        to_address: ADDRESS_3,
+        to_address: sharpSubmissions[0].address,
         input: sharpInput,
         transaction_hash: txHashes[0],
         block_number: block,
