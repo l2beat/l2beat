@@ -17,7 +17,7 @@ export interface UpdateMetadata {
 }
 
 export class UpdateNotifier {
-    readonly throttler: FieldThrottler
+  readonly throttler: FieldThrottler
 
   constructor(
     private readonly updateNotifierRepository: UpdateNotifierRepository,
@@ -50,14 +50,14 @@ export class UpdateNotifier {
     })
 
     const throttled = this.throttler.filterDiff(diff)
-    if(throttled.length <= 0) {
-        this.logger.info('Updates detected, but everything got throttled', {
-            name,
-            amount: countDiff(throttled),
-            throttledCount: diff.length - throttled.length
-        })
+    if (throttled.length <= 0) {
+      this.logger.info('Updates detected, but everything got throttled', {
+        name,
+        amount: countDiff(throttled),
+        throttledCount: diff.length - throttled.length,
+      })
 
-        return
+      return
     }
 
     const messages = diffToMessages(name, throttled, {
@@ -70,7 +70,7 @@ export class UpdateNotifier {
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
       amount: countDiff(throttled),
-      throttledCount: diff.length - throttled.length
+      throttledCount: diff.length - throttled.length,
     })
 
     const filteredDiff = filterDiff(throttled, metadata.unknownContracts)
