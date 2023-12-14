@@ -10,15 +10,13 @@ export interface BigQueryAuth {
   projectId: string
 }
 
-const bytesInGb = 1_000_000_000
-// Currently the biggest query that we do takes around 5.1 GB
-// this limit ensures that there are no surprises and we do not overpay
-const LIMIT = 7 * bytesInGb
+const BYTES_IN_GB = 1_000_000_000
 
 export class BigQueryClient {
   private readonly bigquery: BigQuery
+  private readonly queryLimit: number
 
-  constructor(auth: BigQueryAuth, private readonly queryLimit = LIMIT) {
+  constructor(auth: BigQueryAuth, queryLimitGB: number) {
     this.bigquery = new BigQuery({
       credentials: {
         client_email: auth.clientEmail,
@@ -26,6 +24,7 @@ export class BigQueryClient {
       },
       projectId: auth.projectId,
     })
+    this.queryLimit = queryLimitGB * BYTES_IN_GB
 
     const rateLimiter = new RateLimiter({
       callsPerMinute: 100,
