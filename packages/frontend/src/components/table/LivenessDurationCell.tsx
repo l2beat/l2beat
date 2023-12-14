@@ -3,14 +3,12 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
-import { RoundedWarningIcon } from '../icons/symbols/RoundedWarningIcon'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
   dataType?: Exclude<keyof LivenessApiProject, 'anomalies'>
   project?: ScalingLivenessViewEntry
   tooltip?: string
-  warning?: string
 }) {
   if (
     !props.durationInSeconds &&
@@ -71,19 +69,11 @@ export function LivenessDurationCell(props: {
 
   return (
     <span
-      className={classNames(
-        'inline-flex items-center gap-1.5',
-        props.tooltip && 'Tooltip',
-      )}
+      className={classNames(props.tooltip && 'Tooltip')}
       title={props.tooltip}
       data-tooltip-big={true}
     >
       {duration}
-      {props.warning && (
-        <div className="Tooltip" title={props.warning}>
-          <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
-        </div>
-      )}
     </span>
   )
 }

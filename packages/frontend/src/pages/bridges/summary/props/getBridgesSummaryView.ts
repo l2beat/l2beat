@@ -7,14 +7,14 @@ import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionU
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
-import { PagesData } from '../../../Page'
-import { BridgesTvlViewEntry } from '../types'
-import { BridgesTvlViewProps } from '../view/BridgesTvlView'
+import { BridgesPagesData } from '../../types'
+import { BridgesSummaryViewEntry } from '../types'
+import { BridgesSummaryViewProps } from '../view/BridgesSummaryView'
 
-export function getBridgesTvlView(
+export function getBridgesSummaryView(
   projects: (Bridge | Layer2)[],
-  pagesData: PagesData,
-): BridgesTvlViewProps {
+  pagesData: BridgesPagesData,
+): BridgesSummaryViewProps {
   const { tvlApiResponse, verificationStatus } = pagesData
 
   const included = getIncludedProjects(projects, tvlApiResponse).filter(
@@ -27,7 +27,7 @@ export function getBridgesTvlView(
 
   return {
     items: ordered.map((project) =>
-      getBridgesTvlViewEntry(
+      getBridgesSummaryViewEntry(
         project,
         tvlApiResponse,
         bridgesTvl,
@@ -38,13 +38,13 @@ export function getBridgesTvlView(
   }
 }
 
-export function getBridgesTvlViewEntry(
+export function getBridgesSummaryViewEntry(
   project: Bridge | Layer2,
   tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,
   combinedTvl: number,
   verificationStatus: VerificationStatus,
-): BridgesTvlViewEntry {
+): BridgesSummaryViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
   let stats: TvlStats | undefined

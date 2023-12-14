@@ -1,12 +1,12 @@
 import { ActivityViewEntry } from './activity/types'
-import { ScalingDetailedTvlViewEntry } from './detailed-tvl/types'
 import { ScalingLivenessViewEntry } from './liveness/types'
 import { ScalingRiskViewEntry } from './risk/types'
+import { ScalingSummaryViewEntry } from './summary/types'
 import { ScalingTvlViewEntry } from './tvl/types'
 
 export type ScalingEntry =
-  | ScalingTvlViewEntry
+  | ScalingSummaryViewEntry
   | ScalingRiskViewEntry
   | ActivityViewEntry
-  | ScalingDetailedTvlViewEntry
+  | ScalingTvlViewEntry
   | ScalingLivenessViewEntry

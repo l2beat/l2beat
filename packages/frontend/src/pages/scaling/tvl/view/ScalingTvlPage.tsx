@@ -1,4 +1,3 @@
-import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import {
@@ -14,16 +13,15 @@ import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
-export interface TvlPageProps {
-  tvlView: ScalingTvlViewProps
+export interface ScalingTvlPageProps {
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
   showLiveness: boolean
-  milestones?: Milestone[]
+  detailedTvlView: ScalingTvlViewProps
 }
 
-export function ScalingTvlPage(props: TvlPageProps) {
+export function ScalingTvlPage(props: ScalingTvlPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -31,16 +29,15 @@ export function ScalingTvlPage(props: TvlPageProps) {
         <ScalingNavigationTabs
           showActivity={props.showActivity}
           showLiveness={props.showLiveness}
-          selected="summary"
+          selected="detailed"
         />
         <main className="mt-4 md:mt-12">
           <Chart
-            settingsId="scaling-summary"
-            initialType={{ type: 'layer2-tvl' }}
-            milestones={props.milestones}
+            settingsId="scaling-tvl"
+            initialType={{ type: 'layer2-detailed-tvl' }}
             header="tvl"
           />
-          <ScalingTvlView {...props.tvlView} />
+          <ScalingTvlView {...props.detailedTvlView} />
           <OtherSites />
           <About />
         </main>
