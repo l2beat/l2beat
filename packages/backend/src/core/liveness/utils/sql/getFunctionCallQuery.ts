@@ -2,26 +2,41 @@ import { Query } from '@google-cloud/bigquery'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 export function getFunctionCallQuery(
-  functionCallsConfig: { address: EthereumAddress; selector: string }[],
+  functionCalls: { address: EthereumAddress; selector: string }[],
+  sharpSubmissions: { address: EthereumAddress; selector: string }[],
   from: UnixTime,
   to: UnixTime,
 ): Query {
-  const params = [
+  let params: (string | string[])[] = [
     from.toDate().toISOString(),
     to.toDate().toISOString(),
-    ...functionCallsConfig.flatMap((c) => [
+    ...functionCalls.flatMap((c) => [
+      c.address.toLowerCase(),
+      c.selector.toLowerCase() + '%',
+    ]),
+    ...sharpSubmissions.flatMap((c) => [
       c.address.toLowerCase(),
       c.selector.toLowerCase() + '%',
     ]),
   ]
 
+  if (sharpSubmissions.length > 0) {
+    params = [sharpSubmissions.map((c) => c.address.toLowerCase()), ...params]
+  }
+
   const query = `
     SELECT
       block_number,
-      LEFT(input, 10) AS input,
+      ${
+        sharpSubmissions.length > 0
+          ? `CASE WHEN to_address IN (${sharpSubmissions
+              .map(() => '?')
+              .join(',')}) THEN input ELSE LEFT(input, 10) END AS input,`
+          : `LEFT(input, 10) AS input,`
+      }
       to_address,
       block_timestamp,
-      transaction_hash,
+      transaction_hash
     FROM
       bigquery-public-data.crypto_ethereum.traces
     WHERE call_type = 'call'
@@ -29,7 +44,7 @@ export function getFunctionCallQuery(
     AND block_timestamp >= TIMESTAMP(?)
     AND block_timestamp < TIMESTAMP(?)
     AND (
-      ${functionCallsConfig
+      ${[...functionCalls, ...sharpSubmissions]
         .map(() => `(to_address = ? AND input LIKE ?)`)
         .join(' OR ')}
     )
