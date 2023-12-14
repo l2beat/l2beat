@@ -13,6 +13,7 @@ export interface UpdateNotifierRecord {
   projectName: string
   blockNumber: number
   diff: DiscoveryDiff[]
+  chainId: ChainId
 }
 
 export class UpdateNotifierRepository extends BaseRepository {
@@ -82,6 +83,7 @@ function toRecord(row: UpdateNotifierRow): UpdateNotifierRecord {
     projectName: row.project_name,
     blockNumber: row.block_number,
     diff: row.diff_json_blob as unknown as DiscoveryDiff[],
+    chainId: ChainId(row.chain_id),
   }
 }
 
@@ -92,5 +94,6 @@ function toRow(
     project_name: record.projectName,
     block_number: record.blockNumber,
     diff_json_blob: JSON.stringify(record.diff),
+    chain_id: Number(record.chainId),
   }
 }

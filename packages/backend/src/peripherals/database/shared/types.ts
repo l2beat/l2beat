@@ -107,6 +107,7 @@ declare module 'knex/types/tables' {
     project_name: string
     block_number: number
     diff_json_blob: string
+    chain_id: number
   }
 
   interface TotalSupplyRow {
