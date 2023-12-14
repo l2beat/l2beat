@@ -8,46 +8,28 @@ import {
 import { BigQueryFunctionCallsResult } from '../types/model'
 import { isProgramHashProven } from './isProgramHashProven'
 
+// TODO: think about possible rename
 export function transformFunctionCallsQueryResult(
   functionCalls: LivenessFunctionCall[],
   sharpSubmissions: LivenessSharpSubmission[],
   queryResults: BigQueryFunctionCallsResult,
 ): LivenessRecord[] {
   return queryResults.flatMap((r) => {
-    const functionCallsConfig = functionCalls.filter(
-      (t) => r.input.startsWith(t.selector) && t.address === r.to_address,
+    const selector = r.input.slice(0, 10)
+
+    const matchingCalls = functionCalls.filter(
+      (c) => c.selector === selector && c.address === r.to_address,
     )
+    const matchingSubmissions = sharpSubmissions
+      .filter((c) => c.selector === selector && c.address === r.to_address)
+      .filter((c) => isProgramHashProven(r, c.programHashes))
 
-    if (functionCallsConfig.length > 0) {
-      assert(
-        functionCallsConfig.length === 1,
-        'There should be exactly one matching config for functions',
-      )
-      return {
-        timestamp: r.block_timestamp,
-        blockNumber: r.block_number,
-        txHash: r.transaction_hash,
-        livenessId: functionCallsConfig[0].id,
-      }
-    }
-
-    // There can be more than one matching config for the projects using the same contract.
-    const sharpSubmissionsConfig = sharpSubmissions.filter(
-      (t) => r.input.startsWith(t.selector) && t.address === r.to_address,
-    )
-
-    const results: LivenessRecord[] = []
-
-    for (const config of sharpSubmissionsConfig) {
-      if (isProgramHashProven(r, config.programHashes)) {
-        results.push({
-          timestamp: r.block_timestamp,
-          blockNumber: r.block_number,
-          txHash: r.transaction_hash,
-          livenessId: config.id,
-        })
-      }
-    }
+    const results = [...matchingCalls, ...matchingSubmissions].map((c) => ({
+      timestamp: r.block_timestamp,
+      blockNumber: r.block_number,
+      txHash: r.transaction_hash,
+      livenessId: c.id,
+    }))
 
     assert(results.length > 0, 'There should be at least one matching config')
 

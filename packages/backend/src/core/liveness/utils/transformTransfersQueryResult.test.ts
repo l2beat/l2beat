@@ -124,42 +124,7 @@ describe(transformTransfersQueryResult.name, () => {
     ]
 
     expect(() => transformTransfersQueryResult(config, queryResults)).toThrow(
-      'There should be exactly one matching config',
-    )
-  })
-
-  it('should throw if there is more than one matching config', () => {
-    const config: LivenessTransfer[] = [
-      makeLivenessTransfer({
-        formula: 'transfer',
-        projectId: ProjectId('project1'),
-        from: ADDRESS_1,
-        to: ADDRESS_2,
-        type: 'STATE',
-        sinceTimestamp: SINCE_TIMESTAMP,
-      }),
-      makeLivenessTransfer({
-        formula: 'transfer',
-        projectId: ProjectId('project2'),
-        from: ADDRESS_1,
-        to: ADDRESS_2,
-        type: 'STATE',
-        sinceTimestamp: SINCE_TIMESTAMP,
-      }),
-    ]
-
-    const queryResults: BigQueryTransfersResult = [
-      {
-        from_address: ADDRESS_1,
-        to_address: ADDRESS_2,
-        transaction_hash: '',
-        block_number: 1,
-        block_timestamp: RESULT_TIMESTAMP,
-      },
-    ]
-
-    expect(() => transformTransfersQueryResult(config, queryResults)).toThrow(
-      'There should be exactly one matching config',
+      'There should be at least one matching config',
     )
   })
 })
