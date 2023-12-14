@@ -106,8 +106,6 @@ const CONFIGURATIONS: LivenessConfigEntry[] = [
   makeLivenessSharpSubmissions({
     projectId: ProjectId('project1'),
     formula: 'sharpSubmission',
-    address: ADDRESS_4,
-    selector: '0x9b3b76cc', // verifyProofAndRegister
     programHashes: [paradexProgramHash],
     sinceTimestamp: FROM,
     type: 'STATE',

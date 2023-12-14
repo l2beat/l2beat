@@ -58,8 +58,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
       makeLivenessSharpSubmissions({
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        address: ADDRESS_3,
-        selector: SELECTOR_3,
         type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
@@ -150,8 +148,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
       makeLivenessSharpSubmissions({
         formula: 'sharpSubmission',
         projectId: ProjectId('project1'),
-        address: ADDRESS_3,
-        selector: SELECTOR_3,
         type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
@@ -159,8 +155,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
       makeLivenessSharpSubmissions({
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        address: ADDRESS_3,
-        selector: SELECTOR_3,
         type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash + 'wrong-rest-part-of-hash'],
