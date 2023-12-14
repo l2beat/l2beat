@@ -8,7 +8,6 @@ import {
 import { BigQueryFunctionCallsResult } from '../types/model'
 import { isProgramHashProven } from './isProgramHashProven'
 
-// TODO: think about possible rename
 export function transformFunctionCallsQueryResult(
   functionCalls: LivenessFunctionCall[],
   sharpSubmissions: LivenessSharpSubmission[],
