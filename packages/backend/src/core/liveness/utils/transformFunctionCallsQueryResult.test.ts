@@ -145,41 +145,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ).toThrow('There should be at least one matching config')
   })
 
-  it('throws when there is more than one matching function configuration', () => {
-    const functionCalls: LivenessFunctionCall[] = [
-      makeLivenessFunctionCall({
-        formula: 'functionCall',
-        projectId: ProjectId('project1'),
-        address: ADDRESS_1,
-        selector: SELECTOR_1,
-        type: 'STATE',
-        sinceTimestamp: SINCE_TIMESTAMP,
-      }),
-      makeLivenessFunctionCall({
-        formula: 'functionCall',
-        projectId: ProjectId('project2'),
-        address: ADDRESS_1,
-        selector: SELECTOR_1,
-        type: 'STATE',
-        sinceTimestamp: SINCE_TIMESTAMP,
-      }),
-    ]
-
-    const queryResults: BigQueryFunctionCallsResult = [
-      {
-        to_address: ADDRESS_1,
-        input: SELECTOR_1,
-        transaction_hash: txHashes[0],
-        block_number: block,
-        block_timestamp: timestamp,
-      },
-    ]
-
-    expect(() =>
-      transformFunctionCallsQueryResult(functionCalls, [], queryResults),
-    ).toThrow('There should be exactly one matching config for functions')
-  })
-
   it('includes only configurations which program hashes were proven', () => {
     const sharpSubmissions: LivenessSharpSubmission[] = [
       makeLivenessSharpSubmissions({

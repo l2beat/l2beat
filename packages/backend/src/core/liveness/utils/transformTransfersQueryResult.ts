@@ -14,8 +14,8 @@ export function transformTransfersQueryResult(
     )
 
     assert(
-      matchingConfigs.length === 1,
-      'There should be exactly one matching config',
+      matchingConfigs.length > 0,
+      'There should be at least one matching config',
     )
 
     return {
