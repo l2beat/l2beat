@@ -61,7 +61,7 @@ export class UpdateNotifierRepository extends BaseRepository {
     const knex = await this.knex()
 
     const rows = await knex('update_notifier')
-      .where('unix_timestamp', '>=', from.toDate())
+      .where('created_at', '>=', from.toDate())
       .andWhere({ project_name: projectName, chain_id: Number(chainId) })
 
     return rows.map(toRecord)
