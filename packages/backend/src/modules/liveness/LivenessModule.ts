@@ -38,7 +38,9 @@ export function createLivenessModule(
       privateKey: config.liveness.bigQuery.privateKey,
       projectId: config.liveness.bigQuery.projectId,
     },
-    config.liveness.bigQuery.queryLimitGB,
+    config.liveness.bigQuery.queryLimitGb,
+    config.liveness.bigQuery.queryWarningLimitGb,
+    logger,
   )
   const livenessClient = new LivenessClient(bigQueryClient)
 
