@@ -254,7 +254,7 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
           sinceTimestamp: new UnixTime(1636978914),
-          programHash: [
+          programHashes: [
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },

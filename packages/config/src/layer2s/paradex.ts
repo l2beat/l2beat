@@ -107,7 +107,7 @@ export const paradex: Layer2 = {
           functionSignature:
             'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
           sinceTimestamp: new UnixTime(1636978914),
-          programHash: [
+          programHashes: [
             '3258367057337572248818716706664617507069572185152472699066582725377748079373',
           ],
         },

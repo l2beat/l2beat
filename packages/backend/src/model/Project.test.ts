@@ -85,7 +85,7 @@ describe('Backend project config', () => {
           )
 
           for (const config of sharpConfigs ?? []) {
-            for (const hash of config.programHash) {
+            for (const hash of config.programHashes) {
               assert(
                 !programHashes.has(hash),
                 `Duplicate program hash in ${project.projectId.toString()}`,

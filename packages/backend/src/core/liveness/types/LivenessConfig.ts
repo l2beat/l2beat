@@ -58,7 +58,7 @@ export interface LivenessSharpSubmission extends LivenessConfigBase {
   formula: 'sharpSubmission'
   address: EthereumAddress
   selector: string
-  programHash: string[]
+  programHashes: string[]
 }
 
 export function makeLivenessSharpSubmissions(
@@ -68,7 +68,7 @@ export function makeLivenessSharpSubmissions(
     ...baseValues(values),
     values.address.toString(),
     values.selector,
-    ...values.programHash,
+    ...values.programHashes,
   ])
   return { id, ...values }
 }

@@ -41,7 +41,7 @@ interface SharpSubmission {
   formula: 'sharpSubmission'
   address: EthereumAddress
   selector: `0x${string}`
-  programHash: string[]
+  programHashes: string[]
   functionSignature: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
