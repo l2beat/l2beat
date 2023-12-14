@@ -5,20 +5,20 @@ import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
 import { BridgesFilters } from '../../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../../components/table/props/getBridgesRowProps'
 import {
-  getActiveBridgesTvlColumnsConfig,
-  getArchivedBridgesTvlColumnsConfig,
+  getActiveBridgesSummaryColumnsConfig,
+  getArchivedBridgesSummaryColumnsConfig,
 } from '../../../../components/table/props/getBridgesTableColumnsConfig'
 import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
 import { Tabs } from '../../../../components/Tabs'
-import { BridgesTvlViewEntry } from '../types'
+import { BridgesSummaryViewEntry } from '../types'
 
-export interface BridgesTvlViewProps {
-  items: BridgesTvlViewEntry[]
+export interface BridgesSummaryViewProps {
+  items: BridgesSummaryViewEntry[]
 }
 
-export function BridgesTvlView({ items }: BridgesTvlViewProps) {
-  const rows: RowConfig<BridgesTvlViewEntry> = {
+export function BridgesSummaryView({ items }: BridgesSummaryViewProps) {
+  const rows: RowConfig<BridgesSummaryViewEntry> = {
     getProps: getBridgesRowProps,
   }
 
@@ -39,7 +39,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={activeProjects}
-                columnsConfig={getActiveBridgesTvlColumnsConfig()}
+                columnsConfig={getActiveBridgesSummaryColumnsConfig()}
                 rows={rows}
                 rerenderOnLoad
               />
@@ -54,7 +54,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             content: (
               <TableView
                 items={archivedProjects}
-                columnsConfig={getArchivedBridgesTvlColumnsConfig()}
+                columnsConfig={getArchivedBridgesSummaryColumnsConfig()}
                 rows={rows}
                 rerenderOnLoad
               />

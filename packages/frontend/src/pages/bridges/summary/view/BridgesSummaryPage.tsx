@@ -11,15 +11,18 @@ import { About } from '../../../../components/About'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
 import { PageContent } from '../../../../components/PageContent'
-import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
+import {
+  BridgesSummaryView,
+  BridgesSummaryViewProps,
+} from './BridgesSummaryView'
 
-export interface BridgesTvlPageProps {
-  tvlView: BridgesTvlViewProps
+export interface BridgesSummaryPageProps {
+  tvlView: BridgesSummaryViewProps
   footer: FooterProps
   navbar: NavbarProps
 }
 
-export function BridgesTvlPage(props: BridgesTvlPageProps) {
+export function BridgesSummaryPage(props: BridgesSummaryPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -32,7 +35,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
             initialType={{ type: 'bridges-tvl', includeCanonical: false }}
             header="tvl"
           />
-          <BridgesTvlView {...props.tvlView} />
+          <BridgesSummaryView {...props.tvlView} />
           <About />
         </main>
       </PageContent>

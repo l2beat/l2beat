@@ -47,6 +47,8 @@ export interface Layer2 {
   technology: Layer2Technology
   /** Open-source node details */
   stateDerivation?: Layer2StateDerivation
+  /** How project validates state? */
+  stateValidation?: string
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses */

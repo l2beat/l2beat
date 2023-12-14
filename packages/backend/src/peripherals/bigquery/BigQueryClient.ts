@@ -1,4 +1,5 @@
 import { BigQuery, Query } from '@google-cloud/bigquery'
+import { Logger } from '@l2beat/backend-tools'
 import { assert, RateLimiter } from '@l2beat/shared-pure'
 
 export interface BigQueryAuth {
@@ -10,15 +11,19 @@ export interface BigQueryAuth {
   projectId: string
 }
 
-const bytesInGb = 1_000_000_000
-// Currently the biggest query that we do takes around 5.1 GB
-// this limit ensures that there are no surprises and we do not overpay
-const LIMIT = 7 * bytesInGb
+const BYTES_IN_GB = 1_000_000_000
 
 export class BigQueryClient {
   private readonly bigquery: BigQuery
+  private readonly queryLimit: number
+  private readonly queryWarningLimit: number
 
-  constructor(auth: BigQueryAuth, private readonly queryLimit = LIMIT) {
+  constructor(
+    auth: BigQueryAuth,
+    queryLimitGb: number,
+    queryWarningLimitGb: number,
+    private readonly logger: Logger,
+  ) {
     this.bigquery = new BigQuery({
       credentials: {
         client_email: auth.clientEmail,
@@ -26,6 +31,8 @@ export class BigQueryClient {
       },
       projectId: auth.projectId,
     })
+    this.queryLimit = queryLimitGb * BYTES_IN_GB
+    this.queryWarningLimit = queryWarningLimitGb * BYTES_IN_GB
 
     const rateLimiter = new RateLimiter({
       callsPerMinute: 100,
@@ -41,6 +48,10 @@ export class BigQueryClient {
       estimate && estimate < this.queryLimit,
       'BigQuery estimate too high: ' + estimate.toString(),
     )
+
+    if (estimate > this.queryWarningLimit) {
+      this.logger.warn('BigQuery estimate is high: ' + estimate.toString())
+    }
 
     const [job] = await this.bigquery.createQueryJob(
       typeof query === 'string'
