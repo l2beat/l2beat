@@ -1,13 +1,16 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { readFileSync } from 'fs'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessClient } from './LivenessClient'
 import {
   LivenessConfigEntry,
   LivenessFunctionCall,
+  LivenessSharpSubmission,
   LivenessTransfer,
   makeLivenessFunctionCall,
+  makeLivenessSharpSubmissions,
   makeLivenessTransfer,
 } from './types/LivenessConfig'
 import {
@@ -62,7 +65,7 @@ describe(LivenessClient.name, () => {
       const bigquery = getMockBiqQuery([])
       const livenessClient = new LivenessClient(bigquery)
 
-      await livenessClient.getFunctionCalls([], FROM, TO)
+      await livenessClient.getFunctionCalls([], [], FROM, TO)
 
       expect(bigquery.query).not.toHaveBeenCalled()
     })
@@ -72,9 +75,15 @@ describe(LivenessClient.name, () => {
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
 const ADDRESS_3 = EthereumAddress.random()
+const ADDRESS_4 = EthereumAddress.random()
 // for the sake of simplicity those will be the same in all responses
 const TX_HASH = '0x123456'
 const BLOCK = 1
+
+const inputFile = `src/test/sharpVerifierInput.txt`
+const sharpInput = readFileSync(inputFile, 'utf-8')
+const paradexProgramHash =
+  '3258367057337572248818716706664617507069572185152472699066582725377748079373'
 
 const CONFIGURATIONS: LivenessConfigEntry[] = [
   makeLivenessTransfer({
@@ -91,6 +100,15 @@ const CONFIGURATIONS: LivenessConfigEntry[] = [
     formula: 'functionCall',
     address: ADDRESS_3,
     selector: '0x9aaab648',
+    sinceTimestamp: FROM,
+    type: 'STATE',
+  }),
+  makeLivenessSharpSubmissions({
+    projectId: ProjectId('project1'),
+    formula: 'sharpSubmission',
+    address: ADDRESS_4,
+    selector: '0x9b3b76cc', // verifyProofAndRegister
+    programHashes: [paradexProgramHash],
     sinceTimestamp: FROM,
     type: 'STATE',
   }),
@@ -119,12 +137,20 @@ const FUNCTIONS_RESPONSE = [
     block_timestamp: toBigQueryDate(FROM),
     transaction_hash: TX_HASH,
   },
+  {
+    to_address: (CONFIGURATIONS[2] as LivenessFunctionCall).address,
+    input: sharpInput,
+    block_number: BLOCK,
+    block_timestamp: toBigQueryDate(FROM),
+    transaction_hash: TX_HASH,
+  },
 ]
 
 const parsedFunctionCalls =
   BigQueryFunctionCallsResult.parse(FUNCTIONS_RESPONSE)
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[1] as LivenessFunctionCall],
+  [CONFIGURATIONS[2] as LivenessSharpSubmission],
   parsedFunctionCalls,
 )
 
@@ -135,6 +161,7 @@ const TRANSFERS_SQL = getTransferQuery(
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
   [CONFIGURATIONS[1] as LivenessFunctionCall],
+  [CONFIGURATIONS[2] as LivenessSharpSubmission],
   FROM,
   TO,
 )
