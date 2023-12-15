@@ -19,18 +19,25 @@ export function transformFunctionCallsQueryResult(
     const matchingCalls = functionCalls.filter(
       (c) => c.selector === selector && c.address === r.to_address,
     )
-    const matchingSubmissions = sharpSubmissions
-      .filter((c) => c.selector === selector && c.address === r.to_address)
-      .filter((c) => isProgramHashProven(r, c.programHashes))
+    const matchingSubmissions = sharpSubmissions.filter(
+      (c) => c.selector === selector && c.address === r.to_address,
+    )
 
-    const results = [...matchingCalls, ...matchingSubmissions].map((c) => ({
+    assert(
+      matchingCalls.length > 0 || matchingSubmissions.length > 0,
+      'There should be at least one matching config',
+    )
+
+    const filteredSubmissions = matchingSubmissions.filter((c) =>
+      isProgramHashProven(r, c.programHashes),
+    )
+
+    const results = [...matchingCalls, ...filteredSubmissions].map((c) => ({
       timestamp: r.block_timestamp,
       blockNumber: r.block_number,
       txHash: r.transaction_hash,
       livenessId: c.id,
     }))
-
-    assert(results.length > 0, 'There should be at least one matching config')
 
     return results
   })
