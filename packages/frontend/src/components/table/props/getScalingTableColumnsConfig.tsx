@@ -327,7 +327,7 @@ export function getScalingRiskColumnsConfig() {
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
     },
     {
-      name: 'Exit window',
+      name: 'Exit\nwindow',
       tooltip:
         'How much time do users have to exit the system in case of an unwanted upgrade?',
       getValue: (project) => <RiskCell item={project.exitWindow} />,
