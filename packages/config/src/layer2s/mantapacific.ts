@@ -56,6 +56,24 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       bridge: 'Hyperlane Nexus',
     },
   },
+  {
+    id: AssetId('mantapacific:stone-stakestone-ether'),
+    name: 'StakeStone Ether',
+    symbol: 'STONE',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672',
+    address: EthereumAddress('0xEc901DA9c68E90798BbBb74c11406A32A70652C3'),
+    coingeckoId: CoingeckoId('stakestone-ether'),
+    sinceTimestamp: new UnixTime(1699781729),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Layer Zero',
+      slug: 'omnichain',
+    },
+  },
 ]
 
 export const mantapacific: Layer2 = {
