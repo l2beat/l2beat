@@ -204,7 +204,7 @@ export const mantapacific: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+      rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
       stateVerificationOnL1: false,
