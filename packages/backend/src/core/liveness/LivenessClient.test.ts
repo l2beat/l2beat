@@ -75,7 +75,6 @@ describe(LivenessClient.name, () => {
 const ADDRESS_1 = EthereumAddress.random()
 const ADDRESS_2 = EthereumAddress.random()
 const ADDRESS_3 = EthereumAddress.random()
-const ADDRESS_4 = EthereumAddress.random()
 // for the sake of simplicity those will be the same in all responses
 const TX_HASH = '0x123456'
 const BLOCK = 1
