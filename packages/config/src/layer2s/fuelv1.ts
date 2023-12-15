@@ -62,29 +62,34 @@ export const fuelv1: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: null,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: [
+          true,
+          'Users have at least 30d to exit as the system cannot be upgraded.',
+        ],
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: null,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/cartesi/rollups/tree/v1.0.2/offchain',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: [
-        true,
-        'Users have at least 30d to exit as the system cannot be upgraded.',
-      ],
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
