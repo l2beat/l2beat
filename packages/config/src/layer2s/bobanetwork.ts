@@ -223,7 +223,7 @@ export const bobanetwork: Layer2 = {
       references: [
         {
           text: 'Data Availability Batches - Paradigm Research',
-          href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
         {
           text: 'CanonicalTransactionChain.sol#L219 - Etherscan source code, appendSequencerBatch function',
