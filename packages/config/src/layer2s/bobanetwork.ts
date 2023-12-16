@@ -259,7 +259,7 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The Standard Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/standard-bridge',
           },
           {
             text: 'BondManager.sol#L31 - Etherscan source code, isCollateralized function',
@@ -275,7 +275,7 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The LP Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge-1',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/fast-bridge',
           },
         ],
         risks: [],
