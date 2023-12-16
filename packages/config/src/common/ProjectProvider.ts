@@ -1,0 +1,11 @@
+export type ProjectProvider =
+  | 'StarkEx'
+  | 'OP Stack'
+  | 'zkSync Lite'
+  | 'ZK Stack'
+  | 'Loopring'
+  | 'Arbitrum'
+  | 'Polygon'
+  | 'OVM'
+  | 'Starknet'
+  | 'Arbitrum Orbit'

@@ -1,13 +1,12 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
-import { Layer2 } from '../types'
+import { CONTRACTS } from './common'
+import { Layer3 } from './types'
 
-export const xai: Layer2 = {
+export const xai: Layer3 = {
   isUpcoming: true,
-  type: 'layer2',
+  type: 'layer3',
   id: ProjectId('xai'),
-  isLayer3: true,
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Xai',
@@ -32,13 +31,5 @@ export const xai: Layer2 = {
     activityDataSource: 'Blockchain RPC',
     dataAvailabilityMode: 'NotApplicable',
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
 }
