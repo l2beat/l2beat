@@ -7,7 +7,10 @@ import {
 
 import { LivenessId } from './LivenessId'
 
-export type LivenessConfigEntry = LivenessFunctionCall | LivenessTransfer
+export type LivenessConfigEntry =
+  | LivenessFunctionCall
+  | LivenessTransfer
+  | LivenessSharpSubmission
 
 interface LivenessConfigBase {
   id: LivenessId
@@ -49,6 +52,25 @@ export function makeLivenessTransfer(
     values.to.toString(),
   ])
   return { id, ...values }
+}
+
+export interface LivenessSharpSubmission extends LivenessConfigBase {
+  formula: 'sharpSubmission'
+  address: EthereumAddress
+  selector: string
+  programHashes: string[]
+}
+
+const sharpAddress = EthereumAddress(
+  '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
+)
+const sharpSelector = '0x9b3b76cc'
+
+export function makeLivenessSharpSubmissions(
+  values: Omit<LivenessSharpSubmission, 'id' | 'address' | 'selector'>,
+): LivenessSharpSubmission {
+  const id = LivenessId([...baseValues(values), ...values.programHashes])
+  return { id, ...values, address: sharpAddress, selector: sharpSelector }
 }
 
 function baseValues(values: Omit<LivenessConfigEntry, 'id'>) {

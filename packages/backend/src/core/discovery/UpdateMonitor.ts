@@ -72,7 +72,9 @@ export class UpdateMonitor {
 
       const notUpdatedProjects: string[] = []
       for (const projectConfig of projectConfigs) {
-        const discovery = this.cachedDiscovery.get(projectConfig.name)
+        const discovery = this.cachedDiscovery.get(
+          this.getCacheKey(projectConfig.name, chainId),
+        )
 
         if (!discovery) {
           continue
@@ -172,7 +174,10 @@ export class UpdateMonitor {
       runSanityCheck: true,
       injectInitialAddresses: true,
     })
-    this.cachedDiscovery.set(projectConfig.name, discovery)
+    this.cachedDiscovery.set(
+      this.getCacheKey(projectConfig.name, runner.getChainId()),
+      discovery,
+    )
 
     const deployedDiscovered = await this.configReader.readDiscovery(
       projectConfig.name,
@@ -289,6 +294,10 @@ export class UpdateMonitor {
       histogramDone()
       latestBlock.set(blockNumber)
     }
+  }
+
+  private getCacheKey(projectName: string, chainId: ChainId): string {
+    return `${ChainId.getName(chainId)}:${projectName}`
   }
 }
 
