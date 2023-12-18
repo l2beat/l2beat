@@ -11,6 +11,7 @@ export interface ScalingSummaryViewEntry {
   category: Layer2['display']['category']
   provider?: Layer2['display']['provider']
   warning?: string
+  redWarning?: string
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean

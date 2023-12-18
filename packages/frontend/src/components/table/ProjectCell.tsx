@@ -10,6 +10,7 @@ export interface ProjectCellProps {
     isVerified?: boolean
     isUpcoming?: boolean
     isArchived?: boolean
+    redWarning?: string
     showProjectUnderReview?: boolean
     warning?: string
   }
@@ -37,6 +38,13 @@ export function ProjectCell({ project }: ProjectCellProps) {
             title="This project contains unverified contracts."
           >
             <UnverifiedIcon className="relative top-px h-4 w-4 fill-red-300" />
+          </span>
+        </span>
+      )}
+      {project.redWarning && (
+        <span className="pl-1.5">
+          <span className="Tooltip inline-block" title={project.redWarning}>
+            <ShieldIcon className="relative top-px h-4 w-4 fill-red-300" />
           </span>
         </span>
       )}
