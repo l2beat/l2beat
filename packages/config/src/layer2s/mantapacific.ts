@@ -23,7 +23,6 @@ import {
   subtractOne,
 } from './common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantapacific')
@@ -85,12 +84,12 @@ export const mantapacific: Layer2 = {
     name: 'Manta Pacific',
     slug: 'mantapacific',
     description:
-      'Manta Pacific is an optimistic rollup empowering EVM-native zero-knowledge (ZK) applications and general dapps with a scalable, cost-effective environment to deploy simply using Solidity. Manta Pacific plans to eventually leverage Celestia for data availability to lower gas costs for users across all applications in its ecosystem.',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
+      'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps. Manta Pacific currently uses Celestia for data availability.',
+    redWarning:
+      'The fraud proof system is still under development and data is posted offchain.',
     purpose: 'Universal',
-    category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
+    category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'OP Stack',
     links: {
       websites: ['https://pacific.manta.network/'],
@@ -140,39 +139,16 @@ export const mantapacific: Layer2 = {
       callsPerMinute: 1500,
       assessCount: subtractOne,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
-          formula: 'transfer',
-          from: EthereumAddress('0xa76e31d8471d569efdd3d95d1b11ce6710f4533f'),
-          to: EthereumAddress('0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe'),
-          sinceTimestamp: new UnixTime(1694225435),
-        },
-      ],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x30c789674ad3B458886BBC9abf42EEe19EA05C1D',
-          ),
-          selector: '0x9aaab648',
-          functionSignature:
-            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1694221607),
-        },
-      ],
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
+      ...RISK_VIEW.DATA_CELESTIA(false),
       sources: [
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1#code#F1#L376',
+            'https://etherscan.io/address/0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1#code#F1#L376', // this ref only implies that deposited txs are onchain
           ],
         },
       ],
@@ -217,26 +193,9 @@ export const mantapacific: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
-    },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
-    },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  stage: {
+    stage: 'NotApplicable',
+  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
@@ -257,12 +216,9 @@ export const mantapacific: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
       references: [
-        {
-          text: 'Derivation: Batch submission - OP Stack specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
-        },
+        ...DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false).references,
         {
           text: 'BatchInbox - Etherscan address',
           href: 'https://etherscan.io/address/0xaeba8e2307a22b6824a9a7a39f8b016c357cd1fe',
@@ -305,7 +261,7 @@ export const mantapacific: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR('optimistic', 'merkle proof', challengePeriod),
         references: [
           {
             text: 'OptimismPortal.sol#L242 - Etherscan source code, proveWithdrawalTransaction function',

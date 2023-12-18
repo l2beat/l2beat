@@ -99,7 +99,7 @@ export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
     Challenge mechanizm is not yet fully implemented.',
-  sentiment: 'warning',
+  sentiment: 'bad',
 }
 
 export const DATA_EXTERNAL_DAC: ProjectRiskViewEntry = {
@@ -117,15 +117,18 @@ export const DATA_EXTERNAL: ProjectRiskViewEntry = {
 }
 
 // Upgradability
-
-export function UPGRADABLE_ZKSYNC(
-  delay: string,
-  securityCouncil: string,
+export function DATA_CELESTIA(
+  isUsingBlobstream: boolean,
 ): ProjectRiskViewEntry {
+  const additional = isUsingBlobstream
+    ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
+    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots, meaning that the Sequencer can single-handedly post unavaialable roots.'
   return {
-    value: `${delay} or no delay`,
-    description: `There is ${delay} for upgrades initiated by ZkSync Multisig. The ${securityCouncil} Security Council can override the delay and allow instant upgrade. Some system components can be changed with no delay but that do not impede the ability for users to withdraw permissionlessly.`,
-    sentiment: 'warning',
+    value: 'External',
+    description:
+      `Proof construction and state derivation rely fully on data that is posted on Celestia.` +
+      additional,
+    sentiment: isUsingBlobstream ? 'warning' : 'bad',
   }
 }
 
@@ -426,6 +429,8 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
+  DATA_CELESTIA,
+  UPGRADABLE_YES,
   VALIDATED_BY_ETHEREUM,
   NATIVE_AND_CANONICAL,
   CANONICAL,
@@ -449,5 +454,4 @@ export const RISK_VIEW = {
   EXIT_WINDOW,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,
-  UPGRADABLE_YES,
 }
