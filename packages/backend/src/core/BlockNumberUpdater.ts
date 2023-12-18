@@ -35,7 +35,7 @@ export class BlockNumberUpdater {
 
     assert(
       this.chainId === blockNumberProvider.getChainId(),
-      'chainId mismatch between blockNumberProvider and consturctor argument',
+      'chainId mismatch between blockNumberProvider and constructor argument',
     )
   }
 
