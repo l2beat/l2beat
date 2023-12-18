@@ -4,7 +4,7 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { FieldThrottler } from './FieldThrottler'
+import { fieldThrottleDiff } from './FieldThrottler'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
@@ -20,15 +20,12 @@ const OCCURRENCE_LIMIT = 3
 const HOUR_RANGE = 4
 
 export class UpdateNotifier {
-  readonly throttler: FieldThrottler
-
   constructor(
     private readonly updateNotifierRepository: UpdateNotifierRepository,
     private readonly discordClient: DiscordClient | undefined,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.throttler = new FieldThrottler()
   }
 
   async handleUpdate(
@@ -60,11 +57,7 @@ export class UpdateNotifier {
       metadata.chainId,
     )
 
-    const throttled = this.throttler.filterDiff(
-      previousRecords,
-      diff,
-      OCCURRENCE_LIMIT,
-    )
+    const throttled = fieldThrottleDiff(previousRecords, diff, OCCURRENCE_LIMIT)
     if (throttled.length <= 0) {
       this.logger.info('Updates detected, but everything got throttled', {
         name,

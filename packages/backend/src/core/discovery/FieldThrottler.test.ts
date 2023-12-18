@@ -3,9 +3,9 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { UpdateNotifierRecord } from '../../peripherals/database/discovery/UpdateNotifierRepository'
-import { FieldThrottler } from './FieldThrottler'
+import { fieldThrottleDiff } from './FieldThrottler'
 
-describe(FieldThrottler.name, () => {
+describe(fieldThrottleDiff.name, () => {
   const OCCURRENCE_LIMIT = 2
 
   const ADDRESS_A = EthereumAddress.random()
@@ -76,11 +76,7 @@ describe(FieldThrottler.name, () => {
       ]),
     ]
 
-    const fieldThrottler = new FieldThrottler()
-
-    expect(
-      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
-    ).toEqual([
+    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual([
       {
         ...DIFF[0],
         diff: DIFF[0].diff?.slice(1),
@@ -94,29 +90,23 @@ describe(FieldThrottler.name, () => {
 
   it('does nothing if database returned correct amount of empty diffs', async () => {
     const previousRecords = [mockRecord([]), mockRecord([])]
-    const fieldThrottler = new FieldThrottler()
-
-    expect(
-      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
-    ).toEqual(DIFF)
+    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual(
+      DIFF,
+    )
   })
 
   it('does nothing if database returned less diffs than limit', async () => {
     const previousRecords = [mockRecord([])]
-    const fieldThrottler = new FieldThrottler()
-
-    expect(
-      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
-    ).toEqual(DIFF)
+    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual(
+      DIFF,
+    )
   })
 
   it('does nothing if database is empty', async () => {
     const previousRecords: ReturnType<typeof mockRecord>[] = []
-    const fieldThrottler = new FieldThrottler()
-
-    expect(
-      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
-    ).toEqual(DIFF)
+    expect(fieldThrottleDiff(previousRecords, DIFF, OCCURRENCE_LIMIT)).toEqual(
+      DIFF,
+    )
   })
 })
 
