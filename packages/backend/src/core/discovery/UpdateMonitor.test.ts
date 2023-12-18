@@ -55,6 +55,40 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
   version: 0,
 }
 
+const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
+  name: PROJECT_B,
+  chain: ChainId.getName(ChainId.ETHEREUM),
+  blockNumber: BLOCK_NUMBER,
+  configHash: Hash256.random(),
+  contracts: [
+    {
+      ...mockContract(NAME_A, ADDRESS_A),
+      values: { a: false },
+    },
+    mockContract(NAME_B, ADDRESS_B),
+  ],
+  eoas: [],
+  abis: {},
+  version: 0,
+}
+
+const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
+  name: PROJECT_B,
+  chain: ChainId.getName(ChainId.ARBITRUM),
+  blockNumber: BLOCK_NUMBER,
+  configHash: Hash256.random(),
+  contracts: [
+    {
+      ...mockContract(NAME_A, ADDRESS_A),
+      values: { c: true, a: false },
+    },
+    mockContract(NAME_B, ADDRESS_B),
+  ],
+  eoas: [],
+  abis: {},
+  version: 0,
+}
+
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
@@ -574,6 +608,150 @@ describe(UpdateMonitor.name, () => {
         BLOCK_NUMBER - 1,
         OPTIONS,
       )
+    })
+  })
+
+  describe(UpdateMonitor.prototype.generateDailyReminder.name, () => {
+    it('does not cross-contaminate between chains', async () => {
+      const discoveryRunnerEth = discoveryRunner
+      const discoveryRunnerArb = mockObject<DiscoveryRunner>({
+        run: async () => DISCOVERY_RESULT_ARB_2,
+        getChainId: () => ChainId.ARBITRUM,
+        getBlockNumber: async () => BLOCK_NUMBER,
+      })
+
+      const runners = [discoveryRunnerEth, discoveryRunnerArb]
+
+      const timestamp = new UnixTime(0)
+      const repository = mockObject<UpdateMonitorRepository>({
+        findLatest: async () => undefined,
+        addOrUpdate: async () => '',
+      })
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: async (name: string, chainId: ChainId) => {
+          if (name === PROJECT_B && chainId === ChainId.ETHEREUM) {
+            return DISCOVERY_RESULT_ETH_2
+          }
+          if (name === PROJECT_A && chainId === ChainId.ARBITRUM) {
+            return DISCOVERY_RESULT
+          }
+
+          return {
+            ...mockProject,
+            contracts: COMMITTED,
+          }
+        },
+
+        readAllConfigsForChain: async (chainId: ChainId) => {
+          if (chainId === ChainId.ARBITRUM) {
+            return [mockConfig(PROJECT_B, chainId)]
+          }
+
+          return [
+            mockConfig(PROJECT_A, chainId),
+            mockConfig(PROJECT_B, chainId),
+          ]
+        },
+      })
+      const updateMonitor = new UpdateMonitor(
+        runners,
+        updateNotifier,
+        configReader,
+        repository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+        false,
+        0,
+      )
+
+      await updateMonitor.update(timestamp)
+      const result = await updateMonitor.generateDailyReminder()
+
+      expect(Object.entries(result).length).toEqual(runners.length)
+      expect(result).toEqual({
+        ethereum: ['project-a'],
+        arbitrum: ['project-b'],
+      })
+    })
+
+    it('generates the daily reminder for two different chains', async () => {
+      const discoveryRunnerEth = discoveryRunner
+      const discoveryRunnerArb = mockObject<DiscoveryRunner>({
+        run: async () => DISCOVERY_RESULT,
+        getChainId: () => ChainId.ARBITRUM,
+        getBlockNumber: async () => BLOCK_NUMBER,
+      })
+
+      const runners = [discoveryRunnerEth, discoveryRunnerArb]
+
+      const timestamp = new UnixTime(0)
+      const repository = mockObject<UpdateMonitorRepository>({
+        findLatest: async () => undefined,
+        addOrUpdate: async () => '',
+      })
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: async () => ({
+          ...mockProject,
+          contracts: COMMITTED,
+        }),
+
+        readAllConfigsForChain: async (chainId: ChainId) => {
+          return [mockConfig(PROJECT_A, chainId)]
+        },
+      })
+      const updateMonitor = new UpdateMonitor(
+        runners,
+        updateNotifier,
+        configReader,
+        repository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+        false,
+        0,
+      )
+
+      await updateMonitor.update(timestamp)
+      const result = await updateMonitor.generateDailyReminder()
+
+      expect(Object.entries(result).length).toEqual(runners.length)
+      expect(result).toEqual({
+        ethereum: ['project-a'],
+        arbitrum: ['project-a'],
+      })
+    })
+
+    it('does nothing for an empty cache', async () => {
+      const timestamp = new UnixTime(0)
+      const repository = mockObject<UpdateMonitorRepository>({
+        findLatest: async () => undefined,
+        addOrUpdate: async () => '',
+      })
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: async () => ({
+          ...mockProject,
+          contracts: COMMITTED,
+        }),
+
+        readAllConfigsForChain: async (chainId: ChainId) => {
+          return [mockConfig(PROJECT_A, chainId)]
+        },
+      })
+
+      const updateMonitor = new UpdateMonitor(
+        [],
+        updateNotifier,
+        configReader,
+        repository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+        false,
+        0,
+      )
+
+      await updateMonitor.update(timestamp)
+      const result = await updateMonitor.generateDailyReminder()
+
+      expect(Object.entries(result).length).toEqual(0)
     })
   })
 })
