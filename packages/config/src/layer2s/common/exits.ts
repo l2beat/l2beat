@@ -4,12 +4,17 @@ import { formatSeconds } from '../../utils/formatSeconds'
 function REGULAR(
   type: 'zk' | 'optimistic',
   proof: 'no proof' | 'merkle proof',
+  timeSeconds?: number,
 ): ProjectTechnologyChoice {
   const finalized = type === 'zk' ? 'proven' : 'finalized'
   const requires = proof === 'no proof' ? 'does not require' : 'requires'
+  const timeString =
+    timeSeconds !== undefined
+      ? `takes ${formatSeconds(timeSeconds)}`
+      : 'usually takes several days'
   const time =
     type === 'optimistic'
-      ? ' The process of block finalization usually takes several days to complete.'
+      ? ` The process of block finalization ${timeString} to complete.`
       : ''
   return {
     name: 'Regular exit',

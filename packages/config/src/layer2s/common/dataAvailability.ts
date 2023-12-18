@@ -111,6 +111,37 @@ const PLASMA_OFF_CHAIN: ProjectTechnologyChoice = {
     'The transaction data is stored on a plasma chain and is not recorded on the Ethereum main chain.',
 }
 
+function CELESTIA_OFF_CHAIN(
+  isUsingBlobstream: boolean,
+): ProjectTechnologyChoice {
+  const additionalDescription = isUsingBlobstream
+    ? ' The blobstream bridge is used to verify attestations from the Celestia validator set that the data is indeed available.'
+    : ' Since the Blobstream bridge is not used, availability of the data is not verified against Celestia validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
+  return {
+    name: 'Data is stored on Celestia',
+    description:
+      `Transactions roots are posted onchain and the full data is posted on Celestia. ` +
+      additionalDescription,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'The sequencer posts an unavailable transaction root.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'The data is not available on Celestia.',
+      },
+    ],
+    references: [
+      {
+        text: 'Introducing Blobstream: streaming modular DA to Ethereum',
+        href: 'https://blog.celestia.org/introducing-blobstream/',
+      },
+    ],
+  }
+}
+
 export const DATA_AVAILABILITY = {
   ON_CHAIN,
   ON_CHAIN_CANONICAL,
@@ -120,4 +151,5 @@ export const DATA_AVAILABILITY = {
   STARKEX_OFF_CHAIN,
   ANYTRUST_OFF_CHAIN,
   PLASMA_OFF_CHAIN,
+  CELESTIA_OFF_CHAIN,
 }
