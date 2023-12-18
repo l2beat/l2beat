@@ -41,7 +41,10 @@ export function RiskSection({ title, id, riskGroups }: RiskSectionProps) {
                   {item.isCritical ? (
                     <>
                       {item.text.slice(0, -1)}{' '}
-                      <span className="text-red-300 underline">(CRITICAL)</span>
+                      <span className="text-red-300 underline">
+                        {' '}
+                        (CRITICAL)
+                      </span>
                       {item.text.slice(-1)}
                     </>
                   ) : (
