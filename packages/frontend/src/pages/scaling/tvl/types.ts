@@ -1,4 +1,4 @@
-import { Layer2, StageConfig } from '@l2beat/config'
+import { ProjectCategory, ProjectProvider, StageConfig } from '@l2beat/config'
 
 import { TokenControl } from '../../../components/chart/TokenControls'
 import { RiskValues } from '../../../utils/risks/types'
@@ -8,8 +8,8 @@ export interface ScalingTvlViewEntry {
   name: string
   slug: string
   riskValues: RiskValues
-  category: Layer2['display']['category']
-  provider?: Layer2['display']['provider']
+  category: ProjectCategory
+  provider?: ProjectProvider
   warning?: string
   isArchived?: boolean
   isVerified?: boolean

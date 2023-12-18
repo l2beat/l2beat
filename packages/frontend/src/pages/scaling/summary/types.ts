@@ -1,29 +1,42 @@
-import { Layer2, StageConfig } from '@l2beat/config'
+import { ProjectCategory, ProjectProvider, StageConfig } from '@l2beat/config'
 
 import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
 import { ValueWithDisplayValue } from '../../types'
 
-export interface ScalingSummaryViewEntry {
+export interface ScalingSummaryViewEntryBase {
   name: string
   slug: string
-  riskValues: RiskValues
-  category: Layer2['display']['category']
-  provider?: Layer2['display']['provider']
+  category: ProjectCategory
+  provider?: ProjectProvider
   warning?: string
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
+  purpose: string
+}
+
+export interface ScalingSummaryViewEntryLayer2
+  extends ScalingSummaryViewEntryBase {
+  type: 'layer2'
+  riskValues: RiskValues
+  stage: StageConfig
   tvl?: ValueWithDisplayValue
-  isLayer3?: boolean
-  hostChainName?: string
   tvlTooltip?: string
   tvlBreakdown?: TVLBreakdownProps
   oneDayChange?: string
   sevenDayChange?: string
   marketShare?: ValueWithDisplayValue
   marketShareValue?: number
-  purpose: string
-  stage: StageConfig
 }
+
+export interface ScalingSummaryViewEntryLayer3
+  extends ScalingSummaryViewEntryBase {
+  type: 'layer3'
+  hostChainName?: string
+}
+
+export type ScalingSummaryViewEntry =
+  | ScalingSummaryViewEntryLayer2
+  | ScalingSummaryViewEntryLayer3

@@ -86,7 +86,6 @@ export function getProjectHeader(
     risks: getRiskValues(project.riskView),
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
-    isLayer3: project.isLayer3,
     isUnderReview: project.isUnderReview,
     showProjectUnderReview: isAnySectionUnderReview(project),
     warning: project.display.headerWarning,

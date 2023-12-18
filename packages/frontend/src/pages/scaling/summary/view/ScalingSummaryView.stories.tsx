@@ -18,6 +18,7 @@ const meta = {
         name: 'Base',
         slug: 'base',
         provider: 'OP Stack',
+        type: 'layer2',
         riskValues: {
           dataAvailability: {
             value: '',
@@ -98,6 +99,7 @@ const meta = {
       {
         name: 'Linea',
         slug: 'linea',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -159,6 +161,7 @@ const meta = {
       {
         name: 'Mantle',
         slug: 'mantle',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -220,6 +223,7 @@ const meta = {
       {
         name: 'Scroll',
         slug: 'scroll',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -279,6 +283,7 @@ const meta = {
       {
         name: 'Taiko',
         slug: 'taiko',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -338,6 +343,7 @@ const meta = {
       {
         name: 'ZKSwap 1.0',
         slug: 'zkswap',
+        type: 'layer2',
         provider: 'zkSync Lite',
         riskValues: {
           dataAvailability: {
@@ -404,6 +410,7 @@ const meta = {
       {
         name: 'Polygon Hermez',
         slug: 'hermez',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -469,6 +476,7 @@ const meta = {
       {
         name: 'ZKSwap 2.0',
         slug: 'zkswap2',
+        type: 'layer2',
         provider: 'zkSync Lite',
         riskValues: {
           dataAvailability: {
@@ -536,6 +544,7 @@ const meta = {
       {
         name: 'Gluon',
         slug: 'gluon',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -602,6 +611,7 @@ const meta = {
       {
         name: 'OMG Network',
         slug: 'omgnetwork',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -667,6 +677,7 @@ const meta = {
       {
         name: 'L2.Finance-zk',
         slug: 'layer2financezk',
+        type: 'layer2',
         provider: 'StarkEx',
         riskValues: {
           dataAvailability: {
@@ -732,6 +743,7 @@ const meta = {
       {
         name: 'Arbitrum One',
         slug: 'arbitrum',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -821,6 +833,7 @@ const meta = {
       {
         name: 'Optimism',
         slug: 'optimism',
+        type: 'layer2',
         provider: 'OP Stack',
         riskValues: {
           dataAvailability: {
@@ -888,6 +901,7 @@ const meta = {
       {
         name: 'dYdX',
         slug: 'dydx',
+        type: 'layer2',
         provider: 'StarkEx',
         riskValues: {
           dataAvailability: {
@@ -952,6 +966,7 @@ const meta = {
       {
         name: 'zkSync Era',
         slug: 'zksync-era',
+        type: 'layer2',
         provider: 'ZK Stack',
         riskValues: {
           dataAvailability: {
@@ -1017,6 +1032,7 @@ const meta = {
       {
         name: 'Metis Andromeda',
         slug: 'metis',
+        type: 'layer2',
         provider: 'OVM',
         riskValues: {
           dataAvailability: {
@@ -1084,6 +1100,7 @@ const meta = {
       {
         name: 'Loopring',
         slug: 'loopring',
+        type: 'layer2',
         provider: undefined,
         riskValues: {
           dataAvailability: {
@@ -1169,6 +1186,7 @@ const meta = {
       {
         name: 'Immutable X',
         slug: 'immutablex',
+        type: 'layer2',
         provider: 'StarkEx',
         riskValues: {
           dataAvailability: {

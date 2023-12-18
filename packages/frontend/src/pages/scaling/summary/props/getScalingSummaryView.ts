@@ -1,4 +1,4 @@
-import { Layer2, layer2s } from '@l2beat/config'
+import { Layer2, layer2s, Layer3 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
@@ -12,7 +12,7 @@ import { ScalingSummaryViewEntry } from '../types'
 import { ScalingSummaryViewProps } from '../view/ScalingSummaryView'
 
 export function getScalingSummaryView(
-  projects: Layer2[],
+  projects: (Layer2 | Layer3)[],
   tvlApiResponse: TvlApiResponse,
   tvl: number,
   verificationStatus: VerificationStatus,
@@ -32,62 +32,79 @@ export function getScalingSummaryView(
 }
 
 function getScalingSummarySummaryEntry(
-  project: Layer2,
+  project: Layer2 | Layer3,
   tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
   isVerified?: boolean,
 ): ScalingSummaryViewEntry {
-  const associatedTokens = project.config.associatedTokens ?? []
-  const apiProject = tvlApiResponse.projects[project.id.toString()]
+  if (project.type === 'layer2') {
+    const associatedTokens = project.config.associatedTokens ?? []
+    const apiProject = tvlApiResponse.projects[project.id.toString()]
 
-  let stats: TvlStats | undefined
+    let stats: TvlStats | undefined
 
-  if (!apiProject) {
-    if (!project.isUpcoming && !project.isLayer3) {
-      throw new Error(`Project ${project.display.name} is missing in api`)
+    if (!apiProject) {
+      if (!project.isUpcoming) {
+        throw new Error(`Project ${project.display.name} is missing in api`)
+      }
+    } else {
+      stats = getTvlStats(apiProject, project.display.name, associatedTokens)
+    }
+
+    return {
+      name: project.display.name,
+      slug: project.display.slug,
+      type: 'layer2',
+      provider: project.display.provider,
+      category: project.display.category,
+      riskValues: getRiskValues(project.riskView),
+      warning: project.display.warning,
+      isVerified,
+      isArchived: project.isArchived,
+      showProjectUnderReview: isAnySectionUnderReview(project),
+      isUpcoming: project.isUpcoming,
+
+      tvl:
+        stats && escrowsConfigured(project)
+          ? {
+              value: stats.latestTvl,
+              displayValue: formatUSD(stats.latestTvl),
+            }
+          : undefined,
+      tvlTooltip: getProjectTvlTooltipText(project.config),
+      tvlBreakdown:
+        stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
+      oneDayChange:
+        stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
+      sevenDayChange:
+        stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
+      marketShare:
+        stats && escrowsConfigured(project)
+          ? {
+              value: stats.latestTvl / aggregateTvl,
+              displayValue: formatPercent(stats.latestTvl / aggregateTvl),
+            }
+          : undefined,
+      marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
+      purpose: project.display.purpose,
+      stage: project.stage,
     }
   } else {
-    stats = getTvlStats(apiProject, project.display.name, associatedTokens)
-  }
-
-  return {
-    name: project.display.name,
-    slug: project.display.slug,
-    provider: project.display.provider,
-    category: project.display.category,
-    riskValues: getRiskValues(project.riskView),
-    warning: project.display.warning,
-    isVerified,
-    isArchived: project.isArchived,
-    showProjectUnderReview: isAnySectionUnderReview(project),
-    isUpcoming: project.isUpcoming,
-    isLayer3: project.isLayer3,
-    hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
-      .name,
-    tvl:
-      stats && escrowsConfigured(project)
-        ? {
-            value: stats.latestTvl,
-            displayValue: formatUSD(stats.latestTvl),
-          }
-        : undefined,
-    tvlTooltip: getProjectTvlTooltipText(project.config),
-    tvlBreakdown:
-      stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
-    oneDayChange:
-      stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
-    sevenDayChange:
-      stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
-    marketShare:
-      stats && escrowsConfigured(project)
-        ? {
-            value: stats.latestTvl / aggregateTvl,
-            displayValue: formatPercent(stats.latestTvl / aggregateTvl),
-          }
-        : undefined,
-    marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
-    purpose: project.display.purpose,
-    stage: project.stage,
+    return {
+      name: project.display.name,
+      slug: project.display.slug,
+      type: 'layer3',
+      provider: project.display.provider,
+      category: project.display.category,
+      warning: project.display.warning,
+      isVerified,
+      isArchived: project.isArchived,
+      showProjectUnderReview: isAnySectionUnderReview(project),
+      isUpcoming: project.isUpcoming,
+      purpose: project.display.purpose,
+      hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
+        .name,
+    }
   }
 }
 

@@ -13,7 +13,7 @@ export function getScalingRiskView(
   const included = getIncludedProjects(
     projects,
     pagesData.tvlApiResponse,
-  ).filter((p) => !p.isUpcoming && !p.isLayer3)
+  ).filter((p) => !p.isUpcoming)
   const ordered = orderByTvl(included, pagesData.tvlApiResponse)
 
   return {

@@ -1,4 +1,9 @@
-import { Layer2Display, StageConfig } from '@l2beat/config'
+import {
+  ProjectCategory,
+  ProjectDataAvailabilityMode,
+  ProjectProvider,
+  StageConfig,
+} from '@l2beat/config'
 import {
   LivenessApiResponse,
   LivenessDetails,
@@ -12,9 +17,9 @@ export interface LivenessPagesData {
 export interface ScalingLivenessViewEntry {
   name: string
   slug: string
-  category: Layer2Display['category']
-  dataAvailabilityMode: Layer2Display['dataAvailabilityMode']
-  provider: Layer2Display['provider'] | undefined
+  category: ProjectCategory
+  dataAvailabilityMode: ProjectDataAvailabilityMode
+  provider: ProjectProvider | undefined
   warning: string | undefined
   stage: StageConfig
   explanation: string | undefined
