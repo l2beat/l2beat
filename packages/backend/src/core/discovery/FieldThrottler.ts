@@ -1,53 +1,18 @@
-import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
+import { UpdateNotifierRecord } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 
 const DEFAULT_OCCURRENCE_LIMIT = 3
-const DEFAULT_HOUR_RANGE = 4
 
 export class FieldThrottler {
-  constructor(
-    private readonly updateNotifierRepository: UpdateNotifierRepository,
-    private readonly logger: Logger,
-    private readonly occurrenceLimit = DEFAULT_OCCURRENCE_LIMIT,
-    private readonly hourRange = DEFAULT_HOUR_RANGE,
-  ) {}
-
-  async filterDiff(
-    projectName: string,
-    chainId: ChainId,
+  filterDiff(
+    previousRecords: UpdateNotifierRecord[],
     diff: DiscoveryDiff[],
-  ): Promise<DiscoveryDiff[]> {
-    // NOTE(radomski): For myself tomorrow, the idea behind this is
-    // to get the diffs saved for a project/chainId combo. Get the last 3
-    // diffs, if the time difference between the first and last diff is
-    // less than 4 hours, throttle values that are recurring in those three
-    // diffs. This is because in the UpdateNoitiferRepository we never
-    // overwrite. Everything is appended so we know the entire history of
-    // the diffs sent. Thus we can track any things that start to act
-    // irrationally.
-    //
-    // There are some problems, like the fact that we rely on the
-    // UpdateNotifierRepository already having that diff that we want to
-    // throttle. The best idea to be secure any potential changes in the
-    // future is to write a test that will prevent any code changes that
-    // change the order. We might even put in an assert that checks if the
-    // last diff from the database matches the one that is sent to us.
-    //
-    // Maybe just insert into the database here? Fixes the check, and still
-    // only one place where everything is stored.
-
-    const timeFence = UnixTime.now().add(-this.hourRange, 'hours')
-    const previousRecords = await this.updateNotifierRepository.getNewerThan(
-      timeFence,
-      projectName,
-      chainId,
-    )
+    occurrenceLimit = DEFAULT_OCCURRENCE_LIMIT,
+  ): DiscoveryDiff[] {
     const previousDiffs = previousRecords.flatMap((r) => r.diff)
-
-    if (previousDiffs.length < this.occurrenceLimit) {
+    if (previousDiffs.length < occurrenceLimit) {
       return diff
     }
 
@@ -66,7 +31,7 @@ export class FieldThrottler {
 
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           const count = counts[this.getFieldKey(d.address, field.key)] ?? 0
-          return count < this.occurrenceLimit
+          return count < occurrenceLimit
         }),
       }
     })

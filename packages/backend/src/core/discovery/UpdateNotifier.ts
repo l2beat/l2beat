@@ -16,6 +16,9 @@ export interface UpdateMetadata {
   unknownContracts: EthereumAddress[]
 }
 
+const OCCURRENCE_LIMIT = 3
+const HOUR_RANGE = 4
+
 export class UpdateNotifier {
   readonly throttler: FieldThrottler
 
@@ -25,7 +28,7 @@ export class UpdateNotifier {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.throttler = new FieldThrottler(updateNotifierRepository, logger)
+    this.throttler = new FieldThrottler()
   }
 
   async handleUpdate(
@@ -50,7 +53,18 @@ export class UpdateNotifier {
       chainId: metadata.chainId,
     })
 
-    const throttled = this.throttler.filterDiff(diff)
+    const timeFence = UnixTime.now().add(-HOUR_RANGE, 'hours')
+    const previousRecords = await this.updateNotifierRepository.getNewerThan(
+      timeFence,
+      name,
+      metadata.chainId,
+    )
+
+    const throttled = this.throttler.filterDiff(
+      previousRecords,
+      diff,
+      OCCURRENCE_LIMIT,
+    )
     if (throttled.length <= 0) {
       this.logger.info('Updates detected, but everything got throttled', {
         name,

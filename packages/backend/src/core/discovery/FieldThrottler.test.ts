@@ -1,18 +1,12 @@
-import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect } from 'earl'
 
-import {
-  UpdateNotifierRecord,
-  UpdateNotifierRepository,
-} from '../../peripherals/database/discovery/UpdateNotifierRepository'
+import { UpdateNotifierRecord } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { FieldThrottler } from './FieldThrottler'
 
 describe(FieldThrottler.name, () => {
   const OCCURRENCE_LIMIT = 2
-  const HOUR_RANGE = 1
-  const PROJECT = 'project'
 
   const ADDRESS_A = EthereumAddress.random()
   const ADDRESS_B = EthereumAddress.random()
@@ -40,59 +34,52 @@ describe(FieldThrottler.name, () => {
   ]
 
   it('correctly throttles diffs', async () => {
-    const repository = mockObject<UpdateNotifierRepository>({
-      getNewerThan: mockFn().returnsOnce([
-        mockRecord([
-          {
-            name: 'ContractA',
-            address: ADDRESS_A,
-            diff: [FIELDS_A[0]],
-          },
-          {
-            name: 'ContractB',
-            address: ADDRESS_B,
-            diff: [FIELDS_B[0]],
-          },
-          {
-            name: 'ContractB',
-            address: ADDRESS_B,
-            diff: [FIELDS_B[1]],
-          },
-          DIFF[2],
-        ]),
-        mockRecord([
-          {
-            name: 'ContractB',
-            address: ADDRESS_B,
-            diff: [FIELDS_B[0]],
-          },
-          DIFF[2],
-        ]),
-        mockRecord([
-          {
-            name: 'ContractA',
-            address: ADDRESS_A,
-            diff: [FIELDS_A[0]],
-          },
-          {
-            name: 'ContractB',
-            address: ADDRESS_B,
-            diff: [FIELDS_B[1]],
-          },
-          DIFF[2],
-        ]),
+    const previousRecords = [
+      mockRecord([
+        {
+          name: 'ContractA',
+          address: ADDRESS_A,
+          diff: [FIELDS_A[0]],
+        },
+        {
+          name: 'ContractB',
+          address: ADDRESS_B,
+          diff: [FIELDS_B[0]],
+        },
+        {
+          name: 'ContractB',
+          address: ADDRESS_B,
+          diff: [FIELDS_B[1]],
+        },
+        DIFF[2],
       ]),
-    })
+      mockRecord([
+        {
+          name: 'ContractB',
+          address: ADDRESS_B,
+          diff: [FIELDS_B[0]],
+        },
+        DIFF[2],
+      ]),
+      mockRecord([
+        {
+          name: 'ContractA',
+          address: ADDRESS_A,
+          diff: [FIELDS_A[0]],
+        },
+        {
+          name: 'ContractB',
+          address: ADDRESS_B,
+          diff: [FIELDS_B[1]],
+        },
+        DIFF[2],
+      ]),
+    ]
 
-    const fieldThrottler = new FieldThrottler(
-      repository,
-      Logger.SILENT,
-      OCCURRENCE_LIMIT,
-      HOUR_RANGE,
-    )
+    const fieldThrottler = new FieldThrottler()
 
     expect(
-      await fieldThrottler.filterDiff(PROJECT, ChainId.ETHEREUM, DIFF),
+      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
     ).toEqual([
       {
         ...DIFF[0],
@@ -106,53 +93,29 @@ describe(FieldThrottler.name, () => {
   })
 
   it('does nothing if database returned correct amount of empty diffs', async () => {
-    const repository = mockObject<UpdateNotifierRepository>({
-      getNewerThan: mockFn().returnsOnce([mockRecord([]), mockRecord([])]),
-    })
-
-    const fieldThrottler = new FieldThrottler(
-      repository,
-      Logger.SILENT,
-      OCCURRENCE_LIMIT,
-      HOUR_RANGE,
-    )
+    const previousRecords = [mockRecord([]), mockRecord([])]
+    const fieldThrottler = new FieldThrottler()
 
     expect(
-      await fieldThrottler.filterDiff(PROJECT, ChainId.ETHEREUM, DIFF),
+      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
     ).toEqual(DIFF)
   })
 
   it('does nothing if database returned less diffs than limit', async () => {
-    const repository = mockObject<UpdateNotifierRepository>({
-      getNewerThan: mockFn().returnsOnce([mockRecord([])]),
-    })
-
-    const fieldThrottler = new FieldThrottler(
-      repository,
-      Logger.SILENT,
-      OCCURRENCE_LIMIT,
-      HOUR_RANGE,
-    )
+    const previousRecords = [mockRecord([])]
+    const fieldThrottler = new FieldThrottler()
 
     expect(
-      await fieldThrottler.filterDiff(PROJECT, ChainId.ETHEREUM, DIFF),
+      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
     ).toEqual(DIFF)
   })
 
   it('does nothing if database is empty', async () => {
-    const repository = mockObject<UpdateNotifierRepository>({
-      getNewerThan: mockFn().returnsOnce([]),
-    })
-
-    const fieldThrottler = new FieldThrottler(
-      repository,
-      Logger.SILENT,
-      OCCURRENCE_LIMIT,
-      HOUR_RANGE,
-    )
+    const previousRecords: ReturnType<typeof mockRecord>[] = []
+    const fieldThrottler = new FieldThrottler()
 
     expect(
-      await fieldThrottler.filterDiff(PROJECT, ChainId.ETHEREUM, DIFF),
+      fieldThrottler.filterDiff(previousRecords, DIFF, OCCURRENCE_LIMIT),
     ).toEqual(DIFF)
   })
 })
