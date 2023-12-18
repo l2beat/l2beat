@@ -125,12 +125,13 @@ function CELESTIA_OFF_CHAIN(
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'The sequencer posts an unavailable transaction root.',
+        text: 'the sequencer posts an unavailable transaction root.',
         isCritical: true,
       },
       {
         category: 'Funds can be lost if',
-        text: 'The data is not available on Celestia.',
+        text: 'the data is not available on the external provider.',
+        isCritical: true,
       },
     ],
     references: [
