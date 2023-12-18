@@ -101,7 +101,7 @@ export const mantle: Layer2 = {
         {
           contract: 'EigenDataLayerChain',
           references: [
-            // The contract that is supposed to perfrom the signature check is not verified!
+            // The contract that is supposed to perform the signature check is not verified!
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L328',
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L395', // dummy proveFraud function
           ],
