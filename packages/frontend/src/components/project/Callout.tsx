@@ -43,7 +43,7 @@ export function Callout({
         small ? 'gap-2 rounded-[4px] text-sm' : 'gap-3',
       )}
     >
-      <span className="pt-[2px]">{icon}</span>
+      <span>{icon}</span>
       <div>{body}</div>
     </div>
   )
