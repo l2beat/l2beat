@@ -62,6 +62,7 @@ function getScalingSummarySummaryEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     isLayer3: project.isLayer3,
+    redWarning: project.display.redWarning,
     hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
       .name,
     tvl:

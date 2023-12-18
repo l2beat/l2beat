@@ -43,7 +43,7 @@ export function Callout({
         small ? 'gap-2 rounded-[4px] text-sm' : 'gap-3',
       )}
     >
-      <span>{icon}</span>
+      <span className="flex items-center justify-center">{icon}</span>
       <div>{body}</div>
     </div>
   )
