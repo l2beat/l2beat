@@ -41,17 +41,7 @@ export class BigQueryClient {
   }
 
   async query(query: Query | string): Promise<unknown[]> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const estimate = await this.estimateQuerySize(query)
-
-    assert(
-      estimate && estimate < this.queryLimit,
-      'BigQuery estimate too high: ' + estimate.toString(),
-    )
-
-    if (estimate > this.queryWarningLimit) {
-      this.logger.warn('BigQuery estimate is high: ' + estimate.toString())
-    }
+    await this.dryRunQuery(query)
 
     const [job] = await this.bigquery.createQueryJob(
       typeof query === 'string'
@@ -62,14 +52,36 @@ export class BigQueryClient {
     return rows as unknown[]
   }
 
+  private async dryRunQuery(query: string | Query) {
+    const estimate = await this.estimateQuerySize(query)
+
+    assert(estimate !== undefined, 'BigQuery estimate is undefined')
+    assert(
+      estimate < this.queryLimit,
+      'BigQuery estimate too high: ' + estimate.toString(),
+    )
+
+    if (estimate > this.queryWarningLimit) {
+      this.logger.warn('BigQuery estimate is high: ' + estimate.toString())
+    }
+  }
+
   async estimateQuerySize(query: Query | string) {
     const [dryJob] = await this.bigquery.createQueryJob(
       typeof query === 'string'
         ? { query, location: 'US', dryRun: true }
         : { ...query, location: 'US', dryRun: true },
     )
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const estimate = +dryJob.metadata.statistics.query.totalBytesProcessed
+
+    let estimate: number | undefined
+
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      estimate = +dryJob.metadata.statistics.query.totalBytesProcessed
+    } catch (e) {
+      this.logger.warn(e)
+      estimate = undefined
+    }
 
     return estimate
   }

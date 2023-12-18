@@ -248,7 +248,7 @@ export function groupAndMergeBreakdowns(
   return projects.reduce((prev, curr) => {
     const projectId = curr.projectId.toString()
 
-    // Grouped entires may be missing, fill the gaps with empty primitives
+    // Grouped entries may be missing, fill the gaps with empty primitives
     // i.e no native assets
     /* eslint-disable @typescript-eslint/no-unnecessary-condition */
     const external = groupedExternalBreakdownEntries[projectId] ?? []
