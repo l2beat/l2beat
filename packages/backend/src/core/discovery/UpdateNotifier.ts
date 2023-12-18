@@ -4,7 +4,7 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { fieldThrottleDiff } from './FieldThrottler'
+import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
