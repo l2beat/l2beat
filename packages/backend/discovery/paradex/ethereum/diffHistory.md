@@ -6,6 +6,7 @@
 ## Description
 
 Change in the deposit limits of the USDC Bridge contract:
+
 - The maximum amount per deposit is increased to 500K USDC
 - The maximum amount that can be locked across all users is increased to 10M USDC
 
