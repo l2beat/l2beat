@@ -22,6 +22,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
         findLatestId: async () => undefined,
+        getNewerThan: async () => [],
       })
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
@@ -70,6 +71,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
 
@@ -81,6 +83,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
         findLatestId: async () => undefined,
+        getNewerThan: async () => [],
       })
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
@@ -142,6 +145,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
 
@@ -153,6 +157,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
         findLatestId: async () => 0,
+        getNewerThan: async () => [],
       })
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
 
@@ -193,6 +198,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
   })
