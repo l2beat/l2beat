@@ -10,6 +10,7 @@ import {
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -23,6 +24,7 @@ import {
 } from './common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('base')
@@ -31,6 +33,11 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
 
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
@@ -87,6 +94,7 @@ export const base: Layer2 = {
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
       explorers: [
         'https://basescan.org/',
+        'https://base.superscan.network',
         'https://base.blockscout.com/',
         'https://base.l2scan.co/',
       ],
@@ -96,12 +104,18 @@ export const base: Layer2 = {
         'https://discord.gg/buildonbase',
         'https://base.mirror.xyz/',
       ],
+      rollupCodes: 'https://rollup.codes/base',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation: `Base is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        FINALIZATION_PERIOD_SECONDS,
+      )} after it has been posted.`,
     },
   },
   config: {
@@ -336,14 +350,7 @@ export const base: Layer2 = {
       ],
     },
   },
-  stateDerivation: {
-    nodeSoftware: `Base [node](https://github.com/base-org/node) is open-sourced and built on Optimism’s open-source [OP Stack](https://stack.optimism.io/) with no modification. The configuration file for Base Mainnet can be found [here](https://github.com/base-org/node/blob/main/mainnet/rollup.json).`,
-    compressionScheme:
-      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
-    genesisState:
-      'The genesis file can be found [here](https://raw.githubusercontent.com/base-org/node/main/mainnet/genesis-l2.json).',
-    dataFormat: `Batch submission format can be found [here](https://github.com/ethereum-optimism/optimism/blob/33741760adce92c8bdf61f693058144bb6986e30/specs/derivation.md#batch-submission-wire-format).`,
-  },
+  stateDerivation: DERIVATION.OPSTACK('BASE'),
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',

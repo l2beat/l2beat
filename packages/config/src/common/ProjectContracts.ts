@@ -24,6 +24,8 @@ export type ProjectContract =
 export interface ProjectContractSingleAddress {
   /** Address of the contract */
   address: EthereumAddress
+  /** Url to chain's etherscan */
+  etherscanUrl?: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
@@ -60,6 +62,8 @@ export interface ProjectContractMultipleAddresses {
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
+  /** Url to chain's etherscan */
+  etherscanUrl?: string
   description?: string
 }
 

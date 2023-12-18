@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -17,6 +18,11 @@ import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aevo')
+
+const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
 
 const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
@@ -38,7 +44,7 @@ export const aevo: Layer2 = {
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     links: {
-      websites: ['https://www.aevo.xyz/'],
+      websites: ['https://aevo.xyz/'],
       apps: ['https://app.aevo.xyz/'],
       documentation: ['https://docs.aevo.xyz/'],
       explorers: ['https://explorer.aevo.xyz/'],
@@ -50,6 +56,11 @@ export const aevo: Layer2 = {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation: `Aevo is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        FINALIZATION_PERIOD_SECONDS,
+      )} after it has been posted.`,
     },
   },
   config: {
@@ -152,7 +163,7 @@ export const aevo: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: false,

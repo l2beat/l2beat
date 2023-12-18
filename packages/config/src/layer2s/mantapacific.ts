@@ -10,6 +10,7 @@ import {
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -32,6 +33,11 @@ const upgradesProxy = {
   upgradeDelay: 'No delay',
 }
 
+const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
     id: AssetId('mantapacific:tia-celestia'),
@@ -48,6 +54,24 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     formula: 'totalSupply',
     bridgedUsing: {
       bridge: 'Hyperlane Nexus',
+    },
+  },
+  {
+    id: AssetId('mantapacific:stone-stakestone-ether'),
+    name: 'StakeStone Ether',
+    symbol: 'STONE',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672',
+    address: EthereumAddress('0xEc901DA9c68E90798BbBb74c11406A32A70652C3'),
+    coingeckoId: CoingeckoId('stakestone-ether'),
+    sinceTimestamp: new UnixTime(1699781729),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Layer Zero',
+      slug: 'omnichain',
     },
   },
 ]
@@ -83,6 +107,11 @@ export const mantapacific: Layer2 = {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation: `Manta Pacific is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        FINALIZATION_PERIOD_SECONDS,
+      )} after it has been posted.`,
     },
   },
   config: {
@@ -191,7 +220,7 @@ export const mantapacific: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+      rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
       stateVerificationOnL1: false,

@@ -52,7 +52,7 @@ export const brine: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
     links: {
-      websites: ['https://www.brine.fi/'],
+      websites: ['https://brine.fi/'],
       apps: ['https://trade.brine.fi/'],
       documentation: ['https://docs.brine.fi/'],
       explorers: [],
@@ -60,6 +60,7 @@ export const brine: Layer2 = {
       socialMedia: [
         'https://twitter.com/BrineFinance',
         'https://discord.gg/wMAnf3gVTh',
+        'https://linkedin.com/company/brine-fi-dex',
       ],
     },
   },

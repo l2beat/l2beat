@@ -1,426 +1,430 @@
-import { hashJson, LivenessType, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { Logger } from '@l2beat/backend-tools'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { Project } from '../../model'
+import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import {
-  IndexerStateRecord,
-  IndexerStateRepository,
-} from '../../peripherals/database/IndexerStateRepository'
-import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
-import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
-import { LIVENESS_MOCK } from '../../test/mockLiveness'
+  LivenessConfigurationRecord,
+  LivenessConfigurationRepository,
+} from '../../peripherals/database/LivenessConfigurationRepository'
+import {
+  LivenessRecord,
+  LivenessRepository,
+} from '../../peripherals/database/LivenessRepository'
+import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
 import {
-  adjustToForBigqueryCall,
-  getLivenessConfigHash,
-  isTimestampInRange,
-  mergeConfigs,
-} from './utils'
+  LivenessConfigEntry,
+  makeLivenessFunctionCall,
+} from './types/LivenessConfig'
+import { LivenessId } from './types/LivenessId'
+import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
+import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
+import { getSafeHeight } from './utils/getSafeHeight'
 
-const {
-  getMockLivenessIndexer,
-  FROM,
-  TO,
-  PROJECTS,
-  CONFIGURATIONS,
-  TRANSFERS_EXPECTED,
-  FUNCTIONS_EXPECTED,
-  MOCK_TRX,
-} = LIVENESS_MOCK
+const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+const TRX = mockObject<Knex.Transaction>({})
 
 describe(LivenessIndexer.name, () => {
-  describe(LivenessIndexer.prototype.start.name, () => {
-    describe('initialize indexer state', () => {
-      it('undefined config hash', async () => {
-        const {
-          livenessIndexer,
-          stateRepository,
-          indexerConfigHash,
-          minTimestamp,
-        } = getMockLivenessIndexer({
-          configHash: undefined,
-        })
-        await livenessIndexer.start()
-
-        expect(stateRepository.add).toHaveBeenCalledWith(
-          {
-            indexerId: 'liveness_indexer',
-            configHash: indexerConfigHash,
-            safeHeight: minTimestamp.toNumber(),
-            minTimestamp,
-          },
-          MOCK_TRX,
-        )
-      })
-
-      it('different config hash', async () => {
-        const {
-          livenessIndexer,
-          stateRepository,
-          indexerConfigHash,
-          minTimestamp,
-        } = getMockLivenessIndexer({
-          configHash: hashJson('different-config-hash'),
-        })
-        await livenessIndexer.start()
-
-        expect(stateRepository.setConfigHash).toHaveBeenCalledWith(
-          'liveness_indexer',
-          indexerConfigHash,
-          MOCK_TRX,
-        )
-        expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
-          'liveness_indexer',
-          minTimestamp.toNumber(),
-          MOCK_TRX,
-        )
-      })
-
-      it('the same config hash', async () => {
-        const { livenessIndexer, stateRepository, indexerConfigHash } =
-          getMockLivenessIndexer({
-            configHash: getLivenessConfigHash(PROJECTS),
-          })
-
-        await livenessIndexer.start()
-
-        expect(stateRepository.add).not.toHaveBeenCalled()
-        expect(stateRepository.setConfigHash).not.toHaveBeenCalled()
-        expect(stateRepository.setSafeHeight).not.toHaveBeenCalled()
-        expect(indexerConfigHash).toEqual(getLivenessConfigHash(PROJECTS))
-      })
-
-      it('throws when minTimestamp updated', async () => {
-        const indexerState: IndexerStateRecord = {
-          indexerId: 'liveness_indexer',
-          configHash: hashJson('config-hash'),
-          safeHeight: 1,
-          minTimestamp: FROM.add(30, 'days'),
-        }
-
-        const stateRepository = mockObject<IndexerStateRepository>({
-          add() {
-            return Promise.resolve('')
-          },
-          findIndexerState() {
-            return Promise.resolve(indexerState)
-          },
-          runInTransaction: async (
-            fun: (trx: Knex.Transaction) => Promise<void>,
-          ) => {
-            await fun(MOCK_TRX)
-          },
-        })
-
-        const { livenessIndexer } = getMockLivenessIndexer({
-          stateRepository,
-        })
-
-        await expect(
-          async () => await livenessIndexer.start(),
-        ).toBeRejectedWith(
-          'Minimum timestamp of this indexer cannot be updated',
-        )
-      })
-    })
-
-    describe('initialize configurations', () => {
-      it('adds new configurations to the DB', async () => {
-        const configurationRepository =
-          mockObject<LivenessConfigurationRepository>({
-            getAll: async () => CONFIGURATIONS.slice(0, 1),
-            addMany: async () => [],
-            deleteMany: async () => -1,
-          })
-
-        const { livenessIndexer } = getMockLivenessIndexer({
-          configurationRepository,
-        })
-        await livenessIndexer.start()
-
-        expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
-        expect(configurationRepository.addMany).toHaveBeenNthCalledWith(
-          1,
-          CONFIGURATIONS.slice(1).map((c) => ({
-            identifier: c.identifier,
-            type: c.type,
-            params: c.params,
-            sinceTimestamp: c.sinceTimestamp,
-            untilTimestamp: c.untilTimestamp,
-            projectId: c.projectId,
-          })),
-          MOCK_TRX,
-        )
-      })
-
-      it('updates configuration in DB when difference detected', async () => {
-        const configurationRepository =
-          mockObject<LivenessConfigurationRepository>({
-            getAll: async () => CONFIGURATIONS,
-            addMany: async () => [],
-            setLastSyncedTimestamp: async () => -1,
-            setUntilTimestamp: async () => -1,
-            deleteMany: async () => -1,
-          })
-
-        const newUntilTimestamp = UnixTime.now()
-        const updatedProjects: Project[] = [
-          {
-            ...PROJECTS[0],
-            livenessConfig: {
-              ...PROJECTS[0].livenessConfig!,
-              functionCalls: [
-                {
-                  ...PROJECTS[0].livenessConfig!.functionCalls[0],
-                  untilTimestamp: newUntilTimestamp,
-                },
-              ],
-            },
-          },
-        ]
-
-        const { livenessIndexer, livenessRepository } = getMockLivenessIndexer({
-          projects: updatedProjects,
-          configurationRepository,
-        })
-        await livenessIndexer.start()
-
-        expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
-        expect(
-          configurationRepository.setUntilTimestamp,
-        ).toHaveBeenNthCalledWith(1, 1, newUntilTimestamp, MOCK_TRX)
-        expect(livenessRepository.deleteAfter).toHaveBeenNthCalledWith(
-          1,
-          1,
-          newUntilTimestamp,
-          MOCK_TRX,
-        )
-      })
-
-      it('deletes phasedOut configurations from the DB', async () => {
-        const configurationRepository =
-          mockObject<LivenessConfigurationRepository>({
-            getAll: async () => CONFIGURATIONS,
-            addMany: async () => [],
-            setLastSyncedTimestamp: async () => -1,
-            setUntilTimestamp: async () => -1,
-            deleteMany: async () => -1,
-          })
-
-        const updatedProjects: Project[] = [
-          {
-            ...PROJECTS[0],
-            livenessConfig: {
-              transfers: [],
-              functionCalls: [],
-            },
-          },
-        ]
-
-        const { livenessIndexer } = getMockLivenessIndexer({
-          projects: updatedProjects,
-          configurationRepository,
-        })
-        await livenessIndexer.start()
-
-        expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
-        expect(configurationRepository.deleteMany).toHaveBeenNthCalledWith(
-          1,
-          CONFIGURATIONS.map((c) => c.id),
-          MOCK_TRX,
-        )
-      })
-
-      it('does not run if the config hash is the same', async () => {
-        const { livenessIndexer, configurationRepository } =
-          getMockLivenessIndexer({
-            configHash: getLivenessConfigHash(PROJECTS),
-          })
-
-        await livenessIndexer.start()
-
-        expect(configurationRepository.getAll).not.toHaveBeenCalled()
-      })
-
-      it('runs if the config hash is different', async () => {
-        const { livenessIndexer, configurationRepository } =
-          getMockLivenessIndexer({
-            configHash: hashJson('different-config-hash'),
-          })
-
-        await livenessIndexer.start()
-
-        expect(configurationRepository.getAll).toHaveBeenCalled()
-      })
-
-      it('runs if the indexer state is undefined', async () => {
-        const { livenessIndexer, configurationRepository } =
-          getMockLivenessIndexer({
-            configHash: undefined,
-          })
-
-        await livenessIndexer.start()
-
-        expect(configurationRepository.getAll).toHaveBeenCalled()
-      })
-    })
-  })
-
   describe(LivenessIndexer.prototype.update.name, () => {
-    it('calls getLivenessData and adds results to database, returns "to"', async () => {
-      const expectedToSave: LivenessRecord[] = [
-        ...TRANSFERS_EXPECTED,
-        ...FUNCTIONS_EXPECTED,
-      ]
-
-      const adjustedTo = adjustToForBigqueryCall(FROM.toNumber(), TO.toNumber())
-
+    it('updates liveness data', async () => {
+      const from = MIN_TIMESTAMP.add(365, 'days')
+      const to = from.add(1, 'hours')
+      const runtimeEntries = getMockRuntimeConfigurations()
+      const databaseEntries = runtimeEntries.map((r) => toRecord(r, from))
+      const configurationRepository = getMockConfigRepository(databaseEntries)
+      const livenessRepository = getMockLivenessRepository()
+      const livenessResults = getMockLivenessResults()
       const livenessClient = mockObject<LivenessClient>({
-        getLivenessData: mockFn().resolvesTo(expectedToSave),
+        getLivenessData: async () => livenessResults,
       })
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        livenessRepository,
+        runtimeEntries,
+        livenessClient,
+      })
+      const [configurationsToSync, adjustedTo] =
+        await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
 
-      const { livenessIndexer, livenessRepository, configurationRepository } =
-        getMockLivenessIndexer({ livenessClient })
+      const value = await livenessIndexer.update(from.toNumber(), to.toNumber())
 
-      const currentTo = await livenessIndexer.update(
-        FROM.toNumber(),
-        adjustedTo.toNumber(),
-      )
-
-      const config = mergeConfigs(
-        PROJECTS,
-        CONFIGURATIONS.map((c, i) => ({
-          ...c,
-          id: i,
-          lastSyncedTimestamp: undefined,
-        })),
-      )
-
-      const transfersConfig = config.transfers.filter((c) =>
-        isTimestampInRange(
-          c.sinceTimestamp,
-          c.untilTimestamp,
-          c.latestSyncedTimestamp,
-          FROM,
-          adjustedTo,
-        ),
-      )
-      const functionCallsConfig = config.functionCalls.filter((c) =>
-        isTimestampInRange(
-          c.sinceTimestamp,
-          c.untilTimestamp,
-          c.latestSyncedTimestamp,
-          FROM,
-          adjustedTo,
-        ),
-      )
-
-      expect(livenessClient.getLivenessData).toHaveBeenNthCalledWith(
-        1,
-        transfersConfig,
-        functionCallsConfig,
-        FROM,
+      expect(value).toEqual(adjustedTo.toNumber())
+      expect(livenessClient.getLivenessData).toHaveBeenOnlyCalledWith(
+        configurationsToSync,
+        from,
         adjustedTo,
       )
-      expect(currentTo).toEqual(adjustedTo.toNumber())
-      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
-
-      CONFIGURATIONS.forEach((c, i) => {
-        expect(
-          configurationRepository.setLastSyncedTimestamp,
-        ).toHaveBeenNthCalledWith(i + 1, i, adjustedTo, MOCK_TRX)
-      })
-
-      expect(livenessRepository.addMany).toHaveBeenCalledWith(
-        expectedToSave,
-        MOCK_TRX,
+      expect(livenessRepository.addMany).toHaveBeenOnlyCalledWith(
+        livenessResults,
+        TRX,
+      )
+      expect(
+        configurationRepository.setLastSyncedTimestamp,
+      ).toHaveBeenOnlyCalledWith(
+        runtimeEntries.map((r) => r.id),
+        adjustedTo,
+        TRX,
       )
     })
-    it('does not run getLivenessData when configs are empty', async () => {
+
+    it('skips update if there are no configurations to sync', async () => {
+      const from = MIN_TIMESTAMP
+      const to = from.add(365, 'days')
+      const runtimeEntries = getMockRuntimeConfigurations()
+      const databaseEntries = runtimeEntries.map((r) => toRecord(r, to))
+      const configurationRepository = getMockConfigRepository(databaseEntries)
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        runtimeEntries,
+      })
       const livenessClient = mockObject<LivenessClient>({
-        getLivenessData: mockFn().resolvesTo([]),
+        getLivenessData: async () => [],
       })
-      const { livenessIndexer } = getMockLivenessIndexer({
-        livenessClient,
-        projects: [],
-      })
-      await livenessIndexer.update(FROM.toNumber(), TO.toNumber())
+      const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
+
+      const value = await livenessIndexer.update(from.toNumber(), to.toNumber())
+
+      expect(value).toEqual(adjustedTo.toNumber())
       expect(livenessClient.getLivenessData).not.toHaveBeenCalled()
     })
   })
 
-  describe(LivenessIndexer.prototype.getSafeHeight.name, () => {
-    it('should return valid value', async () => {
-      const configHash = hashJson('different-config-hash')
+  describe(LivenessIndexer.prototype.getConfiguration.name, () => {
+    it('adjusts to and finds configurations to sync', async () => {
+      const from = MIN_TIMESTAMP
+      const to = from.add(365, 'days')
+
+      const runtimeEntries = getMockRuntimeConfigurations()
+      const databaseEntries = runtimeEntries.map((r) => toRecord(r))
+      const configurationRepository = getMockConfigRepository(databaseEntries)
 
       const livenessIndexer = getMockLivenessIndexer({
-        configHash,
-      }).livenessIndexer
+        configurationRepository,
+        runtimeEntries,
+      })
+
+      const [configurationsToSync, adjustedTo] =
+        await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
+
+      const expectedAdjustedTo = adjustToForBigqueryCall(
+        from.toNumber(),
+        to.toNumber(),
+      )
+
+      expect(adjustedTo).toEqual(expectedAdjustedTo)
+
+      const expectedConfigurationsToSync = findConfigurationsToSync(
+        runtimeEntries,
+        databaseEntries,
+        from,
+        adjustedTo,
+      )
+
+      expect(configurationsToSync).toEqual(expectedConfigurationsToSync)
+
+      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe(LivenessIndexer.prototype.start.name, () => {
+    it('initializes configurations and indexer state', async () => {
+      const runtimeEntries = [
+        getMockRuntimeConfigurations()[0],
+        {
+          ...getMockRuntimeConfigurations()[1],
+          untilTimestamp: MIN_TIMESTAMP.add(1, 'days'),
+        },
+      ]
+
+      const databaseEntries: LivenessConfigurationRecord[] = [
+        mockObject<LivenessConfigurationRecord>({
+          id: LivenessId.random(),
+          lastSyncedTimestamp: undefined,
+          sinceTimestamp: MIN_TIMESTAMP,
+        }),
+        {
+          ...toRecord(runtimeEntries[1]),
+          untilTimestamp: undefined,
+        },
+        // rest of the configurations would be considered "toAdd"
+      ]
+
+      const configurationRepository = getMockConfigRepository(databaseEntries)
+      const livenessRepository = getMockLivenessRepository()
+      const stateRepository = getMockStateRepository()
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        livenessRepository,
+        stateRepository,
+        runtimeEntries,
+      })
+
+      await livenessIndexer.start()
+
+      const { toAdd, toRemove, toTrim } = diffLivenessConfigurations(
+        runtimeEntries,
+        databaseEntries,
+      )
+
+      expect(configurationRepository.addMany).toHaveBeenOnlyCalledWith(
+        toAdd,
+        TRX,
+      )
+      expect(configurationRepository.deleteMany).toHaveBeenOnlyCalledWith(
+        toRemove,
+        TRX,
+      )
+      expect(
+        configurationRepository.setUntilTimestamp,
+      ).toHaveBeenOnlyCalledWith(toTrim[0].id, toTrim[0].untilTimestamp, TRX)
+      expect(livenessRepository.deleteAfter).toHaveBeenOnlyCalledWith(
+        toTrim[0].id,
+        toTrim[0].untilTimestamp,
+        TRX,
+      )
+
+      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+      expect(stateRepository.runInTransaction).toHaveBeenCalledTimes(1)
+
+      const syncStatus = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+      expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
+        livenessIndexer.indexerId,
+        syncStatus,
+        TRX,
+      )
+
+      // 1st during this.initialize() -> this.setSafeHeight()
+      // 2nd during super.start() -> this.getSafeHeight()
+      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(2)
+    })
+
+    it('indexer state undefined', async () => {
+      const configurationRepository = getMockConfigRepository([])
+      const livenessRepository = getMockLivenessRepository()
+      const stateRepository = mockObject<IndexerStateRepository>({
+        findIndexerState: async () => undefined,
+        add: async () => '',
+        setSafeHeight: async () => 0,
+        runInTransaction: async (fn) => fn(TRX),
+      })
+      const livenessIndexer = getMockLivenessIndexer({
+        configurationRepository,
+        livenessRepository,
+        stateRepository,
+        runtimeEntries: [],
+      })
+
+      await livenessIndexer.start()
+
+      expect(stateRepository.add).toHaveBeenOnlyCalledWith(
+        {
+          indexerId: livenessIndexer.indexerId,
+          safeHeight: MIN_TIMESTAMP.toNumber(),
+          minTimestamp: MIN_TIMESTAMP,
+        },
+        TRX,
+      )
+    })
+  })
+
+  describe(LivenessIndexer.prototype.getSafeHeight.name, () => {
+    it('returns safe height from DB', async () => {
+      const safeHeightDB = 123
+      const stateRepository = mockObject<IndexerStateRepository>({
+        findIndexerState: async () => ({
+          indexerId: 'liveness_indexer',
+          safeHeight: safeHeightDB,
+          minTimestamp: MIN_TIMESTAMP,
+        }),
+      })
+      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
+
       const safeHeight = await livenessIndexer.getSafeHeight()
-      expect(safeHeight).toEqual(1)
+
+      expect(safeHeight).toEqual(safeHeightDB)
+      expect(stateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
+        livenessIndexer.indexerId,
+      )
+    })
+    it('returns minTimestamp if indexer state is undefined', async () => {
+      const stateRepository = mockObject<IndexerStateRepository>({
+        findIndexerState: async () => undefined,
+      })
+      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
+
+      const safeHeight = await livenessIndexer.getSafeHeight()
+
+      expect(safeHeight).toEqual(MIN_TIMESTAMP.toNumber())
+      expect(stateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
+        livenessIndexer.indexerId,
+      )
     })
   })
 
   describe(LivenessIndexer.prototype.setSafeHeight.name, () => {
-    it('should be called with valid parameters', async () => {
-      const mock = getMockLivenessIndexer({})
-      const livenessIndexer = mock.livenessIndexer
-      const stateRepository = mock.stateRepository
-      await livenessIndexer.setSafeHeight(12)
+    it('saves safe height in the database', async () => {
+      const stateRepository = mockObject<IndexerStateRepository>({
+        setSafeHeight: async () => 0, // return value is not important
+      })
+      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
 
-      expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
+      const safeHeight = MIN_TIMESTAMP.add(1, 'hours').toNumber()
+      await livenessIndexer.setSafeHeight(safeHeight, TRX)
+
+      expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
         'liveness_indexer',
-        12,
+        safeHeight,
+        TRX,
+      )
+    })
+
+    it('throws if height is lower than minimum timestamp', async () => {
+      const stateRepository = mockObject<IndexerStateRepository>({
+        setSafeHeight: async () => 0, // return value is not important
+      })
+      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
+
+      const incorrectHeight = MIN_TIMESTAMP.add(-1, 'hours').toNumber()
+      await expect(
+        async () => await livenessIndexer.setSafeHeight(incorrectHeight, TRX),
+      ).toBeRejectedWith(
+        'Cannot set height to be lower than the minimum timestamp',
       )
     })
   })
 
   describe(LivenessIndexer.prototype.invalidate.name, () => {
-    it('should return its parameter', async () => {
-      const mock = getMockLivenessIndexer({})
-      const livenessIndexer = mock.livenessIndexer
-      const value = await livenessIndexer.invalidate(1)
+    it('only returns target height', async () => {
+      const livenessIndexer = getMockLivenessIndexer({})
 
-      expect(value).toEqual(1)
-    })
-  })
+      const targetHeight = 1
+      const value = await livenessIndexer.invalidate(targetHeight)
 
-  describe(LivenessIndexer.prototype.getConfiguration.name, () => {
-    it('should return configurations and adjustedTo', async () => {
-      const { livenessIndexer } = getMockLivenessIndexer({})
-
-      const { functionCallsConfig, transfersConfig, adjustedTo } =
-        await livenessIndexer.getConfiguration(FROM.toNumber(), TO.toNumber())
-
-      const expectedTransfersConfig = [
-        {
-          projectId: PROJECTS[0].projectId,
-          from: PROJECTS[0].livenessConfig!.transfers[0].from,
-          to: PROJECTS[0].livenessConfig!.transfers[0].to,
-          type: LivenessType(PROJECTS[0].livenessConfig!.transfers[0].type),
-          sinceTimestamp: CONFIGURATIONS[0].sinceTimestamp,
-          untilTimestamp: CONFIGURATIONS[0].untilTimestamp,
-          latestSyncedTimestamp: undefined,
-          livenessConfigurationId: 0,
-        },
-      ]
-      const expectedFunctionCallsConfig = [
-        {
-          projectId: PROJECTS[0].projectId,
-          address: PROJECTS[0].livenessConfig!.functionCalls[0].address,
-          selector: PROJECTS[0].livenessConfig!.functionCalls[0].selector,
-          sinceTimestamp: CONFIGURATIONS[1].sinceTimestamp,
-          type: LivenessType(PROJECTS[0].livenessConfig!.functionCalls[0].type),
-          latestSyncedTimestamp: undefined,
-          livenessConfigurationId: 1,
-        },
-      ]
-
-      expect(transfersConfig).toEqual(expectedTransfersConfig)
-      expect(functionCallsConfig).toEqual(expectedFunctionCallsConfig)
-      expect(adjustedTo).toEqual(TO)
+      expect(value).toEqual(targetHeight)
     })
   })
 })
+
+function getMockLivenessIndexer(params: {
+  stateRepository?: IndexerStateRepository
+  configurationRepository?: LivenessConfigurationRepository
+  livenessRepository?: LivenessRepository
+  runtimeEntries?: LivenessConfigEntry[]
+  livenessClient?: LivenessClient
+}) {
+  const {
+    stateRepository,
+    configurationRepository,
+    livenessRepository,
+    runtimeEntries,
+    livenessClient,
+  } = params
+
+  return new LivenessIndexer(
+    Logger.SILENT,
+    mockObject<HourlyIndexer>({
+      start: async () => {},
+      tick: async () => 1,
+      subscribe: () => {},
+    }),
+    livenessClient ?? mockObject<LivenessClient>({}),
+    stateRepository ?? mockObject<IndexerStateRepository>({}),
+    livenessRepository ?? mockObject<LivenessRepository>({}),
+    configurationRepository ?? mockObject<LivenessConfigurationRepository>({}),
+    runtimeEntries ?? [],
+    MIN_TIMESTAMP,
+  )
+}
+
+function getMockLivenessRepository() {
+  return mockObject<LivenessRepository>({
+    deleteAfter: async () => 0,
+    runInTransaction: async (fn) => fn(TRX),
+    addMany: async () => 0,
+  })
+}
+
+function getMockConfigRepository(
+  databaseEntries: LivenessConfigurationRecord[],
+) {
+  return mockObject<LivenessConfigurationRepository>({
+    addMany: async () => [],
+    deleteMany: async () => 0,
+    setUntilTimestamp: async () => 0,
+    getAll: async () => databaseEntries,
+    setLastSyncedTimestamp: async () => 0,
+  })
+}
+
+function getMockStateRepository(
+  indexerState = {
+    indexerId: 'liveness_indexer',
+    safeHeight: MIN_TIMESTAMP.toNumber(),
+    minTimestamp: MIN_TIMESTAMP,
+  },
+) {
+  const stateRepository = mockObject<IndexerStateRepository>({
+    findIndexerState: async () => indexerState,
+    add: async () => '',
+    setSafeHeight: async () => 0,
+    runInTransaction: async (fn) => fn(TRX),
+  })
+  return stateRepository
+}
+
+function getMockRuntimeConfigurations() {
+  return [
+    makeLivenessFunctionCall({
+      projectId: ProjectId('test'),
+      type: 'STATE',
+      formula: 'functionCall',
+      address: EthereumAddress.random(),
+      selector: '0x',
+      sinceTimestamp: MIN_TIMESTAMP,
+    }),
+    // this one has updated untilTimestamp
+    makeLivenessFunctionCall({
+      projectId: ProjectId('test2'),
+      type: 'STATE',
+      formula: 'functionCall',
+      address: EthereumAddress.random(),
+      selector: '0x',
+      sinceTimestamp: MIN_TIMESTAMP,
+    }),
+  ]
+}
+
+function getMockLivenessResults(): LivenessRecord[] {
+  return [
+    {
+      livenessId: getMockRuntimeConfigurations()[0].id,
+      blockNumber: 1,
+      timestamp: UnixTime.now(),
+      txHash: '',
+    },
+    {
+      livenessId: getMockRuntimeConfigurations()[1].id,
+      blockNumber: 1,
+      timestamp: UnixTime.now(),
+      txHash: '',
+    },
+  ]
+}
+
+function toRecord(
+  entry: LivenessConfigEntry,
+  lastSyncedTimestamp?: UnixTime,
+): LivenessConfigurationRecord {
+  return {
+    id: entry.id,
+    projectId: entry.projectId,
+    type: entry.type,
+    sinceTimestamp: entry.sinceTimestamp,
+    untilTimestamp: entry.untilTimestamp,
+    debugInfo: '',
+    lastSyncedTimestamp,
+  }
+}

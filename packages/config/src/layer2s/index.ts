@@ -38,12 +38,13 @@ import { mantle } from './mantle'
 import { metal } from './metal'
 import { metis } from './metis'
 import { mode } from './mode'
-import { morphism } from './morphism'
+import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { orb3 } from './orb3'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { polygonmiden } from './polygonmiden'
@@ -109,12 +110,13 @@ export const layer2s: Layer2[] = [
   metal,
   metis,
   mode,
-  morphism,
+  morph,
   myria,
   nova,
   obscuro,
   omgnetwork,
   optimism,
+  orb3,
   palm,
   paradex,
   polygonmiden,

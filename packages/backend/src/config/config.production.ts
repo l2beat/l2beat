@@ -146,6 +146,11 @@ export function getProductionConfig(env: Env): Config {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
         privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
         projectId: env.string('LIVENESS_PROJECT_ID'),
+        queryLimitGb: env.integer('LIVENESS_BIGQUERY_LIMIT_GB', 15),
+        queryWarningLimitGb: env.integer(
+          'LIVENESS_BIGQUERY_WARNING_LIMIT_GB',
+          8,
+        ),
       },
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },

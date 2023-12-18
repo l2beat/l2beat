@@ -55,7 +55,7 @@ export const bobanetwork: Layer2 = {
       socialMedia: [
         'https://boba.network/#news',
         'https://boba.network/blog/',
-        'https://www.enya.ai/company/media',
+        'https://enya.ai/company/media',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
         'https://discord.gg/m7NysJjKhm',
@@ -66,6 +66,8 @@ export const bobanetwork: Layer2 = {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
+      explanation:
+        'Boba Network is an Optimistic rollup based on Optimism’s OVM that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner is always allowed to delete them.',
     },
   },
   config: {

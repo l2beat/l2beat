@@ -89,10 +89,20 @@ const VALIDATORS: ProjectPermissionedAccount[] = [
   },
 ]
 
+const DERI_VALIDATORS: ProjectPermissionedAccount[] = [
+  {
+    address: EthereumAddress('0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0'),
+    type: 'EOA',
+  },
+]
+
 export const ARBITRUM = {
   OLD_BRIDGE,
   SEQUENCER,
   VALIDATORS,
   getSequencerFailureString,
   getProposerFailureString,
+  DERI: {
+    VALIDATORS: DERI_VALIDATORS,
+  },
 }
