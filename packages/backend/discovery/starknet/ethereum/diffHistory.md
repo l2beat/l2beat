@@ -5,7 +5,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Few new escrows have been added, to track the balances of the new tokens.
 
 ## Watched changes
 
