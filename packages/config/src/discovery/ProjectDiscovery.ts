@@ -31,9 +31,9 @@ import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
-  OpStackTag,
-  OpStackTagDescription,
 } from './OpStackTypes'
+import { PermissionedContract } from './PermissionedContract'
+import { findRoleMatchingTemplate, stringFormat } from './values/templateUtils'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -164,71 +164,55 @@ export class ProjectDiscovery {
   ): ProjectPermission[] {
     const inversion = this.getInversion()
 
-    const result: Record<
-      string,
-      {
-        name: string
-        address: EthereumAddress
-        contractDescription: Record<string, string[]>
-        taggedNames: Record<string, string[]>
-      }
-    > = {}
+    const contracts: Record<string, PermissionedContract> = {}
+    const getContract = (name: string, address: EthereumAddress) => {
+      contracts[name] ??= new PermissionedContract(name, address)
+      return contracts[name]
+    }
 
     for (const template of OP_STACK_PERMISSION_TEMPLATES) {
-      for (const contract of inversion.values()) {
-        const role = contract.roles.find(
-          (r) =>
-            r.name === template.role.value &&
-            r.atName ===
-              (contractOverrides?.[template.role.contract] ??
-                template.role.contract),
+      for (const invertedContract of inversion.values()) {
+        const role = findRoleMatchingTemplate(
+          invertedContract,
+          template,
+          contractOverrides,
         )
         if (!role) {
           continue
         }
-
-        const contractKey = overrides?.[role.name] ?? contract.name ?? role.name
-
-        result[contractKey] ??= {
-          name: contractKey,
-          address: EthereumAddress(contract.address),
-          contractDescription: {},
-          taggedNames: {},
-        }
-        const entry = result[contractKey]
+        const contractKey =
+          overrides?.[role.name] ?? invertedContract.name ?? role.name
+        const contractAddress = EthereumAddress(invertedContract.address)
+        const contract = getContract(contractKey, contractAddress)
+        const referenced = getContract(role.atName, role.atAddress)
 
         if (template.description !== undefined) {
-          entry.contractDescription[role.name] ??= []
-          entry.contractDescription[role.name].push(
+          contract.addDescription(
             stringFormat(template.description, role.atName),
           )
         }
-
         if (template.tags !== undefined) {
           for (const tag of template.tags) {
-            entry.taggedNames[tag] ??= []
-            entry.taggedNames[tag].push(role.atName)
+            contract.addTag(tag, role.atName)
+            referenced.addTagReference(tag, contractKey)
           }
         }
       }
     }
 
-    return Object.values(result).map((entry) => ({
-      name: entry.name,
-      accounts: [this.formatPermissionedAccount(entry.address)],
-      description: Object.values(entry.contractDescription)
-        .flat()
-        .concat(
-          Object.entries(entry.taggedNames).map(([tag, contracts]) =>
-            stringFormat(
-              OpStackTagDescription[tag as OpStackTag],
-              contracts.join(', '),
-            ),
-          ),
-        )
-        .join(' '),
-      etherscanUrl: this.explorer,
-    }))
+    return Object.values(contracts)
+      .map((contract) => {
+        const description = contract.generateDescription()
+        if (description !== '') {
+          return {
+            name: contract.name,
+            accounts: [this.formatPermissionedAccount(contract.address)],
+            description: contract.generateDescription(),
+            etherscanUrl: this.explorer,
+          }
+        }
+      })
+      .filter((x) => !!x) as ProjectPermission[]
   }
 
   getMultisigPermission(
@@ -502,11 +486,4 @@ function isNonNullable<T>(
   value: T | undefined | null,
 ): value is NonNullable<T> {
   return value !== null && value !== undefined
-}
-
-export function stringFormat(str: string, ...val: string[]) {
-  for (let index = 0; index < val.length; index++) {
-    str = str.replaceAll(`{${index}}`, val[index])
-  }
-  return str
 }
