@@ -669,8 +669,8 @@ describe(UpdateMonitor.name, () => {
 
       expect(Object.entries(result).length).toEqual(runners.length)
       expect(result).toEqual({
-        ethereum: ['project-a'],
-        arbitrum: ['project-b'],
+        [PROJECT_A]: [ChainId.ETHEREUM],
+        [PROJECT_B]: [ChainId.ARBITRUM],
       })
     })
 
@@ -713,10 +713,10 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = await updateMonitor.generateDailyReminder()
 
-      expect(Object.entries(result).length).toEqual(runners.length)
+      expect(Object.entries(result).length).toEqual(1)
+      expect(result[PROJECT_A].length).toEqual(2)
       expect(result).toEqual({
-        ethereum: ['project-a'],
-        arbitrum: ['project-a'],
+        [PROJECT_A]: [ChainId.ETHEREUM, ChainId.ARBITRUM],
       })
     })
 
