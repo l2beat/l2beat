@@ -97,7 +97,15 @@ export const paradex: Layer2 = {
       }),
     ],
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1636978914),
+          programHashes: [
+            '3258367057337572248818716706664617507069572185152472699066582725377748079373',
+          ],
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {
