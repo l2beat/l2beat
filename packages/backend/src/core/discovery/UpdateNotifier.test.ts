@@ -250,7 +250,8 @@ describe(UpdateNotifier.name, () => {
       )
 
       const reminders = {
-        [ChainId.getName(ChainId.ETHEREUM)]: ['project-a', 'project-b'],
+        ['project-a']: [ChainId.ETHEREUM],
+        ['project-b']: [ChainId.ETHEREUM],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 

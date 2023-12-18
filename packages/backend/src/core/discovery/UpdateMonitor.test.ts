@@ -169,8 +169,7 @@ describe(UpdateMonitor.name, () => {
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
         {
-          [ChainId.getName(ChainId.ETHEREUM)]: ['project-a'],
-          [ChainId.getName(ChainId.ARBITRUM)]: ['project-a'],
+          ['project-a']: [ChainId.ETHEREUM, ChainId.ARBITRUM],
         },
         timestamp,
       )
