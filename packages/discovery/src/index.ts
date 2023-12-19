@@ -39,3 +39,4 @@ export {
 } from './utils/EtherscanLikeClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { HttpClient } from './utils/HttpClient'
+export { UnixTime } from './utils/UnixTime'

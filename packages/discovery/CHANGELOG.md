@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.28.1
+
+### Patch Changes
+
+- Expose UnixTime class
+
 ## 0.28.0
 
 ### Minor Changes

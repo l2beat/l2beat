@@ -196,4 +196,8 @@ export class DiscoveryProvider {
   async getBlockNumber(): Promise<number> {
     return this.provider.getBlockNumber()
   }
+
+  async getBlockNumberAt(timestampNumber: UnixTime): Promise<number> {
+    return this.etherscanLikeClient.getBlockNumberAtOrBefore(timestampNumber)
+  }
 }
