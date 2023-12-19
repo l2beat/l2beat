@@ -116,9 +116,21 @@ export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-// Upgradability
 export function DATA_CELESTIA(
   isUsingBlobstream: boolean,
+): ProjectRiskViewEntry {
+  const additional = isUsingBlobstream
+    ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
+    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots, meaning that the Sequencer can single-handedly post unavaialable roots.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation rely fully on data that is posted on Celestia.` +
+      additional,
+    sentiment: isUsingBlobstream ? 'warning' : 'bad',
+  }
+}
+
 ): ProjectRiskViewEntry {
   const additional = isUsingBlobstream
     ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
