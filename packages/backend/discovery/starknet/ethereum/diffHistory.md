@@ -1,3 +1,22 @@
+# Diff at Tue, 19 Dec 2023 15:34:07 GMT:
+
+- author: Radina Talanova (<radinatalanova@Radinas-MacBook-Air.local>)
+- comparing to: master@66449a15ea740d012130a024e5e0daa7f431f04b
+
+## Description
+
+Updated Starknet program hash.
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+      values.programHash:
+-        "1865367024509426979036104162713508294334262484507712987283009063059134893433"
++        "54878256403880350656938046611252303365750679698042371543935159963667935317"
+    }
+```
+
 # Diff at Mon, 18 Dec 2023 14:44:24 GMT:
 
 - author: maciekzygmunt (<maciekzygmunt@interia.pl>)
@@ -6,6 +25,10 @@
 ## Description
 
 Few new escrows have been added, to track the balances of the new tokens.
+
+The TVL limits on all StarGate Bridge contracts have been lifted (set to very high number).
+
+New owner (EOA) has been added to Implementation Multisig, now it's 2/5.
 
 ## Watched changes
 
