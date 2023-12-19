@@ -47,7 +47,7 @@ const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
-const totalDelayString = formatSeconds(totalDelay)
+// const totalDelayString = formatSeconds(totalDelay)
 
 const upgradesExecutor = {
   upgradableBy: ['UpgradeExecutorAdmin'],
@@ -425,9 +425,17 @@ export const arbitrum: Layer2 = {
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
-      description: `There is a ${totalDelayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay. Withdrawals can be censored for up to ${formatSeconds(
+      description: `Upgrades go first through the ${formatSeconds(
+        l1TimelockDelay,
+      )} delay L2 Timelock, through the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window and finally through the ${formatSeconds(
+        l2TimelockDelay,
+      )} delay L1 Timelock before reaching L1. There is a ${formatSeconds(
         selfSequencingDelay,
-      )}.`,
+      )} delay to force include a transaction on L2 and a ${formatSeconds(
+        validatorAfkTime,
+      )} delay before users can self-propose.`,
       sources: [
         {
           contract: 'OutboxV2',
