@@ -36,7 +36,7 @@ export const hermez: Layer2 = {
       apps: ['https://wallet.hermez.io/'],
       documentation: [
         'https://docs.hermez.io/',
-        'https://hermez.io/hermez-whitepaper.pdf',
+        'https://hermez.io/polygon-hermez-whitepaper.pdf',
       ],
       explorers: ['https://explorer.hermez.io/'],
       repositories: ['https://github.com/0xpolygonhermez'],
