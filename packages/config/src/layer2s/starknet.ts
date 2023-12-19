@@ -149,10 +149,7 @@ export const starknet: Layer2 = {
     dataAvailabilityMode: 'StateDiffs',
 
     links: {
-      apps: [
-        'https://www.dappland.com/',
-        'https://www.starknet-ecosystem.com/',
-      ],
+      apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
@@ -247,7 +244,15 @@ export const starknet: Layer2 = {
       type: 'starknet',
     },
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1636978914),
+          programHashes: [
+            '1865367024509426979036104162713508294334262484507712987283009063059134893433',
+          ],
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

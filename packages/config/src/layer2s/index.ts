@@ -45,6 +45,7 @@ import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { orb3 } from './orb3'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { polygonmiden } from './polygonmiden'
@@ -117,6 +118,7 @@ export const layer2s: Layer2[] = [
   obscuro,
   omgnetwork,
   optimism,
+  orb3,
   palm,
   paradex,
   polygonmiden,

@@ -37,8 +37,8 @@ export const mantle: Layer2 = {
   display: {
     name: 'Mantle',
     slug: 'mantle',
-    warning:
-      'Fraud proof system is currently disabled. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
+    redWarning:
+      'Fraud proof system is currently disabled and data is posted offchain. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'Mantle is an EVM compatible Optimium that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
       It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
@@ -50,10 +50,10 @@ export const mantle: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',
     links: {
-      websites: ['https://www.mantle.xyz/'],
+      websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs.mantle.xyz/'],
-      explorers: ['https://explorer.mantle.xyz/'],
+      explorers: ['https://explorer.mantle.xyz/', 'https://mantlescan.info'],
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
@@ -94,7 +94,7 @@ export const mantle: Layer2 = {
         {
           contract: 'EigenDataLayerChain',
           references: [
-            // The contract that is supposed to perfrom the signature check is not verified!
+            // The contract that is supposed to perform the signature check is not verified!
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L328',
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L395', // dummy proveFraud function
           ],

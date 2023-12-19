@@ -6,6 +6,7 @@ export interface ProjectPermission {
   accounts: ProjectPermissionedAccount[]
   name: string
   description: string
+  etherscanUrl?: string
   // list of source code permalinks and useful materials
   references?: ProjectReference[]
 }

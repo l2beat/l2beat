@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
+import { ProjectLink } from '../../../../components/icons'
 import { formatLargeNumber } from '../../../../utils'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
@@ -107,7 +108,7 @@ function getTitleLength(name: string): 'long' | 'very-long' | undefined {
   }
 }
 
-function getLinks(links: ProjectLinks) {
+function getLinks(links: ProjectLinks): ProjectLink[] {
   const items = [
     {
       name: 'Website',
@@ -118,7 +119,7 @@ function getLinks(links: ProjectLinks) {
       links: links.apps,
     },
     {
-      name: 'Documentation',
+      name: 'Docs',
       links: links.documentation,
     },
     {
@@ -132,6 +133,10 @@ function getLinks(links: ProjectLinks) {
     {
       name: 'Social',
       links: links.socialMedia,
+    },
+    {
+      name: 'rollup.codes',
+      links: links.rollupCodes ? [links.rollupCodes] : [],
     },
   ] as const
 

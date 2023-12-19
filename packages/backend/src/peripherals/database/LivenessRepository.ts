@@ -3,6 +3,7 @@ import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { LivenessRow } from 'knex/types/tables'
 
+import { LivenessId } from '../../core/liveness/types/LivenessId'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -10,7 +11,7 @@ export interface LivenessRecord {
   timestamp: UnixTime
   blockNumber: number
   txHash: string
-  livenessConfigurationId: number
+  livenessId: LivenessId
 }
 
 export interface LivenessRecordWithProjectIdAndType {
@@ -43,30 +44,12 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAllWithProjectIdAndType(): Promise<
-    LivenessRecordWithProjectIdAndType[]
-  > {
-    const knex = await this.knex()
-    const rows = await knex('liveness as l')
-      .join(
-        'liveness_configuration as c',
-        'l.liveness_configuration_id',
-        'c.id',
-      )
-      .select('l.timestamp', 'c.type', 'c.project_id')
-    return rows.map(toRecordWithProjectIdAndType)
-  }
-
   async getWithTypeDistinctTimestamp(
     projectId: ProjectId,
   ): Promise<LivenessRecordWithType[]> {
     const knex = await this.knex()
     const rows = await knex('liveness as l')
-      .join(
-        'liveness_configuration as c',
-        'l.liveness_configuration_id',
-        'c.id',
-      )
+      .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
       .select('l.timestamp', 'c.type', 'c.project_id')
       .where('c.project_id', projectId.toString())
       .distinct('l.timestamp')
@@ -82,11 +65,7 @@ export class LivenessRepository extends BaseRepository {
   ): Promise<LivenessRecordWithType[]> {
     const knex = await this.knex()
     const rows = await knex('liveness as l')
-      .join(
-        'liveness_configuration as c',
-        'l.liveness_configuration_id',
-        'c.id',
-      )
+      .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
       .select('l.timestamp', 'c.type', 'c.project_id')
       .where('c.project_id', projectId.toString())
       .andWhere('c.type', type)
@@ -105,13 +84,13 @@ export class LivenessRepository extends BaseRepository {
   }
 
   async deleteAfter(
-    livenessConfigurationId: number,
+    livenessId: LivenessId,
     after: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
     return knex('liveness')
-      .where('liveness_configuration_id', livenessConfigurationId)
+      .where('liveness_id', livenessId)
       .andWhere('timestamp', '>', after.toDate())
       .delete()
   }
@@ -127,7 +106,7 @@ function toRecord(row: LivenessRow): LivenessRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
     txHash: row.tx_hash,
-    livenessConfigurationId: row.liveness_configuration_id,
+    livenessId: LivenessId.unsafe(row.liveness_id),
   }
 }
 
@@ -140,21 +119,11 @@ function toRecordWithTimestampAndType(
   }
 }
 
-function toRecordWithProjectIdAndType(
-  row: LivenessRowWithProjectIdAndType,
-): LivenessRecordWithProjectIdAndType {
-  return {
-    timestamp: UnixTime.fromDate(row.timestamp),
-    projectId: ProjectId(row.project_id),
-    type: LivenessType(row.type),
-  }
-}
-
 function toRow(record: LivenessRecord): LivenessRow {
   return {
     timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
     tx_hash: record.txHash,
-    liveness_configuration_id: record.livenessConfigurationId,
+    liveness_id: record.livenessId.toString(),
   }
 }

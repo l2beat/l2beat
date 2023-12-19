@@ -19,7 +19,7 @@ export const metis: Layer2 = {
   display: {
     name: 'Metis Andromeda',
     slug: 'metis',
-    warning:
+    redWarning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \
       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system. \
       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
@@ -34,10 +34,13 @@ export const metis: Layer2 = {
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.metis.io'],
+      websites: ['https://metis.io'],
       apps: [],
       documentation: ['https://docs.metis.io'],
-      explorers: ['https://andromeda-explorer.metis.io'],
+      explorers: [
+        'https://andromeda-explorer.metis.io',
+        'https://explorer.metis.io',
+      ],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
         'https://medium.com/@MetisDAO',

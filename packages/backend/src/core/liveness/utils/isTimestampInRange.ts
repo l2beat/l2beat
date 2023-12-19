@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 export function isTimestampInRange(
   sinceTimestamp: UnixTime,
   untilTimestamp: UnixTime | undefined,
-  latestSyncedTimestamp: UnixTime | undefined,
+  lastSyncedTimestamp: UnixTime | undefined,
   from: UnixTime,
   to: UnixTime,
 ): boolean {
@@ -11,7 +11,7 @@ export function isTimestampInRange(
     return false
   }
 
-  if (latestSyncedTimestamp?.gte(to)) {
+  if (lastSyncedTimestamp?.gte(to)) {
     return false
   }
 

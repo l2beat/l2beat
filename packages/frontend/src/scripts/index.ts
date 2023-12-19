@@ -11,13 +11,14 @@ import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureSidebarMenu } from './configureSidebarMenu'
-import { configureTables } from './configureTables'
 import { configureTabs } from './configureTabs'
 import { configureThemeToggle } from './configureThemeToggle'
 import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
+import { configureSorting } from './table/configureSorting'
+import { configureTables } from './table/configureTables'
 
 configureThemeToggle()
 configureFloatingBanner()
@@ -39,3 +40,4 @@ configureRichSelects()
 configureBridgesAndCombinedOnly()
 configureLivenessTimeRangeControls()
 configureOverflowWrappers()
+configureSorting()
