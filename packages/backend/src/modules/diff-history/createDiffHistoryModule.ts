@@ -29,10 +29,7 @@ export function createDiffHistoryModule(
 
   const configReader = new ConfigReader()
 
-  const discoveryLogger =
-    config.name === 'Backend/Local'
-      ? DiscoveryLogger.SILENT
-      : DiscoveryLogger.SILENT
+  const discoveryLogger = DiscoveryLogger.SILENT
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
