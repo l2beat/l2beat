@@ -52,6 +52,7 @@ export const myria: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://myria.com/'],
       apps: ['https://market.x.immutable.com/'],
@@ -61,6 +62,8 @@ export const myria: Layer2 = {
       socialMedia: [
         'https://medium.com/@myriagames',
         'https://twitter.com/myria',
+        'https://discord.gg/myria',
+        'https://t.me/myriaofficialgroup',
       ],
     },
     activityDataSource: 'Closed API',
@@ -78,24 +81,9 @@ export const myria: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'myria',
+      product: ['myria'],
       sinceTimestamp: new UnixTime(1659542607),
       resyncLastDays: 7,
-    },
-    liveness: {
-      batchSubmissions: [],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
-          ),
-          selector: '0x538f9406',
-          functionSignature:
-            'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1659542607),
-        },
-      ],
     },
   },
   riskView: makeBridgeCompatible({

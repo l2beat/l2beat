@@ -146,11 +146,10 @@ export const starknet: Layer2 = {
       with a single Sequencer.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
-      apps: [
-        'https://www.dappland.com/',
-        'https://www.starknet-ecosystem.com/',
-      ],
+      apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
@@ -161,7 +160,7 @@ export const starknet: Layer2 = {
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
-        'https://discord.gg/uJ9HZTUk2Y',
+        'https://discord.com/invite/qypnmzkhbc',
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
@@ -169,6 +168,10 @@ export const starknet: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+    },
   },
   config: {
     escrows: [
@@ -241,6 +244,15 @@ export const starknet: Layer2 = {
       type: 'starknet',
     },
     liveness: {
+      proofSubmissions: [
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1636978914),
+          programHashes: [
+            '1865367024509426979036104162713508294334262484507712987283009063059134893433',
+          ],
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

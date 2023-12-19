@@ -51,8 +51,9 @@ export const immutablex: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.immutable.com/'],
+      websites: ['https://immutable.com/'],
       apps: ['https://market.x.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
       explorers: ['https://immutascan.io/'],
@@ -79,24 +80,9 @@ export const immutablex: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'immutable',
+      product: ['immutable'],
       sinceTimestamp: new UnixTime(1615389188),
       resyncLastDays: 7,
-    },
-    liveness: {
-      batchSubmissions: [],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
-          ),
-          selector: '0x538f9406',
-          functionSignature:
-            'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1615389188),
-        },
-      ],
     },
   },
   riskView: makeBridgeCompatible({

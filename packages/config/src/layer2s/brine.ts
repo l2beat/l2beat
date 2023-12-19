@@ -49,9 +49,10 @@ export const brine: Layer2 = {
     description: 'Brine is a DEX powered by StarkEx.',
     purpose: 'Exchange',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
     links: {
-      websites: ['https://www.brine.fi/'],
+      websites: ['https://brine.fi/'],
       apps: ['https://trade.brine.fi/'],
       documentation: ['https://docs.brine.fi/'],
       explorers: [],
@@ -59,6 +60,7 @@ export const brine: Layer2 = {
       socialMedia: [
         'https://twitter.com/BrineFinance',
         'https://discord.gg/wMAnf3gVTh',
+        'https://linkedin.com/company/brine-fi-dex',
       ],
     },
   },
@@ -74,20 +76,11 @@ export const brine: Layer2 = {
         description: "Main entry point for users' deposits.",
       }),
     ],
-    liveness: {
-      batchSubmissions: [],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
-          ),
-          selector: '0x538f9406',
-          functionSignature:
-            'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1614799636),
-        },
-      ],
+    transactionApi: {
+      type: 'starkex',
+      product: ['brine'],
+      sinceTimestamp: new UnixTime(1657453320),
+      resyncLastDays: 7,
     },
   },
   riskView: makeBridgeCompatible({

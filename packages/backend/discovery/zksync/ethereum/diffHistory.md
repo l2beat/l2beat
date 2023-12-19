@@ -1,3 +1,21 @@
+# Diff at Tue, 21 Nov 2023 15:45:04 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@c91f8874e3c01dd4c477491e11cff7b3c664ef34
+
+## Description
+
+Change in the zkSync Era Multisig owners - one address is removed, which makes it a 4/7 Multisig.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+      values.getOwners[7]:
+-        "0xa265146cA40F52cfC439888D0b4291b5440e6769"
+    }
+```
+
 # Diff at Fri, 13 Oct 2023 12:28:20 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

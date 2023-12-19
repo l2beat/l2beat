@@ -14,9 +14,10 @@ export const mode: Layer2 = {
       'Mode is the Ethereum L2 designed for builders and users to grow as the network grows.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.mode.network/'],
+      websites: ['https://mode.network/'],
       apps: [],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://sepolia.explorer.mode.network/'],

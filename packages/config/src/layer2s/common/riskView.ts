@@ -101,7 +101,7 @@ export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
     Challenge mechanizm is not yet fully implemented.',
-  sentiment: 'warning',
+  sentiment: 'bad',
 }
 
 export const DATA_EXTERNAL_DAC: ProjectRiskViewEntry = {
@@ -116,6 +116,21 @@ export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   description:
     'Proof construction and state derivation rely fully on data that is NOT published on chain.',
   sentiment: 'bad',
+}
+
+export function DATA_CELESTIA(
+  isUsingBlobstream: boolean,
+): ProjectRiskViewEntry {
+  const additional = isUsingBlobstream
+    ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
+    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots, meaning that the Sequencer can single-handedly post unavaialable roots.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation rely fully on data that is posted on Celestia.` +
+      additional,
+    sentiment: isUsingBlobstream ? 'warning' : 'bad',
+  }
 }
 
 // Upgradable
@@ -162,17 +177,24 @@ export function UPGRADABLE_ZKSYNC(
 
 export function UPGRADE_DELAY(
   upgradeDelay: number,
+  exitDelay?: number,
   canExit?: boolean,
+  isOptimisticDelay?: boolean,
 ): ProjectRiskViewEntry {
   const upgradeDelayString = formatSeconds(upgradeDelay)
-  const canReactString =
-    canExit === false
-      ? "and users don't have enough time to react if the permissioned operator is censoring"
-      : 'but users have some time to react even if the permissioned operator is censoring'
+  const exitDelayString =
+    exitDelay !== undefined ? formatSeconds(exitDelay) : ''
+  const canReactString = canExit
+    ? isOptimisticDelay === true
+      ? ` but users have some time to react even with the challenge period delay`
+      : ' but users have some time to react even if the permissioned operator is censoring'
+    : isOptimisticDelay === true
+    ? ` and users don't have enough time to react because of the ${exitDelayString} challenge period delay`
+    : " and users don't have enough time to react if the permissioned operator is censoring"
   return {
     value: `${upgradeDelayString} delay`,
     description:
-      'The code that secures the system can be changed arbitrarily ' +
+      'The code that secures the system can be changed arbitrarily' +
       canReactString +
       '.',
     sentiment: canExit === false ? 'bad' : 'warning',
@@ -182,6 +204,7 @@ export function UPGRADE_DELAY(
 function UPGRADE_DELAY_SECONDS(
   upgradeDelay: number,
   exitDelay?: number,
+  isOptimisticDelay?: boolean,
 ): ProjectRiskViewEntry {
   if (upgradeDelay < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADABLE_YES
@@ -190,9 +213,9 @@ function UPGRADE_DELAY_SECONDS(
     exitDelay !== undefined &&
     upgradeDelay - exitDelay < DANGER_DELAY_THRESHOLD_SECONDS
   ) {
-    return UPGRADE_DELAY(upgradeDelay, false)
+    return UPGRADE_DELAY(upgradeDelay, exitDelay, false, isOptimisticDelay)
   }
-  return UPGRADE_DELAY(upgradeDelay, true)
+  return UPGRADE_DELAY(upgradeDelay, exitDelay, true, isOptimisticDelay)
 }
 
 export const UPGRADABLE_NO: ProjectRiskViewEntry = {
@@ -435,6 +458,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
+  DATA_CELESTIA,
   UPGRADABLE_YES,
   UPGRADABLE_ARBITRUM,
   UPGRADABLE_POLYGON_ZKEVM,

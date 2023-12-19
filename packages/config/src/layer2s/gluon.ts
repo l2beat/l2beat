@@ -25,6 +25,7 @@ export const gluon: Layer2 = {
       'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
     purpose: 'Exchange',
     category: 'Plasma',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://gluon.network/', 'https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
@@ -45,12 +46,11 @@ export const gluon: Layer2 = {
     stage: 'NotApplicable',
   },
   config: {
-    associatedTokens: ['L2'],
     escrows: [
       {
         address: EthereumAddress('0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB'),
         sinceTimestamp: new UnixTime(1573694037),
-        tokens: ['ETH', 'DAI', 'L2'],
+        tokens: ['ETH', 'DAI'],
       },
       {
         address: EthereumAddress('0x84e34fD82FC368F1a072075114AdC4b552a7a1F4'),

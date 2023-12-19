@@ -1,5 +1,8 @@
 import { Layer2 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
@@ -12,6 +15,7 @@ import { PermissionsSectionProps } from '../../../../components/project/Permissi
 import { RiskAnalysisProps } from '../../../../components/project/RiskAnalysis'
 import { StageSectionProps } from '../../../../components/project/StageSection'
 import { StateDerivationSectionProps } from '../../../../components/project/StateDerivationSection'
+import { StateValidationSectionProps } from '../../../../components/project/StateValidationSection'
 import { TechnologyIncompleteProps } from '../../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
@@ -23,12 +27,17 @@ import { getTechnologyOverview } from './getTechnologyOverview'
 export function getProjectDetails(
   project: Layer2,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   chart: ChartProps,
 ) {
   const isUpcoming = project.isUpcoming
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(project)
-  const permissionsSection = getPermissionsSection(project, verificationStatus)
+  const permissionsSection = getPermissionsSection(
+    project,
+    verificationStatus,
+    manuallyVerifiedContracts,
+  )
   const items: ScalingDetailsItem[] = []
 
   items.push({
@@ -67,7 +76,7 @@ export function getProjectDetails(
       items.push({
         type: 'StageSection',
         props: {
-          stage: project.stage,
+          stageConfig: project.stage,
           name: project.display.name,
           icon: `/icons/${project.display.slug}.png`,
           type: project.display.category,
@@ -111,6 +120,17 @@ export function getProjectDetails(
       })
     }
 
+    if (project.stateValidation) {
+      items.push({
+        type: 'StateValidationSection',
+        props: {
+          id: 'state-validation',
+          title: 'State validation',
+          stateValidation: project.stateValidation,
+        },
+      })
+    }
+
     technologySections.slice(1).forEach((section) =>
       items.push({
         type: 'TechnologySection',
@@ -136,7 +156,11 @@ export function getProjectDetails(
 
     items.push({
       type: 'ContractsSection',
-      props: getContractSection(project, verificationStatus),
+      props: getContractSection(
+        project,
+        verificationStatus,
+        manuallyVerifiedContracts,
+      ),
     })
 
     if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
@@ -172,6 +196,7 @@ export type ScalingDetailsSection =
   | RiskAnalysisSection
   | TechnologySection
   | StateDerivationSection
+  | StateValidationSection
   | PermissionsSection
   | ContractsSection
   | StageSection
@@ -219,6 +244,11 @@ interface TechnologySection {
 interface StateDerivationSection {
   type: 'StateDerivationSection'
   props: StateDerivationSectionProps
+}
+
+interface StateValidationSection {
+  type: 'StateValidationSection'
+  props: StateValidationSectionProps
 }
 
 interface PermissionsSection {

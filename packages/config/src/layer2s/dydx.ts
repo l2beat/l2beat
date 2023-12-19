@@ -80,13 +80,17 @@ export const dydx: Layer2 = {
   type: 'layer2',
   id: ProjectId('dydx'),
   display: {
-    name: 'dYdX',
+    name: 'dYdX v3',
     slug: 'dydx',
+    warning:
+      'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
     description:
-      'dYdX aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
+      'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [
@@ -114,6 +118,10 @@ export const dydx: Layer2 = {
       ],
     },
     activityDataSource: 'Closed API',
+    liveness: {
+      explanation:
+        'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
+    },
   },
   config: {
     escrows: [
@@ -126,11 +134,23 @@ export const dydx: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'dydx',
+      product: ['dydx'],
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
     },
     liveness: {
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
+          ),
+          selector: '0x9b3b76cc',
+          functionSignature:
+            'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
+          sinceTimestamp: new UnixTime(1615417556),
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {

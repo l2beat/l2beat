@@ -59,6 +59,8 @@ export const degate: Layer2 = {
     purpose: 'Exchange',
     provider: 'Loopring',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
@@ -67,7 +69,7 @@ export const degate: Layer2 = {
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',
-        'https://discord.gg/RFVDKGemJb',
+        'https://discord.gg/degate',
         'https://youtube.com/@degatedex1718',
         'https://medium.com/degate',
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
@@ -84,6 +86,7 @@ export const degate: Layer2 = {
       }),
     ],
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -95,6 +98,7 @@ export const degate: Layer2 = {
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
           sinceTimestamp: new UnixTime(1681993655),
+          untilTimestamp: new UnixTime(1695902495),
         },
       ],
     },
@@ -222,7 +226,7 @@ export const degate: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Forced Request Handling - DeGate design doc',

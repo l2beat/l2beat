@@ -72,6 +72,7 @@ export const polygonzkevm: Layer2 = {
       'Polygon zkEVM is aiming to become a decentralized Ethereum Layer 2 scalability solution that uses cryptographic zero-knowledge proofs to offer validity and finality of off-chain transactions. Polygon zkEVM wants to be equivalent with the Ethereum Virtual Machine.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
@@ -89,8 +90,13 @@ export const polygonzkevm: Layer2 = {
         'https://discord.gg/XvpHAxZ',
         'https://polygon.technology/blog-tags/polygon-zk',
       ],
+      rollupCodes: 'https://rollup.codes/polygon-zkevm',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
+    },
   },
   config: {
     escrows: [
@@ -105,6 +111,13 @@ export const polygonzkevm: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'functionCall',
@@ -126,6 +139,16 @@ export const polygonzkevm: Layer2 = {
           selector: '0x2b0006fa',
           functionSignature:
             'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
+          sinceTimestamp: new UnixTime(1679653163),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x621dd411',
+          functionSignature:
+            'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
           sinceTimestamp: new UnixTime(1679653163),
         },
       ],

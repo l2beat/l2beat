@@ -45,6 +45,8 @@ export const loopring: Layer2 = {
     purpose: 'Tokens, NFTs, AMM',
     provider: 'Loopring',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://loopring.org'],
       apps: ['https://exchange.loopring.io/'],
@@ -65,6 +67,10 @@ export const loopring: Layer2 = {
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation:
+        'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
   },
   config: {
     associatedTokens: ['LRC'],
@@ -94,6 +100,13 @@ export const loopring: Layer2 = {
       callsPerMinute: 240,
     },
     liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -235,7 +248,7 @@ export const loopring: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Forced Request Handling - Loopring design doc',

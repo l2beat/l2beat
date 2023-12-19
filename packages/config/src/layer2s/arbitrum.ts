@@ -23,6 +23,7 @@ import {
   RISK_VIEW,
   subtractOneAfterBlockInclusive,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
@@ -258,6 +259,7 @@ export const arbitrum: Layer2 = {
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -276,8 +278,19 @@ export const arbitrum: Layer2 = {
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
       ],
+      rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Arbitrum One is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to ${formatSeconds(
+        selfSequencingDelay,
+      )}. The state root gets finalized ${formatSeconds(
+        challengeWindow * assumedBlockTime,
+      )} after it has been posted.`,
+    },
   },
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
@@ -311,6 +324,12 @@ export const arbitrum: Layer2 = {
         description:
           'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+      }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
@@ -328,6 +347,7 @@ export const arbitrum: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'functionCall',
@@ -364,7 +384,7 @@ export const arbitrum: Layer2 = {
         {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x0eA7372338a589e7f0b00E463a53AA464ef04e17',
+            '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
           ),
           selector: '0xa04cee60',
           functionSignature:
@@ -540,6 +560,7 @@ export const arbitrum: Layer2 = {
           },
         ],
       },
+      EXITS.AUTONOMOUS,
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

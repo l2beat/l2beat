@@ -37,8 +37,8 @@ export const mantle: Layer2 = {
   display: {
     name: 'Mantle',
     slug: 'mantle',
-    warning:
-      'Fraud proof system is currently disabled. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
+    redWarning:
+      'Fraud proof system is currently disabled and data is posted offchain. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'Mantle is an EVM compatible Optimium that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
       It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
@@ -47,12 +47,13 @@ export const mantle: Layer2 = {
       intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
     purpose: 'Universal',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',
     links: {
-      websites: ['https://www.mantle.xyz/'],
+      websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs.mantle.xyz/'],
-      explorers: ['https://explorer.mantle.xyz/'],
+      explorers: ['https://explorer.mantle.xyz/', 'https://mantlescan.info'],
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
@@ -81,31 +82,6 @@ export const mantle: Layer2 = {
       url: 'https://rpc.mantle.xyz',
       callsPerMinute: 1500,
     },
-    liveness: {
-      batchSubmissions: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93',
-          ),
-          selector: '0xd0f89344',
-          functionSignature: 'function appendSequencerBatch()',
-          sinceTimestamp: new UnixTime(1687952507),
-        },
-      ],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0xD1328C9167e0693B689b5aa5a024379d4e437858',
-          ),
-          selector: '0x49cd3004',
-          functionSignature:
-            'function createAssertionWithStateBatch(bytes32 vmHash,uint256 inboxSize,bytes32[] _batch,uint256 _shouldStartAtElement,bytes _signature)',
-          sinceTimestamp: new UnixTime(1687961351),
-        },
-      ],
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
@@ -118,7 +94,7 @@ export const mantle: Layer2 = {
         {
           contract: 'EigenDataLayerChain',
           references: [
-            // The contract that is supposed to perfrom the signature check is not verified!
+            // The contract that is supposed to perform the signature check is not verified!
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L328',
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L395', // dummy proveFraud function
           ],
@@ -255,6 +231,7 @@ export const mantle: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

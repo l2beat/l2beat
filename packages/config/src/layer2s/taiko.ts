@@ -14,20 +14,19 @@ export const taiko: Layer2 = {
       'Taiko is a decentralized, Ethereum-equivalent ZK Rollup that has been developed on the Ethereum network. At present, Taiko is deployed on the Sepolia testnet for further testing and optimization.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.test.taiko.xyz'],
       documentation: ['https://taiko.xyz/docs'],
-      explorers: [
-        'https://explorer.test.taiko.xyz',
-        'https://status.test.taiko.xyz',
-      ],
+      explorers: ['https://jolnir.taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [
         'https://twitter.com/taikoxyz',
         'https://discord.gg/taikoxyz',
         'https://taiko.mirror.xyz',
       ],
+      rollupCodes: 'https://rollup.codes/taiko',
     },
   },
   stage: {

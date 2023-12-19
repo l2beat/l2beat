@@ -1,11 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BigQueryClient, BigQuerySDKWrapper } from '@l2beat/shared'
 
+import { LivenessController } from '../../api/controllers/liveness/LivenessController'
+import { createLivenessRouter } from '../../api/routers/LivenessRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { HourlyIndexer } from '../../core/liveness/HourlyIndexer'
 import { LivenessClient } from '../../core/liveness/LivenessClient'
 import { LivenessIndexer } from '../../core/liveness/LivenessIndexer'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
@@ -30,25 +32,41 @@ export function createLivenessModule(
     logger,
   )
 
-  const bigQueryWrapper = new BigQuerySDKWrapper({
-    clientEmail: config.liveness.bigQuery.clientEmail,
-    privateKey: config.liveness.bigQuery.privateKey,
-    projectId: config.liveness.bigQuery.projectId,
-  })
-  const bigQueryClient = new BigQueryClient(bigQueryWrapper)
+  const bigQueryClient = new BigQueryClient(
+    {
+      clientEmail: config.liveness.bigQuery.clientEmail,
+      privateKey: config.liveness.bigQuery.privateKey,
+      projectId: config.liveness.bigQuery.projectId,
+    },
+    config.liveness.bigQuery.queryLimitGb,
+    config.liveness.bigQuery.queryWarningLimitGb,
+    logger,
+  )
   const livenessClient = new LivenessClient(bigQueryClient)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
+
+  const runtimeConfigurations = config.projects.flatMap(
+    (project) => project.livenessConfig?.entries ?? [],
+  )
   const liveness = new LivenessIndexer(
     logger,
     hourlyIndexer,
-    config.projects,
     livenessClient,
     indexerStateRepository,
     livenessRepository,
     livenessConfigurationRepository,
+    runtimeConfigurations,
     config.liveness.minTimestamp,
   )
+
+  const livenessController = new LivenessController(
+    livenessRepository,
+    indexerStateRepository,
+    config.projects,
+    clock,
+  )
+  const livenessRouter = createLivenessRouter(livenessController)
 
   const start = async () => {
     await hourlyIndexer.start()
@@ -57,5 +75,6 @@ export function createLivenessModule(
 
   return {
     start,
+    routers: [livenessRouter],
   }
 }

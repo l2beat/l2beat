@@ -17,8 +17,8 @@ import { AggregatedReportRecord } from '../../../peripherals/database/Aggregated
 import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { groupByAndOmit, nestedGroupBy } from '../utils/grouping'
 import { asNumber } from './asNumber'
-import { groupByAndOmit, nestedGroupBy } from './grouping'
 
 export type ReportsPerProjectIdAndTimestamp = ReturnType<
   typeof groupByProjectIdAndTimestamp
@@ -248,7 +248,7 @@ export function groupAndMergeBreakdowns(
   return projects.reduce((prev, curr) => {
     const projectId = curr.projectId.toString()
 
-    // Grouped entires may be missing, fill the gaps with empty primitives
+    // Grouped entries may be missing, fill the gaps with empty primitives
     // i.e no native assets
     /* eslint-disable @typescript-eslint/no-unnecessary-condition */
     const external = groupedExternalBreakdownEntries[projectId] ?? []

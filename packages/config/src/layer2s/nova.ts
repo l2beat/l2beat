@@ -48,6 +48,7 @@ export const nova: Layer2 = {
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
     links: {
       websites: [
@@ -102,52 +103,6 @@ export const nova: Layer2 = {
       type: 'rpc',
       assessCount: subtractOne,
       startBlock: 1,
-    },
-    liveness: {
-      batchSubmissions: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
-          ),
-          selector: '0x8f111f3c',
-          functionSignature:
-            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-          sinceTimestamp: new UnixTime(1656050353),
-        },
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
-          ),
-          selector: '0x6f12b0c9',
-          functionSignature:
-            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
-          sinceTimestamp: new UnixTime(1656050353),
-        },
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
-          ),
-          selector: '0xe0bc9729',
-          functionSignature:
-            'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-          sinceTimestamp: new UnixTime(1656050353),
-        },
-      ],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
-          ),
-          selector: '0xa04cee60',
-          functionSignature:
-            'function updateSendRoot(bytes32 sendRoot, bytes32 l2BlockHash) external',
-          sinceTimestamp: new UnixTime(1691501141),
-        },
-      ],
     },
   },
   riskView: makeBridgeCompatible({

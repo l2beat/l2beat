@@ -1,5 +1,7 @@
 import {
   ActivityApiResponse,
+  LivenessApiResponse,
+  ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
@@ -33,5 +35,7 @@ export interface PagesData {
   tvlApiResponse: TvlApiResponse
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
+  livenessApiResponse: LivenessApiResponse | undefined
 }

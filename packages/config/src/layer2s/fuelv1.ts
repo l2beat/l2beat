@@ -23,15 +23,24 @@ export const fuelv1: Layer2 = {
       'Fuel aims to be a complete optimistic rollup with low transaction costs, high speed and high throughput.',
     purpose: 'Payments',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://fuel.sh/'],
       apps: [],
       documentation: ['https://docs.fuel.sh/'],
       explorers: ['https://mainnet.fuel.sh/network/'],
-      repositories: ['https://github.com/FuelLabs/fuel-v1-contracts'],
+      repositories: [
+        'https://github.com/FuelLabs/fuel-core',
+        'https://github.com/FuelLabs/fuels-rs',
+        'https://github.com/FuelLabs/fuels-ts',
+        'https://github.com/FuelLabs/fuel-v1-contracts',
+      ],
       socialMedia: [
         'https://discord.gg/xfpK4Pe',
         'https://twitter.com/fuellabs_',
+        'https://linkedin.com/company/fuel-labs',
+        'https://youtube.com/@fuelnetwork',
+        'https://hey.xyz/u/fuelnetwork',
       ],
     },
   },
@@ -53,29 +62,34 @@ export const fuelv1: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: null,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: [
+          true,
+          'Users have at least 30d to exit as the system cannot be upgraded.',
+        ],
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: null,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/cartesi/rollups/tree/v1.0.2/offchain',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: [
-        true,
-        'Users have at least 30d to exit as the system cannot be upgraded.',
-      ],
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
@@ -128,6 +142,13 @@ export const fuelv1: Layer2 = {
         ],
       },
     ],
+  },
+  stateDerivation: {
+    nodeSoftware:
+      'The node software source code can be found [here](https://github.com/FuelLabs/fuel-js).',
+    genesisState: `The bridge contracts deployments are the genesis state of the rollup chain. The bridge contracts of mainnet and testnet (rinkeby) deployment block number are available [here](https://github.com/FuelLabs/fuel-js/blob/master/packages/logic/src/genesis.js).`,
+    dataFormat:
+      'The data format details are documented in the Data Structure subsection [here](https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/System%20Description%20Primer.html).',
   },
   contracts: {
     addresses: [

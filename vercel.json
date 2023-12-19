@@ -2,12 +2,17 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "scaling/summary/",
+      "destination": "/scaling/summary",
       "permanent": true
     },
     {
-      "source": "/scaling/tvl",
-      "destination": "/scaling/summary/",
+      "source": "/scaling",
+      "destination": "/scaling/summary",
+      "permanent": true
+    },
+    {
+      "source": "/scaling/detailedTvl",
+      "destination": "/scaling/tvl",
       "permanent": true
     },
     {
@@ -62,7 +67,12 @@
     },
     {
       "source": "/bridges/tvl",
-      "destination": "bridges/summary/",
+      "destination": "/bridges/summary",
+      "permanent": true
+    },
+    {
+      "source": "/bridges",
+      "destination": "/bridges/summary",
       "permanent": true
     },
     {

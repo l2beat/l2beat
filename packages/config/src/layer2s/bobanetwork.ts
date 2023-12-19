@@ -11,6 +11,7 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -44,6 +45,7 @@ export const bobanetwork: Layer2 = {
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://boba.network'],
       apps: [],
@@ -53,13 +55,20 @@ export const bobanetwork: Layer2 = {
       socialMedia: [
         'https://boba.network/#news',
         'https://boba.network/blog/',
-        'https://www.enya.ai/company/media',
+        'https://enya.ai/company/media',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
         'https://discord.gg/m7NysJjKhm',
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation:
+        'Boba Network is an Optimistic rollup based on Optimism’s OVM that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner is always allowed to delete them.',
+    },
   },
   config: {
     associatedTokens: ['BOBA', 'OMG'],
@@ -86,6 +95,7 @@ export const bobanetwork: Layer2 = {
       startBlock: 1,
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'functionCall',
@@ -270,6 +280,7 @@ export const bobanetwork: Layer2 = {
         ],
         risks: [],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

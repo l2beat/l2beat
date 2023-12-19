@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { configureDarkThemeToggle } from './configureDarkThemeToggle'
-import { configureSidebarMenu } from './configureSidebarMenu'
+import { configureSidebarMenu } from '../../scripts/configureSidebarMenu'
+import { configureThemeToggle } from '../../scripts/configureThemeToggle'
 import { Navbar } from './Navbar'
 
 const meta: Meta<typeof Navbar> = {
@@ -17,7 +17,7 @@ const meta: Meta<typeof Navbar> = {
     (Story) => {
       useEffect(() => {
         configureSidebarMenu()
-        configureDarkThemeToggle()
+        configureThemeToggle()
       }, [])
       return <Story />
     },

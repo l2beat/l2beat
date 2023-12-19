@@ -1,11 +1,9 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { multicallConfig } from '@l2beat/discovery'
-import { EtherscanClient } from '@l2beat/shared'
+import { getChainConfig } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
-import { getChainMinTimestamp } from './chains'
 import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -16,6 +14,7 @@ export function getLocalConfig(env: Env): Config {
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
+  const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
@@ -70,10 +69,13 @@ export function getLocalConfig(env: Env): Config {
           'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey:
-          env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
-          env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api.etherscan.io/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey:
+            env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
+            env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.etherscan.io/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       arbitrum: arbitrumTvlEnabled && {
@@ -82,8 +84,11 @@ export function getLocalConfig(env: Env): Config {
           'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api.arbiscan.io/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.arbiscan.io/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       optimism: optimismTvlEnabled && {
@@ -92,8 +97,11 @@ export function getLocalConfig(env: Env): Config {
           'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       base: baseTvlEnabled && {
@@ -102,8 +110,23 @@ export function getLocalConfig(env: Env): Config {
           'TVL_BASE_RPC_CALLS_PER_MINUTE',
           25,
         ),
-        etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
-        etherscanApiUrl: 'https://api.basescan.org/api',
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.basescan.org/api',
+        },
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+      mantapacific: mantapacificTvlEnabled && {
+        providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
+          'TVL_MANTA_PACIFIC_RPC_CALLS_PER_MINUTE',
+          25,
+        ),
+        blockNumberProviderConfig: {
+          type: 'RoutescanLike',
+          routescanApiUrl: 'https://manta-pacific.calderaexplorer.xyz/api',
+        },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },
@@ -112,6 +135,11 @@ export function getLocalConfig(env: Env): Config {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
         privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
         projectId: env.string('LIVENESS_PROJECT_ID'),
+        queryLimitGb: env.integer('LIVENESS_BIGQUERY_LIMIT_GB', 15),
+        queryWarningLimitGb: env.integer(
+          'LIVENESS_BIGQUERY_WARNING_LIMIT_GB',
+          8,
+        ),
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
@@ -192,18 +220,62 @@ export function getLocalConfig(env: Env): Config {
       },
       chains: [
         {
-          chainId: ChainId.ETHEREUM,
-          rpcUrl: env.string('DISCOVERY_ETHEREUM_RPC_URL'),
-          rpcGetLogsMaxRange: env.optionalInteger(
-            'DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE',
-          ),
+          ...getChainConfig(ChainId.ETHEREUM),
           reorgSafeDepth: env.optionalInteger(
             'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
-          multicall: multicallConfig.ethereum,
-          etherscanApiKey: env.string('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
-          etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
+        },
+        {
+          ...getChainConfig(ChainId.ARBITRUM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ARBITRUM_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.AVALANCHE),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_AVALANCHE_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.BSC),
+          reorgSafeDepth: env.optionalInteger('DISCOVERY_BSC_REORG_SAFE_DEPTH'),
+        },
+        {
+          ...getChainConfig(ChainId.CELO),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_CELO_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.GNOSIS),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_GNOSIS_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.LINEA),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_LINEA_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.OPTIMISM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_OPTIMISM_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.POLYGON_POS),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_POLYGON_POS_REORG_SAFE_DEPTH',
+          ),
+        },
+        {
+          ...getChainConfig(ChainId.POLYGON_ZKEVM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
+          ),
         },
       ],
     },

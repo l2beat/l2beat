@@ -53,8 +53,10 @@ export const zksynclite: Layer2 = {
     description:
       'zkSync Lite (formerly zkSync) is a user-centric ZK Rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
     purpose: 'Payments, Tokens',
-    provider: 'zkSync',
+    provider: 'zkSync Lite',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -70,6 +72,10 @@ export const zksynclite: Layer2 = {
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation:
+        'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
+    },
   },
   config: {
     escrows: [
@@ -84,8 +90,7 @@ export const zksynclite: Layer2 = {
       callsPerMinute: 3_000,
     },
     liveness: {
-      batchSubmissions: [],
-      stateUpdates: [
+      proofSubmissions: [
         {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -94,6 +99,19 @@ export const zksynclite: Layer2 = {
           selector: '0x83981808',
           functionSignature:
             'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
+          sinceTimestamp: new UnixTime(1592218707),
+        },
+      ],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+          ),
+          selector: '0xb0705b42',
+          functionSignature:
+            'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
           sinceTimestamp: new UnixTime(1592218707),
         },
       ],
@@ -275,7 +293,7 @@ export const zksynclite: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',

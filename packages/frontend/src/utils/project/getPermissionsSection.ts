@@ -1,5 +1,8 @@
 import { Bridge, Layer2, ProjectPermission } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 import { TechnologyContract } from '../../components/project/ContractEntry'
 import { PermissionsSectionProps } from '../../components/project/PermissionsSection'
@@ -7,11 +10,13 @@ import { PermissionsSectionProps } from '../../components/project/PermissionsSec
 export function getPermissionsSection(
   project: Layer2 | Bridge,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): PermissionsSectionProps | undefined {
   const section: PermissionsSectionProps = {
     id: 'permissions',
     title: 'Permissions',
     verificationStatus,
+    manuallyVerifiedContracts,
     permissions: [],
   }
 
@@ -33,11 +38,12 @@ export function getPermissionsSection(
 function toTechnologyContract(
   permission: ProjectPermission,
 ): TechnologyContract {
+  const etherscanUrl = permission.etherscanUrl ?? 'https://etherscan.io'
   const links = permission.accounts.slice(1).map((account) => {
     return {
       name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
       address: account.address.toString(),
-      href: `https://etherscan.io/address/${account.address.toString()}#code`,
+      href: `${etherscanUrl}/address/${account.address.toString()}#code`,
       isAdmin: false,
     }
   })
@@ -54,5 +60,6 @@ function toTechnologyContract(
     description: permission.description,
     links,
     references: permission.references,
+    etherscanUrl: permission.etherscanUrl,
   }
 }

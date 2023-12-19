@@ -88,6 +88,7 @@ function gatherAddressesFromUpgradeability(
     case 'Reference':
     case 'immutable':
     case 'gnosis safe':
+    case 'gnosis safe zodiac module':
     case 'EIP2535 diamond proxy':
       // Ignoring types because no (admin/user)implementation included in them
       break

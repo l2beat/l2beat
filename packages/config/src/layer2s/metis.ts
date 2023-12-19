@@ -19,7 +19,7 @@ export const metis: Layer2 = {
   display: {
     name: 'Metis Andromeda',
     slug: 'metis',
-    warning:
+    redWarning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \
       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system. \
       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
@@ -32,11 +32,15 @@ export const metis: Layer2 = {
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.metis.io'],
+      websites: ['https://metis.io'],
       apps: [],
       documentation: ['https://docs.metis.io'],
-      explorers: ['https://andromeda-explorer.metis.io'],
+      explorers: [
+        'https://andromeda-explorer.metis.io',
+        'https://explorer.metis.io',
+      ],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
         'https://medium.com/@MetisDAO',
@@ -64,31 +68,6 @@ export const metis: Layer2 = {
       type: 'rpc',
       url: 'https://andromeda.metis.io/',
       startBlock: 1,
-    },
-    liveness: {
-      batchSubmissions: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a',
-          ),
-          selector: '0xa8cda37b',
-          functionSignature: 'function appendSequencerBatchByChainId()',
-          sinceTimestamp: new UnixTime(1649638297),
-        },
-      ],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0xf209815E595Cdf3ed0aAF9665b1772e608AB9380',
-          ),
-          selector: '0xd710083f',
-          functionSignature:
-            'function appendStateBatchByChainId(uint256 _chainId,bytes32[] _batch,uint256 _shouldStartAtElement,string proposer)',
-          sinceTimestamp: new UnixTime(1637071157),
-        },
-      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -178,6 +157,7 @@ export const metis: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
