@@ -58,7 +58,7 @@ export const bobanetwork: Layer2 = {
         'https://enya.ai/about-us/',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
-        'https://discord.gg/invite/Hvu3zpFwWd',
+        'https://discord.com/invite/Hvu3zpFwWd',
       ],
     },
     activityDataSource: 'Blockchain RPC',
