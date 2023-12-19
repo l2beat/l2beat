@@ -38,13 +38,40 @@ export class UpdateMonitorRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
+  async getTimestamps(
+    projectName: string,
+    chainId: ChainId,
+  ): Promise<UnixTime[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('update_monitor').select('unix_timestamp').where({
+      project_name: projectName,
+      chain_id: +chainId,
+    })
+
+    return rows.map((t) => UnixTime.fromDate(t.unix_timestamp))
+  }
+
+  async add(record: UpdateMonitorRecord): Promise<string> {
     const knex = await this.knex()
     const row = toRow(record)
 
     await knex('update_monitor')
       .insert(row)
-      .onConflict(['project_name', 'chain_id'])
+      .onConflict(['project_name', 'chain_id', 'unix_timestamp'])
+      .merge()
+
+    return `${
+      record.projectName
+    } | block_number:  ${record.blockNumber.toString()}`
+  }
+
+  async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
+    const knex = await this.knex()
+
+    await knex('update_monitor')
+      .insert(toRow(record))
+      .onConflict(['project_name', 'chain_id', 'unix_timestamp'])
       .merge()
 
     return `${

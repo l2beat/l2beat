@@ -22,6 +22,7 @@ export function getLocalConfig(env: Env): Config {
   )
   const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
+  const diffHistoryEnabled = env.boolean('DIFF_HISTORY_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const internalDiscordChannelId = env.optionalString(
     'INTERNAL_DISCORD_CHANNEL_ID',
@@ -288,6 +289,16 @@ export function getLocalConfig(env: Env): Config {
           ...getChainConfig(ChainId.POLYGON_ZKEVM),
           reorgSafeDepth: env.optionalInteger(
             'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
+          ),
+        },
+      ],
+    },
+    diffHistory: diffHistoryEnabled && {
+      chains: [
+        {
+          ...getChainConfig(ChainId.ETHEREUM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
         },
       ],

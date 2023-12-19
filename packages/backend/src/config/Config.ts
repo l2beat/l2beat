@@ -21,6 +21,7 @@ export interface Config {
   readonly liveness: LivenessConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
+  readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
 }
 
@@ -119,6 +120,10 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
 }
 
+export interface DiffHistoryConfig {
+  readonly chains: DiffHistoryChainConfig[]
+}
+
 export interface DiscordConfig {
   readonly token: string
   readonly publicChannelId?: string
@@ -132,3 +137,5 @@ export interface DiscoveryCacheChainConfig {
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
+
+export type DiffHistoryChainConfig = UpdateMonitorChainConfig
