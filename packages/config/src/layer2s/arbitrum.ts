@@ -423,11 +423,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(
-        totalDelay,
-        challengeWindowSeconds + selfSequencingDelay,
-        0,
-      ),
+      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
       description: `There is a ${totalDelayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay. Withdrawals can be censored for up to ${formatSeconds(
         selfSequencingDelay,
