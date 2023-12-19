@@ -17,7 +17,7 @@ export interface UpdateMetadata {
 }
 
 const OCCURRENCE_LIMIT = 3
-const HOUR_RANGE = 4
+const HOUR_RANGE = 12
 
 export class UpdateNotifier {
   constructor(
