@@ -17,8 +17,7 @@ import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 import { rimraf } from 'rimraf'
-import { createHash } from 'crypto'
-import { readFileAsync } from '@sentry/node/types/integrations/context'
+
 import {
   getDiscoveryHash,
   getHashesDatabase,
