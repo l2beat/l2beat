@@ -26,7 +26,7 @@ export const lyra: Layer2 = {
     provider: 'OP Stack',
     links: {
       websites: ['https://lyra.finance/'],
-      apps: ['https://www.lyra.finance/portfolio'],
+      apps: ['https://lyra.finance/portfolio'],
       documentation: ['https://docs.lyra.finance/docs/introduction'],
       explorers: ['https://explorer.lyra.finance/'],
       repositories: ['https://github.com/lyra-finance/v2-core'],
