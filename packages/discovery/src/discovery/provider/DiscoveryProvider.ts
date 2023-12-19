@@ -16,6 +16,7 @@ export interface ContractMetadata {
   abi: string[]
   source: string
 }
+type Topics = (string | string[] | null)[]
 
 /**
  * This class is meant as a wrapper for all interactions with the blockchain
@@ -62,7 +63,7 @@ export class DiscoveryProvider {
 
   public async getLogs(
     address: EthereumAddress,
-    topics: (string | string[])[],
+    topics: Topics,
     fromBlock: number,
     toBlock: number,
   ): Promise<providers.Log[]> {
@@ -103,7 +104,7 @@ export class DiscoveryProvider {
 
   public async getLogsBatch(
     address: EthereumAddress,
-    topics: (string | string[])[],
+    topics: Topics,
     fromBlock: number,
     toBlock: number,
   ): Promise<providers.Log[]> {

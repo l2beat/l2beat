@@ -213,5 +213,33 @@ describe(StateFromEventHandler.name, () => {
         ignoreRelative: true,
       })
     })
+
+    it('filters by topics', async () => {
+      const Alice = EthereumAddress.random()
+
+      const address = EthereumAddress.random()
+      const provider = mockObject<DiscoveryProvider>({
+        async getLogs(_address, topics) {
+          expect(topics).toEqual([
+            abi.getEventTopic('OwnerChanged'),
+            utils.hexZeroPad(Alice.toString(), 32),
+          ])
+          return [OwnerChanged(Alice, true)]
+        },
+      })
+
+      const handler = new StateFromEventHandler(
+        'someName',
+        {
+          type: 'stateFromEvent',
+          event,
+          topics: [Alice.toString()],
+          returnParams: ['account', 'status'],
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      await handler.execute(provider, address, BLOCK_NUMBER)
+    })
   })
 })

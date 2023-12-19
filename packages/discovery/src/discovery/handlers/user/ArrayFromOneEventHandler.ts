@@ -8,6 +8,7 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
+import { toTopics } from '../utils/toTopics'
 
 export type ArrayFromOneEventHandlerDefinition = z.infer<
   typeof ArrayFromOneEventHandlerDefinition
@@ -25,6 +26,7 @@ export const ArrayFromOneEventHandlerDefinition = z.strictObject({
   ),
   invert: z.optional(z.boolean()),
   ignoreRelative: z.optional(z.boolean()),
+  topics: z.optional(z.array(z.union([z.string(), z.null()]))),
 })
 
 export class ArrayFromOneEventHandler implements ClassicHandler {
@@ -75,12 +77,8 @@ export class ArrayFromOneEventHandler implements ClassicHandler {
     blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Querying ', this.fragment.name])
-    const logs = await provider.getLogs(
-      address,
-      [this.abi.getEventTopic(this.fragment)],
-      0,
-      blockNumber,
-    )
+    const topics = toTopics(this.abi, this.fragment, this.definition.topics)
+    const logs = await provider.getLogs(address, topics, 0, blockNumber)
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)
