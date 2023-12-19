@@ -61,8 +61,8 @@ export class UpdateMonitor {
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
   }
 
-  async generateDailyReminder(): Promise<Record<string, string[]>> {
-    const result: Record<string, string[]> = {}
+  async generateDailyReminder(): Promise<Record<string, ChainId[]>> {
+    const result: Record<string, ChainId[]> = {}
 
     for (const runner of this.discoveryRunners) {
       const chainId = runner.getChainId()
@@ -70,7 +70,6 @@ export class UpdateMonitor {
         chainId,
       )
 
-      const notUpdatedProjects: string[] = []
       for (const projectConfig of projectConfigs) {
         const discovery = this.cachedDiscovery.get(
           this.getCacheKey(projectConfig.name, chainId),
@@ -92,11 +91,10 @@ export class UpdateMonitor {
         )
 
         if (diff.length > 0) {
-          notUpdatedProjects.push(projectConfig.name)
+          result[projectConfig.name] ??= []
+          result[projectConfig.name].push(chainId)
         }
       }
-
-      result[ChainId.getName(chainId)] = notUpdatedProjects
     }
 
     return result
