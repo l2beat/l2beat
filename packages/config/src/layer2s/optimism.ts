@@ -35,6 +35,9 @@ const upgradesProxy = {
 }
 
 const challengePeriod: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
 
 const upgradeDelay = 0
 

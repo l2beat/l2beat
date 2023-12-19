@@ -500,9 +500,6 @@ export function getScalingRiskColumnsConfig() {
       sorting: {
         getOrderValue: (project) =>
           getOrderValueBySentiment(project.exitWindow),
-      sorting: {
-        getOrderValue: (project) =>
-          getOrderValueBySentiment(project.upgradeability),
         rule: 'numeric',
       },
     },
