@@ -19,7 +19,7 @@ export const lyra: Layer2 = {
     name: 'Lyra',
     slug: 'lyra',
     description:
-      'Lyra Chain is a L2 scaling solution build using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals and options trading.',
+      'Lyra Chain is an L2 scaling solution built using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals, and options trading.',
     purpose: 'Exchange',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
