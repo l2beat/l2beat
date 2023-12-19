@@ -243,15 +243,11 @@ describe('discovery config.jsonc', () => {
       for (const configs of chainConfigs ?? []) {
         if (configs.length > 0) {
           for (const c of configs) {
-            const hash = await getDiscoveryHash(
-              c.name,
-              ChainId.getName(c.chainId),
-            )
+            const hash = await getDiscoveryHash(c.name, c.chainId)
             const database = getHashesDatabase(
               'discovery/discoveredHashes.json',
             )
-            const savedHash =
-              database[getHashesDatabaseKey(c.name, ChainId.getName(c.chainId))]
+            const savedHash = database[getHashesDatabaseKey(c.name, c.chainId)]
             assert(
               hash === savedHash,
               `The hash of your local discovered.json (${hash}) does not match the hash stored in the discoveredHashes.json (${savedHash}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,

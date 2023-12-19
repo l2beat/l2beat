@@ -2,8 +2,7 @@ import { createHash } from 'crypto'
 import { readFileSync } from 'fs'
 import { ChainId, ConfigReader } from '@l2beat/discovery'
 
-export async function getDiscoveryHash(projectName: string, chainName: string) {
-  const chainId = ChainId.fromName(chainName)
+export async function getDiscoveryHash(projectName: string, chainId: ChainId) {
   const configReader = new ConfigReader()
   const curDiscovery = await configReader.readDiscovery(projectName, chainId)
   const hasher = createHash('sha1')
@@ -24,7 +23,7 @@ export function getHashesDatabase(path: string): Record<string, string> {
 
 export function getHashesDatabaseKey(
   projectName: string,
-  chainName: string,
+  chainId: ChainId,
 ): string {
-  return `${chainName}:${projectName}`
+  return `${ChainId.getName(chainId)}:${projectName}`
 }

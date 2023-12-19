@@ -328,10 +328,11 @@ function findDescription(
 
 async function updateHashes(projectName: string, chainName: string) {
   const databasePath = 'discovery/discoveredHashes.json'
-  const shaSum = await getDiscoveryHash(projectName, chainName)
+  const chainId = ChainId.fromName(chainName)
+  const shaSum = await getDiscoveryHash(projectName, chainId)
   const database = getHashesDatabase(databasePath)
 
-  database[getHashesDatabaseKey(projectName, chainName)] = shaSum
+  database[getHashesDatabaseKey(projectName, chainId)] = shaSum
 
   writeFileSync(databasePath, JSON.stringify(database, null, 2))
 }
