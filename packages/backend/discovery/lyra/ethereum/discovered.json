@@ -1,8 +1,8 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 18818692,
-  "configHash": "0x4ccb4576fbd12f162c18ac60f4617b87aae152fbc8009418faafefc35f87824a",
+  "blockNumber": 18818800,
+  "configHash": "0x2f3258454d92cf904e076447728d92a320cd58ddd79e34cf830a74e2338f78a3",
   "version": 3,
   "contracts": [
     {

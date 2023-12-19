@@ -42,7 +42,7 @@
         }
       }
     },
-    "ZoraMultisig": {
+    "LyraMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {
