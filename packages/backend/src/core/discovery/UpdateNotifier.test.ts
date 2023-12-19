@@ -230,7 +230,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '# Daily bot report @ 2023-12-18\n\n:x: Detected changes :x:\n```\n- project-a (ethereum, arbitrum)\n- project-b (ethereum, optimism)\n```\n',
+        `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes :x:\n\`\`\`\n- project-a (ethereum, arbitrum)\n- project-b (ethereum, optimism)\n\`\`\`\n`,
         'INTERNAL',
       )
     })
