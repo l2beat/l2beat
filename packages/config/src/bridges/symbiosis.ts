@@ -24,7 +24,7 @@ export const symbiosis: Bridge = {
       repositories: ['https://github.com/symbiosis-finance'],
       socialMedia: [
         'https://t.me/symbiosis_finance',
-        'https://blog.symbiosis.finance/',
+        'https://medium.com/@symbiosis_fi',
         'https://twitter.com/symbiosis_fi',
       ],
     },
