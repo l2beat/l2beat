@@ -3,12 +3,14 @@ export type OpStackContractName =
   | 'OptimismPortal'
   | 'SystemConfig'
   | 'L1CrossDomainMessenger'
+  | 'L1ERC721Bridge'
 
 export type OpStackPermissionName = 'Sequencer' | 'Proposer' | 'ProxyAdmin'
 
 export interface OPStackContractTemplate {
   name: OpStackContractName
   coreDescription: string
+  optional?: boolean
 }
 
 export type OpStackTag = 'admin' | 'owner' | 'owned'
@@ -46,6 +48,12 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
     coreDescription:
       "The {0} (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
   },
+  {
+    name: 'L1ERC721Bridge',
+    coreDescription:
+      'The {0} contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+    optional: true
+  }
 ]
 
 export const OP_STACK_PERMISSION_TEMPLATES: OPStackPermissionTemplate[] = [

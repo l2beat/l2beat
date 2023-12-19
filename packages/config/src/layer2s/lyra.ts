@@ -1,20 +1,13 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { opStack } from './opstack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lyra')
 
-const upgradesProxy = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-export const lyra: Layer2 = {
-  isUnderReview: true,
-  type: 'layer2',
-  id: ProjectId('lyra'),
+export const lyra: Layer2 = opStack({
+  discovery,
   display: {
     name: 'Lyra',
     slug: 'lyra',
@@ -36,27 +29,18 @@ export const lyra: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'UnderReview',
-  },
-  config: {
-    escrows: [
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8'),
-        tokens: ['ETH'],
-        description: 'Main entry point for users depositing ETH.',
-        ...upgradesProxy,
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x61E44dC0dae6888B5a301887732217d5725B0bFf'),
-        tokens: '*',
-        description:
-          'Main entry point for users depositing ERC20 token that do not require custom gateway.',
-        ...upgradesProxy,
-      }),
-    ],
-  },
-  riskView: UNDER_REVIEW_RISK_VIEW,
-  technology: TECHNOLOGY.UNDER_REVIEW,
-  contracts: CONTRACTS.UNDER_REVIEW,
-}
+  l1StandardBridgeEscrow: EthereumAddress(
+    '0x61E44dC0dae6888B5a301887732217d5725B0bFf',
+  ),
+  apiUrl: 'https://rpc.lyra.finance',
+  sequencerAddress: EthereumAddress(
+    discovery.getContractValue('SystemConfig', 'batcherHash'),
+  ),
+  inboxAddress: EthereumAddress('0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50'),
+  genesisTimestamp: new UnixTime(1700022479),
+  l2OutputOracle: discovery.getContract('L2OutputOracle'), // TODO: should be derived?
+  portal: discovery.getContract('OptimismPortal'),
+  // stateDerivation: DERIVATION.OPSTACK('LYRA'),
+  milestones: [],
+  knowledgeNuggets: []
+})
