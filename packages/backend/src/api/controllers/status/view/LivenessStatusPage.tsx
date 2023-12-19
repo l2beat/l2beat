@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { LivenessId } from '../../../../core/liveness/types/LivenessId'
 import { IndexerStateRecord } from '../../../../peripherals/database/IndexerStateRepository'
 import { LivenessConfigurationRecord } from '../../../../peripherals/database/LivenessConfigurationRepository'
 import { LivenessConfigurationCard } from './components/LivenessConfigurationCard'
@@ -11,7 +12,7 @@ export interface LivenessStatusPageProps {
   indexerState: IndexerStateRecord | undefined
   targetTimestamp: UnixTime
   configurations: LivenessConfigurationRecord[]
-  unusedConfigurationsIds: number[]
+  unusedConfigurationsIds: LivenessId[]
 }
 
 export function LivenessStatusPage(props: LivenessStatusPageProps) {
@@ -29,12 +30,6 @@ export function LivenessStatusPage(props: LivenessStatusPageProps) {
         style={{ width: '800px' }}
       >
         <p>Overview</p>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <p style={{ fontWeight: 'bold' }}>Current config hash:</p>
-          <p style={{ fontWeight: 'normal' }}>
-            {props.indexerState?.configHash}
-          </p>
-        </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
           <p style={{ fontWeight: 'bold' }}>Synced from:</p>
           {props.indexerState?.minTimestamp && (

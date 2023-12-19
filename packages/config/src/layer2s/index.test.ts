@@ -14,13 +14,7 @@ import {
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import {
-  FunctionCallParams,
-  layer2s,
-  Layer2Technology,
-  milestonesLayer2s,
-  NUGGETS,
-} from './index'
+import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -30,6 +24,16 @@ describe('layer2s', () => {
           const links = Object.values(layer2.display.links).flat()
           for (const link of links) {
             expect(link).not.toInclude(' ')
+          }
+        })
+      }
+    })
+    describe('do not include www part', () => {
+      for (const layer2 of layer2s) {
+        it(layer2.display.name, () => {
+          const links = Object.values(layer2.display.links).flat()
+          for (const link of links) {
+            expect(link).not.toInclude('www')
           }
         })
       }
@@ -85,7 +89,10 @@ describe('layer2s', () => {
           const functionCalls = [
             ...project.config.liveness.batchSubmissions,
             ...project.config.liveness.stateUpdates,
-          ].filter((x) => x.formula === 'functionCall') as FunctionCallParams[]
+          ].filter((x) => x.formula === 'functionCall') as {
+            selector: string
+            functionSignature: string
+          }[]
 
           functionCalls.forEach((c) => {
             const i = new utils.Interface([c.functionSignature])

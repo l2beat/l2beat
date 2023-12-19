@@ -1,5 +1,4 @@
 import {
-  assert,
   LivenessApiResponse,
   LivenessType,
   ProjectId,
@@ -10,13 +9,9 @@ import { Clock } from '../../../core/Clock'
 import { Project } from '../../../model'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
-import {
-  calculate30DayRollingStats,
-  calculateAnomaliesPerProject,
-} from './calculateAnomalies'
+import { calculateAnomaliesPerProject } from './calculateAnomalies'
 import {
   calcIntervalWithAvgsPerProject,
-  calculateIntervals,
   LivenessRecordWithInterval,
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
@@ -92,7 +87,7 @@ export class LivenessController {
   ): Promise<{
     projectId: ProjectId
     type: LivenessType
-    data: { timestamp: UnixTime; avg: number }[]
+    data: UnixTime[]
   }> {
     const lastHour = UnixTime.now().toStartOf('hour')
     const records: LivenessRecordWithInterval[] =
@@ -101,47 +96,11 @@ export class LivenessController {
         livenessType,
         lastHour.add(-60, 'days'),
       )
-    calculateIntervals(records)
-
-    const lastRecord = records.at(-1)
-    assert(lastRecord !== undefined)
-
-    const timestamp60daysAgo = lastHour.add(-60, 'days')
-    const last60Days = records.filter((record) =>
-      record.timestamp.gte(timestamp60daysAgo),
-    )
-    assert(last60Days.length !== 0)
-
-    const startIndex = last60Days.findIndex((record) =>
-      record.timestamp.lte(lastHour),
-    )
-    const lastIndex = last60Days.findIndex((record) =>
-      record.timestamp.lte(lastHour.add(-30, 'days')),
-    )
-    const { means } = calculate30DayRollingStats(
-      last60Days,
-      startIndex,
-      lastIndex,
-      lastHour,
-    )
-
-    const last30Days = last60Days.slice(startIndex, lastIndex)
-    const result = last30Days.map((record) => {
-      if (record.previousRecordInterval === undefined)
-        return { timestamp: record.timestamp, avg: 0 }
-
-      const mean = means.get(record.timestamp.toStartOf('minute').toNumber())
-      assert(mean !== undefined, 'mean should not be undefined')
-      return {
-        timestamp: record.timestamp,
-        avg: mean,
-      }
-    })
 
     return {
       projectId,
       type: livenessType,
-      data: result,
+      data: records.map((r) => r.timestamp),
     }
   }
 }

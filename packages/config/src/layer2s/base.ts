@@ -94,6 +94,7 @@ export const base: Layer2 = {
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
       explorers: [
         'https://basescan.org/',
+        'https://base.superscan.network',
         'https://base.blockscout.com/',
         'https://base.l2scan.co/',
       ],
@@ -103,6 +104,7 @@ export const base: Layer2 = {
         'https://discord.gg/buildonbase',
         'https://base.mirror.xyz/',
       ],
+      rollupCodes: 'https://rollup.codes/base',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {

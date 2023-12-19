@@ -6,6 +6,7 @@ export type SectionId =
   | 'risk-analysis'
   | 'technology'
   | 'state-derivation'
+  | 'state-validation'
   | 'operator'
   | 'withdrawals'
   | 'other-considerations'

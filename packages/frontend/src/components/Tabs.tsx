@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from './HorizontalSeparator'
@@ -45,8 +46,12 @@ export function Tabs({ items }: TabsProps) {
         <span className="TabsUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-900 transition-all duration-300 dark:bg-pink-200" />
       </OverflowWrapper>
       <HorizontalSeparator className="mb-3 md:mb-6" />
-      {items.map((tab) => (
-        <div className="TabsContent hidden" id={tab.id} key={tab.id}>
+      {items.map((tab, i) => (
+        <div
+          className={classNames('TabsContent', i !== 0 && 'hidden')}
+          id={tab.id}
+          key={tab.id}
+        >
           {tab.content}
         </div>
       ))}

@@ -2,7 +2,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import React from 'react'
 
-import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
+import { ScalingSummaryViewEntry } from '../../../pages/scaling/summary/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'
@@ -42,7 +42,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
     <OverflowWrapper>
       <FiltersWrapper>
         {!hideRollupsOnlyCheckbox && <RollupsOnlyCheckbox items={items} />}
-        <RichSelect label="Select technology" id="technology-select">
+        <RichSelect label="Select type" id="technology-select">
           {categories.map((category) => (
             <RichSelect.Item
               selectedLabel={category.label}
@@ -80,7 +80,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
   )
 }
 
-function stageLabel(stage: ScalingTvlViewEntry['stage']['stage']) {
+function stageLabel(stage: ScalingSummaryViewEntry['stage']['stage']) {
   switch (stage) {
     case 'NotApplicable':
       return 'Not applicable'

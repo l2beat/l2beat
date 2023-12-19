@@ -53,7 +53,7 @@ const links: ProjectLink[] = [
   { name: 'Website', links: ['https://bridge.gnosischain.com/'] },
   { name: 'App', links: ['https://bridge.gnosischain.com/'] },
   {
-    name: 'Documentation',
+    name: 'Docs',
     links: ['https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge'],
   },
   {
@@ -74,6 +74,10 @@ const links: ProjectLink[] = [
       'https://discord.gg/VQb3WzsywU',
       'https://t.me/gnosischain',
     ],
+  },
+  {
+    name: 'rollup.codes',
+    links: ['https://rollup.codes/arbitrum-one'],
   },
 ]
 
