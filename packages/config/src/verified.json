@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-12-11T11:45:44.096Z",
+  "updatedAt": "2023-12-19T08:17:40.803Z",
   "projects": {
     "across-v2": true,
     "aevo": true,
@@ -49,7 +49,7 @@
     "layer2financezk": false,
     "linea": true,
     "loopring": true,
-    "lyrafinance": true,
+    "lyra": true,
     "lzomnichain": false,
     "mantapacific": true,
     "mantle": true,
@@ -68,6 +68,7 @@
     "opticsV1": true,
     "opticsV2": true,
     "optimism": true,
+    "orb3": true,
     "orbit": false,
     "orbiter": true,
     "palm": true,
@@ -99,6 +100,7 @@
     "xai": true,
     "xchain": true,
     "xdai": true,
+    "zkfair": true,
     "zkspace": true,
     "zkswap": false,
     "zkswap2": false,
