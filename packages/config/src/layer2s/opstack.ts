@@ -1,7 +1,7 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { KnowledgeNugget, Milestone } from '../common'
+import { KnowledgeNugget, Milestone, ProjectPermission } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import {
@@ -35,7 +35,9 @@ export interface OpStackConfig {
   portal: ContractParameters
   stateDerivation?: Layer2StateDerivation
   milestones: Milestone[]
-  knowledgeNuggets: KnowledgeNugget[]
+  knowledgeNuggets: KnowledgeNugget[],
+  roleOverrides: Record<string, string>,
+  permissions: ProjectPermission[]
 }
 
 function safeGetImplementation(contract: ContractParameters): string {
@@ -296,20 +298,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
     },
     permissions: [
-      ...templateVars.discovery.getMultisigPermission(
-        'ZoraMultisig',
-        'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-      ),
-      ...templateVars.discovery.getMultisigPermission(
-        'ChallengerMultisig',
-        'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
-      ),
-      ...templateVars.discovery.getOpStackPermissions({
-        batcherHash: 'Sequencer',
-        PROPOSER: 'Proposer',
-        GUARDIAN: 'Guardian',
-        CHALLENGER: 'Challenger',
-      }),
+      ...templateVars.discovery.getOpStackPermissions(templateVars.roleOverrides),
+      ...templateVars.permissions
     ],
     contracts: {
       addresses:
