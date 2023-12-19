@@ -19,7 +19,7 @@ export const bob: Layer2 = {
       websites: ['https://gobob.xyz'],
       apps: [],
       documentation: ['https://docs.gobob.xyz'],
-      explorers: ['https://explorerl2-fluffy-bob-7mjgi9pmtg.t.conduit.xyz/'],
+      explorers: ['https://testnet-explorer.gobob.xyz/'],
       repositories: ['https://github.com/bob-collective'],
       socialMedia: [
         'https://twitter.com/build_on_bob'
