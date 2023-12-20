@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -8,7 +8,6 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   STATE_CORRECTNESS,
-  TECHNOLOGY,
   UPCOMING_RISK_VIEW,
 } from './common'
 import { Layer2 } from './types'
@@ -103,7 +102,7 @@ export const zkfair: Layer2 = {
   riskView: UPCOMING_RISK_VIEW,
   technology: {
     stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
-    dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+    dataAvailability: DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
     exitMechanisms: [
@@ -116,8 +115,8 @@ export const zkfair: Layer2 = {
   milestones: [
     {
       name: 'ZKFair Mainnet is Live',
-      link: 'https://foresightnews.pro/news/detail/35149',
-      date: '2023-12-18T00:00:00Z',
+      link: 'https://twitter.com/ZKFCommunity/status/1737307444181869017',
+      date: '2023-12-20T00:00:00Z',
       description: 'ZKFair launched.',
     },
   ],
