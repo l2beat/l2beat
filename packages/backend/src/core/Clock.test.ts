@@ -25,7 +25,8 @@ describe(Clock.name, () => {
   it('cannot be constructed with minTimestamp in the future', () => {
     setTime('13:05:48')
     const minTimestamp = toTimestamp('15:12:34')
-    expect(() => new Clock(minTimestamp, 0)).toThrow(
+    const clock = new Clock(minTimestamp, 0)
+    expect(() => clock.getFirstHour()).toThrow(
       'minTimestamp must be in the past',
     )
   })
