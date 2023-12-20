@@ -40,7 +40,9 @@ export class DiscoveryRunner {
   }
 
   async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return this.discoveryProvider.getBlockNumberAt(new DiscoveryUnixTime(timestamp.toNumber()))
+    return this.discoveryProvider.getBlockNumberAt(
+      new DiscoveryUnixTime(timestamp.toNumber()),
+    )
   }
 
   getChainId(): ChainId {
