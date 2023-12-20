@@ -1,10 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from './opstack'
+import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lyra')
+
+const upgradeability = {
+  upgradableBy: ['ProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
 
 export const lyra: Layer2 = opStack({
   discovery,
@@ -29,6 +34,7 @@ export const lyra: Layer2 = opStack({
       ],
     },
   },
+  upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x61E44dC0dae6888B5a301887732217d5725B0bFf',
   ),
@@ -38,7 +44,7 @@ export const lyra: Layer2 = opStack({
   ),
   inboxAddress: EthereumAddress('0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50'),
   genesisTimestamp: new UnixTime(1700022479),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'), 
+  l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   milestones: [
@@ -56,7 +62,7 @@ export const lyra: Layer2 = opStack({
     GUARDIAN: 'Guardian',
     CHALLENGER: 'Challenger',
   },
-  permissions: [
+  nonTemplatePermissions: [
     // TODO: check whether the description is correct
     ...discovery.getMultisigPermission(
       'LyraMultisig',
@@ -66,5 +72,12 @@ export const lyra: Layer2 = opStack({
       'ChallengerMultisig',
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
     ),
-  ]
+  ],
+  nonTemplateContracts: [
+    discovery.getContractDetails('L1ERC721Bridge', {
+      description:
+        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+      ...upgradeability,
+    }),
+  ],
 })

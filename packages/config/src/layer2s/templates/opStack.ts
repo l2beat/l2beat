@@ -1,9 +1,14 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { KnowledgeNugget, Milestone, ProjectPermission } from '../common'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
+import {
+  KnowledgeNugget,
+  Milestone,
+  ProjectContract,
+  ProjectPermission,
+} from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -14,18 +19,17 @@ import {
   OPERATOR,
   RISK_VIEW,
   subtractOne,
-} from './common'
-import { getStage } from './common/stages/getStage'
-import { Layer2, Layer2Display, Layer2StateDerivation } from './types'
-
-const upgradesProxy = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
+} from '../common'
+import { getStage } from '../common/stages/getStage'
+import { Layer2, Layer2Display, Layer2StateDerivation } from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
   display: Layer2Display
+  upgradeability: {
+    upgradableBy: string[] | undefined
+    upgradeDelay: string | undefined
+  }
   l1StandardBridgeEscrow: EthereumAddress
   apiUrl: string
   inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
@@ -35,17 +39,10 @@ export interface OpStackConfig {
   portal: ContractParameters
   stateDerivation?: Layer2StateDerivation
   milestones: Milestone[]
-  knowledgeNuggets: KnowledgeNugget[],
-  roleOverrides: Record<string, string>,
-  permissions: ProjectPermission[]
-}
-
-function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
+  knowledgeNuggets: KnowledgeNugget[]
+  roleOverrides: Record<string, string>
+  nonTemplatePermissions?: ProjectPermission[]
+  nonTemplateContracts?: ProjectContract[]
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -59,14 +56,14 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           address: templateVars.portal.address,
           tokens: ['ETH'],
           description: 'Main entry point for users depositing ETH.',
-          ...upgradesProxy,
+          ...templateVars.upgradeability,
         }),
         templateVars.discovery.getEscrowDetails({
           address: templateVars.l1StandardBridgeEscrow,
           tokens: '*',
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
-          ...upgradesProxy,
+          ...templateVars.upgradeability,
         }),
       ],
       transactionApi: {
@@ -298,12 +295,18 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
     },
     permissions: [
-      ...templateVars.discovery.getOpStackPermissions(templateVars.roleOverrides),
-      ...templateVars.permissions
+      ...templateVars.discovery.getOpStackPermissions(
+        templateVars.roleOverrides,
+      ),
+      ...(templateVars.nonTemplatePermissions ?? []),
     ],
     contracts: {
-      addresses:
-        templateVars.discovery.getOpStackContractDetails(upgradesProxy),
+      addresses: [
+        ...templateVars.discovery.getOpStackContractDetails(
+          templateVars.upgradeability,
+        ),
+        ...(templateVars.nonTemplateContracts ?? []),
+      ],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
     milestones: templateVars.milestones,
@@ -326,4 +329,12 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
     ],
   }
+}
+
+function safeGetImplementation(contract: ContractParameters): string {
+  const implementation = contract.implementations?.[0]
+  if (!implementation) {
+    throw new Error(`No implementation found for ${contract.name}`)
+  }
+  return implementation.toString()
 }
