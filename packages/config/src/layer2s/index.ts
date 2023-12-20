@@ -32,7 +32,7 @@ import { layer2financezk } from './layer2financezk'
 import { deri, xai } from './layer3s'
 import { linea } from './linea'
 import { loopring } from './loopring'
-import { lyrafinance } from './lyrafinance'
+import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metal } from './metal'
@@ -105,7 +105,7 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   linea,
   loopring,
-  lyrafinance,
+  lyra,
   mantapacific,
   mantle,
   metal,
