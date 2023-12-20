@@ -412,7 +412,7 @@ function isContractUnverified(
   }
 
   return contract.multipleAddresses.some(
-    (address) => verificationStatus.contracts[address.toString()],
+    (address) => verificationStatus.contracts[address.toString()] === false,
   )
 }
 
