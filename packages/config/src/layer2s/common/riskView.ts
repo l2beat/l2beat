@@ -101,7 +101,7 @@ export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
     Challenge mechanizm is not yet fully implemented.',
-  sentiment: 'warning',
+  sentiment: 'bad',
 }
 
 export const DATA_EXTERNAL_DAC: ProjectRiskViewEntry = {
@@ -116,6 +116,21 @@ export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   description:
     'Proof construction and state derivation rely fully on data that is NOT published on chain.',
   sentiment: 'bad',
+}
+
+export function DATA_CELESTIA(
+  isUsingBlobstream: boolean,
+): ProjectRiskViewEntry {
+  const additional = isUsingBlobstream
+    ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
+    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots, meaning that the Sequencer can single-handedly post unavaialable roots.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation rely fully on data that is posted on Celestia.` +
+      additional,
+    sentiment: isUsingBlobstream ? 'warning' : 'bad',
+  }
 }
 
 // Upgradable
@@ -443,6 +458,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
+  DATA_CELESTIA,
   UPGRADABLE_YES,
   UPGRADABLE_ARBITRUM,
   UPGRADABLE_POLYGON_ZKEVM,

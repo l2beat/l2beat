@@ -1,13 +1,18 @@
 import { assert } from '@l2beat/backend-tools'
 import { layer2s } from '@l2beat/config'
 
+import {
+  LivenessFunctionCall,
+  LivenessSharpSubmission,
+  LivenessTransfer,
+} from '../core/liveness/types/LivenessConfig'
 import { layer2ToProject } from './Project'
 
 describe('Backend project config', () => {
   describe('Liveness', () => {
-    it('every LivenessId is unique', () => {
-      const projects = layer2s.map(layer2ToProject)
+    const projects = layer2s.map(layer2ToProject)
 
+    it('every LivenessId is unique', () => {
       const ids = new Set<string>()
 
       for (const project of projects) {
@@ -23,6 +28,73 @@ describe('Backend project config', () => {
           ids.add(id)
         }
       }
+    })
+
+    describe('transfers', () => {
+      it('every configuration points to unique transfer params', () => {
+        const transfers = new Set<string>()
+
+        for (const project of projects) {
+          const transferConfigs = project.livenessConfig?.entries.filter(
+            (e): e is LivenessTransfer => e.formula === 'transfer',
+          )
+
+          for (const config of transferConfigs ?? []) {
+            const key = `${config.from.toString()}-${config.to.toString()}`
+
+            assert(
+              !transfers.has(key),
+              `Duplicate transfer config in ${project.projectId.toString()}`,
+            )
+            transfers.add(key)
+          }
+        }
+      })
+    })
+
+    describe('function calls', () => {
+      it('every configuration points to unique function call params', () => {
+        const functionCalls = new Set<string>()
+
+        for (const project of projects) {
+          const functionCallConfigs = project.livenessConfig?.entries.filter(
+            (e): e is LivenessFunctionCall => e.formula === 'functionCall',
+          )
+
+          for (const config of functionCallConfigs ?? []) {
+            const key = `${config.address.toString()}-${config.selector}`
+
+            assert(
+              !functionCalls.has(key),
+              `Duplicate function call config in ${project.projectId.toString()}`,
+            )
+            functionCalls.add(key)
+          }
+        }
+      })
+    })
+
+    describe('sharp submissions', () => {
+      it('every configuration uses unique program hashes', () => {
+        const programHashes = new Set<string>()
+
+        for (const project of projects) {
+          const sharpConfigs = project.livenessConfig?.entries.filter(
+            (e): e is LivenessSharpSubmission =>
+              e.formula === 'sharpSubmission',
+          )
+
+          for (const config of sharpConfigs ?? []) {
+            for (const hash of config.programHashes) {
+              assert(
+                !programHashes.has(hash),
+                `Duplicate program hash in ${project.projectId.toString()}`,
+              )
+              programHashes.add(hash)
+            }
+          }
+        }
+      })
     })
   })
 })
