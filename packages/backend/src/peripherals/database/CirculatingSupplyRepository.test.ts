@@ -36,8 +36,11 @@ describe(CirculatingSupplyRepository.name, () => {
   ]
 
   beforeEach(async () => {
-    await repository.deleteAll()
     await repository.addMany(DATA)
+  })
+
+  afterEach(async () => {
+    await repository.deleteAll()
   })
 
   describe(CirculatingSupplyRepository.prototype.getByTimestamp.name, () => {
