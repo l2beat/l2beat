@@ -64,7 +64,7 @@ export function ContractEntry({
         tooltip="Source code is not verified"
       />
     ) : (
-      <BulletIcon className="h-6 md:h-[27px]" />
+      <BulletIcon className="h-[1em]" />
     )
 
   addresses.forEach((address) => {
