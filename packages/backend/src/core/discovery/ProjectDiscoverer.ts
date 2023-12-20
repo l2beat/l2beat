@@ -42,7 +42,7 @@ export class ProjectDiscoverer {
     )
 
     for (const timestamp of known) {
-      this.knownSet.add(timestamp.toNumber())
+      this.knownSet.add(timestamp.toStartOf('day').toNumber())
     }
 
     this.projectConfig = await this.configReader.readConfig(
@@ -51,7 +51,7 @@ export class ProjectDiscoverer {
     )
 
     return this.clock.onEveryDay((timestamp) => {
-      if (!this.knownSet.has(timestamp.toNumber())) {
+      if (!this.knownSet.has(timestamp.toStartOf('day').toNumber())) {
         this.taskQueue.addToFront(timestamp)
       }
     })
