@@ -3,20 +3,24 @@
   "chain": "ethereum",
   "name": "lzomnichain",
   "initialAddresses": [
-    "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6" // STG
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2" // ULNv2
   ],
   "names": {
     "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
     "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": "Endpoint",
-    "0x65bb797c2B9830d891D87288F029ed8dACc19705": "Stargate Multisig",
     "0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero Relayer",
     "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "Google Cloud Oracle",
     "0x5a54fe5234E811466D5366846283323c954310B2": "TSS Oracle",
-    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig"
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig",
+    "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97": "Stargate Bridge",
+    "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": "Stargate Token"
   },
   "overrides": {
-    "Stargate Multisig": {
-      "ignoreInWatchMode": ["nonce"]
+    "Stargate Bridge": {
+      "ignoreDiscovery": true
+    },
+    "Stargate Token": {
+      "ignoreDiscovery": true
     },
     "Endpoint": {
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
@@ -78,8 +82,7 @@
           "returnParams": ["chainId", "lib"],
           "groupBy": "chainId",
           "onlyValue": true,
-          "multipleInGroup": true,
-          "ignoreRelative": true
+          "multipleInGroup": true
         },
         "supportedOutboundProof": {
           "type": "stateFromEvent",
@@ -88,12 +91,6 @@
           "groupBy": "chainId",
           "onlyValue": true,
           "multipleInGroup": true
-        },
-        "INBOUND_PROOF_LIBRARIES": {
-          "type": "arrayFromOneEvent",
-          "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
-          "valueKey": "lib",
-          "ignoreRelative": true
         }
       }
     }
