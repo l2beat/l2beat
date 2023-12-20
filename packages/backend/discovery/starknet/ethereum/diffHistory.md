@@ -5,7 +5,8 @@
 
 ## Description
 
-Updated Starknet program hash.
+Updated Starknet program hash. 
+The hash can be found by looking at the transactions of one of the Starknet Implementation Governors - 0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd. The tx hash is 0x4131a969982ec958490e399653f84bb356e4c282376320b1d6d2e6cc195597ef.
 
 ## Watched changes
 
