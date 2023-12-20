@@ -1,0 +1,41 @@
+{
+  "name": "zkfair",
+  "chain": "ethereum",
+  "blockNumber": 18810961,
+  "configHash": "0x51742266d88802d01ba0ab7b531d4947d08e3933d887f74c84607ff837e89f8b",
+  "version": 3,
+  "contracts": [
+    {
+      "name": "Bridge",
+      "address": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xEb80283EBc508CF6AaC5E054118954a2BD7fA006",
+        "admin": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      },
+      "implementations": ["0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"],
+      "sinceTimestamp": 18810960,
+      "values": {
+        "globalExitRootManager": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+        "isEmergencyState": false,
+        "networkID": 0,
+        "polygonZkEVMaddress": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      },
+      "derivedName": "PolygonZkEVMBridge"
+    }
+  ],
+  "eoas": [],
+  "abis": {
+    "0x9cb4706e20A18E59a48ffa7616d700A3891e1861": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ]
+  }
+}
