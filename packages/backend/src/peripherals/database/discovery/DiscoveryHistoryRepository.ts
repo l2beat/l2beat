@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { UpdateMonitorRow } from 'knex/types/tables'
+import { DiscoveryHistoryRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
-export interface UpdateMonitorRecord {
+export interface DiscoveryHistoryRecord {
   projectName: string
   chainId: ChainId
   blockNumber: number
@@ -16,19 +16,19 @@ export interface UpdateMonitorRecord {
   version: number
 }
 
-export class UpdateMonitorRepository extends BaseRepository {
+export class DiscoveryHistoryRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
 
-    this.autoWrap<CheckConvention<UpdateMonitorRepository>>(this)
+    this.autoWrap<CheckConvention<DiscoveryHistoryRepository>>(this)
   }
 
   async findLatest(
     name: string,
     chainId: ChainId,
-  ): Promise<UpdateMonitorRecord | undefined> {
+  ): Promise<DiscoveryHistoryRecord | undefined> {
     const knex = await this.knex()
-    const row = await knex('update_monitor')
+    const row = await knex('discovery_history')
       .where({
         project_name: name,
         chain_id: +chainId,
@@ -38,12 +38,26 @@ export class UpdateMonitorRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
+  async getTimestamps(
+    projectName: string,
+    chainId: ChainId,
+  ): Promise<UnixTime[]> {
     const knex = await this.knex()
 
-    await knex('update_monitor')
+    const rows = await knex('discovery_history').select('unix_timestamp').where({
+      project_name: projectName,
+      chain_id: +chainId,
+    })
+
+    return rows.map((t) => UnixTime.fromDate(t.unix_timestamp))
+  }
+
+  async addOrUpdate(record: DiscoveryHistoryRecord): Promise<string> {
+    const knex = await this.knex()
+
+    await knex('discovery_history')
       .insert(toRow(record))
-      .onConflict(['project_name', 'chain_id'])
+      .onConflict(['project_name', 'chain_id', 'unix_timestamp'])
       .merge()
 
     return `${
@@ -51,20 +65,20 @@ export class UpdateMonitorRepository extends BaseRepository {
     } | block_number:  ${record.blockNumber.toString()}`
   }
 
-  async getAll(): Promise<UpdateMonitorRecord[]> {
+  async getAll(): Promise<DiscoveryHistoryRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('update_monitor')
+    const rows = await knex('discovery_history')
 
     return rows.map(toRecord)
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return knex('update_monitor').delete()
+    return knex('discovery_history').delete()
   }
 }
 
-function toRecord(row: UpdateMonitorRow): UpdateMonitorRecord {
+function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
   return {
     projectName: row.project_name,
     chainId: ChainId(row.chain_id),
@@ -76,7 +90,7 @@ function toRecord(row: UpdateMonitorRow): UpdateMonitorRecord {
   }
 }
 
-function toRow(record: UpdateMonitorRecord): UpdateMonitorRow {
+function toRow(record: DiscoveryHistoryRecord): DiscoveryHistoryRow {
   return {
     project_name: record.projectName,
     chain_id: +record.chainId,

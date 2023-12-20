@@ -6,11 +6,9 @@ import {
   DiscoveryEngine,
   DiscoveryProvider,
   toDiscoveryOutput,
-} from '@l2beat/discovery'
+ UnixTime as DiscoveryUnixTime } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
-
-import { UnixTime as DiscoveryUnixTime } from '@l2beat/discovery'
 import { assert } from 'console'
 import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'

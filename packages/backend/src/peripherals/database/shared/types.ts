@@ -100,6 +100,16 @@ declare module 'knex/types/tables' {
     version: number
   }
 
+  interface DiscoveryHistoryRow {
+    project_name: string
+    chain_id: number
+    block_number: number
+    unix_timestamp: Date
+    discovery_json_blob: string
+    config_hash: string
+    version: number
+  }
+
   interface UpdateNotifierRow {
     id: number
     created_at: Date
