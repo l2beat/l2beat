@@ -14,15 +14,19 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.alterTable('update_monitor', (table) => {
-    table.dropPrimary()
+  await knex.schema.createTable('discovery_history', function (table) {
+    table.string('project_name').notNullable()
+    table.integer('chain_id').notNullable()
+    table.dateTime('unix_timestamp', { useTz: false }).notNullable()
+    table.integer('block_number').notNullable()
+    table.integer('version').notNullable()
+    table.string('config_hash').notNullable()
+    table.jsonb('discovery_json_blob').notNullable()
+
     table.primary(['project_name', 'chain_id', 'unix_timestamp'])
   })
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.alterTable('update_monitor', (table) => {
-    table.dropPrimary()
-    table.primary(['project_name', 'chain_id'])
-  })
+  await knex.schema.dropTable('discovery_history')
 }

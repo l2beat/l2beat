@@ -52,26 +52,12 @@ export class UpdateMonitorRepository extends BaseRepository {
     return rows.map((t) => UnixTime.fromDate(t.unix_timestamp))
   }
 
-  async add(record: UpdateMonitorRecord): Promise<string> {
-    const knex = await this.knex()
-    const row = toRow(record)
-
-    await knex('update_monitor')
-      .insert(row)
-      .onConflict(['project_name', 'chain_id', 'unix_timestamp'])
-      .merge()
-
-    return `${
-      record.projectName
-    } | block_number:  ${record.blockNumber.toString()}`
-  }
-
   async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
     const knex = await this.knex()
 
     await knex('update_monitor')
       .insert(toRow(record))
-      .onConflict(['project_name', 'chain_id', 'unix_timestamp'])
+      .onConflict(['project_name', 'chain_id'])
       .merge()
 
     return `${
