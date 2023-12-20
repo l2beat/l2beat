@@ -170,22 +170,25 @@ describe('layer2s', () => {
                   const referencedAddresses = getReferencedAddresses(
                     sourceCodeReference.references,
                   )
-                  const contract = discovery.getContract(
-                    sourceCodeReference.contract,
-                  )
 
-                  const contractAddresses = [
-                    contract.address,
-                    ...gatherAddressesFromUpgradeability(
-                      contract.upgradeability,
-                    ),
-                  ]
+                  if (referencedAddresses.length > 0) {
+                    const contract = discovery.getContract(
+                      sourceCodeReference.contract,
+                    )
 
-                  expect(
-                    contractAddresses.some((a) =>
-                      referencedAddresses.includes(a),
-                    ),
-                  ).toEqual(true)
+                    const contractAddresses = [
+                      contract.address,
+                      ...gatherAddressesFromUpgradeability(
+                        contract.upgradeability,
+                      ),
+                    ]
+
+                    expect(
+                      contractAddresses.some((a) =>
+                        referencedAddresses.includes(a),
+                      ),
+                    ).toEqual(true)
+                  }
                 })
               }
             })

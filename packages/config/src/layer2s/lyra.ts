@@ -38,7 +38,7 @@ export const lyra: Layer2 = opStack({
   ),
   inboxAddress: EthereumAddress('0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50'),
   genesisTimestamp: new UnixTime(1700022479),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'), // TODO: should be derived?
+  l2OutputOracle: discovery.getContract('L2OutputOracle'), 
   portal: discovery.getContract('OptimismPortal'),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   milestones: [
