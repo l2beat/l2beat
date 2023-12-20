@@ -44,10 +44,12 @@ export class DiscoveryHistoryRepository extends BaseRepository {
   ): Promise<UnixTime[]> {
     const knex = await this.knex()
 
-    const rows = await knex('discovery_history').select('unix_timestamp').where({
-      project_name: projectName,
-      chain_id: +chainId,
-    })
+    const rows = await knex('discovery_history')
+      .select('unix_timestamp')
+      .where({
+        project_name: projectName,
+        chain_id: +chainId,
+      })
 
     return rows.map((t) => UnixTime.fromDate(t.unix_timestamp))
   }

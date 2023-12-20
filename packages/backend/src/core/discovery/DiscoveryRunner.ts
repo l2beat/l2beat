@@ -6,7 +6,8 @@ import {
   DiscoveryEngine,
   DiscoveryProvider,
   toDiscoveryOutput,
- UnixTime as DiscoveryUnixTime } from '@l2beat/discovery'
+  UnixTime as DiscoveryUnixTime,
+} from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { assert } from 'console'

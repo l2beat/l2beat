@@ -205,6 +205,7 @@ declare module 'knex/types/tables' {
     circulating_supplies_status: CirculatingSupplyStatusRow
     liveness: LivenessRow
     discovery_cache: DiscoveryCacheRow
+    discovery_history: DiscoveryHistoryRow
     liveness_configuration: LivenessConfigurationRow
     indexer_state: IndexerStateRow
   }

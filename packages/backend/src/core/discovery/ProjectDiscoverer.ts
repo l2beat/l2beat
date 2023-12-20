@@ -3,7 +3,7 @@ import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
+import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -18,7 +18,7 @@ export class ProjectDiscoverer {
     private readonly projectName: string,
     private readonly chainId: ChainId,
     private readonly configReader: ConfigReader,
-    private readonly repository: UpdateMonitorRepository,
+    private readonly repository: DiscoveryHistoryRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly version: number,

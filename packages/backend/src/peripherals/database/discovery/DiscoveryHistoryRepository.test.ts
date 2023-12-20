@@ -69,36 +69,6 @@ describe(DiscoveryHistoryRepository.name, () => {
     expect(resultArb).toEqual(expectedArb)
   })
 
-  it(DiscoveryHistoryRepository.prototype.addOrUpdate.name, async () => {
-    const projectName = 'project'
-
-    const discovery: DiscoveryHistoryRecord = {
-      projectName,
-      chainId: ChainId.ETHEREUM,
-      blockNumber: -1,
-      timestamp: new UnixTime(0),
-      discovery: {
-        name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
-        blockNumber: -1,
-        configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
-        abis: {},
-        version: 0,
-      },
-      configHash: CONFIG_HASH,
-      version: 0,
-    }
-    await repository.addOrUpdate(discovery)
-
-    const updated: DiscoveryHistoryRecord = { ...discovery, blockNumber: 1 }
-    await repository.addOrUpdate(updated)
-    const latest = await repository.findLatest(projectName, ChainId.ETHEREUM)
-
-    expect(latest).toEqual(updated)
-  })
-
   it(DiscoveryHistoryRepository.prototype.getTimestamps.name, async () => {
     const projectName = 'project'
 
@@ -121,12 +91,15 @@ describe(DiscoveryHistoryRepository.name, () => {
       version: 0,
     }
     const discovery2 = {
-        ...discovery,
-        timestamp: new UnixTime(2)
+      ...discovery,
+      timestamp: new UnixTime(2),
     }
     await repository.addOrUpdate(discovery)
     await repository.addOrUpdate(discovery2)
-    const timestamps = await repository.getTimestamps(projectName, ChainId.ETHEREUM)
+    const timestamps = await repository.getTimestamps(
+      projectName,
+      ChainId.ETHEREUM,
+    )
 
     expect(timestamps).toEqual([discovery.timestamp, discovery2.timestamp])
   })

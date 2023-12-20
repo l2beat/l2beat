@@ -12,7 +12,7 @@ import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { ProjectDiscoverer } from '../../core/discovery/ProjectDiscoverer'
-import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
+import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
 import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
@@ -31,7 +31,10 @@ export function createDiffHistoryModule(
 
   const discoveryLogger = DiscoveryLogger.SILENT
 
-  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
+  const discoveryHistoryRepository = new DiscoveryHistoryRepository(
+    database,
+    logger,
+  )
 
   const discoveryCacheRepository = new DiscoveryCacheRepository(
     database,
@@ -74,7 +77,7 @@ export function createDiffHistoryModule(
             project.name,
             ChainId.ETHEREUM,
             configReader,
-            updateMonitorRepository,
+            discoveryHistoryRepository,
             new Clock(project.minTimestamp, 60 * 60),
             logger,
             DISCOVERY_LOGIC_VERSION,
