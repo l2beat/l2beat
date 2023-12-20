@@ -1,6 +1,6 @@
 # Diff at Tue, 19 Dec 2023 15:34:07 GMT:
 
-- author: Radina Talanova (<radinatalanova@Radinas-MacBook-Air.local>)
+- author: Radina Talanova (<nt.radina@gmail.com>)
 - comparing to: master@66449a15ea740d012130a024e5e0daa7f431f04b
 
 ## Description
