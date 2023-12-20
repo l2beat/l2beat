@@ -1135,20 +1135,6 @@
       "formula": "locked"
     },
     {
-      "id": "flex-flex-coin",
-      "name": "FLEX Coin",
-      "coingeckoId": "flex-coin",
-      "address": "0xFcF8eda095e37A41e002E266DaAD7efC1579bc0A",
-      "symbol": "FLEX",
-      "decimals": 18,
-      "sinceTimestamp": 1610646626,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/9108/large/coinflex_logo.png?1628750583",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
       "id": "frax-frax",
       "name": "Frax",
       "coingeckoId": "frax",
