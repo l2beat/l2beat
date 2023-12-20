@@ -4,6 +4,7 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
@@ -14,6 +15,9 @@ export interface UpdateMetadata {
   dependents: string[]
   unknownContracts: EthereumAddress[]
 }
+
+const OCCURRENCE_LIMIT = 3
+const HOUR_RANGE = 12
 
 export class UpdateNotifier {
   constructor(
@@ -37,25 +41,47 @@ export class UpdateNotifier {
     if (metadata.chainId !== ChainId.ETHEREUM) {
       return
     }
+
     const nonce = await this.getInternalMessageNonce()
-    const messages = diffToMessages(name, diff, {
+    await this.updateNotifierRepository.add({
+      projectName: name,
+      diff,
+      blockNumber: metadata.blockNumber,
+      chainId: metadata.chainId,
+    })
+
+    const timeFence = UnixTime.now().add(-HOUR_RANGE, 'hours')
+    const previousRecords = await this.updateNotifierRepository.getNewerThan(
+      timeFence,
+      name,
+      metadata.chainId,
+    )
+
+    const throttled = fieldThrottleDiff(previousRecords, diff, OCCURRENCE_LIMIT)
+    if (throttled.length <= 0) {
+      this.logger.info('Updates detected, but everything got throttled', {
+        name,
+        amount: countDiff(throttled),
+        throttledCount: diff.length - throttled.length,
+      })
+
+      return
+    }
+
+    const messages = diffToMessages(name, throttled, {
       dependents: metadata.dependents,
       blockNumber: metadata.blockNumber,
       chainId: metadata.chainId,
       nonce,
     })
     await this.notify(messages, 'INTERNAL')
-    await this.updateNotifierRepository.add({
-      projectName: name,
-      diff,
-      blockNumber: metadata.blockNumber,
-    })
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
-      amount: countDiff(diff),
+      amount: countDiff(throttled),
+      throttledCount: diff.length - throttled.length,
     })
 
-    const filteredDiff = filterDiff(diff, metadata.unknownContracts)
+    const filteredDiff = filterDiff(throttled, metadata.unknownContracts)
     if (filteredDiff.length === 0) {
       return
     }
@@ -106,45 +132,41 @@ export class UpdateNotifier {
   }
 
   async sendDailyReminder(
-    reminders: Record<string, string[]>,
+    reminders: Record<string, ChainId[]>,
     timestamp: UnixTime,
   ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
       return
     }
 
-    const messages = Object.entries(reminders).map(
-      ([chainIdString, notUpdatedProjects]) =>
-        getDailyReminderMessageForChainId(
-          notUpdatedProjects,
-          ChainId.fromName(chainIdString),
-        ),
-    )
+    let internals = ''
+    if (Object.entries(reminders).length > 0) {
+      const longestProjectName = Math.max(
+        ...Object.keys(reminders).map((name) => name.length),
+      )
+      const messages = Object.entries(reminders).map(
+        ([project, chains]) =>
+          `- ${project.padEnd(longestProjectName, ' ')} (${chains
+            .map((c) => ChainId.getName(c))
+            .join(', ')})`,
+      )
 
-    await this.notify(
-      getDailyReminderHeader(timestamp) + messages.join('\n'),
-      'INTERNAL',
-    )
+      internals = `\`\`\`\n${messages.join('\n')}\n\`\`\``
+    } else {
+      internals = ':white_check_mark: everything is up to date'
+    }
+
+    const notifyMessage = `${getDailyReminderHeader(timestamp)}\n${internals}\n`
+
+    await this.notify(notifyMessage, 'INTERNAL')
     this.logger.info('Daily reminder sent', {
       reminders: reminders,
     })
   }
 }
 
-function getDailyReminderMessageForChainId(
-  projects: string[],
-  chainId: ChainId,
-) {
-  const header = `chainId: ${ChainId.getName(chainId)}\n`
-  if (projects.length > 0) {
-    return `${header}${projects.map((p) => `:x: ${p}`).join('\n')}`
-  }
-
-  return `${header}:white_check_mark: everything is up to date`
-}
-
 function getDailyReminderHeader(timestamp: UnixTime): string {
-  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n`
+  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes :x:`
 }
 
 function countDiff(diff: DiscoveryDiff[]): number {

@@ -3,32 +3,41 @@ import { expect } from 'earl'
 
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 
+const ADDRESS_1 = EthereumAddress.random()
+const ADDRESS_2 = EthereumAddress.random()
+const SELECTOR_1 = '0x' + 'A'.repeat(8)
+const SELECTOR_2 = '0x' + 'B'.repeat(8)
+const FROM = UnixTime.fromDate(new Date('2021-01-01Z'))
+const TO = UnixTime.fromDate(new Date('2021-01-02Z'))
+
+const CONFIGURATIONS = [
+  {
+    address: ADDRESS_1,
+    selector: SELECTOR_1,
+    getFullInput: false,
+  },
+  {
+    address: ADDRESS_2,
+    selector: SELECTOR_2,
+    getFullInput: true,
+  },
+]
+
 describe(getFunctionCallQuery.name, () => {
-  it('should return valid SQL query', () => {
-    const ADDRESS_1 = EthereumAddress.random()
-    const ADDRESS_2 = EthereumAddress.random()
-    const query = getFunctionCallQuery(
-      [
-        {
-          address: ADDRESS_1,
-          selector: '0x' + 'A'.repeat(8),
-        },
-        {
-          address: ADDRESS_2,
-          selector: '0x' + 'B'.repeat(8),
-        },
-      ],
-      UnixTime.fromDate(new Date('2021-01-01Z')),
-      UnixTime.fromDate(new Date('2021-01-02Z')),
+  it('returns valid SQL', () => {
+    const { query, params, types } = getFunctionCallQuery(
+      CONFIGURATIONS,
+      FROM,
+      TO,
     )
 
-    expect(query.query).toEqual(`
+    expect(query).toEqual(`
     SELECT
       block_number,
-      LEFT(input, 10) AS input,
+      CASE WHEN to_address IN UNNEST(?) THEN input ELSE LEFT(input, 10) END AS input,
       to_address,
       block_timestamp,
-      transaction_hash,
+      transaction_hash
     FROM
       bigquery-public-data.crypto_ethereum.traces
     WHERE call_type = 'call'
@@ -41,13 +50,26 @@ describe(getFunctionCallQuery.name, () => {
         .join(' OR ')}
     )
   `)
-    expect(query.params).toEqual([
-      new Date('2021-01-01Z').toISOString(),
-      new Date('2021-01-02Z').toISOString(),
+
+    expect(params).toEqual([
+      [ADDRESS_2.toLowerCase()],
+      FROM.toDate().toISOString(),
+      TO.toDate().toISOString(),
       ADDRESS_1.toLowerCase(),
-      '0x' + 'a'.repeat(8) + '%',
+      SELECTOR_1.toLowerCase() + '%',
       ADDRESS_2.toLowerCase(),
-      '0x' + 'b'.repeat(8) + '%',
+      SELECTOR_2.toLowerCase() + '%',
+    ])
+
+    // @ts-expect-error BigQuery types are wrong
+    expect(types).toEqual([
+      ['STRING'],
+      'STRING',
+      'STRING',
+      'STRING',
+      'STRING',
+      'STRING',
+      'STRING',
     ])
   })
 })
