@@ -23,6 +23,7 @@ const validatorAfkBlocks = discovery.getContractValue<number>(
   'ArbitrumProxy',
   'VALIDATOR_AFK_BLOCKS',
 )
+const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 const challengeWindow = discovery.getContractValue<number>(
   'ArbitrumProxy',
   'confirmPeriodBlocks',
@@ -125,9 +126,21 @@ export const nova: Layer2 = {
         0,
       ),
       sentiment: 'bad',
-      description: `There is a ${upgradeDelayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay. Withdrawals can be censored for up to ${formatSeconds(
+      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
+        l2TimelockDelay,
+      )} delay. Since there is a ${formatSeconds(
         selfSequencingDelay,
-      )}.`,
+      )} to force a tx, users have only ${formatSeconds(
+        l2TimelockDelay - selfSequencingDelay,
+      )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+        validatorAfkTime,
+      )} delay and then wait for the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window and the ${formatSeconds(
+        l1TimelockDelay,
+      )} L1 timelock.\n\nThe Security Council can upgrade with no delay.`,
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(

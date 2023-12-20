@@ -150,7 +150,11 @@ export const zksynclite: Layer2 = {
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
       sentiment: 'warning',
-      description: `There is a ${upgradeDelayString} delay for upgrades initiated by ZkSync Multisig. The 9 of 15 Security Council can override the delay and allow instant upgrade. Some system components can be changed with no delay but that do not impede the ability for users to withdraw permissionlessly.`,
+      description: `Users have ${formatSeconds(
+        upgradeDelay - forcedWithdrawalDelay,
+      )} to exit to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
+        forcedWithdrawalDelay,
+      )} to be processed.\n\nThe Security Council can upgrade with no delay.`,
       sources: [
         {
           contract: 'Governance',

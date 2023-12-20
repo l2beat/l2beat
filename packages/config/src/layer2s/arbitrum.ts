@@ -425,17 +425,21 @@ export const arbitrum: Layer2 = {
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
-      description: `Upgrades go first through the ${formatSeconds(
-        l1TimelockDelay,
-      )} delay L2 Timelock, through the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window and finally through the ${formatSeconds(
+      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
         l2TimelockDelay,
-      )} delay L1 Timelock before reaching L1. There is a ${formatSeconds(
+      )} delay. Since there is a ${formatSeconds(
         selfSequencingDelay,
-      )} delay to force include a transaction on L2 and a ${formatSeconds(
+      )} to force a tx, users have only ${formatSeconds(
+        l2TimelockDelay - selfSequencingDelay,
+      )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
         validatorAfkTime,
-      )} delay before users can self-propose.`,
+      )} delay and then wait for the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window and the ${formatSeconds(
+        l1TimelockDelay,
+      )} L1 timelock.\n\nThe Security Council can upgrade with no delay.`,
       sources: [
         {
           contract: 'OutboxV2',
