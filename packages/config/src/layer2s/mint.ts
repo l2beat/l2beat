@@ -16,7 +16,7 @@ export const mint: Layer2 = {
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.mintchain.io/'],
+      websites: ['https://mintchain.io/'],
       apps: [],
       documentation: [],
       explorers: [],
