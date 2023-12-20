@@ -53,12 +53,12 @@ export const bobanetwork: Layer2 = {
       explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
-        'https://boba.network/#news',
+        'https://boba.network/',
         'https://boba.network/blog/',
-        'https://enya.ai/company/media',
+        'https://enya.ai/about-us/',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
-        'https://discord.gg/m7NysJjKhm',
+        'https://discord.com/invite/Hvu3zpFwWd',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -223,7 +223,7 @@ export const bobanetwork: Layer2 = {
       references: [
         {
           text: 'Data Availability Batches - Paradigm Research',
-          href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
         {
           text: 'CanonicalTransactionChain.sol#L219 - Etherscan source code, appendSequencerBatch function',
@@ -259,7 +259,7 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The Standard Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/standard-bridge',
           },
           {
             text: 'BondManager.sol#L31 - Etherscan source code, isCollateralized function',
@@ -275,7 +275,7 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The LP Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge-1',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/fast-bridge',
           },
         ],
         risks: [],
