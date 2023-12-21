@@ -409,7 +409,7 @@ export const starknet: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [

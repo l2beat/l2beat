@@ -34,6 +34,8 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
 export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
@@ -125,7 +127,7 @@ export const loopring: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,

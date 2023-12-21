@@ -29,7 +29,7 @@ type Story = StoryObj<typeof TooltipComponent>
 const project: RosetteTooltipProps = {
   riskSentiments: {
     proposerFailure: 'bad',
-    upgradeability: 'bad',
+    exitWindow: 'bad',
     sequencerFailure: 'good',
     dataAvailability: 'warning',
     stateValidation: 'good',
@@ -43,7 +43,7 @@ const project: RosetteTooltipProps = {
       value: 'No mechanism',
       sentiment: 'bad',
     },
-    upgradeability: {
+    exitWindow: {
       value: 'Yes',
       sentiment: 'bad',
     },

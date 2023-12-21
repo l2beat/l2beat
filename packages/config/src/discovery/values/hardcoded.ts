@@ -31,6 +31,11 @@ export const HARDCODED = {
     // https://github.com/kroma-network/kroma/blob/dev/packages/contracts/deploy-config/mainnet.json#L9C30-L9C30
     SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
   },
+  STARGATE: {
+    // if any of those change, please update stargate.ts. It will probably also require updating the discovery config, to make sure we discover the new oracles and relayers
+    ORACLE_COUNT: 2,
+    RELAYER_COUNT: 1,
+  },
   ZKSYNC: {
     PRIORITY_EXPIRATION_PERIOD: 1209600, // 14 days
   },

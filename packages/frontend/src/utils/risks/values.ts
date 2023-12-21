@@ -7,7 +7,7 @@ export function getRiskValues(riskView: Layer2RiskView): RiskValues {
     dataAvailability: riskView.dataAvailability,
     sequencerFailure: riskView.sequencerFailure,
     stateValidation: riskView.stateValidation,
-    upgradeability: riskView.upgradeability,
+    exitWindow: riskView.exitWindow,
     proposerFailure: riskView.proposerFailure,
   }
 }
@@ -21,7 +21,7 @@ export function getRiskSentiments(
       sequencerFailure: 'UnderReview',
       stateValidation: 'UnderReview',
       dataAvailability: 'UnderReview',
-      upgradeability: 'UnderReview',
+      exitWindow: 'UnderReview',
       proposerFailure: 'UnderReview',
     }
   }
@@ -29,7 +29,7 @@ export function getRiskSentiments(
     sequencerFailure: riskView.sequencerFailure.sentiment,
     stateValidation: riskView.stateValidation.sentiment,
     dataAvailability: riskView.dataAvailability.sentiment,
-    upgradeability: riskView.upgradeability.sentiment,
+    exitWindow: riskView.exitWindow.sentiment,
     proposerFailure: riskView.proposerFailure.sentiment,
   }
 }
