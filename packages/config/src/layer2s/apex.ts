@@ -25,18 +25,18 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('apex')
 
-const delaySecondsUSDC = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySecondsUSDC = discovery.getContractUpgradeabilityParam(
   'StarkExchangeUSDC',
   'upgradeDelay',
 )
-const delaySecondsUSDT = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySecondsUSDT = discovery.getContractUpgradeabilityParam(
   'StarkExchangeUSDT',
   'upgradeDelay',
 )
-const delayUSDC = formatSeconds(delaySecondsUSDC)
-const delayUSDT = formatSeconds(delaySecondsUSDT)
+const upgradeDelayUSDC = formatSeconds(upgradeDelaySecondsUSDC)
+const upgradeDelayUSDT = formatSeconds(upgradeDelaySecondsUSDT)
 
-const delaySeconds = Math.min(delaySecondsUSDC, delaySecondsUSDT)
+const upgradeDelay = Math.min(upgradeDelaySecondsUSDC, upgradeDelaySecondsUSDT)
 
 const verifierAddressUSDC = discovery.getAddressFromValue(
   'FinalizableGpsFactAdapterUSDC',
@@ -140,10 +140,7 @@ export const apex: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(
-      delaySeconds,
-      minFreezeGracePeriod,
-    ),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, minFreezeGracePeriod),
     sequencerFailure:
       RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(minFreezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
@@ -194,7 +191,7 @@ export const apex: Layer2 = {
         ? getSHARPVerifierContracts(discovery, verifierAddressUSDT)
         : []),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelay)],
   },
   permissions: [
     {
@@ -202,14 +199,14 @@ export const apex: Layer2 = {
       accounts: getProxyGovernance(discovery, 'StarkExchangeUSDC'),
       description:
         'Allowed to upgrade the implementation of the StarkExchange (USDC) contract, potentially maliciously gaining control over the system or stealing funds.' +
-        delayDescriptionFromString(delayUSDC),
+        delayDescriptionFromString(upgradeDelayUSDC),
     },
     {
       name: 'Governors for USDT StarkEx',
       accounts: getProxyGovernance(discovery, 'StarkExchangeUSDT'),
       description:
         'Allowed to upgrade the implementation of the StarkExchange (USDT) contract, potentially maliciously gaining control over the system or stealing funds.' +
-        delayDescriptionFromString(delayUSDT),
+        delayDescriptionFromString(upgradeDelayUSDT),
     },
     {
       name: 'Operators for USDC StarkEx',

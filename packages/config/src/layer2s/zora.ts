@@ -31,6 +31,13 @@ const upgradesProxy = {
   upgradeDelay: 'No delay',
 }
 
+const challengePeriod: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
+const upgradeDelay = 0
+
 export const zora: Layer2 = {
   type: 'layer2',
   id: ProjectId('zora'),
@@ -134,8 +141,8 @@ export const zora: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',
