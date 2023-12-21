@@ -1,10 +1,13 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
+const discovery = new ProjectDiscovery('zkfair')
+
 export const zkfair: Layer2 = {
-  isUpcoming: true,
+  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('zkfair'),
   display: {
@@ -18,20 +21,34 @@ export const zkfair: Layer2 = {
     provider: 'Polygon',
     links: {
       websites: ['https://zkfair.io/'],
-      apps: [],
+      apps: ['https://wallet.zkfair.io/'],
       documentation: ['https://docs.zkfair.io/'],
-      explorers: [],
-      repositories: [],
-      socialMedia: ['https://twitter.com/ZK_fair'],
+      explorers: ['https://scan.zkfair.io/'],
+      repositories: ['https://github.com/ZKFair'],
+      socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
+  },
+  config: {
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x9cb4706e20A18E59a48ffa7616d700A3891e1861'),
+        sinceTimestamp: new UnixTime(1702879283),
+        tokens: '*',
+      }),
+    ],
   },
   stage: {
     stage: 'NotApplicable',
   },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
+  riskView: UNDER_REVIEW_RISK_VIEW,
+  technology: TECHNOLOGY.UNDER_REVIEW,
+  contracts: CONTRACTS.UNDER_REVIEW,
+  milestones: [
+    {
+      name: 'ZKFair Mainnet is Live',
+      link: 'https://twitter.com/ZKFCommunity/status/1737307444181869017',
+      date: '2023-12-20T00:00:00Z',
+      description: 'ZKFair launched.',
+    },
+  ],
 }
