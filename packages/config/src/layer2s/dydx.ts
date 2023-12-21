@@ -183,11 +183,11 @@ export const dydx: Layer2 = {
         freezeGracePeriod,
         minPriorityDelay,
       ),
-      description: `There is no exit window since although upgrade have a ${formatSeconds(
+      description: `There is no exit window. Upgrades have a ${formatSeconds(
         maxPriorityDelay,
-      )} delay, (or shortened to ${formatSeconds(
+      )} delay, (or ${formatSeconds(
         minPriorityDelay,
-      )} by the Priority Controller), withdrawals can be censored for up to ${formatSeconds(
+      )} if shortened by the Priority Controller), but withdrawals can be censored for up to ${formatSeconds(
         freezeGracePeriod,
       )}.`,
     },
