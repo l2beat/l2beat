@@ -63,6 +63,7 @@ export const brine: Layer2 = {
         'https://linkedin.com/company/brine-fi-dex',
       ],
     },
+    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
