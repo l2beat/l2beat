@@ -1,1 +1,63 @@
-{}
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "zkfair",
+  "initialAddresses": ["0x9cb4706e20A18E59a48ffa7616d700A3891e1861"],
+  "names": {
+    "0x9cb4706e20A18E59a48ffa7616d700A3891e1861": "Bridge",
+    "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5": "CDKValidium",
+    "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b": "GlobalExitRoot",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC"
+  },
+  "overrides": {
+    "CDKValidium": {
+      "ignoreMethods": [
+        "checkStateRootInsidePrime",
+        "pendingStateTransitions",
+        "batchFee",
+        "calculateRewardPerBatch",
+        "getForcedBatchFee",
+        "getLastVerifiedBatch",
+        "lastBatchSequenced",
+        "lastForceBatch",
+        "lastForceBatchSequenced",
+        "lastPendingState",
+        "lastPendingStateConsolidated",
+        "lastTimestamp",
+        "lastVerifiedBatch",
+        "multiplierBatchFee"
+      ],
+      "fields": {
+        "_HALT_AGGREGATION_TIMEOUT": {
+          "type": "hardcoded",
+          "value": 604800
+        },
+        "nondeterminsiticPendingState": {
+          "type": "stateFromEvent",
+          "event": "ProveNonDeterministicPendingState",
+          "returnParams": ["storedStateRoot", "provedStateRoot"]
+        }
+      }
+    },
+    "GlobalExitRoot": {
+      "ignoreMethods": [
+        "getLastGlobalExitRoot",
+        "lastMainnetExitRoot",
+        "lastRollupExitRoot"
+      ]
+    },
+    "Bridge": {
+      "ignoreMethods": [
+        "claimedBitMap",
+        "isClaimed",
+        "depositCount",
+        "lastUpdatedDepositCount",
+        "getDepositRoot"
+      ],
+      "fields": {}
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    }
+  }
+}
