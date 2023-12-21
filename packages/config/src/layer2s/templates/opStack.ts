@@ -109,8 +109,14 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      upgradeability: {
-        ...RISK_VIEW.UPGRADABLE_YES,
+      exitWindow: {
+        ...RISK_VIEW.EXIT_WINDOW(
+          0,
+          templateVars.discovery.getContractValue<number>(
+            'L2OutputOracle',
+            'FINALIZATION_PERIOD_SECONDS',
+          ),
+        ),
         sources: [
           {
             contract: templateVars.portal.name,
