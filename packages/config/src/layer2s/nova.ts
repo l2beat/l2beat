@@ -41,8 +41,6 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
-const upgradeDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
-
 export const nova: Layer2 = {
   type: 'layer2',
   id: ProjectId('nova'),
@@ -119,11 +117,7 @@ export const nova: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(
-        upgradeDelay,
-        challengeWindowSeconds + selfSequencingDelay,
-        0,
-      ),
+      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
       description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
         l2TimelockDelay,
