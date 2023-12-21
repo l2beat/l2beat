@@ -2,7 +2,7 @@
   "name": "zkfair",
   "chain": "ethereum",
   "blockNumber": 18834722,
-  "configHash": "0xb98c549108a96321da477b2cbdaa0c0adef2519b7635a96c05c9013947901a9d",
+  "configHash": "0x360ba8e248747f1c583d258e9fa8e742ecb95f982753383df81a59246a025509",
   "version": 3,
   "contracts": [
     {
@@ -66,30 +66,42 @@
       "derivedName": "CDKValidium"
     },
     {
-      "name": "CDKValidiumTimelock",
+      "name": "Timelock",
       "address": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1702879391,
       "values": {
-        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+              "0x75575Dc1adD71eA794A52D83f836a13F7891C527"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x75575Dc1adD71eA794A52D83f836a13F7891C527"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x75575Dc1adD71eA794A52D83f836a13F7891C527"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x75575Dc1adD71eA794A52D83f836a13F7891C527"]
+          }
+        },
         "cdkValidium": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "getMinDelay": 86400,
-        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
-    },
-    {
-      "name": "",
-      "address": "0x6dfAF52259d494C29596F5Eb16573B105693E78f",
-      "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
+        "getMinDelay": 86400
       },
-      "sinceTimestamp": 1702831931
+      "derivedName": "CDKValidiumTimelock"
     },
     {
       "name": "GlobalExitRoot",
@@ -220,6 +232,7 @@
     "0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e",
     "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba",
     "0x689752C198f0cEbe9993ee3E13AF0e565C068c25",
+    "0x75575Dc1adD71eA794A52D83f836a13F7891C527",
     "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c",
     "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7",
     "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",

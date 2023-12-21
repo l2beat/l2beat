@@ -7,7 +7,9 @@
     "0x9cb4706e20A18E59a48ffa7616d700A3891e1861": "Bridge",
     "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5": "CDKValidium",
     "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b": "GlobalExitRoot",
-    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC"
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x6dfAF52259d494C29596F5Eb16573B105693E78f": "ZKF_MATIC",
+    "0x52882c7564fAca480549145fAc4d0b09eD0D9c17": "Timelock"
   },
   "overrides": {
     "CDKValidium": {
@@ -39,6 +41,20 @@
         }
       }
     },
+    "Timelock": {
+      "ignoreMethods": [
+        "CANCELLER_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "EXECUTOR_ROLE",
+        "PROPOSER_ROLE",
+        "TIMELOCK_ADMIN_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
     "GlobalExitRoot": {
       "ignoreMethods": [
         "getLastGlobalExitRoot",
@@ -57,6 +73,9 @@
       "fields": {}
     },
     "USDC": {
+      "ignoreDiscovery": true
+    },
+    "ZKF_MATIC": {
       "ignoreDiscovery": true
     }
   }
