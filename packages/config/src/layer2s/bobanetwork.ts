@@ -29,6 +29,13 @@ const upgradesAddressManager = {
     'The AddressManager can be used to replace this contract.',
 }
 
+const upgradeDelay = 0
+
+const challengePeriod = discovery.getContractValue<number>(
+  'StateCommitmentChain',
+  'FRAUD_PROOF_WINDOW',
+)
+
 export const bobanetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('bobanetwork'),
@@ -134,8 +141,8 @@ export const bobanetwork: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'L1CrossDomainMessenger_1',
