@@ -32,7 +32,7 @@ export const obscuro: Layer2 = {
       ],
       socialMedia: [
         'https://twitter.com/obscuronet',
-        'https://discord.gg/NcK3DMZqF8',
+        'https://discord.gg/yQfmKeNzNd',
         'https://medium.com/obscuro-labs',
       ],
     },

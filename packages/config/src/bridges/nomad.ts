@@ -27,7 +27,7 @@ export const nomad: Bridge = {
       repositories: ['https://github.com/nomad-xyz/monorepo'],
       socialMedia: [
         'https://twitter.com/nomadxyz_',
-        'https://discord.gg/nomadxyz',
+        'https://discord.gg/RurtmJApqm',
       ],
     },
     description:
