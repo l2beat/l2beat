@@ -46,6 +46,7 @@ const forceBatchTimeout = discovery.getContractValue<number>(
   'forceBatchTimeout',
 )
 
+/*
 const bridgeEmergencyState = discovery.getContractValue<boolean>(
   'Bridge',
   'isEmergencyState',
@@ -54,6 +55,8 @@ const rollupEmergencyState = discovery.getContractValue<boolean>(
   'PolygonZkEvm',
   'isEmergencyState',
 )
+*/
+
 const exitWindowRisk = {
   ...RISK_VIEW.EXIT_WINDOW(
     upgradeDelay,

@@ -42,7 +42,6 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 const upgradeDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
-const upgradeDelayString = formatSeconds(upgradeDelay)
 
 export const nova: Layer2 = {
   type: 'layer2',
