@@ -117,18 +117,10 @@ export const symbiosis: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('MetaRouter').address,
-        name: 'MetaRouter',
-        description:
-          'An upgradeable contract to process funds by provided route.',
-      },
-      {
-        address: discovery.getContract('MetaRouterGateway').address,
-        name: 'MetaRouter Gateway',
-        description:
-          "A detached contract for secure isolation of users' assets.",
-      },
+      discovery.getContractDetails(
+        'MetaRouter',
+        'An upgradeable contract to process funds by provided route.',
+      ),
       {
         address: discovery.getContract('Bridge').address,
         name: 'Bridge',
