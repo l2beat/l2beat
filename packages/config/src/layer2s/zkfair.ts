@@ -25,7 +25,7 @@ export const zkfair: Layer2 = {
       documentation: ['https://docs.zkfair.io/'],
       explorers: ['https://scan.zkfair.io/'],
       repositories: ['https://github.com/ZKFair'],
-      socialMedia: ['https://twitter.com/ZK_fair'],
+      socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
   },
   config: {
