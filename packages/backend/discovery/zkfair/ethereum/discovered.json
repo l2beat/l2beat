@@ -1,8 +1,8 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 18834601,
-  "configHash": "0xd40e829e409b6c87aa3b4e6e5697d7c728940b15ec2e9b1cd5119493818e31f7",
+  "blockNumber": 18834722,
+  "configHash": "0xb98c549108a96321da477b2cbdaa0c0adef2519b7635a96c05c9013947901a9d",
   "version": 3,
   "contracts": [
     {
@@ -40,65 +40,22 @@
       "implementations": ["0x668965757127549f8755D2eEd10494B06420213b"],
       "sinceTimestamp": 1702879355,
       "values": {
+        "_HALT_AGGREGATION_TIMEOUT": 604800,
         "admin": "0x0110B1B231aA3b96a94c900eb3056297526AB725",
-        "batchFee": "100000000000000000",
         "bridgeAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
-        "calculateRewardPerBatch": "100000000000000000",
         "chainID": 42766,
-        "checkStateRootInsidePrime": [true, true, true, true, true],
         "dataCommitteeAddress": "0x997CfB0838544f68E59f877EDc905001456F125b",
         "forceBatchTimeout": 432000,
         "forkID": 5,
-        "getForcedBatchFee": "10000000000000000000",
-        "getLastVerifiedBatch": 1072,
         "globalExitRootManager": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
         "isEmergencyState": false,
         "isForcedBatchDisallowed": true,
-        "lastBatchSequenced": 2335,
-        "lastForceBatch": 0,
-        "lastForceBatchSequenced": 0,
-        "lastPendingState": 0,
-        "lastPendingStateConsolidated": 0,
-        "lastTimestamp": 1703160160,
-        "lastVerifiedBatch": 1072,
         "matic": "0x6dfAF52259d494C29596F5Eb16573B105693E78f",
-        "multiplierBatchFee": 1002,
         "networkName": "zkfair",
+        "nondeterminsiticPendingState": [],
         "owner": "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88",
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pendingStateTimeout": 432000,
-        "pendingStateTransitions": [
-          [
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000000000000000000000000000"
-          ]
-        ],
         "rollupVerifier": "0x769E285d2120472c3400A09684B82A842012F46d",
         "trustedAggregator": "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027",
         "trustedAggregatorTimeout": 432000,
@@ -106,10 +63,7 @@
         "trustedSequencerURL": "http://main-rpc-1.zkfair-internal.mainnet:8123",
         "verifyBatchTimeTarget": 1800
       },
-      "errors": {
-        "checkStateRootInsidePrime": "Too many values. Update configuration to explore fully",
-        "pendingStateTransitions": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "CDKValidium"
     },
     {
       "name": "CDKValidiumTimelock",
@@ -138,7 +92,7 @@
       "sinceTimestamp": 1702831931
     },
     {
-      "name": "PolygonZkEVMGlobalExitRoot",
+      "name": "GlobalExitRoot",
       "address": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -149,11 +103,9 @@
       "sinceTimestamp": 1702879331,
       "values": {
         "bridgeAddress": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
-        "getLastGlobalExitRoot": "0xdfc44e6ab0eaf64ea7953782c7d164786c7ccc2881df8937841d0493e1561a75",
-        "lastMainnetExitRoot": "0x8274b6bd3e5f3df37b9972adb185eb781bca3cf2536d25d3064a5daf51cc0272",
-        "lastRollupExitRoot": "0x6cccf27c16f9574924545a289a0b991c9e4f29a9cbeecdba7bc2ca711332b159",
         "rollupAddress": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
-      }
+      },
+      "derivedName": "PolygonZkEVMGlobalExitRoot"
     },
     {
       "name": "FflonkVerifier",
@@ -212,65 +164,16 @@
       "values": {
         "admin": "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
         "bridgeFee": 2500000000000000,
-        "claimedBitMap": [
-          "26328072917139296674479506920917608079723773850137277813577744387",
-          26456998543360,
-          0,
-          0,
-          0
-        ],
-        "depositCount": 216,
         "feeAddress": "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D",
         "gasTokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "gasTokenDecimalDiffFactor": 1000000000000,
         "gasTokenMetadata": "0x000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000005457468657200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000034554480000000000000000000000000000000000000000000000000000000000",
-        "getDepositRoot": "0x8274b6bd3e5f3df37b9972adb185eb781bca3cf2536d25d3064a5daf51cc0272",
         "globalExitRootManager": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
-        "isClaimed": [true, true, false, false, false],
         "isEmergencyState": false,
-        "lastUpdatedDepositCount": 216,
         "networkID": 0,
         "polygonZkEVMaddress": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
       },
-      "errors": {
-        "claimedBitMap": "Too many values. Update configuration to explore fully",
-        "isClaimed": "Too many values. Update configuration to explore fully"
-      },
       "derivedName": "PolygonZkEVMBridge"
-    },
-    {
-      "name": "FiatTokenV2_1",
-      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "upgradeability": {
-        "type": "ZeppelinOS proxy",
-        "implementation": "0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF",
-        "admin": "0x807a96288A1A408dBC13DE2b1d087d10356395d2"
-      },
-      "implementations": ["0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF"],
-      "sinceTimestamp": 1533324504,
-      "values": {
-        "blacklister": "0x10DF6B6fe66dd319B1f82BaB2d054cbb61cdAD2e",
-        "CANCEL_AUTHORIZATION_TYPEHASH": "0x158b0a9edf7a828aad02f63cd515c68ef2f50ba807396f6d12842833a1597429",
-        "currency": "USD",
-        "decimals": 6,
-        "DOMAIN_SEPARATOR": "0x06c37168a7db5138defc7866392bb87a741f9b3d104deb5094588ce041cae335",
-        "masterMinter": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-        "name": "USD Coin",
-        "owner": "0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
-        "paused": false,
-        "pauser": "0x4914f61d25e5C567143774B76EdbF4D5109a8566",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
-        "rescuer": "0x0000000000000000000000000000000000000000",
-        "symbol": "USDC",
-        "totalSupply": "22505753646522628",
-        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
-        "version": "2"
-      },
-      "errors": {
-        "admin": "Multicall failed",
-        "implementation": "Multicall failed"
-      }
     },
     {
       "name": "ProxyAdmin",
@@ -306,40 +209,23 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       }
-    },
-    {
-      "name": "MasterMinter",
-      "address": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1553538530,
-      "values": {
-        "getMinterManager": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "owner": "0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
-      }
     }
   ],
   "eoas": [
-    "0x10DF6B6fe66dd319B1f82BaB2d054cbb61cdAD2e",
     "0x3226ECf79dc7007063599A334832d015B48aBDBc",
     "0x39FcAEb9870cB015f2165e93c51f4663AE970953",
     "0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292",
-    "0x4914f61d25e5C567143774B76EdbF4D5109a8566",
     "0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976",
     "0x4dba6F06597Ea29A330C06806FA284610c810295",
     "0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e",
     "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba",
     "0x689752C198f0cEbe9993ee3E13AF0e565C068c25",
-    "0x807a96288A1A408dBC13DE2b1d087d10356395d2",
     "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c",
     "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7",
     "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
-    "0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
     "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87",
     "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027",
     "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF",
-    "0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
     "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D"
   ],
   "abis": {
@@ -568,85 +454,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": [
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function implementation() view returns (address)",
-      "function changeAdmin(address newAdmin)",
-      "function admin() view returns (address)",
-      "constructor(address _implementation)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address implementation)"
-    ],
-    "0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF": [
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event AuthorizationCanceled(address indexed authorizer, bytes32 indexed nonce)",
-      "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
-      "event Blacklisted(address indexed _account)",
-      "event BlacklisterChanged(address indexed newBlacklister)",
-      "event Burn(address indexed burner, uint256 amount)",
-      "event MasterMinterChanged(address indexed newMasterMinter)",
-      "event Mint(address indexed minter, address indexed to, uint256 amount)",
-      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
-      "event MinterRemoved(address indexed oldMinter)",
-      "event OwnershipTransferred(address previousOwner, address newOwner)",
-      "event Pause()",
-      "event PauserChanged(address indexed newAddress)",
-      "event RescuerChanged(address indexed newRescuer)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event UnBlacklisted(address indexed _account)",
-      "event Unpause()",
-      "function CANCEL_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function RECEIVE_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
-      "function TRANSFER_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function authorizationState(address authorizer, bytes32 nonce) view returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function blacklist(address _account)",
-      "function blacklister() view returns (address)",
-      "function burn(uint256 _amount)",
-      "function cancelAuthorization(address authorizer, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
-      "function configureMinter(address minter, uint256 minterAllowedAmount) returns (bool)",
-      "function currency() view returns (string)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
-      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
-      "function initialize(string tokenName, string tokenSymbol, string tokenCurrency, uint8 tokenDecimals, address newMasterMinter, address newPauser, address newBlacklister, address newOwner)",
-      "function initializeV2(string newName)",
-      "function initializeV2_1(address lostAndFound)",
-      "function isBlacklisted(address _account) view returns (bool)",
-      "function isMinter(address account) view returns (bool)",
-      "function masterMinter() view returns (address)",
-      "function mint(address _to, uint256 _amount) returns (bool)",
-      "function minterAllowance(address minter) view returns (uint256)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pauser() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
-      "function removeMinter(address minter) returns (bool)",
-      "function rescueERC20(address tokenContract, address to, uint256 amount)",
-      "function rescuer() view returns (address)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
-      "function unBlacklist(address _account)",
-      "function unpause()",
-      "function updateBlacklister(address _newBlacklister)",
-      "function updateMasterMinter(address _newMasterMinter)",
-      "function updatePauser(address _newPauser)",
-      "function updateRescuer(address newRescuer)",
-      "function version() view returns (string)"
-    ],
     "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -721,28 +528,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0xE982615d461DD5cD06575BbeA87624fda4e3de17": [
-      "function incrementMinterAllowance(uint256 _allowanceIncrement) returns (bool)",
-      "function setMinterManager(address _newMinterManager)",
-      "function decrementMinterAllowance(uint256 _allowanceDecrement) returns (bool)",
-      "function owner() view returns (address)",
-      "function getMinterManager() view returns (address)",
-      "function getWorker(address _controller) view returns (address)",
-      "function configureController(address _controller, address _worker)",
-      "function configureMinter(uint256 _newAllowance) returns (bool)",
-      "function removeMinter() returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function removeController(address _controller)",
-      "constructor(address _minterManager)",
-      "event MinterManagerSet(address indexed _oldMinterManager, address indexed _newMinterManager)",
-      "event MinterConfigured(address indexed _msgSender, address indexed _minter, uint256 _allowance)",
-      "event MinterRemoved(address indexed _msgSender, address indexed _minter)",
-      "event MinterAllowanceIncremented(address indexed _msgSender, address indexed _minter, uint256 _increment, uint256 _newAllowance)",
-      "event MinterAllowanceDecremented(address indexed msgSender, address indexed minter, uint256 decrement, uint256 newAllowance)",
-      "event ControllerConfigured(address indexed _controller, address indexed _worker)",
-      "event ControllerRemoved(address indexed _controller)",
-      "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
     "0xEb80283EBc508CF6AaC5E054118954a2BD7fA006": [
       "error AlreadyClaimed()",

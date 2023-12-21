@@ -1,4 +1,4 @@
-# Diff at Thu, 21 Dec 2023 13:41:28 GMT:
+# Diff at Thu, 21 Dec 2023 14:05:42 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@
@@ -35,7 +35,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract PolygonZkEVMGlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
     }
 ```
 
@@ -65,12 +65,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract FiatTokenV2_1 (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) {
-    }
-```
-
-```diff
-+   Status: CREATED
     contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
     }
 ```
@@ -78,11 +72,5 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract GnosisSafe (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract MasterMinter (0xE982615d461DD5cD06575BbeA87624fda4e3de17) {
     }
 ```
