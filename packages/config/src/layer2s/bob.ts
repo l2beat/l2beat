@@ -21,12 +21,11 @@ export const bob: Layer2 = {
       documentation: ['https://docs.gobob.xyz'],
       explorers: ['https://testnet-explorer.gobob.xyz/'],
       repositories: ['https://github.com/bob-collective'],
-      socialMedia: [
-        'https://twitter.com/build_on_bob'
-      ],
+      socialMedia: ['https://twitter.com/build_on_bob'],
     },
+    dataAvailabilityMode: 'NotApplicable',
   },
-  stage: { 
+  stage: {
     stage: 'NotApplicable',
   },
   config: {
