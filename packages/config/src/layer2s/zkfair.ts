@@ -253,7 +253,7 @@ export const zkfair: Layer2 = {
       }),
       discovery.getContractDetails('Bridge', {
         description:
-          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets. To transfer funds a user initiated transaction on both sides is required.',
+          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer ERC20 assets. To transfer funds a user initiated transaction on both sides is required.',
         ...timelockUpgrades,
       }),
       discovery.getContractDetails('GlobalExitRoot', {
