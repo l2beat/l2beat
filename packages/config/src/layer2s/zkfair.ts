@@ -78,7 +78,7 @@ export const zkfair: Layer2 = {
       'ZKFair is the first community Validium based on Polygon CDK and Celestia DA, championing fairness. In its current implementation it is not using Celestia Blobstream bridge though meaning that Ethereum bridge does not have assurance that data has really been posted to Celestia.',
     purpose: 'Universal',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
+    dataAvailabilityMode: 'TxData',
     provider: 'Polygon',
     links: {
       websites: ['https://zkfair.io/'],
