@@ -23,6 +23,7 @@ import { gluon } from './gluon'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
+import { hypr } from './hypr'
 import { immutablex } from './immutablex'
 import { immutablezkevm } from './immutablezkevm'
 import { kinto } from './kinto'
@@ -97,6 +98,7 @@ export const layer2s: Layer2[] = [
   gluon,
   grvt,
   hermez,
+  hypr,
   immutablex,
   immutablezkevm,
   kinto,
