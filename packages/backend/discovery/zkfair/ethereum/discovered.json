@@ -2,7 +2,7 @@
   "name": "zkfair",
   "chain": "ethereum",
   "blockNumber": 18841455,
-  "configHash": "0xba6014cae6c6dca314245d29abf5b763657fd9b3bb07b5c4440559e307e084bf",
+  "configHash": "0x0c842caf3e79f85c091e3c41b5d139eed63005756a476f89d1fcda10cf4e137f",
   "version": 3,
   "contracts": [
     {
@@ -154,7 +154,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "",
+      "name": "DataAvailabilityCommittee",
       "address": "0x997CfB0838544f68E59f877EDc905001456F125b",
       "unverified": true,
       "upgradeability": {
@@ -163,7 +163,8 @@
         "admin": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
       },
       "implementations": ["0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"],
-      "sinceTimestamp": 1702879319
+      "sinceTimestamp": 1702879319,
+      "derivedName": ""
     },
     {
       "name": "Bridge",

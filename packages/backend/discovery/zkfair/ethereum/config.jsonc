@@ -12,7 +12,8 @@
     "0x52882c7564fAca480549145fAc4d0b09eD0D9c17": "Timelock",
     "0x0110B1B231aA3b96a94c900eb3056297526AB725": "BridgeAdminMultiSig",
     "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F": "ZkFairAdmin",
-    "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88": "ZkFairOwner"
+    "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88": "ZkFairOwner",
+    "0x997CfB0838544f68E59f877EDc905001456F125b": "DataAvailabilityCommittee"
   },
   "overrides": {
     "CDKValidium": {

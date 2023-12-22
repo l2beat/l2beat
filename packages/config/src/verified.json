@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-12-22T13:28:54.922Z",
+  "updatedAt": "2023-12-22T13:41:06.842Z",
   "projects": {
     "across-v2": true,
     "aevo": true,
@@ -101,7 +101,7 @@
     "xai": true,
     "xchain": true,
     "xdai": true,
-    "zkfair": true,
+    "zkfair": false,
     "zkspace": true,
     "zkswap": false,
     "zkswap2": false,
@@ -408,6 +408,7 @@
     "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD": true,
     "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3": true,
     "0x6312E56c17e1011dD0821558034a77BB60D06e1B": true,
+    "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc": false,
     "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310": true,
     "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": true,
     "0x642af405bF64660665B37977449C9C536B806318": true,
@@ -581,6 +582,7 @@
     "0x988DdC2b0ad9Ba5Ade892E1BF848308e8c7A9187": true,
     "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": true,
     "0x9923263fA127b3d1484cFD649df8f1831c2A74e4": true,
+    "0x997CfB0838544f68E59f877EDc905001456F125b": true,
     "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b": true,
     "0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD": true,
     "0x9C07A72177c5A05410cA338823e790876E79D73B": true,
