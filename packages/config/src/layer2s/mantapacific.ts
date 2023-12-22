@@ -10,6 +10,7 @@ import {
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,6 +22,7 @@ import {
   RISK_VIEW,
   subtractOne,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantapacific')
@@ -30,10 +32,12 @@ const upgradesProxy = {
   upgradeDelay: 'No delay',
 }
 
-const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
+const challengePeriod: number = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
+
+const upgradeDelay = 0
 
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
@@ -100,6 +104,16 @@ export const mantapacific: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Manta Pacific is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        challengePeriod,
+      )} after it has been posted.`,
+    },
   },
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.MANTA_PACIFIC })),
@@ -139,8 +153,8 @@ export const mantapacific: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',
@@ -247,11 +261,7 @@ export const mantapacific: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR(
-          'optimistic',
-          'merkle proof',
-          FINALIZATION_PERIOD_SECONDS,
-        ),
+        ...EXITS.REGULAR('optimistic', 'merkle proof', challengePeriod),
         references: [
           {
             text: 'OptimismPortal.sol#L242 - Etherscan source code, proveWithdrawalTransaction function',

@@ -171,12 +171,8 @@ export const kroma: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADE_DELAY_SECONDS(
-        timelockDefaultDelay,
-        finalizationPeriod,
-        true,
-      ),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(timelockDefaultDelay, finalizationPeriod),
       sources: [
         {
           contract: 'KromaPortal',
