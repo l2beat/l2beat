@@ -73,7 +73,7 @@ export const zkfair: Layer2 = {
     name: 'ZKFair',
     slug: 'zkfair',
     warning:
-      'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC.',
+      'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description:
       'ZKFair is the first community Validium based on Polygon CDK and Celestia DA, championing fairness. In its current implementation it is not using Celestia Blobstream bridge though meaning that Ethereum bridge does not have assurance that data has really been posted to Celestia.',
     purpose: 'Universal',
@@ -253,7 +253,7 @@ export const zkfair: Layer2 = {
       }),
       discovery.getContractDetails('Bridge', {
         description:
-          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
+          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer ERC20 assets. To transfer funds a user initiated transaction on both sides is required.',
         ...timelockUpgrades,
       }),
       discovery.getContractDetails('GlobalExitRoot', {
