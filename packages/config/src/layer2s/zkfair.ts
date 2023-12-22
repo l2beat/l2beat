@@ -1,10 +1,71 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { formatSeconds } from '../utils/formatSeconds'
+import {
+  CONTRACTS,
+  DATA_AVAILABILITY,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  FRONTRUNNING_RISK,
+  makeBridgeCompatible,
+  RISK_VIEW,
+  SEQUENCER_NO_MECHANISM,
+  STATE_CORRECTNESS,
+} from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
+const upgradeDelay = discovery.getContractValue<number>(
+  'Timelock',
+  'getMinDelay',
+)
+const upgradeDelayString = formatSeconds(upgradeDelay)
+const trustedAggregatorTimeout = discovery.getContractValue<number>(
+  'CDKValidium',
+  'trustedAggregatorTimeout',
+)
+const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
+
+const pendingStateTimeout = discovery.getContractValue<number>(
+  'CDKValidium',
+  'pendingStateTimeout',
+)
+const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
+const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
+  discovery.getContractValue<number>(
+    'CDKValidium',
+    '_HALT_AGGREGATION_TIMEOUT',
+  ),
+)
+
+const forceBatchTimeout = discovery.getContractValue<number>(
+  'CDKValidium',
+  'forceBatchTimeout',
+)
+
+const exitWindowRisk = {
+  ...RISK_VIEW.EXIT_WINDOW(
+    upgradeDelay,
+    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+    0,
+  ),
+  description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
+    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+  )}.\n\nThe ZkFair Owner can upgrade with no delay.`,
+}
+
+const timelockUpgrades = {
+  upgradableBy: ['ZkFairAdmin'],
+  upgradeDelay: exitWindowRisk.value,
+  upgradeConsiderations: exitWindowRisk.description,
+}
+
+const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
+  'CDKValidium',
+  'isForcedBatchDisallowed',
+)
 
 export const zkfair: Layer2 = {
   isUnderReview: true,
@@ -13,11 +74,12 @@ export const zkfair: Layer2 = {
   display: {
     name: 'ZKFair',
     slug: 'zkfair',
+    warning: 'The forced transaction mechanism is currently disabled.',
     description:
-      'ZKFair is the first community Validium based on Polygon CDK and Celestia DA, championing fairness.',
+      'ZKFair is the first community Validium based on Polygon CDK and Celestia DA, championing fairness. In its current implementation it is not using Celestia Blobstream bridge though meaning that Ethereum bridge does not have assurance that data has really been posted to Celestia.',
     purpose: 'Universal',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
+    dataAvailabilityMode: 'TxData',
     provider: 'Polygon',
     links: {
       websites: ['https://zkfair.io/'],
@@ -37,12 +99,207 @@ export const zkfair: Layer2 = {
       }),
     ],
   },
-  stage: {
-    stage: 'NotApplicable',
+  riskView: makeBridgeCompatible({
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'CDKValidium',
+          references: [
+            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L820',
+          ],
+        },
+      ],
+    },
+    dataAvailability: {
+      ...RISK_VIEW.DATA_EXTERNAL_DAC,
+      sources: [
+        {
+          contract: 'CDKValidium',
+          references: [
+            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L587',
+          ],
+        },
+      ],
+    },
+    exitWindow: exitWindowRisk,
+    // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
+    sequencerFailure: {
+      ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
+      sources: [
+        {
+          contract: 'CDKValidium',
+          references: [
+            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L247',
+          ],
+        },
+      ],
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+      description:
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
+        ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+      sources: [
+        {
+          contract: 'CDKValidium',
+          references: [
+            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L639',
+            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L862',
+          ],
+        },
+      ],
+    },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: [
+          false,
+          'Security Council members are not publicly known.',
+        ],
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/0xPolygonHermez/zkevm-node',
+    },
+  ),
+  technology: {
+    stateCorrectness: {
+      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      references: [
+        {
+          text: 'CDKValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
+          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
+        },
+      ],
+    },
+    dataAvailability: {
+      ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+      references: [
+        {
+          text: 'CDKValidium.sol#L494 - Etherscan source code, sequencedBatches mapping',
+          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L494',
+        },
+      ],
+    },
+    operator: {
+      name: 'The system has a centralized sequencer',
+      description:
+        'Only a trusted sequencer is allowed to submit transaction batches. A mechanism for users to submit their own batches is currently disabled.',
+      risks: [
+        FRONTRUNNING_RISK,
+        {
+          category: 'Funds can be frozen if',
+          text: 'the sequencer refuses to include an exit transaction.',
+          isCritical: true,
+        },
+      ],
+      references: [
+        {
+          text: 'CDKValidium.sol#L61 - Etherscan source code, onlyTrustedSequencer modifier',
+          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L461',
+        },
+      ],
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      description:
+        'The mechanism for allowing users to submit their own transactions is currently disabled.',
+      references: [
+        {
+          text: 'CDKValidium.sol#L475 - Etherscan source code, isForceBatchAllowed modifier',
+          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L475',
+        },
+      ],
+    },
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR('zk', 'merkle proof'),
+        references: [
+          {
+            text: 'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
+            href: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
+          },
+        ],
+      },
+    ],
   },
-  riskView: UNDER_REVIEW_RISK_VIEW,
-  technology: TECHNOLOGY.UNDER_REVIEW,
-  contracts: CONTRACTS.UNDER_REVIEW,
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'ZkFairAdmin',
+      'Admin of the CDKValidium, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the CDKValidium contracts, but are restricted by a 10d delay unless rollup is put in the Emergency State.',
+    ),
+    {
+      name: 'Sequencer',
+      accounts: [
+        discovery.getPermissionedAccount('CDKValidium', 'trustedSequencer'),
+      ],
+      description:
+        'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
+    },
+    {
+      name: 'Proposer',
+      accounts: [
+        discovery.getPermissionedAccount('CDKValidium', 'trustedAggregator'),
+      ],
+      description: `The trusted proposer (called Aggregator) provides the CDKValidium contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+    },
+    ...discovery.getMultisigPermission(
+      'ZkFairOwner',
+      'The ZkFair Owner is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
+    ),
+    ...discovery.getMultisigPermission(
+      'BridgeAdminMultiSig',
+      'The Bridge Admin is a multisig that can be used to set bridge fees and an address into which fees are transferred.',
+    ),
+  ],
+  contracts: {
+    addresses: [
+      discovery.getContractDetails('CDKValidium', {
+        description: `The main contract of the Polygon CDK Validium. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the ZkFair Owner, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives transaction roots, L2 state roots as well as ZK proofs. It also holds the address of DataAvailabilityCommittee.`,
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('Bridge', {
+        description:
+          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('GlobalExitRoot', {
+        description:
+          'Synchronizes deposit and withdraw merkle trees across L1 and L2. The global root from this contract is injected into the L2 contract.',
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails(
+        'FflonkVerifier',
+        'An autogenerated contract that verifies ZK proofs in the CDKValidium system.',
+      ),
+    ],
+    references: [
+      {
+        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
+        href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
+      },
+    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
+  },
   milestones: [
     {
       name: 'ZKFair Mainnet is Live',
