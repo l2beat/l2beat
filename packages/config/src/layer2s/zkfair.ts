@@ -68,7 +68,6 @@ const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
 )
 
 export const zkfair: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('zkfair'),
   display: {
