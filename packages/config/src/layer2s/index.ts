@@ -93,6 +93,7 @@ export const layer2s: Layer2[] = [
   degate3,
   deri,
   dydx,
+  eclipse,
   fuel,
   fuelv1,
   gluon,
