@@ -28,6 +28,7 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvlSubmodule'
 import { createBaseTvlSubmodule } from './BaseTvlSubmodule'
+import { createLyraTvlSubmodule } from './LyraTvlSubmodule'
 import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
 import { createMantaTvlSubmodule } from './MantaTvlSubmodule'
 import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
@@ -112,6 +113,15 @@ export function createTvlModule(
       clock,
     ),
     createBaseTvlSubmodule(
+      db,
+      priceUpdater,
+      coingeckoQueryService,
+      config,
+      logger,
+      http,
+      clock,
+    ),
+    createLyraTvlSubmodule(
       db,
       priceUpdater,
       coingeckoQueryService,
