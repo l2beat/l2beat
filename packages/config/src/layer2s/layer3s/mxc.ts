@@ -5,9 +5,9 @@ import {
   OPERATOR,
   STATE_CORRECTNESS,
   UNDER_REVIEW_RISK_VIEW,
-} from './common'
-import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+} from '../common'
+import { getStage } from '../common/stages/getStage'
+import { Layer2 } from '../types'
 
 export const mxc: Layer2 = {
   type: 'layer2',
@@ -37,6 +37,7 @@ export const mxc: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    dataAvailabilityMode: 'NotApplicable',
   },
   config: {
     escrows: [],
@@ -52,7 +53,7 @@ export const mxc: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -66,6 +67,8 @@ export const mxc: Layer2 = {
       fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: false,
     },
+  },{
+    rollupNodeLink: 'https://github.com/MXCzkEVM/mxc-geth',
   }),
   technology: {
     operator: OPERATOR.DECENTRALIZED_OPERATOR,
