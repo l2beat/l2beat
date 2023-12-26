@@ -1,15 +1,15 @@
 import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
 import { Wrapped } from '../Page'
-import { faqItems } from './faqItems'
 import { FaqPageProps } from './FaqPage'
+import { getFaqItems } from './getFaqItems'
 
 export function getProps(config: Config): Wrapped<FaqPageProps> {
   return {
     props: {
       navbar: getNavbarProps(config, 'faq'),
       title: 'Frequently Asked Questions',
-      items: faqItems,
+      items: getFaqItems(),
       footer: getFooterProps(config),
     },
     wrapper: {
@@ -20,6 +20,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
         image: 'https://l2beat.com/meta-images/overview-scaling.png',
         url: 'https://l2beat.com/faq/',
       },
+      banner: config.features.banner,
     },
   }
 }

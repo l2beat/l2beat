@@ -1,7 +1,9 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
+import { getChainMinTimestamp } from '../../config/chains'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -10,6 +12,7 @@ import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatu
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
+import { getStatus } from '../reports/getStatus'
 import { BalanceProject } from './BalanceProject'
 import { BalanceProvider, BalanceQuery } from './BalanceProvider'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
@@ -30,7 +33,9 @@ export class BalanceUpdater {
     private readonly chainId: ChainId,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(this)
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
+    )
     this.configHash = getBalanceConfigHash(projects)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -50,6 +55,16 @@ export class BalanceUpdater {
     return this.minTimestamp
   }
 
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+      getChainMinTimestamp(this.chainId),
+    )
+  }
+
   async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     assert(
       timestamp.gte(this.minTimestamp),
@@ -62,7 +77,10 @@ export class BalanceUpdater {
       })
       await setTimeout(refreshIntervalMs)
     }
-    return this.balanceRepository.getByTimestamp(this.chainId, timestamp)
+    return this.balanceRepository.getByChainAndTimestamp(
+      this.chainId,
+      timestamp,
+    )
   }
 
   async start() {
@@ -77,8 +95,10 @@ export class BalanceUpdater {
     this.logger.info('Started', { chainId: this.chainId.toString() })
     return this.clock.onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
-        // we add to front to sync from newest to oldest
-        this.taskQueue.addToFront(timestamp)
+        if (timestamp.gte(this.minTimestamp)) {
+          // we add to front to sync from newest to oldest
+          this.taskQueue.addToFront(timestamp)
+        }
       }
     })
   }
@@ -86,19 +106,16 @@ export class BalanceUpdater {
   // TODO(radomski): Remove all op-optimism/arb-arbitrum tokens from balances.
   // Don't fetch balances for those two tokens
   async update(timestamp: UnixTime) {
-    if (!timestamp.gte(this.minTimestamp)) {
-      this.logger.debug('Skipping update', {
-        timestamp: timestamp.toNumber(),
-        minTimestamp: this.minTimestamp.toNumber(),
-      })
-      return
-    }
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Timestamp cannot be smaller than minTimestamp',
+    )
 
     this.logger.debug('Update started', {
       timestamp: timestamp.toNumber(),
       chainId: this.chainId.toString(),
     })
-    const known = await this.balanceRepository.getByTimestamp(
+    const known = await this.balanceRepository.getByChainAndTimestamp(
       this.chainId,
       timestamp,
     )

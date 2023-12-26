@@ -1,6 +1,7 @@
+import { Logger } from '@l2beat/backend-tools'
 import { StarknetTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { HttpClient } from '@l2beat/shared'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
@@ -24,7 +25,9 @@ export function createStarknetCounter(
 ): TransactionCounter {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new StarknetClient(transactionApi.url, http, {
+  const url = transactionApi.url
+  assert(url, `Url must be defined for ${projectId.toString()}`)
+  const client = new StarknetClient(url, http, {
     callsPerMinute,
   })
 

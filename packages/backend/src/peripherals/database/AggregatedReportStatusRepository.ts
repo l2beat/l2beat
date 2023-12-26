@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -46,7 +46,28 @@ export class AggregatedReportStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('aggregated_reports_status').delete()
+    return knex('aggregated_reports_status').delete()
+  }
+
+  async findCountsForHash(
+    configHash: Hash256,
+  ): Promise<{ matching: number; different: number }> {
+    const knex = await this.knex()
+
+    const [matchingRowsCount, differentRowsCount] = await Promise.all([
+      knex('aggregated_reports_status')
+        .where({ config_hash: configHash.toString() })
+        .count('config_hash'),
+
+      knex('aggregated_reports_status')
+        .where('config_hash', '<>', configHash.toString())
+        .count('config_hash'),
+    ])
+
+    return {
+      matching: Number(matchingRowsCount[0].count),
+      different: Number(differentRowsCount[0].count),
+    }
   }
 
   async getBetween(

@@ -1,0 +1,97 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "nova",
+  "initialAddresses": [
+    "0xFb209827c58283535b744575e11953DCC4bEAD88",
+    "0xc840838bc438d73c16c2f8b22d2ce3669963cd48",
+    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786"
+  ],
+  "names": {
+    "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils",
+    "0x71D78dC7cCC0e037e12de1E50f5470903ce37148": "ProxyAdmin 1",
+    "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin 2",
+    "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3",
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway"
+  },
+  "overrides": {
+    "ValidatorUtils": {
+      "fields": {
+        "NOVA_STAKERS": {
+          "type": "call",
+          "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+          "args": ["0xFb209827c58283535b744575e11953DCC4bEAD88", 0, 100]
+        }
+      },
+      "ignoreRelatives": ["NOVA_STAKERS"]
+    },
+    "0xFb209827c58283535b744575e11953DCC4bEAD88": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated",
+        "wasmModuleRoot"
+      ]
+    },
+    "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": {
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"]
+    },
+    "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58": {
+      "ignoreMethods": ["isSpent", "spent"]
+    },
+    "0xA59075221b50C598aED0Eae0bB9869639513af0D": {
+      "ignoreMethods": ["challenges"]
+    },
+    "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd": {
+      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    // L1ArbitrumTimelock
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+      "ignoreRelatives": ["governanceChainInbox", "l2Timelock"],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    // L1CustomGateway
+    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    // Arbitrum One Bridge
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
+      "ignoreDiscovery": true
+    },
+    "L1DaiGateway": {
+      "ignoreRelatives": [
+        "counterpartGateway",
+        "inbox",
+        "l1Dai",
+        "l1Router",
+        "l2Counterpart",
+        "l2Dai"
+      ]
+    }
+  }
+}

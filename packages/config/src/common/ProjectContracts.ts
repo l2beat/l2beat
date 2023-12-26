@@ -1,4 +1,5 @@
-import { EthereumAddress, UpgradeabilityParameters } from '@l2beat/shared-pure'
+import type { UpgradeabilityParameters } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ProjectReference } from './ProjectReference'
 import { ProjectRisk } from './ProjectRisk'
@@ -23,6 +24,8 @@ export type ProjectContract =
 export interface ProjectContractSingleAddress {
   /** Address of the contract */
   address: EthereumAddress
+  /** Url to chain's etherscan */
+  etherscanUrl?: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
@@ -59,6 +62,8 @@ export interface ProjectContractMultipleAddresses {
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
+  /** Url to chain's etherscan */
+  etherscanUrl?: string
   description?: string
 }
 

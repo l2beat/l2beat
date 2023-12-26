@@ -1,15 +1,23 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { configureTabs } from '../scripts/configureTabs'
 import { Tabs } from './Tabs'
 
-const meta = {
+const meta: Meta<typeof Tabs> = {
   title: 'Components/Tabs',
   component: Tabs,
-} satisfies Meta<typeof Tabs>
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTabs()
+      }, [])
+      return <Story />
+    },
+  ],
+}
 export default meta
-
 type Story = StoryObj<typeof Tabs>
 
 export const Default: Story = {
@@ -51,18 +59,43 @@ export const Default: Story = {
           </span>
         ),
       },
+      {
+        id: 'example-id-3',
+        name: 'Example item 3',
+        shortName: 'Example 3',
+        content: (
+          <span>
+            Sint magna proident sunt duis adipisicing. Ex adipisicing nulla sit
+            nisi ex elit tempor Lorem deserunt dolor dolore velit consequat ea
+            occaecat. Et magna velit elit mollit excepteur eu eu non in et.
+            Cupidatat sunt cupidatat Lorem qui. Eu veniam pariatur sit nostrud
+            do. Et id sit fugiat consequat enim sunt veniam in esse nisi fugiat
+            ut dolore et. Commodo minim in consectetur enim minim ipsum
+            excepteur. Irure occaecat consectetur excepteur pariatur cillum.
+          </span>
+        ),
+      },
+      {
+        id: 'example-id-4',
+        name: 'Example item 4',
+        shortName: 'Example 4',
+        content: (
+          <span>
+            Sunt eu ex mollit consectetur cupidatat eu incididunt esse. Ad sint
+            reprehenderit ea deserunt culpa voluptate et duis sunt ad non ex
+            sunt ea. Lorem Lorem anim aliquip proident officia nostrud nulla
+            duis cillum anim occaecat eu laboris. Voluptate ullamco sint
+            adipisicing culpa dolor fugiat id eu minim sint nostrud aliquip
+            minim. Velit eu ad ullamco consectetur ex est tempor. Laboris mollit
+            adipisicing nisi aliqua.
+          </span>
+        ),
+      },
     ],
   },
-  decorators: [
-    (Story) => {
-      useEffect(() => {
-        configureTabs()
-      }, [])
-      return (
-        <div className="p-4">
-          <Story />
-        </div>
-      )
-    },
-  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const tab = canvas.getByText('Example item')
+    await userEvent.click(tab, { delay: 25 })
+  },
 }

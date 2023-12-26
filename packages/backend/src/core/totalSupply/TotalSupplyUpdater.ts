@@ -1,14 +1,16 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   AssetId,
   ChainId,
-  EthereumAddress,
   Hash256,
+  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
+import { getChainMinTimestamp } from '../../config/chains'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -17,9 +19,9 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
+import { getStatus } from '../reports/getStatus'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider, TotalSupplyQuery } from './TotalSupplyProvider'
-import { TotalSupplyTokensConfig } from './TotalSupplyTokensConfig'
 
 export class TotalSupplyUpdater {
   private readonly configHash: Hash256
@@ -32,12 +34,22 @@ export class TotalSupplyUpdater {
     private readonly totalSupplyRepository: TotalSupplyRepository,
     private readonly totalSupplyStatusRepository: TotalSupplyStatusRepository,
     private readonly clock: Clock,
-    private readonly tokens: TotalSupplyTokensConfig[],
+    private readonly tokens: Token[],
     private readonly logger: Logger,
     private readonly chainId: ChainId,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(this)
+    assert(
+      tokens.every(
+        (token) =>
+          token.chainId === this.getChainId() &&
+          token.formula === this.getAssetType(),
+      ),
+      'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
+    )
+    this.logger = this.logger.for(
+      `${this.constructor.name}.${ChainId.getName(chainId)}`,
+    )
     this.configHash = getTotalSupplyConfigHash(tokens)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -55,6 +67,24 @@ export class TotalSupplyUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getChainId() {
+    return this.chainId
+  }
+
+  getAssetType() {
+    return 'totalSupply'
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+      getChainMinTimestamp(this.chainId),
+    )
   }
 
   async getTotalSuppliesWhenReady(
@@ -88,20 +118,19 @@ export class TotalSupplyUpdater {
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
-        // we add to front to sync from newest to oldest
-        this.taskQueue.addToFront(timestamp)
+        if (timestamp.gte(this.minTimestamp)) {
+          // we add to front to sync from newest to oldest
+          this.taskQueue.addToFront(timestamp)
+        }
       }
     })
   }
 
   async update(timestamp: UnixTime) {
-    if (!timestamp.gte(this.minTimestamp)) {
-      this.logger.debug('Skipping update', {
-        timestamp: timestamp.toNumber(),
-        minTimestamp: this.minTimestamp.toNumber(),
-      })
-      return
-    }
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Timestamp cannot be smaller than minTimestamp',
+    )
 
     this.logger.debug('Update started', {
       timestamp: timestamp.toNumber(),
@@ -155,7 +184,7 @@ export class TotalSupplyUpdater {
 export function getMissingTotalSupplies(
   timestamp: UnixTime,
   known: TotalSupplyRecord[],
-  tokens: TotalSupplyTokensConfig[],
+  tokens: Token[],
 ): TotalSupplyQuery[] {
   function makeKey(assetId: AssetId) {
     return `${assetId.toString()}`
@@ -172,9 +201,14 @@ export function getMissingTotalSupplies(
       continue
     }
 
+    assert(
+      token.address !== undefined,
+      'Token address should not be undefined there',
+    )
+
     const queryCandidate: TotalSupplyQuery = {
-      tokenAddress: EthereumAddress(token.tokenAddress),
-      assetId: token.assetId,
+      tokenAddress: token.address,
+      assetId: token.id,
     }
 
     if (!knownTotalSupplies.has(makeKey(queryCandidate.assetId))) {

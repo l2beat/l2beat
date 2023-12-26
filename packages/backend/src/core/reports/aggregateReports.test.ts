@@ -1,9 +1,10 @@
 import {
+  AggregatedReportType,
   AssetId,
   ChainId,
   ProjectId,
+  ReportType,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -24,11 +25,11 @@ describe(aggregateReports.name, () => {
   it('correctly aggregates many reports', () => {
     const result = aggregateReports(
       [
-        report(ARBITRUM, 'eth', 30n),
-        report(ARBITRUM, 'dai', 5_000n),
-        report(OPTIMISM, 'eth', 20n),
-        report(POLYGON, 'dai', 1_000n),
-        report(AVALANCHE, 'eth', 40n),
+        report(ARBITRUM, 'eth', 30n, 'NMV'),
+        report(OPTIMISM, 'eth', 20n, 'NMV'),
+        report(ARBITRUM, 'dai', 5_000n, 'EBV'),
+        report(POLYGON, 'dai', 1_000n, 'EBV'),
+        report(AVALANCHE, 'eth', 40n, 'CBV'),
       ],
       [
         project(ARBITRUM, 'layer2'),
@@ -38,14 +39,49 @@ describe(aggregateReports.name, () => {
       ],
       NOW,
     )
+
     expect(result).toEqual([
-      record(ARBITRUM, 35_000n),
-      record(OPTIMISM, 20_000n),
-      record(POLYGON, 1_000n),
-      record(AVALANCHE, 40_000n),
-      record(ProjectId.ALL, 96_000n),
-      record(ProjectId.BRIDGES, 41_000n),
-      record(ProjectId.LAYER2S, 55_000n),
+      // Arbitrum
+      record(ARBITRUM, 0n, 'CBV'),
+      record(ARBITRUM, 5_000n, 'EBV'),
+      record(ARBITRUM, 30_000n, 'NMV'),
+      record(ARBITRUM, 35_000n, 'TVL'),
+
+      // Optimism
+      record(OPTIMISM, 0n, 'CBV'),
+      record(OPTIMISM, 0n, 'EBV'),
+      record(OPTIMISM, 20_000n, 'NMV'),
+      record(OPTIMISM, 20_000n, 'TVL'),
+
+      // Polygon
+      record(POLYGON, 0n, 'CBV'),
+      record(POLYGON, 1_000n, 'EBV'),
+      record(POLYGON, 0n, 'NMV'),
+      record(POLYGON, 1_000n, 'TVL'),
+
+      // Avalanche
+      record(AVALANCHE, 40_000n, 'CBV'),
+      record(AVALANCHE, 0n, 'EBV'),
+      record(AVALANCHE, 0n, 'NMV'),
+      record(AVALANCHE, 40_000n, 'TVL'),
+
+      // Summary of all projects
+      record(ProjectId.ALL, 40_000n, 'CBV'),
+      record(ProjectId.ALL, 6_000n, 'EBV'),
+      record(ProjectId.ALL, 50_000n, 'NMV'),
+      record(ProjectId.ALL, 96_000n, 'TVL'),
+
+      // Only bridges summary
+      record(ProjectId.BRIDGES, 40_000n, 'CBV'),
+      record(ProjectId.BRIDGES, 1_000n, 'EBV'),
+      record(ProjectId.BRIDGES, 0n, 'NMV'),
+      record(ProjectId.BRIDGES, 41_000n, 'TVL'),
+
+      // Only L2s summary
+      record(ProjectId.LAYER2S, 0n, 'CBV'),
+      record(ProjectId.LAYER2S, 5_000n, 'EBV'),
+      record(ProjectId.LAYER2S, 50_000n, 'NMV'),
+      record(ProjectId.LAYER2S, 55_000n, 'TVL'),
     ])
   })
 
@@ -60,28 +96,142 @@ describe(aggregateReports.name, () => {
       ],
       NOW,
     )
+
     expect(result).toEqual([
-      record(ARBITRUM, 0n),
-      record(OPTIMISM, 0n),
-      record(POLYGON, 0n),
-      record(AVALANCHE, 0n),
-      record(ProjectId.ALL, 0n),
-      record(ProjectId.BRIDGES, 0n),
-      record(ProjectId.LAYER2S, 0n),
+      // Arbitrum
+      record(ARBITRUM, 0n, 'CBV'),
+      record(ARBITRUM, 0n, 'EBV'),
+      record(ARBITRUM, 0n, 'NMV'),
+      record(ARBITRUM, 0n, 'TVL'),
+
+      // Optimism
+      record(OPTIMISM, 0n, 'CBV'),
+      record(OPTIMISM, 0n, 'EBV'),
+      record(OPTIMISM, 0n, 'NMV'),
+      record(OPTIMISM, 0n, 'TVL'),
+
+      // Polygon
+      record(POLYGON, 0n, 'CBV'),
+      record(POLYGON, 0n, 'EBV'),
+      record(POLYGON, 0n, 'NMV'),
+      record(POLYGON, 0n, 'TVL'),
+
+      // Avalanche
+      record(AVALANCHE, 0n, 'CBV'),
+      record(AVALANCHE, 0n, 'EBV'),
+      record(AVALANCHE, 0n, 'NMV'),
+      record(AVALANCHE, 0n, 'TVL'),
+
+      // Summary of all projects
+      record(ProjectId.ALL, 0n, 'CBV'),
+      record(ProjectId.ALL, 0n, 'EBV'),
+      record(ProjectId.ALL, 0n, 'NMV'),
+      record(ProjectId.ALL, 0n, 'TVL'),
+
+      // Only bridges summary
+      record(ProjectId.BRIDGES, 0n, 'CBV'),
+      record(ProjectId.BRIDGES, 0n, 'EBV'),
+      record(ProjectId.BRIDGES, 0n, 'NMV'),
+      record(ProjectId.BRIDGES, 0n, 'TVL'),
+
+      // Only L2s summary
+      record(ProjectId.LAYER2S, 0n, 'CBV'),
+      record(ProjectId.LAYER2S, 0n, 'EBV'),
+      record(ProjectId.LAYER2S, 0n, 'NMV'),
+      record(ProjectId.LAYER2S, 0n, 'TVL'),
     ])
+  })
+
+  it('filters out upcoming projects', () => {
+    const result = aggregateReports(
+      [
+        report(ARBITRUM, 'eth', 30n, 'CBV'),
+        report(ARBITRUM, 'dai', 5_000n, 'CBV'),
+        report(OPTIMISM, 'dai', 1_000n, 'CBV'),
+        report(ProjectId('other'), 'eth', 40n, 'CBV'),
+      ],
+      [
+        project(ARBITRUM, 'layer2'),
+        project(OPTIMISM, 'layer2'),
+        project(ProjectId('other'), 'layer2', true),
+      ],
+      NOW,
+    )
+    const sum = result
+      .filter(
+        (x) =>
+          (x.projectId === ARBITRUM || x.projectId === OPTIMISM) &&
+          x.reportType === 'TVL',
+      )
+      .reduce(
+        (acc, next) => ({
+          ethValue: acc.ethValue + next.ethValue,
+          usdValue: acc.usdValue + next.usdValue,
+        }),
+        {
+          ethValue: 0n,
+          usdValue: 0n,
+        },
+      )
+    const totalTvl = result.find(
+      (x) => x.projectId === ProjectId.ALL && x.reportType === 'TVL',
+    )
+
+    expect(totalTvl?.ethValue).toEqual(sum.ethValue)
+    expect(totalTvl?.usdValue).toEqual(sum.usdValue)
+  })
+
+  it('filters out layer 3 projects', () => {
+    const result = aggregateReports(
+      [
+        report(ARBITRUM, 'eth', 30n, 'CBV'),
+        report(ARBITRUM, 'dai', 5_000n, 'CBV'),
+        report(OPTIMISM, 'dai', 1_000n, 'CBV'),
+        report(ProjectId('other'), 'eth', 40n, 'CBV'),
+      ],
+      [
+        project(ARBITRUM, 'layer2'),
+        project(OPTIMISM, 'layer2'),
+        project(ProjectId('other'), 'layer2', false, true),
+      ],
+      NOW,
+    )
+    const sum = result
+      .filter(
+        (x) =>
+          (x.projectId === ARBITRUM || x.projectId === OPTIMISM) &&
+          x.reportType === 'TVL',
+      )
+      .reduce(
+        (acc, next) => ({
+          ethValue: acc.ethValue + next.ethValue,
+          usdValue: acc.usdValue + next.usdValue,
+        }),
+        {
+          ethValue: 0n,
+          usdValue: 0n,
+        },
+      )
+    const totalTvl = result.find(
+      (x) => x.projectId === ProjectId.ALL && x.reportType === 'TVL',
+    )
+
+    expect(totalTvl?.ethValue).toEqual(sum.ethValue)
+    expect(totalTvl?.usdValue).toEqual(sum.usdValue)
   })
 
   function report(
     projectId: ProjectId,
     asset: 'eth' | 'dai',
     balance: bigint,
+    reportType: ReportType = 'CBV',
   ): ReportRecord {
     return {
       timestamp: NOW,
       projectId,
+      reportType,
       asset: asset === 'eth' ? AssetId.ETH : AssetId.DAI,
       chainId: ChainId.ETHEREUM,
-      type: ValueType.CBV,
       amount: balance * 10n ** 18n,
       usdValue: (asset === 'eth' ? balance * ETH_PRICE_IN_DAI : balance) * 100n,
       ethValue:
@@ -92,19 +242,23 @@ describe(aggregateReports.name, () => {
   function project(
     projectId: ProjectId,
     type: ReportProject['type'],
+    isUpcoming = false,
+    isLayer3 = false,
   ): ReportProject {
-    return { projectId, type, escrows: [] }
+    return { projectId, type, escrows: [], isUpcoming, isLayer3 }
   }
 
   function record(
     projectId: ProjectId,
-    usdTVL: bigint,
+    usdValue: bigint,
+    reportType: AggregatedReportType,
   ): AggregatedReportRecord {
     return {
-      timestamp: NOW,
       projectId,
-      tvlUsd: usdTVL * 100n,
-      tvlEth: usdTVL * 1000n,
+      timestamp: NOW,
+      reportType,
+      usdValue: usdValue * 100n,
+      ethValue: usdValue * 1000n,
     }
   }
 })

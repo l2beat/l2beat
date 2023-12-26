@@ -19,9 +19,11 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
 
-const upgradeDelay = formatSeconds(
-  discovery.getContractValue<number>('ZkSync', 'UPGRADE_NOTICE_PERIOD'),
+const upgradeDelay = discovery.getContractValue<number>(
+  'ZkSync',
+  'UPGRADE_NOTICE_PERIOD',
 )
+const upgradeDelayString = formatSeconds(upgradeDelay)
 
 const securityCouncilThreshold = discovery.getContractValue<number>(
   'ZkSync',
@@ -37,7 +39,7 @@ const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers
 
 const upgrades = {
   upgradableBy: ['ZkSync Multisig'],
-  upgradeDelay: `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradeDelay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
   upgradeConsiderations:
     'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
 }
@@ -51,10 +53,12 @@ export const zksynclite: Layer2 = {
     name: 'zkSync Lite',
     slug: 'zksync-lite',
     description:
-      'zkSync Lite (formerly zkSync) is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
+      'zkSync Lite (formerly zkSync) is a user-centric ZK Rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
     purpose: 'Payments, Tokens',
-    provider: 'zkSync',
+    provider: 'zkSync Lite',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -62,13 +66,18 @@ export const zksynclite: Layer2 = {
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
-        'https://blog.matter-labs.io/',
-        'https://discord.gg/px2aR7w',
+        'https://zksync.mirror.xyz/',
+        'https://join.zksync.dev/',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
+        'https://twitter.com/zkSyncDevs',
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation:
+        'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
+    },
   },
   config: {
     escrows: [
@@ -81,6 +90,33 @@ export const zksynclite: Layer2 = {
     transactionApi: {
       type: 'zksync',
       callsPerMinute: 3_000,
+    },
+    liveness: {
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+          ),
+          selector: '0x83981808',
+          functionSignature:
+            'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
+          sinceTimestamp: new UnixTime(1592218707),
+        },
+      ],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+          ),
+          selector: '0xb0705b42',
+          functionSignature:
+            'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
+          sinceTimestamp: new UnixTime(1592218707),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -111,8 +147,14 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_ZKSYNC(upgradeDelay, securityCouncil),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
+      sentiment: 'warning',
+      description: `Users have ${formatSeconds(
+        upgradeDelay - forcedWithdrawalDelay,
+      )} to exit to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
+        forcedWithdrawalDelay,
+      )} to be processed.\n\nThe Security Council can upgrade with no delay.`,
       sources: [
         {
           contract: 'Governance',
@@ -152,26 +194,31 @@ export const zksynclite: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: true,
+    {
+      rollupNodeLink: 'https://github.com/matter-labs/zksync',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -254,7 +301,7 @@ export const zksynclite: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
@@ -293,11 +340,11 @@ export const zksynclite: Layer2 = {
     addresses: [
       discovery.getContractDetails('ZkSync', {
         description:
-          'The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
+          'The main Rollup contract. Allows the operator to commit blocks, provide ZK proofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
         ...upgrades,
       }),
       discovery.getContractDetails('Verifier', {
-        description: 'Implements zkProof verification logic.',
+        description: 'Implements ZK proof verification logic.',
         ...upgrades,
       }),
       discovery.getContractDetails('Governance', {
@@ -334,6 +381,13 @@ export const zksynclite: Layer2 = {
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  stateDerivation: {
+    nodeSoftware: `The node software is open-sourced and the source can be found [here](https://github.com/matter-labs/zksync).`,
+    compressionScheme: 'No compression, transactions are always the same size.',
+    genesisState:
+      'There is no genesis file nor regenesis for zkSync Lite. By default, all accounts were empty at the beginning.',
+    dataFormat: `The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).`,
   },
   permissions: [
     ...discovery.getMultisigPermission(
@@ -379,7 +433,7 @@ export const zksynclite: Layer2 = {
       link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       date: '2020-06-18T00:00:00Z',
       description:
-        'zkSync is live, bringing scalable payments to Ethereum using zkRollup technology.',
+        'zkSync is live, bringing scalable payments to Ethereum using ZK Rollup technology.',
     },
     {
       name: 'Rebranding',

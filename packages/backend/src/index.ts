@@ -2,14 +2,23 @@ import { Application } from './Application'
 import { getConfig } from './config'
 import { flushErrors, reportError } from './tools/ErrorReporter'
 
-main().catch((e) => {
+main().catch(async (e: unknown) => {
   console.error(e)
-  reportError(e)
 
-  // Need to flush errors to sentry before exiting otherwise they will be lost
-  return flushErrors().finally(() => {
+  if (typeof e === 'string') {
+    reportError({ message: e })
+  } else if (e instanceof Error) {
+    reportError({ error: e })
+  } else {
+    reportError({ parameters: e })
+  }
+
+  try {
+    // Need to flush errors to sentry before exiting otherwise they will be lost
+    await flushErrors()
+  } finally {
     process.exit(1)
-  })
+  }
 })
 
 async function main() {

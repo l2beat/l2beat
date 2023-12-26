@@ -17,6 +17,8 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 
+const upgradeDelay = 0
+
 export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
@@ -27,10 +29,11 @@ export const layer2financezk: Layer2 = {
     warning:
       'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
-      'Celer’s Layer2.finance in ZK Proofs Mode Built with StarkEx from StarkWare.',
+      'Celer’s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
     purpose: 'DeFi protocols',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://layer2.finance/'],
       apps: [],
@@ -46,6 +49,9 @@ export const layer2financezk: Layer2 = {
         'https://twitter.com/CelerNetwork',
       ],
     },
+  },
+  stage: {
+    stage: 'NotApplicable',
   },
   config: {
     escrows: [
@@ -74,7 +80,7 @@ export const layer2financezk: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,

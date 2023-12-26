@@ -1,0 +1,37 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "portal",
+  "initialAddresses": [
+    "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+    "0x3ee18B2214AFF97000D974cf647E7C347E8fa585"
+  ],
+  "names": {
+    "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": "Wormhole",
+    "0x3ee18B2214AFF97000D974cf647E7C347E8fa585": "TokenBridge",
+    "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": "TokenImplementation"
+  },
+  "overrides": {
+    "Wormhole": {
+      "ignoreMethods": ["quorum"],
+      "fields": {
+        "guardianSet": {
+          "type": "call",
+          "method": "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
+          "args": ["{{ getCurrentGuardianSetIndex }}"]
+        },
+        "quorum": {
+          "type": "array",
+          "method": "quorum",
+          "length": 30
+        }
+      }
+    },
+    "TokenBridge": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "0x3ee18B2214AFF97000D974cf647E7C347E8fa585": {
+      "ignoreMethods": ["WETH"]
+    }
+  }
+}

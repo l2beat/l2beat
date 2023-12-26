@@ -1,5 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { HttpClient, Logger } from '@l2beat/shared'
+import { HttpClient } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 

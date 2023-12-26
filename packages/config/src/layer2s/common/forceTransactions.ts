@@ -97,6 +97,19 @@ const SEQUENCER_NO_MECHANISM: ProjectTechnologyChoice = {
   references: [],
 }
 
+const ENQUEUE: ProjectTechnologyChoice = {
+  name: 'Users can enqueue transactions',
+  description:
+    "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
+  risks: [
+    {
+      category: 'Users can be censored if',
+      text: 'the operator is offline or refuses to process the queue.',
+    },
+  ],
+  references: [],
+}
+
 export const FORCE_TRANSACTIONS = {
   WITHDRAW,
   WITHDRAW_OR_HALT,
@@ -105,4 +118,5 @@ export const FORCE_TRANSACTIONS = {
   CANONICAL_ORDERING,
   PROPOSE_OWN_BLOCKS,
   SEQUENCER_NO_MECHANISM,
+  ENQUEUE,
 }

@@ -13,6 +13,7 @@ import {
   CoinListResult,
   CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
+  CoinMetadata,
 } from './model'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
@@ -49,6 +50,20 @@ export class CoingeckoClient {
     }
   }
 
+  async getImageUrl(id: CoingeckoId): Promise<string> {
+    const data = await this.query(`/coins/${id.toString()}`, {
+      localization: 'false',
+      tickers: 'false',
+      market_data: 'false',
+      community_data: 'false',
+      developer_data: 'false',
+      sparkline: 'false',
+    })
+
+    const parsed = CoinMetadata.parse(data)
+    return parsed.image.large
+  }
+
   async getCoinMarketChartRange(
     coinId: CoingeckoId,
     vs_currency: string,
@@ -73,7 +88,7 @@ export class CoingeckoClient {
     vs_currency: string,
     from: UnixTime,
     to: UnixTime,
-  ) {
+  ): Promise<CoinMarketChartRangeData> {
     const data = await this.query(
       `/coins/${coinId.toString()}/market_chart/range`,
       {
@@ -87,16 +102,16 @@ export class CoingeckoClient {
     return {
       prices: parsedData.prices.map(([timestamp, price]) => ({
         date: new Date(timestamp),
-        price,
+        value: price,
       })),
       marketCaps: parsedData.market_caps.map(([timestamp, marketCap]) => ({
         date: new Date(timestamp),
-        marketCap,
+        value: marketCap,
       })),
       totalVolumes: parsedData.total_volumes.map(
         ([timestamp, totalVolume]) => ({
           date: new Date(timestamp),
-          totalVolume,
+          value: totalVolume,
         }),
       ),
     }

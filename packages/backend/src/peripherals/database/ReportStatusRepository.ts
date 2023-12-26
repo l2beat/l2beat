@@ -1,5 +1,5 @@
-import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import { ChainId, Hash256, ReportType, UnixTime } from '@l2beat/shared-pure'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
@@ -16,19 +16,15 @@ export class ReportStatusRepository extends BaseRepository {
     this.autoWrap<CheckConvention<ReportStatusRepository>>(this)
   }
 
-  // TODO(radomski): Add different config hashes for value_type and chain_id
-  // after the config the updated
   async getByConfigHash(
     configHash: Hash256,
     chainId: ChainId,
-    valueType: ValueType,
   ): Promise<UnixTime[]> {
     const knex = await this.knex()
     const rows = await knex('reports_status')
       .where({
         config_hash: configHash.toString(),
         chain_id: chainId.valueOf(),
-        asset_type: valueType.toString(),
       })
       .select('unix_timestamp')
 
@@ -39,7 +35,6 @@ export class ReportStatusRepository extends BaseRepository {
     configHash: Hash256
     timestamp: UnixTime
     chainId: ChainId
-    valueType: ValueType
   }): Promise<Hash256> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
@@ -47,14 +42,13 @@ export class ReportStatusRepository extends BaseRepository {
         .where({
           unix_timestamp: record.timestamp.toDate(),
           chain_id: record.chainId.valueOf(),
-          asset_type: record.valueType.toString(),
         })
         .delete()
       await trx('reports_status').insert({
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toDate(),
         chain_id: record.chainId.valueOf(),
-        asset_type: record.valueType.toString(),
+        report_type: 'TVL', // TODO(radomski): Remove report_type from reportStatusTable
       })
     })
     return record.configHash
@@ -62,14 +56,13 @@ export class ReportStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('reports_status').delete()
+    return knex('reports_status').delete()
   }
 
   async getBetween(
     from: UnixTime,
     to: UnixTime,
     chainId: ChainId,
-    valueType: ValueType,
   ): Promise<ReportStatusRecord[]> {
     const knex = await this.knex()
 
@@ -78,7 +71,6 @@ export class ReportStatusRepository extends BaseRepository {
       .andWhere('unix_timestamp', '<=', to.toDate())
       .andWhere({
         chain_id: chainId.valueOf(),
-        asset_type: valueType.toString(),
       })
 
     return rows.map((r) => ({
@@ -87,18 +79,32 @@ export class ReportStatusRepository extends BaseRepository {
     }))
   }
 
-  async findLatestTimestamp(
-    chainId: ChainId,
-    valueType: ValueType,
-  ): Promise<UnixTime | undefined> {
+  async findLatestTimestamp(chainId: ChainId): Promise<UnixTime | undefined> {
     const knex = await this.knex()
     // note: we need to provide better types manually here
     const row = (await knex('reports_status')
-      .where({ chain_id: chainId.valueOf(), asset_type: valueType.toString() })
+      .where({ chain_id: chainId.valueOf() })
       .max('unix_timestamp')
       .first()) as NullableDict<Date> | undefined
     if (!row || row.max === null) {
       return undefined
+    }
+
+    return UnixTime.fromDate(row.max)
+  }
+
+  async findLatestTimestampOfType(
+    reportType: ReportType,
+  ): Promise<UnixTime | undefined> {
+    const knex = await this.knex()
+    const row = (await knex('reports_status')
+      .where({
+        report_type: reportType,
+      })
+      .max('unix_timestamp')
+      .first()) as NullableDict<Date> | undefined
+    if (!row || row.max === null) {
+      return
     }
 
     return UnixTime.fromDate(row.max)

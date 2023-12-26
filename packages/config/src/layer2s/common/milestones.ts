@@ -12,11 +12,11 @@ export const MILESTONES = {
 
 export const HOMEPAGE_MILESTONES: Milestone[] = [
   {
-    name: 'First zkRollup (DEX)',
+    name: 'First ZK Rollup (DEX)',
     date: '2019-12-04T00:00:00Z',
     link: 'https://medium.loopring.io/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
     description:
-      'Loopring is live, bringing the first DEX protocol on zkRollup technology.',
+      'Loopring is live, bringing the first DEX protocol on ZK Rollup technology.',
   },
   {
     name: 'First StarkEx Validium',
@@ -26,10 +26,10 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
       'DeversiFi is live, bringing first STARKex Validium for spot trading.',
   },
   {
-    name: 'First zkRollup (for payments)',
+    name: 'First ZK Rollup (for payments)',
     date: '2020-06-18T00:00:00Z',
     link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
-    description: 'zkSync 1.0 is live, bringing first zkRollup for payments.',
+    description: 'zkSync 1.0 is live, bringing first ZK Rollup for payments.',
   },
   {
     name: 'Ethereum Rollup centric future',
@@ -53,10 +53,11 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
       'Optimism is live, bringing first permissioned universal Optimistic Rollup with fraud proofs.',
   },
   {
-    name: 'First private zkRollup (for payments)',
+    name: 'First private ZK Rollup (for payments)',
     link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
     date: '2021-03-15T00:00:00Z',
-    description: 'Aztec is live, bringing first private zkRollup for payments.',
+    description:
+      'Aztec is live, bringing first private ZK Rollup for payments.',
   },
   {
     name: 'First StarkEx Rollup (perpetuals)',
@@ -77,7 +78,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
     date: '2021-11-29T00:00:00Z',
     description:
-      'Starknet Alpha is live, bringing first universal rollup based on zkRollup technology.',
+      'Starknet Alpha is live, bringing first universal rollup based on ZK Rollup technology.',
   },
   {
     name: 'Hybrid Computation introduced',
@@ -87,24 +88,24 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
       'Hybrid Compute is live on Boba Network, bringing off-chain computation to smart contracts.',
   },
   {
-    name: 'First Optimistic Chain (universal)',
+    name: 'First Optimium (universal)',
     link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
     date: '2022-04-12T00:00:00Z',
     description:
-      'Metis starts storing data off-chain, becoming first optimistic chain.',
+      'Metis starts storing data off-chain, becoming first Optimium.',
   },
   {
-    name: 'First Optimistic Chain with fallback (universal)',
+    name: 'First Optimium with fallback (universal)',
     link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
     date: '2022-08-09T00:00:00Z',
     description:
-      'Arbitrum Nova is live, becoming first Optimistic Chain with fallback to Rollup mode.',
+      'Arbitrum Nova is live, becoming first Optimium with fallback to Rollup mode.',
   },
   {
-    name: 'First zkRollup with universal Solidity support',
+    name: 'First ZK Rollup with universal Solidity support',
     date: '2023-03-24T00:00:00Z',
     link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
     description:
-      'zkSync Era is now permissionless and open for everyone brining first zkEVM to mainnet.',
+      'zkSync Era is now permissionless and open for everyone bringing first zkEVM to mainnet.',
   },
 ]

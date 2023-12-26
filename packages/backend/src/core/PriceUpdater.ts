@@ -1,8 +1,14 @@
-import { Logger } from '@l2beat/shared'
-import { assert, AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import {
+  assert,
+  AssetId,
+  EthereumAddress,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { Token } from '../model'
+import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   DataBoundary,
@@ -11,6 +17,7 @@ import {
 } from '../peripherals/database/PriceRepository'
 import { Clock } from './Clock'
 import { TaskQueue } from './queue/TaskQueue'
+import { getStatus } from './reports/getStatus'
 
 export class PriceUpdater {
   private readonly knownSet = new Set<number>()
@@ -33,8 +40,20 @@ export class PriceUpdater {
     )
   }
 
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+    )
+  }
+
   async getPricesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getPricesWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.priceRepository.getByTimestamp(timestamp)
@@ -57,9 +76,10 @@ export class PriceUpdater {
     const boundaries = await this.priceRepository.findDataBoundaries()
 
     const results = await Promise.allSettled(
-      this.tokens.map(({ id: assetId, address }) => {
+      this.tokens.map(({ id: assetId, address, sinceTimestamp }) => {
         const boundary = boundaries.get(assetId)
-        return this.updateToken(assetId, boundary, from, to, address)
+        const adjustedFrom = getAdjustedFrom(sinceTimestamp, from)
+        return this.updateToken(assetId, boundary, adjustedFrom, to, address)
       }),
     )
     const error = results.find((x) => x.status === 'rejected')
@@ -99,7 +119,7 @@ export class PriceUpdater {
       }
     }
     if (hours > 0) {
-      this.logger.debug('Updated prices', {
+      this.logger.info('Updated prices', {
         coingeckoId: assetId.toString(),
         hours,
       })
@@ -123,20 +143,24 @@ export class PriceUpdater {
     const coingeckoId = this.getCoingeckoId(assetId)
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
       coingeckoId,
-      // Make sure that we have enough old data to fill holes
-      from.add(-7, 'days'),
+      from,
       to,
-      'hourly',
       address,
     )
-    const priceRecords: PriceRecord[] = prices
-      .filter((x) => x.timestamp.gte(from))
-      .map((price) => ({
-        assetId,
-        timestamp: price.timestamp,
-        priceUsd: price.value,
-      }))
+    const priceRecords: PriceRecord[] = prices.map((price) => ({
+      assetId,
+      timestamp: price.timestamp,
+      priceUsd: price.value,
+    }))
 
     await this.priceRepository.addMany(priceRecords)
   }
+}
+
+function getAdjustedFrom(sinceTimestamp: UnixTime, from: UnixTime) {
+  const sinceTimestampFullHour = sinceTimestamp.isFull('hour')
+    ? sinceTimestamp
+    : sinceTimestamp.toNext('hour')
+
+  return sinceTimestampFullHour.gt(from) ? sinceTimestampFullHour : from
 }

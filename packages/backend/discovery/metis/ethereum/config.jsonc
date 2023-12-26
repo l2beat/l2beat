@@ -1,0 +1,209 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "metis",
+  "initialAddresses": ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"],
+  "names": {
+    "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer",
+    "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": "StateCommitmentChain",
+    "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig",
+    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
+  },
+  "overrides": {
+    "0x918778e825747a892b17C66fe7D24C618262867d": {
+      "fields": {
+        "BondManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BondManager"]
+        },
+        "CanonicalTransactionChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["CanonicalTransactionChain"]
+        },
+        "MVM_DiscountOracle": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["MVM_DiscountOracle"]
+        },
+        "METIS_MANAGER": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["METIS_MANAGER"]
+        },
+        "_1088_MVM_Sequencer_Wrapper": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["1088_MVM_Sequencer_Wrapper"]
+        },
+        "Proxy__MVM_CanonicalTransaction": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__MVM_CanonicalTransaction"]
+        },
+        "_1088_MVM_FraudVerifier": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["1088_MVM_FraudVerifier"]
+        },
+        "Proxy__MVM_Verifier": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__MVM_Verifier"]
+        },
+        "ChainStorageContainer_CTC_queue": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["ChainStorageContainer-CTC-queue"]
+        },
+        "StateCommitmentChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["StateCommitmentChain"]
+        },
+        "Proxy__MVM_ChainManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__MVM_ChainManager"]
+        },
+        "_1088_MVM_Proposer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["1088_MVM_Proposer"]
+        },
+        "_1088_MVM_Sequencer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["1088_MVM_Sequencer"]
+        },
+        "L2CrossDomainMessenger": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L2CrossDomainMessenger"]
+        },
+        "undefined_MVM_FraudVerifier": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["undefined_MVM_FraudVerifier"]
+        },
+        "Proxy__OVM_L1StandardBridge": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__OVM_L1StandardBridge"]
+        }
+      }
+    },
+    "StateCommitmentChain": {
+      "fields": {
+        "getLastSequencerTimestampByChainId": {
+          "type": "call",
+          "method": "getLastSequencerTimestampByChainId",
+          "args": ["{{ DEFAULT_CHAINID }}"]
+        },
+        "getTotalBatchesByChainId": {
+          "type": "call",
+          "method": "getTotalBatchesByChainId",
+          "args": ["{{ DEFAULT_CHAINID }}"]
+        },
+        "getTotalElementsByChainId": {
+          "type": "call",
+          "method": "getTotalElementsByChainId",
+          "args": ["{{ DEFAULT_CHAINID }}"]
+        }
+      },
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements",
+        "getLastSequencerTimestampByChainId",
+        "getTotalBatchesByChainId",
+        "getTotalElementsByChainId"
+      ]
+    },
+    "ChainStorageContainer": {
+      "ignoreMethods": ["get"],
+      "fields": {
+        "getGlobalMetadataByChainId": {
+          "type": "call",
+          "method": "getGlobalMetadataByChainId",
+          "args": ["{{ DEFAULT_CHAINID }}"]
+        },
+        "lengthByChainId": {
+          "type": "call",
+          "method": "lengthByChainId",
+          "args": ["{{ DEFAULT_CHAINID }}"]
+        }
+      },
+      "ignoreInWatchMode": [
+        "getGlobalMetadata",
+        "length",
+        "getGlobalMetadataByChainId",
+        "lengthByChainId"
+      ]
+    },
+    "0x081D1101855bD523bA69A9794e0217F0DB6323ff": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "0xB2e2060A179e67cA4299Cc79fA337B98791DE069": {
+      "ignoreMethods": ["get", "chain_under_challenge"]
+    },
+    "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": {
+      "ignoreMethods": [
+        "get",
+        "getGlobalMetadata",
+        "getGlobalMetadataByChainId",
+        "length",
+        "lengthByChainId"
+      ]
+    },
+    "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": {
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
+      ],
+      "ignoreMethods": [
+        "getBatchGlobalMetadataByChainId",
+        "getLastBlockNumberByChainId",
+        "getLastTimestampByChainId",
+        "getNextQueueIndexByChainId",
+        "getNumPendingQueueElementsByChainId",
+        "getQueueElement",
+        "getQueueLengthByChainId",
+        "getTotalBatchesByChainId",
+        "getTotalElementsByChainId",
+        "lengthBatchByChainId"
+      ]
+    },
+    "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": {
+      "fields": {
+        "getGlobalMetadataByChainId": {
+          "type": "call",
+          "method": "getGlobalMetadataByChainId",
+          "args": ["{{ DEFAULT_CHAINID }}"]
+        },
+        "lengthByChainId": {
+          "type": "call",
+          "method": "lengthByChainId",
+          "args": ["{{ DEFAULT_CHAINID }}"]
+        }
+      }
+    },
+    "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": {
+      "ignoreMethods": ["chain_under_challenge"]
+    },
+    "Metis Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "MToken": {
+      // isOwner() compares caller to 0x00.. which gives true for call()
+      // and returns false for multicall(). Let's ignore it.
+      "ignoreMethods": ["isOwner"]
+    }
+  }
+}

@@ -14,7 +14,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const env = process.env.DEPLOYMENT_ENV ?? 'production'
+  const env = process.env.DEPLOYMENT_ENV ?? 'ci'
   console.log(`Using config for ${env}`)
   const config = getConfig(env)
 
@@ -27,6 +27,7 @@ async function main() {
     const server = app.listen(1234, () => resolve(server))
   })
 
+  //TODO: Check this
   const slugs = [...layer2s, ...bridges]
     .map((x) => x.display.slug)
     .filter((slug) =>
@@ -34,6 +35,17 @@ async function main() {
       existsSync(path.join('build/meta-images', slug, 'index.html')),
     )
     .concat('overview-scaling', 'overview-bridges')
+
+  slugs.push('overview-detailed-scaling')
+
+  slugs.push(
+    ...[...layer2s, ...bridges]
+      .map((x) => `${x.display.slug}-detailed`)
+      .filter((slug) =>
+        // only screenshot those that were actually generated
+        existsSync(path.join('build/meta-images', slug, 'index.html')),
+      ),
+  )
 
   if (config.features.activity) {
     slugs.push('overview-scaling-activity')

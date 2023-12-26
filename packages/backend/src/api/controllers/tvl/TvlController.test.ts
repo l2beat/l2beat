@@ -1,382 +1,582 @@
+import { Logger } from '@l2beat/backend-tools'
 import { tokenList } from '@l2beat/config'
-import { Logger } from '@l2beat/shared'
 import {
+  assert,
   AssetId,
   ChainId,
   EthereumAddress,
+  Hash256,
   ProjectId,
-  TvlApiChart,
+  ReportType,
+  Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
+import {
+  AggregatedReportRecord,
+  AggregatedReportRepository,
+} from '../../../peripherals/database/AggregatedReportRepository'
+import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
+import {
+  BalanceRecord,
+  BalanceRepository,
+} from '../../../peripherals/database/BalanceRepository'
+import {
+  PriceRecord,
+  PriceRepository,
+} from '../../../peripherals/database/PriceRepository'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
-import { reduceDuplicatedReports, TvlController } from './TvlController'
-
-const START = UnixTime.fromDate(new Date('2022-05-31'))
-const DAI = tokenList.find((x) => x.symbol === 'DAI')!
-const USDC = tokenList.find((x) => x.symbol === 'USDC')!
-
-const OPTIMISM: ReportProject = {
-  projectId: ProjectId('optimism'),
-  type: 'layer2',
-  escrows: [
-    {
-      address: EthereumAddress.random(),
-      sinceTimestamp: new UnixTime(0),
-      tokens: [DAI],
-    },
-  ],
-}
-
-const ARBITRUM: ReportProject = {
-  projectId: ProjectId('arbitrum'),
-  type: 'layer2',
-  escrows: [
-    {
-      address: EthereumAddress.random(),
-      sinceTimestamp: new UnixTime(0),
-      tokens: [USDC],
-    },
-  ],
-}
+import { getProjectAssetChartData } from './charts'
+import { TvlController } from './TvlController'
 
 describe(TvlController.name, () => {
-  describe(TvlController.prototype.getTvlApiResponse.name, () => {
-    it('deduplicates tokens response', async () => {
-      const baseReport: Omit<ReportRecord, 'timestamp'> = {
-        usdValue: 1234_56n,
-        ethValue: 1_111111n,
-        amount: 111_1111n * 10n ** (6n - 4n),
-        asset: AssetId.USDC,
-        chainId: ChainId.ETHEREUM,
-        projectId: ARBITRUM.projectId,
-        type: ValueType.CBV,
-      }
+  const START = UnixTime.fromDate(new Date('2022-05-31'))
+  const MINIMUM_TIMESTAMP = START.add(-1, 'hours')
 
-      // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
-      const reportRepository = mockObject<ReportRepository>({
-        getByTimestamp: async () => [
-          { ...baseReport, timestamp: START },
-          { ...baseReport, timestamp: START },
-        ],
-      })
-      const aggregateRepository = mockObject<AggregatedReportRepository>({
-        getDaily: async () => [],
-        getHourly: async () => [],
-        getSixHourly: async () => [],
-      })
-      const controller = new TvlController(
-        mockObject<ReportStatusRepository>({
-          async findLatestTimestamp() {
-            return START
-          },
-        }),
-        aggregateRepository,
-        reportRepository,
-        [ARBITRUM],
-        [USDC],
-        Logger.SILENT,
-      )
-      const types: TvlApiChart['types'] = ['timestamp', 'usd', 'eth']
-      const charts = await controller.getTvlApiResponse()
-      expect(charts?.projects.arbitrum).toEqual({
-        charts: {
-          hourly: {
-            types,
-            data: [],
-          },
-          sixHourly: {
-            types,
-            data: [],
-          },
-          daily: {
-            types,
-            data: [],
-          },
-        },
-        tokens: [
-          {
-            assetId: AssetId('usdc-usd-coin'),
-            tvl: 2469.12,
-          },
-        ],
-      })
-    })
-  })
+  const USDC = tokenList.find((x) => x.symbol === 'USDC' && x.type === 'CBV')!
 
-  describe(TvlController.prototype.getProjectAssetChart.name, () => {
-    it('returns undefined if project does not exist', async () => {
-      const controller = new TvlController(
-        mockObject<ReportStatusRepository>(),
-        mockObject<AggregatedReportRepository>(),
-        mockObject<ReportRepository>(),
-        [],
-        [],
-        Logger.SILENT,
-      )
-      const chart = await controller.getProjectAssetChart(
-        OPTIMISM.projectId,
-        AssetId.DAI,
-      )
-      expect(chart).toEqual(undefined)
-    })
-
-    it('returns undefined if asset does not exist', async () => {
-      const controller = new TvlController(
-        mockObject<ReportStatusRepository>(),
-        mockObject<AggregatedReportRepository>(),
-        mockObject<ReportRepository>(),
-        [OPTIMISM],
-        [],
-        Logger.SILENT,
-      )
-      const chart = await controller.getProjectAssetChart(
-        OPTIMISM.projectId,
-        AssetId.DAI,
-      )
-      expect(chart).toEqual(undefined)
-    })
-
-    it('returns reports', async () => {
-      const baseReport: Omit<ReportRecord, 'timestamp'> = {
-        usdValue: 1234_56n,
-        ethValue: 1_111111n,
-        amount: 111_1111n * 10n ** (18n - 4n),
-        asset: AssetId.DAI,
-        chainId: ChainId.ETHEREUM,
-        projectId: OPTIMISM.projectId,
-        type: ValueType.CBV,
-      }
-
-      const controller = new TvlController(
-        mockObject<ReportStatusRepository>({
-          async findLatestTimestamp() {
-            return START
-          },
-        }),
-        mockObject<AggregatedReportRepository>(),
-        mockObject<ReportRepository>({
-          getHourlyByProjectAndAsset: async () => [
-            { ...baseReport, timestamp: START.add(-1, 'hours') },
-            { ...baseReport, timestamp: START },
-          ],
-          getSixHourlyByProjectAndAsset: async () => [
-            { ...baseReport, timestamp: START.add(-6, 'hours') },
-            { ...baseReport, timestamp: START },
-          ],
-          getDailyByProjectAndAsset: async () => [
-            { ...baseReport, timestamp: START.add(-1, 'days') },
-            { ...baseReport, timestamp: START },
-          ],
-        }),
-        [OPTIMISM],
-        [DAI],
-        Logger.SILENT,
-      )
-      const types: TvlApiChart['types'] = ['timestamp', 'dai', 'usd']
-      const charts = await controller.getProjectAssetChart(
-        OPTIMISM.projectId,
-        AssetId.DAI,
-      )
-      expect(charts).toEqual({
-        hourly: {
-          types,
-          data: [
-            [START.add(-1, 'hours'), 111.1111, 1234.56],
-            [START, 111.1111, 1234.56],
-          ],
-        },
-        sixHourly: {
-          types,
-          data: [
-            [START.add(-6, 'hours'), 111.1111, 1234.56],
-            [START, 111.1111, 1234.56],
-          ],
-        },
-        daily: {
-          types,
-          data: [
-            [START.add(-1, 'days'), 111.1111, 1234.56],
-            [START, 111.1111, 1234.56],
-          ],
-        },
-      })
-    })
-
-    it('adds the Arbitrum USDC value to the TVL', async () => {
-      const baseReport: Omit<ReportRecord, 'timestamp'> = {
-        usdValue: 1234_56n,
-        ethValue: 1_111111n,
-        amount: 111_1111n * 10n ** (6n - 4n),
-        asset: AssetId.USDC,
-        chainId: ChainId.ETHEREUM,
-        projectId: ARBITRUM.projectId,
-        type: ValueType.CBV,
-      }
-
-      // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
-      const reportRepository = mockObject<ReportRepository>({
-        getHourlyByProjectAndAsset: async () => [
-          { ...baseReport, timestamp: START.add(-1, 'hours') },
-          { ...baseReport, timestamp: START.add(-1, 'hours') },
-          { ...baseReport, timestamp: START },
-          { ...baseReport, timestamp: START },
-        ],
-        getSixHourlyByProjectAndAsset: async () => [
-          { ...baseReport, timestamp: START.add(-6, 'hours') },
-          { ...baseReport, timestamp: START.add(-6, 'hours') },
-          { ...baseReport, timestamp: START },
-          { ...baseReport, timestamp: START },
-        ],
-        getDailyByProjectAndAsset: async () => [
-          { ...baseReport, timestamp: START.add(-1, 'days') },
-          { ...baseReport, timestamp: START.add(-1, 'days') },
-          { ...baseReport, timestamp: START },
-          { ...baseReport, timestamp: START },
-        ],
-      })
-      const controller = new TvlController(
-        mockObject<ReportStatusRepository>({
-          async findLatestTimestamp() {
-            return START
-          },
-        }),
-        mockObject<AggregatedReportRepository>(),
-        reportRepository,
-        [ARBITRUM],
-        [USDC],
-        Logger.SILENT,
-      )
-      const types: TvlApiChart['types'] = ['timestamp', 'usdc', 'usd']
-      const charts = await controller.getProjectAssetChart(
-        ARBITRUM.projectId,
-        AssetId.USDC,
-      )
-      expect(charts).toEqual({
-        hourly: {
-          types,
-          data: [
-            [START.add(-1, 'hours'), 111.1111 * 2, 1234.56 * 2],
-            [START, 111.1111 * 2, 1234.56 * 2],
-          ],
-        },
-        sixHourly: {
-          types,
-          data: [
-            [START.add(-6, 'hours'), 111.1111 * 2, 1234.56 * 2],
-            [START, 111.1111 * 2, 1234.56 * 2],
-          ],
-        },
-        daily: {
-          types,
-          data: [
-            [START.add(-1, 'days'), 111.1111 * 2, 1234.56 * 2],
-            [START, 111.1111 * 2, 1234.56 * 2],
-          ],
-        },
-      })
-    })
-
-    it('correctly finds timestamp for Arbitrum USDC', async () => {
-      const reportRepository = mockObject<ReportRepository>({
-        getHourlyByProjectAndAsset: async () => [],
-        getSixHourlyByProjectAndAsset: async () => [],
-        getDailyByProjectAndAsset: async () => [],
-      })
-      const controller = new TvlController(
-        mockObject<ReportStatusRepository>({
-          async findLatestTimestamp(chainId) {
-            if (chainId === ChainId.ETHEREUM) {
-              return START
-            }
-            return START.add(2, 'hours')
-          },
-        }),
-        mockObject<AggregatedReportRepository>(),
-        reportRepository,
-        [ARBITRUM],
-        [USDC],
-        Logger.SILENT,
-      )
-
-      await controller.getProjectAssetChart(ARBITRUM.projectId, AssetId.USDC)
-
-      expect(
-        reportRepository.getHourlyByProjectAndAsset,
-      ).toHaveBeenOnlyCalledWith(
-        ARBITRUM.projectId,
-        AssetId.USDC,
-        START.add(-7, 'days'),
-      )
-
-      expect(
-        reportRepository.getSixHourlyByProjectAndAsset,
-      ).toHaveBeenOnlyCalledWith(
-        ARBITRUM.projectId,
-        AssetId.USDC,
-        START.add(-90, 'days'),
-      )
-
-      expect(
-        reportRepository.getDailyByProjectAndAsset,
-      ).toHaveBeenOnlyCalledWith(ARBITRUM.projectId, AssetId.USDC)
-    })
-  })
-})
-
-describe(reduceDuplicatedReports.name, () => {
-  const baseReport: Omit<ReportRecord, 'asset' | 'timestamp'> = {
-    usdValue: 1234_56n,
-    ethValue: 1_111111n,
-    amount: 111_1111n * 10n ** (6n - 4n),
-    chainId: ChainId.ETHEREUM,
-    projectId: ARBITRUM.projectId,
-    type: ValueType.CBV,
+  const ARBITRUM: ReportProject = {
+    projectId: ProjectId('arbitrum'),
+    type: 'layer2',
+    escrows: [
+      {
+        address: EthereumAddress.random(),
+        sinceTimestamp: new UnixTime(0),
+        tokens: [USDC],
+      },
+    ],
   }
 
-  it('works for different timestamps', () => {
-    const reports: ReportRecord[] = [
-      {
-        ...baseReport,
-        asset: AssetId.USDC,
-        timestamp: START,
-      },
-      {
-        ...baseReport,
-        asset: AssetId.USDC,
-        timestamp: START.add(-1, 'hours'),
-      },
-      {
-        ...baseReport,
-        asset: AssetId.USDC,
-        timestamp: START.add(-1, 'hours'),
-      },
-    ]
+  describe(TvlController.prototype.getTvlApiResponse.name, () => {
+    it('selects minimum viable timestamp for the aggregation', async () => {
+      const latestConfigHash = Hash256.random()
 
-    const reduced = reduceDuplicatedReports(reports)
+      const baseReport: ReportRecord = {
+        timestamp: MINIMUM_TIMESTAMP,
+        usdValue: 1234_56n,
+        ethValue: 1_111111n,
+        amount: 111_1111n * 10n ** (6n - 4n),
+        asset: AssetId.USDC,
+        chainId: ChainId.ETHEREUM,
+        projectId: ARBITRUM.projectId,
+        reportType: 'CBV',
+      }
 
-    expect(reduced).toEqual([
-      {
-        ...baseReport,
-        asset: AssetId.USDC,
-        timestamp: START,
-      },
-      {
-        ...baseReport,
-        asset: AssetId.USDC,
-        usdValue: baseReport.usdValue * 2n,
-        ethValue: baseReport.ethValue * 2n,
-        amount: baseReport.amount * 2n,
-        timestamp: START.add(-1, 'hours'),
-      },
-    ])
+      const baseAggregatedReport: AggregatedReportRecord[] = [
+        {
+          timestamp: MINIMUM_TIMESTAMP,
+          usdValue: 1234_56n,
+          ethValue: 1_111111n,
+          reportType: 'CBV',
+          projectId: ARBITRUM.projectId,
+        },
+        {
+          timestamp: MINIMUM_TIMESTAMP,
+          usdValue: 1234_56n,
+          ethValue: 1_111111n,
+          reportType: 'CBV',
+          projectId: ProjectId.ALL,
+        },
+        {
+          timestamp: MINIMUM_TIMESTAMP,
+          usdValue: 1234_56n,
+          ethValue: 1_111111n,
+          reportType: 'CBV',
+          projectId: ProjectId.BRIDGES,
+        },
+        {
+          timestamp: MINIMUM_TIMESTAMP,
+          usdValue: 1234_56n,
+          ethValue: 1_111111n,
+          reportType: 'CBV',
+          projectId: ProjectId.LAYER2S,
+        },
+      ]
+
+      const aggregatedReportStatusRepository =
+        mockObject<AggregatedReportStatusRepository>({
+          findLatestTimestamp: async () => MINIMUM_TIMESTAMP,
+          findCountsForHash: async () => ({
+            isSynced: true,
+            latestTimestamp: MINIMUM_TIMESTAMP,
+            matching: 100, // doesn't matter
+            different: 0,
+          }),
+        })
+
+      const reportRepository = mockObject<ReportRepository>({
+        getByTimestamp: async () => [baseReport],
+      })
+
+      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
+        {
+          getDailyWithAnyType: async () => baseAggregatedReport,
+          getHourlyWithAnyType: async () => baseAggregatedReport,
+          getSixHourlyWithAnyType: async () => baseAggregatedReport,
+        },
+      )
+      const controller = new TvlController(
+        aggregatedReportRepository,
+        reportRepository,
+        aggregatedReportStatusRepository,
+        mockObject<BalanceRepository>({}),
+        mockObject<PriceRepository>({}),
+        [ARBITRUM],
+        [USDC],
+        Logger.SILENT,
+        latestConfigHash,
+        {
+          errorOnUnsyncedTvl: false,
+        },
+      )
+
+      await controller.getTvlApiResponse()
+
+      expect(reportRepository.getByTimestamp).toHaveBeenCalledWith(
+        MINIMUM_TIMESTAMP,
+      )
+
+      expect(
+        aggregatedReportRepository.getDailyWithAnyType,
+      ).toHaveBeenCalledTimes(1)
+
+      expect(
+        aggregatedReportRepository.getHourlyWithAnyType,
+      ).toHaveBeenCalledWith(MINIMUM_TIMESTAMP.add(-7, 'days'))
+
+      expect(
+        aggregatedReportRepository.getSixHourlyWithAnyType,
+      ).toHaveBeenCalledWith(MINIMUM_TIMESTAMP.add(-90, 'days'))
+    })
   })
+
+  /**
+   * TODO: Add test for granular/exact matches of produces chart points
+   */
+  describe(TvlController.prototype.getAssetTvlApiResponse.name, () => {
+    it('produces asset`s balances in time for charts', async () => {
+      const latestConfigHash = Hash256.random()
+
+      const projectId = ProjectId('arbitrum')
+      const chainId = ChainId.ARBITRUM
+      const asset = AssetId.USDC
+      const type = 'EBV'
+
+      const fakeReports = fakeReportSeries(projectId, chainId, asset, type)
+
+      const reportRepository = mockObject<ReportRepository>({
+        getHourly: async () => fakeReports.hourlyReports,
+        getSixHourly: async () => fakeReports.sixHourlyReports,
+        getDaily: async () => fakeReports.dailyReports,
+      })
+
+      const aggregatedReportStatusRepository =
+        mockObject<AggregatedReportStatusRepository>({
+          findCountsForHash: async () => ({
+            isSynced: true,
+            latestTimestamp: fakeReports.to,
+            matching: 100, // doesn't matter
+            different: 0,
+          }),
+          findLatestTimestamp: async () => fakeReports.to,
+        })
+
+      const controller = new TvlController(
+        mockObject<AggregatedReportRepository>(),
+        reportRepository,
+        aggregatedReportStatusRepository,
+        mockObject<BalanceRepository>({}),
+        mockObject<PriceRepository>({}),
+        [ARBITRUM],
+        [USDC],
+        Logger.SILENT,
+        latestConfigHash,
+        {
+          errorOnUnsyncedTvl: false,
+        },
+      )
+
+      const result = await controller.getAssetTvlApiResponse(
+        projectId,
+        chainId,
+        asset,
+        type,
+      )
+
+      assert(result.result === 'success')
+
+      expect(result.data.daily).toEqual({
+        types: ['timestamp', USDC.symbol.toLowerCase(), 'usd'],
+        data: getProjectAssetChartData(
+          fakeReports.dailyReports,
+          USDC.decimals,
+          24,
+        ),
+      })
+
+      expect(result.data.sixHourly).toEqual({
+        types: ['timestamp', USDC.symbol.toLowerCase(), 'usd'],
+        data: getProjectAssetChartData(
+          fakeReports.sixHourlyReports,
+          USDC.decimals,
+          6,
+        ),
+      })
+
+      expect(result.data.hourly).toEqual({
+        types: ['timestamp', USDC.symbol.toLowerCase(), 'usd'],
+        data: getProjectAssetChartData(
+          fakeReports.hourlyReports,
+          USDC.decimals,
+          1,
+        ),
+      })
+
+      expect(reportRepository.getHourly).toHaveBeenCalledWith(
+        projectId,
+        chainId,
+        asset,
+        type,
+        fakeReports.to.add(-7, 'days'),
+      )
+
+      expect(reportRepository.getSixHourly).toHaveBeenCalledWith(
+        projectId,
+        chainId,
+        asset,
+        type,
+        fakeReports.to.add(-90, 'days'),
+      )
+
+      expect(reportRepository.getDaily).toHaveBeenCalledWith(
+        projectId,
+        chainId,
+        asset,
+        type,
+      )
+    })
+  })
+
+  describe(
+    TvlController.prototype.getProjectTokenBreakdownApiResponse.name,
+    () => {
+      it('produces assets breakdown per project', async () => {
+        const USDC = tokenList.find(
+          (x) => x.symbol === 'USDC' && x.type === 'CBV',
+        )!
+
+        const OP = tokenList.find((x) => x.symbol === 'OP' && x.type === 'NMV')!
+
+        const DAI = tokenList.find(
+          (x) => x.symbol === 'DAI' && x.type === 'CBV',
+        )!
+
+        const ETH = tokenList.find(
+          (x) => x.symbol === 'ETH' && x.type === 'CBV',
+        )!
+
+        const latestConfigHash = Hash256.random()
+        const timestamp = UnixTime.now()
+
+        const firstEscrow = EthereumAddress(
+          '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
+        )
+        const secondEscrow = EthereumAddress(
+          '0xFFD6F05E65c9F7C9725f576cFa16c635419DA408',
+        )
+
+        const eth: Token = { ...ETH, type: 'CBV', chainId: ChainId.ETHEREUM }
+        const usdc: Token = {
+          ...USDC,
+          type: 'CBV',
+          chainId: ChainId.ETHEREUM,
+        }
+        const dai: Token = { ...DAI, type: 'EBV', chainId: ChainId.ARBITRUM }
+        const op: Token = { ...OP, type: 'NMV', chainId: ChainId.ARBITRUM }
+
+        const projects: ReportProject[] = [
+          {
+            projectId: ProjectId('arbitrum'),
+            type: 'layer2',
+            escrows: [
+              {
+                address: firstEscrow,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [eth, usdc],
+              },
+
+              {
+                address: secondEscrow,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [usdc],
+              },
+            ],
+          },
+          {
+            projectId: ProjectId('optimism'),
+            type: 'layer2',
+            escrows: [],
+          },
+        ]
+
+        const reports: ReportRecord[] = [
+          {
+            timestamp,
+            projectId: ProjectId('arbitrum'),
+            asset: dai.id,
+            chainId: dai.chainId,
+            reportType: dai.type,
+            amount: 10_000_000_000_000n,
+            usdValue: 10_000_000_000_000n,
+            ethValue: 10_000n,
+          },
+          {
+            timestamp,
+            projectId: ProjectId('arbitrum'),
+            asset: usdc.id,
+            chainId: usdc.chainId,
+            reportType: usdc.type,
+            amount: 20_000_000_000_000n,
+            usdValue: 20_000_000_000_000n,
+            ethValue: 20_000n,
+          },
+          {
+            timestamp,
+            projectId: ProjectId('arbitrum'),
+            asset: op.id,
+            chainId: op.chainId,
+            reportType: op.type,
+            amount: 30_000_000_000_000n,
+            usdValue: 45_000_000_000_000n,
+            ethValue: 45_000n,
+          },
+        ]
+
+        const balances: BalanceRecord[] = projects.flatMap(({ escrows }) =>
+          escrows.flatMap(({ tokens, address }) =>
+            tokens.flatMap((token) => ({
+              timestamp,
+              holderAddress: address,
+              assetId: token.id,
+              balance: 10_000_000_000_000n,
+              chainId: token.chainId,
+            })),
+          ),
+        )
+
+        const prices: PriceRecord[] = [
+          {
+            assetId: ETH.id,
+            timestamp,
+            priceUsd: 1000,
+          },
+          {
+            assetId: DAI.id,
+            timestamp,
+            priceUsd: 1,
+          },
+          {
+            assetId: OP.id,
+            timestamp,
+            priceUsd: 1.5,
+          },
+          {
+            assetId: USDC.id,
+            timestamp,
+            priceUsd: 1,
+          },
+        ]
+
+        const aggregatedReportStatusRepository =
+          mockObject<AggregatedReportStatusRepository>({
+            findCountsForHash: async () => ({
+              isSynced: true,
+              latestTimestamp: timestamp,
+              matching: 100, // doesn't matter
+              different: 0,
+            }),
+            findLatestTimestamp: async () => timestamp,
+          })
+
+        const reportRepository = mockObject<ReportRepository>({
+          getByTimestamp: async () => reports,
+        })
+
+        const balanceRepository = mockObject<BalanceRepository>({
+          getByTimestamp: async () => balances,
+        })
+
+        const priceRepository = mockObject<PriceRepository>({
+          getByTimestamp: async () => prices,
+        })
+
+        const controller = new TvlController(
+          mockObject<AggregatedReportRepository>(),
+          reportRepository,
+          aggregatedReportStatusRepository,
+          balanceRepository,
+          priceRepository,
+          projects,
+          [dai, op, usdc],
+          Logger.SILENT,
+          latestConfigHash,
+          {
+            errorOnUnsyncedTvl: false,
+          },
+        )
+
+        const result = await controller.getProjectTokenBreakdownApiResponse()
+
+        assert(result.result === 'success')
+
+        expect(result.data.dataTimestamp).toEqual(timestamp)
+        expect(result.data.breakdowns).toEqual({
+          arbitrum: {
+            external: [
+              {
+                assetId: dai.id,
+                chainId: dai.chainId,
+                amount: '0.00001',
+                usdValue: '100000000000',
+                usdPrice: '10000000000000000',
+                tokenAddress: EthereumAddress(
+                  '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+                ),
+              },
+            ],
+            native: [
+              {
+                assetId: op.id,
+                chainId: op.chainId,
+                amount: '0.00003',
+                usdValue: '450000000000',
+                usdPrice: '15000000000000000',
+                tokenAddress: EthereumAddress(
+                  '0x4200000000000000000000000000000000000042',
+                ),
+              },
+            ],
+            canonical: [
+              {
+                amount: '20000000',
+                assetId: AssetId('usdc-usd-coin'),
+                chainId: ChainId.ETHEREUM,
+                escrows: [
+                  {
+                    amount: '10000000',
+                    escrowAddress: EthereumAddress(
+                      '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
+                    ),
+                    usdValue: '10000000',
+                  },
+                  {
+                    amount: '10000000',
+                    escrowAddress: EthereumAddress(
+                      '0xFFD6F05E65c9F7C9725f576cFa16c635419DA408',
+                    ),
+                    usdValue: '10000000',
+                  },
+                ],
+                usdPrice: '1',
+                usdValue: '20000000',
+              },
+              {
+                amount: '0.00001',
+                assetId: AssetId('eth-ether'),
+                chainId: ChainId.ETHEREUM,
+                escrows: [
+                  {
+                    amount: '0.00001',
+                    escrowAddress: EthereumAddress(
+                      '0x53d267E6b0cd8f2908561c8A9160Ce82236900EA',
+                    ),
+                    usdValue: '0.01',
+                  },
+                ],
+                usdPrice: '1000',
+                usdValue: '0.01',
+              },
+            ],
+          },
+          optimism: {
+            external: [],
+            native: [],
+            canonical: [],
+          },
+        })
+      })
+    },
+  )
 })
+
+function fakeAssetReport(
+  projectId: ProjectId,
+  chainId: ChainId,
+  asset: AssetId,
+  reportType: ReportType,
+  timestamp: UnixTime,
+) {
+  return {
+    timestamp: timestamp,
+    usdValue: 10_000_000n,
+    ethValue: 10_000n,
+    amount: 50_000_000n * 10n ** (6n - 4n),
+    asset,
+    chainId,
+    projectId,
+    reportType,
+  }
+}
+
+function fakeReportSeries(
+  projectId: ProjectId,
+  chainId: ChainId,
+  asset: AssetId,
+  type: ReportType,
+) {
+  const to = UnixTime.now()
+  const from = to.add(-90, 'days')
+
+  const timeDiff = to.toNumber() - from.toNumber()
+
+  const hoursInDiff = Math.floor(timeDiff / 1000 / 60 / 60)
+  const sixHoursInDiff = Math.floor(hoursInDiff / 6)
+  const daysInDiff = Math.floor(hoursInDiff / 24)
+
+  const hourlyTimestamps = Array.from({ length: hoursInDiff }, (_, i) =>
+    from.add(i, 'hours'),
+  )
+
+  const sixHourlyTimestamps = Array.from({ length: sixHoursInDiff }, (_, i) =>
+    from.add(i * 6, 'hours'),
+  )
+
+  const dailyTimestamps = Array.from({ length: daysInDiff }, (_, i) =>
+    from.add(i, 'days'),
+  )
+
+  const hourlyReports = hourlyTimestamps.map((timestamp) =>
+    fakeAssetReport(projectId, chainId, asset, type, timestamp),
+  )
+
+  const sixHourlyReports = sixHourlyTimestamps.map((timestamp) =>
+    fakeAssetReport(projectId, chainId, asset, type, timestamp),
+  )
+
+  const dailyReports = dailyTimestamps.map((timestamp) =>
+    fakeAssetReport(projectId, chainId, asset, type, timestamp),
+  )
+
+  return {
+    from,
+    to,
+    hourlyReports,
+    sixHourlyReports,
+    dailyReports,
+  }
+}

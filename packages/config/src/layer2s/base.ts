@@ -1,7 +1,16 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,16 +20,61 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOne,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('base')
 
 const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No Delay',
+  upgradeDelay: 'No delay',
 }
+
+const challengePeriod: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
+const upgradeDelay = 0
+
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId.USDC_ON_BASE,
+    name: 'USD Coin',
+    symbol: 'USDC',
+    decimals: 6,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
+    address: EthereumAddress('0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'),
+    coingeckoId: CoingeckoId('usd-coin'),
+    sinceTimestamp: new UnixTime(1692383789),
+    category: 'stablecoin',
+    type: 'NMV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('base:sdex-smardex'),
+    name: 'SmarDex',
+    symbol: 'SDEX',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/29470/large/SDEX_logo_transparent.png?1690430205',
+    address: EthereumAddress('0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f'),
+    coingeckoId: CoingeckoId('smardex'),
+    sinceTimestamp: new UnixTime(1691501141),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Wormhole',
+      slug: 'portal',
+    },
+  },
+]
 
 export const base: Layer2 = {
   type: 'layer2',
@@ -34,22 +88,40 @@ export const base: Layer2 = {
       'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    provider: 'Optimism',
+    dataAvailabilityMode: 'TxData',
+    provider: 'OP Stack',
     links: {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
-      explorers: ['https://basescan.org/'],
+      explorers: [
+        'https://basescan.org/',
+        'https://base.superscan.network',
+        'https://base.blockscout.com/',
+        'https://base.l2scan.co/',
+      ],
       repositories: ['https://github.com/base-org'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',
         'https://discord.gg/buildonbase',
         'https://base.mirror.xyz/',
       ],
+      rollupCodes: 'https://rollup.codes/base',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Base is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        challengePeriod,
+      )} after it has been posted.`,
+    },
   },
   config: {
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.BASE })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x49048044D57e1C92A77f79988d21Fa8fAF74E97e'),
@@ -66,21 +138,46 @@ export const base: Layer2 = {
           'Main entry point for users depositing ERC20 token that do not require custom gateway.',
         ...upgradesProxy,
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
       url: 'https://developer-access-mainnet.base.org',
       callsPerMinute: 1500,
+      assessCount: subtractOne,
+    },
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x5050F69a9786F081509234F1a7F4684b5E5b76C9'),
+          to: EthereumAddress('0xFf00000000000000000000000000000000008453'),
+          sinceTimestamp: new UnixTime(1686796655),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x56315b90c40730925ec5485cf004d835058518A0',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1686793895),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: {
-      value: 'In development',
-      description:
-        'Currently the system permits invalid state roots. More details in project overview.',
-      sentiment: 'bad',
-    },
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
@@ -92,8 +189,8 @@ export const base: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',
@@ -122,7 +219,7 @@ export const base: Layer2 = {
         {
           contract: 'L2OutputOracle',
           references: [
-            'https://etherscan.io/address/0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA#code#F1#L186',
+            'https://etherscan.io/address/0xf2460D3433475C8008ceFfe8283F07EB1447E39a#code#F1#L186',
           ],
         },
       ],
@@ -130,31 +227,36 @@ export const base: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/base-org/node',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Base will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -227,11 +329,20 @@ export const base: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
+      },
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Base is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Base.',
+        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
       risks: [],
       references: [
         {
@@ -241,62 +352,42 @@ export const base: Layer2 = {
       ],
     },
   },
+  stateDerivation: DERIVATION.OPSTACK('BASE'),
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
       'This address is the owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds.',
     ),
     ...discovery.getMultisigPermission(
-      'ChallengerMultisig',
-      "This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It's the owner of SystemConfig, which allows to update the sequencer address.",
+      'GuardianMultisig',
+      "Address designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It's the owner of SystemConfig, which allows to update the sequencer address. Moreover, it can challenge state roots without going through the fault proof process.",
     ),
-    {
-      name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description:
-        'Admin of the OptimismPortal, L1ERC721Bridge, L2OutputOracle, OptimismMintableERC20Factory, L1StandardBridge, AddressManager, SystemConfig proxies. It’s controlled by the AdminMultisig.',
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions to L1.',
-    },
-    {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
-      ],
-      description: 'Central actor allowed to post new L2 state roots to L1.',
-    },
+    ...discovery.getMultisigPermission(
+      'BaseMultisig',
+      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
+    ),
+    ...discovery.getMultisigPermission(
+      'OptimismMultisig',
+      "Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process. It's also a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
+    ),
+    ...discovery.getOpStackPermissions({
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger',
+    }),
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
-      }),
+      ...discovery.getOpStackContractDetails(upgradesProxy),
       discovery.getContractDetails('L1ERC721Bridge', {
         description:
           'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
         ...upgradesProxy,
       }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
+      discovery.getContractDetails('Challenger1of2', {
         description:
-          "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        ...upgradesProxy,
+          "This contract is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is functionally equivalent to a 1/2 multisig where neither party can remove the other's permission to execute a Challenger call. It is controlled by the GuardianMultisig and the OptimismMultisig.",
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

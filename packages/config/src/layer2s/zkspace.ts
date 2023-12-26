@@ -15,12 +15,13 @@ import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
 
-const upgradeDelay = formatSeconds(HARDCODED.ZKSPACE.UPGRADE_NOTICE_PERIOD)
+const upgradeDelay = HARDCODED.ZKSPACE.UPGRADE_NOTICE_PERIOD
+const upgradeDelayString = formatSeconds(upgradeDelay)
 const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
 
 const upgradeability = {
   upgradableBy: ['zkSpace Admin'],
-  upgradeDelay,
+  upgradeDelayString,
 }
 
 export const zkspace: Layer2 = {
@@ -30,10 +31,11 @@ export const zkspace: Layer2 = {
     name: 'ZKSpace',
     slug: 'zkspace',
     description:
-      'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK-Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
+      'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
     purpose: 'Tokens, NFTs, AMM',
-    provider: 'zkSync',
-    category: zkswap.display.category,
+    provider: 'zkSync Lite',
+    category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -48,6 +50,10 @@ export const zkspace: Layer2 = {
         'https://reddit.com/r/ZKSwap_Official/',
       ],
     },
+    liveness: {
+      explanation:
+        'ZK Space is a ZK rollup based on zkSync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
   },
   config: {
     associatedTokens: ['ZKS'],
@@ -58,6 +64,28 @@ export const zkspace: Layer2 = {
         tokens: '*',
       }),
     ],
+    liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+          ),
+          selector: '0x6898e6fc',
+          functionSignature:
+            'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
+          sinceTimestamp: new UnixTime(1639569183),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -82,8 +110,8 @@ export const zkspace: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADE_DELAY(upgradeDelay),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
       sources: [
         {
           contract: 'ZkSync',
@@ -125,7 +153,7 @@ export const zkspace: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -160,7 +188,7 @@ export const zkspace: Layer2 = {
     addresses: [
       discovery.getContractDetails('ZkSync', {
         description:
-          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
         ...upgradeability,
       }),
       discovery.getContractDetails('Governance', {
@@ -177,11 +205,11 @@ export const zkspace: Layer2 = {
         ...upgradeability,
       }),
       discovery.getContractDetails('Verifier', {
-        description: 'zk-SNARK Plonk Verifier.',
+        description: 'zkSNARK Plonk Verifier.',
         ...upgradeability,
       }),
       discovery.getContractDetails('VerifierExit', {
-        description: 'zk-SNARK Verifier for the escape hatch.',
+        description: 'zkSNARK Verifier for the escape hatch.',
         ...upgradeability,
       }),
       discovery.getContractDetails(
@@ -189,7 +217,7 @@ export const zkspace: Layer2 = {
         'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelay)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   permissions: [
     {

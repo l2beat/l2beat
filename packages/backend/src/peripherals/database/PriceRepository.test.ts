@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { AssetId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -39,8 +39,11 @@ describe(PriceRepository.name, () => {
   ]
 
   beforeEach(async () => {
-    await repository.deleteAll()
     await repository.addMany(DATA)
+  })
+
+  afterEach(async () => {
+    await repository.deleteAll()
   })
 
   describe(PriceRepository.prototype.addMany.name, () => {

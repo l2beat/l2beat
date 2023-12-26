@@ -1,7 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { VALUES } from '../discovery/values'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -9,6 +8,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  MILESTONES,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
@@ -31,6 +31,8 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
@@ -41,25 +43,37 @@ export const zksyncera: Layer2 = {
       ? `Withdrawals are delayed by ${delay}. The length of the delay can be arbitrarily set by a MultiSig.`
       : undefined,
     description:
-      'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
+      'zkSync Era is a general-purpose ZK Rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its ZK friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
     purpose: 'Universal',
-    provider: 'zkSync',
+    provider: 'ZK Stack',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
       documentation: ['https://era.zksync.io/docs/'],
-      explorers: ['https://explorer.zksync.io/'],
+      explorers: [
+        'https://explorer.zksync.io/',
+        'https://zksync-era.l2scan.co/',
+      ],
       repositories: ['https://github.com/matter-labs/zksync-era'],
       socialMedia: [
-        'https://blog.matter-labs.io/',
+        'https://zksync.mirror.xyz/',
         'https://join.zksync.dev/',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
+        'https://twitter.com/zkSyncDevs',
       ],
+      rollupCodes: 'https://rollup.codes/zksync-era',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation: delay
+        ? `zkSync Era is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${delay} delay between state diffs verification and the execution of the corresponding state actions.`
+        : undefined,
+    },
   },
   config: {
     escrows: [
@@ -73,17 +87,7 @@ export const zksyncera: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
         sinceTimestamp: new UnixTime(1676367083),
-        tokens: [
-          'USDC',
-          'PERP',
-          'MUTE',
-          'USDT',
-          'WBTC',
-          'LUSD',
-          'rETH',
-          'RPL',
-          '1INCH',
-        ],
+        tokens: '*',
         description:
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
         ...upgrades,
@@ -94,6 +98,55 @@ export const zksyncera: Layer2 = {
       startBlock: 1,
       url: 'https://mainnet.era.zksync.io',
       callsPerMinute: 1500,
+    },
+    liveness: {
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+          ),
+          selector: '0x7739cbe7',
+          functionSignature:
+            'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
+          sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701718427),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0x7f61885c',
+          functionSignature:
+            'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
+          sinceTimestamp: new UnixTime(1701258299),
+        },
+      ],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x3dB52cE065f728011Ac6732222270b3F2360d919',
+          ),
+          selector: '0xce9dcf16',
+          functionSignature:
+            'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
+          sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701719687),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0xc3d93e7c',
+          functionSignature:
+            'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
+          sinceTimestamp: new UnixTime(1701258299),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -106,20 +159,20 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L89',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L89',
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L254',
-            'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F1#L24',
+            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L365',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F7#L26',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0x020b26826C23142f2582733b2E6428EE31eAaB49#code#F1#L227',
+            'https://etherscan.io/address/0xB465882F67d236DcC0D090F78ebb0d838e9719D8#code#F1#L348',
           ],
         },
       ],
@@ -134,15 +187,14 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L71',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L71',
             'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b', // example tx (see calldata)
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L149',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F11#L41',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F1#L128',
           ],
         },
       ],
@@ -150,14 +202,14 @@ export const zksyncera: Layer2 = {
         'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
       ],
     },
-    upgradeability: {
-      ...VALUES.ZKSYNC_2.UPGRADEABILITY,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelay),
       sources: [
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F1#L121',
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F7#L51',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F1#L100',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F7#L58',
           ],
         },
       ],
@@ -168,8 +220,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L56',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L73',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L56',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L73',
           ],
         },
       ],
@@ -184,7 +236,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L149',
+            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L186',
           ],
         },
       ],
@@ -192,26 +244,31 @@ export const zksyncera: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/matter-labs/zksync-era',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -247,7 +304,7 @@ export const zksyncera: Layer2 = {
       risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
       references: [
         {
-          text: "L1 - L2 interoperability - Developer's documentation'",
+          text: "L1 - L2 interoperability - Developer's documentation",
           href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
         },
       ],
@@ -262,20 +319,21 @@ export const zksyncera: Layer2 = {
           },
         ],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
   },
   contracts: {
     addresses: [
       discovery.getContractDetails('zkSync', {
         description:
-          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
+          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract \
           and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-          It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
+          It uses separate Verifier to validate ZK proofs. Governance manages list of Validators and can set basic rollup parameters.\
           It is also serves the purpose of ETH bridge.',
         ...upgrades,
       }),
       discovery.getContractDetails('Verifier', {
-        description: 'Implements zkProof verification logic.',
+        description: 'Implements ZK proof verification logic.',
         ...upgrades,
         upgradeConsiderations:
           'Multisig can change the verifier with no delay.',
@@ -286,6 +344,15 @@ export const zksyncera: Layer2 = {
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  stateDerivation: {
+    nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
+    The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but zkSync is actively working on a solution for this.`,
+    compressionScheme:
+      'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/compression.md).',
+    genesisState: 'There have been neither genesis states nor regenesis.',
+    dataFormat:
+      'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   },
   permissions: [
     ...discovery.getMultisigPermission(
@@ -300,9 +367,21 @@ export const zksyncera: Layer2 = {
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
     },
-    VALUES.ZKSYNC_2.SECURITY_COUNCIL,
   ],
   milestones: [
+    {
+      name: 'Introduction of Boojum prover',
+      link: 'https://zksync.mirror.xyz/HJ2Pj45EJkRdt5Pau-ZXwkV2ctPx8qFL19STM5jdYhc',
+      date: '2023-07-17T00:00:00Z',
+      description: 'Deployment of Boojum - new high-performance proof system.',
+    },
+    {
+      ...MILESTONES.MAINNET_OPEN,
+      link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
+      date: '2022-03-24T00:00:00Z',
+      description:
+        'Whitelist got removed, there are no restrictions on who can transact with the network.',
+    },
     {
       name: 'zkSync 2.0 baby alpha launch',
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',

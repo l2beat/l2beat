@@ -14,13 +14,13 @@ export function getHeader(
   const hourly =
     tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data ?? []
   const tvl = hourly.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
+  const tvlSevenDaysAgo = hourly.at(0)?.[1] ?? 0
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const activityData =
-    activityApiResponse?.projects[project.id.toString()]?.data
-  const tpsDaily = getTpsDaily(activityData)
-  const tpsWeeklyChange = getTpsWeeklyChange(activityData)
+    activityApiResponse?.projects[project.id.toString()]?.daily.data
+  const tpsDaily = getTpsDaily(activityData, 'project')
+  const tpsWeeklyChange = getTpsWeeklyChange(activityData, 'project')
 
   return {
     icon: `/icons/${project.display.slug}.png`,

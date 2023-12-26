@@ -1,24 +1,20 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
-  AddressAnalyzer,
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
-  DiscoveryEngine,
   DiscoveryLogger,
-  DiscoveryProvider,
-  HandlerExecutor,
-  ProxyDetector,
-  SourceCodeService,
+  HttpClient as DiscoveryHttpClient,
 } from '@l2beat/discovery'
-import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { providers } from 'ethers'
+import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
-import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
+import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
+import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -35,27 +31,24 @@ export function createUpdateMonitorModule(
     return
   }
 
-  const provider = new providers.AlchemyProvider(
-    'mainnet',
-    config.updateMonitor.alchemyApiKey,
-  )
-  const etherscanClient = new EtherscanClient(
-    http,
-    config.updateMonitor.etherscanApiKey,
-    config.clock.minBlockTimestamp,
-  )
-  const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
+  const configReader = new ConfigReader()
+
+  const discoveryLogger =
+    config.name === 'Backend/Local'
+      ? DiscoveryLogger.CLI
+      : DiscoveryLogger.SERVER
 
   const discordClient = config.updateMonitor.discord
-    ? new DiscordClient(
-        http,
-        config.updateMonitor.discord.token,
-        config.updateMonitor.discord.publicChannelId,
-        config.updateMonitor.discord.internalChannelId,
-      )
+    ? new DiscordClient(http, config.updateMonitor.discord)
     : undefined
 
   const updateNotifierRepository = new UpdateNotifierRepository(
+    database,
+    logger,
+  )
+  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
+
+  const discoveryCacheRepository = new DiscoveryCacheRepository(
     database,
     logger,
   )
@@ -66,31 +59,21 @@ export function createUpdateMonitorModule(
     logger,
   )
 
-  const configReader = new ConfigReader()
+  // TODO: get rid of that once we achieve full library separation
+  const discoveryHttpClient = new DiscoveryHttpClient()
 
-  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
-
-  const discoveryLogger = DiscoveryLogger.SERVER
-
-  const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
-  const sourceCodeService = new SourceCodeService(discoveryProvider)
-  const handlerExecutor = new HandlerExecutor(
-    discoveryProvider,
-    discoveryLogger,
+  const runners = config.updateMonitor.chains.map((chainConfig) =>
+    createDiscoveryRunner(
+      discoveryHttpClient,
+      configReader,
+      discoveryCacheRepository,
+      discoveryLogger,
+      chainConfig,
+    ),
   )
-  const addressAnalyzer = new AddressAnalyzer(
-    discoveryProvider,
-    proxyDetector,
-    sourceCodeService,
-    handlerExecutor,
-    discoveryLogger,
-  )
-  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
-  const discoveryRunner = new DiscoveryRunner(discoveryEngine, configReader)
 
   const updateMonitor = new UpdateMonitor(
-    provider,
-    discoveryRunner,
+    runners,
     updateNotifier,
     configReader,
     updateMonitorRepository,

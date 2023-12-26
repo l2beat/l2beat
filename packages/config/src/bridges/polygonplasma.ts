@@ -1,9 +1,22 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
+import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('polygon-plasma')
+
+const delayString = formatSeconds(
+  discovery.getContractValue('Timelock', 'getMinDelay'),
+)
+
+const upgrades = {
+  upgradableBy: ['PolygonMultisig'],
+  upgradeDelay: delayString,
+}
 
 export const polygonplasma: Bridge = {
   type: 'bridge',
@@ -34,9 +47,8 @@ export const polygonplasma: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: '48 hours delay',
-      description:
-        'The bridge can be upgraded by 5/9 MSig after 48 hour delay.',
+      value: `${delayString} delay`,
+      description: `The bridge can be upgraded by the PolygonMultisig after a delay of ${delayString}.`,
       sentiment: 'warning',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MATIC'),
@@ -47,14 +59,14 @@ export const polygonplasma: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. The withdrawal process includes 7-day delay.',
+        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. There is no exit delay since the challenge system is not implemented.',
       references: [],
       risks: [],
     },
     validation: {
       name: 'Outbound transfers are externally verified, inbound require merkle proof',
       description:
-        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
+        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Validators periodically submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
       references: [],
       risks: [
         {
@@ -78,120 +90,81 @@ export const polygonplasma: Bridge = {
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'If MATIC ERC20 token is bridged, the native MATIC token is minted on Polygon sidechain.',
+        'If the MATIC ERC20 token is bridged, the native MATIC token is minted on Polygon sidechain.',
       references: [],
       risks: [],
     },
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x401F6c983eA34274ec46f84D70b31C151321188b'),
-        name: 'Deposit Manager',
-        description: 'Escrow contract for MATIC and DAI.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: EthereumAddress(
-            '0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf',
-          ),
-          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
-        },
-      },
-      {
-        address: EthereumAddress('0x2A88696e0fFA76bAA1338F2C74497cC013495922'),
-        name: 'Withdraw Manager',
+      discovery.getContractDetails(
+        'StateSender',
+        'Smart contract containing the logic for syncing the state of registered bridges.',
+      ),
+      discovery.getContractDetails('RootChain', {
         description:
-          'Contract handling completion of user withdrawal requests after the 7-day delay.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: EthereumAddress(
-            '0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de',
-          ),
-          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
-        },
-      },
-      {
-        address: EthereumAddress('0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95'),
-        name: 'ERC20PredicateBurnOnly',
+          'Contract storing Polygon sidechain checkpoints. Note that the validity of the checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('DepositManager', {
+        description: 'Contract used to deposit ETH, ERC20 or ERC721 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('WithdrawManager', {
+        description: "Contract handling users' withdrawal finalization.",
+        ...upgrades,
+      }),
+      discovery.getContractDetails('ERC20PredicateBurnOnly', {
         description:
-          'Contract allowing users to start the withdrawal process. It should also exit challenges, however with empty verifyDeprecation() method no challenges are supported.',
-      },
+          'Contract used to initiate ERC20 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+      }),
+      discovery.getContractDetails('ERC721PredicateBurnOnly', {
+        description:
+          'Contract used to initiate ERC721 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+      }),
+      discovery.getContractDetails('Registry', {
+        description:
+          'Contract mantaining the addresses of the contracts used in the system.',
+      }),
+      discovery.getContractDetails('StakeManager', {
+        description:
+          'Contract managing the staker network and that checks checkpoints signatures.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Governance', {
+        description:
+          'Contract used to manage permissions in the system. It consists of a single owner: the PolygonMultisig.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('EventsHub', {
+        description: 'Contains events used by other contracts.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails(
+        'StakingInfo',
+        'Contains logging and getter functions regarding the staking network.',
+      ),
+      discovery.getContractDetails(
+        'ValidatorShareFactory',
+        'Contract used to create ValidatorShare contracts.',
+      ),
+      discovery.getContractDetails(
+        'ValidatorShare',
+        'Contract used to delegate to a validator.',
+      ),
+      discovery.getContractDetails(
+        'ExitNFT',
+        'NFTs used to represent an exit.',
+      ),
+      discovery.getContractDetails('SlashingManager'),
+      discovery.getContractDetails('ChildChain'),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xFa7D2a996aC6350f4b56C043112Da0366a59b74c',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'Polygon MultiSig',
-      description:
-        'Can propose and execute code upgrades on escrows via Timelock contract.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x39415255619783A2E71fcF7d8f708A951d92e1b6',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xFb9af163DF1e54171bC773eb88B46aa1E912489f',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xb771380f912E4b5F6beDdf81314C383c13F16ab5',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'MultiSig Participants',
-      description: 'Participants of the 5/9 Polygon MultiSig.',
-    },
+    ...discovery.getMultisigPermission(
+      'PolygonMultisig',
+      'Can propose and execute code upgrades via Timelock contract.',
+    ),
   ],
 }

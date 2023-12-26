@@ -21,12 +21,22 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const paused =
+  discovery.getContractValue<number>('ForeignAMB', 'maxGasPerTx') < 21000
+const warningText = paused ? 'The bridge is currently paused.' : undefined
+
+const pausable = {
+  paused,
+  pausableBy: ['BridgeGovernance'],
+}
+
 export const omni: Bridge = {
   type: 'bridge',
   id: ProjectId('omni'),
   display: {
     name: 'Omnibridge',
     slug: 'omni',
+    warning: warningText,
     category: 'Token Bridge',
     links: {
       websites: ['https://omni.gnosischain.com/'],
@@ -102,7 +112,7 @@ export const omni: Bridge = {
     },
     validation: {
       name: 'Incoming transfers are externally verified',
-      description: `Incoming messages to Ethereum are managed by the Arbitrary Message Bridge (AMB), a trusted message relaying mechanism currently validated by a ${validatorsString} Validator MultiSig. The GovernanceMultisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts. For Omnibridge, messages are passed between "Mediator" contracts deployed on both chains. When user deposits a token to Mediator escrow on Ethereum, an AMB message is passed to Mediator on Gnosis chain, which mints a "representation token", optionally deploying a necessary token contract on Gnosis chain if this is the first time this token is transferred. Transfers from Gnosis chain to Ethereum use the same mechanism in the opposite direction but tokens on Gnosis are burned and tokens on Ethereum are released from escrow. Outgoing messages are verified on the Gnosis chain using a zk Ethereum light client.`,
+      description: `Incoming messages to Ethereum are managed by the Arbitrary Message Bridge (AMB), a trusted message relaying mechanism currently validated by a ${validatorsString} Validator MultiSig. The GovernanceMultisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts. For Omnibridge, messages are passed between "Mediator" contracts deployed on both chains. When user deposits a token to Mediator escrow on Ethereum, an AMB message is passed to Mediator on Gnosis chain, which mints a "representation token", optionally deploying a necessary token contract on Gnosis chain if this is the first time this token is transferred. Transfers from Gnosis chain to Ethereum use the same mechanism in the opposite direction but tokens on Gnosis are burned and tokens on Ethereum are released from escrow. Outgoing messages are verified on the Gnosis chain using a ZK Ethereum light client.`,
       references: [
         {
           text: 'Omnibridge documentation',
@@ -154,6 +164,7 @@ export const omni: Bridge = {
         description:
           'Arbitrary Message Bridge validated by the BridgeValidators.',
         ...upgrades,
+        pausable,
       }),
       discovery.getContractDetails('MultiTokenMediator', {
         description: 'Mediator contract and escrow.',

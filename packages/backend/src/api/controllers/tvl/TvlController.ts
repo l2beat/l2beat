@@ -1,218 +1,401 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
+  Hash256,
+  ProjectAssetsBreakdownApiResponse,
   ProjectId,
+  ReportType,
+  Token,
+  TokenTvlApiChart,
+  TokenTvlApiCharts,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { Token } from '../../../model'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
-import {
-  ReportRecord,
-  ReportRepository,
-} from '../../../peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
+import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
+import { PriceRepository } from '../../../peripherals/database/PriceRepository'
+import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
-import { getChartPoints } from './charts'
+import { asNumber } from './asNumber'
+import { getProjectAssetChartData } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
+import {
+  getCanonicalAssetsBreakdown,
+  getNonCanonicalAssetsBreakdown,
+  groupAndMergeBreakdowns,
+  groupByProjectIdAndAssetType,
+  groupByProjectIdAndTimestamp,
+} from './tvl'
+import { Result } from './types'
+
+interface TvlControllerOptions {
+  errorOnUnsyncedTvl: boolean
+}
+
+type ProjectAssetBreakdownResult = Result<
+  ProjectAssetsBreakdownApiResponse,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+>
+
+type TvlResult = Result<TvlApiResponse, 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'>
+
+type TokenTvlResult = Result<
+  TokenTvlApiCharts,
+  'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
+>
+
+type AggregatedTvlResult = Result<
+  TvlApiCharts,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA' | 'EMPTY_SLUG'
+>
 
 export class TvlController {
   constructor(
-    private readonly reportStatusRepository: ReportStatusRepository,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
+    private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
+    private readonly balanceRepository: BalanceRepository,
+    private readonly priceRepository: PriceRepository,
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
-    private readonly isArbitrumEnabled = false,
+    private readonly aggregatedConfigHash: Hash256,
+    private readonly options: TvlControllerOptions,
   ) {
     this.logger = this.logger.for(this)
   }
 
-  async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
-    const timestamps: (UnixTime | undefined)[] = []
+  /**
+   * TODO: Add project exclusion?
+   */
+  async getTvlApiResponse(): Promise<TvlResult> {
+    const dataTimings = await this.getDataTimings()
 
-    timestamps.push(
-      await this.reportStatusRepository.findLatestTimestamp(
-        ChainId.ETHEREUM,
-        ValueType.CBV,
-      ),
-    )
-    if (this.isArbitrumEnabled) {
-      timestamps.push(
-        await this.reportStatusRepository.findLatestTimestamp(
-          ChainId.ARBITRUM,
-          ValueType.EBV,
-        ),
-      )
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
     }
 
-    if (timestamps.some((x) => x === undefined)) {
-      return undefined
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
     }
-
-    const timestamp = timestamps
-      .filter(notUndefined)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
 
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
-        this.aggregatedReportRepository.getHourly(
-          getHourlyMinTimestamp(timestamp),
+        this.aggregatedReportRepository.getHourlyWithAnyType(
+          getHourlyMinTimestamp(dataTimings.latestTimestamp),
         ),
-        this.aggregatedReportRepository.getSixHourly(
-          getSixHourlyMinTimestamp(timestamp),
+
+        this.aggregatedReportRepository.getSixHourlyWithAnyType(
+          getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
         ),
-        this.aggregatedReportRepository.getDaily(),
-        this.reportRepository.getByTimestamp(timestamp),
+
+        this.aggregatedReportRepository.getDailyWithAnyType(),
+
+        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
       ])
+
+    /**
+     * ProjectID => Timestamp => [Report, Report, Report, Report]
+     * Ideally 4 reports per project per timestamp corresponding to 4 Value Types
+     */
+    const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
+
+    const groupedSixHourlyReportsTree =
+      groupByProjectIdAndTimestamp(sixHourlyReports)
+
+    const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
+
+    /**
+     * ProjectID => Asset => Report[]
+     * Ideally 1 report. Some chains like Arbitrum may have multiple reports per asset differentiated by Value Type
+     * That isl 1 report for USDC of value type CBV and 1 report for USDC of value type EBV
+     * Reduce (dedupe) occurs later in the call chain
+     * @see getProjectTokensCharts
+     */
+    const groupedLatestReports = groupByProjectIdAndAssetType(latestReports)
+
     const tvlApiResponse = generateTvlApiResponse(
-      hourlyReports,
-      sixHourlyReports,
-      dailyReports,
-      reduceDuplicatedReports(latestReports),
+      groupedHourlyReports,
+      groupedSixHourlyReportsTree,
+      groupedDailyReports,
+      groupedLatestReports,
       this.projects.map((x) => x.projectId),
     )
-    return tvlApiResponse
-  }
 
-  private getChartData(
-    reports: ReportRecord[],
-    decimals: number,
-    hours: number,
-  ) {
-    const balances = reports.map((r) => ({
-      timestamp: r.timestamp,
-      usd: r.usdValue,
-      asset: r.amount,
-    }))
-    return getChartPoints(balances, hours, decimals)
-  }
-
-  async getProjectAssetChart(
-    projectId: ProjectId,
-    assetId: AssetId,
-  ): Promise<TvlApiCharts | undefined> {
-    const project = this.projects.find((p) => p.projectId === projectId)
-    const asset = this.tokens.find((t) => t.id === assetId)
-    if (!project || !asset) {
-      return undefined
+    return {
+      result: 'success',
+      data: tvlApiResponse,
     }
+  }
 
-    const timestamps: (UnixTime | undefined)[] = []
+  async getAggregatedTvlApiResponse(
+    slugs: string[],
+  ): Promise<AggregatedTvlResult> {
+    console.time('[Aggregate endpoint]: setup')
 
-    timestamps.push(
-      await this.reportStatusRepository.findLatestTimestamp(
-        ChainId.ETHEREUM,
-        ValueType.CBV,
-      ),
-    )
-    if (
-      this.isArbitrumEnabled &&
-      projectId === ProjectId.ARBITRUM &&
-      assetId === AssetId.USDC
-    ) {
-      timestamps.push(
-        await this.reportStatusRepository.findLatestTimestamp(
-          ChainId.ARBITRUM,
-          ValueType.EBV,
-        ),
+    const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => !project.isUpcoming)
+      .filter((project) =>
+        project.type === 'layer2' ? !project.isLayer3 : true,
       )
+      .filter((project) => slugs.includes(project.display.slug))
+      .map((project) => project.id)
+
+    if (projectIdsFilter.length === 0) {
+      return {
+        result: 'error',
+        error: 'EMPTY_SLUG',
+      }
     }
 
-    if (timestamps.some((x) => x === undefined)) {
-      return undefined
+    const dataTimings = await this.getDataTimings()
+
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
     }
 
-    const timestamp = timestamps
-      .filter(notUndefined)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
+    console.timeEnd('[Aggregate endpoint]: setup')
+
+    console.time('[Aggregate endpoint]: database')
+    const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
+      this.aggregatedReportRepository.getAggregateHourly(
+        projectIdsFilter,
+        getHourlyMinTimestamp(dataTimings.latestTimestamp),
+      ),
+      this.aggregatedReportRepository.getAggregateSixHourly(
+        projectIdsFilter,
+        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+      ),
+      this.aggregatedReportRepository.getAggregateDaily(projectIdsFilter),
+    ])
+    console.timeEnd('[Aggregate endpoint]: database')
+
+    console.time('[Aggregate endpoint]: aggregation')
+
+    const data: TvlApiCharts = {
+      hourly: aggregateRecordsToResponse(hourlyReports),
+      sixHourly: aggregateRecordsToResponse(sixHourlyReports),
+      daily: aggregateRecordsToResponse(dailyReports),
+    }
+
+    console.timeEnd('[Aggregate endpoint]: aggregation')
+
+    return {
+      result: 'success',
+      data,
+    }
+  }
+
+  async getAssetTvlApiResponse(
+    projectId: ProjectId,
+    chainId: ChainId,
+    assetId: AssetId,
+    assetType: ReportType,
+  ): Promise<TokenTvlResult> {
+    const asset = this.tokens.find((t) => t.id === assetId)
+    const project = this.projects.find((p) => p.projectId === projectId)
+
+    if (!asset || !project) {
+      return {
+        result: 'error',
+        error: 'INVALID_PROJECT_OR_ASSET',
+      }
+    }
+
+    const dataTimings = await this.getDataTimings()
+
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
 
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
-      this.reportRepository.getHourlyByProjectAndAsset(
+      this.reportRepository.getHourly(
         projectId,
+        chainId,
         assetId,
-        getHourlyMinTimestamp(timestamp),
+        assetType,
+        getHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
-      this.reportRepository.getSixHourlyByProjectAndAsset(
+      this.reportRepository.getSixHourly(
         projectId,
+        chainId,
         assetId,
-        getSixHourlyMinTimestamp(timestamp),
+        assetType,
+        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
       ),
-      this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
+      this.reportRepository.getDaily(projectId, chainId, assetId, assetType),
     ])
-    const types: TvlApiChart['types'] = [
-      'timestamp',
-      asset.symbol.toLowerCase(),
-      'usd',
-    ]
+    const assetSymbol = asset.symbol.toLowerCase()
+
+    const types: TokenTvlApiChart['types'] = ['timestamp', assetSymbol, 'usd']
+
     return {
-      hourly: {
-        types,
-        data: this.getChartData(
-          reduceDuplicatedReports(hourlyReports),
-          asset.decimals,
-          1,
-        ),
-      },
-      sixHourly: {
-        types,
-        data: this.getChartData(
-          reduceDuplicatedReports(sixHourlyReports),
-          asset.decimals,
-          6,
-        ),
-      },
-      daily: {
-        types,
-        data: this.getChartData(
-          reduceDuplicatedReports(dailyReports),
-          asset.decimals,
-          24,
-        ),
+      result: 'success',
+      data: {
+        hourly: {
+          types,
+          data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
+        },
+        sixHourly: {
+          types,
+          data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
+        },
+        daily: {
+          types,
+          data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+        },
       },
     }
   }
-}
 
-export function reduceDuplicatedReports(
-  reports: ReportRecord[],
-): ReportRecord[] {
-  const result: ReportRecord[] = []
+  async getProjectTokenBreakdownApiResponse(): Promise<ProjectAssetBreakdownResult> {
+    const dataTimings = await this.getDataTimings()
 
-  for (const report of reports) {
-    const existingIndex = result.findIndex(
-      (r) =>
-        r.projectId === report.projectId &&
-        r.asset === report.asset &&
-        r.timestamp.equals(report.timestamp),
-    )
-    if (existingIndex !== -1) {
-      const existing = result[existingIndex]
-
-      result[existingIndex] = {
-        ...existing,
-        amount: existing.amount + report.amount,
-        usdValue: existing.usdValue + report.usdValue,
-        ethValue: existing.ethValue + report.ethValue,
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
       }
-    } else {
-      result.push(report)
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
+
+    const [latestReports, balances, prices] = await Promise.all([
+      this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
+      this.balanceRepository.getByTimestamp(dataTimings.latestTimestamp),
+      this.priceRepository.getByTimestamp(dataTimings.latestTimestamp),
+    ])
+
+    const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(this.logger)(
+      latestReports,
+      this.tokens,
+      'EBV',
+    )
+
+    const nativeAssetsBreakdown = getNonCanonicalAssetsBreakdown(this.logger)(
+      latestReports,
+      this.tokens,
+      'NMV',
+    )
+
+    const canonicalAssetsBreakdown = getCanonicalAssetsBreakdown(this.logger)(
+      balances,
+      prices,
+      this.projects,
+    )
+
+    const breakdowns = groupAndMergeBreakdowns(this.projects, {
+      external: externalAssetsBreakdown,
+      native: nativeAssetsBreakdown,
+      canonical: canonicalAssetsBreakdown,
+    })
+
+    return {
+      result: 'success',
+      data: {
+        dataTimestamp: dataTimings.latestTimestamp,
+        breakdowns,
+      },
     }
   }
 
-  return result
+  private async getDataTimings() {
+    const { matching: syncedReportsAmount, different: unsyncedReportsAmount } =
+      await this.aggregatedReportStatusRepository.findCountsForHash(
+        this.aggregatedConfigHash,
+      )
+
+    const latestTimestamp =
+      await this.aggregatedReportStatusRepository.findLatestTimestamp()
+
+    const isSynced = unsyncedReportsAmount === 0
+
+    const result = {
+      syncedReportsAmount,
+      unsyncedReportsAmount,
+      isSynced,
+      latestTimestamp,
+    }
+
+    return result
+  }
 }
 
-function notUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
+export const TYPE_LABELS: TvlApiChart['types'] = [
+  'timestamp',
+  'valueUsd',
+  'cbvUsd',
+  'ebvUsd',
+  'nmvUsd',
+  'valueEth',
+  'cbvEth',
+  'ebvEth',
+  'nmvEth',
+]
+
+function aggregateRecordsToResponse(
+  hourlyReports: {
+    timestamp: UnixTime
+    cbvUsdValue: bigint
+    cbvEthValue: bigint
+    ebvUsdValue: bigint
+    ebvEthValue: bigint
+    nmvUsdValue: bigint
+    nmvEthValue: bigint
+    tvlUsdValue: bigint
+    tvlEthValue: bigint
+  }[],
+): TvlApiChart {
+  return {
+    types: TYPE_LABELS,
+    data: hourlyReports.map((report) => [
+      report.timestamp,
+      asNumber(report.tvlUsdValue, 2),
+      asNumber(report.cbvUsdValue, 2),
+      asNumber(report.ebvUsdValue, 2),
+      asNumber(report.nmvUsdValue, 2),
+      asNumber(report.tvlEthValue, 6),
+      asNumber(report.cbvEthValue, 6),
+      asNumber(report.ebvEthValue, 6),
+      asNumber(report.nmvEthValue, 6),
+    ]),
+  }
 }

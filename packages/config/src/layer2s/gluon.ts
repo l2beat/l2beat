@@ -12,6 +12,8 @@ import {
 } from './common'
 import { Layer2 } from './types'
 
+const upgradeDelay = 0
+
 export const gluon: Layer2 = {
   type: 'layer2',
   id: ProjectId('gluon'),
@@ -25,6 +27,7 @@ export const gluon: Layer2 = {
       'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
     purpose: 'Exchange',
     category: 'Plasma',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://gluon.network/', 'https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
@@ -41,13 +44,15 @@ export const gluon: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
-    associatedTokens: ['L2'],
     escrows: [
       {
         address: EthereumAddress('0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB'),
         sinceTimestamp: new UnixTime(1573694037),
-        tokens: ['ETH', 'DAI', 'L2'],
+        tokens: ['ETH', 'DAI'],
       },
       {
         address: EthereumAddress('0x84e34fD82FC368F1a072075114AdC4b552a7a1F4'),
@@ -64,7 +69,7 @@ export const gluon: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,

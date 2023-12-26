@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 
 import { Database, DatabaseOpts } from '../peripherals/database/shared/Database'
 
@@ -21,7 +21,8 @@ export function setupDatabaseTestSuite() {
 }
 
 export function getTestDatabase(opts?: DatabaseOpts) {
-  const connection = process.env.TEST_DB_URL
+  const env = getEnv()
+  const connection = env.optionalString('TEST_DB_URL')
   const database = new Database(connection, 'Backend/Test', Logger.SILENT, {
     ...opts,
     minConnectionPoolSize: 5,

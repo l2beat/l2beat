@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { Knex } from 'knex'
 import { SequenceProcessorRow } from 'knex/types/tables'
 
@@ -34,7 +34,7 @@ export class SequenceProcessorRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('sequence_processor').delete()
+    return knex('sequence_processor').delete()
   }
 }
 

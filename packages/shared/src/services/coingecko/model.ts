@@ -19,6 +19,14 @@ export const CoinListPlatformEntry = z.object({
 export const CoinListResult = z.array(CoinListEntry)
 export const CoinListPlatformResult = z.array(CoinListPlatformEntry)
 
+export const CoinMetadata = z.object({
+  image: z.object({
+    thumb: z.string(),
+    small: z.string(),
+    large: z.string(),
+  }),
+})
+
 export type CoinMarketChartRangeResult = z.infer<
   typeof CoinMarketChartRangeResult
 >
@@ -29,7 +37,7 @@ export const CoinMarketChartRangeResult = z.object({
 })
 
 export interface CoinMarketChartRangeData {
-  prices: { date: Date; price: number }[]
-  marketCaps: { date: Date; marketCap: number }[]
-  totalVolumes: { date: Date; totalVolume: number }[]
+  prices: { date: Date; value: number }[]
+  marketCaps: { date: Date; value: number }[]
+  totalVolumes: { date: Date; value: number }[]
 }

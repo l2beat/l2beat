@@ -1,11 +1,11 @@
-import { TokenInfo } from '@l2beat/config'
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -19,9 +19,9 @@ import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatu
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { BalanceProject } from './BalanceProject'
+import { BalanceProvider } from './BalanceProvider'
 import { BalanceUpdater, getMissingData } from './BalanceUpdater'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
-import { EthereumBalanceProvider } from './providers/EthereumBalanceProvider'
 
 describe(BalanceUpdater.name, () => {
   const chainId = ChainId.ETHEREUM
@@ -46,14 +46,14 @@ describe(BalanceUpdater.name, () => {
           `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async () => [],
+        getByChainAndTimestamp: async () => [],
       })
-      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+      const balanceProvider = mockObject<BalanceProvider>({
         getChainId: () => chainId,
       })
 
       const balanceUpdater = new BalanceUpdater(
-        ethereumBalanceProvider,
+        balanceProvider,
         mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
@@ -104,7 +104,7 @@ describe(BalanceUpdater.name, () => {
       ]
 
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async (chainId, timestamp) => [
+        getByChainAndTimestamp: async (chainId, timestamp) => [
           mockBalance(AssetId('baz'), timestamp, holderAddress, chainId),
         ],
         addOrUpdateMany: async () => 0,
@@ -113,7 +113,7 @@ describe(BalanceUpdater.name, () => {
         add: async (x) =>
           `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
-      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+      const balanceProvider = mockObject<BalanceProvider>({
         getChainId: () => chainId,
       })
 
@@ -122,7 +122,7 @@ describe(BalanceUpdater.name, () => {
       })
 
       const balanceUpdater = new BalanceUpdater(
-        ethereumBalanceProvider,
+        balanceProvider,
         blockNumberUpdater,
         balanceRepository,
         balanceStatusRepository,
@@ -139,10 +139,8 @@ describe(BalanceUpdater.name, () => {
         mockBalance(AssetId('bar'), timestamp, holderAddress, chainId),
       ]
       const fetchBalances =
-        mockFn<typeof ethereumBalanceProvider.fetchBalances>().resolvesTo(
-          balances,
-        )
-      ethereumBalanceProvider.fetchBalances = fetchBalances
+        mockFn<typeof balanceProvider.fetchBalances>().resolvesTo(balances)
+      balanceProvider.fetchBalances = fetchBalances
 
       await balanceUpdater.update(timestamp)
       expect(fetchBalances).toHaveBeenOnlyCalledWith(
@@ -183,7 +181,7 @@ describe(BalanceUpdater.name, () => {
       ]
 
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async (chainId, timestamp) => [
+        getByChainAndTimestamp: async (chainId, timestamp) => [
           mockBalance(AssetId('foo'), timestamp, holderAddress, chainId),
           mockBalance(AssetId('bar'), timestamp, holderAddress, chainId),
           mockBalance(AssetId('baz'), timestamp, holderAddress, chainId),
@@ -193,11 +191,11 @@ describe(BalanceUpdater.name, () => {
         add: async (x) =>
           `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
-      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+      const balanceProvider = mockObject<BalanceProvider>({
         getChainId: () => chainId,
       })
       const balanceUpdater = new BalanceUpdater(
-        ethereumBalanceProvider,
+        balanceProvider,
         mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
@@ -218,17 +216,20 @@ describe(BalanceUpdater.name, () => {
       })
     })
 
-    it('skips work if timestamp < minTimestamp', async () => {
-      const provider = mockObject<EthereumBalanceProvider>({
+    it('throws if timestamp < minTimestamp', async () => {
+      const provider = mockObject<BalanceProvider>({
         getChainId: () => chainId,
         fetchBalances: async () => [],
       })
 
+      const status = mockObject<BalanceStatusRepository>({
+        add: async () => '',
+      })
       const balanceUpdater = new BalanceUpdater(
         provider,
         mockObject<BlockNumberUpdater>(),
         mockObject<BalanceRepository>(),
-        mockObject<BalanceStatusRepository>(),
+        status,
         mockObject<Clock>(),
         [],
         Logger.SILENT,
@@ -236,7 +237,9 @@ describe(BalanceUpdater.name, () => {
         new UnixTime(1000),
       )
 
-      await balanceUpdater.update(new UnixTime(500))
+      await expect(
+        async () => await balanceUpdater.update(new UnixTime(999)),
+      ).toBeRejectedWith('Timestamp cannot be smaller than minTimestamp')
 
       expect(provider.fetchBalances).not.toHaveBeenCalled()
     })
@@ -295,7 +298,7 @@ describe(BalanceUpdater.name, () => {
     })
   })
 
-  function fakeTokenInfo(id: AssetId, sinceTimestamp: UnixTime): TokenInfo {
+  function fakeTokenInfo(id: AssetId, sinceTimestamp: UnixTime): Token {
     return {
       id,
       sinceTimestamp,
@@ -305,6 +308,9 @@ describe(BalanceUpdater.name, () => {
       decimals: 18,
       address: EthereumAddress.random(),
       category: 'other',
+      chainId: ChainId.ETHEREUM,
+      type: 'CBV',
+      formula: 'locked',
     }
   }
 })

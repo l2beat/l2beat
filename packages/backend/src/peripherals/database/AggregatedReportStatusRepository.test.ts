@@ -1,5 +1,5 @@
-import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -22,21 +22,15 @@ describe(AggregatedReportStatusRepository.name, () => {
   const TIME_THREE = TIME_ONE.add(-2, 'hours')
 
   const ETH_ID = ChainId.ETHEREUM
-  const VALUE_TYPE = ValueType.CBV
 
   it('stores a single timestamp', async () => {
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
 
-    const timestamps = await repository.getByConfigHash(
-      HASH_ONE,
-      ETH_ID,
-      VALUE_TYPE,
-    )
+    const timestamps = await repository.getByConfigHash(HASH_ONE, ETH_ID)
     expect(timestamps).toEqual([TIME_ONE])
   })
 
@@ -45,45 +39,32 @@ describe(AggregatedReportStatusRepository.name, () => {
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_THREE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
 
-    const timestampsOne = await repository.getByConfigHash(
-      HASH_ONE,
-      ETH_ID,
-      VALUE_TYPE,
-    )
+    const timestampsOne = await repository.getByConfigHash(HASH_ONE, ETH_ID)
     expect(timestampsOne).toEqual([TIME_THREE])
 
-    const timestampsTwo = await repository.getByConfigHash(
-      HASH_TWO,
-      ETH_ID,
-      VALUE_TYPE,
-    )
+    const timestampsTwo = await repository.getByConfigHash(HASH_TWO, ETH_ID)
     expect(timestampsTwo).toEqualUnsorted([TIME_ONE, TIME_TWO])
   })
 
@@ -92,26 +73,19 @@ describe(AggregatedReportStatusRepository.name, () => {
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
 
-    const timestamps = await repository.getByConfigHash(
-      HASH_ONE,
-      ETH_ID,
-      VALUE_TYPE,
-    )
+    const timestamps = await repository.getByConfigHash(HASH_ONE, ETH_ID)
     expect(timestamps).toEqual([TIME_ONE])
   })
 
@@ -120,21 +94,14 @@ describe(AggregatedReportStatusRepository.name, () => {
       configHash: HASH_TWO,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
 
-    const result = await repository.getBetween(
-      TIME_THREE,
-      TIME_TWO,
-      ETH_ID,
-      VALUE_TYPE,
-    )
+    const result = await repository.getBetween(TIME_THREE, TIME_TWO, ETH_ID)
     expect(result).toEqual([{ configHash: HASH_TWO, timestamp: TIME_TWO }])
   })
 
@@ -143,21 +110,19 @@ describe(AggregatedReportStatusRepository.name, () => {
       configHash: HASH_TWO,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
     })
 
-    const result = await repository.findLatestTimestamp(ETH_ID, VALUE_TYPE)
+    const result = await repository.findLatestTimestamp(ETH_ID)
     expect(result).toEqual(TIME_ONE)
   })
 
   it('finds latest timestamp when database is empty', async () => {
-    const result = await repository.findLatestTimestamp(ETH_ID, VALUE_TYPE)
+    const result = await repository.findLatestTimestamp(ETH_ID)
     expect(result).toEqual(undefined)
   })
 })

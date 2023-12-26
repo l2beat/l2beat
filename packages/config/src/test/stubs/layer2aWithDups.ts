@@ -16,8 +16,9 @@ export const layer2aWithDups: Layer2 = {
     slug: 'layer2a',
     description: '',
     purpose: 'Universal',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: [],
       apps: [],
@@ -27,13 +28,16 @@ export const layer2aWithDups: Layer2 = {
       socialMedia: [],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [],
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW_UNKNOWN,
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),

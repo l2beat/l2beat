@@ -4,6 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
 import {
@@ -23,6 +24,16 @@ describe('layer2s', () => {
           const links = Object.values(layer2.display.links).flat()
           for (const link of links) {
             expect(link).not.toInclude(' ')
+          }
+        })
+      }
+    })
+    describe('do not include www part', () => {
+      for (const layer2 of layer2s) {
+        it(layer2.display.name, () => {
+          const links = Object.values(layer2.display.links).flat()
+          for (const link of links) {
+            expect(link).not.toInclude('www')
           }
         })
       }
@@ -49,6 +60,49 @@ describe('layer2s', () => {
         }
       }
     })
+
+    it('every escrow of upcoming project has isUpcoming flag', () => {
+      for (const layer2 of layer2s) {
+        if (!layer2.isUpcoming) continue
+
+        for (const escrow of layer2.config.escrows) {
+          expect(escrow.isUpcoming).toEqual(true)
+        }
+      }
+    })
+
+    it('every not upcoming project does not have isUpcoming flag', () => {
+      for (const layer2 of layer2s) {
+        if (layer2.isUpcoming) continue
+
+        for (const escrow of layer2.config.escrows) {
+          expect([false, undefined]).toInclude(escrow.isUpcoming)
+        }
+      }
+    })
+  })
+
+  describe('liveness', () => {
+    for (const project of layer2s) {
+      it(`${project.id.toString()} : has valid signatures`, () => {
+        if (project.config.liveness) {
+          const functionCalls = [
+            ...project.config.liveness.batchSubmissions,
+            ...project.config.liveness.stateUpdates,
+          ].filter((x) => x.formula === 'functionCall') as {
+            selector: string
+            functionSignature: string
+          }[]
+
+          functionCalls.forEach((c) => {
+            const i = new utils.Interface([c.functionSignature])
+            const fragment = i.fragments[0]
+            const calculatedSignature = i.getSighash(fragment)
+            expect(calculatedSignature).toEqual(c.selector)
+          })
+        }
+      })
+    }
   })
 
   describe('activity', () => {
@@ -72,6 +126,32 @@ describe('layer2s', () => {
         })
       }
     })
+
+    describe('all arbitrum and op stack chains have the assessCount defined', () => {
+      const opAndArbL2sWithActivity = layer2s
+        .filter((layer2) => {
+          const { provider } = layer2.display
+          return provider === 'Arbitrum' || provider === 'OP Stack'
+        })
+        .flatMap((layer2) => {
+          const { transactionApi } = layer2.config
+
+          if (transactionApi && transactionApi.type === 'rpc') {
+            return {
+              id: layer2.id,
+              assessCount: transactionApi.assessCount,
+            }
+          }
+
+          return []
+        })
+
+      for (const { id, assessCount } of opAndArbL2sWithActivity) {
+        it(`${id.toString()}`, () => {
+          expect(assessCount).not.toBeNullish()
+        })
+      }
+    })
   })
 
   describe('references', () => {
@@ -90,22 +170,25 @@ describe('layer2s', () => {
                   const referencedAddresses = getReferencedAddresses(
                     sourceCodeReference.references,
                   )
-                  const contract = discovery.getContract(
-                    sourceCodeReference.contract,
-                  )
 
-                  const contractAddresses = [
-                    contract.address,
-                    ...gatherAddressesFromUpgradeability(
-                      contract.upgradeability,
-                    ),
-                  ]
+                  if (referencedAddresses.length > 0) {
+                    const contract = discovery.getContract(
+                      sourceCodeReference.contract,
+                    )
 
-                  expect(
-                    contractAddresses.some((a) =>
-                      referencedAddresses.includes(a),
-                    ),
-                  ).toEqual(true)
+                    const contractAddresses = [
+                      contract.address,
+                      ...gatherAddressesFromUpgradeability(
+                        contract.upgradeability,
+                      ),
+                    ]
+
+                    expect(
+                      contractAddresses.some((a) =>
+                        referencedAddresses.includes(a),
+                      ),
+                    ).toEqual(true)
+                  }
                 })
               }
             })
@@ -332,13 +415,16 @@ describe('layer2s', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
         if (
-          layer2.stage === undefined ||
-          layer2.stage.stage === 'UnderReview'
+          layer2.stage.stage === 'UnderReview' ||
+          layer2.stage.stage === 'NotApplicable'
         ) {
           continue
         }
         for (const item of layer2.stage.summary) {
           for (const req of item.requirements) {
+            if (req.description.includes('[View code]')) {
+              continue
+            }
             it(req.description, () => {
               expect(req.description.endsWith('.')).toEqual(true)
             })
@@ -346,6 +432,17 @@ describe('layer2s', () => {
         }
       }
     })
+  })
+})
+
+describe('layer3s', () => {
+  const layer3s = layer2s.filter((x) => x.isLayer3)
+  it('every layer3 has a valid host chain', () => {
+    for (const layer3 of layer3s) {
+      expect(layer3.hostChain).not.toBeNullish()
+      const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
+      expect(hostChain).not.toBeNullish()
+    }
   })
 })
 

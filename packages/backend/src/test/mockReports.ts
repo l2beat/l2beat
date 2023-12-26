@@ -1,20 +1,18 @@
-import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
-  CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { aggregateReports } from '../core/reports/aggregateReports'
 import { createReports } from '../core/reports/createReports'
-import { OP_TOKEN_ID } from '../core/reports/custom/optimism'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
+import { getMockToken } from './token'
 
 const NOW = UnixTime.now().toStartOf('hour')
 const APEX_ESCROW_ONE = EthereumAddress.random()
@@ -29,14 +27,14 @@ const PROJECTS: ReportProject[] = [
       {
         address: APEX_ESCROW_ONE,
         sinceTimestamp: new UnixTime(0),
-        tokens: [fakeTokenInfo({ id: AssetId.DAI, decimals: 18 })],
+        tokens: [fakeToken({ id: AssetId.DAI, decimals: 18 })],
       },
       {
         address: APEX_ESCROW_TWO,
         sinceTimestamp: new UnixTime(0),
         tokens: [
-          fakeTokenInfo({ id: AssetId.DAI, decimals: 18 }),
-          fakeTokenInfo({ id: AssetId.ETH, decimals: 18 }),
+          fakeToken({ id: AssetId.DAI, decimals: 18 }),
+          fakeToken({ id: AssetId.ETH, decimals: 18 }),
         ],
       },
     ],
@@ -48,7 +46,7 @@ const PROJECTS: ReportProject[] = [
       {
         address: DYDX_ESCROW,
         sinceTimestamp: new UnixTime(0),
-        tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
+        tokens: [fakeToken({ id: AssetId.ETH, decimals: 18 })],
       },
     ],
   },
@@ -63,11 +61,6 @@ const FUTURE_PRICES = PRICES.map((price) => ({
   ...price,
   timestamp: NOW.add(1, 'hours'),
 }))
-FUTURE_PRICES.push({
-  priceUsd: 1000,
-  assetId: OP_TOKEN_ID,
-  timestamp: NOW.add(1, 'hours'),
-})
 
 const BALANCES: BalanceRecord[] = [
   {
@@ -113,37 +106,16 @@ const FUTURE_REPORTS = createReports(
   ChainId.ETHEREUM,
 )
 
-const FUTURE_OP_REPORT = [
-  {
-    asset: OP_TOKEN_ID,
-    type: ValueType.NMV,
-    chainId: ChainId.NMV,
-    amount: 644594782000000000000000000n,
-    ethValue: 644594782000000n,
-    usdValue: 64459478200000n,
-    timestamp: NOW.add(1, 'hours'),
-    projectId: ProjectId.OPTIMISM,
-  },
-]
-const FUTURE_REPORTS_WITH_OP = [...FUTURE_REPORTS, ...FUTURE_OP_REPORT]
-
 const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
-const FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP = aggregateReports(
-  FUTURE_REPORTS_WITH_OP,
+const FUTURE_AGGREGATE_REPORTS = aggregateReports(
+  FUTURE_REPORTS,
   PROJECTS,
   NOW.add(1, 'hours'),
 )
 
-function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
+export function fakeToken(token: Partial<Token>): Token {
   return {
-    name: 'Fake',
-    id: AssetId('fake-token'),
-    coingeckoId: CoingeckoId('fake-token'),
-    symbol: 'FKT',
-    decimals: 18,
-    address: EthereumAddress.random(),
-    sinceTimestamp: new UnixTime(0),
-    category: 'other',
+    ...getMockToken(),
     ...token,
   }
 }
@@ -157,7 +129,6 @@ export const REPORTS_MOCK = {
   AGGREGATED_REPORTS,
   FUTURE_PRICES,
   FUTURE_BALANCES,
-  FUTURE_OP_REPORT,
   FUTURE_REPORTS,
-  FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP,
+  FUTURE_AGGREGATE_REPORTS,
 }

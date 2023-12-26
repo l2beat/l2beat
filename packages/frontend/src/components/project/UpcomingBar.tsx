@@ -3,12 +3,13 @@ import React from 'react'
 
 import { UpcomingIcon } from '../icons/symbols/UpcomingIcon'
 
-export function UpcomingBar() {
+export function UpcomingBar({ className }: { className?: string }) {
   return (
     <div
       className={cx(
-        'mb-6 flex justify-center py-2.5 md:px-0',
+        'flex justify-center py-2.5 md:px-0',
         'rounded-lg bg-purple-100 text-white dark:bg-purple-100',
+        className,
       )}
     >
       <span className="flex flex-row">

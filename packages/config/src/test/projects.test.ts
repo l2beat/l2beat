@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, getTokenBySymbol, layer2s } from '../'
+import { bridges, getCanonicalTokenBySymbol, layer2s } from '../'
 import { checkRisk } from './helpers'
 
 describe('projects', () => {
@@ -15,7 +15,7 @@ describe('projects', () => {
       .filter((x, i, a) => a.indexOf(x) === i)
     for (const symbol of symbols) {
       it(symbol, () => {
-        expect(() => getTokenBySymbol(symbol)).not.toThrow()
+        expect(() => getCanonicalTokenBySymbol(symbol)).not.toThrow()
       })
     }
   })
@@ -112,6 +112,7 @@ describe('projects', () => {
       )
       for (const link of links) {
         it(link, () => {
+          console.log(link)
           expect(link).toMatchRegex(/^https:\/\//)
         })
       }
@@ -124,7 +125,9 @@ describe('projects', () => {
       for (const link of links) {
         it(link, () => {
           if (link.includes('discord')) {
-            expect(link).toMatchRegex(/^https:\/\/discord\.gg\/[\w-]+$/)
+            expect(link).toMatchRegex(
+              /^https:\/\/discord\.(gg|com\/invite)\/[\w-]+$/,
+            )
           } else if (link.includes('t.me')) {
             expect(link).toMatchRegex(/^https:\/\/t\.me\/(joinchat\/)?\w+$/)
           } else if (link.includes('medium')) {
@@ -146,7 +149,7 @@ describe('projects', () => {
           } else if (link.includes('gitter')) {
             expect(link).toMatchRegex(/^https:\/\/gitter\.im\/[\w-/]+$/)
           } else if (link.includes('instagram')) {
-            expect(link).toMatchRegex(/^https:\/\/instagram\.com\/[\w-/]+$/)
+            expect(link).toMatchRegex(/^https:\/\/instagram\.com\/[\w-./]+$/)
           }
         })
       }

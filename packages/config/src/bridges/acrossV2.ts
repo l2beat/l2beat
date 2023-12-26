@@ -2,11 +2,17 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
+import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('across-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
+
+const finalizationDelaySeconds = discovery.getContractValue<number>(
+  'HubPool',
+  'liveness',
+)
 
 export const acrossV2: Bridge = {
   type: 'bridge',
@@ -62,7 +68,7 @@ export const acrossV2: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum'],
+    destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum', 'ZkSync Era'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
@@ -102,7 +108,7 @@ export const acrossV2: Bridge = {
       references: [
         {
           text: 'Across V2 Optimistic Oracle documentation',
-          href: 'https://docs.across.to/v2/how-does-across-work/optimistic-oracle',
+          href: 'https://docs.across.to/how-across-works/security-model',
         },
       ],
     },
@@ -118,7 +124,13 @@ export const acrossV2: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'HubPool',
-        'Escrow contract for ERC20 tokens and administration of other contracts.',
+        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${formatSeconds(
+          finalizationDelaySeconds,
+        )} delay before a bundle proposal is considered finalized.`,
+      ),
+      discovery.getContractDetails(
+        'BondToken',
+        'Token used to bond the data worker for proposing Relayer refund bundles.',
       ),
       discovery.getContractDetails('LpTokenFactory'),
       discovery.getContractDetails('Finder'),
@@ -128,6 +140,8 @@ export const acrossV2: Bridge = {
       discovery.getContractDetails('Optimism_Adapter'),
       discovery.getContractDetails('Boba_Adapter'),
       discovery.getContractDetails('Arbitrum_Adapter'),
+      discovery.getContractDetails('ZkSync_Adapter'),
+      discovery.getContractDetails('Base_Adapter'),
       discovery.getContractDetails('Ethereum_Adapter'),
       discovery.getContractDetails('Ethereum_SpokePool'),
       {
@@ -149,6 +163,11 @@ export const acrossV2: Bridge = {
       'HubPool Multisig',
       'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
     ),
+    {
+      name: 'BondToken transfer proposers',
+      accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
+      description: 'Allowed to propose BondToken transfers',
+    },
   ],
   knowledgeNuggets: [
     {

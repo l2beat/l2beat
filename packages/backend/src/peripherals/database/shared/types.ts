@@ -25,7 +25,7 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
     project_id: string
     asset_id: string
-    asset_type: string
+    report_type: string
     chain_id: number
     asset_amount: string
     usd_value: string
@@ -35,17 +35,16 @@ declare module 'knex/types/tables' {
   interface AggregatedReportRow {
     unix_timestamp: Date
     project_id: string
-    tvl_usd: string
-    tvl_eth: string
-    is_daily: boolean
-    is_six_hourly: boolean
+    usd_value: string
+    eth_value: string
+    report_type: string
   }
 
   interface ReportStatusRow {
     config_hash: string
     unix_timestamp: Date
     chain_id: number
-    asset_type: string
+    report_type: string
   }
 
   interface BalanceStatusRow {
@@ -86,8 +85,14 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  type ProjectsAggregatedDailyCountRow = Omit<
+    DailyTransactionCountRow,
+    'project_id'
+  >
+
   interface UpdateMonitorRow {
     project_name: string
+    chain_id: number
     block_number: number
     unix_timestamp: Date
     discovery_json_blob: string
@@ -102,6 +107,7 @@ declare module 'knex/types/tables' {
     project_name: string
     block_number: number
     diff_json_blob: string
+    chain_id: number
   }
 
   interface TotalSupplyRow {
@@ -115,6 +121,56 @@ declare module 'knex/types/tables' {
     chain_id: number
     config_hash: string
     unix_timestamp: Date
+  }
+
+  interface CirculatingSupplyRow {
+    unix_timestamp: Date
+    asset_id: string
+    circulating_supply: string
+    chain_id: number
+  }
+
+  interface CirculatingSupplyStatusRow {
+    chain_id: number
+    config_hash: string
+    unix_timestamp: Date
+  }
+
+  interface LivenessRow {
+    timestamp: Date
+    block_number: number
+    tx_hash: string
+    liveness_id: string
+  }
+
+  interface LivenessConfigurationRow {
+    id: string
+    project_id: string
+    type: string
+    since_timestamp: Date
+    until_timestamp: Date | null
+    last_synced_timestamp: Date | null
+    debug_info: string
+  }
+
+  interface DiscoveryCacheRow {
+    key: string
+    value: string
+    chain_id: number
+    block_number: number
+  }
+
+  interface DiscoveryCacheRow {
+    key: string
+    value: string
+    chain_id: number
+    block_number: number
+  }
+
+  interface IndexerStateRow {
+    indexer_id: string
+    safe_height: number
+    min_timestamp: Date | undefined
   }
 
   interface Tables {
@@ -135,6 +191,12 @@ declare module 'knex/types/tables' {
     update_notifier: UpdateNotifierRow
     total_supplies: TotalSupplyRow
     total_supplies_status: TotalSupplyStatusRow
+    circulating_supplies: CirculatingSupplyRow
+    circulating_supplies_status: CirculatingSupplyStatusRow
+    liveness: LivenessRow
+    discovery_cache: DiscoveryCacheRow
+    liveness_configuration: LivenessConfigurationRow
+    indexer_state: IndexerStateRow
   }
 }
 

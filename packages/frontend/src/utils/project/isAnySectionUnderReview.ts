@@ -13,7 +13,7 @@ export function isAnySectionUnderReview(project: Layer2 | Bridge): boolean {
     project.technology.isUnderReview ??
     project.contracts?.isUnderReview ??
     ((isAnyRiskUnderReview(project.riskView) ?? false) ||
-      (project.type === 'layer2' && project.stage?.stage === 'UnderReview') ||
+      (project.type === 'layer2' && project.stage.stage === 'UnderReview') ||
       project.permissions === 'UnderReview')
   )
 }

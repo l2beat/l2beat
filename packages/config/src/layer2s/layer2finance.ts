@@ -4,6 +4,7 @@ import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 export const layer2finance: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('layer2finance'),
   display: {
@@ -15,6 +16,7 @@ export const layer2finance: Layer2 = {
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purpose: 'DeFi aggregation',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],

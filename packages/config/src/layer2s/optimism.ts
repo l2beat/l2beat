@@ -1,7 +1,16 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,8 +21,11 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOneAfterBlockInclusive,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
 
@@ -21,6 +33,72 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const challengePeriod: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
+const upgradeDelay = 0
+
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId('op-optimism'),
+    name: 'Optimism',
+    coingeckoId: CoingeckoId('optimism'),
+    address: EthereumAddress('0x4200000000000000000000000000000000000042'),
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1660904599',
+    symbol: 'OP',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1654039974),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId.USDC_ON_OPTIMISM,
+    name: 'USD Coin',
+    coingeckoId: CoingeckoId('usd-coin'),
+    address: EthereumAddress('0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85'),
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
+    symbol: 'USDC',
+    decimals: 6,
+    sinceTimestamp: new UnixTime(1668453318),
+    category: 'stablecoin',
+    type: 'NMV',
+    formula: 'totalSupply',
+  },
+  {
+    id: AssetId('optimism:kwenta-kwenta'),
+    name: 'Kwenta',
+    symbol: 'KWENTA',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/27409/large/kwenta.png?1668768595',
+    address: EthereumAddress('0x920cf626a271321c151d027030d5d08af699456b'),
+    coingeckoId: CoingeckoId('kwenta'),
+    sinceTimestamp: new UnixTime(1668733200),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+  {
+    id: AssetId('optimism:velo-velodrome-finance'),
+    name: 'Velodrome Finance',
+    symbol: 'VELO',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/25783/large/velo.png?1653817876',
+    address: EthereumAddress('0x9560e827af36c94d2ac33a39bce1fe78631088db'),
+    coingeckoId: CoingeckoId('velodrome-finance'),
+    sinceTimestamp: new UnixTime(1687392369),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
+]
 
 export const optimism: Layer2 = {
   type: 'layer2',
@@ -35,13 +113,17 @@ export const optimism: Layer2 = {
     With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
     new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
       documentation: ['https://community.optimism.io'],
-      explorers: ['https://optimistic.etherscan.io'],
+      explorers: [
+        'https://optimistic.etherscan.io',
+        'https://optimism.blockscout.com/',
+      ],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
         'https://optimism.mirror.xyz/',
@@ -50,10 +132,22 @@ export const optimism: Layer2 = {
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
       ],
+      rollupCodes: 'https://rollup.codes/optimism',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Optimism is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        challengePeriod,
+      )} after it has been posted.`,
+    },
   },
   config: {
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],
     escrows: [
@@ -99,19 +193,44 @@ export const optimism: Layer2 = {
         tokens: ['SNX'],
         isHistorical: true,
       },
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
+      assessCount: subtractOneAfterBlockInclusive(105235064),
+    },
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [
+        {
+          formula: 'transfer',
+          from: EthereumAddress('0x6887246668a3b87F54DeB3b94Ba47a6f63F32985'),
+          to: EthereumAddress('0xFF00000000000000000000000000000000000010'),
+          sinceTimestamp: new UnixTime(1686074603),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xdfe97868233d1aa22e815a266982f2cf17685a27',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestamp: new UnixTime(1685377367),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: {
-      value: 'In development',
-      description:
-        'Currently the system permits invalid state roots. More details in project overview.',
-      sentiment: 'bad',
-    },
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
@@ -123,8 +242,8 @@ export const optimism: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',
@@ -161,31 +280,37 @@ export const optimism: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink:
+        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, OP Mainnet will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -270,11 +395,20 @@ export const optimism: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
+      },
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'OP Mainnet is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on OP Mainnet.',
+        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
       risks: [],
       references: [
         {
@@ -284,65 +418,38 @@ export const optimism: Layer2 = {
       ],
     },
   },
+  stateDerivation: {
+    ...DERIVATION.OPSTACK('OP_MAINNET'),
+    genesisState:
+      'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
+  },
   permissions: [
     ...discovery.getMultisigPermission(
       'OptimismMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
-    {
-      name: 'ProxyAdmin',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description:
-        'Admin of the OptimismPortal, L2OutputOracle, SystemConfig contract, L1StandardBridge, AddressManager proxies. It’s controlled by the OptimismMultisig.',
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions to L1.',
-    },
-    {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
-      ],
-      description: 'Central actor allowed to post new L2 state roots to L1.',
-    },
-    {
-      name: 'Challenger',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
-      ],
-      description: 'Central actor allowed to challenge L2 state roots.',
-    },
+    ...discovery.getOpStackPermissions({
+      batcherHash: 'Sequencer',
+      PROPOSER: 'Proposer',
+      GUARDIAN: 'Guardian',
+      CHALLENGER: 'Challenger',
+    }),
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessengerProxy', {
-        description:
-          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
+      ...discovery.getOpStackContractDetails(upgradesProxy, {
+        L1CrossDomainMessenger: 'L1CrossDomainMessengerProxy',
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
+    {
+      name: 'Fault Proof System is live on OP Goerli',
+      link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      date: '2023-10-03T00:00:00Z',
+      description: 'Fraud Proof system is live on Goerli.',
+    },
     {
       name: 'Mainnet migration to Bedrock',
       link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
@@ -350,17 +457,11 @@ export const optimism: Layer2 = {
       description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
     },
     {
-      name: 'Goerli testnet migration to Bedrock',
-      link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
-      date: '2023-01-13T00:00:00Z',
-      description: 'OP Mainnet on Goerli, since Jan 2023 is running Bedrock.',
-    },
-    {
       name: 'OP Stack Introduced',
       link: 'https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs',
       date: '2022-10-17T00:00:00Z',
       description:
-        'OP Stack, modular, open-sourced blueprint o how to build scalable blockchains.',
+        'OP Stack, modular, open-sourced blueprint on how to build scalable blockchains.',
     },
     {
       ...MILESTONES.MAINNET_OPEN,
@@ -411,6 +512,11 @@ export const optimism: Layer2 = {
       title: 'Modular Rollup Theory',
       url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
       thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
+    },
+    {
+      title: 'The Optimistic Vision',
+      url: 'https://www.optimism.io/vision',
+      thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_VISION,
     },
   ],
 }

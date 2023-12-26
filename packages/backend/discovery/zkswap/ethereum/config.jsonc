@@ -1,0 +1,60 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "zkswap",
+  "initialAddresses": ["0x714B2D10210f2A3a7AA614F949259C87613689aB"],
+  "names": {
+    "0x961369d347EF7A6896BDD39cBE2B89e3911f521f": "VerifierExit",
+    "0x27C229937745d697d28FC7853d1bFEA7331Edf56": "Verifier",
+    "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": "PairManager",
+    "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5": "ZkSyncExit"
+  },
+  "overrides": {
+    "0x714B2D10210f2A3a7AA614F949259C87613689aB": {
+      "ignoreMethods": ["nextTargets"],
+      "fields": {
+        "managedContracts": {
+          "type": "array"
+        }
+      }
+    },
+    "0x02ecef526f806f06357659fFD14834fe82Ef4B04": {
+      "fields": {
+        "validators": {
+          "type": "arrayFromOneEvent",
+          "event": "ValidatorStatusUpdate",
+          "valueKey": "validatorAddress",
+          "flagKey": "isActive"
+        }
+      }
+    },
+    "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": {
+      "fields": {
+        "verifier": {
+          "type": "storage",
+          "slot": 5,
+          "returnType": "address"
+        },
+        "verifierExit": {
+          "type": "storage",
+          "slot": 6,
+          "returnType": "address"
+        },
+        "governance": {
+          "type": "storage",
+          "slot": 7,
+          "returnType": "address"
+        },
+        "pairManager": {
+          "type": "storage",
+          "slot": 8,
+          "returnType": "address"
+        }
+      },
+      "ignoreInWatchMode": [
+        "firstPendingWithdrawalIndex",
+        "numberOfPendingWithdrawals"
+      ]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { AssetId, UnixTime } from '@l2beat/shared-pure'
 import { PriceRow } from 'knex/types/tables'
 
@@ -66,7 +66,7 @@ export class PriceRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('coingecko_prices').delete()
+    return knex('coingecko_prices').delete()
   }
 
   async findDataBoundaries(): Promise<Map<AssetId, DataBoundary>> {

@@ -1,11 +1,13 @@
 import React from 'react'
 
-import { ActivityIcon, RiskIcon, SummaryIcon } from '../icons'
+import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { NavigationPage, NavigationTabs } from './NavigationTabs'
 
 interface ScalingNavigationTabsProps {
-  selected: 'summary' | 'risk' | 'activity'
+  selected: 'summary' | 'detailed' | 'risk' | 'activity' | 'liveness'
   showActivity: boolean
+  showLiveness: boolean
 }
 
 export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
@@ -17,14 +19,31 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       link: '/scaling/summary',
       selected: props.selected === 'summary',
     },
-    {
-      fullTitle: 'Risk Analysis',
-      shortTitle: 'Risks',
-      icon: <RiskIcon />,
-      link: '/scaling/risk',
-      selected: props.selected === 'risk',
-    },
   ]
+  pages.push({
+    fullTitle: 'Value Locked',
+    shortTitle: 'Value',
+    icon: <TvlIcon />,
+    link: '/scaling/tvl',
+    selected: props.selected === 'detailed',
+  })
+
+  pages.push({
+    fullTitle: 'Risk Analysis',
+    shortTitle: 'Risks',
+    icon: <RiskIcon />,
+    link: '/scaling/risk',
+    selected: props.selected === 'risk',
+  })
+  if (props.showLiveness) {
+    pages.push({
+      fullTitle: 'Liveness',
+      shortTitle: 'Liveness',
+      icon: <LivenessIcon />,
+      link: '/scaling/liveness',
+      selected: props.selected === 'liveness',
+    })
+  }
   if (props.showActivity) {
     pages.push({
       fullTitle: 'Activity',

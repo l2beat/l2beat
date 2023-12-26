@@ -1,0 +1,43 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "layer2financezk",
+  "initialAddresses": ["0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5"],
+  "overrides": {
+    "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": {
+      "ignoreMethods": [
+        "actualPrices",
+        "prices",
+        "rideDeparted",
+        "rideInfos",
+        "ridesShares",
+        "slippages"
+      ]
+    },
+    "0x82123571C8a5e0910280C066bc634c4945FFcbC8": {
+      "ignoreMethods": [
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "initializerSize",
+        "isAssetRegistered"
+      ],
+      "fields": {
+        "GOVERNORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
+          "addKey": "acceptedGovernor",
+          "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
+          "removeKey": "removedGovernor"
+        },
+        "OPERATORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogOperatorAdded(address operator)",
+          "addKey": "operator",
+          "removeEvent": "event LogOperatorRemoved(address operator)",
+          "removeKey": "operator"
+        }
+      }
+    }
+  }
+}

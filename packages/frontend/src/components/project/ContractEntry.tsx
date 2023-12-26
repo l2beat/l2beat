@@ -1,9 +1,13 @@
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
+import { Markdown } from '../Markdown'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
@@ -18,6 +22,7 @@ export interface TechnologyContract {
   upgradeDelay?: string
   upgradeConsiderations?: string
   references?: TechnologyReference[]
+  etherscanUrl?: string
 }
 
 export interface TechnologyContractLinks {
@@ -29,12 +34,14 @@ export interface TechnologyContractLinks {
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
 }
 
 export function ContractEntry({
   contract,
   verificationStatus,
+  manuallyVerifiedContracts,
   className,
 }: ContractEntryProps) {
   const areLinksUnverified = contract.links
@@ -42,7 +49,10 @@ export function ContractEntry({
     .map((c) => verificationStatus.contracts[c.address])
     .some((c) => c === false)
 
-  const areAddressesUnverified = (contract.addresses ?? [])
+  const addresses = contract.addresses ?? []
+  const references = contract.references ?? []
+
+  const areAddressesUnverified = addresses
     .map((c) => verificationStatus.contracts[c])
     .some((c) => c === false)
 
@@ -54,8 +64,17 @@ export function ContractEntry({
         tooltip="Source code is not verified"
       />
     ) : (
-      <BulletIcon className="h-6 md:h-[27px]" />
+      <BulletIcon className="h-[1em]" />
     )
+
+  addresses.forEach((address) => {
+    if (manuallyVerifiedContracts[address]) {
+      references.push({
+        text: 'Source code',
+        href: manuallyVerifiedContracts[address],
+      })
+    }
+  })
 
   return (
     <Callout
@@ -69,6 +88,7 @@ export function ContractEntry({
             {(contract.addresses ?? []).map((address, i) => (
               <EtherscanLink
                 address={address}
+                url={contract.etherscanUrl}
                 key={i}
                 className={cx(
                   verificationStatus.contracts[address] === false
@@ -93,9 +113,9 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
+            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {contract.description}
-            </p>
+            </Markdown>
           )}
           {contract.upgradeableBy && (
             <p className="mt-2 text-gray-850 dark:text-gray-400">
@@ -122,13 +142,13 @@ export function ContractEntry({
                 Show upgrade details
               </button>
               {/* TODO: remove leading once line heights are fixed for all text on the page */}
-              <p className="mt-2 hidden text-sm leading-[15px] text-gray-850 dark:text-gray-400">
+              <Markdown className="mt-2 hidden text-sm leading-snug text-gray-850 dark:text-gray-400">
                 {contract.upgradeConsiderations}
-              </p>
+              </Markdown>
             </>
           )}
-          {contract.references && (
-            <ReferenceList references={contract.references} tight />
+          {references.length > 0 && (
+            <ReferenceList references={references} tight />
           )}
         </>
       }

@@ -15,6 +15,7 @@ export type ProjectRiskCategory =
   | 'Funds can be frozen if'
   | 'Users can be censored if'
   | 'MEV can be extracted if'
+  | 'Withdrawals can be delayed if'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -22,6 +23,7 @@ export interface ProjectRiskViewEntry {
   value: string
   description: string
   sentiment: Sentiment
+  showWarning?: boolean
   // second line in risk view
   secondLine?: string
   secondSentiment?: 'warning' | 'bad'

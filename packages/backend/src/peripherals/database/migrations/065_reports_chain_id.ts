@@ -11,7 +11,7 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -28,9 +28,7 @@ export async function up(knex: Knex) {
     ])
   })
 
-  await knex('reports')
-    .where('asset_type', ValueType.NMV)
-    .update({ chain_id: ChainId.NMV.valueOf() })
+  await knex('reports').where('asset_type', 'NMV').update({ chain_id: -1 })
 }
 
 export async function down(knex: Knex) {

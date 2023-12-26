@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { json, UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../Clock'
@@ -93,14 +93,17 @@ export class TransactionCountingMonitor {
   }
 
   private logLagging(syncInfos: SyncInfo[], today: string): void {
+    const unsyncedNames = syncInfos
+      .filter((s) => !s.isSynced)
+      .map((s) => s.projectId)
+    const connector = unsyncedNames.length === 1 ? 'is' : 'are'
+
     this.logger.error(
+      `${unsyncedNames.join(', ')} ${connector} lagging behind`,
       {
-        syncInfo: {
-          counters: syncInfos,
-          today,
-        },
+        counters: syncInfos,
+        today,
       },
-      new Error('Not all transaction counters are synced'),
     )
   }
 }

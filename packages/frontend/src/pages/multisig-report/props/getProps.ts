@@ -7,16 +7,14 @@ import { getPageMetadata } from './getPageMetadata'
 export function getProps(config: Config): Wrapped<MultisigReportPageProps> {
   return {
     props: {
-      navbar: {
-        ...getNavbarProps(config, 'multisig-report'),
-        showMultisigReport: false,
-      },
+      navbar: getNavbarProps(config, 'multisig-report'),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
       multisigReportUrl: config.links.multisigReport,
     },
     wrapper: {
       metadata: getPageMetadata(),
+      banner: config.features.banner,
     },
   }
 }

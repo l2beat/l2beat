@@ -1,5 +1,8 @@
 import {
   ActivityApiResponse,
+  LivenessApiResponse,
+  ManuallyVerifiedContracts,
+  ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -19,8 +22,8 @@ export interface WrapperProps {
   htmlClassName?: string
   metadata: PageMetadata
   preloadApi?: string
+  banner: boolean | undefined
 }
-
 export interface PageMetadata {
   title: string
   description: string
@@ -32,4 +35,7 @@ export interface PagesData {
   tvlApiResponse: TvlApiResponse
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
+  tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
+  livenessApiResponse: LivenessApiResponse | undefined
 }

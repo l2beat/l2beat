@@ -3,7 +3,8 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/shared-pure'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import { ChainId } from '@l2beat/shared-pure'
 
 import { UpdateMonitorRepository } from '../../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 
@@ -11,8 +12,9 @@ export async function getDiff(
   updateMonitorRepository: UpdateMonitorRepository,
   discovery: DiscoveryOutput,
   config: DiscoveryConfig,
+  chainId: ChainId,
 ) {
-  const db = await updateMonitorRepository.findLatest(config.name)
+  const db = await updateMonitorRepository.findLatest(config.name, chainId)
 
   let diff: DiscoveryDiff[] = []
   if (db?.discovery.contracts) {

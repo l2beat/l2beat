@@ -1,11 +1,14 @@
 # How to run discovery?
 
-- `yarn discover [project]` run discovery for the project
-- `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [project]` run discovery on a specific block number
-- `yarn discover [project] --dry-run` check simulated update-monitor output
-- `yarn discover [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
-- `yarn invert [project]` print addresses and their functions
-- `yarn invert [project] --mermaid` builds a mermaid graph of the project
+- `yarn discover [chain] [project]` run discovery for the project
+- `yarn discover [chain] [project] --block-number=<block_number>` run discovery on a specific block number
+- `yarn discover [chain] [project] --dry-run` check simulated update-monitor output
+- `yarn discover [chain] [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
+- `yarn invert [chain] [project]` print addresses and their functions
+- `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
+- `yarn discover:single [chain] [address]` run a discovery on the address (no config needed, useful for experimenting)
+
+supported chains: checkout config.discovery.ts
 
 # Discovery documentation
 
@@ -26,7 +29,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 **Parameters:**
 
-- `"$schema": "../config.schema.json"`
+- `"$schema": "../../config.schema.json"`
 - `name` - name of the project
 - `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). By default, discovery checks only `view` or `constant` methods with no arguments or with exactly one argument of `uint256` (array). To check other functions you'll need to write custom handlers (see `overrides`). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
 - `names: Record<address, string>` - (optional) key-value object, with addresses as keys. It will allow you to override the name of the contract in discovery (ex. `Bridge` instead of `Bridge_v1`)
@@ -36,7 +39,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 ```
 {
-  "$schema": "../config.schema.json"
+  "$schema": "../../config.schema.json"
   name: "project_a",
   initialAddresses: ["0x1234", "0x5678"],
   names: {
@@ -344,6 +347,39 @@ Specify some names:
 }
 ```
 
+### Scroll access control handler
+
+This handler allows you to analyze a contract using Scroll's modified OpenZeppelin's AccessControl pattern.
+
+WARNING: Make sure that the name of this field is `scrollAccessControl`. The inversion logic depends on that.
+
+**Parameters:**
+
+- `type` - always the literal: `"scrollAccessControl"`
+- `roleNames` - (optional) a record of bytes32 role hashes to predefined role names. Usually this handler is pretty good at guessing, so this is often unnecessary
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+**Examples:**
+
+Analyze the contract:
+
+```json
+{
+  "type": "scrollAccessControl"
+}
+```
+
+Specify some names:
+
+```json
+{
+  "type": "scrollAccessControl",
+  "roleNames": {
+    "0x3f3b3bf06419b25db8f1ac3dfb014d79b6fb633e65d1ca540c6a3c665e32e106": "GOBLIN_ROLE"
+  }
+}
+```
+
 ### StarkWare named storage handler
 
 This handler allows you to read values from contracts using StarkWare's named storage pattern. This handler only supports simple values and does not support mappings and other possible types.
@@ -463,16 +499,36 @@ Same example, but the abis are explicit:
 }
 ```
 
+### State from event handler
+
+This handler allows you to collect values emitted by a smart contract through a single event type in a highly structured way, supporting multiple values per event and grouping by parameter values.
+
+**Parameters:**
+
+- `type` - the literal: `"stateFromEvent"`
+- `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
+- `returnParams` - array of strings that represent event keys that we want to save
+- `groupBy` - (optional) when specified, must be a `returnParam`, the output will be grouped by the values of this param
+- `onlyValue` - (optional, default: `false`) when `true`, the `groupBy` key is removed from the output record.
+- `multipleInGroup` - (optional, default: `false`) when `true`, each grouping key will point to an array of values if more than one value exist.
+- `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+**Examples:**
+
+Assumes there is `event AddInboundProofLibraryForChain(uint16 chainId, address lig)` in the abi. Collects the list of all `inboundProofLibraries` ever added for every `chainId`:
+
+```json
+{
+  "type": "stateFromEvent",
+  "event": "AddInboundProofLibraryForChain",
+  "returnParams": ["chainId", "lib"],
+  "groupBy": "chainId",
+  "onlyValue": true,
+  "multipleInGroup": true,
+  "ignoreRelative": true
+},
+```
+
 ## Cache
 
 Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
-
-### env variable
-
-Set the proper environmental variable to prevent script from fetching the same data multiple times:
-
-`DISCOVERY_BLOCK_NUMBER`- overrides the block number used during local discovery
-
-### proposed usage
-
-`DISCOVERY_BLOCK_NUMBER=<block_number> y discover <project>`

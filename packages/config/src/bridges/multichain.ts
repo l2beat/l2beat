@@ -12,7 +12,7 @@ export const multichain: Bridge = {
     name: 'Multichain',
     slug: 'multichain',
     warning:
-      "THE BRIDGE IS NOT SAFE FOR USE. The Multichain's team urges everyone to refrain from using the bridge as it is under investigation by Chinese law enforcement authorities. For more information, please visit: https://twitter.com/multichainorg/status/1679768407628185600.",
+      "THE BRIDGE IS NOT SAFE FOR USE. The Multichain's team urges everyone to refrain from using the bridge as it is under investigation by Chinese law enforcement authorities. [**<u>For more information, please visit this thread.</u>**](https://twitter.com/multichainorg/status/1679768407628185600)",
     description:
       'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',
     category: 'Hybrid',

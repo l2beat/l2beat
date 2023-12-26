@@ -1,19 +1,17 @@
-import { Story } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
 
 import { formatLargeNumber } from '../../utils'
 import { ProjectLink } from '../icons'
-import { PageContent } from '../PageContent'
-import { TechnologyCell } from '../table/TechnologyCell'
-import {
-  DetailsHeader as DetailsHeaderComponent,
-  HeaderProps,
-} from './DetailsHeader'
+import { TypeCell } from '../table/TypeCell'
+import { DetailsHeader as DetailsHeaderComponent } from './DetailsHeader'
 import { StatWithChange } from './stats/StatWithChange'
 
-export default {
-  title: 'Components/DetailsHeader',
+const meta: Meta<typeof DetailsHeaderComponent> = {
+  component: DetailsHeaderComponent,
 }
+export default meta
+type Story = StoryObj<typeof DetailsHeaderComponent>
 
 const project = {
   display: {
@@ -46,8 +44,8 @@ const stats = [
     value: project.display.purpose,
   },
   {
-    title: 'Technology',
-    value: <TechnologyCell>{project.technology.category}</TechnologyCell>,
+    title: 'Type',
+    value: <TypeCell>{project.technology.category}</TypeCell>,
   },
 ]
 
@@ -55,7 +53,7 @@ const links: ProjectLink[] = [
   { name: 'Website', links: ['https://bridge.gnosischain.com/'] },
   { name: 'App', links: ['https://bridge.gnosischain.com/'] },
   {
-    name: 'Documentation',
+    name: 'Docs',
     links: ['https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge'],
   },
   {
@@ -77,53 +75,53 @@ const links: ProjectLink[] = [
       'https://t.me/gnosischain',
     ],
   },
+  {
+    name: 'rollup.codes',
+    links: ['https://rollup.codes/arbitrum-one'],
+  },
 ]
-
-function Template(props: HeaderProps) {
-  return (
-    <PageContent>
-      <DetailsHeaderComponent {...props} />
-    </PageContent>
-  )
-}
 
 const warning =
   'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.'
 
-export const DetailsHeader: Story<HeaderProps> = Template.bind({})
-DetailsHeader.args = {
-  title: project.display.name,
-  icon: `/icons/${project.display.slug}.png`,
-  stats,
-  links,
-  isArchived: false,
-  warning,
+export const DetailsHeader: Story = {
+  args: {
+    title: project.display.name,
+    icon: `/icons/${project.display.slug}.png`,
+    stats: { summary: stats },
+    links,
+    isArchived: false,
+    warning,
+  },
 }
 
-export const ArchivedHeader: Story<HeaderProps> = Template.bind({})
-ArchivedHeader.args = {
-  title: project.display.name,
-  icon: `/icons/${project.display.slug}.png`,
-  stats,
-  links,
-  isArchived: true,
-  warning,
+export const ArchivedHeader: Story = {
+  args: {
+    title: project.display.name,
+    icon: `/icons/${project.display.slug}.png`,
+    stats: { summary: stats },
+    links,
+    isArchived: true,
+    warning,
+  },
 }
 
-export const UpcomingHeader: Story<HeaderProps> = Template.bind({})
-UpcomingHeader.args = {
-  title: project.display.name,
-  icon: `/icons/${project.display.slug}.png`,
-  stats,
-  links,
-  isUpcoming: true,
+export const UpcomingHeader: Story = {
+  args: {
+    title: project.display.name,
+    icon: `/icons/${project.display.slug}.png`,
+    stats: { summary: stats },
+    links,
+    isUpcoming: true,
+  },
 }
 
-export const UnderReviewHeader: Story<HeaderProps> = Template.bind({})
-UnderReviewHeader.args = {
-  title: project.display.name,
-  icon: `/icons/${project.display.slug}.png`,
-  stats,
-  links,
-  showProjectUnderReview: true,
+export const UnderReviewHeader: Story = {
+  args: {
+    title: project.display.name,
+    icon: `/icons/${project.display.slug}.png`,
+    stats: { summary: stats },
+    links,
+    showProjectUnderReview: true,
+  },
 }

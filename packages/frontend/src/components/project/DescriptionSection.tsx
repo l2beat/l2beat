@@ -1,6 +1,9 @@
 import React from 'react'
 
+import { ShieldIcon } from '../icons'
+import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Link } from '../Link'
+import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
 import { WarningBar } from './WarningBar'
@@ -13,6 +16,7 @@ export interface DescriptionSectionProps {
   description: string
   warning?: string
   isVerified?: boolean
+  redWarning?: string
 }
 
 export function DescriptionSection(props: DescriptionSectionProps) {
@@ -24,6 +28,15 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           color="red"
           isCritical={true}
           className="mt-4"
+          icon={UnverifiedIcon}
+        />
+      )}
+      {props.redWarning && (
+        <WarningBar
+          text={props.redWarning}
+          color="red"
+          className="mt-4"
+          icon={ShieldIcon}
         />
       )}
       {props.warning && (
@@ -34,10 +47,10 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           className="mt-4"
         />
       )}
-      <p className="mt-4 text-gray-850 dark:text-gray-400">
+      <Markdown className="mt-4 leading-snug text-gray-850 dark:text-gray-400">
         {props.description}
-      </p>
-      <p className="mt-4 text-gray-850 dark:text-gray-400">
+      </Markdown>
+      <p className="mt-4 leading-snug text-gray-850 dark:text-gray-400">
         If you find something wrong on this page you can{' '}
         <Link href={props.issueLink}>submit an issue</Link>
         {' or '}

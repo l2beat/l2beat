@@ -1,5 +1,6 @@
 import { deduplicateAbi } from '@l2beat/discovery'
-import { ContractParameters } from '@l2beat/shared-pure'
+import type { ContractParameters } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { getAddresses } from './getAddresses'
@@ -13,7 +14,9 @@ export function getViewABI(
     return new ethers.utils.Interface([])
   }
 
-  const addresses = getAddresses(contract)
+  const addresses = getAddresses(contract).filter(
+    (addr) => addr !== EthereumAddress.ZERO,
+  )
 
   const abis = addresses
     .map((address) => {

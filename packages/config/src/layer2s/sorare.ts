@@ -29,11 +29,11 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const delaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
 )
-const delay = formatSeconds(delaySeconds)
+const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
   'gpsContract',
@@ -50,6 +50,7 @@ export const sorare: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://sorare.com/'],
       apps: [],
@@ -65,6 +66,9 @@ export const sorare: Layer2 = {
     },
     activityDataSource: 'Closed API',
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -75,7 +79,7 @@ export const sorare: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'sorare',
+      product: ['sorare'],
       sinceTimestamp: new UnixTime(1626352527),
       resyncLastDays: 7,
     },
@@ -99,7 +103,7 @@ export const sorare: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -122,7 +126,7 @@ export const sorare: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
   },
   permissions: [
     {
@@ -130,7 +134,7 @@ export const sorare: Layer2 = {
       accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(delay),
+        delayDescriptionFromString(upgradeDelay),
     },
     getCommittee(discovery),
     ...getSHARPVerifierGovernors(discovery, verifierAddress),

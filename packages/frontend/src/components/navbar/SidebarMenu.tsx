@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { ActivityIcon, RiskIcon, SummaryIcon } from '../icons'
+import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -12,7 +13,7 @@ import { NavbarPage } from './types'
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
   showActivity: boolean
-  showHiring: boolean
+  showLiveness: boolean
   showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -47,9 +48,19 @@ export function SidebarMenu(props: SidebarMenuProps) {
                 <a href="/scaling/summary">Summary</a>
               </li>
               <li className="flex gap-2 font-medium">
+                <TvlIcon className="h-auto w-4" />
+                <a href="/scaling/tvl">Value Locked</a>
+              </li>
+              <li className="flex gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />
                 <a href="/scaling/risk">Risks</a>
               </li>
+              {props.showLiveness && (
+                <li className="flex gap-2 font-medium">
+                  <LivenessIcon className="h-auto w-4" />
+                  <a href="/scaling/liveness">Liveness</a>
+                </li>
+              )}
               {props.showActivity && (
                 <li className="flex items-center gap-2 font-medium">
                   <ActivityIcon className="h-auto w-4" />
@@ -94,17 +105,15 @@ export function SidebarMenu(props: SidebarMenuProps) {
           <li>
             <a href="/faq">FAQ</a>
           </li>
-          {props.showHiring && (
-            <li>
-              <OutLink
-                className="flex items-center"
-                href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
-              >
-                Jobs
-                {props.showHiringBadge && <HiringBadge className="ml-2" />}
-              </OutLink>
-            </li>
-          )}
+          <li>
+            <OutLink
+              className="flex items-center"
+              href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+            >
+              Jobs
+              {props.showHiringBadge && <HiringBadge className="ml-2" />}
+            </OutLink>
+          </li>
         </ul>
         <hr className="my-6 w-full border-gray-200 dark:border-gray-850" />
         <ul className="mb-12 flex gap-4 px-6">

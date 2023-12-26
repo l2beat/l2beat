@@ -18,6 +18,17 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
+const escapeHatchDelaySeconds = discovery.getContractValue<number>(
+  'RollupProcessorV2',
+  'delayBeforeEscapeHatch',
+)
+
+const upgradeDelay = 0
+
+assert(escapeHatchDelaySeconds === 4294967295) // otherwise change descriptions!!
+const escapeHatchDelayApprox = 4_291_745_472
+const escapeHatchDelayString = '~136 years'
+
 function getAccessControl() {
   const accessControl = discovery.getContractValue<
     Record<string, { adminRole: string; members: string[] } | undefined>
@@ -62,17 +73,18 @@ function getAccessControl() {
 }
 
 export const aztecconnect: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),
   display: {
-    name: 'Aztec Connect',
+    name: 'Zk.Money v2 (Aztec Connect)',
     slug: 'aztecconnect',
-    warning:
-      'EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024.',
+    warning: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024. The escape hatch delay has been recently increased to ${escapeHatchDelayString}, meaning that users will not be able to exit when the operator will be shut down.`,
     description:
       'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
     purpose: 'Private DeFi',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
@@ -96,6 +108,21 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
+          ),
+          selector: '0xf81cccbe',
+          functionSignature: 'function processRollup(bytes ,bytes _signatures)',
+          sinceTimestamp: new UnixTime(1654638194),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -114,7 +141,7 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'Verifier28x32',
           references: [
-            'https://etherscan.io/address/0xB656f4219f565b93DF57D531B574E17FE0F25939#code#F3#L150',
+            'https://etherscan.io/address/0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69#code#F3#L150',
           ],
         },
       ],
@@ -130,7 +157,7 @@ export const aztecconnect: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, escapeHatchDelayApprox),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [
@@ -143,7 +170,8 @@ export const aztecconnect: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      description: `Only the whitelisted proposers can publish L2 state roots on L1 within ${escapeHatchDelayString} from the last posted root, so in the event of failure the withdrawals are frozen.`,
       sources: [
         {
           contract: 'RollupProcessorV2',
@@ -156,26 +184,32 @@ export const aztecconnect: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink:
+        'https://github.com/AztecProtocol/aztec-connect/tree/v2.1',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -206,8 +240,7 @@ export const aztecconnect: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      description:
-        'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
+      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks, but only if the last root was posted more than ${escapeHatchDelayString} prior.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L692 - Etherscan source code',
@@ -219,7 +252,7 @@ export const aztecconnect: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description:
         FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-        ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
+        ` Periodically the rollup opens a special window during which anyone can propose new blocks. This is only possible if the last root was posted more than ${escapeHatchDelayString} prior.`,
       references: [
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
@@ -228,6 +261,13 @@ export const aztecconnect: Layer2 = {
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
           href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1491',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'the centralized operator censors withdrawal transactions.',
+          isCritical: true,
         },
       ],
     },
@@ -265,8 +305,7 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('RollupProcessorV2', {
-        description:
-          'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside a ZK proof. The escape hatch delay is currently set to ${escapeHatchDelayString})}`,
         pausable: {
           paused: discovery.getContractValue('RollupProcessorV2', 'paused'),
           pausableBy: ['Emergency Multisig'],
@@ -296,6 +335,14 @@ export const aztecconnect: Layer2 = {
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  stateDerivation: {
+    nodeSoftware: `The entire stack's source code is housed in a single monorepo, which can be found [here](https://github.com/AztecProtocol/aztec-connect/tree/v2.1). For instructions on running the node, please refer to [this readme](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/README.md).`,
+    compressionScheme: 'No compression is used.',
+    genesisState:
+      'The genesis file is available [here](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/falafel/src/environment/init/data/mainnet/accounts), and it includes accounts from [zk.money](http://zk.money) as well.',
+    dataFormat:
+      'The code to decode onchain data can be found [here](https://github.com/AztecProtocol/aztec-connect/blob/master/yarn-project/barretenberg.js/src/rollup_proof/rollup_proof_data.ts#L453)',
   },
   permissions: [
     ...getAccessControl(),
@@ -331,7 +378,7 @@ export const aztecconnect: Layer2 = {
       thumbnail: NUGGETS.THUMBNAILS.AZTEC_01,
     },
     {
-      title: 'Economics of Aztec zkRollup',
+      title: 'Economics of Aztec ZK Rollup',
       url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
       thumbnail: NUGGETS.THUMBNAILS.AZTEC_02,
     },

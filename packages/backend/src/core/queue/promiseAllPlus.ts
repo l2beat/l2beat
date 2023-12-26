@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { assert, Retries } from '@l2beat/shared-pure'
 
 import { TaskQueue } from './TaskQueue'
@@ -42,17 +42,18 @@ export async function promiseAllPlus<T>(
     // this is quite ugly but we do exponential retries and finally propagate error
     shouldRetry: (job, error) => {
       const shouldRetry = Retries.exponentialBackOff({
-        stepMs: 100,
-        maxDistanceMs: 3_000,
+        stepMs: 1000,
+        maxDistanceMs: 1_000, // fail fast
         maxAttempts: maxAttempts,
-      })(job)
+        notifyAfterAttempts: Infinity, // do not notify
+      })(job, error)
 
-      if (!shouldRetry.retry) {
+      if (shouldRetry.shouldStop) {
         permanentError = error
       }
       return shouldRetry
     },
-    shouldHaltAfterFailedRetries: false, // we have our own strategy to handle that
+    shouldStopAfterFailedRetries: false, // we have our own strategy to handle that
     metricsId: opts.metricsId,
   })
 

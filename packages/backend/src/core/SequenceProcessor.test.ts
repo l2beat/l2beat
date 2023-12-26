@@ -1,4 +1,4 @@
-import { Logger, LoggerOptions, LogLevel } from '@l2beat/shared'
+import { Logger, LoggerOptions } from '@l2beat/backend-tools'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
@@ -37,7 +37,7 @@ describe(SequenceProcessor.name, () => {
     return new SequenceProcessor(
       PROCESSOR_ID,
       new Logger({
-        logLevel: LogLevel.ERROR, // tests rely on error being logged -- do not change
+        logLevel: 'ERROR', // tests rely on error being logged -- do not change
         format: 'pretty',
         reportError,
       }),
@@ -211,8 +211,6 @@ describe(SequenceProcessor.name, () => {
     it('re-processes data when from > getLatest', async () => {
       const time = install()
 
-      const errorMessage =
-        'getLatest returned sequence member that was already processed'
       const reportErrorMock = mockFn().returns(undefined)
       const getLatestMock =
         mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(0)
@@ -232,11 +230,16 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(
-        expect.subset({ message: expect.includes(errorMessage) }),
-        expect.anything(),
-      )
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
+        error: new Error(
+          'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
+        ),
+        message:
+          'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
+        parameters: undefined,
+      })
     })
 
     it('works when processRange throws', async () => {
@@ -263,11 +266,13 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(
-        expect.subset({ message: errorMessage }),
-        expect.anything(),
-      )
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
+        error: new Error('Force-failing during tests!'),
+        message: 'Force-failing during tests!',
+        parameters: undefined,
+      })
     })
 
     it('does not process anything when already done', async () => {
@@ -504,7 +509,7 @@ async function waitForErrorReport(
   let errorReported = false
 
   while (!errorReported) {
-    await time.tickAsync(1)
+    await time.tickAsync(100)
     errorReported = reportErrorMock.calls.length > currentCalls
   }
 }

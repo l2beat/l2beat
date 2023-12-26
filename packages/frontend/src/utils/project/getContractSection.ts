@@ -10,6 +10,7 @@ import {
   assert,
   assertUnreachable,
   EthereumAddress,
+  ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
@@ -18,15 +19,22 @@ import {
   TechnologyContractLinks,
 } from '../../components/project/ContractEntry'
 import { ContractsSectionProps } from '../../components/project/ContractsSection'
+import { languageJoin } from '../utils'
 import { hasArchitectureImage } from './hasArchitectureImage'
 
 export function getContractSection(
   project: Layer2 | Bridge,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): ContractsSectionProps {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified = isContractUnverified(contract, verificationStatus)
-    return makeTechnologyContract(contract, project, isUnverified)
+    return makeTechnologyContract(
+      contract,
+      project,
+      isUnverified,
+      verificationStatus,
+    )
   })
 
   const escrows = project.config.escrows
@@ -39,7 +47,13 @@ export function getContractSection(
       )
       const contract = escrowToProjectContract(escrow)
 
-      return makeTechnologyContract(contract, project, isUnverified, true)
+      return makeTechnologyContract(
+        contract,
+        project,
+        isUnverified,
+        verificationStatus,
+        true,
+      )
     })
 
   const risks =
@@ -61,7 +75,7 @@ export function getContractSection(
 
   return {
     id: 'contracts',
-    title: 'Smart Contracts',
+    title: 'Smart contracts',
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
@@ -70,6 +84,7 @@ export function getContractSection(
     isIncomplete: project.contracts?.isIncomplete,
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
+    manuallyVerifiedContracts,
     nativeL2TokensIncludedInTVL:
       project.type === 'layer2'
         ? project.config.nativeL2TokensIncludedInTVL ?? []
@@ -81,9 +96,11 @@ function makeTechnologyContract(
   item: ProjectContract,
   project: Layer2 | Bridge,
   isUnverified: boolean,
+  verificationStatus: VerificationStatus,
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
+  const etherscanUrl = item.etherscanUrl ?? 'https://etherscan.io'
 
   if (isSingleAddress(item)) {
     if (item.upgradeability?.type) {
@@ -94,14 +111,14 @@ function makeTechnologyContract(
         case 'Eternal Storage proxy':
           links.push({
             name: 'Implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
             address: item.upgradeability.implementation.toString(),
             isAdmin: false,
           })
           if (item.upgradeability.admin) {
             links.push({
               name: 'Admin',
-              href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+              href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
               address: item.upgradeability.admin.toString(),
               isAdmin: true,
             })
@@ -116,7 +133,7 @@ function makeTechnologyContract(
         case 'Polygon proxy':
           links.push({
             name: 'Implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
             address: item.upgradeability.implementation.toString(),
             isAdmin: false,
           })
@@ -132,7 +149,7 @@ function makeTechnologyContract(
             name: `Implementation (Upgradable${
               delay ? ` ${days} days delay` : ''
             })`,
-            href: `https://etherscan.io/address/${implementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${implementation.toString()}#code`,
             address: implementation.toString(),
             isAdmin: false,
           })
@@ -142,7 +159,7 @@ function makeTechnologyContract(
         case 'Reference':
           links.push({
             name: 'Code (Upgradable)',
-            href: `https://etherscan.io/address/${item.address.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.address.toString()}#code`,
             address: item.address.toString(),
             isAdmin: false,
           })
@@ -152,19 +169,19 @@ function makeTechnologyContract(
         case 'Arbitrum proxy':
           links.push({
             name: 'Admin',
-            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
             address: item.upgradeability.admin.toString(),
             isAdmin: true,
           })
           links.push({
             name: 'Admin logic (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.adminImplementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.adminImplementation.toString()}#code`,
             address: item.upgradeability.adminImplementation.toString(),
             isAdmin: true,
           })
           links.push({
             name: 'User logic (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.userImplementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.userImplementation.toString()}#code`,
             address: item.upgradeability.userImplementation.toString(),
             isAdmin: false,
           })
@@ -173,19 +190,19 @@ function makeTechnologyContract(
         case 'Beacon':
           links.push({
             name: 'Beacon',
-            href: `https://etherscan.io/address/${item.upgradeability.beacon.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.beacon.toString()}#code`,
             address: item.upgradeability.beacon.toString(),
             isAdmin: false,
           })
           links.push({
             name: 'Implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
             address: item.upgradeability.implementation.toString(),
             isAdmin: false,
           })
           links.push({
             name: 'Beacon Admin',
-            href: `https://etherscan.io/address/${item.upgradeability.beaconAdmin.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.beaconAdmin.toString()}#code`,
             address: item.upgradeability.beaconAdmin.toString(),
             isAdmin: true,
           })
@@ -194,63 +211,112 @@ function makeTechnologyContract(
         case 'zkSync Lite proxy':
           links.push({
             name: 'Implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
             address: item.upgradeability.implementation.toString(),
             isAdmin: false,
           })
           links.push({
             name: 'Additional implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.additional.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.additional.toString()}#code`,
             address: item.upgradeability.additional.toString(),
             isAdmin: false,
           })
           links.push({
             name: 'Admin',
-            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
             address: item.upgradeability.admin.toString(),
             isAdmin: true,
           })
           break
+
         case 'zkSpace proxy':
           links.push({
             name: 'Implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
             address: item.upgradeability.implementation.toString(),
             isAdmin: false,
           })
           links.push(
             ...item.upgradeability.additional.map((additional) => ({
               name: 'Additional implementation (Upgradable)',
-              href: `https://etherscan.io/address/${additional.toString()}#code`,
+              href: `${etherscanUrl}/address/${additional.toString()}#code`,
               address: additional.toString(),
               isAdmin: false,
             })),
           )
           links.push({
             name: 'Admin',
-            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
             address: item.upgradeability.admin.toString(),
             isAdmin: true,
           })
           break
+
         case 'Polygon Extension proxy':
           links.push({
             name: 'Implementation (Upgradable)',
-            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
             address: item.upgradeability.implementation.toString(),
             isAdmin: false,
           }),
             links.push({
               name: 'Extension (Upgradable)',
-              href: `https://etherscan.io/address/${item.upgradeability.extension.toString()}#code`,
+              href: `${etherscanUrl}/address/${item.upgradeability.extension.toString()}#code`,
               address: item.upgradeability.extension.toString(),
               isAdmin: false,
             })
+          break
+        case 'Optics Beacon proxy':
+          links.push({
+            name: 'Upgrade Beacon',
+            href: `${etherscanUrl}/address/${item.upgradeability.upgradeBeacon.toString()}#code`,
+            address: item.upgradeability.upgradeBeacon.toString(),
+            isAdmin: false,
+          })
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          })
+          links.push({
+            name: 'Beacon Controller',
+            href: `${etherscanUrl}/address/${item.upgradeability.beaconController.toString()}#code`,
+            address: item.upgradeability.beaconController.toString(),
+            isAdmin: true,
+          })
+          break
+        case 'Axelar proxy':
+          links.push(
+            ...item.upgradeability.admins.map((admin, i) => ({
+              name: `Admin ${i}`,
+              href: `${etherscanUrl}/address/${admin.toString()}#code`,
+              address: admin.toString(),
+              isAdmin: true,
+            })),
+          )
+          links.push(
+            ...item.upgradeability.owners.map((owner, i) => ({
+              name: `Owner ${i}`,
+              href: `${etherscanUrl}/address/${owner.toString()}#code`,
+              address: owner.toString(),
+              isAdmin: true,
+            })),
+          )
+          links.push(
+            ...item.upgradeability.operators.map((operator, i) => ({
+              name: `Operator ${i}`,
+              href: `${etherscanUrl}/address/${operator.toString()}#code`,
+              address: operator.toString(),
+              isAdmin: true,
+            })),
+          )
           break
 
         // Ignore types
         case 'immutable':
         case 'gnosis safe':
+        case 'gnosis safe zodiac module':
         case 'EIP2535 diamond proxy':
           break
 
@@ -263,10 +329,34 @@ function makeTechnologyContract(
   let description = item.description
 
   if (isUnverified) {
-    if (!description) {
-      description = CONTRACTS.UNVERIFIED_DESCRIPTION
+    let unverifiedText = ''
+    if (isSingleAddress(item) || item.multipleAddresses.length === 1) {
+      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
+    } else if (
+      areAllAddressesUnverified(item.multipleAddresses, verificationStatus)
+    ) {
+      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION_ALL
     } else {
-      description += ' ' + CONTRACTS.UNVERIFIED_DESCRIPTION
+      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION_SOME
+    }
+
+    if (!description) {
+      description = unverifiedText
+    } else {
+      description += ' ' + unverifiedText
+    }
+  }
+
+  const areImplementationsUnverified = links
+    .filter((c) => !c.isAdmin)
+    .map((c) => verificationStatus.contracts[c.address])
+    .some((c) => c === false)
+
+  if (areImplementationsUnverified) {
+    if (!description) {
+      description = CONTRACTS.UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION
+    } else {
+      description += ' ' + CONTRACTS.UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION
     }
   }
 
@@ -297,6 +387,7 @@ function makeTechnologyContract(
     addresses,
     description,
     links,
+    etherscanUrl: item.etherscanUrl,
   }
 
   if (isSingleAddress(item)) {
@@ -307,19 +398,6 @@ function makeTechnologyContract(
   }
 
   return result
-}
-
-function languageJoin(items?: string[]) {
-  if (!items || items.length === 0) {
-    return undefined
-  }
-  if (items.length === 1) {
-    return items[0]
-  }
-  items = [...items]
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const last = items.pop()!
-  return `${items.join(', ')} and ${last}`
 }
 
 function isContractUnverified(
@@ -366,4 +444,13 @@ function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 
   return bTokens - aTokens
+}
+
+function areAllAddressesUnverified(
+  addresses: EthereumAddress[],
+  verificationStatus: VerificationStatus,
+) {
+  return addresses.every((address) => {
+    return verificationStatus.contracts[address.toString()] === false
+  })
 }

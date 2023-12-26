@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { wrapAndMeasure } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Histogram } from 'prom-client'
@@ -9,11 +9,20 @@ import { Database } from './Database'
 type IdType = number | string | String | Number
 
 type AnyMethod = (...args: any[]) => Promise<any>
-type AddMethod = (record: any) => Promise<IdType>
-type AddManyMethod = (records: any[]) => Promise<IdType[] | number>
+type AddMethod = (record: any, ...args: any[]) => Promise<IdType>
+type AddManyMethod = (
+  records: any[],
+  ...args: any[]
+) => Promise<IdType[] | number>
+type UpdateMethod = (record: any, ...args: any[]) => Promise<IdType>
+type UpdateManyMethod = (
+  records: any[],
+  ...args: any[]
+) => Promise<IdType[] | number>
 type GetMethod = (...args: any[]) => Promise<{}[]>
 type FindMethod = (...args: any[]) => Promise<{} | undefined>
 type DeleteMethod = (...args: any[]) => Promise<number>
+type SetMethod = (...args: any[]) => Promise<number>
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
 
 type Keys<T, U> = Extract<keyof T, U>
@@ -21,8 +30,11 @@ type Match<T, U> = T extends U ? T : Exclude<U, T>
 
 type AddKeys<T> = Exclude<Keys<T, `add${string}`>, AddManyKeys<T>>
 type AddManyKeys<T> = Keys<T, `addMany${string}` | `add${string}Many`>
+type UpdateKeys<T> = Exclude<Keys<T, `update${string}`>, UpdateManyKeys<T>>
+type UpdateManyKeys<T> = Keys<T, `updateMany${string}` | `update${string}Many`>
 type FindKeys<T> = Keys<T, `find${string}`>
 type GetKeys<T> = Keys<T, `get${string}`>
+type SetKeys<T> = Keys<T, `set${string}`>
 type DeleteKeys<T> = Keys<T, `delete${string}`>
 
 export type CheckConvention<T extends BaseRepository> = {
@@ -30,11 +42,17 @@ export type CheckConvention<T extends BaseRepository> = {
 } & {
   [K in AddManyKeys<T>]: Match<T[K], AddManyMethod>
 } & {
+  [K in UpdateKeys<T>]: Match<T[K], UpdateMethod>
+} & {
+  [K in UpdateManyKeys<T>]: Match<T[K], UpdateManyMethod>
+} & {
   [K in FindKeys<T>]: Match<T[K], FindMethod>
 } & {
   [K in GetKeys<T>]: Match<T[K], GetMethod>
 } & {
   [K in DeleteKeys<T>]: Match<T[K], DeleteMethod>
+} & {
+  [K in SetKeys<T>]: Match<T[K], SetMethod>
 }
 
 /* 
@@ -135,6 +153,23 @@ export abstract class BaseRepository {
         continue
       }
 
+      if (
+        methodName.startsWith('updateMany') ||
+        (methodName.startsWith('update') && methodName.endsWith('Many'))
+      ) {
+        obj[methodName] = this.wrapAddMany(
+          method as unknown as UpdateManyMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (methodName.startsWith('update')) {
+        obj[methodName] = this.wrapAdd(
+          method as unknown as UpdateMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
       if (methodName.startsWith('find')) {
         obj[methodName] = this.wrapFind(
           method as unknown as FindMethod,
@@ -145,6 +180,13 @@ export abstract class BaseRepository {
       if (methodName.startsWith('delete')) {
         obj[methodName] = this.wrapDelete(
           method as unknown as DeleteMethod,
+        ) as unknown as T[keyof T & string]
+        continue
+      }
+
+      if (methodName.startsWith('set')) {
+        obj[methodName] = this.wrapSet(
+          method as unknown as SetMethod,
         ) as unknown as T[keyof T & string]
         continue
       }
@@ -163,7 +205,7 @@ export abstract class BaseRepository {
   // eslint-disable-next-line @typescript-eslint/ban-types
   protected wrapAdd<T extends AddMethod>(method: T): T {
     return this.wrap(method, (id) =>
-      this.logger.info({ method: method.name, id: id.valueOf() }),
+      this.logger.debug({ method: method.name, id: id.valueOf() }),
     )
   }
 
@@ -184,16 +226,22 @@ export abstract class BaseRepository {
 
   protected wrapDelete<T extends DeleteMethod>(method: T): T {
     return this.wrap(method, (count) =>
-      this.logger.info({ method: method.name, count }),
+      this.logger.debug({ method: method.name, count }),
+    )
+  }
+
+  protected wrapSet<T extends SetMethod>(method: T): T {
+    return this.wrap(method, (count) =>
+      this.logger.debug({ method: method.name, count }),
     )
   }
 
   protected wrapAddMany<T extends AddManyMethod>(method: T): T {
-    const fn = async (records: T[]) => {
+    const fn = async (records: T[], ...args: unknown[]) => {
       if (records.length === 0) {
         return []
       }
-      return method.call(this, records)
+      return method.call(this, records, ...args)
     }
 
     return this.wrap(fn, (result) =>

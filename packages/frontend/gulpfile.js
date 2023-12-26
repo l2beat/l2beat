@@ -14,8 +14,9 @@ function clean() {
 }
 
 function buildScripts() {
-  return exec(
+  return multipleExec(
     `esbuild --bundle src/scripts/index.ts --outfile=build/scripts/main.js --minify`,
+    'esbuild --bundle src/scripts/prerenderIndex.ts --outfile=build/scripts/prerender.js --minify',
   )
 }
 
@@ -68,18 +69,11 @@ function generateMetaImages() {
   return exec('node -r esbuild-register src/build/buildMetaImages.ts')
 }
 
-async function updateVerifiedContracts() {
-  if (
-    process.env.DEPLOYMENT_ENV !== 'production' &&
-    process.env.DEPLOYMENT_ENV !== 'staging'
-  ) {
-    return
-  }
-  const cwd = process.cwd()
-  process.chdir('../config')
-  await exec('yarn check-verified-contracts')
-  process.chdir(cwd)
-}
+const proxyUrls = [
+  '/api/projects',
+  '/api/tvl/aggregate',
+  '/api/activity/aggregate',
+]
 
 function serve() {
   const app = express()
@@ -87,18 +81,28 @@ function serve() {
   app.get('/', (req, res) => {
     res.redirect('/scaling/summary')
   })
-  app.use(
-    '/api/projects',
-    createProxyMiddleware({
-      target:
-        process.env.DEPLOYMENT_ENV === 'local'
-          ? 'http://localhost:3000'
-          : process.env.DEPLOYMENT_ENV === 'staging'
-          ? 'https://staging.l2beat.com'
-          : 'https://api.l2beat.com',
-      changeOrigin: true,
-    }),
-  )
+
+  const deploymentEnvironment = process.env.DEPLOYMENT_ENV || 'ci'
+  const apiUrl = {
+    ci: 'https://api.l2beat.com',
+    production: 'https://api.l2beat.com',
+    staging: 'https://staging.l2beat.com',
+    local: 'http://localhost:3000',
+  }[deploymentEnvironment]
+  if (!apiUrl) {
+    throw new Error('Unknown environment: ' + deploymentEnvironment)
+  }
+
+  for (const proxyUrl of proxyUrls) {
+    app.use(
+      proxyUrl,
+      createProxyMiddleware({
+        target: apiUrl,
+        changeOrigin: true,
+      }),
+    )
+  }
+
   const server = app.listen(8080, '0.0.0.0')
   console.log('Listening on http://localhost:8080')
   return server
@@ -106,7 +110,6 @@ function serve() {
 
 const build = gulp.series(
   clean,
-  updateVerifiedContracts,
   gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
   generateMetaImages,
 )
@@ -130,6 +133,10 @@ module.exports = {
 }
 
 // Utilities
+
+function multipleExec(...commands) {
+  return Promise.all(commands.map((command) => exec(command)))
+}
 
 function exec(command) {
   const nodeModulesHere = path.join(__dirname, './node_modules/.bin')

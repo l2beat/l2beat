@@ -34,6 +34,8 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
 export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
@@ -41,10 +43,12 @@ export const loopring: Layer2 = {
     name: 'Loopring',
     slug: 'loopring',
     description:
-      "Loopring's zkRollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
+      "Loopring's ZK Rollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
     purpose: 'Tokens, NFTs, AMM',
-    provider: 'loopring',
+    provider: 'Loopring',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://loopring.org'],
       apps: ['https://exchange.loopring.io/'],
@@ -65,6 +69,10 @@ export const loopring: Layer2 = {
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation:
+        'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
   },
   config: {
     associatedTokens: ['LRC'],
@@ -93,11 +101,33 @@ export const loopring: Layer2 = {
       type: 'loopring',
       callsPerMinute: 240,
     },
+    liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
+          ),
+          selector: '0xdcb2aa31',
+          functionSignature:
+            'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
+          sinceTimestamp: new UnixTime(1616396742),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,
@@ -140,7 +170,7 @@ export const loopring: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: 'UnderReview',
+      rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -220,7 +250,7 @@ export const loopring: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Forced Request Handling - Loopring design doc',
@@ -288,7 +318,7 @@ export const loopring: Layer2 = {
       ),
       discovery.getContractDetails(
         'LoopringV3',
-        'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawl fee and the Verifier address.',
+        'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawal fee and the Verifier address.',
       ),
       discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',
@@ -305,7 +335,7 @@ export const loopring: Layer2 = {
   },
   milestones: [
     {
-      name: 'Loopring zkRollup is live',
+      name: 'Loopring ZK Rollup is live',
       link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
       date: '2019-12-04T00:00:00Z',
       description:
@@ -319,7 +349,7 @@ export const loopring: Layer2 = {
         'Enhancements in transfers, order-book trading and AMM swap.',
     },
     {
-      name: 'Loopring’s zkRollup AMM is Live',
+      name: 'Loopring’s ZK Rollup AMM is Live',
       link: 'https://medium.loopring.io/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
       date: '2020-12-02T00:00:00Z',
       description:
@@ -349,7 +379,7 @@ export const loopring: Layer2 = {
       link: 'https://medium.loopring.io/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
       date: '2020-02-27T00:00:00Z',
       description:
-        'zkRollup trading is live, as Loopring launches their order book based exchange.',
+        'ZK Rollup trading is live, as Loopring launches their order book based exchange.',
     },
   ],
 }

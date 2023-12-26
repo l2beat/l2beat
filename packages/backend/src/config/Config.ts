@@ -1,9 +1,10 @@
+import { LoggerOptions } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { LogLevel } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { DiscoveryChainConfig } from '@l2beat/discovery'
+import { Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { Project, Token } from '../model'
+import { Project } from '../model'
 
 export interface Config {
   readonly name: string
@@ -17,20 +18,19 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
+  readonly liveness: LivenessConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly statusEnabled: boolean
 }
 
-export interface LoggerConfig {
-  readonly logLevel: LogLevel
-  readonly format: 'pretty' | 'json'
-}
+export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
+  Partial<LoggerOptions>
 
 export interface LogThrottlerConfig {
-  readonly threshold: number
-  readonly thresholdTimeInMs: number
-  readonly throttleTimeInMs: number
+  readonly callsUntilThrottle: number
+  readonly clearIntervalMs: number
+  readonly throttleTimeMs: number
 }
 
 export interface ApiConfig {
@@ -53,21 +53,44 @@ export interface ClockConfig {
 
 export interface TvlConfig {
   readonly enabled: boolean
+  readonly errorOnUnsyncedTvl: boolean
   readonly coingeckoApiKey: string | undefined
-  readonly ethereum: EthereumTvlConfig | false
-  readonly arbitrum: ArbitrumTvlConfig | false
+  readonly ethereum: ChainTvlConfig | false
+  readonly arbitrum: ChainTvlConfig | false
+  readonly optimism: ChainTvlConfig | false
+  readonly base: ChainTvlConfig | false
+  readonly mantapacific: ChainTvlConfig | false
 }
 
-export interface EthereumTvlConfig {
-  readonly alchemyApiKey: string
+export interface LivenessConfig {
+  readonly bigQuery: {
+    readonly clientEmail: string
+    readonly privateKey: string
+    readonly projectId: string
+    readonly queryLimitGb: number
+    readonly queryWarningLimitGb: number
+  }
+  readonly minTimestamp: UnixTime
+}
+
+export interface RoutescanChainConfig {
+  readonly type: 'RoutescanLike'
+  readonly routescanApiUrl: string
+}
+
+export interface EtherscanChainConfig {
+  readonly type: 'EtherscanLike'
   readonly etherscanApiKey: string
-  readonly minBlockTimestamp: UnixTime
+  readonly etherscanApiUrl: string
 }
 
-export interface ArbitrumTvlConfig {
+export interface ChainTvlConfig {
   readonly providerUrl: string
-  readonly arbiscanApiKey: string
+  readonly providerCallsPerMinute: number
   readonly minBlockTimestamp: UnixTime
+  readonly blockNumberProviderConfig:
+    | EtherscanChainConfig
+    | RoutescanChainConfig
 }
 
 export interface HealthConfig {
@@ -91,13 +114,20 @@ export interface MetricsAuthConfig {
 
 export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
-  readonly alchemyApiKey: string
-  readonly etherscanApiKey: string
-  readonly discord:
-    | {
-        readonly token: string
-        readonly publicChannelId?: string
-        readonly internalChannelId: string
-      }
-    | false
+  readonly chains: UpdateMonitorChainConfig[]
+  readonly discord: DiscordConfig | false
 }
+
+export interface DiscordConfig {
+  readonly token: string
+  readonly publicChannelId?: string
+  readonly internalChannelId: string
+  readonly callsPerMinute: number
+}
+
+export interface DiscoveryCacheChainConfig {
+  reorgSafeDepth?: number
+}
+
+export type UpdateMonitorChainConfig = DiscoveryChainConfig &
+  DiscoveryCacheChainConfig

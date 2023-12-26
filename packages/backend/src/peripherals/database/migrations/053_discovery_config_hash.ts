@@ -8,6 +8,7 @@ should create a new migration file that fixes the issue.
 */
 
 import { ConfigReader } from '@l2beat/discovery'
+import { ChainId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -16,7 +17,7 @@ export async function up(knex: Knex) {
   })
 
   const configReader = new ConfigReader()
-  const configs = await configReader.readAllConfigs()
+  const configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
 
   await Promise.all(
     configs.map((config) => {

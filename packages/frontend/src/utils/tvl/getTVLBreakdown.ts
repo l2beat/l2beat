@@ -11,6 +11,7 @@ export function getTvlBreakdown(
   tokens: TvlApiToken[],
 ): TVLBreakdownProps {
   const partial = getPartialTVLBreakdown(associatedTokens, total, tokens)
+
   return {
     ...partial,
     label: getTVLBreakdownLabel(partial, associatedTokens),
@@ -18,6 +19,9 @@ export function getTvlBreakdown(
   }
 }
 
+/**
+ * @notice Unify once classic TVL API is deprecated
+ */
 function getPartialTVLBreakdown(
   associatedTokens: string[],
   total: number,
@@ -28,18 +32,18 @@ function getPartialTVLBreakdown(
   let stable = 0
   let other = 0
 
-  for (const { assetId, tvl } of tokens) {
-    const token = safeGetTokenByAssetId(assetId)
-    if (!token) {
-      other += tvl
-    } else if (associatedTokens.includes(token.symbol)) {
-      associated += tvl
-    } else if (token.category === 'ether') {
-      ether += tvl
-    } else if (token.category === 'stablecoin') {
-      stable += tvl
+  for (const token of tokens) {
+    const safeToken = safeGetTokenByAssetId(token.assetId)
+    if (!safeToken) {
+      other += token.usdValue
+    } else if (associatedTokens.includes(safeToken.symbol)) {
+      associated += token.usdValue
+    } else if (safeToken.category === 'ether') {
+      ether += token.usdValue
+    } else if (safeToken.category === 'stablecoin') {
+      stable += token.usdValue
     } else {
-      other += tvl
+      other += token.usdValue
     }
   }
 

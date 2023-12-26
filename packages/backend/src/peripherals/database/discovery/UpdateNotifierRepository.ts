@@ -1,6 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { Logger } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { UpdateNotifierRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
@@ -13,6 +13,7 @@ export interface UpdateNotifierRecord {
   projectName: string
   blockNumber: number
   diff: DiscoveryDiff[]
+  chainId: ChainId
 }
 
 export class UpdateNotifierRepository extends BaseRepository {
@@ -52,9 +53,23 @@ export class UpdateNotifierRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getNewerThan(
+    from: UnixTime,
+    projectName: string,
+    chainId: ChainId,
+  ): Promise<UpdateNotifierRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('update_notifier')
+      .where('created_at', '>=', from.toDate())
+      .andWhere({ project_name: projectName, chain_id: Number(chainId) })
+
+    return rows.map(toRecord)
+  }
+
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('update_notifier').delete()
+    return knex('update_notifier').delete()
   }
 }
 
@@ -66,6 +81,7 @@ function toRecord(row: UpdateNotifierRow): UpdateNotifierRecord {
     projectName: row.project_name,
     blockNumber: row.block_number,
     diff: row.diff_json_blob as unknown as DiscoveryDiff[],
+    chainId: ChainId(row.chain_id),
   }
 }
 
@@ -76,5 +92,6 @@ function toRow(
     project_name: record.projectName,
     block_number: record.blockNumber,
     diff_json_blob: JSON.stringify(record.diff),
+    chain_id: Number(record.chainId),
   }
 }

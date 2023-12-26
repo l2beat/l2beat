@@ -3,6 +3,15 @@ module.exports = {
   content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {
+    keyframes: {
+      'fade-in': {
+        '0%': { opacity: '0' },
+        '100%': { opacity: '1' },
+      },
+    },
+    animation: {
+      'quick-fade-in': 'fade-in 0.1s ease-in-out',
+    },
     fontSize: {
       '3xs': ['8px', '12px'],
       '2xs': ['12px', '16px'],
@@ -22,9 +31,11 @@ module.exports = {
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
+        900: '#131215',
       },
       zinc: {
         800: '#272A2F',
+        900: '#1D1E22',
       },
       gray: {
         50: '#AEAEAE',
@@ -107,6 +118,9 @@ module.exports = {
         800: '#083575',
         900: '#112944',
       },
+      slate: {
+        600: '#525C6A',
+      },
     },
     screens: {
       xs: '400px',
@@ -118,6 +132,7 @@ module.exports = {
       1: '1',
       10: '10', // Chart logo and Y axis, Borders (TvlActivityToggle and DesktopTabs)
       20: '20', // Chart canvas and loader, Items (DesktopTabs, TvlActivityToggle)
+      25: '25',
       30: '30', // Chart hover line
       40: '40', // Milestones, Chart hover line point (squares and circles)
       50: '50', // Chart hover content
@@ -132,6 +147,9 @@ module.exports = {
       },
       spacing: {
         '2/3': '66.666666%',
+      },
+      opacity: {
+        15: '0.15',
       },
       transitionProperty: {
         height: 'height',

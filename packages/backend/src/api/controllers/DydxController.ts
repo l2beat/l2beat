@@ -11,8 +11,9 @@ export class DydxController {
   async getTvl(): Promise<number | undefined> {
     const report = await this.aggregatedReportsRepository.findLatest(
       ProjectId('dydx'),
+      'TVL',
     )
 
-    return report ? asNumber(report.tvlUsd, 2) : undefined
+    return report ? asNumber(report.usdValue, 2) : undefined
   }
 }

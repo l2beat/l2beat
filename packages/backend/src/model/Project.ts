@@ -1,40 +1,67 @@
 import {
   Bridge,
-  getTokenBySymbol,
+  DuplicateData,
+  getCanonicalTokenBySymbol,
   Layer2,
-  Layer2ExternalAssets,
+  Layer2Liveness,
+  Layer2LivenessConfiguration,
   Layer2TransactionApi,
-  TokenInfo,
   tokenList,
 } from '@l2beat/config'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  LivenessType,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
+
+import {
+  LivenessConfigEntry,
+  makeLivenessFunctionCall,
+  makeLivenessSharpSubmissions,
+  makeLivenessTransfer,
+} from '../core/liveness/types/LivenessConfig'
+
+interface LivenessConfig {
+  entries: LivenessConfigEntry[]
+  duplicateData?: DuplicateData[]
+}
 
 export interface Project {
   projectId: ProjectId
+  isArchived?: boolean
   type: 'layer2' | 'bridge'
-  externalTokens?: Layer2ExternalAssets
+  isUpcoming?: boolean
+  isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
+  livenessConfig?: LivenessConfig
 }
 
 export interface ProjectEscrow {
   address: EthereumAddress
   sinceTimestamp: UnixTime
-  tokens: TokenInfo[]
+  tokens: Token[]
 }
 
 export function layer2ToProject(layer2: Layer2): Project {
   return {
     projectId: layer2.id,
     type: 'layer2',
-    externalTokens: layer2.config.externalAssets ?? undefined,
+    isUpcoming: layer2.isUpcoming,
+    isLayer3: layer2.isLayer3,
+    isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map((escrow) => ({
       address: escrow.address,
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
-        escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
+        escrow.tokens === '*'
+          ? tokenList.filter((t) => t.type === 'CBV')
+          : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
     transactionApi: layer2.config.transactionApi,
+    livenessConfig: toBackendLivenessConfig(layer2.id, layer2.config.liveness),
   }
 }
 
@@ -42,12 +69,47 @@ export function bridgeToProject(bridge: Bridge): Project {
   return {
     projectId: bridge.id,
     type: 'bridge',
-    externalTokens: undefined,
     escrows: bridge.config.escrows.map((escrow) => ({
       address: escrow.address,
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
-        escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
+        escrow.tokens === '*'
+          ? tokenList.filter((t) => t.type === 'CBV')
+          : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
   }
+}
+
+function toBackendLivenessConfig(
+  projectId: ProjectId,
+  config: Layer2Liveness | undefined,
+): LivenessConfig | undefined {
+  if (config === undefined) return
+
+  const livenessConfig: LivenessConfig = {
+    entries: [],
+    duplicateData: config.duplicateData,
+  }
+
+  function addEntry(param: Layer2LivenessConfiguration, type: LivenessType) {
+    if (param.formula === 'functionCall') {
+      livenessConfig.entries.push(
+        makeLivenessFunctionCall({ projectId, type, ...param }),
+      )
+    } else if (param.formula === 'transfer') {
+      livenessConfig.entries.push(
+        makeLivenessTransfer({ projectId, type, ...param }),
+      )
+    } else {
+      livenessConfig.entries.push(
+        makeLivenessSharpSubmissions({ projectId, type, ...param }),
+      )
+    }
+  }
+
+  config.stateUpdates.forEach((param) => addEntry(param, 'STATE'))
+  config.batchSubmissions.forEach((param) => addEntry(param, 'DA'))
+  config.proofSubmissions.forEach((param) => addEntry(param, 'PROOF'))
+
+  return livenessConfig
 }
