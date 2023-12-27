@@ -604,20 +604,6 @@
       "formula": "locked"
     },
     {
-      "id": "xcm-coinmetro-token",
-      "name": "CoinMetro Token",
-      "coingeckoId": "coinmetro",
-      "address": "0x36ac219f90f5A6A3C77f2a7B660E3cC701f68e25",
-      "symbol": "XCM",
-      "decimals": 18,
-      "sinceTimestamp": 1606218049,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/3125/large/XCM_Token_Logo_.png?1646280053",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
       "id": "comp-compound",
       "name": "Compound",
       "coingeckoId": "compound-governance-token",
