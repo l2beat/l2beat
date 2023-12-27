@@ -21,8 +21,8 @@ export function createLyraTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   return chainTvlSubmodule(
-    ChainId.BASE,
-    ProjectId.BASE,
+    ChainId.LYRA,
+    ProjectId.LYRA,
     config.tvl.base,
     config.tokens,
     LYRA_MULTICALL_CONFIG,
