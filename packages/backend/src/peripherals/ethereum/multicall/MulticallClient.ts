@@ -29,7 +29,7 @@ export class MulticallClient {
   async multicall(requests: MulticallRequest[], blockNumber: number) {
     const config = this.config.find((x) => blockNumber >= x.sinceBlock)
     try {
-      if (!config) {
+      if (!config || requests.length == 1) {
         return this.executeIndividual(requests, blockNumber)
       } else {
         const batches = toBatches(requests, config.batchSize)
