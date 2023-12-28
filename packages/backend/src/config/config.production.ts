@@ -207,6 +207,11 @@ export function getProductionConfig(env: Env): Config {
           callsPerMinute: env.integer('ACTIVITY_MANTLE_CALLS', 1500),
           url: env.string('ACTIVITY_MANTLE_URL', 'https://rpc.mantle.xyz'),
         },
+        metis: {
+          type: 'rpc',
+          callsPerMinute: env.integer('ACTIVITY_METIS_CALLS', 1500),
+          url: env.string('ACTIVITY_METIS_URL', 'https://andromeda.metis.io/'),
+        },
       },
     },
     statusEnabled: env.boolean('STATUS_ENABLED', true),
