@@ -23,7 +23,7 @@ export function createLyraTvlSubmodule(
   return chainTvlSubmodule(
     ChainId.LYRA,
     ProjectId.LYRA,
-    config.tvl.base,
+    config.tvl.lyra,
     config.tokens,
     LYRA_MULTICALL_CONFIG,
     db,
