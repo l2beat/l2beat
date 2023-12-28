@@ -17,7 +17,7 @@ export const socket: Bridge = {
       'The security parameters of each individual token and vault must be individually assessed, and can be changed by the developers. DYOR and use Socket at your own risk.',
     category: 'Token Bridge',
     links: {
-      websites: ['http://socketscan.io'],
+      websites: ['https://socketscan.io/'],
       repositories: [
         'https://github.com/SocketDotTech/socket-plugs/blob/main/contracts/superbridge',
       ],
@@ -68,12 +68,12 @@ export const socket: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'Watchers fail to facilitate the transfer.',
+          text: 'watchers fail to facilitate the transfer.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'Watchers submit fraudulent block hash and relay fraudulent transfer .',
+          text: 'watchers submit fraudulent block hash and relay fraudulent transfer .',
           isCritical: true,
         },
         {
