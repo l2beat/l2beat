@@ -140,7 +140,7 @@ export function getProductionConfig(env: Env): Config {
           etherscanApiKey: env.string('TVL_LYRA_ETHERSCAN_API_KEY'),
           etherscanApiUrl: 'https://explorer.lyra.finance/api',
         },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+        minBlockTimestamp: getChainMinTimestamp(ChainId.LYRA),
       },
       mantapacific: mantapacificTvlEnabled && {
         providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
