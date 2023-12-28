@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "blockNumber": 18883324,
-  "configHash": "0x064e45c53e2a933f2013e6a21c9da4194b919eee9067550baa22156fb30c2762",
+  "configHash": "0x74b4d94edb844c497b55f547cc649150ee0de53e996e16a7f3bc68cc4cdafbe4",
   "version": 3,
   "contracts": [
     {
@@ -237,6 +237,12 @@
       },
       "sinceTimestamp": 1700128955,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
         "chainSlug": 1,
         "isGlobalTipped": false,
         "nominee": "0x0000000000000000000000000000000000000000",

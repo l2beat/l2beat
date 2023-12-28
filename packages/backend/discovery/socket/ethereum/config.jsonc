@@ -77,6 +77,16 @@
         "outbox__",
         "remoteNativeSwitchboard"
       ]
+    },
+    "FastSwitchboard": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+          }
+        }
+      }
     }
   }
 }
