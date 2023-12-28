@@ -125,9 +125,8 @@ export function getLocalConfig(env: Env): Config {
           25,
         ),
         blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_LYRA_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://explorer.lyra.finance/api',
+          type: 'RoutescanLike',
+          routescanApiUrl: 'https://explorer.lyra.finance/api',
         },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
