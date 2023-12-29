@@ -1,3 +1,25 @@
+# Diff at Tue, 19 Dec 2023 13:36:06 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: master@1e70db199340dc9df7ac0996900e54067b9d4f12
+
+## Description
+
+Added new config values.
+
+## Watched changes
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+      values.stargateOracles[1]:
++        "0x000000000000000000000000d56e4eab23cb81f43168f9f45211eb027b9ac7cc"
+      values.stargateOracles[0]:
++        "0x0000000000000000000000005a54fe5234e811466d5366846283323c954310b2"
+      values.stargateRelayers[0]:
++        "0x000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e"
+    }
+```
+
 # Diff at Thu, 23 Nov 2023 13:31:10 GMT:
 
 - author: Amin Latifi (<a.latifi.al@gmail.com>)

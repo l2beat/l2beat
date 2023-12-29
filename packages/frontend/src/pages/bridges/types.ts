@@ -1,4 +1,11 @@
-import { BridgesRiskViewEntry } from './risk/types'
-import { BridgesTvlViewEntry } from './tvl/types'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
-export type BridgesEntry = BridgesTvlViewEntry | BridgesRiskViewEntry
+import { BridgesRiskViewEntry } from './risk/types'
+import { BridgesSummaryViewEntry } from './summary/types'
+
+export interface BridgesPagesData {
+  tvlApiResponse: TvlApiResponse
+  verificationStatus: VerificationStatus
+}
+
+export type BridgesEntry = BridgesSummaryViewEntry | BridgesRiskViewEntry

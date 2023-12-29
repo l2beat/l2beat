@@ -107,6 +107,7 @@ declare module 'knex/types/tables' {
     project_name: string
     block_number: number
     diff_json_blob: string
+    chain_id: number
   }
 
   interface TotalSupplyRow {
@@ -139,18 +140,17 @@ declare module 'knex/types/tables' {
     timestamp: Date
     block_number: number
     tx_hash: string
-    liveness_configuration_id: number
+    liveness_id: string
   }
 
   interface LivenessConfigurationRow {
-    id: number
+    id: string
     project_id: string
     type: string
-    identifier: string
-    params: string
     since_timestamp: Date
-    until_timestamp: Date | undefined
-    last_synced_timestamp: Date | undefined
+    until_timestamp: Date | null
+    last_synced_timestamp: Date | null
+    debug_info: string
   }
 
   interface DiscoveryCacheRow {
@@ -169,7 +169,6 @@ declare module 'knex/types/tables' {
 
   interface IndexerStateRow {
     indexer_id: string
-    config_hash: string
     safe_height: number
     min_timestamp: Date | undefined
   }

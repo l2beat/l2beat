@@ -13,7 +13,7 @@ export function TokenEntry({ className, l2Tokens }: TokenEntryProps) {
   return (
     <Callout
       className={cx('px-4', className)}
-      icon={<BulletIcon className="h-6 md:h-[27px]" />}
+      icon={<BulletIcon className="h-[1em]" />}
       body={
         <>
           <div className="flex flex-wrap gap-x-2">

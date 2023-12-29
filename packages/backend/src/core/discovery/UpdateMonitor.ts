@@ -56,6 +56,48 @@ export class UpdateMonitor {
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
+
+    const reminders = await this.generateDailyReminder()
+    await this.updateNotifier.sendDailyReminder(reminders, timestamp)
+  }
+
+  async generateDailyReminder(): Promise<Record<string, ChainId[]>> {
+    const result: Record<string, ChainId[]> = {}
+
+    for (const runner of this.discoveryRunners) {
+      const chainId = runner.getChainId()
+      const projectConfigs = await this.configReader.readAllConfigsForChain(
+        chainId,
+      )
+
+      for (const projectConfig of projectConfigs) {
+        const discovery = this.cachedDiscovery.get(
+          this.getCacheKey(projectConfig.name, chainId),
+        )
+
+        if (!discovery) {
+          continue
+        }
+
+        const committed = await this.configReader.readDiscovery(
+          projectConfig.name,
+          chainId,
+        )
+
+        const diff = diffDiscovery(
+          committed.contracts,
+          discovery.contracts,
+          projectConfig,
+        )
+
+        if (diff.length > 0) {
+          result[projectConfig.name] ??= []
+          result[projectConfig.name].push(chainId)
+        }
+      }
+    }
+
+    return result
   }
 
   async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
@@ -105,8 +147,6 @@ export class UpdateMonitor {
       })
     }
 
-    await this.findUnresolvedProjects(projectConfigs, timestamp)
-
     metricsDone()
     this.logger.info('Update finished', {
       chain: ChainId.getName(chainId),
@@ -132,7 +172,10 @@ export class UpdateMonitor {
       runSanityCheck: true,
       injectInitialAddresses: true,
     })
-    this.cachedDiscovery.set(projectConfig.name, discovery)
+    this.cachedDiscovery.set(
+      this.getCacheKey(projectConfig.name, runner.getChainId()),
+      discovery,
+    )
 
     const deployedDiscovered = await this.configReader.readDiscovery(
       projectConfig.name,
@@ -190,7 +233,7 @@ export class UpdateMonitor {
       })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
-        ChainId.ETHEREUM,
+        runner.getChainId(),
       )
     }
 
@@ -221,13 +264,14 @@ export class UpdateMonitor {
     if (diff.length > 0) {
       const dependents = await findDependents(
         projectConfig.name,
+        chainId,
         this.configReader,
       )
       const unknownContracts = await findUnknownContracts(
         discovery.name,
         discovery.contracts,
         this.configReader,
-        ChainId.ETHEREUM,
+        chainId,
       )
       await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,
@@ -239,41 +283,6 @@ export class UpdateMonitor {
     }
   }
 
-  // this function gets a diff between current discovery and committed discovery
-  // and checks if there are any changes that are not yet resolved
-  // sends the results to the notification manager
-  async findUnresolvedProjects(
-    projectConfigs: DiscoveryConfig[],
-    timestamp: UnixTime,
-  ) {
-    const notUpdatedProjects: string[] = []
-
-    for (const projectConfig of projectConfigs) {
-      const discovery = this.cachedDiscovery.get(projectConfig.name)
-
-      if (!discovery) {
-        continue
-      }
-
-      const committed = await this.configReader.readDiscovery(
-        projectConfig.name,
-        ChainId.ETHEREUM,
-      )
-
-      const diff = diffDiscovery(
-        committed.contracts,
-        discovery.contracts,
-        projectConfig,
-      )
-
-      if (diff.length > 0) {
-        notUpdatedProjects.push(projectConfig.name)
-      }
-    }
-
-    await this.updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
-  }
-
   initMetrics(blockNumber: number): () => void {
     const histogramDone = syncHistogram.startTimer()
     changesDetected.set(0)
@@ -283,6 +292,10 @@ export class UpdateMonitor {
       histogramDone()
       latestBlock.set(blockNumber)
     }
+  }
+
+  private getCacheKey(projectName: string, chainId: ChainId): string {
+    return `${ChainId.getName(chainId)}:${projectName}`
   }
 }
 

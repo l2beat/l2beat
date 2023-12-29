@@ -16,7 +16,8 @@
     "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": "ERC20Bridge",
     "0x5B0bb17755FBa06028530682E2FD5bc373931768": "ERC20BridgeProxyAdmin",
     "0xC84832f69bFFbC1A94E44a157A342766E959ED27": "PlonkVerifierFull2",
-    "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "ERC20UpgradableBeacon"
+    "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "ERC20UpgradableBeacon",
+    "0xF24f1DC519d88246809B660eb56D94048575d083": "Roles"
   },
   "overrides": {
     "zkEVM": {
@@ -77,6 +78,13 @@
     "USDCBridge": {
       "ignoreMethods": ["usdc"],
       "ignoreInWatchMode": ["balance"]
+    },
+    "Roles": {
+      "fields": {
+        "roles": {
+          "type": "lineaRolesModule"
+        }
+      }
     }
   }
 }
