@@ -12,6 +12,7 @@ import { brine } from './brine'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
+import { debank } from './debank'
 import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -81,6 +82,7 @@ export const layer2s: Layer2[] = [
   canto,
   capx,
   canvasconnect,
+  debank,
   honeypot,
   degate,
   degate2,
