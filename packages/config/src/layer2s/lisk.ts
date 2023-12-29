@@ -25,7 +25,6 @@ export const lisk: Layer2 = {
       socialMedia: [
         'https://twitter.com/LiskHQ',
         'https://lisk.chat/',
-        'https://www.youtube.com/channel/UCuqpGfg_bOQ8Ja4pj811PWg/featured',
         'https://t.me/Lisk_HQ',
       ],
     },
