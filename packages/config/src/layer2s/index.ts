@@ -36,6 +36,7 @@ import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metis } from './metis'
 import { mode } from './mode'
+import { molten } from './molten'
 import { morphism } from './morphism'
 import { myria } from './myria'
 import { nova } from './nova'
@@ -104,6 +105,7 @@ export const layer2s: Layer2[] = [
   mantle,
   metis,
   mode,
+  molten,
   morphism,
   myria,
   nova,
