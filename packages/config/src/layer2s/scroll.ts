@@ -27,8 +27,10 @@ const timelockFastDelay = discovery.getContractValue<number>(
 
 const upgradesScrollMultisig = {
   upgradableBy: ['ScrollMultisig'],
-  upgradeDelay: 'None',
+  upgradeDelay: 'No delay',
 }
+
+const upgradeDelay = 0
 
 export const scroll: Layer2 = {
   type: 'layer2',
@@ -52,7 +54,8 @@ export const scroll: Layer2 = {
         'https://scrollscan.com/',
         'https://blockscout.scroll.io',
         'https://scroll.unifra.xyz/',
-        'https://www.ondora.xyz/network/scroll',
+        'https://ondora.xyz/network/scroll',
+        'https://scroll.l2scan.co/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',
@@ -70,15 +73,24 @@ export const scroll: Layer2 = {
         'https://twitter.com/Scroll_ZKP',
         'https://youtube.com/@Scroll_ZKP',
       ],
+      rollupCodes: 'https://rollup.codes/scroll',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        batchSubmissions:
+          'Transaction data batches that have not yet been proven can be reverted.',
+      },
+      explanation:
+        'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
+    },
   },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -173,8 +185,8 @@ export const scroll: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
       sources: [
         {
           contract: 'ScrollChain',

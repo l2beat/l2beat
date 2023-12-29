@@ -1,3 +1,38 @@
+# Diff at Thu, 21 Dec 2023 13:24:40 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@10f854f818ad64712b787aaf697a6953e41185cf
+
+## Description
+
+Owner is being changed. They are using Claimable istead of Ownable, which is the same thing but the new pending owner has to accept the ownership.
+
+## Watched changes
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+    }
+```
+
+```diff
+    contract LoopringV3 (0x9385aCd9d78dFE854c543294770d0C94c2B07EDC) {
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD) {
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+    }
+```
+
 # Diff at Tue, 21 Nov 2023 13:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

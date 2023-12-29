@@ -17,9 +17,9 @@ export const x1: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
-      websites: ['https://www.okx.com/x1'],
+      websites: ['https://okx.com/x1'],
       apps: [],
-      documentation: ['https://www.okx.com/x1/docs'],
+      documentation: ['https://okx.com/x1/docs'],
       explorers: [],
       repositories: [],
       socialMedia: ['https://twitter.com/X1_Network'],

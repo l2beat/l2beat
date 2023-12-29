@@ -2003,20 +2003,49 @@
     dotenv "^16.3.1"
     error-stack-parser "^2.1.4"
 
-"@l2beat/discovery-types@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.5.0.tgz#a1e84c060397b05a273eb99380e22951b1d1681e"
-  integrity sha512-R90CBX94VwT3O7D731/LQEjAbNZ8L5JsGZm4wD8A3tmN+6z0zt81oX/YFPSLAUVpgzN2+hs96pN6jfCsR9K8Cw==
+"@l2beat/backend-tools@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@l2beat/backend-tools/-/backend-tools-0.5.1.tgz#c19dcfad851ef7111bff93cfdcb50899b3a6e710"
+  integrity sha512-IxbTChpTZ1gCOk+TsPXK9ysQkFbsGOfIw85+m4z2kcwNT0Dv9/iKWqPR+QE3djZXU/D2IJ7a7l6FxhE2YyY0lw==
+  dependencies:
+    chalk "^4.1.2"
+    dotenv "^16.3.1"
+    error-stack-parser "^2.1.4"
+
+"@l2beat/discovery-types@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.7.0.tgz#e6d90cd4fcb68d36d0f296eb82975c0344f1576f"
+  integrity sha512-GP2fM2NOZQzZPvm8PlYyBFVyrx8fZK8P3CVfGy4TkuXFlE4342e2ZQ3cZ507MHZkGrWE3zYOqR2MfFpH1beSMg==
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.24.0.tgz#ff977c13c466d08876292ca97bac68dc517238f6"
-  integrity sha512-sa+n9i3WzrNblwQOKtqnomWIEh1Ah5VbHIg8erMQkWJNI2jU8YhgBaAo10q5Ew+hdPZ3FIfy7vmKda7DBMk/6Q==
+"@l2beat/discovery@0.27.1":
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.27.1.tgz#d418783c9b7a5ec8f7025c3b89c30dd43bbbabbe"
+  integrity sha512-RT8AjLyXM6pD9ePaAAKMvrBCt52WsbypcsX442L9pd00ZETiTPE8NLEsM43jtkUtVeeAJJQBMY6JUQ93dhoxZQ==
   dependencies:
     "@l2beat/backend-tools" "^0.5.0"
-    "@l2beat/discovery-types" "^0.5.0"
+    "@l2beat/discovery-types" "^0.7.0"
+    chalk "^4.1.2"
+    deep-diff "^1.0.2"
+    dotenv "^16.0.3"
+    ethers "^5.7.2"
+    jsonc-parser "^3.2.0"
+    lodash "^4.17.21"
+    mkdirp "^3.0.0"
+    node-fetch "^2.6.7"
+    prettier "^3.0.3"
+    rimraf "^5.0.0"
+    sqlite3 "^5.1.6"
+    zod "^3.22.2"
+
+"@l2beat/discovery@0.28.0":
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.28.0.tgz#e24f78abc630be86958b0d1bfe6657656b6c422c"
+  integrity sha512-Ml6VEFh6ARpa3R+Y87lShVruM4M+VIqfakYJJHVfDnusC+bCS47HWhkfIG/fjo0vpLtZ8NlkeixMTR43dfjNrQ==
+  dependencies:
+    "@l2beat/backend-tools" "^0.5.1"
+    "@l2beat/discovery-types" "^0.7.0"
     chalk "^4.1.2"
     deep-diff "^1.0.2"
     dotenv "^16.0.3"

@@ -16,6 +16,12 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztec')
 
+const upgradeDelay = 0
+const escapeBlockLowerBound = discovery.getContractValue<number>(
+  'RollupProcessor',
+  'escapeBlockLowerBound',
+)
+
 function getRollupProviders() {
   // not getting this from the discovery, because it's the deployer
   // https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L88
@@ -111,8 +117,8 @@ export const aztecV1: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, escapeBlockLowerBound),
       description: '1/2 MSig can change Validator.',
       sources: [
         {
@@ -123,7 +129,6 @@ export const aztecV1: Layer2 = {
         },
       ],
     },
-
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [

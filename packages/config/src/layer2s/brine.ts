@@ -24,11 +24,11 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('brine')
 
-const delaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
 )
-const delay = formatSeconds(delaySeconds)
+const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 
 const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
@@ -52,7 +52,7 @@ export const brine: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
     links: {
-      websites: ['https://www.brine.fi/'],
+      websites: ['https://brine.fi/'],
       apps: ['https://trade.brine.fi/'],
       documentation: ['https://docs.brine.fi/'],
       explorers: [],
@@ -60,8 +60,10 @@ export const brine: Layer2 = {
       socialMedia: [
         'https://twitter.com/BrineFinance',
         'https://discord.gg/wMAnf3gVTh',
+        'https://linkedin.com/company/brine-fi-dex',
       ],
     },
+    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -97,10 +99,7 @@ export const brine: Layer2 = {
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.CANONICAL,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(
-      delaySeconds,
-      freezeGracePeriod,
-    ),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
   }),
@@ -120,7 +119,7 @@ export const brine: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
   },
   permissions: [
     {
@@ -128,7 +127,7 @@ export const brine: Layer2 = {
       accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(delay),
+        delayDescriptionFromString(upgradeDelay),
     },
     getCommittee(discovery),
     ...getSHARPVerifierGovernors(discovery, verifierAddress),

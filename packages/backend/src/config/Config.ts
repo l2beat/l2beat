@@ -1,7 +1,7 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { MulticallConfig } from '@l2beat/discovery'
-import { ChainId, Token, UnixTime } from '@l2beat/shared-pure'
+import { DiscoveryChainConfig } from '@l2beat/discovery'
+import { Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model'
@@ -67,6 +67,8 @@ export interface LivenessConfig {
     readonly clientEmail: string
     readonly privateKey: string
     readonly projectId: string
+    readonly queryLimitGb: number
+    readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
 }
@@ -123,13 +125,9 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
-export interface UpdateMonitorChainConfig {
-  chainId: ChainId
-  rpcUrl: string
-  rpcGetLogsMaxRange?: number
+export interface DiscoveryCacheChainConfig {
   reorgSafeDepth?: number
-  multicall: MulticallConfig
-  etherscanApiKey: string
-  etherscanUrl: string
-  minTimestamp: UnixTime
 }
+
+export type UpdateMonitorChainConfig = DiscoveryChainConfig &
+  DiscoveryCacheChainConfig

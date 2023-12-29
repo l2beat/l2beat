@@ -49,20 +49,16 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 const delay1 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
 const delay2 = discovery.getContractValue<number>('TimeLock2', 'MINIMUM_DELAY')
 
-const upgradeabilityRisk = RISK_VIEW.UPGRADE_DELAY_SECONDS(
-  Math.min(delay1, delay2),
-)
+const upgradeDelay = Math.min(delay1, delay2)
 
 const timelockUpgrades1 = {
   upgradableBy: ['Degate HomeDAO2 Multisig'],
   upgradeDelay: formatSeconds(delay1),
-  upgradeConsiderations: upgradeabilityRisk.description,
 }
 
 const timelockUpgrades2 = {
   upgradableBy: ['Degate HomeDAO2 Multisig'],
   upgradeDelay: formatSeconds(delay2),
-  upgradeConsiderations: upgradeabilityRisk.description,
 }
 
 export const degate3: Layer2 = {
@@ -91,6 +87,10 @@ export const degate3: Layer2 = {
         'https://medium.com/degate',
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
       ],
+    },
+    liveness: {
+      explanation:
+        'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
   },
   config: {
@@ -128,7 +128,7 @@ export const degate3: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: upgradeabilityRisk,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,
@@ -159,29 +159,34 @@ export const degate3: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: null,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: [
+          true,
+          'Users have at least 30d to exit as the system upgrades have a 45d delay.',
+        ],
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: null,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/degatedev/degate-state-recover',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: [
-        true,
-        'Users have at least 30d to exit as the system upgrades have a 45d delay.',
-      ],
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,

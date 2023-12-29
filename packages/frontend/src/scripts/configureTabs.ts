@@ -1,3 +1,5 @@
+import { setSortingQueryParamsByTabId } from './table/configureSorting'
+
 interface TabWithContent {
   tab: HTMLAnchorElement
   content: HTMLElement
@@ -14,11 +16,9 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
   if (!elements) {
     return
   }
-  const { tabsWithContent, tabs, underline } = elements
+  const { tabsWithContent, tabsContainer, tabs, underline } = elements
 
-  let selectedId =
-    tabs.find((tab) => tab.href.endsWith(window.location.hash))?.id ??
-    tabs[0].id
+  let selectedId = tabs[0].id
 
   const highlightTab = (tab: HTMLAnchorElement) => {
     tabsWithContent[selectedId].tab.classList.remove(
@@ -38,12 +38,25 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
     underline.style.width = `${tab.clientWidth}px`
   }
 
+  const scrollToItem = (item: HTMLAnchorElement) => {
+    const scrollPosition =
+      item.offsetLeft -
+      tabsContainer.getBoundingClientRect().width / 2 +
+      item.offsetWidth / 2
+
+    tabsContainer.scrollTo({
+      left: scrollPosition,
+      behavior: 'smooth',
+    })
+  }
+
   const onTabClick = (id: string) => {
     const { tab, content } = tabsWithContent[id]
 
     switchContent(content)
     highlightTab(tab)
     moveUnderline(tab)
+    scrollToItem(tab)
     selectedId = id
   }
 
@@ -53,12 +66,16 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
   }
 
   onTabClick(selectedId)
+  if (window.location.hash) {
+    onTabClick(window.location.hash.slice(1))
+  }
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', (e) => {
       e.preventDefault()
       history.replaceState({}, '', tab.href)
       onTabClick(tab.id)
+      setSortingQueryParamsByTabId(tab.id)
     })
   })
 
@@ -66,16 +83,16 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
 }
 
 function getElements(tabNavigation: HTMLElement) {
-  const tabsContainers = tabNavigation.querySelector<HTMLElement>(
+  const tabsContainer = tabNavigation.querySelector<HTMLElement>(
     '.TabsItemsContainer',
   )
   const underline = tabNavigation.querySelector<HTMLElement>('.TabsUnderline')
 
   const tabs = Array.from(
-    tabsContainers?.querySelectorAll<HTMLAnchorElement>('.TabsItem') ?? [],
+    tabsContainer?.querySelectorAll<HTMLAnchorElement>('.TabsItem') ?? [],
   )
 
-  if (!underline || !tabsContainers || tabs.length === 0) {
+  if (!underline || !tabsContainer || tabs.length === 0) {
     return
   }
   const tabsWithContent: Record<string, TabWithContent> = {}
@@ -97,6 +114,7 @@ function getElements(tabNavigation: HTMLElement) {
   })
 
   return {
+    tabsContainer,
     tabs,
     underline,
     tabsWithContent,

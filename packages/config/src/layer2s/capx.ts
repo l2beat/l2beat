@@ -17,7 +17,7 @@ export const capx: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
-      websites: ['https://www.capx.fi/'],
+      websites: ['https://capx.fi/'],
       apps: ['https://app.capx.fi/explore'],
       documentation: ['https://capx.gitbook.io/docs'],
       explorers: ['https://explorer.palm.io/'],

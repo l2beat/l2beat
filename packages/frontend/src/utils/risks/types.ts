@@ -4,7 +4,7 @@ type Risk =
   | 'sequencerFailure'
   | 'stateValidation'
   | 'dataAvailability'
-  | 'upgradeability'
+  | 'exitWindow'
   | 'proposerFailure'
 export type RiskSentiments = Record<Risk, Sentiment>
 

@@ -30,6 +30,7 @@ export function createDiscoveryRunner(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
+    chainConfig.etherscanUnsupported,
   )
 
   const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
