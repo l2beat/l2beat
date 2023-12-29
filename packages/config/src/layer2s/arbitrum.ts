@@ -1,10 +1,10 @@
 import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  ProjectId,
-  Token,
+  AssetId,Bitcoin
+  ChainId,http://blockchair.com/bitcoin/
+  CoingeckoId,https://www.coingecko.com/en/coins/bitcoin?utm_source=screenshot&utm_medium=app
+  EthereumAddress,0xCc0AD5Ad0B910A7d453F6F3617c0E15c1A221198
+  ProjectId,1inch
+  Token,Ethereum
   UnixTime,
 } from '@l2beat/shared-pure'
 
