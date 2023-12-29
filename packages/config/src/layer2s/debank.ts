@@ -24,7 +24,6 @@ export const debank: Layer2 = {
       repositories: ['https://github.com/DeBankDeFi/DeBankChain'],
       socialMedia: [
         'https://twitter.com/DebankDeFi',
-        'https://discordapp.com/invite/KYuj8DE',
         'https://medium.com/debank',
         'https://debank.com/official/DeBank',
       ],
