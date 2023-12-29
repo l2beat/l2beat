@@ -13,6 +13,7 @@ import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { HOMEPAGE_MILESTONES } from './common'
+import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
@@ -87,6 +88,7 @@ export const layer2s: Layer2[] = [
   canto,
   capx,
   canvasconnect,
+  debank,
   honeypot,
   degate,
   degate2,
