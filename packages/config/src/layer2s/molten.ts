@@ -17,7 +17,7 @@ export const molten: Layer2 = {
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.unidex.exchange/molten-network'],
+      websites: ['https://unidex.exchange/molten-network'],
       apps: [],
       documentation: ['https://docs.unidex.exchange/appchain/markdown'],
       explorers: ['https://unidex-celestium.calderaexplorer.xyz/'], //Temporarily Unavailable

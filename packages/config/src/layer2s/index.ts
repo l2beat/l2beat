@@ -40,7 +40,7 @@ import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
 import { molten } from './molten'
-import { morphism } from './morphism'
+import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
@@ -114,7 +114,7 @@ export const layer2s: Layer2[] = [
   mint,
   mode,
   molten,
-  morphism,
+  morph,
   myria,
   nova,
   obscuro,
