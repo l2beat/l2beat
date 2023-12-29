@@ -11,6 +11,7 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -27,6 +28,13 @@ const upgradesAddressManager = {
   upgradeConsiderations:
     'The AddressManager can be used to replace this contract.',
 }
+
+const upgradeDelay = 0
+
+const challengePeriod = discovery.getContractValue<number>(
+  'StateCommitmentChain',
+  'FRAUD_PROOF_WINDOW',
+)
 
 export const bobanetwork: Layer2 = {
   type: 'layer2',
@@ -52,15 +60,22 @@ export const bobanetwork: Layer2 = {
       explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
-        'https://boba.network/#news',
+        'https://boba.network/',
         'https://boba.network/blog/',
-        'https://www.enya.ai/company/media',
+        'https://enya.ai/about-us/',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
-        'https://discord.gg/m7NysJjKhm',
+        'https://discord.com/invite/Hvu3zpFwWd',
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation:
+        'Boba Network is an Optimistic rollup based on Optimism’s OVM that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner is always allowed to delete them.',
+    },
   },
   config: {
     associatedTokens: ['BOBA', 'OMG'],
@@ -126,8 +141,8 @@ export const bobanetwork: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'L1CrossDomainMessenger_1',
@@ -215,7 +230,7 @@ export const bobanetwork: Layer2 = {
       references: [
         {
           text: 'Data Availability Batches - Paradigm Research',
-          href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
         {
           text: 'CanonicalTransactionChain.sol#L219 - Etherscan source code, appendSequencerBatch function',
@@ -251,7 +266,7 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The Standard Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/standard-bridge',
           },
           {
             text: 'BondManager.sol#L31 - Etherscan source code, isCollateralized function',
@@ -267,7 +282,7 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The LP Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge-1',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/fast-bridge',
           },
         ],
         risks: [],

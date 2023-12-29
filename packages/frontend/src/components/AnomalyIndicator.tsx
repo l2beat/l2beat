@@ -9,7 +9,7 @@ import {
   AnomalyIndicatorEntry,
 } from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
-import { LivenessDurationCell } from './table/DurationCell'
+import { LivenessDurationCell } from './table/LivenessDurationCell'
 
 interface Props {
   anomalyEntries: AnomalyIndicatorEntry[]

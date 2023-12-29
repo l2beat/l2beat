@@ -14,13 +14,7 @@ import {
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import {
-  FunctionCallParams,
-  layer2s,
-  Layer2Technology,
-  milestonesLayer2s,
-  NUGGETS,
-} from './index'
+import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -30,6 +24,16 @@ describe('layer2s', () => {
           const links = Object.values(layer2.display.links).flat()
           for (const link of links) {
             expect(link).not.toInclude(' ')
+          }
+        })
+      }
+    })
+    describe('do not include www part', () => {
+      for (const layer2 of layer2s) {
+        it(layer2.display.name, () => {
+          const links = Object.values(layer2.display.links).flat()
+          for (const link of links) {
+            expect(link).not.toInclude('www')
           }
         })
       }
@@ -85,7 +89,10 @@ describe('layer2s', () => {
           const functionCalls = [
             ...project.config.liveness.batchSubmissions,
             ...project.config.liveness.stateUpdates,
-          ].filter((x) => x.formula === 'functionCall') as FunctionCallParams[]
+          ].filter((x) => x.formula === 'functionCall') as {
+            selector: string
+            functionSignature: string
+          }[]
 
           functionCalls.forEach((c) => {
             const i = new utils.Interface([c.functionSignature])
@@ -163,22 +170,25 @@ describe('layer2s', () => {
                   const referencedAddresses = getReferencedAddresses(
                     sourceCodeReference.references,
                   )
-                  const contract = discovery.getContract(
-                    sourceCodeReference.contract,
-                  )
 
-                  const contractAddresses = [
-                    contract.address,
-                    ...gatherAddressesFromUpgradeability(
-                      contract.upgradeability,
-                    ),
-                  ]
+                  if (referencedAddresses.length > 0) {
+                    const contract = discovery.getContract(
+                      sourceCodeReference.contract,
+                    )
 
-                  expect(
-                    contractAddresses.some((a) =>
-                      referencedAddresses.includes(a),
-                    ),
-                  ).toEqual(true)
+                    const contractAddresses = [
+                      contract.address,
+                      ...gatherAddressesFromUpgradeability(
+                        contract.upgradeability,
+                      ),
+                    ]
+
+                    expect(
+                      contractAddresses.some((a) =>
+                        referencedAddresses.includes(a),
+                      ),
+                    ).toEqual(true)
+                  }
                 })
               }
             })
@@ -422,6 +432,17 @@ describe('layer2s', () => {
         }
       }
     })
+  })
+})
+
+describe('layer3s', () => {
+  const layer3s = layer2s.filter((x) => x.isLayer3)
+  it('every layer3 has a valid host chain', () => {
+    for (const layer3 of layer3s) {
+      expect(layer3.hostChain).not.toBeNullish()
+      const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
+      expect(hostChain).not.toBeNullish()
+    }
   })
 })
 

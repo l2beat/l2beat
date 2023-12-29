@@ -60,8 +60,8 @@ export function RosetteTooltipPopup({
             risk={riskValues.dataAvailability}
           />
           <RiskValueComponent
-            title="Upgradeability"
-            risk={riskValues.upgradeability}
+            title="Exit window"
+            risk={riskValues.exitWindow}
           />
           <RiskValueComponent
             title="Proposer failure"

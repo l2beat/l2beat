@@ -52,7 +52,7 @@ function getLinks(links: Partial<ProjectLinks>) {
 
   if (links.documentation) {
     projectLinks.push({
-      name: 'Documentation',
+      name: 'Docs',
       links: links.documentation,
     })
   }
