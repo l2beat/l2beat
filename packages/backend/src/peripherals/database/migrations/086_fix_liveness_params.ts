@@ -15,7 +15,7 @@ import { layer2s } from '@l2beat/config'
 import { LivenessType, notUndefined } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { LivenessConfigurationIdentifier } from '../../../core/liveness/types/LivenessConfigurationIdentifier'
+import { makeLivenessTransfer } from '../../../core/liveness/types/LivenessConfig'
 
 export async function up(knex: Knex) {
   const transfersToUpdate = layer2s.flatMap((l2) => {
@@ -45,15 +45,15 @@ export async function up(knex: Knex) {
   })
 
   for (const config of transfersToUpdate) {
-    const identifier = LivenessConfigurationIdentifier(config)
     await knex('liveness_configuration')
       .update({
+        // @ts-expect-error schema has changed
         params: JSON.stringify({
           from: config.from.toString(),
           to: config.to.toString(),
         }),
       })
-      .where('identifier', '=', identifier)
+      .where('identifier', '=', makeLivenessTransfer(config).id)
   }
 }
 
@@ -85,14 +85,15 @@ export async function down(knex: Knex) {
   })
 
   for (const config of transfersToUpdate) {
-    const identifier = LivenessConfigurationIdentifier(config)
     await knex('liveness_configuration')
       .update({
+        // @ts-expect-error schema has changed
         params: JSON.stringify({
           from: config.from.toString(),
           to: config.from.toString(),
         }),
       })
-      .where('identifier', '=', identifier)
+      // TODO: this migration will break, what to do with it?
+      .where('identifier', '=', makeLivenessTransfer(config).id)
   }
 }

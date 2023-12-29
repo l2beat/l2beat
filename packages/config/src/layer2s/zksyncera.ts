@@ -1,7 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { VALUES } from '../discovery/values'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -32,6 +31,8 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
@@ -53,7 +54,10 @@ export const zksyncera: Layer2 = {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
       documentation: ['https://era.zksync.io/docs/'],
-      explorers: ['https://explorer.zksync.io/'],
+      explorers: [
+        'https://explorer.zksync.io/',
+        'https://zksync-era.l2scan.co/',
+      ],
       repositories: ['https://github.com/matter-labs/zksync-era'],
       socialMedia: [
         'https://zksync.mirror.xyz/',
@@ -62,8 +66,14 @@ export const zksyncera: Layer2 = {
         'https://twitter.com/zksync',
         'https://twitter.com/zkSyncDevs',
       ],
+      rollupCodes: 'https://rollup.codes/zksync-era',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation: delay
+        ? `zkSync Era is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${delay} delay between state diffs verification and the execution of the corresponding state actions.`
+        : undefined,
+    },
   },
   config: {
     escrows: [
@@ -100,6 +110,17 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
           sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701718427),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0x7f61885c',
+          functionSignature:
+            'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
+          sinceTimestamp: new UnixTime(1701258299),
         },
       ],
       batchSubmissions: [],
@@ -113,6 +134,17 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
           sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701719687),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0xc3d93e7c',
+          functionSignature:
+            'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
+          sinceTimestamp: new UnixTime(1701258299),
         },
       ],
     },
@@ -127,20 +159,20 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L89',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L89',
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F1#L352',
-            'https://etherscan.io/address/0x7444DE636699F080cA1C033528D2bB3705B391Ce#code#F7#L24',
+            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L365',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F7#L26',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0x3F04F86f14aB74953fDAEde8175e0714eB8e798e#code#F1#L227',
+            'https://etherscan.io/address/0xB465882F67d236DcC0D090F78ebb0d838e9719D8#code#F1#L348',
           ],
         },
       ],
@@ -155,14 +187,14 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L71',
+            'https://etherscan.io/address/0xa0425d71cB1D6fb80E65a5361a04096E0672De03#code#F1#L71',
             'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b', // example tx (see calldata)
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7444DE636699F080cA1C033528D2bB3705B391Ce#code#F1#L151',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F1#L128',
           ],
         },
       ],
@@ -170,14 +202,14 @@ export const zksyncera: Layer2 = {
         'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
       ],
     },
-    upgradeability: {
-      ...VALUES.ZKSYNC_2.UPGRADEABILITY,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelay),
       sources: [
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4#code#F1#L121',
-            'https://etherscan.io/address/0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4#code#F7#L54',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F1#L100',
+            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F7#L58',
           ],
         },
       ],
@@ -188,8 +220,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F14#L56',
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F14#L73',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L56',
+            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L73',
           ],
         },
       ],
@@ -204,7 +236,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b#code#F1#L186',
+            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L186',
           ],
         },
       ],
@@ -317,10 +349,10 @@ export const zksyncera: Layer2 = {
     nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
     The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but zkSync is actively working on a solution for this.`,
     compressionScheme:
-      'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/advanced/bytecode_compression.md).',
+      'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/compression.md).',
     genesisState: 'There have been neither genesis states nor regenesis.',
     dataFormat:
-      'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/advanced/pubdata.md).',
+      'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   },
   permissions: [
     ...discovery.getMultisigPermission(
@@ -335,7 +367,6 @@ export const zksyncera: Layer2 = {
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
     },
-    VALUES.ZKSYNC_2.SECURITY_COUNCIL,
   ],
   milestones: [
     {

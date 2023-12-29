@@ -14,6 +14,8 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('omgnetwork')
 
+const upgradeDelay = 0
+
 export const omgnetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
@@ -61,7 +63,7 @@ export const omgnetwork: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,

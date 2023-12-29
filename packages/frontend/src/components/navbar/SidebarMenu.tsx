@@ -49,7 +49,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </li>
               <li className="flex gap-2 font-medium">
                 <TvlIcon className="h-auto w-4" />
-                <a href="/scaling/detailedTvl">Value Locked</a>
+                <a href="/scaling/tvl">Value Locked</a>
               </li>
               <li className="flex gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />

@@ -10,6 +10,7 @@ import { PermissionsSection } from '../../../../components/project/PermissionsSe
 import { RiskAnalysis } from '../../../../components/project/RiskAnalysis'
 import { StageSection } from '../../../../components/project/StageSection'
 import { StateDerivationSection } from '../../../../components/project/StateDerivationSection'
+import { StateValidationSection } from '../../../../components/project/StateValidationSection'
 import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
@@ -55,6 +56,10 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'StateDerivationSection':
             return (
               <StateDerivationSection key={item.props.id} {...item.props} />
+            )
+          case 'StateValidationSection':
+            return (
+              <StateValidationSection key={item.props.id} {...item.props} />
             )
           case 'PermissionsSection':
             return <PermissionsSection key={item.props.id} {...item.props} />

@@ -31,7 +31,7 @@ export function WarningBar({
       <Markdown className="leading-snug" inline>
         {text}
       </Markdown>
-      {isCritical && <span className="text-red-300">(CRITICAL)</span>}
+      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
     </>
   )
   const Icon = icon ?? ShieldIcon

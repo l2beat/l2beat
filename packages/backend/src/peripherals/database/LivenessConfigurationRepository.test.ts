@@ -1,43 +1,54 @@
 import { Logger } from '@l2beat/backend-tools'
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  LivenessType,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessConfigurationIdentifier } from '../../core/liveness/types/LivenessConfigurationIdentifier'
+import {
+  LivenessConfigEntry,
+  makeLivenessFunctionCall,
+} from '../../core/liveness/types/LivenessConfig'
+import { LivenessId } from '../../core/liveness/types/LivenessId'
 import { setupDatabaseTestSuite } from '../../test/database'
 import {
   LivenessConfigurationRecord,
   LivenessConfigurationRepository,
-  NewLivenessConfigurationRecord,
 } from './LivenessConfigurationRepository'
 import { LivenessRepository } from './LivenessRepository'
 
 const START = UnixTime.now()
 
-export const LIVENESS_CONFIGS: NewLivenessConfigurationRecord[] = [
-  {
+export const LIVENESS_CONFIGS: LivenessConfigEntry[] = [
+  makeLivenessFunctionCall({
     projectId: ProjectId('project1'),
     type: LivenessType('STATE'),
-    identifier: LivenessConfigurationIdentifier.random(),
-    params: "{ key1: 'value1', key2: 'value2' }",
-    sinceTimestamp: START.add(-1, 'hours'),
-    untilTimestamp: START.add(-2, 'hours'),
-  },
-  {
+    formula: 'functionCall',
+    address: EthereumAddress.random(),
+    selector: '0x',
+    sinceTimestamp: START,
+    untilTimestamp: START.add(1, 'hours'),
+  }),
+  makeLivenessFunctionCall({
     projectId: ProjectId('project2'),
     type: LivenessType('DA'),
-    identifier: LivenessConfigurationIdentifier.random(),
-    params: "{ key1: 'value3', key2: 'value4' }",
-    sinceTimestamp: START.add(-4, 'hours'),
-    untilTimestamp: START.add(-5, 'hours'),
-  },
-  {
+    formula: 'functionCall',
+    address: EthereumAddress.random(),
+    selector: '0x',
+    sinceTimestamp: START,
+    untilTimestamp: START.add(1, 'hours'),
+  }),
+  makeLivenessFunctionCall({
     projectId: ProjectId('project3'),
-    type: LivenessType('STATE'),
-    identifier: LivenessConfigurationIdentifier.random(),
-    params: "{ key1: 'value5', key2: 'value6' }",
-    sinceTimestamp: START.add(-7, 'hours'),
-    untilTimestamp: START.add(-8, 'hours'),
-  },
+    type: LivenessType('PROOF'),
+    formula: 'functionCall',
+    address: EthereumAddress.random(),
+    selector: '0x',
+    sinceTimestamp: START,
+    untilTimestamp: START.add(1, 'hours'),
+  }),
 ]
 
 describe(LivenessConfigurationRepository.name, () => {
@@ -54,17 +65,10 @@ describe(LivenessConfigurationRepository.name, () => {
 
   describe(LivenessConfigurationRepository.prototype.addMany.name, () => {
     it('should add new rows', async () => {
-      const newIds = await repository.addMany(LIVENESS_CONFIGS)
-
+      await repository.addMany(LIVENESS_CONFIGS)
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        LIVENESS_CONFIGS.map((c, i) => ({
-          ...c,
-          id: newIds[i],
-          lastSyncedTimestamp: undefined,
-        })),
-      )
+      expect(results).toEqualUnsorted(LIVENESS_CONFIGS.map(toRecord))
     })
 
     it('empty array', async () => {
@@ -82,7 +86,7 @@ describe(LivenessConfigurationRepository.name, () => {
             timestamp: UnixTime.now(),
             blockNumber: 0,
             txHash: '0x',
-            livenessConfigurationId: newIds[0],
+            livenessId: newIds[0],
           },
         ])
 
@@ -97,43 +101,38 @@ describe(LivenessConfigurationRepository.name, () => {
     LivenessConfigurationRepository.prototype.setLastSyncedTimestamp.name,
     () => {
       it('updates last synced timestamp of given configuration', async () => {
-        const newIds = await repository.addMany(LIVENESS_CONFIGS)
+        await repository.addMany(LIVENESS_CONFIGS)
 
         const latest = UnixTime.now()
-        const updatedRow: LivenessConfigurationRecord = {
-          ...LIVENESS_CONFIGS[0],
-          id: newIds[0],
-          lastSyncedTimestamp: latest,
-        }
 
-        await repository.setLastSyncedTimestamp(newIds[0], latest)
+        await repository.setLastSyncedTimestamp(
+          [LIVENESS_CONFIGS[0].id, LIVENESS_CONFIGS[1].id],
+          latest,
+        )
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
-          updatedRow,
-          ...LIVENESS_CONFIGS.slice(1).map((c, i) => ({
-            ...c,
-            id: newIds[i + 1],
-            lastSyncedTimestamp: undefined,
-          })),
+          {
+            ...toRecord(LIVENESS_CONFIGS[0]),
+            lastSyncedTimestamp: latest,
+          },
+          {
+            ...toRecord(LIVENESS_CONFIGS[1]),
+            lastSyncedTimestamp: latest,
+          },
+          ...LIVENESS_CONFIGS.slice(2).map(toRecord),
         ])
       })
 
       it('does not update if configuration not found', async () => {
-        const newIds = await repository.addMany(LIVENESS_CONFIGS)
+        await repository.addMany(LIVENESS_CONFIGS)
 
         const latest = UnixTime.now()
 
-        await repository.setLastSyncedTimestamp(-1, latest)
+        await repository.setLastSyncedTimestamp([LivenessId.random()], latest)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
-          ...LIVENESS_CONFIGS.map((c, i) => ({
-            ...c,
-            id: newIds[i],
-            lastSyncedTimestamp: undefined,
-          })),
-        ])
+        expect(results).toEqualUnsorted([...LIVENESS_CONFIGS.map(toRecord)])
       })
     },
   )
@@ -146,10 +145,8 @@ describe(LivenessConfigurationRepository.name, () => {
 
         const untilTimestamp = UnixTime.now()
         const updatedRow: LivenessConfigurationRecord = {
-          ...LIVENESS_CONFIGS[0],
-          id: newIds[0],
+          ...toRecord(LIVENESS_CONFIGS[0]),
           untilTimestamp: untilTimestamp,
-          lastSyncedTimestamp: undefined,
         }
 
         await repository.setUntilTimestamp(newIds[0], untilTimestamp)
@@ -157,46 +154,30 @@ describe(LivenessConfigurationRepository.name, () => {
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([
           updatedRow,
-          ...LIVENESS_CONFIGS.slice(1).map((c, i) => ({
-            ...c,
-            id: newIds[i + 1],
-            lastSyncedTimestamp: undefined,
-          })),
+          ...LIVENESS_CONFIGS.slice(1).map(toRecord),
         ])
       })
 
       it('does not update if configuration not found', async () => {
-        const newIds = await repository.addMany(LIVENESS_CONFIGS)
+        await repository.addMany(LIVENESS_CONFIGS)
 
         const untilTimestamp = UnixTime.now()
 
-        await repository.setUntilTimestamp(-1, untilTimestamp)
+        await repository.setUntilTimestamp(LivenessId.random(), untilTimestamp)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
-          ...LIVENESS_CONFIGS.map((c, i) => ({
-            ...c,
-            id: newIds[i],
-            lastSyncedTimestamp: undefined,
-          })),
-        ])
+        expect(results).toEqualUnsorted([...LIVENESS_CONFIGS.map(toRecord)])
       })
     },
   )
 
   describe(LivenessConfigurationRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
-      const newIds = await repository.addMany(LIVENESS_CONFIGS)
+      await repository.addMany(LIVENESS_CONFIGS)
 
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        LIVENESS_CONFIGS.map((c, i) => ({
-          ...c,
-          id: newIds[i],
-          lastSyncedTimestamp: undefined,
-        })),
-      )
+      expect(results).toEqualUnsorted(LIVENESS_CONFIGS.map(toRecord))
     })
   })
 
@@ -222,19 +203,13 @@ describe(LivenessConfigurationRepository.name, () => {
           timestamp: UnixTime.now(),
           blockNumber: 0,
           txHash: '0x',
-          livenessConfigurationId: newIds[1],
+          livenessId: newIds[1],
         },
       ])
 
       await repository.deleteMany(newIds.slice(1))
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        {
-          ...LIVENESS_CONFIGS[0],
-          id: newIds[0],
-          lastSyncedTimestamp: undefined,
-        },
-      ])
+      expect(results).toEqualUnsorted([toRecord(LIVENESS_CONFIGS[0])])
 
       const childResults = await childRepository.getAll()
       expect(childResults).toEqualUnsorted([])
@@ -245,3 +220,14 @@ describe(LivenessConfigurationRepository.name, () => {
     })
   })
 })
+function toRecord(entry: LivenessConfigEntry): LivenessConfigurationRecord {
+  return {
+    id: entry.id,
+    projectId: entry.projectId,
+    type: entry.type,
+    sinceTimestamp: entry.sinceTimestamp,
+    untilTimestamp: entry.untilTimestamp,
+    lastSyncedTimestamp: undefined,
+    debugInfo: expect.a(String),
+  }
+}

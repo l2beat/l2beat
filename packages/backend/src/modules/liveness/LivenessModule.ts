@@ -32,22 +32,31 @@ export function createLivenessModule(
     logger,
   )
 
-  const bigQueryClient = new BigQueryClient({
-    clientEmail: config.liveness.bigQuery.clientEmail,
-    privateKey: config.liveness.bigQuery.privateKey,
-    projectId: config.liveness.bigQuery.projectId,
-  })
+  const bigQueryClient = new BigQueryClient(
+    {
+      clientEmail: config.liveness.bigQuery.clientEmail,
+      privateKey: config.liveness.bigQuery.privateKey,
+      projectId: config.liveness.bigQuery.projectId,
+    },
+    config.liveness.bigQuery.queryLimitGb,
+    config.liveness.bigQuery.queryWarningLimitGb,
+    logger,
+  )
   const livenessClient = new LivenessClient(bigQueryClient)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
+
+  const runtimeConfigurations = config.projects.flatMap(
+    (project) => project.livenessConfig?.entries ?? [],
+  )
   const liveness = new LivenessIndexer(
     logger,
     hourlyIndexer,
-    config.projects,
     livenessClient,
     indexerStateRepository,
     livenessRepository,
     livenessConfigurationRepository,
+    runtimeConfigurations,
     config.liveness.minTimestamp,
   )
 
