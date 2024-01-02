@@ -60,6 +60,7 @@ export interface TvlConfig {
   readonly optimism: ChainTvlConfig | false
   readonly base: ChainTvlConfig | false
   readonly mantapacific: ChainTvlConfig | false
+  readonly lyra: ChainTvlConfig | false
 }
 
 export interface LivenessConfig {
