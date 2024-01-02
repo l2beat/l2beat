@@ -1,4 +1,4 @@
-import { bridges, layer2s } from '@l2beat/config'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { ChainId, ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -11,6 +11,7 @@ describe('discovery config.jsonc', () => {
   const projectIds = layer2s
     .map((p) => p.id.toString())
     .concat(bridges.map((p) => p.id.toString()))
+    .concat(layer3s.map((p) => p.id.toString()))
 
   before(async () => {
     chainConfigs = await Promise.all(
