@@ -35,6 +35,9 @@ export interface ScalingSummaryViewEntryLayer3
   extends ScalingSummaryViewEntryBase {
   type: 'layer3'
   hostChainName?: string
+  stage: {
+    stage: 'NotApplicable'
+  }
 }
 
 export type ScalingSummaryViewEntry =

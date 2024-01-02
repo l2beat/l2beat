@@ -2,10 +2,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import React from 'react'
 
-import {
-  ScalingSummaryViewEntry,
-  ScalingSummaryViewEntryLayer2,
-} from '../../../pages/scaling/summary/types'
+import { ScalingSummaryViewEntryLayer2 } from '../../../pages/scaling/summary/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'

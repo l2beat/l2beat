@@ -50,7 +50,6 @@ export function layer2ToProject(layer2: Layer2): Project {
     projectId: layer2.id,
     type: 'layer2',
     isUpcoming: layer2.isUpcoming,
-    isLayer3: layer2.isLayer3,
     isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map((escrow) => ({
       address: escrow.address,

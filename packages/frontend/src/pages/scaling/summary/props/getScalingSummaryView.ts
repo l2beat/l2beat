@@ -97,6 +97,9 @@ function getScalingSummarySummaryEntry(
       provider: project.display.provider,
       category: project.display.category,
       warning: project.display.warning,
+      stage: {
+        stage: 'NotApplicable',
+      },
       isVerified,
       isArchived: project.isArchived,
       showProjectUnderReview: isAnySectionUnderReview(project),
