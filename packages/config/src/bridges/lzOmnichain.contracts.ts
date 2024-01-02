@@ -7,7 +7,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 export const OMNICHAN_ESCROWS: ProjectEscrow[] = [
   {
     address: EthereumAddress('0x7122985656e38BDC0302Db86685bb972b145bD3C'),
-    sinceTimestamp: new UnixTime(1695535811),
+    sinceTimestamp: new UnixTime(1700658000),
     tokens: ['STONE'],
   },
   {
