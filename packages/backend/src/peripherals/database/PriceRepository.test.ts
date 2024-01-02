@@ -39,8 +39,11 @@ describe(PriceRepository.name, () => {
   ]
 
   beforeEach(async () => {
-    await repository.deleteAll()
     await repository.addMany(DATA)
+  })
+
+  afterEach(async () => {
+    await repository.deleteAll()
   })
 
   describe(PriceRepository.prototype.addMany.name, () => {

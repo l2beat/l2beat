@@ -10,6 +10,7 @@ export interface ScalingSummaryViewEntryBase {
   category: ProjectCategory
   provider?: ProjectProvider
   warning?: string
+  redWarning?: string
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean

@@ -3,30 +3,27 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
-export const lyrafinance: Layer2 = {
+export const mint: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
-  id: ProjectId('lyrafinance'),
+  id: ProjectId('mint'),
   display: {
-    name: 'Lyra',
-    slug: 'lyrafinance',
-    description:
-      'Lyra Chain is a L2 scaling solution build using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals and options trading.',
-    purpose: 'Trading',
+    name: 'Mint',
+    slug: 'mint',
+    description: 'Mint Blockchain is a Layer 2 network for NFTs.',
+    purpose: 'Universal, NFT',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
-      websites: ['https://lyra.finance/v2'],
+      websites: ['https://mintchain.io/'],
       apps: [],
-      documentation: [
-        'https://mirror.xyz/lyra.eth/JRj-8JInwtW8jp5y6QzyUHq0suTcH_B1iGO7V5LYwVQ',
-      ],
+      documentation: [],
       explorers: [],
       repositories: [],
       socialMedia: [
-        'https://twitter.com/lyrafinance',
-        'https://discord.gg/Lyra',
+        'https://twitter.com/Mint_Blockchain',
+        'https://discord.gg/mint-blockchain',
       ],
     },
   },

@@ -63,7 +63,7 @@ function getScalingSummarySummaryEntry(
       isArchived: project.isArchived,
       showProjectUnderReview: isAnySectionUnderReview(project),
       isUpcoming: project.isUpcoming,
-
+      redWarning: project.display.redWarning,
       tvl:
         stats && escrowsConfigured(project)
           ? {

@@ -18,7 +18,7 @@ import {
   ProjectProvider,
 } from '../../common'
 import { StageConfig } from '../common/stages/types'
-import { Layer2LivenessConfig } from './Layer2LivenessConfig'
+import { Layer2Liveness } from './Layer2LivenessConfig'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2StateDerivation } from './Layer2StateDerivation'
 import { Layer2Technology } from './Layer2Technology'
@@ -78,6 +78,8 @@ export interface Layer2Display {
     | string
   /** A warning displayed above the description of the project */
   warning?: string
+  /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
+  redWarning?: string
   /** A few sentences describing the layer2 */
   description: string
   /** A short (<20 characters) description of the use case */
@@ -114,7 +116,7 @@ export interface Layer2Config {
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
   /** Configuration for getting state updates and batch submission */
-  liveness?: Layer2LivenessConfig
+  liveness?: Layer2Liveness
 }
 
 export interface Layer2ExternalAssets {

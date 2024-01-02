@@ -14,13 +14,7 @@ import {
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import {
-  FunctionCallParams,
-  layer2s,
-  Layer2Technology,
-  milestonesLayer2s,
-  NUGGETS,
-} from './index'
+import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -95,7 +89,10 @@ describe('layer2s', () => {
           const functionCalls = [
             ...project.config.liveness.batchSubmissions,
             ...project.config.liveness.stateUpdates,
-          ].filter((x) => x.formula === 'functionCall') as FunctionCallParams[]
+          ].filter((x) => x.formula === 'functionCall') as {
+            selector: string
+            functionSignature: string
+          }[]
 
           functionCalls.forEach((c) => {
             const i = new utils.Interface([c.functionSignature])
@@ -173,22 +170,25 @@ describe('layer2s', () => {
                   const referencedAddresses = getReferencedAddresses(
                     sourceCodeReference.references,
                   )
-                  const contract = discovery.getContract(
-                    sourceCodeReference.contract,
-                  )
 
-                  const contractAddresses = [
-                    contract.address,
-                    ...gatherAddressesFromUpgradeability(
-                      contract.upgradeability,
-                    ),
-                  ]
+                  if (referencedAddresses.length > 0) {
+                    const contract = discovery.getContract(
+                      sourceCodeReference.contract,
+                    )
 
-                  expect(
-                    contractAddresses.some((a) =>
-                      referencedAddresses.includes(a),
-                    ),
-                  ).toEqual(true)
+                    const contractAddresses = [
+                      contract.address,
+                      ...gatherAddressesFromUpgradeability(
+                        contract.upgradeability,
+                      ),
+                    ]
+
+                    expect(
+                      contractAddresses.some((a) =>
+                        referencedAddresses.includes(a),
+                      ),
+                    ).toEqual(true)
+                  }
                 })
               }
             })

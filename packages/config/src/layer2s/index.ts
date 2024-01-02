@@ -13,6 +13,7 @@ import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { HOMEPAGE_MILESTONES } from './common'
+import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
@@ -31,12 +32,14 @@ import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { linea } from './linea'
 import { loopring } from './loopring'
-import { lyrafinance } from './lyrafinance'
+import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metal } from './metal'
 import { metis } from './metis'
+import { mint } from './mint'
 import { mode } from './mode'
+import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
@@ -84,6 +87,7 @@ export const layer2s: Layer2[] = [
   canto,
   capx,
   canvasconnect,
+  debank,
   honeypot,
   degate,
   degate2,
@@ -102,12 +106,14 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   linea,
   loopring,
-  lyrafinance,
+  lyra,
   mantapacific,
   mantle,
   metal,
   metis,
+  mint,
   mode,
+  molten,
   morph,
   myria,
   nova,

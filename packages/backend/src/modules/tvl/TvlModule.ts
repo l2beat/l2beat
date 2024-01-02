@@ -29,6 +29,7 @@ import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvlSubmodule'
 import { createBaseTvlSubmodule } from './BaseTvlSubmodule'
 import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
+import { createLyraTvlSubmodule } from './LyraTvlSubmodule'
 import { createMantaTvlSubmodule } from './MantaTvlSubmodule'
 import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
 import { TvlDatabase } from './types'
@@ -112,6 +113,15 @@ export function createTvlModule(
       clock,
     ),
     createBaseTvlSubmodule(
+      db,
+      priceUpdater,
+      coingeckoQueryService,
+      config,
+      logger,
+      http,
+      clock,
+    ),
+    createLyraTvlSubmodule(
       db,
       priceUpdater,
       coingeckoQueryService,

@@ -97,7 +97,15 @@ export const paradex: Layer2 = {
       }),
     ],
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1636978914),
+          programHashes: [
+            '3258367057337572248818716706664617507069572185152472699066582725377748079373',
+          ],
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -136,7 +144,7 @@ export const paradex: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [

@@ -34,10 +34,12 @@ const upgradesProxy = {
   upgradeDelay: 'No delay',
 }
 
-const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
+const challengePeriod: number = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
+
+const upgradeDelay = 0
 
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
@@ -114,7 +116,7 @@ export const base: Layer2 = {
       explanation: `Base is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
+        challengePeriod,
       )} after it has been posted.`,
     },
   },
@@ -187,8 +189,8 @@ export const base: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',

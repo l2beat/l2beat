@@ -21,7 +21,7 @@ export function getTransferQuery(
       from_address,
       to_address,
       block_timestamp,
-      transaction_hash,
+      transaction_hash
     FROM
       bigquery-public-data.crypto_ethereum.traces
     WHERE call_type = 'call'

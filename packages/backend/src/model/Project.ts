@@ -1,13 +1,12 @@
 import {
   Bridge,
   DuplicateData,
-  FunctionCallParams,
   getCanonicalTokenBySymbol,
   Layer2,
-  Layer2LivenessConfig,
+  Layer2Liveness,
+  Layer2LivenessConfiguration,
   Layer2TransactionApi,
   tokenList,
-  TransferParams,
 } from '@l2beat/config'
 import {
   EthereumAddress,
@@ -20,6 +19,7 @@ import {
 import {
   LivenessConfigEntry,
   makeLivenessFunctionCall,
+  makeLivenessSharpSubmissions,
   makeLivenessTransfer,
 } from '../core/liveness/types/LivenessConfig'
 
@@ -81,7 +81,7 @@ export function bridgeToProject(bridge: Bridge): Project {
 
 function toBackendLivenessConfig(
   projectId: ProjectId,
-  config: Layer2LivenessConfig | undefined,
+  config: Layer2Liveness | undefined,
 ): LivenessConfig | undefined {
   if (config === undefined) return
 
@@ -90,17 +90,18 @@ function toBackendLivenessConfig(
     duplicateData: config.duplicateData,
   }
 
-  function addEntry(
-    param: FunctionCallParams | TransferParams,
-    type: LivenessType,
-  ) {
+  function addEntry(param: Layer2LivenessConfiguration, type: LivenessType) {
     if (param.formula === 'functionCall') {
       livenessConfig.entries.push(
         makeLivenessFunctionCall({ projectId, type, ...param }),
       )
-    } else {
+    } else if (param.formula === 'transfer') {
       livenessConfig.entries.push(
         makeLivenessTransfer({ projectId, type, ...param }),
+      )
+    } else {
+      livenessConfig.entries.push(
+        makeLivenessSharpSubmissions({ projectId, type, ...param }),
       )
     }
   }

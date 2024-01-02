@@ -42,6 +42,11 @@ const ESCROW_USDC_ADDRESS = '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'
 const ESCROW_USDT_ADDRESS = '0xbb3400F107804DFB482565FF1Ec8D8aE66747605'
 const ESCROW_WSTETH_ADDRESS = '0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B'
 const ESCROW_RETH_ADDRESS = '0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2'
+const ESCROW_UNI_ADDRESS = '0xf76e6bF9e2df09D0f854F045A3B724074dA1236B'
+const ESCROW_FRAX_ADDRESS = '0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb'
+const ESCROW_FXS_ADDRESS = '0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
+const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
+const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -59,14 +64,32 @@ const escrowUSDTDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_USDT_ADDRESS,
   'upgradeDelay',
 )
-
 const escrowWSTETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_WSTETH_ADDRESS,
   'upgradeDelay',
 )
-
 const escrowRETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_RETH_ADDRESS,
+  'upgradeDelay',
+)
+const escrowUNIDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_UNI_ADDRESS,
+  'upgradeDelay',
+)
+const escrowFRAXDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_FRAX_ADDRESS,
+  'upgradeDelay',
+)
+const escrowSFRXETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_SFRXETH_ADDRESS,
+  'upgradeDelay',
+)
+const escrowFXSDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_FXS_ADDRESS,
+  'upgradeDelay',
+)
+const escrowLUSDDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_LUSD_ADDRESS,
   'upgradeDelay',
 )
 
@@ -85,9 +108,16 @@ function formatMaxTotalBalanceString(
   maxTotalBalance: number,
   decimals: number,
 ) {
-  return `The current bridge cap is ${formatLargeNumberShared(
-    maxTotalBalance / 10 ** decimals,
-  )} ${ticker}.`
+  if (
+    maxTotalBalance.toString() ===
+    '115792089237316195423570985008687907853269984665640564039457584007913129639935'
+  ) {
+    return 'There is no bridge cap.'
+  } else {
+    return `The current bridge cap is ${formatLargeNumberShared(
+      maxTotalBalance / 10 ** decimals,
+    )} ${ticker}.`
+  }
 }
 
 const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
@@ -123,6 +153,36 @@ const escrowWSTETHMaxTotalBalanceString = formatMaxTotalBalanceString(
 const escrowRETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'rETH',
   discovery.getContractValue<number>('rETH Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowUNIMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'UNI',
+  discovery.getContractValue<number>('UNI Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'FRAX',
+  discovery.getContractValue<number>('FRAX Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'FXS',
+  discovery.getContractValue<number>('FXS Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowSFRXETHMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'sfrxETH',
+  discovery.getContractValue<number>('sfrxETH Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowLUSDMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'LUSD',
+  discovery.getContractValue<number>('LUSD Bridge', 'maxTotalBalance'),
   18,
 )
 
@@ -239,12 +299,70 @@ export const starknet: Layer2 = {
         upgradableBy: ['StarkGate rETH owner'],
         upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_UNI_ADDRESS),
+        tokens: ['UNI'],
+        description:
+          'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
+        upgradableBy: ['StarkGate UNI owner'],
+        upgradeDelay: formatSeconds(escrowUNIDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_FRAX_ADDRESS),
+        tokens: ['FRAX'],
+        description:
+          'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
+        upgradableBy: ['StarkGate FRAX owner'],
+        upgradeDelay: formatSeconds(escrowFRAXDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_FXS_ADDRESS),
+        tokens: ['FXS'],
+        description:
+          'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
+        upgradableBy: ['StarkGate FXS owner'],
+        upgradeDelay: formatSeconds(escrowFXSDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_SFRXETH_ADDRESS),
+        tokens: ['sfrxETH'],
+        description:
+          'StarkGate bridge for sfrxETH.' +
+          ' ' +
+          escrowSFRXETHMaxTotalBalanceString,
+        upgradableBy: ['StarkGate sfrxETH owner'],
+        upgradeDelay: formatSeconds(escrowSFRXETHDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_LUSD_ADDRESS),
+        tokens: ['LUSD'],
+        description:
+          'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
+        upgradableBy: ['StarkGate LUSD owner'],
+        upgradeDelay: formatSeconds(escrowLUSDDelaySeconds),
+      }),
     ],
     transactionApi: {
       type: 'starknet',
     },
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1636978914),
+          untilTimestamp: new UnixTime(1702921247),
+          programHashes: [
+            '1865367024509426979036104162713508294334262484507712987283009063059134893433',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1702921247),
+          programHashes: [
+            '54878256403880350656938046611252303365750679698042371543935159963667935317',
+          ],
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -291,7 +409,7 @@ export const starknet: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [
@@ -466,6 +584,41 @@ export const starknet: Layer2 = {
       description:
         'Can upgrade implementation of the rETH escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowRETHDelaySeconds),
+    },
+    {
+      name: 'StarkGate UNI owner',
+      accounts: getProxyGovernance(discovery, ESCROW_UNI_ADDRESS),
+      description:
+        'Can upgrade implementation of the UNI escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowUNIDelaySeconds),
+    },
+    {
+      name: 'StarkGate FRAX owner',
+      accounts: getProxyGovernance(discovery, ESCROW_FRAX_ADDRESS),
+      description:
+        'Can upgrade implementation of the FRAX escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowFRAXDelaySeconds),
+    },
+    {
+      name: 'StarkGate FXS owner',
+      accounts: getProxyGovernance(discovery, ESCROW_FXS_ADDRESS),
+      description:
+        'Can upgrade implementation of the FXS escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowFXSDelaySeconds),
+    },
+    {
+      name: 'StarkGate sfrxETH owner',
+      accounts: getProxyGovernance(discovery, ESCROW_SFRXETH_ADDRESS),
+      description:
+        'Can upgrade implementation of the sfrxETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowSFRXETHDelaySeconds),
+    },
+    {
+      name: 'StarkGate LUSD owner',
+      accounts: getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
+      description:
+        'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',
