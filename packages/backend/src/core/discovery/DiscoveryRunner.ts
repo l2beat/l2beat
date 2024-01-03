@@ -6,9 +6,10 @@ import {
   DiscoveryEngine,
   DiscoveryProvider,
   toDiscoveryOutput,
+  UnixTime as DiscoveryUnixTime,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { assert } from 'console'
 import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
@@ -35,6 +36,12 @@ export class DiscoveryRunner {
 
   async getBlockNumber(): Promise<number> {
     return this.discoveryProvider.getBlockNumber()
+  }
+
+  async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
+    return this.discoveryProvider.getBlockNumberAt(
+      new DiscoveryUnixTime(timestamp.toNumber()),
+    )
   }
 
   getChainId(): ChainId {
