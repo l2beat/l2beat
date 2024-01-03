@@ -1,10 +1,7 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
-
-const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = {
   isUpcoming: true,
@@ -13,7 +10,7 @@ export const parallel: Layer2 = {
   display: {
     name: 'Parallel',
     slug: 'parallel',
-    headerWarning:'',
+    headerWarning: '',
     description:
       'Parallel will launch an Ethereum Layer2 supporting native yield. More information coming soon.',
     purpose: 'Universal, DeFi',
@@ -32,14 +29,7 @@ export const parallel: Layer2 = {
     stage: 'NotApplicable',
   },
   config: {
-    escrows: [
-      discovery.getEscrowDetails({
-        address: '*',
-        tokens: '*',
-        description: '*',
-        isUpcoming: true,
-      }),
-    ],
+    escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
   technology: TECHNOLOGY.UPCOMING,
