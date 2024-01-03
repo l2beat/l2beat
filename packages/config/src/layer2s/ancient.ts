@@ -17,7 +17,7 @@ export const ancient: Layer2 = {
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.ancient8.gg/'],
+      websites: ['https://ancient8.gg/'],
       apps: [],
       documentation: ['https://docs.ancient8.gg/'],
       explorers: ['https://testnet.a8scan.io/'],
