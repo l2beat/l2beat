@@ -8,8 +8,8 @@ export const eclipse: Layer2 = {
   type: 'layer2',
   id: ProjectId('eclipse'),
   display: {
-    name: 'Eclipse Mainnet',
-    slug: 'eclipse-mainnet',
+    name: 'Eclipse',
+    slug: 'eclipse',
     description:
       'Eclipse is a Layer 2 powered by the Solana Virtual Machine (SVM).',
     purpose: 'Universal',
