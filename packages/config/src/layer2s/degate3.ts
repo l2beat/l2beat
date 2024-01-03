@@ -49,20 +49,16 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 const delay1 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
 const delay2 = discovery.getContractValue<number>('TimeLock2', 'MINIMUM_DELAY')
 
-const upgradeabilityRisk = RISK_VIEW.UPGRADE_DELAY_SECONDS(
-  Math.min(delay1, delay2),
-)
+const upgradeDelay = Math.min(delay1, delay2)
 
 const timelockUpgrades1 = {
   upgradableBy: ['Degate HomeDAO2 Multisig'],
   upgradeDelay: formatSeconds(delay1),
-  upgradeConsiderations: upgradeabilityRisk.description,
 }
 
 const timelockUpgrades2 = {
   upgradableBy: ['Degate HomeDAO2 Multisig'],
   upgradeDelay: formatSeconds(delay2),
-  upgradeConsiderations: upgradeabilityRisk.description,
 }
 
 export const degate3: Layer2 = {
@@ -132,7 +128,7 @@ export const degate3: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: upgradeabilityRisk,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,

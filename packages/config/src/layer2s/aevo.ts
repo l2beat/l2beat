@@ -29,6 +29,13 @@ const upgradesProxy = {
   upgradeDelay: 'No delay',
 }
 
+const challengePeriod: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
+const upgradeDelay = 0
+
 export const aevo: Layer2 = {
   type: 'layer2',
   id: ProjectId('aevo'),
@@ -118,8 +125,8 @@ export const aevo: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',

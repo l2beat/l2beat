@@ -1,7 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { VALUES } from '../discovery/values'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -31,6 +30,8 @@ const upgrades = {
   upgradableBy: ['zkSync Era Multisig'],
   upgradeDelay: 'No delay',
 }
+
+const upgradeDelay = 0
 
 export const zksyncera: Layer2 = {
   type: 'layer2',
@@ -201,8 +202,8 @@ export const zksyncera: Layer2 = {
         'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
       ],
     },
-    upgradeability: {
-      ...VALUES.ZKSYNC_2.UPGRADEABILITY,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelay),
       sources: [
         {
           contract: 'zkSync',

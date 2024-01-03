@@ -5,6 +5,7 @@ import React from 'react'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
+import { RoundedWarningIcon } from '../icons'
 import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
@@ -29,8 +30,16 @@ export function RiskCell({ item }: Props) {
       className={cx(item.description !== '' && 'Tooltip')}
       title={item.description !== '' ? item.description : undefined}
     >
-      <span className={cx('font-medium', sentimentToTextColor(item.sentiment))}>
+      <span
+        className={cx(
+          'flex items-center gap-1 font-medium',
+          sentimentToTextColor(item.sentiment),
+        )}
+      >
         {item.value}
+        {item.showWarning && (
+          <RoundedWarningIcon className="inline h-4 w-4 fill-current" />
+        )}
       </span>
       {item.secondLine && (
         <span

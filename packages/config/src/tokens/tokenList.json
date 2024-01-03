@@ -604,20 +604,6 @@
       "formula": "locked"
     },
     {
-      "id": "xcm-coinmetro-token",
-      "name": "CoinMetro Token",
-      "coingeckoId": "coinmetro",
-      "address": "0x36ac219f90f5A6A3C77f2a7B660E3cC701f68e25",
-      "symbol": "XCM",
-      "decimals": 18,
-      "sinceTimestamp": 1606218049,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/3125/large/XCM_Token_Logo_.png?1646280053",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
       "id": "comp-compound",
       "name": "Compound",
       "coingeckoId": "compound-governance-token",
@@ -1625,6 +1611,20 @@
       "formula": "locked"
     },
     {
+      "id": "magic-magic",
+      "name": "MAGIC",
+      "coingeckoId": "magic",
+      "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
+      "symbol": "MAGIC",
+      "decimals": 18,
+      "sinceTimestamp": 1630989984,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "mim-magic-internet-money",
       "name": "Magic Internet Money",
       "coingeckoId": "magic-internet-money",
@@ -2487,8 +2487,22 @@
       "decimals": 18,
       "sinceTimestamp": 1669860000,
       "category": "other",
-      "chainId": 1,
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "stone-stakestone-ether",
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+      "symbol": "STONE",
+      "decimals": 18,
+      "sinceTimestamp": 1700658000,
+      "category": "other",
+      "chainId": 1,
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "type": "CBV",
       "formula": "locked"
     },
@@ -2992,20 +3006,6 @@
       "sinceTimestamp": 1606542899,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13295/large/mirror_logo_transparent.png?1611554658",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
-      "id": "wusdm-wrapped-mountain-protocol-usd",
-      "name": "Wrapped Mountain Protocol USD",
-      "coingeckoId": "wrapped-usdm",
-      "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
-      "symbol": "wUSDM",
-      "decimals": 18,
-      "sinceTimestamp": 1696622279,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

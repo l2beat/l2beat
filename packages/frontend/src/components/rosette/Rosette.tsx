@@ -49,7 +49,7 @@ export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
       />
       <path
         d="M17.8554 14.8216C17.3732 14.6599 17.1884 14.0755 17.4898 13.6659L24.5611 4.05961C24.8234 3.70319 25.3312 3.65312 25.6397 3.9704C26.6819 5.04211 28.8273 7.50181 29.7514 10.4233C30.7567 13.6017 30.3802 16.7098 30.1174 18.1077C30.038 18.5297 29.6057 18.7622 29.1986 18.6257L17.8554 14.8216Z"
-        className={sentimentToFillColor(risks.upgradeability)}
+        className={sentimentToFillColor(risks.exitWindow)}
       />
       <path
         d="M16.3566 17.2429C16.354 16.7344 16.8476 16.3708 17.3325 16.5239L28.7071 20.116C29.1291 20.2493 29.3404 20.7137 29.1397 21.1081C28.4617 22.4405 26.8261 25.265 24.3593 27.0826C21.6755 29.0599 18.6122 29.7068 17.2043 29.9093C16.7793 29.9704 16.4197 29.6363 16.4175 29.2069L16.3566 17.2429Z"
@@ -126,8 +126,8 @@ export function MediumRosette({ risks, isUnderReview }: RosetteProps) {
       <span className="absolute top-0.5 left-1/2 w-[10ch] -translate-x-1/2 text-center text-[10px] font-medium uppercase leading-tight">
         Data availability
       </span>
-      <span className="absolute top-[69px] left-[138px] rotate-[68deg] text-[10px] font-medium uppercase leading-tight">
-        Upgradeability
+      <span className="absolute top-[58px] left-[160px] rotate-[68deg] text-center text-[10px] font-medium uppercase leading-tight">
+        Exit window
       </span>
       <span className="absolute bottom-[20px] right-[19px] w-[10ch] -rotate-[36deg] text-center text-[10px] font-medium uppercase leading-tight">
         Proposer failure
@@ -183,10 +183,10 @@ export function BigRosette({
         Data availability
       </span>
       <span
-        className="Rosette-Text absolute top-[94px] left-[184px] rotate-[68deg] text-xs font-medium uppercase leading-tight"
-        data-rosette="upgradeability"
+        className="Rosette-Text absolute top-[72px] left-[207px] rotate-[64deg] text-center text-xs font-medium uppercase leading-tight"
+        data-rosette="exit-window"
       >
-        Upgradeability
+        Exit window
       </span>
       <span
         className="Rosette-Text absolute bottom-[32px] right-[23px] w-[10ch] -rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
@@ -211,8 +211,8 @@ export function BigRosette({
       />
       <OverlayBox
         className="absolute top-44 left-0"
-        data-rosette="upgradeability"
-        risk={risks.upgradeability}
+        data-rosette="exit-window"
+        risk={risks.exitWindow}
       />
       <OverlayBox
         className="absolute top-44 left-0"
@@ -271,10 +271,10 @@ function BigRosetteIcon({
         <path
           d="M103.756 89.1339C101.153 88.2379 100.177 85.0657 101.827 82.8615L140.521 31.1566C141.957 29.2382 144.708 28.9889 146.365 30.7199C151.961 36.5668 163.471 49.9752 168.349 65.8316C173.655 83.082 171.483 99.8928 170.001 107.45C169.553 109.731 167.203 110.971 165.005 110.215L103.756 89.1339Z"
           className={cx(
-            sentimentToFillColor(risks.upgradeability),
+            sentimentToFillColor(risks.exitWindow),
             'Rosette-Slice focus:outline-none',
           )}
-          data-rosette="upgradeability"
+          data-rosette="exit-window"
         />
         <path
           d="M95.5409 102.181C95.5486 99.428 98.2361 97.4805 100.855 98.3304L162.282 118.265C164.561 119.005 165.685 121.528 164.581 123.655C160.854 130.839 151.878 146.061 138.445 155.795C123.83 166.385 107.218 169.756 99.5872 170.792C97.2836 171.105 95.3511 169.28 95.3577 166.956L95.5409 102.181Z"
@@ -336,7 +336,7 @@ function BigRosetteIcon({
                 />
               </>
             )}
-            {risks.upgradeability === 'UnderReview' && (
+            {risks.exitWindow === 'UnderReview' && (
               <>
                 <path
                   d="M140.774 77.6667C140.686 77.6661 140.599 77.6483 140.518 77.614C140.436 77.5798 140.363 77.5299 140.301 77.4672C140.239 77.4044 140.19 77.3301 140.157 77.2485C140.124 77.1668 140.107 77.0795 140.108 76.9913C140.116 75.1913 140.174 74.466 140.535 73.5913C141.01 72.5293 141.72 71.5891 142.612 70.842C143.266 70.3073 143.842 69.6852 144.326 68.9933C144.589 68.598 144.743 68.1404 144.773 67.6667C144.804 67.3964 144.774 67.1226 144.685 66.8657C144.595 66.6088 144.449 66.3754 144.257 66.183C144.064 65.9906 143.831 65.8443 143.574 65.7549C143.317 65.6654 143.043 65.6353 142.773 65.6667C141.42 65.6667 140.921 66.704 140.792 67.7287C140.775 67.8932 140.698 68.0456 140.576 68.1571C140.454 68.2686 140.295 68.3313 140.13 68.3333H136.112C136.021 68.3326 135.932 68.3138 135.85 68.2779C135.767 68.2421 135.692 68.1901 135.63 68.1248C135.568 68.0596 135.519 67.9825 135.488 67.8982C135.456 67.8139 135.441 67.7241 135.445 67.634C135.538 64.986 136.19 63.8273 137.458 62.6573C138.742 61.4727 140.352 61 142.773 61C145.244 61 146.834 61.4667 148.089 62.5693C148.768 63.192 149.301 63.9572 149.65 64.8101C149.999 65.663 150.155 66.5825 150.106 67.5027C150.109 68.4605 149.885 69.4055 149.454 70.2607C148.885 71.2865 148.153 72.2133 147.287 73.0047L146.044 74.188C145.269 74.9438 144.821 75.9728 144.796 77.0547C144.782 77.2208 144.707 77.3757 144.584 77.4889C144.462 77.602 144.302 77.6652 144.135 77.666L140.774 77.6667Z"
