@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { IndexerStateRow } from 'knex/types/tables'
 
@@ -8,7 +8,6 @@ import { Database } from './shared/Database'
 
 export interface IndexerStateRecord {
   indexerId: string
-  configHash: Hash256
   safeHeight: number
   minTimestamp?: UnixTime
 }
@@ -25,9 +24,7 @@ export class IndexerStateRepository extends BaseRepository {
     const knex = await this.knex()
 
     const row = await knex('indexer_state')
-      .where({
-        indexer_id: indexerId,
-      })
+      .where({ indexer_id: indexerId })
       .first()
 
     return row ? toRecord(row) : undefined
@@ -41,28 +38,8 @@ export class IndexerStateRepository extends BaseRepository {
     const knex = await this.knex(trx)
 
     return await knex('indexer_state')
-      .where({
-        indexer_id: indexerId,
-      })
-      .update({
-        safe_height: safeHeight,
-      })
-  }
-
-  async setConfigHash(
-    indexerId: string,
-    configHash: Hash256,
-    trx?: Knex.Transaction,
-  ) {
-    const knex = await this.knex(trx)
-
-    return await knex('indexer_state')
-      .where({
-        indexer_id: indexerId,
-      })
-      .update({
-        config_hash: configHash.toString(),
-      })
+      .where({ indexer_id: indexerId })
+      .update({ safe_height: safeHeight })
   }
 
   async add(
@@ -91,7 +68,6 @@ export class IndexerStateRepository extends BaseRepository {
 function toRecord(row: IndexerStateRow): IndexerStateRecord {
   return {
     indexerId: row.indexer_id,
-    configHash: Hash256(row.config_hash),
     safeHeight: row.safe_height,
     minTimestamp: row.min_timestamp
       ? UnixTime.fromDate(row.min_timestamp)
@@ -102,7 +78,6 @@ function toRecord(row: IndexerStateRow): IndexerStateRecord {
 function toRow(record: IndexerStateRecord): IndexerStateRow {
   return {
     indexer_id: record.indexerId,
-    config_hash: record.configHash.toString(),
     safe_height: record.safeHeight,
     min_timestamp: record.minTimestamp?.toDate(),
   }

@@ -13,6 +13,8 @@ export const orbit: Bridge = {
   display: {
     name: 'Orbit Bridge',
     slug: 'orbit',
+    warning:
+      'Orbit Bridge has been hacked on 1 Jan 2024 and is potentially not safe to use.',
     category: 'Token Bridge',
     links: {
       websites: [
@@ -183,6 +185,13 @@ export const orbit: Bridge = {
       )}/${
         discovery.getContractValue<string[]>('ETH Vault', 'getOwners').length
       } Orbit Multisig.`,
+    },
+  ],
+  milestones: [
+    {
+      name: 'Orbit Bridge hacked for $81.5',
+      date: '2024-01-01T00:00:00.00Z',
+      link: 'https://digifinex.medium.com/orbit-bridge-hacked-for-81-5-million-orbit-chain-ecosystem-plummets-1fe5b8d85ff3',
     },
   ],
 }

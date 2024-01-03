@@ -23,6 +23,7 @@ import {
   RISK_VIEW,
   subtractOneAfterBlockInclusive,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
@@ -43,8 +44,10 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
-const totalDelay =
-  l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
+const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
+
+// const totalDelayString = formatSeconds(totalDelay)
 
 const upgradesExecutor = {
   upgradableBy: ['UpgradeExecutorAdmin'],
@@ -277,8 +280,19 @@ export const arbitrum: Layer2 = {
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
       ],
+      rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Arbitrum One is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to ${formatSeconds(
+        selfSequencingDelay,
+      )}. The state root gets finalized ${formatSeconds(
+        challengeWindow * assumedBlockTime,
+      )} after it has been posted.`,
+    },
   },
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
@@ -408,8 +422,24 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
+      sentiment: 'bad',
+      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
+        l2TimelockDelay,
+      )} delay. Since there is a ${formatSeconds(
+        selfSequencingDelay,
+      )} to force a tx, users have only ${formatSeconds(
+        l2TimelockDelay - selfSequencingDelay,
+      )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+        validatorAfkTime,
+      )} delay and then wait for the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window and the ${formatSeconds(
+        l1TimelockDelay,
+      )} L1 timelock.\n\nThe Security Council can upgrade with no delay.`,
       sources: [
         {
           contract: 'OutboxV2',

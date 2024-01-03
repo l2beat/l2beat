@@ -3,7 +3,7 @@ import React from 'react'
 
 import { formatLargeNumber } from '../../utils'
 import { ProjectLink } from '../icons'
-import { TechnologyCell } from '../table/TechnologyCell'
+import { TypeCell } from '../table/TypeCell'
 import { DetailsHeader as DetailsHeaderComponent } from './DetailsHeader'
 import { StatWithChange } from './stats/StatWithChange'
 
@@ -44,8 +44,8 @@ const stats = [
     value: project.display.purpose,
   },
   {
-    title: 'Technology',
-    value: <TechnologyCell>{project.technology.category}</TechnologyCell>,
+    title: 'Type',
+    value: <TypeCell>{project.technology.category}</TypeCell>,
   },
 ]
 
@@ -53,7 +53,7 @@ const links: ProjectLink[] = [
   { name: 'Website', links: ['https://bridge.gnosischain.com/'] },
   { name: 'App', links: ['https://bridge.gnosischain.com/'] },
   {
-    name: 'Documentation',
+    name: 'Docs',
     links: ['https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge'],
   },
   {
@@ -74,6 +74,10 @@ const links: ProjectLink[] = [
       'https://discord.gg/VQb3WzsywU',
       'https://t.me/gnosischain',
     ],
+  },
+  {
+    name: 'rollup.codes',
+    links: ['https://rollup.codes/arbitrum-one'],
   },
 ]
 

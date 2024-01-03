@@ -19,9 +19,11 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
 
-const upgradeDelay = formatSeconds(
-  discovery.getContractValue<number>('ZkSync', 'UPGRADE_NOTICE_PERIOD'),
+const upgradeDelay = discovery.getContractValue<number>(
+  'ZkSync',
+  'UPGRADE_NOTICE_PERIOD',
 )
+const upgradeDelayString = formatSeconds(upgradeDelay)
 
 const securityCouncilThreshold = discovery.getContractValue<number>(
   'ZkSync',
@@ -37,7 +39,7 @@ const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers
 
 const upgrades = {
   upgradableBy: ['ZkSync Multisig'],
-  upgradeDelay: `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradeDelay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
   upgradeConsiderations:
     'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
 }
@@ -72,6 +74,10 @@ export const zksynclite: Layer2 = {
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation:
+        'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
+    },
   },
   config: {
     escrows: [
@@ -141,8 +147,14 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_ZKSYNC(upgradeDelay, securityCouncil),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
+      sentiment: 'warning',
+      description: `Users have ${formatSeconds(
+        upgradeDelay - forcedWithdrawalDelay,
+      )} to exit to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
+        forcedWithdrawalDelay,
+      )} to be processed.\n\nThe Security Council can upgrade with no delay.`,
       sources: [
         {
           contract: 'Governance',

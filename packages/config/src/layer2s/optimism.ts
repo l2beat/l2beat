@@ -10,6 +10,7 @@ import {
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -22,7 +23,9 @@ import {
   RISK_VIEW,
   subtractOneAfterBlockInclusive,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
 
@@ -30,6 +33,13 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const challengePeriod: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
+const upgradeDelay = 0
 
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
@@ -122,8 +132,19 @@ export const optimism: Layer2 = {
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
       ],
+      rollupCodes: 'https://rollup.codes/optimism',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Optimism is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        challengePeriod,
+      )} after it has been posted.`,
+    },
   },
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
@@ -221,8 +242,8 @@ export const optimism: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',
@@ -398,14 +419,9 @@ export const optimism: Layer2 = {
     },
   },
   stateDerivation: {
-    nodeSoftware:
-      'The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file for OP Mainnet can be found [here](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/deploy-config/mainnet.json).',
-    compressionScheme:
-      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+    ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
-    dataFormat:
-      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
   },
   permissions: [
     ...discovery.getMultisigPermission(

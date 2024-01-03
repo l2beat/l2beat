@@ -19,7 +19,7 @@ export const sollet: Bridge = {
       'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
     category: 'Token Bridge',
     links: {
-      websites: ['https://www.sollet.io/'],
+      websites: ['https://sollet.io/'],
       socialMedia: ['https://projectserum.medium.com/'],
       explorers: ['https://solscan.io/'],
       repositories: ['https://github.com/project-serum/spl-token-wallet'],

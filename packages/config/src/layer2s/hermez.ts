@@ -13,6 +13,8 @@ import {
 } from './common'
 import { Layer2 } from './types'
 
+const upgradeDelay = 604800
+
 export const hermez: Layer2 = {
   type: 'layer2',
   id: ProjectId('hermez'),
@@ -34,7 +36,7 @@ export const hermez: Layer2 = {
       apps: ['https://wallet.hermez.io/'],
       documentation: [
         'https://docs.hermez.io/',
-        'https://hermez.io/hermez-whitepaper.pdf',
+        'https://hermez.io/polygon-hermez-whitepaper.pdf',
       ],
       explorers: ['https://explorer.hermez.io/'],
       repositories: ['https://github.com/0xpolygonhermez'],
@@ -61,7 +63,7 @@ export const hermez: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY(604800),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
     // NOTE: I have no clue what token are fees paid in. There are fees but

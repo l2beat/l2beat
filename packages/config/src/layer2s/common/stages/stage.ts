@@ -132,7 +132,9 @@ function getWarning(
   return stageKeyBlueprint.warningMessage
 }
 
-function isSatisfied(stageKeyChecklist: ChecklistValue): Satisfied | null {
+export function isSatisfied(
+  stageKeyChecklist: ChecklistValue,
+): Satisfied | null {
   if (stageKeyChecklist === null) return null
 
   if (

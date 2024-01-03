@@ -1,4 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ContractValue } from '@l2beat/discovery-types'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { ProjectPermissionedAccount } from '../common'
@@ -85,15 +91,20 @@ export const linea: Layer2 = {
       websites: ['https://linea.build/'],
       apps: [],
       documentation: ['https://docs.linea.build/'],
-      explorers: ['https://explorer.linea.build/'],
+      explorers: ['https://explorer.linea.build/', 'https://linea.l2scan.co/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/LineaBuild',
         'https://discord.gg/consensys',
         'https://linea.mirror.xyz/',
       ],
+      rollupCodes: 'https://rollup.codes/linea',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
+    },
   },
   config: {
     escrows: [
@@ -170,7 +181,7 @@ export const linea: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -259,6 +270,19 @@ export const linea: Layer2 = {
     ...discovery.getMultisigPermission(
       'AdminMultisig',
       'Admin of the Linea rollup. It can upgrade core contracts, bridges, change the verifier address, and publish blocks by effectively overriding the proof system.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('Roles'),
+      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles. ${(() => {
+        const roles = discovery.getContract('Roles')
+        assert(roles.values !== undefined)
+        const rolesCount = Object.entries(
+          roles.values.roles['roles' as keyof ContractValue],
+        ).length
+        assert(rolesCount === 0)
+
+        return 'Currently there are no additional members.'
+      })()}`,
     ),
     {
       accounts: operators,

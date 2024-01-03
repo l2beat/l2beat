@@ -23,7 +23,10 @@ const escapeHatchDelaySeconds = discovery.getContractValue<number>(
   'delayBeforeEscapeHatch',
 )
 
+const upgradeDelay = 0
+
 assert(escapeHatchDelaySeconds === 4294967295) // otherwise change descriptions!!
+const escapeHatchDelayApprox = 4_291_745_472
 const escapeHatchDelayString = '~136 years'
 
 function getAccessControl() {
@@ -154,7 +157,7 @@ export const aztecconnect: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, escapeHatchDelayApprox),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [
