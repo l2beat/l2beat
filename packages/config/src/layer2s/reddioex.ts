@@ -60,8 +60,8 @@ export const reddioex: Layer2 = {
       repositories: ['https://github.com/reddio-com/starkex-contracts-source'],
       socialMedia: [
         'https://twitter.com/reddio_com',
-		    'https://www.facebook.com/reddiocom',
-		    'https://www.linkedin.com/company/reddio',
+        'https://www.facebook.com/reddiocom',
+        'https://www.linkedin.com/company/reddio',
       ],
     },
     activityDataSource: 'Explorer API',
@@ -71,12 +71,12 @@ export const reddioex: Layer2 = {
   },
   config: {
     escrows: [
-        discovery.getEscrowDetails({
-            address: EthereumAddress('0xB62BcD40A24985f560b5a9745d478791d8F1945C'),
-            sinceTimestamp: new UnixTime(1615389188),
-            tokens: ['ETH', 'USDC', 'USDT'],
-            description: 'Main StarkEx contract, used also as an escrow.',
-        }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xB62BcD40A24985f560b5a9745d478791d8F1945C'),
+        sinceTimestamp: new UnixTime(1615389188),
+        tokens: ['ETH', 'USDC', 'USDT'],
+        description: 'Main StarkEx contract, used also as an escrow.',
+      }),
     ],
     transactionApi: {
       type: 'starkex',
@@ -153,7 +153,7 @@ export const reddioex: Layer2 = {
       date: '2022-09-29T00:00:00Z',
       description:
         'Reddio announces its layer 2 zkRollup mainnet launch providing Web3 App, Metaverse and Gaming developers an easy way to scale NFT minting and trading on Ethereum with low gas fee and instant confirmation.',
-    }
+    },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

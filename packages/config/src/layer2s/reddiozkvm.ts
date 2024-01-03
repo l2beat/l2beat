@@ -11,7 +11,7 @@ export const reddiozkvm: Layer2 = {
     name: 'Reddio zkVM',
     slug: 'reddiozkvm',
     description:
-      "Reddio zkVM is an upcoming ZK Rollup focused on general use cases like Games and Apps, powered by Starknet Stack.",
+      'Reddio zkVM is an upcoming ZK Rollup focused on general use cases like Games and Apps, powered by Starknet Stack.',
     purpose: 'Universal, Gaming',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'NotApplicable',
@@ -19,13 +19,15 @@ export const reddiozkvm: Layer2 = {
     links: {
       websites: ['https://www.reddio.com'],
       apps: [],
-      documentation: ['https://docs.reddio.com/guide/starknet/smart-contracts/overview.html'],
+      documentation: [
+        'https://docs.reddio.com/guide/starknet/smart-contracts/overview.html',
+      ],
       explorers: [],
       repositories: ['https://github.com/reddio-com/starknet-appchain-utils'],
       socialMedia: [
         'https://twitter.com/reddio_com',
-		    'https://www.facebook.com/reddiocom',
-		    'https://www.linkedin.com/company/reddio',
+        'https://www.facebook.com/reddiocom',
+        'https://www.linkedin.com/company/reddio',
       ],
     },
   },
