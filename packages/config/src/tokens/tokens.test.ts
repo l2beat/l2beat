@@ -161,6 +161,12 @@ describe('tokens', () => {
       getCanonicalTokens().map((token) => {
         if (token.symbol === 'ETH') {
           expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
+        } else if (
+          token.id === AssetId('wusdm-wrapped-mountain-protocol-usd')
+        ) {
+          expect(token.coingeckoId).toEqual(
+            CoingeckoId('mountain-protocol-usdm'),
+          )
         } else {
           const expectedId = token.address && result.get(token.address)
           if (expectedId) {
