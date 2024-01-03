@@ -1,4 +1,5 @@
 import { aevo } from './aevo'
+import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { astarzkevm } from './astarzkevm'
@@ -7,6 +8,7 @@ import { aztecV1 } from './aztecV1'
 import { aztecV2 } from './aztecV2'
 import { base } from './base'
 import { blast } from './blast'
+import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canto } from './canto'
@@ -18,12 +20,15 @@ import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
+import { eclipse } from './eclipse'
+import { frame } from './frame'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
+import { hypr } from './hypr'
 import { immutablex } from './immutablex'
 import { immutablezkevm } from './immutablezkevm'
 import { kinto } from './kinto'
@@ -31,6 +36,7 @@ import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { linea } from './linea'
+import { lisk } from './lisk'
 import { loopring } from './loopring'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
@@ -74,6 +80,7 @@ export * from './types'
 
 export const layer2s: Layer2[] = [
   aevo,
+  ancient,
   apex,
   arbitrum,
   astarzkevm,
@@ -82,6 +89,7 @@ export const layer2s: Layer2[] = [
   aztecV2,
   base,
   blast,
+  bob,
   bobanetwork,
   brine,
   canto,
@@ -93,11 +101,14 @@ export const layer2s: Layer2[] = [
   degate2,
   degate3,
   dydx,
+  eclipse,
+  frame,
   fuel,
   fuelv1,
   gluon,
   grvt,
   hermez,
+  hypr,
   immutablex,
   immutablezkevm,
   kinto,
@@ -105,6 +116,7 @@ export const layer2s: Layer2[] = [
   layer2finance,
   layer2financezk,
   linea,
+  lisk,
   loopring,
   lyra,
   mantapacific,
