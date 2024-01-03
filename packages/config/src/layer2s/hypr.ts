@@ -16,8 +16,8 @@ export const hypr: Layer2 = {
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.hypr.network/'],
-      apps: ['https://www.hypr.network/applications'],
+      websites: ['https://hypr.network/'],
+      apps: ['https://hypr.network/applications'],
       documentation: ['https://docs.hypr.network'],
       explorers: ['https://explorer.hypr.network/'],
       repositories: [],
