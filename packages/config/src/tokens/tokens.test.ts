@@ -164,6 +164,26 @@ describe('tokens', () => {
         } else if (
           token.id === AssetId('wusdm-wrapped-mountain-protocol-usd')
         ) {
+          // TODO(radomski): This is a short term solution to the problem of
+          // wrapped token prices. wUSDM is ~15% of Manta Pacific TVL but the
+          // Coingecko price chart for the _WRAPPED_ version of this token is
+          // broken. After an investigation we've decided to temporally
+          // approximate the price of the wUSDM to be the same as the
+          // non-wrapped source (USDM). In reality at the time of writing this
+          // comment it's more like
+          //
+          // 1wUSDM = 1.0118 USDM
+          //
+          // A more generalized solution is required. But since we can't
+          // stall forever until the perfect solution is ready we accept this
+          // approximation. A generalized solution would determine the price
+          // of a token based on the price of a different token times some
+          // multiplier. Where the multiplier can be dynamic, that means it
+          // requires calling a custom typescript function. Further work will
+          // be cooperated by @antooni, refer to him for further questions
+          //
+          // - 3 January 2024
+          //
           expect(token.coingeckoId).toEqual(
             CoingeckoId('mountain-protocol-usdm'),
           )
