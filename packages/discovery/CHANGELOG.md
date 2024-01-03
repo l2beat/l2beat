@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.28.2
+
+### Patch Changes
+
+- Add new ChainIds
+
 ## 0.28.1
 
 ### Patch Changes

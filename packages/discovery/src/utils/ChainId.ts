@@ -59,6 +59,8 @@ const CHAIN_IDS = {
   8453: 'base',
   1101: 'polygon-zkevm',
   100: 'gnosis',
+  957: 'lyra',
+  169: 'manta-pacific',
   '-1': 'native',
 } as const
 
