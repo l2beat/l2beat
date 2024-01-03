@@ -24,7 +24,26 @@ describe(DiscoveryHistoryRepository.name, () => {
     const expectedEth: DiscoveryHistoryRecord = {
       projectName,
       chainId: ChainId.ETHEREUM,
-      blockNumber: -1,
+      blockNumber: 1,
+      timestamp: new UnixTime(1),
+      discovery: {
+        name: projectName,
+        chain: ChainId.getName(ChainId.ETHEREUM),
+        blockNumber: -1,
+        configHash: Hash256.random(),
+        contracts: [],
+        eoas: [],
+        abis: {},
+        version: 0,
+      },
+      configHash: CONFIG_HASH,
+      version: 0,
+    }
+
+    const secondEth: DiscoveryHistoryRecord = {
+      projectName,
+      chainId: ChainId.ETHEREUM,
+      blockNumber: 0,
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
@@ -60,6 +79,7 @@ describe(DiscoveryHistoryRepository.name, () => {
     }
 
     await repository.addOrUpdate(expectedEth)
+    await repository.addOrUpdate(secondEth)
     await repository.addOrUpdate(expectedArb)
 
     const resultEth = await repository.findLatest(projectName, ChainId.ETHEREUM)

@@ -28,11 +28,12 @@ export class DiscoveryHistoryRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<DiscoveryHistoryRecord | undefined> {
     const knex = await this.knex()
-    const row = await knex('discovery_history')
+    const row = await knex('discovery_history as dh')
       .where({
         project_name: name,
         chain_id: +chainId,
       })
+      .orderBy('unix_timestamp', 'desc')
       .first()
 
     return row ? toRecord(row) : undefined
