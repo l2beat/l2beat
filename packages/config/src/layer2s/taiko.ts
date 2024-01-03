@@ -19,16 +19,14 @@ export const taiko: Layer2 = {
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.test.taiko.xyz'],
       documentation: ['https://taiko.xyz/docs'],
-      explorers: [
-        'https://explorer.test.taiko.xyz',
-        'https://status.test.taiko.xyz',
-      ],
+      explorers: ['https://jolnir.taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [
         'https://twitter.com/taikoxyz',
         'https://discord.gg/taikoxyz',
         'https://taiko.mirror.xyz',
       ],
+      rollupCodes: 'https://rollup.codes/taiko',
     },
   },
   stage: {

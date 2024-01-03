@@ -74,7 +74,7 @@ export function LivenessConfigurationCard({
           }}
         >
           <p style={{ fontWeight: 'bold' }}>Params:</p>
-          <p style={{ fontWeight: 'normal' }}>{config.params}</p>
+          <p style={{ fontWeight: 'normal' }}>{config.debugInfo}</p>
         </div>
       </p>
     </details>

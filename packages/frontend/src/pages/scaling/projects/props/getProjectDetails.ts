@@ -15,6 +15,7 @@ import { PermissionsSectionProps } from '../../../../components/project/Permissi
 import { RiskAnalysisProps } from '../../../../components/project/RiskAnalysis'
 import { StageSectionProps } from '../../../../components/project/StageSection'
 import { StateDerivationSectionProps } from '../../../../components/project/StateDerivationSection'
+import { StateValidationSectionProps } from '../../../../components/project/StateValidationSection'
 import { TechnologyIncompleteProps } from '../../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
@@ -119,6 +120,17 @@ export function getProjectDetails(
       })
     }
 
+    if (project.stateValidation) {
+      items.push({
+        type: 'StateValidationSection',
+        props: {
+          id: 'state-validation',
+          title: 'State validation',
+          stateValidation: project.stateValidation,
+        },
+      })
+    }
+
     technologySections.slice(1).forEach((section) =>
       items.push({
         type: 'TechnologySection',
@@ -184,6 +196,7 @@ export type ScalingDetailsSection =
   | RiskAnalysisSection
   | TechnologySection
   | StateDerivationSection
+  | StateValidationSection
   | PermissionsSection
   | ContractsSection
   | StageSection
@@ -231,6 +244,11 @@ interface TechnologySection {
 interface StateDerivationSection {
   type: 'StateDerivationSection'
   props: StateDerivationSectionProps
+}
+
+interface StateValidationSection {
+  type: 'StateValidationSection'
+  props: StateValidationSectionProps
 }
 
 interface PermissionsSection {

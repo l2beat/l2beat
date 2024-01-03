@@ -1,17 +1,15 @@
 import { utils } from 'ethers'
 
-import { ProjectRiskViewEntry } from '../../common'
+import { ProjectRiskViewEntry, Sentiment } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
-import { roundSeconds } from '../../utils/roundSeconds'
 import { Layer2RiskView } from '../types'
-import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
 export function makeBridgeCompatible(
   entry: Omit<Layer2RiskView, 'sourceUpgradeability'>,
 ): Layer2RiskView {
   return {
     ...entry,
-    sourceUpgradeability: entry.upgradeability,
+    sourceUpgradeability: entry.exitWindow,
   }
 }
 
@@ -101,7 +99,7 @@ export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
     Challenge mechanizm is not yet fully implemented.',
-  sentiment: 'warning',
+  sentiment: 'bad',
 }
 
 export const DATA_EXTERNAL_DAC: ProjectRiskViewEntry = {
@@ -118,95 +116,19 @@ export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-// Upgradable
-
-export const UPGRADABLE_YES: ProjectRiskViewEntry = {
-  value: 'Yes',
-  description:
-    'The code that secures the system can be changed arbitrarily and without notice.',
-  sentiment: 'bad',
-}
-
-export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
-  const delayString = formatSeconds(delay)
-  const delayStringRounded = '~' + formatSeconds(roundSeconds(delay, 60 * 60)) // round to nearest hour
-  return {
-    value: `${delayStringRounded} or no delay`,
-    description: `There is a ${delayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
-    sentiment: 'warning',
-  }
-}
-
-export function UPGRADABLE_POLYGON_ZKEVM(
-  delay: string,
-  rollupEmergencyState: boolean,
-  bridgeEmergencyState: boolean,
+export function DATA_CELESTIA(
+  isUsingBlobstream: boolean,
 ): ProjectRiskViewEntry {
+  const additional = isUsingBlobstream
+    ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
+    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots, meaning that the Sequencer can single-handedly post unavaialable roots.'
   return {
-    value: `${delay} or no delay`,
-    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay. Currently rollup emergency state is set to ${rollupEmergencyState.toString()}, bridge emergency state is set to ${bridgeEmergencyState.toString()}.`,
-    sentiment: 'warning',
-  }
-}
-
-export function UPGRADABLE_ZKSYNC(
-  delay: string,
-  securityCouncil: string,
-): ProjectRiskViewEntry {
-  return {
-    value: `${delay} or no delay`,
-    description: `There is ${delay} for upgrades initiated by ZkSync Multisig. The ${securityCouncil} Security Council can override the delay and allow instant upgrade. Some system components can be changed with no delay but that do not impede the ability for users to withdraw permissionlessly.`,
-    sentiment: 'warning',
-  }
-}
-
-export function UPGRADE_DELAY(
-  upgradeDelay: number,
-  exitDelay?: number,
-  canExit?: boolean,
-  isOptimisticDelay?: boolean,
-): ProjectRiskViewEntry {
-  const upgradeDelayString = formatSeconds(upgradeDelay)
-  const exitDelayString =
-    exitDelay !== undefined ? formatSeconds(exitDelay) : ''
-  const canReactString = canExit
-    ? isOptimisticDelay === true
-      ? ` but users have some time to react even with the challenge period delay`
-      : ' but users have some time to react even if the permissioned operator is censoring'
-    : isOptimisticDelay === true
-    ? ` and users don't have enough time to react because of the ${exitDelayString} challenge period delay`
-    : " and users don't have enough time to react if the permissioned operator is censoring"
-  return {
-    value: `${upgradeDelayString} delay`,
+    value: 'External',
     description:
-      'The code that secures the system can be changed arbitrarily' +
-      canReactString +
-      '.',
-    sentiment: canExit === false ? 'bad' : 'warning',
+      `Proof construction and state derivation rely fully on data that is posted on Celestia.` +
+      additional,
+    sentiment: isUsingBlobstream ? 'warning' : 'bad',
   }
-}
-
-function UPGRADE_DELAY_SECONDS(
-  upgradeDelay: number,
-  exitDelay?: number,
-  isOptimisticDelay?: boolean,
-): ProjectRiskViewEntry {
-  if (upgradeDelay < DANGER_DELAY_THRESHOLD_SECONDS) {
-    return UPGRADABLE_YES
-  }
-  if (
-    exitDelay !== undefined &&
-    upgradeDelay - exitDelay < DANGER_DELAY_THRESHOLD_SECONDS
-  ) {
-    return UPGRADE_DELAY(upgradeDelay, exitDelay, false, isOptimisticDelay)
-  }
-  return UPGRADE_DELAY(upgradeDelay, exitDelay, true, isOptimisticDelay)
-}
-
-export const UPGRADABLE_NO: ProjectRiskViewEntry = {
-  value: 'No',
-  description: 'The code that secures the system can never change.',
-  sentiment: 'good',
 }
 
 // bridges
@@ -251,7 +173,7 @@ export const UPCOMING_RISK: ProjectRiskViewEntry = {
 export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   stateValidation: UPCOMING_RISK,
   dataAvailability: UPCOMING_RISK,
-  upgradeability: UPCOMING_RISK,
+  exitWindow: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
   proposerFailure: UPCOMING_RISK,
   destinationToken: UPCOMING_RISK,
@@ -267,7 +189,7 @@ export const UNDER_REVIEW_RISK: ProjectRiskViewEntry = {
 export const UNDER_REVIEW_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   stateValidation: UNDER_REVIEW_RISK,
   dataAvailability: UNDER_REVIEW_RISK,
-  upgradeability: UNDER_REVIEW_RISK,
+  exitWindow: UNDER_REVIEW_RISK,
   sequencerFailure: UNDER_REVIEW_RISK,
   proposerFailure: UNDER_REVIEW_RISK,
   destinationToken: UNDER_REVIEW_RISK,
@@ -428,6 +350,69 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
+export function EXIT_WINDOW(
+  upgradeDelay: number,
+  exitDelay: number,
+  upgradeDelay2?: number,
+): ProjectRiskViewEntry {
+  let window: number = upgradeDelay - exitDelay
+  const windowText = window <= 0 ? 'None' : formatSeconds(window)
+  let showWarning = false
+  if (upgradeDelay2 !== undefined) {
+    const window2: number = upgradeDelay2 - exitDelay
+    const windowString2 = window2 <= 0 ? 'None' : formatSeconds(window2)
+    if (windowText !== windowString2) {
+      showWarning = true
+      window = Math.min(window, window2)
+    }
+  }
+  let sentiment: Sentiment
+  if (window < 7 * 24 * 60 * 60) {
+    sentiment = 'bad'
+  } else if (window < 30 * 24 * 60 * 60) {
+    sentiment = 'warning'
+  } else {
+    sentiment = 'good'
+  }
+  const instantlyUpgradable =
+    upgradeDelay === 0 ? ' since contracts are instantly upgradable' : ''
+  const description =
+    windowText === 'None'
+      ? `There is no window for users to exit in case of an unwanted upgrade${instantlyUpgradable}.`
+      : `Users have ${windowText} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
+          upgradeDelay,
+        )} delay before an upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
+          exitDelay,
+        )} to be processed.`
+  return {
+    value: windowText,
+    description,
+    sentiment,
+    showWarning,
+  }
+}
+
+export const EXIT_WINDOW_NON_UPGRADABLE: ProjectRiskViewEntry = {
+  value: '∞',
+  description:
+    'Users can exit funds at any time because contracts are not upgradeable.',
+  sentiment: 'good',
+}
+
+export const EXIT_WINDOW_UNKNOWN: ProjectRiskViewEntry = {
+  value: 'Unknown',
+  description:
+    'Some contracts are not verified, so there is no way to assess the exit window.',
+  sentiment: 'bad',
+}
+
+export const UPGRADABLE_YES: ProjectRiskViewEntry = {
+  value: 'Yes',
+  description:
+    'The code that secures the system can be changed arbitrarily and without notice.',
+  sentiment: 'bad',
+}
+
 export const RISK_VIEW = {
   STATE_NONE,
   STATE_FP,
@@ -443,13 +428,8 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
+  DATA_CELESTIA,
   UPGRADABLE_YES,
-  UPGRADABLE_ARBITRUM,
-  UPGRADABLE_POLYGON_ZKEVM,
-  UPGRADABLE_ZKSYNC,
-  UPGRADE_DELAY,
-  UPGRADE_DELAY_SECONDS,
-  UPGRADABLE_NO,
   VALIDATED_BY_ETHEREUM,
   NATIVE_AND_CANONICAL,
   CANONICAL,
@@ -470,4 +450,7 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
   UNDER_REVIEW_RISK,
+  EXIT_WINDOW,
+  EXIT_WINDOW_NON_UPGRADABLE,
+  EXIT_WINDOW_UNKNOWN,
 }

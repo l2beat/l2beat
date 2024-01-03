@@ -73,12 +73,16 @@ export const paradex: Layer2 = {
     dataAvailabilityMode: 'StateDiffs',
 
     links: {
-      websites: ['https://www.paradex.trade/'],
+      websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade'],
       documentation: ['https://docs.paradex.trade/'],
       explorers: [],
       repositories: ['https://github.com/tradeparadex'],
       socialMedia: ['https://twitter.com/tradeparadex'],
+    },
+    liveness: {
+      explanation:
+        'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
   },
   config: {
@@ -93,7 +97,15 @@ export const paradex: Layer2 = {
       }),
     ],
     liveness: {
-      proofSubmissions: [],
+      proofSubmissions: [
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1636978914),
+          programHashes: [
+            '3258367057337572248818716706664617507069572185152472699066582725377748079373',
+          ],
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -132,7 +144,7 @@ export const paradex: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [
@@ -153,7 +165,7 @@ export const paradex: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,

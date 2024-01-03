@@ -108,7 +108,7 @@ export const acrossV2: Bridge = {
       references: [
         {
           text: 'Across V2 Optimistic Oracle documentation',
-          href: 'https://docs.across.to/v2/how-does-across-work/optimistic-oracle',
+          href: 'https://docs.across.to/how-across-works/security-model',
         },
       ],
     },

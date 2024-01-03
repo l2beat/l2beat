@@ -1,4 +1,4 @@
-import { createGetStage } from './stage'
+import { createGetStage, isSatisfied } from './stage'
 import { ChecklistTemplate } from './types'
 
 export type StageChecklist = Parameters<typeof getStage>[0]
@@ -12,6 +12,13 @@ export const getStage = (
   blueprintChecklist: BlueprintChecklist,
   opts?: GetStageOptions,
 ) => {
+  const rollupNode = isSatisfied(
+    blueprintChecklist.stage0.rollupNodeSourceAvailable,
+  )
+  if (rollupNode === true && !opts?.rollupNodeLink) {
+    throw new Error('Rollup node link is required')
+  }
+
   const blueprint = getBlueprint(opts)
   return createGetStage(blueprint)(blueprintChecklist)
 }

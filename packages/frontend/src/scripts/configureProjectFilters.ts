@@ -1,8 +1,8 @@
 import intersection from 'lodash/intersection'
 
 import { clearRichSelect, getRichSelectValue } from './configureRichSelect'
-import { rerenderTable } from './configureTables'
 import { makeQuery } from './query'
+import { rerenderTable } from './table/configureTables'
 
 const states = new Map<string, string[]>()
 
