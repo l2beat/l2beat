@@ -19,7 +19,7 @@ export interface ProjectSummaryStat {
 }
 
 export function ProjectSummary(props: Props) {
-  const cols = props.type === 'bridge' ? 4 : 3
+  const cols = props.type === 'layer2' ? 3 : 4
   const groupedStats = chunk(props.stats, cols)
   return (
     <div
