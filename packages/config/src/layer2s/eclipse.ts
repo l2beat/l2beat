@@ -1,10 +1,7 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
-
-const discovery = new ProjectDiscovery('eclipse')
 
 export const eclipse: Layer2 = {
   isUpcoming: true,
@@ -14,7 +11,7 @@ export const eclipse: Layer2 = {
     name: 'Eclipse Mainnet',
     slug: 'eclipse-mainnet',
     description:
-      'Eclipse is Ethereum\'s fastest Layer 2, powered by the Solana Virtual Machine (SVM).',
+      'Eclipse is a Layer 2 powered by the Solana Virtual Machine (SVM).',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'NotApplicable',
@@ -28,7 +25,7 @@ export const eclipse: Layer2 = {
         'https://twitter.com/eclipsefnd',
         'https://discord.gg/eclipse-labs',
         'https://eclipsemainnet.mirror.xyz/',
-        ],
+      ],
     },
   },
   stage: {
