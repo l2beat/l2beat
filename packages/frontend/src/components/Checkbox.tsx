@@ -8,8 +8,6 @@ export interface CheckboxProps {
   checkIconClassName?: string
   label: ReactNode
   role: string
-  slugsWhenChecked?: string[]
-  slugsWhenUnchecked?: string[]
   id: string
   defaultChecked?: boolean
 }
@@ -19,10 +17,9 @@ export function Checkbox({
   checkIconClassName,
   label,
   role,
-  slugsWhenChecked,
-  slugsWhenUnchecked,
   id,
   defaultChecked,
+  ...rest
 }: CheckboxProps) {
   return (
     <label
@@ -34,13 +31,12 @@ export function Checkbox({
     >
       <input
         data-role={role}
-        data-slugs-when-checked={slugsWhenChecked}
-        data-slugs-when-unchecked={slugsWhenUnchecked}
         id={id}
         type="checkbox"
         autoComplete="off"
         className="peer hidden"
         defaultChecked={defaultChecked}
+        {...rest}
       />
       <CheckIcon className={classNames('flex-shrink-0', checkIconClassName)} />
       <span className="whitespace-pre">{label}</span>

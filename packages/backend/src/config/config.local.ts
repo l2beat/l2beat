@@ -14,6 +14,7 @@ export function getLocalConfig(env: Env): Config {
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
+  const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
   const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
@@ -21,6 +22,7 @@ export function getLocalConfig(env: Env): Config {
   )
   const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
+  const diffHistoryEnabled = env.boolean('DIFF_HISTORY_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const internalDiscordChannelId = env.optionalString(
     'INTERNAL_DISCORD_CHANNEL_ID',
@@ -114,6 +116,18 @@ export function getLocalConfig(env: Env): Config {
           type: 'EtherscanLike',
           etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
           etherscanApiUrl: 'https://api.basescan.org/api',
+        },
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
+      lyra: lyraTvlEnabled && {
+        providerUrl: env.string('TVL_LYRA_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
+          'TVL_LYRA_RPC_CALLS_PER_MINUTE',
+          25,
+        ),
+        blockNumberProviderConfig: {
+          type: 'RoutescanLike',
+          routescanApiUrl: 'https://explorer.lyra.finance/api',
         },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
@@ -275,6 +289,16 @@ export function getLocalConfig(env: Env): Config {
           ...getChainConfig(ChainId.POLYGON_ZKEVM),
           reorgSafeDepth: env.optionalInteger(
             'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
+          ),
+        },
+      ],
+    },
+    diffHistory: diffHistoryEnabled && {
+      chains: [
+        {
+          ...getChainConfig(ChainId.ETHEREUM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
         },
       ],

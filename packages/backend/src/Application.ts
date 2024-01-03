@@ -6,6 +6,7 @@ import { Config } from './config'
 import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
+import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
@@ -47,6 +48,7 @@ export class Application {
       createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
+      createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger, database, clock),
       createLivenessModule(config, logger, database, clock),
     ]
