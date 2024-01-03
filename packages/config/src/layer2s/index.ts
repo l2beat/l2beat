@@ -56,6 +56,7 @@ import { optimism } from './optimism'
 import { orb3 } from './orb3'
 import { palm } from './palm'
 import { paradex } from './paradex'
+import { parallel } from './parallel'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -137,6 +138,7 @@ export const layer2s: Layer2[] = [
   orb3,
   palm,
   paradex,
+  parallel,
   polygonmiden,
   polygonzkevm,
   polygonpos2,
