@@ -10,8 +10,7 @@ export const hypr: Layer2 = {
   display: {
     name: 'Hypr',
     slug: 'hypr',
-    description:
-      'Hypr is a Layer 2 blockchain, focused on scaling ZK gaming.',
+    description: 'Hypr is a Layer 2 blockchain, focused on scaling ZK gaming.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',
