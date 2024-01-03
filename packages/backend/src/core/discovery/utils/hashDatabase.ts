@@ -1,6 +1,6 @@
 import { ChainId, ConfigReader } from '@l2beat/discovery'
 import { createHash } from 'crypto'
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 
 export async function getDiscoveryHash(projectName: string, chainId: ChainId) {
   const configReader = new ConfigReader()
@@ -21,6 +21,19 @@ export function getHashesDatabase(path: string): Record<string, string> {
   }
 
   return result
+}
+
+export async function updateProjectHash(
+  projectName: string,
+  chainId: ChainId,
+  databasePath: string,
+) {
+  const shaSum = await getDiscoveryHash(projectName, chainId)
+  const database = getHashesDatabase(databasePath)
+
+  database[getHashesDatabaseKey(projectName, chainId)] = shaSum
+
+  writeFileSync(databasePath, JSON.stringify(database, null, 2))
 }
 
 export function getHashesDatabaseKey(
