@@ -5,7 +5,7 @@
 
 ## Description
 
-The owner has accepted the ownership of the contract.
+The owner has accepted the ownership of the contract, which is now the same multisig used for upgrades. The EOA that was there before is now only the owner of the BlockVerifier, but it has no power since all the methods with the `onlyOwner` modifier have been deleted from Loopring's original codebase.
 
 ## Watched changes
 
