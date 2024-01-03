@@ -1,3 +1,47 @@
+# Diff at Wed, 03 Jan 2024 12:45:52 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@805ee1a5aebc9121fdd78c14ee9d33cc8a0d975f
+
+## Description
+
+The owner has accepted the ownership of the contract.
+
+## Watched changes
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+      values.pendingOwner:
+-        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract LoopringV3 (0x9385aCd9d78dFE854c543294770d0C94c2B07EDC) {
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+      values.pendingOwner:
+-        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD) {
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+      values.pendingOwner:
+-        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 # Diff at Thu, 21 Dec 2023 13:24:40 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
