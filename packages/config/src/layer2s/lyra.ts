@@ -1,4 +1,11 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStack } from './templates/opStack'
@@ -11,8 +18,29 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId.USDC_ON_LYRA,
+    name: 'USD Coin',
+    symbol: 'USDC',
+    decimals: 6,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
+    address: EthereumAddress('0x6879287835A86F50f784313dBEd5E5cCC5bb8481'),
+    coingeckoId: CoingeckoId('usd-coin'),
+    sinceTimestamp: new UnixTime(1700221999),
+    category: 'stablecoin',
+    type: 'EBV',
+    formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Socket',
+    },
+  },
+]
+
 export const lyra: Layer2 = opStack({
   discovery,
+  tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.LYRA })),
   display: {
     name: 'Lyra',
     slug: 'lyra',
