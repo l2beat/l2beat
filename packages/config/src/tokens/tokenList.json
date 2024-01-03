@@ -1619,8 +1619,8 @@
       "decimals": 18,
       "sinceTimestamp": 1630989984,
       "category": "other",
-      "chainId": 1,
       "iconUrl": "https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095",
+      "chainId": 1,
       "type": "CBV",
       "formula": "locked"
     },
@@ -2487,8 +2487,22 @@
       "decimals": 18,
       "sinceTimestamp": 1669860000,
       "category": "other",
-      "chainId": 1,
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "stone-stakestone-ether",
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+      "symbol": "STONE",
+      "decimals": 18,
+      "sinceTimestamp": 1700658000,
+      "category": "other",
+      "chainId": 1,
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "type": "CBV",
       "formula": "locked"
     },
