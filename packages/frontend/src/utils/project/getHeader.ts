@@ -1,4 +1,4 @@
-import { Bridge, Layer2 } from '@l2beat/config'
+import { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { HeaderProps } from '../../components'
@@ -7,7 +7,7 @@ import { getTpsWeeklyChange } from '../activity/getTpsWeeklyChange'
 import { formatUSD, getPercentageChange } from '../utils'
 
 export function getHeader(
-  project: Layer2 | Bridge,
+  project: Layer2 | Layer3 | Bridge,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): HeaderProps {

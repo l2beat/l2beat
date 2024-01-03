@@ -26,7 +26,7 @@ export interface HeaderProps {
   showProjectUnderReview?: boolean
   risks?: RiskValues
   links: ProjectLink[]
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   warning?: string | { text: string; href: string }
 }
 

@@ -1,4 +1,4 @@
-import { Bridge, Layer2, ProjectPermission } from '@l2beat/config'
+import { Bridge, Layer2, Layer3, ProjectPermission } from '@l2beat/config'
 import {
   ManuallyVerifiedContracts,
   VerificationStatus,
@@ -8,7 +8,7 @@ import { TechnologyContract } from '../../components/project/ContractEntry'
 import { PermissionsSectionProps } from '../../components/project/PermissionsSection'
 
 export function getPermissionsSection(
-  project: Layer2 | Bridge,
+  project: Layer2 | Layer3 | Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): PermissionsSectionProps | undefined {

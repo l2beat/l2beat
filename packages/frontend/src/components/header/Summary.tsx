@@ -8,7 +8,7 @@ import { ProjectSummary, ProjectSummaryStat } from './ProjectSummary'
 import { TvlStats, TvlSummary } from './TvlSummary'
 
 interface SummaryProps {
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   stats: FullSummaryStats
   links: ProjectLink[]
   isUpcoming?: boolean

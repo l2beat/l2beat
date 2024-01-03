@@ -55,6 +55,8 @@ export interface Layer3Display {
     | string
   /** A warning displayed above the description of the project */
   warning?: string
+  /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
+  redWarning?: string
   /** A few sentences describing the layer3 */
   description: string
   /** A short (<20 characters) description of the use case */

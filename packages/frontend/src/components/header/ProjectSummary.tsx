@@ -6,7 +6,7 @@ import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
 
 interface Props {
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   stats: ProjectSummaryStat[]
   className?: string
 }
