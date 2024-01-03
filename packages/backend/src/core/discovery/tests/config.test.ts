@@ -249,7 +249,9 @@ describe('discovery config.jsonc', () => {
             const savedHash = database[getHashesDatabaseKey(c.name, c.chainId)]
             assert(
               hash === savedHash,
-              `The hash of your local discovered.json (${hash}) does not match the hash stored in the discoveredHashes.json (${savedHash}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+              `The hash for ${ChainId.getName(c.chainId)}:${
+                c.name
+              } of your local discovered.json (${hash.toString()}) does not match the hash stored in the discoveredHashes.json (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
             )
           }
         }
