@@ -21,7 +21,9 @@ export const parallel: Layer2 = {
       websites: ['https://parallel.fi'],
       apps: ['https://parallel.fi/airdrop'],
       documentation: ['https://docs.parallel.fi/parallel-chain/overview'],
-      explorers: ['https://explorerl2new-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz/'], 
+      explorers: [
+        'https://explorerl2new-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz/',
+      ],
       repositories: [],
       socialMedia: [
         'https://twitter.com/ParallelFi',
