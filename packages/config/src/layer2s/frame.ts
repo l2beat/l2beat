@@ -17,9 +17,9 @@ export const frame: Layer2 = {
     dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.frame.xyz/'],
+      websites: ['https://frame.xyz/'],
       apps: [],
-      documentation: ['https://www.docs.frame.xyz/'],
+      documentation: ['https://docs.frame.xyz/'],
       explorers: ['https://explorer.testnet.frame.xyz/'],
       repositories: ['https://github.com/frame-network'],
       socialMedia: [
