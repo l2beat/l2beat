@@ -28,7 +28,7 @@ export class DiscoveryHistoryRepository extends BaseRepository {
     chainId: ChainId,
   ): Promise<DiscoveryHistoryRecord | undefined> {
     const knex = await this.knex()
-    const row = await knex('discovery_history as dh')
+    const row = await knex('daily_discovery')
       .where({
         project_name: name,
         chain_id: +chainId,
@@ -45,7 +45,7 @@ export class DiscoveryHistoryRepository extends BaseRepository {
   ): Promise<UnixTime[]> {
     const knex = await this.knex()
 
-    const rows = await knex('discovery_history')
+    const rows = await knex('daily_discovery')
       .select('unix_timestamp')
       .where({
         project_name: projectName,
@@ -58,7 +58,7 @@ export class DiscoveryHistoryRepository extends BaseRepository {
   async addOrUpdate(record: DiscoveryHistoryRecord): Promise<string> {
     const knex = await this.knex()
 
-    await knex('discovery_history')
+    await knex('daily_discovery')
       .insert(toRow(record))
       .onConflict(['project_name', 'chain_id', 'unix_timestamp'])
       .merge()
@@ -70,14 +70,14 @@ export class DiscoveryHistoryRepository extends BaseRepository {
 
   async getAll(): Promise<DiscoveryHistoryRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('discovery_history')
+    const rows = await knex('daily_discovery')
 
     return rows.map(toRecord)
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return knex('discovery_history').delete()
+    return knex('daily_discovery').delete()
   }
 }
 
