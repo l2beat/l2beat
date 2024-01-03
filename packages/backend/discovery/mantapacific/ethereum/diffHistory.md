@@ -1,3 +1,22 @@
+# Diff at Wed, 03 Jan 2024 15:26:09 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@e8eb03b39061a86a8ec01e26d970e40d080ad225
+
+## Description
+
+Scalar - a system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation, has been increased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.scalar:
+-        166667
++        333333
+    }
+```
+
 # Diff at Tue, 19 Dec 2023 14:23:07 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
