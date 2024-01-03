@@ -10,6 +10,7 @@ import {
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -22,7 +23,9 @@ import {
   RISK_VIEW,
   subtractOneAfterBlockInclusive,
 } from './common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
 
@@ -30,6 +33,13 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const challengePeriod: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
+const upgradeDelay = 0
 
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
@@ -105,6 +115,7 @@ export const optimism: Layer2 = {
     purpose: 'Universal',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
@@ -121,8 +132,19 @@ export const optimism: Layer2 = {
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',
       ],
+      rollupCodes: 'https://rollup.codes/optimism',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Optimism is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets finalized ${formatSeconds(
+        challengePeriod,
+      )} after it has been posted.`,
+    },
   },
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
@@ -171,6 +193,12 @@ export const optimism: Layer2 = {
         tokens: ['SNX'],
         isHistorical: true,
       },
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -178,6 +206,7 @@ export const optimism: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(105235064),
     },
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [
         {
           formula: 'transfer',
@@ -213,8 +242,8 @@ export const optimism: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'OptimismPortal',
@@ -366,6 +395,15 @@ export const optimism: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
+      },
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
@@ -381,14 +419,9 @@ export const optimism: Layer2 = {
     },
   },
   stateDerivation: {
-    nodeSoftware:
-      'The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file for OP Mainnet can be found [here](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/deploy-config/mainnet.json).',
-    compressionScheme:
-      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+    ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
-    dataFormat:
-      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
   },
   permissions: [
     ...discovery.getMultisigPermission(
@@ -412,16 +445,16 @@ export const optimism: Layer2 = {
   },
   milestones: [
     {
+      name: 'Fault Proof System is live on OP Goerli',
+      link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      date: '2023-10-03T00:00:00Z',
+      description: 'Fraud Proof system is live on Goerli.',
+    },
+    {
       name: 'Mainnet migration to Bedrock',
       link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
       date: '2023-06-06T00:00:00Z',
       description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
-    },
-    {
-      name: 'Goerli testnet migration to Bedrock',
-      link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
-      date: '2023-01-13T00:00:00Z',
-      description: 'OP Mainnet on Goerli, since Jan 2023 is running Bedrock.',
     },
     {
       name: 'OP Stack Introduced',

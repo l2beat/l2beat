@@ -10,7 +10,7 @@ import { TvlStats } from '../../../../components/header/TvlSummary'
 import { InfoIcon, ProjectLink } from '../../../../components/icons'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
-import { TechnologyCell } from '../../../../components/table/TechnologyCell'
+import { TypeCell } from '../../../../components/table/TypeCell'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
@@ -36,6 +36,7 @@ export interface ProjectHeaderProps {
   stage: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
+  isLayer3?: boolean
   isUnderReview?: boolean
   showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
@@ -82,7 +83,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                 <span
                   className="Tooltip inline-block px-2"
                   title={renderToStaticMarkup(
-                    <StageTooltip item={props.stage} />,
+                    <StageTooltip stageConfig={props.stage} />,
                   )}
                 >
                   <InfoIcon />
@@ -93,8 +94,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
         ]
       : []),
     {
-      title: 'Technology',
-      value: <TechnologyCell>{props.technology}</TechnologyCell>,
+      title: 'Type',
+      value: <TypeCell>{props.technology}</TypeCell>,
     },
     {
       title: 'Purpose',
@@ -116,7 +117,9 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}
-      showTvlBreakdown={props.isUpcoming ? false : props.showTvlBreakdown}
+      showTvlBreakdown={
+        props.isUpcoming || props.isLayer3 ? false : props.showTvlBreakdown
+      }
     />
   )
 }

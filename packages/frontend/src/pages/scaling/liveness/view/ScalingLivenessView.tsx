@@ -1,9 +1,11 @@
 import React from 'react'
 
+import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingLivenessColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
-import { RowConfig, TableView } from '../../../../components/table/TableView'
+import { TableView } from '../../../../components/table/TableView'
+import { RowConfig } from '../../../../components/table/types'
 import { ScalingLivenessViewEntry } from '../types'
 import { LivenessTimeRangeControls } from './LivenessTimeRangeControls'
 
@@ -24,6 +26,7 @@ export function ScalingLivenessView({ items }: ScalingLivenessViewProps) {
         <LivenessTimeRangeControls />
       </div>
       <TableView columnsConfig={columnsConfig} rows={rows} items={items} />
+      <ScalingLegend />
     </section>
   )
 }

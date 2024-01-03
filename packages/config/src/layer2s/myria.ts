@@ -25,11 +25,11 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('myria')
 
-const delaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
 )
-const delay = formatSeconds(delaySeconds)
+const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 
 const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
@@ -52,6 +52,7 @@ export const myria: Layer2 = {
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://myria.com/'],
       apps: ['https://market.x.immutable.com/'],
@@ -61,6 +62,8 @@ export const myria: Layer2 = {
       socialMedia: [
         'https://medium.com/@myriagames',
         'https://twitter.com/myria',
+        'https://discord.gg/myria',
+        'https://t.me/myriaofficialgroup',
       ],
     },
     activityDataSource: 'Closed API',
@@ -78,7 +81,7 @@ export const myria: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'myria',
+      product: ['myria'],
       sinceTimestamp: new UnixTime(1659542607),
       resyncLastDays: 7,
     },
@@ -102,10 +105,7 @@ export const myria: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(
-      delaySeconds,
-      freezeGracePeriod,
-    ),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -128,7 +128,7 @@ export const myria: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
   },
   permissions: [
     {
@@ -136,7 +136,7 @@ export const myria: Layer2 = {
       accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(delay),
+        delayDescriptionFromString(upgradeDelay),
     },
     getCommittee(discovery),
     ...getSHARPVerifierGovernors(discovery, verifierAddress),

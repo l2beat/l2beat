@@ -1,7 +1,7 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { MulticallConfig } from '@l2beat/discovery'
-import { ChainId, Token, UnixTime } from '@l2beat/shared-pure'
+import { DiscoveryChainConfig } from '@l2beat/discovery'
+import { Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model'
@@ -21,6 +21,7 @@ export interface Config {
   readonly liveness: LivenessConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
+  readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
 }
 
@@ -59,6 +60,8 @@ export interface TvlConfig {
   readonly arbitrum: ChainTvlConfig | false
   readonly optimism: ChainTvlConfig | false
   readonly base: ChainTvlConfig | false
+  readonly mantapacific: ChainTvlConfig | false
+  readonly lyra: ChainTvlConfig | false
 }
 
 export interface LivenessConfig {
@@ -66,16 +69,30 @@ export interface LivenessConfig {
     readonly clientEmail: string
     readonly privateKey: string
     readonly projectId: string
+    readonly queryLimitGb: number
+    readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
+}
+
+export interface RoutescanChainConfig {
+  readonly type: 'RoutescanLike'
+  readonly routescanApiUrl: string
+}
+
+export interface EtherscanChainConfig {
+  readonly type: 'EtherscanLike'
+  readonly etherscanApiKey: string
+  readonly etherscanApiUrl: string
 }
 
 export interface ChainTvlConfig {
   readonly providerUrl: string
   readonly providerCallsPerMinute: number
-  readonly etherscanApiKey: string
-  readonly etherscanApiUrl: string
   readonly minBlockTimestamp: UnixTime
+  readonly blockNumberProviderConfig:
+    | EtherscanChainConfig
+    | RoutescanChainConfig
 }
 
 export interface HealthConfig {
@@ -103,6 +120,10 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
 }
 
+export interface DiffHistoryConfig {
+  readonly chains: DiffHistoryChainConfig[]
+}
+
 export interface DiscordConfig {
   readonly token: string
   readonly publicChannelId?: string
@@ -110,13 +131,11 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
-export interface UpdateMonitorChainConfig {
-  chainId: ChainId
-  rpcUrl: string
-  rpcGetLogsMaxRange?: number
+export interface DiscoveryCacheChainConfig {
   reorgSafeDepth?: number
-  multicall: MulticallConfig
-  etherscanApiKey: string
-  etherscanUrl: string
-  minTimestamp: UnixTime
 }
+
+export type UpdateMonitorChainConfig = DiscoveryChainConfig &
+  DiscoveryCacheChainConfig
+
+export type DiffHistoryChainConfig = UpdateMonitorChainConfig

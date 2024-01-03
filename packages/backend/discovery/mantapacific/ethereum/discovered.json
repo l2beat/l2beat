@@ -1,7 +1,7 @@
 {
   "name": "mantapacific",
   "chain": "ethereum",
-  "blockNumber": 18591512,
+  "blockNumber": 18820559,
   "configHash": "0x12ff72fc2b7d2394b395e51f26feaa392717a99a81ba83f659a327d5c59d06c2",
   "version": 3,
   "contracts": [
@@ -20,10 +20,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 259200,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 599640,
-        "latestOutputIndex": 4996,
-        "nextBlockNumber": 599760,
-        "nextOutputIndex": 4997,
+        "latestBlockNumber": 876960,
+        "latestOutputIndex": 7307,
+        "nextBlockNumber": 877080,
+        "nextOutputIndex": 7308,
         "PROPOSER": "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
         "startingBlockNumber": 0,
         "startingTimestamp": 1694223959,
@@ -103,7 +103,7 @@
       "sinceTimestamp": 1694224919,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643314",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292646799",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -141,7 +141,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 1000000,
+        "scalar": 166667,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xfeC5478feD709F728566FA6bF4546C83106be95B",
         "version": "1.3.1",
@@ -163,7 +163,7 @@
         "GUARDIAN": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "L2_ORACLE": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 18591506],
+        "params": [1000000000, 490798, 18820559],
         "paused": false,
         "SYSTEM_CONFIG": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
         "version": "1.7.2"

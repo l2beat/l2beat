@@ -1,4 +1,5 @@
 import { aevo } from './aevo'
+import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { astarzkevm } from './astarzkevm'
@@ -7,41 +8,52 @@ import { aztecV1 } from './aztecV1'
 import { aztecV2 } from './aztecV2'
 import { base } from './base'
 import { blast } from './blast'
+import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { HOMEPAGE_MILESTONES } from './common'
+import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
+import { eclipse } from './eclipse'
+import { frame } from './frame'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
+import { hypr } from './hypr'
 import { immutablex } from './immutablex'
 import { immutablezkevm } from './immutablezkevm'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { deri, xai } from './layer3s'
 import { linea } from './linea'
+import { lisk } from './lisk'
 import { loopring } from './loopring'
-import { lyrafinance } from './lyrafinance'
+import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
+import { metal } from './metal'
 import { metis } from './metis'
+import { mint } from './mint'
 import { mode } from './mode'
-import { morphism } from './morphism'
+import { molten } from './molten'
+import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { orb3 } from './orb3'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { polygonmiden } from './polygonmiden'
@@ -55,7 +67,9 @@ import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { Layer2 } from './types'
+import { x1 } from './x1'
 import { xchain } from './xchain'
+import { zkfair } from './zkfair'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -67,6 +81,7 @@ export * from './types'
 
 export const layer2s: Layer2[] = [
   aevo,
+  ancient,
   apex,
   arbitrum,
   astarzkevm,
@@ -75,21 +90,27 @@ export const layer2s: Layer2[] = [
   aztecV2,
   base,
   blast,
+  bob,
   bobanetwork,
   brine,
   canto,
   capx,
   canvasconnect,
+  debank,
   honeypot,
   degate,
   degate2,
   degate3,
+  deri,
   dydx,
+  eclipse,
+  frame,
   fuel,
   fuelv1,
   gluon,
   grvt,
   hermez,
+  hypr,
   immutablex,
   immutablezkevm,
   kinto,
@@ -97,18 +118,23 @@ export const layer2s: Layer2[] = [
   layer2finance,
   layer2financezk,
   linea,
+  lisk,
   loopring,
-  lyrafinance,
+  lyra,
   mantapacific,
   mantle,
+  metal,
   metis,
+  mint,
   mode,
-  morphism,
+  molten,
+  morph,
   myria,
   nova,
   obscuro,
   omgnetwork,
   optimism,
+  orb3,
   palm,
   paradex,
   polygonmiden,
@@ -121,7 +147,10 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   taiko,
+  x1,
+  xai,
   xchain,
+  zkfair,
   zkspace,
   zkswap,
   zkswap2,

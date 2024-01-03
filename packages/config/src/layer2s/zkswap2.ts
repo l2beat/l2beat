@@ -25,7 +25,8 @@ export const zkswap2: Layer2 = {
       'ZKSwap is a fork of ZkSync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
     purpose: 'Payments, AMM',
     provider: 'zkSync Lite',
-    category: zkswap.display.category,
+    category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -57,7 +58,7 @@ export const zkswap2: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY(691200),
+    exitWindow: RISK_VIEW.EXIT_WINDOW_UNKNOWN,
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),

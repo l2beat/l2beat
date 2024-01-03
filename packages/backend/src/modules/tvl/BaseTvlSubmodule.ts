@@ -15,7 +15,6 @@ export function createBaseTvlSubmodule(
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   coingeckoQueryService: CoingeckoQueryService,
-
   config: Config,
   logger: Logger,
   http: HttpClient,

@@ -47,7 +47,7 @@ export function aggregateReports(
   return aggregatedReports
 }
 
-function buildReportTree(
+export function buildReportTree(
   reports: ReportRecord[],
   projects: ReportProject[],
 ): NotAggregatedReportTree {
@@ -123,7 +123,7 @@ function aggregateReportTree(
   return finalTree
 }
 
-function deriveCategoryTree(
+export function deriveCategoryTree(
   tree: AggregatedReportTree,
 ): SerializableReportTree {
   const categoriesTree = ReportTree.from(
@@ -136,8 +136,13 @@ function deriveCategoryTree(
   )
 
   for (const [project, valueMap] of tree) {
+    if (project.isUpcoming || project.isLayer3) {
+      continue
+    }
+
     const targetType =
       project.type === 'bridge' ? ProjectId.BRIDGES : ProjectId.LAYER2S
+
     for (const [reportType, values] of valueMap) {
       categoriesTree.set(targetType, reportType, ({ usdValue, ethValue }) => {
         return {

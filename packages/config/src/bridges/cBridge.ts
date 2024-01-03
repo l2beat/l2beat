@@ -20,7 +20,7 @@ export const cBridge: Bridge = {
       For Liquidity Network, liquidity providers need to rely on SGN to remove their funds from the network.',
     category: 'Hybrid',
     links: {
-      websites: ['https://www.celer.network/'],
+      websites: ['https://celer.network/'],
       apps: ['https://cbridge.celer.network/'],
       explorers: [
         'https://cbridge-analytics.celer.network/',

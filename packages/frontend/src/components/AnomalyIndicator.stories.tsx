@@ -3,8 +3,9 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../.storybook/modes'
+import { AnomalyIndicatorEntry } from '../pages/scaling/liveness/types'
 import { configureTooltips } from '../scripts/configureTooltips'
-import { AnomalyIndicator, AnomalyIndicatorEntry } from './AnomalyIndicator'
+import { AnomalyIndicator } from './AnomalyIndicator'
 import { Tooltip } from './Tooltip'
 
 const meta: Meta<typeof AnomalyIndicator> = {
@@ -48,7 +49,7 @@ const anomalies: AnomalyIndicatorEntry[] = [
       {
         timestamp: 1697277392,
         durationInSeconds: 20 * 60,
-        type: 'BATCH SUBMISSION',
+        type: 'TX DATA SUBMISSION',
       },
     ],
   },
@@ -85,7 +86,7 @@ const anomalies: AnomalyIndicatorEntry[] = [
       {
         timestamp: 1698054992,
         durationInSeconds: 45 * 60,
-        type: 'BATCH SUBMISSION',
+        type: 'TX DATA SUBMISSION',
       },
     ],
   },

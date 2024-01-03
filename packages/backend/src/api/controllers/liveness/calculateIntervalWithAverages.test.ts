@@ -3,9 +3,9 @@ import { expect } from 'earl'
 import { cloneDeep } from 'lodash'
 
 import {
-  calculateAverages,
   calculateIntervals,
   calculateIntervalWithAverages,
+  calculateMinMaxAverages,
   LivenessRecordWithInterval,
 } from './calculateIntervalWithAverages'
 
@@ -47,6 +47,14 @@ const RECORDS: LivenessRecordWithInterval[] = [
     timestamp: NOW.add(-93, 'days'),
     type: LivenessType('DA'),
   },
+  {
+    timestamp: NOW.add(-93, 'days'),
+    type: LivenessType('PROOF'),
+  },
+  {
+    timestamp: NOW.add(-94, 'days'),
+    type: LivenessType('PROOF'),
+  },
 ]
 
 describe(calculateIntervals.name, () => {
@@ -75,30 +83,50 @@ describe(calculateIntervals.name, () => {
   })
 })
 
-describe(calculateAverages.name, () => {
+describe(calculateMinMaxAverages.name, () => {
   it('returns the averages for stateUpdates with undefined', () => {
     const input = cloneDeep(RECORDS).filter(
       (r) => r.type === LivenessType('STATE'),
     )
     calculateIntervals(input)!
-    const result = calculateAverages(input)
+    const result = calculateMinMaxAverages(input)
     const expected = {
       last30Days: undefined,
-      last90Days: { averageInSeconds: 3600, maximumInSeconds: 3600 },
-      max: { averageInSeconds: 3600, maximumInSeconds: 3600 },
+      last90Days: {
+        averageInSeconds: 3600,
+        minimumInSeconds: 3600,
+        maximumInSeconds: 3600,
+      },
+      allTime: {
+        averageInSeconds: 3600,
+        minimumInSeconds: 3600,
+        maximumInSeconds: 3600,
+      },
     }
     expect(result).toEqual(expected)
   })
   it('returns the averages for batchSubmissions', () => {
     const input = cloneDeep(RECORDS)
     calculateIntervals(input)!
-    const result = calculateAverages(
+    const result = calculateMinMaxAverages(
       input.filter((r) => r.type === LivenessType('DA')),
     )
     const expected = {
-      last30Days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
-      last90Days: { averageInSeconds: 892800, maximumInSeconds: 2667600 },
-      max: { averageInSeconds: 570240, maximumInSeconds: 2667600 },
+      last30Days: {
+        averageInSeconds: 892800,
+        minimumInSeconds: 3600,
+        maximumInSeconds: 2667600,
+      },
+      last90Days: {
+        averageInSeconds: 892800,
+        minimumInSeconds: 3600,
+        maximumInSeconds: 2667600,
+      },
+      allTime: {
+        averageInSeconds: 570240,
+        minimumInSeconds: 3600,
+        maximumInSeconds: 2667600,
+      },
     }
     expect(result).toEqual(expected)
   })
@@ -114,6 +142,9 @@ describe(calculateIntervalWithAverages.name, () => {
         stateUpdates: {
           records: RECORDS.filter((r) => r.type === LivenessType('STATE')),
         },
+        proofSubmissions: {
+          records: RECORDS.filter((r) => r.type === LivenessType('PROOF')),
+        },
       },
     })
 
@@ -125,6 +156,10 @@ describe(calculateIntervalWithAverages.name, () => {
       (r) => r.type === LivenessType('STATE'),
     )
     calculateIntervals(stateUpdateRecords)
+    const proofSubmissionsRecords = cloneDeep(RECORDS).filter(
+      (r) => r.type === LivenessType('PROOF'),
+    )
+    calculateIntervals(proofSubmissionsRecords)
 
     const expected = {
       project1: {
@@ -132,14 +167,17 @@ describe(calculateIntervalWithAverages.name, () => {
           records: batchSubmissionRecords,
           last30Days: {
             averageInSeconds: 2620800,
+            minimumInSeconds: 3600,
             maximumInSeconds: 7851600,
           },
           last90Days: {
             averageInSeconds: 2620800,
+            minimumInSeconds: 3600,
             maximumInSeconds: 7851600,
           },
-          max: {
+          allTime: {
             averageInSeconds: 1607040,
+            minimumInSeconds: 3600,
             maximumInSeconds: 7851600,
           },
         },
@@ -149,11 +187,23 @@ describe(calculateIntervalWithAverages.name, () => {
           last30Days: undefined,
           last90Days: {
             averageInSeconds: 3600,
+            minimumInSeconds: 3600,
             maximumInSeconds: 3600,
           },
-          max: {
+          allTime: {
             averageInSeconds: 3600,
+            minimumInSeconds: 3600,
             maximumInSeconds: 3600,
+          },
+        },
+        proofSubmissions: {
+          records: proofSubmissionsRecords,
+          last30Days: undefined,
+          last90Days: undefined,
+          allTime: {
+            averageInSeconds: 86400,
+            minimumInSeconds: 86400,
+            maximumInSeconds: 86400,
           },
         },
       },

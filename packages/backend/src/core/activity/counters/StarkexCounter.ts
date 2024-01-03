@@ -39,10 +39,15 @@ export function createStarkexCounter(
       getLatest: () => getStarkexLastDay(clock.getLastHour()),
       processRange: async (from, to, trx, logger) => {
         const queries = range(from, to + 1).map((day) => async () => {
-          const count = await starkexClient.getDailyCount(day, options.product)
+          const counts = await Promise.all(
+            options.product.map(
+              async (product) =>
+                await starkexClient.getDailyCount(day, product),
+            ),
+          )
 
           return {
-            count,
+            count: counts.reduce((a, b) => a + b, 0),
             timestamp: UnixTime.fromDays(day),
             projectId: projectId,
           }

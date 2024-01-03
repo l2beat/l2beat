@@ -10,13 +10,15 @@ export interface WarningBarProps {
   color: 'red' | 'yellow'
   text: string
   href?: string
-  isCritical: boolean
+  icon?: (props: { className?: string }) => JSX.Element
+  isCritical?: boolean
   className?: string
 }
 
 export function WarningBar({
   color,
   text,
+  icon,
   href,
   isCritical,
   className,
@@ -29,10 +31,10 @@ export function WarningBar({
       <Markdown className="leading-snug" inline>
         {text}
       </Markdown>
-      {isCritical && <span className="text-red-300">(CRITICAL)</span>}
+      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
     </>
   )
-
+  const Icon = icon ?? ShieldIcon
   if (href) {
     return (
       <OutLink href={href}>
@@ -40,7 +42,7 @@ export function WarningBar({
           className={cx('p-4', className)}
           color={color}
           hoverable
-          icon={<ShieldIcon className={cx(iconFill)} />}
+          icon={<Icon className={cx('h-5 w-5', iconFill)} />}
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -56,7 +58,7 @@ export function WarningBar({
     <Callout
       className={cx('p-4', className)}
       color={color}
-      icon={<ShieldIcon className={cx(iconFill)} />}
+      icon={<Icon className={cx('h-5 w-5', iconFill)} />}
       body={textElement}
     />
   )

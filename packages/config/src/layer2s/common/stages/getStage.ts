@@ -1,4 +1,4 @@
-import { createGetStage } from './stage'
+import { createGetStage, isSatisfied } from './stage'
 import { ChecklistTemplate } from './types'
 
 export type StageChecklist = Parameters<typeof getStage>[0]
@@ -12,6 +12,13 @@ export const getStage = (
   blueprintChecklist: BlueprintChecklist,
   opts?: GetStageOptions,
 ) => {
+  const rollupNode = isSatisfied(
+    blueprintChecklist.stage0.rollupNodeSourceAvailable,
+  )
+  if (rollupNode === true && !opts?.rollupNodeLink) {
+    throw new Error('Rollup node link is required')
+  }
+
   const blueprint = getBlueprint(opts)
   return createGetStage(blueprint)(blueprintChecklist)
 }
@@ -43,6 +50,10 @@ const getBlueprint = (opts?: GetStageOptions) =>
               : ''),
           negative:
             'No source-available node exists that can recreate the state from L1 data.',
+          underReviewMessage:
+            'The requirement for available node software is under review',
+          warningMessage:
+            'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
         },
       },
     },

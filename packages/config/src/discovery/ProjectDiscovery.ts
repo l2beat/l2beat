@@ -54,12 +54,18 @@ const filesystem = {
 
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
+  private readonly explorer: string
   constructor(
     public readonly projectName: string,
     public readonly chainId: ChainId = ChainId.ETHEREUM,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
+    this.explorer = ChainId.getExplorer(chainId)
+    assert(
+      this.explorer,
+      `No explorer found for chainId: ${chainId.toString()}`,
+    )
   }
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
@@ -97,6 +103,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
+      etherscanUrl: this.explorer,
       ...descriptionOrOptions,
     }
   }
@@ -109,6 +116,8 @@ export class ProjectDiscovery {
     tokens,
     upgradableBy,
     upgradeDelay,
+    isUpcoming,
+    isLayer3,
   }: {
     address: EthereumAddress
     name?: string
@@ -117,6 +126,8 @@ export class ProjectDiscovery {
     tokens: string[] | '*'
     upgradableBy?: string[]
     upgradeDelay?: string
+    isUpcoming?: boolean
+    isLayer3?: boolean
   }): ProjectEscrow {
     const contract = this.getContractByAddress(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contract.sinceTimestamp
@@ -134,9 +145,12 @@ export class ProjectDiscovery {
         name: name ?? contract.name,
         description,
         upgradeability: contract.upgradeability,
+        etherscanUrl: this.explorer,
         upgradableBy,
         upgradeDelay,
       },
+      isUpcoming,
+      isLayer3,
     }
   }
 
@@ -213,6 +227,7 @@ export class ProjectDiscovery {
           ),
         )
         .join(' '),
+      etherscanUrl: this.explorer,
     }))
   }
 
@@ -239,6 +254,7 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
+        etherscanUrl: this.explorer,
       },
       {
         name: `${identifier} participants`,
@@ -343,11 +359,11 @@ export class ProjectDiscovery {
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
     }
-
     return {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
+      etherscanUrl: this.explorer,
       ...descriptionOrOptions,
     }
   }
@@ -389,6 +405,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
+      etherscanUrl: this.explorer,
       description,
     }
   }

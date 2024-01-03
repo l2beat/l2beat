@@ -1,3 +1,69 @@
+# Diff at Tue, 28 Nov 2023 16:07:09 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: master@049dc0679d8762dc52199c99e9e62ba7cb396a7b
+
+## Description
+
+New remote chains added: 217, 218, 230. One of the owners in the Stargate Multisig has changed.
+
+## Watched changes
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+      values.chainAddressSizeMap.217:
++        20
+      values.chainAddressSizeMap.218:
++        20
+      values.chainAddressSizeMap.230:
++        20
+      values.defaultAdapterParams.217:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAdapterParams.218:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAdapterParams.230:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAppConfig.217:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.defaultAppConfig.218:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.defaultAppConfig.230:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.inboundProofLibrary.217:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.inboundProofLibrary.218:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.inboundProofLibrary.230:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.supportedOutboundProof.217:
++        [1,2]
+      values.supportedOutboundProof.218:
++        [1,2]
+      values.supportedOutboundProof.230:
++        2
+      values.ulnLookup.217:
++        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+      values.ulnLookup.218:
++        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+      values.ulnLookup.230:
++        "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+    }
+```
+
+```diff
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+      values.getOwners.2:
+-        "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1"
++        "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
+      values.getOwners.1:
+-        "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
++        "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
+      values.getOwners.0:
+-        "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
++        "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
+    }
+```
+
 # Diff at Tue, 07 Nov 2023 10:45:37 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)

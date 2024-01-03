@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectRiskViewEntry } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getCommittee } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
@@ -31,17 +30,6 @@ const priorityPeriod = discovery.getContractValue<number>(
 )
 const minPriorityDelay = maxPriorityDelay - priorityPeriod
 
-const upgradeRisk: ProjectRiskViewEntry = {
-  value: `${formatSeconds(maxPriorityDelay)} or ${formatSeconds(
-    minPriorityDelay,
-  )} delay`,
-  description: `There is a ${formatSeconds(
-    maxPriorityDelay,
-  )} delay, although this time can be shortened to ${formatSeconds(
-    minPriorityDelay,
-  )} by the Priority Controller.`,
-  sentiment: 'warning',
-}
 const shortTimelockDelay = discovery.getContractValue<number>(
   'ShortTimelockExecutor',
   'getDelay',
@@ -89,6 +77,8 @@ export const dydx: Layer2 = {
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [
@@ -116,6 +106,10 @@ export const dydx: Layer2 = {
       ],
     },
     activityDataSource: 'Closed API',
+    liveness: {
+      explanation:
+        'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
+    },
   },
   config: {
     escrows: [
@@ -128,11 +122,23 @@ export const dydx: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'dydx',
+      product: ['dydx'],
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
     },
     liveness: {
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
+          ),
+          selector: '0x9b3b76cc',
+          functionSignature:
+            'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
+          sinceTimestamp: new UnixTime(1615417556),
+        },
+      ],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -171,7 +177,20 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    upgradeability: upgradeRisk,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(
+        maxPriorityDelay,
+        freezeGracePeriod,
+        minPriorityDelay,
+      ),
+      description: `There is no exit window. Upgrades have a ${formatSeconds(
+        maxPriorityDelay,
+      )} delay, (or ${formatSeconds(
+        minPriorityDelay,
+      )} if shortened by the Priority Controller), but withdrawals can be censored for up to ${formatSeconds(
+        freezeGracePeriod,
+      )}.`,
+    },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
       sources: [

@@ -2,10 +2,11 @@ import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
+import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { configureOverflowWrappers } from '../../../../scripts/configureOverflowWrappers'
 import { configureProjectFilters } from '../../../../scripts/configureProjectFilters'
-import { configureTables } from '../../../../scripts/configureTables'
 import { configureTabs } from '../../../../scripts/configureTabs'
+import { configureTables } from '../../../../scripts/table/configureTables'
 import { ScalingRiskView } from './ScalingRiskView'
 
 const meta = {
@@ -35,7 +36,7 @@ const meta = {
             'All of the data needed for proof construction is published on chain.',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: '8 days delay',
           description:
             'The code that secures the system can be changed arbitrarily but users have some time to react.',
@@ -77,7 +78,7 @@ const meta = {
             'All of the data needed for proof construction is published on chain.',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: '7 days delay',
           description:
             'The code that secures the system can be changed arbitrarily but users have some time to react.',
@@ -119,7 +120,7 @@ const meta = {
             'All of the data needed for proof construction is published on chain.',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: '8 days delay',
           description:
             'The code that secures the system can be changed arbitrarily but users have some time to react.',
@@ -161,7 +162,7 @@ const meta = {
             'Proof construction relies fully on data that is NOT published on chain.',
           sentiment: 'bad',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
@@ -202,7 +203,7 @@ const meta = {
             'Proof construction relies fully on data that is NOT published on chain.',
           sentiment: 'bad',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
@@ -244,7 +245,7 @@ const meta = {
             'Proof construction relies fully on data that is NOT published on chain. There exists a data availability committee (DAC) that is tasked with protecting and supplying the data.',
           sentiment: 'warning',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
@@ -287,12 +288,13 @@ const meta = {
           secondLine: 'Transactions',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: '13d or no delay',
           description:
             'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
           sentiment: 'warning',
           secondLine: 'by DAO decentralized',
+          showWarning: true,
         },
         sequencerFailure: {
           value: 'Transact using L1',
@@ -331,7 +333,7 @@ const meta = {
           secondLine: 'Transactions, compressed',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
@@ -373,7 +375,7 @@ const meta = {
             'All of the data needed for proof construction is published on chain.',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
@@ -415,7 +417,7 @@ const meta = {
             'All of the data (SD = state diffs) needed for proof construction is published on chain.',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a 4 / 7 Multisig.',
@@ -457,7 +459,7 @@ const meta = {
             'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.     Challenge mechanism is not yet fully implemented.',
           sentiment: 'warning',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
@@ -501,7 +503,7 @@ const meta = {
           secondLine: 'Transactions',
           sentiment: 'good',
         },
-        upgradeability: {
+        exitWindow: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
@@ -544,7 +546,7 @@ const meta = {
             'Proof construction relies fully on data that is NOT published on chain. There exists a data availability committee (DAC) that is tasked with protecting and supplying the data.',
           sentiment: 'warning',
         },
-        upgradeability: {
+        exitWindow: {
           value: '14d delay',
           description:
             'The code that secures the system can be changed arbitrarily but users have some time to react.',
@@ -577,6 +579,11 @@ const meta = {
       return <Story />
     },
   ],
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 } satisfies Meta<typeof ScalingRiskView>
 export default meta
 

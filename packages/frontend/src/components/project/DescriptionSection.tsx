@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { ShieldIcon } from '../icons'
+import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
@@ -14,6 +16,7 @@ export interface DescriptionSectionProps {
   description: string
   warning?: string
   isVerified?: boolean
+  redWarning?: string
 }
 
 export function DescriptionSection(props: DescriptionSectionProps) {
@@ -25,6 +28,15 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           color="red"
           isCritical={true}
           className="mt-4"
+          icon={UnverifiedIcon}
+        />
+      )}
+      {props.redWarning && (
+        <WarningBar
+          text={props.redWarning}
+          color="red"
+          className="mt-4"
+          icon={ShieldIcon}
         />
       )}
       {props.warning && (

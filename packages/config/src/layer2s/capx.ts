@@ -14,9 +14,10 @@ export const capx: Layer2 = {
       'Capx is a sector-specific Layer 2 blockchain, specialised for token distribution and trading, facilitating curated distributions for project communities, token streaming for investor distributions, and a liquid secondary market for tokens.',
     purpose: 'DeFi',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
-      websites: ['https://www.capx.fi/'],
+      websites: ['https://capx.fi/'],
       apps: ['https://app.capx.fi/explore'],
       documentation: ['https://capx.gitbook.io/docs'],
       explorers: ['https://explorer.palm.io/'],

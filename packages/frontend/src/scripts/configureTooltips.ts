@@ -4,7 +4,6 @@ import { isMobile } from './utils/isMobile'
 
 export function configureTooltips() {
   const { $, $$ } = makeQuery(document.body)
-
   if (!document.querySelector('.Tooltip-Popup')) {
     return
   }
@@ -72,13 +71,9 @@ export function configureTooltips() {
 
   window.addEventListener('resize', hide)
   document
-    .querySelectorAll('.TableView')
-    .forEach((x) => x.addEventListener('scroll', hide))
-  document
     .querySelectorAll('[data-role="table"]')
     .forEach((x) => x.addEventListener('scroll', hide))
   document.body.addEventListener('scroll', hide)
-  window.addEventListener('scroll', hide)
   window.addEventListener('scroll', hide)
   document.body.addEventListener('click', (e) => {
     if (e.currentTarget !== tooltip) {

@@ -23,7 +23,10 @@ const escapeHatchDelaySeconds = discovery.getContractValue<number>(
   'delayBeforeEscapeHatch',
 )
 
+const upgradeDelay = 0
+
 assert(escapeHatchDelaySeconds === 4294967295) // otherwise change descriptions!!
+const escapeHatchDelayApprox = 4_291_745_472
 const escapeHatchDelayString = '~136 years'
 
 function getAccessControl() {
@@ -81,6 +84,7 @@ export const aztecconnect: Layer2 = {
       'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
     purpose: 'Private DeFi',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
@@ -105,6 +109,7 @@ export const aztecconnect: Layer2 = {
       },
     ],
     liveness: {
+      proofSubmissions: [],
       batchSubmissions: [],
       stateUpdates: [
         {
@@ -152,7 +157,7 @@ export const aztecconnect: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, escapeHatchDelayApprox),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [
