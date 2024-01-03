@@ -10,8 +10,8 @@ Retrieved agents from Agent Registry. As most of them are LoopringAMMPools, bloc
 
 ## Config related changes
 
-Following changes come from updates made to the config file, 
-not from differences found during discovery. Values are 
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
 for block 18219921 (main branch discovery), not current.
 
 ```diff
