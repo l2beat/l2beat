@@ -8,6 +8,7 @@ export interface ActivityPagesData {
 
 export interface ActivityViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
   category: Layer2['display']['category'] | undefined
   provider: Layer2['display']['provider'] | undefined

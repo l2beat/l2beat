@@ -16,6 +16,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Arbitrum One',
+        shortName: undefined,
         slug: 'arbitrum',
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -55,6 +56,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Polygon PoS',
+        shortName: undefined,
         slug: 'polygon-pos',
         warning: undefined,
         isArchived: undefined,
@@ -92,6 +94,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Metis Andromeda',
+        shortName: undefined,
         slug: 'metis',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
@@ -132,6 +135,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Omnichain (LayerZero)',
+        shortName: undefined,
         slug: 'omnichain',
         warning:
           'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are are in the early stages of development, use at your own risk.',
@@ -169,6 +173,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Hop',
+        shortName: undefined,
         slug: 'hop',
         warning: undefined,
         isArchived: undefined,
@@ -205,6 +210,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Synapse',
+        shortName: undefined,
         slug: 'synapse',
         warning: undefined,
         isArchived: undefined,
@@ -240,6 +246,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Starknet',
+        shortName: undefined,
         slug: 'starknet',
         warning: undefined,
         isArchived: undefined,
@@ -276,6 +283,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'ZKSpace',
+        shortName: undefined,
         slug: 'zkspace',
         warning: undefined,
         isArchived: undefined,
@@ -314,6 +322,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Omnibridge',
+        shortName: undefined,
         slug: 'omni',
         warning: undefined,
         isArchived: undefined,
@@ -350,6 +359,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'xDai Bridge',
+        shortName: undefined,
         slug: 'xdai',
         warning: undefined,
         isArchived: undefined,
@@ -385,6 +395,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Aptos (LayerZero)',
+        shortName: undefined,
         slug: 'aptos',
         warning: undefined,
         isArchived: undefined,
@@ -422,6 +433,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'ZKSwap 1.0',
+        shortName: undefined,
         slug: 'zkswap',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -460,6 +472,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Polygon Hermez',
+        shortName: undefined,
         slug: 'hermez',
         warning:
           'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
@@ -497,6 +510,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Wormhole V1',
+        shortName: undefined,
         slug: 'wormholev1',
         warning: undefined,
         isArchived: true,
@@ -533,6 +547,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'ZKSwap 2.0',
+        shortName: undefined,
         slug: 'zkswap2',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -572,6 +587,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Gluon',
+        shortName: undefined,
         slug: 'gluon',
         warning:
           'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
@@ -610,6 +626,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'OMG Network',
+        shortName: undefined,
         slug: 'omgnetwork',
         warning: undefined,
         isArchived: true,
@@ -647,6 +664,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Connext (Legacy)',
+        shortName: undefined,
         slug: 'connext-legacy',
         warning: undefined,
         isArchived: true,
@@ -682,6 +700,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Nomad',
+        shortName: undefined,
         slug: 'nomad',
         warning:
           'The Nomad token bridge contract has recently been exploited and currently is not operational.',
@@ -719,6 +738,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'L2.Finance-zk',
+        shortName: undefined,
         slug: 'layer2financezk',
         warning:
           'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
@@ -756,6 +776,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Sollet',
+        shortName: undefined,
         slug: 'sollet',
         warning:
           'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',

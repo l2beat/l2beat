@@ -16,6 +16,7 @@ const meta = {
     items: [
       {
         name: 'ZKSwap 1.0',
+        shortName: undefined,
         slug: 'zkswap',
         provider: 'zkSync Lite',
         category: 'ZK Rollup',
@@ -58,6 +59,7 @@ const meta = {
       },
       {
         name: 'Polygon Hermez',
+        shortName: 'PolHer',
         slug: 'hermez',
         provider: undefined,
         category: 'ZK Rollup',
@@ -100,6 +102,7 @@ const meta = {
       },
       {
         name: 'ZKSwap 2.0',
+        shortName: undefined,
         slug: 'zkswap2',
         provider: 'zkSync Lite',
         category: 'ZK Rollup',
@@ -142,6 +145,7 @@ const meta = {
       },
       {
         name: 'Gluon',
+        shortName: undefined,
         slug: 'gluon',
         category: 'Optimium',
         provider: undefined,
@@ -184,6 +188,7 @@ const meta = {
       },
       {
         name: 'OMG Network',
+        shortName: undefined,
         slug: 'omgnetwork',
         category: 'Plasma',
         provider: undefined,
@@ -225,6 +230,7 @@ const meta = {
       },
       {
         name: 'L2.Finance-zk',
+        shortName: undefined,
         slug: 'layer2financezk',
         category: 'Validium',
         provider: 'StarkEx',
@@ -267,6 +273,7 @@ const meta = {
       },
       {
         name: 'Arbitrum One',
+        shortName: undefined,
         slug: 'arbitrum',
         category: 'Optimistic Rollup',
         provider: undefined,
@@ -312,6 +319,7 @@ const meta = {
       },
       {
         name: 'Optimism',
+        shortName: undefined,
         slug: 'optimism',
         category: 'Optimistic Rollup',
         provider: 'OP Stack',
@@ -356,6 +364,7 @@ const meta = {
       },
       {
         name: 'dYdX',
+        shortName: undefined,
         slug: 'dydx',
         category: 'ZK Rollup',
         provider: 'StarkEx',
@@ -397,6 +406,7 @@ const meta = {
       },
       {
         name: 'zkSync Era',
+        shortName: undefined,
         slug: 'zksync-era',
         category: 'ZK Rollup',
         provider: 'ZK Stack',
@@ -439,6 +449,7 @@ const meta = {
       },
       {
         name: 'Metis Andromeda',
+        shortName: undefined,
         slug: 'metis',
         category: 'Optimium',
         provider: 'OVM',
@@ -483,6 +494,7 @@ const meta = {
       },
       {
         name: 'Loopring',
+        shortName: undefined,
         slug: 'loopring',
         category: 'ZK Rollup',
         provider: undefined,
@@ -527,6 +539,7 @@ const meta = {
       },
       {
         name: 'Immutable X',
+        shortName: undefined,
         slug: 'immutablex',
         category: 'Validium',
         provider: 'StarkEx',

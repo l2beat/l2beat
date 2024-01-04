@@ -60,6 +60,7 @@ export function getBridgesSummaryViewEntry(
 
   return {
     type: project.type,
+    shortName: project.display.shortName,
     name: project.display.name,
     slug: project.display.slug,
     warning: project.display.warning,

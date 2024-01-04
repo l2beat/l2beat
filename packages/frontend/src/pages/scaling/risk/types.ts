@@ -8,6 +8,7 @@ export interface ScalingRiskPagesData {
 
 export interface ScalingRiskViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
   category: Layer2['display']['category']
   provider?: Layer2['display']['provider']

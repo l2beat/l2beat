@@ -52,6 +52,7 @@ function getScalingSummarySummaryEntry(
 
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
     category: project.display.category,

@@ -11,6 +11,7 @@ export interface LivenessPagesData {
 
 export interface ScalingLivenessViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
   category: Layer2Display['category']
   dataAvailabilityMode: Layer2Display['dataAvailabilityMode']

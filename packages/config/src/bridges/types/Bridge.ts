@@ -29,6 +29,7 @@ export interface Bridge {
 
 export interface BridgeDisplay {
   name: string
+  shortName?: string
   slug: string
   warning?: string
   description?: string

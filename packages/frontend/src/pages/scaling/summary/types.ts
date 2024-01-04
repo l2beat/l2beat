@@ -6,6 +6,7 @@ import { ValueWithDisplayValue } from '../../types'
 
 export interface ScalingSummaryViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
   riskValues: RiskValues
   category: Layer2['display']['category']
