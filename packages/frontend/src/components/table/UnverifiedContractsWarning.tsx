@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
+import { Tooltip } from '../tooltip/Tooltip'
 
 export interface UnverifiedContractsWarningProps {
   tooltip: string
@@ -13,8 +14,8 @@ export function UnverifiedContractsWarning({
   tooltip,
 }: UnverifiedContractsWarningProps) {
   return (
-    <span className={cx('Tooltip inline-block', className)} title={tooltip}>
+    <Tooltip className={cx('inline-block', className)} content={tooltip}>
       <UnverifiedIcon className={cx('fill-red-300')} />
-    </span>
+    </Tooltip>
   )
 }

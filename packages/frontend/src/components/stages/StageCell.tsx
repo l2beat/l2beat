@@ -1,7 +1,7 @@
 import { StageConfig } from '@l2beat/config'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
+import { Tooltip } from '../tooltip/Tooltip'
 import { StageBadge } from './StageBadge'
 import { StageTooltip } from './StageTooltip'
 
@@ -15,11 +15,10 @@ export function StageCell({ stageConfig }: StageCellProps) {
   }
 
   return (
-    <div
-      className="Tooltip"
-      title={renderToStaticMarkup(<StageTooltip stageConfig={stageConfig} />)}
-      data-tooltip-big
-      data-tooltip-mobile-disabled
+    <Tooltip
+      content={<StageTooltip stageConfig={stageConfig} />}
+      big
+      disabledOnMobile
     >
       <StageBadge
         stage={stageConfig.stage}
@@ -30,6 +29,6 @@ export function StageCell({ stageConfig }: StageCellProps) {
         }
         oneSize
       />
-    </div>
+    </Tooltip>
   )
 }

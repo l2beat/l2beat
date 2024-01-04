@@ -3,6 +3,7 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
+import { Tooltip } from '../tooltip/Tooltip'
 
 export function ActivityHeader() {
   return (
@@ -28,9 +29,9 @@ export function ActivityHeader() {
           )}
         >
           Observed over the last 7 days
-          <span
-            className="Tooltip inline-block"
-            title={
+          <Tooltip
+            className="inline-block"
+            content={
               'How many more transactions are settled by Ethereum if we take into account projects listed below.' +
               '\n' +
               'Exact formula:' +
@@ -39,7 +40,7 @@ export function ActivityHeader() {
             }
           >
             <InfoIcon />
-          </span>
+          </Tooltip>
         </p>
       </div>
       <HorizontalSeparator className="mt-2 md:hidden" />

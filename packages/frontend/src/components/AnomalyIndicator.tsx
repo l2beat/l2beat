@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import range from 'lodash/range'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import {
   Anomaly,
@@ -10,6 +9,7 @@ import {
 } from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
 import { LivenessDurationCell } from './table/LivenessDurationCell'
+import { Tooltip } from './tooltip/Tooltip'
 
 interface Props {
   anomalyEntries: AnomalyIndicatorEntry[]
@@ -50,10 +50,10 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
   ) as AnomalyEntry[]
 
   return (
-    <span
-      className="Tooltip flex h-6 w-min gap-x-0.5"
-      title={renderToStaticMarkup(<AnomalyTooltip anomalyEntries={data} />)}
-      data-tooltip-big={true}
+    <Tooltip
+      className="flex h-6 w-min gap-x-0.5"
+      content={<AnomalyTooltip anomalyEntries={data} />}
+      big
       data-testid="anomaly-indicator"
     >
       {anomalyEntries.map((anomaly, i) => (
@@ -65,7 +65,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
           )}
         />
       ))}
-    </span>
+    </Tooltip>
   )
 }
 

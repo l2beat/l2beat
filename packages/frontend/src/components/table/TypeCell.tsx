@@ -13,6 +13,7 @@ import {
   ZKStackIcon,
   ZkSyncLiteIcon,
 } from '../icons'
+import { Tooltip } from '../tooltip/Tooltip'
 
 export interface TypeCellProps {
   children: string
@@ -22,7 +23,7 @@ export interface TypeCellProps {
 
 export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
   const isRollup = children.includes('Rollup')
-  const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
+  const providerClassName = 'relative inline-block h-4 w-4 ml-1'
   const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
 
   return (
@@ -33,76 +34,76 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
     >
       {children}
       {provider === 'StarkEx' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is built using StarkEx."
+          content="This project is built using StarkEx."
         >
           <StarkWareIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'OP Stack' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on OP Stack's code base."
+          content="This project is based on OP Stack's code base."
         >
           <OptimismIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'OVM' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on old OVM's code base."
+          content="This project is based on old OVM's code base."
         >
           <OVMIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'zkSync Lite' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on zkSync Lite's code base."
+          content="This project is based on zkSync Lite's code base."
         >
           <ZkSyncLiteIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'ZK Stack' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on ZK Stack's code base."
+          content="This project is based on ZK Stack's code base."
         >
           <ZKStackIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'Loopring' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on Loopring's code base."
+          content="This project is based on Loopring's code base."
         >
           <LoopringIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'Arbitrum' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on Arbitrum's code base."
+          content="This project is based on Arbitrum's code base."
         >
           <ArbitrumIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'Polygon' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on Polygon's code base."
+          content="This project is based on Polygon's code base."
         >
           <PolygonIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
       {provider === 'Starknet' && (
-        <span
+        <Tooltip
           className={providerClassName}
-          title="This project is based on Starknet's code base."
+          content="This project is based on Starknet's code base."
         >
           <StarknetIcon className={providerIconClassName} />
-        </span>
+        </Tooltip>
       )}
     </span>
   )

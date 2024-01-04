@@ -4,6 +4,7 @@ import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatLargeNumberWithCommas } from '../../../utils'
+import { Tooltip } from '../../tooltip/Tooltip'
 
 interface TokenAmountCellProps {
   assetId: AssetId
@@ -23,9 +24,9 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       : ''
 
   return props.forCanonical && props.escrows ? (
-    <div
-      className="Tooltip flex flex-col items-end gap-2 text-xs font-medium"
-      title="Circulating supply"
+    <Tooltip
+      className="flex flex-col items-end gap-2 text-xs font-medium"
+      content="Circulating supply"
     >
       {formatLargeNumberWithCommas(Number(props.amount))}
       {props.escrows.length > 1 &&
@@ -38,13 +39,13 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
             {formatLargeNumberWithCommas(Number(escrow.amount))}
           </div>
         ))}
-    </div>
+    </Tooltip>
   ) : (
-    <div
-      className="Tooltip text-xs font-medium"
-      title={props.forExternal ? 'Circulating supply' : formula}
+    <Tooltip
+      className="text-xs font-medium"
+      content={props.forExternal ? 'Circulating supply' : formula}
     >
       {formatLargeNumberWithCommas(Number(props.amount))}
-    </div>
+    </Tooltip>
   )
 }

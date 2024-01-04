@@ -6,6 +6,7 @@ import { sentimentToTextColor } from '../../utils/risks/color'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
+import { Tooltip } from '../tooltip/Tooltip'
 import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
@@ -26,9 +27,9 @@ export function RiskCell({ item }: Props) {
   }
 
   return (
-    <div
-      className={cx(item.description !== '' && 'Tooltip')}
-      title={item.description !== '' ? item.description : undefined}
+    <Tooltip
+      as="div"
+      content={item.description !== '' ? item.description : undefined}
     >
       <span
         className={cx(
@@ -53,6 +54,6 @@ export function RiskCell({ item }: Props) {
           {item.secondLine}
         </span>
       )}
-    </div>
+    </Tooltip>
   )
 }

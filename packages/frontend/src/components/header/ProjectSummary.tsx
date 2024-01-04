@@ -4,6 +4,7 @@ import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
+import { Tooltip } from '../tooltip/Tooltip'
 
 interface Props {
   type: 'bridge' | 'layer2'
@@ -68,12 +69,12 @@ function DetailsHeaderStat(props: ProjectSummaryStat) {
           {props.title}
         </span>
         {props.tooltip && (
-          <span
-            className="Tooltip -translate-y-px md:translate-y-0"
-            title={props.tooltip}
+          <Tooltip
+            className="-translate-y-px md:translate-y-0"
+            content={props.tooltip}
           >
             <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:h-3.5 md:w-3.5" />
-          </span>
+          </Tooltip>
         )}
       </div>
 

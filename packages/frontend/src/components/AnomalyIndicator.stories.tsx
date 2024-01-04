@@ -6,7 +6,7 @@ import { onlyDesktopModes } from '../../.storybook/modes'
 import { AnomalyIndicatorEntry } from '../pages/scaling/liveness/types'
 import { configureTooltips } from '../scripts/configureTooltips'
 import { AnomalyIndicator } from './AnomalyIndicator'
-import { Tooltip } from './Tooltip'
+import { TooltipProvider } from './tooltip/TooltipProvider'
 
 const meta: Meta<typeof AnomalyIndicator> = {
   component: AnomalyIndicator,
@@ -18,7 +18,7 @@ const meta: Meta<typeof AnomalyIndicator> = {
 
       return (
         <>
-          <Story /> <Tooltip withAnimation={false} />
+          <Story /> <TooltipProvider withAnimation={false} />
         </>
       )
     },

@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react'
 import { WrapperProps } from '../pages/Page'
 import { Head } from './head'
 import { FloatingBanner } from './l2warsaw/FloatingBanner'
-import { Tooltip } from './Tooltip'
+import { TooltipProvider } from './tooltip/TooltipProvider'
 
 export interface PageWrapperProps extends WrapperProps {
   children: ReactNode
@@ -23,7 +23,7 @@ export function PageWrapper(props: PageWrapperProps) {
       <body className="bg-white text-black dark:bg-neutral-900 dark:text-white">
         <script src="/scripts/prerender.js" />
         {props.children}
-        <Tooltip />
+        <TooltipProvider />
         {props.banner && <FloatingBanner />}
         <script src="/scripts/main.js" />
       </body>

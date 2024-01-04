@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { RoundedWarningIcon } from './icons'
+import { Tooltip } from './tooltip/Tooltip'
 
 export interface TVLBreakdownProps {
   warning?: string
@@ -40,14 +41,14 @@ export function TVLBreakdown(props: TVLBreakdownProps) {
         </svg>
       </span>
       {props.warning && (
-        <div className="Tooltip" title={props.warning}>
+        <Tooltip content={props.warning}>
           {props.warningSeverity === 'warning' && (
             <RoundedWarningIcon className="fill-yellow-700 dark:fill-yellow-300" />
           )}
           {props.warningSeverity === 'bad' && (
             <RoundedWarningIcon className="fill-red-700 dark:fill-red-300" />
           )}
-        </div>
+        </Tooltip>
       )}
     </span>
   )

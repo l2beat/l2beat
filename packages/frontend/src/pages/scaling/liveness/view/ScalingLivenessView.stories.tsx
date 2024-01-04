@@ -3,7 +3,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../../.storybook/modes'
-import { Tooltip } from '../../../../components/Tooltip'
+import { TooltipProvider } from '../../../../components/tooltip/TooltipProvider'
 import { configureLivenessTimeRangeControls } from '../../../../scripts/configureLivenessTimeRangeControls'
 import { configureTooltips } from '../../../../scripts/configureTooltips'
 import { ScalingLivenessView } from './ScalingLivenessView'
@@ -1437,7 +1437,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       }, [])
       return (
         <>
-          <Story /> <Tooltip />
+          <Story /> <TooltipProvider />
         </>
       )
     },

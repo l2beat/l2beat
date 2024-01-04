@@ -1,12 +1,14 @@
 import React from 'react'
 
+import { Tooltip } from '../tooltip/Tooltip'
+
 export function NoInfoCell() {
   return (
-    <span
-      className="Tooltip text-gray-550 dark:text-gray-500"
-      title="This item is still under review."
+    <Tooltip
+      className="text-gray-550 dark:text-gray-500"
+      content="This item is still under review."
     >
       No info
-    </span>
+    </Tooltip>
   )
 }

@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { isZeroUSD } from '../../utils/utils'
 import { TokenControl } from '../chart/TokenControls'
+import { Tooltip } from '../tooltip/Tooltip'
 import { NumberCell } from './NumberCell'
 
 export interface ValueWithPercentageCellProps {
@@ -21,18 +22,18 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
       {props.value && !isZeroUSD(props.value) ? (
         <>
           {props.tokens ? (
-            <div
-              className="Tooltip"
-              title={renderToStaticMarkup(
+            <Tooltip
+              as="div"
+              content={renderToStaticMarkup(
                 <TokenGridTooltip tokens={props.tokens} />,
               )}
-              data-tooltip-big
+              big
             >
               <NumberCell className="font-bold">{props.value}</NumberCell>
               <NumberCell signed className="w-18 ml-1 !text-base font-medium ">
                 {props.percentChange}
               </NumberCell>
-            </div>
+            </Tooltip>
           ) : (
             <div>
               <NumberCell className="font-bold">{props.value}</NumberCell>

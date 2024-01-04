@@ -4,6 +4,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../../icons'
 import { SectionId } from '../../project/sectionId'
+import { Tooltip } from '../../tooltip/Tooltip'
 
 interface Props<
   T extends {
@@ -83,12 +84,12 @@ export function TVLBreakdownTableView<
                       <span className="md:hidden">{column.shortName}</span>
                     )}
                     {column.tooltip && (
-                      <span
-                        className="Tooltip -translate-y-px md:translate-y-0"
-                        title={column.tooltip}
+                      <Tooltip
+                        className="-translate-y-px md:translate-y-0"
+                        content={column.tooltip}
                       >
                         <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
-                      </span>
+                      </Tooltip>
                     )}
                   </div>
                 </th>
@@ -96,7 +97,7 @@ export function TVLBreakdownTableView<
             })}
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {items.map((item, i) => {
             const { className: rowClassName, ...rest } =
               rows?.getProps(item, i) ?? {}
