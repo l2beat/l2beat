@@ -1,13 +1,11 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS } from '../layer2s/common'
 import { Layer3 } from './types'
 
 export const deri: Layer3 = {
   type: 'layer3',
   isUpcoming: false,
   isUnderReview: true,
-  isArchived: false,
   id: ProjectId('deri'),
   hostChain: ProjectId('arbitrum'),
   display: {
@@ -30,8 +28,5 @@ export const deri: Layer3 = {
         'https://discord.com/invite/kb8ZbYgp8M',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
-    dataAvailabilityMode: 'NotApplicable',
   },
-  contracts: CONTRACTS.EMPTY,
 }

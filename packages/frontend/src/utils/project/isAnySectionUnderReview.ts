@@ -12,11 +12,7 @@ export function isAnySectionUnderReview(
   project: Layer2 | Bridge | Layer3,
 ): boolean {
   if (project.type === 'layer3') {
-    return (
-      project.isUnderReview ??
-      project.contracts.isUnderReview ??
-      project.permissions === 'UnderReview'
-    )
+    return !!project.isUnderReview
   } else
     return (
       project.isUnderReview ??

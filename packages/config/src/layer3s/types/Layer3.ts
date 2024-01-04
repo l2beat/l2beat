@@ -12,8 +12,6 @@ export interface Layer3 {
   type: 'layer3'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
-  /** Is this layer3 archived? */
-  isArchived?: boolean
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
   /** Has this layer3 changed and is under review? */

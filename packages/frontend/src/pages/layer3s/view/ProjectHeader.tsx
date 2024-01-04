@@ -13,7 +13,6 @@ export interface ProjectHeaderProps {
   purpose: string
   technology: string
   links: ProjectLink[]
-  isArchived?: boolean
   isUpcoming?: boolean
   isLayer3?: boolean
   isUnderReview?: boolean
@@ -50,7 +49,6 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       links={props.links}
       isUpcoming={props.isUpcoming}
       isUnderReview={props.isUnderReview}
-      isArchived={props.isArchived}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
     />

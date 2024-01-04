@@ -11,7 +11,6 @@ export function getProjectHeader(project: Layer3): ProjectHeaderProps {
     purpose: project.display.purpose,
     technology: project.display.category,
     links: getLinks(project.display.links),
-    isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
     isUnderReview: project.isUnderReview,
     showProjectUnderReview: isAnySectionUnderReview(project),
