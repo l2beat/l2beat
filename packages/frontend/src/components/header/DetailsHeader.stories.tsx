@@ -88,7 +88,16 @@ export const DetailsHeader: Story = {
   args: {
     title: project.display.name,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     isArchived: false,
     warning,
@@ -100,7 +109,16 @@ export const ArchivedHeader: Story = {
   args: {
     title: project.display.name,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     isArchived: true,
     warning,
@@ -123,7 +141,16 @@ export const UnderReviewHeader: Story = {
   args: {
     title: project.display.name,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     showProjectUnderReview: true,
     type: 'layer2',
