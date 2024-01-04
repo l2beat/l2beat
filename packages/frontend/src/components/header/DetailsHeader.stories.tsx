@@ -92,6 +92,7 @@ export const DetailsHeader: Story = {
     links,
     isArchived: false,
     warning,
+    type: 'layer2',
   },
 }
 
@@ -103,6 +104,7 @@ export const ArchivedHeader: Story = {
     links,
     isArchived: true,
     warning,
+    type: 'layer2',
   },
 }
 
@@ -113,6 +115,7 @@ export const UpcomingHeader: Story = {
     stats: { summary: stats },
     links,
     isUpcoming: true,
+    type: 'layer2',
   },
 }
 
@@ -123,5 +126,6 @@ export const UnderReviewHeader: Story = {
     stats: { summary: stats },
     links,
     showProjectUnderReview: true,
+    type: 'layer2',
   },
 }
