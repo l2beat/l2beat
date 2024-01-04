@@ -81,6 +81,13 @@
     },
     "ZKF_MATIC": {
       "ignoreDiscovery": true
+    },
+    "DataAvailabilityCommittee": {
+      "fields": {
+        "members": {
+          "type": "array"
+        }
+      }
     }
   }
 }

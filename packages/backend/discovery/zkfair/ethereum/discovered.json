@@ -1,8 +1,8 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 18933185,
-  "configHash": "0x0c842caf3e79f85c091e3c41b5d139eed63005756a476f89d1fcda10cf4e137f",
+  "blockNumber": 18934480,
+  "configHash": "0x06c1e029eb7bdfde76f19813c36e7e30735edb2b84ee3ea57ad96aefeaa95c89",
   "version": 3,
   "contracts": [
     {
@@ -190,9 +190,6 @@
         ],
         "owner": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
         "requiredAmountOfSignatures": 3
-      },
-      "errors": {
-        "members": "Too many values. Update configuration to explore fully"
       },
       "derivedName": "CDKDataCommittee"
     },
