@@ -1,8 +1,8 @@
 import { Layer2Category } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import cx from 'classnames'
+import { default as cx } from 'classnames'
 
-import { getRowVerificationClassNames } from './getRowVerificationClassNames'
+import { getRowType, getRowTypeClassNames } from './getRowType'
 
 interface ScalingTableEntry {
   slug: string
@@ -35,7 +35,8 @@ export function getScalingRowProps(
   }
 
   return {
-    className: getRowVerificationClassNames(entry),
+    className: getRowTypeClassNames(),
+    'data-row-type': getRowType(entry),
     href,
     'data-slug': entry.slug,
   }
