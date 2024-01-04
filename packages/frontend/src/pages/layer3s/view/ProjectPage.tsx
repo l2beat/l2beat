@@ -32,7 +32,7 @@ export function ProjectPage(props: ProjectPageProps) {
       <div className="sticky top-0 z-100 md:hidden">
         <MobileProjectNavigation sections={sections} />
       </div>
-      <PageContent mobileFull>
+      <PageContent mobileFull className="mb-20">
         <ProjectHeader {...props.projectHeader} />
         <div className="gap-x-12 md:flex">
           <div className="mt-16 hidden max-w-[240px] shrink-0 md:block">
@@ -51,7 +51,7 @@ export function ProjectPage(props: ProjectPageProps) {
           </div>
         </div>
       </PageContent>
-      <Footer narrow {...props.footer} />
+      <Footer className="mt-auto" narrow {...props.footer} />
     </>
   )
 }
