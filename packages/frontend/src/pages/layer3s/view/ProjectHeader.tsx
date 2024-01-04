@@ -8,7 +8,6 @@ import { TypeCell } from '../../../components/table/TypeCell'
 
 export interface ProjectHeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
   purpose: string

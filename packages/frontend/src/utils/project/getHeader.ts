@@ -25,25 +25,9 @@ export function getHeader(
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
-    titleLength: getTitleLength(project.display.name),
     tvl: formatUSD(tvl),
     tvlWeeklyChange,
     tpsDaily: tpsDaily?.toString() ?? '',
     tpsWeeklyChange,
-  }
-}
-
-function getTitleLength(name: string): 'long' | 'very-long' | undefined {
-  switch (name) {
-    case 'Optimism':
-    case 'rhino.fi':
-    case 'Immutable X':
-      return 'long'
-    case 'OMG Network':
-    case 'Layer2.Finance':
-    case 'ZKSwap V2':
-    case 'Polygon Hermez':
-    case 'Metis Andromeda':
-      return 'very-long'
   }
 }
