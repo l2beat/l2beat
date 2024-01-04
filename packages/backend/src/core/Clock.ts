@@ -46,7 +46,13 @@ export class Clock {
     const onNewTimestamps = () => {
       const last = this.getLastHour()
       while (next.lte(last)) {
-        callback(next)
+        if (next.add(7, 'days').gte(last)) {
+          callback(next)
+        } else {
+          if (next.isFull('day')) {
+            callback(next)
+          }
+        }
         next = next.add(1, 'hours')
       }
     }
