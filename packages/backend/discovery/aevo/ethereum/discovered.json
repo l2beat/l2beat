@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18927607,
-  "configHash": "0x2c9b74e546139cafd6d2a395ed51a96738fd24ca67fd3838a33af91c74442ca9",
+  "blockNumber": 18933723,
+  "configHash": "0x2fbd84117e6e451cc199f99dbefc30a6e7b6c6a179bafd7965442eec6d6adae4",
   "version": 3,
   "contracts": [
     {
@@ -18,7 +18,7 @@
       "sinceTimestamp": 1679193095,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628195",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628239",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -66,7 +66,7 @@
       "derivedName": "L1StandardBridge"
     },
     {
-      "name": "PGNMultiSig",
+      "name": "AevoMultiSig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
@@ -105,7 +105,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 694997, 18927518],
+        "params": [1000000000, 694997, 18933380],
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "1.7.2"
@@ -139,10 +139,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 2509200,
-        "latestOutputIndex": 4181,
-        "nextBlockNumber": 2509800,
-        "nextOutputIndex": 4182,
+        "latestBlockNumber": 2517000,
+        "latestOutputIndex": 4194,
+        "nextBlockNumber": 2517600,
+        "nextOutputIndex": 4195,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,

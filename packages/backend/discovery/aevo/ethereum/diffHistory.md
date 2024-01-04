@@ -1,16 +1,16 @@
-# Diff at Wed, 03 Jan 2024 15:06:40 GMT:
+# Diff at Thu, 04 Jan 2024 11:38:42 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@cd7178dac8382781a897ca3b491227c5b79030a1
+- comparing to: master@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
 
 ## Description
 
-One owner is removed and another is added to PGNMultiSig.
+One owner is removed and another is added to AevoMultiSig.
 
 ## Watched changes
 
 ```diff
-    contract PGNMultiSig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    contract AevoMultiSig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
       values.getOwners.4:
 -        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
 +        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
