@@ -95,6 +95,13 @@ export class CBVUpdater implements ReportUpdater {
       'Timestamp cannot be smaller than minTimestamp',
     )
 
+    if (timestamp.equals(this.clock.getLastHour())) {
+      await this.reportRepository.deleteHourlyUntil(timestamp.add(-7, 'days'))
+      await this.reportRepository.deleteSixHourlyUntil(
+        timestamp.add(-90, 'days'),
+      )
+    }
+
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
