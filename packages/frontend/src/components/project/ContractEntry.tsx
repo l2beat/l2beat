@@ -83,7 +83,7 @@ export function ContractEntry({
       icon={icon}
       body={
         <>
-          <div className="flex flex-wrap gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2">
             <strong>{contract.name}</strong>{' '}
             {(contract.addresses ?? []).map((address, i) => (
               <EtherscanLink
@@ -94,6 +94,7 @@ export function ContractEntry({
                   verificationStatus.contracts[address] === false
                     ? 'text-red-300'
                     : '',
+                  'Address rounded py-1 px-2',
                 )}
               />
             ))}
@@ -103,10 +104,12 @@ export function ContractEntry({
                 className={cx(
                   verificationStatus.contracts[x.address] === false &&
                     !x.isAdmin
-                    ? 'text-red-300'
+                    ? ' text-red-300'
                     : '',
+                  'Address rounded py-1 px-2',
                 )}
                 href={x.href}
+                data-address={x.href}
               >
                 {x.name}
               </Link>

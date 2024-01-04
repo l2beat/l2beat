@@ -1,4 +1,5 @@
 import { configureCharts } from './charts'
+import { configureAddresses } from './configureAddresses'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
@@ -41,3 +42,4 @@ configureBridgesAndCombinedOnly()
 configureLivenessTimeRangeControls()
 configureOverflowWrappers()
 configureSorting()
+configureAddresses()
