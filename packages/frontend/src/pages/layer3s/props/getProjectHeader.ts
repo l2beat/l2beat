@@ -8,7 +8,6 @@ export function getProjectHeader(project: Layer3): ProjectHeaderProps {
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
-    titleLength: getTitleLength(project.display.name),
     purpose: project.display.purpose,
     technology: project.display.category,
     links: getLinks(project.display.links),
@@ -18,21 +17,6 @@ export function getProjectHeader(project: Layer3): ProjectHeaderProps {
     showProjectUnderReview: isAnySectionUnderReview(project),
     warning: project.display.headerWarning,
     hostChain: layer2s.find((l) => l.id === project.hostChain)?.display.name,
-  }
-}
-
-function getTitleLength(name: string): 'long' | 'very-long' | undefined {
-  switch (name) {
-    case 'Optimism':
-    case 'rhino.fi':
-    case 'Immutable X':
-      return 'long'
-    case 'OMG Network':
-    case 'Layer2.Finance':
-    case 'ZKSwap V2':
-    case 'Polygon Hermez':
-    case 'Metis Andromeda':
-      return 'very-long'
   }
 }
 
