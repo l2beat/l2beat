@@ -3,6 +3,7 @@ import { branded, Hash160 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import { z } from 'zod'
+
 import { fileExistsCaseSensitive } from './fsLayer'
 
 const HashesDatabase = z.record(branded(z.string(), Hash160))
@@ -22,7 +23,7 @@ export async function getDiscoveryHash(
 export function getHashesDatabase(path: string): Record<string, Hash160> {
   let result: Record<string, Hash160> = {}
 
-  if(fileExistsCaseSensitive(path)) {
+  if (fileExistsCaseSensitive(path)) {
     const hashContent = readFileSync(path, 'utf-8')
     result = HashesDatabase.parse(JSON.parse(hashContent))
   }
