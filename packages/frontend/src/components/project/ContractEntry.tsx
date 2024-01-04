@@ -60,11 +60,11 @@ export function ContractEntry({
   const icon =
     areAddressesUnverified || areLinksUnverified ? (
       <UnverifiedContractsWarning
-        className="mt-[3px]"
+        className="mt-[3px] pt-1"
         tooltip="Source code is not verified"
       />
     ) : (
-      <BulletIcon className="h-[1em]" />
+      <BulletIcon className="h-[1em] pt-2" />
     )
 
   addresses.forEach((address) => {

@@ -2,10 +2,6 @@ import { makeQuery } from './query'
 
 export function configureAddresses() {
   const { $$ } = makeQuery(document.body)
-  if (!document.querySelector('.Tooltip-Popup')) {
-    return
-  }
-
   const elements = $$('.Address')
 
   elements.forEach((element) => {
@@ -14,7 +10,7 @@ export function configureAddresses() {
       if (!address) {
         return
       }
-      changeBackgroundColor(address)
+      toggleBgColor(address)
     })
 
     element.addEventListener('mouseleave', function () {
@@ -22,12 +18,12 @@ export function configureAddresses() {
       if (!address) {
         return
       }
-      changeBackgroundColor(address)
+      toggleBgColor(address)
     })
   })
 }
 
-function changeBackgroundColor(address: string) {
+function toggleBgColor(address: string) {
   const { $$ } = makeQuery(document.body)
   $$(`.Address[data-address="${address}"]`).forEach((element) => {
     element.classList.toggle('bg-yellow-250')
