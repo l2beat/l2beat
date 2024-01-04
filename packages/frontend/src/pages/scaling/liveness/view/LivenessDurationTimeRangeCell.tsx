@@ -35,9 +35,9 @@ export function LivenessDurationTimeRangeCell({
               dataType={dataType}
             />
             {data?.warning && (
-              <div className="Tooltip" title={data.warning}>
+              <Tooltip content={data.warning}>
                 <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
-              </div>
+              </Tooltip>
             )}
           </div>
         }
@@ -55,9 +55,9 @@ export function LivenessDurationTimeRangeCell({
               dataType={dataType}
             />
             {data?.warning && (
-              <div className="Tooltip" title={data.warning}>
+              <Tooltip content={data.warning}>
                 <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
-              </div>
+              </Tooltip>
             )}
           </div>
         }

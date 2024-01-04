@@ -17,9 +17,9 @@ export interface TVLBreakdownProps {
 export function TVLBreakdown(props: TVLBreakdownProps) {
   return (
     <span className="flex items-center gap-1">
-      <span
-        className="Tooltip overflow-hidden rounded opacity-80"
-        title={props.label}
+      <Tooltip
+        className="overflow-hidden rounded opacity-80"
+        content={props.label}
       >
         <svg
           className=""
@@ -39,7 +39,7 @@ export function TVLBreakdown(props: TVLBreakdownProps) {
             />
           ))}
         </svg>
-      </span>
+      </Tooltip>
       {props.warning && (
         <Tooltip content={props.warning}>
           {props.warningSeverity === 'warning' && (
