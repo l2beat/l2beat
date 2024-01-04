@@ -3011,6 +3011,20 @@
       "formula": "locked"
     },
     {
+      "id": "wusdm-wrapped-mountain-protocol-usd",
+      "name": "Wrapped Mountain Protocol USD",
+      "coingeckoId": "mountain-protocol-usdm",
+      "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+      "symbol": "wUSDM",
+      "decimals": 18,
+      "sinceTimestamp": 1696622279,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "toncoin-wrapped-ton-coin",
       "name": "Wrapped TON Coin",
       "coingeckoId": "the-open-network",

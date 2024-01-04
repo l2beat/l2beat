@@ -9,6 +9,7 @@ export class HourlyIndexer extends RootIndexer {
   }
 
   override async start(): Promise<void> {
+    this.logger.info('Starting...')
     await super.start()
 
     this.requestTick()

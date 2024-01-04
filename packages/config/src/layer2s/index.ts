@@ -56,6 +56,7 @@ import { optimism } from './optimism'
 import { orb3 } from './orb3'
 import { palm } from './palm'
 import { paradex } from './paradex'
+import { parallel } from './parallel'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -63,6 +64,7 @@ import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
+import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
@@ -137,6 +139,7 @@ export const layer2s: Layer2[] = [
   orb3,
   palm,
   paradex,
+  parallel,
   polygonmiden,
   polygonzkevm,
   polygonpos2,
@@ -144,6 +147,7 @@ export const layer2s: Layer2[] = [
   rhinofi,
   scroll,
   sorare,
+  specular,
   starknet,
   stealthchain,
   taiko,

@@ -110,10 +110,15 @@ export class DiscoveryRunner {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
       }
 
+      const errorString = JSON.stringify(
+        err,
+        Object.getOwnPropertyNames(err),
+        2,
+      )
       logger.warn(
         `DiscoveryRunner: Retrying ${config.name} (chain: ${ChainId.getName(
           config.chainId,
-        )}) | attempt:${i}`,
+        )}) | attempt:${i} | error:${errorString}`,
       )
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }

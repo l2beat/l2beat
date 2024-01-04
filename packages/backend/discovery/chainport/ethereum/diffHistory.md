@@ -1,3 +1,22 @@
+# Diff at Thu, 04 Jan 2024 07:22:14 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
+
+## Description
+
+New proposal was created and executed. It changes the fee collector address (to 0xdb07241c48eAd8b973A76B0bEb60a21F09BEC5e4) for the main Vault contract and a side contract (source code not available).
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+      values.proposalCount:
+-        44
++        45
+    }
+```
+
 # Diff at Fri, 06 Oct 2023 09:11:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
