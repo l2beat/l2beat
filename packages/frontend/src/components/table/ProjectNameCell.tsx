@@ -19,7 +19,7 @@ export interface ProjectCellProps {
 export function ProjectNameCell({ project }: ProjectCellProps) {
   return (
     <div className="pl-3">
-      <span className="relative text-base font-bold group-hover:underline md:text-lg">
+      <span className="text-base font-bold group-hover:underline md:text-lg">
         {project.name}
       </span>
       {project.isVerified === false && (
