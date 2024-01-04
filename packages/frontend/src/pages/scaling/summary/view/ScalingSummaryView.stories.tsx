@@ -1233,6 +1233,18 @@ const meta = {
         stage: { stage: 'NotApplicable' },
       },
     ],
+    layer3s: [
+      {
+        name: 'Xai',
+        slug: 'xai',
+        provider: 'Arbitrum Orbit',
+        warning: undefined,
+        isArchived: undefined,
+        isUpcoming: true,
+        purpose: 'Gaming',
+        category: 'Optimium',
+      },
+    ],
   },
   decorators: [
     (Story) => {
