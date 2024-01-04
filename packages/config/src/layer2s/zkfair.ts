@@ -66,6 +66,18 @@ const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
   'isForcedBatchDisallowed',
 )
 
+const DACSize = discovery.getContractValue<number>(
+  'DataAvailabilityCommittee',
+  'getAmountOfMembers',
+)
+
+const DACThreshold = discovery.getContractValue<number>(
+  'DataAvailabilityCommittee',
+  'requiredAmountOfSignatures',
+)
+
+const DACThresholdString = `${DACThreshold}/${DACSize}`
+
 export const zkfair: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkfair'),
@@ -244,6 +256,31 @@ export const zkfair: Layer2 = {
       'BridgeAdminMultiSig',
       'The Bridge Admin is a multisig that can be used to set bridge fees and an address into which fees are transferred.',
     ),
+    {
+      name: 'DAC members',
+      accounts: (() => {
+        // format: [ [ip, address], ... ]
+        const membersMap = discovery.getContractValue<string[][]>(
+          'DataAvailabilityCommittee',
+          'members',
+        )
+
+        const members = membersMap.map((member) =>
+          discovery.formatPermissionedAccount(EthereumAddress(member[1])),
+        )
+
+        return members
+      })(),
+      description: `Members of the Data Availability Committee. The setup is equivalent to a ${DACThresholdString} multisig.`,
+    },
+    {
+      name: 'DAC Owner',
+      accounts: [
+        discovery.getPermissionedAccount('DataAvailabilityCommittee', 'owner'),
+      ],
+      description:
+        'The owner of the Data Availability Committee, can update the member set at any time.',
+    },
   ],
   contracts: {
     addresses: [
@@ -267,7 +304,7 @@ export const zkfair: Layer2 = {
       ),
       discovery.getContractDetails(
         'DataAvailabilityCommittee',
-        'Committee attesting that data for a given dataRoot has been published.',
+        'Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.',
       ),
     ],
     references: [
