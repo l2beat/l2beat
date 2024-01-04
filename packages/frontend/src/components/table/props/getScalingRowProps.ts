@@ -1,6 +1,5 @@
 import { Layer2Category } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { default as cx } from 'classnames'
 
 import { getRowType, getRowTypeClassNames } from './getRowType'
 
@@ -20,25 +19,14 @@ export function getScalingRowProps(
   type: ScalingRowType,
 ) {
   const href = getHref(entry.slug, type)
-
   const isEthereum = entry.slug === 'ethereum'
-  if (isEthereum) {
-    return {
-      className: cx(
-        'bg-blue-400 hover:bg-blue-400 border-b-blue-600',
-        'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
-      ),
-      href,
-      'data-slug': entry.slug,
-      'data-non-filterable': true,
-    }
-  }
 
   return {
     className: getRowTypeClassNames(),
-    'data-row-type': getRowType(entry),
     href,
+    'data-row-type': isEthereum ? 'ethereum' : getRowType(entry),
     'data-slug': entry.slug,
+    'data-non-filterable': isEthereum,
   }
 }
 

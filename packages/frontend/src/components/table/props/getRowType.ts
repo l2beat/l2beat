@@ -21,6 +21,8 @@ export function getRowType(entry: Entry): string | undefined {
 
 export function getRowTypeClassNames(): string {
   return classNames(
+    'data-[row-type=ethereum]:bg-blue-400 data-[row-type=ethereum]:hover:bg-blue-400 data-[row-type=ethereum]:border-b-blue-600',
+    'dark:data-[row-type=ethereum]:bg-blue-900 dark:data-[row-type=ethereum]:border-b-blue-500 dark:data-[row-type=ethereum]:hover:bg-blue-900',
     'data-[row-type=unverified]:bg-red-100 data-[row-type=unverified]:dark:bg-red-900',
     'data-[row-type=under-review]:bg-yellow-200/10 data-[row-type=under-review]:hover:!bg-yellow-200/20',
     'data-[row-type=upcoming]:bg-purple-300/80 data-[row-type=upcoming]:hover:bg-purple-300 data-[row-type=upcoming]:dark:bg-purple-500/40 data-[row-type=upcoming]:dark:hover:bg-purple-500/60',
