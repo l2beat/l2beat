@@ -7,9 +7,9 @@ import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/v
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
 import {
+  ScalingL2SummaryViewEntry,
+  ScalingL3SummaryViewEntry,
   ScalingSummaryViewEntry,
-  ScalingSummaryViewEntryLayer2,
-  ScalingSummaryViewEntryLayer3,
 } from '../../../pages/scaling/summary/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
@@ -30,7 +30,7 @@ import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
 export function getActiveScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntryLayer2>[] = [
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -205,7 +205,7 @@ export function getUpcomingScalingSummaryColumnsConfig() {
 }
 
 export function getArchivedScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntryLayer2>[] = [
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -287,7 +287,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
 }
 
 export function getLayer3sScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntryLayer3>[] = [
+  const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,

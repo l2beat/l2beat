@@ -17,36 +17,38 @@ import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
 import { Tabs } from '../../../../components/Tabs'
 import {
+  ScalingL2SummaryViewEntry,
+  ScalingL3SummaryViewEntry,
   ScalingSummaryViewEntry,
-  ScalingSummaryViewEntryLayer2,
-  ScalingSummaryViewEntryLayer3,
 } from '../types'
 
 export interface ScalingSummaryViewProps {
-  items: ScalingSummaryViewEntry[]
+  layer2s: ScalingL2SummaryViewEntry[]
+  layer3s: ScalingL3SummaryViewEntry[]
 }
 
-export function ScalingSummaryView({ items }: ScalingSummaryViewProps) {
+export function ScalingSummaryView({
+  layer2s,
+  layer3s,
+}: ScalingSummaryViewProps) {
   const rows: RowConfig<ScalingSummaryViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
 
-  const activeProjects = items.filter(
-    (item) => !item.isArchived && !item.isUpcoming && item.type === 'layer2',
-  ) as ScalingSummaryViewEntryLayer2[]
-  const upcomingProjects = items.filter(
+  const activeProjects = layer2s.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
+  const upcomingProjects = [...layer2s, ...layer3s].filter(
     (item) => item.isUpcoming,
-  ) as ScalingSummaryViewEntryLayer3[]
-  const archivedProjects = items.filter(
-    (item) => item.isArchived && item.type === 'layer2',
-  ) as ScalingSummaryViewEntryLayer2[]
-  const layer3sProjects = items.filter(
-    (item) => item.type === 'layer3' && !item.isArchived && !item.isUpcoming,
-  ) as ScalingSummaryViewEntryLayer3[]
+  )
+  const archivedProjects = layer2s.filter((item) => item.isArchived)
+  const layer3sProjects = layer3s.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <ScalingFilters items={items} />
+      <ScalingFilters items={[...layer2s, ...layer3s]} />
       <Tabs
         items={[
           {

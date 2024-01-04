@@ -1,6 +1,6 @@
 import {
+  Layer2Provider,
   ProjectCategory,
-  ProjectProvider,
   ProjectRiskViewEntry,
   StageConfig,
 } from '@l2beat/config'
@@ -15,7 +15,7 @@ export interface ScalingRiskViewEntry {
   name: string
   slug: string
   category: ProjectCategory
-  provider?: ProjectProvider
+  provider?: Layer2Provider
   warning?: string
   isArchived?: boolean
   isVerified?: boolean

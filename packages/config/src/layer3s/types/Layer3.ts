@@ -2,13 +2,10 @@ import { ProjectId } from '@l2beat/shared-pure'
 
 import {
   KnowledgeNugget,
+  Layer3Provider,
   Milestone,
   ProjectCategory,
-  ProjectContracts,
-  ProjectDataAvailabilityMode,
   ProjectLinks,
-  ProjectPermission,
-  ProjectProvider,
 } from '../../common'
 
 export interface Layer3 {
@@ -22,13 +19,9 @@ export interface Layer3 {
   /** Has this layer3 changed and is under review? */
   isUnderReview?: boolean
   /** ProjectId of hostChain */
-  hostChain?: ProjectId
+  hostChain: ProjectId
   /** Information displayed about the layer3 on the frontend */
   display: Layer3Display
-  /** Risk view values for this layer3 */
-  contracts: ProjectContracts
-  /** List of permissioned addresses */
-  permissions?: ProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -42,8 +35,6 @@ export interface Layer3Display {
   slug: string
   /** Name of the category the layer3 belongs to */
   category: ProjectCategory
-  /** Data availability mode of layer3 project */
-  dataAvailabilityMode: ProjectDataAvailabilityMode
   /** A warning displayed in the header of the project */
   headerWarning?:
     | {
@@ -62,9 +53,7 @@ export interface Layer3Display {
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** Technology provider */
-  provider?: ProjectProvider
+  provider?: Layer3Provider
   /** List of links */
   links: ProjectLinks
-  /** Where does the activity data come from? */
-  activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
 }

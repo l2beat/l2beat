@@ -8,6 +8,7 @@ import {
 
 import {
   KnowledgeNugget,
+  Layer2Provider,
   Milestone,
   ProjectCategory,
   ProjectContracts,
@@ -15,7 +16,6 @@ import {
   ProjectEscrow,
   ProjectLinks,
   ProjectPermission,
-  ProjectProvider,
 } from '../../common'
 import { StageConfig } from '../common/stages/types'
 import { Layer2Liveness } from './Layer2LivenessConfig'
@@ -85,7 +85,7 @@ export interface Layer2Display {
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** Technology provider */
-  provider?: ProjectProvider
+  provider?: Layer2Provider
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */

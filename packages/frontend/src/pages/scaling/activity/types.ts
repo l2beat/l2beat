@@ -1,4 +1,4 @@
-import { ProjectCategory, ProjectProvider, StageConfig } from '@l2beat/config'
+import { Layer2Provider, ProjectCategory, StageConfig } from '@l2beat/config'
 import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 export interface ActivityPagesData {
@@ -10,7 +10,7 @@ export interface ActivityViewEntry {
   name: string
   slug: string
   category: ProjectCategory | undefined
-  provider: ProjectProvider | undefined
+  provider: Layer2Provider | undefined
   warning: string | undefined
   isVerified: boolean | undefined
   showProjectUnderReview: boolean | undefined

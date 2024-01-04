@@ -1,4 +1,4 @@
-export type ProjectProvider =
+export type Layer2Provider =
   | 'StarkEx'
   | 'OP Stack'
   | 'zkSync Lite'
@@ -8,4 +8,5 @@ export type ProjectProvider =
   | 'Polygon'
   | 'OVM'
   | 'Starknet'
-  | 'Arbitrum Orbit'
+
+export type Layer3Provider = 'Arbitrum Orbit'
