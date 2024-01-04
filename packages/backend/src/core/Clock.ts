@@ -48,6 +48,10 @@ export class Clock {
       while (next.lte(last)) {
         if (next.add(7, 'days').gte(last)) {
           callback(next)
+        } else if (next.add(90, 'days').gte(last)) {
+          if (next.isFull('six hours')) {
+            callback(next)
+          }
         } else {
           if (next.isFull('day')) {
             callback(next)

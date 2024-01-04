@@ -124,10 +124,10 @@ describe(Clock.name, () => {
       stop()
     })
 
-    it('ticks only daily for timestamps older than 7D', () => {
+    it('ticks six hourly after 7D and daily after 90D', () => {
       setTime('00:00:00')
       const now = UnixTime.now()
-      const start = now.add(-14, 'days')
+      const start = now.add(-180, 'days')
 
       const clock = new Clock(start, 0)
 
@@ -135,32 +135,23 @@ describe(Clock.name, () => {
       const stop = clock.onEveryHour((timestamp) => calls.push(timestamp))
       stop()
 
-      // timestamps older than 7D should be ticked daily
-      const dailyCalls = calls.slice(0, 7)
+      const DAILY = 90
+      const SIX_HOURLY = 83 * 4
+
+      // timestamps older than 90D should be ticked daily
+      const dailyCalls = calls.slice(0, DAILY)
       expect(dailyCalls.every((x) => x.isFull('day'))).toEqual(true)
 
-      // timestamps newer than 7D should be ticked hourly
-      const hourlyCalls = calls.slice(7)
+      // timestamps older than 7D & earlier than 90D should be ticked six hourly
+      const sixHourly = calls.slice(DAILY, DAILY + SIX_HOURLY)
+      expect(sixHourly.every((x) => x.isFull('six hours'))).toEqual(true)
+
+      const hourlyCalls = calls.slice(DAILY + SIX_HOURLY)
       for (let i = 0; i < hourlyCalls.length - 1; i++) {
         const call = hourlyCalls[i]
         const nextCall = hourlyCalls[i + 1]
         expect(nextCall).toEqual(call.add(1, 'hours'))
       }
-
-      // straightforward test case to better visualize the functionality
-      expect(calls.slice(0, 10)).toEqual([
-        toTimestamp('00:00:00').add(-14, 'days'),
-        toTimestamp('00:00:00').add(-13, 'days'),
-        toTimestamp('00:00:00').add(-12, 'days'),
-        toTimestamp('00:00:00').add(-11, 'days'),
-        toTimestamp('00:00:00').add(-10, 'days'),
-        toTimestamp('00:00:00').add(-9, 'days'),
-        toTimestamp('00:00:00').add(-8, 'days'),
-        toTimestamp('00:00:00').add(-7, 'days'),
-        toTimestamp('00:00:00').add(-7, 'days').add(1, 'hours'),
-        toTimestamp('00:00:00').add(-7, 'days').add(2, 'hours'),
-        // hourly granularity...
-      ])
     })
   })
 
