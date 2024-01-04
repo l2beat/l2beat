@@ -39,7 +39,7 @@ export function getProjectWithIndexColumns(opts?: {
       noPaddingRight: true,
       className: classNames(
         'sticky left-[18px] md:static z-10 dark:bg-neutral-900 bg-white md:bg-transparent md:dark:bg-transparent',
-        'before:absolute',
+        'before:absolute md:before:content-none',
         'before:z-10',
         'before:inset-y-0',
         'before:w-4',
