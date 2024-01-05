@@ -1,3 +1,22 @@
+# Diff at Wed, 03 Jan 2024 12:15:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@9cd2eb99d34f64eadf915ab21cf5e0819367bbc1
+
+## Description
+
+Ignored following method.
+
+## Watched changes
+
+```diff
+    contract LoopringOwner (0x2028834B2c0A36A918c10937EeA71BE4f932da52) {
+      values.transactionCount:
+-        5
++        8
+    }
+```
+
 # Diff at Mon, 02 Oct 2023 13:27:28 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
