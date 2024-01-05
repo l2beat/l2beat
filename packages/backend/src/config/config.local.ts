@@ -14,7 +14,7 @@ export function getLocalConfig(env: Env): Config {
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
-  const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', true)
+  const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
   const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', true)
   const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)

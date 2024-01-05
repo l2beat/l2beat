@@ -89,7 +89,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       'https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672',
     address: EthereumAddress('0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116'),
     coingeckoId: CoingeckoId('stakestone-ether'),
-    sinceTimestamp: new UnixTime(1695507314),
+    sinceTimestamp: new UnixTime(1699781729),
     category: 'other',
     type: 'EBV',
     formula: 'totalSupply',
