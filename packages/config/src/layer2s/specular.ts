@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const specular: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('specular'),
+export const specular: Layer2 = upcoming({
+  id: 'specular',
   display: {
     name: 'Specular',
     slug: 'specular',
@@ -14,7 +10,6 @@ export const specular: Layer2 = {
       'Specular is an EVM-native optimistic rollup designed to scale Ethereum securely, with minimal additional trust assumptions.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://specular.network/'],
       apps: [],
@@ -24,13 +19,4 @@ export const specular: Layer2 = {
       socialMedia: ['https://twitter.com/SpecularL2'],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const xchain: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('xchain'),
+export const xchain: Layer2 = upcoming({
+  id: 'xchain',
   display: {
     name: 'XCHAIN',
     slug: 'xchain',
@@ -14,7 +10,6 @@ export const xchain: Layer2 = {
       'XCHAIN is an upcoming validium leveraging Polygon zkEVM Supernets.',
     purpose: 'DEX Chain',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
       websites: ['https://idex.io/'],
@@ -31,13 +26,4 @@ export const xchain: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})
