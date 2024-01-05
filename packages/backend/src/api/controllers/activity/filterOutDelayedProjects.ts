@@ -14,7 +14,9 @@ export function filterOutDelayedProjects(
 ): DailyTransactionCountProjectsMap {
   const delayedProjectsMap: DailyTransactionCountProjectsMap = projectsMap
   delayedProjectsMap.forEach((data, projectId) => {
-    const lastTimestamp = data.at(-1)?.timestamp
+    // if project is delayed it adds aligns records to newer timestamps but with activity 0, so we filter them out
+    const recordsWithActivity = data.filter((record) => record.count > 0)
+    const lastTimestamp = recordsWithActivity.at(-1)?.timestamp
     if (!lastTimestamp) return
     const delay = UnixTime.now().toNumber() - lastTimestamp.toNumber()
     if (delay > ACTIVITY_ACCEPTABLE_DELAY) {

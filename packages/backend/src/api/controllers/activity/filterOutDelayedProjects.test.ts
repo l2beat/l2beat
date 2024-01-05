@@ -20,6 +20,14 @@ describe(filterOutDelayedProjects.name, () => {
   ])
   projectsMap.set(ProjectId('project-2'), [
     {
+      count: 0,
+      timestamp: NOW,
+    },
+    {
+      count: 0,
+      timestamp: NOW.add(-1, 'days'),
+    },
+    {
       count: 2,
       timestamp: NOW.add(-3, 'days'),
     },
