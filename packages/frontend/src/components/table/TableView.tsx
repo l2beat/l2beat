@@ -26,7 +26,7 @@ export function TableView<T>({
   return (
     <div
       className={cx(
-        'group/tableview mt-3 overflow-x-auto whitespace-pre text-base md:mt-6',
+        'group/tableview mt-3 overflow-x-auto whitespace-pre pb-3 text-base md:mt-6',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
