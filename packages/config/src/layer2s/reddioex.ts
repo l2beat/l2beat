@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -47,24 +47,23 @@ export const reddioex: Layer2 = {
     name: 'ReddioEx',
     slug: 'reddioex',
     description:
-      'Reddio, an easy-to-use layer 2 solution on Ethereum for apps/games, tackle issues related to scalability and transaction fees in order to scale the Ethereum network for application and game development.',
+      'Reddio, an easy-to-use solution on Ethereum for apps/games, tackle issues related to scalability and transaction fees in order to scale the Ethereum network for application and game development.',
     purpose: 'Universal',
     provider: 'StarkEx',
     category: 'Validium',
-    dataAvailabilityMode: 'StateDiffs',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.reddio.com/'],
-      apps: ['https://www.reddio.com/explore'],
+      websites: ['https://reddio.com/'],
+      apps: ['https://reddio.com/explore'],
       documentation: ['https://docs.reddio.com/'],
       explorers: ['https://explorer.reddio.com/'],
       repositories: ['https://github.com/reddio-com/starkex-contracts-source'],
       socialMedia: [
         'https://twitter.com/reddio_com',
-        'https://www.facebook.com/reddiocom',
-        'https://www.linkedin.com/company/reddio',
+        'https://facebook.com/reddiocom',
+        'https://linkedin.com/company/reddio',
       ],
     },
-    activityDataSource: 'Explorer API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -73,17 +72,18 @@ export const reddioex: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xB62BcD40A24985f560b5a9745d478791d8F1945C'),
-        sinceTimestamp: new UnixTime(1615389188),
         tokens: ['ETH', 'USDC', 'USDT'],
         description: 'Main StarkEx contract, used also as an escrow.',
       }),
     ],
+    /*
     transactionApi: {
       type: 'starkex',
       product: ['reddio'],
       sinceTimestamp: new UnixTime(1615389188),
       resyncLastDays: 7,
     },
+    */
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -148,11 +148,10 @@ export const reddioex: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Reddio Announces Layer 2 zkRollup Mainnet Launch',
+      name: 'Reddio Announces Mainnet Launch',
       link: 'https://blog.reddio.com/announces-layer2-zkrollup-mainnet-launch/',
       date: '2022-09-29T00:00:00Z',
-      description:
-        'Reddio announces its layer 2 zkRollup mainnet launch providing Web3 App, Metaverse and Gaming developers an easy way to scale NFT minting and trading on Ethereum with low gas fee and instant confirmation.',
+      description: 'Reddio announces its Validium Mainnet launch.',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

@@ -17,7 +17,7 @@ export const reddiozkvm: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Starknet',
     links: {
-      websites: ['https://www.reddio.com'],
+      websites: ['https://reddio.com'],
       apps: [],
       documentation: [
         'https://docs.reddio.com/guide/starknet/smart-contracts/overview.html',
@@ -26,8 +26,8 @@ export const reddiozkvm: Layer2 = {
       repositories: ['https://github.com/reddio-com/starknet-appchain-utils'],
       socialMedia: [
         'https://twitter.com/reddio_com',
-        'https://www.facebook.com/reddiocom',
-        'https://www.linkedin.com/company/reddio',
+        'https://facebook.com/reddiocom',
+        'https://linkedin.com/company/reddio',
       ],
     },
   },
