@@ -5,7 +5,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added initial config.
 
 ## Watched changes
 
