@@ -14,7 +14,7 @@ export function filterOutDelayedProjects(
 ): DailyTransactionCountProjectsMap {
   const delayedProjectsMap: DailyTransactionCountProjectsMap = projectsMap
   delayedProjectsMap.forEach((data, projectId) => {
-    // if project is delayed it adds aligns records to newer timestamps but with activity 0, so we filter them out
+    // if project is delayed src/api/controllers/activity/postprocessCounts.ts adds records with activity 0 after last records, so we filter them out
     const recordsWithActivity = data.filter((record) => record.count > 0)
     const lastTimestamp = recordsWithActivity.at(-1)?.timestamp
     if (!lastTimestamp) return
