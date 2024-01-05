@@ -20,11 +20,11 @@ export function getScalingRowProps(
 ) {
   const href = getHref(entry.slug, type)
   const isEthereum = entry.slug === 'ethereum'
-
+  const rowType = getRowType(entry)
   return {
-    className: getRowTypeClassNames(),
+    className: getRowTypeClassNames(rowType),
     href,
-    'data-row-type': isEthereum ? 'ethereum' : getRowType(entry),
+    'data-row-type': rowType,
     'data-slug': entry.slug,
     'data-non-filterable': isEthereum,
   }

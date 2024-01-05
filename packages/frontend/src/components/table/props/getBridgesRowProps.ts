@@ -15,13 +15,13 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
     entry.type === 'layer2'
       ? `/scaling/projects/${entry.slug}`
       : `/bridges/projects/${entry.slug}`
-
+  const rowType = getRowType(entry)
   return {
     className: classNames(
-      getRowTypeClassNames(),
+      getRowTypeClassNames(rowType),
       entry.type === 'layer2' && 'hidden',
     ),
-    'data-row-type': getRowType(entry),
+    'data-row-type': rowType,
     'data-slug': entry.slug,
     href,
   }
