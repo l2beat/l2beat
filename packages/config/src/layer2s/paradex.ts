@@ -218,6 +218,12 @@ export const paradex: Layer2 = {
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
         delayDescriptionFromSeconds(upgradeDelaySeconds),
     },
+    {
+      name: 'Paradex Implementation Governors',
+      accounts: discovery.getPermissionedAccounts('Paradex', 'governors'),
+      description:
+        'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
+    },
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
