@@ -1,8 +1,8 @@
 {
   "name": "reddioex",
   "chain": "ethereum",
-  "blockNumber": 18927918,
-  "configHash": "0x92dfaa558d9fa3850f31f36f669f888d021d3136f461f922ff861b7e14e2bcfb",
+  "blockNumber": 18939696,
+  "configHash": "0x64fe7d2d45d42978ef4b3d22e4f1c55c664e11a4bbd46be2bb685ab66fcf976f",
   "version": 3,
   "contracts": [
     {
@@ -86,8 +86,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 326,
-        "getOrderRoot": "1996232911485730442683638384562046746312999318185342080995662309234811382726",
+        "getLastBatchId": 334,
+        "getOrderRoot": "3179905517557840449952730483853602351576008607780901076282511194182331728295",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669"
@@ -97,10 +97,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 309,
+        "getSequenceNumber": 317,
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "248526012851683165389311642270614682999001967788196626034589038282746426555",
+        "getValidiumVaultRoot": "3312543509112747985833495904823478685666315051938533185585739789565340526591",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
