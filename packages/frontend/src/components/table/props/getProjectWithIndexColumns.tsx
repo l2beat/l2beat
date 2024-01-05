@@ -10,7 +10,7 @@ import { ColumnConfig } from '../types'
 
 const stickyColumnBackgroundClasses = classNames(
   'group-data-[row-type=ethereum]/table-row:bg-blue-400 dark:group-data-[row-type=ethereum]/table-row:bg-blue-900',
-  'group-data-[row-type=under-review]/table-row:bg-[#2B2414]',
+  'group-data-[row-type=under-review]/table-row:bg-[#FBF5E1] dark:group-data-[row-type=under-review]/table-row:bg-[#2B2414]',
   'group-data-[row-type=upcoming]/table-row:bg-[#F3DDFE] dark:group-data-[row-type=upcoming]/table-row:bg-[#350B46]',
   'group-data-[row-type=unverified]/table-row:bg-red-100 dark:group-data-[row-type=unverified]/table-row:bg-red-900',
 )
@@ -53,7 +53,7 @@ export function getProjectWithIndexColumns(opts?: {
         // Gradient colors based on the row type
         'before:from-white dark:before:from-neutral-900',
         'group-data-[row-type=ethereum]/table-row:before:from-blue-400 dark:group-data-[row-type=ethereum]/table-row:before:from-blue-900',
-        'group-data-[row-type=under-review]/table-row:before:from-[#2B2414]',
+        'group-data-[row-type=under-review]/table-row:before:from-[#FBF5E1] dark:group-data-[row-type=under-review]/table-row:before:from-[#2B2414]',
         'group-data-[row-type=upcoming]/table-row:before:from-[#F3DDFE] dark:group-data-[row-type=upcoming]/table-row:before:from-[#350B46]',
         'group-data-[row-type=unverified]/table-row:before:from-red-100 dark:group-data-[row-type=unverified]/table-row:before:from-red-900',
       ),
