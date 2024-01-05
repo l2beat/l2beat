@@ -1,5 +1,8 @@
 /** @type import("tailwindcss/types").Config */
 module.exports = {
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {

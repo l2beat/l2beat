@@ -3,42 +3,21 @@ import React from 'react'
 import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
 import { BridgesSummaryViewEntry } from '../../../pages/bridges/summary/types'
 import { TVLBreakdown } from '../../TVLBreakdown'
-import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
-import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { TypeCell } from '../TypeCell'
 import { ColumnConfig } from '../types'
+import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
 export function getArchivedBridgesSummaryColumnsConfig() {
   const columns: ColumnConfig<BridgesSummaryViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-        defaultState: 'asc',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (entry) => <ProjectCell project={entry} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       name: 'Total',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
-      alignRight: true,
+      align: 'right',
       getValue: (entry) =>
         !entry.isUpcoming &&
         entry.tvlBreakdown && (
@@ -79,12 +58,12 @@ export function getActiveBridgesSummaryColumnsConfig() {
   const columns = getArchivedBridgesSummaryColumnsConfig()
 
   columns.splice(
-    3,
+    4,
     0,
     {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
-      alignRight: true,
+      align: 'right',
       getValue: (entry) =>
         entry.tvlBreakdown && (
           <NumberCell signed>{entry.sevenDayChange}</NumberCell>
@@ -104,7 +83,7 @@ export function getActiveBridgesSummaryColumnsConfig() {
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
-      alignRight: true,
+      align: 'right',
       getValue: (entry) =>
         entry.tvlBreakdown && (
           <NumberCell>
@@ -126,27 +105,7 @@ export function getActiveBridgesSummaryColumnsConfig() {
 
 export function getBridgesRiskColumnsConfig() {
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-        defaultState: 'asc',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (entry) => <ProjectCell project={entry} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       name: 'Destination',
       tooltip: 'What chains can you get to using this bridge?',
