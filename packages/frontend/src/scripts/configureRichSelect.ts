@@ -129,12 +129,12 @@ function configureSlideCard(
   function onTouchEnd(e: TouchEvent) {
     const touchEndY = e.changedTouches[0].clientY
     const diff = touchEndY - touchStartY
-    content.style.transform = ''
-    background.style.opacity = ''
     if (diff > CLOSE_GESTURE_Y_DIFF) {
       setState(null)
     }
     background.classList.add('transition-opacity')
+    background.style.opacity = ''
+    content.style.transform = ''
   }
 
   function close() {
