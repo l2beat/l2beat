@@ -1,6 +1,6 @@
-# Diff at Wed, 27 Dec 2023 10:44:31 GMT:
+# Diff at Fri, 05 Jan 2024 10:33:32 GMT:
 
-- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: master@
 
 ## Description
@@ -23,6 +23,24 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract swETH-Strategy (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ankrETH-Strategy (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract rETH-Strategy (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    }
+```
+
+```diff
++   Status: CREATED
     contract GnosisSafe (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
     }
 ```
@@ -35,6 +53,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract cbETH-Strategy (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract osETH-Strategy (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    }
+```
+
+```diff
++   Status: CREATED
     contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
     }
 ```
@@ -42,6 +72,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract EigenPod (0x5c86e9609fbBc1B754D0FD5a4963Fdf0F5b99dA7) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract wBETH-Strategy (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
     }
 ```
 
@@ -66,6 +102,24 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract stETH-Strategy (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ETHx-Strategy (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OETH-Strategy (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
     }
 ```
 
