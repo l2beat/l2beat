@@ -61,6 +61,7 @@ export const lyra: Layer2 = opStack({
         'https://discord.gg/Lyra',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(

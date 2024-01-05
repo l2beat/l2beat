@@ -6,7 +6,11 @@ import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
-import { ScalingSummaryViewEntry } from '../../../pages/scaling/summary/types'
+import {
+  ScalingL2SummaryViewEntry,
+  ScalingL3SummaryViewEntry,
+  ScalingSummaryViewEntry,
+} from '../../../pages/scaling/summary/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
@@ -24,7 +28,7 @@ import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
 export function getActiveScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
     ...getProjectWithIndexColumns(),
     {
       name: 'Risks',
@@ -56,9 +60,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       name: 'Stage',
       idHref: 'stage' as const,
       tooltip: 'Rollup stage based on its features and maturity.',
-      getValue: (project: ScalingSummaryViewEntry) => (
-        <StageCell stageConfig={project.stage} />
-      ),
+      getValue: (project) => <StageCell stageConfig={project.stage} />,
       sorting: {
         getOrderValue: (project) => {
           const stage = project.stage.stage
@@ -162,7 +164,7 @@ export function getUpcomingScalingSummaryColumnsConfig() {
 }
 
 export function getArchivedScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
     ...getProjectWithIndexColumns(),
     {
       name: 'Risks',
@@ -225,7 +227,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
 }
 
 export function getLayer3sScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
+  const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = [
     ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       name: 'Type',

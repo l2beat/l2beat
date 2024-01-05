@@ -435,17 +435,6 @@ describe('layer2s', () => {
   })
 })
 
-describe('layer3s', () => {
-  const layer3s = layer2s.filter((x) => x.isLayer3)
-  it('every layer3 has a valid host chain', () => {
-    for (const layer3 of layer3s) {
-      expect(layer3.hostChain).not.toBeNullish()
-      const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
-      expect(hostChain).not.toBeNullish()
-    }
-  })
-})
-
 function getAddressFromReferences(references: ProjectReference[] = []) {
   const addresses = references.map((r) => r.href)
   return getReferencedAddresses(addresses)
