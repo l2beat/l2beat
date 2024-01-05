@@ -10,7 +10,7 @@ import { configureTables } from '../../../../scripts/table/configureTables'
 import { ScalingSummaryView } from './ScalingSummaryView'
 
 const meta = {
-  title: 'Pages/Scaling/TvlView',
+  title: 'Pages/Scaling/SummaryView',
   component: ScalingSummaryView,
   args: {
     layer2s: [

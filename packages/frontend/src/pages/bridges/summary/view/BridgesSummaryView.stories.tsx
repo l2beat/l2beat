@@ -9,7 +9,7 @@ import { configureTables } from '../../../../scripts/table/configureTables'
 import { BridgesSummaryView } from './BridgesSummaryView'
 
 const meta = {
-  title: 'Pages/Bridges/TvlView',
+  title: 'Pages/Bridges/SummaryView',
   component: BridgesSummaryView,
   args: {
     items: [
