@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "blockNumber": 18927705,
+  "blockNumber": 18941024,
   "configHash": "0xff1890aee41821580f988c883490c969aa21f0ffaa99748095e95ea182660e52",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 47772,
+        "getBlockHeight": 47822,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -36,7 +36,7 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x0a47ba995cd84f456740d4f29105fef6a2605029910bd543a9f7c83a3ed2f533",
+        "getMerkleRoot": "0x0a7d86d22cea6f2445a32149a1221e723ba1bf40c4cc2bbb9709897604da4c0c",
         "getNumAvailableForcedSlots": 4096,
         "getProtocolFeeValues": [1703988983, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",

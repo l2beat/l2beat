@@ -311,8 +311,8 @@ function generateDiffHistoryMarkdown(
     result.push('## Config related changes')
     result.push('')
     result.push(
-      `Following changes come from updates made to the config file, 
-not from differences found during discovery. Values are 
+      `Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
 for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
@@ -347,7 +347,7 @@ function findDescription(
   }
 
   const followingLines = lines.slice(index + 1)
-  const lastIndex = followingLines.findIndex((l) => l.startsWith('#'))
+  const lastIndex = followingLines.findIndex((l) => l.startsWith('## '))
   if (lastIndex < 0) {
     return followingLines.join('\n')
   }
