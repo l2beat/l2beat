@@ -16,7 +16,10 @@ export function getIncludedProjects<
     .filter((x) => !!tvlApiResponse.projects[x.id.toString()])
 
   if (projects.every((x) => x.type === 'layer2' || x.type === 'layer3')) {
-    included.push(...projects.filter((x) => x.isUpcoming))
+    included.push(
+      ...projects.filter((x) => x.isUpcoming && x.type === 'layer2'),
+    )
+    included.push(...projects.filter((x) => x.type === 'layer3'))
   }
 
   return included
