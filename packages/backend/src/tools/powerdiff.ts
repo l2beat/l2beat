@@ -18,6 +18,7 @@ function powerdiff() {
             line-height: 1em;
             height: 1em; /* Adjust to line height */
             transition: height 0.3s ease-out;
+            margin-top: 0.5em;
         }
 
         .icon {
@@ -36,7 +37,7 @@ function powerdiff() {
     </style>
   </head>
 
-  <body style="background-color: #222; color: white">
+  <body style="background-color: #222; color: white; margin: 2em;">
     <script>
       function toggleCollapse(element) {
         var content = element;
@@ -49,6 +50,7 @@ function powerdiff() {
         }
       }
     </script>
+    <br><br>
   `)
   console.log('>>>> Powerdiff <<<<')
   const currentDirectory = process.env.INIT_CWD ?? process.cwd()
@@ -89,7 +91,7 @@ function powerdiff() {
     console.log('</pre>')
     console.log('</div>')
   }
-  console.log('</body></html>')
+  console.log('<br><br></body></html>')
 }
 
 function processGitDiff(gitDiff: string) {
