@@ -13,6 +13,7 @@ export function getProductionConfig(env: Env): Config {
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
   const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
+  const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', false)
   const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const activityProjectsExcludedFromApi = env.optionalString(
@@ -141,6 +142,19 @@ export function getProductionConfig(env: Env): Config {
           routescanApiUrl: 'https://explorer.lyra.finance/api',
         },
         minBlockTimestamp: getChainMinTimestamp(ChainId.LYRA),
+      },
+      linea: lineaTvlEnabled && {
+        providerUrl: env.string('TVL_LINEA_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
+          'TVL_LINEA_RPC_CALLS_PER_MINUTE',
+          25,
+        ),
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_LINEA_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.lineascan.build/api',
+        },
+        minBlockTimestamp: getChainMinTimestamp(ChainId.LINEA),
       },
       mantapacific: mantapacificTvlEnabled && {
         providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
