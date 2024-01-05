@@ -39,7 +39,7 @@ export function getNativelyMintedColumns() {
     },
     {
       name: 'AMOUNT',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenAmountCell amount={token.amount} assetId={token.assetId} />
@@ -47,7 +47,7 @@ export function getNativelyMintedColumns() {
     },
     {
       name: 'VALUE',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenValueCell assetId={token.assetId} usdValue={token.usdValue} />
@@ -83,7 +83,7 @@ export function getExternallyBridgedColumns() {
     },
     {
       name: 'AMOUNT',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenAmountCell
@@ -95,7 +95,7 @@ export function getExternallyBridgedColumns() {
     },
     {
       name: 'VALUE',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenValueCell
@@ -131,7 +131,7 @@ export function getCanonicallyBridgedColumns() {
     {
       name: 'PRICE',
       headClassName: 'md:pl-4',
-      alignRight: true,
+      align: 'right',
       tooltip: 'Prices are fetched from CoinGecko',
       getValue: (token) => (
         <div className="pr-2 text-xs font-medium">
@@ -141,7 +141,7 @@ export function getCanonicallyBridgedColumns() {
     },
     {
       name: 'AMOUNT',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenAmountCell
@@ -154,7 +154,7 @@ export function getCanonicallyBridgedColumns() {
     },
     {
       name: 'VALUE',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenValueCell

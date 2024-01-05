@@ -1,7 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse } from '@l2beat/shared-pure'
 
-import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTokens } from '../../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
@@ -15,8 +14,7 @@ export function getScalingTvlView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
 ): ScalingTvlViewProps {
-  const included = getIncludedProjects(projects, tvlApiResponse)
-  const orderedProjects = orderByTvl(included, tvlApiResponse)
+  const orderedProjects = orderByTvl(projects, tvlApiResponse)
 
   return {
     items: orderedProjects.map((project) =>
