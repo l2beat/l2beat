@@ -1,7 +1,6 @@
 import { Bridge, Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
-import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
@@ -17,9 +16,7 @@ export function getBridgesSummaryView(
 ): BridgesSummaryViewProps {
   const { tvlApiResponse, verificationStatus } = pagesData
 
-  const included = getIncludedProjects(projects, tvlApiResponse).filter(
-    (project) => project.type === 'bridge',
-  )
+  const included = projects.filter((project) => project.type === 'bridge')
   const ordered = orderByTvl(included, tvlApiResponse)
 
   const { tvl: bridgesTvl } = getTvlWithChange(tvlApiResponse.bridges)
