@@ -31,7 +31,8 @@
         "getOrderRoot",
         "getOrderTreeHeight",
         "getSequenceNumber",
-        "getVaultRoot"
+        "getRollupVaultRoot",
+        "getValidiumVaultRoot"
       ],
       "fields": {
         "OPERATORS": {
