@@ -11,6 +11,7 @@ import {
 
 export interface FooterProps extends SocialLinksProps {
   narrow?: boolean
+  className?: string
 }
 
 export function getFooterProps(config: Config): FooterProps {
@@ -19,7 +20,12 @@ export function getFooterProps(config: Config): FooterProps {
 
 export function Footer(props: FooterProps) {
   return (
-    <footer className="mt-20 border-t border-gray-200 py-8 dark:border-gray-850">
+    <footer
+      className={cx(
+        'mt-20 border-t border-gray-200 py-8 dark:border-gray-850',
+        props.className,
+      )}
+    >
       <div
         className={cx(
           props.narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',

@@ -69,6 +69,9 @@ export function createLivenessModule(
   const livenessRouter = createLivenessRouter(livenessController)
 
   const start = async () => {
+    logger = logger.for('LivenessModule')
+    logger.info('Starting...')
+
     await hourlyIndexer.start()
     await liveness.start()
   }
