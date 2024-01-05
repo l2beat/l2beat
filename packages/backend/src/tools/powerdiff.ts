@@ -1,6 +1,8 @@
 import Convert from 'ansi-to-html'
 import { execSync } from 'child_process'
 import path from 'path'
+import { fileExistsCaseSensitive } from '../core/discovery/utils/fsLayer'
+import { readFileSync, stat } from 'fs'
 
 // This is a CLI tool. Run logic immediately.
 powerdiff()
@@ -58,29 +60,38 @@ function powerdiff() {
   const path2 = process.argv[3]
   const difftasticPath = process.argv[4]
 
-  const absPath1 = '/' + path.resolve(currentDirectory, path1)
-  const absPath2 = '/' + path.resolve(currentDirectory, path2)
+  const absPath1 = path.resolve(currentDirectory, path1)
+  const absPath2 = path.resolve(currentDirectory, path2)
 
   const gitDiff = gitDiffFolders(absPath1, absPath2)
   const filePathsList = processGitDiff(gitDiff)
   for (const filePaths of filePathsList) {
+    let status: 'diff' | 'added' | 'removed' = 'diff'
+    let diff;
     if (filePaths[0] === filePaths[1]) {
-      // TODO: show added/removed files
-      continue
+      if (filePaths[0].startsWith(absPath1)) {
+        status = 'removed'
+      } else {
+        status = 'added'
+      }
+      diff = readFileSync(filePaths[0]).toString()
     }
-    const diff = compareUsingDifftastic(
-      filePaths[0],
-      filePaths[1],
-      difftasticPath,
-    )
-    const status = diff.split('\n')[1] ?? 'Error'
-    if (status === 'No syntactic changes.' || status === 'No changes.') {
-      continue
+    else {
+      diff = compareUsingDifftastic(
+        filePaths[0],
+        filePaths[1],
+        difftasticPath,
+      )
+      const difftasticStatus = diff.split('\n')[1] ?? 'Error'
+      if (difftasticStatus === 'No syntactic changes.' || difftasticStatus === 'No changes.') {
+        continue
+      }
     }
     console.log('<div class="collapsible" onclick="toggleCollapse(this)">')
     console.log(
       '<span class="icon">&#9654;</span> <!-- Right-pointing triangle; rotates when expanded -->',
     )
+    console.log(`(${status})`)
     console.log(filePaths[0].split('/').slice(-1)[0])
     console.log('<pre>')
     console.log(filePaths[0])
@@ -119,9 +130,9 @@ function compareUsingDifftastic(
   }
 }
 
-function gitDiffFolders(path1: string, path2: string): string {
+function gitDiffFolders(absPath1: string, absPath2: string): string {
   try {
-    return osExec(`git diff --no-index ${path1} ${path2}`).toString()
+    return osExec(`git diff --no-index "/${absPath1}" "/${absPath2}"`).toString()
   } catch (error) {
     // When difference is found, git diff returns non-zero exit code
     // so execSync throws and error, which we handle here
