@@ -46,11 +46,7 @@ export function getBridgesSummaryViewEntry(
   const apiProject = tvlApiResponse.projects[project.id.toString()]
   let stats: TvlStats | undefined
 
-  if (!apiProject) {
-    if (!project.isUpcoming) {
-      throw new Error(`Project ${project.display.name} is missing in api`)
-    }
-  } else {
+  if (apiProject) {
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
   const isVerified = verificationStatus.projects[project.id.toString()]

@@ -50,11 +50,7 @@ function getScalingL2SummaryEntry(
 
   let stats: TvlStats | undefined
 
-  if (!apiProject) {
-    if (!project.isUpcoming) {
-      throw new Error(`Project ${project.display.name} is missing in api`)
-    }
-  } else {
+  if (apiProject) {
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
 
