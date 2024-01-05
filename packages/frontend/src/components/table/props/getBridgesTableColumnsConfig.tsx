@@ -58,7 +58,7 @@ export function getActiveBridgesSummaryColumnsConfig() {
   const columns = getArchivedBridgesSummaryColumnsConfig()
 
   columns.splice(
-    3,
+    4,
     0,
     {
       name: '7d Change',
