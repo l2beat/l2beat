@@ -32,6 +32,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
+    this.logger.info('Starting...')
     await this.initialize()
     await super.start()
   }

@@ -19,7 +19,10 @@ export function IncludeLayer2sCheckbox({
       role="chart-combined"
       id="combined-bridges-checkbox"
       label="Include canonical bridges"
-      slugsWhenUnchecked={generateSlugList(items, (i) => i.type === 'bridge')}
+      data-slugs-when-unchecked={generateSlugList(
+        items,
+        (i) => i.type === 'bridge',
+      )}
     />
   )
 }

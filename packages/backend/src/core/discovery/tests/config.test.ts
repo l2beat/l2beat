@@ -1,8 +1,14 @@
-import { bridges, layer2s, onChainProjects } from '@l2beat/config'
+import { bridges, layer2s, onChainProjects, layer3s } from '@l2beat/config'
 import { ChainId, ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
+
+import {
+  getDiscoveryHash,
+  getHashesDatabase,
+  getHashesDatabaseKey,
+} from '../utils/hashDatabase'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -12,6 +18,7 @@ describe('discovery config.jsonc', () => {
     .map((p) => p.id.toString())
     .concat(bridges.map((p) => p.id.toString()))
     .concat(onChainProjects)
+    .concat(layer3s.map((p) => p.id.toString()))
 
   before(async () => {
     chainConfigs = await Promise.all(
@@ -21,7 +28,7 @@ describe('discovery config.jsonc', () => {
     )
   })
 
-  it(`every config name corresponds to ProjectId`, () => {
+  it('every config name corresponds to ProjectId', () => {
     const notCorresponding =
       chainConfigs
         ?.flat()
@@ -37,7 +44,7 @@ describe('discovery config.jsonc', () => {
     )
   })
 
-  it(`every config name is equal to the name in discovery.json`, async () => {
+  it('every config name is equal to the name in discovery.json', async () => {
     const notEqual = []
 
     for (const configs of chainConfigs ?? []) {
@@ -103,7 +110,7 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  it(`every discovery.json has sorted contracts`, async () => {
+  it('every discovery.json has sorted contracts', async () => {
     const notSorted: string[] = []
 
     for (const configs of chainConfigs ?? []) {
@@ -216,20 +223,6 @@ describe('discovery config.jsonc', () => {
   })
 
   describe('names', () => {
-    // TODO: L2B-1235
-    // it('every name correspond to existing contract', async () => {
-    //   for (const config of configs ?? []) {
-    //     const discovery = await configReader.readDiscovery(config.name)
-
-    //     assert(
-    //       Object.keys(config.names ?? {}).every((address) =>
-    //         discovery.contracts.some((c) => c.address.toString() === address),
-    //       ),
-    //       `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
-    //     )
-    //   }
-    // })
-
     it('every name is unique', async () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
@@ -242,6 +235,28 @@ describe('discovery config.jsonc', () => {
               Object.values(c.raw.names).length,
             `names field in ${c.name} configuration includes duplicate names`,
           )
+        }
+      }
+    })
+  })
+
+  describe('discovered.json hashes', () => {
+    it('hashes match', async () => {
+      for (const configs of chainConfigs ?? []) {
+        if (configs.length > 0) {
+          for (const c of configs) {
+            const hash = await getDiscoveryHash(c.name, c.chainId)
+            const database = getHashesDatabase(
+              'discovery/discoveredHashes.json',
+            )
+            const savedHash = database[getHashesDatabaseKey(c.name, c.chainId)]
+            assert(
+              hash === savedHash,
+              `The hash for ${ChainId.getName(c.chainId)}:${
+                c.name
+              } of your local discovered.json (${hash.toString()}) does not match the hash stored in the discoveredHashes.json (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+            )
+          }
         }
       }
     })

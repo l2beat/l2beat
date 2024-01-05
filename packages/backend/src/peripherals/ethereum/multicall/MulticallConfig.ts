@@ -59,6 +59,16 @@ export const BASE_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   },
 ]
 
+export const LYRA_MULTICALL_CONFIG: MulticallConfigEntry[] = [
+  {
+    sinceBlock: 5022,
+    batchSize: 150,
+    address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'), //TODO: FIND MULTICALL LYRA ADDRESS, THIS IS COPIED FROM BASE
+    encodeBatch: encodeMulticallV2,
+    decodeBatch: decodeMulticallV2,
+  },
+]
+
 export const MANTA_PACIFIC_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   {
     sinceBlock: 54816,

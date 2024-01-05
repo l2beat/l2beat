@@ -15,7 +15,7 @@ export function getBridgesRiskView(
   const { tvlApiResponse, verificationStatus } = pagesData
 
   const included = getIncludedProjects(projects, tvlApiResponse).filter(
-    (project) => project.type === 'bridge' || !project.isLayer3,
+    (project) => project.type === 'bridge',
   )
   const orderedProjects = orderByTvl(included, tvlApiResponse)
 
