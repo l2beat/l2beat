@@ -94,22 +94,20 @@ export function ContractEntry({
                   verificationStatus.contracts[address] === false
                     ? 'text-red-300'
                     : '',
-                  'Address rounded py-1 px-2',
                 )}
               />
             ))}
             {contract.links.map((x, i) => (
               <Link
+                data-role="etherscan-link"
                 key={i}
                 className={cx(
                   verificationStatus.contracts[x.address] === false &&
                     !x.isAdmin
                     ? ' text-red-300'
                     : '',
-                  'Address rounded py-1 px-2',
                 )}
                 href={x.href}
-                data-address={x.href}
               >
                 {x.name}
               </Link>

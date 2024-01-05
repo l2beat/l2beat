@@ -1,7 +1,7 @@
 import { configureCharts } from './charts'
-import { configureAddresses } from './configureAddresses'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureDropdowns } from './configureDropdowns'
+import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
@@ -42,4 +42,4 @@ configureBridgesAndCombinedOnly()
 configureLivenessTimeRangeControls()
 configureOverflowWrappers()
 configureSorting()
-configureAddresses()
+configureEtherscanLinks()
