@@ -320,6 +320,14 @@ export const loopring: Layer2 = {
         'LoopringV3',
         'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawal fee and the Verifier address.',
       ),
+      discovery.getContractDetails(
+        'FastWithdrawalAgent',
+        'Auxiliary contract allowing users to process fast withdrawals.',
+      ),
+      discovery.getContractDetails(
+        'ForcedWithdrawalAgent',
+        'Auxiliary contract allowing users to process fast withdrawals.',
+      ),
       discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',
         ...upgrades,
