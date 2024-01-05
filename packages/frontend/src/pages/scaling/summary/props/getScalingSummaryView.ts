@@ -1,7 +1,6 @@
 import { Layer2, layer2s, Layer3 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
-import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
@@ -17,8 +16,7 @@ export function getScalingSummaryView(
   tvl: number,
   verificationStatus: VerificationStatus,
 ): ScalingSummaryViewProps {
-  const included = getIncludedProjects(projects, tvlApiResponse)
-  const ordered = orderByTvl(included, tvlApiResponse)
+  const ordered = orderByTvl(projects, tvlApiResponse)
 
   const layer2s = ordered.filter((p) => p.type === 'layer2') as Layer2[]
   const layer3s = ordered.filter((p) => p.type === 'layer3') as Layer3[]
@@ -52,11 +50,7 @@ function getScalingL2SummaryEntry(
 
   let stats: TvlStats | undefined
 
-  if (!apiProject) {
-    if (!project.isUpcoming) {
-      throw new Error(`Project ${project.display.name} is missing in api`)
-    }
-  } else {
+  if (apiProject) {
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
 
