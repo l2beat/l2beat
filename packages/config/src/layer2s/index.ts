@@ -60,6 +60,8 @@ import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { reddioex } from './reddioex'
+import { reddiozkvm } from './reddiozkvm'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
@@ -142,6 +144,8 @@ export const layer2s: Layer2[] = [
   polygonzkevm,
   polygonpos2,
   publicgoodsnetwork,
+  reddioex,
+  reddiozkvm,
   rhinofi,
   scroll,
   sorare,

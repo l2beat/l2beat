@@ -48,6 +48,7 @@ export type StarkexProduct =
   | 'apex_usdt'
   | 'apex_usdc'
   | 'brine'
+  | 'reddio'
 
 export interface StarkexTransactionApi {
   type: 'starkex'
