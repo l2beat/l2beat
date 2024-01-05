@@ -15,9 +15,7 @@ export function getScalingTvlView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
 ): ScalingTvlViewProps {
-  const included = getIncludedProjects(projects, tvlApiResponse).filter(
-    (project) => !project.isLayer3,
-  )
+  const included = getIncludedProjects(projects, tvlApiResponse)
   const orderedProjects = orderByTvl(included, tvlApiResponse)
 
   return {

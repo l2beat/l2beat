@@ -14,7 +14,6 @@ const bridges = allBridges
 const layer2s = allLayer2s
   .filter((x) => !x.isUpcoming)
   .filter((x) => !x.isArchived)
-  .filter((x) => !x.isLayer3)
 
 export type TvlProjectData = [string, TvlApiCharts]
 

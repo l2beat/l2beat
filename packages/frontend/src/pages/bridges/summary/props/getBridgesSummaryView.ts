@@ -18,7 +18,7 @@ export function getBridgesSummaryView(
   const { tvlApiResponse, verificationStatus } = pagesData
 
   const included = getIncludedProjects(projects, tvlApiResponse).filter(
-    (project) => project.type === 'bridge' || !project.isLayer3,
+    (project) => project.type === 'bridge',
   )
   const ordered = orderByTvl(included, tvlApiResponse)
 

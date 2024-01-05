@@ -1,4 +1,4 @@
-import { Bridge, Layer2 } from '@l2beat/config'
+import { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { HeaderProps } from '../../components'
@@ -7,7 +7,7 @@ import { getTpsWeeklyChange } from '../activity/getTpsWeeklyChange'
 import { formatUSD, getPercentageChange } from '../utils'
 
 export function getHeader(
-  project: Layer2 | Bridge,
+  project: Layer2 | Layer3 | Bridge,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): HeaderProps {
@@ -25,25 +25,9 @@ export function getHeader(
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
-    titleLength: getTitleLength(project.display.name),
     tvl: formatUSD(tvl),
     tvlWeeklyChange,
     tpsDaily: tpsDaily?.toString() ?? '',
     tpsWeeklyChange,
-  }
-}
-
-function getTitleLength(name: string): 'long' | 'very-long' | undefined {
-  switch (name) {
-    case 'Optimism':
-    case 'rhino.fi':
-    case 'Immutable X':
-      return 'long'
-    case 'OMG Network':
-    case 'Layer2.Finance':
-    case 'ZKSwap V2':
-    case 'Polygon Hermez':
-    case 'Metis Andromeda':
-      return 'very-long'
   }
 }
