@@ -1,5 +1,6 @@
 export * from './bridges'
 export * from './common'
 export * from './layer2s'
+export * from './onChainProjects'
 export * from './tokens'
 export * from './verification'

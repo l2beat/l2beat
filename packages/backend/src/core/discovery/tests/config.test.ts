@@ -1,4 +1,4 @@
-import { bridges, layer2s } from '@l2beat/config'
+import { bridges, layer2s, onChainProjects } from '@l2beat/config'
 import { ChainId, ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -11,6 +11,7 @@ describe('discovery config.jsonc', () => {
   const projectIds = layer2s
     .map((p) => p.id.toString())
     .concat(bridges.map((p) => p.id.toString()))
+    .concat(onChainProjects)
 
   before(async () => {
     chainConfigs = await Promise.all(
@@ -31,7 +32,8 @@ describe('discovery config.jsonc', () => {
     assert(
       notCorresponding.length === 0,
       'Following projects do not have the same name as ProjectIds: ' +
-        notCorresponding.join(', '),
+        notCorresponding.join(', ') +
+        '. Add them to config/src/[layer2s|bridges|onChainProjects]',
     )
   })
 
