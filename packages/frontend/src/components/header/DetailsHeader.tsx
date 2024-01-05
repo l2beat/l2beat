@@ -14,7 +14,6 @@ import { FullSummaryStats, Summary } from './Summary'
 
 export interface HeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
   stats: FullSummaryStats
@@ -26,7 +25,7 @@ export interface HeaderProps {
   showProjectUnderReview?: boolean
   risks?: RiskValues
   links: ProjectLink[]
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   warning?: string | { text: string; href: string }
 }
 
@@ -48,7 +47,6 @@ export function DetailsHeader(props: HeaderProps) {
             className={cx(
               'relative mb-0 flex items-center justify-start gap-3',
               'whitespace-pre px-4 text-3xl font-bold md:px-0 md:text-4xl',
-              props.titleLength,
               props.titleClassName,
             )}
           >
