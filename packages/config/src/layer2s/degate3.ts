@@ -73,7 +73,6 @@ export const degate3: Layer2 = {
     provider: 'Loopring',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
-
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
@@ -291,31 +290,6 @@ export const degate3: Layer2 = {
   },
   permissions: [
     {
-      name: 'DefaultDepositContract Owner',
-      accounts: (() => {
-        const owner1 = discovery.getAddressFromValue(
-          'DefaultDepositContract',
-          'owner',
-        )
-        const owner2 = discovery.getAddressFromValue(
-          'LoopringIOExchangeOwner',
-          'owner',
-        )
-        const owner3 = discovery.getAddressFromValue('LoopringV3', 'owner')
-
-        // making sure that the description is correct
-        assert(owner1 === owner2 && owner2 === owner3 && owner3, 'DeGate')
-
-        const permissionedAccount = discovery.formatPermissionedAccount(owner1)
-
-        // if it was updated, we should add multisig participants
-        assert(permissionedAccount.type === 'EOA', 'DeGate')
-
-        return [permissionedAccount]
-      })(),
-      description: `This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`,
-    },
-    {
       name: 'BlockVerifier Owner',
       description: 'This address is the owner of the BlockVerifier contract.',
       accounts: [discovery.getPermissionedAccount('BlockVerifier', 'owner')],
@@ -336,7 +310,33 @@ export const degate3: Layer2 = {
         const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
         const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
         assert(owner1 === owner2, 'The owners are different')
-        return 'Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts.'
+
+        const ownerDepositContract = discovery.getAddressFromValue(
+          'DefaultDepositContract',
+          'owner',
+        )
+        const ownerIOExchange = discovery.getAddressFromValue(
+          'LoopringIOExchangeOwner',
+          'owner',
+        )
+        const ownerV3 = discovery.getAddressFromValue('LoopringV3', 'owner')
+
+        // making sure that the description is correct
+        assert(
+          ownerDepositContract === ownerIOExchange &&
+            ownerIOExchange === ownerV3 &&
+            ownerV3 === owner1,
+          'DeGate: owners structure changed, update description',
+        )
+
+        const permissionedAccount =
+          discovery.formatPermissionedAccount(ownerDepositContract)
+
+        assert(
+          permissionedAccount.type !== 'EOA',
+          'DeGate: found unexpected EOA',
+        )
+        return `Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts. This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`
       })(),
     },
   ],

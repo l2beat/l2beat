@@ -13,7 +13,7 @@ const meta = {
   title: 'Pages/Scaling/TvlView',
   component: ScalingSummaryView,
   args: {
-    items: [
+    layer2s: [
       {
         name: 'Base',
         slug: 'base',
@@ -1231,6 +1231,18 @@ const meta = {
         purpose: 'NFT, Exchange',
         category: 'Validium',
         stage: { stage: 'NotApplicable' },
+      },
+    ],
+    layer3s: [
+      {
+        name: 'Xai',
+        slug: 'xai',
+        provider: 'Arbitrum Orbit',
+        warning: undefined,
+        isArchived: undefined,
+        isUpcoming: true,
+        purpose: 'Gaming',
+        category: 'Optimium',
       },
     ],
   },

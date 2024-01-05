@@ -18,6 +18,8 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 import { rimraf } from 'rimraf'
 
+import { updateProjectHash } from '../core/discovery/utils/hashDatabase'
+
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
 
@@ -99,6 +101,8 @@ async function updateDiffHistoryFile() {
   } else {
     console.log('No changes found')
   }
+
+  await updateHashes(projectName, chainName)
 }
 
 async function performDiscoveryOnPreviousBlock(
@@ -349,4 +353,10 @@ function findDescription(
   }
 
   return followingLines.slice(0, lastIndex).join('\n')
+}
+
+async function updateHashes(projectName: string, chainName: string) {
+  const databasePath = 'discovery/discoveredHashes.json'
+  const chainId = ChainId.fromName(chainName)
+  await updateProjectHash(projectName, chainId, databasePath)
 }
