@@ -19,7 +19,6 @@ import { RiskValues } from '../../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
   tvlStats: TvlStats

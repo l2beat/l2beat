@@ -2,7 +2,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import React from 'react'
 
-import { ScalingSummaryViewEntry } from '../../../pages/scaling/summary/types'
+import { ScalingL2SummaryViewEntry } from '../../../pages/scaling/summary/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'
@@ -80,7 +80,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
   )
 }
 
-function stageLabel(stage: ScalingSummaryViewEntry['stage']['stage']) {
+function stageLabel(stage: ScalingL2SummaryViewEntry['stage']['stage']) {
   switch (stage) {
     case 'NotApplicable':
       return 'Not applicable'

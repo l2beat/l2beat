@@ -18,23 +18,6 @@
   font-size: var(--font-xxl);
   margin: 0;
   white-space: pre;
-
-  &.long {
-    @media (max-width: 400px) {
-      font-size: var(--font-xl);
-    }
-  }
-
-  &.very-long {
-    white-space: break-spaces;
-    @media (max-width: 550px) {
-      font-size: var(--font-xl);
-    }
-
-    @media (max-width: 400px) {
-      font-size: var(--font-l);
-    }
-  }
 }
 
 .Header-Icon {
