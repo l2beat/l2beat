@@ -1,4 +1,4 @@
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer3 } from './types'
 import { VALUES } from '../discovery/values'
@@ -72,8 +72,26 @@ export const deri: Layer3 = {
     },
   },
   config: {
-    escrows: [],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xA597e0212971e65f53f288Ff1fFd26A6C8201f83'),
+        tokens: ['ETH'],
+        description:
+          'Contract managing Inboxes and Outboxes. It escrows ETH sent from the L2 to L3.',
+        ...upgradesProxyAdmin,
+      }),
+    ],
   },
+  permissions: [
+    discovery.contractAsPermissioned(
+      discovery.getContract('ProxyAdmin'),
+      'This contract is an admin of SequencerInbox, RollupEventInbox, Bridge, Outbox, Inbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
+      "This contract is an admin of the UpgradeExecutor contract, but is also owned by it.",
+    ),
+  ],
   contracts: {
     addresses: [ 
       discovery.getContractDetails('RollupProxy', {

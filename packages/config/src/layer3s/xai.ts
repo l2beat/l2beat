@@ -40,5 +40,8 @@ export const xai: Layer3 = {
     risks: [
 
     ],   
-  }
+  },
+  permissions: [
+
+  ],
 }
