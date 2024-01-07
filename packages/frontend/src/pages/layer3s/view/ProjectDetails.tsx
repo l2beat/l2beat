@@ -8,6 +8,7 @@ import { MilestonesSection } from '../../../components/project/MilestonesSection
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
 import { ScalingDetailsItem } from '../props/getProjectDetails'
+import { PermissionsSection } from '../../../components/project/PermissionsSection'
 
 
 export interface ProjectDetailsProps {
@@ -29,6 +30,8 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             )
           case 'ContractsSection':
             return <ContractsSection key={item.props.id} {...item.props} />
+          case 'PermissionsSection':
+              return <PermissionsSection key={item.props.id} {...item.props} />
           case 'DescriptionSection':
             return <DescriptionSection key={item.props.id} {...item.props} />
           case 'UpcomingDisclaimer':
