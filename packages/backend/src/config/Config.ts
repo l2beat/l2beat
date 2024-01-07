@@ -21,6 +21,7 @@ export interface Config {
   readonly liveness: LivenessConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
+  readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
 }
 
@@ -60,6 +61,8 @@ export interface TvlConfig {
   readonly optimism: ChainTvlConfig | false
   readonly base: ChainTvlConfig | false
   readonly mantapacific: ChainTvlConfig | false
+  readonly lyra: ChainTvlConfig | false
+  readonly linea: ChainTvlConfig | false
 }
 
 export interface LivenessConfig {
@@ -118,6 +121,10 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
 }
 
+export interface DiffHistoryConfig {
+  readonly chains: DiffHistoryChainConfig[]
+}
+
 export interface DiscordConfig {
   readonly token: string
   readonly publicChannelId?: string
@@ -131,3 +138,5 @@ export interface DiscoveryCacheChainConfig {
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
+
+export type DiffHistoryChainConfig = UpdateMonitorChainConfig

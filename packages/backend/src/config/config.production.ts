@@ -12,6 +12,8 @@ export function getProductionConfig(env: Env): Config {
   const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
+  const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
+  const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', false)
   const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const activityProjectsExcludedFromApi = env.optionalString(
@@ -19,6 +21,7 @@ export function getProductionConfig(env: Env): Config {
   )
   const livenessEnabled = env.boolean('LIVENESS_ENABLED', false)
   const updateMonitorEnabled = env.boolean('WATCHMODE_ENABLED', false)
+  const diffHistoryEnabled = env.boolean('DIFF_HISTORY_ENABLED', false)
   const discordToken = env.optionalString('DISCORD_TOKEN')
   const publicDiscordChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
   const internalDiscordChannelId = env.optionalString(
@@ -128,6 +131,31 @@ export function getProductionConfig(env: Env): Config {
         },
         minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
       },
+      lyra: lyraTvlEnabled && {
+        providerUrl: env.string('TVL_LYRA_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
+          'TVL_LYRA_RPC_CALLS_PER_MINUTE',
+          25,
+        ),
+        blockNumberProviderConfig: {
+          type: 'RoutescanLike',
+          routescanApiUrl: 'https://explorer.lyra.finance/api',
+        },
+        minBlockTimestamp: getChainMinTimestamp(ChainId.LYRA),
+      },
+      linea: lineaTvlEnabled && {
+        providerUrl: env.string('TVL_LINEA_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
+          'TVL_LINEA_RPC_CALLS_PER_MINUTE',
+          25,
+        ),
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_LINEA_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.lineascan.build/api',
+        },
+        minBlockTimestamp: getChainMinTimestamp(ChainId.LINEA),
+      },
       mantapacific: mantapacificTvlEnabled && {
         providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
@@ -207,6 +235,11 @@ export function getProductionConfig(env: Env): Config {
           callsPerMinute: env.integer('ACTIVITY_MANTLE_CALLS', 1500),
           url: env.string('ACTIVITY_MANTLE_URL', 'https://rpc.mantle.xyz'),
         },
+        metis: {
+          type: 'rpc',
+          callsPerMinute: env.integer('ACTIVITY_METIS_CALLS', 1500),
+          url: env.string('ACTIVITY_METIS_URL', 'https://andromeda.metis.io/'),
+        },
       },
     },
     statusEnabled: env.boolean('STATUS_ENABLED', true),
@@ -274,6 +307,16 @@ export function getProductionConfig(env: Env): Config {
           ...getChainConfig(ChainId.POLYGON_ZKEVM),
           reorgSafeDepth: env.optionalInteger(
             'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
+          ),
+        },
+      ],
+    },
+    diffHistory: diffHistoryEnabled && {
+      chains: [
+        {
+          ...getChainConfig(ChainId.ETHEREUM),
+          reorgSafeDepth: env.optionalInteger(
+            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
           ),
         },
       ],

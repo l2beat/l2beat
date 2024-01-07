@@ -91,6 +91,10 @@ const CHAIN_IDS: Record<number, { name: string; explorer: string }> = {
     name: 'bsc',
     explorer: 'https://bscscan.com',
   },
+  957: {
+    name: 'lyra',
+    explorer: 'https://explorer.lyra.finance/',
+  },
   43114: {
     name: 'avalanche',
     explorer: 'https://snowtrace.io',
@@ -125,6 +129,7 @@ ChainId.BSC = chainIdFromName('bsc')
 ChainId.AVALANCHE = chainIdFromName('avalanche')
 ChainId.CELO = chainIdFromName('celo')
 ChainId.LINEA = chainIdFromName('linea')
+ChainId.LYRA = chainIdFromName('lyra')
 ChainId.BASE = chainIdFromName('base')
 ChainId.POLYGON_ZKEVM = chainIdFromName('polygon-zkevm')
 ChainId.GNOSIS = chainIdFromName('gnosis')

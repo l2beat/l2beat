@@ -4,7 +4,6 @@ import React from 'react'
 
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
-import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { ActivityMetaImage } from './ActivityMetaImage'
 import { DetailedTvlMetaImage } from './DetailedTvlMetaImage'
 import { getProps, getPropsActivity, getPropsDetailed } from './getProps'
@@ -15,10 +14,7 @@ export function getMetaImagePages(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ) {
-  const included = getIncludedProjects(
-    [...config.layer2s, ...config.bridges],
-    tvlApiResponse,
-  )
+  const included = [...config.layer2s, ...config.bridges]
   const scaling = getProps(tvlApiResponse, undefined, 'layers2s')
   const bridges = getProps(tvlApiResponse, undefined, 'bridges')
   const activity = activityApiResponse

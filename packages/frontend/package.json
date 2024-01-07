@@ -19,7 +19,7 @@
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
     "start": "yarn start:staging",
     "start:local": "DEPLOYMENT_ENV=local gulp watch",
-    "start:local-mock": "DEPLOYMENT_ENV=local MOCK=true gulp watch",
+    "start:mock": "DEPLOYMENT_ENV=local MOCK=true gulp watch",
     "start:staging": "DEPLOYMENT_ENV=staging gulp watch",
     "start:production": "DEPLOYMENT_ENV=production gulp watch",
     "test": "mocha",
