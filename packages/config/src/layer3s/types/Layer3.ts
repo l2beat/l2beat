@@ -7,8 +7,10 @@ import {
   ProjectCategory,
   ProjectLinks,
   ProjectContracts,
-  ProjectEscrow
+  ProjectEscrow,
+  ProjectPermission
 } from '../../common'
+
 
 export interface Layer3 {
   type: 'layer3'
@@ -30,6 +32,8 @@ export interface Layer3 {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of permissioned addresses */
   contracts: ProjectContracts
+  /** List of permissioned addresses */
+  permissions?: ProjectPermission[] | 'UnderReview'
 
 }
 
