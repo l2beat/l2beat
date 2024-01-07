@@ -6,8 +6,11 @@ import { DescriptionSectionProps } from '../../../components/project/Description
 import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSectionProps } from '../../../components/project/MilestonesSection'
 import { ContractsSectionProps } from '../../../components/project/ContractsSection'
+import { PermissionsSectionProps } from '../../../components/project/PermissionsSection'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getContractSection } from '../../../utils/project/getContractSection'
+import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
+
 
 export function getProjectDetails(
   project: Layer3,
@@ -16,6 +19,11 @@ export function getProjectDetails(
 ) {
   const isUpcoming = project.isUpcoming
   const items: ScalingDetailsItem[] = []
+  const permissionsSection = getPermissionsSection(
+    project,
+    verificationStatus,
+    manuallyVerifiedContracts,
+  )
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
@@ -32,6 +40,17 @@ export function getProjectDetails(
     type: 'DescriptionSection',
     props: getDescriptionSection(project, verificationStatus),
   })
+
+  if (permissionsSection) {
+    items.push({
+      type: 'PermissionsSection',
+      props: {
+        ...permissionsSection,
+        id: 'permissions',
+        title: 'Permissions',
+      },
+    })
+  }
 
   items.push({
     type: 'ContractsSection',
@@ -73,6 +92,7 @@ export type ScalingDetailsSection =
   | MilestonesSection
   | KnowledgeNuggetsSection
   | ContractsSection
+  | PermissionsSection
 
 type NonSectionElement = UpcomingDisclaimer
 
@@ -98,4 +118,9 @@ interface UpcomingDisclaimer {
 interface ContractsSection {
   type: 'ContractsSection'
   props: ContractsSectionProps
+}
+
+interface PermissionsSection {
+  type: 'PermissionsSection'
+  props: PermissionsSectionProps
 }
