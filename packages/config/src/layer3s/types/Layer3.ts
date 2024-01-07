@@ -6,6 +6,8 @@ import {
   Milestone,
   ProjectCategory,
   ProjectLinks,
+  ProjectContracts,
+  ProjectEscrow
 } from '../../common'
 
 export interface Layer3 {
@@ -14,6 +16,8 @@ export interface Layer3 {
   id: ProjectId
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
+  /** Information required to calculate the stats of the layer2 */
+  config: Layer3Config
   /** Has this layer3 changed and is under review? */
   isUnderReview?: boolean
   /** ProjectId of hostChain */
@@ -24,6 +28,9 @@ export interface Layer3 {
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
+  /** List of permissioned addresses */
+  contracts: ProjectContracts
+
 }
 
 export interface Layer3Display {
@@ -54,4 +61,21 @@ export interface Layer3Display {
   provider?: Layer3Provider
   /** List of links */
   links: ProjectLinks
+}
+
+export interface Layer3Config {
+  // /** List of native and external tokens */
+  // tokenList?: Token[]
+  // /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
+  // associatedTokens?: string[]
+  // /** Native tokens should be also marked as associated tokens, however often associated tokens are not native tokens. This has to be kept manually in sync with code executed in CBVUpdater.update.  */
+  // nativeL2TokensIncludedInTVL?: string[]
+  // /** Assets external to L1 which should be incorporated into the aggregated TVL report for a given project.  */
+  // externalAssets?: Layer2ExternalAssets
+  /** List of contracts in which L1 funds are locked */
+  escrows: ProjectEscrow[]
+  // /** API parameters used to get transaction count */
+  // transactionApi?: Layer2TransactionApi
+  // /** Configuration for getting state updates and batch submission */
+  // liveness?: Layer2Liveness
 }

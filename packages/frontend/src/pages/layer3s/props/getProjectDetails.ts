@@ -1,15 +1,18 @@
 import { Layer3 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import { ManuallyVerifiedContracts, VerificationStatus } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
 import { DescriptionSectionProps } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSectionProps } from '../../../components/project/MilestonesSection'
+import { ContractsSectionProps } from '../../../components/project/ContractsSection'
 import { getDescriptionSection } from './getDescriptionSection'
+import { getContractSection } from '../../../utils/project/getContractSection'
 
 export function getProjectDetails(
   project: Layer3,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ) {
   const isUpcoming = project.isUpcoming
   const items: ScalingDetailsItem[] = []
@@ -28,6 +31,15 @@ export function getProjectDetails(
   items.push({
     type: 'DescriptionSection',
     props: getDescriptionSection(project, verificationStatus),
+  })
+
+  items.push({
+    type: 'ContractsSection',
+    props: getContractSection(
+      project,
+      verificationStatus,
+      manuallyVerifiedContracts,
+    ),
   })
 
   if (!isUpcoming) {
@@ -60,6 +72,7 @@ export type ScalingDetailsSection =
   | DescriptionSection
   | MilestonesSection
   | KnowledgeNuggetsSection
+  | ContractsSection
 
 type NonSectionElement = UpcomingDisclaimer
 
@@ -80,4 +93,9 @@ interface KnowledgeNuggetsSection {
 
 interface UpcomingDisclaimer {
   type: 'UpcomingDisclaimer'
+}
+
+interface ContractsSection {
+  type: 'ContractsSection'
+  props: ContractsSectionProps
 }

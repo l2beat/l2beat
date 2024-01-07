@@ -28,4 +28,17 @@ export const xai: Layer3 = {
       ],
     },
   },
+  config: {
+    escrows: [
+
+    ],
+  },
+  contracts: {
+    addresses: [
+
+    ],
+    risks: [
+
+    ],   
+  }
 }

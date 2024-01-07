@@ -3,6 +3,7 @@ import {
   CONTRACTS,
   isSingleAddress,
   Layer2,
+  Layer3,
   ProjectContract,
   ProjectEscrow,
 } from '@l2beat/config'
@@ -23,7 +24,7 @@ import { languageJoin } from '../utils'
 import { hasArchitectureImage } from './hasArchitectureImage'
 
 export function getContractSection(
-  project: Layer2 | Bridge,
+  project: Layer2 | Bridge | Layer3,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): ContractsSectionProps {
@@ -94,7 +95,7 @@ export function getContractSection(
 
 function makeTechnologyContract(
   item: ProjectContract,
-  project: Layer2 | Bridge,
+  project: Layer2 | Bridge | Layer3,
   isUnverified: boolean,
   verificationStatus: VerificationStatus,
   isEscrow?: boolean,

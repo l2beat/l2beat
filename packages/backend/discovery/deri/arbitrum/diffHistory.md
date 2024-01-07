@@ -1,3 +1,44 @@
+# Diff at Fri, 05 Jan 2024 10:03:32 GMT:
+
+- author: unknown (<unknown>)
+- comparing to: master@ea50ecee4d08800c3cff3742fc1c8912fc54c16c
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
++        "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+      values.loserStakeEscrow:
+-        "0xE6Deca8779AAd0F8C96Dd843F77BF2a55ea2F402"
++        "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract Bridge (0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+      values.delayedMessageCount:
+-        261
++        431
+      values.sequencerMessageCount:
+-        214
++        381
+      values.sequencerReportedSubMessageCount:
+-        36742
++        61377
+    }
+```
+
 # Diff at Tue, 12 Dec 2023 13:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
