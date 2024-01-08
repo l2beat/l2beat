@@ -21,6 +21,7 @@ export interface ScalingLivenessViewEntry {
   dataAvailabilityMode: ProjectDataAvailabilityMode
   provider: Layer2Provider | undefined
   warning: string | undefined
+  redWarning: string | undefined
   stage: StageConfig
   explanation: string | undefined
   batchSubmissions: LivenessDetailsWithWarning | undefined
