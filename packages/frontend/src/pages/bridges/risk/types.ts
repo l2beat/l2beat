@@ -2,6 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 
 export interface BridgesRiskViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
   type: 'layer2' | 'bridge'
   warning?: string

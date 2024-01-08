@@ -36,6 +36,7 @@ function getScalingLivenessViewEntry(
   const liveness = livenessResponse.projects[project.id.toString()]
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     warning: project.display.warning,
     category: project.display.category,

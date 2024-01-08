@@ -34,6 +34,7 @@ function getScalingTvlViewEntry(
 
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
     provider: project.display.provider,

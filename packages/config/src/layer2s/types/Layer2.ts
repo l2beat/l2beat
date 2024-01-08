@@ -61,6 +61,8 @@ export interface Layer2 {
 export interface Layer2Display {
   /** Name of the layer2, will be used as a display name on the website */
   name: string
+  /** Short name of the layer2, will be used in some places on the website as a display name */
+  shortName?: string
   /** Url friendly layer2 name, will be used in website urls */
   slug: string
   /** Name of the category the layer2 belongs to */

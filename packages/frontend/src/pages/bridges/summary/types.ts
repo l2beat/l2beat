@@ -5,6 +5,7 @@ import { ValueWithDisplayValue } from '../../types'
 
 export interface BridgesSummaryViewEntry {
   type: 'bridge' | 'layer2'
+  shortName: string | undefined
   name: string
   slug: string
   warning?: string

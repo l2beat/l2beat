@@ -56,6 +56,7 @@ function getScalingL2SummaryEntry(
 
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
     category: project.display.category,
@@ -99,6 +100,7 @@ function getScalingL3SummaryEntry(
 ): ScalingL3SummaryViewEntry {
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
     category: project.display.category,
