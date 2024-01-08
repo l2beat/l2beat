@@ -127,6 +127,9 @@ export function DetailsHeader(props: HeaderProps) {
         </div>
         {props.risks && (
           <div className="ml-8 mt-auto hidden lg:block">
+            <span className="text-xs font-medium text-gray-600">
+              Risk rosette
+            </span>
             <BigRosette
               risks={props.risks}
               isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
