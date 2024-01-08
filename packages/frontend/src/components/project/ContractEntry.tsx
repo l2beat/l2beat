@@ -83,7 +83,7 @@ export function ContractEntry({
       icon={icon}
       body={
         <>
-          <div className="flex flex-wrap gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2">
             <strong>{contract.name}</strong>{' '}
             {(contract.addresses ?? []).map((address, i) => (
               <EtherscanLink
@@ -99,12 +99,12 @@ export function ContractEntry({
             ))}
             {contract.links.map((x, i) => (
               <Link
+                data-role="etherscan-link"
                 key={i}
                 className={cx(
                   verificationStatus.contracts[x.address] === false &&
-                    !x.isAdmin
-                    ? 'text-red-300'
-                    : '',
+                    !x.isAdmin &&
+                    'text-red-300',
                 )}
                 href={x.href}
               >
