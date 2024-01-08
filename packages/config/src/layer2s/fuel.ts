@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const fuel: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('fuel'),
+export const fuel: Layer2 = upcoming({
+  id: 'fuel',
   display: {
     name: 'Fuel',
     slug: 'fuel',
@@ -14,7 +10,6 @@ export const fuel: Layer2 = {
       'At Fuel we are building the fastest execution layer for the modular blockchain stack.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://fuel.network/'],
       apps: ['https://alpha.fuel.network/ecosystem/'],
@@ -28,13 +23,4 @@ export const fuel: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})
