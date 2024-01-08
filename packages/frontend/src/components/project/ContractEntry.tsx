@@ -103,9 +103,8 @@ export function ContractEntry({
                 key={i}
                 className={cx(
                   verificationStatus.contracts[x.address] === false &&
-                    !x.isAdmin
-                    ? ' text-red-300'
-                    : '',
+                    !x.isAdmin &&
+                    'text-red-300',
                 )}
                 href={x.href}
               >
