@@ -8,13 +8,15 @@ import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
 import {
+  NUGGETS,
   ProjectReference,
   ProjectRiskViewEntry,
   ProjectTechnologyChoice,
 } from '../common'
+import { ProjectTechnology } from '../common/ProjectTechnology'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
+import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -237,7 +239,7 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         describe(layer2.display.name, () => {
           type Key = Exclude<
-            keyof Layer2Technology,
+            keyof ProjectTechnology,
             'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 

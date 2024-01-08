@@ -1,5 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
 import { Layer3 } from './types'
 
 export const deri: Layer3 = {
@@ -30,4 +31,10 @@ export const deri: Layer3 = {
     },
     dataAvailabilityMode: 'NotApplicable',
   },
+  config: {
+    escrows: [],
+  },
+  contracts: CONTRACTS.EMPTY,
+  riskView: UPCOMING_RISK_VIEW,
+  technology: TECHNOLOGY.UPCOMING,
 }

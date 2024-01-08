@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 
-import { layer2s, NUGGETS } from '../layer2s'
+import { NUGGETS } from '../common'
+import { layer2s } from '../layer2s'
 import { layer3s } from './index'
 
 describe('layer3s', () => {

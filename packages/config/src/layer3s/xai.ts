@@ -1,5 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
 import { Layer3 } from './types'
 
 export const xai: Layer3 = {
@@ -27,5 +28,12 @@ export const xai: Layer3 = {
         'https://discord.gg/xaigames',
       ],
     },
+    dataAvailabilityMode: 'NotApplicable',
   },
+  config: {
+    escrows: [],
+  },
+  riskView: UPCOMING_RISK_VIEW,
+  technology: TECHNOLOGY.UPCOMING,
+  contracts: CONTRACTS.EMPTY,
 }
