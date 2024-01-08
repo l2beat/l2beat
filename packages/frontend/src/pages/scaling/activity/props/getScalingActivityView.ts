@@ -43,6 +43,7 @@ export function getScalingActivityViewEntry(
 
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
     provider: project.display.provider,
@@ -61,6 +62,7 @@ function getEthereumActivityViewEntry(
   const data = activityApiResponse.combined.daily.data
   return {
     name: 'Ethereum',
+    shortName: undefined,
     slug: 'ethereum',
     dataSource: 'Blockchain RPC',
     category: undefined,

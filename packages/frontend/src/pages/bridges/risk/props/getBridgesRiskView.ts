@@ -30,6 +30,7 @@ export function getBridgesRiskViewEntry(
   return {
     type: project.type,
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     warning: project.display.warning,
     isArchived: project.isArchived,

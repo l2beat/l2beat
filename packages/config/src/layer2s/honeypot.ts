@@ -20,6 +20,7 @@ export const honeypot: Layer2 = {
   id: ProjectId('honeypot'),
   display: {
     name: 'Honeypot (Cartesi)',
+    shortName: 'Honeypot',
     slug: 'cartesi-honeypot',
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups.\
