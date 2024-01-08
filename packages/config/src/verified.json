@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2024-01-05T07:32:00.956Z",
+  "updatedAt": "2024-01-08T12:44:22.639Z",
   "projects": {
     "across-v2": true,
     "aevo": true,
@@ -31,7 +31,6 @@
     "degate": true,
     "degate2": true,
     "degate3": true,
-    "deri": true,
     "deversifi": true,
     "dydx": true,
     "eclipse": true,
@@ -110,7 +109,6 @@
     "taiko": true,
     "wormholeV1": true,
     "x1": true,
-    "xai": true,
     "xchain": true,
     "xdai": true,
     "zkfair": true,
