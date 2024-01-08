@@ -4,8 +4,7 @@ export function getIncludedProjects<
   T extends {
     id: ProjectId
     isUpcoming?: boolean
-    isLayer3?: boolean
-    type: 'bridge' | 'layer2'
+    type: 'bridge' | 'layer2' | 'layer3'
   },
 >(projects: T[], tvlApiResponse: TvlApiResponse, buildAllProjectPages = false) {
   if (buildAllProjectPages) {
@@ -16,8 +15,11 @@ export function getIncludedProjects<
     .filter((x) => !x.isUpcoming)
     .filter((x) => !!tvlApiResponse.projects[x.id.toString()])
 
-  if (projects.every((x) => x.type === 'layer2')) {
-    included.push(...projects.filter((x) => x.isUpcoming))
+  if (projects.every((x) => x.type === 'layer2' || x.type === 'layer3')) {
+    included.push(
+      ...projects.filter((x) => x.isUpcoming && x.type === 'layer2'),
+    )
+    included.push(...projects.filter((x) => x.type === 'layer3'))
   }
 
   return included

@@ -10,7 +10,6 @@ import { RiskCell } from '../../../../components/table/RiskCell'
 
 export interface ProjectHeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
   tvl?: string

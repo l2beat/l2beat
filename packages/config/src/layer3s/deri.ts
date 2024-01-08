@@ -1,14 +1,11 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
-import { Layer2 } from '../types'
+import { Layer3 } from './types'
 
-export const deri: Layer2 = {
+export const deri: Layer3 = {
+  type: 'layer3',
   isUpcoming: false,
   isUnderReview: true,
-  isArchived: false,
-  type: 'layer2',
-  isLayer3: true,
   id: ProjectId('deri'),
   hostChain: ProjectId('arbitrum'),
   display: {
@@ -31,16 +28,5 @@ export const deri: Layer2 = {
         'https://discord.com/invite/kb8ZbYgp8M',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
-    dataAvailabilityMode: 'NotApplicable',
   },
-  stage: {
-    stage: 'UnderReview',
-  },
-  config: {
-    escrows: [],
-  },
-  technology: TECHNOLOGY.UPCOMING,
-  riskView: UNDER_REVIEW_RISK_VIEW,
-  contracts: CONTRACTS.EMPTY,
 }
