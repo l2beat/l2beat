@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   EXITS,
@@ -8,7 +7,8 @@ import {
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metis')

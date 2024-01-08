@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -8,8 +7,9 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   OPERATOR,
-} from './common'
-import { RISK_VIEW } from './common/riskView'
+} from '../common'
+import { RISK_VIEW } from '../common/riskView'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')

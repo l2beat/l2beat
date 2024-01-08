@@ -9,7 +9,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 

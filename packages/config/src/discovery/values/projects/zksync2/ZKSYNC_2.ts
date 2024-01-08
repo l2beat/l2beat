@@ -1,5 +1,5 @@
 import { ProjectRiskViewEntry } from '../../../../common'
-import { RISK_VIEW } from '../../../../layer2s/common/riskView'
+import { RISK_VIEW } from '../../../../common/riskView'
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('zksync2')

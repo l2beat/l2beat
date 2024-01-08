@@ -4,10 +4,9 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { ProjectRiskViewEntry } from '../common'
+import { NUGGETS, ProjectRiskViewEntry } from '../common'
 import { ProjectTechnologyChoice } from '../common/ProjectTechnologyChoice'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
 import { getReferencedAddresses } from '../layer2s/index.test'
 import { checkRisk } from '../test/helpers'
 import { bridges, BridgeTechnology } from './index'

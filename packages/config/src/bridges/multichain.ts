@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { NUGGETS } from '../layer2s'
+import { NUGGETS } from '../common'
 import { RISK_VIEW } from './common'
 import * as config from './multichain-config.json'
 import { Bridge } from './types'

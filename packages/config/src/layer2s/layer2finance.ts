@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
 import { Layer2 } from './types'
 
 export const layer2finance: Layer2 = {

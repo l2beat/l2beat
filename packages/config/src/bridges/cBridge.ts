@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 

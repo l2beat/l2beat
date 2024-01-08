@@ -8,9 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { VALUES } from '../discovery/values'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,11 +18,14 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOneAfterBlockInclusive,
-} from './common'
+} from '../common'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
+import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { VALUES } from '../discovery/values'
+import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')

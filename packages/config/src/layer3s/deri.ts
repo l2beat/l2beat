@@ -28,5 +28,6 @@ export const deri: Layer3 = {
         'https://discord.com/invite/kb8ZbYgp8M',
       ],
     },
+    dataAvailabilityMode: 'NotApplicable',
   },
 }

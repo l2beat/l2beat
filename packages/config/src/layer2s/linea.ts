@@ -11,9 +11,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ProjectPermissionedAccount } from '../common'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,9 +18,12 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  ProjectPermissionedAccount,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 

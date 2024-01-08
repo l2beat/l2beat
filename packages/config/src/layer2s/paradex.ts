@@ -5,14 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,11 +13,19 @@ import {
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
-} from './common'
-import { FORCE_TRANSACTIONS } from './common/forceTransactions'
-import { RISK_VIEW } from './common/riskView'
+} from '../common'
+import { FORCE_TRANSACTIONS } from '../common/forceTransactions'
+import { RISK_VIEW } from '../common/riskView'
+import { STATE_CORRECTNESS } from '../common/stateCorrectness'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
-import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('paradex')

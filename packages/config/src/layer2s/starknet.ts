@@ -5,14 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -24,7 +16,15 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 

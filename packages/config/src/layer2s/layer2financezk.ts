@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getSHARPVerifierContracts } from '../discovery/starkware'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,7 +10,9 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getSHARPVerifierContracts } from '../discovery/starkware'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('layer2financezk')

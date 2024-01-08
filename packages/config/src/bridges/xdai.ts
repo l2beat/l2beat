@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS } from '../layer2s/common'
+import { CONTRACTS } from '../common'
 import { Bridge } from './types'
 
 export const xdai: Bridge = {
