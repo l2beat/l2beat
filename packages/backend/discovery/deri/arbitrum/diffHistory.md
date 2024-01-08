@@ -1,12 +1,12 @@
-# Diff at Mon, 08 Jan 2024 12:38:09 GMT:
+# Diff at Mon, 08 Jan 2024 15:22:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@3ee3c075ee99707d8392a73b092ed24eeb24866f block: 159392469
-- current block number: 168339235
+- current block number: 168378561
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Executors and stake escrow contracts have been updated. At this point we're not displaying any info yet (ts is empty).
 
 ## Watched changes
 
@@ -23,20 +23,6 @@ Provide description of changes. This section will be preserved.
       values.loserStakeEscrow:
 -        "0xE6Deca8779AAd0F8C96Dd843F77BF2a55ea2F402"
 +        "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
-    }
-```
-
-```diff
-    contract Bridge (0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
-      values.delayedMessageCount:
--        261
-+        451
-      values.sequencerMessageCount:
--        214
-+        400
-      values.sequencerReportedSubMessageCount:
--        36742
-+        62074
     }
 ```
 
