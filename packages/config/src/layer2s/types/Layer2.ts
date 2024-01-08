@@ -82,8 +82,10 @@ export interface Layer2Display {
   warning?: string
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
   redWarning?: string
-  /** A few sentences describing the layer2 */
+  /** A few sentences describing the layer2, will be visible in the project header */
   description: string
+  /** Detailed description of the layer2, will be visible in detailed description section */
+  detailedDescription?: string
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** Technology provider */

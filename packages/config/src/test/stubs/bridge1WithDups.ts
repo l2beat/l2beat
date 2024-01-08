@@ -9,6 +9,7 @@ export const bridge1WithDups: Bridge = {
     name: 'Bridge1',
     slug: 'bridge1',
     category: 'Token Bridge',
+    description: 'Bridge1 description',
     links: {},
   },
   config: {
