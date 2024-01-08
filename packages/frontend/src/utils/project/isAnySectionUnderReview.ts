@@ -2,8 +2,8 @@ import {
   Bridge,
   BridgeRiskView,
   Layer2,
-  Layer2RiskView,
   Layer3,
+  ProjectRiskView,
   ProjectRiskViewEntry,
 } from '@l2beat/config'
 
@@ -25,7 +25,7 @@ export function isAnySectionUnderReview(
 }
 
 export function isAnyRiskUnderReview(
-  riskView?: Layer2RiskView | BridgeRiskView,
+  riskView?: ProjectRiskView | BridgeRiskView,
 ) {
   return (
     riskView &&

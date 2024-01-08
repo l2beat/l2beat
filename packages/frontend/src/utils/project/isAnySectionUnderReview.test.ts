@@ -2,10 +2,10 @@ import {
   Layer2,
   Layer2Config,
   Layer2Display,
-  Layer2RiskView,
-  Layer2Technology,
   ProjectContracts,
+  ProjectRiskView,
   ProjectRiskViewEntry,
+  ProjectTechnology,
   StageConfig,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -18,9 +18,9 @@ describe(isAnySectionUnderReview.name, () => {
     type: 'layer2',
     id: ProjectId('project-id'),
     display: mockObject<Layer2Display>(),
-    technology: mockObject<Layer2Technology>({ isUnderReview: undefined }),
+    technology: mockObject<ProjectTechnology>({ isUnderReview: undefined }),
     contracts: mockObject<ProjectContracts>({ isUnderReview: undefined }),
-    riskView: mockObject<Layer2RiskView>(),
+    riskView: mockObject<ProjectRiskView>(),
     config: mockObject<Layer2Config>(),
     stage: mockObject<StageConfig>({ stage: 'Stage 1' }),
   }
