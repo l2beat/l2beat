@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const morph: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('morph'),
+export const morph: Layer2 = upcoming({
+  id: 'morph',
   display: {
     name: 'Morph',
     slug: 'morph',
@@ -14,7 +10,6 @@ export const morph: Layer2 = {
       'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://morphl2.io'],
       apps: ['https://bridge-testnet.morphl2.io'],
@@ -30,13 +25,4 @@ export const morph: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

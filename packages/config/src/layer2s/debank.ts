@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const debank: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('debank'),
+export const debank: Layer2 = upcoming({
+  id: 'debank',
   display: {
     name: 'Debank Chain',
     slug: 'debank',
@@ -14,7 +10,6 @@ export const debank: Layer2 = {
       'Debank Chain is an upcoming scaling solution by Debank team. It is powered by the OP Stack.',
     purpose: 'Universal, Social',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://debank.com/account'],
@@ -29,13 +24,4 @@ export const debank: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

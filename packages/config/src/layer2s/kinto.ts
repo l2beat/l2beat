@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const kinto: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('kinto'),
+export const kinto: Layer2 = upcoming({
+  id: 'kinto',
   display: {
     name: 'Kinto',
     slug: 'kinto',
@@ -14,7 +10,6 @@ export const kinto: Layer2 = {
       'Kinto is the first KYCed Layer 2 capable of supporting both modern financial institutions and decentralized protocols.',
     purpose: 'DeFi',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
       websites: ['https://kinto.xyz'],
@@ -29,13 +24,4 @@ export const kinto: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})
