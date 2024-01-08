@@ -1,4 +1,4 @@
-import { ProjectTechnologyChoice } from '../../common'
+import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 
 const FRAUD_PROOFS: ProjectTechnologyChoice = {
   name: 'Fraud proofs ensure state correctness',

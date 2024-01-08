@@ -1,5 +1,6 @@
-import { CONTRACTS, ProjectTechnologyChoice } from '../../common'
-import { formatSeconds } from '../../utils/formatSeconds'
+import { formatSeconds } from '../utils/formatSeconds'
+import { CONTRACTS } from './contracts'
+import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 
 function ARBITRUM_DAO(
   l1Delay: number,
