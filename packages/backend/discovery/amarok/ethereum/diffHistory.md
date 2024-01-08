@@ -6,7 +6,85 @@
 
 ## Description
 
-This update is for the Bacco upgrade (https://medium.com/connext/introducing-the-bacco-network-upgrade-73ad19cee9ed).
+This update is for the Bacco upgrade.
+Read [this blog post](https://medium.com/connext/introducing-the-bacco-network-upgrade-73ad19cee9ed) before continuing to read further.
+
+An example of Optimistic root proposal, finalization and submission into the Mainnet spoke.
+A root is proposed [here](https://ethtx.info/mainnet/0x8623518d4c60d5cc85d817c3d7b17bafa24a3699756ff43d4c519dfe4e624397/).
+After around 30 minutes it is [finalized](https://ethtx.info/mainnet/0x1dd1482174233218b482bcd6ccf971b52e021d5920254335fb46ea57e0e72f22/).
+After some time, the root gets saved to the MainnetSpokeConnector [here](https://ethtx.info/mainnet/0x67415da90ec170de7c7138081b5446903258f0337ffe012228bbf0da8b5f6f3a/).
+
+Any watcher can enable the Slow Mode which reverts back to the original behaviour of root propagation.
+Only the owner can re-enable the optimistic mode.
+There is no on-chain fraud proof, if the watcher believes that the proposed root is invalid he can put the bridge into the Slow Mode thus invalidating the proposed root.
+There is no penalty (slashing) for invalidating a proposed root that is not fraudulent which allows for risk-minimized censoring.
+
+### MainnetSpokeConnector
+
+Connector allows to withdraw funds with the `withdrawFunds` function, emits an `FundsWithdrawn` event.
+
+- MainnetSpokeConnector:
+
+Saves the aggregated root while in Optimistic Mode.
+Proposing and finalizing the aggregated root is deprecated in this contract.
+
+- SpokeConnector:
+
+Many new similar helper functions/values as in `RootManager`.
+
+### RootManager
+
+- Queue: Simpler check for removedItmes, bool instead of counting.
+- WatcherClient: Calling `renounceOwnership` now reverts instead of doing nothing.
+- WatcherManager: Calling `renounceOwnership` now reverts instead of doing nothing.
+- MerkleTreeManager: Now saving leaf and nonce status. Leaves have this FSM: None -> Proven -> Processed.
+- RootManager:
+
+Now keeps track of values that are required to operate in optimistic mode.
+For example: the number of blocks that watchers have to claim a dispute, the proposed root hash as well as the list of white listed proposers.
+Introduced functions to add/remove proposers, set new values for minimum dispute block length and the actual dispute block length.
+Optimistic proposal of a root has the following path: `proposeAggregateRoot()` -> `finalize()`.
+This workflow does not require the call to `propagate()`, but if someone calls that it's going to skip the Mainnet Spoke because it would use `sendMessage()` which is intended for Slow Mode only.
+To send the aggregated root while the system is in Optimistic Mode one should use `sendRootToHubSpoke()`.
+As written above, any watcher can enable Slow Mode, thus invalidating the proposed root hash, but only the owner can re-enable the Optimistic Mode.
+
+Potential for an issue, in `setMinDisputeBlocks` the owner can set the
+`minDisputeBlocks` but it does not check if the new value is less-or-equal than the `disputeBlocks`.
+
+### WatcherManager
+
+Calling `renounceOwnership` now reverts instead of doing nothing.
+
+### ArbitrumHubConnector
+
+Connector allows to withdraw funds with the `withdrawFunds` function, emits an `FundsWithdrawn` event.
+
+### GnosisHubConnector
+
+Introduced a lower gas threshold that needs to be breached to send a message to Gnosis.
+Connector allows to withdraw funds with the `withdrawFunds` function, emits an `FundsWithdrawn` event.
+Gas cap is now made public.
+
+### LineaHubConnector
+
+Connector allows to withdraw funds with the `withdrawFunds` function, emits an `FundsWithdrawn` event.
+
+### OptimismHubConnector
+
+The way the message root is recovered is simplified.
+I'd assume that is because Optimism restructured their message binary packing.
+Connector allows to withdraw funds with the `withdrawFunds` function, emits an `FundsWithdrawn` event.
+Gas cap is now made public.
+
+### PolygonHubConnector
+
+Adds a check to make sure that it does not process the same message root twice.
+Connector allows to withdraw funds with the `withdrawFunds` function, emits an `FundsWithdrawn` event.
+
+### WormholeHubConnector
+
+Connector allows to withdraw funds with the `withdrawFunds` function, emits an `FundsWithdrawn` event.
+Gas cap is now made public.
 
 ## Watched changes
 

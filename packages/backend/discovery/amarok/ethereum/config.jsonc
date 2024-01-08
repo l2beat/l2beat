@@ -29,7 +29,8 @@
     "0x83096c7455f24E593aaC9A7c73f849d36d3EEb82": "ArbitrumHubConnector",
     "0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA": "WormholeHubConnector",
     "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": "GnosisHubConnector",
-    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain"
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
+    "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": "PolygonHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -110,6 +111,17 @@
         "pendingInboundRoots",
         "getPendingInboundRootsCount"
       ]
+    },
+    "PolygonHubConnector": {
+      "ignoreRelatives": [
+        "fxChildTunnel",
+        "mirrorConnector",
+        "ROOT_MANAGER",
+        "checkpointManager",
+        "fxRoot",
+        "AMB"
+      ],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "ArbitrumHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector", "rollup", "outbox"],
