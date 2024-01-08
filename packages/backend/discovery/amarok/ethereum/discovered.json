@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 18941290,
-  "configHash": "0x2d83f9aafd58a313ccf879b4877242a7fbda1e971ec3eed1cef6adf96e59343b",
+  "configHash": "0xf92557914378a70b30d8649a6c938f90c09d58671e54a8d545bea8b301ec1bb7",
   "version": 3,
   "contracts": [
     {
@@ -264,8 +264,13 @@
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
-        "renounced": false
-      }
+        "renounced": false,
+        "WATCHERS": [
+          "0x9c77788d761ee0347Ab550883237CeD274a0F248",
+          "0x917133b1dE100E9fF8F03E24c43F9272dD6A8E99"
+        ]
+      },
+      "derivedName": "WatcherManager"
     },
     {
       "name": "GovernorV2",
@@ -805,11 +810,13 @@
     "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
     "0x8cb19CE8EEDF740389D428879a876A3B030B9170",
     "0x8D09e20b835009E5320cC11E6a6F00aF451aD669",
+    "0x917133b1dE100E9fF8F03E24c43F9272dD6A8E99",
     "0x9584Eb0356a380b25D7ED2C14c54De58a25f2581",
     "0x96D38b113b1bC6a21d1137676f2f05DfcAce24e8",
     "0x975574980a5Da77f5C90bC92431835D91B73669e",
     "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
     "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
+    "0x9c77788d761ee0347Ab550883237CeD274a0F248",
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
     "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
     "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
