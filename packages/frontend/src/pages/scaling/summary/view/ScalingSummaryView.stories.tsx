@@ -1254,6 +1254,7 @@ const meta = {
     layer3s: [
       {
         name: 'Xai',
+        shortName: undefined,
         slug: 'xai',
         provider: 'Arbitrum Orbit',
         warning: undefined,
