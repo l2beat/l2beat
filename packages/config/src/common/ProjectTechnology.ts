@@ -1,13 +1,13 @@
-import { ProjectTechnologyChoice } from '../../common/ProjectTechnologyChoice'
+import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
 
-export interface Layer2Technology {
-  /** What state correctness mechanism is used in the layer2 */
+export interface ProjectTechnology {
+  /** What state correctness mechanism is used in the project */
   stateCorrectness: ProjectTechnologyChoice
-  /** What is the new cryptography used in the layer2 */
+  /** What is the new cryptography used in the project */
   newCryptography?: ProjectTechnologyChoice
-  /** What is the data availability choice for the layer2 */
+  /** What is the data availability choice for the project */
   dataAvailability: ProjectTechnologyChoice
-  /** What are the details about layer2 operator(s) */
+  /** What are the details about project operator(s) */
   operator: ProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
   forceTransactions: ProjectTechnologyChoice
@@ -19,7 +19,7 @@ export interface Layer2Technology {
   additionalPrivacy?: ProjectTechnologyChoice
   /** What are the smart contract capabilities */
   smartContracts?: ProjectTechnologyChoice
-  /** How can the Layer2 be upgraded? */
+  /** How can the project be upgraded? */
   upgradeMechanism?: ProjectTechnologyChoice
   /** Is the technology section under review */
   isUnderReview?: boolean
