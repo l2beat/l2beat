@@ -1,19 +1,14 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const hypr: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('hypr'),
+export const hypr: Layer2 = upcoming({
+  id: 'hypr',
   display: {
     name: 'Hypr',
     slug: 'hypr',
     description: 'Hypr is a Layer 2 blockchain, focused on scaling ZK gaming.',
     purpose: 'Universal',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://hypr.network/'],
@@ -27,13 +22,4 @@ export const hypr: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})
