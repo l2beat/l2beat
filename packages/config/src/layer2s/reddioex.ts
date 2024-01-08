@@ -56,7 +56,7 @@ export const reddioex: Layer2 = {
       websites: ['https://reddio.com/'],
       apps: [
         'https://reddio.com/explore',
-        'https://dashboard.reddio.com/',
+        'https://dashboard.reddio.com',
       ],
       documentation: ['https://docs.reddio.com/'],
       explorers: ['https://explorer.reddio.com/'],
