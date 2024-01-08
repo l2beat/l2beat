@@ -11,6 +11,7 @@ import { ValueWithDisplayValue } from '../../types'
 
 export interface ScalingSummaryViewEntryBase {
   name: string
+  shortName: string | undefined
   slug: string
   category: ProjectCategory
   warning?: string

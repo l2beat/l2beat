@@ -6,6 +6,7 @@ import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 export interface ProjectCellProps {
   project: {
     name: string
+    shortName?: string
     slug: string
     isVerified?: boolean
     isUpcoming?: boolean
@@ -20,7 +21,7 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
   return (
     <div className="pl-3">
       <span className="text-base font-bold group-hover:underline md:text-lg">
-        {project.name}
+        {project.shortName ?? project.name}
       </span>
       {project.isVerified === false && (
         <span className="pl-1.5">

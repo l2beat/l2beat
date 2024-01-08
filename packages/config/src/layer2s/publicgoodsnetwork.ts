@@ -43,6 +43,7 @@ export const publicgoodsnetwork: Layer2 = {
   id: ProjectId('publicgoodsnetwork'),
   display: {
     name: 'Public Goods Network',
+    shortName: 'PGN',
     slug: 'publicgoodsnetwork',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',

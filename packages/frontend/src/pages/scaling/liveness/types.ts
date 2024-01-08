@@ -16,6 +16,7 @@ export interface LivenessPagesData {
 
 export interface ScalingLivenessViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
   category: ProjectCategory
   dataAvailabilityMode: ProjectDataAvailabilityMode

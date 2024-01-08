@@ -6,6 +6,7 @@ import { ValueWithDisplayValue } from '../../types'
 
 export interface ScalingTvlViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
   riskValues: RiskValues
   category: ProjectCategory
