@@ -153,7 +153,7 @@ export function getLocalConfig(env: Env): Config {
         ),
         blockNumberProviderConfig: {
           type: 'RoutescanLike',
-          routescanApiUrl: 'https://manta-pacific.calderaexplorer.xyz/api',
+          routescanApiUrl: 'https://pacific-explorer.manta.network/api',
         },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
