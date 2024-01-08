@@ -11,6 +11,7 @@ import { RiskCell } from '../../../../components/table/RiskCell'
 export interface ProjectHeaderProps {
   title: string
   titleClassName?: string
+  description: string | undefined
   icon?: string
   tvl?: string
   tvlWeeklyChange?: string
@@ -57,6 +58,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     <DetailsHeader
       type="bridge"
       title={props.title}
+      description={props.description}
       icon={props.icon}
       links={props.links}
       stats={{ summary: stats }}

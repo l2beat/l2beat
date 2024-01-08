@@ -20,6 +20,7 @@ import { RiskValues } from '../../../../utils/risks/types'
 export interface ProjectHeaderProps {
   title: string
   titleClassName?: string
+  description: string
   icon?: string
   tvlStats: TvlStats
   tpsDaily?: string
@@ -106,6 +107,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     <DetailsHeader
       type="layer2"
       title={props.title}
+      description={props.description}
       icon={props.icon}
       stats={{ summary, l2Tvl: props.tvlStats }}
       risks={props.risks}

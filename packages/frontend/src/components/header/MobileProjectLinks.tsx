@@ -1,7 +1,6 @@
 import { default as classNames } from 'classnames'
 import React from 'react'
 
-import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ChevronDownIcon, ProjectLink } from '../icons'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 
@@ -12,7 +11,6 @@ interface MobileProjectLinksProps {
 export function MobileProjectLinks(props: MobileProjectLinksProps) {
   return (
     <div className="Dropdown">
-      <HorizontalSeparator className="-mx-4 w-[calc(100%+2rem)]" />
       <label className="flex items-center justify-between py-4">
         <input
           type="checkbox"
