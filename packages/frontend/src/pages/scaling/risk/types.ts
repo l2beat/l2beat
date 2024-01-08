@@ -1,4 +1,9 @@
-import { Layer2, ProjectRiskViewEntry, StageConfig } from '@l2beat/config'
+import {
+  Layer2Provider,
+  ProjectCategory,
+  ProjectRiskViewEntry,
+  StageConfig,
+} from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 export interface ScalingRiskPagesData {
@@ -10,8 +15,8 @@ export interface ScalingRiskViewEntry {
   name: string
   shortName: string | undefined
   slug: string
-  category: Layer2['display']['category']
-  provider?: Layer2['display']['provider']
+  category: ProjectCategory
+  provider?: Layer2Provider
   warning?: string
   isArchived?: boolean
   isVerified?: boolean

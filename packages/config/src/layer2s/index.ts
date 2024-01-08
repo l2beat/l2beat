@@ -35,7 +35,6 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
-import { deri, xai } from './layer3s'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
@@ -61,6 +60,8 @@ import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { reddioex } from './reddioex'
+import { reddiozkvm } from './reddiozkvm'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
@@ -103,7 +104,6 @@ export const layer2s: Layer2[] = [
   degate,
   degate2,
   degate3,
-  deri,
   dydx,
   eclipse,
   frame,
@@ -144,6 +144,8 @@ export const layer2s: Layer2[] = [
   polygonzkevm,
   polygonpos2,
   publicgoodsnetwork,
+  reddioex,
+  reddiozkvm,
   rhinofi,
   scroll,
   sorare,
@@ -152,7 +154,6 @@ export const layer2s: Layer2[] = [
   stealthchain,
   taiko,
   x1,
-  xai,
   xchain,
   zkfair,
   zkspace,

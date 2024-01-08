@@ -1,4 +1,4 @@
-import cx from 'classnames'
+import classNames from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
@@ -6,7 +6,11 @@ import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
 import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
-import { ScalingSummaryViewEntry } from '../../../pages/scaling/summary/types'
+import {
+  ScalingL2SummaryViewEntry,
+  ScalingL3SummaryViewEntry,
+  ScalingSummaryViewEntry,
+} from '../../../pages/scaling/summary/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
@@ -14,45 +18,24 @@ import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { ComingSoonCell } from '../ComingSoonCell'
-import { EthereumCell } from '../EthereumCell'
-import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
-import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
 import { TypeCell } from '../TypeCell'
 import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
+import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
 export function getActiveScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
+    ...getProjectWithIndexColumns(),
     {
       name: 'Risks',
       tooltip: 'Risks associated with this project.',
       idHref: 'risk-analysis',
       minimalWidth: true,
-      alignCenter: true,
+      align: 'center',
       getValue: (project) => (
         <RosetteCell
           riskValues={project.riskValues}
@@ -77,9 +60,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       name: 'Stage',
       idHref: 'stage' as const,
       tooltip: 'Rollup stage based on its features and maturity.',
-      getValue: (project: ScalingSummaryViewEntry) => (
-        <StageCell stageConfig={project.stage} />
-      ),
+      getValue: (project) => <StageCell stageConfig={project.stage} />,
       sorting: {
         getOrderValue: (project) => {
           const stage = project.stage.stage
@@ -114,7 +95,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       name: 'Total',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-      alignRight: true,
+      align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
@@ -136,7 +117,7 @@ export function getActiveScalingSummaryColumnsConfig() {
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
-      alignRight: true,
+      align: 'right',
       minimalWidth: true,
       headClassName: '!pr-4',
       getValue: (project) =>
@@ -158,27 +139,7 @@ export function getActiveScalingSummaryColumnsConfig() {
 
 export function getUpcomingScalingSummaryColumnsConfig() {
   const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-        defaultState: 'asc',
-      },
-    },
+    ...getProjectWithIndexColumns(),
     {
       name: 'Type',
       tooltip:
@@ -203,32 +164,13 @@ export function getUpcomingScalingSummaryColumnsConfig() {
 }
 
 export function getArchivedScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
+    ...getProjectWithIndexColumns(),
     {
       name: 'Risks',
       tooltip: 'Risks associated with this project.',
       minimalWidth: true,
-      alignCenter: true,
+      align: 'center',
       getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
     },
     {
@@ -253,7 +195,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
       name: 'Total',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-      alignRight: true,
+      align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
@@ -285,28 +227,8 @@ export function getArchivedScalingSummaryColumnsConfig() {
 }
 
 export function getLayer3sScalingSummaryColumnsConfig() {
-  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-        defaultState: 'asc',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+  const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = [
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       name: 'Type',
       tooltip:
@@ -341,33 +263,14 @@ export function getLayer3sScalingSummaryColumnsConfig() {
 
 export function getScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+    ...getProjectWithIndexColumns(),
     {
       type: 'group',
       columns: [
         {
           name: 'Total',
           tooltip: 'Total = Canonical + External + Native',
-          alignCenter: true,
+          align: 'center',
           noPaddingRight: true,
           getValue: (project) => (
             <ValueWithPercentageCell
@@ -389,7 +292,7 @@ export function getScalingTvlColumnsConfig() {
       icon: <CanonicalIcon />,
       tooltip:
         'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
-      alignCenter: true,
+      align: 'center',
       noPaddingRight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
@@ -409,7 +312,7 @@ export function getScalingTvlColumnsConfig() {
       icon: <ExternalIcon />,
       tooltip:
         'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
-      alignCenter: true,
+      align: 'center',
       noPaddingRight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
@@ -429,7 +332,7 @@ export function getScalingTvlColumnsConfig() {
       icon: <NativeIcon />,
       tooltip:
         'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
-      alignCenter: true,
+      align: 'center',
       noPaddingRight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
@@ -451,27 +354,7 @@ export function getScalingTvlColumnsConfig() {
 
 export function getScalingRiskColumnsConfig() {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-        defaultState: 'asc',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       name: 'State\nvalidation',
       tooltip: 'How is the validity of the system state checked?',
@@ -532,36 +415,11 @@ export function getScalingRiskColumnsConfig() {
 
 export function getScalingActivityColumnsConfig() {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      minimalWidth: true,
-      getValue: (project) =>
-        project.slug !== 'ethereum' ? (
-          <ProjectCell project={project} />
-        ) : (
-          <EthereumCell project={project} />
-        ),
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+    ...getProjectWithIndexColumns(),
     {
       name: 'Past day TPS',
       tooltip: 'Transactions per second averaged over the past day.',
-      alignRight: true,
+      align: 'right',
       getValue: (project) =>
         project.tpsDaily !== undefined ? (
           <NumberCell>{formatTps(project.tpsDaily)}</NumberCell>
@@ -578,7 +436,7 @@ export function getScalingActivityColumnsConfig() {
       name: '7d Change',
       tooltip:
         'Observed change in average daily transactions per second as compared to a week ago.',
-      alignRight: true,
+      align: 'right',
       getValue: (project) => (
         <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
       ),
@@ -591,13 +449,13 @@ export function getScalingActivityColumnsConfig() {
       name: 'Max daily TPS',
       tooltip:
         'Highest observed transactions per second averaged over a single day.',
-      alignRight: true,
+      align: 'right',
       getValue: (project) =>
         project.maxTps !== undefined && (
           <span className="flex items-baseline justify-end gap-1.5">
             <NumberCell>{formatTps(project.maxTps)}</NumberCell>
             <span
-              className={cx(
+              className={classNames(
                 'text-gray-700 dark:text-gray-300',
                 'block min-w-[115px] text-left',
               )}
@@ -614,7 +472,7 @@ export function getScalingActivityColumnsConfig() {
     {
       name: '30D Count',
       tooltip: 'Total number of transactions over the past month.',
-      alignRight: true,
+      align: 'right',
       getValue: (project) =>
         project.transactionsMonthlyCount ? (
           <NumberCell>
@@ -637,28 +495,7 @@ export function getScalingActivityColumnsConfig() {
 
 export function getScalingLivenessColumnsConfig() {
   const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-      sorting: {
-        getOrderValue: (_, index) => index,
-        rule: 'numeric',
-        defaultState: 'asc',
-      },
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      minimalWidth: true,
-      getValue: (project) => <ProjectCell project={project} />,
-      sorting: {
-        getOrderValue: (project) => project.name,
-        rule: 'alphabetical',
-      },
-    },
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       type: 'group',
       title: (
@@ -756,7 +593,7 @@ export function getScalingLivenessColumnsConfig() {
       name: '30-day\nanomalies',
       tooltip:
         'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
-      alignCenter: true,
+      align: 'center',
       getValue: (project) => (
         <AnomalyIndicator
           anomalyEntries={project.anomalyEntries}
