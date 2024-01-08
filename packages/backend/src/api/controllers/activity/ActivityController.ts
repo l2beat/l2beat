@@ -11,6 +11,7 @@ import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { Clock } from '../../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { alignActivityData } from './alignActivityData'
+import { filterOutDelayedProjects } from './filterOutDelayedProjects'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
@@ -44,8 +45,9 @@ export class ActivityController {
     }
     assert(ethereumCounts, 'Ethereum missing in daily transaction count')
 
+    const notDelayedProjects = filterOutDelayedProjects(layer2sCounts)
     const combinedChartPoints = alignActivityData(
-      toCombinedActivity(layer2sCounts),
+      toCombinedActivity(notDelayedProjects),
       ethereumCounts,
     )
 

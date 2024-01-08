@@ -12,7 +12,9 @@ const ACTIVITY_ACCEPTABLE_DELAY = UnixTime.DAY * 2 + 2 * UnixTime.HOUR
 export function filterOutDelayedProjects(
   projectsMap: DailyTransactionCountProjectsMap,
 ): DailyTransactionCountProjectsMap {
-  const delayedProjectsMap: DailyTransactionCountProjectsMap = projectsMap
+  const delayedProjectsMap: DailyTransactionCountProjectsMap = new Map(
+    projectsMap,
+  )
   delayedProjectsMap.forEach((data, projectId) => {
     // if project is delayed src/api/controllers/activity/postprocessCounts.ts adds records with activity 0 after last records, so we filter them out
     const recordsWithActivity = data.filter((record) => record.count > 0)
