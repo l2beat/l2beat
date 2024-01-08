@@ -32,7 +32,9 @@ export const beamerbridgev2: Bridge = {
       ],
     },
     description:
-      'Beamer Bridge is an optimistic rollup-to-rollup bridge that enables direct ERC-20 asset transfers between any two EVM compatible rollups, without transitioning to L1. It uses actors called Agents to fulfill user transfer requests on the destination chain. Users lock their assets on the source chain, and Agents provide the assets on the destination chain. Agents later receive the locked capital on the source chain by proving that they actually provided the assets on the destination chain. There is no liquidity pool, every agent participates in the cross-chain transfer by providing their own capital. Claims can ultimately be challenged on L1 using the rollups canonical bridges.',
+      'Beamer Bridge is an optimistic rollup-to-rollup bridge that enables direct ERC-20 asset transfers between any two EVM compatible rollups, without transitioning to L1.',
+    detailedDescription:
+      'It uses actors called Agents to fulfill user transfer requests on the destination chain. Users lock their assets on the source chain, and Agents provide the assets on the destination chain. Agents later receive the locked capital on the source chain by proving that they actually provided the assets on the destination chain. There is no liquidity pool, every agent participates in the cross-chain transfer by providing their own capital. Claims can ultimately be challenged on L1 using the rollups canonical bridges.',
   },
   config: {
     escrows: [

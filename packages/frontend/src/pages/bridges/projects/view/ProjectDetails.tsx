@@ -3,7 +3,7 @@ import React from 'react'
 
 import { ChartSection } from '../../../../components/project/ChartSection'
 import { ContractsSection } from '../../../../components/project/ContractsSection'
-import { DescriptionSection } from '../../../../components/project/DescriptionSection'
+import { DetailedDescriptionSection } from '../../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSection } from '../../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../../components/project/PermissionsSection'
@@ -28,8 +28,10 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <ChartSection key={item.props.id} {...item.props} />
           case 'MilestonesSection':
             return <MilestonesSection key={item.props.id} {...item.props} />
-          case 'DescriptionSection':
-            return <DescriptionSection key={item.props.id} {...item.props} />
+          case 'DetailedDescriptionSection':
+            return (
+              <DetailedDescriptionSection key={item.props.id} {...item.props} />
+            )
           case 'RiskSection':
             return <RiskSection key={item.props.id} {...item.props} />
           case 'TechnologyIncompleteNote':

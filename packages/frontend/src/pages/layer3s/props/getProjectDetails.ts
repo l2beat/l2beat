@@ -1,16 +1,12 @@
 import { Layer3 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { DescriptionSectionProps } from '../../../components/project/DescriptionSection'
+import { DetailedDescriptionSectionProps } from '../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSectionProps } from '../../../components/project/MilestonesSection'
-import { getDescriptionSection } from './getDescriptionSection'
+import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 
-export function getProjectDetails(
-  project: Layer3,
-  verificationStatus: VerificationStatus,
-) {
+export function getProjectDetails(project: Layer3) {
   const isUpcoming = project.isUpcoming
   const items: ScalingDetailsItem[] = []
 
@@ -25,10 +21,12 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'DescriptionSection',
-    props: getDescriptionSection(project, verificationStatus),
-  })
+  if (project.display.detailedDescription) {
+    items.push({
+      type: 'DetailedDescriptionSection',
+      props: getDetailedDescriptionSection(project),
+    })
+  }
 
   if (!isUpcoming) {
     if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
@@ -64,8 +62,8 @@ export type ScalingDetailsSection =
 type NonSectionElement = UpcomingDisclaimer
 
 interface DescriptionSection {
-  type: 'DescriptionSection'
-  props: DescriptionSectionProps
+  type: 'DetailedDescriptionSection'
+  props: DetailedDescriptionSectionProps
 }
 
 interface MilestonesSection {

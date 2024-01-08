@@ -3,10 +3,10 @@ import React from 'react'
 
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 
 export interface StateDerivationSectionProps extends Layer2StateDerivation {
-  id: SectionId
+  id: ProjectSectionId
   title: string
 }
 

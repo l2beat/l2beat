@@ -10,6 +10,7 @@ export const wormholeV1: Bridge = {
   display: {
     name: 'Wormhole V1',
     slug: 'wormholev1',
+    description: '',
     links: {
       websites: ['https://wormhole.com/'],
     },

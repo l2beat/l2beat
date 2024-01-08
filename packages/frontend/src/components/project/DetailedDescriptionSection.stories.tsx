@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { DescriptionSection as DescriptionSectionComponent } from './DescriptionSection'
+import { DetailedDescriptionSection as DescriptionSectionComponent } from './DetailedDescriptionSection'
 
 const meta: Meta<typeof DescriptionSectionComponent> = {
   component: DescriptionSectionComponent,

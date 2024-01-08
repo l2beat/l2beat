@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { DescriptionSection } from '../../../components/project/DescriptionSection'
+import { DetailedDescriptionSection } from '../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
@@ -26,7 +26,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
               <KnowledgeNuggetsSection key={item.props.id} {...item.props} />
             )
           case 'DescriptionSection':
-            return <DescriptionSection key={item.props.id} {...item.props} />
+            return (
+              <DetailedDescriptionSection key={item.props.id} {...item.props} />
+            )
           case 'UpcomingDisclaimer':
             return (
               <UpcomingDisclaimer

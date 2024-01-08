@@ -29,9 +29,9 @@ export const pNetwork: Bridge = {
       ],
     },
     description:
-      'pNetwork aims to be a decentralized system facilitating cross-chain movement of assets.\
-      It is built as a simple Token Bridge that uses a single EOA address to move assets across. For a typical token transfer,\
-      "pToken" is minted on the destination chain.',
+      'pNetwork aims to be a decentralized system facilitating cross-chain movement of assets.',
+    detailedDescription:
+      'It is built as a simple Token Bridge that uses a single EOA address to move assets across. For a typical token transfer, "pToken" is minted on the destination chain.',
   },
   config: {
     associatedTokens: ['PNT'],

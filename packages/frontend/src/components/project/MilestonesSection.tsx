@@ -6,11 +6,11 @@ import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 
 export interface MilestonesSectionProps {
   title: string
-  id: SectionId
+  id: ProjectSectionId
   milestones: Milestone[]
 }
 

@@ -8,7 +8,7 @@ import isEmpty from 'lodash/isEmpty'
 import { ChartProps } from '../../../../components'
 import { ChartSectionProps } from '../../../../components/project/ChartSection'
 import { ContractsSectionProps } from '../../../../components/project/ContractsSection'
-import { DescriptionSectionProps } from '../../../../components/project/DescriptionSection'
+import { DetailedDescriptionSectionProps } from '../../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsProps } from '../../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSectionProps } from '../../../../components/project/MilestonesSection'
 import { PermissionsSectionProps } from '../../../../components/project/PermissionsSection'
@@ -17,7 +17,7 @@ import { TechnologyIncompleteProps } from '../../../../components/project/Techno
 import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
-import { getDescriptionSection } from './getDescriptionSection'
+import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -51,10 +51,12 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'DescriptionSection',
-    props: getDescriptionSection(bridge, verificationStatus),
-  })
+  if (bridge.display.detailedDescription) {
+    items.push({
+      type: 'DetailedDescriptionSection',
+      props: getDetailedDescriptionSection(bridge),
+    })
+  }
 
   const riskSection = getRiskSection(bridge, verificationStatus)
   if (riskSection.riskGroups.length > 0) {
@@ -128,7 +130,7 @@ export type BridgeDetailsItem = { excludeFromNavigation?: boolean } & (
 
 export type BridgeDetailsSection =
   | ChartSection
-  | DescriptionSection
+  | DetailedDescriptionSection
   | MilestonesSection
   | KnowledgeNuggetsSection
   | RiskSection
@@ -142,9 +144,9 @@ interface ChartSection {
   type: 'ChartSection'
   props: ChartSectionProps
 }
-interface DescriptionSection {
-  type: 'DescriptionSection'
-  props: DescriptionSectionProps
+interface DetailedDescriptionSection {
+  type: 'DetailedDescriptionSection'
+  props: DetailedDescriptionSectionProps
 }
 
 interface MilestonesSection {

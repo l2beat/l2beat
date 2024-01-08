@@ -1,6 +1,6 @@
-export type SectionId =
+export type ProjectSectionId =
   | 'chart'
-  | 'description'
+  | 'detailed-description'
   | 'milestones'
   | 'knowledge-nuggets'
   | 'risk-analysis'

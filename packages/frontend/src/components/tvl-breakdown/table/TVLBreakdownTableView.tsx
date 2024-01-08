@@ -3,7 +3,7 @@ import cx from 'classnames'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../../icons'
-import { SectionId } from '../../project/sectionId'
+import { ProjectSectionId } from '../../project/sectionId'
 
 interface Props<
   T extends {
@@ -24,7 +24,7 @@ export interface ColumnConfig<T> {
   align?: 'center' | 'right'
   headClassName?: string
   noPaddingRight?: true
-  idHref?: SectionId
+  idHref?: ProjectSectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
   highlight?: boolean

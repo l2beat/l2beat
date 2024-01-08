@@ -2,11 +2,11 @@ import React from 'react'
 
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 
 export interface StateValidationSectionProps {
   stateValidation: string
-  id: SectionId
+  id: ProjectSectionId
   title: string
 }
 

@@ -38,5 +38,8 @@ export function getRiskSection(
     id: 'risk-analysis',
     title: 'Risk summary',
     riskGroups: groupRisks(risks),
+    warning: project.display.warning,
+    isVerified: verificationStatus.projects[project.id.toString()],
+    redWarning: undefined,
   }
 }

@@ -23,10 +23,11 @@ export const honeypot: Layer2 = {
     shortName: 'Honeypot',
     slug: 'cartesi-honeypot',
     description:
-      'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups.\
-       Bug hunters are incentivized to hack the application to obtain the funds locked in the rollup contract.\
-       Honeypot holds real assets with a dual objective: setting a financial benchmark for secure asset management\
-       and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.',
+      'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups.',
+    detailedDescription:
+      'Bug hunters are incentivized to hack the application to obtain the funds locked in the rollup contract.\
+      Honeypot holds real assets with a dual objective: setting a financial benchmark for secure asset management\
+      and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.',
     purpose: 'Bug bounty',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

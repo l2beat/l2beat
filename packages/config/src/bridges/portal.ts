@@ -26,9 +26,9 @@ export const portal: Bridge = {
       ],
     },
     description:
-      'Portal Token Bridge is built on top of Wormhole, which is a message passing protocol that leverages specialized network \
-      of nodes called Guardians to perform cross-chain communication. It is governed by the same set of Guardians that run the underlying Wormhole\
-      protocols.',
+      'Portal Token Bridge is built on top of Wormhole, which is a message passing protocol that performs cross-chain communication.',
+    detailedDescription:
+      'It leverages specialized network of nodes called Guardians to do this. It is governed by the same set of Guardians that run the underlying Wormhole protocols.',
     category: 'Token Bridge',
   },
   config: {

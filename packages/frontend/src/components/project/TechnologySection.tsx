@@ -4,12 +4,12 @@ import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface TechnologySectionProps {
-  id: SectionId
+  id: ProjectSectionId
   title: string
   items: TechnologyChoice[]
   isUnderReview?: boolean

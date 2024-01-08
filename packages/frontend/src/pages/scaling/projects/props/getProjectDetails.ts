@@ -8,7 +8,7 @@ import isEmpty from 'lodash/isEmpty'
 import { ChartProps } from '../../../../components'
 import { ChartSectionProps } from '../../../../components/project/ChartSection'
 import { ContractsSectionProps } from '../../../../components/project/ContractsSection'
-import { DescriptionSectionProps } from '../../../../components/project/DescriptionSection'
+import { DetailedDescriptionSectionProps } from '../../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsProps } from '../../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSectionProps } from '../../../../components/project/MilestonesSection'
 import { PermissionsSectionProps } from '../../../../components/project/PermissionsSection'
@@ -21,7 +21,7 @@ import { TechnologySectionProps } from '../../../../components/project/Technolog
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import { getRiskValues } from '../../../../utils/risks/values'
-import { getDescriptionSection } from './getDescriptionSection'
+import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -56,19 +56,24 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'DescriptionSection',
-    props: getDescriptionSection(project, verificationStatus),
-  })
+  if (project.display.detailedDescription) {
+    items.push({
+      type: 'DetailedDescriptionSection',
+      props: getDetailedDescriptionSection(project),
+    })
+  }
 
   if (!isUpcoming) {
     items.push({
       type: 'RiskAnalysisSection',
       props: {
-        riskValues: getRiskValues(project.riskView),
-        isUnderReview: project.isUnderReview,
         id: 'risk-analysis',
         title: 'Risk analysis',
+        riskValues: getRiskValues(project.riskView),
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        isVerified: verificationStatus.projects[project.id.toString()],
+        isUnderReview: project.isUnderReview,
       },
     })
 
@@ -208,8 +213,8 @@ interface ChartSection {
   props: ChartSectionProps
 }
 interface DescriptionSection {
-  type: 'DescriptionSection'
-  props: DescriptionSectionProps
+  type: 'DetailedDescriptionSection'
+  props: DetailedDescriptionSectionProps
 }
 
 interface MilestonesSection {

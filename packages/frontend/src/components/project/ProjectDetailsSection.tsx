@@ -1,12 +1,12 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 import { UnderReviewCallout } from './UnderReviewCallout'
 
 interface Props {
   title: string
-  id: SectionId
+  id: ProjectSectionId
   className?: string
   children: ReactNode
   isUnderReview?: boolean
