@@ -20,7 +20,6 @@ export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
   showTvlBreakdown?: boolean
-  type: 'layer2' | 'layer3'
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
@@ -77,9 +76,7 @@ export function TvlSummary(props: TvlSummaryProps) {
       <div
         className={classNames(
           'flex w-full flex-wrap items-baseline justify-between',
-          props.type === 'layer2'
-            ? 'md:gap-2'
-            : 'md:flex-col md:justify-start md:gap-4',
+          'md:gap-2',
         )}
       >
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">

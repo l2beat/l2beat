@@ -25,7 +25,12 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
-      projectHeader: getProjectHeader(project),
+      projectHeader: getProjectHeader(
+        project,
+        config,
+        tvlApiResponse,
+        activityApiResponse,
+      ),
       projectDetails: getProjectDetails(
         project,
         verificationStatus,

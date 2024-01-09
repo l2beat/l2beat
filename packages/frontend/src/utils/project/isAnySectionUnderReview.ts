@@ -11,17 +11,14 @@ import {
 export function isAnySectionUnderReview(
   project: Layer2 | Bridge | Layer3,
 ): boolean {
-  if (project.type === 'layer3') {
-    return !!project.isUnderReview
-  } else
-    return (
-      project.isUnderReview ??
-      project.technology.isUnderReview ??
-      project.contracts?.isUnderReview ??
-      ((isAnyRiskUnderReview(project.riskView) ?? false) ||
-        (project.type === 'layer2' && project.stage.stage === 'UnderReview') ||
-        project.permissions === 'UnderReview')
-    )
+  return (
+    project.isUnderReview ??
+    project.technology.isUnderReview ??
+    project.contracts?.isUnderReview ??
+    isAnyRiskUnderReview(project.riskView) ??
+    ((project.type === 'layer2' && project.stage.stage === 'UnderReview') ||
+      project.permissions === 'UnderReview')
+  )
 }
 
 export function isAnyRiskUnderReview(

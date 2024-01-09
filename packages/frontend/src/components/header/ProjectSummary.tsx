@@ -22,9 +22,9 @@ export function ProjectSummary(props: Props) {
   let cols
   switch (props.type) {
     case 'layer2':
+    case 'layer3':
       cols = 3
       break
-    case 'layer3':
     case 'bridge':
       cols = 4
       break
