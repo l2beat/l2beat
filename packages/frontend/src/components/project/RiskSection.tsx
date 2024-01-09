@@ -4,8 +4,8 @@ import React from 'react'
 import { ShieldIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { WarningBar } from './WarningBar'
 import { ProjectSectionId } from './sectionId'
+import { WarningBar } from './WarningBar'
 
 export interface RiskSectionProps {
   title: string

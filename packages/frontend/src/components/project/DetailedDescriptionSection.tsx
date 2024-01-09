@@ -1,12 +1,9 @@
 import React from 'react'
 
-import { ShieldIcon } from '../icons'
-import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ProjectSectionId } from './sectionId'
-import { WarningBar } from './WarningBar'
 
 export interface DetailedDescriptionSectionProps {
   id: ProjectSectionId

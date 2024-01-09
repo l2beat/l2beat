@@ -25,7 +25,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <KnowledgeNuggetsSection key={item.props.id} {...item.props} />
             )
-          case 'DescriptionSection':
+          case 'DetailedDescriptionSection':
             return (
               <DetailedDescriptionSection key={item.props.id} {...item.props} />
             )
