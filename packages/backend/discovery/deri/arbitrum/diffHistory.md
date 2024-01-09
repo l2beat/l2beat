@@ -1,3 +1,45 @@
+# Diff at Mon, 08 Jan 2024 15:22:41 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@3ee3c075ee99707d8392a73b092ed24eeb24866f block: 159392469
+- current block number: 168378561
+
+## Description
+
+Executors and stake escrow contracts have been updated. At this point we're not displaying any info yet (ts is empty).
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
++        "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+      values.loserStakeEscrow:
+-        "0xE6Deca8779AAd0F8C96Dd843F77BF2a55ea2F402"
++        "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 159392469 (main branch discovery), not current.
+
+```diff
+    contract Inbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+      name:
+-        "Inbox"
++        "SequencerInbox"
+    }
+```
+
 # Diff at Tue, 12 Dec 2023 13:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
