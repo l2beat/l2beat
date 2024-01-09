@@ -6,11 +6,14 @@ import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNu
 import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
+import { WrongResearchCTA } from '../../../components/project/WrongInformationCTA'
 import { ScalingDetailsItem } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
-  isUpcoming?: boolean
   items: ScalingDetailsItem[]
+  issueLink: string
+  editLink: string
+  isUpcoming?: boolean
   incomplete?: TechnologyIncompleteProps
 }
 
@@ -40,6 +43,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             assertUnreachable(item)
         }
       })}
+      <WrongResearchCTA issueLink={props.issueLink} editLink={props.editLink} />
     </div>
   )
 }

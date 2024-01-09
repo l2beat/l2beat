@@ -20,6 +20,10 @@ import { TechnologyIncompleteProps } from '../../../../components/project/Techno
 import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import {
+  getProjectEditLink,
+  getProjectIssueLink,
+} from '../../../../utils/project/links'
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
@@ -185,7 +189,13 @@ export function getProjectDetails(
     })
   }
 
-  return { incomplete, isUpcoming, items }
+  return {
+    items,
+    editLink: getProjectEditLink(project),
+    issueLink: getProjectIssueLink(project),
+    incomplete,
+    isUpcoming,
+  }
 }
 
 export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (

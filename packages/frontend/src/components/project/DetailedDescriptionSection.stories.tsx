@@ -18,7 +18,5 @@ export const Description: Story = {
       'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain.',
     detailedDescription:
       'It aims to be fast, simple, and secure. With the Nov 2021 upgrade to "EVM equivalent" OVM 2.0 old fraud proof system has been disabled while the new fraud-proof system is being built (https://github.com/geohot/cannon).',
-    issueLink: '#',
-    editLink: '#',
   },
 }

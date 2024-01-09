@@ -13,10 +13,13 @@ import {
   TechnologyIncompleteProps,
 } from '../../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../../components/project/TechnologySection'
+import { WrongResearchCTA } from '../../../../components/project/WrongInformationCTA'
 import { BridgeDetailsItem } from '../props/getProjectDetails'
 export interface ProjectDetailsProps {
-  incomplete?: TechnologyIncompleteProps
   items: BridgeDetailsItem[]
+  issueLink: string
+  editLink: string
+  incomplete?: TechnologyIncompleteProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -55,6 +58,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             assertUnreachable(item)
         }
       })}
+      <WrongResearchCTA issueLink={props.issueLink} editLink={props.editLink} />
     </div>
   )
 }

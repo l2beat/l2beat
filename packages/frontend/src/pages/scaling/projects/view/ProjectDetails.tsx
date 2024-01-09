@@ -17,11 +17,14 @@ import {
 } from '../../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../../components/project/UpcomingDisclaimer'
+import { WrongResearchCTA } from '../../../../components/project/WrongInformationCTA'
 import { ScalingDetailsItem } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
-  isUpcoming?: boolean
   items: ScalingDetailsItem[]
+  issueLink: string
+  editLink: string
+  isUpcoming?: boolean
   incomplete?: TechnologyIncompleteProps
 }
 
@@ -78,6 +81,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             assertUnreachable(item)
         }
       })}
+      <WrongResearchCTA issueLink={props.issueLink} editLink={props.editLink} />
     </div>
   )
 }

@@ -4,6 +4,10 @@ import isEmpty from 'lodash/isEmpty'
 import { DetailedDescriptionSectionProps } from '../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSectionProps } from '../../../components/project/MilestonesSection'
+import {
+  getProjectEditLink,
+  getProjectIssueLink,
+} from '../../../utils/project/links'
 import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 
 export function getProjectDetails(project: Layer3) {
@@ -46,7 +50,12 @@ export function getProjectDetails(project: Layer3) {
     })
   }
 
-  return { isUpcoming, items }
+  return {
+    items,
+    editLink: getProjectEditLink(project),
+    issueLink: getProjectIssueLink(project),
+    isUpcoming,
+  }
 }
 
 export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (

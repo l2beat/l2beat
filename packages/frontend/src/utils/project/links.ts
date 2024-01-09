@@ -1,6 +1,14 @@
-import { Bridge, Layer2 } from '@l2beat/config'
+import { Bridge, Layer2, Layer3 } from '@l2beat/config'
 
-export function getTwitterLink(project: Layer2 | Bridge) {
+export function getProjectEditLink(project: Bridge | Layer2 | Layer3) {
+  return `https://github.com/l2beat/l2beat/edit/master/packages/config/src/bridges/${project.display.slug}.ts`
+}
+
+export function getProjectIssueLink(project: Bridge | Layer2 | Layer3) {
+  return `https://github.com/l2beat/l2beat/issues/new?title=${project.display.name}&labels=website`
+}
+
+export function getTwitterLink(project: Layer2 | Layer3 | Bridge) {
   const twitterSocialMedia = project.display.links.socialMedia?.find((x) =>
     x.includes('twitter'),
   )

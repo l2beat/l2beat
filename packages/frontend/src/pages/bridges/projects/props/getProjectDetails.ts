@@ -17,6 +17,10 @@ import { TechnologyIncompleteProps } from '../../../../components/project/Techno
 import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import {
+  getProjectEditLink,
+  getProjectIssueLink,
+} from '../../../../utils/project/links'
 import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
@@ -118,8 +122,10 @@ export function getProjectDetails(
   }
 
   return {
-    incomplete,
     items,
+    editLink: getProjectEditLink(bridge),
+    issueLink: getProjectIssueLink(bridge),
+    incomplete,
   }
 }
 
