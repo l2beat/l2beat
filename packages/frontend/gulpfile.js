@@ -111,7 +111,7 @@ function serve() {
 const build = gulp.series(
   clean,
   gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
-  generateMetaImages,
+  ...(process.env.GENERATE_METAIMAGES ? [generateMetaImages] : []),
 )
 
 const watch = gulp.series(
