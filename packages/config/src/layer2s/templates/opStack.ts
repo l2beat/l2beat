@@ -40,7 +40,7 @@ export interface OpStackConfig {
   inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
-  tokenList: Token[]
+  tokenList?: Token[]
   l2OutputOracle: ContractParameters
   portal: ContractParameters
   stateDerivation?: Layer2StateDerivation
