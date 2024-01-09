@@ -51,7 +51,7 @@ export function DetailsHeader(props: HeaderProps) {
     <>
       <header className="md:pt-15 flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
         <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
-          <div className="mb-4 flex flex-col gap-2 px-4 md:mb-0 md:px-0">
+          <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
             <h1
               className={cx(
                 'relative mb-0 flex items-center justify-start gap-3',
