@@ -36,7 +36,7 @@ export interface OpStackConfig {
     upgradeDelay: string | undefined
   }
   l1StandardBridgeEscrow: EthereumAddress
-  apiUrl: string
+  apiUrl?: string
   inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
@@ -83,13 +83,16 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ...templateVars.upgradeability,
         }),
       ],
-      transactionApi: {
-        type: 'rpc',
-        startBlock: 1,
-        url: templateVars.apiUrl,
-        callsPerMinute: 1500,
-        assessCount: subtractOne,
-      },
+      transactionApi:
+        templateVars.apiUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              url: templateVars.apiUrl,
+              callsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined,
       liveness: {
         proofSubmissions: [],
         batchSubmissions: [

@@ -3,7 +3,6 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { formatSeconds } from '../utils/formatSeconds'
-import { NUGGETS } from './common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { DERIVATION } from './common/stateDerivations'
 import { opStack } from './templates/opStack'
@@ -80,23 +79,7 @@ export const zora: Layer2 = opStack({
       description: 'Zora Network is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [
-    {
-      title: 'How Optimism compresses data',
-      url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Bedrock Explainer',
-      url: 'https://community.optimism.io/docs/developers/bedrock/explainer/',
-      thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_04,
-    },
-    {
-      title: 'Modular Rollup Theory',
-      url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
-    },
-  ],
+  knowledgeNuggets: [],
   roleOverrides: {
     batcherHash: 'Sequencer',
     PROPOSER: 'Proposer',
@@ -117,6 +100,11 @@ export const zora: Layer2 = opStack({
     discovery.getContractDetails('L1ERC721Bridge', {
       description:
         'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+      ...upgradeability,
+    }),
+    discovery.getContractDetails('L1StandardBridge', {
+      description:
+        'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
       ...upgradeability,
     }),
   ],
