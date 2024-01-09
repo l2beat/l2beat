@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "bsc",
-  "blockNumber": 34520576,
+  "blockNumber": 35098616,
   "configHash": "0xfce57aa70f43b610fcaf7b859f64fdda64d9daa11ae70f69363294b19cf7d713",
   "version": 3,
   "contracts": [
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1665890525,
       "values": {
         "getProofType": 2,
         "getUtilsVersion": 1,
@@ -26,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528757,
       "values": {
         "feeEnabled": false,
         "nativeBP": 0,
@@ -41,6 +43,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647317014,
       "values": {
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
@@ -51,6 +54,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1647316942,
       "values": {
         "BLOCK_VERSION": 65535,
         "chainId": 2,
@@ -78,6 +82,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528745,
       "values": {
         "getProofType": 1,
         "getUtilsVersion": 4,
@@ -94,6 +99,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661528751,
       "values": {
         "chainAddressSizeMap": {
           "101": 20,
@@ -376,9 +382,9 @@
             "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
           },
           "102": {
-            "inboundProofLib": 2,
+            "inboundProofLib": 1,
             "inboundBlockConfirm": 20,
-            "outboundProofType": 2,
+            "outboundProofType": 1,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
@@ -408,9 +414,9 @@
             "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
           },
           "110": {
-            "inboundProofLib": 2,
+            "inboundProofLib": 1,
             "inboundBlockConfirm": 20,
-            "outboundProofType": 2,
+            "outboundProofType": 1,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
@@ -1077,7 +1083,8 @@
         "implementation": "0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583",
         "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
       },
-      "implementations": ["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"]
+      "implementations": ["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"],
+      "sinceTimestamp": 1661535965
     },
     {
       "name": "",
@@ -1085,7 +1092,8 @@
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1687808648
     },
     {
       "name": "NonceContract",
@@ -1093,6 +1101,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661280106,
       "values": {
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
@@ -1106,7 +1115,8 @@
         "implementation": "0xc9A227D0319f42e8C5997BD639a5286642474849",
         "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
       },
-      "implementations": ["0xc9A227D0319f42e8C5997BD639a5286642474849"]
+      "implementations": ["0xc9A227D0319f42e8C5997BD639a5286642474849"],
+      "sinceTimestamp": 1669425920
     },
     {
       "name": "",
@@ -1117,7 +1127,8 @@
         "implementation": "0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6",
         "admin": "0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C"
       },
-      "implementations": ["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"]
+      "implementations": ["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"],
+      "sinceTimestamp": 1687808660
     },
     {
       "name": "LayerZero Multisig",
@@ -1128,6 +1139,7 @@
         "modules": []
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1648073735,
       "values": {
         "domainSeparator": "0x177169efa9840f133f0472583ab7f069e6a611246ecf24092e54d542d6e0f47f",
         "getChainId": 56,
@@ -1140,7 +1152,7 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
-        "nonce": 55,
+        "nonce": 56,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1151,6 +1163,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1661448871,
       "values": {
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       }
@@ -1164,7 +1177,8 @@
         "implementation": "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0",
         "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
       },
-      "implementations": ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"]
+      "implementations": ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"],
+      "sinceTimestamp": 1661531611
     },
     {
       "name": "VerifierNetwork",
@@ -1172,6 +1186,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1694218835,
       "values": {
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1193,14 +1208,16 @@
         "implementation": "0x8363302080e711E0CAb978C081b9e69308d49808",
         "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
       },
-      "implementations": ["0x8363302080e711E0CAb978C081b9e69308d49808"]
+      "implementations": ["0x8363302080e711E0CAb978C081b9e69308d49808"],
+      "sinceTimestamp": 1669420588
     },
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1694218841
     }
   ],
   "eoas": [

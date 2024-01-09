@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "arbitrum",
-  "blockNumber": 161918475,
+  "blockNumber": 168740974,
   "configHash": "0xe4b0b9152ae4b2186a523ada8e0eaa882f5b0d3d5617cff56ff8c8f59f350ce5",
   "version": 3,
   "contracts": [
@@ -371,9 +371,9 @@
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "102": {
-            "inboundProofLib": 2,
+            "inboundProofLib": 1,
             "inboundBlockConfirm": 20,
-            "outboundProofType": 2,
+            "outboundProofType": 1,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
@@ -403,9 +403,9 @@
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "110": {
-            "inboundProofLib": 2,
+            "inboundProofLib": 1,
             "inboundBlockConfirm": 20,
-            "outboundProofType": 2,
+            "outboundProofType": 1,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
@@ -1207,7 +1207,7 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
-        "nonce": 57,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"

@@ -1,7 +1,8 @@
-# Diff at Wed, 20 Dec 2023 13:22:41 GMT:
+# Diff at Tue, 09 Jan 2024 16:44:11 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@fea77c90d7ee6217f84ee87d58e123b42f0b5273
+- comparing to: master@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 2177243
+- current block number: 9014644
 
 ## Description
 
@@ -356,4 +357,82 @@ Unified configurations across L2s. Few new remote chains configurations added.
  .../base/{.code@2177243 => .code}/meta.txt         |   2 +-
  .../base/{.code@2177243 => .code}/proxy/meta.txt   |   2 +-
  95 files changed, 6800 insertions(+), 3 deletions(-)
+```
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 2177243 (main branch discovery), not current.
+
+```diff
+    contract UltraLightNodeV2 (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+      values.chainAddressSizeMap:
++        {"101":20,"102":20,"106":20,"109":20,"110":20,"111":20,"112":20,"151":20,"158":20,"167":20,"177":20,"181":20,"183":20,"184":20}
+      values.defaultAdapterParams:
++        {"101":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"102":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"106":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"109":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"110":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"111":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"112":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"151":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"158":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"167":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"177":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"181":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"183":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"},"184":{"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}}
+      values.defaultAppConfig:
++        {"101":{"inboundProofLib":2,"inboundBlockConfirm":15,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"102":{"inboundProofLib":2,"inboundBlockConfirm":20,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"106":{"inboundProofLib":2,"inboundBlockConfirm":12,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"109":{"inboundProofLib":2,"inboundBlockConfirm":512,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"110":{"inboundProofLib":2,"inboundBlockConfirm":20,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"111":{"inboundProofLib":2,"inboundBlockConfirm":20,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"112":{"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"151":{"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"158":{"inboundProofLib":2,"inboundBlockConfirm":20,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"167":{"inboundProofLib":2,"inboundBlockConfirm":10,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"177":{"inboundProofLib":2,"inboundBlockConfirm":2,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"181":{"inboundProofLib":2,"inboundBlockConfirm":2,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"183":{"inboundProofLib":2,"inboundBlockConfirm":10,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"},"184":{"inboundProofLib":2,"inboundBlockConfirm":10,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"}}
+      values.inboundProofLibrary:
++        {"101":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"102":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"106":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"109":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"110":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"111":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"112":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"151":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"158":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"167":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"177":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"181":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"183":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],"184":["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"]}
+      values.supportedOutboundProof:
++        {"101":2,"102":2,"106":2,"109":2,"110":2,"111":2,"112":2,"151":2,"158":2,"167":2,"177":2,"181":2,"183":2,"184":2}
+      values.ulnLookup:
++        {"101":"0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2","102":"0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2","106":"0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2","109":"0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2","110":"0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2","111":"0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2","112":"0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2","151":"0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251","158":"0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098","167":"0x000000000000000000000000e9ba4c1e76d874a43942718dafc96009ec9d9917","177":"0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251","181":"0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251","183":"0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251","184":"0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"}
+      sinceTimestamp:
++        1689301083
+    }
+```
+
+```diff
+    contract NonceContract (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+      sinceTimestamp:
++        1689301077
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x980205D352F198748B626f6f7C38A8a5663Ec981) {
+      sinceTimestamp:
++        1689301089
+    }
+```
+
+```diff
+    contract Endpoint (0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7) {
+      values.libraryLookup:
++        ["0x38dE71124f7a447a01D67945a51eDcE9FF491251"]
+      sinceTimestamp:
++        1689300955
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MPTValidator01 (0x2D61DCDD36F10b22176E0433B86F74567d529aAa) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FPValidator (0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xFe7C30860D01e28371D40434806F4A8fcDD3A098) {
+    }
 ```
