@@ -41,7 +41,7 @@ export async function updateProjectHash(
 
   database[getHashesDatabaseKey(projectName, chainId)] = shaSum
 
-  writeFileSync(databasePath, JSON.stringify(database, null, 2))
+  writeFileSync(databasePath, JSON.stringify(database, null, 2) + '\n')
 }
 
 export function getHashesDatabaseKey(
