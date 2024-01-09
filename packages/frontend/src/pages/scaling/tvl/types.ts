@@ -12,6 +12,7 @@ export interface ScalingTvlViewEntry {
   category: ProjectCategory
   provider?: Layer2Provider
   warning?: string
+  redWarning: string | undefined
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean
