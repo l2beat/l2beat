@@ -44,6 +44,11 @@ export const amarok: Bridge = {
       description:
         'The new, modular architecture for Connext Amarok has been announced.',
     },
+    {
+      name: 'Bacco Upgrade',
+      date: '2023-12-07T00:00:00Z',
+      link: 'https://medium.com/connext/introducing-the-bacco-network-upgrade-73ad19cee9ed',
+    },
   ],
   config: {
     escrows: [

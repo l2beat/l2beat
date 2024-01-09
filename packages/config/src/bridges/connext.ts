@@ -29,13 +29,6 @@ export const connext: Bridge = {
     description:
       'Connext Bridge is a cross-chain bridge that performs atomic swap between user and a liquidity provider (on separate chains) to perform asset swap. Liquidity Providers (Routers) bid for user requests in an off-chain auction.',
   },
-  milestones: [
-    {
-      name: 'Bacco Upgrade',
-      date: '2023-12-07T00:00:00Z',
-      link: 'https://medium.com/connext/introducing-the-bacco-network-upgrade-73ad19cee9ed',
-    },
-  ],
   config: {
     escrows: [
       {
