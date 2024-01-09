@@ -16,7 +16,8 @@ export function getBridgesSummaryView(
 ): BridgesSummaryViewProps {
   const { tvlApiResponse, verificationStatus } = pagesData
 
-  const ordered = orderByTvl(projects, tvlApiResponse)
+  const included = projects.filter((project) => !project.isUpcoming)
+  const ordered = orderByTvl(included, tvlApiResponse)
 
   const { tvl: bridgesTvl } = getTvlWithChange(tvlApiResponse.bridges)
   const { tvl: combinedTvl } = getTvlWithChange(tvlApiResponse.combined)
