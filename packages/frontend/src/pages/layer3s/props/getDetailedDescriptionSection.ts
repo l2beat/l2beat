@@ -1,5 +1,4 @@
 import { Layer3 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { DetailedDescriptionSectionProps } from '../../../components/project/DetailedDescriptionSection'
 import { getEditLink, getIssueLink } from './links'

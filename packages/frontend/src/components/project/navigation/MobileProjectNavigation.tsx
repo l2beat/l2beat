@@ -9,6 +9,8 @@ interface Props {
 }
 
 export function MobileProjectNavigation({ sections }: Props) {
+  if (sections.length === 0) return null
+
   return (
     <OverflowWrapper
       className="bg-white dark:bg-neutral-900"
