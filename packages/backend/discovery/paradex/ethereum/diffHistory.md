@@ -1,3 +1,31 @@
+# Diff at Tue, 09 Jan 2024 12:25:52 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@b7709dd0e3c6ef3f399763ef275fd65d4b6bd415 block: 18941335
+- current block number: 18969390
+
+## Description
+
+The program hash is updated (with tx 0x4dc1b43e0b932f665a95af3d2cb61f280a1b7a63f7464b3b27edfde5d183bd8a).
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+      values.nonce:
+-        6
++        7
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+      values.programHash:
+-        "3258367057337572248818716706664617507069572185152472699066582725377748079373"
++        "54878256403880350656938046611252303365750679698042371543935159963667935317"
+    }
+```
+
 # Diff at Fri, 05 Jan 2024 13:21:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
