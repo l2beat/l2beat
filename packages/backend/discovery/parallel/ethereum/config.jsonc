@@ -1,18 +1,24 @@
 {
   "$schema": "../../config.schema.json",
-  "chain": "arbitrum",
-  "name": "deri",
+  "chain": "ethereum",
+  "name": "parallel",
   "initialAddresses": [
-    "0x846387C3D6001F74170455B1074D01f05eB3067a",
-    "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
+    "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
+    "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+    "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
+    "0xa1c86E2362dba0525075622af6d5f739B1304D45",
+    "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"
   ],
   "names": {
-    "0x846387C3D6001F74170455B1074D01f05eB3067a": "RollupProxy",
-    "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0": "Bridge",
-    "0x383eFE8D410285c5CbE1B4F296022640759aA834": "ChallengeManager",
-    "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": "Outbox",
-    "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "SequencerInbox",
-    "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "UpgradeExecutor"
+    "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877": "RollupProxy",
+    "0x5a961c7D162195a9Dc5a357Cc168b0694283382E": "Bridge",
+    "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4": "ChallengeManager",
+    "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8": "SequencerInbox",
+    "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3": "Outbox",
+    "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89": "UpgradeExecutor",
+    "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d": "L1ERC20Gateway",
+    "0xa1c86E2362dba0525075622af6d5f739B1304D45": "L1CustomGateway",
+    "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d": "L1WETHGateway"
   },
   "overrides": {
     "ChallengeManager": {
@@ -72,7 +78,7 @@
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
           "type": "call",
           "method": "function isBatchPoster(address) external view returns (bool)",
-          "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
+          "args": ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"]
         },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
@@ -92,6 +98,9 @@
           "type": "accessControl"
         }
       }
+    },
+    "L1WETHGateway": {
+      "ignoreMethods": ["l1Weth"]
     }
   }
 }
