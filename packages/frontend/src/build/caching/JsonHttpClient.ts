@@ -6,7 +6,7 @@ import { HttpClient } from '../../../../shared/build'
 export class JsonHttpClient {
   constructor(
     private readonly http: HttpClient,
-    private readonly skipCache: boolean,
+    private readonly skipCache: boolean | undefined,
   ) {}
 
   async fetchJson(url: string): Promise<unknown> {
