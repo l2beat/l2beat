@@ -27,6 +27,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'ZKSwap 1.0',
+        shortName: undefined,
         slug: 'zkswap',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -61,6 +62,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Polygon Hermez',
+        shortName: undefined,
         slug: 'hermez',
         warning:
           'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
@@ -95,6 +97,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Wormhole V1',
+        shortName: undefined,
         slug: 'wormholev1',
         warning: undefined,
         isArchived: true,
@@ -126,6 +129,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'ZKSwap 2.0',
+        shortName: undefined,
         slug: 'zkswap2',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -159,6 +163,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Gluon',
+        shortName: undefined,
         slug: 'gluon',
         warning:
           'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
@@ -189,6 +194,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'OMG Network',
+        shortName: undefined,
         slug: 'omgnetwork',
         warning: undefined,
         isArchived: true,
@@ -222,6 +228,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Connext (Legacy)',
+        shortName: undefined,
         slug: 'connext-legacy',
         warning: undefined,
         isArchived: true,
@@ -260,6 +267,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Nomad',
+        shortName: undefined,
         slug: 'nomad',
         warning:
           'The Nomad token bridge contract has recently been exploited and currently is not operational.',
@@ -292,6 +300,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'L2.Finance-zk',
+        shortName: undefined,
         slug: 'layer2financezk',
         warning:
           'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
@@ -326,6 +335,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Sollet',
+        shortName: undefined,
         slug: 'sollet',
         warning:
           'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
@@ -354,6 +364,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Arbitrum One',
+        shortName: undefined,
         slug: 'arbitrum',
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -387,6 +398,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Polygon PoS',
+        shortName: undefined,
         slug: 'polygon-pos',
         warning: undefined,
         isArchived: undefined,
@@ -419,6 +431,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Optimism',
+        shortName: undefined,
         slug: 'optimism',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
@@ -453,6 +466,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Polygon "Plasma"',
+        shortName: undefined,
         slug: 'polygon-plasma',
         warning: undefined,
         isArchived: undefined,
@@ -485,6 +499,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Ronin V2',
+        shortName: undefined,
         slug: 'ronin',
         warning: undefined,
         isArchived: undefined,
@@ -515,6 +530,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Avalanche Bridge',
+        shortName: undefined,
         slug: 'avalanche',
         warning: undefined,
         isArchived: undefined,
@@ -545,6 +561,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'dYdX',
+        shortName: undefined,
         slug: 'dydx',
         warning: undefined,
         isArchived: undefined,
@@ -574,6 +591,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Multichain',
+        shortName: undefined,
         slug: 'multichain',
         warning:
           'In July 2021 millions of dollars of user funds from the Multichain escrow addresses were taken out by validators to supply liquidity to Any tokens on various chains.       Multichain declares it as a shared liquidity managed by SMPC tool to promote the routing paths between chains and help reduce bridge fee for users.      As a result there is more tokens minted (e.g. DAI on Fantom) than there are tokens directly backing them in escrow.',
@@ -659,6 +677,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Rainbow Bridge',
+        shortName: undefined,
         slug: 'near',
         warning: undefined,
         isArchived: undefined,
@@ -691,6 +710,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'zkSync Era',
+        shortName: undefined,
         slug: 'zksync-era',
         warning:
           'Withdrawals are delayed by 1d. The length of the delay can be arbitrarily set by a MultiSig.',
@@ -725,6 +745,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Portal (Wormhole)',
+        shortName: undefined,
         slug: 'portal',
         warning: undefined,
         isArchived: undefined,
@@ -771,6 +792,7 @@ const meta = {
       {
         type: 'bridge',
         name: 'Orbit Bridge',
+        shortName: undefined,
         slug: 'orbit',
         warning: undefined,
         isArchived: undefined,
@@ -813,6 +835,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Metis Andromeda',
+        shortName: undefined,
         slug: 'metis',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
@@ -848,6 +871,7 @@ const meta = {
       {
         type: 'layer2',
         name: 'Loopring',
+        shortName: undefined,
         slug: 'loopring',
         warning: undefined,
         isArchived: undefined,

@@ -1,7 +1,6 @@
 import { Bridge, Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
-import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
@@ -17,9 +16,7 @@ export function getBridgesSummaryView(
 ): BridgesSummaryViewProps {
   const { tvlApiResponse, verificationStatus } = pagesData
 
-  const included = getIncludedProjects(projects, tvlApiResponse).filter(
-    (project) => project.type === 'bridge',
-  )
+  const included = projects.filter((project) => !project.isUpcoming)
   const ordered = orderByTvl(included, tvlApiResponse)
 
   const { tvl: bridgesTvl } = getTvlWithChange(tvlApiResponse.bridges)
@@ -49,17 +46,14 @@ export function getBridgesSummaryViewEntry(
   const apiProject = tvlApiResponse.projects[project.id.toString()]
   let stats: TvlStats | undefined
 
-  if (!apiProject) {
-    if (!project.isUpcoming) {
-      throw new Error(`Project ${project.display.name} is missing in api`)
-    }
-  } else {
+  if (apiProject) {
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
   const isVerified = verificationStatus.projects[project.id.toString()]
 
   return {
     type: project.type,
+    shortName: project.display.shortName,
     name: project.display.name,
     slug: project.display.slug,
     warning: project.display.warning,

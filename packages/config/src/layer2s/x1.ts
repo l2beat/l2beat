@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const x1: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('x1'),
+export const x1: Layer2 = upcoming({
+  id: 'x1',
   display: {
     name: 'X1',
     slug: 'x1',
@@ -14,7 +10,6 @@ export const x1: Layer2 = {
       'X1 is an upcoming Validium by OKX. It is powered by the Polygon CDK.',
     purpose: 'Universal',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
       websites: ['https://okx.com/x1'],
@@ -25,13 +20,4 @@ export const x1: Layer2 = {
       socialMedia: ['https://twitter.com/X1_Network'],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

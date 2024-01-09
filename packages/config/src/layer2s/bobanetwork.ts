@@ -41,6 +41,7 @@ export const bobanetwork: Layer2 = {
   id: ProjectId('bobanetwork'),
   display: {
     name: 'Boba Network',
+    shortName: 'Boba',
     slug: 'bobanetwork',
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
