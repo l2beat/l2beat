@@ -9,6 +9,7 @@ import { TypeCell } from '../../../components/table/TypeCell'
 export interface ProjectHeaderProps {
   title: string
   titleClassName?: string
+  description: string
   icon?: string
   purpose: string
   technology: string
@@ -51,6 +52,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isUnderReview={props.isUnderReview}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
+      description={props.description}
     />
   )
 }

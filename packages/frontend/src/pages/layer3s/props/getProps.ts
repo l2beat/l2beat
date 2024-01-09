@@ -14,14 +14,14 @@ export function getProps(
   config: Config,
   pagesData: PagesData,
 ): Wrapped<ProjectPageProps> {
-  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
+  const { tvlApiResponse, activityApiResponse } = pagesData
 
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
       projectHeader: getProjectHeader(project),
-      projectDetails: getProjectDetails(project, verificationStatus),
+      projectDetails: getProjectDetails(project),
       footer: getFooterProps(config),
     },
     wrapper: {

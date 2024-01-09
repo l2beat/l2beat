@@ -8,6 +8,7 @@ export function getProjectHeader(project: Layer3): ProjectHeaderProps {
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
+    description: project.display.description,
     purpose: project.display.purpose,
     technology: project.display.category,
     links: getLinks(project.display.links),
