@@ -1,16 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import { execSync } from 'child_process'
 import { providers } from 'ethers'
-import { writeFile } from 'fs/promises'
-import { mkdirp } from 'mkdirp'
-import { dirname } from 'path'
+import path from 'path'
 import { rimraf } from 'rimraf'
 
 import { DiscoveryCliConfig } from '../config/config.discovery'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
-import { getSourceName } from '../discovery/output/saveDiscoveryResult'
-import { toDiscoveryOutput } from '../discovery/output/toDiscoveryOutput'
+import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
 import { discover as discovery } from '../discovery/runDiscovery'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { HttpClient } from '../utils/HttpClient'
@@ -53,34 +50,12 @@ export async function singleDiscoveryCommand(
     chainConfig.rpcGetLogsMaxRange,
   )
 
-  const discoveryOutput = toDiscoveryOutput(
-    projectConfig.name,
-    projectConfig.chainId,
-    projectConfig.hash,
-    blockNumber,
-    results,
-  )
+  const rootFolder = `./cache/single-discovery`
+  await rimraf(rootFolder)
 
-  const root = `./cache/single-discovery`
-  await mkdirp(root)
-
-  const jsonFilePath = `${root}/discovered.json`
-  await writeFile(jsonFilePath, JSON.stringify(discoveryOutput, null, 2))
-
-  await rimraf(`${root}/code`)
-  for (const result of results) {
-    if (result.type === 'EOA') {
-      continue
-    }
-    for (const [i, files] of result.sources.entries()) {
-      for (const [file, content] of Object.entries(files)) {
-        const codebase = getSourceName(i, result.sources.length)
-        const path = `${root}/code/${result.name}${codebase}/${file}`
-        await mkdirp(dirname(path))
-        await writeFile(path, content)
-      }
-    }
-  }
+  await saveDiscoveryResult(results, projectConfig, blockNumber, {
+    rootFolder,
+  })
 
   logger.info(
     'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',
@@ -89,5 +64,6 @@ export async function singleDiscoveryCommand(
     'The discovered.json & code can be found in "./cache/single-discovery"',
   )
 
+  const jsonFilePath = path.join(rootFolder, 'discovered.json')
   execSync(`open ${jsonFilePath}`)
 }

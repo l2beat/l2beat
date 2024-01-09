@@ -48,15 +48,10 @@ export async function runDiscovery(
     blockNumber,
     config.getLogsMaxRange,
   )
-  await saveDiscoveryResult(
-    result,
-    projectConfig,
-    blockNumber,
-    projectConfig.hash,
-    config.chainId,
-    config.sourcesFolder,
-    config.discoveryFilename,
-  )
+  await saveDiscoveryResult(result, projectConfig, blockNumber, {
+    sourcesFolder: config.sourcesFolder,
+    discoveryFilename: config.discoveryFilename,
+  })
 }
 
 export async function dryRunDiscovery(

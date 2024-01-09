@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.28.3
+
+### Patch Changes
+
+- Append address to source folders if names clash
+
 ## 0.28.2
 
 ### Patch Changes
