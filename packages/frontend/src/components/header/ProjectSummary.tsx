@@ -44,7 +44,7 @@ export function ProjectSummary(props: Props) {
             {groupIndex !== 0 && (
               <HorizontalSeparator
                 key={`horizontal-separator${groupIndex}`}
-                className="col-span-full mt-2 hidden md:my-4 md:block"
+                className="col-span-full mt-2 hidden md:my-0 md:block"
               />
             )}
             {group.map((stat) => {
