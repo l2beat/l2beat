@@ -31,7 +31,7 @@
     "@l2beat/discovery-types": "^0.7.0",
     "@l2beat/backend-tools": "^0.4.0",
     "@l2beat/config": "*",
-    "@l2beat/discovery": "0.28.2",
+    "@l2beat/discovery": "0.28.3",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@l2beat/uif": "^0.2.2",

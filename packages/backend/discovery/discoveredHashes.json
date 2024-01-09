@@ -33,7 +33,7 @@
   "ethereum:deversifi": "0x495e7e90cb4b023baa1d3199c587ddebec8899ec",
   "ethereum:mantle": "0x8a2ebd1ed5e44522570b9134ca6330f0734f6910",
   "ethereum:amarok": "0xa5b08bb1ef8901f32c4fac9a1059a10959df31f8",
-  "arbitrum:deri": "0xcdef69bb35354731d43630cf732247ef784aa49c",
+  "arbitrum:deri": "0x5d08166fbc7c6aa88111e2f8371a491b9448f7a9",
   "ethereum:loopring": "0xac15ca2c95f98cd446cb6f7f2d4f7d01b42175ed",
   "celo:opticsV2": "0xde19f2ebe1136290ea02df3349b7bb24b23432ab",
   "ethereum:opticsV2": "0x74bcd043312b0348984fdfc131f54f06d3e23171",
@@ -85,5 +85,8 @@
   "ethereum:lyra": "0x6bcce5411e6f7332a813aee3069659eaffc9d463",
   "ethereum:debridge": "0xd133788793598b5af4867d5da87989ea720df3a9",
   "ethereum:omni": "0xb1363783b237a042a2c53a93b308bac6de544c8e",
-  "ethereum:connext": "0xe640ac96be2db9e2555b5aa9d1d0c05dd54205a8"
+  "ethereum:connext": "0xe640ac96be2db9e2555b5aa9d1d0c05dd54205a8",
+  "ethereum:eigenlayer": "0xa1ccb00cdefb3146bab2d25d87a7fa645f54e413",
+  "ethereum:reddioex": "0x00501922f7e16faad3e41c1515991582f7cf70f6",
+  "ethereum:parallel": "0x78fc4d3640fd7262f2630f4af6e366d8b9d7689a"
 }
