@@ -6,7 +6,31 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Overall seems like a step towards introducing a security council.
+The Governance contract is improved and written in a way that allows to simply set the security councils address and increase the minimum delay.
+Any reference to AllowList has been deleted in favour of Gorvernance.
+Removed the deposit limit.
+
+### L1ERC20Bridge
+
+When calling `deposit()`, `claimFailedDeposit()` and `finalizeWithdrawal()` the `senderCanCallFunction()` modifier has been removed.
+In the first two functions the call to `_verifyDepositLimit()` is no longer being made because the function has been removed.
+
+### zkSync
+
+- Admin facet: setting a new pending admin is done by governor only instead of governor or admin.
+- Getters facet: everything related to AllowList is removed.
+- Mailbox facet: when calling `finalizeEthWithdrawal()`, `requestL2Transaction()` the `senderCanCallFunction()` modifier has been removed. In the latter function the call to `_verifyDepositLimit()` is removed.
+
+### Governance
+
+A new contract admin of L1ERC20Bridge and ValidatorTimelock.
+Owned by zkSync Era Multisig, securityCouncil set to zero.
+Owner can schedule a transparent (you see the upgrade data on-chain) or a shadow (you don't see the upgrade data on-chain) upgrade.
+While scheduling an upgrade the owner chooses a delay, that delay has to be bigger than `minDelay` - currently that is set to zero.
+Canceling the upgrade can be done only by the owner.
+The owner or security council can call `execute()` that performs the upgrade if the delay is up.
+Only the security council can call `executeInstant()` that performs the upgrade even if the delay is not up.
 
 ## Watched changes
 
