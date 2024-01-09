@@ -30,7 +30,7 @@ import { Layer2, Layer2Display, Layer2StateDerivation } from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
-  display: Layer2Display
+  display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   upgradeability: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -49,13 +49,23 @@ export interface OpStackConfig {
   roleOverrides: Record<string, string>
   nonTemplatePermissions?: ProjectPermission[]
   nonTemplateContracts?: ProjectContract[]
+  isNodeAvailable: boolean | 'UnderReview'
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
-    display: templateVars.display,
+    display: {
+      ...templateVars.display,
+      provider: 'OP Stack',
+      category: 'Optimistic Rollup',
+      dataAvailabilityMode: 'TxData',
+      warning:
+        templateVars.display.warning === undefined
+          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
+          : templateVars.display.warning,
+    },
     config: {
       tokenList: templateVars.tokenList,
       escrows: [
@@ -162,7 +172,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           callsItselfRollup: true,
           stateRootsPostedToL1: true,
           dataAvailabilityOnL1: true,
-          rollupNodeSourceAvailable: true,
+          rollupNodeSourceAvailable: templateVars.isNodeAvailable,
         },
         stage1: {
           stateVerificationOnL1: false,
@@ -179,7 +189,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       {
         rollupNodeLink:
-          'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+          templateVars.isNodeAvailable === true
+            ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+            : '',
       },
     ),
     stateDerivation: templateVars.stateDerivation,
