@@ -1577,8 +1577,8 @@
       "decimals": 18,
       "sinceTimestamp": 1641171600,
       "category": "other",
-      "chainId": 1,
       "iconUrl": "https://assets.coingecko.com/coins/images/22171/large/Frame_1.png?1696521515",
+      "chainId": 1,
       "type": "CBV",
       "formula": "locked"
     },
@@ -2405,6 +2405,20 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1597397942",
       "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "sdai-savings-dai",
+      "name": "Savings Dai",
+      "coingeckoId": "savings-dai",
+      "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+      "symbol": "sDAI",
+      "decimals": 18,
+      "sinceTimestamp": 1673977931,
+      "category": "other",
+      "chainId": 1,
+      "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
       "type": "CBV",
       "formula": "locked"
     },
