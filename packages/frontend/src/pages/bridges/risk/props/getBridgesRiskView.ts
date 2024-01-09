@@ -13,8 +13,7 @@ export function getBridgesRiskView(
 ): BridgesRiskViewProps {
   const { tvlApiResponse, verificationStatus } = pagesData
 
-  const included = projects.filter((project) => project.type === 'bridge')
-  const orderedProjects = orderByTvl(included, tvlApiResponse)
+  const orderedProjects = orderByTvl(projects, tvlApiResponse)
 
   return {
     items: orderedProjects.map((project) =>
