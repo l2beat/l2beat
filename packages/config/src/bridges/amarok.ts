@@ -69,7 +69,7 @@ export const amarok: Bridge = {
       aggregate root. This triggers a ${discovery.getContractValue<number>(
         'MainnetSpokeConnector',
         'disputeBlocks',
-      )} block window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
+      )} blocks window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
       Only the owner can set the system back into Optimistic Mode. In Slow Mode messages from various domains are aggregated into one message\
       root and are periodically sent to Ethereum using native AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism)\
       the AMB is only used as a transport layer, but 7-day delay is being ignored. Upon being delivered to Ethereum these message roots are\
