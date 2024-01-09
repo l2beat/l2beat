@@ -27,8 +27,8 @@ describe('icons', () => {
       const stats = statSync(iconPath)
       const size = stats.size
 
-      expect(width).toEqual(256)
-      expect(height).toEqual(256)
+      expect(width).toEqual(128)
+      expect(height).toEqual(128)
       expect(size).toBeLessThanOrEqual(10240)
     })
   }
