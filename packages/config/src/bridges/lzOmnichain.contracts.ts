@@ -97,6 +97,11 @@ export const ORACLES = Object.values(relevantAppConfigs)
   .flatMap((x) => (x ? EthereumAddress(x.oracle) : []))
   .filter((x, i, a) => a.indexOf(x) === i)
 
-export const INBOUND_PROOF_LIBRARIES = discovery
-  .getContractValue<string[]>('UltraLightNodeV2', 'INBOUND_PROOF_LIBRARIES')
+const inboundProofLibraries = discovery.getContractValue<
+  Partial<Record<string, string[] | string>>
+>('UltraLightNodeV2', 'inboundProofLibrary')
+
+export const INBOUND_PROOF_LIBRARIES = Object.values(inboundProofLibraries)
+  .flatMap((x) => x ?? [])
+  .filter((x, i, a) => a.indexOf(x) === i)
   .map((address) => EthereumAddress(address))
