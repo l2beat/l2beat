@@ -29,4 +29,13 @@ jobs:
         run: yarn storybook:build
 
       - name: Publish to Chromatic
-        run: npx chromatic --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --storybook-build-dir ./storybook-static --only-changed --exit-once-uploaded --exit-zero-on-changes --externals packages/frontend/tailwind.config.js --externals packages/frontend/src/styles --externals packages/frontend/src/static/fonts
+        run: --exit-once-uploaded /styles --externals packages/frontend/src/static/fonts
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          onlyChanged: true
+          externals: packages/frontend/tailwind.config.js,packages/frontend/src/styles,packages/frontend/src/static/fonts
+          exitZeroOnChanges: true
+          exitOnceUploaded: true
