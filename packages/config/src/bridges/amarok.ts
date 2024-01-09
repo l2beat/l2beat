@@ -65,16 +65,16 @@ export const amarok: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
+        `The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
       the messages are sent through the Connext Sequencer. In this mode the Connext sequencer or any permissioned actor periodically submits an\
-      aggregate root. This triggers a 30 minute window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
+      aggregate root. This triggers a ${discovery.getContractValue('MainnetSpokeConnector', 'disputeBlocks')} block window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
       Only the owner can set the system back into Optimistic Mode. In Slow Mode messages from various domains are aggregated into one message\
       root and are periodically sent to Ethereum using native AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism)\
       the AMB is only used as a transport layer, but 7-day delay is being ignored. Upon being delivered to Ethereum these message roots are\
       subsequently aggregated again into a root-of-root of messages before being delivered to their destination domains. Each message can be optimistically fast-forwarded by a network of Routers that will\
       front liquidity (if the message is a token transfer) or post a bond (if the message is a xChain call). Upon receiving the message root via native AMBs Connext bridge will\
       reconciles messages and return bond to the Routers. There is a configurable delay programmed into the RootManager contract and the SpokeConnectors\
-      receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.',
+      receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.`,
       references: [],
       risks: [],
     },
