@@ -64,10 +64,12 @@ export const amarok: Bridge = {
     destination: ['Gnosis', 'Optimism', 'Arbitrum', 'Polygon', 'BSC'],
     principleOfOperation: {
       name: 'Principle of operation',
-      description:
-        `The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
+      description: `The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
       the messages are sent through the Connext Sequencer. In this mode the Connext sequencer or any permissioned actor periodically submits an\
-      aggregate root. This triggers a ${discovery.getContractValue('MainnetSpokeConnector', 'disputeBlocks')} block window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
+      aggregate root. This triggers a ${discovery.getContractValue<number>(
+        'MainnetSpokeConnector',
+        'disputeBlocks',
+      )} block window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
       Only the owner can set the system back into Optimistic Mode. In Slow Mode messages from various domains are aggregated into one message\
       root and are periodically sent to Ethereum using native AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism)\
       the AMB is only used as a transport layer, but 7-day delay is being ignored. Upon being delivered to Ethereum these message roots are\
