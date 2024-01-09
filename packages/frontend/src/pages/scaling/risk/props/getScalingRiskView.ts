@@ -34,6 +34,7 @@ export function getScalingRiskViewEntry(
     slug: project.display.slug,
     provider: project.display.provider,
     warning: project.display.warning,
+    redWarning: project.display.redWarning,
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isVerified,
