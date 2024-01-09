@@ -68,9 +68,7 @@ export const kroma: Layer2 = {
     name: 'Kroma',
     slug: 'kroma',
     description:
-      'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture.',
-    detailedDescription:
-      "Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll. Kroma's goal is to eventually transition to a ZK Rollup once the generation of ZK proofs becomes more cost-efficient and faster.",
+      'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

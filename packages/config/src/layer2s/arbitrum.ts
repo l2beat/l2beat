@@ -249,14 +249,7 @@ export const arbitrum: Layer2 = {
     slug: 'arbitrum',
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-    description: `Arbitrum One is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.`,
-    detailedDescription: `Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Proposers (currently whitelisted)\
-    read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any Validator (currently whitelisted) can challenge the state root within the challenge window (${formatSeconds(
-      challengeWindow * assumedBlockTime,
-    )}).
-    The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed thateventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Proposer publishes L2 state root within ${formatSeconds(
-      validatorAfkTime,
-    )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
+    description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO`,
     purpose: 'Universal',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
