@@ -1,5 +1,6 @@
 {
   "ethereum:kroma": "0xa4559190e2814d8b859e482b8c31b52d0d8ec5b8",
+  "ethereum:eigenlayer": "0xa1ccb00cdefb3146bab2d25d87a7fa645f54e413",
   "ethereum:hyphen": "0x67af80d7ac395369d1e76bde9cb603842eabf5a8",
   "ethereum:aevo": "0x5953c29d6b04f40d524893b00175e6cd63ffadb3",
   "ethereum:orbit": "0x434b5655adec92831f11b676b4ff7726de33643c",
@@ -31,8 +32,8 @@
   "ethereum:stargate": "0x29cb41f4a8a4a8561bdc8cc94c8befe842a34be1",
   "ethereum:deversifi": "0x495e7e90cb4b023baa1d3199c587ddebec8899ec",
   "ethereum:mantle": "0x8a2ebd1ed5e44522570b9134ca6330f0734f6910",
-  "ethereum:amarok": "0x07c09e327a7673b697f85cd6178d933ac46d0946",
-  "arbitrum:deri": "0xcdef69bb35354731d43630cf732247ef784aa49c",
+  "ethereum:amarok": "0xa5b08bb1ef8901f32c4fac9a1059a10959df31f8",
+  "arbitrum:deri": "0x5d08166fbc7c6aa88111e2f8371a491b9448f7a9",
   "ethereum:loopring": "0xac15ca2c95f98cd446cb6f7f2d4f7d01b42175ed",
   "celo:opticsV2": "0xde19f2ebe1136290ea02df3349b7bb24b23432ab",
   "ethereum:opticsV2": "0x74bcd043312b0348984fdfc131f54f06d3e23171",
@@ -58,6 +59,7 @@
   "ethereum:zora": "0x1ade6863ad3ac45f10a4a6d257e8aa1fb4883813",
   "ethereum:zksync": "0x11c74e1bde9ddaec5dce54b6e2066c60a6ae6488",
   "ethereum:zksync2": "0x8b50f9c3b390f9821643524ca5e066b6bc5479d1",
+  "ethereum:reddioex": "0x00501922f7e16faad3e41c1515991582f7cf70f6",
   "ethereum:polygonzkevm": "0x5bbf27e57ddf4df4210e8824f8b621a83e723244",
   "ethereum:paradex": "0xc351d60b5c5e06b0ad29f6a942b4d15696481e0f",
   "ethereum:blast": "0x5b30219b3d4a84db72d284e57cc3517c71486db3",
@@ -85,5 +87,6 @@
   "ethereum:omni": "0xb1363783b237a042a2c53a93b308bac6de544c8e",
   "ethereum:connext": "0xe640ac96be2db9e2555b5aa9d1d0c05dd54205a8",
   "ethereum:eigenlayer": "0xa1ccb00cdefb3146bab2d25d87a7fa645f54e413",
-  "ethereum:reddioex": "0x00501922f7e16faad3e41c1515991582f7cf70f6"
+  "ethereum:reddioex": "0x00501922f7e16faad3e41c1515991582f7cf70f6",
+  "ethereum:parallel": "0x78fc4d3640fd7262f2630f4af6e366d8b9d7689a"
 }

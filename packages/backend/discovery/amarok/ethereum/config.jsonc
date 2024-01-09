@@ -4,18 +4,13 @@
   "name": "amarok",
   "names": {
     "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": "ConnextBridge",
-    "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c": "MainnetSpokeConnector",
-    "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6": "WatcherManager",
-    "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE": "PolygonHubConnector",
-    "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1": "RootManager",
-    "0xd151C9ef49cE2d30B829a98A07767E3280F70961": "ArbitrumHubConnector",
-    "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE": "OptimismHubConnector",
-    "0x245F757d660C3ec65416168690431076d58d6413": "GnosisHubConnector",
+    "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc": "MainnetSpokeConnector",
+    "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d": "WatcherManager",
+    "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": "RootManager",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
     "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
     "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": "Connext Multisig Member",
     "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": "Connext Multisig 2",
-    "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
     "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
     "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
@@ -23,7 +18,13 @@
     "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": "OptimisticGovernor",
     "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer",
     "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9",
-    "0x076cD2B25cb1Ed7272d716bdeb4A8551CF606a3D": "LineaHubConnector"
+    "0x56Ab287e5c33Ee70158c951f34818bd095446255": "LineaHubConnector",
+    "0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A": "OptimismHubConnector",
+    "0x83096c7455f24E593aaC9A7c73f849d36d3EEb82": "ArbitrumHubConnector",
+    "0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA": "WormholeHubConnector",
+    "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": "GnosisHubConnector",
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
+    "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": "PolygonHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -56,6 +57,7 @@
       "ignoreRelatives": ["lpTokenTargetAddress", "RELAYERS"]
     },
     "MainnetSpokeConnector": {
+      "ignoreMethods": ["snapshotRoots"],
       "ignoreInWatchMode": [
         "lastSentBlock",
         "outboundRoot",
@@ -80,36 +82,24 @@
       "fields": {
         "connectors": {
           "type": "array",
-          "method": "connectors"
+          "method": "connectors",
+          "maxLength": 8
         },
         "domains": {
           "type": "array",
-          "method": "domains"
+          "method": "domains",
+          "maxLength": 8
         }
       },
+      "ignoreMethods": ["validAggregateRoots"],
       "ignoreInWatchMode": [
         "domains",
         "domainsHash",
         "getPendingInboundRootsCount",
-        "lastPropagatedRoot",
         "pendingInboundRoots",
         "proposedTimestamp",
-        "proposed",
-        "lastPropagatedRoot",
-        "pendingInboundRoots",
-        "pendingInboundRoots",
-        "getPendingInboundRootsCount"
+        "proposed"
       ]
-    },
-    "ArbitrumHubConnector": {
-      "ignoreRelatives": ["AMB", "mirrorConnector", "rollup", "outbox"],
-      "ignoreMethods": ["processed"],
-      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
-    },
-    "WormholeHubConnector": {
-      "ignoreRelatives": ["AMB", "mirrorConnector"],
-      "ignoreMethods": ["processed"],
-      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "PolygonHubConnector": {
       "ignoreRelatives": [
@@ -120,6 +110,16 @@
         "fxRoot",
         "AMB"
       ],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "ArbitrumHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "rollup", "outbox"],
+      "ignoreMethods": ["processed"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "WormholeHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreMethods": ["processed"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "OptimismHubConnector": {
@@ -133,6 +133,9 @@
     "LineaHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "RootChain": {
+      "ignoreMethods": ["headerBlocks"]
     },
     "RelayTransit": {
       "ignoreRelatives": ["gelato"]
