@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const taiko: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('taiko'),
+export const taiko: Layer2 = upcoming({
+  id: 'taiko',
   display: {
     name: 'Taiko',
     slug: 'taiko',
@@ -14,7 +10,6 @@ export const taiko: Layer2 = {
       'Taiko is a decentralized, Ethereum-equivalent ZK Rollup that has been developed on the Ethereum network. At present, Taiko is deployed on the Sepolia testnet for further testing and optimization.',
     purpose: 'Universal',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.test.taiko.xyz'],
@@ -29,13 +24,4 @@ export const taiko: Layer2 = {
       rollupCodes: 'https://rollup.codes/taiko',
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

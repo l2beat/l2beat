@@ -20,6 +20,7 @@ export const metis: Layer2 = {
   id: ProjectId('metis'),
   display: {
     name: 'Metis Andromeda',
+    shortName: 'Metis',
     slug: 'metis',
     redWarning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \

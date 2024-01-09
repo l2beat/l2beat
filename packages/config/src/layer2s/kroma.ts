@@ -220,9 +220,9 @@ export const kroma: Layer2 = {
       stage1: {
         stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: false,
+        usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: false,
+        securityCouncilProperlySetUp: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

@@ -45,6 +45,12 @@ const chainConfig = [
     // https://explorer.lyra.finance/block/0
     minTimestamp: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
   },
+  {
+    chainId: ChainId.LINEA,
+    // ~ Timestamp of block number 0 on Linea
+    // https://lineascan.build/block/0
+    minTimestamp: UnixTime.fromDate(new Date('2023-07-06T01:15:00Z')),
+  },
 ]
 
 export function getChainMinTimestamp(chainId: ChainId): UnixTime {

@@ -8,8 +8,11 @@ import {
 
 import {
   KnowledgeNugget,
+  Layer2Provider,
   Milestone,
+  ProjectCategory,
   ProjectContracts,
+  ProjectDataAvailabilityMode,
   ProjectEscrow,
   ProjectLinks,
   ProjectPermission,
@@ -31,10 +34,6 @@ export interface Layer2 {
   isUpcoming?: boolean
   /** Has this layer2 changed and is under review? */
   isUnderReview?: boolean
-  /** Is this a layer3? */
-  isLayer3?: boolean
-  /** ProjectId of hostChain */
-  hostChain?: ProjectId
   /** Information displayed about the layer2 on the frontend */
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
@@ -62,12 +61,14 @@ export interface Layer2 {
 export interface Layer2Display {
   /** Name of the layer2, will be used as a display name on the website */
   name: string
+  /** Short name of the layer2, will be used in some places on the website as a display name */
+  shortName?: string
   /** Url friendly layer2 name, will be used in website urls */
   slug: string
   /** Name of the category the layer2 belongs to */
-  category: Layer2Category
+  category: ProjectCategory
   /** Data availability mode of layer2 project */
-  dataAvailabilityMode: 'StateDiffs' | 'TxData' | 'NotApplicable'
+  dataAvailabilityMode: ProjectDataAvailabilityMode
   /** A warning displayed in the header of the project */
   headerWarning?:
     | {
@@ -86,17 +87,7 @@ export interface Layer2Display {
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** Technology provider */
-  provider?:
-    | 'StarkEx'
-    | 'OP Stack'
-    | 'zkSync Lite'
-    | 'ZK Stack'
-    | 'Loopring'
-    | 'Arbitrum'
-    | 'Polygon'
-    | 'OVM'
-    | 'Starknet'
-    | 'Arbitrum Orbit'
+  provider?: Layer2Provider
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
@@ -145,10 +136,3 @@ export interface Layer2ExternalAssets {
     decimals: number
   }[]
 }
-
-export type Layer2Category =
-  | 'Optimistic Rollup'
-  | 'ZK Rollup'
-  | 'Plasma'
-  | 'Validium'
-  | 'Optimium'

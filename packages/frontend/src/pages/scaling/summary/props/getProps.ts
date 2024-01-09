@@ -20,7 +20,7 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       tvlView: getScalingSummaryView(
-        config.layer2s,
+        [...config.layer2s, ...config.layer3s],
         tvlApiResponse,
         tvl,
         verificationStatus,

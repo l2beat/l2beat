@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2Provider, Layer3Provider } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
@@ -17,7 +17,7 @@ import {
 export interface TypeCellProps {
   children: string
   disableColors?: boolean
-  provider?: Layer2['display']['provider']
+  provider?: Layer2Provider | Layer3Provider
 }
 
 export function TypeCell({ provider, children, disableColors }: TypeCellProps) {

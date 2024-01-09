@@ -21,8 +21,7 @@ interface Props<
 export interface ColumnConfig<T> {
   name: ReactNode
   shortName?: ReactNode
-  alignRight?: true
-  alignCenter?: true
+  align?: 'center' | 'right'
   headClassName?: string
   noPaddingRight?: true
   idHref?: SectionId
@@ -72,8 +71,8 @@ export function TVLBreakdownTableView<
                   <div
                     className={cx(
                       'flex flex-row items-center gap-1.5',
-                      column.alignRight && 'justify-end',
-                      column.alignCenter && 'justify-center',
+                      column.align === 'right' && 'justify-end',
+                      column.align === 'center' && 'justify-center',
                     )}
                   >
                     <span className={cx(column.shortName && 'hidden md:block')}>
@@ -118,8 +117,8 @@ export function TVLBreakdownTableView<
                 {columns.map((column, j) => {
                   const childClassName = cx(
                     'h-full w-full items-start pt-2 pb-2',
-                    column.alignRight && 'justify-end',
-                    column.alignCenter && 'justify-center',
+                    column.align === 'right' && 'justify-end',
+                    column.align === 'center' && 'justify-center',
                   )
                   return (
                     <td

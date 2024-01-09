@@ -1,4 +1,4 @@
-import { bridges, layer2s, milestonesLayer2s } from '@l2beat/config'
+import { bridges, layer2s, layer3s, milestonesLayer2s } from '@l2beat/config'
 
 import { Config } from './Config'
 
@@ -26,6 +26,7 @@ export const common: Omit<Config, 'backend'> = {
     buildAllProjectPages: false,
   },
   layer2s,
+  layer3s,
   bridges,
   milestones: milestonesLayer2s,
 }

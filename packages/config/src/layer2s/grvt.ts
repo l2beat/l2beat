@@ -1,12 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const grvt: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('grvt'),
+export const grvt: Layer2 = upcoming({
+  id: 'grvt',
   display: {
     name: 'GRVT',
     slug: 'grvt',
@@ -14,7 +10,6 @@ export const grvt: Layer2 = {
       'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being decentralized, featuring self-custodial funds and wallets.',
     purpose: 'DeFi',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'ZK Stack',
     links: {
       websites: ['https://grvt.io'],
@@ -28,13 +23,4 @@ export const grvt: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

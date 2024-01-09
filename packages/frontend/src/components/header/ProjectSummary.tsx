@@ -6,7 +6,7 @@ import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
 
 interface Props {
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   stats: ProjectSummaryStat[]
   className?: string
 }
@@ -19,7 +19,16 @@ export interface ProjectSummaryStat {
 }
 
 export function ProjectSummary(props: Props) {
-  const cols = props.type === 'bridge' ? 4 : 3
+  let cols
+  switch (props.type) {
+    case 'layer2':
+      cols = 3
+      break
+    case 'layer3':
+    case 'bridge':
+      cols = 4
+      break
+  }
   const groupedStats = chunk(props.stats, cols)
   return (
     <div
