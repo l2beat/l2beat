@@ -201,7 +201,7 @@ export const starknet: Layer2 = {
     slug: 'starknet',
     provider: 'Starknet',
     description:
-      'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. It uses the Cairo programming language both for its infrastructure and for writing Starknet contracts.',
+      'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',

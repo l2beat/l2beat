@@ -45,8 +45,7 @@ export const rhinofi: Layer2 = {
   display: {
     name: 'rhino.fi',
     slug: 'rhinofi',
-    description:
-      'rhino.fi (formerly DeversiFi) claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
+    description: 'rhino.fi is a Validium based on the StarkEx technology.',
     purpose: 'Exchange',
     provider: 'StarkEx',
     category: 'Validium',

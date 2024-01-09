@@ -31,7 +31,7 @@ export const zkspace: Layer2 = {
     name: 'ZKSpace',
     slug: 'zkspace',
     description:
-      'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
+      'ZKSpace consists of three main parts: an AMM DEX utilizing ZK Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
     purpose: 'Tokens, NFTs, AMM',
     provider: 'zkSync Lite',
     category: 'ZK Rollup',

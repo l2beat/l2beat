@@ -46,7 +46,7 @@ export const sorare: Layer2 = {
     name: 'Sorare',
     slug: 'sorare',
     description:
-      'Sorare is a global fantasy football game where you can play with officially licensed digital cards and earn prizes every week.',
+      'Sorare is a global fantasy football game where you can play with officially licensed digital cards.',
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',

@@ -47,8 +47,7 @@ export const mantle: Layer2 = {
     redWarning:
       'Fraud proof system is currently disabled and data is posted offchain. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Mantle is an EVM compatible Optimium, based on the Optimism OVM architecture. It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system.\
-      Currently, both of these technologies are yet to be fully launched on mainnet, so Mantle needs to be considered "under development".',
+      'Mantle is an under development EVM compatible Optimium, based on the Optimism OVM architecture.',
     purpose: 'Universal',
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',

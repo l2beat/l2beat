@@ -46,7 +46,7 @@ export const bobanetwork: Layer2 = {
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Boba is an EVM-compatible Optimistic Rollup forked from Optimism and built by the Enya team as core contributors to the Boba Foundation. One notable feature is fast withdrawals that use liquidity providers and allow users to withdraw funds immediately (without waiting for 7 days). Another feature is Hybrid Compute technology that enables Ethereum developers to build dApps that trigger code executed on web-scale infrastructure.',
+      'Boba is an EVM-compatible Optimistic Rollup forked from Optimism and built by the Enya team as core contributors to the Boba Foundation.',
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimistic Rollup',
