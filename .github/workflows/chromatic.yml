@@ -29,6 +29,7 @@ jobs:
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: packages/frontend
           buildScriptName: storybook:build
           onlyChanged: true
           externals: packages/frontend/tailwind.config.js,packages/frontend/src/styles,packages/frontend/src/static/fonts
