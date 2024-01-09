@@ -7,7 +7,7 @@ export const astarzkevm: Layer2 = upcoming({
     name: 'Astar zkEVM',
     slug: 'astarzkevm',
     description:
-      "Astar zkEVM is an Ethereum Layer-2 scaling solution that leverages Polygon's CDK and cutting edge zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence. Additionally, it includes a canonical bridge that connects the Astar zkEVM to Ethereum.",
+      "Astar zkEVM is an Ethereum Layer 2 solution that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
     purpose: 'Universal',
     category: 'ZK Rollup',
     provider: 'Polygon',
