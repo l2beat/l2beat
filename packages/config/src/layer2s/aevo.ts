@@ -90,4 +90,5 @@ export const aevo: Layer2 = opStack({
       ...upgradeability,
     }),
   ],
+  nonTemplateEscrows: [],
 })

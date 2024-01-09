@@ -108,4 +108,5 @@ export const zora: Layer2 = opStack({
       ...upgradeability,
     }),
   ],
+  nonTemplateEscrows: [],
 })

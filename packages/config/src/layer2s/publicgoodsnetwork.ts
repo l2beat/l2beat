@@ -96,4 +96,5 @@ export const publicgoodsnetwork: Layer2 = opStack({
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
     ),
   ],
+  nonTemplateEscrows: [],
 })

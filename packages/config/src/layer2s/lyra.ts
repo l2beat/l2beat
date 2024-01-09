@@ -106,4 +106,5 @@ export const lyra: Layer2 = opStack({
       ...upgradeability,
     }),
   ],
+  nonTemplateEscrows: [],
 })

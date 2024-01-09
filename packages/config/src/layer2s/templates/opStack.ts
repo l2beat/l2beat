@@ -10,6 +10,7 @@ import {
   KnowledgeNugget,
   Milestone,
   ProjectContract,
+  ProjectEscrow,
   ProjectPermission,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -49,6 +50,7 @@ export interface OpStackConfig {
   roleOverrides: Record<string, string>
   nonTemplatePermissions?: ProjectPermission[]
   nonTemplateContracts?: ProjectContract[]
+  nonTemplateEscrows: ProjectEscrow[]
   isNodeAvailable: boolean | 'UnderReview'
 }
 
@@ -82,6 +84,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...templateVars.upgradeability,
         }),
+        ...templateVars.nonTemplateEscrows,
       ],
       transactionApi:
         templateVars.apiUrl !== undefined
