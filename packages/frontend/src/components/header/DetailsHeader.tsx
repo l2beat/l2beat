@@ -51,7 +51,7 @@ export function DetailsHeader(props: HeaderProps) {
     <>
       <header className="md:pt-15 flex flex-row justify-end gap-3 pt-6 dark:bg-zinc-900 md:gap-0 md:dark:bg-transparent">
         <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
-          <div className="mb-6 px-4 md:mb-0 md:px-0">
+          <div className="mb-4 flex flex-col gap-2 px-4 md:mb-0 md:px-0">
             <h1
               className={cx(
                 'relative mb-0 flex items-center justify-start gap-3',
@@ -69,31 +69,32 @@ export function DetailsHeader(props: HeaderProps) {
               {props.title}
             </h1>
             {props.description && (
-              <div className="mt-6 text-sm opacity-80">{props.description}</div>
+              <div className="mt-4 text-sm opacity-80">{props.description}</div>
+            )}
+            {props.isArchived && <ArchivedBar className="w-full" />}
+            {props.isUpcoming && <UpcomingBar className="w-full" />}
+            {props.showProjectUnderReview && (
+              <UnderReviewBar className="w-full" />
+            )}
+            {props.warning && (
+              <WarningBar
+                text={
+                  typeof props.warning === 'string'
+                    ? props.warning
+                    : props.warning.text
+                }
+                href={
+                  typeof props.warning !== 'string'
+                    ? props.warning.href
+                    : undefined
+                }
+                color="yellow"
+                isCritical={false}
+                className="w-full items-center justify-center py-2.5 px-2.5 text-xs md:text-base"
+              />
             )}
           </div>
-          {props.isArchived && <ArchivedBar className="mx-4 w-full md:mx-0" />}
-          {props.isUpcoming && <UpcomingBar className="mx-4 w-full md:mx-0" />}
-          {props.showProjectUnderReview && (
-            <UnderReviewBar className="mx-4 w-full md:mx-0" />
-          )}
-          {props.warning && (
-            <WarningBar
-              text={
-                typeof props.warning === 'string'
-                  ? props.warning
-                  : props.warning.text
-              }
-              href={
-                typeof props.warning !== 'string'
-                  ? props.warning.href
-                  : undefined
-              }
-              color="yellow"
-              isCritical={false}
-              className="mx-4 w-full items-center justify-center py-2.5 px-2.5 text-xs md:mx-0 md:px-4 md:text-base"
-            />
-          )}
+
           <div className="my-2 hidden w-full md:block">
             <DesktopProjectLinks projectLinks={props.links} />
           </div>
@@ -127,9 +128,6 @@ export function DetailsHeader(props: HeaderProps) {
         </div>
         {props.risks && (
           <div className="ml-8 mt-auto hidden lg:block">
-            <span className="text-xs font-medium text-gray-600">
-              Risk rosette
-            </span>
             <BigRosette
               risks={props.risks}
               isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
