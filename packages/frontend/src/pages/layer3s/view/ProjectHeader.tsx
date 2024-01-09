@@ -79,7 +79,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       value: props.hostChain,
     },
   ]
-  console.log(props.tvlBreakdown && !props.tvlBreakdown.empty)
+
   return (
     <DetailsHeader
       type="layer3"
