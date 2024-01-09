@@ -1,8 +1,7 @@
 import Convert from 'ansi-to-html'
 import { execSync } from 'child_process'
+import { readFileSync } from 'fs'
 import path from 'path'
-import { fileExistsCaseSensitive } from '../core/discovery/utils/fsLayer'
-import { readFileSync, stat } from 'fs'
 
 // This is a CLI tool. Run logic immediately.
 powerdiff()
@@ -67,7 +66,7 @@ function powerdiff() {
   const filePathsList = processGitDiff(gitDiff)
   for (const filePaths of filePathsList) {
     let status: 'diff' | 'added' | 'removed' = 'diff'
-    let diff;
+    let diff
     if (filePaths[0] === filePaths[1]) {
       if (filePaths[0].startsWith(absPath1)) {
         status = 'removed'
@@ -75,15 +74,13 @@ function powerdiff() {
         status = 'added'
       }
       diff = readFileSync(filePaths[0]).toString()
-    }
-    else {
-      diff = compareUsingDifftastic(
-        filePaths[0],
-        filePaths[1],
-        difftasticPath,
-      )
+    } else {
+      diff = compareUsingDifftastic(filePaths[0], filePaths[1], difftasticPath)
       const difftasticStatus = diff.split('\n')[1] ?? 'Error'
-      if (difftasticStatus === 'No syntactic changes.' || difftasticStatus === 'No changes.') {
+      if (
+        difftasticStatus === 'No syntactic changes.' ||
+        difftasticStatus === 'No changes.'
+      ) {
         continue
       }
     }
@@ -132,7 +129,9 @@ function compareUsingDifftastic(
 
 function gitDiffFolders(absPath1: string, absPath2: string): string {
   try {
-    return osExec(`git diff --no-index "/${absPath1}" "/${absPath2}"`).toString()
+    return osExec(
+      `git diff --no-index "/${absPath1}" "/${absPath2}"`,
+    ).toString()
   } catch (error) {
     // When difference is found, git diff returns non-zero exit code
     // so execSync throws and error, which we handle here
