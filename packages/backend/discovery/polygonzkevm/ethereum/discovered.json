@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 18968776,
-  "configHash": "0x22dbec40ce2d8313953c86613d95ad283f0d8a53dcc350c5cc9ebe6c9dd8d170",
+  "configHash": "0xdcc57498fdfc78cbaafe06569c130434bee15b10e7b7d6a51c916b20dfee1406",
   "version": 3,
   "contracts": [
     {
@@ -281,7 +281,7 @@
       "sinceTimestamp": 1651947248
     },
     {
-      "name": "GnosisSafe",
+      "name": "EscrowsAdmin",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "upgradeability": {
         "type": "gnosis safe",
@@ -308,7 +308,8 @@
         "getThreshold": 1,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
