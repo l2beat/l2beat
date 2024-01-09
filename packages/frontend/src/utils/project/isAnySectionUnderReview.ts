@@ -10,15 +10,17 @@ import {
 // this function should be updated when new sections that can be under review are added
 export function isAnySectionUnderReview(
   project: Layer2 | Bridge | Layer3,
-): boolean {
-  return (
-    project.isUnderReview ??
-    project.technology.isUnderReview ??
-    project.contracts?.isUnderReview ??
-    isAnyRiskUnderReview(project.riskView) ??
-    ((project.type === 'layer2' && project.stage.stage === 'UnderReview') ||
-      project.permissions === 'UnderReview')
-  )
+): boolean | undefined {
+  if (project.type === 'layer2' && project.stage.stage === 'UnderReview')
+    return true
+  else
+    return (
+      project.isUnderReview ??
+      project.technology.isUnderReview ??
+      project.contracts?.isUnderReview ??
+      (project.permissions === 'UnderReview' ||
+        isAnyRiskUnderReview(project.riskView))
+    )
 }
 
 export function isAnyRiskUnderReview(
