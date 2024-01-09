@@ -34,7 +34,7 @@ Many new similar helper functions/values as in `RootManager`.
 
 ### RootManager
 
-- Queue: Simpler check for removedItmes, bool instead of counting.
+- Queue: Simpler check for removedItems, bool instead of counting.
 - WatcherClient: Calling `renounceOwnership` now reverts instead of doing nothing.
 - WatcherManager: Calling `renounceOwnership` now reverts instead of doing nothing.
 - MerkleTreeManager: Now saving leaf and nonce status. Leaves have this FSM: None -> Proven -> Processed.
