@@ -1,6 +1,6 @@
 import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { expect } from 'earl'
-import { existsSync, readFileSync, statSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 
 describe('icons', () => {
@@ -132,8 +132,12 @@ describe('icons', () => {
   ]
 
   for (const project of projects) {
-    if (PROJECTS_TO_SKIP.includes(project.id.toString())) continue
-    it(`${project.id.toString()} every icon has proper dimensions and size`, () => {
+    const description = `${project.id.toString()} every icon has proper dimensions and size`
+    if (PROJECTS_TO_SKIP.includes(project.id.toString())) {
+      it.skip(description)
+      continue
+    }
+    it(description, () => {
       const iconPath = path.join(
         __dirname,
         `../static/icons/${project.display.slug}.png`,
@@ -142,8 +146,7 @@ describe('icons', () => {
       const buffer = readFileSync(iconPath)
       const width = buffer.readUInt32BE(16)
       const height = buffer.readUInt32BE(20)
-      const stats = statSync(iconPath)
-      const size = stats.size
+      const size = buffer.length
 
       expect(width).toEqual(128)
       expect(height).toEqual(128)
