@@ -51,6 +51,7 @@ export interface OpStackConfig {
   nonTemplatePermissions?: ProjectPermission[]
   nonTemplateContracts?: ProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
+  associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
 }
 
@@ -70,6 +71,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
     },
     config: {
       tokenList: templateVars.tokenList,
+      associatedTokens: templateVars.associatedTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.portal.address,
