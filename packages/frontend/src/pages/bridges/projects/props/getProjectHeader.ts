@@ -1,4 +1,4 @@
-import { Bridge, ProjectLinks } from '@l2beat/config'
+import { Bridge, ScalingProjectLinks } from '@l2beat/config'
 import { TvlApiResponse } from '@l2beat/shared-pure'
 
 import { ProjectLink } from '../../../../components/icons'
@@ -34,7 +34,7 @@ export function getProjectHeader(
   }
 }
 
-function getLinks(links: Partial<ProjectLinks>) {
+function getLinks(links: Partial<ScalingProjectLinks>) {
   const projectLinks: ProjectLink[] = []
 
   if (links.websites) {

@@ -1,11 +1,11 @@
-import { ProjectCategory } from '@l2beat/config'
+import { ScalingProjectCategory } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 
 import { getRowType, getRowTypeClassNames } from './getRowType'
 
 interface ScalingTableEntry {
   slug: string
-  category?: ProjectCategory
+  category?: ScalingProjectCategory
   isArchived?: boolean
   isVerified?: boolean
   isUpcoming?: boolean

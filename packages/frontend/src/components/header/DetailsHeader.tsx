@@ -46,7 +46,7 @@ export function DetailsHeader(props: HeaderProps) {
         )
       })
     : undefined
-
+  const isL2orL3 = props.type === 'layer2' || props.type === 'layer3'
   return (
     <>
       <header className="md:pt-15 flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
@@ -101,13 +101,11 @@ export function DetailsHeader(props: HeaderProps) {
           <div
             className={classNames(
               'grid w-full divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0 ',
-              props.type === 'layer2' && 'md:grid-cols-3',
-              props.type === 'layer3' && 'md:grid-cols-5',
+              isL2orL3 && 'md:grid-cols-3',
             )}
           >
-            {(props.type === 'layer2' || props.type === 'layer3') && (
+            {isL2orL3 && (
               <TvlSummary
-                type={props.type}
                 stats={props.stats.l2Tvl}
                 tvlBreakdownHref={props.tvlBreakdownHref}
                 showTvlBreakdown={props.showTvlBreakdown}
@@ -116,10 +114,7 @@ export function DetailsHeader(props: HeaderProps) {
             <ProjectSummary
               stats={props.stats.summary}
               type={props.type}
-              className={classNames(
-                props.type === 'layer2' && 'md:col-span-2',
-                props.type === 'layer3' && 'md:col-span-4',
-              )}
+              className="md:col-span-2"
             />
           </div>
           <div className="w-full px-4 md:hidden md:px-0">

@@ -1,4 +1,4 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
+import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 
 export interface BridgesRiskViewEntry {
   name: string
@@ -10,8 +10,8 @@ export interface BridgesRiskViewEntry {
   isVerified?: boolean
   showProjectUnderReview?: boolean
   category: string
-  destination: ProjectRiskViewEntry
-  validatedBy?: ProjectRiskViewEntry
-  sourceUpgradeability?: ProjectRiskViewEntry
-  destinationToken?: ProjectRiskViewEntry
+  destination: ScalingProjectRiskViewEntry
+  validatedBy?: ScalingProjectRiskViewEntry
+  sourceUpgradeability?: ScalingProjectRiskViewEntry
+  destinationToken?: ScalingProjectRiskViewEntry
 }

@@ -6,8 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -17,7 +15,9 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 

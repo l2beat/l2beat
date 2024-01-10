@@ -4,9 +4,14 @@ import {
   KnowledgeNugget,
   Layer3Provider,
   Milestone,
-  ProjectCategory,
-  ProjectLinks,
+  ScalingProjectConfig,
+  ScalingProjectContracts,
+  ScalingProjectDisplay,
+  ScalingProjectPermission,
 } from '../../common'
+import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
+import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
+import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 
 export interface Layer3 {
   type: 'layer3'
@@ -20,42 +25,27 @@ export interface Layer3 {
   hostChain: ProjectId
   /** Information displayed about the layer3 on the frontend */
   display: Layer3Display
+  /** Information required to calculate the stats of the layer3 */
+  config: ScalingProjectConfig
+  /** Risk view values for this layer3 */
+  riskView: ScalingProjectRiskView
+  /** Deep dive into layer3 technology */
+  technology: ScalingProjectTechnology
+  /** Open-source node details */
+  stateDerivation?: ScalingProjectStateDerivation
+  /** How project validates state? */
+  stateValidation?: string
+  /** List of smart contracts used in the layer2 */
+  contracts: ScalingProjectContracts
+  /** List of permissioned addresses */
+  permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
-export interface Layer3Display {
-  /** Name of the layer3, will be used as a display name on the website */
-  name: string
-  /** Short name of the layer2, will be used in some places on the website as a display name */
-  shortName?: string
-  /** Url friendly layer3 name, will be used in website urls */
-  slug: string
-  /** Name of the category the layer3 belongs to */
-  category: ProjectCategory
-  /** A warning displayed in the header of the project */
-  headerWarning?:
-    | {
-        /** Warning text */
-        text: string
-        /** Link to the warning source */
-        href: string
-      }
-    | string
-  /** A warning displayed above the description of the project */
-  warning?: string
-  /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
-  redWarning?: string
-  /** A few sentences describing the layer3, will be visible in the project header */
-  description: string
-  /** Detailed description of the layer3, will be visible in detailed description section */
-  detailedDescription?: string
-  /** A short (<20 characters) description of the use case */
-  purpose: string
+export interface Layer3Display extends ScalingProjectDisplay {
   /** Technology provider */
   provider?: Layer3Provider
-  /** List of links */
-  links: ProjectLinks
 }

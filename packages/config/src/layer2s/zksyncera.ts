@@ -1,20 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  MILESTONES,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -373,13 +372,6 @@ export const zksyncera: Layer2 = {
       link: 'https://zksync.mirror.xyz/HJ2Pj45EJkRdt5Pau-ZXwkV2ctPx8qFL19STM5jdYhc',
       date: '2023-07-17T00:00:00Z',
       description: 'Deployment of Boojum - new high-performance proof system.',
-    },
-    {
-      ...MILESTONES.MAINNET_OPEN,
-      link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
-      date: '2022-03-24T00:00:00Z',
-      description:
-        'Whitelist got removed, there are no restrictions on who can transact with the network.',
     },
     {
       name: 'zkSync 2.0 baby alpha launch',

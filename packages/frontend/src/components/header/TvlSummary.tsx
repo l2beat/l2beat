@@ -20,7 +20,6 @@ export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
   showTvlBreakdown?: boolean
-  type: 'layer2' | 'layer3'
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
@@ -77,9 +76,7 @@ export function TvlSummary(props: TvlSummaryProps) {
       <div
         className={classNames(
           'flex w-full flex-wrap items-baseline justify-between',
-          props.type === 'layer2'
-            ? 'md:gap-2'
-            : 'md:flex-col md:justify-start md:gap-4',
+          'md:gap-2',
         )}
       >
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
@@ -94,9 +91,11 @@ export function TvlSummary(props: TvlSummaryProps) {
             <p className="text-lg font-bold md:text-2xl md:leading-none">
               {formatUSD(props.stats.tvl)}
             </p>
-            <p className="text-xs font-bold md:text-base">
-              <PercentChange value={props.stats.tvlChange} />
-            </p>
+            {props.stats.tvl > 0 && (
+              <p className="text-xs font-bold md:text-base">
+                <PercentChange value={props.stats.tvlChange} />
+              </p>
+            )}
           </div>
         ) : (
           <div className="w-auto">
@@ -147,9 +146,11 @@ export function TvlSummary(props: TvlSummaryProps) {
                 </div>
                 <span className="text-base font-semibold leading-none">
                   {s.value}
-                  <span className="font-normal text-gray-500">
-                    {` (${s.usage}%)`}
-                  </span>
+                  {props.stats && props.stats.tvl > 0 && (
+                    <span className="font-normal text-gray-500">
+                      {` (${s.usage}%)`}
+                    </span>
+                  )}
                 </span>
               </div>
             ))}

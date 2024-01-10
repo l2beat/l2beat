@@ -1,4 +1,4 @@
-import { ProjectRiskCategory } from '@l2beat/config'
+import { ScalingProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
 import { ShieldIcon } from '../icons'
@@ -18,7 +18,7 @@ export interface RiskSectionProps {
 
 export interface RiskGroup {
   start: number
-  name: ProjectRiskCategory
+  name: ScalingProjectRiskCategory
   items: RiskItem[]
 }
 

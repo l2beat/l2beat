@@ -11,9 +11,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ProjectPermissionedAccount } from '../common'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -22,8 +19,11 @@ import {
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
   RISK_VIEW,
+  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -50,12 +50,11 @@ const roles = discovery.getContractValue<{
   PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
 
-const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
-  (address) => ({
+const operators: ScalingProjectPermissionedAccount[] =
+  roles.OPERATOR_ROLE.members.map((address) => ({
     address: EthereumAddress(address),
     type: 'EOA',
-  }),
-)
+  }))
 
 const pausers: string[] = roles.PAUSE_MANAGER_ROLE.members
 const isPaused: boolean =

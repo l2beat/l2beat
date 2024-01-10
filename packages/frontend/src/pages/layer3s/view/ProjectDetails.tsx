@@ -1,10 +1,19 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { ContractsSection } from '../../../components/project/ContractsSection'
 import { DetailedDescriptionSection } from '../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSection } from '../../../components/project/MilestonesSection'
-import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
+import { PermissionsSection } from '../../../components/project/PermissionsSection'
+import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
+import { StateDerivationSection } from '../../../components/project/StateDerivationSection'
+import { StateValidationSection } from '../../../components/project/StateValidationSection'
+import {
+  TechnologyIncomplete,
+  TechnologyIncompleteProps,
+} from '../../../components/project/TechnologyIncomplete'
+import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
 import { WrongResearchCTA } from '../../../components/project/WrongInformationCTA'
 import { ScalingDetailsItem } from '../props/getProjectDetails'
@@ -32,6 +41,29 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <DetailedDescriptionSection key={item.props.id} {...item.props} />
             )
+          case 'RiskAnalysisSection':
+            return <RiskAnalysis key={item.props.id} {...item.props} />
+          case 'TechnologyIncompleteNote':
+            return (
+              <TechnologyIncomplete
+                key={`${item.type}${index}`}
+                {...item.props}
+              />
+            )
+          case 'TechnologySection':
+            return <TechnologySection key={item.props.id} {...item.props} />
+          case 'StateDerivationSection':
+            return (
+              <StateDerivationSection key={item.props.id} {...item.props} />
+            )
+          case 'StateValidationSection':
+            return (
+              <StateValidationSection key={item.props.id} {...item.props} />
+            )
+          case 'PermissionsSection':
+            return <PermissionsSection key={item.props.id} {...item.props} />
+          case 'ContractsSection':
+            return <ContractsSection key={item.props.id} {...item.props} />
           case 'UpcomingDisclaimer':
             return (
               <UpcomingDisclaimer
