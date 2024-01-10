@@ -85,8 +85,6 @@ export const mantapacific: Layer2 = {
     slug: 'mantapacific',
     description:
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps. Manta Pacific currently uses Celestia for data availability.',
-    redWarning:
-      'The fraud proof system is still under development and data is posted offchain.',
     purpose: 'Universal',
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
