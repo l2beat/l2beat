@@ -50,6 +50,7 @@ import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
+import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { orb3 } from './orb3'
@@ -134,6 +135,7 @@ export const layer2s: Layer2[] = [
   myria,
   nova,
   obscuro,
+  ola,
   omgnetwork,
   optimism,
   orb3,
