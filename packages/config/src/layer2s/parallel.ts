@@ -40,6 +40,8 @@ const challengeWindow = discovery.getContractValue<number>(
   'confirmPeriodBlocks',
 ) // 43200
 
+const l1TimelockDelay = 0
+const l2TimelockDelay = 0
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
 const totalDelay = challengeWindowSeconds
 
@@ -248,7 +250,7 @@ export const arbitrum: Layer2 = {
       )} delay. Since there is a ${formatSeconds(
         selfSequencingDelay,
       )} to force a tx, users have only ${formatSeconds(
-        l2TimelockDelay - selfSequencingDelay,
+        Math.min(l2TimelockDelay - selfSequencingDelay, 0),
       )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
         validatorAfkTime,
       )} delay and then wait for the ${formatSeconds(
@@ -513,8 +515,8 @@ export const arbitrum: Layer2 = {
   milestones: [
     {
       ...MILESTONES.MAINNET_OPEN,
-      link: 'https://twitter.com/arbitrum/status/1432817424752128008',
-      date: '2021-08-31T00:00:00Z',
+      link: 'https://twitter.com/ParallelFi/status/1743048283684237574',
+      date: '2024-01-05T07:14:00Z',
     },
   ],
   stage: getStage(
@@ -542,16 +544,5 @@ export const arbitrum: Layer2 = {
       rollupNodeLink: 'https://github.com/OffchainLabs/nitro/',
     },
   ),
-  knowledgeNuggets: [
-    {
-      title: 'Arbitrum update boosts decentralization',
-      url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Arbitrum is down... or is it?',
-      url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_04,
-    },
-  ],
+  knowledgeNuggets: [],
 }
