@@ -57,7 +57,7 @@ export const aevo: Layer2 = opStack({
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
-  genesisTimestamp: new UnixTime(1679193119),
+  genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: false,
