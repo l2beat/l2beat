@@ -1,7 +1,9 @@
-import { ProjectRisk, ProjectRiskCategory } from '@l2beat/config'
+import { ScalingProjectRisk, ScalingProjectRiskCategory } from '@l2beat/config'
 
-export function groupRisks(risks: (ProjectRisk & { referencedId: string })[]) {
-  const categories: ProjectRiskCategory[] = [
+export function groupRisks(
+  risks: (ScalingProjectRisk & { referencedId: string })[],
+) {
+  const categories: ScalingProjectRiskCategory[] = [
     'Funds can be stolen if',
     'Funds can be lost if',
     'Funds can be frozen if',

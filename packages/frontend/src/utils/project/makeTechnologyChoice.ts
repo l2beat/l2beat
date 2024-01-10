@@ -1,10 +1,10 @@
-import { ProjectTechnologyChoice } from '@l2beat/config'
+import { ScalingProjectTechnologyChoice } from '@l2beat/config'
 
 import { TechnologyChoice } from '../../components/project/TechnologySection'
 
 export function makeTechnologyChoice(
   id: string,
-  item: ProjectTechnologyChoice,
+  item: ScalingProjectTechnologyChoice,
 ): TechnologyChoice {
   const risks = item.risks.map((risk) => ({
     text: `${risk.category} ${risk.text}`,

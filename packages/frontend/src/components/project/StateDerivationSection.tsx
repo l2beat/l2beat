@@ -1,11 +1,12 @@
-import { ProjectStateDerivation } from '@l2beat/config'
+import { ScalingProjectStateDerivation } from '@l2beat/config'
 import React from 'react'
 
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
 
-export interface StateDerivationSectionProps extends ProjectStateDerivation {
+export interface StateDerivationSectionProps
+  extends ScalingProjectStateDerivation {
   id: SectionId
   title: string
 }

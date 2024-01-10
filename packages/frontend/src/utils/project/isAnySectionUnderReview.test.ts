@@ -3,9 +3,9 @@ import {
   Layer2Config,
   Layer2Display,
   ScalingProjectContracts,
-  ProjectRiskView,
-  ProjectRiskViewEntry,
-  ProjectTechnology,
+  ScalingProjectRiskView,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnology,
   StageConfig,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -18,11 +18,13 @@ describe(isAnySectionUnderReview.name, () => {
     type: 'layer2',
     id: ProjectId('project-id'),
     display: mockObject<Layer2Display>(),
-    technology: mockObject<ProjectTechnology>({ isUnderReview: undefined }),
+    technology: mockObject<ScalingProjectTechnology>({
+      isUnderReview: undefined,
+    }),
     contracts: mockObject<ScalingProjectContracts>({
       isUnderReview: undefined,
     }),
-    riskView: mockObject<ProjectRiskView>(),
+    riskView: mockObject<ScalingProjectRiskView>(),
     config: mockObject<Layer2Config>(),
     stage: mockObject<StageConfig>({ stage: 'Stage 1' }),
   }
@@ -67,7 +69,7 @@ describe(isAnySectionUnderReview.name, () => {
         riskView: {
           ...mockProject.riskView,
           sequencerFailure: {
-            ...mockObject<ProjectRiskViewEntry>(),
+            ...mockObject<ScalingProjectRiskViewEntry>(),
             sentiment: 'UnderReview' as const,
           },
         },
