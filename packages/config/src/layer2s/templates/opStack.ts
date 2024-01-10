@@ -27,7 +27,12 @@ import {
   subtractOne,
 } from '../common'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2StateDerivation } from '../types'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2StateDerivation,
+  Layer2TransactionApi,
+} from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
@@ -38,6 +43,7 @@ export interface OpStackConfig {
   }
   l1StandardBridgeEscrow: EthereumAddress
   apiUrl?: string
+  transactionApi?: Layer2TransactionApi
   inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
@@ -89,7 +95,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         ...templateVars.nonTemplateEscrows,
       ],
       transactionApi:
-        templateVars.apiUrl !== undefined
+        templateVars.transactionApi ??
+        (templateVars.apiUrl !== undefined
           ? {
               type: 'rpc',
               startBlock: 1,
@@ -97,7 +104,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               callsPerMinute: 1500,
               assessCount: subtractOne,
             }
-          : undefined,
+          : undefined),
       liveness: {
         proofSubmissions: [],
         batchSubmissions: [
