@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { ProjectLink } from '../icons'
@@ -27,7 +26,7 @@ export function Summary(props: SummaryProps) {
       <div className="my-2 hidden w-full md:block">
         <DesktopProjectLinks projectLinks={props.links} />
       </div>
-      <div className={classNames('grid w-full gap-4 md:grid-cols-3')}>
+      <div className="grid w-full gap-4 md:grid-cols-3">
         {(props.type === 'layer2' || props.type === 'layer3') && (
           <TvlSummary
             stats={props.stats.l2Tvl}
@@ -38,7 +37,7 @@ export function Summary(props: SummaryProps) {
         <ProjectSummary
           stats={props.stats.summary}
           type={props.type}
-          className={classNames('md:col-span-2')}
+          className="md:col-span-2"
         />
       </div>
       <div className="w-full px-4 md:hidden md:px-0">
