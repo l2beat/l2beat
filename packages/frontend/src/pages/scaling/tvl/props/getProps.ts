@@ -15,10 +15,7 @@ export function getProps(
       showLiveness: config.features.liveness,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
-      detailedTvlView: getScalingTvlView(
-        config.layer2s,
-        pagesData.tvlApiResponse,
-      ),
+      tvlView: getScalingTvlView(config.layer2s, pagesData.tvlApiResponse),
     },
     wrapper: {
       metadata: getPageMetadata(),

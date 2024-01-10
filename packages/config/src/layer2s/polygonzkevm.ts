@@ -79,6 +79,10 @@ const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
   'isForcedBatchDisallowed',
 )
 
+const ESCROW_wstETH_ADDRESS = '0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'
+const ESCROW_USDC_ADDRESS = '0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'
+const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
+
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygonzkevm'),
@@ -122,6 +126,27 @@ export const polygonzkevm: Layer2 = {
         address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
         sinceTimestamp: new UnixTime(1679653127),
         tokens: '*',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_wstETH_ADDRESS),
+        sinceTimestamp: new UnixTime(1703945135),
+        tokens: ['wstETH'],
+        description: 'Escrow for wstETH',
+        upgradableBy: ['EscrowAdmin'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_USDC_ADDRESS),
+        sinceTimestamp: new UnixTime(1700125979),
+        tokens: ['USDC'],
+        description: 'Escrow for USDC',
+        upgradableBy: ['EscrowAdmin'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_DAI_ADDRESS),
+        sinceTimestamp: new UnixTime(1695199499),
+        tokens: ['DAI', 'sDAI'],
+        description: 'Escrow for DAI',
+        upgradableBy: ['EscrowAdmin'],
       }),
     ],
     transactionApi: {
@@ -350,6 +375,10 @@ export const polygonzkevm: Layer2 = {
     ...discovery.getMultisigPermission(
       'SecurityCouncil',
       'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
+    ),
+    ...discovery.getMultisigPermission(
+      'EscrowsAdmin',
+      'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
     ),
   ],
   contracts: {

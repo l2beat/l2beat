@@ -85,26 +85,43 @@ describe('layer2s', () => {
   })
 
   describe('liveness', () => {
-    for (const project of layer2s) {
-      it(`${project.id.toString()} : has valid signatures`, () => {
-        if (project.config.liveness) {
-          const functionCalls = [
-            ...project.config.liveness.batchSubmissions,
-            ...project.config.liveness.stateUpdates,
-          ].filter((x) => x.formula === 'functionCall') as {
-            selector: string
-            functionSignature: string
-          }[]
+    it('every project has valid signatures', () => {
+      for (const project of layer2s) {
+        it(`${project.id.toString()} : has valid signatures`, () => {
+          if (project.config.liveness) {
+            const functionCalls = [
+              ...project.config.liveness.batchSubmissions,
+              ...project.config.liveness.stateUpdates,
+            ].filter((x) => x.formula === 'functionCall') as {
+              selector: string
+              functionSignature: string
+            }[]
 
-          functionCalls.forEach((c) => {
-            const i = new utils.Interface([c.functionSignature])
-            const fragment = i.fragments[0]
-            const calculatedSignature = i.getSighash(fragment)
-            expect(calculatedSignature).toEqual(c.selector)
+            functionCalls.forEach((c) => {
+              const i = new utils.Interface([c.functionSignature])
+              const fragment = i.fragments[0]
+              const calculatedSignature = i.getSighash(fragment)
+              expect(calculatedSignature).toEqual(c.selector)
+            })
+          }
+        })
+      }
+    })
+
+    describe('if validium or optimium, then has NotApplicable as dataAvailabilityMode', () => {
+      for (const project of layer2s) {
+        if (
+          project.display.category === 'Optimium' ||
+          project.display.category === 'Validium'
+        ) {
+          it(project.id.toString(), () => {
+            expect(project.display.dataAvailabilityMode).toEqual(
+              'NotApplicable',
+            )
           })
         }
-      })
-    }
+      }
+    })
   })
 
   describe('activity', () => {

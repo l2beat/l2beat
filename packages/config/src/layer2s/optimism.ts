@@ -149,7 +149,6 @@ export const optimism: Layer2 = {
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
-    nativeL2TokensIncludedInTVL: ['OP'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),

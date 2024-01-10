@@ -6,6 +6,11 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
 export const OMNICHAN_ESCROWS: ScalingProjectEscrow[] = [
   {
+    address: EthereumAddress('0x92cc36d66e9d739d50673d1f27929a371fb83a67'),
+    sinceTimestamp: new UnixTime(1695376800),
+    tokens: ['WAGMI'],
+  },
+  {
     address: EthereumAddress('0x7122985656e38BDC0302Db86685bb972b145bD3C'),
     sinceTimestamp: new UnixTime(1700658000),
     tokens: ['STONE'],
@@ -90,13 +95,18 @@ export const RELAYERS = Object.values(relevantAppConfigs)
 
 assert(
   RELAYERS.length === 1,
-  'Expected exactly one relayer. Please update the project contracts section. ',
+  'Expected exactly one relayer. Please update the project contracts section.',
 )
 
 export const ORACLES = Object.values(relevantAppConfigs)
   .flatMap((x) => (x ? EthereumAddress(x.oracle) : []))
   .filter((x, i, a) => a.indexOf(x) === i)
 
-export const INBOUND_PROOF_LIBRARIES = discovery
-  .getContractValue<string[]>('UltraLightNodeV2', 'INBOUND_PROOF_LIBRARIES')
+const inboundProofLibraries = discovery.getContractValue<
+  Partial<Record<string, string[] | string>>
+>('UltraLightNodeV2', 'inboundProofLibrary')
+
+export const INBOUND_PROOF_LIBRARIES = Object.values(inboundProofLibraries)
+  .flatMap((x) => x ?? [])
+  .filter((x, i, a) => a.indexOf(x) === i)
   .map((address) => EthereumAddress(address))

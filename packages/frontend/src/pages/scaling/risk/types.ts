@@ -18,6 +18,7 @@ export interface ScalingRiskViewEntry {
   category: ScalingProjectCategory
   provider?: Layer2Provider
   warning?: string
+  redWarning: string | undefined
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean

@@ -17,6 +17,7 @@ export interface ActivityViewEntry {
   category: ScalingProjectCategory | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
+  redWarning: string | undefined
   isVerified: boolean | undefined
   showProjectUnderReview: boolean | undefined
   dataSource: string | undefined

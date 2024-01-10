@@ -40,6 +40,7 @@ function getScalingTvlViewEntry(
     provider: project.display.provider,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
+    redWarning: project.display.redWarning,
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
