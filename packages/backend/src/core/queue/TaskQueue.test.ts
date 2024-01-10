@@ -143,7 +143,6 @@ describe(TaskQueue.name, () => {
     expect(logger.error).toHaveBeenNthCalledWith(
       3,
       'Stopping queue because of error',
-      // @ts-expect-error mock
       {
         job: expect.a(String),
         error,
