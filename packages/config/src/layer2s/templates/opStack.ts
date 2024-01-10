@@ -16,10 +16,10 @@ import {
   Milestone,
   NUGGETS,
   OPERATOR,
-  ProjectContract,
-  ProjectPermission,
-  ProjectStateDerivation,
   RISK_VIEW,
+  ScalingProjectContract,
+  ScalingProjectPermission,
+  ScalingProjectStateDerivation,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -42,12 +42,12 @@ export interface OpStackConfig {
   tokenList: Token[]
   l2OutputOracle: ContractParameters
   portal: ContractParameters
-  stateDerivation?: ProjectStateDerivation
+  stateDerivation?: ScalingProjectStateDerivation
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   roleOverrides: Record<string, string>
-  nonTemplatePermissions?: ProjectPermission[]
-  nonTemplateContracts?: ProjectContract[]
+  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplateContracts?: ScalingProjectContract[]
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {

@@ -1,10 +1,10 @@
 import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectEscrow } from '../common'
+import { ScalingProjectEscrow } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
-export const OMNICHAN_ESCROWS: ProjectEscrow[] = [
+export const OMNICHAN_ESCROWS: ScalingProjectEscrow[] = [
   {
     address: EthereumAddress('0x7122985656e38BDC0302Db86685bb972b145bD3C'),
     sinceTimestamp: new UnixTime(1700658000),

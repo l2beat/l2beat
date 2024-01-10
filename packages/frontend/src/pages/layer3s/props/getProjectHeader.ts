@@ -1,4 +1,4 @@
-import { layer2s, Layer3, ProjectLinks } from '@l2beat/config'
+import { layer2s, Layer3, ScalingProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
   TvlApiCharts,
@@ -90,7 +90,7 @@ export function getProjectHeader(
   }
 }
 
-function getLinks(links: ProjectLinks): ProjectLink[] {
+function getLinks(links: ScalingProjectLinks): ProjectLink[] {
   const items = [
     {
       name: 'Website',

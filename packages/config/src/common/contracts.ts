@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { formatSeconds } from '../utils/formatSeconds'
 import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
-import { ProjectContracts } from './ProjectContracts'
-import { ProjectRisk } from './ProjectRisk'
+import { ScalingProjectContracts } from './ScalingProjectContracts'
+import { ScalingProjectRisk } from './ScalingProjectRisk'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
@@ -17,26 +17,26 @@ const UNVERIFIED_DESCRIPTION_ALL =
 const UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION =
   'The source code of some implementations is not verified on Etherscan.'
 
-const UNVERIFIED_RISK: ProjectRisk = {
+const UNVERIFIED_RISK: ScalingProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'the source code of unverified contracts contains malicious code.',
   isCritical: true,
 }
 
-const UPGRADE_NO_DELAY_RISK: ProjectRisk = {
+const UPGRADE_NO_DELAY_RISK: ScalingProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'a contract receives a malicious code upgrade. There is no delay on code upgrades.',
   isCritical: true,
 }
 
-function UPGRADE_WITH_DELAY_RISK(delay: string): ProjectRisk {
+function UPGRADE_WITH_DELAY_RISK(delay: string): ScalingProjectRisk {
   return {
     category: 'Funds can be stolen if',
     text: `a contract receives a malicious code upgrade. There is a ${delay} delay on code upgrades.`,
   }
 }
 
-function UPGRADE_WITH_DELAY_RISK_WITH_SC(delay: string): ProjectRisk {
+function UPGRADE_WITH_DELAY_RISK_WITH_SC(delay: string): ScalingProjectRisk {
   return {
     category: 'Funds can be stolen if',
     text: `a contract receives a malicious code upgrade. There is a ${delay} days delay on code upgrades unless upgrade is initiated by the \
@@ -44,7 +44,9 @@ function UPGRADE_WITH_DELAY_RISK_WITH_SC(delay: string): ProjectRisk {
   }
 }
 
-function UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds: number): ProjectRisk {
+function UPGRADE_WITH_DELAY_SECONDS_RISK(
+  delaySeconds: number,
+): ScalingProjectRisk {
   if (delaySeconds < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADE_NO_DELAY_RISK
   }
@@ -52,7 +54,7 @@ function UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds: number): ProjectRisk {
   return UPGRADE_WITH_DELAY_RISK(delay)
 }
 
-const EMPTY: ProjectContracts = {
+const EMPTY: ScalingProjectContracts = {
   addresses: [],
   risks: [],
 }

@@ -1,6 +1,6 @@
-export interface ProjectRisk {
+export interface ScalingProjectRisk {
   /** Category of this risk */
-  category: ProjectRiskCategory
+  category: ScalingProjectRiskCategory
   /** Description of the risk. Should form a sentence with the category */
   text: string
   /** If the risk is particularly bad */
@@ -9,7 +9,7 @@ export interface ProjectRisk {
   _ignoreTextFormatting?: boolean
 }
 
-export type ProjectRiskCategory =
+export type ScalingProjectRiskCategory =
   | 'Funds can be stolen if'
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
@@ -19,7 +19,7 @@ export type ProjectRiskCategory =
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
-export interface ProjectRiskViewEntry {
+export interface ScalingProjectRiskViewEntry {
   value: string
   description: string
   sentiment: Sentiment

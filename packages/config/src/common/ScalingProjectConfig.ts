@@ -1,8 +1,8 @@
 import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectEscrow } from './ProjectEscrow'
+import { ScalingProjectEscrow } from './ScalingProjectEscrow'
 
-export interface ProjectConfig {
+export interface ScalingProjectConfig {
   /** List of native and external tokens */
   tokenList?: Token[]
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
@@ -12,7 +12,7 @@ export interface ProjectConfig {
   /** Assets external to L1 which should be incorporated into the aggregated TVL report for a given project.  */
   externalAssets?: ProjectExternalAssets
   /** List of contracts in which L1 funds are locked */
-  escrows: ProjectEscrow[]
+  escrows: ScalingProjectEscrow[]
 }
 
 export interface ProjectExternalAssets {

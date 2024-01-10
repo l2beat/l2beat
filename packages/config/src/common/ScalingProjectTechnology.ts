@@ -1,26 +1,26 @@
-import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
+import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
-export interface ProjectTechnology {
+export interface ScalingProjectTechnology {
   /** What state correctness mechanism is used in the project */
-  stateCorrectness: ProjectTechnologyChoice
+  stateCorrectness: ScalingProjectTechnologyChoice
   /** What is the new cryptography used in the project */
-  newCryptography?: ProjectTechnologyChoice
+  newCryptography?: ScalingProjectTechnologyChoice
   /** What is the data availability choice for the project */
-  dataAvailability: ProjectTechnologyChoice
+  dataAvailability: ScalingProjectTechnologyChoice
   /** What are the details about project operator(s) */
-  operator: ProjectTechnologyChoice
+  operator: ScalingProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
-  forceTransactions: ProjectTechnologyChoice
+  forceTransactions: ScalingProjectTechnologyChoice
   /** A description of the available exit mechanisms */
-  exitMechanisms: ProjectTechnologyChoice[]
+  exitMechanisms: ScalingProjectTechnologyChoice[]
   /** What is solution to the mass exit problem */
-  massExit?: ProjectTechnologyChoice
+  massExit?: ScalingProjectTechnologyChoice
   /** What is the additional privacy offered */
-  additionalPrivacy?: ProjectTechnologyChoice
+  additionalPrivacy?: ScalingProjectTechnologyChoice
   /** What are the smart contract capabilities */
-  smartContracts?: ProjectTechnologyChoice
+  smartContracts?: ScalingProjectTechnologyChoice
   /** How can the project be upgraded? */
-  upgradeMechanism?: ProjectTechnologyChoice
+  upgradeMechanism?: ScalingProjectTechnologyChoice
   /** Is the technology section under review */
   isUnderReview?: boolean
 }

@@ -1,8 +1,8 @@
-import { ProjectCategory } from './ProjectCategory'
-import { ProjectDataAvailabilityMode } from './ProjectDataAvailabilityMode'
-import { ProjectLinks } from './ProjectLinks'
+import { ScalingProjectCategory } from './ScalingProjectCategory'
+import { ScalingProjectDataAvailabilityMode } from './ScalingProjectDataAvailabilityMode'
+import { ScalingProjectLinks } from './ScalingProjectLinks'
 
-export interface ProjectDisplay {
+export interface ScalingProjectDisplay {
   /** Name of the layer2/3, will be used as a display name on the website */
   name: string
   /** Short name of the layer2/3, will be used in some places on the website as a display name */
@@ -10,9 +10,9 @@ export interface ProjectDisplay {
   /** Url friendly layer2/3 name, will be used in website urls */
   slug: string
   /** Name of the category the layer2/3 belongs to */
-  category: ProjectCategory
+  category: ScalingProjectCategory
   /** Data availability mode of layer2/3 project */
-  dataAvailabilityMode: ProjectDataAvailabilityMode
+  dataAvailabilityMode: ScalingProjectDataAvailabilityMode
   /** A warning displayed in the header of the project */
   headerWarning?:
     | {
@@ -31,7 +31,7 @@ export interface ProjectDisplay {
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** List of links */
-  links: ProjectLinks
+  links: ScalingProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
 }

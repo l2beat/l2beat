@@ -1,12 +1,12 @@
-import { ProjectRisk } from './ProjectRisk'
-import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
+import { ScalingProjectRisk } from './ScalingProjectRisk'
+import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
-export const FRONTRUNNING_RISK: ProjectRisk = {
+export const FRONTRUNNING_RISK: ScalingProjectRisk = {
   category: 'MEV can be extracted if',
   text: 'the operator exploits their centralized position and frontruns user transactions.',
 }
 
-const CENTRALIZED_OPERATOR: ProjectTechnologyChoice = {
+const CENTRALIZED_OPERATOR: ScalingProjectTechnologyChoice = {
   name: 'The system has a centralized operator',
   description:
     'The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.',
@@ -14,7 +14,7 @@ const CENTRALIZED_OPERATOR: ProjectTechnologyChoice = {
   references: [],
 }
 
-const CENTRALIZED_SEQUENCER: ProjectTechnologyChoice = {
+const CENTRALIZED_SEQUENCER: ScalingProjectTechnologyChoice = {
   name: 'The system has a centralized sequencer',
   description:
     'While proposing blocks is open to anyone the system employs a privileged sequencer that has priority for submitting transaction batches and ordering transactions.',
@@ -22,7 +22,7 @@ const CENTRALIZED_SEQUENCER: ProjectTechnologyChoice = {
   references: [],
 }
 
-const STARKEX_OPERATOR: ProjectTechnologyChoice = {
+const STARKEX_OPERATOR: ScalingProjectTechnologyChoice = {
   ...CENTRALIZED_OPERATOR,
   description:
     CENTRALIZED_OPERATOR.description +
@@ -35,7 +35,7 @@ const STARKEX_OPERATOR: ProjectTechnologyChoice = {
   ],
 }
 
-const DECENTRALIZED_OPERATOR: ProjectTechnologyChoice = {
+const DECENTRALIZED_OPERATOR: ScalingProjectTechnologyChoice = {
   name: 'There is no central operator',
   description:
     'There is no privileged entity that sequences transactions or produces blocks. This activity is permissionless and open to anyone.',

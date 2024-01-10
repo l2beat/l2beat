@@ -4,14 +4,14 @@ import {
   KnowledgeNugget,
   Layer2Provider,
   Milestone,
-  ProjectConfig,
-  ProjectContracts,
-  ProjectDisplay,
-  ProjectPermission,
+  ScalingProjectConfig,
+  ScalingProjectContracts,
+  ScalingProjectDisplay,
+  ScalingProjectPermission,
 } from '../../common'
-import { ProjectRiskView } from '../../common/ProjectRiskView'
-import { ProjectStateDerivation } from '../../common/ProjectStateDerivation'
-import { ProjectTechnology } from '../../common/ProjectTechnology'
+import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
+import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
+import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2Liveness } from './Layer2LivenessConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
@@ -31,26 +31,26 @@ export interface Layer2 {
   /** Information required to calculate the stats of the layer2 */
   config: Layer2Config
   /** Risk view values for this layer2 */
-  riskView: ProjectRiskView
+  riskView: ScalingProjectRiskView
   /** Rollup stage */
   stage: StageConfig
   /** Deep dive into layer2 technology */
-  technology: ProjectTechnology
+  technology: ScalingProjectTechnology
   /** Open-source node details */
-  stateDerivation?: ProjectStateDerivation
+  stateDerivation?: ScalingProjectStateDerivation
   /** How project validates state? */
   stateValidation?: string
   /** List of smart contracts used in the layer2 */
-  contracts: ProjectContracts
+  contracts: ScalingProjectContracts
   /** List of permissioned addresses */
-  permissions?: ProjectPermission[] | 'UnderReview'
+  permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
-export interface Layer2Display extends ProjectDisplay {
+export interface Layer2Display extends ScalingProjectDisplay {
   /** Technology provider */
   provider?: Layer2Provider
   /** Explanation on how liveness data is gathered for given project */
@@ -65,7 +65,7 @@ export interface Layer2LivenessDisplay {
   }
 }
 
-export interface Layer2Config extends ProjectConfig {
+export interface Layer2Config extends ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
   /** Configuration for getting state updates and batch submission */

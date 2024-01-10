@@ -4,8 +4,8 @@ import {
   isSingleAddress,
   Layer2,
   Layer3,
-  ProjectContract,
-  ProjectEscrow,
+  ScalingProjectContract,
+  ScalingProjectEscrow,
 } from '@l2beat/config'
 import {
   assert,
@@ -94,7 +94,7 @@ export function getContractSection(
 }
 
 function makeTechnologyContract(
-  item: ProjectContract,
+  item: ScalingProjectContract,
   project: Layer2 | Layer3 | Bridge,
   isUnverified: boolean,
   verificationStatus: VerificationStatus,
@@ -402,7 +402,7 @@ function makeTechnologyContract(
 }
 
 function isContractUnverified(
-  contract: ProjectContract,
+  contract: ScalingProjectContract,
   verificationStatus: {
     projects: Record<string, boolean | undefined>
     contracts: Record<string, boolean | undefined>
@@ -427,7 +427,9 @@ function isAddressUnverified(
   return verificationStatus.contracts[address.toString()] === false
 }
 
-function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
+function escrowToProjectContract(
+  escrow: ScalingProjectEscrow,
+): ScalingProjectContract {
   assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
   return {
@@ -440,7 +442,7 @@ function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   }
 }
 
-function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
+function moreTokensFirst(a: ScalingProjectEscrow, b: ScalingProjectEscrow) {
   const aTokens = a.tokens === '*' ? Number.POSITIVE_INFINITY : a.tokens.length
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 

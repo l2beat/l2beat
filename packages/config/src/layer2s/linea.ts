@@ -18,8 +18,8 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  ProjectPermissionedAccount,
   RISK_VIEW,
+  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -50,12 +50,11 @@ const roles = discovery.getContractValue<{
   PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
 
-const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
-  (address) => ({
+const operators: ScalingProjectPermissionedAccount[] =
+  roles.OPERATOR_ROLE.members.map((address) => ({
     address: EthereumAddress(address),
     type: 'EOA',
-  }),
-)
+  }))
 
 const pausers: string[] = roles.PAUSE_MANAGER_ROLE.members
 const isPaused: boolean =

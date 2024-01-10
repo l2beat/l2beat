@@ -1,12 +1,12 @@
 import { formatSeconds } from '../utils/formatSeconds'
 import { CONTRACTS } from './contracts'
-import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
+import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
 function ARBITRUM_DAO(
   l1Delay: number,
   challengeWindow: number,
   l2Delay: number,
-): ProjectTechnologyChoice {
+): ScalingProjectTechnologyChoice {
   const totalDelay = l1Delay + challengeWindow + l2Delay
   return {
     name: 'Arbitrum DAO is in charge of upgrades',

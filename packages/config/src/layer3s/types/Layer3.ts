@@ -4,14 +4,14 @@ import {
   KnowledgeNugget,
   Layer3Provider,
   Milestone,
-  ProjectConfig,
-  ProjectContracts,
-  ProjectDisplay,
-  ProjectPermission,
+  ScalingProjectConfig,
+  ScalingProjectContracts,
+  ScalingProjectDisplay,
+  ScalingProjectPermission,
 } from '../../common'
-import { ProjectRiskView } from '../../common/ProjectRiskView'
-import { ProjectStateDerivation } from '../../common/ProjectStateDerivation'
-import { ProjectTechnology } from '../../common/ProjectTechnology'
+import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
+import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
+import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 
 export interface Layer3 {
   type: 'layer3'
@@ -26,26 +26,26 @@ export interface Layer3 {
   /** Information displayed about the layer3 on the frontend */
   display: Layer3Display
   /** Information required to calculate the stats of the layer3 */
-  config: ProjectConfig
+  config: ScalingProjectConfig
   /** Risk view values for this layer3 */
-  riskView: ProjectRiskView
+  riskView: ScalingProjectRiskView
   /** Deep dive into layer3 technology */
-  technology: ProjectTechnology
+  technology: ScalingProjectTechnology
   /** Open-source node details */
-  stateDerivation?: ProjectStateDerivation
+  stateDerivation?: ScalingProjectStateDerivation
   /** How project validates state? */
   stateValidation?: string
   /** List of smart contracts used in the layer2 */
-  contracts: ProjectContracts
+  contracts: ScalingProjectContracts
   /** List of permissioned addresses */
-  permissions?: ProjectPermission[] | 'UnderReview'
+  permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
-export interface Layer3Display extends ProjectDisplay {
+export interface Layer3Display extends ScalingProjectDisplay {
   /** Technology provider */
   provider?: Layer3Provider
 }

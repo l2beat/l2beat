@@ -1,4 +1,9 @@
-import { Bridge, Layer2, Layer3, ProjectPermission } from '@l2beat/config'
+import {
+  Bridge,
+  Layer2,
+  Layer3,
+  ScalingProjectPermission,
+} from '@l2beat/config'
 import {
   ManuallyVerifiedContracts,
   VerificationStatus,
@@ -36,7 +41,7 @@ export function getPermissionsSection(
 }
 
 function toTechnologyContract(
-  permission: ProjectPermission,
+  permission: ScalingProjectPermission,
 ): TechnologyContract {
   const etherscanUrl = permission.etherscanUrl ?? 'https://etherscan.io'
   const links = permission.accounts.slice(1).map((account) => {

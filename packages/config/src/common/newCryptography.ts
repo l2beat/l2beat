@@ -1,6 +1,6 @@
-import { ProjectTechnologyChoice } from './ProjectTechnologyChoice'
+import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
-const ZK_SNARKS: ProjectTechnologyChoice = {
+const ZK_SNARKS: ScalingProjectTechnologyChoice = {
   name: 'Zero knowledge SNARK cryptography is used',
   description:
     'Despite their production use zkSNARKs are still new and experimental cryptography. Cryptography has made a lot of advancements in the recent years but all cryptographic solutions rely on time to prove their security. In addition zkSNARKs require a trusted setup to operate.',
@@ -13,7 +13,7 @@ const ZK_SNARKS: ProjectTechnologyChoice = {
   references: [],
 }
 
-const ZK_STARKS: ProjectTechnologyChoice = {
+const ZK_STARKS: ScalingProjectTechnologyChoice = {
   name: 'Zero knowledge STARK cryptography is used',
   description:
     'Despite their production use zkSTARKs proof systems are still relatively new, complex and they rely on the proper implementation of the polynomial constraints used to check validity of the Execution Trace.',

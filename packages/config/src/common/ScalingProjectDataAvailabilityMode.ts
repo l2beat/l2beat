@@ -1,4 +1,4 @@
-export type ProjectDataAvailabilityMode =
+export type ScalingProjectDataAvailabilityMode =
   | 'StateDiffs'
   | 'TxData'
   | 'NotApplicable'

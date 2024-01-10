@@ -1,4 +1,4 @@
-import { ProjectStateDerivation } from './ProjectStateDerivation'
+import { ScalingProjectStateDerivation } from './ScalingProjectStateDerivation'
 
 type SupportedOPStackChains = 'OP_MAINNET' | 'BASE' | 'ZORA' | 'PGN'
 type OPStackInfo = [string, string] // [config, genesis file]
@@ -22,7 +22,7 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   ],
 }
 
-function OPSTACK(chain: SupportedOPStackChains): ProjectStateDerivation {
+function OPSTACK(chain: SupportedOPStackChains): ScalingProjectStateDerivation {
   const [config, genesis] = OPStackInfos[chain]
   return {
     nodeSoftware: `The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](${config}).`,
