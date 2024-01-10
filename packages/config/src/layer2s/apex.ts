@@ -74,7 +74,7 @@ export const apex: Layer2 = {
     detailedDescription: `ApeX Pro is running
       two independent StarkEx instances, one for USDC and one for USDT, but that
       technical distinction is not visible to the user.`,
-    purpose: 'Exchange',
+    purpose: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

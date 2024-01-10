@@ -48,7 +48,7 @@ export function ScalingSummaryView({
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <ScalingFilters items={[...layer2s, ...layer3s]} />
+      <ScalingFilters items={[...layer2s, ...layer3s]} logPurposes />
       <Tabs
         items={[
           {

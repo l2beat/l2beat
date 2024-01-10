@@ -1,6 +1,7 @@
 import { ScalingProjectCategory } from './ScalingProjectCategory'
 import { ScalingProjectDataAvailabilityMode } from './ScalingProjectDataAvailabilityMode'
 import { ScalingProjectLinks } from './ScalingProjectLinks'
+import { ScalingProjectPurpose } from './ScalingProjectPurpose'
 
 export interface ScalingProjectDisplay {
   /** Name of the scaling project, will be used as a display name on the website */
@@ -31,7 +32,7 @@ export interface ScalingProjectDisplay {
   /** Detailed description of the scaling project, will be visible in detailed description section */
   detailedDescription?: string
   /** A short (<20 characters) description of the use case */
-  purpose: string
+  purpose: ScalingProjectPurpose[]
   /** List of links */
   links: ScalingProjectLinks
   /** Where does the activity data come from? */

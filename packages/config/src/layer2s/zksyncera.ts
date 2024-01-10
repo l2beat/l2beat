@@ -43,7 +43,7 @@ export const zksyncera: Layer2 = {
       : undefined,
     description:
       'zkSync Era is a general-purpose ZK Rollup by Matter Labs with full EVM compatibility.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     provider: 'ZK Stack',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',

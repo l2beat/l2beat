@@ -8,7 +8,7 @@ export const mode: Layer2 = upcoming({
     slug: 'mode',
     description:
       'Mode is the Ethereum L2 designed for builders and users to grow as the network grows.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

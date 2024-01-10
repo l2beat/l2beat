@@ -46,7 +46,7 @@ export const rhinofi: Layer2 = {
     name: 'rhino.fi',
     slug: 'rhinofi',
     description: 'rhino.fi is a Validium based on the StarkEx technology.',
-    purpose: 'Exchange',
+    purpose: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

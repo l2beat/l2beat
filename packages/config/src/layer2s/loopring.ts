@@ -44,7 +44,7 @@ export const loopring: Layer2 = {
     slug: 'loopring',
     description:
       'Loopring is a ZK Rollup exchange protocol for trading and payments.',
-    purpose: 'Tokens, NFTs, AMM',
+    purpose: ['Tokens', 'NFTs', 'AMM'],
     provider: 'Loopring',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',

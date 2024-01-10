@@ -8,7 +8,7 @@ export const bob: Layer2 = upcoming({
     slug: 'bob',
     description:
       'BOB ("Build on Bitcoin") is an OP Stack rollup that natively supports the Bitcoin stack, incl. Ordinals, Lightning and Nostr, powered by cross-chain light clients, a universal Bitcoin smart contract SDK, and the Risc Zero zkVM.',
-    purpose: 'Bitcoin DApps',
+    purpose: ['Bitcoin DApps'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

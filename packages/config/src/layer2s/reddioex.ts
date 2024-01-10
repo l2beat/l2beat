@@ -47,7 +47,7 @@ export const reddioex: Layer2 = {
     name: 'ReddioEx',
     slug: 'reddioex',
     description: 'ReddioEx is a Validium based on the StarkEx technology.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

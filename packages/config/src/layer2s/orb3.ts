@@ -7,7 +7,7 @@ export const orb3: Layer2 = upcoming({
     name: 'ORB3 Protocol',
     slug: 'orb3',
     description: 'SocialFi & GameFi blockchain built for the Gaming Industry.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     category: 'Optimium',
     provider: 'Arbitrum',
     links: {

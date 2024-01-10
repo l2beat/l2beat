@@ -8,7 +8,7 @@ export const x1: Layer2 = upcoming({
     slug: 'x1',
     description:
       'X1 is an upcoming Validium by OKX. It is powered by the Polygon CDK.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     category: 'Validium',
     provider: 'Polygon',
     links: {

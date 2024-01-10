@@ -7,7 +7,7 @@ export const mint: Layer2 = upcoming({
     name: 'Mint',
     slug: 'mint',
     description: 'Mint Blockchain is a Layer 2 network for NFTs.',
-    purpose: 'Universal, NFT',
+    purpose: ['Universal', 'NFT'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

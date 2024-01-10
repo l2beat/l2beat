@@ -38,6 +38,14 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
       value: generateSlugList(items, (i) => i.category === category),
     }))
 
+  const purposes = uniq(items.flatMap((i) => i.purpose))
+    .sort()
+    .filter(notUndefined)
+    .map((purpose) => ({
+      label: purpose,
+      value: generateSlugList(items, (i) => !!i.purpose?.includes(purpose)),
+    }))
+
   return (
     <OverflowWrapper>
       <FiltersWrapper>
@@ -66,6 +74,17 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
         </RichSelect>
         <RichSelect label="Select stage" id="stage-select">
           {stages.map((stage) => (
+            <RichSelect.Item
+              selectedLabel={stage.label}
+              key={stage.label}
+              value={stage.value}
+            >
+              {stage.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+        <RichSelect label="Select purpose" id="purpose-select">
+          {purposes.map((stage) => (
             <RichSelect.Item
               selectedLabel={stage.label}
               key={stage.label}

@@ -8,7 +8,7 @@ export const lisk: Layer2 = upcoming({
     slug: 'lisk',
     description:
       'Lisk announced a strategic move to integrate with the Ethereum ecosystem as an OP Stack L2.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

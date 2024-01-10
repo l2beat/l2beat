@@ -7,7 +7,7 @@ export const stealthchain: Layer2 = upcoming({
     name: 'StealthChain',
     slug: 'stealthchain',
     description: 'Degen Stealth Launchpad, Cross Chain Token Bridge & LP Pool.',
-    purpose: 'Launchpad',
+    purpose: ['Launchpad'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

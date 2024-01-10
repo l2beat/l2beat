@@ -307,8 +307,11 @@ describe('layer2s', () => {
   describe('every purpose is short', () => {
     const purposes = layer2s.map((x) => x.display.purpose)
     for (const purpose of purposes) {
-      it(purpose, () => {
-        expect(purpose.length).toBeLessThanOrEqual(20)
+      const totalLength = purpose.reduce((acc, curr) => {
+        return acc + curr.length
+      }, 0)
+      it(purpose.join(', '), () => {
+        expect(totalLength).toBeLessThanOrEqual(20)
       })
     }
   })

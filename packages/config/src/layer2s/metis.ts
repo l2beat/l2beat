@@ -28,7 +28,7 @@ export const metis: Layer2 = {
       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',

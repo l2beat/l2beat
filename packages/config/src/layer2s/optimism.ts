@@ -110,7 +110,7 @@ export const optimism: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

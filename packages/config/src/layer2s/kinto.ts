@@ -8,7 +8,7 @@ export const kinto: Layer2 = upcoming({
     slug: 'kinto',
     description:
       'Kinto is the first KYCed Layer 2 capable of supporting both modern financial institutions and decentralized protocols.',
-    purpose: 'DeFi',
+    purpose: ['DeFi'],
     category: 'Optimistic Rollup',
     provider: 'Arbitrum',
     links: {

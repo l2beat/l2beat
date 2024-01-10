@@ -8,7 +8,7 @@ export const morph: Layer2 = upcoming({
     slug: 'morph',
     description:
       'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs.',
-    purpose: 'Universal',
+    purpose: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://morphl2.io'],
