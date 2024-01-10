@@ -91,9 +91,11 @@ export function TvlSummary(props: TvlSummaryProps) {
             <p className="text-lg font-bold md:text-2xl md:leading-none">
               {formatUSD(props.stats.tvl)}
             </p>
-            <p className="text-xs font-bold md:text-base">
-              <PercentChange value={props.stats.tvlChange} />
-            </p>
+            {props.stats.tvl > 0 && (
+              <p className="text-xs font-bold md:text-base">
+                <PercentChange value={props.stats.tvlChange} />
+              </p>
+            )}
           </div>
         ) : (
           <div className="w-auto">
@@ -144,9 +146,11 @@ export function TvlSummary(props: TvlSummaryProps) {
                 </div>
                 <span className="text-base font-semibold leading-none">
                   {s.value}
-                  <span className="font-normal text-gray-500">
-                    {` (${s.usage}%)`}
-                  </span>
+                  {props.stats && props.stats.tvl > 0 && (
+                    <span className="font-normal text-gray-500">
+                      {` (${s.usage}%)`}
+                    </span>
+                  )}
                 </span>
               </div>
             ))}
