@@ -22,6 +22,7 @@ export interface FullSummaryStats {
 }
 
 export function Summary(props: SummaryProps) {
+  const isL2orL3 = props.type === 'layer2' || props.type === 'layer3'
   return (
     <>
       <div className="my-2 hidden w-full md:block">
@@ -30,11 +31,10 @@ export function Summary(props: SummaryProps) {
       <div
         className={classNames(
           'grid w-full gap-4',
-          (props.type === 'layer2' || props.type === 'layer3') &&
-            'md:grid-cols-3',
+          isL2orL3 && 'md:grid-cols-3',
         )}
       >
-        {(props.type === 'layer2' || props.type === 'layer3') && (
+        {isL2orL3 && (
           <TvlSummary
             stats={props.stats.l2Tvl}
             tvlBreakdownHref={props.tvlBreakdownHref}
