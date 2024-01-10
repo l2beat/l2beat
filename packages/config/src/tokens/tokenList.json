@@ -2417,8 +2417,8 @@
       "decimals": 18,
       "sinceTimestamp": 1696989600,
       "category": "other",
-      "chainId": 1,
       "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+      "chainId": 1,
       "type": "CBV",
       "formula": "locked"
     },
@@ -2909,6 +2909,20 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/9651/large/logo_blue.png?1663764088",
       "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "wagmi-wagmi",
+      "name": "Wagmi",
+      "coingeckoId": "wagmi-2",
+      "address": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
+      "symbol": "WAGMI",
+      "decimals": 18,
+      "sinceTimestamp": 1695376800,
+      "category": "other",
+      "chainId": 1,
+      "iconUrl": "https://assets.coingecko.com/coins/images/31887/large/wagmi_token_logo.png?1696530698",
       "type": "CBV",
       "formula": "locked"
     },
