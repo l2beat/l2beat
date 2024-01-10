@@ -7,7 +7,7 @@ export const polygonpos2: Layer2 = upcoming({
     name: 'Polygon PoS 2.0',
     slug: 'polygon-pos-2',
     description:
-      'Polygon PoS 2.0 leverages bleeding edge ZK technology and fit into the Polygon 2.0 vision, ideally without changing anything for users or developers. All applications should continue working and fees should stay just as low. The only difference should be higher security for users and seamless interoperability with every other chain in the Polygon 2.0 ecosystem.',
+      'Polygon PoS 2.0 leverages ZK technology, ideally without changing anything for users or developers. All applications should continue working and fees should stay just as low. The only difference should be higher security and seamless interoperability with other chains in the Polygon 2.0 ecosystem.',
     purpose: 'Universal',
     category: 'Validium',
     provider: 'Polygon',

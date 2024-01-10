@@ -18,6 +18,8 @@ const project = {
     purpose: 'Universal',
     name: 'Arbitrum One',
     slug: 'arbitrum',
+    description:
+      'Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.',
   },
   technology: {
     category: 'Optimistic Rollup',
@@ -87,6 +89,7 @@ const warning =
 export const DetailsHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
     stats: {
       summary: stats,
@@ -108,6 +111,7 @@ export const DetailsHeader: Story = {
 export const ArchivedHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
     stats: {
       summary: stats,
@@ -129,6 +133,7 @@ export const ArchivedHeader: Story = {
 export const UpcomingHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
     stats: { summary: stats },
     links,
@@ -140,6 +145,7 @@ export const UpcomingHeader: Story = {
 export const UnderReviewHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
     stats: {
       summary: stats,

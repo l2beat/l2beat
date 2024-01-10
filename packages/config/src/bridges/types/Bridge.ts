@@ -32,7 +32,8 @@ export interface BridgeDisplay {
   shortName?: string
   slug: string
   warning?: string
-  description?: string
+  description: string
+  detailedDescription?: string
   category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
   links: Partial<ScalingProjectLinks>
 }

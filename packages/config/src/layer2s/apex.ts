@@ -70,7 +70,8 @@ export const apex: Layer2 = {
     name: 'ApeX',
     slug: 'apex',
     description: `ApeX Pro is a non-custodial trading platform that delivers
-      limitless cross-margined perpetual contracts trading.  ApeX Pro is running
+      limitless cross-margined perpetual contracts trading.`,
+    detailedDescription: `ApeX Pro is running
       two independent StarkEx instances, one for USDC and one for USDT, but that
       technical distinction is not visible to the user.`,
     purpose: 'Exchange',

@@ -8,11 +8,15 @@ import isEmpty from 'lodash/isEmpty'
 import { ChartProps } from '../../../../components'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import {
+  getProjectEditLink,
+  getProjectIssueLink,
+} from '../../../../utils/project/links'
 import { getRiskValues } from '../../../../utils/risks/values'
 import {
   ProjectDetailsChartSection,
   ProjectDetailsContractsSection,
-  ProjectDetailsDescriptionSection,
+  ProjectDetailsDetailedDescriptionSection,
   ProjectDetailsKnowledgeNuggetsSection,
   ProjectDetailsMilestonesSection,
   ProjectDetailsPermissionsSection,
@@ -24,7 +28,7 @@ import {
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
 } from '../../../types'
-import { getDescriptionSection } from './getDescriptionSection'
+import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -59,19 +63,24 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'DescriptionSection',
-    props: getDescriptionSection(project, verificationStatus),
-  })
+  if (project.display.detailedDescription) {
+    items.push({
+      type: 'DetailedDescriptionSection',
+      props: getDetailedDescriptionSection(project),
+    })
+  }
 
   if (!isUpcoming) {
     items.push({
       type: 'RiskAnalysisSection',
       props: {
-        riskValues: getRiskValues(project.riskView),
-        isUnderReview: project.isUnderReview,
         id: 'risk-analysis',
         title: 'Risk analysis',
+        riskValues: getRiskValues(project.riskView),
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        isVerified: verificationStatus.projects[project.id.toString()],
+        isUnderReview: project.isUnderReview,
       },
     })
 
@@ -183,7 +192,13 @@ export function getProjectDetails(
     })
   }
 
-  return { incomplete, isUpcoming, items }
+  return {
+    items,
+    editLink: getProjectEditLink(project),
+    issueLink: getProjectIssueLink(project),
+    incomplete,
+    isUpcoming,
+  }
 }
 
 export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
@@ -197,7 +212,7 @@ type ProjectDetailsNonSectionElement =
 
 export type ScalingDetailsSection =
   | ProjectDetailsChartSection
-  | ProjectDetailsDescriptionSection
+  | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskAnalysisSection

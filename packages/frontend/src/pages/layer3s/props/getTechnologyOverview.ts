@@ -3,9 +3,11 @@ import { notUndefined } from '@l2beat/shared-pure'
 
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../components/project/TechnologySection'
-import { getTwitterLink } from '../../../utils/project/getTwitterLink'
+import {
+  getProjectEditLink,
+  getTwitterLink,
+} from '../../../utils/project/links'
 import { makeTechnologyChoice } from '../../../utils/project/makeTechnologyChoice'
-import { getEditLink } from './links'
 
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
@@ -104,7 +106,7 @@ export function getTechnologyOverview(project: Layer3): TechnologyOverview {
 
   const incomplete = isIncomplete
     ? {
-        editLink: getEditLink(project),
+        editLink: getProjectEditLink(project),
         twitterLink: getTwitterLink(project),
       }
     : undefined

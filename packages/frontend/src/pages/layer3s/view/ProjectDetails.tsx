@@ -2,7 +2,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ContractsSection } from '../../../components/project/ContractsSection'
-import { DescriptionSection } from '../../../components/project/DescriptionSection'
+import { DetailedDescriptionSection } from '../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../components/project/PermissionsSection'
@@ -15,11 +15,14 @@ import {
 } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
+import { WrongResearchCTA } from '../../../components/project/WrongInformationCTA'
 import { ScalingDetailsItem } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
-  isUpcoming?: boolean
   items: ScalingDetailsItem[]
+  issueLink: string
+  editLink: string
+  isUpcoming?: boolean
   incomplete?: TechnologyIncompleteProps
 }
 
@@ -34,8 +37,10 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return (
               <KnowledgeNuggetsSection key={item.props.id} {...item.props} />
             )
-          case 'DescriptionSection':
-            return <DescriptionSection key={item.props.id} {...item.props} />
+          case 'DetailedDescriptionSection':
+            return (
+              <DetailedDescriptionSection key={item.props.id} {...item.props} />
+            )
           case 'RiskAnalysisSection':
             return <RiskAnalysis key={item.props.id} {...item.props} />
           case 'TechnologyIncompleteNote':
@@ -70,6 +75,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             assertUnreachable(item)
         }
       })}
+      <WrongResearchCTA issueLink={props.issueLink} editLink={props.editLink} />
     </div>
   )
 }

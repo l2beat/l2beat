@@ -3,15 +3,15 @@ import { ScalingProjectDataAvailabilityMode } from './ScalingProjectDataAvailabi
 import { ScalingProjectLinks } from './ScalingProjectLinks'
 
 export interface ScalingProjectDisplay {
-  /** Name of the layer2/3, will be used as a display name on the website */
+  /** Name of the scaling project, will be used as a display name on the website */
   name: string
-  /** Short name of the layer2/3, will be used in some places on the website as a display name */
+  /** Short name of the scaling project, will be used in some places on the website as a display name */
   shortName?: string
-  /** Url friendly layer2/3 name, will be used in website urls */
+  /** Url friendly scaling project name, will be used in website urls */
   slug: string
-  /** Name of the category the layer2/3 belongs to */
+  /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
-  /** Data availability mode of layer2/3 project */
+  /** Data availability mode of scaling project project */
   dataAvailabilityMode: ScalingProjectDataAvailabilityMode
   /** A warning displayed in the header of the project */
   headerWarning?:
@@ -26,8 +26,10 @@ export interface ScalingProjectDisplay {
   warning?: string
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
   redWarning?: string
-  /** A few sentences describing the layer2/3 */
+  /** A few sentences describing the scaling project */
   description: string
+  /** Detailed description of the scaling project, will be visible in detailed description section */
+  detailedDescription?: string
   /** A short (<20 characters) description of the use case */
   purpose: string
   /** List of links */

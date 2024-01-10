@@ -47,7 +47,7 @@ export const immutablex: Layer2 = {
     name: 'Immutable X',
     slug: 'immutablex',
     description:
-      'Immutable X claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
+      'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
     purpose: 'NFT, Exchange',
     provider: 'StarkEx',
     category: 'Validium',

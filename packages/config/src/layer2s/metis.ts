@@ -23,11 +23,7 @@ export const metis: Layer2 = {
     shortName: 'Metis',
     slug: 'metis',
     description:
-      'Metis is an EVM-equivalent Scaling Solution originally forked from Optimism. It provides support for multiple, \
-      interconnected chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
-      The risk analysis below relates to the default chain with chainId=1088 called Andromeda. Since April 2022 Andromeda \
-      uses "optimistic data availability" scheme in which transaction data is kept off-chain in MEMO while Validators can \
-      request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
+      'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimium',

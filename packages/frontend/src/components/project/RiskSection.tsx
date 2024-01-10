@@ -1,13 +1,19 @@
 import { ScalingProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
+import { ShieldIcon } from '../icons'
+import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
+import { WarningBar } from './WarningBar'
 
 export interface RiskSectionProps {
   title: string
-  id: SectionId
+  id: ProjectSectionId
   riskGroups: RiskGroup[]
+  warning: string | undefined
+  isVerified: boolean | undefined
+  redWarning: string | undefined
 }
 
 export interface RiskGroup {
@@ -22,12 +28,44 @@ export interface RiskItem {
   isCritical: boolean
 }
 
-export function RiskSection({ title, id, riskGroups }: RiskSectionProps) {
+export function RiskSection({
+  title,
+  id,
+  riskGroups,
+  isVerified,
+  redWarning,
+  warning,
+}: RiskSectionProps) {
   if (riskGroups.length === 0) {
     return null
   }
   return (
     <ProjectDetailsSection title={title} id={id} className="mt-4">
+      {isVerified === false && (
+        <WarningBar
+          text="This project includes unverified contracts."
+          color="red"
+          isCritical={true}
+          className="mt-4"
+          icon={UnverifiedIcon}
+        />
+      )}
+      {redWarning && (
+        <WarningBar
+          text={redWarning}
+          color="red"
+          className="mt-4"
+          icon={ShieldIcon}
+        />
+      )}
+      {warning && (
+        <WarningBar
+          text={warning}
+          color="yellow"
+          isCritical={false}
+          className="mt-4"
+        />
+      )}
       {riskGroups.map((group, i) => (
         <div className="mt-4 md:mt-6" key={i}>
           <h3 className="font-bold text-red-300 md:text-lg">{group.name}</h3>
