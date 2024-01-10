@@ -9,7 +9,7 @@ import {
 } from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
 import { LivenessDurationCell } from './table/LivenessDurationCell'
-import { Tooltip } from './tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
 
 interface Props {
   anomalyEntries: AnomalyIndicatorEntry[]
@@ -52,24 +52,28 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
   return (
     <Tooltip
       className="flex h-6 w-min gap-x-0.5"
-      content={<AnomalyTooltip anomalyEntries={data} />}
       big
       data-testid="anomaly-indicator"
     >
-      {anomalyEntries.map((anomaly, i) => (
-        <div
-          key={i}
-          className={classNames(
-            'w-0.5 rounded-full',
-            anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
-          )}
-        />
-      ))}
+      <TooltipTrigger>
+        {anomalyEntries.map((anomaly, i) => (
+          <div
+            key={i}
+            className={classNames(
+              'w-0.5 rounded-full',
+              anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
+            )}
+          />
+        ))}
+      </TooltipTrigger>
+      <TooltipContent>
+        <AnomalyTooltipContent anomalyEntries={data} />
+      </TooltipContent>
     </Tooltip>
   )
 }
 
-function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
+function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   const anomalies = props.anomalyEntries
     .flatMap((anomalyEntry) => anomalyEntry.anomalies)
     .reverse()

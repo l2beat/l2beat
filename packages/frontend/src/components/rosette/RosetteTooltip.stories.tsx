@@ -3,7 +3,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
-import { Tooltip } from '../tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { TooltipProvider as TooltipComponent } from '../tooltip/TooltipProvider'
 import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
@@ -61,17 +61,14 @@ const project: RosetteTooltipProps = {
 export const RosetteTooltip: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <Tooltip
-        className="inline-block"
-        content={
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <RosetteTooltipPopup
             riskSentiments={project.riskSentiments}
             riskValues={project.riskValues}
           />
-        }
-        big
-      >
-        <span>Element with tooltip</span>
+        </TooltipContent>
       </Tooltip>
     </div>
   ),

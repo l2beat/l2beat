@@ -2,13 +2,21 @@ import { LivenessApiProject } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
-import { Tooltip, TooltipContent } from '../tooltip/Tooltip'
+import { RoundedWarningIcon } from '../icons'
+import { WarningBar } from '../project/WarningBar'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipContentType,
+  TooltipTrigger,
+} from '../tooltip/Tooltip'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
   dataType?: Exclude<keyof LivenessApiProject, 'anomalies'>
   project?: ScalingLivenessViewEntry
-  tooltip?: TooltipContent
+  tooltipContent?: TooltipContentType
+  warning?: string
 }) {
   if (
     !props.durationInSeconds &&
@@ -32,13 +40,9 @@ export function LivenessDurationCell(props: {
         ? 'Optimistic rollups do not post validity proofs to the L1.'
         : undefined
     return (
-      <Tooltip
-        className={
-          'rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50'
-        }
-        content={tooltipText}
-      >
-        n/a
+      <Tooltip className="rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+        <TooltipTrigger>n/a</TooltipTrigger>
+        <TooltipContent>{tooltipText}</TooltipContent>
       </Tooltip>
     )
   }
@@ -68,8 +72,19 @@ export function LivenessDurationCell(props: {
     )
 
   return (
-    <Tooltip content={props.tooltip} big>
-      {duration}
+    <Tooltip>
+      <TooltipTrigger className="flex items-center gap-1">
+        {duration}
+        {props.warning && (
+          <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+        )}
+      </TooltipTrigger>
+      <TooltipContent>
+        {props.tooltipContent}
+        {props.warning && (
+          <WarningBar className="mt-2" text={props.warning} color="yellow" />
+        )}
+      </TooltipContent>
     </Tooltip>
   )
 }

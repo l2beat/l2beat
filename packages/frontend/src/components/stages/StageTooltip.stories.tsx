@@ -3,7 +3,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
-import { Tooltip } from '../tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { TooltipProvider as TooltipComponent } from '../tooltip/TooltipProvider'
 import { StageTooltip as StageTooltipComponent } from './StageTooltip'
 
@@ -29,9 +29,9 @@ type Story = StoryObj<typeof TooltipComponent>
 export const Primary: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <Tooltip
-        className="inline-block"
-        content={
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <StageTooltipComponent
             stageConfig={{
               stage: 'Stage 1',
@@ -43,10 +43,7 @@ export const Primary: Story = {
               summary: [],
             }}
           />
-        }
-        big
-      >
-        <span>Element with tooltip</span>
+        </TooltipContent>
       </Tooltip>
     </div>
   ),
@@ -63,9 +60,9 @@ export const Primary: Story = {
 export const WithWarning: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <Tooltip
-        className="inline-block"
-        content={
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <StageTooltipComponent
             stageConfig={{
               stage: 'Stage 0',
@@ -80,10 +77,7 @@ export const WithWarning: Story = {
               summary: [],
             }}
           />
-        }
-        big
-      >
-        <span>Element with tooltip</span>
+        </TooltipContent>
       </Tooltip>
     </div>
   ),
@@ -100,9 +94,9 @@ export const WithWarning: Story = {
 export const WithUnderReview: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <Tooltip
-        className="inline-block"
-        content={
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <StageTooltipComponent
             stageConfig={{
               stage: 'Stage 0',
@@ -117,10 +111,7 @@ export const WithUnderReview: Story = {
               summary: [],
             }}
           />
-        }
-        big
-      >
-        <span>Element with tooltip</span>
+        </TooltipContent>
       </Tooltip>
     </div>
   ),

@@ -1,7 +1,7 @@
 import { StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { Tooltip } from '../tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { StageBadge } from './StageBadge'
 import { StageTooltip } from './StageTooltip'
 
@@ -15,20 +15,21 @@ export function StageCell({ stageConfig }: StageCellProps) {
   }
 
   return (
-    <Tooltip
-      content={<StageTooltip stageConfig={stageConfig} />}
-      big
-      disabledOnMobile
-    >
-      <StageBadge
-        stage={stageConfig.stage}
-        icon={
-          stageConfig.stage !== 'UnderReview'
-            ? stageConfig.message?.type
-            : undefined
-        }
-        oneSize
-      />
+    <Tooltip big disabledOnMobile>
+      <TooltipTrigger>
+        <StageBadge
+          stage={stageConfig.stage}
+          icon={
+            stageConfig.stage !== 'UnderReview'
+              ? stageConfig.message?.type
+              : undefined
+          }
+          oneSize
+        />
+      </TooltipTrigger>
+      <TooltipContent>
+        <StageTooltip stageConfig={stageConfig} />
+      </TooltipContent>
     </Tooltip>
   )
 }

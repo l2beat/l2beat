@@ -1,9 +1,7 @@
 import { LivenessApiProject, LivenessDataPoint } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { RoundedWarningIcon } from '../../../../components/icons'
 import { LivenessDurationCell } from '../../../../components/table/LivenessDurationCell'
-import { Tooltip } from '../../../../components/tooltip/Tooltip'
 import { LivenessDetailsWithWarning, ScalingLivenessViewEntry } from '../types'
 import { LivenessTimeRangeCell } from './LivenessTimeRangeCell'
 
@@ -22,64 +20,46 @@ export function LivenessDurationTimeRangeCell({
     <div>
       <LivenessTimeRangeCell
         last30Days={
-          <div className="flex items-center gap-1.5">
-            <LivenessDurationCell
-              durationInSeconds={data?.last30Days?.averageInSeconds}
-              project={project}
-              tooltip={
-                <LivenessTooltip
-                  label="30-day intervals"
-                  data={data?.last30Days}
-                />
-              }
-              dataType={dataType}
-            />
-            {data?.warning && (
-              <Tooltip content={data.warning}>
-                <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
-              </Tooltip>
-            )}
-          </div>
+          <LivenessDurationCell
+            durationInSeconds={data?.last30Days?.averageInSeconds}
+            project={project}
+            tooltipContent={
+              <LivenessTooltip
+                label="30-day intervals"
+                data={data?.last30Days}
+              />
+            }
+            dataType={dataType}
+            warning={data?.warning}
+          />
         }
         last90Days={
-          <div className="flex items-center gap-1.5">
-            <LivenessDurationCell
-              durationInSeconds={data?.last90Days?.averageInSeconds}
-              project={project}
-              tooltip={
-                <LivenessTooltip
-                  label="90-day intervals"
-                  data={data?.last90Days}
-                />
-              }
-              dataType={dataType}
-            />
-            {data?.warning && (
-              <Tooltip content={data.warning}>
-                <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
-              </Tooltip>
-            )}
-          </div>
+          <LivenessDurationCell
+            durationInSeconds={data?.last90Days?.averageInSeconds}
+            project={project}
+            tooltipContent={
+              <LivenessTooltip
+                label="90-day intervals"
+                data={data?.last90Days}
+              />
+            }
+            dataType={dataType}
+            warning={data?.warning}
+          />
         }
         max={
-          <div className="flex items-center gap-1.5">
-            <LivenessDurationCell
-              durationInSeconds={data?.allTime?.averageInSeconds}
-              project={project}
-              tooltip={
-                <LivenessTooltip
-                  label="All-time intervals"
-                  data={data?.allTime}
-                />
-              }
-              dataType={dataType}
-            />
-            {data?.warning && (
-              <Tooltip content={data.warning}>
-                <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
-              </Tooltip>
-            )}
-          </div>
+          <LivenessDurationCell
+            durationInSeconds={data?.allTime?.averageInSeconds}
+            project={project}
+            tooltipContent={
+              <LivenessTooltip
+                label="All-time intervals"
+                data={data?.allTime}
+              />
+            }
+            dataType={dataType}
+            warning={data?.warning}
+          />
         }
       />
     </div>

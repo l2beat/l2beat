@@ -13,7 +13,7 @@ import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
-import { Tooltip } from '../../tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 import { ComingSoonCell } from '../ComingSoonCell'
 import { EthereumCell } from '../EthereumCell'
 import { IndexCell } from '../IndexCell'
@@ -771,11 +771,12 @@ export function getScalingLivenessColumnsConfig() {
       name: '',
       getValue: (project) =>
         project.explanation ? (
-          <div className="pr-4">
-            <Tooltip as="div" content={project.explanation}>
+          <Tooltip className="pr-4">
+            <TooltipTrigger>
               <InfoIcon className="fill-blue-550" />
-            </Tooltip>
-          </div>
+            </TooltipTrigger>
+            <TooltipContent>{project.explanation}</TooltipContent>
+          </Tooltip>
         ) : null,
     },
   ]

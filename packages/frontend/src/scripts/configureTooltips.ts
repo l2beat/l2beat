@@ -4,22 +4,18 @@ import { isMobile } from './utils/isMobile'
 
 export function configureTooltips() {
   const { $, $$ } = makeQuery(document.body)
-  if (!document.querySelector('.Tooltip-Popup')) {
-    return
-  }
 
-  const elements = $$('.Tooltip[title]')
-
-  const tooltip = $('.Tooltip-Popup')
-  const tooltipText = $('.Tooltip-Popup span')
-  const tooltipTriangle = $('.Tooltip-Triangle')
+  const tooltip = $('[data-role=tooltip-popup]')
+  const tooltipText = $('[data-role=tooltip-popup] span')
+  const tooltipTriangle = $('[data-role=tooltip-popup-triangle]')
+  const elements = $$('[data-role=tooltip]')
 
   let activeElement: HTMLElement | undefined
   let visible = false
 
   function show(
     element: HTMLElement,
-    title: string,
+    content: Element,
     isDisabledOnMobile: boolean,
   ) {
     if (isDisabledOnMobile && isMobile()) return
@@ -27,7 +23,7 @@ export function configureTooltips() {
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
     const rect = activeElement.getBoundingClientRect()
-    tooltipText.innerHTML = title
+    tooltipText.innerHTML = content.innerHTML
     tooltip.style.display = 'block'
     const tooltipHeight = tooltip.getBoundingClientRect().height
     const tooltipWidth = tooltip.getBoundingClientRect().width
@@ -82,8 +78,9 @@ export function configureTooltips() {
   })
 
   for (const element of elements) {
-    const title = element.getAttribute('title') ?? ''
-    element.removeAttribute('title')
+    const content = element.querySelector('[data-role=tooltip-content]')
+    if (!content) continue
+    const trigger = element.querySelector('[data-role=tooltip-trigger]')
     element.setAttribute('tabindex', '0')
     const isDisabledOnMobile = Boolean(
       element.getAttribute('data-tooltip-mobile-disabled'),
@@ -91,17 +88,17 @@ export function configureTooltips() {
 
     let mouseEnteredAt = Date.now()
 
-    element.addEventListener('mouseenter', () => {
+    trigger?.addEventListener('mouseenter', () => {
       mouseEnteredAt = Date.now()
-      show(element, title, isDisabledOnMobile)
+      show(element, content, isDisabledOnMobile)
     })
-    element.addEventListener('mouseleave', hide)
-    element.addEventListener('focus', () =>
-      show(element, title, isDisabledOnMobile),
+    trigger?.addEventListener('mouseleave', hide)
+    trigger?.addEventListener('focus', () =>
+      show(element, content, isDisabledOnMobile),
     )
-    element.addEventListener('blur', hide)
+    trigger?.addEventListener('blur', hide)
 
-    element.addEventListener('click', (e) => {
+    trigger?.addEventListener('click', (e) => {
       e.stopPropagation()
       if (isMobile() && !isDisabledOnMobile) {
         e.preventDefault()
@@ -112,7 +109,7 @@ export function configureTooltips() {
           hide()
         }
       } else {
-        show(element, title, isDisabledOnMobile)
+        show(element, content, isDisabledOnMobile)
       }
     })
   }

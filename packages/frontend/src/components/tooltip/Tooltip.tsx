@@ -1,52 +1,52 @@
-import classNames from 'classnames'
-import isString from 'lodash/isString'
-import React, { ElementType } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import React from 'react'
 
-interface TooltipProps<T extends ElementType> {
+interface TooltipProps {
   children: React.ReactNode
-  content: React.ReactElement | string | undefined
   className?: string
   big?: boolean
   disabledOnMobile?: boolean
-  as?: T
 }
 
-export type TooltipContent = React.ReactElement | string | undefined
+export type TooltipContentType = React.ReactElement | string | undefined
 
-export function Tooltip<T extends ElementType>({
-  content,
-  as,
+export function Tooltip({
   big,
   disabledOnMobile,
   className,
   children,
   ...rest
-}: TooltipProps<T>) {
-  const title = getTitleAttribute(content)
-  const Comp = as ?? 'span'
-
+}: TooltipProps) {
   return (
-    <Comp
-      className={classNames(title && 'Tooltip', className)}
+    <div
+      className={className}
+      data-role="tooltip"
       data-tooltip-big={big}
       data-tooltip-mobile-disabled={disabledOnMobile}
-      title={title}
       {...rest}
     >
       {children}
-    </Comp>
+    </div>
   )
 }
 
-function getTitleAttribute(content: React.ReactElement | string | undefined) {
-  if (!content) {
-    return undefined
-  }
+interface TooltipTriggerProps {
+  children: React.ReactNode
+  className?: string
+}
 
-  if (isString(content)) {
-    return content
-  }
+export function TooltipTrigger({ children, className }: TooltipTriggerProps) {
+  return (
+    <div data-role="tooltip-trigger" className={className}>
+      {children}
+    </div>
+  )
+}
 
-  return renderToStaticMarkup(content)
+interface TooltipContentProps {
+  children: React.ReactNode
+}
+
+export function TooltipContent({ children }: TooltipContentProps) {
+  if (!children) return null
+  return <template data-role="tooltip-content">{children}</template>
 }

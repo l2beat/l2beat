@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { Tooltip } from '../tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 type BadgeType = 'error' | 'warning' | 'brightYellow' | 'gray' | 'purple'
 
@@ -31,8 +31,9 @@ export function Badge(props: BadgeProps) {
 
   if (props.title) {
     return (
-      <Tooltip content={props.title} className={className}>
-        {props.children}
+      <Tooltip className={className}>
+        <TooltipTrigger>{props.children}</TooltipTrigger>
+        <TooltipContent>{props.title}</TooltipContent>
       </Tooltip>
     )
   }
