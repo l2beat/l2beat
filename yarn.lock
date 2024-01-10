@@ -1266,6 +1266,13 @@
     pump "^3.0.0"
     stack-generator "^2.0.3"
 
+"@bugsnag/plugin-koa@^7.19.0":
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/@bugsnag/plugin-koa/-/plugin-koa-7.19.0.tgz#72a5b567ea7e0ea784e99496e523aa1ad1c8cf10"
+  integrity sha512-zvzOMf1oXgO1hi0bQti+khFn4D32EfMv6W3Vc65+wcSGSFaMxuPJSE8sdOJqE6gFj2ANhCpHk8UvzlMAzRODSw==
+  dependencies:
+    iserror "^0.0.2"
+
 "@bugsnag/safe-json-stringify@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@bugsnag/safe-json-stringify/-/safe-json-stringify-6.0.0.tgz#22abdcd83e008c369902976730c34c150148a758"
