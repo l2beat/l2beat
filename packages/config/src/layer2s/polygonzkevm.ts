@@ -376,6 +376,10 @@ export const polygonzkevm: Layer2 = {
       'SecurityCouncil',
       'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
     ),
+    ...discovery.getMultisigPermission(
+      'EscrowsAdmin',
+      'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
+    ),
   ],
   contracts: {
     addresses: [
