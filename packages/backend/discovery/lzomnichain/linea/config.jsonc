@@ -9,10 +9,73 @@
   },
   "overrides": {
     "Endpoint": {
-      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
+      "fields": {
+        "libraryLookup": {
+          "type": "array",
+          "method": "libraryLookup",
+          "startIndex": 1,
+          "length": "{{ latestVersion }}",
+          // ignoring because discovered.json gets clattered with ULNv1 and ULNv2RADAR.
+          "ignoreRelative": true
+        }
+      }
     },
     "UltraLightNodeV2": {
-      "ignoreInWatchMode": ["treasuryZROFees"]
+      "fields": {
+        "chainAddressSizeMap": {
+          "type": "stateFromEvent",
+          "event": "SetChainAddressSize",
+          "returnParams": ["chainId", "size"],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
+        "ulnLookup": {
+          "type": "stateFromEvent",
+          "event": "SetRemoteUln",
+          "returnParams": ["chainId", "uln"],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
+        "defaultAppConfig": {
+          "type": "stateFromEvent",
+          "event": "SetDefaultConfigForChainId",
+          "returnParams": [
+            "chainId",
+            "inboundProofLib",
+            "inboundBlockConfirm",
+            "outboundProofType",
+            "outboundBlockConfirm",
+            "oracle",
+            "relayer"
+          ],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
+        "defaultAdapterParams": {
+          "type": "stateFromEvent",
+          "event": "SetDefaultAdapterParamsForChainId",
+          "returnParams": ["chainId", "proofType", "adapterParams"],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
+        "inboundProofLibrary": {
+          "type": "stateFromEvent",
+          "event": "AddInboundProofLibraryForChain",
+          "returnParams": ["chainId", "lib"],
+          "groupBy": "chainId",
+          "onlyValue": true,
+          "multipleInGroup": true
+        },
+        "supportedOutboundProof": {
+          "type": "stateFromEvent",
+          "event": "EnableSupportedOutboundProof",
+          "returnParams": ["chainId", "proofType"],
+          "groupBy": "chainId",
+          "onlyValue": true,
+          "multipleInGroup": true
+        }
+      }
     }
   }
 }

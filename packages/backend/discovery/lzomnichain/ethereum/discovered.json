@@ -1,10 +1,26 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 18671199,
-  "configHash": "0xaee192d083dfa2a5433cda8c1c94cd7a28421914743d208e804e4b703b45f464",
+  "blockNumber": 18941390,
+  "configHash": "0xb7f0dbb0904adb968eca7014c01ef7529309cbffa25c609a5c60f33d7ba2b9a4",
   "version": 3,
   "contracts": [
+    {
+      "name": "FPValidator",
+      "address": "0x07245eEa05826F5984c7c3C8F478b04892e4df89",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1665890591,
+      "values": {
+        "getProofType": 2,
+        "getUtilsVersion": 1,
+        "proofType": 2,
+        "stargateBridgeAddress": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+        "stargateTokenAddress": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+        "utilsVersion": 1
+      }
+    },
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
@@ -19,6 +35,23 @@
         "uln": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
         "zroEnabled": false,
         "zroFee": 0
+      }
+    },
+    {
+      "name": "MPTValidator01",
+      "address": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1661529200,
+      "values": {
+        "getProofType": 1,
+        "getUtilsVersion": 4,
+        "PACKET_SIGNATURE": "0xe9bded5f24a4168e4f3bf44e00298c993b22376aad8c58c7dda9718a54cbea82",
+        "proofType": 1,
+        "stargateBridgeAddress": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+        "stargateTokenAddress": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+        "utilsVersion": 4
       }
     },
     {
@@ -759,10 +792,6 @@
           }
         },
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-        "INBOUND_PROOF_LIBRARIES": [
-          "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
-          "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
-        ],
         "inboundProofLibrary": {
           "2": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
           "12": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
@@ -1119,33 +1148,6 @@
       }
     },
     {
-      "name": "Stargate Multisig",
-      "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1647498793,
-      "values": {
-        "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
-        "getChainId": 1,
-        "getOwners": [
-          "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
-          "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
-          "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
-          "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
-          "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4",
-          "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
-        ],
-        "getThreshold": 3,
-        "nonce": 628,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "upgradeability": {
@@ -1230,25 +1232,6 @@
       }
     },
     {
-      "name": "StargateToken",
-      "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1647504559,
-      "values": {
-        "chainId": 1,
-        "decimals": 18,
-        "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-        "isMain": true,
-        "name": "StargateToken",
-        "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "paused": false,
-        "symbol": "STG",
-        "totalSupply": "1000000000000000000000000000"
-      }
-    },
-    {
       "name": "",
       "address": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
       "unverified": true,
@@ -1316,21 +1299,29 @@
     }
   ],
   "eoas": [
-    "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
-    "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
-    "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
     "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
     "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
     "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
-    "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
     "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
     "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
     "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
-    "0xe095F2590eF1Ab39601445025847Ed8E4B40D687",
-    "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
-    "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
+    "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
   ],
   "abis": {
+    "0x07245eEa05826F5984c7c3C8F478b04892e4df89": [
+      "constructor(address _stargateBridgeAddress, address _stargateTokenAddress)",
+      "function getPacket(bytes data, uint256 sizeOfSrcAddress, bytes32 ulnAddress) pure returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload))",
+      "function getProofType() view returns (uint8)",
+      "function getUtilsVersion() view returns (uint8)",
+      "function getVerifyLog(bytes32, uint256[], uint256, bytes[] proof) pure returns (tuple(bytes32 contractAddress, bytes32 topicZeroSig, bytes data) log)",
+      "function proofType() view returns (uint8)",
+      "function secureStgPayload(bytes _payload) view returns (bytes)",
+      "function secureStgTokenPayload(bytes _payload) pure returns (bytes)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function stargateTokenAddress() view returns (address)",
+      "function utilsVersion() view returns (uint8)",
+      "function validateProof(bytes32 _packetHash, bytes _transactionProof, uint256 _remoteAddressSize) view returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload) packet)"
+    ],
     "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": [
       "constructor(address _ulnv2)",
       "event FeeEnabled(bool feeEnabled)",
@@ -1353,6 +1344,21 @@
       "function withdrawZROFromULN(address _to, uint256 _amount)",
       "function zroEnabled() view returns (bool)",
       "function zroFee() view returns (uint256)"
+    ],
+    "0x462F7eC57C6492B983a8C8322B4369a7f149B859": [
+      "constructor(address _stargateBridgeAddress, address _stargateTokenAddress)",
+      "function PACKET_SIGNATURE() view returns (bytes32)",
+      "function getPacket(bytes data, uint256 sizeOfSrcAddress, bytes32 ulnAddress) pure returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload))",
+      "function getProofType() view returns (uint8)",
+      "function getUtilsVersion() view returns (uint8)",
+      "function getVerifyLog(bytes32 hashRoot, uint256[] receiptSlotIndex, uint256 logIndex, bytes[] proof) pure returns (tuple(bytes32 contractAddress, bytes32 topicZeroSig, bytes data))",
+      "function proofType() view returns (uint8)",
+      "function secureStgPayload(bytes _payload) view returns (bytes)",
+      "function secureStgTokenPayload(bytes _payload) pure returns (bytes)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function stargateTokenAddress() view returns (address)",
+      "function utilsVersion() view returns (uint8)",
+      "function validateProof(bytes32 _receiptsRoot, bytes _transactionProof, uint256 _remoteAddressSize) view returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload) packet)"
     ],
     "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
@@ -1439,9 +1445,6 @@
       "function endpoint() view returns (address)",
       "function increment(uint16 _chainId, address _ua, bytes _path) returns (uint64)",
       "function outboundNonce(uint16, bytes) view returns (uint64)"
-    ],
-    "0x65bb797c2B9830d891D87288F029ed8dACc19705": [
-      "constructor(address _singleton)"
     ],
     "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": [
       "constructor(uint16 _chainId)",
@@ -1532,43 +1535,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": [
-      "constructor(string _name, string _symbol, address _endpoint, uint16 _mainEndpointId, uint256 _initialSupplyOnMainEndpoint)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(bool isPaused)",
-      "event ReceiveFromChain(uint16 srcChainId, uint64 nonce, uint256 qty)",
-      "event SendToChain(uint16 dstChainId, bytes to, uint256 qty)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function chainId() view returns (uint16)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function dstContractLookup(uint16) view returns (bytes)",
-      "function endpoint() view returns (address)",
-      "function estimateSendTokensFee(uint16 _dstChainId, bool _useZro, bytes txParameters) view returns (uint256 nativeFee, uint256 zroFee)",
-      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function isMain() view returns (bool)",
-      "function lzReceive(uint16 _srcChainId, bytes _fromAddress, uint64 nonce, bytes _payload)",
-      "function name() view returns (string)",
-      "function owner() view returns (address)",
-      "function pauseSendTokens(bool _pause)",
-      "function paused() view returns (bool)",
-      "function renounceOwnership()",
-      "function sendTokens(uint16 _dstChainId, bytes _to, uint256 _qty, address zroPaymentAddress, bytes adapterParam) payable",
-      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
-      "function setDestination(uint16 _dstChainId, bytes _destinationContractAddress)",
-      "function setReceiveVersion(uint16 version)",
-      "function setSendVersion(uint16 version)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)"
     ],
     "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": [
       "constructor(address _logic, address admin_, bytes _data) payable",
