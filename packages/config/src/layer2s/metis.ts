@@ -24,6 +24,8 @@ export const metis: Layer2 = {
     slug: 'metis',
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimium',

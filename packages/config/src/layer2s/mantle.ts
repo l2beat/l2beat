@@ -46,6 +46,8 @@ export const mantle: Layer2 = {
     slug: 'mantle',
     description:
       'Mantle is an under development EVM compatible Optimium, based on the Optimism OVM architecture.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     purpose: 'Universal',
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
