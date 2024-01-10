@@ -1,3 +1,26 @@
+# Diff at Wed, 10 Jan 2024 08:28:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@47499b2e645343d8fd16b1ecc8f9d4e11fbc57a1 block: 18969236
+- current block number: 18975357
+
+## Description
+
+Changes necessary for diff history module.
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18969236 (main branch discovery), not current.
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+      values.identify:
+-        "StarkWare_PerpetualTokensAndRamping_2020_1"
+    }
+```
+
 # Diff at Tue, 09 Jan 2024 11:54:37 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
