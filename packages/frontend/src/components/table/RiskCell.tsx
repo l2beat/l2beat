@@ -38,7 +38,7 @@ export function RiskCell({ item }: Props) {
         >
           {item.value}
           {item.warning && (
-            <RoundedWarningIcon className="inline h-4 w-4 fill-current" />
+            <RoundedWarningIcon className="h-4 w-4 fill-current" />
           )}
         </span>
         {item.secondLine && (
