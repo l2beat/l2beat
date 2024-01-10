@@ -74,8 +74,7 @@ export const zkfair: Layer2 = {
     slug: 'zkfair',
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
-    description:
-      'ZKFair is the first community Validium based on Polygon CDK and Celestia DA, championing fairness. In its current implementation it is not using Celestia Blobstream bridge though meaning that Ethereum bridge does not have assurance that data has really been posted to Celestia.',
+    description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
     purpose: 'Universal',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

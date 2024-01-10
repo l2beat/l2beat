@@ -7,10 +7,14 @@ import isEmpty from 'lodash/isEmpty'
 
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
+import {
+  getProjectEditLink,
+  getProjectIssueLink,
+} from '../../../utils/project/links'
 import { getRiskValues } from '../../../utils/risks/values'
 import {
   ProjectDetailsContractsSection,
-  ProjectDetailsDescriptionSection,
+  ProjectDetailsDetailedDescriptionSection,
   ProjectDetailsKnowledgeNuggetsSection,
   ProjectDetailsMilestonesSection,
   ProjectDetailsPermissionsSection,
@@ -21,7 +25,7 @@ import {
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
 } from '../../types'
-import { getDescriptionSection } from './getDescriptionSection'
+import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -30,6 +34,7 @@ export function getProjectDetails(
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ) {
   const isUpcoming = project.isUpcoming
+
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(project)
   const permissionsSection = getPermissionsSection(
@@ -50,19 +55,24 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'DescriptionSection',
-    props: getDescriptionSection(project, verificationStatus),
-  })
+  if (project.display.detailedDescription) {
+    items.push({
+      type: 'DetailedDescriptionSection',
+      props: getDetailedDescriptionSection(project),
+    })
+  }
 
   if (!isUpcoming) {
     items.push({
       type: 'RiskAnalysisSection',
       props: {
-        riskValues: getRiskValues(project.riskView),
-        isUnderReview: project.isUnderReview,
         id: 'risk-analysis',
         title: 'Risk analysis',
+        riskValues: getRiskValues(project.riskView),
+        isUnderReview: project.isUnderReview,
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        isVerified: verificationStatus.projects[project.id.toString()],
       },
     })
 
@@ -159,7 +169,13 @@ export function getProjectDetails(
     })
   }
 
-  return { incomplete, isUpcoming, items }
+  return {
+    incomplete,
+    items,
+    editLink: getProjectEditLink(project),
+    issueLink: getProjectIssueLink(project),
+    isUpcoming,
+  }
 }
 
 export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
@@ -172,7 +188,7 @@ type ProjectDetailsNonSectionElement =
   | ProjectDetailsUpcomingDisclaimer
 
 export type ScalingDetailsSection =
-  | ProjectDetailsDescriptionSection
+  | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskAnalysisSection

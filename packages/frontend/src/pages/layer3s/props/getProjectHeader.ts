@@ -61,6 +61,7 @@ export function getProjectHeader(
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
+    description: project.display.description,
     tvlStats: {
       tvlChange: tvlWeeklyChange,
       tvl: project.config.escrows.length > 0 ? tvl : 0,

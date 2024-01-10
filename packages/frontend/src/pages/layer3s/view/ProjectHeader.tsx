@@ -16,6 +16,7 @@ import { RiskValues } from '../../../utils/risks/types'
 export interface ProjectHeaderProps {
   title: string
   titleClassName?: string
+  description: string
   icon?: string
   tvlStats: TvlStats
   tpsDaily?: string
@@ -93,6 +94,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isArchived={props.isArchived}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
+      description={props.description}
       tvlBreakdownHref={props.tvlBreakdownHref}
       showTvlBreakdown={
         props.showTvlBreakdown &&
