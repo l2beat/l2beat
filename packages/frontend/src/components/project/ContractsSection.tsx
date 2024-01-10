@@ -10,7 +10,6 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { SectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
-import { TokenEntry } from './TokenEntry'
 import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface ContractsSectionProps {
@@ -25,7 +24,6 @@ export interface ContractsSectionProps {
   isUnderReview?: boolean
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
-  nativeL2TokensIncludedInTVL: string[]
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -91,12 +89,6 @@ export function ContractsSection(props: ContractsSectionProps) {
                 />
               </React.Fragment>
             ))}
-            {props.nativeL2TokensIncludedInTVL.length > 0 && (
-              <TokenEntry
-                l2Tokens={props.nativeL2TokensIncludedInTVL}
-                className="mt-4 mb-4"
-              />
-            )}
           </div>
         </>
       )}
