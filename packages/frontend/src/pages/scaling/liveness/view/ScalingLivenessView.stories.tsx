@@ -17,6 +17,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'Arbitrum One',
         shortName: undefined,
         slug: 'arbitrum',
+        redWarning: undefined,
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
         category: 'Optimistic Rollup',
@@ -263,6 +264,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'OP Mainnet',
         shortName: undefined,
         slug: 'optimism',
+        redWarning: undefined,
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -467,6 +469,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'Base',
         shortName: undefined,
         slug: 'base',
+        redWarning: undefined,
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
         category: 'Optimistic Rollup',
@@ -685,6 +688,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'zkSync Era',
         shortName: undefined,
         slug: 'zksync-era',
+        redWarning: undefined,
         warning:
           'Withdrawals are delayed by 21h. The length of the delay can be arbitrarily set by a MultiSig.',
         category: 'ZK Rollup',
@@ -903,6 +907,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'dYdX v3',
         shortName: undefined,
         slug: 'dydx',
+        redWarning: 'This warning is just some random stuff I wrote.',
         warning:
           'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
         category: 'ZK Rollup',
@@ -1106,6 +1111,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'Linea',
         shortName: undefined,
         slug: 'linea',
+        redWarning: undefined,
         warning: 'The circuit of the program being proven is not public.',
         category: 'ZK Rollup',
         dataAvailabilityMode: 'TxData',

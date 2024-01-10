@@ -297,7 +297,6 @@ export const arbitrum: Layer2 = {
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
     associatedTokens: ['ARB'],
-    nativeL2TokensIncludedInTVL: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),

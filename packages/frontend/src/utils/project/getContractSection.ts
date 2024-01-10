@@ -85,10 +85,6 @@ export function getContractSection(
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
     manuallyVerifiedContracts,
-    nativeL2TokensIncludedInTVL:
-      project.type === 'layer2'
-        ? project.config.nativeL2TokensIncludedInTVL ?? []
-        : [],
   }
 }
 
@@ -412,7 +408,7 @@ function isContractUnverified(
   }
 
   return contract.multipleAddresses.some(
-    (address) => verificationStatus.contracts[address.toString()],
+    (address) => verificationStatus.contracts[address.toString()] === false,
   )
 }
 
