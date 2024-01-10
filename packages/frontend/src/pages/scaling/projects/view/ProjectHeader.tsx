@@ -10,7 +10,11 @@ import { InfoIcon, ProjectLink } from '../../../../components/icons'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
 import { TypeCell } from '../../../../components/table/TypeCell'
-import { Tooltip } from '../../../../components/tooltip/Tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/tooltip/Tooltip'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
@@ -79,11 +83,13 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                 <a href="#stage">
                   <StageBadge stage={props.stage.stage} big />
                 </a>
-                <Tooltip
-                  className="inline-block px-2"
-                  content={<StageTooltip stageConfig={props.stage} />}
-                >
-                  <InfoIcon />
+                <Tooltip className="inline-block px-2">
+                  <TooltipTrigger>
+                    <InfoIcon />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <StageTooltip stageConfig={props.stage} />
+                  </TooltipContent>
                 </Tooltip>
               </span>
             ),

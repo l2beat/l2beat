@@ -3,11 +3,11 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
-import { Tooltip as TooltipComponent } from './Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip'
 import { TooltipProvider } from './TooltipProvider'
 
-const meta: Meta<typeof TooltipComponent> = {
-  component: TooltipComponent,
+const meta: Meta<typeof Tooltip> = {
+  component: Tooltip,
   decorators: [
     (Story) => {
       useEffect(() => {
@@ -23,17 +23,19 @@ const meta: Meta<typeof TooltipComponent> = {
   ],
 }
 export default meta
-type Story = StoryObj<typeof TooltipComponent>
+type Story = StoryObj<typeof Tooltip>
 
 export const Primary: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <TooltipComponent
-        className="inline-block"
-        content="Et sunt qui cupidatat minim aliqua occaecat labore elit. Reprehenderit cupidatat culpa aliqua mollit. Adipisicing tempor reprehenderit laborum enim aliquip Lorem excepteur."
-      >
-        <span>Element with tooltip</span>
-      </TooltipComponent>
+      <Tooltip className="inline-block">
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
+          Et sunt qui cupidatat minim aliqua occaecat labore elit. Reprehenderit
+          cupidatat culpa aliqua mollit. Adipisicing tempor reprehenderit
+          laborum enim aliquip Lorem excepteur.
+        </TooltipContent>
+      </Tooltip>
     </div>
   ),
   play: async ({ canvasElement }) => {

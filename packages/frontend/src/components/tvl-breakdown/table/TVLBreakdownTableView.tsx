@@ -4,7 +4,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../../icons'
 import { SectionId } from '../../project/sectionId'
-import { Tooltip } from '../../tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 
 interface Props<
   T extends {
@@ -83,11 +83,11 @@ export function TVLBreakdownTableView<
                       <span className="md:hidden">{column.shortName}</span>
                     )}
                     {column.tooltip && (
-                      <Tooltip
-                        className="-translate-y-px md:translate-y-0"
-                        content={column.tooltip}
-                      >
-                        <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                      <Tooltip className="-translate-y-px md:translate-y-0">
+                        <TooltipTrigger>
+                          <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                        </TooltipTrigger>
+                        <TooltipContent>{column.tooltip}</TooltipContent>
                       </Tooltip>
                     )}
                   </div>
