@@ -1,18 +1,21 @@
-import { getEnv, Logger, ReportedError } from '@l2beat/backend-tools'
-import * as Sentry from '@sentry/node'
-import { Context } from 'koa'
+import Bugsnag, { Event } from '@bugsnag/js'
+import BugsnagPluginKoa from '@bugsnag/plugin-koa'
+import { getEnv, ReportedError } from '@l2beat/backend-tools'
 
-const sentryDsn = getEnv().optionalString('SENTRY_DSN')
-if (sentryDsn) {
-  Sentry.init({
-    dsn: sentryDsn,
+export function initializeErrorReporting() {
+  const bugsnagApiKey = getEnv().optionalString('BUGSNAG_API_KEY')
 
-    // Set tracesSampleRate to 1.0 to capture 100%
-    // of transactions for performance monitoring.
-    // We recommend adjusting this value in production
-    tracesSampleRate: 1.0,
-  })
-  console.log('Sentry integration enabled')
+  if (bugsnagApiKey) {
+    Bugsnag.start({
+      apiKey: bugsnagApiKey,
+      plugins: [BugsnagPluginKoa],
+      logger: null,
+      sendCode: true,
+    })
+    console.log('Bugsnag integration enabled')
+  } else {
+    console.log('Bugsnag integration disabled')
+  }
 }
 
 export function reportError({
@@ -21,39 +24,18 @@ export function reportError({
   parameters,
 }: ReportedError): void {
   if (error) {
-    Sentry.captureException(error, {
-      extra: { message, parameters },
-    })
+    Bugsnag.notify(error, modifyError(parameters))
   } else if (message) {
-    Sentry.captureMessage(message, {
-      level: 'error',
-      extra: { parameters },
-    })
+    Bugsnag.notify(message, modifyError(parameters))
   } else {
-    Sentry.captureMessage('Unknown error', {
-      level: 'error',
-      extra: { parameters },
-    })
+    Bugsnag.notify('Unknown error', modifyError(parameters))
   }
 }
 
-export async function flushErrors(): Promise<void> {
-  if (sentryDsn) {
-    const flushed = await Sentry.flush(5_000)
-    if (!flushed) {
-      console.error('Sentry.flush() timeout')
-    }
+function modifyError(parameters: unknown) {
+  return (event: Event) => {
+    event.severity = 'error'
+    // TODO: event.context = service
+    if (parameters) event.addMetadata('parameters', parameters)
   }
-}
-
-export function handleServerError(logger: Logger, error: Error, ctx: Context) {
-  Sentry.withScope((scope) => {
-    scope.setSDKProcessingMetadata({ request: ctx.request })
-    const errorString = JSON.stringify(
-      error,
-      Object.getOwnPropertyNames(error),
-      2,
-    )
-    logger.error({ path: ctx.path, error: errorString }) // logging error eventually calls reportError
-  })
 }
