@@ -1,11 +1,12 @@
-import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
-import { formatSeconds } from '../../utils/formatSeconds'
+import { formatSeconds } from '../utils/formatSeconds'
+import { ScalingProjectRisk } from './ScalingProjectRisk'
+import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
   proof: 'no proof' | 'merkle proof',
   timeSeconds?: number,
-): ProjectTechnologyChoice {
+): ScalingProjectTechnologyChoice {
   const finalized = type === 'zk' ? 'proven' : 'finalized'
   const requires = proof === 'no proof' ? 'does not require' : 'requires'
   const timeString =
@@ -26,7 +27,7 @@ function REGULAR(
 
 function FORCED(
   orHalt?: 'forced-withdrawals' | 'all-withdrawals',
-): ProjectTechnologyChoice {
+): ScalingProjectTechnologyChoice {
   let orHaltString = ''
   if (orHalt) {
     switch (orHalt) {
@@ -52,8 +53,8 @@ function EMERGENCY(
   state: string,
   proof: 'zero knowledge proof' | 'merkle proof',
   delay?: number,
-): ProjectTechnologyChoice {
-  const risks: ProjectRisk[] =
+): ScalingProjectTechnologyChoice {
+  const risks: ScalingProjectRisk[] =
     proof === 'zero knowledge proof'
       ? [
           {
@@ -71,7 +72,7 @@ function EMERGENCY(
   }
 }
 
-const STARKEX_REGULAR_PERPETUAL: ProjectTechnologyChoice = {
+const STARKEX_REGULAR_PERPETUAL: ScalingProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   references: [
     {
@@ -81,7 +82,7 @@ const STARKEX_REGULAR_PERPETUAL: ProjectTechnologyChoice = {
   ],
 }
 
-const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
+const STARKEX_REGULAR_SPOT: ScalingProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   description:
     REGULAR('zk', 'no proof').description +
@@ -94,7 +95,7 @@ const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
   ],
 }
 
-const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
+const STARKEX_FORCED_PERPETUAL: ScalingProjectTechnologyChoice = {
   ...FORCED(),
   references: [
     {
@@ -112,7 +113,7 @@ const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
   ],
 }
 
-const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
+const STARKEX_FORCED_SPOT: ScalingProjectTechnologyChoice = {
   ...FORCED(),
   references: [
     {
@@ -126,22 +127,22 @@ const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
   ],
 }
 
-const STARKEX_EMERGENCY_PERPETUAL: ProjectTechnologyChoice = {
+const STARKEX_EMERGENCY_PERPETUAL: ScalingProjectTechnologyChoice = {
   ...EMERGENCY('a frozen state', 'merkle proof'),
   references: [...STARKEX_FORCED_PERPETUAL.references],
 }
 
-const STARKEX_EMERGENCY_SPOT: ProjectTechnologyChoice = {
+const STARKEX_EMERGENCY_SPOT: ScalingProjectTechnologyChoice = {
   ...EMERGENCY('a frozen state', 'merkle proof'),
   references: [...STARKEX_FORCED_SPOT.references],
 }
 
-const OPERATOR_CENSORS_WITHDRAWAL: ProjectRisk = {
+const OPERATOR_CENSORS_WITHDRAWAL: ScalingProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the operator censors withdrawal transaction.',
 }
 
-const STARKNET_REGULAR: ProjectTechnologyChoice = {
+const STARKNET_REGULAR: ScalingProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   description:
     REGULAR('zk', 'no proof').description +
@@ -155,7 +156,7 @@ const STARKNET_REGULAR: ProjectTechnologyChoice = {
   risks: [OPERATOR_CENSORS_WITHDRAWAL],
 }
 
-const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
+const STARKNET_EMERGENCY: ScalingProjectTechnologyChoice = {
   name: 'Emergency exit',
   risks: [],
   description:
@@ -163,7 +164,7 @@ const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
   references: [],
 }
 
-const PLASMA: ProjectTechnologyChoice = {
+const PLASMA: ScalingProjectTechnologyChoice = {
   name: 'Regular exit',
   description:
     'The user executes the withdrawal by submitting a transaction on L1 that requires a merkle proof of funds.',
@@ -171,7 +172,7 @@ const PLASMA: ProjectTechnologyChoice = {
   references: [],
 }
 
-export const AUTONOMOUS: ProjectTechnologyChoice = {
+export const AUTONOMOUS: ScalingProjectTechnologyChoice = {
   name: 'Autonomous exit',
   description:
     'Users can (eventually) exit the system by pushing the transaction on L1 and providing the corresponding state root. The only way to prevent such withdrawal is via an upgrade.',
@@ -179,7 +180,7 @@ export const AUTONOMOUS: ProjectTechnologyChoice = {
   references: [],
 }
 
-export const RISK_CENTRALIZED_VALIDATOR: ProjectRisk = {
+export const RISK_CENTRALIZED_VALIDATOR: ScalingProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the centralized validator goes down. Users cannot produce blocks themselves and exiting the system requires new block production.',
   isCritical: true,

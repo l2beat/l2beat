@@ -1,8 +1,8 @@
 import { expect } from 'earl'
 
-import { ProjectRisk } from '../'
+import { ScalingProjectRisk } from '../'
 
-export function checkRisk(risk: ProjectRisk, name: string) {
+export function checkRisk(risk: ScalingProjectRisk, name: string) {
   it(`${name} is correctly formatted`, () => {
     if (!risk._ignoreTextFormatting) {
       expect(risk.text).toMatchRegex(/^[a-z].*\.$/)

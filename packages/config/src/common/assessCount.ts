@@ -1,4 +1,4 @@
-import { AssessCount } from '../types'
+import { AssessCount } from '../layer2s/types'
 
 export const subtractOne: AssessCount = (count) => count - 1
 

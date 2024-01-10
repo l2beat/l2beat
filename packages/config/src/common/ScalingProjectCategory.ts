@@ -1,4 +1,4 @@
-export type ProjectCategory =
+export type ScalingProjectCategory =
   | 'Optimistic Rollup'
   | 'ZK Rollup'
   | 'Plasma'

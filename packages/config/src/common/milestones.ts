@@ -1,4 +1,4 @@
-import { Milestone } from '../../common'
+import { Milestone } from './Milestone'
 
 const MAINNET_OPEN = {
   name: 'Mainnet for everyone',

@@ -1,12 +1,13 @@
-import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
-import { formatSeconds } from '../../utils/formatSeconds'
+import { formatSeconds } from '../utils/formatSeconds'
+import { ScalingProjectRisk } from './ScalingProjectRisk'
+import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
-const EXIT_CENSORSHIP: ProjectRisk = {
+const EXIT_CENSORSHIP: ScalingProjectRisk = {
   category: 'Users can be censored if',
   text: 'the operator refuses to include their transactions. However, there exists a mechanism to independently exit the system.',
 }
 
-const WITHDRAW: ProjectTechnologyChoice = {
+const WITHDRAW: ScalingProjectTechnologyChoice = {
   name: 'Users can independently exit the system',
   description:
     'Independent exit allows the users to escape censorship by withdrawing their funds. The system allows users to  withdraw their funds by submitting a transaction directly to the contract on-chain.',
@@ -14,7 +15,7 @@ const WITHDRAW: ProjectTechnologyChoice = {
   references: [],
 }
 
-function WITHDRAW_OR_HALT(delay?: number): ProjectTechnologyChoice {
+function WITHDRAW_OR_HALT(delay?: number): ScalingProjectTechnologyChoice {
   return {
     name: 'Users can force exit the system',
     description: `Force exit allows the users to escape censorship by withdrawing their funds. The system allows users to force the withdrawal of funds by submitting a request directly to the contract on-chain.  The request must be served within ${
@@ -25,7 +26,7 @@ function WITHDRAW_OR_HALT(delay?: number): ProjectTechnologyChoice {
   }
 }
 
-function STARKEX_SPOT_WITHDRAW(delay?: number): ProjectTechnologyChoice {
+function STARKEX_SPOT_WITHDRAW(delay?: number): ScalingProjectTechnologyChoice {
   return {
     ...WITHDRAW_OR_HALT(delay),
     references: [
@@ -37,7 +38,9 @@ function STARKEX_SPOT_WITHDRAW(delay?: number): ProjectTechnologyChoice {
   }
 }
 
-function STARKEX_PERPETUAL_WITHDRAW(delay?: number): ProjectTechnologyChoice {
+function STARKEX_PERPETUAL_WITHDRAW(
+  delay?: number,
+): ScalingProjectTechnologyChoice {
   return {
     ...WITHDRAW_OR_HALT(delay),
     description:
@@ -63,7 +66,7 @@ function STARKEX_PERPETUAL_WITHDRAW(delay?: number): ProjectTechnologyChoice {
   }
 }
 
-const CANONICAL_ORDERING: ProjectTechnologyChoice = {
+const CANONICAL_ORDERING: ScalingProjectTechnologyChoice = {
   name: 'Users can force any transaction',
   description:
     'Because the state of the system is based on transactions submitted on-chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
@@ -71,7 +74,7 @@ const CANONICAL_ORDERING: ProjectTechnologyChoice = {
   references: [],
 }
 
-const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
+const PROPOSE_OWN_BLOCKS: ScalingProjectTechnologyChoice = {
   name: 'Users can force any transaction',
   description:
     'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
@@ -84,7 +87,7 @@ const PROPOSE_OWN_BLOCKS: ProjectTechnologyChoice = {
   references: [],
 }
 
-const SEQUENCER_NO_MECHANISM: ProjectTechnologyChoice = {
+const SEQUENCER_NO_MECHANISM: ScalingProjectTechnologyChoice = {
   name: "Users can't force any transaction",
   description:
     'There is no general mechanism to force the sequencer to include the transaction.',
@@ -97,7 +100,7 @@ const SEQUENCER_NO_MECHANISM: ProjectTechnologyChoice = {
   references: [],
 }
 
-const ENQUEUE: ProjectTechnologyChoice = {
+const ENQUEUE: ScalingProjectTechnologyChoice = {
   name: 'Users can enqueue transactions',
   description:
     "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",

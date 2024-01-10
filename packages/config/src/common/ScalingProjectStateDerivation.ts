@@ -1,4 +1,4 @@
-export interface Layer2StateDerivation {
+export interface ScalingProjectStateDerivation {
   nodeSoftware: string
   compressionScheme?: string
   genesisState: string

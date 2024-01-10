@@ -1,4 +1,4 @@
-export interface ProjectLinks {
+export interface ScalingProjectLinks {
   /** Links to marketing landing pages. */
   websites: string[]
   /** Links to web apps connected to the layer2. */
