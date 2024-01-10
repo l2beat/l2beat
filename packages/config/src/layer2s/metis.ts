@@ -22,10 +22,6 @@ export const metis: Layer2 = {
     name: 'Metis Andromeda',
     shortName: 'Metis',
     slug: 'metis',
-    redWarning:
-      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \
-      Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system. \
-      The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
     description:
       'Metis is an EVM-equivalent Scaling Solution originally forked from Optimism. It provides support for multiple, \
       interconnected chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \

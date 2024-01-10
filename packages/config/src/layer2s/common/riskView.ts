@@ -127,7 +127,7 @@ export function DATA_CELESTIA(
     description:
       `Proof construction and state derivation fully rely on data that is posted on Celestia.` +
       additional,
-    sentiment: 'warning',
+    sentiment: 'bad',
   }
 }
 
