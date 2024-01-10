@@ -6,7 +6,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Renamed contract to be consistent with template.
 
 ## Config related changes
 
