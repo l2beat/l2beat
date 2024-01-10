@@ -34,7 +34,12 @@
   },
   "overrides": {
     "StarkPerpetual": {
-      "ignoreMethods": ["configurationHash", "getQuantum", "isAssetRegistered", "identify"],
+      "ignoreMethods": [
+        "configurationHash",
+        "getQuantum",
+        "isAssetRegistered",
+        "identify"
+      ],
       "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
       "fields": {
         "OPERATORS": {
