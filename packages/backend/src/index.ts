@@ -1,28 +1,26 @@
 import { Application } from './Application'
 import { getConfig } from './config'
-import { flushErrors, reportError } from './tools/ErrorReporter'
+import { initializeErrorReporting, reportError } from './tools/ErrorReporter'
 
-main().catch(async (e: unknown) => {
+main().catch((e: unknown) => {
   console.error(e)
 
+  // TODO: Bugsnag can handle unhandled error before the app exit, so maybe we can get rid of it
+  // but top-level await is not supported yet
   if (typeof e === 'string') {
     reportError({ message: e })
   } else if (e instanceof Error) {
     reportError({ error: e })
   } else {
-    reportError({ parameters: e })
+    reportError({ message: 'unknown error', parameters: e })
   }
 
-  try {
-    // Need to flush errors to sentry before exiting otherwise they will be lost
-    await flushErrors()
-  } finally {
-    process.exit(1)
-  }
+  process.exit(1)
 })
 
 async function main() {
   const config = getConfig()
+  initializeErrorReporting(config)
   const app = new Application(config)
   await app.start()
 }
