@@ -1,13 +1,14 @@
 import Bugsnag, { Event } from '@bugsnag/js'
 import BugsnagPluginKoa from '@bugsnag/plugin-koa'
-import { getEnv, ReportedError } from '@l2beat/backend-tools'
+import { ReportedError } from '@l2beat/backend-tools'
 
-export function initializeErrorReporting() {
-  const bugsnagApiKey = getEnv().optionalString('BUGSNAG_API_KEY')
+import { Config } from '../config/Config'
 
-  if (bugsnagApiKey) {
+export function initializeErrorReporting(config: Config) {
+  if (config.errorReporting) {
     Bugsnag.start({
-      apiKey: bugsnagApiKey,
+      apiKey: config.errorReporting.bugsnagApiKey,
+      releaseStage: config.errorReporting.environment,
       plugins: [BugsnagPluginKoa],
       logger: null,
       sendCode: true,

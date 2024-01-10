@@ -29,6 +29,7 @@ export function getLocalConfig(env: Env): Config {
     'INTERNAL_DISCORD_CHANNEL_ID',
   )
   const discordEnabled = !!discordToken && !!internalDiscordChannelId
+  const errorReportingEnabled = !!env.optionalString('BUGSNAG_API_KEY')
 
   return {
     name: 'Backend/Local',
@@ -153,7 +154,7 @@ export function getLocalConfig(env: Env): Config {
         ),
         blockNumberProviderConfig: {
           type: 'RoutescanLike',
-          routescanApiUrl: 'https://pacific-explorer.manta.network/api',
+          routescanApiUrl: 'https://pacific-explorer.manta.network/aapi',
         },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
@@ -316,6 +317,10 @@ export function getLocalConfig(env: Env): Config {
           ),
         },
       ],
+    },
+    errorReporting: errorReportingEnabled && {
+      bugsnagApiKey: env.string('BUGSNAG_API_KEY'),
+      environment: 'local',
     },
   }
 }

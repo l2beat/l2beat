@@ -19,8 +19,8 @@ main().catch((e: unknown) => {
 })
 
 async function main() {
-  initializeErrorReporting()
   const config = getConfig()
+  initializeErrorReporting(config)
   const app = new Application(config)
   await app.start()
 }
