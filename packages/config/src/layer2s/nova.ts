@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,9 +10,11 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from './common'
-import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
+} from '../common'
+import { subtractOne } from '../common/assessCount'
+import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')

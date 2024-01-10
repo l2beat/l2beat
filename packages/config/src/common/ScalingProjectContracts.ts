@@ -1,27 +1,27 @@
 import type { UpgradeabilityParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ProjectReference } from './ProjectReference'
-import { ProjectRisk } from './ProjectRisk'
+import { ScalingProjectReference } from './ScalingProjectReference'
+import { ScalingProjectRisk } from './ScalingProjectRisk'
 
-export interface ProjectContracts {
+export interface ScalingProjectContracts {
   /** List of the contracts */
-  addresses: ProjectContract[]
+  addresses: ScalingProjectContract[]
   /** List of risks associated with the contracts */
-  risks: ProjectRisk[]
+  risks: ScalingProjectRisk[]
   /** List of references backing up the claim */
-  references?: ProjectReference[]
+  references?: ScalingProjectReference[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
   /** The description and research is under review */
   isUnderReview?: boolean
 }
 
-export type ProjectContract =
-  | ProjectContractSingleAddress
-  | ProjectContractMultipleAddresses
+export type ScalingProjectContract =
+  | ScalingProjectContractSingleAddress
+  | ScalingProjectContractMultipleAddresses
 
-export interface ProjectContractSingleAddress {
+export interface ScalingProjectContractSingleAddress {
   /** Address of the contract */
   address: EthereumAddress
   /** Url to chain's etherscan */
@@ -31,7 +31,7 @@ export interface ProjectContractSingleAddress {
   /** Description of the contract's role in the system */
   description?: string
   /** Details about upgradeability */
-  upgradeability?: ProjectUpgradeability
+  upgradeability?: ScalingProjectUpgradeability
   /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
   upgradeDelay?: string
   /** Which actors from permissions can upgrade */
@@ -46,17 +46,17 @@ export interface ProjectContractSingleAddress {
     pausableBy: string[]
   }
   /** List of references */
-  references?: ProjectReference[]
+  references?: ScalingProjectReference[]
 }
 
 export function isSingleAddress(
-  c: ProjectContract,
-): c is ProjectContractSingleAddress {
+  c: ScalingProjectContract,
+): c is ScalingProjectContractSingleAddress {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  return (c as ProjectContractSingleAddress).address !== undefined
+  return (c as ScalingProjectContractSingleAddress).address !== undefined
 }
 
-export interface ProjectContractMultipleAddresses {
+export interface ScalingProjectContractMultipleAddresses {
   /** Address of the contract */
   multipleAddresses: EthereumAddress[]
   /** Solidity name of the contract */
@@ -67,7 +67,7 @@ export interface ProjectContractMultipleAddresses {
   description?: string
 }
 
-export type ProjectUpgradeability =
+export type ScalingProjectUpgradeability =
   | CustomUpgradeability
   | CustomUpgradeabilityWithoutAdmin
   | ReferenceUpgradeability

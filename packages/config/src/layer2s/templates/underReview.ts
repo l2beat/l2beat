@@ -1,13 +1,17 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { ProjectEscrow } from '../../common'
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
+import {
+  CONTRACTS,
+  ScalingProjectEscrow,
+  TECHNOLOGY,
+  UNDER_REVIEW_RISK_VIEW,
+} from '../../common'
 import { Layer2, Layer2Display } from '../types'
 
 export interface underReviewConfig {
   id: string
   display: Omit<Layer2Display, 'dataAvailabilityMode'>
-  escrows: ProjectEscrow[]
+  escrows: ScalingProjectEscrow[]
 }
 
 export function underReview(templateVars: underReviewConfig): Layer2 {

@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
+import { CONTRACTS, NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, NUGGETS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import {
   INBOUND_PROOF_LIBRARIES,

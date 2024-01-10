@@ -8,13 +8,15 @@ import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
 import {
-  ProjectReference,
-  ProjectRiskViewEntry,
-  ProjectTechnologyChoice,
+  NUGGETS,
+  ScalingProjectReference,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnologyChoice,
 } from '../common'
+import { ScalingProjectTechnology } from '../common/ScalingProjectTechnology'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
+import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -178,7 +180,7 @@ describe('layer2s', () => {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
           for (const [riskName, riskEntry] of Object.entries(layer2.riskView)) {
-            const risk = riskEntry as ProjectRiskViewEntry
+            const risk = riskEntry as ScalingProjectRiskViewEntry
             if (risk.sources === undefined) continue
 
             describe(`${layer2.id.toString()} : ${riskName}`, () => {
@@ -254,7 +256,7 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         describe(layer2.display.name, () => {
           type Key = Exclude<
-            keyof Layer2Technology,
+            keyof ScalingProjectTechnology,
             'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 
@@ -269,7 +271,10 @@ describe('layer2s', () => {
             }
           }
 
-          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
+          function checkChoice(
+            choice: ScalingProjectTechnologyChoice,
+            name: string,
+          ) {
             it(`${name}.name doesn't end with a dot`, () => {
               expect(choice.name.endsWith('.')).toEqual(false)
             })
@@ -452,7 +457,7 @@ describe('layer2s', () => {
   })
 })
 
-function getAddressFromReferences(references: ProjectReference[] = []) {
+function getAddressFromReferences(references: ScalingProjectReference[] = []) {
   const addresses = references.map((r) => r.href)
   return getReferencedAddresses(addresses)
 }

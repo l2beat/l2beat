@@ -1,4 +1,4 @@
-import { ProjectReference } from '@l2beat/config'
+import { ScalingProjectReference } from '@l2beat/config'
 import {
   ManuallyVerifiedContracts,
   VerificationStatus,
@@ -16,7 +16,7 @@ export interface PermissionsSectionProps {
   permissions: TechnologyContract[]
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
-  references?: ProjectReference[]
+  references?: ScalingProjectReference[]
 }
 
 export function PermissionsSection({
