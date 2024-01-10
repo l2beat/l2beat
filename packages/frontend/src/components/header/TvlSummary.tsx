@@ -146,7 +146,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 </div>
                 <span className="text-base font-semibold leading-none">
                   {s.value}
-                  {s.value !== '$0.00' && (
+                  {props.stats && props.stats.tvl > 0 && (
                     <span className="font-normal text-gray-500">
                       {` (${s.usage}%)`}
                     </span>
