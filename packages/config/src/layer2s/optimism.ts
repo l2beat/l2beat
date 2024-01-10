@@ -8,9 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,11 +18,14 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOneAfterBlockInclusive,
-} from './common'
+} from '../common'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
+import { DERIVATION } from '../common/stateDerivations'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
 
@@ -149,7 +149,6 @@ export const optimism: Layer2 = {
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
-    nativeL2TokensIncludedInTVL: ['OP'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),

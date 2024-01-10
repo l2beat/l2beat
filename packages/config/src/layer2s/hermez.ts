@@ -10,7 +10,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
 import { Layer2 } from './types'
 
 const upgradeDelay = 604800

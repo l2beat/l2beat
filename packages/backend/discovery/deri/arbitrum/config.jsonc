@@ -11,7 +11,7 @@
     "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0": "Bridge",
     "0x383eFE8D410285c5CbE1B4F296022640759aA834": "ChallengeManager",
     "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": "Outbox",
-    "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "Inbox",
+    "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "SequencerInbox",
     "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "UpgradeExecutor"
   },
   "overrides": {
@@ -55,9 +55,14 @@
       "ignoreMethods": ["spent", "isSpent"]
     },
     "Bridge": {
-      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"]
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
     },
-    "Inbox": {
+    "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "fields": {

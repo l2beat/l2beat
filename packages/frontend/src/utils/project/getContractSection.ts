@@ -3,8 +3,9 @@ import {
   CONTRACTS,
   isSingleAddress,
   Layer2,
-  ProjectContract,
-  ProjectEscrow,
+  Layer3,
+  ScalingProjectContract,
+  ScalingProjectEscrow,
 } from '@l2beat/config'
 import {
   assert,
@@ -23,7 +24,7 @@ import { languageJoin } from '../utils'
 import { hasArchitectureImage } from './hasArchitectureImage'
 
 export function getContractSection(
-  project: Layer2 | Bridge,
+  project: Layer2 | Layer3 | Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): ContractsSectionProps {
@@ -85,16 +86,12 @@ export function getContractSection(
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
     manuallyVerifiedContracts,
-    nativeL2TokensIncludedInTVL:
-      project.type === 'layer2'
-        ? project.config.nativeL2TokensIncludedInTVL ?? []
-        : [],
   }
 }
 
 function makeTechnologyContract(
-  item: ProjectContract,
-  project: Layer2 | Bridge,
+  item: ScalingProjectContract,
+  project: Layer2 | Layer3 | Bridge,
   isUnverified: boolean,
   verificationStatus: VerificationStatus,
   isEscrow?: boolean,
@@ -401,7 +398,7 @@ function makeTechnologyContract(
 }
 
 function isContractUnverified(
-  contract: ProjectContract,
+  contract: ScalingProjectContract,
   verificationStatus: {
     projects: Record<string, boolean | undefined>
     contracts: Record<string, boolean | undefined>
@@ -412,7 +409,7 @@ function isContractUnverified(
   }
 
   return contract.multipleAddresses.some(
-    (address) => verificationStatus.contracts[address.toString()],
+    (address) => verificationStatus.contracts[address.toString()] === false,
   )
 }
 
@@ -426,7 +423,9 @@ function isAddressUnverified(
   return verificationStatus.contracts[address.toString()] === false
 }
 
-function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
+function escrowToProjectContract(
+  escrow: ScalingProjectEscrow,
+): ScalingProjectContract {
   assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
   return {
@@ -439,7 +438,7 @@ function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   }
 }
 
-function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
+function moreTokensFirst(a: ScalingProjectEscrow, b: ScalingProjectEscrow) {
   const aTokens = a.tokens === '*' ? Number.POSITIVE_INFINITY : a.tokens.length
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 

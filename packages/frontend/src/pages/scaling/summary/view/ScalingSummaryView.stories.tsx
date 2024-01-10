@@ -10,12 +10,13 @@ import { configureTables } from '../../../../scripts/table/configureTables'
 import { ScalingSummaryView } from './ScalingSummaryView'
 
 const meta = {
-  title: 'Pages/Scaling/TvlView',
+  title: 'Pages/Scaling/SummaryView',
   component: ScalingSummaryView,
   args: {
-    items: [
+    layer2s: [
       {
         name: 'Base',
+        shortName: undefined,
         slug: 'base',
         provider: 'OP Stack',
         riskValues: {
@@ -97,6 +98,7 @@ const meta = {
       },
       {
         name: 'Linea',
+        shortName: undefined,
         slug: 'linea',
         provider: undefined,
         riskValues: {
@@ -158,6 +160,7 @@ const meta = {
       },
       {
         name: 'Mantle',
+        shortName: undefined,
         slug: 'mantle',
         provider: undefined,
         riskValues: {
@@ -219,6 +222,7 @@ const meta = {
       },
       {
         name: 'Scroll',
+        shortName: undefined,
         slug: 'scroll',
         provider: undefined,
         riskValues: {
@@ -278,6 +282,7 @@ const meta = {
       },
       {
         name: 'Taiko',
+        shortName: undefined,
         slug: 'taiko',
         provider: undefined,
         riskValues: {
@@ -337,6 +342,7 @@ const meta = {
       },
       {
         name: 'ZKSwap 1.0',
+        shortName: undefined,
         slug: 'zkswap',
         provider: 'zkSync Lite',
         riskValues: {
@@ -403,6 +409,7 @@ const meta = {
       },
       {
         name: 'Polygon Hermez',
+        shortName: undefined,
         slug: 'hermez',
         provider: undefined,
         riskValues: {
@@ -468,6 +475,7 @@ const meta = {
       },
       {
         name: 'ZKSwap 2.0',
+        shortName: undefined,
         slug: 'zkswap2',
         provider: 'zkSync Lite',
         riskValues: {
@@ -535,6 +543,7 @@ const meta = {
       },
       {
         name: 'Gluon',
+        shortName: undefined,
         slug: 'gluon',
         provider: undefined,
         riskValues: {
@@ -601,6 +610,7 @@ const meta = {
       },
       {
         name: 'OMG Network',
+        shortName: undefined,
         slug: 'omgnetwork',
         provider: undefined,
         riskValues: {
@@ -666,6 +676,7 @@ const meta = {
       },
       {
         name: 'L2.Finance-zk',
+        shortName: undefined,
         slug: 'layer2financezk',
         provider: 'StarkEx',
         riskValues: {
@@ -731,6 +742,7 @@ const meta = {
       },
       {
         name: 'Arbitrum One',
+        shortName: undefined,
         slug: 'arbitrum',
         provider: undefined,
         riskValues: {
@@ -820,6 +832,7 @@ const meta = {
       },
       {
         name: 'Optimism',
+        shortName: undefined,
         slug: 'optimism',
         provider: 'OP Stack',
         riskValues: {
@@ -887,6 +900,7 @@ const meta = {
       },
       {
         name: 'dYdX',
+        shortName: undefined,
         slug: 'dydx',
         provider: 'StarkEx',
         riskValues: {
@@ -951,6 +965,7 @@ const meta = {
       },
       {
         name: 'zkSync Era',
+        shortName: undefined,
         slug: 'zksync-era',
         provider: 'ZK Stack',
         riskValues: {
@@ -1016,6 +1031,7 @@ const meta = {
       },
       {
         name: 'Metis Andromeda',
+        shortName: undefined,
         slug: 'metis',
         provider: 'OVM',
         riskValues: {
@@ -1083,6 +1099,7 @@ const meta = {
       },
       {
         name: 'Loopring',
+        shortName: undefined,
         slug: 'loopring',
         provider: undefined,
         riskValues: {
@@ -1168,6 +1185,7 @@ const meta = {
       },
       {
         name: 'Immutable X',
+        shortName: undefined,
         slug: 'immutablex',
         provider: 'StarkEx',
         riskValues: {
@@ -1231,6 +1249,19 @@ const meta = {
         purpose: 'NFT, Exchange',
         category: 'Validium',
         stage: { stage: 'NotApplicable' },
+      },
+    ],
+    layer3s: [
+      {
+        name: 'Xai',
+        shortName: undefined,
+        slug: 'xai',
+        provider: 'Arbitrum Orbit',
+        warning: undefined,
+        isArchived: undefined,
+        isUpcoming: true,
+        purpose: 'Gaming',
+        category: 'Optimium',
       },
     ],
   },

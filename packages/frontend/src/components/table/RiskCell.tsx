@@ -1,4 +1,4 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
+import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
@@ -11,7 +11,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
-  item?: ProjectRiskViewEntry
+  item?: ScalingProjectRiskViewEntry
 }
 
 export function RiskCell({ item }: Props) {

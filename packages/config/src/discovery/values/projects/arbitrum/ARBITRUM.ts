@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ProjectPermissionedAccount } from '../../../../common'
+import { ScalingProjectPermissionedAccount } from '../../../../common'
 import { formatSeconds } from '../../../../utils/formatSeconds'
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
@@ -27,14 +27,14 @@ const getProposerFailureString = (delayBlocks: number) => {
 // HARDCODED
 const OLD_BRIDGE = EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515')
 
-const SEQUENCER: ProjectPermissionedAccount[] = [
+const SEQUENCER: ScalingProjectPermissionedAccount[] = [
   {
     address: EthereumAddress('0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc'),
     type: 'EOA',
   },
 ]
 
-const VALIDATORS: ProjectPermissionedAccount[] = [
+const VALIDATORS: ScalingProjectPermissionedAccount[] = [
   {
     address: EthereumAddress('0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398'),
     type: 'Contract',
@@ -89,7 +89,7 @@ const VALIDATORS: ProjectPermissionedAccount[] = [
   },
 ]
 
-const DERI_VALIDATORS: ProjectPermissionedAccount[] = [
+const DERI_VALIDATORS: ScalingProjectPermissionedAccount[] = [
   {
     address: EthereumAddress('0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0'),
     type: 'EOA',

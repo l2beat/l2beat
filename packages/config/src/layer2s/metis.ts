@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   EXITS,
@@ -8,7 +7,8 @@ import {
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metis')
@@ -20,6 +20,7 @@ export const metis: Layer2 = {
   id: ProjectId('metis'),
   display: {
     name: 'Metis Andromeda',
+    shortName: 'Metis',
     slug: 'metis',
     redWarning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \

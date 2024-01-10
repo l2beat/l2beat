@@ -63,7 +63,8 @@
         "isConfirmed",
         "owners",
         "transactions"
-      ]
+      ],
+      "ignoreInWatchMode": ["transactionCount"]
     },
     "DGToken": {
       "ignoreDiscovery": true

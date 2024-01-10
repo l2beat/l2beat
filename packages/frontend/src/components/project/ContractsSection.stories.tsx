@@ -92,7 +92,6 @@ const props: ContractsSectionProps = {
     },
   },
   manuallyVerifiedContracts: {},
-  nativeL2TokensIncludedInTVL: ['ARB'],
 }
 
 export const Contracts: Story = { args: props }

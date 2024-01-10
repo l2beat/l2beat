@@ -6,17 +6,19 @@ import {
 import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
-import { ChartSectionProps } from '../../../../components/project/ChartSection'
-import { ContractsSectionProps } from '../../../../components/project/ContractsSection'
-import { DescriptionSectionProps } from '../../../../components/project/DescriptionSection'
-import { KnowledgeNuggetsProps } from '../../../../components/project/KnowledgeNuggetsSection'
-import { MilestonesSectionProps } from '../../../../components/project/MilestonesSection'
-import { PermissionsSectionProps } from '../../../../components/project/PermissionsSection'
-import { RiskSectionProps } from '../../../../components/project/RiskSection'
-import { TechnologyIncompleteProps } from '../../../../components/project/TechnologyIncomplete'
-import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import {
+  ProjectDetailsChartSection,
+  ProjectDetailsContractsSection,
+  ProjectDetailsDescriptionSection,
+  ProjectDetailsKnowledgeNuggetsSection,
+  ProjectDetailsMilestonesSection,
+  ProjectDetailsPermissionsSection,
+  ProjectDetailsRiskSection,
+  ProjectDetailsTechnologyIncompleteNote,
+  ProjectDetailsTechnologySection,
+} from '../../../types'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
@@ -127,56 +129,13 @@ export type BridgeDetailsItem = { excludeFromNavigation?: boolean } & (
 )
 
 export type BridgeDetailsSection =
-  | ChartSection
-  | DescriptionSection
-  | MilestonesSection
-  | KnowledgeNuggetsSection
-  | RiskSection
-  | TechnologySection
-  | PermissionsSection
-  | ContractsSection
+  | ProjectDetailsChartSection
+  | ProjectDetailsDescriptionSection
+  | ProjectDetailsMilestonesSection
+  | ProjectDetailsKnowledgeNuggetsSection
+  | ProjectDetailsRiskSection
+  | ProjectDetailsTechnologySection
+  | ProjectDetailsPermissionsSection
+  | ProjectDetailsContractsSection
 
-type NonSectionElement = TechnologyIncompleteNote
-
-interface ChartSection {
-  type: 'ChartSection'
-  props: ChartSectionProps
-}
-interface DescriptionSection {
-  type: 'DescriptionSection'
-  props: DescriptionSectionProps
-}
-
-interface MilestonesSection {
-  type: 'MilestonesSection'
-  props: MilestonesSectionProps
-}
-
-interface KnowledgeNuggetsSection {
-  type: 'KnowledgeNuggetsSection'
-  props: KnowledgeNuggetsProps
-}
-
-interface RiskSection {
-  type: 'RiskSection'
-  props: RiskSectionProps
-}
-
-interface TechnologyIncompleteNote {
-  type: 'TechnologyIncompleteNote'
-  props: TechnologyIncompleteProps
-}
-interface TechnologySection {
-  type: 'TechnologySection'
-  props: TechnologySectionProps
-}
-
-interface PermissionsSection {
-  type: 'PermissionsSection'
-  props: PermissionsSectionProps
-}
-
-interface ContractsSection {
-  type: 'ContractsSection'
-  props: ContractsSectionProps
-}
+type NonSectionElement = ProjectDetailsTechnologyIncompleteNote

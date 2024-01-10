@@ -1,10 +1,11 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
+import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 
 import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { ValueWithDisplayValue } from '../../types'
 
 export interface BridgesSummaryViewEntry {
   type: 'bridge' | 'layer2'
+  shortName: string | undefined
   name: string
   slug: string
   warning?: string
@@ -18,6 +19,6 @@ export interface BridgesSummaryViewEntry {
   sevenDayChange?: string
   bridgesMarketShare?: string
   combinedMarketShare?: ValueWithDisplayValue
-  validatedBy?: ProjectRiskViewEntry
+  validatedBy?: ScalingProjectRiskViewEntry
   category: string
 }

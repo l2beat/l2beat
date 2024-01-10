@@ -3,12 +3,12 @@ import { ProjectId } from '@l2beat/shared-pure'
 import {
   KnowledgeNugget,
   Milestone,
-  ProjectContracts,
-  ProjectEscrow,
-  ProjectLinks,
-  ProjectPermission,
-  ProjectRiskViewEntry,
-  ProjectTechnologyChoice,
+  ScalingProjectContracts,
+  ScalingProjectEscrow,
+  ScalingProjectLinks,
+  ScalingProjectPermission,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnologyChoice,
 } from '../../common'
 
 export interface Bridge {
@@ -21,37 +21,38 @@ export interface Bridge {
   config: BridgeConfig
   riskView?: BridgeRiskView
   technology: BridgeTechnology
-  contracts?: ProjectContracts
-  permissions?: ProjectPermission[] | 'UnderReview'
+  contracts?: ScalingProjectContracts
+  permissions?: ScalingProjectPermission[] | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
 
 export interface BridgeDisplay {
   name: string
+  shortName?: string
   slug: string
   warning?: string
   description?: string
   category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
-  links: Partial<ProjectLinks>
+  links: Partial<ScalingProjectLinks>
 }
 
 export interface BridgeConfig {
   associatedTokens?: string[]
-  escrows: ProjectEscrow[]
+  escrows: ScalingProjectEscrow[]
 }
 
 export interface BridgeRiskView {
-  validatedBy?: ProjectRiskViewEntry
-  sourceUpgradeability?: ProjectRiskViewEntry
-  destinationToken?: ProjectRiskViewEntry
+  validatedBy?: ScalingProjectRiskViewEntry
+  sourceUpgradeability?: ScalingProjectRiskViewEntry
+  destinationToken?: ScalingProjectRiskViewEntry
 }
 
 export interface BridgeTechnology {
   canonical?: boolean
   destination: string[]
-  principleOfOperation?: ProjectTechnologyChoice
-  validation?: ProjectTechnologyChoice
-  destinationToken?: ProjectTechnologyChoice
+  principleOfOperation?: ScalingProjectTechnologyChoice
+  validation?: ScalingProjectTechnologyChoice
+  destinationToken?: ScalingProjectTechnologyChoice
   isUnderReview?: boolean
 }

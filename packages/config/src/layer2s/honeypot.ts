@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -8,7 +7,8 @@ import {
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -20,6 +20,7 @@ export const honeypot: Layer2 = {
   id: ProjectId('honeypot'),
   display: {
     name: 'Honeypot (Cartesi)',
+    shortName: 'Honeypot',
     slug: 'cartesi-honeypot',
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups.\

@@ -19,10 +19,10 @@ export interface SingleColumnConfig<T> {
   name: string
   icon?: ReactNode
   shortName?: ReactNode
-  alignRight?: true
-  alignCenter?: true
+  align?: 'center' | 'right'
   minimalWidth?: true
   headClassName?: string
+  className?: string
   noPaddingRight?: true
   idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode

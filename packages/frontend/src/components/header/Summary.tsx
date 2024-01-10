@@ -8,7 +8,7 @@ import { ProjectSummary, ProjectSummaryStat } from './ProjectSummary'
 import { TvlStats, TvlSummary } from './TvlSummary'
 
 interface SummaryProps {
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   stats: FullSummaryStats
   links: ProjectLink[]
   isUpcoming?: boolean
@@ -22,6 +22,7 @@ export interface FullSummaryStats {
 }
 
 export function Summary(props: SummaryProps) {
+  const isL2orL3 = props.type === 'layer2' || props.type === 'layer3'
   return (
     <>
       <div className="my-2 hidden w-full md:block">
@@ -30,10 +31,10 @@ export function Summary(props: SummaryProps) {
       <div
         className={classNames(
           'grid w-full gap-4',
-          props.type === 'layer2' && 'md:grid-cols-3',
+          isL2orL3 && 'md:grid-cols-3',
         )}
       >
-        {props.type === 'layer2' && (
+        {isL2orL3 && (
           <TvlSummary
             stats={props.stats.l2Tvl}
             tvlBreakdownHref={props.tvlBreakdownHref}
@@ -43,7 +44,7 @@ export function Summary(props: SummaryProps) {
         <ProjectSummary
           stats={props.stats.summary}
           type={props.type}
-          className={classNames(props.type === 'layer2' && 'md:col-span-2')}
+          className="md:col-span-2"
         />
       </div>
       <div className="w-full px-4 md:hidden md:px-0">

@@ -7,7 +7,7 @@ import { InfoIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 interface Props {
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   stats: ProjectSummaryStat[]
   className?: string
 }
@@ -20,7 +20,16 @@ export interface ProjectSummaryStat {
 }
 
 export function ProjectSummary(props: Props) {
-  const cols = props.type === 'bridge' ? 4 : 3
+  let cols
+  switch (props.type) {
+    case 'layer2':
+    case 'layer3':
+      cols = 3
+      break
+    case 'bridge':
+      cols = 4
+      break
+  }
   const groupedStats = chunk(props.stats, cols)
   return (
     <div

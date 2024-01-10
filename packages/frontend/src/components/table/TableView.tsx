@@ -27,7 +27,7 @@ export function TableView<T>({
   return (
     <div
       className={cx(
-        'group/tableview mt-3 overflow-x-auto whitespace-pre text-base md:mt-6',
+        'group/tableview mt-3 overflow-x-auto whitespace-pre pb-3 text-base md:mt-6',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
@@ -78,7 +78,7 @@ export function TableView<T>({
                 key={i}
                 {...rest}
                 className={cx(
-                  'group cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
+                  'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
                   'hover:bg-black/[0.1] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
@@ -170,13 +170,14 @@ function ColumnHeader<T>(props: {
             'rounded-tr-lg',
           props.groupOptions?.noGroupTitle && 'pt-4',
           props.column.headClassName,
+          props.column.className,
         )}
       >
         <div
           className={cx(
             'flex flex-row items-center gap-1.5',
-            props.column.alignRight && 'justify-end',
-            props.column.alignCenter && 'justify-center',
+            props.column.align === 'right' && 'justify-end',
+            props.column.align === 'center' && 'justify-center',
           )}
         >
           {props.column.sorting ? (
@@ -239,6 +240,7 @@ function DataCell<T>(props: {
           props.columnConfig.minimalWidth && 'w-0',
           props.groupOptions?.isFirst && '!pl-6',
           props.groupOptions?.isLast && '!pr-6',
+          props.columnConfig.className,
         )}
         {...orderAttributes}
       >
@@ -246,8 +248,8 @@ function DataCell<T>(props: {
           href={idHref}
           className={cx(
             'h-full w-full items-center',
-            props.columnConfig.alignRight && 'justify-end',
-            props.columnConfig.alignCenter && 'justify-center',
+            props.columnConfig.align === 'right' && 'justify-end',
+            props.columnConfig.align === 'center' && 'justify-center',
             hasPaddingRight &&
               !props.groupOptions?.isLast &&
               'pr-3 group-last/data-cell:last:pr-0 md:pr-4',
@@ -294,7 +296,7 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
     <tr className="uppercase leading-none">
       {props.groupedColumns.map((groupedColumn, i) => {
         if (groupedColumn.type === 'single') {
-          return <th key={i} />
+          return <th key={i} className={groupedColumn.className} />
         }
         if (!groupedColumn.title) {
           return (
@@ -328,11 +330,13 @@ function EmptyRow(props: { groupedColumns: GroupedColumn[] }) {
             <td
               key={`${i}`}
               colSpan={groupedColumn.span}
-              className={classNames('h-4 rounded-b-lg')}
+              className="h-4 rounded-b-lg"
             />
           )
         }
-        return <td className="h-4" key={i} />
+        return (
+          <td className={classNames('h-4', groupedColumn.className)} key={i} />
+        )
       })}
     </tr>
   )
@@ -346,6 +350,7 @@ type GroupedColumn =
     }
   | {
       type: 'single'
+      className?: string
     }
 
 function getGroupedColumns<T>(
@@ -375,6 +380,7 @@ function getGroupedColumns<T>(
     }
     return {
       type: 'single',
+      className: columnConfig.className,
     } as const
   })
 }

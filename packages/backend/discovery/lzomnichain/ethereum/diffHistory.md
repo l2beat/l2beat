@@ -1,3 +1,50 @@
+# Diff at Fri, 05 Jan 2024 13:32:55 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: master@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18671199
+- current block number: 18941390
+
+## Description
+
+Removed the INBOUND_PROOF_LIBRARIES for a more detailed field.
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18671199 (main branch discovery), not current.
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+      values.INBOUND_PROOF_LIBRARIES:
+-        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StargateToken (0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FPValidator (0x07245eEa05826F5984c7c3C8F478b04892e4df89) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859) {
+    }
+```
+
 # Diff at Tue, 28 Nov 2023 16:07:09 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)

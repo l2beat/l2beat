@@ -6,21 +6,24 @@ import {
 import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
-import { ChartSectionProps } from '../../../../components/project/ChartSection'
-import { ContractsSectionProps } from '../../../../components/project/ContractsSection'
-import { DescriptionSectionProps } from '../../../../components/project/DescriptionSection'
-import { KnowledgeNuggetsProps } from '../../../../components/project/KnowledgeNuggetsSection'
-import { MilestonesSectionProps } from '../../../../components/project/MilestonesSection'
-import { PermissionsSectionProps } from '../../../../components/project/PermissionsSection'
-import { RiskAnalysisProps } from '../../../../components/project/RiskAnalysis'
-import { StageSectionProps } from '../../../../components/project/StageSection'
-import { StateDerivationSectionProps } from '../../../../components/project/StateDerivationSection'
-import { StateValidationSectionProps } from '../../../../components/project/StateValidationSection'
-import { TechnologyIncompleteProps } from '../../../../components/project/TechnologyIncomplete'
-import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import { getRiskValues } from '../../../../utils/risks/values'
+import {
+  ProjectDetailsChartSection,
+  ProjectDetailsContractsSection,
+  ProjectDetailsDescriptionSection,
+  ProjectDetailsKnowledgeNuggetsSection,
+  ProjectDetailsMilestonesSection,
+  ProjectDetailsPermissionsSection,
+  ProjectDetailsRiskAnalysisSection,
+  ProjectDetailsStageSection,
+  ProjectDetailsStateDerivationSection,
+  ProjectDetailsStateValidationSection,
+  ProjectDetailsTechnologyIncompleteNote,
+  ProjectDetailsTechnologySection,
+  ProjectDetailsUpcomingDisclaimer,
+} from '../../../types'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -185,82 +188,22 @@ export function getProjectDetails(
 
 export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
   | ScalingDetailsSection
-  | NonSectionElement
+  | ProjectDetailsNonSectionElement
 )
 
+type ProjectDetailsNonSectionElement =
+  | ProjectDetailsTechnologyIncompleteNote
+  | ProjectDetailsUpcomingDisclaimer
+
 export type ScalingDetailsSection =
-  | ChartSection
-  | DescriptionSection
-  | MilestonesSection
-  | KnowledgeNuggetsSection
-  | RiskAnalysisSection
-  | TechnologySection
-  | StateDerivationSection
-  | StateValidationSection
-  | PermissionsSection
-  | ContractsSection
-  | StageSection
-
-type NonSectionElement = TechnologyIncompleteNote | UpcomingDisclaimer
-
-interface ChartSection {
-  type: 'ChartSection'
-  props: ChartSectionProps
-}
-interface DescriptionSection {
-  type: 'DescriptionSection'
-  props: DescriptionSectionProps
-}
-
-interface MilestonesSection {
-  type: 'MilestonesSection'
-  props: MilestonesSectionProps
-}
-
-interface KnowledgeNuggetsSection {
-  type: 'KnowledgeNuggetsSection'
-  props: KnowledgeNuggetsProps
-}
-
-interface RiskAnalysisSection {
-  type: 'RiskAnalysisSection'
-  props: RiskAnalysisProps
-}
-
-interface StageSection {
-  type: 'StageSection'
-  props: StageSectionProps
-}
-
-interface TechnologyIncompleteNote {
-  type: 'TechnologyIncompleteNote'
-  props: TechnologyIncompleteProps
-}
-interface TechnologySection {
-  type: 'TechnologySection'
-  props: TechnologySectionProps
-}
-
-interface StateDerivationSection {
-  type: 'StateDerivationSection'
-  props: StateDerivationSectionProps
-}
-
-interface StateValidationSection {
-  type: 'StateValidationSection'
-  props: StateValidationSectionProps
-}
-
-interface PermissionsSection {
-  type: 'PermissionsSection'
-  props: PermissionsSectionProps
-}
-
-interface ContractsSection {
-  type: 'ContractsSection'
-  props: ContractsSectionProps
-}
-
-interface UpcomingDisclaimer {
-  type: 'UpcomingDisclaimer'
-}
+  | ProjectDetailsChartSection
+  | ProjectDetailsDescriptionSection
+  | ProjectDetailsMilestonesSection
+  | ProjectDetailsKnowledgeNuggetsSection
+  | ProjectDetailsRiskAnalysisSection
+  | ProjectDetailsTechnologySection
+  | ProjectDetailsStateDerivationSection
+  | ProjectDetailsStateValidationSection
+  | ProjectDetailsPermissionsSection
+  | ProjectDetailsContractsSection
+  | ProjectDetailsStageSection

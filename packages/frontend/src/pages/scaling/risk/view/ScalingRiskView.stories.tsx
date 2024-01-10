@@ -16,11 +16,13 @@ const meta = {
     items: [
       {
         name: 'ZKSwap 1.0',
+        shortName: undefined,
         slug: 'zkswap',
         provider: 'zkSync Lite',
         category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
+        redWarning: undefined,
         isArchived: true,
         isVerified: false,
         isUpcoming: undefined,
@@ -58,11 +60,13 @@ const meta = {
       },
       {
         name: 'Polygon Hermez',
+        shortName: 'PolHer',
         slug: 'hermez',
         provider: undefined,
         category: 'ZK Rollup',
         warning:
           'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
+        redWarning: undefined,
         isArchived: true,
         isVerified: true,
         isUpcoming: undefined,
@@ -100,11 +104,13 @@ const meta = {
       },
       {
         name: 'ZKSwap 2.0',
+        shortName: undefined,
         slug: 'zkswap2',
         provider: 'zkSync Lite',
         category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
+        redWarning: undefined,
         isArchived: true,
         isVerified: false,
         isUpcoming: undefined,
@@ -142,11 +148,13 @@ const meta = {
       },
       {
         name: 'Gluon',
+        shortName: undefined,
         slug: 'gluon',
         category: 'Optimium',
         provider: undefined,
         warning:
           'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
+        redWarning: undefined,
         isArchived: true,
         isVerified: true,
         isUpcoming: undefined,
@@ -184,11 +192,13 @@ const meta = {
       },
       {
         name: 'OMG Network',
+        shortName: undefined,
         slug: 'omgnetwork',
         category: 'Plasma',
         provider: undefined,
         warning: undefined,
         isArchived: true,
+        redWarning: undefined,
         isVerified: false,
         isUpcoming: undefined,
         stateValidation: {
@@ -225,11 +235,13 @@ const meta = {
       },
       {
         name: 'L2.Finance-zk',
+        shortName: undefined,
         slug: 'layer2financezk',
         category: 'Validium',
         provider: 'StarkEx',
         warning:
           'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
+        redWarning: undefined,
         isArchived: true,
         isVerified: false,
         isUpcoming: undefined,
@@ -267,11 +279,13 @@ const meta = {
       },
       {
         name: 'Arbitrum One',
+        shortName: undefined,
         slug: 'arbitrum',
         category: 'Optimistic Rollup',
         provider: undefined,
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+        redWarning: undefined,
         isArchived: undefined,
         isVerified: true,
         isUpcoming: undefined,
@@ -312,11 +326,13 @@ const meta = {
       },
       {
         name: 'Optimism',
+        shortName: undefined,
         slug: 'optimism',
         category: 'Optimistic Rollup',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
+        redWarning: undefined,
         isArchived: undefined,
         isVerified: true,
         isUpcoming: undefined,
@@ -356,11 +372,13 @@ const meta = {
       },
       {
         name: 'dYdX',
+        shortName: undefined,
         slug: 'dydx',
         category: 'ZK Rollup',
         provider: 'StarkEx',
         warning: undefined,
         isArchived: undefined,
+        redWarning: undefined,
         isVerified: true,
         isUpcoming: undefined,
         stateValidation: {
@@ -397,11 +415,13 @@ const meta = {
       },
       {
         name: 'zkSync Era',
+        shortName: undefined,
         slug: 'zksync-era',
         category: 'ZK Rollup',
         provider: 'ZK Stack',
         warning:
           'Withdrawals are delayed by 1d. The length of the delay can be arbitrarily set by a MultiSig.',
+        redWarning: undefined,
         isArchived: undefined,
         isVerified: true,
         isUpcoming: undefined,
@@ -439,11 +459,13 @@ const meta = {
       },
       {
         name: 'Metis Andromeda',
+        shortName: undefined,
         slug: 'metis',
         category: 'Optimium',
         provider: 'OVM',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
+        redWarning: undefined,
         isArchived: undefined,
         isVerified: true,
         isUpcoming: undefined,
@@ -483,11 +505,13 @@ const meta = {
       },
       {
         name: 'Loopring',
+        shortName: undefined,
         slug: 'loopring',
         category: 'ZK Rollup',
         provider: undefined,
         warning: undefined,
         isArchived: undefined,
+        redWarning: undefined,
         isVerified: true,
         isUpcoming: undefined,
         stateValidation: {
@@ -527,11 +551,13 @@ const meta = {
       },
       {
         name: 'Immutable X',
+        shortName: undefined,
         slug: 'immutablex',
         category: 'Validium',
         provider: 'StarkEx',
         warning: undefined,
         isArchived: undefined,
+        redWarning: 'Some random warning',
         isVerified: true,
         isUpcoming: undefined,
         stateValidation: {
