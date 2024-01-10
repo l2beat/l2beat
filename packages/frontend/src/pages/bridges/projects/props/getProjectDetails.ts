@@ -9,9 +9,13 @@ import { ChartProps } from '../../../../components'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import {
+  getProjectEditLink,
+  getProjectIssueLink,
+} from '../../../../utils/project/links'
+import {
   ProjectDetailsChartSection,
   ProjectDetailsContractsSection,
-  ProjectDetailsDescriptionSection,
+  ProjectDetailsDetailedDescriptionSection,
   ProjectDetailsKnowledgeNuggetsSection,
   ProjectDetailsMilestonesSection,
   ProjectDetailsPermissionsSection,
@@ -19,7 +23,7 @@ import {
   ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
 } from '../../../types'
-import { getDescriptionSection } from './getDescriptionSection'
+import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -53,10 +57,12 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'DescriptionSection',
-    props: getDescriptionSection(bridge, verificationStatus),
-  })
+  if (bridge.display.detailedDescription) {
+    items.push({
+      type: 'DetailedDescriptionSection',
+      props: getDetailedDescriptionSection(bridge),
+    })
+  }
 
   const riskSection = getRiskSection(bridge, verificationStatus)
   if (riskSection.riskGroups.length > 0) {
@@ -118,8 +124,10 @@ export function getProjectDetails(
   }
 
   return {
-    incomplete,
     items,
+    editLink: getProjectEditLink(bridge),
+    issueLink: getProjectIssueLink(bridge),
+    incomplete,
   }
 }
 
@@ -130,7 +138,7 @@ export type BridgeDetailsItem = { excludeFromNavigation?: boolean } & (
 
 export type BridgeDetailsSection =
   | ProjectDetailsChartSection
-  | ProjectDetailsDescriptionSection
+  | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskSection

@@ -43,7 +43,7 @@ export const loopring: Layer2 = {
     name: 'Loopring',
     slug: 'loopring',
     description:
-      "Loopring's ZK Rollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
+      'Loopring is a ZK Rollup exchange protocol for trading and payments.',
     purpose: 'Tokens, NFTs, AMM',
     provider: 'Loopring',
     category: 'ZK Rollup',

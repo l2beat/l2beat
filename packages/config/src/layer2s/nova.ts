@@ -48,7 +48,7 @@ export const nova: Layer2 = {
     name: 'Arbitrum Nova',
     slug: 'nova',
     description:
-      'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
+      'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
     purpose: 'Universal',
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',

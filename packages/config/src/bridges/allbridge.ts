@@ -12,10 +12,11 @@ export const allbridge: Bridge = {
     name: 'Allbridge',
     slug: 'allbridge',
     description:
-      'Allbridge Core enables the transfer of value between blockchains by offering cross-chain swaps of native stablecoins using liquidity pools.\
-    For its stableconin liquidity network it is using either own AMB or Wormhole to pass messages. Allbridge bridge is a token bridge implemented\
-    as a separate contract. Both bridges contains a number of core, unverified smart contracts and it is owned by an EOA\
-    account that can drain all funds.',
+      'Allbridge Core enables the transfer of value between blockchains by offering cross-chain swaps of native stablecoins using liquidity pools.',
+    detailedDescription:
+      'For its stableconin liquidity network it is using either own AMB or Wormhole to pass messages. Allbridge bridge is a token bridge implemented\
+      as a separate contract. Both bridges contains a number of core, unverified smart contracts and it is owned by an EOA\
+      account that can drain all funds.',
     category: 'Hybrid',
     links: {
       websites: ['https://app.allbridge.io/'],

@@ -27,11 +27,7 @@ export const metis: Layer2 = {
       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system. \
       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
     description:
-      'Metis is an EVM-equivalent Scaling Solution originally forked from Optimism. It provides support for multiple, \
-      interconnected chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
-      The risk analysis below relates to the default chain with chainId=1088 called Andromeda. Since April 2022 Andromeda \
-      uses "optimistic data availability" scheme in which transaction data is kept off-chain in MEMO while Validators can \
-      request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
+      'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
     purpose: 'Universal',
     provider: 'OVM',
     category: 'Optimium',

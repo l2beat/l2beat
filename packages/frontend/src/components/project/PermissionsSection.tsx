@@ -7,10 +7,10 @@ import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 
 export interface PermissionsSectionProps {
-  id: SectionId
+  id: ProjectSectionId
   title: string
   isUnderReview?: boolean
   permissions: TechnologyContract[]

@@ -109,9 +109,7 @@ export const optimism: Layer2 = {
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'OP Mainnet is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
-    With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
-    new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
+      'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
     purpose: 'Universal',
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
@@ -309,7 +307,7 @@ export const optimism: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development (https://github.com/ethereum-optimism/cannon) and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',

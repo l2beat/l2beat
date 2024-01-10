@@ -25,8 +25,9 @@ export const opticsV2: Bridge = {
       socialMedia: ['https://twitter.com/CeloOrg'],
     },
     description:
-      'Optics is a general messaging bridge that uses optimistic verification to validate cross-chain bridging transactions. Version 2 of the bridge was deployed\
-      after Celo governance lost control over the governors MultiSig keys.',
+      'Optics is a general messaging bridge that uses optimistic verification to validate cross-chain bridging transactions.',
+    detailedDescription:
+      'Version 2 of the bridge was deployed after Celo governance lost control over the governors MultiSig keys.',
   },
   config: {
     escrows: [

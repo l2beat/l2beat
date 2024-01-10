@@ -44,7 +44,7 @@ export const scroll: Layer2 = {
     name: 'Scroll',
     slug: 'scroll',
     description:
-      'Scroll is rollup that extends Ethereum’s capabilities through zero knowledge tech and EVM compatibility.',
+      'Scroll is ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',

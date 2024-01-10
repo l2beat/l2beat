@@ -92,7 +92,7 @@ export const polygonzkevm: Layer2 = {
     slug: 'polygonzkevm',
     warning: 'The forced transaction mechanism is currently disabled.',
     description:
-      'Polygon zkEVM is aiming to become a decentralized Ethereum Layer 2 scalability solution that uses cryptographic zero-knowledge proofs to offer validity and finality of off-chain transactions. Polygon zkEVM wants to be equivalent with the Ethereum Virtual Machine.',
+      'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',

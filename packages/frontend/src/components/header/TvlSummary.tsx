@@ -72,7 +72,7 @@ export function TvlSummary(props: TvlSummaryProps) {
     : []
 
   return (
-    <div className="bg-gray-100 p-4 dark:bg-zinc-800 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
+    <div className="bg-gray-100 p-4 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
       <div
         className={classNames(
           'flex w-full flex-wrap items-baseline justify-between',

@@ -20,7 +20,7 @@ export const fuelv1: Layer2 = {
     name: 'Fuel v1',
     slug: 'fuelv1',
     description:
-      'Fuel aims to be a complete optimistic rollup with low transaction costs, high speed and high throughput.',
+      'Fuel v1 is the first Optimistic Rollup live on Ethereum, supporting payments.',
     purpose: 'Payments',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

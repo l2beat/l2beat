@@ -1,6 +1,6 @@
 import { ChartSectionProps } from '../components/project/ChartSection'
 import { ContractsSectionProps } from '../components/project/ContractsSection'
-import { DescriptionSectionProps } from '../components/project/DescriptionSection'
+import { DetailedDescriptionSectionProps } from '../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsProps } from '../components/project/KnowledgeNuggetsSection'
 import { MilestonesSectionProps } from '../components/project/MilestonesSection'
 import { PermissionsSectionProps } from '../components/project/PermissionsSection'
@@ -21,9 +21,9 @@ export interface ProjectDetailsChartSection {
   type: 'ChartSection'
   props: ChartSectionProps
 }
-export interface ProjectDetailsDescriptionSection {
-  type: 'DescriptionSection'
-  props: DescriptionSectionProps
+export interface ProjectDetailsDetailedDescriptionSection {
+  type: 'DetailedDescriptionSection'
+  props: DetailedDescriptionSectionProps
 }
 
 export interface ProjectDetailsMilestonesSection {
