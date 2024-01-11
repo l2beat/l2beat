@@ -92,7 +92,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
             </span>
             <div className="mt-2 text-black dark:text-white">
               <AnomalyTypeBadge type={anomaly.type} />
-              <span className="ml-2.5">
+              <span className="ml-2.5 inline-flex gap-1">
                 Duration:{' '}
                 <LivenessDurationCell
                   durationInSeconds={anomaly.durationInSeconds}
