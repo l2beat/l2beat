@@ -138,13 +138,17 @@ describe(TaskQueue.name, () => {
 
     // 3 notifications + 1 error when stopping queue
     expect(logger.error).toHaveBeenCalledTimes(3)
-    expect(logger.error).toHaveBeenNthCalledWith(1, error)
-    expect(logger.error).toHaveBeenNthCalledWith(2, error)
+    expect(logger.error).toHaveBeenNthCalledWith(1, error, {
+      job: expect.a(Object),
+    })
+    expect(logger.error).toHaveBeenNthCalledWith(2, error, {
+      job: expect.a(Object),
+    })
     expect(logger.error).toHaveBeenNthCalledWith(
       3,
       'Stopping queue because of error',
       {
-        job: expect.a(String),
+        job: expect.a(Object),
         error,
       },
     )
