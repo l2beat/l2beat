@@ -50,9 +50,8 @@ export class CirculatingSupplyFormulaUpdater implements ReportUpdater {
       ),
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
-    this.logger = this.logger.for(
-      `${this.constructor.name}.${ChainId.getName(chainId)}`,
-    )
+    this.logger = this.logger.for(this.constructor)
+    this.logger.tag(ChainId.getName(chainId))
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(

@@ -22,9 +22,8 @@ export class BlockNumberUpdater {
     private readonly chainId: ChainId,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(
-      `${this.constructor.name}.${ChainId.getName(chainId)}`,
-    )
+    this.logger = this.logger.for(this.constructor)
+    this.logger.tag(ChainId.getName(chainId))
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
