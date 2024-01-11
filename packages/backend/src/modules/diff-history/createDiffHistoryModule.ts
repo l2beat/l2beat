@@ -8,6 +8,8 @@ import {
 } from '@l2beat/discovery'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { DiffHistoryController } from '../../api/controllers/diff-history/DiffHistoryController'
+import { createDiffHistoryRouter } from '../../api/routers/DiffHistoryRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
@@ -86,6 +88,9 @@ export function createDiffHistoryModule(
       )
     })
 
+  const controller = new DiffHistoryController(discoveryHistoryRepository)
+  const routers = [createDiffHistoryRouter(controller)]
+
   const taskQueue = new TaskQueue(
     async (discovererIndex: number) => {
       await discoverers[discovererIndex].start()
@@ -105,7 +110,7 @@ export function createDiffHistoryModule(
   }
 
   return {
-    routers: [],
+    routers,
     start,
   }
 }
