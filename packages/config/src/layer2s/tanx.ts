@@ -47,7 +47,7 @@ export const tanx: Layer2 = {
     name: 'tanX',
     slug: 'tanx',
     description: 'tanX is a DEX powered by StarkEx technology.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',

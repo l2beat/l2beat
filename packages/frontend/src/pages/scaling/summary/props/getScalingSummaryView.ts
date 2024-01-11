@@ -89,7 +89,7 @@ function getScalingL2SummaryEntry(
           }
         : undefined,
     marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     stage: project.stage,
   }
 }
@@ -108,7 +108,7 @@ function getScalingL3SummaryEntry(
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
       .name,
   }

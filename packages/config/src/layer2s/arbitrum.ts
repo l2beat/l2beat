@@ -250,7 +250,7 @@ export const arbitrum: Layer2 = {
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',

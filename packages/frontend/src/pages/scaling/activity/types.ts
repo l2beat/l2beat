@@ -1,6 +1,7 @@
 import {
   Layer2Provider,
   ScalingProjectCategory,
+  ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
 import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
@@ -18,6 +19,7 @@ export interface ActivityViewEntry {
   provider: Layer2Provider | undefined
   warning: string | undefined
   redWarning: string | undefined
+  purposes: ScalingProjectPurpose[] | undefined
   isVerified: boolean | undefined
   showProjectUnderReview: boolean | undefined
   dataSource: string | undefined
