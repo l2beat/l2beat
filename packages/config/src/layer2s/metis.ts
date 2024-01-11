@@ -22,12 +22,10 @@ export const metis: Layer2 = {
     name: 'Metis Andromeda',
     shortName: 'Metis',
     slug: 'metis',
-    redWarning:
-      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \
-      Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system. \
-      The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',

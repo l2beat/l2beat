@@ -44,10 +44,10 @@ export const mantle: Layer2 = {
   display: {
     name: 'Mantle',
     slug: 'mantle',
-    redWarning:
-      'Fraud proof system is currently disabled and data is posted offchain. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'Mantle is an under development EVM compatible Optimium, based on the Optimism OVM architecture.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     purposes: ['Universal'],
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',

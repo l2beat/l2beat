@@ -23,6 +23,7 @@ export interface Config {
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
+  readonly errorReporting: ErrorReportingConfig | false
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
@@ -140,3 +141,8 @@ export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
 
 export type DiffHistoryChainConfig = UpdateMonitorChainConfig
+
+export interface ErrorReportingConfig {
+  readonly bugsnagApiKey: string
+  readonly environment: string
+}
