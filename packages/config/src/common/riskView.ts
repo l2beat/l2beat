@@ -363,12 +363,10 @@ export function EXIT_WINDOW(
 ): ScalingProjectRiskViewEntry {
   let window: number = upgradeDelay - exitDelay
   const windowText = window <= 0 ? 'None' : formatSeconds(window)
-  let showWarning = false
   if (upgradeDelay2 !== undefined) {
     const window2: number = upgradeDelay2 - exitDelay
     const windowString2 = window2 <= 0 ? 'None' : formatSeconds(window2)
     if (windowText !== windowString2) {
-      showWarning = true
       window = Math.min(window, window2)
     }
   }
@@ -394,7 +392,6 @@ export function EXIT_WINDOW(
     value: windowText,
     description,
     sentiment,
-    showWarning,
   }
 }
 

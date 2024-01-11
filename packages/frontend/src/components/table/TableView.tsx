@@ -5,6 +5,7 @@ import React from 'react'
 
 import { InfoIcon } from '../icons'
 import { Link } from '../Link'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { SortingArrows } from './SortingArrows'
 import { ColumnConfig, RowConfig, SingleColumnConfig } from './types'
 
@@ -193,12 +194,12 @@ function ColumnHeader<T>(props: {
           )}
 
           {props.column.tooltip && (
-            <span
-              className="Tooltip -translate-y-px md:translate-y-0"
-              title={props.column.tooltip}
-            >
-              <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
-            </span>
+            <Tooltip>
+              <TooltipTrigger className="-translate-y-px md:translate-y-0">
+                <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+              </TooltipTrigger>
+              <TooltipContent>{props.column.tooltip}</TooltipContent>
+            </Tooltip>
           )}
         </div>
       </th>

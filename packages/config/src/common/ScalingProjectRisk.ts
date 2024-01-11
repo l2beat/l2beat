@@ -23,7 +23,7 @@ export interface ScalingProjectRiskViewEntry {
   value: string
   description: string
   sentiment: Sentiment
-  showWarning?: boolean
+  warning?: string
   // second line in risk view
   secondLine?: string
   secondSentiment?: 'warning' | 'bad'

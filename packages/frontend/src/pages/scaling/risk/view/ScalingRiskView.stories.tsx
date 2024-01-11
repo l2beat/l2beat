@@ -315,7 +315,7 @@ const meta = {
             'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
           sentiment: 'warning',
           secondLine: 'by DAO decentralized',
-          showWarning: true,
+          warning: 'Random warning written just now',
         },
         sequencerFailure: {
           value: 'Transact using L1',
