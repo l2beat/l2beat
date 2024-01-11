@@ -1,5 +1,6 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import { TvlApiToken } from '@l2beat/shared-pure'
+import React from 'react'
 
 import { TVLBreakdownProps } from '../../components/TVLBreakdown'
 import { formatPercent } from '../utils'
@@ -62,19 +63,19 @@ function getTVLBreakdownLabel(
   associatedTokens: string[],
 ) {
   if (breakdown.empty) {
-    return 'No tokens'
+    return <span>No tokens</span>
   }
   const toLabel = (text: string, x: number) =>
-    x === 0 ? '' : `${text} – ${(x * 100).toFixed(2)}%`
+    x === 0 ? null : <div>{`${text} – ${(x * 100).toFixed(2)}%`}</div>
 
-  return [
-    toLabel(associatedTokens.join(' and '), breakdown.associated),
-    toLabel('Ether', breakdown.ether),
-    toLabel('Stablecoins', breakdown.stable),
-    toLabel('Other', breakdown.other),
-  ]
-    .filter((x) => x !== '')
-    .join('<br>')
+  return (
+    <div>
+      {toLabel(associatedTokens.join(' and '), breakdown.associated)}
+      {toLabel('Ether', breakdown.ether)}
+      {toLabel('Stablecoins', breakdown.stable)}
+      {toLabel('Other', breakdown.other)}
+    </div>
+  )
 }
 
 function getTvlWarning(

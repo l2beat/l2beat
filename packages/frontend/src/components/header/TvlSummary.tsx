@@ -105,7 +105,7 @@ export function TvlSummary(props: TvlSummaryProps) {
       </div>
 
       {usage && (
-        <div className="Tooltip my-3 flex h-1 w-full flex-wrap md:my-0">
+        <div className="my-3 flex h-1 w-full flex-wrap md:my-0">
           <div
             className="h-full rounded-l-full bg-purple-100"
             style={{

@@ -3,7 +3,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../../.storybook/modes'
-import { Tooltip } from '../../../../components/Tooltip'
+import { TooltipProvider } from '../../../../components/tooltip/TooltipProvider'
 import { configureLivenessTimeRangeControls } from '../../../../scripts/configureLivenessTimeRangeControls'
 import { configureTooltips } from '../../../../scripts/configureTooltips'
 import { ScalingLivenessView } from './ScalingLivenessView'
@@ -1449,7 +1449,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       }, [])
       return (
         <>
-          <Story /> <Tooltip />
+          <Story /> <TooltipProvider />
         </>
       )
     },
@@ -1465,11 +1465,12 @@ type Story = StoryObj<typeof ScalingLivenessView>
 
 export const Primary: Story = {
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
     await new Promise((resolve) => setTimeout(resolve, 200))
-
     await waitFor(async () => {
-      const element = canvas.getByText('47 seconds').parentElement
+      const element = canvasElement.querySelector(
+        '[data-role="liveness-time-range-cell"] [data-role=tooltip-trigger]',
+      )
+      console.log(element)
       if (element) {
         await userEvent.hover(element)
       }
