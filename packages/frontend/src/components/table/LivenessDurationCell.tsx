@@ -40,8 +40,10 @@ export function LivenessDurationCell(props: {
         ? 'Optimistic rollups do not post validity proofs to the L1.'
         : undefined
     return (
-      <Tooltip className="rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
-        <TooltipTrigger>n/a</TooltipTrigger>
+      <Tooltip>
+        <TooltipTrigger className="rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+          n/a
+        </TooltipTrigger>
         <TooltipContent>{tooltipText}</TooltipContent>
       </Tooltip>
     )

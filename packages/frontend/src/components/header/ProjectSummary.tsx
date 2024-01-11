@@ -78,8 +78,8 @@ function DetailsHeaderStat(props: ProjectSummaryStat) {
           {props.title}
         </span>
         {props.tooltip && (
-          <Tooltip className="-translate-y-px md:translate-y-0">
-            <TooltipTrigger>
+          <Tooltip>
+            <TooltipTrigger className="-translate-y-px md:translate-y-0">
               <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:h-3.5 md:w-3.5" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>

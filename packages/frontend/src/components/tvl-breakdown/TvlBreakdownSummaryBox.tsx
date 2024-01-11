@@ -76,8 +76,8 @@ function StatsItem(props: StatsItemProps) {
           {props.mobileTitle}
         </span>
 
-        <Tooltip className="ml-0.5 -translate-y-px md:translate-y-0">
-          <TooltipTrigger>
+        <Tooltip>
+          <TooltipTrigger className="ml-0.5 -translate-y-px md:translate-y-0">
             <InfoIcon
               className={classNames(
                 'md:h-3.5 md:w-3.5',

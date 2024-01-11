@@ -24,8 +24,8 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       : ''
 
   return props.forCanonical && props.escrows ? (
-    <Tooltip className="flex flex-col items-end gap-2 text-xs font-medium">
-      <TooltipTrigger>
+    <Tooltip>
+      <TooltipTrigger className="flex flex-col items-end gap-2 text-xs font-medium">
         {formatLargeNumberWithCommas(Number(props.amount))}
         {props.escrows.length > 1 &&
           props.escrows.map((escrow) => (
@@ -41,8 +41,8 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       <TooltipContent>Circulating supply</TooltipContent>
     </Tooltip>
   ) : (
-    <Tooltip className="text-xs font-medium">
-      <TooltipTrigger>
+    <Tooltip>
+      <TooltipTrigger className="text-xs font-medium">
         {formatLargeNumberWithCommas(Number(props.amount))}
       </TooltipTrigger>
       <TooltipContent>
