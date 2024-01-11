@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 interface TooltipProps {
-  children: React.ReactNode
+  children: [
+    ReactElement<TooltipTriggerProps>,
+    ReactElement<TooltipContentProps>,
+  ]
   className?: string
   big?: boolean
   disabledOnMobile?: boolean
