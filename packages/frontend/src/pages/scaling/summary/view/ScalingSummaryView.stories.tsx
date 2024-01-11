@@ -1160,7 +1160,7 @@ const meta = {
           displayValue: '1.25%',
           value: 125,
         },
-        purposes: ['Tokens', 'NFT', 'AMM'],
+        purposes: ['NFT', 'AMM'],
         category: 'ZK Rollup',
         stage: {
           stage: 'Stage 1',
