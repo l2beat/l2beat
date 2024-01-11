@@ -22,7 +22,7 @@ import { delayDescriptionFromString } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('tanx')
+const discovery = new ProjectDiscovery('brine')
 
 const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
