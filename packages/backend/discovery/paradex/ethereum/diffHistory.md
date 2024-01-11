@@ -1,8 +1,8 @@
-# Diff at Tue, 09 Jan 2024 12:25:52 GMT:
+# Diff at Thu, 11 Jan 2024 12:24:29 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@b7709dd0e3c6ef3f399763ef275fd65d4b6bd415 block: 18941335
-- current block number: 18969390
+- comparing to: master@f4fd8a33866a1a7eab89875fb7e0473f7609e88b block: 18941335
+- current block number: 18983662
 
 ## Description
 
@@ -11,18 +11,26 @@ The program hash is updated (with tx 0x4dc1b43e0b932f665a95af3d2cb61f280a1b7a63f
 ## Watched changes
 
 ```diff
-    contract GnosisSafe (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
-      values.nonce:
--        6
-+        7
-    }
-```
-
-```diff
     contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
       values.programHash:
 -        "3258367057337572248818716706664617507069572185152472699066582725377748079373"
 +        "54878256403880350656938046611252303365750679698042371543935159963667935317"
+    }
+```
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18941335 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+      name:
+-        "GnosisSafe"
++        "ParadexImplementationGovernorMultisig"
+      derivedName:
++        "GnosisSafe"
     }
 ```
 
