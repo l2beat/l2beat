@@ -51,5 +51,9 @@ interface TooltipContentProps {
 
 export function TooltipContent({ children }: TooltipContentProps) {
   if (!children) return null
-  return <template data-role="tooltip-content">{children}</template>
+  return (
+    <div className="hidden" data-role="tooltip-content">
+      {children}
+    </div>
+  )
 }

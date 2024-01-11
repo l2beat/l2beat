@@ -15,7 +15,7 @@ export function configureTooltips() {
 
   function show(
     element: HTMLElement,
-    content: HTMLTemplateElement,
+    content: HTMLElement,
     isDisabledOnMobile: boolean,
   ) {
     if (isDisabledOnMobile && isMobile()) return
@@ -78,7 +78,7 @@ export function configureTooltips() {
   })
 
   for (const element of elements) {
-    const content = element.querySelector<HTMLTemplateElement>(
+    const content = element.querySelector<HTMLElement>(
       '[data-role=tooltip-content]',
     )
     if (!content) continue
