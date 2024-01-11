@@ -10,6 +10,7 @@ import {
   EthereumAddress,
   Token,
   UnixTime,
+  assert,
 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
@@ -151,6 +152,10 @@ async function getSinceTimestamp(
       new UnixTime(0),
       UnixTime.now(),
     )
+  assert(
+    coingeckoPriceHistoryData.prices.length >= 1,
+    `No price history found for token: ${coingeckoId.toString()}`,
+  )
   const firstCoingeckoPriceTimestamp =
     coingeckoPriceHistoryData.prices[0].date.getTime() / 1000
 
@@ -161,6 +166,7 @@ async function getSinceTimestamp(
     new UnixTime(firstCoingeckoPriceTimestamp),
     UnixTime.now(),
   )
+  // If code reaches here, then the price data is okay
 
   const timestamp = Math.max(
     contractCreationTimestamp,
