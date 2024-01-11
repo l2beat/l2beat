@@ -29,7 +29,6 @@ export function getProductionConfig(env: Env): Config {
   )
   const discordEnabled =
     !!discordToken && !!publicDiscordChannelId && !!internalDiscordChannelId
-  const errorReportingEnabled = !!env.optionalString('BUGSNAG_API_KEY')
 
   return {
     name: 'Backend/Production',
@@ -321,10 +320,6 @@ export function getProductionConfig(env: Env): Config {
           ),
         },
       ],
-    },
-    errorReporting: errorReportingEnabled && {
-      bugsnagApiKey: env.string('BUGSNAG_API_KEY'),
-      environment: 'production',
     },
   }
 }
