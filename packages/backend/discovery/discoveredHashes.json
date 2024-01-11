@@ -86,5 +86,6 @@
   "ethereum:omni": "0xb1363783b237a042a2c53a93b308bac6de544c8e",
   "ethereum:connext": "0xe640ac96be2db9e2555b5aa9d1d0c05dd54205a8",
   "ethereum:parallel": "0x78fc4d3640fd7262f2630f4af6e366d8b9d7689a",
-  "ethereum:tanx": "0xf242593fff23be9722d196783f681c5e132af5b4"
+  "ethereum:tanx": "0xf242593fff23be9722d196783f681c5e132af5b4",
+  "ethereum:brine": "0x2754db0b77b15dbe8449213d7dee14dcede423fb"
 }

@@ -1,8 +1,8 @@
 {
-  "name": "tanx",
+  "name": "brine",
   "chain": "ethereum",
-  "blockNumber": 18983651,
-  "configHash": "0x78e1ad6d81ce401359426650bd5f1a68a85ea0248bfb71a87f7f9af511085a10",
+  "blockNumber": 18983727,
+  "configHash": "0xb03efc49cd04c082e7001d53a82ab71dc71138acc2d59a1754f4120db954c9ac",
   "version": 3,
   "contracts": [
     {
