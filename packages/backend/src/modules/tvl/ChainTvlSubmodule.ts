@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   BlockNumberProvider,
+  CoingeckoQueryService,
   HttpClient,
   UniversalEtherscanClient,
   UniversalRoutescanClient,
@@ -22,7 +23,6 @@ import { PriceUpdater } from '../../core/PriceUpdater'
 import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupplyUpdater'
 import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
 import { MulticallConfigEntry } from '../../peripherals/ethereum/multicall/types'

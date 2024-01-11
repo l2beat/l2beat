@@ -1,7 +1,13 @@
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+} from '@l2beat/shared'
+import {
+  assert,
   AssetId,
   ChainId,
+  CoingeckoId,
   EthereumAddress,
   Token,
   UnixTime,
@@ -22,7 +28,13 @@ export async function getTokenInfo(
     getSymbol(provider, address),
     getDecimals(provider, address),
     coingeckoClient.getImageUrl(coingeckoId),
-    getSinceTimestamp(provider, address, etherscanApiKey),
+    getSinceTimestamp(
+      provider,
+      address,
+      etherscanApiKey,
+      coingeckoClient,
+      coingeckoId,
+    ),
   ])
 
   const tokenInfo: Token = {
@@ -124,7 +136,50 @@ async function getSinceTimestamp(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
   etherscanApiKey: string,
+  coingeckoClient: CoingeckoClient,
+  coingeckoId: CoingeckoId,
 ) {
+  const contractCreationTimestamp = await getContractCreationTimestamp(
+    provider,
+    address,
+    etherscanApiKey,
+  )
+
+  const coingeckoPriceHistoryData =
+    await coingeckoClient.getCoinMarketChartRange(
+      coingeckoId,
+      'usd',
+      new UnixTime(0),
+      UnixTime.now(),
+    )
+  assert(
+    coingeckoPriceHistoryData.prices.length >= 1,
+    `No price history found for token: ${coingeckoId.toString()}`,
+  )
+  const firstCoingeckoPriceTimestamp =
+    coingeckoPriceHistoryData.prices[0].date.getTime() / 1000
+
+  //We call it to check if there is a gap in price history
+  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  await coingeckoQueryService.getUsdPriceHistory(
+    coingeckoId,
+    new UnixTime(firstCoingeckoPriceTimestamp),
+    UnixTime.now(),
+  )
+  // If code reaches here, then the price data is okay
+
+  const timestamp = Math.max(
+    contractCreationTimestamp,
+    firstCoingeckoPriceTimestamp,
+  )
+  return new UnixTime(timestamp)
+}
+
+async function getContractCreationTimestamp(
+  provider: providers.JsonRpcProvider,
+  address: EthereumAddress,
+  etherscanApiKey: string,
+): Promise<number> {
   const http = new HttpClient()
   const response = await http.fetch(
     `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=
@@ -147,6 +202,5 @@ async function getSinceTimestamp(
   }
 
   const block = await provider.getBlock(tx.blockNumber)
-
-  return new UnixTime(block.timestamp)
+  return block.timestamp
 }
