@@ -50,12 +50,8 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
   ) as AnomalyEntry[]
 
   return (
-    <Tooltip
-      className="flex h-6 w-min gap-x-0.5"
-      big
-      data-testid="anomaly-indicator"
-    >
-      <TooltipTrigger>
+    <Tooltip big data-testid="anomaly-indicator">
+      <TooltipTrigger className="flex h-6 w-min gap-x-0.5">
         {anomalyEntries.map((anomaly, i) => (
           <div
             key={i}
