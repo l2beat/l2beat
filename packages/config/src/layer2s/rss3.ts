@@ -17,7 +17,10 @@ export const rss3: Layer2 = upcoming({
       documentation: ['https://docs.rss3.io'],
       explorers: ['https://scan.testnet.rss3.io'],
       repositories: ['https://github.com/rss3-network'],
-      socialMedia: ['https://twitter.com/rss3_'],
+      socialMedia: [
+        'https://twitter.com/rss3_',
+        'https://discord.com/invite/rss3-network',
+        'https://t.me/rss3_en'],
     },
   },
 })
