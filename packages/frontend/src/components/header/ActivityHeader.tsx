@@ -21,7 +21,7 @@ export function ActivityHeader() {
         <p className="hidden text-gray-500 dark:text-gray-600 md:block">
           Transactions per second
         </p>
-        <p
+        <div
           className={cx(
             'w-full text-right text-gray-500 dark:text-gray-600 md:w-auto',
             'flex items-center gap-1.5',
@@ -29,19 +29,22 @@ export function ActivityHeader() {
           )}
         >
           Observed over the last 7 days
-          <Tooltip className="inline-block">
+          <Tooltip>
             <TooltipTrigger>
               <InfoIcon />
             </TooltipTrigger>
             <TooltipContent>
-              {'How many more transactions are settled by Ethereum if we take into account projects listed below.' +
-                '\n' +
-                'Exact formula:' +
-                '\n' +
-                '(project txs/7d + ETH txs/7d) / ETH txs/7d'}
+              <span>
+                How many more transactions are settled by Ethereum if we take
+                into account projects listed below.
+              </span>
+              <br />
+              <span>Exact formula:</span>
+              <br />
+              <span>(project txs/7d + ETH txs/7d) / ETH txs/7d</span>
             </TooltipContent>
           </Tooltip>
-        </p>
+        </div>
       </div>
       <HorizontalSeparator className="mt-2 md:hidden" />
     </header>
