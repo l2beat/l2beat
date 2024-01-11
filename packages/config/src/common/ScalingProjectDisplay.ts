@@ -32,7 +32,7 @@ export interface ScalingProjectDisplay {
   /** Detailed description of the scaling project, will be visible in detailed description section */
   detailedDescription?: string
   /** A short (<20 characters) description of the use case */
-  purpose: ScalingProjectPurpose[]
+  purposes: ScalingProjectPurpose[]
   /** List of links */
   links: ScalingProjectLinks
   /** Where does the activity data come from? */

@@ -13,7 +13,7 @@ export const xai: Layer3 = {
     slug: 'xai',
     description:
       'Xai is an Ethereum Layer-3 that leverages Arbitrum AnyTrust to enable open trade in the next generation of video games.',
-    purpose: ['Gaming'],
+    purposes: ['Gaming'],
     category: 'Optimium',
     provider: 'Arbitrum Orbit',
     links: {

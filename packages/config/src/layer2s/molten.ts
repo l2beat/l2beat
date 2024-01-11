@@ -8,7 +8,7 @@ export const molten: Layer2 = upcoming({
     slug: 'molten',
     description:
       'Molten Network is an upcoming scaling solution by Unidex team. It is powered by the OP Stack.',
-    purpose: ['DeFi'],
+    purposes: ['DeFi'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

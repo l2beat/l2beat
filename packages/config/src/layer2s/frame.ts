@@ -8,7 +8,7 @@ export const frame: Layer2 = upcoming({
     slug: 'frame',
     description:
       'Frame is an Ethereum L2 designed to scale NFT adoption across the Ethereum ecosystem utilizing Arbitrum Nitro technology.',
-    purpose: ['Universal', 'NFT'],
+    purposes: ['Universal', 'NFT'],
     category: 'Optimistic Rollup',
     provider: 'Arbitrum',
     links: {

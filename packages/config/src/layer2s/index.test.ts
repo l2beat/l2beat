@@ -305,7 +305,7 @@ describe('layer2s', () => {
   })
 
   describe('every purpose is short', () => {
-    const purposes = layer2s.map((x) => x.display.purpose)
+    const purposes = layer2s.map((x) => x.display.purposes)
     for (const purpose of purposes) {
       const totalLength = purpose.reduce((acc, curr) => {
         return acc + curr.length

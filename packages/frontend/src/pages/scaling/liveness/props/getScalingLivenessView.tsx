@@ -38,7 +38,7 @@ function getScalingLivenessViewEntry(
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
     category: project.display.category,

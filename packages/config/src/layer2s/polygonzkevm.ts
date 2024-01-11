@@ -92,7 +92,7 @@ export const polygonzkevm: Layer2 = {
     warning: 'The forced transaction mechanism is currently disabled.',
     description:
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'Polygon',

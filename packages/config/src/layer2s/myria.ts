@@ -49,7 +49,7 @@ export const myria: Layer2 = {
     slug: 'myria',
     description:
       'Myria is an expansive blockchain gaming ecosystem, comprised of a blockchain gaming hub and Myriaverse metaverse.',
-    purpose: ['NFT', 'Exchange'],
+    purposes: ['NFT', 'Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

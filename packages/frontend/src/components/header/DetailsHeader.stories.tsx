@@ -15,7 +15,7 @@ type Story = StoryObj<typeof DetailsHeaderComponent>
 
 const project = {
   display: {
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     name: 'Arbitrum One',
     slug: 'arbitrum',
     description:
@@ -43,7 +43,7 @@ const stats = [
   },
   {
     title: 'Purpose',
-    value: project.display.purpose,
+    value: project.display.purposes,
   },
   {
     title: 'Type',

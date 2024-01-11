@@ -47,7 +47,7 @@ export const bobanetwork: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'Boba is an EVM-compatible Optimistic Rollup forked from Optimism and built by the Enya team as core contributors to the Boba Foundation.',
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

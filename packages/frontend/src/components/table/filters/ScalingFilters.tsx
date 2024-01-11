@@ -38,12 +38,12 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
       value: generateSlugList(items, (i) => i.category === category),
     }))
 
-  const purposes = uniq(items.flatMap((i) => i.purpose))
+  const purposes = uniq(items.flatMap((i) => i.purposes))
     .sort()
     .filter(notUndefined)
     .map((purpose) => ({
       label: purpose,
-      value: generateSlugList(items, (i) => !!i.purpose?.includes(purpose)),
+      value: generateSlugList(items, (i) => !!i.purposes?.includes(purpose)),
     }))
 
   return (

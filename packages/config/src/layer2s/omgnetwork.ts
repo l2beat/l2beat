@@ -25,7 +25,7 @@ export const omgnetwork: Layer2 = {
     slug: 'omgnetwork',
     description:
       'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
-    purpose: ['Payments'],
+    purposes: ['Payments'],
     category: 'Plasma',
     dataAvailabilityMode: 'NotApplicable',
     links: {

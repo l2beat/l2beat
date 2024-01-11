@@ -19,7 +19,7 @@ export interface ActivityViewEntry {
   provider: Layer2Provider | undefined
   warning: string | undefined
   redWarning: string | undefined
-  purpose: ScalingProjectPurpose[] | undefined
+  purposes: ScalingProjectPurpose[] | undefined
   isVerified: boolean | undefined
   showProjectUnderReview: boolean | undefined
   dataSource: string | undefined

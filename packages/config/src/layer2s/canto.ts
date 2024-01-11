@@ -8,7 +8,7 @@ export const canto: Layer2 = upcoming({
     slug: 'canto',
     description:
       "Canto is the L1 which will migrate to a Ethereum L2 scaling solution powered by Polygon's CDK dedicated to Real World Assets.",
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     provider: 'Polygon',
     links: {

@@ -33,7 +33,7 @@ export function getScalingRiskViewEntry(
     shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
     isArchived: project.isArchived,

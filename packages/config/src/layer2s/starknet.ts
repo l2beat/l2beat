@@ -202,7 +202,7 @@ export const starknet: Layer2 = {
     provider: 'Starknet',
     description:
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 

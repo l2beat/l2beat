@@ -24,7 +24,7 @@ export interface ScalingLivenessViewEntry {
   provider: Layer2Provider | undefined
   warning: string | undefined
   redWarning: string | undefined
-  purpose: ScalingProjectPurpose[]
+  purposes: ScalingProjectPurpose[]
   stage: StageConfig
   explanation: string | undefined
   batchSubmissions: LivenessDetailsWithWarning | undefined

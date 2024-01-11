@@ -8,7 +8,7 @@ export const capx: Layer2 = upcoming({
     slug: 'capx',
     description:
       'Capx is a sector-specific Layer 2 blockchain, specialised for token distribution and trading, facilitating curated distributions for project communities, token streaming for investor distributions, and a liquid secondary market for tokens.',
-    purpose: ['DeFi'],
+    purposes: ['DeFi'],
     category: 'ZK Rollup',
     provider: 'Polygon',
     links: {

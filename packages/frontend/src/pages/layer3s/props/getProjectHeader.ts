@@ -75,7 +75,7 @@ export function getProjectHeader(
       transactionMonthlyCount !== undefined
         ? formatLargeNumber(transactionMonthlyCount)
         : undefined,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     technology: project.display.category,
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
     showTvlBreakdown: config.features.tvlBreakdown,

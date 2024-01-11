@@ -8,7 +8,7 @@ export const polygonmiden: Layer2 = upcoming({
     slug: 'polygon-miden',
     description:
       "Polygon Miden is a ZK rollup built on top of Ethereum running on the Miden VM. It will allow you to build high-throughput & private applications using smart contract languages like Rust that offer greater safety and lower fees while still benefiting from Ethereum's security.",
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     provider: 'Polygon',
     links: {

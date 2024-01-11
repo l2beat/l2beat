@@ -21,7 +21,7 @@ export interface ScalingSummaryViewEntryBase {
   isVerified?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
-  purpose: ScalingProjectPurpose[]
+  purposes: ScalingProjectPurpose[]
 }
 
 export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {

@@ -8,7 +8,7 @@ export const fuel: Layer2 = upcoming({
     slug: 'fuel',
     description:
       'At Fuel we are building the fastest execution layer for the modular blockchain stack.',
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://fuel.network/'],

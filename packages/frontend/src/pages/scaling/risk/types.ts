@@ -20,7 +20,7 @@ export interface ScalingRiskViewEntry {
   provider?: Layer2Provider
   warning?: string
   redWarning: string | undefined
-  purpose: ScalingProjectPurpose[]
+  purposes: ScalingProjectPurpose[]
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean

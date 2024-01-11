@@ -15,7 +15,7 @@ export const layer2aWithDups: Layer2 = {
     name: 'Layer2a',
     slug: 'layer2a',
     description: '',
-    purpose: ['Universal'],
+    purposes: ['Universal'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

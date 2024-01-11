@@ -8,7 +8,7 @@ export const immutablezkevm: Layer2 = upcoming({
     slug: 'immutablezkevm',
     description:
       "Immutable zkEVM is an upcoming ZK Rollup focused on gaming and powered by Polygon's CDK.",
-    purpose: ['Universal', 'Gaming'],
+    purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
     provider: 'Polygon',
     links: {

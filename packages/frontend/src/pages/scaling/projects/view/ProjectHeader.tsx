@@ -1,4 +1,4 @@
-import { StageConfig } from '@l2beat/config'
+import { ScalingProjectPurpose, StageConfig } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -15,6 +15,7 @@ import {
   TVLBreakdown,
   TVLBreakdownProps,
 } from '../../../../components/TVLBreakdown'
+import { pluralize } from '../../../../utils/pluralize'
 import { RiskValues } from '../../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
@@ -26,7 +27,7 @@ export interface ProjectHeaderProps {
   tpsDaily?: string
   tpsWeeklyChange?: string
   transactionMonthlyCount?: string
-  purpose: string
+  purposes: ScalingProjectPurpose[]
   technology: string
   tvlBreakdown: TVLBreakdownProps | undefined
   showTvlBreakdown: boolean
@@ -98,8 +99,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       value: <TypeCell>{props.technology}</TypeCell>,
     },
     {
-      title: 'Purpose',
-      value: props.purpose,
+      title: pluralize(props.purposes.length, 'Purpose'),
+      value: props.purposes.join(', '),
     },
   ]
 
