@@ -8,7 +8,7 @@ export const ola: Layer2 = upcoming({
     slug: 'ola',
     description:
       'Ola is an open source hybrid ZK Rollup that delivers programmable scalability and data ownership (Privacy) to blockchain ecosystems.',
-    purpose: 'Privacy',
+    purposes: ['Privacy'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://www.olavm.org/'],
