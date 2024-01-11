@@ -22,7 +22,7 @@ import { ComingSoonCell } from '../ComingSoonCell'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
-import { TypeCell } from '../TypeCell'
+import { TypeCell, TypeColumnTooltip } from '../TypeCell'
 import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
@@ -46,8 +46,7 @@ export function getActiveScalingSummaryColumnsConfig() {
     },
     {
       name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      tooltip: <TypeColumnTooltip />,
       shortName: 'Type',
       getValue: (project) => (
         <TypeCell provider={project.provider}>{project.category}</TypeCell>
@@ -143,8 +142,7 @@ export function getUpcomingScalingSummaryColumnsConfig() {
     ...getProjectWithIndexColumns(),
     {
       name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      tooltip: <TypeColumnTooltip />,
       shortName: 'Type',
       getValue: (project) => (
         <TypeCell provider={project.provider}>{project.category}</TypeCell>
@@ -176,8 +174,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
     },
     {
       name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      tooltip: <TypeColumnTooltip />,
       shortName: 'Type',
       getValue: (project) => (
         <TypeCell provider={project.provider}>{project.category}</TypeCell>
@@ -232,8 +229,7 @@ export function getLayer3sScalingSummaryColumnsConfig() {
     ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
+      tooltip: <TypeColumnTooltip />,
       shortName: 'Type',
       getValue: (project) => <TypeCell>{project.category}</TypeCell>,
       sorting: {
@@ -577,8 +573,7 @@ export function getScalingLivenessColumnsConfig() {
     },
     {
       name: 'Type',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data',
+      tooltip: <TypeColumnTooltip showOnlyRollupsDefinitions />,
       shortName: 'Type',
       getValue: (project) => (
         <TypeCell provider={project.provider} disableColors>
