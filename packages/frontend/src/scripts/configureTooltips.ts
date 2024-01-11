@@ -6,7 +6,7 @@ export function configureTooltips() {
   const { $, $$ } = makeQuery(document.body)
 
   const tooltip = $('[data-role=tooltip-popup]')
-  const tooltipText = $('[data-role=tooltip-popup] span')
+  const tooltipContent = $('[data-role=tooltip-popup] span')
   const tooltipTriangle = $('[data-role=tooltip-popup-triangle]')
   const elements = $$('[data-role=tooltip]')
 
@@ -15,7 +15,7 @@ export function configureTooltips() {
 
   function show(
     element: HTMLElement,
-    content: Element,
+    content: HTMLTemplateElement,
     isDisabledOnMobile: boolean,
   ) {
     if (isDisabledOnMobile && isMobile()) return
@@ -23,7 +23,7 @@ export function configureTooltips() {
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
     const rect = activeElement.getBoundingClientRect()
-    tooltipText.innerHTML = content.innerHTML
+    tooltipContent.innerHTML = content.innerHTML
     tooltip.style.display = 'block'
     const tooltipHeight = tooltip.getBoundingClientRect().height
     const tooltipWidth = tooltip.getBoundingClientRect().width
@@ -78,7 +78,9 @@ export function configureTooltips() {
   })
 
   for (const element of elements) {
-    const content = element.querySelector('[data-role=tooltip-content]')
+    const content = element.querySelector<HTMLTemplateElement>(
+      '[data-role=tooltip-content]',
+    )
     if (!content) continue
     const trigger = element.querySelector('[data-role=tooltip-trigger]')
     element.setAttribute('tabindex', '0')

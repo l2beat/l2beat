@@ -1465,11 +1465,12 @@ type Story = StoryObj<typeof ScalingLivenessView>
 
 export const Primary: Story = {
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
     await new Promise((resolve) => setTimeout(resolve, 200))
-
     await waitFor(async () => {
-      const element = canvas.getByText('47 seconds').parentElement
+      const element = canvasElement.querySelector(
+        '[data-role="liveness-time-range-cell"] [data-role=tooltip-trigger]',
+      )
+      console.log(element)
       if (element) {
         await userEvent.hover(element)
       }
