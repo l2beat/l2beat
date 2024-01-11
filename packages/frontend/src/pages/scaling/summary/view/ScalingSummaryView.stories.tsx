@@ -736,7 +736,7 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purposes: ['DeFi protocols'],
+        purposes: ['DeFi'],
         category: 'Validium',
         stage: { stage: 'NotApplicable' },
       },
@@ -1160,7 +1160,7 @@ const meta = {
           displayValue: '1.25%',
           value: 125,
         },
-        purposes: ['Tokens', 'NFTs', 'AMM'],
+        purposes: ['Tokens', 'NFT', 'AMM'],
         category: 'ZK Rollup',
         stage: {
           stage: 'Stage 1',

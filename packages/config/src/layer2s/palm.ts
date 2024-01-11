@@ -8,7 +8,7 @@ export const palm: Layer2 = upcoming({
     slug: 'palm',
     description:
       'The Palm network is a sidechain focused on NFTs that will transition from a Proof of Authority network to a ZK Rollup in 2024.',
-    purposes: ['NFTs'],
+    purposes: ['NFT'],
     category: 'Validium',
     provider: 'Polygon',
     links: {
