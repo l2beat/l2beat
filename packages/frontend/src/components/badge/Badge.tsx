@@ -31,8 +31,8 @@ export function Badge(props: BadgeProps) {
 
   if (props.title) {
     return (
-      <Tooltip className={className}>
-        <TooltipTrigger>{props.children}</TooltipTrigger>
+      <Tooltip>
+        <TooltipTrigger className={className}>{props.children}</TooltipTrigger>
         <TooltipContent>{props.title}</TooltipContent>
       </Tooltip>
     )
