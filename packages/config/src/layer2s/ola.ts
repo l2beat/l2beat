@@ -1,19 +1,15 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const ola: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('ola'),
+export const ola: Layer2 = upcoming({
+  id: 'ola',
   display: {
     name: 'Ola',
     slug: 'ola',
-    description: 'Ola is an open source hybrid ZK Rollup that delivers programmable scalability and data ownership (Privacy) to blockchain ecosystems.',
+    description:
+      'Ola is an open source hybrid ZK Rollup that delivers programmable scalability and data ownership (Privacy) to blockchain ecosystems.',
     purpose: 'Privacy',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://www.olavm.org/'],
       apps: [],
@@ -30,13 +26,4 @@ export const ola: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})
