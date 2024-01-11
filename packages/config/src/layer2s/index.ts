@@ -4,14 +4,13 @@ import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { astarzkevm } from './astarzkevm'
-import { aztecconnect } from './aztecconnect'
 import { aztecV1 } from './aztecV1'
 import { aztecV2 } from './aztecV2'
+import { aztecconnect } from './aztecconnect'
 import { base } from './base'
 import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
-import { brine } from './brine'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
@@ -69,6 +68,7 @@ import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
+import { tanx } from './tanx'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
@@ -95,7 +95,7 @@ export const layer2s: Layer2[] = [
   blast,
   bob,
   bobanetwork,
-  brine,
+  tanx,
   canto,
   capx,
   canvasconnect,

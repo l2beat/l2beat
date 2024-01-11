@@ -67,7 +67,6 @@
   "ethereum:dydx": "0xa1ab385d962d0e430934df8acb2bc6a74947c20e",
   "ethereum:opticsV1": "0xb3f12567e370c1bd7be4003ab5c082f86a29bf86",
   "ethereum:sollet": "0xd761f6544ee0f22fb74194fa20ad2146b204e838",
-  "ethereum:brine": "0x04540863ad05589c080cd328bd1756e192e8f112",
   "ethereum:starknet": "0x1a3502c490838abf81a8090377b549af355535ad",
   "ethereum:chainport": "0x0b59dc3ea184121f40cc8fd764e4e839841fe57d",
   "ethereum:zkfair": "0xbb6ee1c26e0b9024c84e1cb61959202df805a921",
@@ -86,5 +85,6 @@
   "ethereum:debridge": "0xd133788793598b5af4867d5da87989ea720df3a9",
   "ethereum:omni": "0xb1363783b237a042a2c53a93b308bac6de544c8e",
   "ethereum:connext": "0xe640ac96be2db9e2555b5aa9d1d0c05dd54205a8",
-  "ethereum:parallel": "0x78fc4d3640fd7262f2630f4af6e366d8b9d7689a"
+  "ethereum:parallel": "0x78fc4d3640fd7262f2630f4af6e366d8b9d7689a",
+  "ethereum:tanx": "0xf242593fff23be9722d196783f681c5e132af5b4"
 }
