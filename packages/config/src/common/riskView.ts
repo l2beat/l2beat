@@ -121,13 +121,13 @@ export function DATA_CELESTIA(
 ): ScalingProjectRiskViewEntry {
   const additional = isUsingBlobstream
     ? ' Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators.'
-    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots, meaning that the Sequencer can single-handedly post unavaialable roots.'
+    : ' Sequencer tx roots are not checked against the Blobstream bridge data roots onchain, but L2 nodes can verify data availability by running a Celestia light client.'
   return {
     value: 'External',
     description:
-      `Proof construction and state derivation rely fully on data that is posted on Celestia.` +
+      `Proof construction and state derivation fully rely on data that is posted on Celestia.` +
       additional,
-    sentiment: isUsingBlobstream ? 'warning' : 'bad',
+    sentiment: 'bad',
   }
 }
 
