@@ -1,4 +1,4 @@
-import { Layer2, ProjectLinks } from '@l2beat/config'
+import { Layer2, ScalingProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
   TvlApiCharts,
@@ -61,6 +61,7 @@ export function getProjectHeader(
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
+    description: project.display.description,
     tvlStats: {
       tvlChange: tvlWeeklyChange,
       tvl: project.config.escrows.length > 0 ? tvl : 0,
@@ -74,7 +75,7 @@ export function getProjectHeader(
       transactionMonthlyCount !== undefined
         ? formatLargeNumber(transactionMonthlyCount)
         : undefined,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     technology: project.display.category,
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
     showTvlBreakdown: config.features.tvlBreakdown,
@@ -91,7 +92,7 @@ export function getProjectHeader(
   }
 }
 
-function getLinks(links: ProjectLinks): ProjectLink[] {
+function getLinks(links: ScalingProjectLinks): ProjectLink[] {
   const items = [
     {
       name: 'Website',

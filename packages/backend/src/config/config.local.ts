@@ -15,7 +15,7 @@ export function getLocalConfig(env: Env): Config {
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
   const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
-  const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', true)
+  const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', false)
   const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(

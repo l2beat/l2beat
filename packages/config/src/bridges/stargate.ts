@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -27,8 +27,9 @@ export const stargate: Bridge = {
       ],
     },
     description:
-      'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets. It leverages an oracle and relayer for cross-chain security for the protocol. \
-      Note that StarGate UI also supports omnichain tokens built directly on top of LayerZero protocol, e.g. JOE.',
+      'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets.',
+    detailedDescription:
+      'It leverages an oracle and relayer for cross-chain security for the protocol. Note that StarGate UI also supports omnichain tokens built directly on top of LayerZero protocol, e.g. JOE.',
     category: 'Liquidity Network',
   },
   riskView: {

@@ -38,6 +38,7 @@ function getScalingTvlViewEntry(
     slug: project.display.slug,
     category: project.display.category,
     provider: project.display.provider,
+    purposes: project.display.purposes,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
     redWarning: project.display.redWarning,

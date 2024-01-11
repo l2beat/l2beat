@@ -1,20 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  MILESTONES,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -43,9 +42,8 @@ export const zksyncera: Layer2 = {
       ? `Withdrawals are delayed by ${delay}. The length of the delay can be arbitrarily set by a MultiSig.`
       : undefined,
     description:
-      'zkSync Era is a general-purpose ZK Rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its ZK friendly custom virtual machine.\
-      It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
-    purpose: 'Universal',
+      'zkSync Era is a general-purpose ZK Rollup by Matter Labs with full EVM compatibility.',
+    purposes: ['Universal'],
     provider: 'ZK Stack',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
@@ -374,13 +372,6 @@ export const zksyncera: Layer2 = {
       link: 'https://zksync.mirror.xyz/HJ2Pj45EJkRdt5Pau-ZXwkV2ctPx8qFL19STM5jdYhc',
       date: '2023-07-17T00:00:00Z',
       description: 'Deployment of Boojum - new high-performance proof system.',
-    },
-    {
-      ...MILESTONES.MAINNET_OPEN,
-      link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
-      date: '2022-03-24T00:00:00Z',
-      description:
-        'Whitelist got removed, there are no restrictions on who can transact with the network.',
     },
     {
       name: 'zkSync 2.0 baby alpha launch',

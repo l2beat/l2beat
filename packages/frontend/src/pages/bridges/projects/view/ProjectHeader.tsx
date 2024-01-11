@@ -1,4 +1,4 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
+import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { NoDataBadge } from '../../../../components/badge/NoDataBadge'
@@ -11,11 +11,12 @@ import { RiskCell } from '../../../../components/table/RiskCell'
 export interface ProjectHeaderProps {
   title: string
   titleClassName?: string
+  description: string | undefined
   icon?: string
   tvl?: string
   tvlWeeklyChange?: string
-  destination: ProjectRiskViewEntry
-  validatedBy?: ProjectRiskViewEntry
+  destination: ScalingProjectRiskViewEntry
+  validatedBy?: ScalingProjectRiskViewEntry
   type: string
   links: ProjectLink[]
   isArchived?: boolean
@@ -57,6 +58,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     <DetailsHeader
       type="bridge"
       title={props.title}
+      description={props.description}
       icon={props.icon}
       links={props.links}
       stats={{ summary: stats }}

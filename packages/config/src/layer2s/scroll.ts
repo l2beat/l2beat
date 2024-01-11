@@ -1,13 +1,18 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import {
+  DATA_AVAILABILITY,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+  STATE_ZKP_SN,
+} from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
-import { EXITS, makeBridgeCompatible, OPERATOR } from './common'
-import { DATA_AVAILABILITY } from './common/dataAvailability'
-import { FORCE_TRANSACTIONS } from './common/forceTransactions'
-import { RISK_VIEW, STATE_ZKP_SN } from './common/riskView'
 import { getStage } from './common/stages/getStage'
-import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('scroll')
@@ -39,8 +44,8 @@ export const scroll: Layer2 = {
     name: 'Scroll',
     slug: 'scroll',
     description:
-      'Scroll is rollup that extends Ethereum’s capabilities through zero knowledge tech and EVM compatibility.',
-    purpose: 'Universal',
+      'Scroll is ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',
     links: {

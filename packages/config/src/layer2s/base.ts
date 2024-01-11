@@ -8,9 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -20,11 +17,14 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from './common'
+} from '../common'
+import { subtractOne } from '../common/assessCount'
+import { DERIVATION } from '../common/stateDerivations'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('base')
@@ -86,7 +86,7 @@ export const base: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',

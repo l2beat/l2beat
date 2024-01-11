@@ -8,9 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,11 +18,14 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOneAfterBlockInclusive,
-} from './common'
+} from '../common'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
+import { DERIVATION } from '../common/stateDerivations'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import { DERIVATION } from './common/stateDerivations'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
 
@@ -109,10 +109,8 @@ export const optimism: Layer2 = {
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'OP Mainnet is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
-    With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
-    new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
-    purpose: 'Universal',
+      'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
+    purposes: ['Universal'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
@@ -149,7 +147,6 @@ export const optimism: Layer2 = {
   config: {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
-    nativeL2TokensIncludedInTVL: ['OP'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),
@@ -310,7 +307,7 @@ export const optimism: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development (https://github.com/ethereum-optimism/cannon) and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',

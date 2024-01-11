@@ -8,7 +8,7 @@ export const debank: Layer2 = upcoming({
     slug: 'debank',
     description:
       'Debank Chain is an upcoming scaling solution by Debank team. It is powered by the OP Stack.',
-    purpose: 'Universal, Social',
+    purposes: ['Universal', 'Social'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

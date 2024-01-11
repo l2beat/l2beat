@@ -1,8 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,7 +9,10 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -46,7 +46,7 @@ export const aevo: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack.',
-    purpose: 'DEX',
+    purposes: ['DEX'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

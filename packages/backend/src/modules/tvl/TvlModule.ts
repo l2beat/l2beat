@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+} from '@l2beat/shared'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
@@ -12,7 +16,6 @@ import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'

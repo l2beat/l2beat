@@ -32,7 +32,7 @@ interface LinkSectionItemProps {
 function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
-      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors hover:bg-gray-200 dark:bg-neutral-700 dark:hover:bg-gray-750">
+      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors hover:bg-gray-200 dark:bg-zinc-900 dark:hover:bg-zinc-700">
         <OutLink
           href={projectLink.links[0]}
           className="flex flex-row items-center gap-1.5"
@@ -60,7 +60,7 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
           <OutLink
             key={link}
             href={link}
-            className="flex items-center gap-1.5 rounded-lg py-1.5 px-3 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-gray-750"
+            className="flex items-center gap-1.5 rounded-lg py-1.5 px-3 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-zinc-700"
           >
             {parsedSocial?.platform && (
               <ProductIcon

@@ -7,26 +7,25 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
-  KnowledgeNugget,
-  Milestone,
-  ProjectContract,
-  ProjectPermission,
-} from '../../common'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { HARDCODED } from '../../discovery/values/hardcoded'
-import {
   CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  KnowledgeNugget,
   makeBridgeCompatible,
+  Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from '../common'
+  ScalingProjectContract,
+  ScalingProjectPermission,
+  ScalingProjectStateDerivation,
+} from '../../common'
+import { subtractOne } from '../../common/assessCount'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2StateDerivation } from '../types'
+import { Layer2, Layer2Display } from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
@@ -43,12 +42,12 @@ export interface OpStackConfig {
   tokenList: Token[]
   l2OutputOracle: ContractParameters
   portal: ContractParameters
-  stateDerivation?: Layer2StateDerivation
+  stateDerivation?: ScalingProjectStateDerivation
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   roleOverrides: Record<string, string>
-  nonTemplatePermissions?: ProjectPermission[]
-  nonTemplateContracts?: ProjectContract[]
+  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplateContracts?: ScalingProjectContract[]
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {

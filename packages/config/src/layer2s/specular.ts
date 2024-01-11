@@ -8,7 +8,7 @@ export const specular: Layer2 = upcoming({
     slug: 'specular',
     description:
       'Specular is an EVM-native optimistic rollup designed to scale Ethereum securely, with minimal additional trust assumptions.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://specular.network/'],

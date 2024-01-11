@@ -1,6 +1,7 @@
+import Bugsnag from '@bugsnag/js'
 import Router from '@koa/router'
 import { Logger } from '@l2beat/backend-tools'
-import Koa, { Context } from 'koa'
+import Koa from 'koa'
 import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
 
@@ -14,10 +15,21 @@ export class ApiServer {
     private readonly port: number,
     private readonly logger: Logger,
     routers: Router[],
-    handleServerError?: (logger: Logger, error: Error, ctx: Context) => void,
   ) {
     this.logger = this.logger.for(this)
     this.app = new Koa()
+
+    const middleware = Bugsnag.getPlugin('koa')
+
+    if (middleware) {
+      // This must be the first piece of middleware in the stack.
+      // It can only capture errors in downstream middleware
+      this.app.use(middleware.requestHandler)
+
+      // This handles any errors that Koa catches
+      this.app.on('error', middleware.errorHandler)
+      console.log('Bugsnag koa integration enabled')
+    }
 
     this.app.use(createApiMetrics())
     this.app.use(createApiLogger(this.logger))
@@ -32,12 +44,6 @@ export class ApiServer {
 
     this.app.use(router.routes())
     this.app.use(router.allowedMethods())
-
-    if (handleServerError) {
-      this.app.on('error', (err: Error, ctx: Context) =>
-        handleServerError(this.logger, err, ctx),
-      )
-    }
   }
 
   listen() {
