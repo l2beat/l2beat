@@ -3,7 +3,6 @@ import { layer2s } from '@l2beat/config'
 
 import {
   LivenessFunctionCall,
-  LivenessSharpSubmission,
   LivenessTransfer,
 } from '../core/liveness/types/LivenessConfig'
 import { layer2ToProject } from './Project'
