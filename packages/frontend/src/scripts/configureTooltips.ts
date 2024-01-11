@@ -15,6 +15,7 @@ export function configureTooltips() {
 
   function show(
     element: HTMLElement,
+    trigger: HTMLElement,
     content: HTMLElement,
     isDisabledOnMobile: boolean,
   ) {
@@ -22,7 +23,7 @@ export function configureTooltips() {
     visible = true
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
-    const rect = activeElement.getBoundingClientRect()
+    const rect = trigger.getBoundingClientRect()
     tooltipContent.innerHTML = content.innerHTML
     tooltip.style.display = 'block'
     const tooltipHeight = tooltip.getBoundingClientRect().height
@@ -81,8 +82,10 @@ export function configureTooltips() {
     const content = element.querySelector<HTMLElement>(
       '[data-role=tooltip-content]',
     )
-    if (!content) continue
-    const trigger = element.querySelector('[data-role=tooltip-trigger]')
+    const trigger = element.querySelector<HTMLElement>(
+      '[data-role=tooltip-trigger]',
+    )
+    if (!content || !trigger) continue
     element.setAttribute('tabindex', '0')
     const isDisabledOnMobile = Boolean(
       element.getAttribute('data-tooltip-mobile-disabled'),
@@ -90,17 +93,17 @@ export function configureTooltips() {
 
     let mouseEnteredAt = Date.now()
 
-    trigger?.addEventListener('mouseenter', () => {
+    trigger.addEventListener('mouseenter', () => {
       mouseEnteredAt = Date.now()
-      show(element, content, isDisabledOnMobile)
+      show(element, trigger, content, isDisabledOnMobile)
     })
-    trigger?.addEventListener('mouseleave', hide)
-    trigger?.addEventListener('focus', () =>
-      show(element, content, isDisabledOnMobile),
+    trigger.addEventListener('mouseleave', hide)
+    trigger.addEventListener('focus', () =>
+      show(element, trigger, content, isDisabledOnMobile),
     )
-    trigger?.addEventListener('blur', hide)
+    trigger.addEventListener('blur', hide)
 
-    trigger?.addEventListener('click', (e) => {
+    trigger.addEventListener('click', (e) => {
       e.stopPropagation()
       if (isMobile() && !isDisabledOnMobile) {
         e.preventDefault()
@@ -111,7 +114,7 @@ export function configureTooltips() {
           hide()
         }
       } else {
-        show(element, content, isDisabledOnMobile)
+        show(element, trigger, content, isDisabledOnMobile)
       }
     })
   }

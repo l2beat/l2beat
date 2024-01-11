@@ -37,9 +37,13 @@ interface TooltipTriggerProps {
   className?: string
 }
 
-export function TooltipTrigger({ children, className }: TooltipTriggerProps) {
+export function TooltipTrigger({
+  children,
+  className,
+  ...rest
+}: TooltipTriggerProps) {
   return (
-    <div data-role="tooltip-trigger" className={className}>
+    <div data-role="tooltip-trigger" className={className} {...rest}>
       {children}
     </div>
   )

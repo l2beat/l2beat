@@ -50,8 +50,11 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
   ) as AnomalyEntry[]
 
   return (
-    <Tooltip big data-testid="anomaly-indicator">
-      <TooltipTrigger className="flex h-6 w-min gap-x-0.5">
+    <Tooltip big>
+      <TooltipTrigger
+        className="flex h-6 w-min gap-x-0.5"
+        data-testid="anomaly-indicator-tooltip-trigger"
+      >
         {anomalyEntries.map((anomaly, i) => (
           <div
             key={i}
@@ -79,7 +82,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   }
 
   return (
-    <div>
+    <>
       <span>Anomalies from last 30 days:</span>
       <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {anomalies.slice(0, 4).map((anomaly) => (
@@ -105,7 +108,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
       {anomalies.length > 4 && (
         <div className="mt-2.5">And {anomalies.length - 4} more</div>
       )}
-    </div>
+    </>
   )
 }
 
