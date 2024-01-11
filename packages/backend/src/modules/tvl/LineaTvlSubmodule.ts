@@ -1,11 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
+import { CoingeckoQueryService, HttpClient } from '@l2beat/shared'
 import { ChainId, ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { LINEA_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { chainTvlSubmodule } from './ChainTvlSubmodule'
