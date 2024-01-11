@@ -152,7 +152,7 @@ export class TaskQueue<T> {
     const result = this.shouldRetry(job, error)
 
     if (result.notify) {
-      this.logger.error(error)
+      this.logger.error(error, { job })
     }
 
     if (result.shouldStop) {
@@ -160,7 +160,7 @@ export class TaskQueue<T> {
       if (this.shouldStopAfterFailedRetries) {
         // TODO: new logger usage
         this.logger.error('Stopping queue because of error', {
-          job: JSON.stringify(job),
+          job,
           error,
         })
         this.stopped = true

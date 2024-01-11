@@ -25,8 +25,5 @@ export function getConfig(): Config {
 }
 
 function getDeploymentEnv(env: Env) {
-  return (
-    env.optionalString('DEPLOYMENT_ENV') ??
-    (env.optionalString('NODE_ENV') === 'production' ? 'production' : 'local')
-  )
+  return env.optionalString('DEPLOYMENT_ENV') ?? 'local'
 }
