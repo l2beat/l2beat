@@ -49,7 +49,7 @@ export const publicgoodsnetwork: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',

@@ -46,7 +46,7 @@ export const aevo: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack.',
-    purpose: 'DEX',
+    purposes: ['DEX'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

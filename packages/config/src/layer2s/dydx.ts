@@ -74,7 +74,7 @@ export const dydx: Layer2 = {
       'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',

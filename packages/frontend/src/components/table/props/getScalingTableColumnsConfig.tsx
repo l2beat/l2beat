@@ -89,7 +89,7 @@ export function getActiveScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
+      getValue: (project) => project.purposes.join(', '),
     },
     {
       name: 'Total',
@@ -155,7 +155,7 @@ export function getUpcomingScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
+      getValue: (project) => project.purposes.join(', '),
     },
   ]
 
@@ -187,7 +187,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
+      getValue: (project) => project.purposes.join(', '),
     },
     {
       name: 'Total',
@@ -251,7 +251,7 @@ export function getLayer3sScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
+      getValue: (project) => project.purposes.join(', '),
     },
   ]
 

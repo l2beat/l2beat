@@ -68,7 +68,7 @@ export const paradex: Layer2 = {
     provider: 'Starknet',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 

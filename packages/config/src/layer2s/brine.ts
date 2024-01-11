@@ -47,7 +47,7 @@ export const brine: Layer2 = {
     name: 'Brine',
     slug: 'brine',
     description: 'Brine is a DEX powered by StarkEx technology.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
