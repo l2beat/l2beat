@@ -12,24 +12,19 @@ export interface NumberCellProps {
 }
 
 export function NumberCell(props: NumberCellProps) {
+  const className = cx('text-base md:text-lg', props.className)
+
   if (props.signed && typeof props.children === 'string') {
-    return (
-      <PercentChange
-        value={props.children}
-        className={cx('text-base md:text-lg', props.className)}
-      />
-    )
+    return <PercentChange value={props.children} className={className} />
   }
 
   if (props.tooltip)
     return (
       <Tooltip>
-        <TooltipTrigger className={cx('text-base md:text-lg', props.className)}>
-          {props.children}
-        </TooltipTrigger>
+        <TooltipTrigger className={className}>{props.children}</TooltipTrigger>
         <TooltipContent>{props.tooltip}</TooltipContent>
       </Tooltip>
     )
 
-  return <div className={props.className}>{props.children}</div>
+  return <div className={className}>{props.children}</div>
 }
