@@ -54,7 +54,7 @@ export const aztecV1: Layer2 = {
       'EOL: Aztec team announced the intent to shut down the infrastructure for this rollup on Mar 13, 2023. The rollup is still active due to funds locked in, but is not accepting deposits.',
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
-    purposes: ['Payments'],
+    purposes: ['Private payments'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 
