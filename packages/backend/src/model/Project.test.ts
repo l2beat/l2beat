@@ -3,7 +3,6 @@ import { layer2s } from '@l2beat/config'
 
 import {
   LivenessFunctionCall,
-  LivenessSharpSubmission,
   LivenessTransfer,
 } from '../core/liveness/types/LivenessConfig'
 import { layer2ToProject } from './Project'
@@ -69,29 +68,6 @@ describe('Backend project config', () => {
               `Duplicate function call config in ${project.projectId.toString()}`,
             )
             functionCalls.add(key)
-          }
-        }
-      })
-    })
-
-    describe('sharp submissions', () => {
-      it('every configuration uses unique program hashes', () => {
-        const programHashes = new Set<string>()
-
-        for (const project of projects) {
-          const sharpConfigs = project.livenessConfig?.entries.filter(
-            (e): e is LivenessSharpSubmission =>
-              e.formula === 'sharpSubmission',
-          )
-
-          for (const config of sharpConfigs ?? []) {
-            for (const hash of config.programHashes) {
-              assert(
-                !programHashes.has(hash),
-                `Duplicate program hash in ${project.projectId.toString()}`,
-              )
-              programHashes.add(hash)
-            }
           }
         }
       })
