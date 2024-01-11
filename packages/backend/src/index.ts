@@ -21,8 +21,7 @@ main().catch((e: unknown) => {
 
 async function main() {
   const bugsnagApiKey = getEnv().optionalString('BUGSNAG_API_KEY')
-  // TODO: set DEPLOYMENT_ENV on production & simplify getDeploymentEnv function
-  const environment = getEnv().optionalString('DEPLOYMENT_ENV') ?? 'undefined'
+  const environment = getEnv().optionalString('DEPLOYMENT_ENV') ?? 'local'
 
   if (bugsnagApiKey) {
     initializeErrorReporting(bugsnagApiKey, environment)
