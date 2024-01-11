@@ -4,13 +4,13 @@ import {
   HttpClient,
 } from '@l2beat/shared'
 import {
+  assert,
   AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
   Token,
   UnixTime,
-  assert,
 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
