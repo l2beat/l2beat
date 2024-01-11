@@ -52,7 +52,8 @@ const exitWindowRisk = {
   ),
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.\n\nThe ZkFair Owner can upgrade with no delay.`,
+  )}.`,
+  warning: 'The ZkFair Owner can upgrade with no delay.',
 }
 
 const timelockUpgrades = {

@@ -1,6 +1,5 @@
 import { StageConfig } from '@l2beat/config'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { UpcomingBadge } from '../../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../../components/header/DetailsHeader'
@@ -11,6 +10,11 @@ import { InfoIcon, ProjectLink } from '../../../../components/icons'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
 import { TypeCell } from '../../../../components/table/TypeCell'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/tooltip/Tooltip'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
@@ -80,14 +84,14 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                 <a href="#stage">
                   <StageBadge stage={props.stage.stage} big />
                 </a>
-                <span
-                  className="Tooltip inline-block px-2"
-                  title={renderToStaticMarkup(
-                    <StageTooltip stageConfig={props.stage} />,
-                  )}
-                >
-                  <InfoIcon />
-                </span>
+                <Tooltip className="inline-block px-2">
+                  <TooltipTrigger>
+                    <InfoIcon />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <StageTooltip stageConfig={props.stage} />
+                  </TooltipContent>
+                </Tooltip>
               </span>
             ),
           },

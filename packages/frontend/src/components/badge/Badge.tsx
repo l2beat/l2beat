@@ -1,6 +1,8 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+
 type BadgeType = 'error' | 'warning' | 'brightYellow' | 'gray' | 'purple'
 
 export interface BadgeProps {
@@ -19,25 +21,26 @@ const badgeClassnames: Record<BadgeType, string> = {
   purple: 'bg-pink-900 text-white',
 }
 
-export function Badge({
-  type,
-  className,
-  children,
-  title,
-  oneSize,
-}: BadgeProps) {
+export function Badge(props: BadgeProps) {
+  const className = cx(
+    'rounded px-1.5 py-px font-medium',
+    props.oneSize ? 'text-sm' : 'text-2xs md:text-sm',
+    props.type && badgeClassnames[props.type],
+    props.className,
+  )
+
+  if (props.title) {
+    return (
+      <Tooltip>
+        <TooltipTrigger className={className}>{props.children}</TooltipTrigger>
+        <TooltipContent>{props.title}</TooltipContent>
+      </Tooltip>
+    )
+  }
+
   return (
-    <span
-      className={cx(
-        'rounded px-1.5 py-px font-medium',
-        oneSize ? 'text-sm' : 'text-2xs md:text-sm',
-        title && 'Tooltip',
-        type && badgeClassnames[type],
-        className,
-      )}
-      title={title}
-    >
-      {children}
+    <span className={className} title={props.title}>
+      {props.children}
     </span>
   )
 }
