@@ -29,7 +29,6 @@ export function getLocalConfig(env: Env): Config {
     'INTERNAL_DISCORD_CHANNEL_ID',
   )
   const discordEnabled = !!discordToken && !!internalDiscordChannelId
-  const errorReportingEnabled = !!env.optionalString('BUGSNAG_API_KEY')
 
   return {
     name: 'Backend/Local',
@@ -317,10 +316,6 @@ export function getLocalConfig(env: Env): Config {
           ),
         },
       ],
-    },
-    errorReporting: errorReportingEnabled && {
-      bugsnagApiKey: env.string('BUGSNAG_API_KEY'),
-      environment: 'local',
     },
   }
 }
