@@ -66,7 +66,6 @@ export const reddioex: Layer2 = {
         'https://facebook.com/reddiocom',
         'https://linkedin.com/company/reddio',
         'https://discord.com/invite/SjNAJ4qkK3',
-        'https://twitter.com/reddio_com',
       ],
     },
   },
