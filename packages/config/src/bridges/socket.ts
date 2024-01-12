@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -39,7 +39,7 @@ export const socket: Bridge = {
     sourceUpgradeability: {
       value: 'Yes',
       description:
-        "Vaults can be individually upgradable and it's security assumptions must be individually assessed for each individual token.",
+        "Vaults can be individually upgradable and it's security assumptions must be individually assessed for each individual vault.",
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.CANONICAL,
@@ -49,20 +49,18 @@ export const socket: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Omnichain tokens are tokenized Token Bridges. One chain is designated as main and acts as an token escrow. Transfers from the main chain are done using typical lock-mint model. Transfers between\
-        other (non-main) chains are made using burn-mint model. The implementation details may vary between each individual omnichain token and must be individually assessed.',
+        'Socket is a bridge framework connecting different chains via a set of "switchboards". Every chain using Socket for some of its tokens can mix & match many switchboards with varying trust assumptions, for example mixing a "fast" route via "Fast Switchboard" with a "Standard Route" using a native rollup AMB',
       risks: [],
       references: [],
     },
     validation: {
-      name: 'Oracles and Relayers',
+      name: 'Various switchboards',
       description:
-        'Omnichain tokens are built on top of LayerZero protocol. LayerZero relies on Oracles to periodically submit source chain block hashes to the destination chain.\
-        Once block hash is submitted, Relayers can provide the merkle proof for the transfers. The Oracle and Relayer used can be either default LayerZero contracts, or custom built by the token developers.',
+        'Vaults can use any registered switchboards. The validation model is chosen by the switchboard and their security can vary from using a canonical bridge to a third-party validation model.',
       references: [
         {
-          text: 'LayerZero security model analysis',
-          href: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+          text: 'Protocol Design - Socket Documentation',
+          href: 'https://developer.socket.tech/Learn/protocol-design#architecture',
         },
       ],
       risks: [
@@ -73,12 +71,12 @@ export const socket: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'watchers submit fraudulent block hash and relay fraudulent transfer .',
+          text: 'watchers submit fraudulent block hash and relay fraudulent transfer.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'socket vault owners change Vault configuration.',
+          text: 'Socket Vault owners change the Vault configuration.',
           isCritical: true,
         },
       ],
