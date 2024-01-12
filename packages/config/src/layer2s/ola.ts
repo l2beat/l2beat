@@ -11,7 +11,7 @@ export const ola: Layer2 = upcoming({
     purposes: ['Privacy'],
     category: 'ZK Rollup',
     links: {
-      websites: ['https://www.olavm.org/'],
+      websites: ['https://olavm.org/'],
       apps: [],
       documentation: ['https://ola-2.gitbook.io/ola-developer-documents/'],
       explorers: [],
@@ -22,7 +22,7 @@ export const ola: Layer2 = upcoming({
         'https://www.linkedin.com/company/olavm-technology-ltd/',
         'https://hackmd.io/@sin7y',
         'https://medium.com/@ola_zkzkvm',
-        'https://www.youtube.com/@Ola_Sin7y',
+        'https://youtube.com/@Ola_Sin7y',
       ],
     },
   },
