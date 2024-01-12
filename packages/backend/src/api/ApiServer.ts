@@ -27,7 +27,7 @@ export class ApiServer {
 
       // This handles any errors that Koa catches
       this.app.on('error', errorReporterMiddleware.errorHandler)
-      console.log('Bugsnag koa integration enabled')
+      logger.info('Bugsnag koa integration enabled')
     }
 
     this.app.use(createApiMetrics())
