@@ -1,20 +1,15 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const ancient: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('ancient'),
+export const ancient: Layer2 = upcoming({
+  id: 'ancient',
   display: {
     name: 'Ancient8',
     slug: 'ancient',
     description:
       'Ancient8 Chain is a gaming-focused community-driven Ethereum Layer 2 built using OP Stack.',
-    purpose: 'Gaming',
+    purposes: ['Gaming'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://ancient8.gg/'],
@@ -30,13 +25,4 @@ export const ancient: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

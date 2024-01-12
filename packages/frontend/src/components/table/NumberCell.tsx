@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { PercentChange } from '../PercentChange'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export interface NumberCellProps {
   signed?: boolean
@@ -11,20 +12,19 @@ export interface NumberCellProps {
 }
 
 export function NumberCell(props: NumberCellProps) {
-  return (
-    <span
-      className={cx(
-        props.tooltip ? 'Tooltip' : '',
-        'text-base md:text-lg',
-        props.className,
-      )}
-      title={props.tooltip}
-    >
-      {props.signed && typeof props.children === 'string' ? (
-        <PercentChange value={props.children} />
-      ) : (
-        props.children
-      )}
-    </span>
-  )
+  const className = cx('text-base md:text-lg', props.className)
+
+  if (props.signed && typeof props.children === 'string') {
+    return <PercentChange value={props.children} className={className} />
+  }
+
+  if (props.tooltip)
+    return (
+      <Tooltip>
+        <TooltipTrigger className={className}>{props.children}</TooltipTrigger>
+        <TooltipContent>{props.tooltip}</TooltipContent>
+      </Tooltip>
+    )
+
+  return <div className={className}>{props.children}</div>
 }

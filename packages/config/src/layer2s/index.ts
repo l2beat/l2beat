@@ -1,3 +1,4 @@
+import { HOMEPAGE_MILESTONES } from '../common'
 import { aevo } from './aevo'
 import { ancient } from './ancient'
 import { apex } from './apex'
@@ -10,11 +11,9 @@ import { base } from './base'
 import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
-import { brine } from './brine'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
-import { HOMEPAGE_MILESTONES } from './common'
 import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -50,6 +49,7 @@ import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
+import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { orb3 } from './orb3'
@@ -69,6 +69,7 @@ import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
+import { tanx } from './tanx'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
@@ -95,7 +96,6 @@ export const layer2s: Layer2[] = [
   blast,
   bob,
   bobanetwork,
-  brine,
   canto,
   capx,
   canvasconnect,
@@ -134,6 +134,7 @@ export const layer2s: Layer2[] = [
   myria,
   nova,
   obscuro,
+  ola,
   omgnetwork,
   optimism,
   orb3,
@@ -153,6 +154,7 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   taiko,
+  tanx,
   x1,
   xchain,
   zkfair,

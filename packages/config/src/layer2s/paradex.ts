@@ -5,14 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,11 +13,19 @@ import {
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
-} from './common'
-import { FORCE_TRANSACTIONS } from './common/forceTransactions'
-import { RISK_VIEW } from './common/riskView'
+} from '../common'
+import { FORCE_TRANSACTIONS } from '../common/forceTransactions'
+import { RISK_VIEW } from '../common/riskView'
+import { STATE_CORRECTNESS } from '../common/stateCorrectness'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
-import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('paradex')
@@ -68,7 +68,7 @@ export const paradex: Layer2 = {
     provider: 'Starknet',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 
@@ -101,8 +101,16 @@ export const paradex: Layer2 = {
         {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1636978914),
+          untilTimestamp: new UnixTime(1704729971),
           programHashes: [
             '3258367057337572248818716706664617507069572185152472699066582725377748079373',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1704729971),
+          programHashes: [
+            '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
       ],

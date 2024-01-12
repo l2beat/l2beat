@@ -56,6 +56,7 @@ function getScalingL2SummaryEntry(
 
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
     category: project.display.category,
@@ -88,7 +89,7 @@ function getScalingL2SummaryEntry(
           }
         : undefined,
     marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     stage: project.stage,
   }
 }
@@ -99,6 +100,7 @@ function getScalingL3SummaryEntry(
 ): ScalingL3SummaryViewEntry {
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
     category: project.display.category,
@@ -106,7 +108,7 @@ function getScalingL3SummaryEntry(
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
       .name,
   }

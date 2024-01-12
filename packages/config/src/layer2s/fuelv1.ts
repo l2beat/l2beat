@@ -9,7 +9,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -20,8 +20,8 @@ export const fuelv1: Layer2 = {
     name: 'Fuel v1',
     slug: 'fuelv1',
     description:
-      'Fuel aims to be a complete optimistic rollup with low transaction costs, high speed and high throughput.',
-    purpose: 'Payments',
+      'Fuel v1 is the first Optimistic Rollup live on Ethereum, supporting payments.',
+    purposes: ['Payments'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     links: {

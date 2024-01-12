@@ -1,6 +1,8 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
+import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 
-export function getDestination(destinations: string[]): ProjectRiskViewEntry {
+export function getDestination(
+  destinations: string[],
+): ScalingProjectRiskViewEntry {
   if (destinations.length === 0) {
     throw new Error('Invalid destination')
   }

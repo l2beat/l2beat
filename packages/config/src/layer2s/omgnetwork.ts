@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -9,7 +8,8 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('omgnetwork')
@@ -24,8 +24,8 @@ export const omgnetwork: Layer2 = {
     name: 'OMG Network',
     slug: 'omgnetwork',
     description:
-      'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. Using the OMG Network, individuals and businesses can transact on a financial infrastructure that is claimed to be several times faster, 1/3rd the cost, and as secure as the Ethereum Network — while retaining full autonomy over their funds and keys. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
-    purpose: 'Payments',
+      'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
+    purposes: ['Payments'],
     category: 'Plasma',
     dataAvailabilityMode: 'NotApplicable',
     links: {

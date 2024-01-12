@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -10,7 +9,8 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -53,8 +53,8 @@ export const aztecV1: Layer2 = {
     warning:
       'EOL: Aztec team announced the intent to shut down the infrastructure for this rollup on Mar 13, 2023. The rollup is still active due to funds locked in, but is not accepting deposits.',
     description:
-      'Aztec is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs.',
-    purpose: 'Private payments',
+      'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
+    purposes: ['Private payments'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 

@@ -1,20 +1,15 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const frame: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('frame'),
+export const frame: Layer2 = upcoming({
+  id: 'frame',
   display: {
     name: 'Frame',
     slug: 'frame',
     description:
       'Frame is an Ethereum L2 designed to scale NFT adoption across the Ethereum ecosystem utilizing Arbitrum Nitro technology.',
-    purpose: 'Universal, NFT',
+    purposes: ['Universal', 'NFT'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
       websites: ['https://frame.xyz/'],
@@ -28,13 +23,4 @@ export const frame: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

@@ -2,10 +2,12 @@ import React from 'react'
 
 import { ShieldIcon, UnderReviewIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export interface ProjectCellProps {
   project: {
     name: string
+    shortName?: string
     slug: string
     isVerified?: boolean
     isUpcoming?: boolean
@@ -20,40 +22,48 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
   return (
     <div className="pl-3">
       <span className="text-base font-bold group-hover:underline md:text-lg">
-        {project.name}
+        {project.shortName ?? project.name}
       </span>
       {project.isVerified === false && (
         <span className="pl-1.5">
-          <span
-            className="Tooltip inline-block"
-            title="This project contains unverified contracts."
-          >
-            <UnverifiedIcon className="relative top-px h-4 w-4 fill-red-300" />
-          </span>
+          <Tooltip className="inline-block">
+            <TooltipTrigger>
+              <UnverifiedIcon className="relative top-px h-4 w-4 fill-red-300" />
+            </TooltipTrigger>
+            <TooltipContent>
+              This project contains unverified contracts.
+            </TooltipContent>
+          </Tooltip>
         </span>
       )}
       {project.redWarning && (
         <span className="pl-1.5">
-          <span className="Tooltip inline-block" title={project.redWarning}>
-            <ShieldIcon className="relative top-px h-4 w-4 fill-red-300" />
-          </span>
+          <Tooltip className="inline-block">
+            <TooltipTrigger>
+              <ShieldIcon className="relative top-px h-4 w-4 fill-red-300" />
+            </TooltipTrigger>
+            <TooltipContent>{project.redWarning}</TooltipContent>
+          </Tooltip>
         </span>
       )}
       {project.showProjectUnderReview && (
         <span className="pl-1.5">
-          <span
-            className="Tooltip inline-block"
-            title="This project is under review."
-          >
-            <UnderReviewIcon className="relative top-px h-4 w-4" />
-          </span>
+          <Tooltip className="inline-block">
+            <TooltipTrigger>
+              <UnderReviewIcon className="relative top-px h-4 w-4" />
+            </TooltipTrigger>
+            <TooltipContent>This project is under review.</TooltipContent>
+          </Tooltip>
         </span>
       )}
       {project.warning && (
         <span className="pl-1.5">
-          <span className="Tooltip inline-block" title={project.warning}>
-            <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
-          </span>
+          <Tooltip className="inline-block">
+            <TooltipTrigger>
+              <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
+            </TooltipTrigger>
+            <TooltipContent>{project.warning}</TooltipContent>
+          </Tooltip>
         </span>
       )}
     </div>

@@ -16,6 +16,7 @@ const meta = {
     layer2s: [
       {
         name: 'Base',
+        shortName: undefined,
         slug: 'base',
         provider: 'OP Stack',
         riskValues: {
@@ -69,7 +70,7 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'Optimistic Rollup',
         stage: {
           stage: 'Stage 0',
@@ -97,6 +98,7 @@ const meta = {
       },
       {
         name: 'Linea',
+        shortName: undefined,
         slug: 'linea',
         provider: undefined,
         riskValues: {
@@ -150,7 +152,7 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'ZK Rollup',
         stage: {
           stage: 'NotApplicable',
@@ -158,6 +160,7 @@ const meta = {
       },
       {
         name: 'Mantle',
+        shortName: undefined,
         slug: 'mantle',
         provider: undefined,
         riskValues: {
@@ -211,7 +214,7 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'Optimium',
         stage: {
           stage: 'NotApplicable',
@@ -219,6 +222,7 @@ const meta = {
       },
       {
         name: 'Scroll',
+        shortName: undefined,
         slug: 'scroll',
         provider: undefined,
         riskValues: {
@@ -272,12 +276,13 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Taiko',
+        shortName: undefined,
         slug: 'taiko',
         provider: undefined,
         riskValues: {
@@ -331,12 +336,13 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'ZKSwap 1.0',
+        shortName: undefined,
         slug: 'zkswap',
         provider: 'zkSync Lite',
         riskValues: {
@@ -397,12 +403,13 @@ const meta = {
           displayValue: '0.02%',
           value: 2,
         },
-        purpose: 'Payments, AMM',
+        purposes: ['Payments', 'AMM'],
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Polygon Hermez',
+        shortName: undefined,
         slug: 'hermez',
         provider: undefined,
         riskValues: {
@@ -462,12 +469,13 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Payments',
+        purposes: ['Payments'],
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'ZKSwap 2.0',
+        shortName: undefined,
         slug: 'zkswap2',
         provider: 'zkSync Lite',
         riskValues: {
@@ -529,12 +537,13 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Payments, AMM',
+        purposes: ['Payments', 'AMM'],
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Gluon',
+        shortName: undefined,
         slug: 'gluon',
         provider: undefined,
         riskValues: {
@@ -595,12 +604,13 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Exchange',
+        purposes: ['Exchange'],
         category: 'Plasma',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'OMG Network',
+        shortName: undefined,
         slug: 'omgnetwork',
         provider: undefined,
         riskValues: {
@@ -660,12 +670,13 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'Payments',
+        purposes: ['Payments'],
         category: 'Plasma',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'L2.Finance-zk',
+        shortName: undefined,
         slug: 'layer2financezk',
         provider: 'StarkEx',
         riskValues: {
@@ -725,12 +736,13 @@ const meta = {
           displayValue: '0.00%',
           value: 0,
         },
-        purpose: 'DeFi protocols',
+        purposes: ['DeFi'],
         category: 'Validium',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Arbitrum One',
+        shortName: undefined,
         slug: 'arbitrum',
         provider: undefined,
         riskValues: {
@@ -792,7 +804,7 @@ const meta = {
           displayValue: '66.75%',
           value: 6675,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'Optimistic Rollup',
         stage: {
           stage: 'Stage 0',
@@ -820,6 +832,7 @@ const meta = {
       },
       {
         name: 'Optimism',
+        shortName: undefined,
         slug: 'optimism',
         provider: 'OP Stack',
         riskValues: {
@@ -881,12 +894,13 @@ const meta = {
           displayValue: '19.46%',
           value: 1946,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'Optimistic Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'dYdX',
+        shortName: undefined,
         slug: 'dydx',
         provider: 'StarkEx',
         riskValues: {
@@ -945,12 +959,13 @@ const meta = {
           displayValue: '4.08%',
           value: 408,
         },
-        purpose: 'Exchange',
+        purposes: ['Exchange'],
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'zkSync Era',
+        shortName: undefined,
         slug: 'zksync-era',
         provider: 'ZK Stack',
         riskValues: {
@@ -1010,12 +1025,13 @@ const meta = {
           displayValue: '2.77%',
           value: 277,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'ZK Rollup',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Metis Andromeda',
+        shortName: undefined,
         slug: 'metis',
         provider: 'OVM',
         riskValues: {
@@ -1077,12 +1093,13 @@ const meta = {
           displayValue: '1.27%',
           value: 127,
         },
-        purpose: 'Universal',
+        purposes: ['Universal'],
         category: 'Optimium',
         stage: { stage: 'NotApplicable' },
       },
       {
         name: 'Loopring',
+        shortName: undefined,
         slug: 'loopring',
         provider: undefined,
         riskValues: {
@@ -1143,7 +1160,7 @@ const meta = {
           displayValue: '1.25%',
           value: 125,
         },
-        purpose: 'Tokens, NFTs, AMM',
+        purposes: ['NFT', 'AMM'],
         category: 'ZK Rollup',
         stage: {
           stage: 'Stage 1',
@@ -1168,6 +1185,7 @@ const meta = {
       },
       {
         name: 'Immutable X',
+        shortName: undefined,
         slug: 'immutablex',
         provider: 'StarkEx',
         riskValues: {
@@ -1228,7 +1246,7 @@ const meta = {
           displayValue: '1.12%',
           value: 112,
         },
-        purpose: 'NFT, Exchange',
+        purposes: ['NFT', 'Exchange'],
         category: 'Validium',
         stage: { stage: 'NotApplicable' },
       },
@@ -1236,12 +1254,13 @@ const meta = {
     layer3s: [
       {
         name: 'Xai',
+        shortName: undefined,
         slug: 'xai',
         provider: 'Arbitrum Orbit',
         warning: undefined,
         isArchived: undefined,
         isUpcoming: true,
-        purpose: 'Gaming',
+        purposes: ['Gaming'],
         category: 'Optimium',
       },
     ],

@@ -20,7 +20,6 @@ export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
   showTvlBreakdown?: boolean
-  type: 'layer2' | 'layer3'
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
@@ -73,13 +72,11 @@ export function TvlSummary(props: TvlSummaryProps) {
     : []
 
   return (
-    <div className="bg-gray-100 p-4 dark:bg-zinc-800 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
+    <div className="bg-gray-100 p-4 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
       <div
         className={classNames(
           'flex w-full flex-wrap items-baseline justify-between',
-          props.type === 'layer2'
-            ? 'md:gap-2'
-            : 'md:flex-col md:justify-start md:gap-4',
+          'md:gap-2',
         )}
       >
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
@@ -94,9 +91,11 @@ export function TvlSummary(props: TvlSummaryProps) {
             <p className="text-lg font-bold md:text-2xl md:leading-none">
               {formatUSD(props.stats.tvl)}
             </p>
-            <p className="text-xs font-bold md:text-base">
-              <PercentChange value={props.stats.tvlChange} />
-            </p>
+            {props.stats.tvl > 0 && (
+              <p className="text-xs font-bold md:text-base">
+                <PercentChange value={props.stats.tvlChange} />
+              </p>
+            )}
           </div>
         ) : (
           <div className="w-auto">
@@ -106,7 +105,7 @@ export function TvlSummary(props: TvlSummaryProps) {
       </div>
 
       {usage && (
-        <div className="Tooltip my-3 flex h-1 w-full flex-wrap md:my-0">
+        <div className="my-3 flex h-1 w-full flex-wrap md:my-0">
           <div
             className="h-full rounded-l-full bg-purple-100"
             style={{
@@ -147,9 +146,11 @@ export function TvlSummary(props: TvlSummaryProps) {
                 </div>
                 <span className="text-base font-semibold leading-none">
                   {s.value}
-                  <span className="font-normal text-gray-500">
-                    {` (${s.usage}%)`}
-                  </span>
+                  {props.stats && props.stats.tvl > 0 && (
+                    <span className="font-normal text-gray-500">
+                      {` (${s.usage}%)`}
+                    </span>
+                  )}
                 </span>
               </div>
             ))}

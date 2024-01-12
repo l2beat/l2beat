@@ -30,9 +30,12 @@ export function getScalingRiskViewEntry(
 ): ScalingRiskViewEntry {
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
+    purposes: project.display.purposes,
     warning: project.display.warning,
+    redWarning: project.display.redWarning,
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isVerified,

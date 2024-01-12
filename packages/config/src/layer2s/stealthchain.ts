@@ -1,19 +1,14 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const stealthchain: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('stealthchain'),
+export const stealthchain: Layer2 = upcoming({
+  id: 'stealthchain',
   display: {
     name: 'StealthChain',
     slug: 'stealthchain',
     description: 'Degen Stealth Launchpad, Cross Chain Token Bridge & LP Pool.',
-    purpose: 'Launchpad',
+    purposes: ['Launchpad'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://stealthchain.org'],
@@ -31,13 +26,4 @@ export const stealthchain: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

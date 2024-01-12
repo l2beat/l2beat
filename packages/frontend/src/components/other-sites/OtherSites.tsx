@@ -9,7 +9,7 @@ export function OtherSites() {
       className={cx(
         'flex flex-col items-center justify-between gap-4 md:flex-row',
         '-mx-4 my-10 px-4 py-6 md:my-20 md:px-10',
-        'rounded-0 md:rounded-xl',
+        'md:rounded-xl',
         'bg-gradient-to-r from-purple-100/40 via-pink-100/40 to-red-200/40',
       )}
     >
