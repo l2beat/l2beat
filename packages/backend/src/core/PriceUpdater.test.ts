@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
@@ -11,7 +12,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   PriceRecord,
   PriceRepository,

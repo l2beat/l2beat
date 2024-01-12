@@ -76,7 +76,7 @@ export const zkfair: Layer2 = {
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',

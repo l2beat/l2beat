@@ -8,7 +8,7 @@ export const eclipse: Layer2 = upcoming({
     slug: 'eclipse',
     description:
       'Eclipse is a Layer 2 powered by the Solana Virtual Machine (SVM).',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://eclipse.builders/'],

@@ -25,7 +25,7 @@ export const gluon: Layer2 = {
       'Gluon aims to be a Layer 2 scalable trading engine built on top of Ethereum, unlocking low fees and high frequency trading.',
     warning:
       'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     category: 'Plasma',
     dataAvailabilityMode: 'NotApplicable',
     links: {

@@ -2,6 +2,7 @@ import { LivenessApiProject } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
+import { pluralize } from '../../utils/pluralize'
 import { RoundedWarningIcon } from '../icons'
 import { WarningBar } from '../project/WarningBar'
 import {
@@ -57,19 +58,19 @@ export function LivenessDurationCell(props: {
   const duration =
     days > 0 ? (
       <span className="text-orange-600 dark:text-orange-500">
-        {days} {addPlural('day', days)}
+        {days} {pluralize(days, 'day')}
       </span>
     ) : hours > 0 ? (
       <span className="text-yellow-700 dark:text-yellow-100">
-        {hours} {addPlural('hour', hours)}
+        {hours} {pluralize(hours, 'hour')}
       </span>
     ) : minutes > 0 ? (
       <span>
-        {minutes} {addPlural('minute', minutes)}
+        {minutes} {pluralize(minutes, 'minute')}
       </span>
     ) : (
       <span className="text-green-300 dark:text-green-450">
-        {seconds} {addPlural('second', seconds)}
+        {seconds} {pluralize(seconds, 'second')}
       </span>
     )
 
@@ -89,8 +90,4 @@ export function LivenessDurationCell(props: {
       </TooltipContent>
     </Tooltip>
   )
-}
-
-function addPlural(s: string, n: number) {
-  return n === 1 ? s : `${s}s`
 }

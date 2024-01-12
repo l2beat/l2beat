@@ -8,7 +8,7 @@ export const ancient: Layer2 = upcoming({
     slug: 'ancient',
     description:
       'Ancient8 Chain is a gaming-focused community-driven Ethereum Layer 2 built using OP Stack.',
-    purpose: 'Gaming',
+    purposes: ['Gaming'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

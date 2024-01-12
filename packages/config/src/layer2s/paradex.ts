@@ -68,7 +68,7 @@ export const paradex: Layer2 = {
     provider: 'Starknet',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 
@@ -101,8 +101,16 @@ export const paradex: Layer2 = {
         {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1636978914),
+          untilTimestamp: new UnixTime(1704729971),
           programHashes: [
             '3258367057337572248818716706664617507069572185152472699066582725377748079373',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1704729971),
+          programHashes: [
+            '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
       ],
