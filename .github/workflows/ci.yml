@@ -52,7 +52,7 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn lint
 
-  build:
+  build-frontend:
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -64,7 +64,7 @@ jobs:
           node-version: 18.x
           cache: "yarn"
       - run: yarn --frozen-lockfile
-      - run: yarn build
+      - run: yarn build:frontend
 
   typecheck:
       runs-on: ubuntu-latest
