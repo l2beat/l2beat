@@ -20,6 +20,9 @@
     "lint": {
       "dependsOn": ["^build"]
     },
-    "format": {}
+    "format": {},
+    "clean": {
+      "cache": false
+    }
   }
 }

@@ -11,11 +11,15 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: "yarn"
+
       - run: yarn --frozen-lockfile
       - run: yarn ci:check
