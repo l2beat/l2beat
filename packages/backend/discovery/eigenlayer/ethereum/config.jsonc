@@ -15,7 +15,9 @@
     "0xa4C637e0F704745D182e4D38cAb7E7485321d059": "OETH-Strategy",
     "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02": "osETH-Strategy",
     "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6": "swETH-Strategy",
-    "0x7CA911E83dabf90C90dD3De5411a10F1A6112184": "wBETH-Strategy"
+    "0x7CA911E83dabf90C90dD3De5411a10F1A6112184": "wBETH-Strategy",
+    "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
+    "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager"
   },
   "overrides": {
     "StrategyManager": {
@@ -107,6 +109,12 @@
         "underlyingToSharesView"
       ],
       "ignoreInWatchMode": ["totalShares"]
+    },
+    "DepositContract": {
+      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"]
+    },
+    "EigenPodManager": {
+      "ignoreInWatchMode": ["numPods"]
     },
     // ignore discovery, should be ingoreRelative in a strategy but it does not work
     "0xae78736Cd615f374D3085123A210448E74Fc6393": { "ignoreDiscovery": true },

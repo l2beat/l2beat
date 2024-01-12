@@ -1,8 +1,8 @@
 {
   "name": "eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 18991866,
-  "configHash": "0xcab9b98344cfeddcf8cead6acf8127f68ab9626c127a77cceed5bb58a1d42460",
+  "blockNumber": 18992027,
+  "configHash": "0xc52adb7c267be8a76d8781822074bb327112cb1aaa609743c6f56114379be7bc",
   "version": 3,
   "contracts": [
     {
@@ -13,9 +13,10 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x1fce110000000000",
-        "get_deposit_root": "0x0eda2b7dbbfc408109f15125f89c9083eafc34b521333c6b3c908ad3bc25954b"
-      }
+        "get_deposit_count": "0x71ce110000000000",
+        "get_deposit_root": "0xb5291cde0b4093e291339f29af2205e9b321e087a3418c65ee7f2378d7485f71"
+      },
+      "derivedName": "DepositContract"
     },
     {
       "name": "PauserRegistry",
@@ -348,7 +349,8 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      }
+      },
+      "derivedName": "EigenPodManager"
     },
     {
       "name": "stETH-Strategy",
