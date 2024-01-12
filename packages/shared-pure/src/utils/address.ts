@@ -1,3 +1,3 @@
 export function shortenAddress(address: string) {
-  return `${address.slice(0, 6)}…${address.slice(-4)}`
+  return `${address.slice(0, 7)}…${address.slice(-4)}`
 }
