@@ -1,9 +1,9 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, layer2s, tokenList } from '@l2beat/config'
+import { bridges, layer2s, layer3s, tokenList } from '@l2beat/config'
 import { getChainConfig } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model'
+import { bridgeToProject, layer2ToProject, layer3ToProject } from '../model'
 import { getChainMinTimestamp } from './chains'
 import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
@@ -32,7 +32,10 @@ export function getProductionConfig(env: Env): Config {
 
   return {
     name: 'Backend/Production',
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    projects: layer2s
+      .map(layer2ToProject)
+      .concat(bridges.map(bridgeToProject))
+      .concat(layer3s.map(layer3ToProject)),
     tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],

@@ -6,6 +6,7 @@ import {
   Layer2Liveness,
   Layer2LivenessConfiguration,
   Layer2TransactionApi,
+  Layer3,
   tokenList,
 } from '@l2beat/config'
 import {
@@ -31,9 +32,8 @@ interface LivenessConfig {
 export interface Project {
   projectId: ProjectId
   isArchived?: boolean
-  type: 'layer2' | 'bridge'
+  type: 'layer2' | 'layer3' | 'bridge'
   isUpcoming?: boolean
-  isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
   livenessConfig?: LivenessConfig
@@ -61,6 +61,22 @@ export function layer2ToProject(layer2: Layer2): Project {
     })),
     transactionApi: layer2.config.transactionApi,
     livenessConfig: toBackendLivenessConfig(layer2.id, layer2.config.liveness),
+  }
+}
+
+export function layer3ToProject(layer3: Layer3): Project {
+  return {
+    projectId: layer3.id,
+    type: 'layer3',
+    isUpcoming: layer3.isUpcoming,
+    escrows: layer3.config.escrows.map((escrow) => ({
+      address: escrow.address,
+      sinceTimestamp: escrow.sinceTimestamp,
+      tokens:
+        escrow.tokens === '*'
+          ? tokenList.filter((t) => t.type === 'CBV')
+          : escrow.tokens.map(getCanonicalTokenBySymbol),
+    })),
   }
 }
 

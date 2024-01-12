@@ -41,7 +41,6 @@ export interface ProjectHeaderProps {
   stage: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
-  isLayer3?: boolean
   isUnderReview?: boolean
   showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
@@ -123,9 +122,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}
-      showTvlBreakdown={
-        props.isUpcoming || props.isLayer3 ? false : props.showTvlBreakdown
-      }
+      showTvlBreakdown={props.isUpcoming ? false : props.showTvlBreakdown}
     />
   )
 }

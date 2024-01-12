@@ -136,7 +136,7 @@ export function deriveCategoryTree(
   )
 
   for (const [project, valueMap] of tree) {
-    if (project.isUpcoming || project.isLayer3) {
+    if (project.isUpcoming || project.type === 'layer3') {
       continue
     }
 

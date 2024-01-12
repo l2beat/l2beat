@@ -16,8 +16,6 @@ interface OldProjectEscrow {
   newVersion?: false
   /** Upcoming projects needs upcoming escrows (needed for TVL) */
   isUpcoming?: boolean
-  /** If project is Layer 3 */
-  isLayer3?: boolean
 }
 
 interface NewProjectEscrow {
@@ -35,6 +33,4 @@ interface NewProjectEscrow {
   newVersion?: true
   /** Upcoming projects needs upcoming escrows (needed for TVL) */
   isUpcoming?: boolean
-  /** If project is Layer 3 */
-  isLayer3?: boolean
 }

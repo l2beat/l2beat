@@ -33,7 +33,6 @@ export interface ProjectHeaderProps {
   links: ProjectLink[]
   isArchived?: boolean
   isUpcoming?: boolean
-  isLayer3?: boolean
   isUnderReview?: boolean
   showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
