@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "pipeline": {
+    "build:deps": {
+      "dependsOn": ["^build"]
+    },
+    "start": {
+      "dependsOn": ["build:deps"]
+    },
+    "build": {
+      "cache": false
+    }
+  }
+}
