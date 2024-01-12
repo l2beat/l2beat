@@ -19,7 +19,7 @@ export const ola: Layer2 = upcoming({
       socialMedia: [
         'https://twitter.com/ola_zkzkvm',
         'https://discord.com/invite/vDFy7YEG6j',
-        'https://www.linkedin.com/company/olavm-technology-ltd/',
+        'https://linkedin.com/company/olavm-technology-ltd/',
         'https://hackmd.io/@sin7y',
         'https://medium.com/@ola_zkzkvm',
         'https://youtube.com/@Ola_Sin7y',
