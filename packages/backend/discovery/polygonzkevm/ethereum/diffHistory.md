@@ -1,6 +1,6 @@
 # Diff at Thu, 11 Jan 2024 15:48:40 GMT:
 
-- author: Radina Talanova (<radinatalanova@Radinas-MacBook-Air.local>)
+- author: Radina Talanova (<nt.radina@gmail.com>)
 - comparing to: master@d79128df189c297a74fb89b3a58b7e0d6edd88f4 block: 18968776
 - current block number: 18984674
 
