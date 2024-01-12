@@ -1,3 +1,36 @@
+# Diff at Thu, 11 Jan 2024 15:48:40 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@d79128df189c297a74fb89b3a58b7e0d6edd88f4 block: 18968776
+- current block number: 18984674
+
+## Description
+
+The EscrowsAdmin multisig threshold is updated - now 5/10. Nonce is ignored.
+
+## Watched changes
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+      values.getThreshold:
+-        1
++        5
+    }
+```
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18968776 (main branch discovery), not current.
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+      values.nonce:
+-        0
+    }
+```
+
 # Diff at Fri, 10 Nov 2023 10:41:51 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
