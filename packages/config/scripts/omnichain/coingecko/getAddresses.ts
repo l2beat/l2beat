@@ -2,7 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { z } from 'zod'
 
-import { EtherscanClient } from './EtherescanClient'
+import { EtherscanClient } from './EtherscanClient'
 
 /**
  * Gets all addresses that interacted with the endpoint contract

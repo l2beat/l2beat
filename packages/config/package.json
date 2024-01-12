@@ -14,7 +14,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "get-lz-etherscan": "node -r esbuild-register scripts/omnichain/etherscan",
-    "get-lz-coingecko": "node -r esbuild-register scripts/omnichain.coingecko",
+    "get-lz-coingecko": "node -r esbuild-register scripts/omnichain/coingecko",
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
     "tokens:add": "node -r esbuild-register scripts/tokens/add"

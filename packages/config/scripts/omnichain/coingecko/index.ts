@@ -6,7 +6,7 @@ import { writeFileSync } from 'fs'
 import fetch from 'node-fetch'
 import { z } from 'zod'
 
-import { EtherscanClient } from './EtherescanClient'
+import { EtherscanClient } from './EtherscanClient'
 import { getAddresses } from './getAddresses'
 
 main().catch((e) => {
@@ -24,10 +24,7 @@ async function main() {
   const env = getEnv()
   const etherscanApiKey = env.string('ETHERSCAN_API_KEY')
   const coingeckoApiKey = env.string('COINGECKO_API_KEY')
-  const provider = new providers.AlchemyProvider(
-    'homestead',
-    env.string('CONFIG_ALCHEMY_API_KEY'),
-  )
+  const provider = new providers.AlchemyProvider('homestead')
   const blockNumber = await provider.getBlockNumber()
 
   const httpClient = new HttpClient()
@@ -40,14 +37,14 @@ async function main() {
   const coinList = await coingeckoClient.getCoinList({
     includePlatform: true,
   })
-  const { tokenIds, tokenAddresses } = filterTokenAddresses(coinList, addresses)
+  const { tokenIds, tokenData } = getRelevantTokenData(coinList, addresses)
   console.log('Fetching prices...')
   const prices = await getCoingeckoPrices(coingeckoClient, tokenIds)
 
   console.log('Calculating bridged values...')
   const bridgedValues = (
     await Promise.all(
-      tokenAddresses.map(async (token) => {
+      tokenData.map(async (token) => {
         return await calculateBridgedValue(token, provider, prices)
       }),
     )
@@ -99,7 +96,7 @@ async function compareWithLive(
 
   if (diff > THRESHOLD_USD) {
     console.log(
-      `Total value is ${diff} greater than live value. Probably a new token appeared. Check the new tokens that appeared in tokens.json`,
+      `Total value is ${diff} different from live value. Probably a new token appeared. Check the new tokens that appeared in tokens.json`,
     )
 
     const dataToSave = {
@@ -119,7 +116,7 @@ async function compareWithLive(
     )
   } else {
     console.log(
-      `Total value is ${diff} greater than live value. This is within the ${THRESHOLD_USD} threshold. No action required.`,
+      `Total value is ${diff} different from live value. This is within the ${THRESHOLD_USD} threshold. No action required.`,
     )
   }
 }
@@ -158,7 +155,7 @@ async function calculateBridgedValue(
   }
 }
 
-function filterTokenAddresses(
+function getRelevantTokenData(
   coinList: {
     symbol: string
     name: string
@@ -167,7 +164,7 @@ function filterTokenAddresses(
   }[],
   addresses: string[],
 ) {
-  const tokenAddresses = coinList
+  const tokenData = coinList
     .filter(
       (coin) =>
         coin.platforms.ethereum &&
@@ -181,8 +178,8 @@ function filterTokenAddresses(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       coingeckoId: coin.id!,
     }))
-  const tokenIds = tokenAddresses.map((token) => token.coingeckoId)
-  return { tokenIds, tokenAddresses }
+  const tokenIds = tokenData.map((token) => token.coingeckoId)
+  return { tokenIds, tokenData }
 }
 
 async function getCoingeckoPrices(
