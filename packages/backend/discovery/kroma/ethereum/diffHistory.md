@@ -1,3 +1,30 @@
+# Diff at Fri, 05 Jan 2024 10:21:46 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@ea50ecee4d08800c3cff3742fc1c8912fc54c16c
+
+## Description
+
+The Security Council is now a 7/9 multisig, satisfying the requirements to be considered a Security Council.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+      values.quorum:
+-        4
++        7
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+      values.quorumNumerator:
+-        51
++        82
+    }
+```
+
 # Diff at Thu, 23 Nov 2023 10:41:14 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

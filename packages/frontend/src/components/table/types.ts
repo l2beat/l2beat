@@ -1,7 +1,7 @@
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 import { z } from 'zod'
 
-import { SectionId } from '../project/sectionId'
+import { ProjectSectionId } from '../project/sectionId'
 
 export interface RowConfig<T> {
   getProps: (
@@ -19,14 +19,14 @@ export interface SingleColumnConfig<T> {
   name: string
   icon?: ReactNode
   shortName?: ReactNode
-  alignRight?: true
-  alignCenter?: true
+  align?: 'center' | 'right'
   minimalWidth?: true
   headClassName?: string
+  className?: string
   noPaddingRight?: true
-  idHref?: SectionId
+  idHref?: ProjectSectionId
   getValue: (value: T, index: number) => ReactNode
-  tooltip?: string
+  tooltip?: ReactNode
   sorting?: SortingConfig<T>
 }
 export type ColumnConfig<T> =

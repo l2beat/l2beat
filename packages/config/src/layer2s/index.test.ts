@@ -8,13 +8,15 @@ import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
 import {
-  ProjectReference,
-  ProjectRiskViewEntry,
-  ProjectTechnologyChoice,
+  NUGGETS,
+  ScalingProjectReference,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnologyChoice,
 } from '../common'
+import { ScalingProjectTechnology } from '../common/ScalingProjectTechnology'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
-import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
+import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -83,26 +85,43 @@ describe('layer2s', () => {
   })
 
   describe('liveness', () => {
-    for (const project of layer2s) {
-      it(`${project.id.toString()} : has valid signatures`, () => {
-        if (project.config.liveness) {
-          const functionCalls = [
-            ...project.config.liveness.batchSubmissions,
-            ...project.config.liveness.stateUpdates,
-          ].filter((x) => x.formula === 'functionCall') as {
-            selector: string
-            functionSignature: string
-          }[]
+    it('every project has valid signatures', () => {
+      for (const project of layer2s) {
+        it(`${project.id.toString()} : has valid signatures`, () => {
+          if (project.config.liveness) {
+            const functionCalls = [
+              ...project.config.liveness.batchSubmissions,
+              ...project.config.liveness.stateUpdates,
+            ].filter((x) => x.formula === 'functionCall') as {
+              selector: string
+              functionSignature: string
+            }[]
 
-          functionCalls.forEach((c) => {
-            const i = new utils.Interface([c.functionSignature])
-            const fragment = i.fragments[0]
-            const calculatedSignature = i.getSighash(fragment)
-            expect(calculatedSignature).toEqual(c.selector)
+            functionCalls.forEach((c) => {
+              const i = new utils.Interface([c.functionSignature])
+              const fragment = i.fragments[0]
+              const calculatedSignature = i.getSighash(fragment)
+              expect(calculatedSignature).toEqual(c.selector)
+            })
+          }
+        })
+      }
+    })
+
+    describe('if validium or optimium, then has NotApplicable as dataAvailabilityMode', () => {
+      for (const project of layer2s) {
+        if (
+          project.display.category === 'Optimium' ||
+          project.display.category === 'Validium'
+        ) {
+          it(project.id.toString(), () => {
+            expect(project.display.dataAvailabilityMode).toEqual(
+              'NotApplicable',
+            )
           })
         }
-      })
-    }
+      }
+    })
   })
 
   describe('activity', () => {
@@ -161,7 +180,7 @@ describe('layer2s', () => {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
           for (const [riskName, riskEntry] of Object.entries(layer2.riskView)) {
-            const risk = riskEntry as ProjectRiskViewEntry
+            const risk = riskEntry as ScalingProjectRiskViewEntry
             if (risk.sources === undefined) continue
 
             describe(`${layer2.id.toString()} : ${riskName}`, () => {
@@ -237,7 +256,7 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         describe(layer2.display.name, () => {
           type Key = Exclude<
-            keyof Layer2Technology,
+            keyof ScalingProjectTechnology,
             'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 
@@ -252,7 +271,10 @@ describe('layer2s', () => {
             }
           }
 
-          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
+          function checkChoice(
+            choice: ScalingProjectTechnologyChoice,
+            name: string,
+          ) {
             it(`${name}.name doesn't end with a dot`, () => {
               expect(choice.name.endsWith('.')).toEqual(false)
             })
@@ -283,10 +305,13 @@ describe('layer2s', () => {
   })
 
   describe('every purpose is short', () => {
-    const purposes = layer2s.map((x) => x.display.purpose)
+    const purposes = layer2s.map((x) => x.display.purposes)
     for (const purpose of purposes) {
-      it(purpose, () => {
-        expect(purpose.length).toBeLessThanOrEqual(20)
+      const totalLength = purpose.reduce((acc, curr) => {
+        return acc + curr.length
+      }, 0)
+      it(purpose.join(', '), () => {
+        expect(totalLength).toBeLessThanOrEqual(20)
       })
     }
   })
@@ -435,18 +460,7 @@ describe('layer2s', () => {
   })
 })
 
-describe('layer3s', () => {
-  const layer3s = layer2s.filter((x) => x.isLayer3)
-  it('every layer3 has a valid host chain', () => {
-    for (const layer3 of layer3s) {
-      expect(layer3.hostChain).not.toBeNullish()
-      const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
-      expect(hostChain).not.toBeNullish()
-    }
-  })
-})
-
-function getAddressFromReferences(references: ProjectReference[] = []) {
+function getAddressFromReferences(references: ScalingProjectReference[] = []) {
   const addresses = references.map((r) => r.href)
   return getReferencedAddresses(addresses)
 }

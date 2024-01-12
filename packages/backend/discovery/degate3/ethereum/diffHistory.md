@@ -1,3 +1,47 @@
+# Diff at Fri, 05 Jan 2024 07:55:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@c161bc667faec740460d4a22b06cd4ecc322dbfd
+
+## Description
+
+The owner has accepted the ownership of the contract, which is now the same multisig used for upgrades. The EOA that was there before is now only the owner of the BlockVerifier, but it has no power since all the methods with the `onlyOwner` modifier have been deleted from Loopring's original codebase.
+
+## Watched changes
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+      values.pendingOwner:
+-        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract LoopringV3 (0x9385aCd9d78dFE854c543294770d0C94c2B07EDC) {
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+      values.pendingOwner:
+-        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD) {
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
+      values.pendingOwner:
+-        "0x2028834B2c0A36A918c10937EeA71BE4f932da52"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 # Diff at Thu, 21 Dec 2023 13:24:40 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
@@ -5,7 +49,7 @@
 
 ## Description
 
-Owner is being changed. They are using Claimable istead of Ownable, which is the same thing but the new pending owner has to accept the ownership.
+Owner is being changed. They are using Claimable instead of Ownable, which is the same thing but the new pending owner has to accept the ownership.
 
 ## Watched changes
 

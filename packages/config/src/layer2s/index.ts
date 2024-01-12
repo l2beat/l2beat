@@ -1,3 +1,4 @@
+import { HOMEPAGE_MILESTONES } from '../common'
 import { aevo } from './aevo'
 import { ancient } from './ancient'
 import { apex } from './apex'
@@ -10,11 +11,9 @@ import { base } from './base'
 import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
-import { brine } from './brine'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
-import { HOMEPAGE_MILESTONES } from './common'
 import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -35,7 +34,6 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
-import { deri, xai } from './layer3s'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
@@ -51,6 +49,7 @@ import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
 import { obscuro } from './obscuro'
+import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { orb3 } from './orb3'
@@ -61,6 +60,8 @@ import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { reddioex } from './reddioex'
+import { reddiozkvm } from './reddiozkvm'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
@@ -68,6 +69,7 @@ import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
+import { tanx } from './tanx'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
@@ -94,7 +96,6 @@ export const layer2s: Layer2[] = [
   blast,
   bob,
   bobanetwork,
-  brine,
   canto,
   capx,
   canvasconnect,
@@ -103,7 +104,6 @@ export const layer2s: Layer2[] = [
   degate,
   degate2,
   degate3,
-  deri,
   dydx,
   eclipse,
   frame,
@@ -134,6 +134,7 @@ export const layer2s: Layer2[] = [
   myria,
   nova,
   obscuro,
+  ola,
   omgnetwork,
   optimism,
   orb3,
@@ -144,6 +145,8 @@ export const layer2s: Layer2[] = [
   polygonzkevm,
   polygonpos2,
   publicgoodsnetwork,
+  reddioex,
+  reddiozkvm,
   rhinofi,
   scroll,
   sorare,
@@ -151,8 +154,8 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   taiko,
+  tanx,
   x1,
-  xai,
   xchain,
   zkfair,
   zkspace,

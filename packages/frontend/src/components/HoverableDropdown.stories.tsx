@@ -3,6 +3,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
+import { onlyDesktopModes } from '../../.storybook/modes'
 import { configureHoverableDropdown } from '../scripts/configureHoverableDropdown'
 import { HoverableDropdown } from './HoverableDropdown'
 
@@ -48,6 +49,7 @@ export const Hovered: Story = {
   parameters: {
     chromatic: {
       delay: 400,
+      modes: onlyDesktopModes,
     },
     pseudo: {
       hover: true,

@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('blast')
@@ -17,7 +17,7 @@ export const blast: Layer2 = {
       'The bridge is deposit-only and funds cannot be withdrawn yet.',
     description:
       'Blast will launch an EVM-compatible Optimistic Rollup supporting native yield. It currently only supports deposits and no withdrawal mechanism is available yet.',
-    purpose: 'Universal, DeFi',
+    purposes: ['Universal', 'DeFi'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'NotApplicable',
     links: {

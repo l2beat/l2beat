@@ -1,19 +1,14 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const orb3: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('orb3'),
+export const orb3: Layer2 = upcoming({
+  id: 'orb3',
   display: {
     name: 'ORB3 Protocol',
     slug: 'orb3',
     description: 'SocialFi & GameFi blockchain built for the Gaming Industry.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
     links: {
       websites: ['https://orb3.tech'],
@@ -31,13 +26,4 @@ export const orb3: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

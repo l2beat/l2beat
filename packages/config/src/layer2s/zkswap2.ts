@@ -1,12 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
 
@@ -22,8 +22,8 @@ export const zkswap2: Layer2 = {
     warning:
       'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
     description:
-      'ZKSwap is a fork of ZkSync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, while ensuring the core value of decentralized exchange. ZKSwap aims to increase the TPS by multiple orders of magnitude compared to Uniswap, and make transaction processing hardly consume any gas fees.',
-    purpose: 'Payments, AMM',
+      'ZKSwap is a fork of zkSync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, but increase the TPS, and make transaction processing cheaper.',
+    purposes: ['Payments', 'AMM'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',

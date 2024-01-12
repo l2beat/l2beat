@@ -5,14 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -24,7 +16,15 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -47,6 +47,7 @@ const ESCROW_FRAX_ADDRESS = '0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb'
 const ESCROW_FXS_ADDRESS = '0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
 const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
 const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
+const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -200,11 +201,8 @@ export const starknet: Layer2 = {
     slug: 'starknet',
     provider: 'Starknet',
     description:
-      'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
-      infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
-      is available and contracts are fully composable. It is currently launched \
-      with a single Sequencer.',
-    purpose: 'Universal',
+      'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 
@@ -340,6 +338,11 @@ export const starknet: Layer2 = {
           'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
         upgradableBy: ['StarkGate LUSD owner'],
         upgradeDelay: formatSeconds(escrowLUSDDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_LORDS_ADDRESS),
+        tokens: ['LORDS'],
+        description: 'StarkGate bridge for LORDS.',
       }),
     ],
     transactionApi: {

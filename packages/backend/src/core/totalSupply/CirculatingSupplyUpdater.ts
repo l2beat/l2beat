@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -11,7 +12,6 @@ import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import { getChainMinTimestamp } from '../../config/chains'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,

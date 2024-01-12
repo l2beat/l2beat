@@ -1,20 +1,15 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const obscuro: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('obscuro'),
+export const obscuro: Layer2 = upcoming({
+  id: 'obscuro',
   display: {
     name: 'Obscuro',
     slug: 'obscuro',
     description:
       'Obscuro is an Encrypted Rollup that has been designed for use on the Ethereum network and uses 100% of the EVM. At present, Obscuro is available in testnet running on the Sepolia testnet for further testing and optimization.',
-    purpose: 'Universal, Encrypted',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://obscu.ro'],
       apps: [],
@@ -32,18 +27,9 @@ export const obscuro: Layer2 = {
       ],
       socialMedia: [
         'https://twitter.com/obscuronet',
-        'https://discord.gg/NcK3DMZqF8',
+        'https://discord.gg/yQfmKeNzNd',
         'https://medium.com/obscuro-labs',
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

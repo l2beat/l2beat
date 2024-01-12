@@ -1,7 +1,7 @@
 {
   "name": "brine",
   "chain": "ethereum",
-  "blockNumber": 17821210,
+  "blockNumber": 18983727,
   "configHash": "0xb03efc49cd04c082e7001d53a82ab71dc71138acc2d59a1754f4120db954c9ac",
   "version": 3,
   "contracts": [
@@ -40,8 +40,8 @@
         "getActionCount": 6,
         "getAssetInfo": [],
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 592,
-        "getOrderRoot": "3103179674992922993439527510248015639936771986973756428522979547627339793491",
+        "getLastBatchId": 1856,
+        "getOrderRoot": "3179493253259895180973800853368794563056588362994405293933994604070071469502",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446"
@@ -51,10 +51,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 503,
+        "getSequenceNumber": 1722,
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "1323402870001233018771058622228235388735777414000016042499237477142057705321",
+        "getValidiumVaultRoot": "3501331340787021636203767373104694969446830331823579204773246617512830847925",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "initializerSize": 0,
         "isFrozen": false,

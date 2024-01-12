@@ -44,8 +44,17 @@ export class ChartDataController {
     }
 
     void fetch(url, { signal: this.abortController.signal })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 404) {
+          this.chartViewController.showEmptyState()
+          return
+        }
+        return res.json()
+      })
       .then((data: unknown) => {
+        if (!data) {
+          return
+        }
         this.parseAndConfigure(chartType, data)
         this.cache.set(url, data)
         this.chartViewController.hideLoader()

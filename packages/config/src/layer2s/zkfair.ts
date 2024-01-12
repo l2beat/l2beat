@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,7 +10,9 @@ import {
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -52,7 +52,8 @@ const exitWindowRisk = {
   ),
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.\n\nThe ZkFair Owner can upgrade with no delay.`,
+  )}.`,
+  warning: 'The ZkFair Owner can upgrade with no delay.',
 }
 
 const timelockUpgrades = {
@@ -86,9 +87,8 @@ export const zkfair: Layer2 = {
     slug: 'zkfair',
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
-    description:
-      'ZKFair is the first community Validium based on Polygon CDK and Celestia DA, championing fairness. In its current implementation it is not using Celestia Blobstream bridge though meaning that Ethereum bridge does not have assurance that data has really been posted to Celestia.',
-    purpose: 'Universal',
+    description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
+    purposes: ['Universal'],
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',

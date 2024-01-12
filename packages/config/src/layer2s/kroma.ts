@@ -1,8 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,10 +8,13 @@ import {
   makeBridgeCompatible,
   NUGGETS,
   OPERATOR,
-  subtractOne,
-} from './common'
+} from '../common'
+import { subtractOne } from '../common/assessCount'
+import { RISK_VIEW } from '../common/riskView'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { RISK_VIEW } from './common/riskView'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -68,10 +68,8 @@ export const kroma: Layer2 = {
     name: 'Kroma',
     slug: 'kroma',
     description:
-      "Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. \
-            Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll. \
-            Kroma's goal is to eventually transition to a ZK Rollup once the generation of ZK proofs becomes more cost-efficient and faster.",
-    purpose: 'Universal',
+      'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll.',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
@@ -220,9 +218,9 @@ export const kroma: Layer2 = {
       stage1: {
         stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: false,
+        usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: false,
+        securityCouncilProperlySetUp: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

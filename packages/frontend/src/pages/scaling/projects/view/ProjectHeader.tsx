@@ -1,6 +1,5 @@
-import { StageConfig } from '@l2beat/config'
+import { ScalingProjectPurpose, StageConfig } from '@l2beat/config'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { UpcomingBadge } from '../../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../../components/header/DetailsHeader'
@@ -12,21 +11,27 @@ import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
 import { TypeCell } from '../../../../components/table/TypeCell'
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/tooltip/Tooltip'
+import {
   TVLBreakdown,
   TVLBreakdownProps,
 } from '../../../../components/TVLBreakdown'
+import { pluralize } from '../../../../utils/pluralize'
 import { RiskValues } from '../../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
+  description: string
   icon?: string
   tvlStats: TvlStats
   tpsDaily?: string
   tpsWeeklyChange?: string
   transactionMonthlyCount?: string
-  purpose: string
+  purposes: ScalingProjectPurpose[]
   technology: string
   tvlBreakdown: TVLBreakdownProps | undefined
   showTvlBreakdown: boolean
@@ -80,14 +85,14 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                 <a href="#stage">
                   <StageBadge stage={props.stage.stage} big />
                 </a>
-                <span
-                  className="Tooltip inline-block px-2"
-                  title={renderToStaticMarkup(
-                    <StageTooltip stageConfig={props.stage} />,
-                  )}
-                >
-                  <InfoIcon />
-                </span>
+                <Tooltip className="inline-block px-2">
+                  <TooltipTrigger>
+                    <InfoIcon />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <StageTooltip stageConfig={props.stage} />
+                  </TooltipContent>
+                </Tooltip>
               </span>
             ),
           },
@@ -98,8 +103,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       value: <TypeCell>{props.technology}</TypeCell>,
     },
     {
-      title: 'Purpose',
-      value: props.purpose,
+      title: pluralize(props.purposes.length, 'Purpose'),
+      value: props.purposes.join(', '),
     },
   ]
 
@@ -107,6 +112,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     <DetailsHeader
       type="layer2"
       title={props.title}
+      description={props.description}
       icon={props.icon}
       stats={{ summary, l2Tvl: props.tvlStats }}
       risks={props.risks}

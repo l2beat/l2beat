@@ -1,4 +1,10 @@
-import { Layer2, ProjectRiskViewEntry, StageConfig } from '@l2beat/config'
+import {
+  Layer2Provider,
+  ScalingProjectCategory,
+  ScalingProjectPurpose,
+  ScalingProjectRiskViewEntry,
+  StageConfig,
+} from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 export interface ScalingRiskPagesData {
@@ -8,18 +14,21 @@ export interface ScalingRiskPagesData {
 
 export interface ScalingRiskViewEntry {
   name: string
+  shortName: string | undefined
   slug: string
-  category: Layer2['display']['category']
-  provider?: Layer2['display']['provider']
+  category: ScalingProjectCategory
+  provider?: Layer2Provider
   warning?: string
+  redWarning: string | undefined
+  purposes: ScalingProjectPurpose[]
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
-  stateValidation: ProjectRiskViewEntry
-  dataAvailability: ProjectRiskViewEntry
-  exitWindow: ProjectRiskViewEntry
-  sequencerFailure: ProjectRiskViewEntry
-  proposerFailure: ProjectRiskViewEntry
+  stateValidation: ScalingProjectRiskViewEntry
+  dataAvailability: ScalingProjectRiskViewEntry
+  exitWindow: ScalingProjectRiskViewEntry
+  sequencerFailure: ScalingProjectRiskViewEntry
+  proposerFailure: ScalingProjectRiskViewEntry
   stage: StageConfig
 }

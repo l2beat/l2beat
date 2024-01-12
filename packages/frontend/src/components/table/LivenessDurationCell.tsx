@@ -1,14 +1,23 @@
 import { LivenessApiProject } from '@l2beat/shared-pure'
-import classNames from 'classnames'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
+import { pluralize } from '../../utils/pluralize'
+import { RoundedWarningIcon } from '../icons'
+import { WarningBar } from '../project/WarningBar'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipContentType,
+  TooltipTrigger,
+} from '../tooltip/Tooltip'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
   dataType?: Exclude<keyof LivenessApiProject, 'anomalies'>
   project?: ScalingLivenessViewEntry
-  tooltip?: string
+  tooltipContent?: TooltipContentType
+  warning?: string
 }) {
   if (
     !props.durationInSeconds &&
@@ -32,14 +41,12 @@ export function LivenessDurationCell(props: {
         ? 'Optimistic rollups do not post validity proofs to the L1.'
         : undefined
     return (
-      <div
-        className={
-          'Tooltip rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50'
-        }
-        title={tooltipText}
-      >
-        n/a
-      </div>
+      <Tooltip>
+        <TooltipTrigger className="rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+          n/a
+        </TooltipTrigger>
+        <TooltipContent>{tooltipText}</TooltipContent>
+      </Tooltip>
     )
   }
 
@@ -51,33 +58,36 @@ export function LivenessDurationCell(props: {
   const duration =
     days > 0 ? (
       <span className="text-orange-600 dark:text-orange-500">
-        {days} {addPlural('day', days)}
+        {days} {pluralize(days, 'day')}
       </span>
     ) : hours > 0 ? (
       <span className="text-yellow-700 dark:text-yellow-100">
-        {hours} {addPlural('hour', hours)}
+        {hours} {pluralize(hours, 'hour')}
       </span>
     ) : minutes > 0 ? (
       <span>
-        {minutes} {addPlural('minute', minutes)}
+        {minutes} {pluralize(minutes, 'minute')}
       </span>
     ) : (
       <span className="text-green-300 dark:text-green-450">
-        {seconds} {addPlural('second', seconds)}
+        {seconds} {pluralize(seconds, 'second')}
       </span>
     )
 
   return (
-    <span
-      className={classNames(props.tooltip && 'Tooltip')}
-      title={props.tooltip}
-      data-tooltip-big={true}
-    >
-      {duration}
-    </span>
+    <Tooltip>
+      <TooltipTrigger className="flex items-center gap-1">
+        {duration}
+        {props.warning && (
+          <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+        )}
+      </TooltipTrigger>
+      <TooltipContent>
+        {props.tooltipContent}
+        {props.warning && (
+          <WarningBar className="mt-2" text={props.warning} color="yellow" />
+        )}
+      </TooltipContent>
+    </Tooltip>
   )
-}
-
-function addPlural(s: string, n: number) {
-  return n === 1 ? s : `${s}s`
 }

@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,9 +10,11 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from './common'
-import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
+} from '../common'
+import { subtractOne } from '../common/assessCount'
+import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
@@ -48,8 +48,8 @@ export const nova: Layer2 = {
     name: 'Arbitrum Nova',
     slug: 'nova',
     description:
-      'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
-    purpose: 'Universal',
+      'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
+    purposes: ['Universal'],
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
@@ -133,7 +133,8 @@ export const nova: Layer2 = {
         challengeWindowSeconds,
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
-      )} L1 timelock.\n\nThe Security Council can upgrade with no delay.`,
+      )} L1 timelock.`,
+      warning: 'The Security Council can upgrade with no delay.',
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
