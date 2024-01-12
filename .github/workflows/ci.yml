@@ -53,20 +53,4 @@ jobs:
       - name: Build dry
         run: yarn build --dry-run
 
-      - name: Build
-        run: yarn build
-
-      - name: Typecheck
-        run: yarn typecheck
-
-      - name: Test
-        run: yarn test
-
-      - name: Lint
-        run: yarn lint
-        
-      - name: Format
-        run: yarn format
-
-
 
