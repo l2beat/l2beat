@@ -37,4 +37,8 @@ jobs:
           cache: "yarn"
 
       - run: yarn --frozen-lockfile
-      - run: yarn ci:check
+      - run: yarn build
+      - run: yarn typecheck
+      - run: yarn test
+      - run: yarn lint
+      - run: yarn format

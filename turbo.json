@@ -2,9 +2,6 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["tsconfig.json"],
   "pipeline": {
-    "ci:check": {
-      "dependsOn": ["lint", "format", "typecheck", "test", "build"]
-    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["build/**"]
