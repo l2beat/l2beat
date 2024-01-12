@@ -1,10 +1,10 @@
 name: CI
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
-    types: [opened, synchronize]
+  push:
+    branches:
+      - master
   merge_group:
 
 jobs:
@@ -17,6 +17,7 @@ jobs:
       COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
       TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -38,7 +39,17 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build dry
-        run: yarn build --dry=json
+      - name: Build
+        run: yarn build:frontend
 
+      - name: Typecheck
+        run: yarn typecheck
 
+      - name: Test
+        run: yarn test
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Format
+        run: yarn format
