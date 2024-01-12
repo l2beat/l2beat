@@ -1,17 +1,53 @@
-# Diff at Thu, 28 Dec 2023 09:50:24 GMT:
+# Diff at Fri, 12 Jan 2024 09:50:02 GMT:
 
-- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- comparing to: master@
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- current block number: 18990029
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Several new Switchboards created: PolygonL1Switchboard, OptimismSwitchboard2, OptimismSwitchboard, FastSwitchboard, ArbitrumL1Switchboard.
 
-## Watched changes
+## Initial discovery
+
+```diff
++   Status: CREATED
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    }
+```
 
 ```diff
 +   Status: CREATED
     contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Plug2 (0x200AF8FCdD5246D70B369A98143Ac8930A077B7A) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Plug3 (0x22d8360eB04F46195c7B02A66658C375948d8A99) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
     }
 ```
 
@@ -23,7 +59,31 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract Vault1 (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Plug1 (0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D) {
+    }
+```
+
+```diff
++   Status: CREATED
     contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
     }
 ```
 
