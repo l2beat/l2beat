@@ -6,6 +6,7 @@ import { DiscoveryHistoryRepository } from '../../../peripherals/database/discov
 export class DiffHistoryController {
   constructor(
     private readonly discoveryHistoryRepository: DiscoveryHistoryRepository,
+    private readonly configReader: ConfigReader,
   ) {}
 
   async getRaw(chainId: ChainId, project: string): Promise<string> {
@@ -23,8 +24,7 @@ export class DiffHistoryController {
     )
 
     const diffs: Record<number, DiscoveryDiff[]> = {}
-    const configReader = new ConfigReader()
-    const config = await configReader.readConfig(project, chainId)
+    const config = await this.configReader.readConfig(project, chainId)
     for (let i = 0; i < discoveries.length - 1; i++) {
       diffs[discoveries[i + 1].timestamp.toNumber()] = diffDiscovery(
         discoveries[i].discovery.contracts,

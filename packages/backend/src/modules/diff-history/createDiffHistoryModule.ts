@@ -88,7 +88,10 @@ export function createDiffHistoryModule(
       )
     })
 
-  const controller = new DiffHistoryController(discoveryHistoryRepository)
+  const controller = new DiffHistoryController(
+    discoveryHistoryRepository,
+    configReader,
+  )
   const routers = [createDiffHistoryRouter(controller)]
 
   const taskQueue = new TaskQueue(
