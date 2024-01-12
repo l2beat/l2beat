@@ -203,7 +203,7 @@ describe(EtherscanLikeClient.name, () => {
       expect(blockNumber).toEqual(result)
     })
 
-    it('tries to find a block eariler only if no closest block found error, throws otherwise', async () => {
+    it('tries to find a block earlier only if no closest block found error, throws otherwise', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
       const gatewayError = {
