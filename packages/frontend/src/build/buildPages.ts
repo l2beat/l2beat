@@ -30,7 +30,9 @@ main().catch(() => {
 
 async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'ci'
-  const isErrorReportingEnabled = initializeErrorReporting(env)
+  const apiKey = process.env.BUGSNAG_API_KEY
+
+  const isErrorReportingEnabled = initializeErrorReporting(apiKey, env)
 
   try {
     console.log(`Using config for ${env}`)
@@ -93,42 +95,49 @@ async function main() {
     console.error(e)
 
     if (isErrorReportingEnabled) {
-      if (typeof e === 'string') {
-        Bugsnag.notify(e, (event) => {
-          event.context = 'Website build'
-        })
-      } else if (e instanceof Error) {
-        Bugsnag.notify(e, (event) => {
-          event.context = 'Website build'
-        })
-      } else {
-        Bugsnag.notify('Unknown error', (event) => {
-          event.context = 'Website build'
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          event.addMetadata('error', { message: e })
-        })
-      }
-
-      // wait 10 seconds for the error to be reported
-      console.log('Waiting 10 seconds for the error to be reported')
-      await new Promise((resolve) => setTimeout(resolve, 10_000))
+      reportError(e)
     }
     throw e
   }
 }
-function initializeErrorReporting(env: string) {
-  const apiKey = process.env.BUGSNAG_API_KEY
 
-  if (apiKey) {
-    Bugsnag.start({
-      apiKey,
-      releaseStage: env,
-      logger: null,
-      sendCode: true,
-    })
-    console.log('Bugsnag integration enabled')
-    return true
+export function initializeErrorReporting(
+  apiKey: string | undefined,
+  environment: string,
+): boolean {
+  if (!apiKey) {
+    console.log('Bugsnag integration disabled')
+    return false
   }
-  console.log('Bugsnag integration disabled')
-  return false
+
+  Bugsnag.start({
+    apiKey,
+    releaseStage: environment,
+    logger: null,
+    sendCode: true,
+  })
+  console.log('Bugsnag integration enabled')
+  return true
+}
+
+function reportError(e: unknown) {
+  if (typeof e === 'string') {
+    Bugsnag.notify(e, (event) => {
+      event.context = 'Website build'
+    })
+  } else if (e instanceof Error) {
+    Bugsnag.notify(e, (event) => {
+      event.context = 'Website build'
+    })
+  } else {
+    Bugsnag.notify('Unknown error', (event) => {
+      event.context = 'Website build'
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      event.addMetadata('error', { message: e })
+    })
+  }
+
+  // wait 10 seconds for the error to be reported
+  console.log('Waiting 10 seconds for the error to be reported')
+  await new Promise((resolve) => setTimeout(resolve, 10_000))
 }

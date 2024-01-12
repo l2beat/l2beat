@@ -13,11 +13,10 @@ async function main() {
   const bugsnagApiKey = getEnv().optionalString('BUGSNAG_API_KEY')
   const environment = getEnv().optionalString('DEPLOYMENT_ENV') ?? 'local'
 
-  if (bugsnagApiKey) {
-    initializeErrorReporting(bugsnagApiKey, environment)
-  } else {
-    console.log('Bugsnag integration disabled')
-  }
+  const isErrorReportingEnabled = initializeErrorReporting(
+    bugsnagApiKey,
+    environment,
+  )
 
   try {
     const config = getConfig()
@@ -26,28 +25,31 @@ async function main() {
   } catch (e) {
     console.error(e)
 
-    if (bugsnagApiKey) {
-      if (typeof e === 'string') {
-        Bugsnag.notify(e, (event) => {
-          event.context = 'Backend index.ts'
-        })
-      } else if (e instanceof Error) {
-        Bugsnag.notify(e, (event) => {
-          event.context = 'Backend index.ts'
-        })
-      } else {
-        Bugsnag.notify('Unknown error', (event) => {
-          event.context = 'Backend index.ts'
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          event.addMetadata('error', { message: e })
-        })
-      }
-
-      // wait 10 seconds for the error to be reported
-      console.log('Waiting 10 seconds for the error to be reported')
-      await new Promise((resolve) => setTimeout(resolve, 10_000))
+    if (isErrorReportingEnabled) {
+      await reportError(e)
     }
 
     throw e
   }
+}
+
+async function reportError(e: unknown) {
+  if (typeof e === 'string') {
+    Bugsnag.notify(e, (event) => {
+      event.context = 'Backend index.ts'
+    })
+  } else if (e instanceof Error) {
+    Bugsnag.notify(e, (event) => {
+      event.context = 'Backend index.ts'
+    })
+  } else {
+    Bugsnag.notify('Unknown error', (event) => {
+      event.context = 'Backend index.ts'
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      event.addMetadata('error', { message: e })
+    })
+  }
+  // wait 10 seconds for the error to be reported
+  console.log('Waiting 10 seconds for the error to be reported')
+  await new Promise((resolve) => setTimeout(resolve, 10000))
 }

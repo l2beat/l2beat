@@ -3,7 +3,15 @@ import BugsnagPluginKoa from '@bugsnag/plugin-koa'
 import { LogEntry } from '@l2beat/backend-tools'
 import Koa from 'koa'
 
-export function initializeErrorReporting(apiKey: string, environment: string) {
+export function initializeErrorReporting(
+  apiKey: string | undefined,
+  environment: string,
+): boolean {
+  if (!apiKey) {
+    console.log('Bugsnag integration disabled')
+    return false
+  }
+
   Bugsnag.start({
     apiKey,
     releaseStage: environment,
@@ -12,6 +20,7 @@ export function initializeErrorReporting(apiKey: string, environment: string) {
     sendCode: true,
   })
   console.log('Bugsnag integration enabled')
+  return true
 }
 
 export function reportError(logEntry: LogEntry): void {
