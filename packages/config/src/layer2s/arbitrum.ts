@@ -245,7 +245,7 @@ export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
   display: {
-    name: 'Arbitrum XXXXX One',
+    name: 'Arbitrum XXXXXTESTSADA One',
     slug: 'arbitrum',
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
