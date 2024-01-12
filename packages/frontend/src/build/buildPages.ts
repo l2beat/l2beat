@@ -95,7 +95,7 @@ async function main() {
     console.error(e)
 
     if (isErrorReportingEnabled) {
-      reportError(e)
+      await reportError(e)
     }
     throw e
   }
@@ -120,7 +120,7 @@ export function initializeErrorReporting(
   return true
 }
 
-function reportError(e: unknown) {
+async function reportError(e: unknown) {
   if (typeof e === 'string') {
     Bugsnag.notify(e, (event) => {
       event.context = 'Website build'
