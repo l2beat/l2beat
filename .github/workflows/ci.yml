@@ -11,9 +11,24 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+      TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
