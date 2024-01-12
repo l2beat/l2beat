@@ -23,5 +23,13 @@ export function createDiffHistoryRouter(controller: DiffHistoryController) {
     }),
   )
 
+  router.get(
+    '/diff-history/:chainId/:project',
+    withTypedContext(paramsParser, async (ctx) => {
+      const { chainId, project } = ctx.params
+      ctx.body = await controller.getDiff(chainId, project)
+    }),
+  )
+
   return router
 }
