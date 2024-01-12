@@ -8,9 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -20,8 +17,11 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from './common'
+} from '../common'
+import { subtractOne } from '../common/assessCount'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { Layer2 } from './types'
 
@@ -84,10 +84,10 @@ export const mantapacific: Layer2 = {
     name: 'Manta Pacific',
     slug: 'mantapacific',
     description:
-      'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps. Manta Pacific currently uses Celestia for data availability.',
-    redWarning:
-      'The fraud proof system is still under development and data is posted offchain.',
-    purpose: 'Universal',
+      'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+    purposes: ['Universal'],
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'OP Stack',

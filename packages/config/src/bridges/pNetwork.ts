@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -29,9 +29,9 @@ export const pNetwork: Bridge = {
       ],
     },
     description:
-      'pNetwork aims to be a decentralized system facilitating cross-chain movement of assets.\
-      It is built as a simple Token Bridge that uses a single EOA address to move assets across. For a typical token transfer,\
-      "pToken" is minted on the destination chain.',
+      'pNetwork aims to be a decentralized system facilitating cross-chain movement of assets.',
+    detailedDescription:
+      'It is built as a simple Token Bridge that uses a single EOA address to move assets across. For a typical token transfer, "pToken" is minted on the destination chain.',
   },
   config: {
     associatedTokens: ['PNT'],

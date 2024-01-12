@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
 import { Layer2 } from './types'
 
 export const reddiozkvm: Layer2 = {
@@ -12,7 +12,7 @@ export const reddiozkvm: Layer2 = {
     slug: 'reddiozkvm',
     description:
       'Reddio zkVM is an upcoming ZK Rollup focused on general use cases like Games and Apps, powered by Starknet Stack.',
-    purpose: 'Universal, Gaming',
+    purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Starknet',

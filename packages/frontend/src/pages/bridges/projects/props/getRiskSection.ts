@@ -1,4 +1,4 @@
-import { Bridge, CONTRACTS, ProjectRisk } from '@l2beat/config'
+import { Bridge, CONTRACTS, ScalingProjectRisk } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { RiskSectionProps } from '../../../../components/project/RiskSection'
@@ -17,7 +17,7 @@ export function getRiskSection(
     { id: 'destination-token', value: project.technology.destinationToken },
   ]
 
-  const risks: (ProjectRisk & { referencedId: string })[] = []
+  const risks: (ScalingProjectRisk & { referencedId: string })[] = []
   for (const { id, value } of sections) {
     if (value) {
       risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
@@ -38,5 +38,8 @@ export function getRiskSection(
     id: 'risk-analysis',
     title: 'Risk summary',
     riskGroups: groupRisks(risks),
+    warning: project.display.warning,
+    isVerified: verificationStatus.projects[project.id.toString()],
+    redWarning: undefined,
   }
 }

@@ -1,7 +1,8 @@
 import {
   Layer2Provider,
   Layer3Provider,
-  ProjectCategory,
+  ScalingProjectCategory,
+  ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
 
@@ -13,14 +14,14 @@ export interface ScalingSummaryViewEntryBase {
   name: string
   shortName: string | undefined
   slug: string
-  category: ProjectCategory
+  category: ScalingProjectCategory
   warning?: string
   redWarning?: string
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
-  purpose: string
+  purposes: ScalingProjectPurpose[]
 }
 
 export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {

@@ -232,14 +232,12 @@ describe(SequenceProcessor.name, () => {
       time.uninstall()
       sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
-        error: new Error(
+      expect(reportErrorMock.calls[0].args[0].error).toEqual(
+        new Error(
           'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
         ),
-        message:
-          'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
-        parameters: undefined,
-      })
+      )
+      expect(reportErrorMock).toHaveBeenCalledTimes(1)
     })
 
     it('works when processRange throws', async () => {
@@ -268,11 +266,10 @@ describe(SequenceProcessor.name, () => {
       time.uninstall()
       sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith({
-        error: new Error('Force-failing during tests!'),
-        message: 'Force-failing during tests!',
-        parameters: undefined,
-      })
+      expect(reportErrorMock.calls[0].args[0].error).toEqual(
+        new Error('Force-failing during tests!'),
+      )
+      expect(reportErrorMock).toHaveBeenCalledTimes(1)
     })
 
     it('does not process anything when already done', async () => {

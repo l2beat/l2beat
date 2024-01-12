@@ -7,7 +7,7 @@ export const hypr: Layer2 = upcoming({
     name: 'Hypr',
     slug: 'hypr',
     description: 'Hypr is a Layer 2 blockchain, focused on scaling ZK gaming.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     provider: 'OP Stack',
     links: {

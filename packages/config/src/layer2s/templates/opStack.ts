@@ -7,57 +7,71 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
-  KnowledgeNugget,
-  Milestone,
-  ProjectContract,
-  ProjectPermission,
-} from '../../common'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { HARDCODED } from '../../discovery/values/hardcoded'
-import {
   CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  KnowledgeNugget,
   makeBridgeCompatible,
+  Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from '../common'
+  ScalingProjectContract,
+  ScalingProjectEscrow,
+  ScalingProjectPermission,
+  ScalingProjectStateDerivation,
+} from '../../common'
+import { subtractOne } from '../../common/assessCount'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2StateDerivation } from '../types'
+import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
-  display: Layer2Display
+  display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   upgradeability: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
   }
   l1StandardBridgeEscrow: EthereumAddress
-  apiUrl: string
+  apiUrl?: string
+  transactionApi?: Layer2TransactionApi
   inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
-  tokenList: Token[]
+  tokenList?: Token[]
   l2OutputOracle: ContractParameters
   portal: ContractParameters
-  stateDerivation?: Layer2StateDerivation
+  stateDerivation?: ScalingProjectStateDerivation
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   roleOverrides: Record<string, string>
-  nonTemplatePermissions?: ProjectPermission[]
-  nonTemplateContracts?: ProjectContract[]
+  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplateContracts?: ScalingProjectContract[]
+  nonTemplateEscrows: ScalingProjectEscrow[]
+  associatedTokens?: string[]
+  isNodeAvailable: boolean | 'UnderReview'
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
-    display: templateVars.display,
+    display: {
+      ...templateVars.display,
+      provider: 'OP Stack',
+      category: 'Optimistic Rollup',
+      dataAvailabilityMode: 'TxData',
+      warning:
+        templateVars.display.warning === undefined
+          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
+          : templateVars.display.warning,
+    },
     config: {
       tokenList: templateVars.tokenList,
+      associatedTokens: templateVars.associatedTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.portal.address,
@@ -72,14 +86,19 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...templateVars.upgradeability,
         }),
+        ...templateVars.nonTemplateEscrows,
       ],
-      transactionApi: {
-        type: 'rpc',
-        startBlock: 1,
-        url: templateVars.apiUrl,
-        callsPerMinute: 1500,
-        assessCount: subtractOne,
-      },
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.apiUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              url: templateVars.apiUrl,
+              callsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
       liveness: {
         proofSubmissions: [],
         batchSubmissions: [
@@ -162,7 +181,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           callsItselfRollup: true,
           stateRootsPostedToL1: true,
           dataAvailabilityOnL1: true,
-          rollupNodeSourceAvailable: true,
+          rollupNodeSourceAvailable: templateVars.isNodeAvailable,
         },
         stage1: {
           stateVerificationOnL1: false,
@@ -179,7 +198,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       {
         rollupNodeLink:
-          'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+          templateVars.isNodeAvailable === true
+            ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+            : '',
       },
     ),
     stateDerivation: templateVars.stateDerivation,

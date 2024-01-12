@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS } from '../layer2s/common'
+import { CONTRACTS } from '../common'
 import { Bridge } from './types'
 
 export const xdai: Bridge = {
@@ -31,7 +31,9 @@ export const xdai: Bridge = {
       repositories: ['https://github.com/gnosischain'],
     },
     description:
-      'xDai Bridge is the official bridge dedicated to transferring Dai from Ethereum into xDai on Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Tokens sent to the bridge escrow can be further sent to Compound to generate interest for external recipient, although this functionality has been disabled at the time of Ethereum Merge.',
+      'xDai Bridge is the official bridge dedicated to transferring Dai from Ethereum into xDai on Gnosis Chain.',
+    detailedDescription:
+      'It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Tokens sent to the bridge escrow can be further sent to Compound to generate interest for external recipient, although this functionality has been disabled at the time of Ethereum Merge.',
   },
   config: {
     escrows: [

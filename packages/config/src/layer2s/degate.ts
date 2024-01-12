@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -16,7 +15,8 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -56,7 +56,7 @@ export const degate: Layer2 = {
     headerWarning: 'This project is in shutdown mode and no longer active.',
     description:
       'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     provider: 'Loopring',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',

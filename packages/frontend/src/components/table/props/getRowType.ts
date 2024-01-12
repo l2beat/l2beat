@@ -34,7 +34,7 @@ export function getRowTypeClassNames(rowType: RowType) {
     case 'ethereum':
       return 'bg-blue-400 hover:bg-blue-400 border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900'
     case 'unverified':
-      return 'bg-red-100 dark:bg-red-900 hover:bg-red-100 dark:hover:bg-red-900'
+      return 'bg-red-100/70 dark:bg-red-900/70 hover:bg-red-100/90 dark:hover:bg-red-900/90'
     case 'under-review':
       return 'bg-yellow-200/10 hover:!bg-yellow-200/20'
     case 'upcoming':

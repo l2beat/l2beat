@@ -4,8 +4,8 @@ import {
   Bridge,
   isSingleAddress,
   Layer2,
-  ProjectContract,
-  ProjectUpgradeability,
+  ScalingProjectContract,
+  ScalingProjectUpgradeability,
 } from '../../src'
 import { VerificationMap } from './output'
 import { withoutDuplicates } from './utils'
@@ -25,14 +25,14 @@ export function getUniqueContractsForProject(
   const upgradeabilityAddresses = projectContracts
     .filter(isSingleAddress)
     .map((c) => c.upgradeability)
-    .filter((u): u is ProjectUpgradeability => !!u) // remove undefined
+    .filter((u): u is ScalingProjectUpgradeability => !!u) // remove undefined
     .flatMap((u) => gatherAddressesFromUpgradeability(u))
 
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
 function gatherAddressesFromUpgradeability(
-  item: ProjectUpgradeability,
+  item: ScalingProjectUpgradeability,
 ): EthereumAddress[] {
   const result: EthereumAddress[] = []
 
@@ -115,7 +115,7 @@ export function areAllProjectContractsVerified(
   )
 }
 
-function getAddresses(c: ProjectContract): EthereumAddress[] {
+function getAddresses(c: ScalingProjectContract): EthereumAddress[] {
   if (isSingleAddress(c)) {
     return [c.address]
   } else {

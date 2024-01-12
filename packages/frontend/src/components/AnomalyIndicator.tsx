@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import range from 'lodash/range'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import {
   Anomaly,
@@ -10,6 +9,7 @@ import {
 } from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
 import { LivenessDurationCell } from './table/LivenessDurationCell'
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
 
 interface Props {
   anomalyEntries: AnomalyIndicatorEntry[]
@@ -50,26 +50,29 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
   ) as AnomalyEntry[]
 
   return (
-    <span
-      className="Tooltip flex h-6 w-min gap-x-0.5"
-      title={renderToStaticMarkup(<AnomalyTooltip anomalyEntries={data} />)}
-      data-tooltip-big={true}
-      data-testid="anomaly-indicator"
-    >
-      {anomalyEntries.map((anomaly, i) => (
-        <div
-          key={i}
-          className={classNames(
-            'w-0.5 rounded-full',
-            anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
-          )}
-        />
-      ))}
-    </span>
+    <Tooltip big>
+      <TooltipTrigger
+        className="flex h-6 w-min gap-x-0.5"
+        data-testid="anomaly-indicator-tooltip-trigger"
+      >
+        {anomalyEntries.map((anomaly, i) => (
+          <div
+            key={i}
+            className={classNames(
+              'w-0.5 rounded-full',
+              anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
+            )}
+          />
+        ))}
+      </TooltipTrigger>
+      <TooltipContent>
+        <AnomalyTooltipContent anomalyEntries={data} />
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
-function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
+function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   const anomalies = props.anomalyEntries
     .flatMap((anomalyEntry) => anomalyEntry.anomalies)
     .reverse()
@@ -79,7 +82,7 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
   }
 
   return (
-    <div>
+    <>
       <span>Anomalies from last 30 days:</span>
       <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {anomalies.slice(0, 4).map((anomaly) => (
@@ -92,7 +95,7 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
             </span>
             <div className="mt-2 text-black dark:text-white">
               <AnomalyTypeBadge type={anomaly.type} />
-              <span className="ml-2.5">
+              <span className="ml-2.5 inline-flex gap-1">
                 Duration:{' '}
                 <LivenessDurationCell
                   durationInSeconds={anomaly.durationInSeconds}
@@ -105,7 +108,7 @@ function AnomalyTooltip(props: { anomalyEntries: AnomalyEntry[] }) {
       {anomalies.length > 4 && (
         <div className="mt-2.5">And {anomalies.length - 4} more</div>
       )}
-    </div>
+    </>
   )
 }
 

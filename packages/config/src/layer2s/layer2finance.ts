@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
 import { Layer2 } from './types'
 
 export const layer2finance: Layer2 = {
@@ -14,7 +14,7 @@ export const layer2finance: Layer2 = {
       'Currently the TVL is calculated incorrectly, because it does not take assets locked in DeFi into account.',
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
-    purpose: 'DeFi aggregation',
+    purposes: ['DeFi'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     links: {

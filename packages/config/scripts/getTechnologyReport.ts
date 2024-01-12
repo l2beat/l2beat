@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { layer2s, ProjectTechnologyChoice } from '../src'
+import { layer2s, ScalingProjectTechnologyChoice } from '../src'
 
 const keys = [
   'stateCorrectness',
@@ -40,7 +40,7 @@ for (const key of keys) {
 
   for (const [signature, names] of options.entries()) {
     const decoded = JSON.parse(signature) as Omit<
-      ProjectTechnologyChoice,
+      ScalingProjectTechnologyChoice,
       'references'
     >
     report += `  [${names.join(', ')}]\n`

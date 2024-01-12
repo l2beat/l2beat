@@ -1,14 +1,5 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -20,7 +11,16 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromString } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('reddioex')
@@ -46,9 +46,8 @@ export const reddioex: Layer2 = {
   display: {
     name: 'ReddioEx',
     slug: 'reddioex',
-    description:
-      'Reddio, an easy-to-use solution on Ethereum for apps/games, tackle issues related to scalability and transaction fees in order to scale the Ethereum network for application and game development.',
-    purpose: 'Universal',
+    description: 'ReddioEx is a Validium based on the StarkEx technology.',
+    purposes: ['Universal'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
