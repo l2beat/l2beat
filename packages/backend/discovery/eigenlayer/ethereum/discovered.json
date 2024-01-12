@@ -1,8 +1,8 @@
 {
   "name": "eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 18940531,
-  "configHash": "0x3974e7d1766b73f35e185f57197c0de5a5132487debf8d399ff6bdaf89b76e80",
+  "blockNumber": 18991866,
+  "configHash": "0xcab9b98344cfeddcf8cead6acf8127f68ab9626c127a77cceed5bb58a1d42460",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x8499110000000000",
-        "get_deposit_root": "0xfeac8ead126abc7dae612804a0e2ca27f2be2af04a171fb9024b8f2d17f00626"
+        "get_deposit_count": "0x1fce110000000000",
+        "get_deposit_root": "0x0eda2b7dbbfc408109f15125f89c9083eafc34b521333c6b3c908ad3bc25954b"
       }
     },
     {
@@ -49,7 +49,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "114115637388189204452901",
+        "totalShares": "113674401971219177430879",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -75,7 +75,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "980627544214885347522",
+        "totalShares": "979105941052541165075",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -101,7 +101,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "53657218352539511010189",
+        "totalShares": "53144600084918373004306",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -171,7 +171,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "27127472259348371550941",
+        "totalShares": "26668101459642931161656",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -197,7 +197,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15694327098602740402168",
+        "totalShares": "15687246098602740402168",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -254,7 +254,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "13724068051403208200856",
+        "totalShares": "11713517241523208200856",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -342,7 +342,7 @@
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "maxPods": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "numPods": 4698,
+        "numPods": 5650,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 30,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -371,7 +371,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "195505049858163898851372",
+        "totalShares": "194193045272886785958188",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -397,7 +397,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "49287887835749921265370",
+        "totalShares": "49279786301870272466147",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -423,7 +423,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "11303271791854234006729",
+        "totalShares": "11297155028479313729030",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "derivedName": "StrategyBaseTVLLimits"

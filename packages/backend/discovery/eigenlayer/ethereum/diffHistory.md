@@ -1,3 +1,34 @@
+# Diff at Fri, 12 Jan 2024 15:59:21 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@322243e614cafb10d9706977368ec5f84ddcfb85 block: 18940531
+- current block number: 18991866
+
+## Description
+
+The number of EigenPods (contracts, to which validators’ withdrawal credentials point, and where consensus layer rewards accrue) have increased. Changes in the Beacon chain deposit contract include changed deposit count and deposit root (unique identifier for the set of deposits made). totalShares was ignored in watch mode for all Strategy contracts.
+
+## Watched changes
+
+```diff
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa) {
+      values.get_deposit_count:
+-        "0x8499110000000000"
++        "0x1fce110000000000"
+      values.get_deposit_root:
+-        "0xfeac8ead126abc7dae612804a0e2ca27f2be2af04a171fb9024b8f2d17f00626"
++        "0x0eda2b7dbbfc408109f15125f89c9083eafc34b521333c6b3c908ad3bc25954b"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+      values.numPods:
+-        4698
++        5650
+    }
+```
+
 # Diff at Fri, 05 Jan 2024 10:39:06 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)

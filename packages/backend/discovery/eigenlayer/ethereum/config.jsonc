@@ -33,7 +33,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "ETHx-Strategy": {
       "ignoreMethods": [
@@ -41,7 +42,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "cbETH-Strategy": {
       "ignoreMethods": [
@@ -49,7 +51,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "stETH-Strategy": {
       "ignoreMethods": [
@@ -57,7 +60,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "ankrETH-Strategy": {
       "ignoreMethods": [
@@ -65,7 +69,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "OETH-Strategy": {
       "ignoreMethods": [
@@ -73,7 +78,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "osETH-Strategy": {
       "ignoreMethods": [
@@ -81,7 +87,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "swETH-Strategy": {
       "ignoreMethods": [
@@ -89,7 +96,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     "wBETH-Strategy": {
       "ignoreMethods": [
@@ -97,7 +105,8 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalShares"]
     },
     // ignore discovery, should be ingoreRelative in a strategy but it does not work
     "0xae78736Cd615f374D3085123A210448E74Fc6393": { "ignoreDiscovery": true },
