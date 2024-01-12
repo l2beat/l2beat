@@ -1,10 +1,15 @@
 import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectEscrow } from '../common'
+import { ScalingProjectEscrow } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
-export const OMNICHAN_ESCROWS: ProjectEscrow[] = [
+export const OMNICHAN_ESCROWS: ScalingProjectEscrow[] = [
+  {
+    address: EthereumAddress('0x92cc36d66e9d739d50673d1f27929a371fb83a67'),
+    sinceTimestamp: new UnixTime(1695376800),
+    tokens: ['WAGMI'],
+  },
   {
     address: EthereumAddress('0x7122985656e38BDC0302Db86685bb972b145bD3C'),
     sinceTimestamp: new UnixTime(1700658000),
@@ -90,7 +95,7 @@ export const RELAYERS = Object.values(relevantAppConfigs)
 
 assert(
   RELAYERS.length === 1,
-  'Expected exactly one relayer. Please update the project contracts section. ',
+  'Expected exactly one relayer. Please update the project contracts section.',
 )
 
 export const ORACLES = Object.values(relevantAppConfigs)

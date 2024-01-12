@@ -1,14 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -20,7 +11,16 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromString } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -47,8 +47,8 @@ export const immutablex: Layer2 = {
     name: 'Immutable X',
     slug: 'immutablex',
     description:
-      'Immutable X claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
-    purpose: 'NFT, Exchange',
+      'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
+    purposes: ['NFT', 'Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

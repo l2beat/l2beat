@@ -3,7 +3,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../../.storybook/modes'
-import { Tooltip } from '../../../../components/Tooltip'
+import { TooltipProvider } from '../../../../components/tooltip/TooltipProvider'
 import { configureLivenessTimeRangeControls } from '../../../../scripts/configureLivenessTimeRangeControls'
 import { configureTooltips } from '../../../../scripts/configureTooltips'
 import { ScalingLivenessView } from './ScalingLivenessView'
@@ -17,6 +17,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'Arbitrum One',
         shortName: undefined,
         slug: 'arbitrum',
+        purposes: ['DEX'],
         redWarning: undefined,
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -264,6 +265,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'OP Mainnet',
         shortName: undefined,
         slug: 'optimism',
+        purposes: ['DEX'],
         redWarning: undefined,
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
@@ -469,6 +471,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'Base',
         shortName: undefined,
         slug: 'base',
+        purposes: ['DEX'],
         redWarning: undefined,
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -688,6 +691,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'zkSync Era',
         shortName: undefined,
         slug: 'zksync-era',
+        purposes: ['DEX'],
         redWarning: undefined,
         warning:
           'Withdrawals are delayed by 21h. The length of the delay can be arbitrarily set by a MultiSig.',
@@ -907,6 +911,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'dYdX v3',
         shortName: undefined,
         slug: 'dydx',
+        purposes: ['DEX'],
         redWarning: 'This warning is just some random stuff I wrote.',
         warning:
           'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
@@ -1111,6 +1116,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'Linea',
         shortName: undefined,
         slug: 'linea',
+        purposes: ['DEX'],
         redWarning: undefined,
         warning: 'The circuit of the program being proven is not public.',
         category: 'ZK Rollup',
@@ -1449,7 +1455,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
       }, [])
       return (
         <>
-          <Story /> <Tooltip />
+          <Story /> <TooltipProvider />
         </>
       )
     },
@@ -1465,11 +1471,12 @@ type Story = StoryObj<typeof ScalingLivenessView>
 
 export const Primary: Story = {
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
     await new Promise((resolve) => setTimeout(resolve, 200))
-
     await waitFor(async () => {
-      const element = canvas.getByText('47 seconds').parentElement
+      const element = canvasElement.querySelector(
+        '[data-role="liveness-time-range-cell"] [data-role=tooltip-trigger]',
+      )
+      console.log(element)
       if (element) {
         await userEvent.hover(element)
       }

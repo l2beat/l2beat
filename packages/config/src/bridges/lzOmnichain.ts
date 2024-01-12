@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
+import { CONTRACTS, NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, NUGGETS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import {
   INBOUND_PROOF_LIBRARIES,
@@ -35,7 +35,9 @@ export const lzOmnichain: Bridge = {
       socialMedia: ['https://twitter.com/LayerZero_Labs'],
     },
     description:
-      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol, currently they are: STG, Harmony Bridge OFT, BOBA, STONE and agEUR. Risk associated with using any of them varies, depending on the technological decisions made by the developers. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
+      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol',
+    detailedDescription:
+      'Currently they are: STG, Harmony Bridge OFT, BOBA, STONE, WAGMI and agEUR. Risk associated with using any of them varies, depending on the technological decisions made by the developers. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
   },
   riskView: {
     validatedBy: {

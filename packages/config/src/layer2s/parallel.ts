@@ -14,7 +14,7 @@ export const parallel: Layer2 = underReview({
     headerWarning: '',
     description:
       'Parallel will launch an Ethereum L2 solution utilizing Arbitrum Nitro technology. More information coming soon.',
-    purpose: 'Universal, DeFi',
+    purposes: ['Universal', 'DeFi'],
     category: 'Optimistic Rollup',
     provider: 'Arbitrum',
     links: {

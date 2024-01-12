@@ -5,14 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -24,7 +16,15 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -201,11 +201,8 @@ export const starknet: Layer2 = {
     slug: 'starknet',
     provider: 'Starknet',
     description:
-      'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
-      infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
-      is available and contracts are fully composable. It is currently launched \
-      with a single Sequencer.',
-    purpose: 'Universal',
+      'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
 

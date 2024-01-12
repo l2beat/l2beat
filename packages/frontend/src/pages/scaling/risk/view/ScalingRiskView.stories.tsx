@@ -18,6 +18,7 @@ const meta = {
         name: 'ZKSwap 1.0',
         shortName: undefined,
         slug: 'zkswap',
+        purposes: ['AMM'],
         provider: 'zkSync Lite',
         category: 'ZK Rollup',
         warning:
@@ -62,6 +63,7 @@ const meta = {
         name: 'Polygon Hermez',
         shortName: 'PolHer',
         slug: 'hermez',
+        purposes: ['AMM'],
         provider: undefined,
         category: 'ZK Rollup',
         warning:
@@ -106,6 +108,7 @@ const meta = {
         name: 'ZKSwap 2.0',
         shortName: undefined,
         slug: 'zkswap2',
+        purposes: ['AMM'],
         provider: 'zkSync Lite',
         category: 'ZK Rollup',
         warning:
@@ -150,6 +153,7 @@ const meta = {
         name: 'Gluon',
         shortName: undefined,
         slug: 'gluon',
+        purposes: ['AMM'],
         category: 'Optimium',
         provider: undefined,
         warning:
@@ -194,6 +198,7 @@ const meta = {
         name: 'OMG Network',
         shortName: undefined,
         slug: 'omgnetwork',
+        purposes: ['AMM'],
         category: 'Plasma',
         provider: undefined,
         warning: undefined,
@@ -237,6 +242,7 @@ const meta = {
         name: 'L2.Finance-zk',
         shortName: undefined,
         slug: 'layer2financezk',
+        purposes: ['AMM'],
         category: 'Validium',
         provider: 'StarkEx',
         warning:
@@ -281,6 +287,7 @@ const meta = {
         name: 'Arbitrum One',
         shortName: undefined,
         slug: 'arbitrum',
+        purposes: ['AMM'],
         category: 'Optimistic Rollup',
         provider: undefined,
         warning:
@@ -308,7 +315,7 @@ const meta = {
             'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
           sentiment: 'warning',
           secondLine: 'by DAO decentralized',
-          showWarning: true,
+          warning: 'Random warning written just now',
         },
         sequencerFailure: {
           value: 'Transact using L1',
@@ -328,6 +335,7 @@ const meta = {
         name: 'Optimism',
         shortName: undefined,
         slug: 'optimism',
+        purposes: ['AMM'],
         category: 'Optimistic Rollup',
         provider: 'OP Stack',
         warning:
@@ -374,6 +382,7 @@ const meta = {
         name: 'dYdX',
         shortName: undefined,
         slug: 'dydx',
+        purposes: ['AMM'],
         category: 'ZK Rollup',
         provider: 'StarkEx',
         warning: undefined,
@@ -417,6 +426,7 @@ const meta = {
         name: 'zkSync Era',
         shortName: undefined,
         slug: 'zksync-era',
+        purposes: ['AMM'],
         category: 'ZK Rollup',
         provider: 'ZK Stack',
         warning:
@@ -461,6 +471,7 @@ const meta = {
         name: 'Metis Andromeda',
         shortName: undefined,
         slug: 'metis',
+        purposes: ['AMM'],
         category: 'Optimium',
         provider: 'OVM',
         warning:
@@ -507,6 +518,7 @@ const meta = {
         name: 'Loopring',
         shortName: undefined,
         slug: 'loopring',
+        purposes: ['AMM'],
         category: 'ZK Rollup',
         provider: undefined,
         warning: undefined,
@@ -553,6 +565,7 @@ const meta = {
         name: 'Immutable X',
         shortName: undefined,
         slug: 'immutablex',
+        purposes: ['AMM'],
         category: 'Validium',
         provider: 'StarkEx',
         warning: undefined,

@@ -10,7 +10,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
 import { Layer2 } from './types'
 
 const upgradeDelay = 604800
@@ -26,7 +26,7 @@ export const hermez: Layer2 = {
       'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
     description:
       'Hermez is an open-source ZK Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
-    purpose: 'Payments',
+    purposes: ['Payments'],
     category: 'ZK Rollup',
     // TODO: This is not correct. Research it.
     dataAvailabilityMode: 'NotApplicable',

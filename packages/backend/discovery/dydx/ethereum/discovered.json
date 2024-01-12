@@ -1,8 +1,8 @@
 {
   "name": "dydx",
   "chain": "ethereum",
-  "blockNumber": 18969236,
-  "configHash": "0x47112df1ee28df32b58382bb684b9b5696e568eba2d4f1fb8268d1e432381939",
+  "blockNumber": 18975357,
+  "configHash": "0xe4aba76e942e73f989965d36747b337378ea6bbb6885159c2e911bc16fbec2e6",
   "version": 3,
   "contracts": [
     {
@@ -379,7 +379,7 @@
       },
       "sinceTimestamp": 1694426279,
       "values": {
-        "_nextAvailableBridgeId": 3187,
+        "_nextAvailableBridgeId": 3206,
         "decimals": 18,
         "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
         "DELEGATE_TYPEHASH": "0x9a9a49b990ba9bb39f8048c490a40ab25c18f55d208d5fbcf958261a9b48716d",
@@ -390,7 +390,7 @@
         "name": "Wrapped Ethereum DYDX",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "wethDYDX",
-        "totalSupply": "465419212227719074582589227"
+        "totalSupply": "465676899461967671078567963"
       },
       "derivedName": "WrappedEthereumDydxToken"
     },
@@ -498,14 +498,14 @@
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getTimeRemainingInCurrentEpoch": 615949,
+        "getTimeRemainingInCurrentEpoch": 541909,
         "getTotalActiveBalanceCurrentEpoch": 256765623905,
-        "getTotalActiveBalanceNextEpoch": 248478123905,
+        "getTotalActiveBalanceNextEpoch": 238448123905,
         "getTotalBorrowedBalance": 4248,
         "getTotalBorrowerDebtBalance": 0,
         "getTotalDebtAvailableToWithdraw": 0,
         "getTotalInactiveBalanceCurrentEpoch": 217267756505,
-        "getTotalInactiveBalanceNextEpoch": 225555256505,
+        "getTotalInactiveBalanceNextEpoch": 235585256505,
         "hasEpochZeroStarted": true,
         "inBlackoutWindow": false,
         "name": "dYdX Staked USDC",
@@ -650,7 +650,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "2370752747935389029403841"
+        "totalSupply": "2213431377756862480417449"
       },
       "derivedName": "SafetyModuleV2"
     },
@@ -926,7 +926,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 22042,
+        "getLastBatchId": 22077,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -935,13 +935,12 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 21743,
+        "getSequenceNumber": 21778,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
         "getVaultTreeHeight": 64,
         "globalConfigurationHash": "0x03cbd17769430aed60aa8b9a5867b375c3fdca23e56cbbd83e33290577f50449",
-        "identify": "StarkWare_PerpetualTokensAndRamping_2020_1",
         "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
         "initializerSize": 384,
         "isFrozen": false,

@@ -4,6 +4,7 @@ import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { formatLargeNumberWithCommas } from '../../../utils'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 
 interface TokenAmountCellProps {
   assetId: AssetId
@@ -23,28 +24,30 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       : ''
 
   return props.forCanonical && props.escrows ? (
-    <div
-      className="Tooltip flex flex-col items-end gap-2 text-xs font-medium"
-      title="Circulating supply"
-    >
-      {formatLargeNumberWithCommas(Number(props.amount))}
-      {props.escrows.length > 1 &&
-        props.escrows.map((escrow) => (
-          <div
-            key={escrow.escrowAddress.toString()}
-            className="MultipleEscrowsHidden hidden font-normal text-black/80 dark:text-white/80"
-            data-token={props.assetId}
-          >
-            {formatLargeNumberWithCommas(Number(escrow.amount))}
-          </div>
-        ))}
-    </div>
+    <Tooltip>
+      <TooltipTrigger className="flex flex-col items-end gap-2 text-xs font-medium">
+        {formatLargeNumberWithCommas(Number(props.amount))}
+        {props.escrows.length > 1 &&
+          props.escrows.map((escrow) => (
+            <div
+              key={escrow.escrowAddress.toString()}
+              className="MultipleEscrowsHidden hidden font-normal text-black/80 dark:text-white/80"
+              data-token={props.assetId}
+            >
+              {formatLargeNumberWithCommas(Number(escrow.amount))}
+            </div>
+          ))}
+      </TooltipTrigger>
+      <TooltipContent>Circulating supply</TooltipContent>
+    </Tooltip>
   ) : (
-    <div
-      className="Tooltip text-xs font-medium"
-      title={props.forExternal ? 'Circulating supply' : formula}
-    >
-      {formatLargeNumberWithCommas(Number(props.amount))}
-    </div>
+    <Tooltip>
+      <TooltipTrigger className="text-xs font-medium">
+        {formatLargeNumberWithCommas(Number(props.amount))}
+      </TooltipTrigger>
+      <TooltipContent>
+        {props.forExternal ? 'Circulating supply' : formula}
+      </TooltipContent>
+    </Tooltip>
   )
 }

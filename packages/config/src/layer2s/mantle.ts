@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -8,8 +7,9 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   OPERATOR,
-} from './common'
-import { RISK_VIEW } from './common/riskView'
+} from '../common'
+import { RISK_VIEW } from '../common/riskView'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
@@ -44,15 +44,11 @@ export const mantle: Layer2 = {
   display: {
     name: 'Mantle',
     slug: 'mantle',
-    redWarning:
-      'Fraud proof system is currently disabled and data is posted offchain. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Mantle is an EVM compatible Optimium that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
-      It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
-      Note that as currently both of these technologies are yet to be fully launched on mainnet, Mantle needs to be considered "under development".\
-      Additionally Mantle uses a set of nodes that are required to co-sign state roots via TSS (Threshold Signature Scheme). This component is\
-      intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
-    purpose: 'Universal',
+      'Mantle is an under development EVM compatible Optimium, based on the Optimism OVM architecture.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+    purposes: ['Universal'],
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',

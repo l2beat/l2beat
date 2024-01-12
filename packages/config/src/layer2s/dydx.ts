@@ -1,9 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getCommittee } from '../discovery/starkware'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -15,7 +11,11 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getCommittee } from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -74,7 +74,7 @@ export const dydx: Layer2 = {
       'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
-    purpose: 'Exchange',
+    purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',

@@ -20,12 +20,19 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  KnowledgeNugget,
   makeBridgeCompatible,
+  Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from '../common'
+  ScalingProjectContract,
+  ScalingProjectPermission,
+  ScalingProjectStateDerivation,
+} from '../../common'
+import { subtractOne } from '../../common/assessCount'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
 import {
   Layer2,
@@ -50,7 +57,7 @@ export interface OpStackConfig {
   tokenList?: Token[]
   l2OutputOracle: ContractParameters
   portal: ContractParameters
-  stateDerivation?: Layer2StateDerivation
+  stateDerivation?: ScalingProjectStateDerivation
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   roleOverrides: Record<string, string>

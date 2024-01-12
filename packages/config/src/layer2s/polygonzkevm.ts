@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -13,7 +11,9 @@ import {
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -65,7 +65,8 @@ const exitWindowRisk = {
   ),
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.\n\nThe Security Council can upgrade with no delay.`,
+  )}.`,
+  warning: 'The Security Council can upgrade with no delay.',
 }
 
 const timelockUpgrades = {
@@ -91,8 +92,8 @@ export const polygonzkevm: Layer2 = {
     slug: 'polygonzkevm',
     warning: 'The forced transaction mechanism is currently disabled.',
     description:
-      'Polygon zkEVM is aiming to become a decentralized Ethereum Layer 2 scalability solution that uses cryptographic zero-knowledge proofs to offer validity and finality of off-chain transactions. Polygon zkEVM wants to be equivalent with the Ethereum Virtual Machine.',
-    purpose: 'Universal',
+      'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'Polygon',
