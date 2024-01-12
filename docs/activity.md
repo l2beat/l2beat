@@ -1,11 +1,21 @@
-# How to add new activity module for existing project?
+# How to add activity tracking for existing project? ?
 
-### Non starkex type project
+## Introduction
 
-1. Find a RPC for a project you want to add activity module for. Try to write directly to project to
-   obtain a private node access. If you can't, you can use a public node.
+Within L2BEAT💗 we have an [Activity](https://l2beat.com/scaling/activity) tab which tracks activity
+of scaling solutions. 'Activity' in this context refers to the range of transactions that occur on
+each chain. Configuring activity tracking for different projects is straightforward, especially for
+those that support eth_getBlock RPC methods. This configuration process is managed individually for
+each project through their respective .ts (TypeScript) files.
 
-2. Next you need to test your RPC locally. Use `Cast` for this. If you do not have it yet, just
+## Guide
+
+If you want to add starkex type project, go to the [next section](#starkex-type-project)
+
+1. Find RPC endpoint for a project you want to add. Try to write directly to project to obtain a
+   private node access. If you can't, you can use a public node or RPC provider e.g. QuickNode.
+
+2. Next you need to test your RPC locally. Use `cast` for this. If you do not have it yet, just
    install it by running `curl -L https://foundry.paradigm.xyz | bash` in terminal. After
    installing, run these 2 commands and check if you get a response:
 
@@ -46,7 +56,7 @@ you need to talk to devs to handle this case.
 1. Go to this page:
    https://app.swaggerhub.com/apis-docs/StarkExBI/StarkExAggregations/0.3#/Queries/post_aggregations_count
    and check if your project is listed in `product` array in endpoint description section. If it is,
-   you can go to the next step. If not, you need to talk to starkex devs to add support of your
+   you can go to the next step. If not, you need to talk to starkex devs to add support for your
    project.
 
 2. Next step is to fill activity config in project config file. Add `config.transactionApi` property
