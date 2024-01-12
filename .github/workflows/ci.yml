@@ -17,7 +17,18 @@ jobs:
       COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
       TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
-
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Check out code
         uses: actions/checkout@v3
