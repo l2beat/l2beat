@@ -50,8 +50,11 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build
+      - name: Build dry
         run: yarn build --dry-run
+
+      - name: Build
+        run: yarn build
 
       - name: Typecheck
         run: yarn typecheck
