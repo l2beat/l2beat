@@ -54,10 +54,7 @@ export const reddioex: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://reddio.com/'],
-      apps: [
-        'https://reddio.com/explore',
-        'https://dashboard.reddio.com',
-      ],
+      apps: ['https://reddio.com/explore', 'https://dashboard.reddio.com'],
       documentation: ['https://docs.reddio.com/'],
       explorers: ['https://explorer.reddio.com/'],
       repositories: ['https://github.com/reddio-com/starkex-contracts-source'],
