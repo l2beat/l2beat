@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 18961956,
-  "configHash": "0xb1f6724a0c71e4738877b8daada44bcd79ff7afaa7455d98bdd2c5a8abe151dc",
+  "blockNumber": 18975204,
+  "configHash": "0xdae0442c846a8b20c97e2c73f5bb72191b810e3fd942792c1d1a38488e79bd11",
   "version": 3,
   "contracts": [
     {
@@ -55,7 +55,7 @@
       "derivedName": "SystemConfig"
     },
     {
-      "name": "L1CrossDomainMessengerProxy",
+      "name": "L1CrossDomainMessenger",
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
       "upgradeability": {
         "type": "resolved delegate proxy",
@@ -67,7 +67,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704863",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292705294",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -328,7 +328,7 @@
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 18961817],
+        "params": [1000000000, 1301449, 18975059],
         "paused": false,
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.6.0"
@@ -397,10 +397,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 114555463,
-        "latestOutputIndex": 5177,
-        "nextBlockNumber": 114557263,
-        "nextOutputIndex": 5178,
+        "latestBlockNumber": 114636463,
+        "latestOutputIndex": 5222,
+        "nextBlockNumber": 114638263,
+        "nextOutputIndex": 5223,
         "PROPOSER": "0x473300df21D047806A082244b417f96b32f13A33",
         "startingBlockNumber": 105235063,
         "startingTimestamp": 1686068903,
