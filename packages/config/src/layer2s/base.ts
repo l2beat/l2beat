@@ -7,11 +7,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { DERIVATION } from './common/stateDerivations'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
 

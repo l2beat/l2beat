@@ -7,12 +7,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { DERIVATION, MILESTONES, NUGGETS } from '../common'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { formatSeconds } from '../utils/formatSeconds'
-import { MILESTONES, NUGGETS, subtractOneAfterBlockInclusive } from './common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { DERIVATION } from './common/stateDerivations'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')

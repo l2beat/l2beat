@@ -7,15 +7,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
-  KnowledgeNugget,
-  Milestone,
-  ProjectContract,
-  ProjectEscrow,
-  ProjectPermission,
-} from '../../common'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { HARDCODED } from '../../discovery/values/hardcoded'
-import {
   CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
@@ -27,6 +18,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   ScalingProjectContract,
+  ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectStateDerivation,
 } from '../../common'
@@ -34,12 +26,7 @@ import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
-import {
-  Layer2,
-  Layer2Display,
-  Layer2StateDerivation,
-  Layer2TransactionApi,
-} from '../types'
+import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
@@ -61,9 +48,9 @@ export interface OpStackConfig {
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   roleOverrides: Record<string, string>
-  nonTemplatePermissions?: ProjectPermission[]
-  nonTemplateContracts?: ProjectContract[]
-  nonTemplateEscrows: ProjectEscrow[]
+  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplateContracts?: ScalingProjectContract[]
+  nonTemplateEscrows: ScalingProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
 }
