@@ -1,5 +1,4 @@
 name: CI
-
 on:
   pull_request:
   push:
@@ -8,8 +7,7 @@ on:
   merge_group:
 
 jobs:
-  build:
-    name: Build and test
+  test:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -35,10 +33,63 @@ jobs:
         with:
           node-version: 18.x
           cache: "yarn"
+      - run: yarn --frozen-lockfile
+      - run: yarn test
 
+
+
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+      - run: yarn --frozen-lockfile
+      - run: yarn lint
+
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
       - run: yarn --frozen-lockfile
       - run: yarn build
-      - run: yarn typecheck
-      - run: yarn test
-      - run: yarn lint
+
+  typecheck:
+      runs-on: ubuntu-latest
+      env:
+        TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+        TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+          with:
+            node-version: 18.x
+            cache: "yarn"
+        - run: yarn --frozen-lockfile
+        - run: yarn typecheck
+
+  format:
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+      - run: yarn --frozen-lockfile
       - run: yarn format
