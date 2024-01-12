@@ -1,4 +1,6 @@
-# How to add new activity module for existing project? A thread 🧵👇🏽
+# How to add new activity module for existing project?
+
+### Non starkex type project
 
 1. Find a RPC for a project you want to add activity module for. Try to write directly to project to
    obtain a private node access. If you can't, you can use a public node.
@@ -38,3 +40,19 @@ you need to talk to devs to handle this case.
 ```
 
     After that, remember to add these variables to the Heroku config vars before merging them into the master branch
+
+### Starkex type project
+
+1. Go to this page:
+   https://app.swaggerhub.com/apis-docs/StarkExBI/StarkExAggregations/0.3#/Queries/post_aggregations_count
+   and check if your project is listed in `product` array in endpoint description section. If it is,
+   you can go to the next step. If not, you need to talk to starkex devs to add support of your
+   project.
+
+2. Next step is to fill activity config in project config file. Add `config.transactionApi` property
+   and fill it:
+
+   - `type` (required): set it as `'starkex'`
+   - `product` (required): set it for you project `product` property from swaggerhub
+   - `sinceTimestamp` (required): from which timestamp you want to start fetching data
+   - `resyncLastDays` (required): set it to 7
