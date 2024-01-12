@@ -26,6 +26,69 @@ discovery. Values are for block 18962479 (main branch discovery), not current.
     }
 ```
 
+# Diff at Fri, 12 Jan 2024 15:39:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@3ba59c007bed594eaca2484f4c0c687806fd9c9b block: 18962479
+- current block number: 18991767
+
+## Description
+
+Added names to the Safe and unverified contracts.
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18962479 (main branch discovery), not current.
+
+```diff
+    contract  (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+      name:
+-        ""
++        "OneStepProverMemory"
+      derivedName:
++        ""
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) {
+      derivedName:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract  (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+      name:
+-        ""
++        "OneStepProverMath"
+      derivedName:
++        ""
+    }
+```
+
+```diff
+    contract  (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+      name:
+-        ""
++        "OneStepProverHostIo"
+      derivedName:
++        ""
+    }
+```
+
+```diff
+    contract  (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+      name:
+-        ""
++        "OneStepProver0"
+      derivedName:
++        ""
+    }
+```
+
 # Diff at Mon, 08 Jan 2024 13:05:46 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
