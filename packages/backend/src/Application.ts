@@ -14,7 +14,7 @@ import { createStatusModule } from './modules/status/StatusModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/shared/Database'
-import { reportError } from './tools/ErrorReporter'
+import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
@@ -57,6 +57,7 @@ export class Application {
       config.api.port,
       logger,
       modules.flatMap((x) => x?.routers ?? []),
+      getErrorReportingMiddleware(),
     )
 
     this.start = async () => {

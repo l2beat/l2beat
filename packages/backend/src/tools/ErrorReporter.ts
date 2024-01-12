@@ -1,6 +1,7 @@
 import Bugsnag, { Event } from '@bugsnag/js'
 import BugsnagPluginKoa from '@bugsnag/plugin-koa'
 import { LogEntry } from '@l2beat/backend-tools'
+import Koa from 'koa'
 
 export function initializeErrorReporting(apiKey: string, environment: string) {
   Bugsnag.start({
@@ -29,4 +30,15 @@ function modifyError({ parameters, service }: LogEntry) {
     if (service) event.context = service
     if (parameters) event.addMetadata('parameters', parameters)
   }
+}
+
+export interface BugsnagPluginKoaResult {
+  errorHandler: (err: Error, ctx: Koa.Context) => void
+  requestHandler: Koa.Middleware
+}
+
+export function getErrorReportingMiddleware():
+  | BugsnagPluginKoaResult
+  | undefined {
+  return Bugsnag.getPlugin('koa')
 }
