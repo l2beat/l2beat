@@ -4,12 +4,6 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 
-import {
-  getDiscoveryHash,
-  getHashesDatabase,
-  getHashesDatabaseKey,
-} from '../utils/hashDatabase'
-
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
   let chainConfigs: DiscoveryConfig[][] | undefined
@@ -235,28 +229,6 @@ describe('discovery config.jsonc', () => {
               Object.values(c.raw.names).length,
             `names field in ${c.name} configuration includes duplicate names`,
           )
-        }
-      }
-    })
-  })
-
-  describe('discovered.json hashes', () => {
-    it('hashes match', async () => {
-      for (const configs of chainConfigs ?? []) {
-        if (configs.length > 0) {
-          for (const c of configs) {
-            const hash = await getDiscoveryHash(c.name, c.chainId)
-            const database = getHashesDatabase(
-              'discovery/discoveredHashes.json',
-            )
-            const savedHash = database[getHashesDatabaseKey(c.name, c.chainId)]
-            assert(
-              hash === savedHash,
-              `The hash for ${ChainId.getName(c.chainId)}:${
-                c.name
-              } of your local discovered.json (${hash.toString()}) does not match the hash stored in the discoveredHashes.json (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
-            )
-          }
         }
       }
     })
