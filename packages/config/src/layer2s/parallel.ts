@@ -21,7 +21,7 @@ const roles = discovery.getContractValue<{
 }>('UpgradeExecutor', 'accessControl')
 
 const EOAExecutor: ScalingProjectPermissionedAccount = {
-  address: EthereumAddress(roles.EXECUTOR_ROLE.members[1]),
+  address: EthereumAddress(roles.EXECUTOR_ROLE.members[0]),
   type: 'EOA',
 }
 
