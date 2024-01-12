@@ -19,14 +19,15 @@ export const socket: Bridge = {
     links: {
       websites: ['https://socketscan.io/'],
       repositories: [
+        'https://github.com/SocketDotTech/socket-DL',
         'https://github.com/SocketDotTech/socket-plugs/blob/main/contracts/superbridge',
       ],
       documentation: ['https://developer.socket.tech/Learn/protocol-design'],
       socialMedia: ['https://twitter.com/SocketDotTech'],
     },
     description:
-      'This page gathers Socket vaults built on top of Socket bridge framework. Socket is highly flexible and configurable and risks vary depending on the current configuration of the specific route.\
-      Token Vaults are connected via so-called Plugs and Switchboards to their remote counterparts. The central contract on each chain, Socket, stores the configuration of all Plugs and Switchboards.\
+      'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol. Socket is highly flexible and configurable and risks vary depending on the current configuration of the specific route.\
+      Token Vaults are connected via Plugs and Switchboards to their remote counterparts. The central contract on each chain, Socket, stores the configuration of all Plugs and Switchboards.\
       Some Switchboards may be as secure as "native" (canonical) bridge, some may use simple Relayers/Watchers to move messages across chains.',
   },
   riskView: {
@@ -39,7 +40,7 @@ export const socket: Bridge = {
     sourceUpgradeability: {
       value: 'Yes',
       description:
-        "Vaults can be individually upgradable and it's security assumptions must be individually assessed for each individual vault.",
+        'Vaults can be individually upgradable and the security assumptions must be individually assessed for each individual vault.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.CANONICAL,
