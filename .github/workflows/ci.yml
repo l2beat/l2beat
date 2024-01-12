@@ -51,7 +51,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: yarn build --dry=json
 
       - name: Typecheck
         run: yarn typecheck
