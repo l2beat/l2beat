@@ -1,4 +1,5 @@
 name: CI
+
 on:
   pull_request:
   push:
@@ -7,7 +8,8 @@ on:
   merge_group:
 
 jobs:
-  test:
+  build:
+    name: Build and test
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -28,68 +30,35 @@ jobs:
       TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Cache turbo build setup
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn test
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+      - name: Typecheck
+        run: yarn typecheck
+      - name: Test
+        run: yarn test
+      - name: Lint
+        run: yarn lint
+      - name: Format
+        run: yarn format
 
 
 
-  lint:
-    runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn lint
-
-  build-frontend:
-    runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn build:frontend
-
-  typecheck:
-      runs-on: ubuntu-latest
-      env:
-        TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-        TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-node@v3
-          with:
-            node-version: 18.x
-            cache: "yarn"
-        - run: yarn --frozen-lockfile
-        - run: yarn typecheck
-
-  format:
-    runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn format
