@@ -59,6 +59,7 @@
     "MainnetSpokeConnector": {
       "ignoreMethods": ["snapshotRoots"],
       "ignoreInWatchMode": [
+        "getLastCompletedSnapshotId",
         "lastSentBlock",
         "outboundRoot",
         "proposedTimestamp",
@@ -95,6 +96,7 @@
       "ignoreInWatchMode": [
         "domains",
         "domainsHash",
+        "lastSavedAggregateRootTimestamp",
         "getPendingInboundRootsCount",
         "pendingInboundRoots",
         "proposedTimestamp",
