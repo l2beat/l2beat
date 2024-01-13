@@ -20,7 +20,8 @@ export const rss3: Layer2 = upcoming({
       socialMedia: [
         'https://twitter.com/rss3_',
         'https://discord.com/invite/rss3-network',
-        'https://t.me/rss3_en'],
+        'https://t.me/rss3_en',
+      ],
     },
   },
 })
