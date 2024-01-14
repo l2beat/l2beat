@@ -8,7 +8,7 @@ export const rss3: Layer2 = upcoming({
     slug: 'rss3',
     description:
       'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack and Celestia DA, handling the value and ownership of AI and Open Information.',
-    purpose: 'AI, Information',
+    purposes: ['AI', 'Information'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
