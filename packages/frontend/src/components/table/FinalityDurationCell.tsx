@@ -13,7 +13,7 @@ interface Props {
 
 export function FinalityDurationCell(props: Props) {
   return (
-    <Tooltip>
+    <Tooltip data-testid="finality-duration-cell">
       <TooltipTrigger>
         <DurationCell durationInSeconds={props.data.averageInSeconds} />
       </TooltipTrigger>
