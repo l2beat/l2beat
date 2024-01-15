@@ -12,11 +12,10 @@ export interface DesktopTabsProps {
     selected: boolean
     new?: boolean
   }[]
-  useNewLayout?: boolean
 }
 
-export function DesktopTabs({ pages, useNewLayout }: DesktopTabsProps) {
-  if (useNewLayout) {
+export function DesktopTabs({ pages }: DesktopTabsProps) {
+  if (pages.length >= 6) {
     return (
       <ul
         className={cx(
@@ -31,12 +30,16 @@ export function DesktopTabs({ pages, useNewLayout }: DesktopTabsProps) {
               'relative h-12 w-full text-lg font-bold lg:h-16',
               i < 3 &&
                 'border-b-gray-200 dark:border-b-gray-850 md:border-b-2 lg:border-b-0',
-              (i + 1) % 3 !== 0 && 'md:border-r-2',
+              (i + 1) % 3 !== 0 && 'md:border-r-2 md:border-r-transparent',
               (i + 1) % 3 !== 0 &&
                 !page.selected &&
                 !pages[i + 1]?.selected &&
                 'md:border-r-gray-200 md:dark:border-r-gray-850',
-              i !== pages.length - 1 && 'lg:border-r-2',
+              i !== pages.length - 1 && 'lg:border-r-2 lg:border-r-transparent',
+              i !== pages.length - 1 &&
+                !page.selected &&
+                !pages[i + 1]?.selected &&
+                'lg:border-r-gray-200 lg:dark:border-r-gray-850',
               page.selected && [
                 'before:absolute',
                 'before:z-10',
