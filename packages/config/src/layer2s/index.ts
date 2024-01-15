@@ -48,7 +48,7 @@ import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
-import { obscuro } from './obscuro'
+import { ten } from './ten'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
@@ -133,7 +133,7 @@ export const layer2s: Layer2[] = [
   morph,
   myria,
   nova,
-  obscuro,
+  ten,
   ola,
   omgnetwork,
   optimism,

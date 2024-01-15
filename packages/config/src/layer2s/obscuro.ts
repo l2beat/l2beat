@@ -1,32 +1,32 @@
 import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const obscuro: Layer2 = upcoming({
-  id: 'obscuro',
+export const ten: Layer2 = upcoming({
+  id: 'ten',
   display: {
-    name: 'Obscuro',
-    slug: 'obscuro',
+    name: 'Ten',
+    slug: 'ten',
     description:
-      'Obscuro is an Encrypted Rollup that has been designed for use on the Ethereum network and uses 100% of the EVM. At present, Obscuro is available in testnet running on the Sepolia testnet for further testing and optimization.',
-    purposes: ['Universal'],
+      'Ten is an Encrypted Rollup that has been designed for use on the Ethereum network and uses 100% of the EVM. At present, Ten is available in testnet running on the Sepolia testnet for further testing and optimization.',
+    purposes: ['Universal', 'Privacy'],
     category: 'Optimistic Rollup',
     links: {
-      websites: ['https://obscu.ro'],
+      websites: ['https://ten.xyz'],
       apps: [],
       documentation: [
-        'https://docs.obscu.ro',
-        'https://obscu.ro/litepaper',
-        'https://whitepaper.obscu.ro',
+        'https://docs.ten.xyz',
+        'https://ten.xyz/litepaper',
+        'https://whitepaper.ten.xyz',
       ],
-      explorers: ['https://testnet.obscuroscan.io'],
+      explorers: ['https://testnet.tenscan.io'],
       repositories: [
-        'https://github.com/obscuronet',
-        'https://github.com/obscuronet/go-obscuro',
-        'https://github.com/obscuronet/tutorial',
-        'https://github.com/obscuronet/sample-applications',
+        'https://github.com/ten-protocol',
+        'https://github.com/ten-protocol/go-ten',
+        'https://github.com/ten-protocol/tutorial',
+        'https://github.com/ten-protocol/sample-applications',
       ],
       socialMedia: [
-        'https://twitter.com/obscuronet',
+        'https://twitter.com/tenprotocol',
         'https://discord.gg/yQfmKeNzNd',
         'https://medium.com/obscuro-labs',
       ],
