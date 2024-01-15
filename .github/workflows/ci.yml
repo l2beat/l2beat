@@ -8,8 +8,59 @@ on:
   merge_group:
 
 jobs:
-  test:
+  build-frontend:
+    name: Build frontend
     runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build
+        run: yarn build:frontend
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build
+        run: yarn typecheck
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+      TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
         image: postgres:14
@@ -23,57 +74,60 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn build:dependencies
-      - uses: nick-fields/retry@v2
-        name: Run yarn test
-        with:
-          timeout_seconds: 60
-          max_attempts: 2
-          retry_on: timeout
-          command: yarn test
 
-        env:
-          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
-          TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
-          CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Test
+        run: yarn test
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn build:dependencies
-      - run: yarn lint
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn build
-      - run: yarn typecheck
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
 
+      - name: Build
+        run: yarn lint
   format:
+    name: Format
     runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: "yarn"
-      - run: yarn --frozen-lockfile
-      - run: yarn format
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build
+        run: yarn format
