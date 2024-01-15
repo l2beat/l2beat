@@ -1,7 +1,7 @@
 import { deri } from './deri'
-import { zklinknexus } from './zklinknexus'
 import { Layer3 } from './types'
 import { xai } from './xai'
+import { zklinknexus } from './zklinknexus'
 
 export * from './types'
 
