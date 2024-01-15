@@ -1,6 +1,4 @@
-import { ContractValue } from '@l2beat/discovery-types'
 import {
-  assert,
   AssetId,
   ChainId,
   CoingeckoId,
@@ -298,22 +296,27 @@ export const linea: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('Roles'),
-      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles. ${(() => {
-        const roles = discovery.getContract('Roles')
-        assert(roles.values !== undefined)
-        const rolesCount = Object.entries(
-          roles.values.roles['roles' as keyof ContractValue],
-        ).length
-        assert(rolesCount === 0)
-
-        return 'Currently there are no additional members.'
-      })()}`,
+      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles. 0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8 is able to invoke pause() on ERC20Bridge and USDCBridge. Also given address is able to invoke pauseByType() on ZkEvm contract`,
     ),
     {
       accounts: operators,
       name: 'Operators',
       description:
         'The operators are allowed to prove blocks and post the corresponding transaction data.',
+    },
+    // FIXME: Add value transformer
+    {
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8',
+          ),
+          type: 'EOA',
+        },
+      ],
+      name: 'Members of Role 1',
+      description:
+        'Allowed to invoke pause() on ERC20Bridge and USDCBridge. Allowed to invoke pauseByType() on zkEVM contract.',
     },
   ],
   contracts: {
