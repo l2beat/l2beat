@@ -28,6 +28,7 @@ export const ten: Layer2 = upcoming({
       socialMedia: [
         'https://twitter.com/tenprotocol',
         'https://discord.gg/yQfmKeNzNd',
+        'https://t.me/tenprotocol',
         'https://medium.com/obscuro-labs',
       ],
     },
