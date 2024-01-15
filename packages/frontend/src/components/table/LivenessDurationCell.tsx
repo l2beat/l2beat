@@ -61,7 +61,12 @@ export function LivenessDurationCell(props: {
       <TooltipContent>
         {props.tooltipContent}
         {props.warning && (
-          <WarningBar className="mt-2" text={props.warning} color="yellow" />
+          <WarningBar
+            className="mt-2"
+            icon={RoundedWarningIcon}
+            text={props.warning}
+            color="yellow"
+          />
         )}
       </TooltipContent>
     </Tooltip>

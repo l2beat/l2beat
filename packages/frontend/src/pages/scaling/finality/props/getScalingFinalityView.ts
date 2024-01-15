@@ -38,7 +38,10 @@ export function getScalingFinalityViewEntry(
     purposes: project.display.purposes,
     stage: project.stage,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    timeToFinalize: projectApiResponse,
+    timeToFinalize: {
+      ...projectApiResponse,
+      warning: project.display.finalityWarning,
+    },
   }
 }
 

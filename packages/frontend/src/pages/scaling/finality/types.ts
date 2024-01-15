@@ -20,5 +20,6 @@ export interface ScalingFinalityViewEntry {
     averageInSeconds: number
     minimumInSeconds: number
     maximumInSeconds: number
+    warning?: string
   }
 }

@@ -11,7 +11,7 @@ export function getProps(
 ): Wrapped<FinalityPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'finality'),
+      navbar: getNavbarProps(config, 'scaling'),
       finalityView: getScalingFinalityView(
         config.layer2s,
         pagesData.finalityApiResponse,

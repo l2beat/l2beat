@@ -12,7 +12,7 @@ export function FinalityIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Finality icon"
       {...props}
     >
-      <g clip-path="url(#clip0_98_259)">
+      <g clipPath="url(#clip0_98_259)">
         <path
           d="M5.625 3.75L12 3L12.5625 6.1875L18.9375 5.8125L19.3125 10.6875L20.25 16.5L12.9375 16.875L12 14.8125L8.8125 15.1875L7.125 15.5625L5.625 3.75Z"
           fill="#1D1E22"
