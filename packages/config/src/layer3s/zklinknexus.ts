@@ -9,7 +9,7 @@ export const zklinknexus: Layer3 = {
   isUnderReview: true,
   id: ProjectId('zklinknexus'),
   // TODO(Linea, zkSync Era): zkLink Nexus is a multi-chain zkRollup architecture. In addition to Linea, it currently supports zkSync Era and will support more Layer2s in the future.
-  hostChain: ProjectId('linea'),
+  hostChain: 'Multiple',
   display: {
     name: 'zkLink Nexus',
     slug: 'zklinknexus',
