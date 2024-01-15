@@ -66,3 +66,14 @@ you need to talk to devs to handle this case.
    - `product` (required): set it for you project `product` property from swaggerhub
    - `sinceTimestamp` (required): from which timestamp you want to start fetching data
    - `resyncLastDays` (required): set it to 7
+
+## Test locally
+
+1. Set up your backend according to the instructions in the [README](../packages/backend/README.md).
+
+2. Add `ACTIVITY_ENABLED=true` to your `.env` file. Also add `STARKEX_API_KEY` which is required.
+
+3. Run `yarn start:dev` in the `packages/backend` directory and wait till whole activity is synced.
+
+4. Go to `packages/frontend`, run `yarn start:local` to start frontend and check if activity is
+   displayed correctly.
