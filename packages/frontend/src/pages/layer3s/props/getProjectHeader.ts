@@ -87,7 +87,10 @@ export function getProjectHeader(
     isUnderReview: project.isUnderReview,
     showProjectUnderReview: isAnySectionUnderReview(project),
     warning: project.display.headerWarning,
-    hostChain: layer2s.find((l) => l.id === project.hostChain)?.display.name,
+    hostChain:
+      project.hostChain === 'Multiple'
+        ? 'Multiple'
+        : layer2s.find((l) => l.id === project.hostChain)?.display.name,
   }
 }
 
