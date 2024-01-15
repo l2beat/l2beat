@@ -7,6 +7,7 @@ import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
+import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
@@ -51,6 +52,7 @@ export class Application {
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger, database, clock),
       createLivenessModule(config, logger, database, clock),
+      createFinalityModule(config, logger, database, clock),
     ]
 
     const apiServer = new ApiServer(

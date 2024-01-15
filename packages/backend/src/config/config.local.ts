@@ -29,6 +29,7 @@ export function getLocalConfig(env: Env): Config {
     'INTERNAL_DISCORD_CHANNEL_ID',
   )
   const discordEnabled = !!discordToken && !!internalDiscordChannelId
+  const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
 
   return {
     name: 'Backend/Local',
@@ -171,6 +172,9 @@ export function getLocalConfig(env: Env): Config {
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+    },
+    finality: {
+      enabled: finalityEnabled,
     },
     activity: activityEnabled && {
       starkexApiKey: env.string('STARKEX_API_KEY'),

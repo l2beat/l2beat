@@ -29,6 +29,7 @@ export function getProductionConfig(env: Env): Config {
   )
   const discordEnabled =
     !!discordToken && !!publicDiscordChannelId && !!internalDiscordChannelId
+  const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
 
   return {
     name: 'Backend/Production',
@@ -181,6 +182,9 @@ export function getProductionConfig(env: Env): Config {
         ),
       },
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+    },
+    finality: {
+      enabled: finalityEnabled,
     },
     activity: {
       starkexApiKey: env.string('STARKEX_API_KEY'),
