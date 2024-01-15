@@ -22,9 +22,7 @@ export const cronos: Layer2 = {
       documentation: ['https://docs.cronos.org/'],
       explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://twitter.com/cronos_chain'
-      ],
+      socialMedia: ['https://twitter.com/cronos_chain'],
     },
   },
   stage: {
