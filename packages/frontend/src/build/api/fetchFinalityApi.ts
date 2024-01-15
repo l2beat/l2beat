@@ -5,10 +5,7 @@ export function fetchFinalityApi(
   backend: Config['backend'],
   http: JsonHttpClient,
 ) {
-  if (backend.mock) {
-    return getMockFinalityApiResponse()
-  }
-  throw new Error('Not implemented')
+  return getMockFinalityApiResponse()
 }
 
 function getMockFinalityApiResponse() {
