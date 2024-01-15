@@ -13,6 +13,7 @@ import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
+import { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import { Layer2Liveness } from './Layer2LivenessConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
@@ -70,4 +71,6 @@ export interface Layer2Config extends ScalingProjectConfig {
   transactionApi?: Layer2TransactionApi
   /** Configuration for getting state updates and batch submission */
   liveness?: Layer2Liveness
+  /** Configuration for getting finality data */
+  finality?: Layer2FinalityConfig
 }
