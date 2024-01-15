@@ -129,6 +129,7 @@ describe('icons', () => {
     'symbiosis',
     'deri',
     'xai',
+    'zklinknexus',
   ]
 
   for (const project of projects) {
