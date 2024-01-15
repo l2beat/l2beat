@@ -1,7 +1,7 @@
 {
   "name": "deri",
   "chain": "arbitrum",
-  "blockNumber": 168378561,
+  "blockNumber": 170701566,
   "configHash": "0x293f56b845371177637446d304bb0cf3f7987264e9c26cf32cc3d6e3b8206c65",
   "version": 3,
   "contracts": [
@@ -149,12 +149,12 @@
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 400,
+        "firstUnresolvedNode": 442,
         "inbox": "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
         "lastStakeBlock": 18603821,
-        "latestConfirmed": 399,
-        "latestNodeCreated": 405,
+        "latestConfirmed": 441,
+        "latestNodeCreated": 447,
         "loserStakeEscrow": "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
         "minimumAssertionPeriod": 75,
         "outbox": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -240,11 +240,11 @@
           "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
         ],
         "allowedOutboxList": ["0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"],
-        "delayedMessageCount": 451,
+        "delayedMessageCount": 493,
         "rollup": "0x846387C3D6001F74170455B1074D01f05eB3067a",
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 400,
-        "sequencerReportedSubMessageCount": 62074
+        "sequencerMessageCount": 442,
+        "sequencerReportedSubMessageCount": 63659
       },
       "derivedName": "Bridge"
     },
@@ -267,7 +267,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1700367819,
       "values": {
-        "batchCount": 400,
+        "batchCount": 442,
         "bridge": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -276,7 +276,7 @@
         "maxTimeVariation": [5760, 48, 86400, 3600],
         "rollup": "0x846387C3D6001F74170455B1074D01f05eB3067a",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 450
+        "totalDelayedMessagesRead": 492
       },
       "derivedName": "SequencerInbox"
     },
