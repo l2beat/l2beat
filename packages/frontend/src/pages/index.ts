@@ -11,6 +11,7 @@ import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
+import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
@@ -71,6 +72,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         tvlApiResponse,
       }),
     )
+  }
+
+  if (config.features.finality) {
+    pages.push(getFinalityPage(config, pagesData))
   }
 
   outputPages(pages)

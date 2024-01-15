@@ -3,14 +3,14 @@ import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { PagesData, Wrapped } from '../../../Page'
-import { TvlPageProps } from '../view/ScalingSummaryPage'
+import { SummaryPageProps } from '../view/ScalingSummaryPage'
 import { getPageMetadata } from './getPageMetadata'
 import { getScalingSummaryView } from './getScalingSummaryView'
 
 export function getProps(
   config: Config,
   pagesData: PagesData,
-): Wrapped<TvlPageProps> {
+): Wrapped<SummaryPageProps> {
   const { tvlApiResponse, verificationStatus } = pagesData
 
   const charts = tvlApiResponse.layers2s

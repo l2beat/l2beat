@@ -17,7 +17,7 @@ import {
   ScalingSummaryViewProps,
 } from './ScalingSummaryView'
 
-export interface TvlPageProps {
+export interface SummaryPageProps {
   tvlView: ScalingSummaryViewProps
   navbar: NavbarProps
   footer: FooterProps
@@ -26,7 +26,7 @@ export interface TvlPageProps {
   milestones?: Milestone[]
 }
 
-export function ScalingSummaryPage(props: TvlPageProps) {
+export function ScalingSummaryPage(props: SummaryPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />

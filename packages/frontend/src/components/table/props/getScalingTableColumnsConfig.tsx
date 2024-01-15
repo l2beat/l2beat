@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
+import { ScalingFinalityViewEntry } from '../../../pages/scaling/finality/types'
 import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
@@ -610,6 +611,25 @@ export function getScalingLivenessColumnsConfig() {
             <TooltipContent>{project.explanation}</TooltipContent>
           </Tooltip>
         ) : null,
+    },
+  ]
+  return columns
+}
+
+export function getScalingFinalityColumnsConfig() {
+  const columns: ColumnConfig<ScalingFinalityViewEntry>[] = [
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    {
+      name: 'DA MODE',
+      getValue: (project) => project.dataAvailabilityMode,
+      tooltip:
+        'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
+    },
+    {
+      name: '30-day avg. time to finality',
+      getValue: () => '12s',
+      tooltip:
+        'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this does not take into account L1 reorgs.',
     },
   ]
   return columns

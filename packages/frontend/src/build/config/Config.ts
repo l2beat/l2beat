@@ -14,6 +14,7 @@ export interface Config {
   features: {
     activity: boolean
     liveness: boolean
+    finality: boolean
     banner: boolean
     tvlBreakdown: boolean
     gitcoinOption: boolean

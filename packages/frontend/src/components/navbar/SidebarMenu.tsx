@@ -13,6 +13,7 @@ import { NavbarPage } from './types'
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
   showActivity: boolean
+  showFinality: boolean
   showLiveness: boolean
   showHiringBadge: boolean
   forumLink: string
@@ -59,6 +60,12 @@ export function SidebarMenu(props: SidebarMenuProps) {
                 <li className="flex gap-2 font-medium">
                   <LivenessIcon className="h-auto w-4" />
                   <a href="/scaling/liveness">Liveness</a>
+                </li>
+              )}
+              {props.showFinality && (
+                <li className="flex gap-2 font-medium">
+                  <LivenessIcon className="h-auto w-4" />
+                  <a href="/scaling/finality">Finality</a>
                 </li>
               )}
               {props.showActivity && (

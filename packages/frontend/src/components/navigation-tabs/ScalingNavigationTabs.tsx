@@ -5,8 +5,15 @@ import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { NavigationPage, NavigationTabs } from './NavigationTabs'
 
 interface ScalingNavigationTabsProps {
-  selected: 'summary' | 'detailed' | 'risk' | 'activity' | 'liveness'
+  selected:
+    | 'summary'
+    | 'detailed'
+    | 'risk'
+    | 'activity'
+    | 'liveness'
+    | 'finality'
   showActivity: boolean
+  showFinality: boolean
   showLiveness: boolean
 }
 
@@ -42,6 +49,15 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       icon: <LivenessIcon />,
       link: '/scaling/liveness',
       selected: props.selected === 'liveness',
+    })
+  }
+  if (props.showFinality) {
+    pages.push({
+      fullTitle: 'Finality',
+      shortTitle: 'Finality',
+      icon: <LivenessIcon />,
+      link: '/scaling/finality',
+      selected: props.selected === 'finality',
     })
   }
   if (props.showActivity) {
