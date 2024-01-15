@@ -23,6 +23,7 @@ export interface SummaryPageProps {
   footer: FooterProps
   showActivity: boolean
   showLiveness: boolean
+  showFinality: boolean
   milestones?: Milestone[]
 }
 
@@ -34,6 +35,7 @@ export function ScalingSummaryPage(props: SummaryPageProps) {
         <ScalingNavigationTabs
           showActivity={props.showActivity}
           showLiveness={props.showLiveness}
+          showFinality={props.showFinality}
           selected="summary"
         />
         <main className="mt-4 md:mt-12">
