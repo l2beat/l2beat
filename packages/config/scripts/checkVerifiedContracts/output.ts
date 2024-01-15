@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { existsSync } from 'fs'
 import { readFile, writeFile } from 'fs/promises'
 import z from 'zod'
@@ -10,6 +10,11 @@ export const FileStructure = z.object({
 export type FileStructure = z.infer<typeof FileStructure>
 
 export type VerificationMap = Record<string, boolean>
+
+export function getOutputPath(chainId: ChainId) {
+  const chainName = ChainId.getName(chainId)
+  return `src/verification/${chainName}/verified.json`
+}
 
 export async function loadPreviouslyVerifiedContracts(
   filePath: string,

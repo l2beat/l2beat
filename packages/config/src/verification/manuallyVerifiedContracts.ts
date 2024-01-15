@@ -1,9 +1,7 @@
-import { ManuallyVerifiedContracts } from '@l2beat/shared-pure'
-import { readFile } from 'fs/promises'
+import { ChainId, ManuallyVerifiedContracts } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import path from 'path'
-
-const jsonFilePath = path.resolve(__dirname, '../manuallyVerified.jsonc')
 
 export function parseManuallyVerifiedContracts(
   content: string,
@@ -21,7 +19,19 @@ export function parseManuallyVerifiedContracts(
   return ManuallyVerifiedContracts.parse(parsed)
 }
 
-export async function getManuallyVerifiedContracts(): Promise<ManuallyVerifiedContracts> {
-  const content = await readFile(jsonFilePath, 'utf-8')
+export function getManuallyVerifiedContracts(
+  chainId: ChainId,
+): ManuallyVerifiedContracts {
+  const chainName = ChainId.getName(chainId)
+  const jsonFilePath = path.resolve(
+    __dirname,
+    `/${chainName}/manuallyVerified.jsonc`,
+  )
+
+  if (!existsSync(jsonFilePath)) {
+    return ManuallyVerifiedContracts.parse({})
+  }
+
+  const content = readFileSync(jsonFilePath, 'utf-8')
   return parseManuallyVerifiedContracts(content)
 }

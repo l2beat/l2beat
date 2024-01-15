@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { bridges, layer2s } from '../../src/'
@@ -9,11 +9,15 @@ import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
 } from './addresses'
-import { loadVerifiedJson } from './output'
+import {
+  getOutputPath as getVerificationFilePath,
+  loadVerifiedJson,
+} from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
   it('all current contracts are included in verified.json', async () => {
-    const verifiedJson = await loadVerifiedJson('src/verified.json')
+    const filePath = getVerificationFilePath(ChainId.ETHEREUM)
+    const verifiedJson = await loadVerifiedJson(filePath)
     const allContracts = getUniqueContractsForAllProjects([
       ...bridges,
       ...layer2s,
