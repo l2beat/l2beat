@@ -296,7 +296,7 @@ export const linea: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('Roles'),
-      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles. 0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8 is able to invoke pause() on ERC20Bridge and USDCBridge. Also given address is able to invoke pauseByType() on ZkEvm contract`,
+      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles.`,
     ),
     {
       accounts: operators,
