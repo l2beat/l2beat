@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { getScalingFinalityColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
@@ -22,7 +21,6 @@ export function ScalingFinalityView({ items }: ScalingFinalityViewProps) {
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
       <ScalingFilters items={items} hideRollupsOnlyCheckbox />
       <TableView columnsConfig={columnsConfig} rows={rows} items={items} />
-      <ScalingLegend />
     </section>
   )
 }
