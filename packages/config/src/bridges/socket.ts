@@ -50,7 +50,7 @@ export const socket: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Socket is a bridge framework connecting different chains via a set of "switchboards". Every chain using Socket for some of its tokens can mix & match many switchboards with varying trust assumptions, for example mixing a "fast" route via "Fast Switchboard" with a "Standard Route" using a native rollup AMB',
+        'Socket is a bridge framework connecting different chains via a set of "switchboards". Every chain using Socket for some of its tokens can mix & match many switchboards with varying trust assumptions, for example mixing a "fast" route via "Fast Switchboard" with a "Standard Route" using a native rollup AMB.',
       risks: [],
       references: [],
     },
@@ -77,7 +77,7 @@ export const socket: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'Socket Vault owners change the Vault configuration.',
+          text: 'the Socket Vault owners change the Vault configuration.',
           isCritical: true,
         },
       ],
