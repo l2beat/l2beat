@@ -15,6 +15,7 @@
     "build": "turbo run build",
     "build:backend": "turbo run build --filter=backend",
     "build:frontend": "turbo run build --filter=frontend",
+    "build:without-frontend": "turbo run build --filter=!frontend",
     "clean": "turbo run clean",
     "fix": "yarn lint:fix && yarn format:fix",
     "format": "turbo run format",
