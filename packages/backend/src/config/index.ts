@@ -1,4 +1,4 @@
-import { Env, getEnv } from '@l2beat/backend-tools'
+import { getEnv } from '@l2beat/backend-tools'
 
 import { Config } from './Config'
 import { getLocalConfig } from './config.local'
@@ -9,7 +9,7 @@ export type { Config }
 
 export function getConfig(): Config {
   const env = getEnv()
-  const deploymentEnv = getDeploymentEnv(env)
+  const deploymentEnv = env.optionalString('DEPLOYMENT_ENV') ?? 'local'
   console.log('Loading config for:', deploymentEnv)
 
   switch (deploymentEnv) {
@@ -22,8 +22,4 @@ export function getConfig(): Config {
   }
 
   throw new TypeError(`Unrecognized env: ${deploymentEnv}!`)
-}
-
-function getDeploymentEnv(env: Env) {
-  return env.optionalString('DEPLOYMENT_ENV') ?? 'local'
 }
