@@ -109,8 +109,10 @@ function getScalingL3SummaryEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     purposes: project.display.purposes,
-    hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
-      .name,
+    hostChainName:
+      project.hostChain === 'Multiple'
+        ? 'Multiple'
+        : layer2s.find((l) => l.id === project.hostChain)?.display.name,
   }
 }
 
