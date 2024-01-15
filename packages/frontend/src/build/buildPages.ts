@@ -8,6 +8,7 @@ import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
+import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
@@ -71,6 +72,13 @@ async function main() {
   }
   console.log('\n')
 
+  let finalityApiResponse: any = undefined
+  if (config.features.finality) {
+    console.time('[FINALITY]')
+    finalityApiResponse = fetchFinalityApi(config.backend, http)
+    console.timeEnd('[FINALITY]')
+  }
+
   createApi(config, tvlApiResponse, activityApiResponse)
 
   const verificationStatus = getVerificationStatus()
@@ -83,6 +91,8 @@ async function main() {
     manuallyVerifiedContracts,
     tvlBreakdownApiResponse,
     livenessApiResponse,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    finalityApiResponse,
   }
 
   await renderPages(config, pagesData)

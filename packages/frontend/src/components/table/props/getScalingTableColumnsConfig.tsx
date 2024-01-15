@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import { randomInt } from 'crypto'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
@@ -21,7 +20,7 @@ import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 import { ComingSoonCell } from '../ComingSoonCell'
-import { DurationCell } from '../DurationCell'
+import { FinalityDurationCell } from '../FinalityDurationCell'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
@@ -630,7 +629,9 @@ export function getScalingFinalityColumnsConfig() {
     },
     {
       name: '30-day avg. time to finality',
-      getValue: () => <DurationCell durationInSeconds={randomInt(1, 10000)} />,
+      getValue: (project) => (
+        <FinalityDurationCell data={project.timeToFinalize} />
+      ),
       tooltip:
         'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this does not take into account L1 reorgs.',
     },

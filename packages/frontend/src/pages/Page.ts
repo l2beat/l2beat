@@ -39,4 +39,5 @@ export interface PagesData {
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
   livenessApiResponse: LivenessApiResponse | undefined
+  finalityApiResponse: any
 }

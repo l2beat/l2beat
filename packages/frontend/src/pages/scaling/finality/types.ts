@@ -16,4 +16,9 @@ export interface ScalingFinalityViewEntry {
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
+  timeToFinalize: {
+    averageInSeconds: number
+    minimumInSeconds: number
+    maximumInSeconds: number
+  }
 }

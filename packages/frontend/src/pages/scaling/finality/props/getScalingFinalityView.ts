@@ -6,18 +6,25 @@ import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
 
 export function getScalingFinalityView(
   projects: Layer2[],
+  finalityResponse: any,
 ): ScalingFinalityViewProps {
-  const includedProjects = projects.filter(
-    (project) => !project.isArchived && !project.isUpcoming,
-  )
+  const includedProjects = getIncludedProjects(projects, finalityResponse)
+  //Add filter by exluding projects that are not in the finalityApiResponse
 
   return {
-    items: includedProjects.map(getScalingFinalityViewEntry),
+    items: includedProjects.map((project) =>
+      getScalingFinalityViewEntry(
+        project,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        finalityResponse.projects[project.id.toString()],
+      ),
+    ),
   }
 }
 
 export function getScalingFinalityViewEntry(
   project: Layer2,
+  projectApiResponse: any,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
@@ -30,7 +37,22 @@ export function getScalingFinalityViewEntry(
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    timeToFinalize: projectApiResponse,
   }
+}
+
+function getIncludedProjects(
+  projects: Layer2[],
+  finalityResponse: any | undefined,
+) {
+  return projects.filter(
+    (p) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      finalityResponse?.projects[p.id.toString()] &&
+      !p.isUpcoming &&
+      !p.isArchived,
+  )
 }
 
 function daModeToDisplay(daMode: ScalingProjectDataAvailabilityMode) {

@@ -2,9 +2,7 @@ import React from 'react'
 
 import { pluralize } from '../../utils/pluralize'
 
-export function DurationCell(props: { durationInSeconds: number | undefined }) {
-  if (!props.durationInSeconds) return null
-
+export function DurationCell(props: { durationInSeconds: number }) {
   const seconds = props.durationInSeconds
   const minutes = Math.floor(props.durationInSeconds / 60)
   const hours = Math.floor(minutes / 60)
