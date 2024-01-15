@@ -8,7 +8,7 @@ export const obscuro: Layer2 = upcoming({
     slug: 'obscuro',
     description:
       'Obscuro is an Encrypted Rollup that has been designed for use on the Ethereum network and uses 100% of the EVM. At present, Obscuro is available in testnet running on the Sepolia testnet for further testing and optimization.',
-    purpose: 'Universal, Encrypted',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://obscu.ro'],
@@ -27,7 +27,7 @@ export const obscuro: Layer2 = upcoming({
       ],
       socialMedia: [
         'https://twitter.com/obscuronet',
-        'https://discord.gg/NcK3DMZqF8',
+        'https://discord.gg/yQfmKeNzNd',
         'https://medium.com/obscuro-labs',
       ],
     },

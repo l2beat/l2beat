@@ -14,7 +14,7 @@ export const deri: Layer3 = {
     slug: 'deri',
     description:
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
-    purpose: 'DeFi',
+    purposes: ['DeFi'],
     category: 'Optimistic Rollup',
     provider: 'Arbitrum Orbit',
     links: {

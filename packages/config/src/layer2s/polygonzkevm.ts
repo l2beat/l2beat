@@ -65,7 +65,8 @@ const exitWindowRisk = {
   ),
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.\n\nThe Security Council can upgrade with no delay.`,
+  )}.`,
+  warning: 'The Security Council can upgrade with no delay.',
 }
 
 const timelockUpgrades = {
@@ -92,7 +93,7 @@ export const polygonzkevm: Layer2 = {
     warning: 'The forced transaction mechanism is currently disabled.',
     description:
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'Polygon',

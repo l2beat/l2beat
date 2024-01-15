@@ -250,7 +250,7 @@ export const arbitrum: Layer2 = {
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
@@ -429,7 +429,8 @@ export const arbitrum: Layer2 = {
         challengeWindowSeconds,
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
-      )} L1 timelock.\n\nThe Security Council can upgrade with no delay.`,
+      )} L1 timelock.`,
+      warning: 'The Security Council can upgrade with no delay.',
       sources: [
         {
           contract: 'OutboxV2',

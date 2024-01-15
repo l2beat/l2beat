@@ -1,4 +1,3 @@
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   CoingeckoId,
   EthereumAddress,
@@ -7,6 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { HttpClient } from '../HttpClient'
+import { CoingeckoClient } from './CoingeckoClient'
 import {
   approximateCirculatingSupply,
   CoingeckoQueryService,

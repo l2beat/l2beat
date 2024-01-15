@@ -46,10 +46,7 @@ export const lyra: Layer2 = opStack({
     slug: 'lyra',
     description:
       'Lyra Chain is an L2 scaling solution built using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals, and options trading.',
-    purpose: 'Exchange',
-    category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
-    provider: 'OP Stack',
+    purposes: ['Exchange'],
     links: {
       websites: ['https://lyra.finance/'],
       apps: ['https://lyra.finance/portfolio'],
@@ -76,6 +73,7 @@ export const lyra: Layer2 = opStack({
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
+  isNodeAvailable: 'UnderReview',
   milestones: [
     {
       name: 'Lyra V2 live on mainnet',
@@ -92,7 +90,6 @@ export const lyra: Layer2 = opStack({
     CHALLENGER: 'Challenger',
   },
   nonTemplatePermissions: [
-    // TODO: check whether the description is correct
     ...discovery.getMultisigPermission(
       'LyraMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
@@ -109,4 +106,5 @@ export const lyra: Layer2 = opStack({
       ...upgradeability,
     }),
   ],
+  nonTemplateEscrows: [],
 })

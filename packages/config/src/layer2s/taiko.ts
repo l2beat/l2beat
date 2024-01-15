@@ -8,7 +8,7 @@ export const taiko: Layer2 = upcoming({
     slug: 'taiko',
     description:
       'Taiko is a decentralized, Ethereum-equivalent ZK Rollup that has been developed on the Ethereum network. At present, Taiko is deployed on the Sepolia testnet for further testing and optimization.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://taiko.xyz'],

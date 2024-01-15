@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
-import { Tooltip as TooltipComponent } from '../Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { TooltipProvider as TooltipComponent } from '../tooltip/TooltipProvider'
 import { StageTooltip as StageTooltipComponent } from './StageTooltip'
 
 const meta: Meta<typeof TooltipComponent> = {
@@ -29,9 +29,9 @@ type Story = StoryObj<typeof TooltipComponent>
 export const Primary: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <span
-        className="Tooltip inline-block"
-        title={renderToStaticMarkup(
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <StageTooltipComponent
             stageConfig={{
               stage: 'Stage 1',
@@ -42,12 +42,9 @@ export const Primary: Story = {
               message: undefined,
               summary: [],
             }}
-          />,
-        )}
-        data-tooltip-big
-      >
-        <span>Element with tooltip</span>
-      </span>
+          />
+        </TooltipContent>
+      </Tooltip>
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -63,9 +60,9 @@ export const Primary: Story = {
 export const WithWarning: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <span
-        className="Tooltip inline-block"
-        title={renderToStaticMarkup(
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <StageTooltipComponent
             stageConfig={{
               stage: 'Stage 0',
@@ -79,12 +76,9 @@ export const WithWarning: Story = {
               },
               summary: [],
             }}
-          />,
-        )}
-        data-tooltip-big
-      >
-        <span>Element with tooltip</span>
-      </span>
+          />
+        </TooltipContent>
+      </Tooltip>
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -100,9 +94,9 @@ export const WithWarning: Story = {
 export const WithUnderReview: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <span
-        className="Tooltip inline-block"
-        title={renderToStaticMarkup(
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <StageTooltipComponent
             stageConfig={{
               stage: 'Stage 0',
@@ -116,12 +110,9 @@ export const WithUnderReview: Story = {
               },
               summary: [],
             }}
-          />,
-        )}
-        data-tooltip-big
-      >
-        <span>Element with tooltip</span>
-      </span>
+          />
+        </TooltipContent>
+      </Tooltip>
     </div>
   ),
   play: async ({ canvasElement }) => {

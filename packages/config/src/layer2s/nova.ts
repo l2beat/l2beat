@@ -49,7 +49,7 @@ export const nova: Layer2 = {
     slug: 'nova',
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
@@ -133,7 +133,8 @@ export const nova: Layer2 = {
         challengeWindowSeconds,
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
-      )} L1 timelock.\n\nThe Security Council can upgrade with no delay.`,
+      )} L1 timelock.`,
+      warning: 'The Security Council can upgrade with no delay.',
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(

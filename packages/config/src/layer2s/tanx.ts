@@ -40,27 +40,26 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-export const brine: Layer2 = {
+export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
   display: {
-    name: 'Brine',
-    slug: 'brine',
-    description: 'Brine is a DEX powered by StarkEx technology.',
-    purpose: 'Exchange',
+    name: 'tanX',
+    slug: 'tanx',
+    description: 'tanX is a DEX powered by StarkEx technology.',
+    purposes: ['Exchange'],
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
     links: {
-      websites: ['https://brine.fi/'],
-      apps: ['https://trade.brine.fi/'],
-      documentation: ['https://docs.brine.fi/'],
+      websites: ['https://tanx.fi/'],
+      apps: ['https://trade.tanx.fi/'],
+      documentation: ['https://docs.tanx.fi/'],
       explorers: [],
       repositories: [],
       socialMedia: [
-        'https://twitter.com/BrineFinance',
+        'https://twitter.com/tanXfinance',
         'https://discord.gg/wMAnf3gVTh',
-        'https://linkedin.com/company/brine-fi-dex',
       ],
     },
     activityDataSource: 'Closed API',

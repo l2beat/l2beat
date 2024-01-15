@@ -54,7 +54,7 @@ export const zksynclite: Layer2 = {
     slug: 'zksync-lite',
     description:
       'zkSync Lite (formerly zkSync) is a ZK Rollup platform from Matter Labs. It supports payments, token swaps and NFT minting.',
-    purpose: 'Payments, Tokens',
+    purposes: ['Payments'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
     dataAvailabilityMode: 'StateDiffs',
@@ -154,7 +154,8 @@ export const zksynclite: Layer2 = {
         upgradeDelay - forcedWithdrawalDelay,
       )} to exit to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
         forcedWithdrawalDelay,
-      )} to be processed.\n\nThe Security Council can upgrade with no delay.`,
+      )} to be processed.`,
+      warning: 'The Security Council can upgrade with no delay.',
       sources: [
         {
           contract: 'Governance',

@@ -1,4 +1,3 @@
-import { CoingeckoClient, CoinMarketChartRangeData } from '@l2beat/shared'
 import {
   assert,
   CoingeckoId,
@@ -7,6 +6,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
+
+import { CoingeckoClient } from './CoingeckoClient'
+import { CoinMarketChartRangeData } from './model'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
 
