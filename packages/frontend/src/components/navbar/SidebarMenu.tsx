@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
@@ -64,7 +65,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
               )}
               {props.showFinality && (
                 <li className="flex gap-2 font-medium">
-                  <LivenessIcon className="h-auto w-4" />
+                  <FinalityIcon className="h-auto w-4" />
                   <a href="/scaling/finality">Finality</a>
                 </li>
               )}

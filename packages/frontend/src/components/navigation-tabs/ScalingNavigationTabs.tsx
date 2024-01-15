@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { NavigationPage, NavigationTabs } from './NavigationTabs'
 
@@ -55,7 +56,7 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
     pages.push({
       fullTitle: 'Finality',
       shortTitle: 'Finality',
-      icon: <LivenessIcon />,
+      icon: <FinalityIcon />,
       link: '/scaling/finality',
       selected: props.selected === 'finality',
     })
