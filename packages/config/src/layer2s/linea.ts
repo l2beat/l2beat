@@ -48,6 +48,17 @@ const roles = discovery.getContractValue<{
   PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
 
+const zodiacRoles = discovery.getContractValue<{
+  roles: Record<string, Record<string, boolean>>
+}>('Roles', 'roles')
+const zodiacPauserRole = '1'
+const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
+  zodiacRoles.roles[zodiacPauserRole].members,
+).map((zodiacPauser) => ({
+  address: EthereumAddress(zodiacPauser),
+  type: 'EOA',
+}))
+
 const operators: ScalingProjectPermissionedAccount[] =
   roles.OPERATOR_ROLE.members.map((address) => ({
     address: EthereumAddress(address),
@@ -304,19 +315,12 @@ export const linea: Layer2 = {
       description:
         'The operators are allowed to prove blocks and post the corresponding transaction data.',
     },
-    // FIXME: Add value transformer
+
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Members of Role 1',
+      accounts: zodiacPausers,
+      name: 'Pauser',
       description:
-        'Allowed to invoke pause() on ERC20Bridge and USDCBridge. Allowed to invoke pauseByType() on zkEVM contract.',
+        'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project.',
     },
   ],
   contracts: {
