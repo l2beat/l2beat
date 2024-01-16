@@ -15,6 +15,7 @@ import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2Liveness } from './Layer2LivenessConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
+import { ChainConfig } from '../../common/ChainConfig'
 
 export interface Layer2 {
   type: 'layer2'
@@ -30,6 +31,8 @@ export interface Layer2 {
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
   config: Layer2Config
+  /** Technical chain configuration */
+  chainConfig?: ChainConfig
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */

@@ -107,4 +107,16 @@ export const lyra: Layer2 = opStack({
     }),
   ],
   nonTemplateEscrows: [],
+  chainConfig: {
+    devId: 'lyra',
+    chainId: 957,
+    explorerUrl: 'https://explorer.lyra.finance',
+    explorerApi: {
+      url: 'https://explorer.lyra.finance/api',
+      type: 'routescan',
+    },
+    // ~ Timestamp of block number 0 on Lyra
+    // https://explorer.lyra.finance/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
+  },
 })

@@ -198,6 +198,11 @@ export const polygonzkevm: Layer2 = {
       ],
     },
   },
+  chainConfig: {
+    devId: 'polygonzkevm',
+    chainId: 1101,
+    explorerUrl: 'https://zkevm.polygonscan.com',
+  },
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,

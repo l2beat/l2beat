@@ -169,4 +169,16 @@ export const base: Layer2 = opStack({
         "This contract is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is functionally equivalent to a 1/2 multisig where neither party can remove the other's permission to execute a Challenger call. It is controlled by the GuardianMultisig and the OptimismMultisig.",
     }),
   ],
+  chainConfig: {
+    devId: 'base',
+    chainId: 8453,
+    explorerUrl: 'https://basescan.org',
+    explorerApi: {
+      url: 'https://api.basescan.org/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Base
+    // https://basescan.org/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+  },
 })

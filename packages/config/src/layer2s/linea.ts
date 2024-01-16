@@ -180,6 +180,18 @@ export const linea: Layer2 = {
       ],
     },
   },
+  chainConfig: {
+    devId: 'linea',
+    chainId: 59144,
+    explorerUrl: 'https://lineascan.build',
+    explorerApi: {
+      url: 'https://api.lineascan.build/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Linea
+    // https://lineascan.build/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T01:15:00Z')),
+  },
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
