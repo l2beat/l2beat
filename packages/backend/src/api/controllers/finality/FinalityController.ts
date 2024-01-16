@@ -68,11 +68,13 @@ export class FinalityController {
         )
 
         const intervals = calcAvgsPerProject(records)
-
-        result[project.projectId.toString()] = divideAndAddLag(
+        const projectResult = divideAndAddLag(
           intervals,
           project.finalityConfig.lag,
         )
+        if (projectResult) {
+          result[project.projectId.toString()] = projectResult
+        }
       }),
     )
     return result

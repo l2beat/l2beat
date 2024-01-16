@@ -69,13 +69,13 @@ async function main() {
       // TODO: (maciekzygmunt) Sanity check?
     }
 
-    let livenessApiResponse: LivenessApiResponse | undefined = undefined
-    if (config.features.liveness) {
-      console.time('[LIVENESS]')
-      livenessApiResponse = await fetchLivenessApi(config.backend, http)
-      console.timeEnd('[LIVENESS]')
-    }
-    console.log('\n')
+      let livenessApiResponse: LivenessApiResponse | undefined = undefined
+      if (config.features.liveness) {
+        console.time('[LIVENESS]')
+        livenessApiResponse = await fetchLivenessApi(config.backend, http)
+        console.timeEnd('[LIVENESS]')
+      }
+      console.log('\n')
 
   let finalityApiResponse: any = undefined
   if (config.features.finality) {
@@ -89,16 +89,16 @@ async function main() {
     const verificationStatus = getVerificationStatus()
     const manuallyVerifiedContracts = getManuallyVerifiedContracts()
 
-    const pagesData = {
-      tvlApiResponse,
-      activityApiResponse,
-      verificationStatus,
-      manuallyVerifiedContracts,
-      tvlBreakdownApiResponse,
-      livenessApiResponse,
+      const pagesData = {
+        tvlApiResponse,
+        activityApiResponse,
+        verificationStatus,
+        manuallyVerifiedContracts,
+        tvlBreakdownApiResponse,
+        livenessApiResponse,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     finalityApiResponse,
-    }
+      }
 
     await renderPages(config, pagesData)
   } catch (e) {

@@ -4,7 +4,7 @@ import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
 import { Layer3 } from './types'
 
 export const xai: Layer3 = {
-  isUpcoming: true,
+  isUnderReview: true,
   type: 'layer3',
   id: ProjectId('xai'),
   hostChain: ProjectId('arbitrum'),
@@ -33,7 +33,7 @@ export const xai: Layer3 = {
   config: {
     escrows: [],
   },
+  contracts: CONTRACTS.EMPTY,
   riskView: UPCOMING_RISK_VIEW,
   technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
 }
