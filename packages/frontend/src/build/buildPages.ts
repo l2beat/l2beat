@@ -12,6 +12,7 @@ import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
+import { fetchDiffHistory } from './api/getDiffHistory'
 import { getManuallyVerifiedContracts } from './api/getManuallyVerifiedLinks'
 import { getVerificationStatus } from './api/getVerificationStatus'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
@@ -80,6 +81,7 @@ async function main() {
 
     const verificationStatus = getVerificationStatus()
     const manuallyVerifiedContracts = getManuallyVerifiedContracts()
+    const diffHistory = await fetchDiffHistory(config.backend, http)
 
     const pagesData = {
       tvlApiResponse,
@@ -88,6 +90,7 @@ async function main() {
       manuallyVerifiedContracts,
       tvlBreakdownApiResponse,
       livenessApiResponse,
+      diffHistory,
     }
 
     await renderPages(config, pagesData)
