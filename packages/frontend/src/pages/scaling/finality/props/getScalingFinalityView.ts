@@ -5,6 +5,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 
+import { orderByTvl } from '../../../../utils/orderByTvl'
 import { FinalityPagesData, ScalingFinalityViewEntry } from '../types'
 import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
 
@@ -12,12 +13,12 @@ export function getScalingFinalityView(
   projects: Layer2[],
   pagesData: FinalityPagesData,
 ): ScalingFinalityViewProps {
-  const { finalityApiResponse } = pagesData
+  const { finalityApiResponse, tvlApiResponse } = pagesData
 
   const includedProjects = getIncludedProjects(projects)
-
+  const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
   return {
-    items: includedProjects
+    items: orderedProjects
       .map((project) => {
         const finalityDataPoint =
           finalityApiResponse.projects[project.id.toString()]
