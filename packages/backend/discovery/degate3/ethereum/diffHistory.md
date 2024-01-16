@@ -49,7 +49,7 @@ The owner has accepted the ownership of the contract, which is now the same mult
 
 ## Description
 
-Owner is being changed. They are using Claimable istead of Ownable, which is the same thing but the new pending owner has to accept the ownership.
+Owner is being changed. They are using Claimable instead of Ownable, which is the same thing but the new pending owner has to accept the ownership.
 
 ## Watched changes
 

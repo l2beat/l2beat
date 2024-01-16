@@ -306,12 +306,12 @@ function generateDiffHistoryMarkdown(
 
   if (configRelatedDiff.length > 0) {
     assert(blockNumberFromMainBranchDiscovery !== undefined)
-    result.push('## Config related changes')
+    result.push('## Config/verification related changes')
     result.push('')
     result.push(
       `Following changes come from updates made to the config file,
-not from differences found during discovery. Values are
-for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
+or/and contracts becoming verified, not from differences found during 
+discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
     result.push(discoveryDiffToMarkdown(configRelatedDiff))

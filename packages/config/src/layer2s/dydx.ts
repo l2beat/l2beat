@@ -99,7 +99,7 @@ export const dydx: Layer2 = {
       socialMedia: [
         'https://dydx.exchange/blog',
         'https://twitter.com/dYdX',
-        'https://discord.gg/Tuze6tY',
+        'https://discord.gg/dydx',
         'https://youtube.com/c/dydxprotocol',
         'https://reddit.com/r/dydxprotocol/',
         'https://linkedin.com/company/dydx',
