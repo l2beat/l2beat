@@ -59,7 +59,7 @@ export const aevo: Layer2 = opStack({
   inboxAddress: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
   finality: {
     type: 'OPStack',
-    lag: 0,
+    lag: 5 * 60,
   },
   genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
