@@ -43,28 +43,38 @@ export class FinalityController {
 
     const projects: FinalityApiResponse['projects'] = {}
 
-    await Promise.all(
-      this.projects
-        .filter((p) => !p.isArchived && p.finalityConfig?.type === 'OPStack')
-        .map(async (project) => {
-          if (project.finalityConfig === undefined) {
-            return
-          }
-          const records = await this.livenessRepository.getByProjectIdAndType(
-            project.projectId,
-            LivenessType('DA'),
-            UnixTime.now().add(-30, 'days'),
-          )
-
-          const intervals = calcAvgsPerProject(records)
-
-          projects[project.projectId.toString()] = divideAndAddLag(
-            intervals,
-            project.finalityConfig.lag,
-          )
-        }),
+    const OPStackProjects = this.projects.filter(
+      (p) => !p.isArchived && p.finalityConfig?.type === 'OPStack',
     )
+    const OPStackFinality = await this.getOPStackFinality(OPStackProjects)
+    Object.assign(projects, OPStackFinality)
 
     return { type: 'success', data: { projects } }
+  }
+
+  async getOPStackFinality(
+    projects: Project[],
+  ): Promise<FinalityApiResponse['projects']> {
+    const result: FinalityApiResponse['projects'] = {}
+    await Promise.all(
+      projects.map(async (project) => {
+        if (project.finalityConfig === undefined) {
+          return
+        }
+        const records = await this.livenessRepository.getByProjectIdAndType(
+          project.projectId,
+          LivenessType('DA'),
+          UnixTime.now().add(-30, 'days'),
+        )
+
+        const intervals = calcAvgsPerProject(records)
+
+        result[project.projectId.toString()] = divideAndAddLag(
+          intervals,
+          project.finalityConfig.lag,
+        )
+      }),
+    )
+    return result
   }
 }

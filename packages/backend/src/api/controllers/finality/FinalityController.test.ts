@@ -1,3 +1,4 @@
+import { FinalityType } from '@l2beat/config'
 import {
   assert,
   Hash256,
@@ -21,9 +22,8 @@ import {
 import { FinalityController } from './FinalityController'
 
 describe(FinalityController.name, () => {
+  const CLOCK = getMockClock()
   describe(FinalityController.prototype.getFinality.name, () => {
-    const CLOCK = getMockClock()
-
     it('returns empty object if no data', async () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository([]),
@@ -101,6 +101,52 @@ describe(FinalityController.name, () => {
       }
     })
   })
+
+  describe(FinalityController.prototype.getOPStackFinality.name, () => {
+    it('correctly calculate avg, min and max', async () => {
+      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
+
+      RECORDS.push(
+        ...Array.from({ length: 5 }).map((_, i) => {
+          return {
+            projectId: ProjectId('project1'),
+            timestamp: START.add(-i, 'days'),
+            type: LivenessType('DA'),
+          }
+        }),
+      )
+      RECORDS.push(
+        ...Array.from({ length: 3 }).map((_, i) => {
+          return {
+            projectId: ProjectId('project1'),
+            timestamp: START.add(-(5 + i * 2), 'days'),
+            type: LivenessType('DA'),
+          }
+        }),
+      )
+      const projects = mockProjectConfig(RECORDS)
+      const finalityController = new FinalityController(
+        getMockLivenessRepository(RECORDS),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
+        projects,
+        getMockClock(),
+      )
+
+      const records = [...RECORDS]
+      calculateIntervals(records)
+      const last30Days = calculateDetailsFor(records, '30d')
+
+      assert(last30Days, 'last30Days is undefined')
+      const expected = {
+        averageInSeconds: last30Days.averageInSeconds / 2 + 0,
+        minimumInSeconds: last30Days.minimumInSeconds / 2 + 0,
+        maximumInSeconds: last30Days.maximumInSeconds / 2 + 0,
+      }
+
+      const result = await finalityController.getOPStackFinality(projects)
+      expect(result.project1).toEqual(expected)
+    })
+  })
 })
 
 const START = UnixTime.now()
@@ -146,6 +192,7 @@ function getMockLivenessRepository(
 
 function mockProjectConfig(
   records: LivenessRecordWithProjectIdAndType[],
+  type: FinalityType = 'OPStack',
   lag = 0,
 ): Project[] {
   return records
@@ -156,7 +203,7 @@ function mockProjectConfig(
         projectId,
         isArchived: false,
         finalityConfig: mockObject<Project['finalityConfig']>({
-          type: 'OPStack',
+          type,
           lag,
         }),
       }),
