@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+
 import { chains } from './index'
 
 describe('chains', () => {

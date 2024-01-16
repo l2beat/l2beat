@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+
 import { ChainConfig } from '../common/ChainConfig'
 
 export const ethereum: ChainConfig = {

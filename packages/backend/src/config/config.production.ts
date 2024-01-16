@@ -40,7 +40,7 @@ export function getProductionConfig(env: Env): Config {
     },
     clock: {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      minBlockTimestamp: chainsByDevId.get('ethereum')?.minTimestampForTvl!,
+      minBlockTimestamp: chainsByDevId.get('ethereum')!.minTimestampForTvl!,
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
