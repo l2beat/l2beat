@@ -48,7 +48,6 @@ import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
-import { obscuro } from './obscuro'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
@@ -70,6 +69,7 @@ import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { ten } from './ten'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
@@ -133,7 +133,6 @@ export const layer2s: Layer2[] = [
   morph,
   myria,
   nova,
-  obscuro,
   ola,
   omgnetwork,
   optimism,
@@ -155,6 +154,7 @@ export const layer2s: Layer2[] = [
   stealthchain,
   taiko,
   tanx,
+  ten,
   x1,
   xchain,
   zkfair,
