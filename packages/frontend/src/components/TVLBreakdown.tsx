@@ -34,7 +34,7 @@ export function TVLBreakdown(props: TVLBreakdownProps) {
                 y="0"
                 width={g.size}
                 height="21"
-                fill={g.color}
+                className={g.className}
               />
             ))}
           </svg>
@@ -72,10 +72,10 @@ function getGradientGroups(breakdown: TVLBreakdownProps) {
     return []
   }
   const groups = [
-    { weight: breakdown.associated, color: 'var(--gradient-3)' },
-    { weight: breakdown.ether, color: 'var(--gradient-1)' },
-    { weight: breakdown.stable, color: 'var(--gradient-2)' },
-    { weight: breakdown.other, color: 'var(--gradient-4)' },
+    { weight: breakdown.associated, className: 'fill-rose-700' },
+    { weight: breakdown.ether, className: 'fill-green-200' },
+    { weight: breakdown.stable, className: 'fill-teal-400' },
+    { weight: breakdown.other, className: 'fill-sky-600' },
   ].filter((x) => x.weight >= 0.005)
   const gaps = groups.length - 1
   const sizedGroups = groups.map((g) => ({

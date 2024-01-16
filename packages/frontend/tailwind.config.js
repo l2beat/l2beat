@@ -125,6 +125,13 @@ module.exports = {
       slate: {
         600: '#525C6A',
       },
+      rose: {
+        700: '#BB1B41',
+      },
+      teal: {
+        400: '#2EC4B6',
+      },
+      sky: { 600: '#2083C1' },
     },
     screens: {
       xs: '400px',
