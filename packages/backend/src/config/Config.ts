@@ -19,6 +19,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig
   readonly liveness: LivenessConfig | false
+  readonly finality: boolean
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
