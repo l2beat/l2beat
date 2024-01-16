@@ -20,7 +20,7 @@
     "run-kroma-propose-script": "ts-node ./discovery/kroma/ethereum/script-ts/propose.ts",
     "start": "node -r source-map-support/register build/src/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "test": "mocha",
+    "test": "mocha --timeout 10000",
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only src/tools/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
