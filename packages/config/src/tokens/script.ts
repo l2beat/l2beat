@@ -12,7 +12,7 @@ import { readFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
 
-import { getTokenInfo } from '../../scripts/tokens/add/getTokenInfo'
+import { getTokenInfo } from './getTokenInfo'
 
 const FILE_PATH = './src/tokens/source.jsonc'
 
