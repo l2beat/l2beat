@@ -422,7 +422,7 @@ export function getScalingActivityColumnsConfig() {
         project.data ? (
           <NumberCell>{formatTps(project.data.tpsDaily)}</NumberCell>
         ) : (
-          <Badge type="gray" className="w-full text-center md:mr-4">
+          <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
             MISSING ACTIVITY DATA
           </Badge>
         ),
