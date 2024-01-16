@@ -54,10 +54,7 @@ const zodiacRoles = discovery.getContractValue<{
 const zodiacPauserRole = '1'
 const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
   zodiacRoles.roles[zodiacPauserRole].members,
-).map((zodiacPauser) => ({
-  address: EthereumAddress(zodiacPauser),
-  type: 'EOA',
-}))
+).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
 
 const operators: ScalingProjectPermissionedAccount[] =
   roles.OPERATOR_ROLE.members.map((address) => ({
