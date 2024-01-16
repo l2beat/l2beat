@@ -18,8 +18,6 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 import { rimraf } from 'rimraf'
 
-import { updateProjectHash } from '../core/discovery/utils/hashDatabase'
-
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
 
@@ -308,12 +306,12 @@ function generateDiffHistoryMarkdown(
 
   if (configRelatedDiff.length > 0) {
     assert(blockNumberFromMainBranchDiscovery !== undefined)
-    result.push('## Config related changes')
+    result.push('## Config/verification related changes')
     result.push('')
     result.push(
       `Following changes come from updates made to the config file,
-not from differences found during discovery. Values are
-for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
+or/and contracts becoming verified, not from differences found during 
+discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
     result.push(discoveryDiffToMarkdown(configRelatedDiff))
@@ -355,8 +353,6 @@ function findDescription(
   return followingLines.slice(0, lastIndex).join('\n')
 }
 
-async function updateHashes(projectName: string, chainName: string) {
-  const databasePath = 'discovery/discoveredHashes.json'
-  const chainId = ChainId.fromName(chainName)
-  await updateProjectHash(projectName, chainId, databasePath)
+async function updateHashes(_projectName: string, _chainName: string) {
+  // TODO(radomski): no-op for now, look at L2B-3554
 }

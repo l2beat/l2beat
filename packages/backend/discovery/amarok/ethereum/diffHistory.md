@@ -1,3 +1,22 @@
+# Diff at Fri, 12 Jan 2024 10:04:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@29bf7dab0273e12e067979db6a3b622e6e34f64f block: 18941290
+- current block number: 18990101
+
+## Description
+
+New router, empty at the time of discovering this
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+      values.ROUTERS[24]:
++        "0xBa11aA59645a56031fedBcCF60D4f111534f2502"
+    }
+```
+
 # Diff at Fri, 05 Jan 2024 13:12:40 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)

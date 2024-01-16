@@ -392,7 +392,7 @@ export const bobanetwork: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'Node sofware source code can be found [here](https://github.com/bobanetwork/boba).',
+      'Node software source code can be found [here](https://github.com/bobanetwork/boba).',
     compressionScheme: `They utilize a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli) for calldata compression.`,
     genesisState:
       'Genesis state file can be found [here](https://github.com/bobanetwork/boba/blob/develop/boba_community/boba-node/state-dumps/mainnet/state-dump.latest.json).',

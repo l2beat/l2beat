@@ -1,3 +1,34 @@
+# Diff at Fri, 12 Jan 2024 16:33:06 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@bd17b9c403f8c2dc9783e9604ccb1874d7f77cb5 block: 18940531
+- current block number: 18992027
+
+## Description
+
+The number of EigenPods (contracts, to which validators’ withdrawal credentials point, and where consensus layer rewards accrue) have increased. Changes in the DepositContract deposits.
+All these values are now ignored in watch mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18940531 (main branch discovery), not current.
+
+```diff
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa) {
+      derivedName:
++        "DepositContract"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+      derivedName:
++        "EigenPodManager"
+    }
+```
+
 # Diff at Fri, 05 Jan 2024 10:39:06 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
