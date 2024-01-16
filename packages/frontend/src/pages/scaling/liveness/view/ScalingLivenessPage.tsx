@@ -7,6 +7,7 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
+import { LivenessHeader } from '../../../../components/header/LivenessHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
@@ -36,7 +37,8 @@ export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
           showLiveness={props.showLiveness}
           selected="liveness"
         />
-        <main className="mt-4 md:mt-12">
+        <main>
+          <LivenessHeader/>
           <LivenessWarning />
           <ScalingLivenessView {...props.livenessView} />
           <OtherSites />

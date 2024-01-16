@@ -634,6 +634,10 @@ export function getScalingFinalityColumnsConfig() {
         project.dataAvailabilityMode ?? <span>&mdash;</span>,
       tooltip:
         'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
+      sorting: {
+        getOrderValue: (project) => project.dataAvailabilityMode,
+        rule: 'alphabetical',
+      },
     },
     {
       name: '30-day avg. time to finality',
@@ -642,7 +646,11 @@ export function getScalingFinalityColumnsConfig() {
       ),
       tooltip:
         'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this is an approximate estimation. For simplicity values ignore the overhead time to reach L1 finality after L1 inclusion, which is shared among all projects.',
-    },
+      sorting: {
+        rule: 'numeric',
+        getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
+      }
+      },
   ]
   return columns
 }

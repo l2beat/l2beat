@@ -7,6 +7,7 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
+import { FinalityHeader } from '../../../../components/header/FinalityHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
@@ -35,7 +36,8 @@ export function ScalingFinalityPage(props: FinalityPageProps) {
           showLiveness={props.showLiveness}
           selected="finality"
         />
-        <main className="mt-4 md:mt-12">
+        <main>
+          <FinalityHeader />
           <ScalingFinalityView {...props.finalityView} />
           <OtherSites />
           <About />
