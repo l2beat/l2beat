@@ -1,0 +1,40 @@
+# Diff at Tue, 16 Jan 2024 14:09:10 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- current block number: 19019950
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Initial discovery
+
+```diff
++   Status: CREATED
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenDeployer (0xb28478319B64f8D47e19A120209A211D902F8b8f) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AxelarAuthWeighted (0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract InterchainGovernance (0xfDF36A30070ea0241d69052ea85ff44Ad0476a66) {
+    }
+```
