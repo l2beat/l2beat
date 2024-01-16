@@ -78,10 +78,10 @@ async function main() {
     }
 
     let diffHistory: DiffHistoryApiResponse | undefined = undefined
-    if(config.features.diffHistory) {
-        console.time('[DIFF HISTORY]')
-        diffHistory = await fetchDiffHistory(config.backend, http)
-        console.timeEnd('[DIFF HISTORY]')
+    if (config.features.diffHistory) {
+      console.time('[DIFF HISTORY]')
+      diffHistory = await fetchDiffHistory(config.backend, http)
+      console.timeEnd('[DIFF HISTORY]')
     }
     console.log('\n')
 

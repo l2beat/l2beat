@@ -75,8 +75,8 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  if(config.features.diffHistory && diffHistory) {
-      pages.push(...getDiffHistoryPages(config, diffHistory))
+  if (config.features.diffHistory && diffHistory) {
+    pages.push(...getDiffHistoryPages(config, diffHistory))
   }
 
   outputPages(pages)

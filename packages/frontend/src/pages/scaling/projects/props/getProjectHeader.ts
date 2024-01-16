@@ -1,6 +1,8 @@
 import { Layer2, ScalingProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
+  DiffHistoryApiResponse,
+  ProjectId,
   TvlApiCharts,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -23,6 +25,7 @@ export function getProjectHeader(
   config: Config,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
+  diffHistory?: DiffHistoryApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
 
@@ -82,7 +85,7 @@ export function getProjectHeader(
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
     showTvlBreakdown: config.features.tvlBreakdown,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
-    links: getLinks(project.display.links),
+    links: getLinks(project, project.display.links, diffHistory),
     stage: project.stage,
     // TODO: will need to be riskValues when rosette has hover
     risks: getRiskValues(project.riskView),
@@ -94,8 +97,18 @@ export function getProjectHeader(
   }
 }
 
-function getLinks(links: ScalingProjectLinks): ProjectLink[] {
+function getLinks(
+  project: Layer2,
+  links: ScalingProjectLinks,
+  diffHistory?: DiffHistoryApiResponse,
+): ProjectLink[] {
   const items = [
+    {
+      name: 'Changelog',
+      links: isProjectInDiffHistory(project, diffHistory)
+        ? [`/scaling/projects/${project.display.slug}/changelog`]
+        : [],
+    },
     {
       name: 'Website',
       links: links.websites,
@@ -127,4 +140,15 @@ function getLinks(links: ScalingProjectLinks): ProjectLink[] {
   ] as const
 
   return items.filter((link) => link.links.length > 0)
+}
+
+function isProjectInDiffHistory(
+  project: Layer2,
+  diffHistory?: DiffHistoryApiResponse,
+): boolean {
+  if (!diffHistory) return false
+  return (
+    diffHistory.find((diff) => ProjectId(diff.project) === project.id) !==
+    undefined
+  )
 }

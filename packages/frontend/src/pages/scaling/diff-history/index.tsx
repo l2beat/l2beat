@@ -1,10 +1,15 @@
-import { assert, DiffHistoryApiResponse, DiscoveryDiff, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  DiffHistoryApiResponse,
+  DiscoveryDiff,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import toUpper from 'lodash/toUpper'
 import React from 'react'
 
 import { Config } from '../../../build/config'
 import { Markdown } from '../../../components/Markdown'
-import { PagesData } from '../../Page'
 
 function getProjectSlug(config: Config, project: string) {
   const l2 = config.layer2s.find((layer2) => layer2.id === ProjectId(project))
@@ -60,7 +65,10 @@ function diffHistoryToMarkdown(
     .join('\n')
 }
 
-export function getDiffHistoryPages(config: Config, diffHistory: DiffHistoryApiResponse) {
+export function getDiffHistoryPages(
+  config: Config,
+  diffHistory: DiffHistoryApiResponse,
+) {
   return diffHistory.map((entry) => {
     return {
       slug: `/scaling/projects/${getProjectSlug(
