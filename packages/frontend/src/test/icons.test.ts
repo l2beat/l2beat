@@ -62,7 +62,7 @@ describe('icons', () => {
     'morph',
     'myria',
     'nova',
-    'obscuro',
+    'ten',
     'omgnetwork',
     'optimism',
     'orb3',
