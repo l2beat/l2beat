@@ -1,11 +1,12 @@
 import {
   CoingeckoClient,
   CoingeckoQueryService,
-  HttpClient,
+  EtherscanClient,
 } from '@l2beat/shared'
 import {
   assert,
   AssetId,
+  AssetType,
   ChainId,
   CoingeckoId,
   EthereumAddress,
@@ -16,10 +17,13 @@ import { providers, utils } from 'ethers'
 
 export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
+  etherscanClient: EtherscanClient,
   coingeckoClient: CoingeckoClient,
   address: EthereumAddress,
+  chainId: ChainId,
+  type: AssetType,
+  formula: 'totalSupply' | 'locked' | 'circulatingSupply',
   category: 'ether' | 'stablecoin' | 'other',
-  etherscanApiKey: string,
 ): Promise<Token> {
   const coingeckoId = await getCoingeckoId(coingeckoClient, address)
 
@@ -30,9 +34,9 @@ export async function getTokenInfo(
     coingeckoClient.getImageUrl(coingeckoId),
     getSinceTimestamp(
       provider,
-      address,
-      etherscanApiKey,
+      etherscanClient,
       coingeckoClient,
+      address,
       coingeckoId,
     ),
   ])
@@ -46,11 +50,10 @@ export async function getTokenInfo(
     decimals,
     sinceTimestamp,
     category,
-    // TODO: make it configurable
-    chainId: ChainId.ETHEREUM,
+    chainId,
     iconUrl,
-    type: 'CBV',
-    formula: 'locked',
+    type,
+    formula,
   }
 
   return tokenInfo
@@ -134,15 +137,15 @@ async function getCoingeckoId(
 
 async function getSinceTimestamp(
   provider: providers.JsonRpcProvider,
-  address: EthereumAddress,
-  etherscanApiKey: string,
+  etherscanClient: EtherscanClient,
   coingeckoClient: CoingeckoClient,
+  address: EthereumAddress,
   coingeckoId: CoingeckoId,
 ) {
   const contractCreationTimestamp = await getContractCreationTimestamp(
     provider,
+    etherscanClient,
     address,
-    etherscanApiKey,
   )
 
   const coingeckoPriceHistoryData =
@@ -177,25 +180,12 @@ async function getSinceTimestamp(
 
 async function getContractCreationTimestamp(
   provider: providers.JsonRpcProvider,
+  etherscanClient: EtherscanClient,
   address: EthereumAddress,
-  etherscanApiKey: string,
 ): Promise<number> {
-  const http = new HttpClient()
-  const response = await http.fetch(
-    `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=
-      ${address.toString()}&apikey=${etherscanApiKey}`,
-  )
-  const data = (await response.json()) as unknown as {
-    result: { txHash: string }[]
-  }
+  const txHash = await etherscanClient.getContractDeploymentTx(address)
 
-  if (data.result.length === 0) {
-    throw new Error('Could not find transaction hash for token')
-  }
-
-  const txHash = data.result[0].txHash
-
-  const tx = await provider.getTransaction(txHash)
+  const tx = await provider.getTransaction(txHash.toString())
 
   if (!tx.blockNumber) {
     throw new Error('Could not find block number for token')
