@@ -5,18 +5,12 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
+import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(env: Env): Config {
   const tvlEnabled = env.boolean('TVL_ENABLED', true)
   const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
-  const ethereumTvlEnabled = env.boolean('TVL_ETHEREUM_ENABLED', true)
-  const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
-  const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
-  const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
-  const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
-  const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', false)
-  const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
@@ -67,97 +61,36 @@ export function getLocalConfig(env: Env): Config {
       enabled: tvlEnabled,
       errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
-      ethereum: ethereumTvlEnabled && {
-        providerUrl: env.string('TVL_ETHEREUM_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey:
-            env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
-            env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.etherscan.io/api',
-        },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      },
-      arbitrum: arbitrumTvlEnabled && {
-        providerUrl: env.string('TVL_ARBITRUM_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.arbiscan.io/api',
-        },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      },
-      optimism: optimismTvlEnabled && {
-        providerUrl: env.string('TVL_OPTIMISM_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
-        },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      },
-      base: baseTvlEnabled && {
-        providerUrl: env.string('TVL_BASE_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_BASE_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.basescan.org/api',
-        },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      },
-      linea: lineaTvlEnabled && {
-        providerUrl: env.string('TVL_LINEA_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_LINEA_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_LINEA_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.lineascan.build/api',
-        },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      },
-      lyra: lyraTvlEnabled && {
-        providerUrl: env.string('TVL_LYRA_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_LYRA_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'RoutescanLike',
-          routescanApiUrl: 'https://explorer.lyra.finance/api',
-        },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      },
-      mantapacific: mantapacificTvlEnabled && {
-        providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_MANTA_PACIFIC_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'RoutescanLike',
-          routescanApiUrl: 'https://pacific-explorer.manta.network/api',
-        },
-        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
-      },
+
+      ethereum: getChainTvlConfig(env, 'ethereum', 'ETHEREUM', {
+        defaultCallsPerMinute: 25,
+        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      }),
+      arbitrum: getChainTvlConfig(env, 'arbitrum', 'ARBITRUM', {
+        defaultCallsPerMinute: 25,
+        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      }),
+      optimism: getChainTvlConfig(env, 'optimism', 'OPTIMISM', {
+        defaultCallsPerMinute: 25,
+        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      }),
+      base: getChainTvlConfig(env, 'base', 'BASE', {
+        defaultCallsPerMinute: 25,
+        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      }),
+      lyra: getChainTvlConfig(env, 'lyra', 'LYRA', {
+        defaultCallsPerMinute: 25,
+        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      }),
+      linea: getChainTvlConfig(env, 'linea', 'LINEA', {
+        defaultCallsPerMinute: 25,
+        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      }),
+      // TODO: Rename MANTA_PACIFIC to MANTAPACIFIC and remove duplication
+      mantapacific: getChainTvlConfig(env, 'mantapacific', 'MANTA_PACIFIC', {
+        defaultCallsPerMinute: 25,
+        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      }),
     },
     liveness: livenessEnabled && {
       bigQuery: {
