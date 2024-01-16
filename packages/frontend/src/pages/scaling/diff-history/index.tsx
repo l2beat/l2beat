@@ -66,7 +66,7 @@ export function getDiffHistoryPages(config: Config, pagesData: PagesData) {
       slug: `/scaling/projects/${getProjectSlug(
         config,
         entry.project,
-      )}/diff-history`,
+      )}/changelog`,
       page: <Markdown>{diffHistoryToMarkdown(entry.changes)}</Markdown>,
     }
   })
