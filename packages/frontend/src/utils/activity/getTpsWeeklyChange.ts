@@ -10,10 +10,6 @@ export function getTpsWeeklyChange(
   const tps = getTpsDaily(data, type)
   const tpsSevenDaysAgo = getTpsDaily(data, type, 7)
 
-  if (tps === undefined || tpsSevenDaysAgo === undefined) {
-    return ''
-  }
-
   if (tpsSevenDaysAgo === 0) {
     return '+' + formatPercent(0)
   }
