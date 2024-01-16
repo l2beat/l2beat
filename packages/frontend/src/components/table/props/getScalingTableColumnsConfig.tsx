@@ -633,7 +633,7 @@ export function getScalingFinalityColumnsConfig() {
         <FinalityDurationCell data={project.timeToFinalize} />
       ),
       tooltip:
-        'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this is an approximate estimation and it also does not take into account L1 reorgs.',
+        'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this is an approximate estimation. For simplicity values ignore the overhead time to reach L1 finality after L1 inclusion, which is shared among all projects.',
     },
   ]
   return columns
