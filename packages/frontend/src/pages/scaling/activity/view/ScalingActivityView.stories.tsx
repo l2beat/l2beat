@@ -1,10 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { ScalingActivityView } from './ScalingActivityView'
 
 const meta: Meta<typeof ScalingActivityView> = {
   title: 'Pages/Scaling/ActivityView',
   component: ScalingActivityView,
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 }
 export default meta
 type Story = StoryObj<typeof ScalingActivityView>
