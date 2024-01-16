@@ -3,7 +3,7 @@
 ## Introduction
 
 Within L2BEAT💗 we have an [Activity](https://l2beat.com/scaling/activity) tab which tracks activity
-of scaling solutions. 'Activity' in this context refers to the range of transactions that occur on
+of scaling solutions. 'Activity' in this context refers to the amount of transactions that occur on
 each chain. Configuring activity tracking for different projects is straightforward, especially for
 those that support eth_getBlock RPC methods. This configuration process is managed individually for
 each project through their respective .ts (TypeScript) files.
@@ -71,7 +71,8 @@ you need to talk to devs to handle this case.
 
 1. Set up your backend according to the instructions in the [README](../packages/backend/README.md).
 
-2. Add `ACTIVITY_ENABLED=true` to your `.env` file. Also add `STARKEX_API_KEY` which is required.
+2. Add `ACTIVITY_ENABLED=true` to your `.env` file. Also add `STARKEX_API_KEY` which is required. If
+   you are using private RPC, you also need to add `ACTIVITY_<PROJECT_ID>_URL`.
 
 3. Run `yarn start:dev` in the `packages/backend` directory and wait till whole activity is synced.
 
