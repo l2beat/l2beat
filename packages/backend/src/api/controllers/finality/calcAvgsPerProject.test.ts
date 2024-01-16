@@ -39,7 +39,6 @@ describe(calcAvgsPerProject.name, () => {
 
     expect(result).toEqual({
       averageInSeconds: (3600 + 7200 + 86_400 * 91 - 10_800) / 3,
-      minimumInSeconds: 3600,
       maximumInSeconds: 86_400 * 91 - 10_800,
     })
   })

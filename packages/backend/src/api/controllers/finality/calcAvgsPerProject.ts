@@ -1,4 +1,4 @@
-import { LivenessDataPoint } from '@l2beat/shared-pure'
+import { FinalityDataPoint } from '@l2beat/shared-pure'
 
 import { LivenessRecordWithType } from '../../../peripherals/database/LivenessRepository'
 import {
@@ -8,7 +8,13 @@ import {
 
 export function calcAvgsPerProject(
   records: LivenessRecordWithType[],
-): LivenessDataPoint | undefined {
+): FinalityDataPoint | undefined {
   calculateIntervals(records)
-  return calculateDetailsFor(records, '30d')
+  const result = calculateDetailsFor(records, '30d')
+  return result
+    ? {
+        averageInSeconds: result.averageInSeconds,
+        maximumInSeconds: result.maximumInSeconds,
+      }
+    : undefined
 }
