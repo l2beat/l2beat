@@ -15,7 +15,7 @@ export function createFinalityModule(
   database: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.finality.enabled) {
+  if (!config.finality) {
     logger.info('Finality module disabled')
     return
   }

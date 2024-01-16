@@ -14,8 +14,10 @@ import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
 } from '../../../peripherals/database/LivenessRepository'
-import { calculateDetailsFor } from '../liveness/calculateIntervalWithAverages'
-import { calculateIntervals } from './calcAvgsPerProject'
+import {
+  calculateDetailsFor,
+  calculateIntervals,
+} from '../liveness/calculateIntervalWithAverages'
 import { FinalityController } from './FinalityController'
 
 describe(FinalityController.name, () => {
