@@ -1,5 +1,9 @@
 import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
-import { ChainId } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  DiffHistoryApiResponse,
+  DiscoveryHistory,
+} from '@l2beat/shared-pure'
 
 import { DiscoveryHistoryRepository } from '../../../peripherals/database/discovery/DiscoveryHistoryRepository'
 
@@ -9,15 +13,25 @@ export class DiffHistoryController {
     private readonly configReader: ConfigReader,
   ) {}
 
-  async getRaw(chainId: ChainId, project: string): Promise<string> {
+  async getRaw(chainId: ChainId, project: string): Promise<DiscoveryHistory> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
       chainId,
     )
-    return JSON.stringify(discoveries)
+    return {
+      project: project,
+      discoveries: discoveries.map((x) => ({
+        timestamp: x.timestamp,
+        blockNumber: x.blockNumber,
+        discovery: JSON.stringify(x.discovery),
+      })),
+    }
   }
 
-  async getDiff(chainId: ChainId, project: string): Promise<string> {
+  async getDiffHistoryPerProject(
+    chainId: ChainId,
+    project: string,
+  ): Promise<DiffHistoryApiResponse> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
       chainId,
@@ -33,10 +47,31 @@ export class DiffHistoryController {
       )
     }
 
-    const result = Object.fromEntries(
-      Object.entries(diffs).filter(([_, z]) => z.length > 0),
+    const result: DiffHistoryApiResponse = [
+      {
+        project: project,
+        changes: Object.entries(diffs)
+          .filter(([_, z]) => z.length > 0)
+          .map(([timestamp, diffs]) => ({
+            timestamp: timestamp,
+            diffs: diffs,
+          })),
+      },
+    ]
+
+    return result
+  }
+
+  async getAllDiffHistories(): Promise<DiffHistoryApiResponse> {
+    const projects =
+      await this.discoveryHistoryRepository.getAvailableProjects()
+
+    const discoveries = await Promise.all(
+      projects.map(async (p) => {
+        return await this.getDiffHistoryPerProject(p.chainId, p.projectName)
+      }),
     )
 
-    return JSON.stringify(result)
+    return discoveries.flatMap((x) => x)
   }
 }
