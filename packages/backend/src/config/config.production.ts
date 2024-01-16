@@ -72,28 +72,13 @@ export function getProductionConfig(env: Env): Config {
       errorOnUnsyncedTvl,
       enabled: true,
       coingeckoApiKey: env.string('COINGECKO_API_KEY'),
-      ethereum: getChainTvlConfig(env, 'ethereum', 'ETHEREUM', {
-        defaultCallsPerMinute: 500,
-      }),
-      arbitrum: getChainTvlConfig(env, 'arbitrum', 'ARBITRUM', {
-        defaultCallsPerMinute: 500,
-      }),
-      optimism: getChainTvlConfig(env, 'optimism', 'OPTIMISM', {
-        defaultCallsPerMinute: 500,
-      }),
-      base: getChainTvlConfig(env, 'base', 'BASE', {
-        defaultCallsPerMinute: 500,
-      }),
-      lyra: getChainTvlConfig(env, 'lyra', 'LYRA', {
-        defaultCallsPerMinute: 25,
-      }),
-      linea: getChainTvlConfig(env, 'linea', 'LINEA', {
-        defaultCallsPerMinute: 25,
-      }),
-      // TODO: Rename MANTA_PACIFIC to MANTAPACIFIC and remove duplication
-      mantapacific: getChainTvlConfig(env, 'mantapacific', 'MANTA_PACIFIC', {
-        defaultCallsPerMinute: 100,
-      }),
+      ethereum: getChainTvlConfig(env, 'ethereum'),
+      arbitrum: getChainTvlConfig(env, 'arbitrum'),
+      optimism: getChainTvlConfig(env, 'optimism'),
+      base: getChainTvlConfig(env, 'base'),
+      lyra: getChainTvlConfig(env, 'lyra'),
+      linea: getChainTvlConfig(env, 'linea'),
+      mantapacific: getChainTvlConfig(env, 'mantapacific'),
     },
     liveness: livenessEnabled && {
       bigQuery: {
