@@ -1,3 +1,4 @@
+import Bugsnag from '@bugsnag/js'
 import {
   ActivityApiResponse,
   LivenessApiResponse,
@@ -24,53 +25,57 @@ import { getConfig } from './config'
  */
 const TEMP_HTTP_CALL_TIMEOUT_TIME_MS = 30_000
 
-main().catch((e) => {
-  console.error(e)
+main().catch(() => {
   process.exit(1)
 })
 
 async function main() {
   const env = process.env.DEPLOYMENT_ENV ?? 'ci'
-  console.log(`Using config for ${env}`)
-  const config = getConfig(env)
+  const apiKey = process.env.BUGSNAG_API_KEY
 
-  const httpClient = new HttpClient(TEMP_HTTP_CALL_TIMEOUT_TIME_MS)
+  const isErrorReportingEnabled = initializeErrorReporting(apiKey, env)
 
-  const http = new JsonHttpClient(httpClient, config.backend.skipCache)
+  try {
+    console.log(`Using config for ${env}`)
+    const config = getConfig(env)
 
-  console.time('[TVL]')
-  const tvlApiResponse = await fetchTvlApi(config.backend, http)
-  console.timeEnd('[TVL]')
-  tvlSanityCheck(tvlApiResponse)
+    const httpClient = new HttpClient(TEMP_HTTP_CALL_TIMEOUT_TIME_MS)
 
-  let activityApiResponse: ActivityApiResponse | undefined = undefined
-  if (config.features.activity) {
-    console.time('[ACTIVITY]')
-    activityApiResponse = await fetchActivityApi(config.backend, http)
-    console.timeEnd('[ACTIVITY]')
-    activitySanityCheck(activityApiResponse)
-  }
+    const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
-  let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
-    undefined
-  if (config.features.tvlBreakdown) {
-    console.time('[TVL BREAKDOWN]')
-    tvlBreakdownApiResponse = await fetchTvlBreakdownApi(
-      config.backend,
-      config.backend.apiUrl,
-      http,
-    )
-    console.timeEnd('[TVL BREAKDOWN]')
-    // TODO: (maciekzygmunt) Sanity check?
-  }
+    console.time('[TVL]')
+    const tvlApiResponse = await fetchTvlApi(config.backend, http)
+    console.timeEnd('[TVL]')
+    tvlSanityCheck(tvlApiResponse)
 
-  let livenessApiResponse: LivenessApiResponse | undefined = undefined
-  if (config.features.liveness) {
-    console.time('[LIVENESS]')
-    livenessApiResponse = await fetchLivenessApi(config.backend, http)
-    console.timeEnd('[LIVENESS]')
-  }
-  console.log('\n')
+    let activityApiResponse: ActivityApiResponse | undefined = undefined
+    if (config.features.activity) {
+      console.time('[ACTIVITY]')
+      activityApiResponse = await fetchActivityApi(config.backend, http)
+      console.timeEnd('[ACTIVITY]')
+      activitySanityCheck(activityApiResponse)
+    }
+
+    let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
+      undefined
+    if (config.features.tvlBreakdown) {
+      console.time('[TVL BREAKDOWN]')
+      tvlBreakdownApiResponse = await fetchTvlBreakdownApi(
+        config.backend,
+        config.backend.apiUrl,
+        http,
+      )
+      console.timeEnd('[TVL BREAKDOWN]')
+      // TODO: (maciekzygmunt) Sanity check?
+    }
+
+    let livenessApiResponse: LivenessApiResponse | undefined = undefined
+    if (config.features.liveness) {
+      console.time('[LIVENESS]')
+      livenessApiResponse = await fetchLivenessApi(config.backend, http)
+      console.timeEnd('[LIVENESS]')
+    }
+    console.log('\n')
 
   let finalityApiResponse: any = undefined
   if (config.features.finality) {
@@ -79,21 +84,70 @@ async function main() {
     console.timeEnd('[FINALITY]')
   }
 
-  createApi(config, tvlApiResponse, activityApiResponse)
+    createApi(config, tvlApiResponse, activityApiResponse)
 
-  const verificationStatus = getVerificationStatus()
-  const manuallyVerifiedContracts = getManuallyVerifiedContracts()
+    const verificationStatus = getVerificationStatus()
+    const manuallyVerifiedContracts = getManuallyVerifiedContracts()
 
-  const pagesData = {
-    tvlApiResponse,
-    activityApiResponse,
-    verificationStatus,
-    manuallyVerifiedContracts,
-    tvlBreakdownApiResponse,
-    livenessApiResponse,
+    const pagesData = {
+      tvlApiResponse,
+      activityApiResponse,
+      verificationStatus,
+      manuallyVerifiedContracts,
+      tvlBreakdownApiResponse,
+      livenessApiResponse,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     finalityApiResponse,
+    }
+
+    await renderPages(config, pagesData)
+  } catch (e) {
+    console.error(e)
+
+    if (isErrorReportingEnabled) {
+      await reportError(e)
+    }
+    throw e
+  }
+}
+
+export function initializeErrorReporting(
+  apiKey: string | undefined,
+  environment: string,
+): boolean {
+  if (!apiKey) {
+    console.log('Bugsnag integration disabled')
+    return false
   }
 
-  await renderPages(config, pagesData)
+  Bugsnag.start({
+    apiKey,
+    releaseStage: environment,
+    logger: null,
+    sendCode: true,
+  })
+  console.log('Bugsnag integration enabled')
+  return true
+}
+
+async function reportError(e: unknown) {
+  if (typeof e === 'string') {
+    Bugsnag.notify(e, (event) => {
+      event.context = 'Website build'
+    })
+  } else if (e instanceof Error) {
+    Bugsnag.notify(e, (event) => {
+      event.context = 'Website build'
+    })
+  } else {
+    Bugsnag.notify('Unknown error', (event) => {
+      event.context = 'Website build'
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      event.addMetadata('error', { message: e })
+    })
+  }
+
+  // wait 10 seconds for the error to be reported
+  console.log('Waiting 10 seconds for the error to be reported')
+  await new Promise((resolve) => setTimeout(resolve, 10_000))
 }
