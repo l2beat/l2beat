@@ -4,6 +4,11 @@ import {
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
+import { FinalityApiResponse } from '@l2beat/shared-pure'
+
+export interface FinalityPagesData {
+  finalityApiResponse: FinalityApiResponse
+}
 
 export interface ScalingFinalityViewEntry {
   name: string

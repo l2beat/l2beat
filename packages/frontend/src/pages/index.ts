@@ -28,6 +28,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     verificationStatus,
     tvlBreakdownApiResponse,
     livenessApiResponse,
+    finalityApiResponse
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -74,8 +75,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  if (config.features.finality) {
-    pages.push(getFinalityPage(config, pagesData))
+  if (config.features.finality && finalityApiResponse) {
+    pages.push(getFinalityPage(config, {
+      finalityApiResponse,
+    }))
   }
 
   outputPages(pages)

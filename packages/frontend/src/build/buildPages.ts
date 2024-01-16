@@ -1,6 +1,7 @@
 import Bugsnag from '@bugsnag/js'
 import {
   ActivityApiResponse,
+  FinalityApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -69,36 +70,34 @@ async function main() {
       // TODO: (maciekzygmunt) Sanity check?
     }
 
-      let livenessApiResponse: LivenessApiResponse | undefined = undefined
-      if (config.features.liveness) {
-        console.time('[LIVENESS]')
-        livenessApiResponse = await fetchLivenessApi(config.backend, http)
-        console.timeEnd('[LIVENESS]')
-      }
-      console.log('\n')
+    let livenessApiResponse: LivenessApiResponse | undefined = undefined
+    if (config.features.liveness) {
+      console.time('[LIVENESS]')
+      livenessApiResponse = await fetchLivenessApi(config.backend, http)
+      console.timeEnd('[LIVENESS]')
+    }
 
-  let finalityApiResponse: any = undefined
-  if (config.features.finality) {
-    console.time('[FINALITY]')
-    finalityApiResponse = fetchFinalityApi(config.backend, http)
-    console.timeEnd('[FINALITY]')
-  }
+    let finalityApiResponse: FinalityApiResponse | undefined = undefined
+    if (config.features.finality) {
+      console.time('[FINALITY]')
+      finalityApiResponse = await fetchFinalityApi(config.backend, http)
+      console.timeEnd('[FINALITY]')
+    }
 
     createApi(config, tvlApiResponse, activityApiResponse)
 
     const verificationStatus = getVerificationStatus()
     const manuallyVerifiedContracts = getManuallyVerifiedContracts()
 
-      const pagesData = {
-        tvlApiResponse,
-        activityApiResponse,
-        verificationStatus,
-        manuallyVerifiedContracts,
-        tvlBreakdownApiResponse,
-        livenessApiResponse,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    finalityApiResponse,
-      }
+    const pagesData = {
+      tvlApiResponse,
+      activityApiResponse,
+      verificationStatus,
+      manuallyVerifiedContracts,
+      tvlBreakdownApiResponse,
+      livenessApiResponse,
+      finalityApiResponse,
+    }
 
     await renderPages(config, pagesData)
   } catch (e) {

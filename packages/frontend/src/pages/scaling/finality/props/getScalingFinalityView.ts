@@ -1,22 +1,22 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable,FinalityApiResponse, FinalityDataPoint } from '@l2beat/shared-pure'
 
-import { ScalingFinalityViewEntry } from '../types'
+import { FinalityPagesData, ScalingFinalityViewEntry } from '../types'
 import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
 
 export function getScalingFinalityView(
   projects: Layer2[],
-  finalityResponse: any,
+  pagesData: FinalityPagesData,
 ): ScalingFinalityViewProps {
-  const includedProjects = getIncludedProjects(projects, finalityResponse)
-  //Add filter by exluding projects that are not in the finalityApiResponse
+  const { finalityApiResponse } = pagesData
+
+  const includedProjects = getIncludedProjects(projects, finalityApiResponse)
 
   return {
     items: includedProjects.map((project) =>
       getScalingFinalityViewEntry(
         project,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        finalityResponse.projects[project.id.toString()],
+        finalityApiResponse.projects[project.id.toString()],
       ),
     ),
   }
@@ -24,7 +24,7 @@ export function getScalingFinalityView(
 
 export function getScalingFinalityViewEntry(
   project: Layer2,
-  projectApiResponse: any,
+  finalityDataPoint: FinalityDataPoint,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
@@ -37,9 +37,8 @@ export function getScalingFinalityViewEntry(
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     timeToFinalize: {
-      ...projectApiResponse,
+      ...finalityDataPoint,
       warning: project.display.finalityWarning,
     },
   }
@@ -47,12 +46,11 @@ export function getScalingFinalityViewEntry(
 
 function getIncludedProjects(
   projects: Layer2[],
-  finalityResponse: any | undefined,
+  finalityResponse: FinalityApiResponse,
 ) {
   return projects.filter(
     (p) =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      finalityResponse?.projects[p.id.toString()] &&
+      finalityResponse.projects[p.id.toString()] &&
       !p.isUpcoming &&
       !p.isArchived,
   )

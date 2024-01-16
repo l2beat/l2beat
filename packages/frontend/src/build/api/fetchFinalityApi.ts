@@ -1,14 +1,21 @@
+import { FinalityApiResponse, FinalityDataPoint } from '@l2beat/shared-pure'
+
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
 
-export function fetchFinalityApi(
+export async function fetchFinalityApi(
   backend: Config['backend'],
   http: JsonHttpClient,
-) {
-  return getMockFinalityApiResponse()
+): Promise<FinalityApiResponse> {
+  if (backend.mock) {
+    return getMockFinalityApiResponse()
+  }
+  const url = backend.apiUrl + '/api/finality'
+  const json = await http.fetchJson(url)
+  return FinalityApiResponse.parse(json)
 }
 
-function getMockFinalityApiResponse() {
+function getMockFinalityApiResponse(): FinalityApiResponse {
   const projects = [
     'arbitrum',
     'optimism',
@@ -20,7 +27,7 @@ function getMockFinalityApiResponse() {
     'linea',
     'myria',
     'scroll',
-  ].reduce<Record<string, any>>((acc, cur) => {
+  ].reduce<Record<string, FinalityDataPoint>>((acc, cur) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     acc[cur] = generateMockData()
     return acc
@@ -31,11 +38,7 @@ function getMockFinalityApiResponse() {
   }
 }
 
-function generateMockData(): any {
-  return generateDataPoint()
-}
-
-function generateDataPoint(): any | undefined {
+function generateMockData(): FinalityDataPoint {
   return {
     averageInSeconds: generateRandomTime(),
     minimumInSeconds: generateRandomTime(),
