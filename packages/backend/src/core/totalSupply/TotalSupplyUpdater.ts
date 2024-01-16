@@ -10,7 +10,6 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../../config/chains'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -82,7 +81,7 @@ export class TotalSupplyUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
-      getChainMinTimestamp(this.chainId),
+      this.minTimestamp,
     )
   }
 

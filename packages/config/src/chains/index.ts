@@ -18,6 +18,10 @@ export const chains: ChainConfig[] = [
   polygonpos,
 ]
 
-export const chainMap: ReadonlyMap<string, ChainConfig> = new Map(
+export const chainsByDevId: ReadonlyMap<string, ChainConfig> = new Map(
   chains.map((chain) => [chain.devId, chain]),
+)
+
+export const chainsByChainId: ReadonlyMap<number, ChainConfig> = new Map(
+  chains.map((chain) => [chain.chainId, chain]),
 )
