@@ -1,16 +1,18 @@
+import { ChainId } from '@l2beat/shared-pure'
 import React, { ReactNode } from 'react'
 
+import { getExplorerUrl } from '../../utils/getExplorerUrl'
 import { Link } from '../Link'
 
 interface EtherscanLinkProps {
   address: string
-  url?: string
+  chainId?: ChainId
   children?: ReactNode
   className?: string
 }
 
 export function EtherscanLink(props: EtherscanLinkProps) {
-  const explorerUrl = props.url ?? 'https://etherscan.io'
+  const explorerUrl = getExplorerUrl(props.chainId)
   const link = `${explorerUrl}/address/${props.address}`
   return (
     <Link href={link} className={props.className} data-role={'etherscan-link'}>

@@ -105,7 +105,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      etherscanUrl: this.explorer,
+      chainId: this.chainId,
       ...descriptionOrOptions,
     }
   }
@@ -131,26 +131,28 @@ export class ProjectDiscovery {
     isUpcoming?: boolean
     isLayer3?: boolean
   }): ScalingProjectEscrow {
-    const contract = this.getContractByAddress(address.toString())
-    const timestamp = sinceTimestamp?.toNumber() ?? contract.sinceTimestamp
+    const contractRaw = this.getContractByAddress(address.toString())
+    const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
     assert(
       timestamp,
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
+
+    const options: Partial<ScalingProjectContractSingleAddress> = {
+      name,
+      description,
+      upgradableBy,
+      upgradeDelay,
+    }
+
+    const contract = this.getContractDetails(address.toString(), options)
 
     return {
       address,
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
-      contract: {
-        name: name ?? contract.name,
-        description,
-        upgradeability: contract.upgradeability,
-        etherscanUrl: this.explorer,
-        upgradableBy,
-        upgradeDelay,
-      },
+      contract,
       isUpcoming,
       isLayer3,
     }
@@ -229,7 +231,7 @@ export class ProjectDiscovery {
           ),
         )
         .join(' '),
-      etherscanUrl: this.explorer,
+      chainId: this.chainId,
     }))
   }
 
@@ -256,13 +258,14 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
-        etherscanUrl: this.explorer,
+        chainId: this.chainId,
       },
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
+        chainId: this.chainId,
       },
     ]
   }
@@ -367,7 +370,7 @@ export class ProjectDiscovery {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      etherscanUrl: this.explorer,
+      chainId: this.chainId,
       ...descriptionOrOptions,
     }
   }
@@ -409,7 +412,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
-      etherscanUrl: this.explorer,
+      chainId: this.chainId,
       description,
     }
   }

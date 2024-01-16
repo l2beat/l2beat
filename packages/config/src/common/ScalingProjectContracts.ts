@@ -1,5 +1,5 @@
 import type { UpgradeabilityParameters } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 import { ScalingProjectReference } from './ScalingProjectReference'
 import { ScalingProjectRisk } from './ScalingProjectRisk'
@@ -24,8 +24,8 @@ export type ScalingProjectContract =
 export interface ScalingProjectContractSingleAddress {
   /** Address of the contract */
   address: EthereumAddress
-  /** Url to chain's etherscan */
-  etherscanUrl?: string
+  /** Chain id of this address. Optional for backwards compatibility */
+  chainId?: ChainId
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
@@ -62,9 +62,11 @@ export interface ScalingProjectContractMultipleAddresses {
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
+  description?: string
   /** Url to chain's etherscan */
   etherscanUrl?: string
-  description?: string
+  /** Chain id of this address. Optional for backwards compatibility */
+  chainId?: ChainId
 }
 
 export type ScalingProjectUpgradeability =
