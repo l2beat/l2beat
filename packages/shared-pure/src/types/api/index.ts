@@ -1,4 +1,5 @@
 export * from './ActivityApi'
+export * from './DiffHistoryApi'
 export * from './FinalityApi'
 export * from './LivenessApi'
 export * from './ManuallyVerifiedContrats'

@@ -15,93 +15,124 @@ import {
 import { DiffHistoryController } from './DiffHistoryController'
 
 describe(DiffHistoryController.name, () => {
-  describe(DiffHistoryController.prototype.getDiff.name, () => {
-    it('multiple records produce a diff', async () => {
-      const ADDRESS_A = EthereumAddress.random()
-      const ADDRESS_B = EthereumAddress.random()
-      const ADDRESS_C = EthereumAddress.random()
-      const CONTRACTS_AT_1: ContractParameters[] = [
-        mockContract('A', ADDRESS_A),
-      ]
-      const CONTRACTS_AT_2: ContractParameters[] = [
-        mockContract('B', ADDRESS_B),
-      ]
-      const CONTRACTS_AT_3: ContractParameters[] = [
-        mockContract('C', ADDRESS_C),
-      ]
+  describe(
+    DiffHistoryController.prototype.getDiffHistoryPerProject.name,
+    () => {
+      it('multiple records produce a diff', async () => {
+        const ADDRESS_A = EthereumAddress.random()
+        const ADDRESS_B = EthereumAddress.random()
+        const ADDRESS_C = EthereumAddress.random()
+        const CONTRACTS_AT_1: ContractParameters[] = [
+          mockContract('A', ADDRESS_A),
+        ]
+        const CONTRACTS_AT_2: ContractParameters[] = [
+          mockContract('B', ADDRESS_B),
+        ]
+        const CONTRACTS_AT_3: ContractParameters[] = [
+          mockContract('C', ADDRESS_C),
+        ]
 
-      const repository = mockObject<DiscoveryHistoryRepository>({
-        getProject: mockFn().returns([
-          mockRecord(new UnixTime(1), CONTRACTS_AT_1),
-          mockRecord(new UnixTime(2), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(3), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(4), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(5), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(6), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(7), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(8), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(9), CONTRACTS_AT_2),
-          mockRecord(new UnixTime(10), CONTRACTS_AT_3),
-        ]),
+        const repository = mockObject<DiscoveryHistoryRepository>({
+          getProject: mockFn().returns([
+            mockRecord(new UnixTime(1), CONTRACTS_AT_1),
+            mockRecord(new UnixTime(2), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(3), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(4), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(5), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(6), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(7), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(8), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(9), CONTRACTS_AT_2),
+            mockRecord(new UnixTime(10), CONTRACTS_AT_3),
+          ]),
+        })
+
+        const configReader = mockObject<ConfigReader>({
+          readConfig: mockFn((name: string, chainId: ChainId) =>
+            mockConfig(name, chainId),
+          ),
+        })
+
+        const controller = new DiffHistoryController(repository, configReader)
+        const result = await controller.getDiffHistoryPerProject(
+          ChainId.ETHEREUM,
+          'test',
+        )
+
+        expect(result).toEqual([
+          {
+            project: 'test',
+            changes: [
+              {
+                timestamp: '2',
+                diffs: [
+                  { name: 'A', address: ADDRESS_A, type: 'deleted' },
+                  { name: 'B', address: ADDRESS_B, type: 'created' },
+                ],
+              },
+              {
+                timestamp: '10',
+                diffs: [
+                  { name: 'B', address: ADDRESS_B, type: 'deleted' },
+                  { name: 'C', address: ADDRESS_C, type: 'created' },
+                ],
+              },
+            ],
+          },
+        ])
       })
 
-      const configReader = mockObject<ConfigReader>({
-        readConfig: mockFn((name: string, chainId: ChainId) =>
-          mockConfig(name, chainId),
-        ),
+      it('a single record produces no diff', async () => {
+        const repository = mockObject<DiscoveryHistoryRepository>({
+          getProject: mockFn().returns([mockRecord(new UnixTime(1))]),
+        })
+
+        const configReader = mockObject<ConfigReader>({
+          readConfig: mockFn((name: string, chainId: ChainId) =>
+            mockConfig(name, chainId),
+          ),
+        })
+
+        const controller = new DiffHistoryController(repository, configReader)
+        const result = await controller.getDiffHistoryPerProject(
+          ChainId.ETHEREUM,
+          'test',
+        )
+
+        expect(result).toEqual([
+          {
+            project: 'test',
+            changes: [],
+          },
+        ])
       })
 
-      const controller = new DiffHistoryController(repository, configReader)
-      const result = await controller.getDiff(ChainId.ETHEREUM, 'test')
+      it('empty response', async () => {
+        const repository = mockObject<DiscoveryHistoryRepository>({
+          getProject: mockFn().returns([]),
+        })
 
-      expect(result).toEqual(
-        JSON.stringify({
-          '2': [
-            { name: 'A', address: ADDRESS_A.toString(), type: 'deleted' },
-            { name: 'B', address: ADDRESS_B.toString(), type: 'created' },
-          ],
-          '10': [
-            { name: 'B', address: ADDRESS_B.toString(), type: 'deleted' },
-            { name: 'C', address: ADDRESS_C.toString(), type: 'created' },
-          ],
-        }),
-      )
-    })
+        const configReader = mockObject<ConfigReader>({
+          readConfig: mockFn((name: string, chainId: ChainId) =>
+            mockConfig(name, chainId),
+          ),
+        })
 
-    it('a single record produces no diff', async () => {
-      const repository = mockObject<DiscoveryHistoryRepository>({
-        getProject: mockFn().returns([mockRecord(new UnixTime(1))]),
+        const controller = new DiffHistoryController(repository, configReader)
+        const result = await controller.getDiffHistoryPerProject(
+          ChainId.ETHEREUM,
+          'test',
+        )
+
+        expect(result).toEqual([
+          {
+            project: 'test',
+            changes: [],
+          },
+        ])
       })
-
-      const configReader = mockObject<ConfigReader>({
-        readConfig: mockFn((name: string, chainId: ChainId) =>
-          mockConfig(name, chainId),
-        ),
-      })
-
-      const controller = new DiffHistoryController(repository, configReader)
-      const result = await controller.getDiff(ChainId.ETHEREUM, 'test')
-
-      expect(result).toEqual(JSON.stringify({}))
-    })
-
-    it('empty response', async () => {
-      const repository = mockObject<DiscoveryHistoryRepository>({
-        getProject: mockFn().returns([]),
-      })
-
-      const configReader = mockObject<ConfigReader>({
-        readConfig: mockFn((name: string, chainId: ChainId) =>
-          mockConfig(name, chainId),
-        ),
-      })
-
-      const controller = new DiffHistoryController(repository, configReader)
-      const result = await controller.getDiff(ChainId.ETHEREUM, 'test')
-
-      expect(result).toEqual(JSON.stringify({}))
-    })
-  })
+    },
+  )
 })
 
 async function mockConfig(
