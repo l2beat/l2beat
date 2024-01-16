@@ -25,6 +25,9 @@ export function getLocalConfig(env: Env): Config {
   const discordEnabled = !!discordToken && !!internalDiscordChannelId
   const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
 
+  // TODO: This should probably be configurable
+  const minTimestamp = UnixTime.now().add(-7, 'days').toStartOf('hour')
+
   return {
     name: 'Backend/Local',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
@@ -36,8 +39,7 @@ export function getLocalConfig(env: Env): Config {
     },
     logThrottler: false,
     clock: {
-      // TODO: This should probably be configurable
-      minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      minBlockTimestamp: minTimestamp,
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
@@ -61,35 +63,26 @@ export function getLocalConfig(env: Env): Config {
       enabled: tvlEnabled,
       errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
-
-      ethereum: getChainTvlConfig(env, 'ethereum', 'ETHEREUM', {
-        defaultCallsPerMinute: 25,
-        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      ethereum: getChainTvlConfig(env, 'ethereum', {
+        overrideMinTimestamp: minTimestamp,
       }),
-      arbitrum: getChainTvlConfig(env, 'arbitrum', 'ARBITRUM', {
-        defaultCallsPerMinute: 25,
-        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      arbitrum: getChainTvlConfig(env, 'arbitrum', {
+        overrideMinTimestamp: minTimestamp,
       }),
-      optimism: getChainTvlConfig(env, 'optimism', 'OPTIMISM', {
-        defaultCallsPerMinute: 25,
-        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      optimism: getChainTvlConfig(env, 'optimism', {
+        overrideMinTimestamp: minTimestamp,
       }),
-      base: getChainTvlConfig(env, 'base', 'BASE', {
-        defaultCallsPerMinute: 25,
-        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      base: getChainTvlConfig(env, 'base', {
+        overrideMinTimestamp: minTimestamp,
       }),
-      lyra: getChainTvlConfig(env, 'lyra', 'LYRA', {
-        defaultCallsPerMinute: 25,
-        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      lyra: getChainTvlConfig(env, 'lyra', {
+        overrideMinTimestamp: minTimestamp,
       }),
-      linea: getChainTvlConfig(env, 'linea', 'LINEA', {
-        defaultCallsPerMinute: 25,
-        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      linea: getChainTvlConfig(env, 'linea', {
+        overrideMinTimestamp: minTimestamp,
       }),
-      // TODO: Rename MANTA_PACIFIC to MANTAPACIFIC and remove duplication
-      mantapacific: getChainTvlConfig(env, 'mantapacific', 'MANTA_PACIFIC', {
-        defaultCallsPerMinute: 25,
-        overrideMinTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      mantapacific: getChainTvlConfig(env, 'mantapacific', {
+        overrideMinTimestamp: minTimestamp,
       }),
     },
     liveness: livenessEnabled && {
