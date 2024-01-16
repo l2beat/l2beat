@@ -1,4 +1,5 @@
 import { default as classNames, default as cx } from 'classnames'
+import isFunction from 'lodash/isFunction'
 import isObject from 'lodash/isObject'
 import range from 'lodash/range'
 import React from 'react'
@@ -221,6 +222,11 @@ function DataCell<T>(props: {
     isLast: boolean
   }
 }) {
+  const value = props.columnConfig.getValue(props.item, props.rowIndex)
+  if (!value && props.columnConfig.removeCellOnFalsyValue) {
+    return null
+  }
+
   const hasPaddingRight = !props.columnConfig.noPaddingRight
   const idHref =
     props.columnConfig.idHref && props.href
@@ -242,6 +248,11 @@ function DataCell<T>(props: {
           props.groupOptions?.isLast && '!pr-6',
           props.columnConfig.className,
         )}
+        colSpan={
+          isFunction(props.columnConfig.colSpan)
+            ? props.columnConfig.colSpan(props.item)
+            : props.columnConfig.colSpan
+        }
         {...orderAttributes}
       >
         <a
@@ -256,7 +267,7 @@ function DataCell<T>(props: {
             'flex',
           )}
         >
-          {props.columnConfig.getValue(props.item, props.rowIndex)}
+          {value}
         </a>
       </td>
       {props.groupOptions?.isLast && !props.isLastColumn && (

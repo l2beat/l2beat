@@ -4,9 +4,14 @@ import {
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
-import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  TvlApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 export interface ActivityPagesData {
+  tvlApiResponse: TvlApiResponse
   activityApiResponse: ActivityApiResponse
   verificationStatus: VerificationStatus
 }
@@ -23,10 +28,14 @@ export interface ActivityViewEntry {
   isVerified: boolean | undefined
   showProjectUnderReview: boolean | undefined
   dataSource: string | undefined
-  tpsDaily: number | undefined
-  tpsWeeklyChange: string
-  transactionsMonthlyCount: number | undefined
-  maxTps: number | undefined
-  maxTpsDate: string | undefined
+  data: ActivityViewEntryData | undefined
   stage: StageConfig | undefined
+}
+
+export interface ActivityViewEntryData {
+  tpsDaily: number
+  tpsWeeklyChange: string
+  transactionsMonthlyCount: number
+  maxTps: number
+  maxTpsDate: string
 }

@@ -47,6 +47,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   if (activityApiResponse) {
     pages.push(
       getActivityPage(config, {
+        tvlApiResponse,
         activityApiResponse,
         verificationStatus,
       }),
