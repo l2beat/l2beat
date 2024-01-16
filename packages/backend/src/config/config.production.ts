@@ -270,7 +270,7 @@ function getChainTvlConfig(
     throw new Error('Missing explorerApi for chain: ' + devId)
   }
 
-  const enabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
+  const enabled = env.boolean(`TVL_${envName}_ENABLED`, false)
   if (!enabled) {
     return false
   }
