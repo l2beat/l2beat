@@ -79,7 +79,7 @@ export const LINEA_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   },
 ]
 
-export const MANTA_PACIFIC_MULTICALL_CONFIG: MulticallConfigEntry[] = [
+export const MANTAPACIFIC_MULTICALL_CONFIG: MulticallConfigEntry[] = [
   {
     sinceBlock: 54816,
     batchSize: 150,

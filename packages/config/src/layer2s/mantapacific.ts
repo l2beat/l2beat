@@ -116,7 +116,7 @@ export const mantapacific: Layer2 = {
     },
   },
   config: {
-    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.MANTA_PACIFIC })),
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.MANTAPACIFIC })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622'),

@@ -4,13 +4,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { ChainTvlConfig } from './Config'
 
+const DEFAULT_RPC_CALLS_PER_MINUTE = 60
+
 export function getChainTvlConfig(
   env: Env,
   devId: string,
-  envName: string,
   options?: {
-    // TODO: phase this out and make the env variables required
-    defaultCallsPerMinute?: number
     overrideMinTimestamp?: UnixTime
   },
 ): ChainTvlConfig | false {
@@ -27,22 +26,24 @@ export function getChainTvlConfig(
     throw new Error('Missing explorerApi for chain: ' + devId)
   }
 
-  const enabled = env.boolean(`TVL_${envName}_ENABLED`, false)
+  const ENV_NAME = devId.toUpperCase()
+
+  const enabled = env.boolean(`TVL_${ENV_NAME}_ENABLED`, false)
   if (!enabled) {
     return false
   }
 
   return {
-    providerUrl: env.string(`TVL_${envName}_PROVIDER_URL`),
+    providerUrl: env.string(`TVL_${ENV_NAME}_PROVIDER_URL`),
     providerCallsPerMinute: env.integer(
-      `TVL_${envName}_RPC_CALLS_PER_MINUTE`,
-      options?.defaultCallsPerMinute,
+      `TVL_${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+      DEFAULT_RPC_CALLS_PER_MINUTE,
     ),
     blockNumberProviderConfig:
       chain.explorerApi.type === 'etherscan'
         ? {
             type: 'EtherscanLike',
-            etherscanApiKey: env.string(`TVL_${envName}_ETHERSCAN_API_KEY`),
+            etherscanApiKey: env.string(`TVL_${ENV_NAME}_ETHERSCAN_API_KEY`),
             etherscanApiUrl: chain.explorerApi.url,
           }
         : {
