@@ -140,6 +140,18 @@ export const mantapacific: Layer2 = {
       assessCount: subtractOne,
     },
   },
+  chainConfig: {
+    devId: 'mantapacific',
+    chainId: 169,
+    explorerUrl: 'https://pacific-explorer.manta.network',
+    explorerApi: {
+      url: 'https://pacific-explorer.manta.network/api',
+      type: 'routescan',
+    },
+    // ~ Timestamp of block number 0 on MantaPacific
+    // https://pacific-explorer.manta.network/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
+  },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {

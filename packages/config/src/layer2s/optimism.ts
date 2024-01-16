@@ -262,4 +262,17 @@ export const optimism: Layer2 = opStack({
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],
+  chainConfig: {
+    devId: 'optimism',
+    chainId: 10,
+    explorerUrl: 'https://optimistic.etherscan.io',
+    explorerApi: {
+      url: 'https://api-optimistic.etherscan.io/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 138 on Optimism
+    // The first full hour timestamp that will return the block number
+    // https://optimistic.etherscan.io/block/138
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
+  },
 })
