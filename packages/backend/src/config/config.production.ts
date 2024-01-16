@@ -183,9 +183,7 @@ export function getProductionConfig(env: Env): Config {
       },
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
-    finality: {
-      enabled: finalityEnabled,
-    },
+    finality: finalityEnabled,
     activity: {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),

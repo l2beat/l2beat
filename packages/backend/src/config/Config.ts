@@ -19,7 +19,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig
   readonly liveness: LivenessConfig | false
-  readonly finality: FinalityConfig
+  readonly finality: boolean
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
@@ -75,10 +75,6 @@ export interface LivenessConfig {
     readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
-}
-
-export interface FinalityConfig {
-  readonly enabled: boolean
 }
 
 export interface RoutescanChainConfig {
