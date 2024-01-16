@@ -5,7 +5,6 @@ import { Layer3 } from './types'
 
 export const deri: Layer3 = {
   type: 'layer3',
-  isUpcoming: false,
   isUnderReview: true,
   id: ProjectId('deri'),
   hostChain: ProjectId('arbitrum'),
