@@ -4,14 +4,9 @@ import {
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
-import {
-  ActivityApiResponse,
-  TvlApiResponse,
-  VerificationStatus,
-} from '@l2beat/shared-pure'
+import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 export interface ActivityPagesData {
-  tvlApiResponse: TvlApiResponse
   activityApiResponse: ActivityApiResponse
   verificationStatus: VerificationStatus
 }

@@ -2,7 +2,6 @@ import { Layer2 } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
-  TvlApiResponse,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
@@ -22,9 +21,9 @@ export function getScalingActivityView(
   projects: Layer2[],
   pagesData: ActivityPagesData,
 ): ScalingActivityViewProps {
-  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
+  const { activityApiResponse, verificationStatus } = pagesData
 
-  const included = getIncludedProjects(projects, tvlApiResponse)
+  const included = getIncludedProjects(projects)
   const items = [
     ...included.map((x) =>
       getScalingActivityViewEntry(x, activityApiResponse, verificationStatus),
@@ -101,14 +100,6 @@ function getActivityViewEntryDetails(
   }
 }
 
-export function getIncludedProjects<T extends Layer2>(
-  projects: T[],
-  tvlApiResponse: TvlApiResponse,
-) {
-  return projects.filter(
-    (x) =>
-      !!tvlApiResponse.projects[x.id.toString()] &&
-      !x.isArchived &&
-      !x.isUpcoming,
-  )
+export function getIncludedProjects<T extends Layer2>(projects: T[]) {
+  return projects.filter((x) => !x.isArchived && !x.isUpcoming)
 }
