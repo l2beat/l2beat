@@ -126,7 +126,6 @@ export function getActiveScalingSummaryColumnsConfig() {
             {project.marketShare?.displayValue}
           </NumberCell>
         ),
-      //TODO: (Radina) do we need this sorting? its the same as TVL
       sorting: {
         getOrderValue: (project) => project.marketShare?.value,
         rule: 'numeric',
