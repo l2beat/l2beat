@@ -1,14 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -20,7 +11,16 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromString } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('canvasconnect')
@@ -49,7 +49,7 @@ export const canvasconnect: Layer2 = {
       'Canvas Connect is currently open only to whitelisted institutional clients.',
     description:
       'Canvas Connect is a Layer 2 solution based on StarkEx technology, specifically designed to provide centralized investment and trading services to financial institutions.',
-    purpose: 'Privacy, Finance',
+    purposes: ['Privacy', 'DeFi'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

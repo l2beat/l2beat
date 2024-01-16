@@ -1,11 +1,13 @@
 import React from 'react'
 
 import { RoundedWarningIcon } from './icons'
+import { WarningBar } from './project/WarningBar'
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
 
 export interface TVLBreakdownProps {
   warning?: string
   warningSeverity: 'warning' | 'bad'
-  label: string
+  label: React.ReactNode
   empty: boolean
   associated: number
   ether: number
@@ -16,39 +18,48 @@ export interface TVLBreakdownProps {
 export function TVLBreakdown(props: TVLBreakdownProps) {
   return (
     <span className="flex items-center gap-1">
-      <span
-        className="Tooltip overflow-hidden rounded opacity-80"
-        title={props.label}
-      >
-        <svg
-          className=""
-          width="100"
-          height="21"
-          viewBox="0 0 100 21"
-          fill="none"
-        >
-          {getGradientGroups(props).map((g, i) => (
-            <rect
-              key={i}
-              x={g.offset}
-              y="0"
-              width={g.size}
-              height="21"
-              fill={g.color}
+      <Tooltip>
+        <TooltipTrigger className="flex items-center gap-1">
+          <svg
+            className="overflow-hidden rounded opacity-80"
+            width="100"
+            height="21"
+            viewBox="0 0 100 21"
+            fill="none"
+          >
+            {getGradientGroups(props).map((g, i) => (
+              <rect
+                key={i}
+                x={g.offset}
+                y="0"
+                width={g.size}
+                height="21"
+                fill={g.color}
+              />
+            ))}
+          </svg>
+          {props.warning && (
+            <>
+              {props.warningSeverity === 'warning' && (
+                <RoundedWarningIcon className="fill-yellow-700 dark:fill-yellow-300" />
+              )}
+              {props.warningSeverity === 'bad' && (
+                <RoundedWarningIcon className="fill-red-700 dark:fill-red-300" />
+              )}
+            </>
+          )}
+        </TooltipTrigger>
+        <TooltipContent>
+          {props.label}
+          {props.warning && (
+            <WarningBar
+              className="mt-2"
+              text={props.warning}
+              color={props.warningSeverity === 'warning' ? 'yellow' : 'red'}
             />
-          ))}
-        </svg>
-      </span>
-      {props.warning && (
-        <div className="Tooltip" title={props.warning}>
-          {props.warningSeverity === 'warning' && (
-            <RoundedWarningIcon className="fill-yellow-700 dark:fill-yellow-300" />
           )}
-          {props.warningSeverity === 'bad' && (
-            <RoundedWarningIcon className="fill-red-700 dark:fill-red-300" />
-          )}
-        </div>
-      )}
+        </TooltipContent>
+      </Tooltip>
     </span>
   )
 }

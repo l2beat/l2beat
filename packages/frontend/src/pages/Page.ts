@@ -20,6 +20,7 @@ export interface Wrapped<Props> {
 
 export interface WrapperProps {
   htmlClassName?: string
+  bodyClassName?: string
   metadata: PageMetadata
   preloadApi?: string
   banner: boolean | undefined

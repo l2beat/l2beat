@@ -8,10 +8,13 @@ import {
 } from '@l2beat/discovery'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { DiffHistoryController } from '../../api/controllers/diff-history/DiffHistoryController'
+import { createDiffHistoryRouter } from '../../api/routers/DiffHistoryRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { ProjectDiscoverer } from '../../core/discovery/ProjectDiscoverer'
+import { TaskQueue } from '../../core/queue/TaskQueue'
 import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
 import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
 import { Database } from '../../peripherals/database/shared/Database'
@@ -85,18 +88,32 @@ export function createDiffHistoryModule(
       )
     })
 
-  const start = async () => {
+  const controller = new DiffHistoryController(
+    discoveryHistoryRepository,
+    configReader,
+  )
+  const routers = [createDiffHistoryRouter(controller)]
+
+  const taskQueue = new TaskQueue(
+    async (discovererIndex: number) => {
+      await discoverers[discovererIndex].start()
+      await discoverers[discovererIndex].waitUntilDiscovered()
+    },
+    logger,
+    {
+      metricsId: 'DiffHistoryModule',
+    },
+  )
+
+  const start = () => {
     logger = logger.for('DiffHistoryModule')
     logger.info('Starting')
 
-    for (const discoverer of discoverers) {
-      await discoverer.start()
-      await discoverer.waitUntilDiscovered()
-    }
+    discoverers.forEach((_, i) => taskQueue.addToFront(i))
   }
 
   return {
-    routers: [],
+    routers,
     start,
   }
 }

@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -9,7 +10,6 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
-import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   DataBoundary,
   PriceRecord,

@@ -1,5 +1,8 @@
 /** @type import("tailwindcss/types").Config */
 module.exports = {
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {
@@ -34,6 +37,7 @@ module.exports = {
         900: '#131215',
       },
       zinc: {
+        700: '#393C43',
         800: '#272A2F',
         900: '#1D1E22',
       },

@@ -3,33 +3,21 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  ProjectId,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { DERIVATION, MILESTONES, NUGGETS } from '../common'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { formatSeconds } from '../utils/formatSeconds'
-import {
-  CONTRACTS,
-  DATA_AVAILABILITY,
-  EXITS,
-  FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
-  MILESTONES,
-  NUGGETS,
-  OPERATOR,
-  RISK_VIEW,
-  subtractOneAfterBlockInclusive,
-} from './common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { getStage } from './common/stages/getStage'
-import { DERIVATION } from './common/stateDerivations'
+import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
 
-const upgradesProxy = {
+const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
@@ -38,8 +26,6 @@ const challengePeriod: number = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
-
-const upgradeDelay = 0
 
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
@@ -100,22 +86,16 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
   },
 ]
 
-export const optimism: Layer2 = {
-  type: 'layer2',
-  id: ProjectId('optimism'),
+export const optimism: Layer2 = opStack({
+  discovery,
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'OP Mainnet is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
-    With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
-    new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
-    purpose: 'Universal',
-    provider: 'OP Stack',
-    category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
+      'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
+    purposes: ['Universal'],
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
@@ -146,303 +126,34 @@ export const optimism: Layer2 = {
       )} after it has been posted.`,
     },
   },
-  config: {
-    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
-    associatedTokens: ['OP'],
-    nativeL2TokensIncludedInTVL: ['OP'],
-    escrows: [
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),
-        sinceTimestamp: new UnixTime(1686068903),
-        tokens: ['ETH'],
-        description: 'Main entry point for users depositing ETH.',
-        ...upgradesProxy,
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
-        sinceTimestamp: new UnixTime(1624401464),
-        tokens: '*',
-        description:
-          'Main entry point for users depositing ERC20 tokens that do not require custom gateway.',
-        ...upgradesProxy,
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
-        sinceTimestamp: new UnixTime(1625675779),
-        tokens: ['DAI'],
-        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      }),
-      discovery.getEscrowDetails({
-        // current SNX bridge escrow
-        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
-        sinceTimestamp: new UnixTime(1620680982),
-        tokens: ['SNX'],
-        description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
-      }),
-      {
-        // old snx bridge
-        address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
-        sinceTimestamp: new UnixTime(1610668212),
-        tokens: ['SNX'],
-        isHistorical: true,
-      },
-      {
-        // also old snx bridge
-        address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
-        sinceTimestamp: new UnixTime(1620680934),
-        tokens: ['SNX'],
-        isHistorical: true,
-      },
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
-        tokens: ['wstETH'],
-        description:
-          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
-      }),
-    ],
-    transactionApi: {
-      type: 'rpc',
-      startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(105235064),
-    },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
-          formula: 'transfer',
-          from: EthereumAddress('0x6887246668a3b87F54DeB3b94Ba47a6f63F32985'),
-          to: EthereumAddress('0xFF00000000000000000000000000000000000010'),
-          sinceTimestamp: new UnixTime(1686074603),
-        },
-      ],
-      stateUpdates: [
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0xdfe97868233d1aa22e815a266982f2cf17685a27',
-          ),
-          selector: '0x9aaab648',
-          functionSignature:
-            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1685377367),
-        },
-      ],
-    },
-  },
-  riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_NONE,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'OptimismPortal',
-          references: [
-            'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
-          ],
-        },
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
-      sources: [
-        {
-          contract: 'OptimismPortal',
-          references: [
-            'https://etherscan.io/address/0xbEb5Fc579115071764c7423A4f12eDde41f106Ed',
-          ],
-        },
-      ],
-    },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      ),
-      sources: [
-        {
-          contract: 'OptimismPortal',
-          references: [
-            'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: 'L2OutputOracle',
-          references: [
-            'https://etherscan.io/address/0xd2e67b6a032f0a9b1f569e63ad6c38f7342c2e00#code#F1#L186',
-          ],
-        },
-      ],
-    },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: null,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
-    },
+  tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
+  associatedTokens: ['OP'],
+  upgradeability,
+  l1StandardBridgeEscrow: EthereumAddress(
+    '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
   ),
-  technology: {
-    stateCorrectness: {
-      name: 'Fraud proofs are in development',
-      description:
-        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'an invalid state root is submitted to the system.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          text: 'L2OutputOracle.sol#L141 - Etherscan source code, deleteL2Outputs function',
-          href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L141',
-        },
-      ],
-    },
-    dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
-      references: [
-        {
-          text: 'Derivation: Batch submission - OP Mainnet specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
-        },
-        {
-          text: 'BatchInbox - Etherscan address',
-          href: 'https://etherscan.io/address/0xff00000000000000000000000000000000000010',
-        },
-        {
-          text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
-        },
-      ],
-    },
-    operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
-      references: [
-        {
-          text: 'L2OutputOracle.sol#L30 - Etherscan source code, CHALLENGER address',
-          href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L30',
-        },
-        {
-          text: 'L2OutputOracle.sol#L35 - Etherscan source code, PROPOSER address',
-          href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L35',
-        },
-        {
-          text: 'Decentralizing the sequencer - OP Mainnet docs',
-          href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
-        },
-      ],
-    },
-    forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
-      references: [
-        {
-          text: 'Sequencing Window - OP Mainnet Specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
-        },
-        {
-          text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
-        },
-      ],
-    },
-    exitMechanisms: [
-      {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
-        references: [
-          {
-            text: 'Withdrawing back to L1 - OP Mainnet Help Center',
-            href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
-          },
-          {
-            text: 'OptimismPortal.sol#L242 - Etherscan source code, proveWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L242',
-          },
-          {
-            text: 'OptimismPortal.sol#325 - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L325',
-          },
-          {
-            text: 'L2OutputOracle.sol#L185 - Etherscan source code, PROPOSER check',
-            href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L185',
-          },
-        ],
-        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
-      },
-      {
-        ...EXITS.FORCED('all-withdrawals'),
-        references: [
-          {
-            text: 'Forced withdrawal from an OP Stack blockchain',
-            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
-          },
-        ],
-      },
-    ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
-      risks: [],
-      references: [
-        {
-          text: 'Introducing EVM Equivalence',
-          href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
-        },
-      ],
-    },
+  transactionApi: {
+    type: 'rpc',
+    startBlock: 1,
+    assessCount: subtractOneAfterBlockInclusive(105235064),
   },
+  sequencerAddress: EthereumAddress(
+    discovery.getContractValue('SystemConfig', 'batcherHash'),
+  ),
+  inboxAddress: EthereumAddress('0xFF00000000000000000000000000000000000010'),
+  genesisTimestamp: new UnixTime(1686074603),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
+  l2OutputOracle: discovery.getContract('L2OutputOracle'),
+  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'OptimismMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
-    ...discovery.getOpStackPermissions({
-      batcherHash: 'Sequencer',
-      PROPOSER: 'Proposer',
-      GUARDIAN: 'Guardian',
-      CHALLENGER: 'Challenger',
-    }),
-  ],
-  contracts: {
-    addresses: [
-      ...discovery.getOpStackContractDetails(upgradesProxy, {
-        L1CrossDomainMessenger: 'L1CrossDomainMessengerProxy',
-      }),
-    ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-  },
+  isNodeAvailable: true,
   milestones: [
     {
       name: 'Fault Proof System is live on OP Goerli',
@@ -499,24 +210,56 @@ export const optimism: Layer2 = {
   ],
   knowledgeNuggets: [
     {
-      title: 'How OP Mainnet compresses data',
-      url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Bedrock Explainer',
-      url: 'https://community.optimism.io/docs/developers/bedrock/explainer/',
-      thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_04,
-    },
-    {
-      title: 'Modular Rollup Theory',
-      url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
-    },
-    {
       title: 'The Optimistic Vision',
       url: 'https://www.optimism.io/vision',
       thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_VISION,
     },
   ],
-}
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+      sinceTimestamp: new UnixTime(1625675779),
+      tokens: ['DAI'],
+      description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+    }),
+    discovery.getEscrowDetails({
+      // current SNX bridge escrow
+      address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
+      sinceTimestamp: new UnixTime(1620680982),
+      tokens: ['SNX'],
+      description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
+    }),
+    {
+      // old snx bridge
+      address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
+      sinceTimestamp: new UnixTime(1610668212),
+      tokens: ['SNX'],
+      isHistorical: true,
+    },
+    {
+      // also old snx bridge
+      address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
+      sinceTimestamp: new UnixTime(1620680934),
+      tokens: ['SNX'],
+      isHistorical: true,
+    },
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
+      tokens: ['wstETH'],
+      description:
+        'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+    }),
+  ],
+  roleOverrides: {
+    batcherHash: 'Sequencer',
+    PROPOSER: 'Proposer',
+    GUARDIAN: 'Guardian',
+    CHALLENGER: 'Challenger',
+  },
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'OptimismMultisig',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    ),
+  ],
+})

@@ -1,15 +1,16 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import {
   assert,
+  AssetId,
+  ChainId,
+  CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ProjectPermissionedAccount } from '../common'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -18,8 +19,11 @@ import {
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
   RISK_VIEW,
+  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -46,12 +50,11 @@ const roles = discovery.getContractValue<{
   PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
 
-const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
-  (address) => ({
+const operators: ScalingProjectPermissionedAccount[] =
+  roles.OPERATOR_ROLE.members.map((address) => ({
     address: EthereumAddress(address),
     type: 'EOA',
-  }),
-)
+  }))
 
 const pausers: string[] = roles.PAUSE_MANAGER_ROLE.members
 const isPaused: boolean =
@@ -75,6 +78,27 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
   periodInSeconds,
 )} time window.`
 
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId('lyra:stone-stakestone-ether'),
+    name: 'StakeStone Ether',
+    symbol: 'STONE',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672',
+    address: EthereumAddress('0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116'),
+    coingeckoId: CoingeckoId('stakestone-ether'),
+    sinceTimestamp: new UnixTime(1699781729),
+    category: 'other',
+    type: 'EBV',
+    formula: 'totalSupply',
+    bridgedUsing: {
+      bridge: 'Layer Zero',
+      slug: 'omnichain',
+    },
+  },
+]
+
 export const linea: Layer2 = {
   type: 'layer2',
   id: ProjectId('linea'),
@@ -84,7 +108,7 @@ export const linea: Layer2 = {
     warning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
     dataAvailabilityMode: 'TxData',
     links: {
@@ -107,6 +131,7 @@ export const linea: Layer2 = {
     },
   },
   config: {
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.LINEA })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xd19d4B5d358258f05D7B411E21A1460D11B0876F'),

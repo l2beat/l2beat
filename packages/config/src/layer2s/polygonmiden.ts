@@ -1,20 +1,15 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const polygonmiden: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('polygon-miden'),
+export const polygonmiden: Layer2 = upcoming({
+  id: 'polygon-miden',
   display: {
     name: 'Polygon Miden',
     slug: 'polygon-miden',
     description:
-      "Polygon Miden is a zero-knowledge rollup built on top of Ethereum running on the Miden VM. With Polygon Miden, you will be able to build high-throughput & private applications using modern smart contract languages like Rust that offer greater safety and also aim for very low fees while still benefiting from Ethereum's security.",
-    purpose: 'Universal',
+      "Polygon Miden is a ZK rollup built on top of Ethereum running on the Miden VM. It will allow you to build high-throughput & private applications using smart contract languages like Rust that offer greater safety and lower fees while still benefiting from Ethereum's security.",
+    purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
@@ -31,13 +26,4 @@ export const polygonmiden: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

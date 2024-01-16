@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -15,8 +15,9 @@ export const cBridge: Bridge = {
     name: 'cBridge (Celer)',
     slug: 'cbridge',
     description:
-      'Celer cBridge offers cross-chain token bridging in two modes: Token Bridge and Liquidity Network. It also offers AMB facility - ability to pass arbitrary\
-      messages across chains. It leverages the "State Guardian Network" aka SGN to perform cross-chain communication.\
+      'Celer cBridge offers cross-chain token bridging in two modes: Token Bridge and Liquidity Network. It also offers AMB facility - ability to pass arbitrary messages across chains.',
+    detailedDescription:
+      ' It leverages the "State Guardian Network" aka SGN to perform cross-chain communication.\
       For Liquidity Network, liquidity providers need to rely on SGN to remove their funds from the network.',
     category: 'Hybrid',
     links: {

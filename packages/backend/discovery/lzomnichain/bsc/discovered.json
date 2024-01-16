@@ -1,10 +1,26 @@
 {
   "name": "lzomnichain",
   "chain": "bsc",
-  "blockNumber": 30528470,
-  "configHash": "0x711f1ef588bb939adf1ddbe168fb525a6adfe6677e9ffb2b003f353b2093595d",
+  "blockNumber": 35098616,
+  "configHash": "0xfce57aa70f43b610fcaf7b859f64fdda64d9daa11ae70f69363294b19cf7d713",
   "version": 3,
   "contracts": [
+    {
+      "name": "FPValidator",
+      "address": "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1665890525,
+      "values": {
+        "getProofType": 2,
+        "getUtilsVersion": 1,
+        "proofType": 2,
+        "stargateBridgeAddress": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+        "stargateTokenAddress": "0xB0D502E938ed5f4df2E681fE6E419ff29631d62b",
+        "utilsVersion": 1
+      }
+    },
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
@@ -19,6 +35,17 @@
         "uln": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
         "zroEnabled": false,
         "zroFee": 0
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1647317014,
+      "values": {
+        "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
     {
@@ -40,9 +67,31 @@
         "isReceivingPayload": false,
         "isSendingPayload": false,
         "latestVersion": 3,
+        "libraryLookup": [
+          "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+          "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+          "0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877"
+        ],
         "owner": "0x8D452629c5FfCDDE407069da48c096e1F8beF22c"
       },
       "derivedName": "Endpoint"
+    },
+    {
+      "name": "MPTValidator01",
+      "address": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1661528745,
+      "values": {
+        "getProofType": 1,
+        "getUtilsVersion": 4,
+        "PACKET_SIGNATURE": "0xe9bded5f24a4168e4f3bf44e00298c993b22376aad8c58c7dda9718a54cbea82",
+        "proofType": 1,
+        "stargateBridgeAddress": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+        "stargateTokenAddress": "0xB0D502E938ed5f4df2E681fE6E419ff29631d62b",
+        "utilsVersion": 4
+      }
     },
     {
       "name": "UltraLightNodeV2",
@@ -52,21 +101,999 @@
       },
       "sinceTimestamp": 1661528751,
       "values": {
+        "chainAddressSizeMap": {
+          "101": 20,
+          "102": 20,
+          "106": 20,
+          "108": 32,
+          "109": 20,
+          "110": 20,
+          "111": 20,
+          "112": 20,
+          "114": 20,
+          "115": 20,
+          "116": 20,
+          "125": 20,
+          "126": 20,
+          "138": 20,
+          "145": 20,
+          "149": 20,
+          "150": 20,
+          "151": 20,
+          "153": 20,
+          "155": 20,
+          "156": 20,
+          "158": 20,
+          "159": 20,
+          "165": 20,
+          "166": 20,
+          "167": 20,
+          "173": 20,
+          "175": 20,
+          "176": 20,
+          "177": 20,
+          "181": 20,
+          "182": 20,
+          "183": 20,
+          "184": 20,
+          "196": 20,
+          "197": 20,
+          "198": 20,
+          "199": 20,
+          "202": 20,
+          "210": 20,
+          "211": 20,
+          "212": 20,
+          "213": 20,
+          "214": 20,
+          "215": 20,
+          "216": 20,
+          "217": 20,
+          "218": 20,
+          "230": 20
+        },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
         "CONFIG_TYPE_ORACLE": 6,
         "CONFIG_TYPE_OUTBOUND_BLOCK_CONFIRMATIONS": 5,
         "CONFIG_TYPE_OUTBOUND_PROOF_TYPE": 4,
         "CONFIG_TYPE_RELAYER": 3,
+        "defaultAdapterParams": {
+          "101": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "102": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "106": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "108": {
+            "proofType": 2,
+            "adapterParams": "0x000100000000000000000000000000000000000000000000000000000000000009c4"
+          },
+          "109": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "110": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "111": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "112": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "114": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "115": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "116": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "125": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "126": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "138": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "145": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "149": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "150": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "151": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "153": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "155": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "156": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "158": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "159": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "165": {
+            "proofType": 2,
+            "adapterParams": "0x000100000000000000000000000000000000000000000000000000000000003d0900"
+          },
+          "166": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "167": {
+            "proofType": 1,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "173": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "175": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "176": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "177": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "181": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "182": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "183": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "184": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "196": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "197": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "198": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "199": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "202": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "210": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "211": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "212": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "213": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "214": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "215": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "216": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "217": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "218": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "230": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          }
+        },
+        "defaultAppConfig": {
+          "1": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 15,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D",
+            "relayer": "0xde19274c009A22921E3966a1Ec868cEba40A5DaC"
+          },
+          "12": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D",
+            "relayer": "0xde19274c009A22921E3966a1Ec868cEba40A5DaC"
+          },
+          "101": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 15,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "102": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "106": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 12,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "108": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 260,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "109": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 512,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "110": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "111": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "112": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "114": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "115": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "116": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "125": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "126": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "138": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "145": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "149": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "150": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "151": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "153": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 21,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "155": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "156": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "158": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "159": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "165": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "166": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "167": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "173": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "175": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "176": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "177": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "181": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "182": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "183": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "184": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "196": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "197": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "198": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "199": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "202": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "210": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "211": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "212": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "213": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "214": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "215": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "216": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "217": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "218": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "230": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          }
+        },
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62",
+        "inboundProofLibrary": {
+          "1": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+          "12": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+          "101": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "102": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "106": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "108": "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6",
+          "109": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "110": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "111": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "112": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "114": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "115": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "116": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "125": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "126": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "138": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "145": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "149": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "150": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "151": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "153": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "155": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "156": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "158": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "159": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "165": "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6",
+          "166": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "167": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "173": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "175": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "176": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "177": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "181": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "182": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "183": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "184": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "196": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "197": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "198": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "199": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "202": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "210": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "211": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "212": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "213": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "214": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "215": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "216": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "217": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "218": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "230": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ]
+        },
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
         "localChainId": 102,
         "nonceContract": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
         "owner": "0x8D452629c5FfCDDE407069da48c096e1F8beF22c",
+        "supportedOutboundProof": {
+          "1": 1,
+          "12": 1,
+          "101": [1, 2],
+          "102": [1, 2],
+          "106": [1, 2],
+          "108": 2,
+          "109": [1, 2],
+          "110": [1, 2],
+          "111": [1, 2],
+          "112": [1, 2],
+          "114": [1, 2],
+          "115": [1, 2],
+          "116": [1, 2],
+          "125": [1, 2],
+          "126": [1, 2],
+          "138": 2,
+          "145": 2,
+          "149": 2,
+          "150": 2,
+          "151": 2,
+          "153": 2,
+          "155": 2,
+          "156": 2,
+          "158": 2,
+          "159": [1, 2],
+          "165": 2,
+          "166": 2,
+          "167": [2, 1],
+          "173": [1, 2],
+          "175": [1, 2],
+          "176": 2,
+          "177": 2,
+          "181": 2,
+          "182": 2,
+          "183": 2,
+          "184": 2,
+          "196": [1, 2],
+          "197": [1, 2],
+          "198": [1, 2],
+          "199": [1, 2],
+          "202": [1, 2],
+          "210": [1, 2],
+          "211": [1, 2],
+          "212": [1, 2],
+          "213": [1, 2],
+          "214": [1, 2],
+          "215": [1, 2],
+          "216": [1, 2],
+          "217": [1, 2],
+          "218": [1, 2],
+          "230": 2
+        },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-        "treasuryZROFees": 0
+        "treasuryZROFees": 0,
+        "ulnLookup": {
+          "101": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "102": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "106": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "108": "0x54ad3d30af77b60d939ae356e6606de9a4da67583f02b962d2d3f2e481484e90",
+          "109": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "110": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "111": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "112": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "114": "0x000000000000000000000000bb2753c1b940363d278c81d6402fa89e79ab4ebc",
+          "115": "0x000000000000000000000000658fd63dca9378e3b7deb49463d0b25336433f91",
+          "116": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "125": "0x000000000000000000000000377530cda84dfb2673bf4d145dcf0c4d7fdcb5b6",
+          "126": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "138": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "145": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "149": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
+          "150": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "151": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "153": "0x00000000000000000000000066a71dcef29a0ffbdbe3c6a460a3b5bc225cd675",
+          "155": "0x00000000000000000000000066a71dcef29a0ffbdbe3c6a460a3b5bc225cd675",
+          "156": "0x00000000000000000000000026b24e76226d982e362c4662c5f272a16b22e991",
+          "158": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
+          "159": "0x000000000000000000000000c1b15d3b262beec0e3565c11c9e0f6134bdacb36",
+          "165": "0x000000000000000000000000042b8289c97896529ec2fe49ba1a8b9c956a86cc",
+          "166": "0x0000000000000000000000006f475642a6e85809b1c36fa62763669b1b48dd5b",
+          "167": "0x000000000000000000000000e9ba4c1e76d874a43942718dafc96009ec9d9917",
+          "173": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
+          "175": "0x0000000000000000000000002d61dcdd36f10b22176e0433b86f74567d529aaa",
+          "176": "0x0000000000000000000000000be3818b1c495bbd44b6579f6d0a4bea1bcbff8a",
+          "177": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "181": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "182": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "183": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "184": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "196": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "197": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "198": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "199": "0x0000000000000000000000005b19bd330a84c049b62d5b0fc2ba120217a18c1c",
+          "202": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "210": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "211": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "212": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "213": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "214": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "215": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "216": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
+          "217": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "218": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "230": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+        }
       },
       "derivedName": "UltraLightNodeV2"
+    },
+    {
+      "name": "",
+      "address": "0x5a54fe5234E811466D5366846283323c954310B2",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583",
+        "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+      },
+      "implementations": ["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"],
+      "sinceTimestamp": 1661535965
+    },
+    {
+      "name": "",
+      "address": "0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1687808648
     },
     {
       "name": "NonceContract",
@@ -80,7 +1107,31 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "",
+      "address": "0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xc9A227D0319f42e8C5997BD639a5286642474849",
+        "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+      },
+      "implementations": ["0xc9A227D0319f42e8C5997BD639a5286642474849"],
+      "sinceTimestamp": 1669425920
+    },
+    {
+      "name": "",
+      "address": "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6",
+        "admin": "0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C"
+      },
+      "implementations": ["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"],
+      "sinceTimestamp": 1687808660
+    },
+    {
+      "name": "LayerZero Multisig",
       "address": "0x8D452629c5FfCDDE407069da48c096e1F8beF22c",
       "upgradeability": {
         "type": "gnosis safe",
@@ -101,20 +1152,99 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
-        "nonce": 36,
+        "nonce": 56,
         "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1661448871,
+      "values": {
+        "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       }
+    },
+    {
+      "name": "",
+      "address": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0",
+        "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
+      },
+      "implementations": ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"],
+      "sinceTimestamp": 1661531611
+    },
+    {
+      "name": "VerifierNetwork",
+      "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1694218835,
+      "values": {
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "paused": false,
+        "priceFeed": "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b",
+        "quorum": 2,
+        "signerSize": 3,
+        "vid": 102,
+        "workerFeeLib": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
+      }
+    },
+    {
+      "name": "",
+      "address": "0xde19274c009A22921E3966a1Ec868cEba40A5DaC",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x8363302080e711E0CAb978C081b9e69308d49808",
+        "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
+      },
+      "implementations": ["0x8363302080e711E0CAb978C081b9e69308d49808"],
+      "sinceTimestamp": 1669420588
+    },
+    {
+      "name": "VerifierFeeLib",
+      "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1694218841
     }
   ],
   "eoas": [
     "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
     "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+    "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+    "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
     "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
     "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
     "0xe095F2590eF1Ab39601445025847Ed8E4B40D687",
     "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
   ],
   "abis": {
+    "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6": [
+      "constructor(address _stargateBridgeAddress, address _stargateTokenAddress)",
+      "function getPacket(bytes data, uint256 sizeOfSrcAddress, bytes32 ulnAddress) pure returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload))",
+      "function getProofType() view returns (uint8)",
+      "function getUtilsVersion() view returns (uint8)",
+      "function getVerifyLog(bytes32, uint256[], uint256, bytes[] proof) pure returns (tuple(bytes32 contractAddress, bytes32 topicZeroSig, bytes data) log)",
+      "function proofType() view returns (uint8)",
+      "function secureStgPayload(bytes _payload) view returns (bytes)",
+      "function secureStgTokenPayload(bytes _payload) pure returns (bytes)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function stargateTokenAddress() view returns (address)",
+      "function utilsVersion() view returns (uint8)",
+      "function validateProof(bytes32 _packetHash, bytes _transactionProof, uint256 _remoteAddressSize) view returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload) packet)"
+    ],
     "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": [
       "constructor(address _ulnv2)",
       "event FeeEnabled(bool feeEnabled)",
@@ -137,6 +1267,18 @@
       "function withdrawZROFromULN(address _to, uint256 _amount)",
       "function zroEnabled() view returns (bool)",
       "function zroFee() view returns (uint256)"
+    ],
+    "0x38dE71124f7a447a01D67945a51eDcE9FF491251": [
+      "constructor(address owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x3c2269811836af69497E5F486A85D7316753cf62": [
       "constructor(uint16 _chainId)",
@@ -238,6 +1380,21 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0x462F7eC57C6492B983a8C8322B4369a7f149B859": [
+      "constructor(address _stargateBridgeAddress, address _stargateTokenAddress)",
+      "function PACKET_SIGNATURE() view returns (bytes32)",
+      "function getPacket(bytes data, uint256 sizeOfSrcAddress, bytes32 ulnAddress) pure returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload))",
+      "function getProofType() view returns (uint8)",
+      "function getUtilsVersion() view returns (uint8)",
+      "function getVerifyLog(bytes32 hashRoot, uint256[] receiptSlotIndex, uint256 logIndex, bytes[] proof) pure returns (tuple(bytes32 contractAddress, bytes32 topicZeroSig, bytes data))",
+      "function proofType() view returns (uint8)",
+      "function secureStgPayload(bytes _payload) view returns (bytes)",
+      "function secureStgTokenPayload(bytes _payload) pure returns (bytes)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function stargateTokenAddress() view returns (address)",
+      "function utilsVersion() view returns (uint8)",
+      "function validateProof(bytes32 _receiptsRoot, bytes _transactionProof, uint256 _remoteAddressSize) view returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload) packet)"
+    ],
     "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": [
       "constructor(address _endpoint, address _nonceContract, uint16 _localChainId)",
       "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
@@ -302,14 +1459,128 @@
       "function withdrawNative(address _to, uint256 _amount)",
       "function withdrawZRO(address _to, uint256 _amount)"
     ],
+    "0x5a54fe5234E811466D5366846283323c954310B2": [
+      "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068": [
       "constructor(address _endpoint)",
       "function endpoint() view returns (address)",
       "function increment(uint16 _chainId, address _ua, bytes _path) returns (uint64)",
       "function outboundNonce(uint16, bytes) view returns (uint64)"
     ],
+    "0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D": [
+      "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x8D452629c5FfCDDE407069da48c096e1F8beF22c": [
       "constructor(address _singleton)"
+    ],
+    "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": [
+      "constructor(address owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182": [
+      "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": [
+      "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
+      "event ExecuteFailed(uint256 _index, bytes _data)",
+      "event HashAlreadyUsed(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) param, bytes32 _hash)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] params)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event UpdateQuorum(uint64 _quorum)",
+      "event UpdateSigner(address _signer, bool _active)",
+      "event VerifierFeePaid(uint256 fee)",
+      "event VerifySignaturesFailed(uint256 idx)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(tuple(uint32 dstEid, bytes packetHeader, bytes32 payloadHash, uint64 confirmations, address sender) _param, bytes _options) payable returns (uint256 totalFee)",
+      "function assignJob(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) returns (uint256 totalFee)",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)",
+      "function execute(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures)[] _params)",
+      "function getFee(uint32 _dstEid, uint64 _confirmations, address _sender, bytes _options) view returns (uint256 fee)",
+      "function getFee(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 _role, address _account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashCallData(uint32 _vid, address _target, bytes _callData, uint256 _expiration) pure returns (bytes32)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function quorum() view returns (uint64)",
+      "function quorumChangeAdmin(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) _param)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 _role, address _account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setQuorum(uint64 _quorum)",
+      "function setSigner(address _signer, bool _active)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function signerSize() view returns (uint64)",
+      "function signers(address signer) view returns (bool active)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function usedHashes(bytes32 executableHash) view returns (bool used)",
+      "function verifyAndDeliver(address _uln, bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
+      "function verifySignatures(bytes32 _hash, bytes _signatures) view returns (bool, uint8)",
+      "function vid() view returns (uint32)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
+    ],
+    "0xde19274c009A22921E3966a1Ec868cEba40A5DaC": [
+      "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xdeA04ef31C4B4FDf31CB58923F37869739280d49": [
+      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) view returns (uint256)",
+      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) payable returns (uint256)"
     ]
   }
 }

@@ -3,7 +3,8 @@ import cx from 'classnames'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../../icons'
-import { SectionId } from '../../project/sectionId'
+import { ProjectSectionId } from '../../project/sectionId'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 
 interface Props<
   T extends {
@@ -21,11 +22,10 @@ interface Props<
 export interface ColumnConfig<T> {
   name: ReactNode
   shortName?: ReactNode
-  alignRight?: true
-  alignCenter?: true
+  align?: 'center' | 'right'
   headClassName?: string
   noPaddingRight?: true
-  idHref?: SectionId
+  idHref?: ProjectSectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
   highlight?: boolean
@@ -72,8 +72,8 @@ export function TVLBreakdownTableView<
                   <div
                     className={cx(
                       'flex flex-row items-center gap-1.5',
-                      column.alignRight && 'justify-end',
-                      column.alignCenter && 'justify-center',
+                      column.align === 'right' && 'justify-end',
+                      column.align === 'center' && 'justify-center',
                     )}
                   >
                     <span className={cx(column.shortName && 'hidden md:block')}>
@@ -83,12 +83,12 @@ export function TVLBreakdownTableView<
                       <span className="md:hidden">{column.shortName}</span>
                     )}
                     {column.tooltip && (
-                      <span
-                        className="Tooltip -translate-y-px md:translate-y-0"
-                        title={column.tooltip}
-                      >
-                        <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
-                      </span>
+                      <Tooltip>
+                        <TooltipTrigger className="-translate-y-px md:translate-y-0">
+                          <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                        </TooltipTrigger>
+                        <TooltipContent>{column.tooltip}</TooltipContent>
+                      </Tooltip>
                     )}
                   </div>
                 </th>
@@ -96,7 +96,7 @@ export function TVLBreakdownTableView<
             })}
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {items.map((item, i) => {
             const { className: rowClassName, ...rest } =
               rows?.getProps(item, i) ?? {}
@@ -118,8 +118,8 @@ export function TVLBreakdownTableView<
                 {columns.map((column, j) => {
                   const childClassName = cx(
                     'h-full w-full items-start pt-2 pb-2',
-                    column.alignRight && 'justify-end',
-                    column.alignCenter && 'justify-center',
+                    column.align === 'right' && 'justify-end',
+                    column.align === 'center' && 'justify-center',
                   )
                   return (
                     <td

@@ -1,8 +1,8 @@
 {
   "name": "degate",
   "chain": "ethereum",
-  "blockNumber": 18263139,
-  "configHash": "0xe1cf73fc7355d3c8c24c8ccbd8560edbb13d0377b636a9ecbd492f149be68f54",
+  "blockNumber": 18939731,
+  "configHash": "0x526e026f5c2afb7d7c405ee89c6608788cbbd38a60733c609790c668b27a7165",
   "version": 3,
   "contracts": [
     {
@@ -35,7 +35,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 5
+        "transactionCount": 8
       },
       "derivedName": "MultiSigWallet"
     },
@@ -95,7 +95,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 100
+        "transactionCount": 110
       },
       "derivedName": "MultiSigWallet"
     },

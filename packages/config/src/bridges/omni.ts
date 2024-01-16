@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -61,8 +61,9 @@ export const omni: Bridge = {
         'https://github.com/gnosischain',
       ],
     },
-    description:
-      'Omnibridge is the official bridge of Gnosis Chain. It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Tokens sent to the bridge escrow can be further sent to yield generating contracts (e.g. AAVE) to accrue interest for external recipient, although this functionality has been disabled at the time of Ethereum Merge.',
+    description: 'Omnibridge is the official bridge of Gnosis Chain.',
+    detailedDescription:
+      'It uses a set of trusted validators to confirm deposits for a Lock-Mint swap. Tokens sent to the bridge escrow can be further sent to yield generating contracts (e.g. AAVE) to accrue interest for external recipient, although this functionality has been disabled at the time of Ethereum Merge.',
   },
   config: {
     associatedTokens: ['GNO'],

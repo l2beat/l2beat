@@ -5,7 +5,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-} from '../../layer2s/common'
+} from '../../common'
 import { Layer2 } from '../../layer2s/types'
 
 export const layer2aWithDups: Layer2 = {
@@ -15,7 +15,7 @@ export const layer2aWithDups: Layer2 = {
     name: 'Layer2a',
     slug: 'layer2a',
     description: '',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',

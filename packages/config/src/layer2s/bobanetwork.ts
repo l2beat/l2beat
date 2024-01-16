@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -10,7 +9,8 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -41,15 +41,13 @@ export const bobanetwork: Layer2 = {
   id: ProjectId('bobanetwork'),
   display: {
     name: 'Boba Network',
+    shortName: 'Boba',
     slug: 'bobanetwork',
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the Boba Foundation. Boba is an EVM-compatible Optimistic Rollup chain \
-    forked from Optimism. Two notable features are fast withdrawal facility that allows users to remove funds immediately without waiting for the end of the 7-day fraud proof window. \
-    This facility is using funds from liquidity providers. The second is Hybrid Compute technology that enables Ethereum developers to build dApps that trigger code executed on web-scale infrastructure. \
-    Boba Network operates on multiple Layer 1 blockchains.',
-    purpose: 'Universal',
+      'Boba is an EVM-compatible Optimistic Rollup forked from Optimism and built by the Enya team as core contributors to the Boba Foundation.',
+    purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
@@ -394,7 +392,7 @@ export const bobanetwork: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'Node sofware source code can be found [here](https://github.com/bobanetwork/boba).',
+      'Node software source code can be found [here](https://github.com/bobanetwork/boba).',
     compressionScheme: `They utilize a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli) for calldata compression.`,
     genesisState:
       'Genesis state file can be found [here](https://github.com/bobanetwork/boba/blob/develop/boba_community/boba-node/state-dumps/mainnet/state-dump.latest.json).',

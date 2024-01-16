@@ -1,20 +1,15 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const molten: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('molten'),
+export const molten: Layer2 = upcoming({
+  id: 'molten',
   display: {
     name: 'Molten Network',
     slug: 'molten',
     description:
       'Molten Network is an upcoming scaling solution by Unidex team. It is powered by the OP Stack.',
-    purpose: 'DeFi',
+    purposes: ['DeFi'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'OP Stack',
     links: {
       websites: ['https://unidex.exchange/molten-network'],
@@ -30,13 +25,4 @@ export const molten: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

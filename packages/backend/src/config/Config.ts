@@ -19,6 +19,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig
   readonly liveness: LivenessConfig | false
+  readonly finality: boolean
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
@@ -62,6 +63,7 @@ export interface TvlConfig {
   readonly base: ChainTvlConfig | false
   readonly mantapacific: ChainTvlConfig | false
   readonly lyra: ChainTvlConfig | false
+  readonly linea: ChainTvlConfig | false
 }
 
 export interface LivenessConfig {

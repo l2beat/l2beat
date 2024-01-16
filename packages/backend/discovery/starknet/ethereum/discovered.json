@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 18820903,
-  "configHash": "0x09620c4c3e131fb79ed6102ef2c3b41354f1cef76f07818e4e0027b47bff8f94",
+  "blockNumber": 19012236,
+  "configHash": "0x64cde34ba05a69f506b3565a9280c5b600a9a07e4f672890cfa0bbe0b6001a67",
   "version": 3,
   "contracts": [
     {
@@ -25,10 +25,24 @@
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
         ],
         "getThreshold": 2,
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "LORDS Bridge",
+      "address": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1687524587,
+      "values": {
+        "l1Token": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+        "l2Bridge": "3518527153270494256475755541726550738597926965391766941271488561627919771187",
+        "starknet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      },
+      "derivedName": "LordsL1Bridge"
     },
     {
       "name": "DAI Bridge",
@@ -103,6 +117,24 @@
       "derivedName": "StarknetERC20Bridge"
     },
     {
+      "name": "TheLordsToken",
+      "address": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1639089737,
+      "values": {
+        "cap": "500000000000000000000000000",
+        "decimals": 18,
+        "name": "Lords",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "symbol": "LORDS",
+        "totalSupply": "500000000000000000000000000",
+        "totalSupplyAt": []
+      }
+    },
+    {
       "name": "Proxy Multisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "upgradeability": {
@@ -148,7 +180,7 @@
           "0xCe958D997F4a5824D4d503A128216322C6C223a0"
         ],
         "getThreshold": 2,
-        "nonce": 17,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -288,7 +320,7 @@
       "implementations": ["0x16938E4b59297060484Fa56a12594d8D6F4177e8"],
       "sinceTimestamp": 1636978914,
       "values": {
-        "configHash": "671483050609816861429812414688707376174032882875357307847551691140236175837",
+        "configHash": "2590421891839256512113614983194993186457498815986333310670788206383913888162",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
         "governedFinalized": 0,
@@ -301,18 +333,18 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1603167,
+        "l1ToL2MessageNonce": 1615773,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
         ],
-        "programHash": "54878256403880350656938046611252303365750679698042371543935159963667935317",
+        "programHash": "2479841346739966073527450029179698923866252973805981504232089731754042431018",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockHash": "239745883228614642537190660617236381800736636324408935913922664263431954835",
-        "stateBlockNumber": 473417,
-        "stateRoot": "1149696035228371960290261815332938125532198985798398331655665106275007039050",
+        "stateBlockHash": "3477422271958119284482204678455752518076861184569368551088694938000562590910",
+        "stateBlockNumber": 506744,
+        "stateRoot": "1907077908166114592051071516510318670795872632299043023012173611380932534824",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -441,10 +473,7 @@
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": [
-          "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ]
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
       "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
       "sinceTimestamp": 1657137639,
@@ -515,13 +544,22 @@
     "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
     "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
     "0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53",
-    "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
     "0xfdF3E24BD26368512C5F65959BBB668d3338f994",
     "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591"
   ],
   "abis": {
     "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": [
       "constructor(address _singleton)"
+    ],
+    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": [
+      "constructor(address _starknet, address _l1Token, uint256 _l2Bridge)",
+      "event LogDeposit(address indexed l1Sender, uint256 amount, uint256 l2Recipient)",
+      "event LogWithdrawal(address indexed l1Recipient, uint256 amount)",
+      "function deposit(uint256 amount, uint256 l2Recipient, uint256 fee) payable",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (uint256)",
+      "function starknet() view returns (address)",
+      "function withdraw(uint256 amount, address l1Recipient)"
     ],
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": [
       "constructor()",
@@ -671,6 +709,39 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0": [
+      "constructor(uint256 _cap)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Snapshot(uint256 id)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function balanceOfAt(address account, uint256 snapshotId) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function snapshot()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function totalSupplyAt(uint256 snapshotId) view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
     ],
     "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB": [
       "event LogBridgeActivated()",

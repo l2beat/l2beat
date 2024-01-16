@@ -1,57 +1,62 @@
-import { Layer2, layer2s } from '@l2beat/config'
+import { Layer2, layer2s, Layer3 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
-import { getIncludedProjects } from '../../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
-import { ScalingSummaryViewEntry } from '../types'
+import { ScalingL2SummaryViewEntry, ScalingL3SummaryViewEntry } from '../types'
 import { ScalingSummaryViewProps } from '../view/ScalingSummaryView'
 
 export function getScalingSummaryView(
-  projects: Layer2[],
+  projects: (Layer2 | Layer3)[],
   tvlApiResponse: TvlApiResponse,
   tvl: number,
   verificationStatus: VerificationStatus,
 ): ScalingSummaryViewProps {
-  const included = getIncludedProjects(projects, tvlApiResponse)
-  const ordered = orderByTvl(included, tvlApiResponse)
+  const ordered = orderByTvl(projects, tvlApiResponse)
+
+  const layer2s = ordered.filter((p) => p.type === 'layer2') as Layer2[]
+  const layer3s = ordered.filter((p) => p.type === 'layer3') as Layer3[]
+
   return {
-    items: ordered.map((project) =>
-      getScalingSummarySummaryEntry(
+    layer2s: layer2s.map((project) =>
+      getScalingL2SummaryEntry(
         project,
         tvlApiResponse,
         tvl,
         verificationStatus.projects[project.id.toString()],
       ),
     ),
+    layer3s: layer3s.map((project) =>
+      getScalingL3SummaryEntry(
+        project,
+        verificationStatus.projects[project.id.toString()],
+      ),
+    ),
   }
 }
 
-function getScalingSummarySummaryEntry(
+function getScalingL2SummaryEntry(
   project: Layer2,
   tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
   isVerified?: boolean,
-): ScalingSummaryViewEntry {
+): ScalingL2SummaryViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
 
   let stats: TvlStats | undefined
 
-  if (!apiProject) {
-    if (!project.isUpcoming && !project.isLayer3) {
-      throw new Error(`Project ${project.display.name} is missing in api`)
-    }
-  } else {
+  if (apiProject) {
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
 
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
     provider: project.display.provider,
     category: project.display.category,
@@ -61,10 +66,7 @@ function getScalingSummarySummaryEntry(
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
-    isLayer3: project.isLayer3,
     redWarning: project.display.redWarning,
-    hostChainName: layer2s.find((l) => l.id === project.hostChain)?.display
-      .name,
     tvl:
       stats && escrowsConfigured(project)
         ? {
@@ -87,8 +89,30 @@ function getScalingSummarySummaryEntry(
           }
         : undefined,
     marketShareValue: stats?.latestTvl && stats.latestTvl / aggregateTvl,
-    purpose: project.display.purpose,
+    purposes: project.display.purposes,
     stage: project.stage,
+  }
+}
+
+function getScalingL3SummaryEntry(
+  project: Layer3,
+  isVerified?: boolean,
+): ScalingL3SummaryViewEntry {
+  return {
+    name: project.display.name,
+    shortName: project.display.shortName,
+    slug: project.display.slug,
+    provider: project.display.provider,
+    category: project.display.category,
+    warning: project.display.warning,
+    isVerified,
+    showProjectUnderReview: isAnySectionUnderReview(project),
+    isUpcoming: project.isUpcoming,
+    purposes: project.display.purposes,
+    hostChainName:
+      project.hostChain === 'Multiple'
+        ? 'Multiple'
+        : layer2s.find((l) => l.id === project.hostChain)?.display.name,
   }
 }
 

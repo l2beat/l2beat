@@ -4,6 +4,7 @@ import React from 'react'
 import { TvlBreakdownViewProps } from '../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { InfoIcon } from '../icons'
 import { PercentChange } from '../PercentChange'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],
@@ -75,19 +76,19 @@ function StatsItem(props: StatsItemProps) {
           {props.mobileTitle}
         </span>
 
-        <span
-          className="Tooltip ml-0.5 -translate-y-px md:translate-y-0"
-          title={props.tooltip}
-        >
-          <InfoIcon
-            className={classNames(
-              'md:h-3.5 md:w-3.5',
-              props.big
-                ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
-                : 'fill-gray-500 dark:fill-gray-600',
-            )}
-          />
-        </span>
+        <Tooltip>
+          <TooltipTrigger className="ml-0.5 -translate-y-px md:translate-y-0">
+            <InfoIcon
+              className={classNames(
+                'md:h-3.5 md:w-3.5',
+                props.big
+                  ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
+                  : 'fill-gray-500 dark:fill-gray-600',
+              )}
+            />
+          </TooltipTrigger>
+          <TooltipContent>{props.tooltip}</TooltipContent>
+        </Tooltip>
       </div>
       <div className="flex items-center gap-1">
         <span

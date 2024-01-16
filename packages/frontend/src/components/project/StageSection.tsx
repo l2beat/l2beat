@@ -13,13 +13,13 @@ import { Markdown } from '../Markdown'
 import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 import { UnderReviewCallout } from './UnderReviewCallout'
 import { WarningBar } from './WarningBar'
 
 export interface StageSectionProps {
   title: string
-  id: SectionId
+  id: ProjectSectionId
   icon: string
   name: string
   type: string

@@ -1,8 +1,8 @@
 {
   "name": "dydx",
   "chain": "ethereum",
-  "blockNumber": 18282753,
-  "configHash": "0x47112df1ee28df32b58382bb684b9b5696e568eba2d4f1fb8268d1e432381939",
+  "blockNumber": 18975357,
+  "configHash": "0xe4aba76e942e73f989965d36747b337378ea6bbb6885159c2e911bc16fbec2e6",
   "version": 3,
   "contracts": [
     {
@@ -47,13 +47,13 @@
         "CONFIG_UPDATER_ROLE": "0x1ab0187632b3cb5ac848b647a9edd463e705607328ab29602e80fc3fa8001918",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getAreRootUpdatesPaused": false,
-        "getCurrentEpoch": 28,
+        "getCurrentEpoch": 31,
         "getEpochParameters": [2419200, 1628002800],
-        "getIpfsEpoch": 28,
+        "getIpfsEpoch": 31,
         "getIpfsUpdatePeriod": 180,
         "getIpnsName": "rewards-data.dydx.foundation",
         "getRewardsOracle": "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
-        "getWaitingPeriodEnd": 1696350743,
+        "getWaitingPeriodEnd": 1703609267,
         "hasPendingRoot": false,
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
@@ -379,7 +379,7 @@
       },
       "sinceTimestamp": 1694426279,
       "values": {
-        "_nextAvailableBridgeId": 30,
+        "_nextAvailableBridgeId": 3206,
         "decimals": 18,
         "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
         "DELEGATE_TYPEHASH": "0x9a9a49b990ba9bb39f8048c490a40ab25c18f55d208d5fbcf958261a9b48716d",
@@ -390,7 +390,7 @@
         "name": "Wrapped Ethereum DYDX",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "wethDYDX",
-        "totalSupply": "29899837393470000000000"
+        "totalSupply": "465676899461967671078567963"
       },
       "derivedName": "WrappedEthereumDydxToken"
     },
@@ -491,21 +491,21 @@
         "DISTRIBUTION_START": 1628002800,
         "EPOCH_PARAMETERS_ROLE": "0xa69ba352872fe0ee634bc8d48d2a09a61267da1bfb2015e67a11ad05fe21f04b",
         "getBlackoutWindow": 259200,
-        "getContractBalanceAvailableToBorrow": 287712783053,
-        "getContractBalanceAvailableToWithdraw": 526918918580,
-        "getCurrentEpoch": 28,
+        "getContractBalanceAvailableToBorrow": 256766619657,
+        "getContractBalanceAvailableToWithdraw": 474034376162,
+        "getCurrentEpoch": 31,
         "getEpochParameters": [2419200, 1628002800],
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getTimeRemainingInCurrentEpoch": 1669501,
-        "getTotalActiveBalanceCurrentEpoch": 287711787301,
-        "getTotalActiveBalanceNextEpoch": 285029500235,
+        "getTimeRemainingInCurrentEpoch": 541909,
+        "getTotalActiveBalanceCurrentEpoch": 256765623905,
+        "getTotalActiveBalanceNextEpoch": 238448123905,
         "getTotalBorrowedBalance": 4248,
         "getTotalBorrowerDebtBalance": 0,
         "getTotalDebtAvailableToWithdraw": 0,
-        "getTotalInactiveBalanceCurrentEpoch": 239206135527,
-        "getTotalInactiveBalanceNextEpoch": 241888422593,
+        "getTotalInactiveBalanceCurrentEpoch": 217267756505,
+        "getTotalInactiveBalanceNextEpoch": 235585256505,
         "hasEpochZeroStarted": true,
         "inBlackoutWindow": false,
         "name": "dYdX Staked USDC",
@@ -517,7 +517,7 @@
         "STAKED_TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "symbol": "stkUSDC",
         "TOTAL_ALLOCATION": 10000,
-        "totalSupply": 526917922828
+        "totalSupply": 474033380410
       },
       "derivedName": "LiquidityStakingV1"
     },
@@ -534,18 +534,21 @@
       }
     },
     {
-      "name": "Treasury",
+      "name": "TreasuryBridge",
       "address": "0x639192D54431F8c816368D3FB4107Bc168d0E871",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
+        "implementation": "0x8d0051943D4c72aF12D638c6b7253C71929A910A",
         "admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
       },
-      "implementations": ["0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce"],
+      "implementations": ["0x8d0051943D4c72aF12D638c6b7253C71929A910A"],
       "sinceTimestamp": 1627708861,
       "values": {
+        "BRIDGE": "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9",
+        "BURN_ADDRESS": "0x0000000000000000000000000000000000000001",
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-        "REVISION": 1
+        "REVISION": 1,
+        "TREASURY_VESTER": "0xb9431E19B29B952d9358025f680077C3Fd37292f"
       }
     },
     {
@@ -647,7 +650,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "3373519871741305592922123"
+        "totalSupply": "2213431377756862480417449"
       },
       "derivedName": "SafetyModuleV2"
     },
@@ -708,7 +711,7 @@
           "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
         ],
         "getGovernanceStrategy": "0xc2f5F3505910Da80F0592a3Cc023881C50b16505",
-        "getProposalsCount": 16,
+        "getProposalsCount": 17,
         "getVotingDelay": 6570,
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "VOTE_EMITTED_TYPEHASH": "0x4e031542a9553ed1c4e810c54674ab4b984243e335b246aa3de73663bf4c11ee"
@@ -857,8 +860,8 @@
       "sinceTimestamp": 1627709382,
       "values": {
         "dydx": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-        "lastUpdate": 1695764591,
-        "recipient": "0x639192D54431F8c816368D3FB4107Bc168d0E871",
+        "lastUpdate": 1703041535,
+        "recipient": "0x0000000000000000000000000000000000000001",
         "vestingAmount": "369630137000000000000000000",
         "vestingBegin": 1628002800,
         "vestingCliff": 1628002800,
@@ -923,7 +926,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 19207,
+        "getLastBatchId": 22077,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -932,13 +935,12 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 18908,
+        "getSequenceNumber": 21778,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
         "getVaultTreeHeight": 64,
         "globalConfigurationHash": "0x03cbd17769430aed60aa8b9a5867b375c3fdca23e56cbbd83e33290577f50449",
-        "identify": "StarkWare_PerpetualTokensAndRamping_2020_1",
         "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
         "initializerSize": 384,
         "isFrozen": false,
@@ -1067,6 +1069,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000001",
     "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080",
     "0x8129b737912e17212C8693B781928f5D0303390a",
     "0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9",
@@ -1095,16 +1098,6 @@
       "event ReadHashEvent(bytes32 val)",
       "event SendRandomnessEvent(uint256 val)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
-    ],
-    "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function REVISION() view returns (uint256)",
-      "function approve(address token, address recipient, uint256 amount)",
-      "function initialize()",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transfer(address token, address recipient, uint256 amount)",
-      "function transferOwnership(address newOwner)"
     ],
     "0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830": [
       "function hasRegisteredFact() view returns (bool)",
@@ -1589,6 +1582,21 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
+    ],
+    "0x8d0051943D4c72aF12D638c6b7253C71929A910A": [
+      "constructor(address treasuryVester, address bridgeAddress, address burnAddress)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BRIDGE() view returns (address)",
+      "function BURN_ADDRESS() view returns (address)",
+      "function REVISION() view returns (uint256)",
+      "function TREASURY_VESTER() view returns (address)",
+      "function approve(address token, address recipient, uint256 amount)",
+      "function bridgeTreasury(uint256 amount, bytes accAddress, bytes data)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transfer(address token, address recipient, uint256 amount)",
+      "function transferOwnership(address newOwner)"
     ],
     "0x92D6C1e31e14520e676a687F0a93788B716BEff5": [
       "constructor(address distributor, uint256 transfersRestrictedBefore, uint256 transferRestrictionLiftedNoLaterThan, uint256 mintingRestrictedBefore, uint256 mintMaxPercent)",

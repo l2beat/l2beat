@@ -1,6 +1,6 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
-import { ProjectPermission } from '../../common'
+import { ScalingProjectPermission } from '../../common'
 import { ProjectDiscovery } from '../ProjectDiscovery'
 import { getProxyGovernance } from './getProxyGovernance'
 
@@ -60,7 +60,7 @@ export function getSHARPVerifierContracts(
 export function getSHARPVerifierGovernors(
   projectDiscovery: ProjectDiscovery,
   verifierAddress: EthereumAddress,
-): ProjectPermission[] {
+): ScalingProjectPermission[] {
   assert(
     verifierAddress === SHARP_VERIFIER_PROXY.address,
     `SHARPVerifierProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,

@@ -3,6 +3,7 @@ import {
   DuplicateData,
   getCanonicalTokenBySymbol,
   Layer2,
+  Layer2FinalityConfig,
   Layer2Liveness,
   Layer2LivenessConfiguration,
   Layer2TransactionApi,
@@ -37,6 +38,7 @@ export interface Project {
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
   livenessConfig?: LivenessConfig
+  finalityConfig?: Layer2FinalityConfig
 }
 
 export interface ProjectEscrow {
@@ -50,7 +52,6 @@ export function layer2ToProject(layer2: Layer2): Project {
     projectId: layer2.id,
     type: 'layer2',
     isUpcoming: layer2.isUpcoming,
-    isLayer3: layer2.isLayer3,
     isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map((escrow) => ({
       address: escrow.address,
@@ -62,6 +63,7 @@ export function layer2ToProject(layer2: Layer2): Project {
     })),
     transactionApi: layer2.config.transactionApi,
     livenessConfig: toBackendLivenessConfig(layer2.id, layer2.config.liveness),
+    finalityConfig: layer2.config.finality,
   }
 }
 

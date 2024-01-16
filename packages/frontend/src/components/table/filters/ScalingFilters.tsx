@@ -2,7 +2,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import React from 'react'
 
-import { ScalingSummaryViewEntry } from '../../../pages/scaling/summary/types'
+import { ScalingL2SummaryViewEntry } from '../../../pages/scaling/summary/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'
@@ -36,6 +36,14 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
     .map((category) => ({
       label: category,
       value: generateSlugList(items, (i) => i.category === category),
+    }))
+
+  const purposes = uniq(items.flatMap((i) => i.purposes))
+    .sort()
+    .filter(notUndefined)
+    .map((purpose) => ({
+      label: purpose,
+      value: generateSlugList(items, (i) => !!i.purposes?.includes(purpose)),
     }))
 
   return (
@@ -75,12 +83,23 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
             </RichSelect.Item>
           ))}
         </RichSelect>
+        <RichSelect label="Select purpose" id="purpose-select">
+          {purposes.map((stage) => (
+            <RichSelect.Item
+              selectedLabel={stage.label}
+              key={stage.label}
+              value={stage.value}
+            >
+              {stage.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
       </FiltersWrapper>
     </OverflowWrapper>
   )
 }
 
-function stageLabel(stage: ScalingSummaryViewEntry['stage']['stage']) {
+function stageLabel(stage: ScalingL2SummaryViewEntry['stage']['stage']) {
   switch (stage) {
     case 'NotApplicable':
       return 'Not applicable'

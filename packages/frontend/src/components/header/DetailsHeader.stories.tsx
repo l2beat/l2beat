@@ -15,9 +15,11 @@ type Story = StoryObj<typeof DetailsHeaderComponent>
 
 const project = {
   display: {
-    purpose: 'Universal',
+    purposes: ['Universal'],
     name: 'Arbitrum One',
     slug: 'arbitrum',
+    description:
+      'Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.',
   },
   technology: {
     category: 'Optimistic Rollup',
@@ -41,7 +43,7 @@ const stats = [
   },
   {
     title: 'Purpose',
-    value: project.display.purpose,
+    value: project.display.purposes,
   },
   {
     title: 'Type',
@@ -87,41 +89,76 @@ const warning =
 export const DetailsHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     isArchived: false,
     warning,
+    type: 'layer2',
   },
 }
 
 export const ArchivedHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     isArchived: true,
     warning,
+    type: 'layer2',
   },
 }
 
 export const UpcomingHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
     stats: { summary: stats },
     links,
     isUpcoming: true,
+    type: 'layer2',
   },
 }
 
 export const UnderReviewHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     showProjectUnderReview: true,
+    type: 'layer2',
   },
 }

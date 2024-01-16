@@ -1,3 +1,34 @@
+# Diff at Fri, 12 Jan 2024 15:03:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: master@8dedac1fc64b221baf7fd1da0dd78d78b5208ffb block: 18841455
+- current block number: 18991587
+
+## Description
+
+DataAvailabilityCommittee contract (CDKDataCommittee) became verified, exposing
+addresses of committee members. This committee attests that data for a given
+dataRoot has been published. The DAC Owner can update the member set at any
+time.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18841455 (main branch discovery), not current.
+
+```diff
+    contract DataAvailabilityCommittee (0x997CfB0838544f68E59f877EDc905001456F125b) {
+      unverified:
+-        true
+      derivedName:
+-        ""
++        "CDKDataCommittee"
+      values:
++        {"committeeHash":"0xba409e01b8959e09c11202ce45dd3e4ac8aa7e21440e86c1e9dc924369151fca","getAmountOfMembers":5,"members":[["http://ec2-18-166-77-46.ap-east-1.compute.amazonaws.com:8444","0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"],["http://ec2-18-163-181-171.ap-east-1.compute.amazonaws.com:8444","0x061D273bEf947BD0ef2B828526e710eEa0f297ae"],["http://ec2-43-198-25-156.ap-east-1.compute.amazonaws.com:8444","0x9231622437bD57349cC9a15CDEc5383627DEbA17"],["http://ec2-18-167-116-200.ap-east-1.compute.amazonaws.com:8444","0x9d8616545C9941138832EebC58Cb498E0ef21a13"],["http://ec2-18-163-127-148.ap-east-1.compute.amazonaws.com:8444","0xFe1da7CAd939805d4A889822357c348177a5118d"]],"owner":"0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70","requiredAmountOfSignatures":3}
+    }
+```
+
 # Diff at Thu, 21 Dec 2023 14:05:42 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

@@ -18,7 +18,7 @@ export interface ScalingTvlPageProps {
   footer: FooterProps
   showActivity: boolean
   showLiveness: boolean
-  detailedTvlView: ScalingTvlViewProps
+  tvlView: ScalingTvlViewProps
 }
 
 export function ScalingTvlPage(props: ScalingTvlPageProps) {
@@ -37,7 +37,7 @@ export function ScalingTvlPage(props: ScalingTvlPageProps) {
             initialType={{ type: 'layer2-detailed-tvl' }}
             header="tvl"
           />
-          <ScalingTvlView {...props.detailedTvlView} />
+          <ScalingTvlView {...props.tvlView} />
           <OtherSites />
           <About />
         </main>

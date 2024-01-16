@@ -15,6 +15,7 @@ export function getLocalConfig(env: Env): Config {
   const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
   const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
   const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
+  const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', false)
   const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
@@ -28,6 +29,7 @@ export function getLocalConfig(env: Env): Config {
     'INTERNAL_DISCORD_CHANNEL_ID',
   )
   const discordEnabled = !!discordToken && !!internalDiscordChannelId
+  const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
 
   return {
     name: 'Backend/Local',
@@ -119,6 +121,19 @@ export function getLocalConfig(env: Env): Config {
         },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
+      linea: lineaTvlEnabled && {
+        providerUrl: env.string('TVL_LINEA_PROVIDER_URL'),
+        providerCallsPerMinute: env.integer(
+          'TVL_LINEA_RPC_CALLS_PER_MINUTE',
+          25,
+        ),
+        blockNumberProviderConfig: {
+          type: 'EtherscanLike',
+          etherscanApiKey: env.string('TVL_LINEA_ETHERSCAN_API_KEY'),
+          etherscanApiUrl: 'https://api.lineascan.build/api',
+        },
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      },
       lyra: lyraTvlEnabled && {
         providerUrl: env.string('TVL_LYRA_PROVIDER_URL'),
         providerCallsPerMinute: env.integer(
@@ -139,7 +154,7 @@ export function getLocalConfig(env: Env): Config {
         ),
         blockNumberProviderConfig: {
           type: 'RoutescanLike',
-          routescanApiUrl: 'https://manta-pacific.calderaexplorer.xyz/api',
+          routescanApiUrl: 'https://pacific-explorer.manta.network/api',
         },
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
@@ -158,6 +173,7 @@ export function getLocalConfig(env: Env): Config {
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
+    finality: finalityEnabled,
     activity: activityEnabled && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),

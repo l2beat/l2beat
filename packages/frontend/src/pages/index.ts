@@ -5,6 +5,7 @@ import { getBridgesSummaryPage } from './bridges/summary'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
 import { getL2DaysPage } from './l2days'
+import { getL3sProjectPages } from './layer3s'
 import { getMetaImagePages } from './meta-images'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
@@ -34,6 +35,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(getL2DaysPage())
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, pagesData))
+  pages.push(...getL3sProjectPages(config, pagesData))
   pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
 
   pages.push(getBridgesSummaryPage(config, pagesData))

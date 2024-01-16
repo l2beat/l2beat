@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
-import { Tooltip as TooltipComponent } from '../Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { TooltipProvider as TooltipComponent } from '../tooltip/TooltipProvider'
 import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
 const meta: Meta<typeof TooltipComponent> = {
@@ -61,18 +61,15 @@ const project: RosetteTooltipProps = {
 export const RosetteTooltip: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <span
-        className="Tooltip inline-block"
-        title={renderToStaticMarkup(
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <RosetteTooltipPopup
             riskSentiments={project.riskSentiments}
             riskValues={project.riskValues}
-          />,
-        )}
-        data-tooltip-big
-      >
-        <span>Element with tooltip</span>
-      </span>
+          />
+        </TooltipContent>
+      </Tooltip>
     </div>
   ),
   play: async ({ canvasElement }) => {

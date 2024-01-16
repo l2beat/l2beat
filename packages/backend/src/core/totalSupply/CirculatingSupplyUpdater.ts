@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -11,7 +12,6 @@ import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import { getChainMinTimestamp } from '../../config/chains'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
@@ -33,9 +33,8 @@ export class CirculatingSupplyUpdater {
     private readonly chainId: ChainId,
     private readonly logger: Logger,
   ) {
-    this.logger = this.logger.for(
-      `${this.constructor.name}.${ChainId.getName(chainId)}`,
-    )
+    this.logger = this.logger.for(this)
+    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),

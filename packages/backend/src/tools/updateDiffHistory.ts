@@ -64,7 +64,13 @@ async function updateDiffHistoryFile() {
     config,
   )
 
-  if (diff.length > 0) {
+  const configRelatedDiff = diffDiscovery(
+    discoveryFromMainBranch?.contracts ?? [],
+    prevDiscovery?.contracts ?? [],
+    config,
+  )
+
+  if (diff.length > 0 || configRelatedDiff.length > 0) {
     const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
     const { content: historyFileFromMainBranch } =
       getFileVersionOnMainBranch(diffHistoryPath)
@@ -76,7 +82,10 @@ async function updateDiffHistoryFile() {
     }
 
     const newHistoryEntry = generateDiffHistoryMarkdown(
+      discoveryFromMainBranch?.blockNumber,
+      curDiscovery.blockNumber,
       diff,
+      configRelatedDiff,
       mainBranchHash,
       codeDiff,
       description,
@@ -90,6 +99,8 @@ async function updateDiffHistoryFile() {
   } else {
     console.log('No changes found')
   }
+
+  await updateHashes(projectName, chainName)
 }
 
 async function performDiscoveryOnPreviousBlock(
@@ -239,7 +250,10 @@ function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
 }
 
 function generateDiffHistoryMarkdown(
+  blockNumberFromMainBranchDiscovery: number | undefined,
+  curBlockNumber: number,
   diffs: DiscoveryDiff[],
+  configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
   codeDiff?: string,
   description?: string,
@@ -252,12 +266,17 @@ function generateDiffHistoryMarkdown(
   result.push('')
   const { name, email } = getGitUser()
   result.push(`- author: ${name} (<${email}>)`)
-  result.push(`- comparing to: ${mainBranch}@${mainBranchHash}`)
+  if (blockNumberFromMainBranchDiscovery !== undefined) {
+    result.push(
+      `- comparing to: ${mainBranch}@${mainBranchHash} block: ${blockNumberFromMainBranchDiscovery}`,
+    )
+  }
+  result.push(`- current block number: ${curBlockNumber}`)
   result.push('')
+  result.push('## Description')
   if (description) {
     result.push(description)
   } else {
-    result.push('## Description')
     result.push('')
     result.push(
       'Provide description of changes. This section will be preserved.',
@@ -265,10 +284,16 @@ function generateDiffHistoryMarkdown(
     result.push('')
   }
 
-  result.push('## Watched changes')
-  result.push('')
-  result.push(discoveryDiffToMarkdown(diffs))
-  result.push('')
+  if (diffs.length > 0) {
+    if (blockNumberFromMainBranchDiscovery === undefined) {
+      result.push('## Initial discovery')
+    } else {
+      result.push('## Watched changes')
+    }
+    result.push('')
+    result.push(discoveryDiffToMarkdown(diffs))
+    result.push('')
+  }
 
   if (codeDiff !== undefined) {
     result.push('## Source code changes')
@@ -276,6 +301,20 @@ function generateDiffHistoryMarkdown(
     result.push('```diff')
     result.push(codeDiff)
     result.push('```')
+    result.push('')
+  }
+
+  if (configRelatedDiff.length > 0) {
+    assert(blockNumberFromMainBranchDiscovery !== undefined)
+    result.push('## Config/verification related changes')
+    result.push('')
+    result.push(
+      `Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during 
+discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
+    )
+    result.push('')
+    result.push(discoveryDiffToMarkdown(configRelatedDiff))
     result.push('')
   }
 
@@ -305,14 +344,15 @@ function findDescription(
     return undefined
   }
 
-  const lastIndex = lines.findIndex((l) => l.startsWith('## Watched changes'))
+  const followingLines = lines.slice(index + 1)
+  const lastIndex = followingLines.findIndex((l) => l.startsWith('## '))
   if (lastIndex < 0) {
-    return lines.slice(index).join('\n')
+    return followingLines.join('\n')
   }
 
-  if (lastIndex < index) {
-    return undefined
-  }
+  return followingLines.slice(0, lastIndex).join('\n')
+}
 
-  return lines.slice(index, lastIndex).join('\n')
+async function updateHashes(_projectName: string, _chainName: string) {
+  // TODO(radomski): no-op for now, look at L2B-3554
 }
