@@ -7,6 +7,7 @@ import { EthereumAddress } from '../types'
 
 export function gatherAddressesFromUpgradeability(
   item: UpgradeabilityParameters,
+  eoas: EthereumAddress[],
 ): EthereumAddress[] {
   const result: EthereumAddress[] = []
 
@@ -43,7 +44,9 @@ export function gatherAddressesFromUpgradeability(
       result.push(item.guard)
       result.push(item.avatar)
       result.push(item.target)
-      result.push(...(item.modules ?? []))
+      result.push(
+        ...(item.modules ?? []).filter((module) => !eoas.includes(module)),
+      )
       break
     case 'EIP2535 diamond proxy':
       result.push(...item.facets)

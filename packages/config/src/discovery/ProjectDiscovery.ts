@@ -453,7 +453,10 @@ export class ProjectDiscovery {
   getAllContractAddresses(): EthereumAddress[] {
     return this.discovery.contracts.flatMap((contract) => [
       contract.address,
-      ...gatherAddressesFromUpgradeability(contract.upgradeability),
+      ...gatherAddressesFromUpgradeability(
+        contract.upgradeability,
+        this.discovery.eoas,
+      ),
     ])
   }
 
