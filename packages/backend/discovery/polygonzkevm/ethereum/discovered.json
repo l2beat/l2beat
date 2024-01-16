@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 18984674,
-  "configHash": "0x90c6e7d7015fe5fb8b0a9ef15df7da6896bc0bd52716d88a3d21c5e42f0b94ae",
+  "blockNumber": 19018668,
+  "configHash": "0xf102f78ba49907d9746407d731a48193f6bf05c564b167590c6dfac7e2ddaafe",
   "version": 3,
   "contracts": [
     {
@@ -113,7 +113,7 @@
         ],
         "pendingDefaultAdminDelay": [0, 0],
         "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "totalBridgedDAI": "12850000000000000000",
+        "totalBridgedDAI": "62850000000000000000",
         "totalProtocolDAI": "1000000000000000000",
         "zkEvmBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
       },
