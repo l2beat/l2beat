@@ -19,8 +19,12 @@ export function getHeader(
 
   const activityData =
     activityApiResponse?.projects[project.id.toString()]?.daily.data
-  const tpsDaily = getTpsDaily(activityData, 'project')
-  const tpsWeeklyChange = getTpsWeeklyChange(activityData, 'project')
+  const tpsDaily = activityData
+    ? getTpsDaily(activityData, 'project')
+    : undefined
+  const tpsWeeklyChange = activityData
+    ? getTpsWeeklyChange(activityData, 'project')
+    : undefined
 
   return {
     icon: `/icons/${project.display.slug}.png`,

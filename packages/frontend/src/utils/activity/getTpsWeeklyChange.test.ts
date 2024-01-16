@@ -40,13 +40,6 @@ describe(getTpsWeeklyChange.name, () => {
     expect(result).toEqual('+100.00%')
   })
 
-  it('returns empty string if data is undefined', () => {
-    const data = undefined
-
-    const result = getTpsWeeklyChange(data, 'project')
-
-    expect(result).toEqual('')
-  })
   it('returns 0 if data array is too short', () => {
     const result = getTpsWeeklyChange(
       [[new UnixTime(1), ONE_TPS, 2]],
