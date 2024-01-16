@@ -13,10 +13,7 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      finalityView: getScalingFinalityView(
-        config.layer2s,
-        pagesData,
-      ),
+      finalityView: getScalingFinalityView(config.layer2s, pagesData),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
       showLiveness: config.features.liveness,

@@ -38,7 +38,7 @@ export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
           selected="liveness"
         />
         <main>
-          <LivenessHeader/>
+          <LivenessHeader />
           <LivenessWarning />
           <ScalingLivenessView {...props.livenessView} />
           <OtherSites />

@@ -8,7 +8,7 @@ export const FinalityDataPoint = z.object({
 export type FinalityDataPoint = z.infer<typeof FinalityDataPoint>
 
 export const FinalityApiResponse = z.object({
-  projects: z.record(z.string(), FinalityDataPoint),
+  projects: z.record(z.string(), z.optional(FinalityDataPoint)),
 })
 export type FinalityApiResponse = z.infer<typeof FinalityApiResponse>
 

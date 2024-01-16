@@ -649,8 +649,8 @@ export function getScalingFinalityColumnsConfig() {
       sorting: {
         rule: 'numeric',
         getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
-      }
       },
+    },
   ]
   return columns
 }

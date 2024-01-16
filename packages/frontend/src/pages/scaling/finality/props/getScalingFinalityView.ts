@@ -1,5 +1,9 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
-import { assertUnreachable,FinalityApiResponse, FinalityDataPoint } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  FinalityDataPoint,
+  notUndefined,
+} from '@l2beat/shared-pure'
 
 import { FinalityPagesData, ScalingFinalityViewEntry } from '../types'
 import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
@@ -10,15 +14,19 @@ export function getScalingFinalityView(
 ): ScalingFinalityViewProps {
   const { finalityApiResponse } = pagesData
 
-  const includedProjects = getIncludedProjects(projects, finalityApiResponse)
+  const includedProjects = getIncludedProjects(projects)
 
   return {
-    items: includedProjects.map((project) =>
-      getScalingFinalityViewEntry(
-        project,
-        finalityApiResponse.projects[project.id.toString()],
-      ),
-    ),
+    items: includedProjects
+      .map((project) => {
+        const finalityDataPoint =
+          finalityApiResponse.projects[project.id.toString()]
+        if (!finalityDataPoint) {
+          return
+        }
+        return getScalingFinalityViewEntry(project, finalityDataPoint)
+      })
+      .filter(notUndefined),
   }
 }
 
@@ -44,16 +52,8 @@ export function getScalingFinalityViewEntry(
   }
 }
 
-function getIncludedProjects(
-  projects: Layer2[],
-  finalityResponse: FinalityApiResponse,
-) {
-  return projects.filter(
-    (p) =>
-      finalityResponse.projects[p.id.toString()] &&
-      !p.isUpcoming &&
-      !p.isArchived,
-  )
+function getIncludedProjects(projects: Layer2[]) {
+  return projects.filter((p) => !p.isUpcoming && !p.isArchived)
 }
 
 function daModeToDisplay(daMode: ScalingProjectDataAvailabilityMode) {
