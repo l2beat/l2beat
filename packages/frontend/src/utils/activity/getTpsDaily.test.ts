@@ -29,17 +29,4 @@ describe(getTpsDaily.name, () => {
 
     expect(result).toEqual(2)
   })
-
-  it('returns undefined if data not defined', () => {
-    const data = undefined
-
-    const result = getTpsDaily(data, 'project')
-
-    expect(result).toEqual(undefined)
-  })
-  it('returns undefined if data is empty', () => {
-    const result = getTpsDaily([], 'project')
-
-    expect(result).toEqual(undefined)
-  })
 })

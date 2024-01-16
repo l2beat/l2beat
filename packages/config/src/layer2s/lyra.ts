@@ -69,6 +69,10 @@ export const lyra: Layer2 = opStack({
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50'),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1700022479),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),

@@ -142,6 +142,10 @@ export const optimism: Layer2 = opStack({
   ),
   inboxAddress: EthereumAddress('0xFF00000000000000000000000000000000000010'),
   genesisTimestamp: new UnixTime(1686074603),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   stateDerivation: {

@@ -23,11 +23,16 @@ import {
   ScalingProjectStateDerivation,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
+import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
-import { ChainConfig } from '../../common/ChainConfig'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TransactionApi,
+} from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
@@ -43,6 +48,7 @@ export interface OpStackConfig {
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
   tokenList?: Token[]
+  finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
   portal: ContractParameters
   stateDerivation?: ScalingProjectStateDerivation
@@ -125,6 +131,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
+      finality: templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
