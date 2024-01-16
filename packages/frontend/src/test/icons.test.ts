@@ -62,7 +62,7 @@ describe('icons', () => {
     'morph',
     'myria',
     'nova',
-    'obscuro',
+    'ten',
     'omgnetwork',
     'optimism',
     'orb3',
@@ -129,6 +129,7 @@ describe('icons', () => {
     'symbiosis',
     'deri',
     'xai',
+    'zklinknexus',
   ]
 
   for (const project of projects) {

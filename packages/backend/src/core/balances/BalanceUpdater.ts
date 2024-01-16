@@ -33,9 +33,8 @@ export class BalanceUpdater {
     private readonly chainId: ChainId,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(
-      `${this.constructor.name}.${ChainId.getName(chainId)}`,
-    )
+    this.logger = this.logger.for(this)
+    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.configHash = getBalanceConfigHash(projects)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
