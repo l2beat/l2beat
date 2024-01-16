@@ -79,7 +79,7 @@ export function TableView<T>({
                 {...rest}
                 className={cx(
                   'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
-                  'hover:bg-black/[0.1] hover:shadow-sm dark:hover:bg-white/[0.1]',
+                  'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
               >
