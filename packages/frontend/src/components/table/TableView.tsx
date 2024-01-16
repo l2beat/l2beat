@@ -1,5 +1,4 @@
 import { default as classNames, default as cx } from 'classnames'
-import isFunction from 'lodash/isFunction'
 import isObject from 'lodash/isObject'
 import range from 'lodash/range'
 import React from 'react'
@@ -248,11 +247,7 @@ function DataCell<T>(props: {
           props.groupOptions?.isLast && '!pr-6',
           props.columnConfig.className,
         )}
-        colSpan={
-          isFunction(props.columnConfig.colSpan)
-            ? props.columnConfig.colSpan(props.item)
-            : props.columnConfig.colSpan
-        }
+        colSpan={props.columnConfig.colSpan?.(props.item)}
         {...orderAttributes}
       >
         <a
