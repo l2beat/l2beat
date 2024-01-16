@@ -79,7 +79,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(
       getFinalityPage(config, {
         finalityApiResponse,
-        tvlApiResponse
+        tvlApiResponse,
       }),
     )
   }
