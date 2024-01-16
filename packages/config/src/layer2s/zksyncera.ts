@@ -353,7 +353,7 @@ export const zksyncera: Layer2 = {
       'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   },
   stateValidation:
-    '### PROVER ARCHITECTURE\n zkSync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components.' +
+    'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. \n ### PROVER ARCHITECTURE\n zkSync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components.' +
     '\n\n The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover).\n ' +
     '### ZK CIRCUITS \n zkSync Era circuits are built from Boojum and are designed toreplicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).\n ' +
     '### VERIFICATION KEYS GENERATION\n SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
