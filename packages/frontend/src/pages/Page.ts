@@ -40,5 +40,5 @@ export interface PagesData {
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
   livenessApiResponse: LivenessApiResponse | undefined
-  diffHistory: DiffHistoryApiResponse
+  diffHistory: DiffHistoryApiResponse | undefined
 }

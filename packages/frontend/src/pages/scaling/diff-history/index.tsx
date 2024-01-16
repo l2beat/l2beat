@@ -1,4 +1,4 @@
-import { assert, DiscoveryDiff, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, DiffHistoryApiResponse, DiscoveryDiff, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import toUpper from 'lodash/toUpper'
 import React from 'react'
 
@@ -48,7 +48,7 @@ function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
 }
 
 function diffHistoryToMarkdown(
-  changes: PagesData['diffHistory'][0]['changes'],
+  changes: DiffHistoryApiResponse[0]['changes'],
 ): string {
   return changes
     .map((change) => {
@@ -60,8 +60,8 @@ function diffHistoryToMarkdown(
     .join('\n')
 }
 
-export function getDiffHistoryPages(config: Config, pagesData: PagesData) {
-  return pagesData.diffHistory.map((entry) => {
+export function getDiffHistoryPages(config: Config, diffHistory: DiffHistoryApiResponse) {
+  return diffHistory.map((entry) => {
     return {
       slug: `/scaling/projects/${getProjectSlug(
         config,

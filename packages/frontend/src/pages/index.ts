@@ -28,6 +28,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     verificationStatus,
     tvlBreakdownApiResponse,
     livenessApiResponse,
+    diffHistory,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -74,7 +75,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  pages.push(...getDiffHistoryPages(config, pagesData))
+  if(config.features.diffHistory && diffHistory) {
+      pages.push(...getDiffHistoryPages(config, diffHistory))
+  }
 
   outputPages(pages)
 }

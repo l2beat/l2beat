@@ -1,6 +1,7 @@
 import Bugsnag from '@bugsnag/js'
 import {
   ActivityApiResponse,
+  DiffHistoryApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -75,13 +76,19 @@ async function main() {
       livenessApiResponse = await fetchLivenessApi(config.backend, http)
       console.timeEnd('[LIVENESS]')
     }
+
+    let diffHistory: DiffHistoryApiResponse | undefined = undefined
+    if(config.features.diffHistory) {
+        console.time('[DIFF HISTORY]')
+        diffHistory = await fetchDiffHistory(config.backend, http)
+        console.timeEnd('[DIFF HISTORY]')
+    }
     console.log('\n')
 
     createApi(config, tvlApiResponse, activityApiResponse)
 
     const verificationStatus = getVerificationStatus()
     const manuallyVerifiedContracts = getManuallyVerifiedContracts()
-    const diffHistory = await fetchDiffHistory(config.backend, http)
 
     const pagesData = {
       tvlApiResponse,
