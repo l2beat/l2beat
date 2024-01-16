@@ -6,8 +6,8 @@ export function divideAndAddLag(
 ) {
   if (!details) return undefined
   return {
-    averageInSeconds: details.averageInSeconds / 2 + lag,
-    minimumInSeconds: details.minimumInSeconds / 2 + lag,
-    maximumInSeconds: details.maximumInSeconds / 2 + lag,
+    averageInSeconds: Math.ceil(details.averageInSeconds / 2) + lag,
+    minimumInSeconds: Math.ceil(details.minimumInSeconds / 2) + lag,
+    maximumInSeconds: Math.ceil(details.maximumInSeconds / 2) + lag,
   }
 }
