@@ -1,8 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { EthereumAddress, Token } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Token } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { assert } from 'console'
 import { providers } from 'ethers'
 import { writeFileSync } from 'fs'
 
