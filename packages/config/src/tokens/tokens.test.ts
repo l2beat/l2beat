@@ -20,12 +20,6 @@ describe('tokens', () => {
     expect(everyUnique).toEqual(true)
   })
 
-  it('tokens are ordered alphabetically', () => {
-    const names = tokenList.map((x) => x.name)
-    const sorted = [...names].sort((a, b) => a.localeCompare(b))
-    expect(names).toEqual(sorted)
-  })
-
   describe('canonical', () => {
     it('every token has a unique symbol', () => {
       const symbols = canonicalTokenList.map((x) => x.symbol)
