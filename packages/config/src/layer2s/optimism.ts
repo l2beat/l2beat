@@ -84,6 +84,20 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'circulatingSupply',
   },
+  {
+    id: AssetId('optimism:exa-exactly-token'),
+    name: 'Exactly Token',
+    symbol: 'EXA',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921',
+    address: EthereumAddress('0x1e925de1c68ef83bd98ee3e130ef14a50309c01b'),
+    coingeckoId: CoingeckoId('exactly-token'),
+    sinceTimestamp: new UnixTime(1691546460),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
 ]
 
 export const optimism: Layer2 = opStack({
