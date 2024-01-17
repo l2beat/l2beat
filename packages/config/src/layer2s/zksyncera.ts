@@ -342,6 +342,13 @@ export const zksyncera: Layer2 = {
         'ValidatorTimelock',
         'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
       ),
+      discovery.getContractDetails('Governance', {
+        description: `Owner can schedule a transparent (you see the upgrade data on-chain) or a shadow (you don't see the upgrade data on-chain) upgrade. While scheduling an upgrade the owner chooses a delay, that delay has to be bigger than ${discovery.getContractValue<number>(
+          'Governance',
+          'minDelay',
+        )} seconds. Canceling the upgrade can be done only by the owner. The owner or the security council can perform the upgrade if the chosen delay is up. Only the security council can force the upgrade to execute even if the delay is not up.`,
+        ...upgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
