@@ -284,35 +284,10 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
-        case 'Axelar proxy':
-          links.push(
-            ...item.upgradeability.admins.map((admin, i) => ({
-              name: `Admin ${i}`,
-              href: `${etherscanUrl}/address/${admin.toString()}#code`,
-              address: admin.toString(),
-              isAdmin: true,
-            })),
-          )
-          links.push(
-            ...item.upgradeability.owners.map((owner, i) => ({
-              name: `Owner ${i}`,
-              href: `${etherscanUrl}/address/${owner.toString()}#code`,
-              address: owner.toString(),
-              isAdmin: true,
-            })),
-          )
-          links.push(
-            ...item.upgradeability.operators.map((operator, i) => ({
-              name: `Operator ${i}`,
-              href: `${etherscanUrl}/address/${operator.toString()}#code`,
-              address: operator.toString(),
-              isAdmin: true,
-            })),
-          )
-          break
 
         // Ignore types
         case 'immutable':
+        case 'Axelar proxy':
         case 'gnosis safe':
         case 'gnosis safe zodiac module':
         case 'EIP2535 diamond proxy':
