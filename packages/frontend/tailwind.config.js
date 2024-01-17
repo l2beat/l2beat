@@ -1,4 +1,4 @@
-/** @type import("tailwindcss/types").Config */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   future: {
     hoverOnlyWhenSupported: true,
@@ -161,4 +161,7 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    require('@tailwindcss/typography'),
+  ]
 }

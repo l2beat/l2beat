@@ -9,6 +9,7 @@ import {
   ProjectLink,
   ProjectLinkIcon,
 } from '../icons'
+import { Link } from '../Link'
 import { OutLink } from '../OutLink'
 import { parseSocial } from '../project/links/LinkSectionLink'
 
@@ -53,13 +54,14 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
     assert(projectLink.links.length === 1)
     return (
       <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 py-1.5 px-2 text-xs font-medium text-white transition-colors">
-        <OutLink
+        <Link
           href={projectLink.links[0]}
           className="flex flex-row items-center gap-1.5"
+          underline={false}
         >
           <ProjectLinkIcon name={projectLink.name} />
-          {projectLink.name}
-        </OutLink>
+          <span className="text-white">{projectLink.name}</span>
+        </Link>
       </div>
     )
   }
