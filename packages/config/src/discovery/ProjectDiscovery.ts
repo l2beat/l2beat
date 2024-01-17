@@ -451,10 +451,13 @@ export class ProjectDiscovery {
   }
 
   getAllContractAddresses(): EthereumAddress[] {
-    return this.discovery.contracts.flatMap((contract) => [
-      contract.address,
-      ...gatherAddressesFromUpgradeability(contract.upgradeability),
-    ])
+    const addressesWithinUpgradeability = this.discovery.contracts.flatMap(
+      (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
+    )
+
+    return addressesWithinUpgradeability.filter(
+      (addr) => !this.discovery.eoas.includes(addr),
+    )
   }
 
   getContractByAddress(address: string): ContractParameters {
