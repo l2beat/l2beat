@@ -1,4 +1,5 @@
 import { Config } from '../build/config'
+import { Page, PagesData } from './Page'
 import { getBridgeProjectPages } from './bridges/projects'
 import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesSummaryPage } from './bridges/summary'
@@ -9,8 +10,8 @@ import { getL3sProjectPages } from './layer3s'
 import { getMetaImagePages } from './meta-images'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
-import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
+import { getDiffHistoryPages } from './scaling/diff-history'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
@@ -29,6 +30,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     tvlBreakdownApiResponse,
     livenessApiResponse,
     finalityApiResponse,
+    diffHistory,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -82,6 +84,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         tvlApiResponse,
       }),
     )
+  }
+
+  if (config.features.diffHistory && diffHistory) {
+    pages.push(...getDiffHistoryPages(config, diffHistory))
   }
 
   outputPages(pages)

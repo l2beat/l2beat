@@ -311,7 +311,7 @@ export const kroma: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR('optimistic', 'merkle proof', finalizationPeriod),
         references: [
           {
             text: 'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',

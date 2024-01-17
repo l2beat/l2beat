@@ -294,7 +294,14 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       exitMechanisms: [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR(
+            'optimistic',
+            'merkle proof',
+            templateVars.discovery.getContractValue<number>(
+              'L2OutputOracle',
+              'FINALIZATION_PERIOD_SECONDS',
+            ),
+          ),
           references: [
             {
               text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
