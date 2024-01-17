@@ -1,8 +1,8 @@
 {
   "name": "satellite",
   "chain": "ethereum",
-  "blockNumber": 19019950,
-  "configHash": "0xc1ef7146beddebb7d6cf732f930dbd41dcca723bc46b819d2aaf9834bfe62337",
+  "blockNumber": 19027329,
+  "configHash": "0x8aec95c44287c6a143a17e43f139f9ead8b1d2c2a14e8063986501b3fd1925df",
   "version": 3,
   "contracts": [
     {
@@ -10,59 +10,6 @@
       "address": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
       "upgradeability": {
         "type": "Axelar proxy",
-        "admins": [
-          "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4",
-          "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC",
-          "0x5C8EF9ca7b43c93Ac4a146BeF77FAFbc7D3e69B7",
-          "0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b",
-          "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821",
-          "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f",
-          "0x027c1882B975E2cd771AE068b0389FA38B9dda73",
-          "0x30932Ac1f0477Fbd63E4c5Be1928f367A58A45A1"
-        ],
-        "adminThreshold": 4,
-        "owners": [
-          "0x7bA22cfDB59894820493F8EC57484Db89C0b057B",
-          "0x4ABaE21be1D9EBD967D1dd893eE666FC0A9D13B6",
-          "0x61f69E03f06F84Ca45335Cb0f992b9bd2E926DcB",
-          "0x3F15a3f850c59fd11D3c4C6C4221A6B02B0711dF",
-          "0x791e747F4B1c5f372974bb670169394FD5ECa723",
-          "0x177759c81b00dD947e483dDc39e1cbB59813c940",
-          "0xE175791B883694AE8f73457CAa164731d1376E14",
-          "0x3bEa258bf7f8255F3Be21cA40aE650C554AC5Eb7",
-          "0x33DeB07f1D7F02C2BE00d2589299a72AC712785E",
-          "0x1A86378627Dfc7bCfcDF946f8cC4296593b66a99",
-          "0x33d5b2f2cf50caa81D71E56AA1c621e41621eE1D",
-          "0xbf1D2A9fB0775038B4390a0Bc039E5Fa6a512DB5",
-          "0x57d9b10F6316D419fdA4740cE2268C23D0d29cE0",
-          "0x25e0412b52b6108E9C564257D6C7e10a3764D249",
-          "0xB3567695cCD073A2095347137BA4A0Eda6788C22",
-          "0x7272d9D6f391410b2153905E1E505820E3338378"
-        ],
-        "ownerThreshold": 9,
-        "operators": [
-          "0xee983Ce6Ad7bB166770A66A7af600fD552ee6f3D",
-          "0x2cC704bc8aDE53B051e771a46BFCA558d7396dF3",
-          "0x4438260D2351523166cb8777097f13750BE31969",
-          "0x787Bf0802521d073275b44987bfbBC29eC792Ca1",
-          "0x62f66CcEb5A295C9f59fb43D93Ec8b603c51479e",
-          "0x31174208ECc9CadA535E6d0AF9bB790b9fADdaaF",
-          "0x1Bdb0C8626B31498190f854e6890F9E3b0c677C5",
-          "0x9075d14C284A01FEFC78910765d2abeFB906ff81",
-          "0x9C112ef47b506cf3706a16DE1902722cC413Af82",
-          "0xf93B5526d81Ea90fa3261F8F5105E4d0EB8B017B",
-          "0x5a54e2e42599074212dF39190Fa3e50DB378d18e",
-          "0x27c7333EbaE53dcfDC893D4322B7ab1E69c96Ce0",
-          "0x368a5F50b2F03948779417bd25270Fbe37F4b517",
-          "0x1e1e4860a4D66670F55F09A18183D211f68B0D9f",
-          "0x75746864cd9c5619b59dD7A7082Bb9F383D74A68",
-          "0xa60463481f85354fDb5409d6575438c52E272Bca",
-          "0xAAebB2845A300c3a9570A388843208e4dBaaafAd",
-          "0x76af8c4d9C678181781c43E536b358ffAED79829",
-          "0xf4462493709F32E01F1bC555D9a27b4790826e32",
-          "0x1bc6dba6229c3Ac1Faa0A7d9CDCC1ca4728061f5"
-        ],
-        "operatorThreshold": 11,
         "implementation": "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
       },
       "implementations": ["0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"],
@@ -115,7 +62,7 @@
       },
       "sinceTimestamp": 1697785871,
       "values": {
-        "currentEpoch": 84,
+        "currentEpoch": 85,
         "owner": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
