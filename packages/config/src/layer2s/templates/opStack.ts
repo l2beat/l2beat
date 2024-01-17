@@ -1,10 +1,5 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import {
-  EthereumAddress,
-  ProjectId,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -47,7 +42,6 @@ export interface OpStackConfig {
   inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
-  tokenList?: Token[]
   finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
   portal: ContractParameters
@@ -78,7 +72,6 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           : templateVars.display.warning,
     },
     config: {
-      tokenList: templateVars.tokenList,
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({

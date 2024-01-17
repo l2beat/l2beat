@@ -1,12 +1,4 @@
-import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  ProjectId,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import {
@@ -84,27 +76,6 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
   periodInSeconds,
 )} time window.`
 
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId('lyra:stone-stakestone-ether'),
-    name: 'StakeStone Ether',
-    symbol: 'STONE',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672',
-    address: EthereumAddress('0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116'),
-    coingeckoId: CoingeckoId('stakestone-ether'),
-    sinceTimestamp: new UnixTime(1699781729),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Layer Zero',
-      slug: 'omnichain',
-    },
-  },
-]
-
 export const linea: Layer2 = {
   type: 'layer2',
   id: ProjectId('linea'),
@@ -137,7 +108,6 @@ export const linea: Layer2 = {
     },
   },
   config: {
-    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.LINEA })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xd19d4B5d358258f05D7B411E21A1460D11B0876F'),

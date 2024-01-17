@@ -38,14 +38,13 @@ you are out of luck. We will fix this in the future.
 
 import { AssetId, Token } from '@l2beat/shared-pure'
 
-import { layer2s } from '../layer2s'
-import { getCanonicalTokens } from './types'
+import { tokens } from './tokenList.json'
 
-const canonicalTokenList: Token[] = getCanonicalTokens()
+export const tokenList: Token[] = tokens.map((t) => Token.parse(t))
 
-export const tokenList: Token[] = canonicalTokenList
-  .concat(layer2s.map((l2) => l2.config.tokenList ?? []).flat())
-  .sort((a, b) => a.name.localeCompare(b.name))
+export const canonicalTokenList: Token[] = tokenList.filter(
+  (t) => t.type === 'CBV',
+)
 
 const canonicalTokenMap = new Map(
   canonicalTokenList.map((t) => [t.symbol, t] as const),
