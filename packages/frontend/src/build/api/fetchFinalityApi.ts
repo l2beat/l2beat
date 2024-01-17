@@ -41,7 +41,6 @@ function getMockFinalityApiResponse(): FinalityApiResponse {
 function generateMockData(): FinalityDataPoint {
   return {
     averageInSeconds: generateRandomTime(),
-    minimumInSeconds: generateRandomTime(),
     maximumInSeconds: generateRandomTime(),
   }
 }

@@ -24,10 +24,6 @@ export function FinalityDurationCell(props: Props) {
           <span>30-day time to finality:</span>
           <ul className="mt-1 list-inside list-disc">
             <li className="flex justify-between gap-4">
-              Minimum:
-              <DurationCell durationInSeconds={props.data.minimumInSeconds} />
-            </li>
-            <li className="flex justify-between gap-4">
               Average:
               <DurationCell durationInSeconds={props.data.averageInSeconds} />
             </li>
