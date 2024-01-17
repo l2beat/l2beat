@@ -202,6 +202,10 @@ export const polygonzkevm: Layer2 = {
     devId: 'polygonzkevm',
     chainId: 1101,
     explorerUrl: 'https://zkevm.polygonscan.com',
+    explorerApi: {
+      url: 'https://api-zkevm.polygonscan.com/api',
+      type: 'etherscan',
+    },
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

@@ -6,6 +6,10 @@ export const bsc: ChainConfig = {
   devId: 'bsc',
   chainId: 56,
   explorerUrl: 'https://bscscan.com',
+  explorerApi: {
+    url: 'https://api.bscscan.com/api',
+    type: 'etherscan',
+  },
   multicallContracts: [
     {
       address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

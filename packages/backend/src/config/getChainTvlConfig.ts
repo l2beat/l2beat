@@ -10,7 +10,7 @@ export function getChainTvlConfig(
   env: Env,
   devId: string,
   options?: {
-    overrideMinTimestamp?: UnixTime
+    minTimestamp?: UnixTime
   },
 ): ChainTvlConfig | false {
   const chain = chainsByDevId.get(devId)
@@ -50,7 +50,6 @@ export function getChainTvlConfig(
             type: 'RoutescanLike',
             routescanApiUrl: chain.explorerApi.url,
           },
-    minBlockTimestamp:
-      options?.overrideMinTimestamp ?? chain.minTimestampForTvl,
+    minBlockTimestamp: options?.minTimestamp ?? chain.minTimestampForTvl,
   }
 }

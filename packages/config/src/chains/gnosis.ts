@@ -6,6 +6,13 @@ export const gnosis: ChainConfig = {
   devId: 'gnosis',
   chainId: 100,
   explorerUrl: 'https://gnosisscan.io',
+  explorerApi: {
+    url: 'https://api.gnosisscan.io/api',
+    type: 'etherscan',
+    missingFeatures: {
+      getContractCreation: true,
+    },
+  },
   multicallContracts: [
     {
       address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
