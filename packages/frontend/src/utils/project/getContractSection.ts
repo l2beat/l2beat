@@ -20,6 +20,7 @@ import {
   TechnologyContractLinks,
 } from '../../components/project/ContractEntry'
 import { ContractsSectionProps } from '../../components/project/ContractsSection'
+import { getExplorerUrl } from '../getExplorerUrl'
 import { languageJoin } from '../utils'
 import { hasArchitectureImage } from './hasArchitectureImage'
 
@@ -97,7 +98,7 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
-  const etherscanUrl = item.etherscanUrl ?? 'https://etherscan.io'
+  const etherscanUrl = getExplorerUrl(item.devId)
 
   if (isSingleAddress(item)) {
     if (item.upgradeability?.type) {
@@ -384,7 +385,7 @@ function makeTechnologyContract(
     addresses,
     description,
     links,
-    etherscanUrl: item.etherscanUrl,
+    etherscanUrl,
   }
 
   if (isSingleAddress(item)) {

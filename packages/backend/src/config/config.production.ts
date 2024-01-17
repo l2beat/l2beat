@@ -1,20 +1,20 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, layer2s, layer3s, tokenList } from '@l2beat/config'
+import {
+  bridges,
+  chainsByDevId,
+  layer2s,
+  layer3s,
+  tokenList,
+} from '@l2beat/config'
 import { getChainConfig } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject, layer3ToProject } from '../model'
-import { getChainMinTimestamp } from './chains'
 import { Config } from './Config'
+import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
 
 export function getProductionConfig(env: Env): Config {
-  const arbitrumTvlEnabled = env.boolean('TVL_ARBITRUM_ENABLED', false)
-  const optimismTvlEnabled = env.boolean('TVL_OPTIMISM_ENABLED', false)
-  const baseTvlEnabled = env.boolean('TVL_BASE_ENABLED', false)
-  const lyraTvlEnabled = env.boolean('TVL_LYRA_ENABLED', false)
-  const lineaTvlEnabled = env.boolean('TVL_LINEA_ENABLED', false)
-  const mantapacificTvlEnabled = env.boolean('TVL_MANTA_PACIFIC_ENABLED', false)
   const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
@@ -29,6 +29,7 @@ export function getProductionConfig(env: Env): Config {
   )
   const discordEnabled =
     !!discordToken && !!publicDiscordChannelId && !!internalDiscordChannelId
+  const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
 
   return {
     name: 'Backend/Production',
@@ -48,7 +49,8 @@ export function getProductionConfig(env: Env): Config {
       throttleTimeMs: 20000,
     },
     clock: {
-      minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      minBlockTimestamp: chainsByDevId.get('ethereum')!.minTimestampForTvl!,
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
@@ -79,98 +81,13 @@ export function getProductionConfig(env: Env): Config {
       errorOnUnsyncedTvl,
       enabled: true,
       coingeckoApiKey: env.string('COINGECKO_API_KEY'),
-      ethereum: {
-        providerUrl: env.string('TVL_ETHEREUM_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_ETHEREUM_RPC_CALLS_PER_MINUTE',
-          500,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          // TODO: phase out old env variable
-          etherscanApiKey:
-            env.optionalString('ETHEREUM_ETHERSCAN_API_KEY') ??
-            env.string('TVL_ETHEREUM_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.etherscan.io/api',
-        },
-        minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
-      },
-      arbitrum: arbitrumTvlEnabled && {
-        providerUrl: env.string('TVL_ARBITRUM_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_ARBITRUM_RPC_CALLS_PER_MINUTE',
-          500,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_ARBITRUM_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.arbiscan.io/api',
-        },
-        minBlockTimestamp: getChainMinTimestamp(ChainId.ARBITRUM),
-      },
-      optimism: optimismTvlEnabled && {
-        providerUrl: env.string('TVL_OPTIMISM_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_OPTIMISM_RPC_CALLS_PER_MINUTE',
-          500,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_OPTIMISM_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api-optimistic.etherscan.io/api',
-        },
-        minBlockTimestamp: getChainMinTimestamp(ChainId.OPTIMISM),
-      },
-      base: baseTvlEnabled && {
-        providerUrl: env.string('TVL_BASE_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_BASE_RPC_CALLS_PER_MINUTE',
-          500,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_BASE_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.basescan.org/api',
-        },
-        minBlockTimestamp: getChainMinTimestamp(ChainId.BASE),
-      },
-      lyra: lyraTvlEnabled && {
-        providerUrl: env.string('TVL_LYRA_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_LYRA_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'RoutescanLike',
-          routescanApiUrl: 'https://explorer.lyra.finance/api',
-        },
-        minBlockTimestamp: getChainMinTimestamp(ChainId.LYRA),
-      },
-      linea: lineaTvlEnabled && {
-        providerUrl: env.string('TVL_LINEA_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_LINEA_RPC_CALLS_PER_MINUTE',
-          25,
-        ),
-        blockNumberProviderConfig: {
-          type: 'EtherscanLike',
-          etherscanApiKey: env.string('TVL_LINEA_ETHERSCAN_API_KEY'),
-          etherscanApiUrl: 'https://api.lineascan.build/api',
-        },
-        minBlockTimestamp: getChainMinTimestamp(ChainId.LINEA),
-      },
-      mantapacific: mantapacificTvlEnabled && {
-        providerUrl: env.string('TVL_MANTA_PACIFIC_PROVIDER_URL'),
-        providerCallsPerMinute: env.integer(
-          'TVL_MANTA_PACIFIC_RPC_CALLS_PER_MINUTE',
-          100,
-        ),
-        blockNumberProviderConfig: {
-          type: 'RoutescanLike',
-          routescanApiUrl: 'https://pacific-explorer.manta.network/api',
-        },
-        minBlockTimestamp: getChainMinTimestamp(ChainId.MANTA_PACIFIC),
-      },
+      ethereum: getChainTvlConfig(env, 'ethereum'),
+      arbitrum: getChainTvlConfig(env, 'arbitrum'),
+      optimism: getChainTvlConfig(env, 'optimism'),
+      base: getChainTvlConfig(env, 'base'),
+      lyra: getChainTvlConfig(env, 'lyra'),
+      linea: getChainTvlConfig(env, 'linea'),
+      mantapacific: getChainTvlConfig(env, 'mantapacific'),
     },
     liveness: livenessEnabled && {
       bigQuery: {
@@ -185,6 +102,7 @@ export function getProductionConfig(env: Env): Config {
       },
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
+    finality: finalityEnabled,
     activity: {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),

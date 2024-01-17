@@ -15,14 +15,14 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 
 export interface TechnologyContract {
   name: string
-  addresses?: string[]
+  addresses: string[]
+  etherscanUrl: string
   description?: string
   links: TechnologyContractLinks[]
   upgradeableBy?: string
   upgradeDelay?: string
   upgradeConsiderations?: string
   references?: TechnologyReference[]
-  etherscanUrl?: string
 }
 
 export interface TechnologyContractLinks {
@@ -49,7 +49,7 @@ export function ContractEntry({
     .map((c) => verificationStatus.contracts[c.address])
     .some((c) => c === false)
 
-  const addresses = contract.addresses ?? []
+  const addresses = contract.addresses
   const references = contract.references ?? []
 
   const areAddressesUnverified = addresses
@@ -85,10 +85,10 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2">
             <strong>{contract.name}</strong>{' '}
-            {(contract.addresses ?? []).map((address, i) => (
+            {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
-                url={contract.etherscanUrl}
+                etherscanUrl={contract.etherscanUrl}
                 key={i}
                 className={cx(
                   verificationStatus.contracts[address] === false

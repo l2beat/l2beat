@@ -24,8 +24,8 @@ export type ScalingProjectContract =
 export interface ScalingProjectContractSingleAddress {
   /** Address of the contract */
   address: EthereumAddress
-  /** Url to chain's etherscan */
-  etherscanUrl?: string
+  /** devId of the chain of this address. Optional for backwards compatibility */
+  devId?: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
@@ -62,9 +62,11 @@ export interface ScalingProjectContractMultipleAddresses {
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
+  description?: string
   /** Url to chain's etherscan */
   etherscanUrl?: string
-  description?: string
+  /** devId of the chain of this address. Optional for backwards compatibility */
+  devId?: string
 }
 
 export type ScalingProjectUpgradeability =

@@ -386,6 +386,17 @@ export const arbitrum: Layer2 = {
       ],
     },
   },
+  chainConfig: {
+    devId: 'arbitrum',
+    chainId: 42161,
+    explorerUrl: 'https://arbiscan.io',
+    explorerApi: {
+      url: 'https://api.arbiscan.io/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Arbitrum
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+  },
   riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'Fraud proofs (INT)',

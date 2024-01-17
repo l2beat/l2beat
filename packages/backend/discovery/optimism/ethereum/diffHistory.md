@@ -1,3 +1,27 @@
+# Diff at Wed, 10 Jan 2024 07:58:12 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@e2e6b511762816f77296c91449de9dfcd2aa348b block: 18961956
+- current block number: 18975204
+
+## Description
+
+Renamed contract to be consistent with template.
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18961956 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessengerProxy (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+      name:
+-        "L1CrossDomainMessengerProxy"
++        "L1CrossDomainMessenger"
+    }
+```
+
 # Diff at Mon, 08 Jan 2024 11:19:28 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

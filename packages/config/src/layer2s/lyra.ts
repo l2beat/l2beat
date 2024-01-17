@@ -47,9 +47,6 @@ export const lyra: Layer2 = opStack({
     description:
       'Lyra Chain is an L2 scaling solution built using OP Stack specially for Lyra protocol - a settlement protocol for spot, perpetuals, and options trading.',
     purposes: ['Exchange'],
-    category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
-    provider: 'OP Stack',
     links: {
       websites: ['https://lyra.finance/'],
       apps: ['https://lyra.finance/portfolio'],
@@ -72,10 +69,15 @@ export const lyra: Layer2 = opStack({
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50'),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1700022479),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
+  isNodeAvailable: 'UnderReview',
   milestones: [
     {
       name: 'Lyra V2 live on mainnet',
@@ -92,7 +94,6 @@ export const lyra: Layer2 = opStack({
     CHALLENGER: 'Challenger',
   },
   nonTemplatePermissions: [
-    // TODO: check whether the description is correct
     ...discovery.getMultisigPermission(
       'LyraMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
@@ -109,4 +110,17 @@ export const lyra: Layer2 = opStack({
       ...upgradeability,
     }),
   ],
+  nonTemplateEscrows: [],
+  chainConfig: {
+    devId: 'lyra',
+    chainId: 957,
+    explorerUrl: 'https://explorer.lyra.finance',
+    explorerApi: {
+      url: 'https://explorer.lyra.finance/api',
+      type: 'routescan',
+    },
+    // ~ Timestamp of block number 0 on Lyra
+    // https://explorer.lyra.finance/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
+  },
 })

@@ -1,3 +1,58 @@
+# Diff at Wed, 17 Jan 2024 07:18:24 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@e7e7682db5966865697553171159822c2ec0248f block: 19012236
+- current block number: 19025063
+
+## Description
+
+Change in the USDC Bridge proxy governors - a new address is added.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+      upgradeability.proxyGovernance[1]:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      upgradeability.proxyGovernance.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4"
+    }
+```
+
+# Diff at Mon, 15 Jan 2024 12:19:39 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@7146ff49765d6596dfb78aa68e5c4cee6f5f4642 block: 18940875
+- current block number: 19012236
+
+## Description
+
+The program hash and config hash are updated (with transactions 0xd15e25aaac8f634fcbe599fe0f47959d087dac5674091e12fc5a5a9808899f46 and 0x28a355fcc9228ed719110e075a3071d20446cfaff5ece324839429680fc87cf4). One of the USDC Bridge proxy governors has been removed.
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+      values.configHash:
+-        "671483050609816861429812414688707376174032882875357307847551691140236175837"
++        "2590421891839256512113614983194993186457498815986333310670788206383913888162"
+      values.programHash:
+-        "54878256403880350656938046611252303365750679698042371543935159963667935317"
++        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
+    }
+```
+
+```diff
+    contract USDC Bridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+      upgradeability.proxyGovernance[1]:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      upgradeability.proxyGovernance.0:
+-        "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
 # Diff at Tue, 19 Dec 2023 15:34:07 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
