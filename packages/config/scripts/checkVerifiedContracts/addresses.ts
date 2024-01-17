@@ -7,20 +7,24 @@ import {
   ScalingProjectContract,
   ScalingProjectUpgradeability,
 } from '../../src'
-import { VerificationMap } from './output'
+import { VerificationMapPerChain } from './output'
 import { withoutDuplicates } from './utils'
 
 export function getUniqueContractsForAllProjects(
   projects: (Layer2 | Bridge)[],
+  devId: string,
 ): EthereumAddress[] {
-  const addresses = projects.flatMap(getUniqueContractsForProject)
+  const addresses = projects.flatMap((project) =>
+    getUniqueContractsForProject(project, devId),
+  )
   return withoutDuplicates(addresses)
 }
 
 export function getUniqueContractsForProject(
   project: Layer2 | Bridge,
+  devId: string,
 ): EthereumAddress[] {
-  const projectContracts = project.contracts?.addresses ?? []
+  const projectContracts = getProjectContractsForChain(project, devId)
   const mainAddresses = projectContracts.flatMap((c) => getAddresses(c))
   const upgradeabilityAddresses = projectContracts
     .filter(isSingleAddress)
@@ -29,6 +33,16 @@ export function getUniqueContractsForProject(
     .flatMap((u) => gatherAddressesFromUpgradeability(u))
 
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
+}
+
+function getProjectContractsForChain(project: Layer2 | Bridge, devId: string) {
+  return (project.contracts?.addresses ?? []).filter((contract) => {
+    // For backwards compatibility, we assume that contracts without devId are for ethereum
+    if (contract.devId === undefined && devId === 'ethereum') {
+      return true
+    }
+    return contract.devId === devId
+  })
 }
 
 function gatherAddressesFromUpgradeability(
@@ -107,10 +121,24 @@ function gatherAddressesFromUpgradeability(
 
 export function areAllProjectContractsVerified(
   project: Layer2 | Bridge,
-  addressVerificationMap: VerificationMap,
+  addressVerificationMapPerChain: VerificationMapPerChain,
 ): boolean {
-  const projectAddresses = getUniqueContractsForProject(project)
-  return projectAddresses.every(
+  for (const [devId, addressVerificationMap] of Object.entries(
+    addressVerificationMapPerChain,
+  )) {
+    const projectAddresses = getUniqueContractsForProject(project, devId)
+    if (!areAllAddressesVerified(projectAddresses, addressVerificationMap)) {
+      return false
+    }
+  }
+  return true
+}
+
+function areAllAddressesVerified(
+  addresses: EthereumAddress[],
+  addressVerificationMap: Record<string, boolean>,
+): boolean {
+  return addresses.every(
     (address) => addressVerificationMap[address.toString()],
   )
 }

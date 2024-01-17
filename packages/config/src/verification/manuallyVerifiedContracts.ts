@@ -1,4 +1,4 @@
-import { ChainId, ManuallyVerifiedContracts } from '@l2beat/shared-pure'
+import { ManuallyVerifiedContracts } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import path from 'path'
@@ -20,12 +20,11 @@ export function parseManuallyVerifiedContracts(
 }
 
 export function getManuallyVerifiedContracts(
-  chainId: ChainId,
+  devId: string,
 ): ManuallyVerifiedContracts {
-  const chainName = ChainId.getName(chainId)
   const jsonFilePath = path.resolve(
     __dirname,
-    `/${chainName}/manuallyVerified.jsonc`,
+    `/${devId}/manuallyVerified.jsonc`,
   )
 
   if (!existsSync(jsonFilePath)) {

@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { bridges, layer2s } from '../../src/'
@@ -16,16 +16,16 @@ import {
 
 describe('checkVerifiedContracts:addresses', () => {
   it('all current contracts are included in verified.json', async () => {
-    const filePath = getVerificationFilePath(ChainId.ETHEREUM)
+    const filePath = getVerificationFilePath('ethereum')
     const verifiedJson = await loadVerifiedJson(filePath)
-    const allContracts = getUniqueContractsForAllProjects([
-      ...bridges,
-      ...layer2s,
-    ])
+    const allContracts = getUniqueContractsForAllProjects(
+      [...bridges, ...layer2s],
+      'ethereum',
+    )
 
     for (const contract of allContracts) {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (verifiedJson.contracts[contract.toString()] === undefined) {
+      if (verifiedJson[contract.toString()] === undefined) {
         throw new Error(
           `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()}`,
         )
@@ -36,16 +36,15 @@ describe('checkVerifiedContracts:addresses', () => {
   describe('getUniqueContractsForAllProjects()', () => {
     it('can parse all current layer2s and bridges', () => {
       expect(() =>
-        getUniqueContractsForAllProjects([...bridges, ...layer2s]),
+        getUniqueContractsForAllProjects([...bridges, ...layer2s], 'ethereum'),
       ).not.toThrow()
     })
 
     it('correctly finds unique addresses for all stub projects with duplicates', () => {
-      const addresses = getUniqueContractsForAllProjects([
-        layer2aWithDups,
-        bridge1WithDups,
-        bridge2WithDups,
-      ])
+      const addresses = getUniqueContractsForAllProjects(
+        [layer2aWithDups, bridge1WithDups, bridge2WithDups],
+        'ethereum',
+      )
       addresses.sort()
       expect(addresses).toEqual(
         [
@@ -84,7 +83,10 @@ describe('checkVerifiedContracts:addresses', () => {
 
   describe('getUniqueContractsForProject', () => {
     it('correctly finds unique addresses for a single stub project with duplicates', () => {
-      const addresses = getUniqueContractsForProject(layer2aWithDups)
+      const addresses = getUniqueContractsForProject(
+        layer2aWithDups,
+        'ethereum',
+      )
       addresses.sort()
       expect(addresses.sort()).toEqual(
         [

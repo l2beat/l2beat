@@ -1,7 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { ChainId } from '@l2beat/shared-pure'
 
-import { check, SUPPORTED_CHAINS } from './check'
+import { check } from './check'
 
 export async function main() {
   const logger = new Logger({ logLevel: 'INFO', format: 'pretty' })
@@ -14,10 +13,7 @@ export async function main() {
     `${envWorkersVar}=${workersCount} (can be changed via environment variable)`,
   )
 
-  for (const chainId of SUPPORTED_CHAINS) {
-    console.log(`Checking ${ChainId.getName(chainId)}...`)
-    await check(chainId, workersCount, logger)
-  }
+  await check(workersCount, logger)
 }
 
 main().catch((error) => {

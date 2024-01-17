@@ -1,28 +1,31 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
-import { existsSync } from 'fs'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { existsSync, mkdirSync } from 'fs'
 import { readFile, writeFile } from 'fs/promises'
 import z from 'zod'
 
-export const FileStructure = z.object({
-  projects: z.record(z.boolean()),
-  contracts: z.record(z.boolean()),
-})
+export const FileStructure = z.record(z.boolean())
 export type FileStructure = z.infer<typeof FileStructure>
 
 export type VerificationMap = Record<string, boolean>
+export type VerificationMapPerChain = Record<string, VerificationMap>
 
-export function getOutputPath(chainId: ChainId) {
-  const chainName = ChainId.getName(chainId)
-  return `src/verification/${chainName}/verified.json`
+export const PROJECTS_OUTPUT_PATH = 'src/verification/projects.json'
+export function getOutputPath(devId: string) {
+  return `src/verification/${devId}/verified.json`
 }
 
 export async function loadPreviouslyVerifiedContracts(
-  filePath: string,
+  devId: string,
 ): Promise<Set<EthereumAddress>> {
+  const filePath = getOutputPath(devId)
+  if (!existsSync(filePath)) {
+    mkdirSync('src/verification/' + devId)
+    return new Set()
+  }
   const verified = await loadVerifiedJson(filePath)
-  const contractAddresses = Object.keys(verified.contracts)
+  const contractAddresses = Object.keys(verified)
   const verifiedAddresses = contractAddresses
-    .filter((a) => !!verified.contracts[a])
+    .filter((a) => !!verified[a])
     .map(EthereumAddress)
   console.log(
     `Loaded ${verifiedAddresses.length} previously verified contracts.`,
@@ -33,23 +36,23 @@ export async function loadPreviouslyVerifiedContracts(
 export async function loadVerifiedJson(
   filePath: string,
 ): Promise<FileStructure> {
-  if (!existsSync(filePath)) {
-    return { projects: {}, contracts: {} }
-  }
   const data = await readFile(filePath, 'utf-8')
   return FileStructure.parse(JSON.parse(data))
 }
 
-export async function saveResult(
+export async function saveResultPerChain(
   filePath: string,
-  addressVerificationMap: VerificationMap,
-  projectVerificationMap: VerificationMap,
+  result: VerificationMap,
 ) {
-  const output = {
-    updatedAt: new Date().toISOString(),
-    projects: sortObjectKeys(projectVerificationMap),
-    contracts: sortObjectKeys(addressVerificationMap),
-  }
+  const output = sortObjectKeys(result)
+  await writeFile(filePath, JSON.stringify(output, null, 2) + '\n')
+}
+
+export async function saveResult<T>(
+  filePath: string,
+  result: Record<string, T>,
+) {
+  const output = sortObjectKeys(result)
   await writeFile(filePath, JSON.stringify(output, null, 2) + '\n')
 }
 

@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert, ChainId } from '@l2beat/shared-pure'
 
 import { bridges, layer2s } from '../../src'
 import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
@@ -11,45 +10,43 @@ import { getEtherscanClient } from './etherscan'
 import {
   getOutputPath,
   loadPreviouslyVerifiedContracts,
+  PROJECTS_OUTPUT_PATH,
   saveResult,
   VerificationMap,
+  VerificationMapPerChain,
 } from './output'
 import { verifyContracts } from './tasks'
 
-export const SUPPORTED_CHAINS = [ChainId.ETHEREUM]
+export const SUPPORTED_CHAINS = ['ethereum', 'arbitrum']
 
-export async function check(
-  chainId: ChainId,
-  workersCount: number,
-  logger: Logger,
-) {
-  assert(SUPPORTED_CHAINS.includes(chainId))
-
-  const outputFilePath = getOutputPath(chainId)
-  const manuallyVerified = getManuallyVerifiedContracts(chainId)
-
+export async function check(workersCount: number, logger: Logger) {
   const projects = [...layer2s, ...bridges]
-  const previouslyVerified = await loadPreviouslyVerifiedContracts(
-    outputFilePath,
-  )
-  const addresses = getUniqueContractsForAllProjects(projects)
-  const etherscanClient = getEtherscanClient()
-  const addressVerificationMap = await verifyContracts(
-    addresses,
-    previouslyVerified,
-    manuallyVerified,
-    etherscanClient,
-    workersCount,
-    logger,
-  )
+  const addressVerificationMapPerChain: VerificationMapPerChain = {}
+
+  for (const devId of SUPPORTED_CHAINS) {
+    console.log(`Checking on chain ${devId}...`)
+    const outputFilePath = getOutputPath(devId)
+    const manuallyVerified = getManuallyVerifiedContracts(devId)
+
+    const previouslyVerified = await loadPreviouslyVerifiedContracts(devId)
+    const addresses = getUniqueContractsForAllProjects(projects, devId)
+    const etherscanClient = getEtherscanClient(devId)
+    const addressVerificationMap = await verifyContracts(
+      addresses,
+      previouslyVerified,
+      manuallyVerified,
+      etherscanClient,
+      workersCount,
+      logger,
+    )
+    await saveResult(outputFilePath, addressVerificationMap)
+    addressVerificationMapPerChain[devId] = addressVerificationMap
+  }
+
   const projectVerificationMap: VerificationMap = {}
   projects.forEach((project) => {
     projectVerificationMap[project.id.toString()] =
-      areAllProjectContractsVerified(project, addressVerificationMap)
+      areAllProjectContractsVerified(project, addressVerificationMapPerChain)
   })
-  await saveResult(
-    outputFilePath,
-    addressVerificationMap,
-    projectVerificationMap,
-  )
+  await saveResult(PROJECTS_OUTPUT_PATH, projectVerificationMap)
 }

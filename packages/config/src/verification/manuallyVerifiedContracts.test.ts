@@ -1,4 +1,3 @@
-import { ChainId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { SUPPORTED_CHAINS } from '../../scripts/checkVerifiedContracts/check'
@@ -10,9 +9,9 @@ import {
 describe('manually verified contracts', () => {
   describe('getManuallyVerifiedContracts()', () => {
     describe('can load manually verified contracts', () => {
-      for (const chainId of SUPPORTED_CHAINS) {
-        it(ChainId.getName(chainId), async () => {
-          expect(getManuallyVerifiedContracts(chainId)).toBeTruthy()
+      for (const devId of SUPPORTED_CHAINS) {
+        it(devId, async () => {
+          expect(getManuallyVerifiedContracts(devId)).toBeTruthy()
         })
       }
     })
