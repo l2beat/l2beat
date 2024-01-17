@@ -107,6 +107,7 @@ async function main() {
   console.log(chalk.green('Loaded ') + 'environment variables\n')
 
   for (const [chainId, entries] of Object.entries(source)) {
+    // TODO: check chainId is valid
     console.log(chalk.yellow('Processing... ') + `chain ${chainId}`)
 
     for (const entry of entries) {
