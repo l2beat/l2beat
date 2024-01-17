@@ -92,7 +92,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     iconUrl:
       'https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921',
     address: EthereumAddress('0x1e925de1c68ef83bd98ee3e130ef14a50309c01b'),
-    coingeckoId: CoingeckoId('exactly-token'),
+    coingeckoId: CoingeckoId('exa'),
     sinceTimestamp: new UnixTime(1691546460),
     category: 'other',
     type: 'NMV',
