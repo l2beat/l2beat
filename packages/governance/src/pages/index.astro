@@ -1,50 +1,109 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Card from '../components/Card.astro'
+import Layout from '../layouts/Layout.astro'
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/pages/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout title="Welcome to Astro.">
+  <main>
+    <div class="grid grid-cols-3 gap-5">
+      <div class="col-span-2 flex flex-col gap-5">
+        <Card>
+          <h1 class="mb-6 text-4xl font-semibold">Our approach</h1>
+          <p>
+            We recognize that achieving successful decentralized governance
+            stands as a vital challenge within the blockchain realm. Our goal is
+            to actively contribute to governance across the Ethereum ecosystem,
+            ensuring that L2 solutions evolve towards a more secure,
+            decentralized, and trustworthy future.
+          </p>
+          <p>
+            For us, governance isn't just about casting a vote. The real magic
+            happens during healthy debates and coming to conclusions together.
+            Voting should just be the cherry on top of a great community-driven
+            process.
+          </p>
+        </Card>
+        <Card>
+          <h1 class="mb-6 text-4xl font-semibold">Core values</h1>
+          <ul class="list-disc list-inside">
+            <li>
+              Transparency & Open Communication: We believe in being open about
+              our decision-making process and keeping the community informed
+              about any proposals or issues we discuss.
+            </li>
+            <li>
+              Community Focus: Our top priority is to always consider the
+              community's needs and interests in every decision we make.
+            </li>
+            <li>
+              Inclusiveness: We're committed to fostering a diverse and
+              inclusive environment, where everyone's voice is heard, regardless
+              of their background or experience.
+            </li>
+            <li>
+              Accountability: We value accountability and are always open to
+              feedback, which helps us continually improve and better serve our
+              community.
+            </li>
+          </ul>
+        </Card>
+        <Card>
+          <h1 class="mb-6 text-4xl font-semibold">Mission and Values</h1>
+          <p>
+            At L2BEAT we believe that crypto is the new infrastructure for the
+            future financial system. As such, we believe that in order for it to
+            be successful, it needs to be:
+          </p>
+          <ul class="list-disc list-inside">
+            <li>
+              Permissionless, no one should need a third party's permission to
+              join the network,
+            </li>
+            <li>
+              Censorship resistant, everyone should be free from arbitrary
+              censorship,
+            </li>
+            <li>
+              Trustless, it's all about cryptographic proofs and consensus, not
+              trusting a central party,
+            </li>
+            <li>
+              Decentralized, power and control should be spread across many
+              participants,
+            </li>
+            <li>
+              Transparent, everyone should be able to verify and account for
+              transactions, even if they're private,
+            </li>
+            <li>
+              Secure and safe, user safety and security come first, not relying
+              on anyone acting honestly,
+            </li>
+            <li>
+              Open-source, we live by "don't trust, verify," so if we can't see
+              the code, we can't trust it.
+            </li>
+          </ul>
+        </Card>
+      </div>
+      <div class="flex flex-col gap-5">
+        <Card>
+          <h1 class="mb-6 text-4xl font-semibold">Office hours</h1>
+          <p class="font-medium text-lg">
+            To promote transparency and communication as delegates, we’re
+            hosting recurring Office Hours on Google Meets.
+          </p>
+          <p class="mt-4">
+            During the Office Hours, anyone is able to reach L2BEAT’s governance
+            team, which consists of Kaereste (Krzysztof Urbanski) and Sinkas
+            (Anastassis Oikonomopoulos) and discuss our activity as delegates.
+            To allow enough time for constructive discussion, each Office Hours
+            call is specifically targeted at one of the protocols we’re
+            delegates in. However, if time allows, we’ll also be available to
+            address things relative to the other protocols.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </main>
+</Layout>

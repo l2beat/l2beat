@@ -1,0 +1,18 @@
+---
+import Logo from './Logo.astro'
+import { ThemeSwitch } from './ThemeSwitch.tsx'
+---
+
+<div
+  class="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16"
+>
+  <nav
+    class="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12"
+  >
+    <a href="/" class="flex items-center gap-4">
+      <Logo class="h-8 w-auto" />
+      <span class="text-2xl font-medium">Governance</span>
+    </a>
+    <ThemeSwitch client:only />
+  </nav>
+</div>

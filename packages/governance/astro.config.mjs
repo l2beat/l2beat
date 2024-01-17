@@ -1,11 +1,10 @@
-import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
+// eslint-disable-next-line import/no-default-export
+import tailwind from '@astrojs/tailwind'
+import { defineConfig } from 'astro/config'
 
-import preact from "@astrojs/preact";
+import preact from '@astrojs/preact'
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
-  integrations: [mdx(), sitemap(), preact()],
-});
+  integrations: [tailwind(), preact()],
+})
