@@ -6,7 +6,6 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
-  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -54,26 +53,18 @@ const filesystem = {
 
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
-  private readonly explorer: string
   constructor(
     public readonly projectName: string,
-    public readonly chainId: ChainId = ChainId.ETHEREUM,
+    public readonly devId: string = 'ethereum',
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
-    this.explorer = ChainId.getExplorer(chainId)
-    assert(
-      this.explorer,
-      `No explorer found for chainId: ${chainId.toString()}`,
-    )
   }
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(
-        `../backend/discovery/${project}/${ChainId.getName(
-          this.chainId,
-        )}/discovered.json`,
+        `../backend/discovery/${project}/${this.devId}/discovered.json`,
       ),
     )
 
@@ -105,7 +96,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      chainId: this.chainId,
+      devId: this.devId,
       ...descriptionOrOptions,
     }
   }
@@ -231,7 +222,7 @@ export class ProjectDiscovery {
           ),
         )
         .join(' '),
-      chainId: this.chainId,
+      devId: this.devId,
     }))
   }
 
@@ -258,14 +249,14 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
-        chainId: this.chainId,
+        devId: this.devId,
       },
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
-        chainId: this.chainId,
+        devId: this.devId,
       },
     ]
   }
@@ -370,7 +361,7 @@ export class ProjectDiscovery {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      chainId: this.chainId,
+      devId: this.devId,
       ...descriptionOrOptions,
     }
   }
@@ -412,7 +403,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
-      chainId: this.chainId,
+      devId: this.devId,
       description,
     }
   }

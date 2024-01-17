@@ -98,7 +98,7 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
-  const etherscanUrl = getExplorerUrl(item.chainId)
+  const etherscanUrl = getExplorerUrl(item.devId)
 
   if (isSingleAddress(item)) {
     if (item.upgradeability?.type) {

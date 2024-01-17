@@ -44,7 +44,7 @@ export function getPermissionsSection(
 function toTechnologyContract(
   permission: ScalingProjectPermission,
 ): TechnologyContract {
-  const etherscanUrl = getExplorerUrl(permission.chainId)
+  const etherscanUrl = getExplorerUrl(permission.devId)
   const links = permission.accounts.slice(1).map((account) => {
     return {
       name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
