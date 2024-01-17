@@ -7,8 +7,8 @@ export function getExplorerUrl(chainId?: ChainId) {
     return defaultExplorer
   }
 
-  const chain = chainsByChainId.get(chainId as unknown as number)
-  assert(chain !== undefined, 'Unknown chainId: ')
+  const chain = chainsByChainId.get(Number(chainId))
+  assert(chain !== undefined, 'Unknown chainId: ' + chainId.toString())
   assert(
     chain.explorerUrl !== undefined,
     'Chain has no explorerUrl: ' + chain.devId,

@@ -385,7 +385,7 @@ function makeTechnologyContract(
     addresses,
     description,
     links,
-    chainId: item.chainId,
+    etherscanUrl,
   }
 
   if (isSingleAddress(item)) {

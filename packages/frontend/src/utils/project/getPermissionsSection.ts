@@ -63,9 +63,9 @@ function toTechnologyContract(
   return {
     name: permission.name,
     addresses,
+    etherscanUrl,
     description: permission.description,
     links,
     references: permission.references,
-    chainId: permission.chainId,
   }
 }
