@@ -18,16 +18,15 @@ export const multicallConfig = {
   polygon_zkevm: getMulticall3Config(57746),
 }
 
-function getMulticall3Config(
+export function getMulticall3Config(
   sinceBlock: number,
-  address: EthereumAddress = EthereumAddress(
-    '0xcA11bde05977b3631167028862bE2a173976CA11',
-  ),
+  address = EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+  batchSize = 150,
 ): MulticallConfig {
   return {
     address,
     sinceBlock,
-    batchSize: 150,
+    batchSize,
     encodeBatch: encodeMulticall3,
     decodeBatch: decodeMulticall3,
   }

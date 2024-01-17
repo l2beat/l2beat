@@ -20,7 +20,10 @@ export {
 export { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
 export { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
-export { multicallConfig } from './discovery/provider/multicall/MulticallConfig'
+export {
+  getMulticall3Config,
+  multicallConfig,
+} from './discovery/provider/multicall/MulticallConfig'
 export type { MulticallConfig } from './discovery/provider/multicall/types'
 export type { DiscoveryCache } from './discovery/provider/ProviderWithCache'
 export { ProviderWithCache } from './discovery/provider/ProviderWithCache'

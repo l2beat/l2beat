@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.28.4
+
+### Patch Changes
+
+- Export getMulticall3Config
+
 ## 0.28.3
 
 ### Patch Changes
