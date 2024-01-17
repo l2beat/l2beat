@@ -1,7 +1,11 @@
 ---
+import { getCollection } from 'astro:content'
 import Card from '../components/Card.astro'
 import DelegatedProjects from '../components/DelegatedProjects.astro'
 import Layout from '../layouts/Layout.astro'
+
+const postEntries = await getCollection('posts')
+const lastThreePosts = postEntries.slice(0, 3)
 ---
 
 <Layout title="Welcome to Astro.">
@@ -105,6 +109,21 @@ import Layout from '../layouts/Layout.astro'
             address things relative to the other protocols.
           </p>
         </Card>
+        {
+          postEntries.length !== 0 && (
+            <Card>
+              <h1 class="mb-6 text-4xl font-semibold">Recent posts</h1>
+              {lastThreePosts.map((post) => (
+                <a
+                  class="mt-2 px-7 block py-5 rounded-lg border border-zinc-700"
+                  href={`/posts/${post.slug}`}
+                >
+                  <span class="font-bold">{post.data.title}</span>
+                </a>
+              ))}
+            </Card>
+          )
+        }
       </div>
     </div>
   </main>
