@@ -396,6 +396,14 @@ export const arbitrum: Layer2 = {
     },
     // ~ Timestamp of block number 0 on Arbitrum
     minTimestampForTvl: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 7654707,
+        version: 3,
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

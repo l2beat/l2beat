@@ -202,6 +202,14 @@ export const polygonzkevm: Layer2 = {
     devId: 'polygonzkevm',
     chainId: 1101,
     explorerUrl: 'https://zkevm.polygonscan.com',
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 57746,
+        version: 3,
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
