@@ -7,6 +7,10 @@ import {
   AccessControlHandlerDefinition,
 } from './AccessControlHandler'
 import {
+  ArbitrumActorsHandler,
+  ArbitrumActorsHandlerDefinition,
+} from './ArbitrumActorsHandler'
+import {
   ArrayFromOneEventHandler,
   ArrayFromOneEventHandlerDefinition,
 } from './ArrayFromOneEventHandler'
@@ -79,6 +83,7 @@ export const UserHandlerDefinition = z.union([
   HardCodedDefinition,
   StarkWareGovernanceHandlerDefinition,
   LayerZeroMultisigHandlerDefinition,
+  ArbitrumActorsHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -122,5 +127,7 @@ export function getUserHandler(
       return new StateFromEventHandler(field, definition, abi, logger)
     case 'layerZeroMultisig':
       return new LayerZeroMultisigHandler(field, abi, logger)
+    case 'arbitrumActors':
+      return new ArbitrumActorsHandler(field, definition, logger)
   }
 }

@@ -11,9 +11,10 @@ export class RateLimitedProvider {
   getStorageAt: providers.Provider['getStorageAt']
   getTransaction: providers.Provider['getTransaction']
   getCode: providers.Provider['getCode']
+  send: providers.JsonRpcProvider['send']
 
   constructor(
-    private readonly provider: providers.Provider,
+    private readonly provider: providers.JsonRpcProvider,
     callsPerMinute: number,
   ) {
     this.rateLimiter = new RateLimiter({ callsPerMinute })
@@ -39,5 +40,6 @@ export class RateLimitedProvider {
     this.getCode = this.rateLimiter.wrap(
       this.provider.getCode.bind(this.provider),
     )
+    this.send = this.rateLimiter.wrap(this.provider.send.bind(this.provider))
   }
 }

@@ -9,6 +9,7 @@ import { UnixTime } from '../../utils/UnixTime'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 import { RateLimitedProvider } from './RateLimitedProvider'
+import { TraceTransactionResponse } from './TransactionTrace'
 
 export interface ContractMetadata {
   name: string
@@ -30,7 +31,7 @@ type Topics = (string | string[] | null)[]
  */
 export class DiscoveryProvider {
   constructor(
-    private readonly provider: providers.Provider | RateLimitedProvider,
+    private readonly provider: providers.JsonRpcProvider | RateLimitedProvider,
     private readonly etherscanLikeClient: EtherscanLikeClient,
     private readonly logger: DiscoveryLogger,
     private readonly getLogsMaxRange?: number,
@@ -121,6 +122,16 @@ export class DiscoveryProvider {
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse> {
     return this.provider.getTransaction(transactionHash.toString())
+  }
+
+  async getTransactionTrace(
+    transactionHash: Hash256,
+  ): Promise<TraceTransactionResponse> {
+    // trace_transaction seems much faster than debug_traceTransaction.
+    const response = (await this.provider.send('trace_transaction', [
+      transactionHash.toString(),
+    ])) as unknown
+    return TraceTransactionResponse.parse(response)
   }
 
   async getBlock(blockNumber: number): Promise<providers.Block> {

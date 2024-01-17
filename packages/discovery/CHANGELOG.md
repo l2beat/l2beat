@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.30.0
+
+### Minor Changes
+
+- Add ArbitrumActorsHandler
+
 ## 0.29.0
 
 ### Minor Changes

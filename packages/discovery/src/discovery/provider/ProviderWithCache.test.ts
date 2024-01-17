@@ -19,7 +19,7 @@ function setupProviderWithMockCache(values: {
       .given('mockNotCachedKey')
       .resolvesToOnce(undefined),
   })
-  const mockProvider = mockObject<providers.Provider>({
+  const mockProvider = mockObject<providers.JsonRpcProvider>({
     getBlockNumber: mockFn().resolvesTo(values.curBlockNumber),
   })
   const providerWithCache = new ProviderWithCache(

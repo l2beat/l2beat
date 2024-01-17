@@ -6,11 +6,11 @@ import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from './DiscoveryProvider'
 
-const rangesFromCalls = (provider: MockObject<providers.Provider>) =>
-  provider.getLogs.calls.map((call) => [
-    call.args[0].fromBlock,
-    call.args[0].toBlock,
-  ])
+const rangesFromCalls = (provider: MockObject<providers.JsonRpcProvider>) =>
+  provider.getLogs.calls.map((call) => {
+    const arg0 = call.args[0] as providers.Filter
+    return [arg0.fromBlock, arg0.toBlock]
+  })
 
 const GETLOGS_MAX_RANGE = 10000
 
@@ -19,11 +19,11 @@ describe(DiscoveryProvider.name, () => {
     const etherscanLikeClientMock = mockObject<EtherscanLikeClient>({})
     const address = EthereumAddress.random()
     const topics = ['testTopic']
-    let providerMock: MockObject<providers.Provider>
+    let providerMock: MockObject<providers.JsonRpcProvider>
     let discoveryProviderMock: DiscoveryProvider
 
     beforeEach(() => {
-      providerMock = mockObject<providers.Provider>({
+      providerMock = mockObject<providers.JsonRpcProvider>({
         getLogs: mockFn().resolvesTo([]),
       })
       discoveryProviderMock = new DiscoveryProvider(
@@ -107,7 +107,7 @@ describe(DiscoveryProvider.name, () => {
     })
 
     it('handles getLogsMaxRange undefined (no range)', async () => {
-      providerMock = mockObject<providers.Provider>({
+      providerMock = mockObject<providers.JsonRpcProvider>({
         getLogs: mockFn().resolvesTo([]),
       })
       discoveryProviderMock = new DiscoveryProvider(
@@ -126,7 +126,7 @@ describe(DiscoveryProvider.name, () => {
     })
 
     it('starts with deployment block if bigger then fromBlock', async () => {
-      providerMock = mockObject<providers.Provider>({
+      providerMock = mockObject<providers.JsonRpcProvider>({
         getLogs: mockFn().resolvesTo([]),
       })
       discoveryProviderMock = new DiscoveryProvider(
