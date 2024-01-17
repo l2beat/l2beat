@@ -21,7 +21,7 @@ export function FinalityDurationCell(props: Props) {
       </TooltipTrigger>
       <TooltipContent>
         <div className="font-medium">
-          <span>30-day time to finality:</span>
+          <span>30-day avg. time to finality</span>
           <ul className="mt-1 list-inside list-disc">
             <li className="flex justify-between gap-4">
               Average:

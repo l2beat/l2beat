@@ -629,6 +629,18 @@ export function getScalingFinalityColumnsConfig() {
   const columns: ColumnConfig<ScalingFinalityViewEntry>[] = [
     ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
+      ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
+    },
+    {
       name: 'DA MODE',
       getValue: (project) =>
         project.dataAvailabilityMode ?? <span>&mdash;</span>,
