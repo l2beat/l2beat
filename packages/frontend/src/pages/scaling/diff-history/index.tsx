@@ -1,4 +1,4 @@
-import {  DiffHistoryApiResponse } from '@l2beat/shared-pure'
+import { DiffHistoryApiResponse } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { Config } from '../../../build/config'
