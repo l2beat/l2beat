@@ -3439,7 +3439,8 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Hyperlane Nexus"
-      }
+      },
+      "chainId": 169
     },
     {
       "id": "mantapacific:stone-stakestone-ether",
@@ -3456,7 +3457,8 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
-      }
+      },
+      "chainId": 169
     }
   ]
 }
