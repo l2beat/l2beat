@@ -4,7 +4,7 @@ export interface MulticallContractConfig {
   address: EthereumAddress
   sinceBlock: number
   batchSize: number
-  version: 1 | 2 | 3
+  version: '1' | '2' | '3' | 'optimism'
 }
 
 export interface ChainConfig {

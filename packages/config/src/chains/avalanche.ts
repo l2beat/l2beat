@@ -11,7 +11,7 @@ export const avalanche: ChainConfig = {
       address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
       batchSize: 150,
       sinceBlock: 11907934,
-      version: 3,
+      version: '3',
     },
   ],
 }

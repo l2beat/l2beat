@@ -29,7 +29,7 @@ describe('chains', () => {
       .flatMap(
         (x) => x.multicallContracts?.map((y) => [x.devId, y] as const) ?? [],
       )
-      .filter(([_, y]) => y.version === 3)
+      .filter(([_, y]) => y.version === '3')
 
     for (const [devId, contract] of contracts) {
       it(`multicall3 on ${devId}`, () => {
