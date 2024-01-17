@@ -23,6 +23,7 @@ import {
   ScalingProjectStateDerivation,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
+import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
@@ -59,6 +60,7 @@ export interface OpStackConfig {
   nonTemplateEscrows: ScalingProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
+  chainConfig?: ChainConfig
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -131,6 +133,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       finality: templateVars.finality,
     },
+    chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
@@ -289,7 +292,14 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       exitMechanisms: [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR(
+            'optimistic',
+            'merkle proof',
+            templateVars.discovery.getContractValue<number>(
+              'L2OutputOracle',
+              'FINALIZATION_PERIOD_SECONDS',
+            ),
+          ),
           references: [
             {
               text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',

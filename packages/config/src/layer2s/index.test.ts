@@ -84,6 +84,17 @@ describe('layer2s', () => {
     })
   })
 
+  describe('devId equals project id', () => {
+    for (const layer2 of layer2s) {
+      const devId = layer2.chainConfig?.devId
+      if (devId !== undefined) {
+        it(layer2.id.toString(), () => {
+          expect(devId).toEqual(layer2.id.toString())
+        })
+      }
+    }
+  })
+
   describe('liveness', () => {
     it('every project has valid signatures', () => {
       for (const project of layer2s) {

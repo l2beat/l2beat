@@ -73,8 +73,7 @@ describe(FinalityController.name, () => {
       assert(last30Days, 'last30Days is undefined')
       const expected = {
         averageInSeconds: last30Days.averageInSeconds / 2 + 0,
-        minimumInSeconds: last30Days.minimumInSeconds / 2 + 0,
-        maximumInSeconds: last30Days.maximumInSeconds / 2 + 0,
+        maximumInSeconds: last30Days.maximumInSeconds,
       }
 
       const result = await finalityController.getFinality()
@@ -139,8 +138,7 @@ describe(FinalityController.name, () => {
       assert(last30Days, 'last30Days is undefined')
       const expected = {
         averageInSeconds: last30Days.averageInSeconds / 2 + 0,
-        minimumInSeconds: last30Days.minimumInSeconds / 2 + 0,
-        maximumInSeconds: last30Days.maximumInSeconds / 2 + 0,
+        maximumInSeconds: last30Days.maximumInSeconds,
       }
 
       const result = await finalityController.getOPStackFinality(projects)
