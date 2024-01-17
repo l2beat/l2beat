@@ -1,7 +1,7 @@
 import {
   ActivityApiResponse,
-  FinalityApiResponse,
   DiffHistoryApiResponse,
+  FinalityApiResponse,
   LivenessApiResponse,
   ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
