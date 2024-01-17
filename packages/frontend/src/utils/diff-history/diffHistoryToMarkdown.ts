@@ -5,7 +5,6 @@ import {
 } from '@l2beat/shared-pure'
 import toUpper from 'lodash/toUpper'
 
-
 // TODO(radomski): Would be nice this in discovery package or in shared-pure,
 // this is duplicated here and updateDiffHistory.ts
 function contractDiffToMarkdown(diff: DiscoveryDiff): string {
