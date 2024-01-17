@@ -20,7 +20,7 @@ const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
 
 const SourceEntry = z.object({
   symbol: z.string(),
-  address: stringAs(EthereumAddress),
+  address: stringAs(EthereumAddress).optional(),
   category: z.union([
     z.literal('ether'),
     z.literal('stablecoin'),
@@ -71,14 +71,20 @@ async function main() {
     console.log(chalk.yellow('Processing... ') + `chain ${chainId}`)
 
     for (const entry of entries) {
-      const present = output.tokens.find(
-        (e) => e.address && e.address === entry.address,
-      )
+      const present = output.tokens.find((e) => {
+        if (ChainId.fromName(chainId) !== e.chainId) {
+          return false
+        }
+        if (!e.address) {
+          return e.symbol === entry.symbol
+        }
+        return e.address === entry.address
+      })
 
       if (present) {
         console.log(
           chalk.gray('Skipping ') +
-            `${chainId} ${entry.symbol} ${entry.address.toString()}`,
+            `${chainId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
         )
         result.push(present)
         continue
@@ -86,7 +92,7 @@ async function main() {
 
       console.log(
         chalk.yellow('Fetching... ') +
-          `${chainId} ${entry.symbol} ${entry.address.toString()}`,
+          `${chainId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
       )
 
       // TODO: this should be automatically loaded using new dynamic envs
@@ -112,7 +118,7 @@ async function main() {
 
       console.log(
         chalk.green('Fetched ') +
-          `${chainId} ${entry.symbol} ${entry.address.toString()}`,
+          `${chainId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
       )
 
       result.push(token)

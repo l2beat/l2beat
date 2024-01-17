@@ -19,12 +19,16 @@ export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
   etherscanClient: EtherscanClient,
   coingeckoClient: CoingeckoClient,
-  address: EthereumAddress,
+  address: EthereumAddress | undefined,
   chainId: ChainId,
   type: AssetType,
   formula: 'totalSupply' | 'locked' | 'circulatingSupply',
   category: 'ether' | 'stablecoin' | 'other',
 ): Promise<Token> {
+  if (!address) {
+    throw new Error('Native asset detected, configure manually')
+  }
+
   const coingeckoId = await getCoingeckoId(coingeckoClient, address)
 
   const [name, symbol, decimals, iconUrl, sinceTimestamp] = await Promise.all([
