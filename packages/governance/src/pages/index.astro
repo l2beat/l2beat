@@ -1,11 +1,13 @@
 ---
 import Card from '../components/Card.astro'
+import DelegatedProjects from '../components/DelegatedProjects.astro'
 import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
-    <div class="grid grid-cols-3 gap-5">
+    <DelegatedProjects />
+    <div class="mt-9 grid grid-cols-3 gap-5">
       <div class="col-span-2 flex flex-col gap-5">
         <Card>
           <h1 class="mb-6 text-4xl font-semibold">Our approach</h1>

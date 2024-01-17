@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content'
+
+const delegatedProjects = await getCollection('delegatedProjects')
+---
+
+<div class="grid grid-cols-2 gap-4">
+  {
+    delegatedProjects.map((project) => (
+      <div class="flex items-center justify-between bg-zinc-900 rounded-lg p-4">
+        <div class="flex items-center gap-2 ">
+          <img src={`/projects/${project.id}.png`} class="size-7" />
+          <span>{project.data.projectName}</span>
+        </div>
+        <div>
+          <a
+            href={project.data.communicationThreadUrl}
+            class="ml-4 py-1.5 px-2 bg-zinc-800 rounded-md"
+          >
+            Communication thread
+          </a>
+          <a
+            href={project.data.delegateTokensUrl}
+            class="ml-4 py-1.5 px-2 bg-neutral-50 rounded-md text-black"
+          >
+            Delegate tokens
+          </a>
+        </div>
+      </div>
+    ))
+  }
+</div>

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-default-export
 import tailwind from '@astrojs/tailwind'
 import { defineConfig } from 'astro/config'
 
