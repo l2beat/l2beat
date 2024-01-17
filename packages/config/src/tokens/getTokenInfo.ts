@@ -1,7 +1,8 @@
 import {
   CoingeckoClient,
   CoingeckoQueryService,
-  EtherscanClient,
+  UniversalEtherscanClient,
+  UniversalRoutescanClient,
 } from '@l2beat/shared'
 import {
   assert,
@@ -17,7 +18,7 @@ import { providers, utils } from 'ethers'
 
 export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
-  etherscanClient: EtherscanClient,
+  etherscanClient: UniversalEtherscanClient | UniversalRoutescanClient,
   coingeckoClient: CoingeckoClient,
   address: EthereumAddress | undefined,
   chainId: ChainId,
@@ -141,7 +142,7 @@ async function getCoingeckoId(
 
 async function getSinceTimestamp(
   provider: providers.JsonRpcProvider,
-  etherscanClient: EtherscanClient,
+  etherscanClient: UniversalEtherscanClient | UniversalRoutescanClient,
   coingeckoClient: CoingeckoClient,
   address: EthereumAddress,
   coingeckoId: CoingeckoId,
@@ -184,7 +185,7 @@ async function getSinceTimestamp(
 
 async function getContractCreationTimestamp(
   provider: providers.JsonRpcProvider,
-  etherscanClient: EtherscanClient,
+  etherscanClient: UniversalEtherscanClient | UniversalRoutescanClient,
   address: EthereumAddress,
 ): Promise<number> {
   const txHash = await etherscanClient.getContractDeploymentTx(address)

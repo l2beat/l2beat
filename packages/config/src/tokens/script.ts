@@ -1,6 +1,12 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { CoingeckoClient, EtherscanClient, HttpClient } from '@l2beat/shared'
 import {
+  CoingeckoClient,
+  HttpClient,
+  UniversalEtherscanClient,
+  UniversalRoutescanClient,
+} from '@l2beat/shared'
+import {
+  assert,
   ChainId,
   EthereumAddress,
   stringAs,
@@ -13,6 +19,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
 
+import { chains } from '../chains'
 import { getTokenInfo } from './getTokenInfo'
 
 const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
@@ -66,13 +73,13 @@ async function main() {
   const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
   console.log(chalk.green('Loaded ') + 'environment variables\n')
 
-  for (const [chainId, entries] of Object.entries(source)) {
+  for (const [devId, entries] of Object.entries(source)) {
     // TODO: check chainId is valid
-    console.log(chalk.yellow('Processing... ') + `chain ${chainId}`)
+    console.log(chalk.yellow('Processing... ') + `chain ${devId}`)
 
     for (const entry of entries) {
       const present = output.tokens.find((e) => {
-        if (ChainId.fromName(chainId) !== e.chainId) {
+        if (ChainId.fromName(devId) !== e.chainId) {
           return false
         }
         if (!e.address) {
@@ -84,25 +91,69 @@ async function main() {
       if (present) {
         console.log(
           chalk.gray('Skipping ') +
-            `${chainId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
         )
         result.push(present)
         continue
       }
 
+      // TODO: this should be automatically loaded using new dynamic envs
+      const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
+      if (!rpcUrl) {
+        console.log(
+          chalk.red('Missing environmental variable ') +
+            `${devId.toUpperCase()}_RPC_URL`,
+        )
+        process.exit(1)
+      }
+      const provider = new providers.JsonRpcProvider(rpcUrl)
+
+      const chain = chains.find((c) => c.devId === devId)
+      assert(chain, 'Chain not found')
+      if (!chain.explorerApi) {
+        throw new Error('Binary search for block number not supported yet')
+      }
+
+      let etherscanClient:
+        | UniversalEtherscanClient
+        | UniversalRoutescanClient
+        | undefined
+
+      if (chain.explorerApi.type === 'etherscan') {
+        const etherscanApiKey = env.optionalString(
+          `${devId.toUpperCase()}_ETHERSCAN_API_KEY`,
+        )
+        if (!etherscanApiKey) {
+          console.log(
+            chalk.red('Missing environmental variable ') +
+              `${devId.toUpperCase()}_ETHERSCAN_API_KEY`,
+          )
+          process.exit(1)
+        }
+
+        etherscanClient = new UniversalEtherscanClient(
+          http,
+          chain.explorerApi.url,
+          etherscanApiKey,
+          chain.minTimestampForTvl ?? new UnixTime(0),
+          ChainId.fromName(devId),
+        )
+      }
+
+      if (chain.explorerApi.type === 'routescan') {
+        etherscanClient = new UniversalRoutescanClient(
+          http,
+          chain.explorerApi.url,
+          chain.minTimestampForTvl ?? new UnixTime(0),
+          ChainId.fromName(devId),
+        )
+      }
+
+      assert(etherscanClient, 'Etherscan client not found')
+
       console.log(
         chalk.yellow('Fetching... ') +
-          `${chainId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
-      )
-
-      // TODO: this should be automatically loaded using new dynamic envs
-      const alchemyApiKey = env.string('CONFIG_ALCHEMY_API_KEY')
-      const etherscanApiKey = env.string('ETHERSCAN_API_KEY')
-      const provider = new providers.AlchemyProvider('homestead', alchemyApiKey)
-      const etherscanClient = new EtherscanClient(
-        http,
-        etherscanApiKey,
-        new UnixTime(0), // TODO: this should come from chain config
+          `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
       )
 
       const token: Token = await getTokenInfo(
@@ -118,12 +169,12 @@ async function main() {
 
       console.log(
         chalk.green('Fetched ') +
-          `${chainId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+          `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
       )
 
       result.push(token)
     }
-    console.log(chalk.green('Processed ') + `chain ${chainId}\n`)
+    console.log(chalk.green('Processed ') + `chain ${devId}\n`)
   }
 
   console.log(chalk.yellow('Sorting... ') + 'tokens by chain and name')
