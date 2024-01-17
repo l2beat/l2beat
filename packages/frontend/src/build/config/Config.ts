@@ -16,6 +16,7 @@ export interface Config {
     liveness: boolean
     banner: boolean
     tvlBreakdown: boolean
+    diffHistory: boolean
     gitcoinOption: boolean
     hiringBadge: boolean
     buildAllProjectPages: boolean

@@ -1,5 +1,6 @@
 import {
   ActivityApiResponse,
+  DiffHistoryApiResponse,
   LivenessApiResponse,
   ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
@@ -39,4 +40,5 @@ export interface PagesData {
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
   livenessApiResponse: LivenessApiResponse | undefined
+  diffHistory: DiffHistoryApiResponse | undefined
 }
