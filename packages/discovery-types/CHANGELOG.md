@@ -1,5 +1,11 @@
 # @l2beat/discovery-types
 
+## 0.8.0
+
+### Minor Changes
+
+- Axelar proxy rewrite, now manual proxy type
+
 ## 0.7.0
 
 ### Minor Changes

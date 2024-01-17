@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/discovery-types",
   "description": "Common types for @l2beat/discovery.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "license": "MIT",
   "repository": "https://github.com/l2beat/tools",
   "bugs": {

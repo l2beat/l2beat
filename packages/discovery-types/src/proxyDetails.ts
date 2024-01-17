@@ -17,6 +17,7 @@ export const ManualProxyType = z.enum([
   'Eternal Storage proxy',
   'Polygon Extension proxy',
   'Optics Beacon proxy',
+  'Axelar proxy',
   'immutable',
 ])
 
@@ -171,11 +172,5 @@ export interface OpticsBeaconProxyUpgradeability {
 
 export interface AxelarProxyUpgradeability {
   type: 'Axelar proxy'
-  admins: EthereumAddress[]
-  adminThreshold: number
-  owners: EthereumAddress[]
-  ownerThreshold: number
-  operators: EthereumAddress[]
-  operatorThreshold: number
   implementation: EthereumAddress
 }

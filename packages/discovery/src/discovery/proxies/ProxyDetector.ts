@@ -4,7 +4,7 @@ import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
-import { detectAxelarProxy } from './auto/AxelarProxy'
+import { detectAxelarProxy as getAxelarProxy } from './auto/AxelarProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
@@ -41,7 +41,6 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectEip897Proxy,
   detectZeppelinOSProxy,
   detectEip2535proxy,
-  detectAxelarProxy,
 ]
 
 const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
@@ -52,6 +51,7 @@ const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'Eternal Storage proxy': getEternalStorageProxy,
   'Polygon Extension proxy': getPolygonExtensionProxy,
   'Optics Beacon proxy': getOpticsBeaconProxy,
+  'Axelar proxy': getAxelarProxy,
   immutable: getImmutableProxy,
 }
 
