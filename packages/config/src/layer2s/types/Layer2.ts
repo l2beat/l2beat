@@ -9,6 +9,7 @@ import {
   ScalingProjectDisplay,
   ScalingProjectPermission,
 } from '../../common'
+import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
@@ -31,6 +32,8 @@ export interface Layer2 {
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
   config: Layer2Config
+  /** Technical chain configuration */
+  chainConfig?: ChainConfig
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */

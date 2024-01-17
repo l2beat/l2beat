@@ -1,4 +1,34 @@
-# Diff at Thu, 23 Nov 2023 15:07:23 GMT:
+# Diff at Mon, 15 Jan 2024 14:53:19 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: master@51b4576752b780b70ed977cf2d54041a7eb81039 block: 18618865
+- current block number: 19012997
+
+## Description
+
+New role has been configured (`1`).
+One and only member has been assigned (`0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8`).
+
+Assigned member can now invoke:
+
+- `pauseByType(bytes32)` on ZkEVM/MessageService (`0xd19d4B5d358258f05D7B411E21A1460D11B0876F`)
+- `pause()` on ERC20Bridge (`0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319`)
+- `pause()` on USDCBridge (`0x504A330327A089d8364C4ab3811Ee26976d388ce`)
+
+## The member of this role can now invoke
+
+## Watched changes
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+      upgradeability.modules[0]:
++        "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+      values.roles.roles.1:
++        {"members":{"0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8":true},"targets":{"0xd19d4B5d358258f05D7B411E21A1460D11B0876F":{"clearance":"Function","options":"None"},"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319":{"clearance":"Function","options":"None"},"0x504A330327A089d8364C4ab3811Ee26976d388ce":{"clearance":"Function","options":"None"}},"functions":{"0xd19d4B5d358258f05D7B411E21A1460D11B0876F":{"pauseByType(bytes32)":{"options":"None","wildcarded":true,"parameters":[]}},"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319":{"pause()":{"options":"None","wildcarded":true,"parameters":[]}},"0x504A330327A089d8364C4ab3811Ee26976d388ce":{"pause()":{"options":"None","wildcarded":true,"parameters":[]}}},"compValues":{},"compValuesOneOf":{}}
+    }
+```
+
+# Diff at Thu, 23 Nov 2023 15:07:23 GMT
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: master@2ff45714640abe4c50d283967078888d4af81d78
@@ -65,7 +95,7 @@ AccessControl in Scroll.
  17 files changed, 2055 insertions(+)
 ```
 
-# Diff at Mon, 16 Oct 2023 07:14:10 GMT:
+# Diff at Mon, 16 Oct 2023 07:14:10 GMT
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@a2d21b0282f36d2369596c2fe3bb3e7746063abe

@@ -130,6 +130,7 @@ export function chainTvlSubmodule(
     circulatingSupplyTokens,
     chainId,
     logger,
+    chainTvlConfig.minBlockTimestamp,
   )
 
   const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(

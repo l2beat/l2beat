@@ -1,6 +1,4 @@
-import { ContractValue } from '@l2beat/discovery-types'
 import {
-  assert,
   AssetId,
   ChainId,
   CoingeckoId,
@@ -49,6 +47,14 @@ const roles = discovery.getContractValue<{
   OPERATOR_ROLE: { members: string[] }
   PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
+
+const zodiacRoles = discovery.getContractValue<{
+  roles: Record<string, Record<string, boolean>>
+}>('Roles', 'roles')
+const zodiacPauserRole = '1'
+const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
+  zodiacRoles.roles[zodiacPauserRole].members,
+).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
 
 const operators: ScalingProjectPermissionedAccount[] =
   roles.OPERATOR_ROLE.members.map((address) => ({
@@ -180,6 +186,18 @@ export const linea: Layer2 = {
       ],
     },
   },
+  chainConfig: {
+    devId: 'linea',
+    chainId: 59144,
+    explorerUrl: 'https://lineascan.build',
+    explorerApi: {
+      url: 'https://api.lineascan.build/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Linea
+    // https://lineascan.build/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T01:15:00Z')),
+  },
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -298,22 +316,20 @@ export const linea: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('Roles'),
-      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles. ${(() => {
-        const roles = discovery.getContract('Roles')
-        assert(roles.values !== undefined)
-        const rolesCount = Object.entries(
-          roles.values.roles['roles' as keyof ContractValue],
-        ).length
-        assert(rolesCount === 0)
-
-        return 'Currently there are no additional members.'
-      })()}`,
+      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles.`,
     ),
     {
       accounts: operators,
       name: 'Operators',
       description:
         'The operators are allowed to prove blocks and post the corresponding transaction data.',
+    },
+
+    {
+      accounts: zodiacPausers,
+      name: 'Pauser',
+      description:
+        'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project.',
     },
   ],
   contracts: {
