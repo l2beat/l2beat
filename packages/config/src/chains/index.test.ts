@@ -37,4 +37,16 @@ describe('chains', () => {
       })
     }
   })
+
+  describe('multicall contracts are sorted by sinceBlock', () => {
+    for (const chain of chains) {
+      const contracts = chain.multicallContracts?.map((x) => x.sinceBlock)
+      if (!contracts || contracts.length === 0) {
+        continue
+      }
+      it(chain.devId, () => {
+        expect(contracts).toEqual(contracts.slice().sort((a, b) => b - a))
+      })
+    }
+  })
 })

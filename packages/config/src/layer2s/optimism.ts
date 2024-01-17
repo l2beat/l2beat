@@ -276,16 +276,16 @@ export const optimism: Layer2 = opStack({
     minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
     multicallContracts: [
       {
-        sinceBlock: 0,
-        batchSize: 150,
-        address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
-        version: 'optimism',
-      },
-      {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         batchSize: 150,
         sinceBlock: 4286263,
         version: '3',
+      },
+      {
+        sinceBlock: 0,
+        batchSize: 150,
+        address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
+        version: 'optimism',
       },
     ],
   },
