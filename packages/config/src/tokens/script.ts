@@ -32,29 +32,19 @@ const SourceEntry = z.object({
 })
 
 const OutputEntry = z.object({
-  /** Internal token id. Usually ticker-name */
   id: stringAs((s) => AssetId(s)),
-  /** Token name as dictated by the token contract */
+
   name: z.string(),
-  /** Token Coingecko API id. Used to fetch prices */
-  coingeckoId: stringAs((s) => CoingeckoId(s)),
-  /** Token address. Only Ether has no address */
-  address: stringAs((s) => EthereumAddress(s)).optional(),
-  /** Token symbol as dictated by the token contract */
   symbol: z.string(),
-  /** Token decimals as dictated by the token contract */
   decimals: z.number(),
-  /** Timestamp of the token contract deployment transaction */
-  sinceTimestamp: numberAs((n) => new UnixTime(n)),
-  /** Which category does the token belong to */
-  category: z.union([
-    z.literal('ether'),
-    z.literal('stablecoin'),
-    z.literal('other'),
-  ]),
-  /** URL to icon for this token, provided by Coingecko */
   iconUrl: z.optional(z.string()),
+
   chainId: numberAs(ChainId).default(1), // TODO: get rid of default
+  address: stringAs((s) => EthereumAddress(s)).optional(),
+  coingeckoId: stringAs((s) => CoingeckoId(s)),
+
+  sinceTimestamp: numberAs((n) => new UnixTime(n)),
+
   type: z
     .union([z.literal('CBV'), z.literal('EBV'), z.literal('NMV')])
     .default('CBV'), // TODO: get rid of default
@@ -65,6 +55,19 @@ const OutputEntry = z.object({
       z.literal('circulatingSupply'),
     ])
     .default('locked'), // TODO: get rid of default
+  bridgedUsing: z.optional(
+    z.object({
+      bridge: z.string(),
+      slug: z.string().optional(),
+    }),
+  ),
+
+  /** @deprecated */
+  category: z.union([
+    z.literal('ether'),
+    z.literal('stablecoin'),
+    z.literal('other'),
+  ]),
 })
 type OutputEntry = z.infer<typeof OutputEntry>
 
