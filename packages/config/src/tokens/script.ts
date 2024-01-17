@@ -1,11 +1,8 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, EtherscanClient, HttpClient } from '@l2beat/shared'
 import {
-  AssetId,
   ChainId,
-  CoingeckoId,
   EthereumAddress,
-  numberAs,
   stringAs,
   Token,
   UnixTime,
@@ -31,50 +28,10 @@ const SourceEntry = z.object({
   ]),
 })
 
-const OutputEntry = z.object({
-  id: stringAs((s) => AssetId(s)),
-
-  name: z.string(),
-  symbol: z.string(),
-  decimals: z.number(),
-  iconUrl: z.optional(z.string()),
-
-  chainId: numberAs(ChainId).default(1), // TODO: get rid of default
-  address: stringAs((s) => EthereumAddress(s)).optional(),
-  coingeckoId: stringAs((s) => CoingeckoId(s)),
-
-  sinceTimestamp: numberAs((n) => new UnixTime(n)),
-
-  type: z
-    .union([z.literal('CBV'), z.literal('EBV'), z.literal('NMV')])
-    .default('CBV'), // TODO: get rid of default
-  formula: z
-    .union([
-      z.literal('totalSupply'),
-      z.literal('locked'),
-      z.literal('circulatingSupply'),
-    ])
-    .default('locked'), // TODO: get rid of default
-  bridgedUsing: z.optional(
-    z.object({
-      bridge: z.string(),
-      slug: z.string().optional(),
-    }),
-  ),
-
-  /** @deprecated */
-  category: z.union([
-    z.literal('ether'),
-    z.literal('stablecoin'),
-    z.literal('other'),
-  ]),
-})
-type OutputEntry = z.infer<typeof OutputEntry>
-
 const Source = z.record(z.array(SourceEntry))
 const Output = z.object({
   comment: z.string().optional(),
-  tokens: z.array(OutputEntry),
+  tokens: z.array(Token),
 })
 
 async function main() {
@@ -95,7 +52,7 @@ async function main() {
   const output = Output.parse(JSON.parse(outputFile))
   console.log(chalk.green('Loaded ') + 'output file\n')
 
-  const result: OutputEntry[] = []
+  const result: Token[] = []
 
   console.log(chalk.yellow('Loading... ') + 'environment variables')
   const env = getEnv()

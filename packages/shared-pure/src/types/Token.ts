@@ -1,31 +1,46 @@
+import { z } from 'zod'
+
 import { AssetId } from './AssetId'
-import { AssetType } from './AssetType'
+import { numberAs, stringAs } from './branded'
 import { ChainId } from './ChainId'
 import { CoingeckoId } from './CoingeckoId'
 import { EthereumAddress } from './EthereumAddress'
 import { UnixTime } from './UnixTime'
 
-export interface Token {
-  id: AssetId
+export const Token = z.object({
+  id: stringAs((s) => AssetId(s)),
+  chainId: numberAs(ChainId),
 
-  name: string
-  symbol: string
-  decimals: number
-  iconUrl?: string
+  address: stringAs((s) => EthereumAddress(s)).optional(),
+  symbol: z.string(),
+  name: z.string(),
+  decimals: z.number(),
 
-  chainId: ChainId
-  address?: EthereumAddress
-  coingeckoId: CoingeckoId
+  iconUrl: z.optional(z.string()),
+  coingeckoId: stringAs((s) => CoingeckoId(s)),
 
-  sinceTimestamp: UnixTime
+  sinceTimestamp: numberAs((n) => new UnixTime(n)),
 
-  type: AssetType
-  formula: 'totalSupply' | 'locked' | 'circulatingSupply'
-  bridgedUsing?: {
-    bridge: string
-    slug?: string
-  }
+  type: z.union([z.literal('CBV'), z.literal('EBV'), z.literal('NMV')]),
+  formula: z.union([
+    z.literal('totalSupply'),
+    z.literal('locked'),
+    z.literal('circulatingSupply'),
+  ]),
+
+  bridgedUsing: z.optional(
+    z.object({
+      bridge: z.string(),
+      slug: z.string().optional(),
+    }),
+  ),
 
   /** @deprecated */
-  category: 'ether' | 'stablecoin' | 'other'
-}
+  category: z.union([
+    z.literal('ether'),
+    z.literal('stablecoin'),
+    z.literal('other'),
+  ]),
+})
+
+export type Token = z.infer<typeof Token>
