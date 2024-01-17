@@ -9,18 +9,21 @@ import { UnixTime } from './UnixTime'
 
 export const Token = z.object({
   id: stringAs((s) => AssetId(s)),
-  chainId: numberAs(ChainId),
-
+  name: z.string(),
+  coingeckoId: stringAs((s) => CoingeckoId(s)),
   address: stringAs((s) => EthereumAddress(s)).optional(),
   symbol: z.string(),
-  name: z.string(),
   decimals: z.number(),
-
-  iconUrl: z.optional(z.string()),
-  coingeckoId: stringAs((s) => CoingeckoId(s)),
-
   sinceTimestamp: numberAs((n) => new UnixTime(n)),
 
+  /** @deprecated */
+  category: z.union([
+    z.literal('ether'),
+    z.literal('stablecoin'),
+    z.literal('other'),
+  ]),
+  iconUrl: z.optional(z.string()),
+  chainId: numberAs(ChainId),
   type: z.union([z.literal('CBV'), z.literal('EBV'), z.literal('NMV')]),
   formula: z.union([
     z.literal('totalSupply'),
@@ -34,13 +37,6 @@ export const Token = z.object({
       slug: z.string().optional(),
     }),
   ),
-
-  /** @deprecated */
-  category: z.union([
-    z.literal('ether'),
-    z.literal('stablecoin'),
-    z.literal('other'),
-  ]),
 })
 
 export type Token = z.infer<typeof Token>

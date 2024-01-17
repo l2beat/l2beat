@@ -126,15 +126,12 @@ async function main() {
     console.log(chalk.green('Processed ') + `chain ${chainId}\n`)
   }
 
-  console.log(chalk.yellow('Sorting... ') + 'tokens by chain and address')
+  console.log(chalk.yellow('Sorting... ') + 'tokens by chain and name')
   result.sort((a, b) => {
     if (a.chainId !== b.chainId) {
       return Number(a.chainId) - Number(b.chainId)
     }
-    if (a.address && b.address) {
-      return a.address.localeCompare(b.address.toString())
-    }
-    return a.symbol.localeCompare(b.symbol)
+    return a.name.localeCompare(b.name)
   })
   console.log(chalk.green('Sorted ') + 'tokens\n')
 
