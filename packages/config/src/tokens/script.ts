@@ -162,9 +162,7 @@ async function main() {
   console.log(chalk.yellow('Sorting... ') + 'tokens by chain and address')
   result.sort((a, b) => {
     if (a.chainId !== b.chainId) {
-      return ChainId.getName(a.chainId).localeCompare(
-        ChainId.getName(b.chainId),
-      )
+      return Number(a.chainId) - Number(b.chainId)
     }
     if (a.address && b.address) {
       return a.address.localeCompare(b.address.toString())
