@@ -28,6 +28,7 @@ export const SingleAddress: Story = {
   args: {
     contract: {
       name: 'Contract',
+      etherscanUrl: 'etherscan.io',
       addresses: [CONTRACT],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -59,6 +60,7 @@ export const UpgradeDetails: Story = {
   args: {
     contract: {
       name: 'Contract',
+      etherscanUrl: 'etherscan.io',
       addresses: [CONTRACT],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -93,6 +95,7 @@ export const MultipleAddresses: Story = {
   args: {
     contract: {
       name: 'Contract',
+      etherscanUrl: 'etherscan.io',
       addresses: [CONTRACT, ADMIN, IMPLEMENTATION],
       description:
         'This is a smart contract responsible for X in the system Y.',
