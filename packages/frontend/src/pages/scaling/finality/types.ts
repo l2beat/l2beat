@@ -1,8 +1,8 @@
 import {
-    Layer2Provider,
-    ScalingProjectCategory,
-    ScalingProjectPurpose,
-    StageConfig,
+  Layer2Provider,
+  ScalingProjectCategory,
+  ScalingProjectPurpose,
+  StageConfig,
 } from '@l2beat/config'
 import { FinalityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 

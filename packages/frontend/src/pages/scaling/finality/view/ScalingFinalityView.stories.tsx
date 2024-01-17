@@ -95,7 +95,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         },
         timeToFinalize: {
           averageInSeconds: 344900,
-          minimumInSeconds: 809,
           maximumInSeconds: 2240,
         },
       },
@@ -112,7 +111,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         stage: { stage: 'NotApplicable' },
         timeToFinalize: {
           averageInSeconds: 15078,
-          minimumInSeconds: 67348,
           maximumInSeconds: 1259,
         },
       },
@@ -215,7 +213,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         },
         timeToFinalize: {
           averageInSeconds: 2329,
-          minimumInSeconds: 38108,
           maximumInSeconds: 4584,
         },
       },
@@ -298,7 +295,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         },
         timeToFinalize: {
           averageInSeconds: 410,
-          minimumInSeconds: 1955,
           maximumInSeconds: 1626,
         },
       },
@@ -380,7 +376,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         },
         timeToFinalize: {
           averageInSeconds: 18555,
-          minimumInSeconds: 2985,
           maximumInSeconds: 67229,
         },
       },
@@ -476,7 +471,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         },
         timeToFinalize: {
           averageInSeconds: 96,
-          minimumInSeconds: 259,
           maximumInSeconds: 78212,
         },
       },
@@ -493,7 +487,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         stage: { stage: 'NotApplicable' },
         timeToFinalize: {
           averageInSeconds: 819,
-          minimumInSeconds: 1651,
           maximumInSeconds: 2646,
         },
       },
@@ -576,7 +569,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         },
         timeToFinalize: {
           averageInSeconds: 185585,
-          minimumInSeconds: 34866,
           maximumInSeconds: 1211,
         },
       },
@@ -671,7 +663,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         },
         timeToFinalize: {
           averageInSeconds: 4899,
-          minimumInSeconds: 1192,
           maximumInSeconds: 294,
         },
       },
@@ -688,7 +679,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
         stage: { stage: 'NotApplicable' },
         timeToFinalize: {
           averageInSeconds: 175511,
-          minimumInSeconds: 721,
           maximumInSeconds: 2129,
         },
       },
