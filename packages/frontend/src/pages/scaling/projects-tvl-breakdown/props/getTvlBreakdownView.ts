@@ -7,12 +7,9 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
+import { getExplorerUrlByChainId } from '../../../../utils/getExplorerUrl'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
-import {
-  getExplorerUrl,
-  getExplorerUrlByChainId,
-} from '../../../../utils/getExplorerUrl'
 
 export interface TVLProjectBreakdown {
   canonical: (CanonicalAssetBreakdownData & { explorerUrl?: string })[]
