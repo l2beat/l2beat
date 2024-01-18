@@ -1,8 +1,8 @@
 {
   "name": "eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 18992027,
-  "configHash": "0xc52adb7c267be8a76d8781822074bb327112cb1aaa609743c6f56114379be7bc",
+  "blockNumber": 19033739,
+  "configHash": "0x35dbb41b366aedf3caa2a69d2c67967811cd166cd7917029f24b0e19764fa8c8",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x71ce110000000000",
-        "get_deposit_root": "0xb5291cde0b4093e291339f29af2205e9b321e087a3418c65ee7f2378d7485f71"
+        "get_deposit_count": "0xa4f5110000000000",
+        "get_deposit_root": "0xde7770cb2b8c686932a15325527a505323a4a423202f2c34c9de6a5271314787"
       },
       "derivedName": "DepositContract"
     },
@@ -50,7 +50,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "113674401971219177430879",
+        "totalShares": "113257259616687375575998",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -102,13 +102,39 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "53144600084918373004306",
+        "totalShares": "52872442591612715544042",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "derivedName": "StrategyBaseTVLLimits"
     },
     {
-      "name": "GnosisSafe",
+      "name": "METH-Strategy",
+      "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      },
+      "implementations": ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"],
+      "sinceTimestamp": 1704485723,
+      "values": {
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "getTVLLimits": [
+          "200000000000000000000000",
+          "200000000000000000000000"
+        ],
+        "maxPerDeposit": "200000000000000000000000",
+        "maxTotalDeposits": "200000000000000000000000",
+        "paused": 0,
+        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
+        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": 0,
+        "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
+      },
+      "derivedName": "StrategyBaseTVLLimits"
+    },
+    {
+      "name": "EigenlayerProxiedMultisig",
       "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
       "upgradeability": {
         "type": "gnosis safe",
@@ -127,7 +153,8 @@
         "getThreshold": 1,
         "nonce": 3,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "DelegationManager",
@@ -172,7 +199,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "26668101459642931161656",
+        "totalShares": "26252912763327384230595",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -198,7 +225,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15687246098602740402168",
+        "totalShares": "15687017099930901537793",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -310,7 +337,10 @@
           "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
           "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
           "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
+          "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "0xAe60d8180437b5C34bB956822ac2710972584473",
+          "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
         ],
         "strategyWhitelister": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "withdrawalDelayBlocks": 50400
@@ -329,6 +359,32 @@
       }
     },
     {
+      "name": "sfrxETH-Strategy",
+      "address": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      },
+      "implementations": ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"],
+      "sinceTimestamp": 1704485723,
+      "values": {
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "getTVLLimits": [
+          "200000000000000000000000",
+          "200000000000000000000000"
+        ],
+        "maxPerDeposit": "200000000000000000000000",
+        "maxTotalDeposits": "200000000000000000000000",
+        "paused": 0,
+        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
+        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": 0,
+        "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
+      },
+      "derivedName": "StrategyBaseTVLLimits"
+    },
+    {
       "name": "EigenPodManager",
       "address": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
       "upgradeability": {
@@ -343,7 +399,7 @@
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "maxPods": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "numPods": 5650,
+        "numPods": 6791,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 30,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -373,7 +429,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "194193045272886785958188",
+        "totalShares": "193431203031957691534463",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -399,7 +455,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "49279786301870272466147",
+        "totalShares": "49266428158904667866204",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -425,7 +481,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "11297155028479313729030",
+        "totalShares": "11296425319611844920984",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -447,7 +503,33 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "RiverV1-Strategy",
+      "address": "0xAe60d8180437b5C34bB956822ac2710972584473",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
+        "admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      },
+      "implementations": ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"],
+      "sinceTimestamp": 1704485723,
+      "values": {
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "getTVLLimits": [
+          "200000000000000000000000",
+          "200000000000000000000000"
+        ],
+        "maxPerDeposit": "200000000000000000000000",
+        "maxTotalDeposits": "200000000000000000000000",
+        "paused": 0,
+        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
+        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": 0,
+        "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
+      },
+      "derivedName": "StrategyBaseTVLLimits"
+    },
+    {
+      "name": "StrategyAdderMultisig",
       "address": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
       "upgradeability": {
         "type": "gnosis safe",
@@ -467,9 +549,10 @@
           "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
         ],
         "getThreshold": 3,
-        "nonce": 16,
+        "nonce": 18,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Slasher",
@@ -491,7 +574,7 @@
       "derivedName": "Slasher"
     },
     {
-      "name": "GnosisSafe",
+      "name": "EigenlayerMultisig",
       "address": "0xFEA47018D632A77bA579846c840d5706705Dc598",
       "upgradeability": {
         "type": "gnosis safe",
@@ -521,7 +604,8 @@
         "getThreshold": 9,
         "nonce": 3,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
@@ -586,6 +670,17 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -810,6 +905,17 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -875,6 +981,17 @@
       "function queuedTransactions(bytes32) view returns (bool)",
       "function setDelay(uint256 delay_)",
       "function setPendingAdmin(address pendingAdmin_)"
+    ],
+    "0xAe60d8180437b5C34bB956822ac2710972584473": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xBE1685C81aA44FF9FB319dD389addd9374383e90": [
       "constructor(address _singleton)"
