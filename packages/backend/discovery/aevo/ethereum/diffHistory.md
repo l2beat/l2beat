@@ -1,3 +1,27 @@
+# Diff at Thu, 18 Jan 2024 09:19:36 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18933723
+- current block number: 19032812
+
+## Description
+
+Changed dynamic and static L2 fee overhead.
+Ignoring multisig nonce.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.overhead:
+-        2100
++        188
+      values.scalar:
+-        1000000
++        68400
+    }
+```
+
 # Diff at Thu, 04 Jan 2024 11:38:42 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
