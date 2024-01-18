@@ -29,10 +29,6 @@ ChainId.getName = function (chainId: ChainId): string {
   return chain[1]
 }
 
-ChainId.getAll = function (): ChainId[] {
-  return Object.keys(CHAIN_IDS).map((c) => ChainId(+c))
-}
-
 /**
  * Only to use when defining ChainId.ETHEREUM etc. constants.
  * Will save you from typos, but is annoying to work with strings.
