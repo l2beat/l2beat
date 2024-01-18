@@ -32,6 +32,8 @@ export function createEthereumTvlSubmodule(
     return
   }
 
+  logger = logger.tag('ethereum')
+
   // #region peripherals
 
   const ethereumProvider = new providers.JsonRpcProvider(tvlConfig.providerUrl)

@@ -38,6 +38,7 @@ export function chainTvlSubmodule(
     logger.info(`${name} disabled`)
     return
   }
+  logger = logger.tag(devId)
 
   // #region peripherals
   const provider = new providers.JsonRpcProvider(config.providerUrl)
