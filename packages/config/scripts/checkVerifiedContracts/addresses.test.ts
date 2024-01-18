@@ -9,15 +9,17 @@ import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
 } from './addresses'
-import { SUPPORTED_CHAINS } from './check'
+import { getChainDevIds } from './chains'
 import {
   getOutputPath as getVerificationFilePath,
   loadVerifiedJson,
 } from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
+  const projects = [...bridges, ...layer2s]
+  const devIds = getChainDevIds(projects)
   describe('all current contracts are included in verified.json', () => {
-    for (const devId of SUPPORTED_CHAINS) {
+    for (const devId of devIds) {
       it(`for ${devId}`, async () => {
         const filePath = getVerificationFilePath(devId)
         const verifiedJson = await loadVerifiedJson(filePath)
@@ -40,7 +42,7 @@ describe('checkVerifiedContracts:addresses', () => {
 
   describe('getUniqueContractsForAllProjects()', () => {
     describe('can parse all current layer2s and bridges', () => {
-      for (const devId of SUPPORTED_CHAINS) {
+      for (const devId of devIds) {
         it(`for ${devId}`, async () => {
           expect(() =>
             getUniqueContractsForAllProjects(

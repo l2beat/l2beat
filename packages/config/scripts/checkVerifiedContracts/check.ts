@@ -6,6 +6,7 @@ import {
   areAllProjectContractsVerified,
   getUniqueContractsForAllProjects,
 } from './addresses'
+import { getChainDevIds } from './chains'
 import { getEtherscanClient } from './etherscan'
 import {
   getOutputPath,
@@ -17,13 +18,13 @@ import {
 } from './output'
 import { verifyContracts } from './tasks'
 
-export const SUPPORTED_CHAINS = ['ethereum', 'arbitrum']
-
 export async function check(workersCount: number, logger: Logger) {
   const projects = [...layer2s, ...bridges]
+  const devIds = getChainDevIds(projects)
+
   const addressVerificationMapPerChain: VerificationMapPerChain = {}
 
-  for (const devId of SUPPORTED_CHAINS) {
+  for (const devId of devIds) {
     console.log(`Checking on chain ${devId}...`)
     const outputFilePath = getOutputPath(devId)
     const manuallyVerified = getManuallyVerifiedContracts(devId)
