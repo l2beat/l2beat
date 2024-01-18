@@ -25,7 +25,6 @@ import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
-import { MulticallConfigEntry } from '../../peripherals/ethereum/multicall/types'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -34,7 +33,6 @@ export function chainTvlSubmodule(
   projectId: ProjectId,
   chainTvlConfig: ChainTvlConfig | false,
   tokens: Token[],
-  multicallConfig: MulticallConfigEntry[],
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   coingeckoQueryService: CoingeckoQueryService,
@@ -75,7 +73,10 @@ export function chainTvlSubmodule(
     chainTvlConfig.providerCallsPerMinute,
   )
 
-  const multicallClient = new MulticallClient(ethereumClient, multicallConfig)
+  const multicallClient = new MulticallClient(
+    ethereumClient,
+    chainTvlConfig.multicallConfig,
+  )
 
   const totalSupplyProvider = new TotalSupplyProvider(multicallClient, chainId)
 
@@ -130,6 +131,7 @@ export function chainTvlSubmodule(
     circulatingSupplyTokens,
     chainId,
     logger,
+    chainTvlConfig.minBlockTimestamp,
   )
 
   const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(

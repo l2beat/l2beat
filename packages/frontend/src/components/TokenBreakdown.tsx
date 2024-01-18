@@ -54,6 +54,7 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
           <WarningBar
             className="mt-2"
             text={props.warning}
+            icon={RoundedWarningIcon}
             color={props.warningSeverity === 'warning' ? 'yellow' : 'red'}
           />
         )}

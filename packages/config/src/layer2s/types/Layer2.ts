@@ -9,10 +9,12 @@ import {
   ScalingProjectDisplay,
   ScalingProjectPermission,
 } from '../../common'
+import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
+import { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import { Layer2Liveness } from './Layer2LivenessConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
@@ -30,6 +32,8 @@ export interface Layer2 {
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
   config: Layer2Config
+  /** Technical chain configuration */
+  chainConfig?: ChainConfig
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
@@ -53,8 +57,10 @@ export interface Layer2 {
 export interface Layer2Display extends ScalingProjectDisplay {
   /** Technology provider */
   provider?: Layer2Provider
-  /** Explanation on how liveness data is gathered for given project */
+  /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
+  /** Warning tooltip content for finality tab for given project */
+  finalityWarning?: string
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
@@ -70,4 +76,6 @@ export interface Layer2Config extends ScalingProjectConfig {
   transactionApi?: Layer2TransactionApi
   /** Configuration for getting state updates and batch submission */
   liveness?: Layer2Liveness
+  /** Configuration for getting finality data */
+  finality?: Layer2FinalityConfig
 }

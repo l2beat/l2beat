@@ -23,10 +23,16 @@ import {
   ScalingProjectStateDerivation,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
+import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TransactionApi,
+} from '../types'
 
 export interface OpStackConfig {
   discovery: ProjectDiscovery
@@ -42,6 +48,7 @@ export interface OpStackConfig {
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
   tokenList?: Token[]
+  finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
   portal: ContractParameters
   stateDerivation?: ScalingProjectStateDerivation
@@ -53,6 +60,7 @@ export interface OpStackConfig {
   nonTemplateEscrows: ScalingProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
+  chainConfig?: ChainConfig
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -68,6 +76,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
+      finalityWarning:
+        "It's assumed that transaction data batches are submitted sequentially.",
     },
     config: {
       tokenList: templateVars.tokenList,
@@ -123,7 +133,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
+      finality: templateVars.finality,
     },
+    chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
@@ -282,7 +294,14 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       exitMechanisms: [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR(
+            'optimistic',
+            'merkle proof',
+            templateVars.discovery.getContractValue<number>(
+              'L2OutputOracle',
+              'FINALIZATION_PERIOD_SECONDS',
+            ),
+          ),
           references: [
             {
               text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',

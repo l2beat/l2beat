@@ -21,13 +21,13 @@ export function MobileTabs({ pages }: MobileTabsProps) {
           {pages.map((page, i) => (
             <li
               key={i}
-              className="flex w-28 flex-shrink-0"
+              className="flex flex-shrink-0"
               data-selected={page.selected}
             >
               <a
                 href={page.link}
                 className={cx(
-                  'block w-full rounded py-1 text-center font-bold',
+                  'block w-full rounded px-3 py-1 text-center font-bold',
                   page.selected &&
                     'bg-gradient-to-r from-purple-100 to-pink-100 text-white',
                   !page.selected && 'bg-white dark:bg-gray-850',

@@ -1,6 +1,6 @@
 {
   "$schema": "../../config.schema.json",
-  "chain": "polygon-zkevm",
+  "chain": "polygonzkevm",
   "name": "lzomnichain",
   "initialAddresses": ["0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4"],
   "names": {

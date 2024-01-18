@@ -2,7 +2,6 @@ import { LivenessApiProject } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
-import { pluralize } from '../../utils/pluralize'
 import { RoundedWarningIcon } from '../icons'
 import { WarningBar } from '../project/WarningBar'
 import {
@@ -11,6 +10,7 @@ import {
   TooltipContentType,
   TooltipTrigger,
 } from '../tooltip/Tooltip'
+import { DurationCell } from './DurationCell'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
@@ -50,34 +50,10 @@ export function LivenessDurationCell(props: {
     )
   }
 
-  const seconds = props.durationInSeconds
-  const minutes = Math.floor(props.durationInSeconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
-
-  const duration =
-    days > 0 ? (
-      <span className="text-orange-600 dark:text-orange-500">
-        {days} {pluralize(days, 'day')}
-      </span>
-    ) : hours > 0 ? (
-      <span className="text-yellow-700 dark:text-yellow-100">
-        {hours} {pluralize(hours, 'hour')}
-      </span>
-    ) : minutes > 0 ? (
-      <span>
-        {minutes} {pluralize(minutes, 'minute')}
-      </span>
-    ) : (
-      <span className="text-green-300 dark:text-green-450">
-        {seconds} {pluralize(seconds, 'second')}
-      </span>
-    )
-
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        {duration}
+        <DurationCell durationInSeconds={props.durationInSeconds} />
         {props.warning && (
           <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
         )}
@@ -85,7 +61,12 @@ export function LivenessDurationCell(props: {
       <TooltipContent>
         {props.tooltipContent}
         {props.warning && (
-          <WarningBar className="mt-2" text={props.warning} color="yellow" />
+          <WarningBar
+            className="mt-2"
+            icon={RoundedWarningIcon}
+            text={props.warning}
+            color="yellow"
+          />
         )}
       </TooltipContent>
     </Tooltip>

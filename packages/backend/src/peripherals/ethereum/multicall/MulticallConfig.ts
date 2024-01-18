@@ -1,3 +1,4 @@
+import { MulticallContractConfig } from '@l2beat/config'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
@@ -7,87 +8,41 @@ import {
   MulticallResponse,
 } from './types'
 
+/** @deprecated Don't use this in future code, rely on configuration instead */
 export const ETHEREUM_MULTICALL_V1_ADDRESS = EthereumAddress(
   '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441',
 )
+
+/** @deprecated Don't use this in future code, rely on configuration instead */
 export const ETHEREUM_MULTICALL_V1_BLOCK = 7929876
 
-export const ETHEREUM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
-  {
-    sinceBlock: 12336033,
-    batchSize: 150,
-    address: EthereumAddress('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'),
-    encodeBatch: encodeMulticallV2,
-    decodeBatch: decodeMulticallV2,
-  },
-  {
-    sinceBlock: ETHEREUM_MULTICALL_V1_BLOCK,
-    batchSize: 150,
-    address: ETHEREUM_MULTICALL_V1_ADDRESS,
-    encodeBatch: encodeMulticallV1,
-    decodeBatch: decodeMulticallV1,
-  },
-]
+export function toMulticallConfigEntry(
+  config: MulticallContractConfig,
+): MulticallConfigEntry {
+  const [encodeBatch, decodeBatch] = getEncodeAndDecode(config.version)
+  return {
+    sinceBlock: config.sinceBlock,
+    batchSize: config.batchSize,
+    address: config.address,
+    encodeBatch,
+    decodeBatch,
+  }
+}
 
-export const ARBITRUM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
-  {
-    sinceBlock: 821923,
-    batchSize: 150,
-    address: EthereumAddress('0x842eC2c7D803033Edf55E478F461FC547Bc54EB2'),
-    encodeBatch: encodeMulticallV2,
-    decodeBatch: decodeMulticallV2,
-  },
-]
-
-export const OPTIMISM_MULTICALL_CONFIG: MulticallConfigEntry[] = [
-  {
-    sinceBlock: 0,
-    batchSize: 150,
-    address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
-    encodeBatch: encodeOptimismMulticall,
-    decodeBatch: decodeOptimismMulticall,
-  },
-]
-
-export const BASE_MULTICALL_CONFIG: MulticallConfigEntry[] = [
-  {
-    sinceBlock: 5022,
-    batchSize: 150,
-    address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-    encodeBatch: encodeMulticallV2,
-    decodeBatch: decodeMulticallV2,
-  },
-]
-
-export const LYRA_MULTICALL_CONFIG: MulticallConfigEntry[] = [
-  {
-    sinceBlock: 5022,
-    batchSize: 150,
-    address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'), //TODO: FIND MULTICALL LYRA ADDRESS, THIS IS COPIED FROM BASE
-    encodeBatch: encodeMulticallV2,
-    decodeBatch: decodeMulticallV2,
-  },
-]
-
-export const LINEA_MULTICALL_CONFIG: MulticallConfigEntry[] = [
-  {
-    sinceBlock: 43,
-    batchSize: 150,
-    address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-    encodeBatch: encodeMulticallV2,
-    decodeBatch: decodeMulticallV2,
-  },
-]
-
-export const MANTA_PACIFIC_MULTICALL_CONFIG: MulticallConfigEntry[] = [
-  {
-    sinceBlock: 54816,
-    batchSize: 150,
-    address: EthereumAddress('0x9731502B98F65BBb573D0106ECd9E4097dbcCD30'),
-    encodeBatch: encodeMulticallV2,
-    decodeBatch: decodeMulticallV2,
-  },
-]
+function getEncodeAndDecode(
+  version: MulticallContractConfig['version'],
+): [MulticallConfigEntry['encodeBatch'], MulticallConfigEntry['decodeBatch']] {
+  switch (version) {
+    case '1':
+      return [encodeMulticallV1, decodeMulticallV1]
+    case '2':
+      return [encodeMulticallV2, decodeMulticallV2]
+    case '3':
+      return [encodeMulticallV2, decodeMulticallV2]
+    case 'optimism':
+      return [encodeOptimismMulticall, decodeOptimismMulticall]
+  }
+}
 
 export const multicallInterface = new utils.Interface([
   'function multicall(tuple(address, bytes)[] memory calls) public returns (bytes[] memory results)',

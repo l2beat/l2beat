@@ -1,3 +1,25 @@
+# Diff at Wed, 17 Jan 2024 07:18:24 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@e7e7682db5966865697553171159822c2ec0248f block: 19012236
+- current block number: 19025063
+
+## Description
+
+Change in the USDC Bridge proxy governors - a new address is added.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+      upgradeability.proxyGovernance[1]:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      upgradeability.proxyGovernance.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4"
+    }
+```
+
 # Diff at Mon, 15 Jan 2024 12:19:39 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

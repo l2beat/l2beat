@@ -52,6 +52,9 @@
           "args": []
         }
       }
+    },
+    "AevoMultiSig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

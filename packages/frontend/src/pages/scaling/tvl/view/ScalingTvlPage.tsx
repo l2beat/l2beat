@@ -18,6 +18,7 @@ export interface ScalingTvlPageProps {
   footer: FooterProps
   showActivity: boolean
   showLiveness: boolean
+  showFinality: boolean
   tvlView: ScalingTvlViewProps
 }
 
@@ -29,6 +30,7 @@ export function ScalingTvlPage(props: ScalingTvlPageProps) {
         <ScalingNavigationTabs
           showActivity={props.showActivity}
           showLiveness={props.showLiveness}
+          showFinality={props.showFinality}
           selected="detailed"
         />
         <main className="mt-4 md:mt-12">

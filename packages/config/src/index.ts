@@ -1,4 +1,5 @@
 export * from './bridges'
+export * from './chains'
 export * from './common'
 export * from './layer2s'
 export * from './layer3s'

@@ -45,7 +45,7 @@ export function Markdown(props: MarkdownProps) {
     const rendered = markdown.render(props.children)
     return (
       <div
-        className={cx('mdc mdc-block', props.className)}
+        className={cx('mdc mdc-inline', props.className)}
         dangerouslySetInnerHTML={{ __html: rendered }}
       />
     )
