@@ -9,35 +9,47 @@ import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
 } from './addresses'
+import { SUPPORTED_CHAINS } from './check'
 import {
   getOutputPath as getVerificationFilePath,
   loadVerifiedJson,
 } from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
-  it('all current contracts are included in verified.json', async () => {
-    const filePath = getVerificationFilePath('ethereum')
-    const verifiedJson = await loadVerifiedJson(filePath)
-    const allContracts = getUniqueContractsForAllProjects(
-      [...bridges, ...layer2s],
-      'ethereum',
-    )
-
-    for (const contract of allContracts) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (verifiedJson[contract.toString()] === undefined) {
-        throw new Error(
-          `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()}`,
+  describe('all current contracts are included in verified.json', () => {
+    for (const devId of SUPPORTED_CHAINS) {
+      it(`for ${devId}`, async () => {
+        const filePath = getVerificationFilePath(devId)
+        const verifiedJson = await loadVerifiedJson(filePath)
+        const allContracts = getUniqueContractsForAllProjects(
+          [...bridges, ...layer2s],
+          devId,
         )
-      }
+
+        for (const contract of allContracts) {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (verifiedJson[contract.toString()] === undefined) {
+            throw new Error(
+              `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${devId}`,
+            )
+          }
+        }
+      })
     }
   })
 
   describe('getUniqueContractsForAllProjects()', () => {
-    it('can parse all current layer2s and bridges', () => {
-      expect(() =>
-        getUniqueContractsForAllProjects([...bridges, ...layer2s], 'ethereum'),
-      ).not.toThrow()
+    describe('can parse all current layer2s and bridges', () => {
+      for (const devId of SUPPORTED_CHAINS) {
+        it(`for ${devId}`, async () => {
+          expect(() =>
+            getUniqueContractsForAllProjects(
+              [...bridges, ...layer2s],
+              'ethereum',
+            ),
+          ).not.toThrow()
+        })
+      }
     })
 
     it('correctly finds unique addresses for all stub projects with duplicates', () => {
