@@ -1,17 +1,16 @@
 import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
 
 import {
-  Bridge,
   isSingleAddress,
-  Layer2,
   ScalingProjectContract,
   ScalingProjectUpgradeability,
 } from '../../src'
 import { VerificationMapPerChain } from './output'
+import { Project } from './types'
 import { withoutDuplicates } from './utils'
 
 export function getUniqueContractsForAllProjects(
-  projects: (Layer2 | Bridge)[],
+  projects: Project[],
   devId: string,
 ): EthereumAddress[] {
   const addresses = projects.flatMap((project) =>
@@ -21,7 +20,7 @@ export function getUniqueContractsForAllProjects(
 }
 
 export function getUniqueContractsForProject(
-  project: Layer2 | Bridge,
+  project: Project,
   devId: string,
 ): EthereumAddress[] {
   const projectContracts = getProjectContractsForChain(project, devId)
@@ -35,7 +34,7 @@ export function getUniqueContractsForProject(
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
-function getProjectContractsForChain(project: Layer2 | Bridge, devId: string) {
+function getProjectContractsForChain(project: Project, devId: string) {
   return (project.contracts?.addresses ?? []).filter((contract) => {
     // For backwards compatibility, we assume that contracts without devId are for ethereum
     if (contract.devId === undefined && devId === 'ethereum') {
@@ -116,7 +115,7 @@ function gatherAddressesFromUpgradeability(
 }
 
 export function areAllProjectContractsVerified(
-  project: Layer2 | Bridge,
+  project: Project,
   addressVerificationMapPerChain: VerificationMapPerChain,
 ): boolean {
   for (const [devId, addressVerificationMap] of Object.entries(
