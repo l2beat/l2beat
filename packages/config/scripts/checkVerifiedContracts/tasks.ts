@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EtherscanClient } from '@l2beat/shared'
+import { EtherscanLikeClient } from '@l2beat/shared'
 import { EthereumAddress, toBatches } from '@l2beat/shared-pure'
 
 import { isContractVerified } from './etherscan'
@@ -9,7 +9,7 @@ export async function verifyContracts(
   addresses: EthereumAddress[],
   previouslyVerified: Set<EthereumAddress>,
   manuallyVerified: Record<string, string>,
-  etherscanClient: EtherscanClient,
+  etherscanClient: EtherscanLikeClient,
   workersCount: number,
   logger: Logger,
 ): Promise<VerificationMap> {
