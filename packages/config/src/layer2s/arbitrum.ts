@@ -239,6 +239,20 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'circulatingSupply',
   },
+  {
+    id: AssetId('arbitrum:xai-xai'),
+    name: 'Xai',
+    symbol: 'XAI',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/34258/standard/2024-01-09_16.31.28.jpg?1704789138',
+    address: EthereumAddress('0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66'),
+    coingeckoId: CoingeckoId('xai-blockchain'),
+    sinceTimestamp: new UnixTime(1704758400),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
 ]
 
 export const arbitrum: Layer2 = {

@@ -6,7 +6,6 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
-  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -54,26 +53,18 @@ const filesystem = {
 
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
-  private readonly explorer: string
   constructor(
     public readonly projectName: string,
-    public readonly chainId: ChainId = ChainId.ETHEREUM,
+    public readonly devId: string = 'ethereum',
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
-    this.explorer = ChainId.getExplorer(chainId)
-    assert(
-      this.explorer,
-      `No explorer found for chainId: ${chainId.toString()}`,
-    )
   }
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(
-        `../backend/discovery/${project}/${ChainId.getName(
-          this.chainId,
-        )}/discovered.json`,
+        `../backend/discovery/${project}/${this.devId}/discovered.json`,
       ),
     )
 
@@ -105,7 +96,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      etherscanUrl: this.explorer,
+      devId: this.devId,
       ...descriptionOrOptions,
     }
   }
@@ -131,26 +122,28 @@ export class ProjectDiscovery {
     isUpcoming?: boolean
     isLayer3?: boolean
   }): ScalingProjectEscrow {
-    const contract = this.getContractByAddress(address.toString())
-    const timestamp = sinceTimestamp?.toNumber() ?? contract.sinceTimestamp
+    const contractRaw = this.getContractByAddress(address.toString())
+    const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
     assert(
       timestamp,
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
+
+    const options: Partial<ScalingProjectContractSingleAddress> = {
+      name,
+      description,
+      upgradableBy,
+      upgradeDelay,
+    }
+
+    const contract = this.getContractDetails(address.toString(), options)
 
     return {
       address,
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
-      contract: {
-        name: name ?? contract.name,
-        description,
-        upgradeability: contract.upgradeability,
-        etherscanUrl: this.explorer,
-        upgradableBy,
-        upgradeDelay,
-      },
+      contract,
       isUpcoming,
       isLayer3,
     }
@@ -229,7 +222,7 @@ export class ProjectDiscovery {
           ),
         )
         .join(' '),
-      etherscanUrl: this.explorer,
+      devId: this.devId,
     }))
   }
 
@@ -256,13 +249,14 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
-        etherscanUrl: this.explorer,
+        devId: this.devId,
       },
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
+        devId: this.devId,
       },
     ]
   }
@@ -367,7 +361,7 @@ export class ProjectDiscovery {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      etherscanUrl: this.explorer,
+      devId: this.devId,
       ...descriptionOrOptions,
     }
   }
@@ -409,7 +403,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
-      etherscanUrl: this.explorer,
+      devId: this.devId,
       description,
     }
   }
