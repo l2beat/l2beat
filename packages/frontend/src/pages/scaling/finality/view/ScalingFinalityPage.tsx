@@ -7,18 +7,18 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
-import { LivenessHeader } from '../../../../components/header/LivenessHeader'
+import { FinalityHeader } from '../../../../components/header/FinalityHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
-import { LivenessWarning } from './LivenessWarning'
+import { FinalityWarning } from './FinalityWarning'
 import {
-  ScalingLivenessView,
-  ScalingLivenessViewProps,
-} from './ScalingLivenessView'
+  ScalingFinalityView,
+  ScalingFinalityViewProps,
+} from './ScalingFinalityView'
 
-export interface ScalingLivenessPageProps {
-  livenessView: ScalingLivenessViewProps
+export interface FinalityPageProps {
+  finalityView: ScalingFinalityViewProps
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
@@ -26,7 +26,7 @@ export interface ScalingLivenessPageProps {
   showFinality: boolean
 }
 
-export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
+export function ScalingFinalityPage(props: FinalityPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -35,12 +35,12 @@ export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
           showActivity={props.showActivity}
           showFinality={props.showFinality}
           showLiveness={props.showLiveness}
-          selected="liveness"
+          selected="finality"
         />
         <main>
-          <LivenessHeader />
-          <LivenessWarning />
-          <ScalingLivenessView {...props.livenessView} />
+          <FinalityHeader />
+          <FinalityWarning />
+          <ScalingFinalityView {...props.finalityView} />
           <OtherSites />
           <About />
         </main>

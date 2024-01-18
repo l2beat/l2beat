@@ -12,12 +12,13 @@ import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
 import { getDiffHistoryPages } from './scaling/diff-history'
+import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getRiskPage } from './scaling/risk'
-import { getTvlPage } from './scaling/summary'
-import { getDetailedTvlPage } from './scaling/tvl'
+import { getSummaryPage } from './scaling/summary'
+import { getTvlPage } from './scaling/tvl'
 
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
@@ -28,11 +29,12 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     verificationStatus,
     tvlBreakdownApiResponse,
     livenessApiResponse,
+    finalityApiResponse,
     diffHistory,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
-  pages.push(getTvlPage(config, pagesData))
+  pages.push(getSummaryPage(config, pagesData))
   pages.push(getFaqPage(config))
   pages.push(getL2DaysPage())
   pages.push(await getDonatePage(config))
@@ -55,7 +57,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  pages.push(getDetailedTvlPage(config, pagesData))
+  pages.push(getTvlPage(config, pagesData))
 
   if (config.features.tvlBreakdown && tvlBreakdownApiResponse) {
     pages.push(
@@ -70,6 +72,15 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(
       getLivenessPage(config, {
         livenessApiResponse,
+        tvlApiResponse,
+      }),
+    )
+  }
+
+  if (config.features.finality && finalityApiResponse) {
+    pages.push(
+      getFinalityPage(config, {
+        finalityApiResponse,
         tvlApiResponse,
       }),
     )

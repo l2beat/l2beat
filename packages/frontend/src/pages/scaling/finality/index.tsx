@@ -2,17 +2,17 @@ import React from 'react'
 
 import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
-import { PagesData } from '../../Page'
 import { getProps } from './props'
-import { ScalingTvlPage } from './view/ScalingTvlPage'
+import { FinalityPagesData } from './types'
+import { ScalingFinalityPage } from './view/ScalingFinalityPage'
 
-export function getTvlPage(config: Config, pagesData: PagesData) {
+export function getFinalityPage(config: Config, pagesData: FinalityPagesData) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
-    slug: '/scaling/tvl',
+    slug: '/scaling/finality',
     page: (
       <PageWrapper {...wrapper}>
-        <ScalingTvlPage {...props} />
+        <ScalingFinalityPage {...props} />
       </PageWrapper>
     ),
   }
