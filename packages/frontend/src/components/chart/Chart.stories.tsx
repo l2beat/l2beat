@@ -269,6 +269,7 @@ export const TvlWithTokens: Story = {
 
 export const TvlWithActivity: Story = {
   args: {
+    hasTvl: true,
     hasActivity: true,
     header: 'project',
   },
