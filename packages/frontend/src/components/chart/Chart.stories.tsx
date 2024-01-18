@@ -278,6 +278,7 @@ export const TvlWithActivity: Story = {
 export const DetailedTvlWithActivity: Story = {
   args: {
     initialType: { type: 'storybook-fake-detailed-tvl' },
+    hasTvl: true,
     hasActivity: true,
     header: 'project',
   },
