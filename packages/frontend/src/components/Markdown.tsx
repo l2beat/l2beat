@@ -37,10 +37,7 @@ export function Markdown(props: MarkdownProps) {
     const rendered = markdown.renderInline(props.children)
     return (
       <span
-        className={cx(
-          'mdc mdc-inline',
-          props.className,
-        )}
+        className={cx('mdc mdc-inline', props.className)}
         dangerouslySetInnerHTML={{ __html: rendered }}
       />
     )
@@ -48,10 +45,7 @@ export function Markdown(props: MarkdownProps) {
     const rendered = markdown.render(props.children)
     return (
       <div
-        className={cx(
-          'mdc mdc-inline',
-          props.className,
-        )}
+        className={cx('mdc mdc-inline', props.className)}
         dangerouslySetInnerHTML={{ __html: rendered }}
       />
     )

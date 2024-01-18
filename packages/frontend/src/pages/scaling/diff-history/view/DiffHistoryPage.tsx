@@ -26,7 +26,7 @@ export function DiffHistoryPage(props: DiffHistoryPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ProjectSubPageHeader {...props.header} className="mt-11" />
-        <article className="mt-6 mx-auto lg:max-w-none ">
+        <article className="mx-auto mt-6 lg:max-w-none ">
           <Markdown>{props.markdown}</Markdown>
         </article>
       </PageContent>
