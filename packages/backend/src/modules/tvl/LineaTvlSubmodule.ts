@@ -5,7 +5,6 @@ import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { LINEA_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { chainTvlSubmodule } from './ChainTvlSubmodule'
 import { TvlDatabase } from './types'
@@ -24,7 +23,6 @@ export function createLineaTvlSubmodule(
     ProjectId.LINEA,
     config.tvl.linea,
     config.tokens,
-    LINEA_MULTICALL_CONFIG,
     db,
     priceUpdater,
     coingeckoQueryService,

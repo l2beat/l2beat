@@ -26,8 +26,8 @@ export function DiffHistoryPage(props: DiffHistoryPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ProjectSubPageHeader {...props.header} className="mt-11" />
-        <article className="prose mx-auto dark:prose-invert lg:max-w-none lg:prose-xl">
-          <Markdown withoutDefaultStyling>{props.markdown}</Markdown>
+        <article className="mx-auto mt-6 lg:max-w-none ">
+          <Markdown>{props.markdown}</Markdown>
         </article>
       </PageContent>
       <Footer {...props.footer} />

@@ -84,6 +84,20 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'circulatingSupply',
   },
+  {
+    id: AssetId('optimism:exa-exactly-token'),
+    name: 'Exactly Token',
+    symbol: 'EXA',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921',
+    address: EthereumAddress('0x1e925de1c68ef83bd98ee3e130ef14a50309c01b'),
+    coingeckoId: CoingeckoId('exa'),
+    sinceTimestamp: new UnixTime(1691546460),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
 ]
 
 export const optimism: Layer2 = opStack({
@@ -274,5 +288,19 @@ export const optimism: Layer2 = opStack({
     // The first full hour timestamp that will return the block number
     // https://optimistic.etherscan.io/block/138
     minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 4286263,
+        version: '3',
+      },
+      {
+        sinceBlock: 0,
+        batchSize: 150,
+        address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
+        version: 'optimism',
+      },
+    ],
   },
 })

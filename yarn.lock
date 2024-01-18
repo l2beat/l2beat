@@ -2049,20 +2049,20 @@
     dotenv "^16.3.1"
     error-stack-parser "^2.1.4"
 
-"@l2beat/discovery-types@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.7.0.tgz#e6d90cd4fcb68d36d0f296eb82975c0344f1576f"
-  integrity sha512-GP2fM2NOZQzZPvm8PlYyBFVyrx8fZK8P3CVfGy4TkuXFlE4342e2ZQ3cZ507MHZkGrWE3zYOqR2MfFpH1beSMg==
+"@l2beat/discovery-types@0.8.0", "@l2beat/discovery-types@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery-types/-/discovery-types-0.8.0.tgz#b91c860b89f1fdbeb50c10f5c6b90fe7b0be2de8"
+  integrity sha512-EqzoADhi5/Q8ZX/j6O9qdWBr/bGaA5eUIFJlbYLGpcYmFx/wY/l4q0HjIixx3s9T3uRFUOIatewwZXbe7qKH9w==
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.28.3":
-  version "0.28.3"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.28.3.tgz#0729679d4853e524476e1d536ff8222549504c6a"
-  integrity sha512-VfHQsODaLsWkEudjf0GFif+Xduf3mu52BMI6R0QjM8f1JjUuRPJqBwHAOke3xOpqhitQ4cDQZ0C5S8zJiPFERg==
+"@l2beat/discovery@0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.30.0.tgz#e1e8cfeceb5593ed503ec7fbaf893ed5b8dda94d"
+  integrity sha512-sLtxhGzi/Wd9U18JW4acLmzJZSxjI0YJPVuosm4QB4SlVjNJ6OO4jeMB71dGHqrPssmGUXthmpC3sXu167OtXg==
   dependencies:
     "@l2beat/backend-tools" "^0.5.1"
-    "@l2beat/discovery-types" "^0.7.0"
+    "@l2beat/discovery-types" "^0.8.0"
     chalk "^4.1.2"
     deep-diff "^1.0.2"
     dotenv "^16.0.3"
@@ -3037,16 +3037,6 @@
     "@types/babel__core" "^7.0.0"
     "@types/express" "^4.7.0"
     file-system-cache "^2.0.0"
-
-"@tailwindcss/typography@^0.5.10":
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.5.10.tgz#2abde4c6d5c797ab49cf47610830a301de4c1e0a"
-  integrity sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==
-  dependencies:
-    lodash.castarray "^4.4.0"
-    lodash.isplainobject "^4.0.6"
-    lodash.merge "^4.6.2"
-    postcss-selector-parser "6.0.10"
 
 "@testing-library/dom@^9.0.0":
   version "9.3.3"
@@ -8983,11 +8973,6 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-lodash.castarray@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.castarray/-/lodash.castarray-4.4.0.tgz#c02513515e309daddd4c24c60cfddcf5976d9115"
-  integrity sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==
-
 lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
@@ -8997,11 +8982,6 @@ lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
-
-lodash.isplainobject@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
-  integrity sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -10536,14 +10516,6 @@ postcss-reduce-transforms@^5.1.0:
   integrity sha512-2fbdbmgir5AvpW9RLtdONx1QoYG2/EtqpNQbFASDlixBbAYuTcJ0dECwlqNqH7VbaUnEnh8SrxOe2sRIn24XyQ==
   dependencies:
     postcss-value-parser "^4.2.0"
-
-postcss-selector-parser@6.0.10:
-  version "6.0.10"
-  resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.10.tgz#79b61e2c0d1bfc2602d549e11d0876256f8df88d"
-  integrity sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==
-  dependencies:
-    cssesc "^3.0.0"
-    util-deprecate "^1.0.2"
 
 postcss-selector-parser@^6.0.10, postcss-selector-parser@^6.0.2, postcss-selector-parser@^6.0.4, postcss-selector-parser@^6.0.5, postcss-selector-parser@^6.0.9:
   version "6.0.11"
