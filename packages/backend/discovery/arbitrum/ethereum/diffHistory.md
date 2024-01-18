@@ -1,3 +1,124 @@
+# Diff at Thu, 18 Jan 2024 10:37:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@66d81d543e5774973a4ef4bf257f67dd0862a255 block: 18691623
+- current block number: 19033196
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+      values.getOwners.0:
+-        "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b"
++        "0x375906ADFD34D93236084F462BB2dB0D92129Fe1"
+      values.nonce:
+-        170
++        179
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during 
+discovery. Values are for block 18691623 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+      values.batchPosters:
++        ["0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D","0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
+    }
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+      values.validators:
++        ["0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","0x610Aa279989F440820e14248BD3879B148717974","0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","0xAB1A39332e934300eBCc57B5f95cA90631a347FF","0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x0ea6999172c1B4563695F76A52de73c848587b17) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3f92814930f43c6a1C6B133E5945E7B3338F33a6) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x509E3CDc218d163DB9A03678107b72e00163b061) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xAb33350E0319466A81D2AE6DC5CdF2518123f766) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xCcadc6B174BEcf31a35b818373e90391971a1C0c) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    }
+```
+
 # Diff at Fri, 24 Nov 2023 10:04:53 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

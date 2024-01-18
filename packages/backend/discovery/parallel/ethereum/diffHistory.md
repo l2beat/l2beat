@@ -29,18 +29,28 @@ discovery. Values are for block 18962479 (main branch discovery), not current.
 # Diff at Fri, 12 Jan 2024 15:39:29 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@3ba59c007bed594eaca2484f4c0c687806fd9c9b block: 18962479
-- current block number: 18991767
+- comparing to: master@66d81d543e5774973a4ef4bf257f67dd0862a255 block: 18962479
+- current block number: 19033209
 
 ## Description
 
 Added names to the Safe and unverified contracts.
 
-## Config related changes
+## Watched changes
+
+```diff
+    contract OwnerMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+      values.nonce:
+-        9
++        10
+    }
+```
+
+## Config/verification related changes
 
 Following changes come from updates made to the config file,
-not from differences found during discovery. Values are
-for block 18962479 (main branch discovery), not current.
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18962479 (main branch discovery), not current.
 
 ```diff
     contract  (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
@@ -49,6 +59,23 @@ for block 18962479 (main branch discovery), not current.
 +        "OneStepProverMemory"
       derivedName:
 +        ""
+    }
+```
+
+```diff
+    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+      name:
+-        "GnosisSafe"
++        "OwnerMultisig"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+      errors:
++        {"validators":"[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  }\n]"}
     }
 ```
 
@@ -76,6 +103,13 @@ for block 18962479 (main branch discovery), not current.
 +        "OneStepProverHostIo"
       derivedName:
 +        ""
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+      errors:
++        {"batchPosters":"[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  }\n]"}
     }
 ```
 
