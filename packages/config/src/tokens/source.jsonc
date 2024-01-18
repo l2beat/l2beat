@@ -1180,6 +1180,11 @@
       "symbol": "USDC",
       "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       "category": "stablecoin"
+    },
+    {
+      "symbol": "XAI",
+      "address": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
+      "category": "other"
     }
   ],
   "optimism": [
@@ -1201,6 +1206,11 @@
     {
       "symbol": "VELO",
       "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+      "category": "other"
+    },
+    {
+      "symbol": "EXA",
+      "address": "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
       "category": "other"
     }
   ],

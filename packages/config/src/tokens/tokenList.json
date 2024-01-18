@@ -3165,6 +3165,20 @@
       "formula": "locked"
     },
     {
+      "id": "optimism:exa-exactly-token",
+      "name": "Exactly Token",
+      "coingeckoId": "exa",
+      "address": "0x1e925De1c68ef83bD98eE3E130eF14a50309C01B",
+      "symbol": "EXA",
+      "decimals": 18,
+      "sinceTimestamp": 1691546460,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "optimism:kwenta-kwenta",
       "name": "Kwenta",
       "coingeckoId": "kwenta",
@@ -3459,6 +3473,20 @@
       "chainId": 42161,
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "id": "arbitrum:xai-xai",
+      "name": "Xai",
+      "coingeckoId": "xai-blockchain",
+      "address": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
+      "symbol": "XAI",
+      "decimals": 18,
+      "sinceTimestamp": 1704758400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34258/standard/2024-01-09_16.31.28.jpg?1704789138",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ]
 }
