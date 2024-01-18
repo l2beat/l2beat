@@ -1,8 +1,8 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 19032765,
-  "configHash": "0x456260ae74b0645cd1b6a67a34f1decfdb66621c0b42552a2f673ed37b156efd",
+  "blockNumber": 19032900,
+  "configHash": "0x077c45bc40b72dc5ea6a928106475a2b4866e2143428afa40d49bf70f49af1b3",
   "version": 3,
   "contracts": [
     {
@@ -117,7 +117,7 @@
       "sinceTimestamp": 1701972755
     },
     {
-      "name": "GnosisSafe",
+      "name": "OwnerMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
