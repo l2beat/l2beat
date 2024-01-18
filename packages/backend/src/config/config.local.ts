@@ -183,8 +183,8 @@ export function getLocalConfig(env: Env): Config {
         getChainDiscoveryConfig(env, 'gnosis'),
         getChainDiscoveryConfig(env, 'linea'),
         getChainDiscoveryConfig(env, 'optimism'),
-        getChainDiscoveryConfig(env, 'polygon_pos'),
-        getChainDiscoveryConfig(env, 'polygon_zkevm'),
+        getChainDiscoveryConfig(env, 'polygonpos'),
+        getChainDiscoveryConfig(env, 'polygonzkevm'),
       ],
     },
     diffHistory: diffHistoryEnabled && {
