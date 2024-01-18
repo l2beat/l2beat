@@ -11,7 +11,7 @@ Ignore nonce of GnosisSafe multisig
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during 
+or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 18962479 (main branch discovery), not current.
 
 ```diff
