@@ -1,56 +1,18 @@
-# Diff at Thu, 18 Jan 2024 09:37:21 GMT:
+# Diff at Thu, 18 Jan 2024 15:20:49 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18962479
-- current block number: 19032900
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: master@a71a2707b2bfc311414db33e095b8672ca13b5d4 block: 19032900
+- current block number: 19034601
 
 ## Description
 
-Ignore nonce of GnosisSafe multisig
+Added discovery of rollup validators.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 18962479 (main branch discovery), not current.
-
-```diff
-    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
-      name:
--        "GnosisSafe"
-+        "OwnerMultisig"
-      values.nonce:
--        9
-      derivedName:
-+        "GnosisSafe"
-    }
-```
-
-# Diff at Fri, 12 Jan 2024 15:39:29 GMT:
-
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@66d81d543e5774973a4ef4bf257f67dd0862a255 block: 18962479
-- current block number: 19033209
-
-## Description
-
-Added names to the Safe and unverified contracts.
-
-## Watched changes
-
-```diff
-    contract OwnerMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
-      values.nonce:
--        9
-+        10
-    }
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 18962479 (main branch discovery), not current.
+discovery. Values are for block 19032900 (main branch discovery), not current.
 
 ```diff
     contract  (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
@@ -63,19 +25,9 @@ discovery. Values are for block 18962479 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
-      name:
--        "GnosisSafe"
-+        "OwnerMultisig"
-      derivedName:
-+        "GnosisSafe"
-    }
-```
-
-```diff
     contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
-      errors:
-+        {"validators":"[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  }\n]"}
+      values.validators:
++        ["0x56D33424edb428744597Ec02571f14B50a33b7de"]
     }
 ```
 
@@ -108,8 +60,8 @@ discovery. Values are for block 18962479 (main branch discovery), not current.
 
 ```diff
     contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
-      errors:
-+        {"batchPosters":"[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      7,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      8,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      10,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      11,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      12,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      13,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      14,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      31,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"action\",\n      \"input\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      34,\n      \"result\",\n      \"output\"\n    ],\n    \"message\": \"Required\"\n  }\n]"}
+      values.batchPosters:
++        ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"]
     }
 ```
 
@@ -120,6 +72,34 @@ discovery. Values are for block 18962479 (main branch discovery), not current.
 +        "OneStepProver0"
       derivedName:
 +        ""
+    }
+```
+
+# Diff at Thu, 18 Jan 2024 09:37:21 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18962479
+- current block number: 19032900
+
+## Description
+
+Ignore nonce of GnosisSafe multisig
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18962479 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+      name:
+-        "GnosisSafe"
++        "OwnerMultisig"
+      values.nonce:
+-        9
+      derivedName:
++        "GnosisSafe"
     }
 ```
 
