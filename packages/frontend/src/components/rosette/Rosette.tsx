@@ -9,6 +9,7 @@ import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { getRiskSentiments } from '../../utils/risks/values'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { Icon } from '../icons/Icon'
+import { WarningBar } from '../project/WarningBar'
 
 export interface RosetteProps {
   risks: RiskSentiments
@@ -39,7 +40,7 @@ export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
         className={sentimentToFillColor(risks.sequencerFailure)}
       />
       <path
-        d="M13.5475 13.7202C13.8415 14.1351 13.6462 14.7161 13.1612 14.8691L1.78553 18.4578C1.36348 18.591 0.923865 18.332 0.861775 17.8938C0.652045 16.4137 0.369734 13.162 1.34618 10.2576C2.40848 7.09781 4.54539 4.80971 5.58199 3.8356C5.89489 3.54156 6.38109 3.6087 6.62939 3.95902L13.5475 
+        d="M13.5475 13.7202C13.8415 14.1351 13.6462 14.7161 13.1612 14.8691L1.78553 18.4578C1.36348 18.591 0.923865 18.332 0.861775 17.8938C0.652045 16.4137 0.369734 13.162 1.34618 10.2576C2.40848 7.09781 4.54539 4.80971 5.58199 3.8356C5.89489 3.54156 6.38109 3.6087 6.62939 3.95902L13.5475
         13.7202Z"
         className={sentimentToFillColor(risks.stateValidation)}
       />
@@ -386,18 +387,25 @@ function OverlayBox({
     <div
       {...props}
       className={cx(
-        'Rosette-Description hidden rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
+        'Rosette-Description z-110 hidden animate-quick-fade-in rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
         className,
       )}
     >
       <span
         className={cx(
-          'mb-2 block font-medium',
+          'mb-2 flex items-center gap-1 font-medium',
           sentimentToTextColor(risk.sentiment),
         )}
       >
         {risk.value}
       </span>
+      {risk.warning && (
+        <WarningBar
+          className="mb-2"
+          text={risk.warning}
+          color={risk.sentiment === 'bad' ? 'red' : 'yellow'}
+        />
+      )}
       <span className="text-xs">{risk.description}</span>
     </div>
   )

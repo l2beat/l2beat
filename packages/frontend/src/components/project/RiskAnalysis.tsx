@@ -114,6 +114,13 @@ function SingleRisk({
           >
             {riskValue.value}
           </span>
+          {riskValue.warning && (
+            <WarningBar
+              className="my-2"
+              text={riskValue.warning}
+              color={riskValue.sentiment === 'bad' ? 'red' : 'yellow'}
+            />
+          )}
           {riskValue.description && (
             <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {riskValue.description}

@@ -13,6 +13,7 @@ export interface RiskValue {
   sentiment: Sentiment
   // TODO: make required
   description?: string
+  warning?: string
 }
 
 export type RiskValues = Record<Risk, RiskValue>
