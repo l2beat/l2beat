@@ -70,9 +70,15 @@ function getGradientGroups(breakdown: TokenBreakdownProps) {
     return []
   }
   const groups = [
-    { weight: breakdown.associated, className: 'fill-rose-700' },
-    { weight: breakdown.ether, className: 'fill-green-200' },
-    { weight: breakdown.stable, className: 'fill-teal-400' },
+    {
+      weight: breakdown.associated,
+      className: 'fill-rose-700 dark:fill-rose-500',
+    },
+    {
+      weight: breakdown.ether,
+      className: 'fill-green-200 dark:fill-green-900',
+    },
+    { weight: breakdown.stable, className: 'fill-teal-400 dark:fill-teal-500' },
     { weight: breakdown.other, className: 'fill-sky-600' },
   ].filter((x) => x.weight >= 0.005)
   const gaps = groups.length - 1
