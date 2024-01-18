@@ -1,3 +1,31 @@
+# Diff at Thu, 18 Jan 2024 09:37:21 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18962479
+- current block number: 19032900
+
+## Description
+
+Ignore nonce of GnosisSafe multisig
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18962479 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+      name:
+-        "GnosisSafe"
++        "OwnerMultisig"
+      values.nonce:
+-        9
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
 # Diff at Mon, 08 Jan 2024 13:05:46 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

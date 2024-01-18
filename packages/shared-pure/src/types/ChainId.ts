@@ -84,7 +84,7 @@ const CHAIN_IDS: Record<number, { name: string; explorer: string }> = {
     explorer: 'https://basescan.org',
   },
   137: {
-    name: 'polygon-pos',
+    name: 'polygonpos',
     explorer: 'https://polygonscan.com',
   },
   56: {
@@ -108,7 +108,7 @@ const CHAIN_IDS: Record<number, { name: string; explorer: string }> = {
     explorer: 'https://lineascan.build',
   },
   1101: {
-    name: 'polygon-zkevm',
+    name: 'polygonzkevm',
     explorer: 'https://zkevm.polygonscan.com',
   },
   100: {
@@ -116,7 +116,7 @@ const CHAIN_IDS: Record<number, { name: string; explorer: string }> = {
     explorer: 'https://gnosisscan.io',
   },
   169: {
-    name: 'manta-pacific',
+    name: 'mantapacific',
     explorer: 'https://pacific-explorer.manta.network',
   },
 } as const
@@ -124,13 +124,13 @@ const CHAIN_IDS: Record<number, { name: string; explorer: string }> = {
 ChainId.ETHEREUM = chainIdFromName('ethereum')
 ChainId.ARBITRUM = chainIdFromName('arbitrum')
 ChainId.OPTIMISM = chainIdFromName('optimism')
-ChainId.POLYGON_POS = chainIdFromName('polygon-pos')
+ChainId.POLYGON_POS = chainIdFromName('polygonpos')
 ChainId.BSC = chainIdFromName('bsc')
 ChainId.AVALANCHE = chainIdFromName('avalanche')
 ChainId.CELO = chainIdFromName('celo')
 ChainId.LINEA = chainIdFromName('linea')
 ChainId.LYRA = chainIdFromName('lyra')
 ChainId.BASE = chainIdFromName('base')
-ChainId.POLYGON_ZKEVM = chainIdFromName('polygon-zkevm')
+ChainId.POLYGON_ZKEVM = chainIdFromName('polygonzkevm')
 ChainId.GNOSIS = chainIdFromName('gnosis')
-ChainId.MANTAPACIFIC = chainIdFromName('manta-pacific')
+ChainId.MANTAPACIFIC = chainIdFromName('mantapacific')

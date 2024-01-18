@@ -1,6 +1,6 @@
 {
   "$schema": "../../config.schema.json",
-  "chain": "polygon-pos",
+  "chain": "polygonpos",
   "name": "lzomnichain",
   "initialAddresses": ["0x4D73AdB72bC3DD368966edD0f0b2148401A178E2"],
   "names": {

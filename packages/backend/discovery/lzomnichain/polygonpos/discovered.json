@@ -1,6 +1,6 @@
 {
   "name": "lzomnichain",
-  "chain": "polygon-pos",
+  "chain": "polygonpos",
   "blockNumber": 52128611,
   "configHash": "0x6f4941c2e11f022b988728a952c4b4c40cebc66c419055dfc15c2b7213e84298",
   "version": 3,
