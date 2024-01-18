@@ -1,3 +1,65 @@
+# Diff at Thu, 18 Jan 2024 12:51:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@9ea763a3a6145f892624da4ecacd25a080a0d5b0 block: 18519360
+- current block number: 19033859
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract EmergencyProposalExecutor (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+      values.getOwners[3]:
++        "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
+      values.getOwners.2:
+-        "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
++        "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
+      values.getOwners.1:
+-        "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
+      values.getOwners.0:
+-        "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
++        "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5"
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+      values.bondAmount:
+-        "10000000000000000000"
++        "2000000000000000000"
+      values.getProposalBond:
+-        "10000000000000000000"
++        "2000000000000000000"
+      values.liveness:
+-        432000
++        172800
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during 
+discovery. Values are for block 18519360 (main branch discovery), not current.
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+      upgradeability.type:
+-        "immutable"
++        "gnosis safe zodiac module"
+      upgradeability.avatar:
++        "0xB524735356985D2f267FA010D681f061DfF03715"
+      upgradeability.target:
++        "0xB524735356985D2f267FA010D681f061DfF03715"
+      upgradeability.guard:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 # Diff at Fri, 13 Oct 2023 08:47:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
