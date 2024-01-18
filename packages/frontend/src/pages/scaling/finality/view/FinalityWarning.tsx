@@ -10,7 +10,7 @@ export function FinalityWarning() {
       reordered. The actionable settlement time on the L1 (that affects your
       ability to withdraw your funds on the L1) for these transactions may be
       longer. In most other cases, however, this does not apply (e.g., when
-      transferring funds to an exchange).For more information on how finality
+      transferring funds to an exchange). For more information on how finality
       works for L2 transactions, check{' '}
       <Link href="https://medium.com/l2beat/tracking-time-to-finality-of-l2-transactions-051d32f5d5ba">
         our article
