@@ -6,7 +6,8 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added three new strategies.
+Named three present multisigs and ignored their nonce in watch mode.
 
 ## Watched changes
 
