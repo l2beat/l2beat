@@ -41,14 +41,6 @@ export async function loadVerifiedJson(
   return FileStructure.parse(JSON.parse(data))
 }
 
-export async function saveResultPerChain(
-  filePath: string,
-  result: VerificationMap,
-) {
-  const output = sortObjectKeys(result)
-  await writeFile(filePath, JSON.stringify(output, null, 2) + '\n')
-}
-
 export async function saveResult<T>(
   filePath: string,
   result: Record<string, T>,
