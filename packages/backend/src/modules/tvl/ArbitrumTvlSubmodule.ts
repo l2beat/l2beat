@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoQueryService, HttpClient } from '@l2beat/shared'
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
@@ -19,8 +18,6 @@ export function createArbitrumTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   return chainTvlSubmodule(
-    ChainId.ARBITRUM,
-    ProjectId.ARBITRUM,
     config.tvl.arbitrum,
     config.tokens,
     db,

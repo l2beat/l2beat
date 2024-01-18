@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoQueryService, HttpClient } from '@l2beat/shared'
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
@@ -19,8 +18,6 @@ export function createLineaTvlSubmodule(
   clock: Clock,
 ): TvlSubmodule | undefined {
   return chainTvlSubmodule(
-    ChainId.LINEA,
-    ProjectId.LINEA,
     config.tvl.linea,
     config.tokens,
     db,
