@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.33.0
+
+### Minor Changes
+
+- Change the trace_transaction zod type
+
 ## 0.32.0
 
 ### Minor Changes
