@@ -4,7 +4,7 @@ import React from 'react'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
-import { ShieldIcon } from '../icons'
+import { RoundedWarningIcon, ShieldIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Markdown } from '../Markdown'
 import { BigRosette } from '../rosette'
@@ -117,6 +117,7 @@ function SingleRisk({
           {riskValue.warning && (
             <WarningBar
               className="my-2"
+              icon={RoundedWarningIcon}
               text={riskValue.warning}
               color={riskValue.sentiment === 'bad' ? 'red' : 'yellow'}
             />
