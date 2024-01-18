@@ -1,6 +1,6 @@
 import { Env } from '@l2beat/backend-tools'
 import { chainsByDevId, layer2s } from '@l2beat/config'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { toMulticallConfigEntry } from '../peripherals/ethereum/multicall/MulticallConfig'
 import { ChainTvlConfig } from './Config'
@@ -19,8 +19,11 @@ export function getChainTvlConfig(
     throw new Error('Unknown chain: ' + devId)
   }
 
-  const project = layer2s.find((layer2) => layer2.chainConfig?.devId === devId)
-  if (!project) {
+  const projectId =
+    devId === 'ethereum'
+      ? ProjectId.ETHEREUM
+      : layer2s.find((layer2) => layer2.chainConfig?.devId === devId)?.id
+  if (!projectId) {
     throw new Error('Missing project for chain: ' + devId)
   }
 
@@ -46,7 +49,7 @@ export function getChainTvlConfig(
   return {
     devId,
     config: {
-      projectId: project.id,
+      projectId,
       chainId: ChainId(chain.chainId),
       providerUrl: env.string(`TVL_${ENV_NAME}_PROVIDER_URL`),
       providerCallsPerMinute: env.integer(
