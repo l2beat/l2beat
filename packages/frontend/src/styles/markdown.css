@@ -63,7 +63,7 @@
 }
 
 .mdc pre {
-  @apply rounded bg-gray-100 px-4 py-2 font-mono text-sm dark:bg-gray-800;
+  @apply rounded bg-gray-100 px-4 py-2 font-mono text-sm dark:bg-gray-800 overflow-auto;
 }
 
 .mdc pre code {

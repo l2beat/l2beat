@@ -8,7 +8,6 @@ export interface MarkdownProps {
   children: string
   inline?: boolean
   className?: string
-  withoutDefaultStyling?: boolean
 }
 
 const markdown = MarkdownIt({
@@ -39,7 +38,7 @@ export function Markdown(props: MarkdownProps) {
     return (
       <span
         className={cx(
-          !props.withoutDefaultStyling && 'mdc mdc-inline',
+          'mdc mdc-inline',
           props.className,
         )}
         dangerouslySetInnerHTML={{ __html: rendered }}
@@ -50,7 +49,7 @@ export function Markdown(props: MarkdownProps) {
     return (
       <div
         className={cx(
-          !props.withoutDefaultStyling && 'mdc mdc-inline',
+          'mdc mdc-inline',
           props.className,
         )}
         dangerouslySetInnerHTML={{ __html: rendered }}
