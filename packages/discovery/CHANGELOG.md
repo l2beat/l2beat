@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.31.0
+
+### Minor Changes
+
+- Remove dashes from chain names (breaking!)
+
 ## 0.30.0
 
 ### Minor Changes

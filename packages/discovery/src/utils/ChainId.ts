@@ -51,28 +51,28 @@ const CHAIN_IDS = {
   1: 'ethereum',
   42161: 'arbitrum',
   10: 'optimism',
-  137: 'polygon-pos',
+  137: 'polygonpos',
   56: 'bsc',
   43114: 'avalanche',
   42220: 'celo',
   59144: 'linea',
   8453: 'base',
-  1101: 'polygon-zkevm',
+  1101: 'polygonzkevm',
   100: 'gnosis',
   957: 'lyra',
-  169: 'manta-pacific',
+  169: 'mantapacific',
   '-1': 'native',
 } as const
 
 ChainId.ETHEREUM = chainIdFromName('ethereum')
 ChainId.ARBITRUM = chainIdFromName('arbitrum')
 ChainId.OPTIMISM = chainIdFromName('optimism')
-ChainId.POLYGON_POS = chainIdFromName('polygon-pos')
+ChainId.POLYGONPOS = chainIdFromName('polygonpos')
 ChainId.BSC = chainIdFromName('bsc')
 ChainId.AVALANCHE = chainIdFromName('avalanche')
 ChainId.CELO = chainIdFromName('celo')
 ChainId.LINEA = chainIdFromName('linea')
 ChainId.BASE = chainIdFromName('base')
-ChainId.POLYGON_ZKEVM = chainIdFromName('polygon-zkevm')
+ChainId.POLYGONZKEVM = chainIdFromName('polygonzkevm')
 ChainId.GNOSIS = chainIdFromName('gnosis')
 ChainId.NMV = chainIdFromName('native')

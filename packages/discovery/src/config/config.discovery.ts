@@ -85,10 +85,12 @@ export function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
         etherscanApiKey: env.string('DISCOVERY_OPTIMISM_ETHERSCAN_API_KEY'),
         etherscanUrl: 'https://api-optimistic.etherscan.io/api',
       }
-    case ChainId.POLYGON_POS:
+    case ChainId.POLYGONPOS:
       return {
-        chainId: ChainId.POLYGON_POS,
-        rpcUrl: env.string('DISCOVERY_POLYGON_POS_RPC_URL'),
+        chainId: ChainId.POLYGONPOS,
+        rpcUrl:
+          env.optionalString('DISCOVERY_POLYGON_POS_RPC_URL') ??
+          env.string('DISCOVERY_POLYGONPOS_RPC_URL'),
         rpcGetLogsMaxRange: env.optionalInteger(
           'DISCOVERY_POLYGON_POS_RPC_GETLOGS_MAX_RANGE',
         ),
@@ -154,10 +156,12 @@ export function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
         etherscanApiKey: env.string('DISCOVERY_BASE_ETHERSCAN_API_KEY'),
         etherscanUrl: 'https://api.basescan.org/api',
       }
-    case ChainId.POLYGON_ZKEVM:
+    case ChainId.POLYGONZKEVM:
       return {
-        chainId: ChainId.POLYGON_ZKEVM,
-        rpcUrl: env.string('DISCOVERY_POLYGON_ZKEVM_RPC_URL'),
+        chainId: ChainId.POLYGONZKEVM,
+        rpcUrl:
+          env.optionalString('DISCOVERY_POLYGON_ZKEVM_RPC_URL') ??
+          env.string('DISCOVERY_POLYGONZKEVM_RPC_URL'),
         rpcGetLogsMaxRange: env.optionalInteger(
           'DISCOVERY_POLYGON_ZKEVM_RPC_GETLOGS_MAX_RANGE',
         ),
