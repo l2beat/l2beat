@@ -23,8 +23,7 @@ export function getChart(
   const hasActivity =
     config?.features.activity &&
     !!activityApiResponse?.projects[project.id.toString()]
-  const hasTvl = !!tvlApiResponse.projects[project.id.toString()]
-
+  const hasTvl = project.config.escrows.length !== 0
   return {
     settingsId: `project-${project.display.slug}`,
     initialType: getInitialType(project, hasTvl, !!hasActivity),
@@ -37,7 +36,7 @@ export function getChart(
     hasTvl,
     hasActivity,
     milestones: project.milestones,
-    showComingSoon: !hasTvl && !hasActivity,
+    showComingSoon: project.config.escrows.length === 0 && !hasActivity,
   }
 }
 
