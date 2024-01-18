@@ -11,7 +11,7 @@ import {
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
 import { TokenControl } from '../../components/chart/TokenControls'
-import { TokenInfo } from '../../scripts/charts/types'
+import { ChartType, TokenInfo } from '../../scripts/charts/types'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
@@ -20,23 +20,40 @@ export function getChart(
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
+  const hasActivity =
+    config?.features.activity &&
+    !!activityApiResponse?.projects[project.id.toString()]
+  const hasTvl = !!tvlApiResponse.projects[project.id.toString()]
+
   return {
     settingsId: `project-${project.display.slug}`,
-    initialType:
-      project.type === 'layer2' || project.type === 'layer3'
-        ? { type: 'project-detailed-tvl', slug: project.display.slug }
-        : { type: 'project-tvl', slug: project.display.slug },
+    initialType: getInitialType(project, hasTvl, !!hasActivity),
     tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
     tvlBreakdownHref:
       (project.type === 'layer2' || project.type === 'layer3') &&
       !project.isUpcoming
         ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
         : undefined,
-    hasActivity:
-      config?.features.activity &&
-      !!activityApiResponse?.projects[project.id.toString()],
+    hasTvl,
+    hasActivity,
     milestones: project.milestones,
-    showComingSoon: project.config.escrows.length === 0,
+    showComingSoon: !hasTvl && !hasActivity,
+  }
+}
+
+function getInitialType(
+  project: Layer2 | Layer3 | Bridge,
+  hasTvl: boolean,
+  hasActivity: boolean,
+): ChartType {
+  if (project.type === 'layer2' || project.type === 'layer3') {
+    if (hasActivity && !hasTvl) {
+      return { type: 'project-activity', slug: project.display.slug }
+    } else {
+      return { type: 'project-detailed-tvl', slug: project.display.slug }
+    }
+  } else {
+    return { type: 'project-tvl', slug: project.display.slug }
   }
 }
 
