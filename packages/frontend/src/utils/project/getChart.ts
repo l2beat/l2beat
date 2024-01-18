@@ -1,4 +1,4 @@
-import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
+import { Bridge, Layer2, Layer3, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   ActivityApiResponse,
   AssetId,
@@ -15,7 +15,7 @@ import { TokenInfo } from '../../scripts/charts/types'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
-  project: Layer2 | Bridge,
+  project: Layer2 | Layer3 | Bridge,
   tvlApiResponse: TvlApiResponse,
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
@@ -23,12 +23,13 @@ export function getChart(
   return {
     settingsId: `project-${project.display.slug}`,
     initialType:
-      project.type === 'layer2'
+      project.type === 'layer2' || project.type === 'layer3'
         ? { type: 'project-detailed-tvl', slug: project.display.slug }
         : { type: 'project-tvl', slug: project.display.slug },
     tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
     tvlBreakdownHref:
-      project.type === 'layer2' && !project.isUpcoming
+      (project.type === 'layer2' || project.type === 'layer3') &&
+      !project.isUpcoming
         ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
         : undefined,
     hasActivity:
@@ -42,7 +43,7 @@ export function getChart(
 export function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse,
-  isLayer2: boolean,
+  isLayer2orLayer3: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
 
@@ -77,7 +78,7 @@ export function getTokens(
             assetType,
             chainId,
             symbol,
-            isLayer2,
+            isLayer2orLayer3,
           ),
           tvl: usdValue,
         }
@@ -93,9 +94,9 @@ function getTokenInfo(
   assetType: AssetType,
   chainId: ChainId,
   symbol: string,
-  isLayer2: boolean,
+  isLayer2orLayer3: boolean,
 ): TokenInfo {
-  if (!isLayer2) {
+  if (!isLayer2orLayer3) {
     return {
       type: 'regular',
       projectId: projectId.toString(),
