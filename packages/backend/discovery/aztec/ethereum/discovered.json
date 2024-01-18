@@ -1,8 +1,8 @@
 {
   "name": "aztec",
   "chain": "ethereum",
-  "blockNumber": 18612421,
-  "configHash": "0xe2a93d58ae1c112d7b8332ec0805a1148e3d5f61c498a0ce0198e92c81db0c82",
+  "blockNumber": 19034126,
+  "configHash": "0xad8491894f3200879e10761d9d6e2249f8daa963f7f1553e8db07498866bbba2",
   "version": 3,
   "contracts": [
     {
@@ -19,7 +19,7 @@
         "reimburseConstant": 678600,
         "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
         "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        "txFeeBalance": ["8318951783789846633", 0, 59000],
+        "txFeeBalance": ["8074067086197883477", 0, 59000],
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "derivedName": "AztecFeeDistributor"
@@ -32,21 +32,21 @@
       },
       "sinceTimestamp": 1614799636,
       "values": {
-        "dataRoot": "0x08d3a48bb6f593c1e706d377e8a500f4246dc9dc63ba1baa067d38dd6463bdfd",
-        "dataSize": 932352,
+        "dataRoot": "0x13c6f18fb0450ca461085a85c2bc2cedaadb5a90e34eac2c3f13f614a89e8ac8",
+        "dataSize": 937472,
         "escapeBlockLowerBound": 4560,
         "escapeBlockUpperBound": 4800,
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
-        "getEscapeHatchStatus": [false, 1739],
+        "getEscapeHatchStatus": [false, 2434],
         "getTotalDeposited": [
-          "35761395413451296404343",
+          "35761624133451296404343",
           "19481078867265097315675826",
           6576737691
         ],
         "getTotalFees": [
-          "310179076007583421000",
+          "310981266007583421000",
           "52304492335015158356924",
           4559522
         ],
@@ -56,12 +56,12 @@
           300
         ],
         "getTotalWithdrawn": [
-          "34334914380720911319526",
+          "34339039860720911319526",
           "19283912609776049374020383",
           6525215174
         ],
-        "nextRollupId": 4306,
-        "nullRoot": "0x071fa1d98b51677700bcba545761f7d93077a840240cf7753656a6b23d3596e7",
+        "nextRollupId": 4326,
+        "nullRoot": "0x09b0bf97679ce36bff9c5a0890db9fe649b43b045c5848a7d7aee28a44852734",
         "numberOfAssets": 4,
         "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
         "paused": false,
@@ -69,14 +69,14 @@
         "rollupNumPubInputs": 14,
         "rollupProviders": [],
         "rollupPubInputLength": 448,
-        "rootRoot": "0x04c33031f0866941253d309431bce438da27a3ec1d15c2060e5178ef299fdc2d",
+        "rootRoot": "0x1acfb5af615ac4e369b784e4d992a095d97182d8fd80ef01140880b83e25fc12",
         "totalDeposited": [
-          "35761395413451296404343",
+          "35761624133451296404343",
           "19481078867265097315675826",
           6576737691
         ],
         "totalFees": [
-          "310179076007583421000",
+          "310981266007583421000",
           "52304492335015158356924",
           4559522
         ],
@@ -86,15 +86,23 @@
           300
         ],
         "totalWithdrawn": [
-          "34334914380720911319526",
+          "34339039860720911319526",
           "19283912609776049374020383",
           6525215174
         ],
         "txNumPubInputs": 12,
         "txPubInputLength": 384,
-        "verifier": "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1"
+        "verifier": "0xc0CFF28c45dA7d36B8cD1e3dCd6451e812CA30d1"
       },
       "derivedName": "RollupProcessor"
+    },
+    {
+      "name": "AlwaysReverting",
+      "address": "0xc0CFF28c45dA7d36B8cD1e3dCd6451e812CA30d1",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1705175267
     },
     {
       "name": "TurboVerifier",
@@ -102,7 +110,8 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1639321684
+      "sinceTimestamp": 1639321684,
+      "derivedName": "TurboVerifier"
     },
     {
       "name": "Aztec Multisig",
@@ -122,7 +131,7 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 270,
+        "nonce": 271,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
