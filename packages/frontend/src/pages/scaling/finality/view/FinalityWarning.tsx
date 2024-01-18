@@ -12,7 +12,10 @@ export function FinalityWarning() {
       longer. In most other cases, however, this does not apply (e.g., when
       transferring funds to an exchange). For more information on how finality
       works for L2 transactions, check{' '}
-      <Link href="https://medium.com/l2beat/tracking-time-to-finality-of-l2-transactions-051d32f5d5ba">
+      <Link
+        href="https://medium.com/l2beat/tracking-time-to-finality-of-l2-transactions-051d32f5d5ba"
+        textClassName="!text-blue-700 group-hover:!text-blue-550"
+      >
         our article
       </Link>
       .
