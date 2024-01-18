@@ -54,6 +54,7 @@ export function TVLBreakdown(props: TVLBreakdownProps) {
           {props.warning && (
             <WarningBar
               className="mt-2"
+              icon={RoundedWarningIcon}
               text={props.warning}
               color={props.warningSeverity === 'warning' ? 'yellow' : 'red'}
             />

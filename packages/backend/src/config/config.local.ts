@@ -149,6 +149,21 @@ export function getLocalConfig(env: Env): Config {
             'https://starknet-mainnet.public.blastapi.io',
           ),
         },
+        scroll: {
+          type: 'rpc',
+          callsPerMinute: 120,
+          url: env.string('ACTIVITY_SCROLL_URL', 'https://rpc.scroll.io'),
+        },
+        mantle: {
+          type: 'rpc',
+          callsPerMinute: 120,
+          url: env.string('ACTIVITY_MANTLE_URL', 'https://rpc.mantle.xyz'),
+        },
+        metis: {
+          type: 'rpc',
+          callsPerMinute: 120,
+          url: env.string('ACTIVITY_METIS_URL', 'https://andromeda.metis.io/'),
+        },
       },
     },
     statusEnabled: env.boolean('STATUS_ENABLED', true),
@@ -168,8 +183,8 @@ export function getLocalConfig(env: Env): Config {
         getChainDiscoveryConfig(env, 'gnosis'),
         getChainDiscoveryConfig(env, 'linea'),
         getChainDiscoveryConfig(env, 'optimism'),
-        getChainDiscoveryConfig(env, 'polygon_pos'),
-        getChainDiscoveryConfig(env, 'polygon_zkevm'),
+        getChainDiscoveryConfig(env, 'polygonpos'),
+        getChainDiscoveryConfig(env, 'polygonzkevm'),
       ],
     },
     diffHistory: diffHistoryEnabled && {

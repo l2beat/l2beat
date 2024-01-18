@@ -57,8 +57,10 @@ export interface Layer2 {
 export interface Layer2Display extends ScalingProjectDisplay {
   /** Technology provider */
   provider?: Layer2Provider
-  /** Explanation on how liveness data is gathered for given project */
+  /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
+  /** Warning tooltip content for finality tab for given project */
+  finalityWarning?: string
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
