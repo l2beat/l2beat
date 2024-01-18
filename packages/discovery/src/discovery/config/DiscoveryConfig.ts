@@ -27,6 +27,10 @@ export class DiscoveryConfig {
     return this.config.names ?? {}
   }
 
+  get chain(): string {
+    return ChainId.getName(this.config.chain)
+  }
+
   get chainId(): ChainId {
     return this.config.chain
   }

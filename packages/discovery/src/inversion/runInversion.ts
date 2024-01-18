@@ -28,8 +28,10 @@ export async function runInversion(
   project: string,
   configReader: ConfigReader,
   useMermaidMarkup: boolean,
-  chain: ChainId,
+  chainId: ChainId,
 ): Promise<void> {
+  const chain = ChainId.getName(chainId)
+
   const discovery = await configReader.readDiscovery(project, chain)
   const config = await configReader.readConfig(project, chain)
   const addresses = calculateInversion(discovery, config)
@@ -49,11 +51,13 @@ export async function runInversion(
       </body>
     </html>`
 
-    const root = `discovery/${project}/${chain.toString()}`
-    const htmlFilePath = `${root}/mermaid/index.html`
-    await mkdir(`${root}/mermaid`, { recursive: true })
+    const root = `discovery/${project}/${chain}`
+    await mkdir(`${root}/.mermaid`, { recursive: true })
+
+    const htmlFilePath = `${root}/.mermaid/index.html`
     await writeFile(htmlFilePath, mermaidPage)
-    await writeFile(`${root}/mermaid/graph`, mermaid)
+    await writeFile(`${root}/.mermaid/graph`, mermaid)
+
     execSync(`open ${htmlFilePath}`)
   } else {
     print(addresses)

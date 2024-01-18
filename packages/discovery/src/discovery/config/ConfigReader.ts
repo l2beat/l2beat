@@ -10,8 +10,13 @@ import { DiscoveryConfig } from './DiscoveryConfig'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
-  async readConfig(name: string, chain: ChainId): Promise<DiscoveryConfig> {
-    const chainName = ChainId.getName(chain).toString()
+  async readConfig(
+    name: string,
+    chain: string | ChainId,
+  ): Promise<DiscoveryConfig> {
+    const chainName =
+      typeof chain === 'string' ? chain : ChainId.getName(chain).toString()
+
     assert(
       fileExistsCaseSensitive(`discovery/${name}`),
       'Project not found, check if case matches',
@@ -35,13 +40,18 @@ export class ConfigReader {
     const rawConfig = RawDiscoveryConfig.parse(parsed)
     const config = new DiscoveryConfig(rawConfig)
 
-    assert(config.chainId === chain, 'Chain ID mismatch in config.jsonc')
+    assert(config.chain === chainName, 'Chain ID mismatch in config.jsonc')
 
     return config
   }
 
-  async readDiscovery(name: string, chain: ChainId): Promise<DiscoveryOutput> {
-    const chainName = ChainId.getName(chain).toString()
+  async readDiscovery(
+    name: string,
+    chain: string | ChainId,
+  ): Promise<DiscoveryOutput> {
+    const chainName =
+      typeof chain === 'string' ? chain : ChainId.getName(chain).toString()
+
     assert(
       fileExistsCaseSensitive(`discovery/${name}`),
       'Project not found, check if case matches',
@@ -61,14 +71,30 @@ export class ConfigReader {
     const discovery = parsed as DiscoveryOutput
 
     assert(
-      ChainId.fromName(discovery.chain) === chain,
+      discovery.chain === chainName,
       'Chain ID mismatch in discovered.json',
     )
 
     return discovery
   }
 
-  async readAllConfigsForChain(chain: ChainId): Promise<DiscoveryConfig[]> {
+  readAllChains(): string[] {
+    const folders = readdirSync('discovery', { withFileTypes: true }).filter(
+      (x) => x.isDirectory() && !x.name.startsWith('_'),
+    )
+    const chains = new Set<string>()
+    for (const folder of folders) {
+      readdirSync(`discovery/${folder.name}`, { withFileTypes: true })
+        .filter((x) => x.isDirectory())
+        .map((x) => x.name)
+        .forEach((x) => chains.add(x))
+    }
+    return [...chains]
+  }
+
+  async readAllConfigsForChain(
+    chain: string | ChainId,
+  ): Promise<DiscoveryConfig[]> {
     const result: DiscoveryConfig[] = []
     const projects = this.readAllProjectsForChain(chain)
 
@@ -80,7 +106,10 @@ export class ConfigReader {
     return result
   }
 
-  readAllProjectsForChain(chain: ChainId): string[] {
+  readAllProjectsForChain(chain: string | ChainId): string[] {
+    const chainName =
+      typeof chain === 'string' ? chain : ChainId.getName(chain).toString()
+
     const folders = readdirSync('discovery', { withFileTypes: true }).filter(
       (x) => x.isDirectory(),
     )
@@ -94,16 +123,13 @@ export class ConfigReader {
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
 
-      if (!contents.includes(ChainId.getName(chain))) {
+      if (!contents.includes(chainName)) {
         continue
       }
 
-      const chainFiles = readdirSync(
-        `discovery/${folder.name}/${ChainId.getName(chain)}`,
-        {
-          withFileTypes: true,
-        },
-      )
+      const chainFiles = readdirSync(`discovery/${folder.name}/${chainName}`, {
+        withFileTypes: true,
+      })
         .filter((x) => x.isFile())
         .map((x) => x.name)
 

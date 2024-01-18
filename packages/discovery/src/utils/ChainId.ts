@@ -29,10 +29,6 @@ ChainId.getName = function (chainId: ChainId): string {
   return chain[1]
 }
 
-ChainId.getAll = function (): ChainId[] {
-  return Object.keys(CHAIN_IDS).map((c) => ChainId(+c))
-}
-
 type ChainIds = typeof CHAIN_IDS
 
 /**

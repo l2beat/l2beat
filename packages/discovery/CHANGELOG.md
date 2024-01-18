@@ -1,5 +1,13 @@
 # @l2beat/discovery
 
+## 0.34.0
+
+### Minor Changes
+
+- Add chain name support to ConfigReader.
+- Add readAllChains method.
+- Mermaid output is now saved to {project}/{chain}/.mermaid
+
 ## 0.33.0
 
 ### Minor Changes
