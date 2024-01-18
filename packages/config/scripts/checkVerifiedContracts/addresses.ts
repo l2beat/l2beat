@@ -104,12 +104,8 @@ function gatherAddressesFromUpgradeability(
     case 'gnosis safe':
     case 'gnosis safe zodiac module':
     case 'EIP2535 diamond proxy':
-      // Ignoring types because no (admin/user)implementation included in them
-      break
     case 'Axelar proxy':
-      result.push(...item.admins)
-      result.push(...item.owners)
-      result.push(...item.operators)
+      // Ignoring types because no (admin/user)implementation included in them
       break
     default:
       // This code triggers a typescript compile-time error if not all cases have been covered
