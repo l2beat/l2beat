@@ -29,25 +29,6 @@ ChainId.getName = function (chainId: ChainId): string {
   return chain[1].name
 }
 
-ChainId.getExplorer = function (chainId: ChainId): string {
-  const chain = Object.entries(CHAIN_IDS).find(
-    ([k]) => k === chainId.toString(),
-  )
-  if (!chain) {
-    throw new TypeError(
-      'Programmer error: Invalid chainId: ' + chainId.toString(),
-    )
-  }
-  if (!chain[1].explorer) {
-    throw new TypeError(
-      'Programmer error: No explorer provided for chainId: ' +
-        chainId.toString(),
-    )
-  }
-
-  return chain[1].explorer
-}
-
 ChainId.getAll = function (): ChainId[] {
   return Object.keys(CHAIN_IDS).map((c) => ChainId(+c))
 }

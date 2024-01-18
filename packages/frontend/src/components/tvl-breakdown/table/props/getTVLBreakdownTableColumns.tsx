@@ -28,7 +28,7 @@ export function getNativelyMintedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={ChainId.getExplorer(token.chainId)}
+            explorer={token.explorerUrl}
           />
         ),
     },
@@ -72,7 +72,7 @@ export function getExternallyBridgedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={ChainId.getExplorer(token.chainId)}
+            explorer={token.explorerUrl}
           />
         ),
     },
@@ -124,7 +124,7 @@ export function getCanonicallyBridgedColumns() {
         <EscrowsCell
           assetId={token.assetId.toString()}
           escrows={token.escrows}
-          explorer={ChainId.getExplorer(token.chainId)}
+          explorer={token.explorerUrl}
         />
       ),
     },
