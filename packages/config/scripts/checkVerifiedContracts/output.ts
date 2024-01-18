@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { existsSync, mkdirSync } from 'fs'
 import { readFile, writeFile } from 'fs/promises'
+import path from 'path'
 import z from 'zod'
 
 export const FileStructure = z.record(z.boolean())
@@ -19,7 +20,7 @@ export async function loadPreviouslyVerifiedContracts(
 ): Promise<Set<EthereumAddress>> {
   const filePath = getOutputPath(devId)
   if (!existsSync(filePath)) {
-    mkdirSync('src/verification/' + devId)
+    mkdirSync(path.dirname(filePath))
     return new Set()
   }
   const verified = await loadVerifiedJson(filePath)
