@@ -14,8 +14,8 @@ export const multicallConfig = {
   celo: getMulticall3Config(13112599),
   gnosis: getMulticall3Config(21022491),
   linea: getMulticall3Config(42),
-  polygon_pos: getMulticall3Config(25770160),
-  polygon_zkevm: getMulticall3Config(57746),
+  polygonpos: getMulticall3Config(25770160),
+  polygonzkevm: getMulticall3Config(57746),
 }
 
 export function getMulticall3Config(

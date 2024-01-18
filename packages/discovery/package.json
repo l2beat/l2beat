@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/discovery",
   "description": "L2Beat discovery - engine & tooling utilized for keeping an eye on L2s",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {

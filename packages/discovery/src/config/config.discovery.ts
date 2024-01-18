@@ -88,14 +88,12 @@ export function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
     case ChainId.POLYGONPOS:
       return {
         chainId: ChainId.POLYGONPOS,
-        rpcUrl:
-          env.optionalString('DISCOVERY_POLYGON_POS_RPC_URL') ??
-          env.string('DISCOVERY_POLYGONPOS_RPC_URL'),
+        rpcUrl: env.string('DISCOVERY_POLYGONPOS_RPC_URL'),
         rpcGetLogsMaxRange: env.optionalInteger(
-          'DISCOVERY_POLYGON_POS_RPC_GETLOGS_MAX_RANGE',
+          'DISCOVERY_POLYGONPOS_RPC_GETLOGS_MAX_RANGE',
         ),
-        multicall: multicallConfig.polygon_pos,
-        etherscanApiKey: env.string('DISCOVERY_POLYGON_POS_ETHERSCAN_API_KEY'),
+        multicall: multicallConfig.polygonpos,
+        etherscanApiKey: env.string('DISCOVERY_POLYGONPOS_ETHERSCAN_API_KEY'),
         etherscanUrl: 'https://api.polygonscan.com/api',
       }
     case ChainId.BSC:
@@ -159,16 +157,12 @@ export function getChainConfig(chainId: ChainId): DiscoveryChainConfig {
     case ChainId.POLYGONZKEVM:
       return {
         chainId: ChainId.POLYGONZKEVM,
-        rpcUrl:
-          env.optionalString('DISCOVERY_POLYGON_ZKEVM_RPC_URL') ??
-          env.string('DISCOVERY_POLYGONZKEVM_RPC_URL'),
+        rpcUrl: env.string('DISCOVERY_POLYGONZKEVM_RPC_URL'),
         rpcGetLogsMaxRange: env.optionalInteger(
-          'DISCOVERY_POLYGON_ZKEVM_RPC_GETLOGS_MAX_RANGE',
+          'DISCOVERY_POLYGONZKEVM_RPC_GETLOGS_MAX_RANGE',
         ),
-        multicall: multicallConfig.polygon_zkevm,
-        etherscanApiKey: env.string(
-          'DISCOVERY_POLYGON_ZKEVM_ETHERSCAN_API_KEY',
-        ),
+        multicall: multicallConfig.polygonzkevm,
+        etherscanApiKey: env.string('DISCOVERY_POLYGONZKEVM_ETHERSCAN_API_KEY'),
         etherscanUrl: 'https://api-zkevm.polygonscan.com/api',
       }
     case ChainId.GNOSIS:

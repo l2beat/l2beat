@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.32.0
+
+### Minor Changes
+
+- Update environment variables for polygonpos and polygonzkevm
+
 ## 0.31.0
 
 ### Minor Changes
