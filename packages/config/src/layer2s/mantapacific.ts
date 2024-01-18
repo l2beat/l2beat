@@ -351,6 +351,12 @@ export const mantapacific: Layer2 = {
       date: '2023-09-12T00:00:00Z',
       description: 'Manta Pacific is live on mainnet.',
     },
+    {
+      name: 'Manta Pacific New Paradigm',
+      link: 'https://mantanetwork.medium.com/new-paradigm-the-real-l2-that-helps-you-earn-more-yield-than-a-multisig-2f445ab4dc47',
+      date: '2023-12-14T00:00:00Z',
+      description: 'Incentivized program offering native yield for ETH and stablecoins.',
+    },
   ],
   knowledgeNuggets: [
     {
