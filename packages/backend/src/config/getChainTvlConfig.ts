@@ -2,6 +2,7 @@ import { Env } from '@l2beat/backend-tools'
 import { chainsByDevId } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { toMulticallConfigEntry } from '../peripherals/ethereum/multicall/MulticallConfig'
 import { ChainTvlConfig } from './Config'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
@@ -10,7 +11,7 @@ export function getChainTvlConfig(
   env: Env,
   devId: string,
   options?: {
-    overrideMinTimestamp?: UnixTime
+    minTimestamp?: UnixTime
   },
 ): ChainTvlConfig | false {
   const chain = chainsByDevId.get(devId)
@@ -24,6 +25,10 @@ export function getChainTvlConfig(
 
   if (!chain.explorerApi) {
     throw new Error('Missing explorerApi for chain: ' + devId)
+  }
+
+  if (!chain.multicallContracts || chain.multicallContracts.length === 0) {
+    throw new Error('Missing multicallContracts for chain: ' + devId)
   }
 
   const ENV_NAME = devId.toUpperCase()
@@ -50,7 +55,7 @@ export function getChainTvlConfig(
             type: 'RoutescanLike',
             routescanApiUrl: chain.explorerApi.url,
           },
-    minBlockTimestamp:
-      options?.overrideMinTimestamp ?? chain.minTimestampForTvl,
+    minBlockTimestamp: options?.minTimestamp ?? chain.minTimestampForTvl,
+    multicallConfig: chain.multicallContracts.map(toMulticallConfigEntry),
   }
 }
