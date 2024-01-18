@@ -62,7 +62,7 @@ export const zksynclite: Layer2 = {
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
-      documentation: ['https://docs.zksync.io/dev/'],
+      documentation: ['https://docs.lite.zksync.io/dev/'],
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
@@ -297,7 +297,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
         ],
       },
@@ -306,7 +306,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
@@ -323,7 +323,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'README.md - zkSync Exit Tool',
