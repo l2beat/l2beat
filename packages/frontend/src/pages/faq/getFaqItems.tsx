@@ -24,7 +24,7 @@ export function getFaqItems(): FaqItem[] {
     },
     {
       question:
-        'Why do you need L2BEAT if you have DeFi Pulse, DefiLlama, etc.?',
+        'Why do you need L2BEAT if you have growthepie, DefiLlama, etc.?',
       answer:
         'While the above-mentioned sites are great, they focus primarily at tracking TVL (Total Value Locked) in DeFi projects on various chain. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just TVL but various metrics related to the liveness and security of these projects.',
     },
