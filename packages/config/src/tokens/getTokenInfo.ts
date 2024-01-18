@@ -1,9 +1,4 @@
-import {
-  CoingeckoClient,
-  CoingeckoQueryService,
-  UniversalEtherscanClient,
-  UniversalRoutescanClient,
-} from '@l2beat/shared'
+import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -18,7 +13,6 @@ import { providers, utils } from 'ethers'
 
 export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
-  etherscanClient: UniversalEtherscanClient | UniversalRoutescanClient,
   coingeckoClient: CoingeckoClient,
   address: EthereumAddress | undefined,
   chainId: ChainId,
@@ -37,13 +31,7 @@ export async function getTokenInfo(
     getSymbol(provider, address),
     getDecimals(provider, address),
     coingeckoClient.getImageUrl(coingeckoId),
-    getSinceTimestamp(
-      provider,
-      etherscanClient,
-      coingeckoClient,
-      address,
-      coingeckoId,
-    ),
+    getSinceTimestamp(provider, coingeckoClient, address, coingeckoId),
   ])
 
   const tokenInfo: Token = {
@@ -142,14 +130,12 @@ async function getCoingeckoId(
 
 async function getSinceTimestamp(
   provider: providers.JsonRpcProvider,
-  etherscanClient: UniversalEtherscanClient | UniversalRoutescanClient,
   coingeckoClient: CoingeckoClient,
   address: EthereumAddress,
   coingeckoId: CoingeckoId,
 ) {
   const contractCreationTimestamp = await getContractCreationTimestamp(
     provider,
-    etherscanClient,
     address,
   )
 
@@ -164,38 +150,70 @@ async function getSinceTimestamp(
     coingeckoPriceHistoryData.prices.length >= 1,
     `No price history found for token: ${coingeckoId.toString()}`,
   )
-  const firstCoingeckoPriceTimestamp =
-    coingeckoPriceHistoryData.prices[0].date.getTime() / 1000
-
+  const firstCoingeckoPriceTimestamp = new UnixTime(
+    coingeckoPriceHistoryData.prices[0].date.getTime() / 1000,
+  )
   //We call it to check if there is a gap in price history
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
   await coingeckoQueryService.getUsdPriceHistory(
     coingeckoId,
-    new UnixTime(firstCoingeckoPriceTimestamp),
+    firstCoingeckoPriceTimestamp,
     UnixTime.now(),
   )
   // If code reaches here, then the price data is okay
 
   const timestamp = Math.max(
-    contractCreationTimestamp,
-    firstCoingeckoPriceTimestamp,
+    contractCreationTimestamp.toNumber(),
+    firstCoingeckoPriceTimestamp.toNumber(),
   )
   return new UnixTime(timestamp)
 }
 
 async function getContractCreationTimestamp(
   provider: providers.JsonRpcProvider,
-  etherscanClient: UniversalEtherscanClient | UniversalRoutescanClient,
   address: EthereumAddress,
+): Promise<UnixTime> {
+  const minBlockNumber = 0
+  const maxBlockNumber = await provider.getBlockNumber()
+
+  const creationBlock = bisectToFindCreationBlock(
+    provider,
+    address,
+    minBlockNumber,
+    maxBlockNumber,
+  )
+
+  const block = await provider.getBlock(creationBlock)
+  return new UnixTime(block.timestamp)
+}
+
+async function bisectToFindCreationBlock(
+  provider: providers.JsonRpcProvider,
+  address: EthereumAddress,
+  minBlockNumber: number,
+  maxBlockNumber: number,
 ): Promise<number> {
-  const txHash = await etherscanClient.getContractDeploymentTx(address)
-
-  const tx = await provider.getTransaction(txHash.toString())
-
-  if (!tx.blockNumber) {
-    throw new Error('Could not find block number for token')
+  if (minBlockNumber === maxBlockNumber) {
+    return minBlockNumber
   }
 
-  const block = await provider.getBlock(tx.blockNumber)
-  return block.timestamp
+  const midBlockNumber = Math.floor((minBlockNumber + maxBlockNumber) / 2)
+
+  const code = await provider.getCode(address.toString(), midBlockNumber)
+
+  if (code !== '0x') {
+    return bisectToFindCreationBlock(
+      provider,
+      address,
+      minBlockNumber,
+      midBlockNumber,
+    )
+  } else {
+    return bisectToFindCreationBlock(
+      provider,
+      address,
+      midBlockNumber + 1,
+      maxBlockNumber,
+    )
+  }
 }

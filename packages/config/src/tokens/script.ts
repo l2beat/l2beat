@@ -1,25 +1,12 @@
 import { getEnv } from '@l2beat/backend-tools'
-import {
-  CoingeckoClient,
-  HttpClient,
-  UniversalEtherscanClient,
-  UniversalRoutescanClient,
-} from '@l2beat/shared'
-import {
-  assert,
-  ChainId,
-  EthereumAddress,
-  stringAs,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import { ChainId, EthereumAddress, stringAs, Token } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
 
-import { chains } from '../chains'
 import { getTokenInfo } from './getTokenInfo'
 
 const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
@@ -108,49 +95,6 @@ async function main() {
       }
       const provider = new providers.JsonRpcProvider(rpcUrl)
 
-      const chain = chains.find((c) => c.devId === devId)
-      assert(chain, 'Chain not found')
-      if (!chain.explorerApi) {
-        throw new Error('Binary search for block number not supported yet')
-      }
-
-      let etherscanClient:
-        | UniversalEtherscanClient
-        | UniversalRoutescanClient
-        | undefined
-
-      if (chain.explorerApi.type === 'etherscan') {
-        const etherscanApiKey = env.optionalString(
-          `${devId.toUpperCase()}_ETHERSCAN_API_KEY`,
-        )
-        if (!etherscanApiKey) {
-          console.log(
-            chalk.red('Missing environmental variable ') +
-              `${devId.toUpperCase()}_ETHERSCAN_API_KEY`,
-          )
-          process.exit(1)
-        }
-
-        etherscanClient = new UniversalEtherscanClient(
-          http,
-          chain.explorerApi.url,
-          etherscanApiKey,
-          chain.minTimestampForTvl ?? new UnixTime(0),
-          ChainId.fromName(devId),
-        )
-      }
-
-      if (chain.explorerApi.type === 'routescan') {
-        etherscanClient = new UniversalRoutescanClient(
-          http,
-          chain.explorerApi.url,
-          chain.minTimestampForTvl ?? new UnixTime(0),
-          ChainId.fromName(devId),
-        )
-      }
-
-      assert(etherscanClient, 'Etherscan client not found')
-
       console.log(
         chalk.yellow('Fetching... ') +
           `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
@@ -158,7 +102,6 @@ async function main() {
 
       const token: Token = await getTokenInfo(
         provider,
-        etherscanClient,
         coingeckoClient,
         entry.address,
         ChainId.ETHEREUM,
