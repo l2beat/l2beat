@@ -9,7 +9,11 @@ const delegatedProjects = await getCollection('delegatedProjects')
     delegatedProjects.map((project) => (
       <div class="flex items-center justify-between bg-zinc-900 rounded-lg p-4">
         <div class="flex items-center gap-2 ">
-          <img src={`/projects/${project.id}.png`} class="size-7" />
+          <img
+            src={`/projects/${project.id}.png`}
+            alt={`${project.data.projectName} logo`}
+            class="size-7"
+          />
           <span>{project.data.projectName}</span>
         </div>
         <div>
