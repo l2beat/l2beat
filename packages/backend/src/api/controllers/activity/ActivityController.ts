@@ -63,16 +63,10 @@ export class ActivityController {
   }
 
   async getAggregatedActivity(
-    filteredProjectsSlugs: string[] = [],
+    projects: ProjectId[],
   ): Promise<ActivityApiCharts> {
-    const projectIdsFilter = [...layer2s, ...bridges]
-      .filter((project) => filteredProjectsSlugs.includes(project.display.slug))
-      .map((project) => project.id)
-
     const [aggregatedDailyCounts, ethereumCounts] = await Promise.all([
-      await this.viewRepository.getProjectsAggregatedDailyCount(
-        projectIdsFilter,
-      ),
+      await this.viewRepository.getProjectsAggregatedDailyCount(projects),
       await this.viewRepository.getDailyCountsPerProject(ProjectId.ETHEREUM),
     ])
     const now = this.clock.getLastHour()
