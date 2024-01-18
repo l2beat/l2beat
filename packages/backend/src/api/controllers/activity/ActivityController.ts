@@ -1,4 +1,3 @@
-import { bridges, layer2s } from '@l2beat/config'
 import {
   ActivityApiCharts,
   ActivityApiResponse,
