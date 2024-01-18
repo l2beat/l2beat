@@ -61,7 +61,6 @@
     "@storybook/react": "7.0.9",
     "@storybook/react-vite": "7.0.9",
     "@storybook/testing-library": "^0.2.2",
-    "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^8.2.5",
     "chromatic": "^7.4.0",
