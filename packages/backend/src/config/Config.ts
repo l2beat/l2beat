@@ -5,6 +5,7 @@ import { Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model'
+import { MulticallConfigEntry } from '../peripherals/ethereum/multicall/types'
 
 export interface Config {
   readonly name: string
@@ -95,6 +96,7 @@ export interface ChainTvlConfig {
   readonly blockNumberProviderConfig:
     | EtherscanChainConfig
     | RoutescanChainConfig
+  readonly multicallConfig: MulticallConfigEntry[]
 }
 
 export interface HealthConfig {

@@ -11,6 +11,7 @@ import {
 
 import { TechnologyContract } from '../../components/project/ContractEntry'
 import { PermissionsSectionProps } from '../../components/project/PermissionsSection'
+import { getExplorerUrl } from '../getExplorerUrl'
 
 export function getPermissionsSection(
   project: Layer2 | Layer3 | Bridge,
@@ -43,7 +44,7 @@ export function getPermissionsSection(
 function toTechnologyContract(
   permission: ScalingProjectPermission,
 ): TechnologyContract {
-  const etherscanUrl = permission.etherscanUrl ?? 'https://etherscan.io'
+  const etherscanUrl = getExplorerUrl(permission.devId)
   const links = permission.accounts.slice(1).map((account) => {
     return {
       name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
@@ -62,9 +63,9 @@ function toTechnologyContract(
   return {
     name: permission.name,
     addresses,
+    etherscanUrl,
     description: permission.description,
     links,
     references: permission.references,
-    etherscanUrl: permission.etherscanUrl,
   }
 }

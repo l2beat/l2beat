@@ -1,10 +1,10 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chainsByDevId, layer2s, tokenList } from '@l2beat/config'
-import { getChainConfig } from '@l2beat/discovery'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
+import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -163,75 +163,19 @@ export function getProductionConfig(env: Env): Config {
         callsPerMinute: 3000,
       },
       chains: [
-        {
-          ...getChainConfig(ChainId.ETHEREUM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.ARBITRUM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_ARBITRUM_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.AVALANCHE),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_AVALANCHE_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.BSC),
-          reorgSafeDepth: env.optionalInteger('DISCOVERY_BSC_REORG_SAFE_DEPTH'),
-        },
-        {
-          ...getChainConfig(ChainId.CELO),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_CELO_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.GNOSIS),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_GNOSIS_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.LINEA),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_LINEA_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.OPTIMISM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_OPTIMISM_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.POLYGON_POS),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_POLYGON_POS_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.POLYGON_ZKEVM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
-          ),
-        },
+        getChainDiscoveryConfig(env, 'ethereum'),
+        getChainDiscoveryConfig(env, 'arbitrum'),
+        getChainDiscoveryConfig(env, 'bsc'),
+        getChainDiscoveryConfig(env, 'celo'),
+        getChainDiscoveryConfig(env, 'gnosis'),
+        getChainDiscoveryConfig(env, 'linea'),
+        getChainDiscoveryConfig(env, 'optimism'),
+        getChainDiscoveryConfig(env, 'polygon_pos'),
+        getChainDiscoveryConfig(env, 'polygon_zkevm'),
       ],
     },
     diffHistory: diffHistoryEnabled && {
-      chains: [
-        {
-          ...getChainConfig(ChainId.ETHEREUM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
-          ),
-        },
-      ],
+      chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
   }
 }

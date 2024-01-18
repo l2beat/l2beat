@@ -94,5 +94,13 @@ export const lyra: Layer2 = opStack({
     // ~ Timestamp of block number 0 on Lyra
     // https://explorer.lyra.finance/block/0
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
+    multicallContracts: [
+      {
+        sinceBlock: 1935198,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
   },
 })

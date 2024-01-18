@@ -9,7 +9,6 @@ export function getTvlBreakdownHeader(
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
 ): TvlBreakdownHeaderProps {
   return {
-    icon: `/icons/${project.display.slug}.png`,
     slug: project.display.slug,
     title: project.display.name,
     tvlBreakdownDate: formatTimestampToDateWithHour(

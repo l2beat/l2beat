@@ -1,4 +1,11 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+
+export interface MulticallContractConfig {
+  address: EthereumAddress
+  sinceBlock: number
+  batchSize: number
+  version: '1' | '2' | '3' | 'optimism'
+}
 
 export interface ChainConfig {
   /**
@@ -11,6 +18,9 @@ export interface ChainConfig {
   explorerApi?: {
     url: string
     type: 'etherscan' | 'routescan'
+    missingFeatures?: {
+      getContractCreation?: boolean
+    }
   }
   /**
    * Setting this value for a chain does not always equal to grabbing the
@@ -18,4 +28,5 @@ export interface ChainConfig {
    * January 2021 but the block 1 on November 2021.
    */
   minTimestampForTvl?: UnixTime
+  multicallContracts?: MulticallContractConfig[]
 }

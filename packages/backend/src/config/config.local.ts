@@ -1,10 +1,10 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { getChainConfig } from '@l2beat/discovery'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
+import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -63,27 +63,13 @@ export function getLocalConfig(env: Env): Config {
       enabled: tvlEnabled,
       errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
-      ethereum: getChainTvlConfig(env, 'ethereum', {
-        overrideMinTimestamp: minTimestamp,
-      }),
-      arbitrum: getChainTvlConfig(env, 'arbitrum', {
-        overrideMinTimestamp: minTimestamp,
-      }),
-      optimism: getChainTvlConfig(env, 'optimism', {
-        overrideMinTimestamp: minTimestamp,
-      }),
-      base: getChainTvlConfig(env, 'base', {
-        overrideMinTimestamp: minTimestamp,
-      }),
-      lyra: getChainTvlConfig(env, 'lyra', {
-        overrideMinTimestamp: minTimestamp,
-      }),
-      linea: getChainTvlConfig(env, 'linea', {
-        overrideMinTimestamp: minTimestamp,
-      }),
-      mantapacific: getChainTvlConfig(env, 'mantapacific', {
-        overrideMinTimestamp: minTimestamp,
-      }),
+      ethereum: getChainTvlConfig(env, 'ethereum', { minTimestamp }),
+      arbitrum: getChainTvlConfig(env, 'arbitrum', { minTimestamp }),
+      optimism: getChainTvlConfig(env, 'optimism', { minTimestamp }),
+      base: getChainTvlConfig(env, 'base', { minTimestamp }),
+      lyra: getChainTvlConfig(env, 'lyra', { minTimestamp }),
+      linea: getChainTvlConfig(env, 'linea', { minTimestamp }),
+      mantapacific: getChainTvlConfig(env, 'mantapacific', { minTimestamp }),
     },
     liveness: livenessEnabled && {
       bigQuery: {
@@ -163,6 +149,21 @@ export function getLocalConfig(env: Env): Config {
             'https://starknet-mainnet.public.blastapi.io',
           ),
         },
+        scroll: {
+          type: 'rpc',
+          callsPerMinute: 120,
+          url: env.string('ACTIVITY_SCROLL_URL', 'https://rpc.scroll.io'),
+        },
+        mantle: {
+          type: 'rpc',
+          callsPerMinute: 120,
+          url: env.string('ACTIVITY_MANTLE_URL', 'https://rpc.mantle.xyz'),
+        },
+        metis: {
+          type: 'rpc',
+          callsPerMinute: 120,
+          url: env.string('ACTIVITY_METIS_URL', 'https://andromeda.metis.io/'),
+        },
       },
     },
     statusEnabled: env.boolean('STATUS_ENABLED', true),
@@ -175,75 +176,19 @@ export function getLocalConfig(env: Env): Config {
         callsPerMinute: 3000,
       },
       chains: [
-        {
-          ...getChainConfig(ChainId.ETHEREUM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.ARBITRUM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_ARBITRUM_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.AVALANCHE),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_AVALANCHE_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.BSC),
-          reorgSafeDepth: env.optionalInteger('DISCOVERY_BSC_REORG_SAFE_DEPTH'),
-        },
-        {
-          ...getChainConfig(ChainId.CELO),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_CELO_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.GNOSIS),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_GNOSIS_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.LINEA),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_LINEA_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.OPTIMISM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_OPTIMISM_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.POLYGON_POS),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_POLYGON_POS_REORG_SAFE_DEPTH',
-          ),
-        },
-        {
-          ...getChainConfig(ChainId.POLYGON_ZKEVM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_POLYGON_ZKEVM_REORG_SAFE_DEPTH',
-          ),
-        },
+        getChainDiscoveryConfig(env, 'ethereum'),
+        getChainDiscoveryConfig(env, 'arbitrum'),
+        getChainDiscoveryConfig(env, 'bsc'),
+        getChainDiscoveryConfig(env, 'celo'),
+        getChainDiscoveryConfig(env, 'gnosis'),
+        getChainDiscoveryConfig(env, 'linea'),
+        getChainDiscoveryConfig(env, 'optimism'),
+        getChainDiscoveryConfig(env, 'polygon_pos'),
+        getChainDiscoveryConfig(env, 'polygon_zkevm'),
       ],
     },
     diffHistory: diffHistoryEnabled && {
-      chains: [
-        {
-          ...getChainConfig(ChainId.ETHEREUM),
-          reorgSafeDepth: env.optionalInteger(
-            'DISCOVERY_ETHEREUM_REORG_SAFE_DEPTH',
-          ),
-        },
-      ],
+      chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
   }
 }

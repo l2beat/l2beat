@@ -27,7 +27,8 @@ export class MulticallClient {
   }
 
   async multicall(requests: MulticallRequest[], blockNumber: number) {
-    const config = this.config.find((x) => blockNumber >= x.sinceBlock)
+    // We use strictly greater than because contracts are deployed during the block
+    const config = this.config.find((x) => blockNumber > x.sinceBlock)
     try {
       if (!config || requests.length === 1) {
         return this.executeIndividual(requests, blockNumber)

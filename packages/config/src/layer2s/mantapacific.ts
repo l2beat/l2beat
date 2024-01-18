@@ -104,6 +104,14 @@ export const mantapacific: Layer2 = {
     // ~ Timestamp of block number 0 on MantaPacific
     // https://pacific-explorer.manta.network/block/0
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
+    multicallContracts: [
+      {
+        sinceBlock: 54816,
+        batchSize: 150,
+        address: EthereumAddress('0x9731502B98F65BBb573D0106ECd9E4097dbcCD30'),
+        version: '2',
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,

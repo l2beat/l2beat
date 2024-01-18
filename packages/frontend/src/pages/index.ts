@@ -11,6 +11,7 @@ import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
+import { getDiffHistoryPages } from './scaling/diff-history'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
@@ -27,6 +28,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     verificationStatus,
     tvlBreakdownApiResponse,
     livenessApiResponse,
+    diffHistory,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -71,6 +73,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         tvlApiResponse,
       }),
     )
+  }
+
+  if (config.features.diffHistory && diffHistory) {
+    pages.push(...getDiffHistoryPages(config, diffHistory))
   }
 
   outputPages(pages)

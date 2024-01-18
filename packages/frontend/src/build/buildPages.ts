@@ -1,6 +1,7 @@
 import Bugsnag from '@bugsnag/js'
 import {
   ActivityApiResponse,
+  DiffHistoryApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -9,6 +10,7 @@ import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
+import { fetchDiffHistory } from './api/fetchDiffHistory'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
@@ -74,6 +76,13 @@ async function main() {
       livenessApiResponse = await fetchLivenessApi(config.backend, http)
       console.timeEnd('[LIVENESS]')
     }
+
+    let diffHistory: DiffHistoryApiResponse | undefined = undefined
+    if (config.features.diffHistory) {
+      console.time('[DIFF HISTORY]')
+      diffHistory = await fetchDiffHistory(config.backend, http)
+      console.timeEnd('[DIFF HISTORY]')
+    }
     console.log('\n')
 
     createApi(config, tvlApiResponse, activityApiResponse)
@@ -88,6 +97,7 @@ async function main() {
       manuallyVerifiedContracts,
       tvlBreakdownApiResponse,
       livenessApiResponse,
+      diffHistory,
     }
 
     await renderPages(config, pagesData)
