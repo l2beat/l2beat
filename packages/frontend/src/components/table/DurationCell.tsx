@@ -11,19 +11,19 @@ export function DurationCell(props: { durationInSeconds: number }) {
   const duration =
     days > 0 ? (
       <span className="text-orange-600 dark:text-orange-500">
-        {days} {pluralize(days, 'day')}
+        {days} {pluralize(days, 'day') + ' + L1 Finality'}
       </span>
     ) : hours > 0 ? (
       <span className="text-yellow-700 dark:text-yellow-100">
-        {hours} {pluralize(hours, 'hour')}
+        {hours} {pluralize(hours, 'hour') + ' + L1 Finality'}
       </span>
     ) : minutes > 0 ? (
       <span>
-        {minutes} {pluralize(minutes, 'minute')}
+        {minutes} {pluralize(minutes, 'minute') + ' + L1 Finality'}
       </span>
     ) : (
       <span className="text-green-300 dark:text-green-450">
-        {seconds} {pluralize(seconds, 'second')}
+        {seconds} {pluralize(seconds, 'second') + ' + L1 Finality'}
       </span>
     )
 
