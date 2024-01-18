@@ -41,8 +41,8 @@ describe(CoingeckoQueryService.name, () => {
       expect(coingeckoClient.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
         CoingeckoId('weth'),
         'usd',
-        UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
-        UnixTime.fromDate(new Date('2021-02-01')).add(12, 'hours'),
+        UnixTime.fromDate(new Date('2021-01-01')).add(-1, 'days'),
+        UnixTime.fromDate(new Date('2021-02-01')).add(1, 'days'),
         undefined,
       )
     })

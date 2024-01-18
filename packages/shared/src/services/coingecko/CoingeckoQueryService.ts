@@ -181,7 +181,7 @@ function adjust(
 ): [UnixTime | undefined, UnixTime] {
   const start = from && (from.isFull('hour') ? from : from.toNext('hour'))
   const end = to.isFull('hour') ? to : to.toStartOf('hour')
-  return [start?.add(-12, 'hours'), end.add(12, 'hours')]
+  return [start?.add(-1, 'days'), end.add(1, 'days')]
 }
 
 export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
