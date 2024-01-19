@@ -66,8 +66,11 @@ const exitWindowRisk = {
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
-  warning: 'The Security Council can upgrade with no delay.',
-}
+  warning: {
+    text: 'The Security Council can upgrade with no delay.',
+    sentiment: 'bad',
+  },
+} as const
 
 const timelockUpgrades = {
   upgradableBy: ['AdminMultisig'],

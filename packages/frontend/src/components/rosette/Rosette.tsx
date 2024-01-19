@@ -404,8 +404,8 @@ function OverlayBox({
         <WarningBar
           className="mb-2"
           icon={RoundedWarningIcon}
-          text={risk.warning}
-          color={risk.sentiment === 'bad' ? 'red' : 'yellow'}
+          text={risk.warning.text}
+          color={risk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
         />
       )}
       <span className="text-xs">{risk.description}</span>

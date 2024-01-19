@@ -118,8 +118,8 @@ function SingleRisk({
             <WarningBar
               className="my-2"
               icon={RoundedWarningIcon}
-              text={riskValue.warning}
-              color={riskValue.sentiment === 'bad' ? 'red' : 'yellow'}
+              text={riskValue.warning.text}
+              color={riskValue.warning.sentiment === 'bad' ? 'red' : 'yellow'}
             />
           )}
           {riskValue.description && (
