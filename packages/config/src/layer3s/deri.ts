@@ -214,7 +214,7 @@ export const deri: Layer3 = {
   permissions: [
     discovery.contractAsPermissioned(
       discovery.getContract('ProxyAdmin'),
-      'Contract owned by the UpgradeExecutor and admin of UpgradeExecutor, ChallengeManager, Outbox, Bridge, SequencerInbox and Inbox proxies.',
+      'Contract owned by the UpgradeExecutor and admin of UpgradeExecutor, L1ERC20Gateway, L1CustomGateway, L1GatewayRouter, ChallengeManager, Outbox, Bridge, SequencerInbox and Inbox proxies.',
     ),
     {
       name: 'OwnerEOA',
