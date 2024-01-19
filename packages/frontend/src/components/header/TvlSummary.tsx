@@ -20,6 +20,8 @@ export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
   showTvlBreakdown?: boolean
+  isArchived?: boolean
+  type?: 'bridge' | 'layer2' | 'layer3'
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
@@ -86,7 +88,7 @@ export function TvlSummary(props: TvlSummaryProps) {
           TVL
         </span>
 
-        {props.stats ? (
+        {props.stats && (props.stats.tvl > 0 || props.isArchived) ? (
           <div className="flex items-center gap-2 md:gap-1">
             <p className="text-lg font-bold md:text-2xl md:leading-none">
               {formatUSD(props.stats.tvl)}

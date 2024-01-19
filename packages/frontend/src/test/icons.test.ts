@@ -28,12 +28,13 @@ describe('icons', () => {
     'bobanetwork',
     'brine',
     'canto',
-    'capx',
     'canvasconnect',
+    'capx',
+    'cronos',
     'debank',
-    'honeypot',
     'degate',
     'degate2',
+    'honeypot',
     'degate3',
     'dydx',
     'eclipse',
@@ -62,7 +63,7 @@ describe('icons', () => {
     'morph',
     'myria',
     'nova',
-    'obscuro',
+    'ten',
     'omgnetwork',
     'optimism',
     'orb3',
@@ -129,6 +130,7 @@ describe('icons', () => {
     'symbiosis',
     'deri',
     'xai',
+    'zklinknexus',
   ]
 
   for (const project of projects) {

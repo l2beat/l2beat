@@ -239,6 +239,20 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: 'NMV',
     formula: 'circulatingSupply',
   },
+  {
+    id: AssetId('arbitrum:xai-xai'),
+    name: 'Xai',
+    symbol: 'XAI',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/34258/standard/2024-01-09_16.31.28.jpg?1704789138',
+    address: EthereumAddress('0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66'),
+    coingeckoId: CoingeckoId('xai-blockchain'),
+    sinceTimestamp: new UnixTime(1704758400),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
 ]
 
 export const arbitrum: Layer2 = {
@@ -388,6 +402,31 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
+  },
+  chainConfig: {
+    devId: 'arbitrum',
+    chainId: 42161,
+    explorerUrl: 'https://arbiscan.io',
+    explorerApi: {
+      url: 'https://api.arbiscan.io/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Arbitrum
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 7654707,
+        version: '3',
+      },
+      {
+        sinceBlock: 821923,
+        batchSize: 150,
+        address: EthereumAddress('0x842eC2c7D803033Edf55E478F461FC547Bc54EB2'),
+        version: '2',
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

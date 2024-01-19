@@ -67,7 +67,7 @@ export class StatusController {
     for (const chainId of ChainId.getAll()) {
       // TODO(radomski): This issue is because there is a disconnect between
       // the ChainId in L2BEAT and in discovery. See L2B-3202
-      if (chainId === ChainId.MANTA_PACIFIC) {
+      if (chainId === ChainId.MANTAPACIFIC) {
         continue
       }
 

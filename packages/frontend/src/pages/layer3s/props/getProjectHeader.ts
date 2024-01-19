@@ -43,13 +43,15 @@ export function getProjectHeader(
 
   const activityData =
     activityApiResponse?.projects[project.id.toString()]?.daily.data
-  const tpsDaily = getTpsDaily(activityData, 'project')
-  const tpsWeeklyChange = getTpsWeeklyChange(activityData, 'project')
-  const transactionMonthlyCount = getTransactionCount(
-    activityData,
-    'project',
-    'month',
-  )
+  const tpsDaily = activityData
+    ? getTpsDaily(activityData, 'project')
+    : undefined
+  const tpsWeeklyChange = activityData
+    ? getTpsWeeklyChange(activityData, 'project')
+    : undefined
+  const transactionMonthlyCount = activityData
+    ? getTransactionCount(activityData, 'project', 'month')
+    : undefined
 
   const tvlBreakdown = getTvlBreakdown(
     project.display.name,
@@ -87,7 +89,10 @@ export function getProjectHeader(
     isUnderReview: project.isUnderReview,
     showProjectUnderReview: isAnySectionUnderReview(project),
     warning: project.display.headerWarning,
-    hostChain: layer2s.find((l) => l.id === project.hostChain)?.display.name,
+    hostChain:
+      project.hostChain === 'Multiple'
+        ? 'Multiple'
+        : layer2s.find((l) => l.id === project.hostChain)?.display.name,
   }
 }
 

@@ -1476,7 +1476,7 @@ export const Primary: Story = {
       const element = canvasElement.querySelector(
         '[data-role="liveness-time-range-cell"] [data-role=tooltip-trigger]',
       )
-      console.log(element)
+
       if (element) {
         await userEvent.hover(element)
       }

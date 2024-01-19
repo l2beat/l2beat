@@ -66,6 +66,10 @@ export const zora: Layer2 = opStack({
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf'),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1686695915),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),

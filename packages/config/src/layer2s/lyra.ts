@@ -69,6 +69,10 @@ export const lyra: Layer2 = opStack({
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50'),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1700022479),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
@@ -107,4 +111,24 @@ export const lyra: Layer2 = opStack({
     }),
   ],
   nonTemplateEscrows: [],
+  chainConfig: {
+    devId: 'lyra',
+    chainId: 957,
+    explorerUrl: 'https://explorer.lyra.finance',
+    explorerApi: {
+      url: 'https://explorer.lyra.finance/api',
+      type: 'routescan',
+    },
+    // ~ Timestamp of block number 0 on Lyra
+    // https://explorer.lyra.finance/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
+    multicallContracts: [
+      {
+        sinceBlock: 1935198,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
+  },
 })

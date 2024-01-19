@@ -23,11 +23,15 @@ export function createDiffHistoryRouter(controller: DiffHistoryController) {
     }),
   )
 
+  router.get('/diff-history', async (ctx) => {
+    ctx.body = await controller.getAllDiffHistories()
+  })
+
   router.get(
     '/diff-history/:chainId/:project',
     withTypedContext(paramsParser, async (ctx) => {
       const { chainId, project } = ctx.params
-      ctx.body = await controller.getDiff(chainId, project)
+      ctx.body = await controller.getDiffHistoryPerProject(chainId, project)
     }),
   )
 

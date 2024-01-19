@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { NUGGETS } from '../common'
@@ -27,11 +28,30 @@ describe('layer3s', () => {
       }
     })
   })
-  it('every layer3 has a valid host chain', () => {
-    for (const layer3 of layer3s) {
+  it('every layer3 has a valid host chain except those with Multiple', () => {
+    for (const layer3 of layer3s.filter((x) => x.hostChain !== 'Multiple')) {
       expect(layer3.hostChain).not.toBeNullish()
       const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
       expect(hostChain).not.toBeNullish()
+    }
+  })
+
+  describe('every contract and escrow in layer3 has a devId different than ethereum', () => {
+    for (const layer3 of layer3s) {
+      it(layer3.display.name, () => {
+        const contracts = layer3.contracts.addresses
+        const escrows = layer3.config.escrows
+        for (const contract of contracts) {
+          expect(contract.devId).not.toBeNullish()
+          expect(contract.devId).not.toEqual('ethereum')
+        }
+        for (const escrow of escrows) {
+          expect(escrow.newVersion).toEqual(true)
+          assert(escrow.newVersion) // to make typescript happy
+          expect(escrow.contract.devId).not.toBeNullish()
+          expect(escrow.contract.devId).not.toEqual('ethereum')
+        }
+      })
     }
   })
 

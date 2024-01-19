@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build
+      - name: Build frontend
         run: yarn build:frontend
 
   typecheck:
@@ -49,7 +49,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build
+      - name: Typecheck
         run: yarn typecheck
 
   test:
@@ -108,7 +108,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build
+      - name: Lint
         run: yarn lint
   format:
     name: Format
@@ -129,5 +129,5 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build
+      - name: Format
         run: yarn format

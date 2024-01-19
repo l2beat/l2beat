@@ -70,10 +70,6 @@ export function gatherAddressesFromUpgradeability(
       result.push(item.implementation)
       break
     case 'Axelar proxy':
-      result.push(...item.admins)
-      result.push(...item.owners)
-      result.push(...item.operators)
-      break
     case 'immutable':
       // Ignoring types because no (admin/user)implementation included in them
       break
