@@ -3,6 +3,7 @@ export type OpStackContractName =
   | 'OptimismPortal'
   | 'SystemConfig'
   | 'L1CrossDomainMessenger'
+  | 'L1StandardBridge'
 
 export type OpStackPermissionName = 'Sequencer' | 'Proposer' | 'ProxyAdmin'
 
@@ -45,6 +46,10 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
     name: 'L1CrossDomainMessenger',
     coreDescription:
       "The {0} (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+  },
+  {
+    name: 'L1StandardBridge',
+    coreDescription: "The {0} contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It's a proxy contract that forwards calls to the OptimismPortal.",
   },
 ]
 
