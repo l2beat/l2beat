@@ -1,17 +1,8 @@
 import { expect } from 'earl'
 
-import {
-  getManuallyVerifiedContracts,
-  parseManuallyVerifiedContracts,
-} from './manuallyVerifiedContracts'
+import { parseManuallyVerifiedContracts } from './manuallyVerifiedContracts'
 
 describe('manually verified contracts', () => {
-  describe('getManuallyVerifiedContracts()', () => {
-    it('can load manually verified contracts', async () => {
-      expect(await getManuallyVerifiedContracts()).toBeTruthy()
-    })
-  })
-
   describe('parseManuallyVerifiedContracts()', () => {
     it('parse well formed jsonc', () => {
       const data = `

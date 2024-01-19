@@ -1,3 +1,23 @@
+# Diff at Thu, 18 Jan 2024 09:23:11 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18927731
+- current block number: 19032828
+
+## Description
+
+Dynamic fee overhead has been changed.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+      values.scalar:
+-        684000
++        68400
+    }
+```
+
 # Diff at Wed, 03 Jan 2024 15:30:59 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

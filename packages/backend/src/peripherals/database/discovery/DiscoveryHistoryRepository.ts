@@ -66,6 +66,21 @@ export class DiscoveryHistoryRepository extends BaseRepository {
     } | block_number:  ${record.blockNumber.toString()}`
   }
 
+  async getAvailableProjects(): Promise<
+    Pick<DiscoveryHistoryRecord, 'projectName' | 'chainId'>[]
+  > {
+    const knex = await this.knex()
+
+    const rows = await knex('daily_discovery')
+      .select('project_name', 'chain_id')
+      .groupBy('project_name', 'chain_id')
+
+    return rows.map((row) => ({
+      projectName: row.project_name,
+      chainId: ChainId(row.chain_id),
+    }))
+  }
+
   async getProject(
     projectName: string,
     chainId: ChainId,

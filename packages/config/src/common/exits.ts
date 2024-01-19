@@ -11,7 +11,7 @@ function REGULAR(
   const requires = proof === 'no proof' ? 'does not require' : 'requires'
   const timeString =
     timeSeconds !== undefined
-      ? `takes ${formatSeconds(timeSeconds)}`
+      ? `takes a challenge period of ${formatSeconds(timeSeconds)}`
       : 'usually takes several days'
   const time =
     type === 'optimistic'

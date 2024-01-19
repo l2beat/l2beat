@@ -11,14 +11,14 @@ import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
 import { TypeCell } from '../../../../components/table/TypeCell'
 import {
+  TokenBreakdown,
+  TokenBreakdownProps,
+} from '../../../../components/TokenBreakdown'
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../../../components/tooltip/Tooltip'
-import {
-  TVLBreakdown,
-  TVLBreakdownProps,
-} from '../../../../components/TVLBreakdown'
 import { pluralize } from '../../../../utils/pluralize'
 import { RiskValues } from '../../../../utils/risks/types'
 
@@ -33,7 +33,7 @@ export interface ProjectHeaderProps {
   transactionMonthlyCount?: string
   purposes: ScalingProjectPurpose[]
   technology: string
-  tvlBreakdown: TVLBreakdownProps | undefined
+  tvlBreakdown: TokenBreakdownProps | undefined
   showTvlBreakdown: boolean
   tvlBreakdownHref: string
   risks: RiskValues
@@ -50,10 +50,10 @@ export interface ProjectHeaderProps {
 export function ProjectHeader(props: ProjectHeaderProps) {
   const summary: ProjectSummaryStat[] = [
     {
-      title: 'Breakdown',
+      title: 'Tokens',
       value:
         !props.isUpcoming && props.tvlBreakdown ? (
-          <TVLBreakdown {...props.tvlBreakdown} />
+          <TokenBreakdown {...props.tvlBreakdown} />
         ) : (
           <UpcomingBadge />
         ),

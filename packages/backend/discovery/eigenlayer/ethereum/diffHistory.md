@@ -1,3 +1,165 @@
+# Diff at Thu, 18 Jan 2024 12:26:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@d613299eac1f45b1c81fd947b8300beb800ba170 block: 18992027
+- current block number: 19033739
+
+## Description
+
+Added three new strategies.
+Named three present multisigs and ignored their nonce in watch mode.
+
+## Watched changes
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+      values.strategies[11]:
++        "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
+      values.strategies[10]:
++        "0xAe60d8180437b5C34bB956822ac2710972584473"
+      values.strategies[9]:
++        "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract sfrxETH-Strategy (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../contracts/token/ERC20/IERC20.sol               |  82 ++++++
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |  60 +++++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      | 116 +++++++++
+ .../contracts/utils/Address.sol                    | 222 ++++++++++++++++
+ .../contracts/proxy/utils/Initializable.sol        | 138 ++++++++++
+ .../contracts/utils/AddressUpgradeable.sol         | 195 ++++++++++++++
+ .../.code/METH-Strategy/implementation/meta.txt    |   2 +
+ .../contracts/interfaces/IDelegationManager.sol    |  81 ++++++
+ .../src/contracts/interfaces/IDelegationTerms.sol  |  26 ++
+ .../src/contracts/interfaces/IPausable.sol         |  56 ++++
+ .../src/contracts/interfaces/IPauserRegistry.sol   |  15 ++
+ .../src/contracts/interfaces/ISlasher.sol          | 139 ++++++++++
+ .../src/contracts/interfaces/IStrategy.sol         |  89 +++++++
+ .../src/contracts/interfaces/IStrategyManager.sol  | 257 +++++++++++++++++++
+ .../src/contracts/permissions/Pausable.sol         | 139 ++++++++++
+ .../src/contracts/strategies/StrategyBase.sol      | 283 +++++++++++++++++++++
+ .../contracts/strategies/StrategyBaseTVLLimits.sol |  84 ++++++
+ .../proxy/interfaces/draft-IERC1822.sol            |  20 ++
+ .../ethereum/.code/METH-Strategy/proxy/meta.txt    |   2 +
+ .../proxy/proxy/ERC1967/ERC1967Proxy.sol           |  32 +++
+ .../proxy/proxy/ERC1967/ERC1967Upgrade.sol         | 185 ++++++++++++++
+ .../.code/METH-Strategy/proxy/proxy/Proxy.sol      |  86 +++++++
+ .../METH-Strategy/proxy/proxy/beacon/IBeacon.sol   |  16 ++
+ .../transparent/TransparentUpgradeableProxy.sol    | 124 +++++++++
+ .../.code/METH-Strategy/proxy/utils/Address.sol    | 222 ++++++++++++++++
+ .../METH-Strategy/proxy/utils/StorageSlot.sol      |  88 +++++++
+ .../contracts/token/ERC20/IERC20.sol               |  82 ++++++
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |  60 +++++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      | 116 +++++++++
+ .../contracts/utils/Address.sol                    | 222 ++++++++++++++++
+ .../contracts/proxy/utils/Initializable.sol        | 138 ++++++++++
+ .../contracts/utils/AddressUpgradeable.sol         | 195 ++++++++++++++
+ .../.code/RiverV1-Strategy/implementation/meta.txt |   2 +
+ .../contracts/interfaces/IDelegationManager.sol    |  81 ++++++
+ .../src/contracts/interfaces/IDelegationTerms.sol  |  26 ++
+ .../src/contracts/interfaces/IPausable.sol         |  56 ++++
+ .../src/contracts/interfaces/IPauserRegistry.sol   |  15 ++
+ .../src/contracts/interfaces/ISlasher.sol          | 139 ++++++++++
+ .../src/contracts/interfaces/IStrategy.sol         |  89 +++++++
+ .../src/contracts/interfaces/IStrategyManager.sol  | 257 +++++++++++++++++++
+ .../src/contracts/permissions/Pausable.sol         | 139 ++++++++++
+ .../src/contracts/strategies/StrategyBase.sol      | 283 +++++++++++++++++++++
+ .../contracts/strategies/StrategyBaseTVLLimits.sol |  84 ++++++
+ .../proxy/interfaces/draft-IERC1822.sol            |  20 ++
+ .../ethereum/.code/RiverV1-Strategy/proxy/meta.txt |   2 +
+ .../proxy/proxy/ERC1967/ERC1967Proxy.sol           |  32 +++
+ .../proxy/proxy/ERC1967/ERC1967Upgrade.sol         | 185 ++++++++++++++
+ .../.code/RiverV1-Strategy/proxy/proxy/Proxy.sol   |  86 +++++++
+ .../proxy/proxy/beacon/IBeacon.sol                 |  16 ++
+ .../transparent/TransparentUpgradeableProxy.sol    | 124 +++++++++
+ .../.code/RiverV1-Strategy/proxy/utils/Address.sol | 222 ++++++++++++++++
+ .../RiverV1-Strategy/proxy/utils/StorageSlot.sol   |  88 +++++++
+ .../contracts/token/ERC20/IERC20.sol               |  82 ++++++
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |  60 +++++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      | 116 +++++++++
+ .../contracts/utils/Address.sol                    | 222 ++++++++++++++++
+ .../contracts/proxy/utils/Initializable.sol        | 138 ++++++++++
+ .../contracts/utils/AddressUpgradeable.sol         | 195 ++++++++++++++
+ .../.code/sfrxETH-Strategy/implementation/meta.txt |   2 +
+ .../contracts/interfaces/IDelegationManager.sol    |  81 ++++++
+ .../src/contracts/interfaces/IDelegationTerms.sol  |  26 ++
+ .../src/contracts/interfaces/IPausable.sol         |  56 ++++
+ .../src/contracts/interfaces/IPauserRegistry.sol   |  15 ++
+ .../src/contracts/interfaces/ISlasher.sol          | 139 ++++++++++
+ .../src/contracts/interfaces/IStrategy.sol         |  89 +++++++
+ .../src/contracts/interfaces/IStrategyManager.sol  | 257 +++++++++++++++++++
+ .../src/contracts/permissions/Pausable.sol         | 139 ++++++++++
+ .../src/contracts/strategies/StrategyBase.sol      | 283 +++++++++++++++++++++
+ .../contracts/strategies/StrategyBaseTVLLimits.sol |  84 ++++++
+ .../proxy/interfaces/draft-IERC1822.sol            |  20 ++
+ .../ethereum/.code/sfrxETH-Strategy/proxy/meta.txt |   2 +
+ .../proxy/proxy/ERC1967/ERC1967Proxy.sol           |  32 +++
+ .../proxy/proxy/ERC1967/ERC1967Upgrade.sol         | 185 ++++++++++++++
+ .../.code/sfrxETH-Strategy/proxy/proxy/Proxy.sol   |  86 +++++++
+ .../proxy/proxy/beacon/IBeacon.sol                 |  16 ++
+ .../transparent/TransparentUpgradeableProxy.sol    | 124 +++++++++
+ .../.code/sfrxETH-Strategy/proxy/utils/Address.sol | 222 ++++++++++++++++
+ .../sfrxETH-Strategy/proxy/utils/StorageSlot.sol   |  88 +++++++
+ 78 files changed, 8277 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18992027 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+      name:
+-        "GnosisSafe"
++        "EigenlayerProxiedMultisig"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+      name:
+-        "GnosisSafe"
++        "StrategyAdderMultisig"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+      name:
+-        "GnosisSafe"
++        "EigenlayerMultisig"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
 # Diff at Fri, 12 Jan 2024 16:33:06 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

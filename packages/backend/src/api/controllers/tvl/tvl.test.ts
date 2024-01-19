@@ -408,7 +408,7 @@ describe('tvl', () => {
 
       const optimismResult = getProjectTokensCharts(
         groupedReports,
-        ProjectId.OPTIMISM,
+        ProjectId('other'),
       )
 
       expect(optimismResult).toEqual({

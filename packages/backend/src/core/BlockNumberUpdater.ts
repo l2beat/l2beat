@@ -4,7 +4,6 @@ import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../config/chains'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { Clock } from './Clock'
 import { TaskQueue } from './queue/TaskQueue'
@@ -23,7 +22,6 @@ export class BlockNumberUpdater {
     private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
@@ -54,7 +52,7 @@ export class BlockNumberUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       knownSet,
-      getChainMinTimestamp(this.chainId),
+      this.minTimestamp,
     )
   }
 

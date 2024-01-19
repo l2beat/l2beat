@@ -126,7 +126,7 @@ export const polygonplasma: Bridge = {
       }),
       discovery.getContractDetails('Registry', {
         description:
-          'Contract mantaining the addresses of the contracts used in the system.',
+          'Contract maintaining the addresses of the contracts used in the system.',
       }),
       discovery.getContractDetails('StakeManager', {
         description:

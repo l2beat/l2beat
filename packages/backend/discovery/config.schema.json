@@ -20,13 +20,13 @@
         "ethereum",
         "arbitrum",
         "optimism",
-        "polygon-pos",
+        "polygonpos",
         "bsc",
         "avalanche",
         "celo",
         "linea",
         "base",
-        "polygon-zkevm",
+        "polygonzkevm",
         "gnosis"
       ]
     },

@@ -198,6 +198,23 @@ export const polygonzkevm: Layer2 = {
       ],
     },
   },
+  chainConfig: {
+    devId: 'polygonzkevm',
+    chainId: 1101,
+    explorerUrl: 'https://zkevm.polygonscan.com',
+    explorerApi: {
+      url: 'https://api-zkevm.polygonscan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 57746,
+        version: '3',
+      },
+    ],
+  },
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,

@@ -15,7 +15,6 @@ import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
-import { ETHEREUM_MULTICALL_CONFIG } from '../../peripherals/ethereum/multicall/MulticallConfig'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -27,33 +26,34 @@ export function createEthereumTvlSubmodule(
   http: HttpClient,
   clock: Clock,
 ): TvlSubmodule | undefined {
-  if (!config.tvl.ethereum) {
+  const tvlConfig = config.tvl.ethereum.config
+  if (!tvlConfig) {
     logger.info('EthereumTvlModule disabled')
     return
   }
 
+  logger = logger.tag('ethereum')
+
   // #region peripherals
 
-  const ethereumProvider = new providers.JsonRpcProvider(
-    config.tvl.ethereum.providerUrl,
-  )
+  const ethereumProvider = new providers.JsonRpcProvider(tvlConfig.providerUrl)
 
-  assert(config.tvl.ethereum.blockNumberProviderConfig.type === 'EtherscanLike')
+  assert(tvlConfig.blockNumberProviderConfig.type === 'EtherscanLike')
 
   const etherscanClient = new EtherscanClient(
     http,
-    config.tvl.ethereum.blockNumberProviderConfig.etherscanApiKey,
-    config.tvl.ethereum.minBlockTimestamp,
+    tvlConfig.blockNumberProviderConfig.etherscanApiKey,
+    tvlConfig.minBlockTimestamp,
     logger,
   )
   const ethereumClient = new EthereumClient(
     ethereumProvider,
     logger,
-    config.tvl.ethereum.providerCallsPerMinute,
+    tvlConfig.providerCallsPerMinute,
   )
   const multicallClient = new MulticallClient(
     ethereumClient,
-    ETHEREUM_MULTICALL_CONFIG,
+    tvlConfig.multicallConfig,
   )
 
   const balanceProvider = new BalanceProvider(
@@ -72,7 +72,7 @@ export function createEthereumTvlSubmodule(
     clock,
     logger,
     ChainId.ETHEREUM,
-    config.tvl.ethereum.minBlockTimestamp,
+    tvlConfig.minBlockTimestamp,
   )
 
   const balanceUpdater = new BalanceUpdater(
@@ -84,7 +84,7 @@ export function createEthereumTvlSubmodule(
     config.projects,
     logger,
     ChainId.ETHEREUM,
-    config.tvl.ethereum.minBlockTimestamp,
+    tvlConfig.minBlockTimestamp,
   )
 
   const cbvUpdater = new CBVUpdater(
@@ -95,7 +95,7 @@ export function createEthereumTvlSubmodule(
     clock,
     config.projects,
     logger,
-    config.tvl.ethereum.minBlockTimestamp,
+    tvlConfig.minBlockTimestamp,
   )
 
   // #endregion

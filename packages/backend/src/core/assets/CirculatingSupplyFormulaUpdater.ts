@@ -10,7 +10,6 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../../config/chains'
 import {
   ReportRecord,
   ReportRepository,
@@ -51,7 +50,6 @@ export class CirculatingSupplyFormulaUpdater implements ReportUpdater {
       'Programmer error: all tokens must be using circulatingSupply formula and have the same chainId',
     )
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
@@ -81,7 +79,7 @@ export class CirculatingSupplyFormulaUpdater implements ReportUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
-      getChainMinTimestamp(this.chainId),
+      this.minTimestamp,
     )
   }
 

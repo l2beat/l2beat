@@ -20,6 +20,7 @@ import {
   TechnologyContractLinks,
 } from '../../components/project/ContractEntry'
 import { ContractsSectionProps } from '../../components/project/ContractsSection'
+import { getExplorerUrl } from '../getExplorerUrl'
 import { languageJoin } from '../utils'
 import { hasArchitectureImage } from './hasArchitectureImage'
 
@@ -42,10 +43,7 @@ export function getContractSection(
     .filter((escrow) => escrow.newVersion && !escrow.isHistorical)
     .sort(moreTokensFirst)
     .map((escrow) => {
-      const isUnverified = isAddressUnverified(
-        escrow.address,
-        verificationStatus,
-      )
+      const isUnverified = isEscrowUnverified(escrow, verificationStatus)
       const contract = escrowToProjectContract(escrow)
 
       return makeTechnologyContract(
@@ -97,7 +95,9 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
-  const etherscanUrl = item.etherscanUrl ?? 'https://etherscan.io'
+  const devId = item.devId ?? 'ethereum'
+  const verificationStatusForChain = verificationStatus.contracts[devId] ?? {}
+  const etherscanUrl = getExplorerUrl(devId)
 
   if (isSingleAddress(item)) {
     if (item.upgradeability?.type) {
@@ -283,35 +283,10 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
-        case 'Axelar proxy':
-          links.push(
-            ...item.upgradeability.admins.map((admin, i) => ({
-              name: `Admin ${i}`,
-              href: `${etherscanUrl}/address/${admin.toString()}#code`,
-              address: admin.toString(),
-              isAdmin: true,
-            })),
-          )
-          links.push(
-            ...item.upgradeability.owners.map((owner, i) => ({
-              name: `Owner ${i}`,
-              href: `${etherscanUrl}/address/${owner.toString()}#code`,
-              address: owner.toString(),
-              isAdmin: true,
-            })),
-          )
-          links.push(
-            ...item.upgradeability.operators.map((operator, i) => ({
-              name: `Operator ${i}`,
-              href: `${etherscanUrl}/address/${operator.toString()}#code`,
-              address: operator.toString(),
-              isAdmin: true,
-            })),
-          )
-          break
 
         // Ignore types
         case 'immutable':
+        case 'Axelar proxy':
         case 'gnosis safe':
         case 'gnosis safe zodiac module':
         case 'EIP2535 diamond proxy':
@@ -330,7 +305,10 @@ function makeTechnologyContract(
     if (isSingleAddress(item) || item.multipleAddresses.length === 1) {
       unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
     } else if (
-      areAllAddressesUnverified(item.multipleAddresses, verificationStatus)
+      areAllAddressesUnverified(
+        item.multipleAddresses,
+        verificationStatusForChain,
+      )
     ) {
       unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION_ALL
     } else {
@@ -346,7 +324,7 @@ function makeTechnologyContract(
 
   const areImplementationsUnverified = links
     .filter((c) => !c.isAdmin)
-    .map((c) => verificationStatus.contracts[c.address])
+    .map((c) => verificationStatusForChain[c.address])
     .some((c) => c === false)
 
   if (areImplementationsUnverified) {
@@ -384,7 +362,8 @@ function makeTechnologyContract(
     addresses,
     description,
     links,
-    etherscanUrl: item.etherscanUrl,
+    etherscanUrl,
+    devId,
   }
 
   if (isSingleAddress(item)) {
@@ -399,28 +378,32 @@ function makeTechnologyContract(
 
 function isContractUnverified(
   contract: ScalingProjectContract,
-  verificationStatus: {
-    projects: Record<string, boolean | undefined>
-    contracts: Record<string, boolean | undefined>
-  },
+  verificationStatus: VerificationStatus,
 ): boolean {
+  const devId = contract.devId ?? 'ethereum'
   if (isSingleAddress(contract)) {
-    return verificationStatus.contracts[contract.address.toString()] === false
+    return (
+      verificationStatus.contracts[devId]?.[contract.address.toString()] ===
+      false
+    )
   }
 
   return contract.multipleAddresses.some(
-    (address) => verificationStatus.contracts[address.toString()] === false,
+    (address) =>
+      verificationStatus.contracts[devId]?.[address.toString()] === false,
   )
 }
 
-function isAddressUnverified(
-  address: EthereumAddress,
-  verificationStatus: {
-    projects: Record<string, boolean | undefined>
-    contracts: Record<string, boolean | undefined>
-  },
+function isEscrowUnverified(
+  escrow: ScalingProjectEscrow,
+  verificationStatus: VerificationStatus,
 ): boolean {
-  return verificationStatus.contracts[address.toString()] === false
+  const devId = escrow.newVersion
+    ? escrow.contract.devId ?? 'ethereum'
+    : 'ethereum'
+  return (
+    verificationStatus.contracts[devId]?.[escrow.address.toString()] === false
+  )
 }
 
 function escrowToProjectContract(
@@ -447,9 +430,9 @@ function moreTokensFirst(a: ScalingProjectEscrow, b: ScalingProjectEscrow) {
 
 function areAllAddressesUnverified(
   addresses: EthereumAddress[],
-  verificationStatus: VerificationStatus,
+  verificationStatus: Partial<Record<string, boolean>>,
 ) {
   return addresses.every((address) => {
-    return verificationStatus.contracts[address.toString()] === false
+    return verificationStatus[address.toString()] === false
   })
 }

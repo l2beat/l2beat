@@ -10,7 +10,6 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../../config/chains'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -48,7 +47,6 @@ export class TotalSupplyUpdater {
       'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
     )
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.configHash = getTotalSupplyConfigHash(tokens)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -82,7 +80,7 @@ export class TotalSupplyUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
-      getChainMinTimestamp(this.chainId),
+      this.minTimestamp,
     )
   }
 

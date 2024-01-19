@@ -3,7 +3,6 @@ import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../../config/chains'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -34,7 +33,6 @@ export class BalanceUpdater {
     private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.configHash = getBalanceConfigHash(projects)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -60,7 +58,7 @@ export class BalanceUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
-      getChainMinTimestamp(this.chainId),
+      this.minTimestamp,
     )
   }
 

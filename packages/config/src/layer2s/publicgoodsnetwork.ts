@@ -66,6 +66,10 @@ export const publicgoodsnetwork: Layer2 = opStack({
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5'),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1689108083),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),

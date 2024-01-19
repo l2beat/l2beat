@@ -66,7 +66,7 @@ export function createActivityModule(
     dailyCountViewRepository,
     clock,
   )
-  const activityV2Router = createActivityRouter(activityController)
+  const activityV2Router = createActivityRouter(activityController, config)
 
   const start = async () => {
     logger = logger.for('ActivityModule')

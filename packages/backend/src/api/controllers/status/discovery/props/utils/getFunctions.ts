@@ -8,15 +8,16 @@ import { getAddresses } from './getAddresses'
 export function getViewABI(
   contract: ContractParameters,
   discoveryABIs: Record<string, string[]>,
+  eoas: EthereumAddress[],
 ): ethers.utils.Interface {
   // contracts without values do not have ABI in discovery.json
   if (contract.values === undefined) {
     return new ethers.utils.Interface([])
   }
 
-  const addresses = getAddresses(contract).filter(
-    (addr) => addr !== EthereumAddress.ZERO,
-  )
+  const addresses = getAddresses(contract)
+    .filter((addr) => addr !== EthereumAddress.ZERO)
+    .filter((addr) => !eoas.includes(addr))
 
   const abis = addresses
     .map((address) => {

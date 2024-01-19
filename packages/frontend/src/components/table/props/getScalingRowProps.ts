@@ -12,7 +12,13 @@ interface ScalingTableEntry {
   showProjectUnderReview?: boolean
 }
 
-type ScalingRowType = 'summary' | 'tvl' | 'risks' | 'activity' | 'liveness'
+type ScalingRowType =
+  | 'summary'
+  | 'tvl'
+  | 'risks'
+  | 'activity'
+  | 'liveness'
+  | 'finality'
 
 export function getScalingRowProps(
   entry: ScalingTableEntry,
@@ -39,6 +45,7 @@ function getHref(slug: ScalingTableEntry['slug'], type: ScalingRowType) {
   switch (type) {
     case 'summary':
     case 'liveness':
+    case 'finality':
       return base
     case 'tvl':
       return base + '/tvl-breakdown'

@@ -2,6 +2,7 @@ import { Layer3 } from '@l2beat/config'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
+import { getChart } from '../../../utils/project/getChart'
 import { getHeader } from '../../../utils/project/getHeader'
 import { PagesData, Wrapped } from '../../Page'
 import { ProjectPageProps } from '../view/ProjectPage'
@@ -21,6 +22,7 @@ export function getProps(
     manuallyVerifiedContracts,
   } = pagesData
 
+  const chart = getChart(project, tvlApiResponse, config, activityApiResponse)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
@@ -35,6 +37,7 @@ export function getProps(
         project,
         verificationStatus,
         manuallyVerifiedContracts,
+        chart,
       ),
       footer: getFooterProps(config),
     },

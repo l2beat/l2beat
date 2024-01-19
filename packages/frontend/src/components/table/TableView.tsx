@@ -79,7 +79,7 @@ export function TableView<T>({
                 {...rest}
                 className={cx(
                   'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
-                  'hover:bg-black/[0.1] hover:shadow-sm dark:hover:bg-white/[0.1]',
+                  'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
               >
@@ -221,6 +221,11 @@ function DataCell<T>(props: {
     isLast: boolean
   }
 }) {
+  const value = props.columnConfig.getValue(props.item, props.rowIndex)
+  if (!value && props.columnConfig.removeCellOnFalsyValue) {
+    return null
+  }
+
   const hasPaddingRight = !props.columnConfig.noPaddingRight
   const idHref =
     props.columnConfig.idHref && props.href
@@ -242,6 +247,7 @@ function DataCell<T>(props: {
           props.groupOptions?.isLast && '!pr-6',
           props.columnConfig.className,
         )}
+        colSpan={props.columnConfig.colSpan?.(props.item)}
         {...orderAttributes}
       >
         <a
@@ -256,7 +262,7 @@ function DataCell<T>(props: {
             'flex',
           )}
         >
-          {props.columnConfig.getValue(props.item, props.rowIndex)}
+          {value}
         </a>
       </td>
       {props.groupOptions?.isLast && !props.isLastColumn && (

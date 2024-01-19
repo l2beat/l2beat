@@ -5,7 +5,9 @@ import { ArrowRightIcon } from './icons'
 
 type LinkProps = React.HTMLProps<HTMLAnchorElement> & {
   type?: LinkType
+  textClassName?: string
   showArrow?: boolean
+  underline?: boolean
 }
 
 type LinkType = 'primary' | 'danger' | 'plain'
@@ -20,9 +22,11 @@ const textClassesByType: Record<LinkType, string> = {
 export function Link({
   type = 'primary',
   className,
+  textClassName,
   href,
   children,
   showArrow,
+  underline = true,
   ...rest
 }: LinkProps) {
   const outLink = isOutLink(href)
@@ -46,11 +50,13 @@ export function Link({
         className={classNames(
           'inline-flex items-center font-semibold transition-colors',
           textClassesByType[type],
+          textClassName,
         )}
       >
         <span
           className={classNames(
-            'flex items-center gap-1 underline',
+            'flex items-center gap-1',
+            underline && 'underline',
             showArrow && 'transition-transform group-hover:-translate-x-px',
           )}
         >
