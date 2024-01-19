@@ -1,12 +1,20 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { ChainId, EthereumAddress, stringAs, Token } from '@l2beat/shared-pure'
+import {
+  assert,
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  stringAs,
+  Token,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
 
+import { chains } from '../chains'
 import { getTokenInfo } from './getTokenInfo'
 
 const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
@@ -15,11 +23,26 @@ const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
 const SourceEntry = z.object({
   symbol: z.string(),
   address: stringAs(EthereumAddress).optional(),
-  category: z.union([
-    z.literal('ether'),
-    z.literal('stablecoin'),
-    z.literal('other'),
-  ]),
+  category: z
+    .union([z.literal('ether'), z.literal('stablecoin'), z.literal('other')])
+    .optional(),
+  type: z
+    .union([z.literal('CBV'), z.literal('EBV'), z.literal('NMV')])
+    .optional(),
+  formula: z
+    .union([
+      z.literal('totalSupply'),
+      z.literal('locked'),
+      z.literal('circulatingSupply'),
+    ])
+    .optional(),
+
+  bridgedUsing: z.optional(
+    z.object({
+      bridge: z.string(),
+      slug: z.string().optional(),
+    }),
+  ),
 })
 
 const Source = z.record(z.array(SourceEntry))
@@ -65,6 +88,24 @@ async function main() {
     console.log(chalk.yellow('Processing... ') + `chain ${devId}`)
 
     for (const entry of entries) {
+      const type = devId === 'ethereum' ? 'CBV' : entry.type
+      if (type === undefined) {
+        console.log(
+          chalk.red('Missing type for ') +
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+        )
+        process.exit(1)
+      }
+      const formula = devId === 'ethereum' ? 'locked' : entry.formula
+      if (formula === undefined) {
+        console.log(
+          chalk.red('Missing formula for ') +
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+        )
+        process.exit(1)
+      }
+      const category = entry.category ?? 'other'
+
       const present = output.tokens.find((e) => {
         if (ChainId.fromName(devId) !== e.chainId) {
           return false
@@ -80,7 +121,12 @@ async function main() {
           chalk.gray('Skipping ') +
             `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
         )
-        result.push(present)
+        result.push({
+          ...present,
+          category,
+          type,
+          formula,
+        })
         continue
       }
 
@@ -95,19 +141,20 @@ async function main() {
       }
       const provider = new providers.JsonRpcProvider(rpcUrl)
 
+      const chain = chains.find((c) => c.devId === devId)
+
+      assert(chain, `Chain ${devId} not found`)
+
       console.log(
         chalk.yellow('Fetching... ') +
           `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
       )
 
-      const token: Token = await getTokenInfo(
+      const tokenInfo = await getTokenInfo(
         provider,
         coingeckoClient,
         entry.address,
-        ChainId.ETHEREUM,
-        'CBV',
-        'locked',
-        entry.category,
+        ChainId(chain.chainId),
       )
 
       console.log(
@@ -115,7 +162,25 @@ async function main() {
           `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
       )
 
-      result.push(token)
+      const id = `${devId}:${tokenInfo.symbol
+        .replaceAll(' ', '-')
+        .toLowerCase()}-${tokenInfo.name.replaceAll(' ', '-').toLowerCase()}`
+
+      result.push({
+        id: AssetId(id),
+        name: tokenInfo.name,
+        coingeckoId: tokenInfo.coingeckoId,
+        address: entry.address,
+        symbol: tokenInfo.symbol,
+        decimals: tokenInfo.decimals,
+        sinceTimestamp: tokenInfo.sinceTimestamp,
+        category,
+        iconUrl: tokenInfo.iconUrl,
+        chainId: ChainId(chain.chainId),
+        type,
+        formula,
+        bridgedUsing: entry.bridgedUsing,
+      })
     }
     console.log(chalk.green('Processed ') + `chain ${devId}\n`)
   }
