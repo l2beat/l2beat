@@ -1,4 +1,4 @@
-import { notUndefined } from '@l2beat/shared-pure'
+import { notUndefined } from './notUndefined'
 
 const units = ['d', 'h', 'm', 's']
 
