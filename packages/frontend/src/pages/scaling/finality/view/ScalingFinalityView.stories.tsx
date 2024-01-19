@@ -98,7 +98,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 344900,
           maximumInSeconds: 2240,
         },
-        finalizationPeriod: formatSeconds(3600),
+        finalizationPeriod: formatSeconds(3600, { fullUnit: true }),
       },
       {
         name: 'ApeX',
@@ -115,7 +115,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 15078,
           maximumInSeconds: 1259,
         },
-        finalizationPeriod: formatSeconds(2 * 3600),
+        finalizationPeriod: formatSeconds(2 * 3600, { fullUnit: true }),
       },
       {
         name: 'Arbitrum One',
@@ -218,7 +218,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 2329,
           maximumInSeconds: 4584,
         },
-        finalizationPeriod: formatSeconds(3 * 3600),
+        finalizationPeriod: formatSeconds(3 * 3600, { fullUnit: true }),
       },
       {
         name: 'Base',
@@ -301,7 +301,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 410,
           maximumInSeconds: 1626,
         },
-        finalizationPeriod: formatSeconds(4 * 3600),
+        finalizationPeriod: formatSeconds(4 * 3600, { fullUnit: true }),
       },
       {
         name: 'dYdX v3',
@@ -383,7 +383,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 18555,
           maximumInSeconds: 67229,
         },
-        finalizationPeriod: formatSeconds(5 * 3600),
+        finalizationPeriod: formatSeconds(5 * 3600, { fullUnit: true }),
       },
       {
         name: 'Linea',
@@ -479,7 +479,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 96,
           maximumInSeconds: 78212,
         },
-        finalizationPeriod: formatSeconds(6 * 3600),
+        finalizationPeriod: formatSeconds(6 * 3600, { fullUnit: true }),
       },
       {
         name: 'Myria',
@@ -496,7 +496,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 819,
           maximumInSeconds: 2646,
         },
-        finalizationPeriod: formatSeconds(7 * 3600),
+        finalizationPeriod: formatSeconds(7 * 3600, { fullUnit: true }),
       },
       {
         name: 'OP Mainnet',
@@ -579,7 +579,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 185585,
           maximumInSeconds: 1211,
         },
-        finalizationPeriod: formatSeconds(8 * 3600),
+        finalizationPeriod: formatSeconds(8 * 3600, { fullUnit: true }),
       },
       {
         name: 'Scroll',
@@ -674,7 +674,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 4899,
           maximumInSeconds: 294,
         },
-        finalizationPeriod: formatSeconds(120),
+        finalizationPeriod: formatSeconds(120, { fullUnit: true }),
       },
       {
         name: 'tanX',
@@ -691,7 +691,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           averageInSeconds: 175511,
           maximumInSeconds: 2129,
         },
-        finalizationPeriod: formatSeconds(24 * 3600),
+        finalizationPeriod: formatSeconds(24 * 3600, { fullUnit: true }),
       },
     ],
   },
