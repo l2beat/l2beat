@@ -8,7 +8,7 @@ import { ChevronDownIcon, OutLinkIcon } from '../../icons'
 
 interface EscrowsCellProps {
   escrows: TVLProjectBreakdown['canonical'][number]['escrows']
-  explorer: string
+  explorer?: string
   assetId: string
 }
 export function EscrowsCell(props: EscrowsCellProps) {
@@ -39,12 +39,24 @@ export function EscrowsCell(props: EscrowsCellProps) {
 
 interface EscrowLinkProps {
   escrowAddress: EthereumAddress
-  explorer: string
+  explorer?: string
   hidden?: boolean
   assetId?: string
 }
 
 function EscrowLink(props: EscrowLinkProps) {
+  if (!props.explorer) {
+    return (
+      <span
+        className={cx(
+          'text-xs font-medium',
+          props.hidden && 'MultipleEscrowsHidden hidden',
+        )}
+      >
+        {formatAddress(props.escrowAddress)}
+      </span>
+    )
+  }
   return (
     <a
       href={`${props.explorer}/address/${props.escrowAddress.toString()}`}
