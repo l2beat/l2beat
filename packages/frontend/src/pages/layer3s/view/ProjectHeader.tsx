@@ -9,9 +9,9 @@ import { TvlStats } from '../../../components/header/TvlSummary'
 import { ProjectLink } from '../../../components/icons'
 import { TypeCell } from '../../../components/table/TypeCell'
 import {
-  TVLBreakdown,
-  TVLBreakdownProps,
-} from '../../../components/TVLBreakdown'
+  TokenBreakdown,
+  TokenBreakdownProps,
+} from '../../../components/TokenBreakdown'
 import { pluralize } from '../../../utils/pluralize'
 import { RiskValues } from '../../../utils/risks/types'
 
@@ -26,7 +26,7 @@ export interface ProjectHeaderProps {
   transactionMonthlyCount?: string
   purposes: ScalingProjectPurpose[]
   technology: string
-  tvlBreakdown: TVLBreakdownProps | undefined
+  tvlBreakdown: TokenBreakdownProps | undefined
   showTvlBreakdown: boolean
   tvlBreakdownHref: string
   risks: RiskValues
@@ -43,12 +43,12 @@ export interface ProjectHeaderProps {
 export function ProjectHeader(props: ProjectHeaderProps) {
   const summary: ProjectSummaryStat[] = [
     {
-      title: 'Breakdown',
+      title: 'Tokens',
       value:
         props.isUpcoming || !props.tvlBreakdown || props.tvlBreakdown.empty ? (
           <UpcomingBadge />
         ) : (
-          <TVLBreakdown {...props.tvlBreakdown} />
+          <TokenBreakdown {...props.tvlBreakdown} />
         ),
     },
     {
