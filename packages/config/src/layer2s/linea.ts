@@ -3,6 +3,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   Token,
   UnixTime,
@@ -21,7 +22,6 @@ import {
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 

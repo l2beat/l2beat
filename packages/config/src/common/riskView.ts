@@ -1,6 +1,6 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { formatSeconds } from '../utils/formatSeconds'
 import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
 

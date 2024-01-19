@@ -1,7 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 
 import { ScalingProjectPermissionedAccount } from '../../../../common'
-import { formatSeconds } from '../../../../utils/formatSeconds'
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('arbitrum')

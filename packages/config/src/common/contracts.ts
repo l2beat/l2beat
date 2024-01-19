@@ -1,6 +1,5 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 
-import { formatSeconds } from '../utils/formatSeconds'
 import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 import { ScalingProjectContracts } from './ScalingProjectContracts'
 import { ScalingProjectRisk } from './ScalingProjectRisk'

@@ -3,6 +3,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   Token,
   UnixTime,
@@ -23,7 +24,6 @@ import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
