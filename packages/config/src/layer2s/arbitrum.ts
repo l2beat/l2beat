@@ -242,6 +242,7 @@ export const arbitrum: Layer2 = {
         version: '2',
       },
     ],
+    coingeckoPlatform: 'arbitrum-one',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

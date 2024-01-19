@@ -12,19 +12,9 @@ import { providers, utils } from 'ethers'
 
 import { ethereum } from '../chains/ethereum'
 
-const PLATFORMS = {
-  1: 'ethereum',
-  10: 'optimistic-ethereum',
-  169: 'manta-pacific',
-  8453: 'base',
-  42161: 'arbitrum-one',
-  // 957: '', Lyra is not supported by coingecko
-}
-
-const PlatformsMap = new Map<string, string>(Object.entries(PLATFORMS))
-
 export async function getTokenInfo(
   _symbol: string,
+  platform: string | undefined,
   address: EthereumAddress | undefined,
   chainId: ChainId,
   devId: string,
@@ -43,19 +33,14 @@ export async function getTokenInfo(
 
   const coingeckoId =
     _coingeckoId ??
-    (await getCoingeckoId(
-      _symbol,
-      coingeckoClient,
-      address,
-      PlatformsMap.get(chainId.toString()),
-    ))
+    (await getCoingeckoId(_symbol, coingeckoClient, address, platform))
 
   // TODO: this should be automatically loaded using new dynamic envs
   const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
   if (!rpcUrl) {
     console.log(
       chalk.red('Missing environmental variable ') +
-        `${devId.toUpperCase()}_RPC_URL`,
+        `${devId.toUpperCase()}_RPC_URL\n`,
     )
     process.exit(1)
   }
@@ -146,7 +131,15 @@ async function getCoingeckoId(
   address: EthereumAddress,
   platform: string | undefined,
 ) {
-  assert(platform, `Platform not found for token: ${address.toString()}`)
+  if (!platform) {
+    console.log(
+      chalk.red('Error ') +
+        'could not find coingecko platform identifier for token ' +
+        symbol +
+        '. Please add it chain config of the project\n',
+    )
+    process.exit(1)
+  }
 
   const coinList = await coingeckoClient.getCoinList({
     includePlatform: true,
@@ -164,7 +157,7 @@ async function getCoingeckoId(
       chalk.red('Error ') +
         'could not find coingeckoId for token ' +
         symbol +
-        '. Please add it manually to source.jsonc',
+        '. Please add it manually to source.jsonc\n',
     )
     process.exit(1)
   }

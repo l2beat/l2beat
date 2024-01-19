@@ -221,5 +221,6 @@ export const optimism: Layer2 = opStack({
         version: 'optimism',
       },
     ],
+    coingeckoPlatform: 'optimistic-ethereum',
   },
 })

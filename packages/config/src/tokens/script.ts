@@ -88,7 +88,7 @@ async function main() {
       if (type === undefined) {
         console.log(
           chalk.red('Missing type for ') +
-            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
         )
         process.exit(1)
       }
@@ -96,7 +96,7 @@ async function main() {
       if (formula === undefined) {
         console.log(
           chalk.red('Missing formula for ') +
-            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
         )
         process.exit(1)
       }
@@ -137,6 +137,7 @@ async function main() {
 
       const tokenInfo = await getTokenInfo(
         entry.symbol,
+        chain.coingeckoPlatform,
         entry.address,
         ChainId(chain.chainId),
         devId,

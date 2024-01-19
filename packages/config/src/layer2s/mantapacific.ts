@@ -112,6 +112,7 @@ export const mantapacific: Layer2 = {
         version: '2',
       },
     ],
+    coingeckoPlatform: 'manta-pacific',
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,

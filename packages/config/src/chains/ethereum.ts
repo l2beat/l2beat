@@ -32,4 +32,5 @@ export const ethereum: ChainConfig = {
       version: '1',
     },
   ],
+  coingeckoPlatform: 'ethereum',
 }
