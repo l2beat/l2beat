@@ -138,7 +138,7 @@ async function main() {
     null,
     2,
   )
-  writeFileSync(OUTPUT_FILE_PATH, outputJson)
+  writeFileSync(OUTPUT_FILE_PATH, outputJson + '\n')
   console.log(chalk.green('Saved ') + 'output file\n')
 }
 
