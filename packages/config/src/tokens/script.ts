@@ -1,7 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
-  assert,
   AssetId,
   ChainId,
   CoingeckoId,
@@ -16,7 +15,8 @@ import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
 
 import { chains } from '../chains'
-import { getTokenInfo } from './getTokenInfo'
+import { getTokenInfo } from './utils/getTokenInfo'
+import { ScriptLogger } from './utils/ScriptLogger'
 
 const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
@@ -54,53 +54,57 @@ const Output = z.object({
 })
 
 async function main() {
-  console.log(chalk.yellow('Loading... ') + 'environment variables')
+  const logger = new ScriptLogger()
+
+  logger.notify('Loading... ', 'environment variables')
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
   const http = new HttpClient()
   const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
-  console.log(chalk.green('Loaded ') + 'environment variables\n')
+  logger.success('Loaded ', 'environment variables')
 
-  console.log(chalk.yellow('Loading... ') + 'source file')
+  logger.notify('Loading... ', 'source file')
   const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
   const errors: ParseError[] = []
   const parsed = parse(sourceFile, errors, {
     allowTrailingComma: true,
   }) as Record<string, string>
-  if (errors.length !== 0) {
-    throw new Error('Cannot parse manuallyVerified.jsonc')
-  }
+  logger.check(errors.length === 0, 'Cannot parse source.jsonc')
   const source = Source.parse(parsed)
-  console.log(chalk.green('Loaded ') + 'source file\n')
+  logger.success('Loaded ', 'source file')
 
-  console.log(chalk.yellow('Loading... ') + 'output file')
+  logger.notify('Loading... ', 'output file')
   const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
   const output = Output.parse(JSON.parse(outputFile))
-  console.log(chalk.green('Loaded ') + 'output file\n')
+  logger.success('Loaded ', 'output file')
 
   const result: Token[] = []
 
   for (const [devId, entries] of Object.entries(source)) {
     // TODO: check chainId is valid
-    console.log(chalk.yellow('Processing... ') + `chain ${devId}`)
+    logger.notify('Processing... ', `chain ${devId}`)
 
     for (const entry of entries) {
-      const type = devId === 'ethereum' ? 'CBV' : entry.type
-      if (type === undefined) {
-        console.log(
-          chalk.red('Missing type for ') +
-            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
-        )
-        process.exit(1)
-      }
-      const formula = devId === 'ethereum' ? 'locked' : entry.formula
-      if (formula === undefined) {
-        console.log(
-          chalk.red('Missing formula for ') +
-            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
-        )
-        process.exit(1)
-      }
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const type = devId === 'ethereum' ? 'CBV' : entry.type!
+      logger.check(
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        type !== undefined,
+        `Missing type for ${devId} ${entry.symbol} ${
+          entry.address?.toString() ?? ''
+        }`,
+      )
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const formula = devId === 'ethereum' ? 'locked' : entry.formula!
+      logger.check(
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        formula !== undefined,
+        `Missing formula for ${devId} ${entry.symbol} ${
+          entry.address?.toString() ?? ''
+        }`,
+      )
+
       const category = entry.category ?? 'other'
 
       const present = output.tokens.find((e) => {
@@ -127,56 +131,50 @@ async function main() {
         continue
       }
 
-      if (!entry.address) {
-        console.log(
-          chalk.red('Error ') +
-            `native asset detected ${entry.symbol}. Configure manually\n`,
-        )
-        process.exit(1)
-      }
+      logger.check(
+        entry.address !== undefined,
+        `native asset detected ${entry.symbol}. Configure manually`,
+      )
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const address = entry.address!
 
       const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
 
-      assert(chain, `Chain ${devId} not found`)
+      logger.check(chain !== undefined, `Chain ${devId} not found`)
 
-      console.log(
-        chalk.yellow('Fetching... ') +
-          `${devId} ${entry.symbol} ${entry.address.toString()}`,
+      logger.notify(
+        'Fetching... ',
+        `${devId} ${entry.symbol} ${address.toString()}`,
       )
 
       const coingeckoId =
         entry.coingeckoId ??
         (await getCoingeckoId(
-          entry.symbol,
           coingeckoClient,
-          entry.address,
-          chain.coingeckoPlatform,
+          logger,
+          address,
+          chain?.coingeckoPlatform,
+          entry.symbol,
         ))
 
-      // TODO: this should be automatically loaded using new dynamic envs
       const env = getEnv()
       const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
-      if (!rpcUrl) {
-        console.log(
-          chalk.red('Missing environmental variable ') +
-            `${devId.toUpperCase()}_RPC_URL\n`,
-        )
-        process.exit(1)
-      }
+      logger.check(rpcUrl !== undefined, `Missing RPC URL for ${devId}`)
       const provider = new providers.JsonRpcProvider(rpcUrl)
 
       const tokenInfo = await getTokenInfo(
+        logger,
         provider,
         coingeckoClient,
+        address,
         entry.symbol,
-        coingeckoId,
-        entry.address,
-        entry.coingeckoId,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        coingeckoId!,
       )
 
-      console.log(
-        chalk.green('Fetched ') +
-          `${devId} ${entry.symbol} ${entry.address.toString()}`,
+      logger.success(
+        'Fetched',
+        `${devId} ${entry.symbol} ${address.toString()}`,
       )
 
       const id = `${devId}:${tokenInfo.symbol
@@ -187,31 +185,33 @@ async function main() {
         id: AssetId(id),
         name: tokenInfo.name,
         coingeckoId: tokenInfo.coingeckoId,
-        address: entry.address,
+        address,
         symbol: tokenInfo.symbol,
         decimals: tokenInfo.decimals,
         sinceTimestamp: tokenInfo.sinceTimestamp,
         category,
         iconUrl: tokenInfo.iconUrl,
-        chainId: ChainId(chain.chainId),
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        chainId: ChainId(chain!.chainId),
         type,
         formula,
         bridgedUsing: entry.bridgedUsing,
       })
     }
-    console.log(chalk.green('Processed ') + `chain ${devId}\n`)
+
+    logger.success('Processed ', `chain ${devId}`)
   }
 
-  console.log(chalk.yellow('Sorting... ') + 'tokens by chain and name')
+  logger.notify('Sorting... ', 'tokens by chain and name')
   result.sort((a, b) => {
     if (a.chainId !== b.chainId) {
       return Number(a.chainId) - Number(b.chainId)
     }
     return a.name.localeCompare(b.name)
   })
-  console.log(chalk.green('Sorted ') + 'tokens\n')
+  logger.success('Sorted ', 'tokens by chain and name')
 
-  console.log(chalk.yellow('Saving... ') + 'output file')
+  logger.notify('Saving... ', 'output file')
   const outputJson = JSON.stringify(
     {
       comment: output.comment,
@@ -221,7 +221,7 @@ async function main() {
     2,
   )
   writeFileSync(OUTPUT_FILE_PATH, outputJson + '\n')
-  console.log(chalk.green('Saved ') + 'output file\n')
+  logger.success('Saved ', 'output file')
 }
 
 main().catch((e: unknown) => {
@@ -229,20 +229,18 @@ main().catch((e: unknown) => {
 })
 
 async function getCoingeckoId(
-  symbol: string,
   coingeckoClient: CoingeckoClient,
+  logger: ScriptLogger,
   address: EthereumAddress,
   platform: string | undefined,
+  symbol: string,
 ) {
-  if (!platform) {
-    console.log(
-      chalk.red('Error ') +
-        'could not find coingecko platform identifier for token ' +
-        symbol +
-        '. Please add it chain config of the project\n',
-    )
-    process.exit(1)
-  }
+  logger.check(
+    platform !== undefined,
+    'could not find coingecko platform identifier for token ' +
+      symbol +
+      '. Please add it chain config of the project',
+  )
 
   const coinList = await coingeckoClient.getCoinList({
     includePlatform: true,
@@ -250,20 +248,19 @@ async function getCoingeckoId(
 
   const coin = coinList.find((coin) => {
     return (
-      coin.platforms[platform]?.toLowerCase() ===
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      coin.platforms[platform!]?.toLowerCase() ===
       address.toString().toLowerCase()
     )
   })
 
-  if (!coin?.id) {
-    console.log(
-      chalk.red('Error ') +
-        'could not find coingeckoId for token ' +
-        symbol +
-        '. Please add it manually to source.jsonc\n',
-    )
-    process.exit(1)
-  }
+  logger.check(
+    coin?.id !== undefined,
+    'could not find coingeckoId for token ' +
+      symbol +
+      '. Please add it manually to source.jsonc',
+  )
 
-  return coin.id
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return coin!.id
 }
