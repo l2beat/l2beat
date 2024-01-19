@@ -469,7 +469,10 @@ export const arbitrum: Layer2 = {
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
       )} L1 timelock.`,
-      warning: 'The Security Council can upgrade with no delay.',
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
       sources: [
         {
           contract: 'OutboxV2',

@@ -134,7 +134,10 @@ export const nova: Layer2 = {
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
       )} L1 timelock.`,
-      warning: 'The Security Council can upgrade with no delay.',
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
