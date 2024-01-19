@@ -37,7 +37,7 @@ function FORCED(
         break
       case 'all-withdrawals':
         orHaltString =
-          ' or halt all withdrawals, including forced withdrawals from L1 and regular withdrawals initated on L2'
+          ' or halt all withdrawals, including forced withdrawals from L1 and regular withdrawals initiated on L2'
         break
     }
   }

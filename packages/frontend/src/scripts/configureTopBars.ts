@@ -93,10 +93,10 @@ function isWithinThreeDaysBefore(targetDate: Date) {
 }
 
 function hasDayPassedSince(sinceDate: Date) {
-  const onyDayMs = 24 * 60 * 60 * 1000
+  const oneDayMs = 24 * 60 * 60 * 1000
   const now = new Date()
 
-  return now.getTime() >= sinceDate.getTime() + onyDayMs
+  return now.getTime() >= sinceDate.getTime() + oneDayMs
 }
 
 function writeStorage(data: TopBarVariantData) {
