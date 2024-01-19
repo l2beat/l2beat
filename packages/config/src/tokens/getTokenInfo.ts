@@ -2,7 +2,6 @@ import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
-  ChainId,
   CoingeckoId,
   EthereumAddress,
   UnixTime,
@@ -16,7 +15,6 @@ export async function getTokenInfo(
   _symbol: string,
   platform: string | undefined,
   address: EthereumAddress | undefined,
-  chainId: ChainId,
   devId: string,
   _coingeckoId: CoingeckoId | undefined,
 ) {

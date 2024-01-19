@@ -139,7 +139,6 @@ async function main() {
         entry.symbol,
         chain.coingeckoPlatform,
         entry.address,
-        ChainId(chain.chainId),
         devId,
         entry.coingeckoId,
       )
