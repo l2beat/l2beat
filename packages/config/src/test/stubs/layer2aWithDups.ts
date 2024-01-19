@@ -27,8 +27,10 @@ export const layer2aWithDups: Layer2 = {
       repositories: [],
       socialMedia: [],
     },
-    finalityWarning:
-      "It's assumed that transaction data batches are submitted sequentially.",
+    finality: {
+      warning:
+        "It's assumed that transaction data batches are submitted sequentially.",
+    },
   },
   stage: {
     stage: 'NotApplicable',
