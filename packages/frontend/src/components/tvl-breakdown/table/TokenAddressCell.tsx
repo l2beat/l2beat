@@ -6,10 +6,18 @@ import { OutLinkIcon } from '../../icons'
 
 interface TokenAddressCellProps {
   address: EthereumAddress
-  explorer: string
+  explorer?: string
 }
 
 export function TokenAddressCell(props: TokenAddressCellProps) {
+  if (!props.explorer) {
+    return (
+      <span className="pr-2 text-xs font-medium">
+        {formatAddress(props.address)}
+      </span>
+    )
+  }
+
   return (
     <a
       href={`${props.explorer}/address/${props.address.toString()}`}
