@@ -1,5 +1,5 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import { CoingeckoClient } from '@l2beat/shared'
 import {
   assert,
   CoingeckoId,
@@ -12,24 +12,15 @@ import { providers, utils } from 'ethers'
 import { ethereum } from '../chains/ethereum'
 
 export async function getTokenInfo(
+  coingeckoClient: CoingeckoClient,
   _symbol: string,
-  platform: string | undefined,
-  address: EthereumAddress | undefined,
+  coingeckoId: CoingeckoId,
+  address: EthereumAddress,
   devId: string,
   _coingeckoId: CoingeckoId | undefined,
 ) {
-  console.log(chalk.yellow('Loading... ') + 'environment variables')
-  const env = getEnv()
-  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
-  console.log(chalk.green('Loaded ') + 'environment variables\n')
-
-  const coingeckoId =
-    _coingeckoId ??
-    (await getCoingeckoId(_symbol, coingeckoClient, address, platform))
-
   // TODO: this should be automatically loaded using new dynamic envs
+  const env = getEnv()
   const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
   if (!rpcUrl) {
     console.log(
@@ -117,46 +108,6 @@ async function getDecimals(
   return parseInt(
     CODER.decodeFunctionResult('decimals', decimalsResult)[0] as string,
   )
-}
-
-async function getCoingeckoId(
-  symbol: string,
-  coingeckoClient: CoingeckoClient,
-  address: EthereumAddress,
-  platform: string | undefined,
-) {
-  if (!platform) {
-    console.log(
-      chalk.red('Error ') +
-        'could not find coingecko platform identifier for token ' +
-        symbol +
-        '. Please add it chain config of the project\n',
-    )
-    process.exit(1)
-  }
-
-  const coinList = await coingeckoClient.getCoinList({
-    includePlatform: true,
-  })
-
-  const coin = coinList.find((coin) => {
-    return (
-      coin.platforms[platform]?.toLowerCase() ===
-      address.toString().toLowerCase()
-    )
-  })
-
-  if (!coin?.id) {
-    console.log(
-      chalk.red('Error ') +
-        'could not find coingeckoId for token ' +
-        symbol +
-        '. Please add it manually to source.jsonc\n',
-    )
-    process.exit(1)
-  }
-
-  return coin.id
 }
 
 async function getSinceTimestamp(

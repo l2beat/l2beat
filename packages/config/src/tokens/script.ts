@@ -1,4 +1,5 @@
 import { getEnv } from '@l2beat/backend-tools'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -52,13 +53,12 @@ const Output = z.object({
 })
 
 async function main() {
+  console.log(chalk.yellow('Loading... ') + 'environment variables')
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  if (coingeckoApiKey) {
-    console.log(chalk.green('Detected ') + 'COINGECKO_API_KEY\n')
-  } else {
-    console.log(chalk.red('Missing ') + 'COINGECKO_API_KEY\n')
-  }
+  const http = new HttpClient()
+  const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
+  console.log(chalk.green('Loaded ') + 'environment variables\n')
 
   console.log(chalk.yellow('Loading... ') + 'source file')
   const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
@@ -89,13 +89,14 @@ async function main() {
           chalk.red('Error ') +
             `native asset detected ${entry.symbol}. Configure manually\n`,
         )
+        process.exit(1)
       }
 
       const type = devId === 'ethereum' ? 'CBV' : entry.type
       if (type === undefined) {
         console.log(
           chalk.red('Missing type for ') +
-            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
+            `${devId} ${entry.symbol} ${entry.address.toString()}\n`,
         )
         process.exit(1)
       }
@@ -103,7 +104,7 @@ async function main() {
       if (formula === undefined) {
         console.log(
           chalk.red('Missing formula for ') +
-            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
+            `${devId} ${entry.symbol} ${entry.address.toString()}\n`,
         )
         process.exit(1)
       }
@@ -122,7 +123,7 @@ async function main() {
       if (present) {
         console.log(
           chalk.gray('Skipping ') +
-            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+            `${devId} ${entry.symbol} ${entry.address.toString()}`,
         )
         result.push({
           ...present,
@@ -139,12 +140,22 @@ async function main() {
 
       console.log(
         chalk.yellow('Fetching... ') +
-          `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+          `${devId} ${entry.symbol} ${entry.address.toString()}`,
       )
 
+      const coingeckoId =
+        entry.coingeckoId ??
+        (await getCoingeckoId(
+          entry.symbol,
+          coingeckoClient,
+          entry.address,
+          chain.coingeckoPlatform,
+        ))
+
       const tokenInfo = await getTokenInfo(
+        coingeckoClient,
         entry.symbol,
-        chain.coingeckoPlatform,
+        coingeckoId,
         entry.address,
         devId,
         entry.coingeckoId,
@@ -152,7 +163,7 @@ async function main() {
 
       console.log(
         chalk.green('Fetched ') +
-          `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
+          `${devId} ${entry.symbol} ${entry.address.toString()}`,
       )
 
       const id = `${devId}:${tokenInfo.symbol
@@ -203,3 +214,43 @@ async function main() {
 main().catch((e: unknown) => {
   console.error(e)
 })
+
+async function getCoingeckoId(
+  symbol: string,
+  coingeckoClient: CoingeckoClient,
+  address: EthereumAddress,
+  platform: string | undefined,
+) {
+  if (!platform) {
+    console.log(
+      chalk.red('Error ') +
+        'could not find coingecko platform identifier for token ' +
+        symbol +
+        '. Please add it chain config of the project\n',
+    )
+    process.exit(1)
+  }
+
+  const coinList = await coingeckoClient.getCoinList({
+    includePlatform: true,
+  })
+
+  const coin = coinList.find((coin) => {
+    return (
+      coin.platforms[platform]?.toLowerCase() ===
+      address.toString().toLowerCase()
+    )
+  })
+
+  if (!coin?.id) {
+    console.log(
+      chalk.red('Error ') +
+        'could not find coingeckoId for token ' +
+        symbol +
+        '. Please add it manually to source.jsonc\n',
+    )
+    process.exit(1)
+  }
+
+  return coin.id
+}
