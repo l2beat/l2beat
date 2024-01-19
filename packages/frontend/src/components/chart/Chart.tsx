@@ -29,6 +29,7 @@ export interface ChartProps {
   initialType: ChartType
   tvlBreakdownHref?: string
   hasActivity?: boolean
+  hasTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
@@ -69,6 +70,7 @@ export function Chart(props: ChartProps) {
           title={title}
           id={id}
           hasActivity={props.hasActivity}
+          hasTvl={props.hasTvl}
           metaChart={props.metaChart}
           header={props.header}
           isBridge={isBridge}
@@ -144,6 +146,7 @@ function ChartHeader(props: {
   id: string
   title: string
   hasActivity: boolean | undefined
+  hasTvl: boolean | undefined
   metaChart: boolean | undefined
   header: ChartProps['header'] | undefined
   isBridge: boolean
@@ -165,9 +168,11 @@ function ChartHeader(props: {
       <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
         <a href={`#${props.id}`}>{props.title}</a>
       </h2>
-
-      {props.hasActivity && (
-        <RadioChartTypeControl hasActivity={props.hasActivity} />
+      {(props.hasActivity || props.hasTvl) && (
+        <RadioChartTypeControl
+          hasActivity={!!props.hasActivity}
+          hasTvl={!!props.hasTvl}
+        />
       )}
     </div>
   )

@@ -1,6 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { ChartSection } from '../../../components/project/ChartSection'
 import { ContractsSection } from '../../../components/project/ContractsSection'
 import { DetailedDescriptionSection } from '../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
@@ -31,6 +32,8 @@ export function ProjectDetails(props: ProjectDetailsProps) {
     <div className="px-4 md:px-0">
       {props.items.map((item, index) => {
         switch (item.type) {
+          case 'ChartSection':
+            return <ChartSection key={item.props.id} {...item.props} />
           case 'MilestonesSection':
             return <MilestonesSection key={item.props.id} {...item.props} />
           case 'KnowledgeNuggetsSection':
