@@ -14,7 +14,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
 import { Layer3 } from './types'
 
-const discovery = new ProjectDiscovery('deri')
+const discovery = new ProjectDiscovery('deri', 'arbitrum')
 
 const roles = discovery.getContractValue<{
   EXECUTOR_ROLE: { members: string[] }
