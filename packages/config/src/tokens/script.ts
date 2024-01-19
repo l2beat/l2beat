@@ -81,7 +81,8 @@ async function main() {
   const result: Token[] = []
 
   for (const [devId, entries] of Object.entries(source)) {
-    // TODO: check chainId is valid
+    const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
+    logger.check(chain !== undefined, `Chain ${devId} not found`)
     logger.notify('Processing... ', `chain ${devId}`)
 
     for (const entry of entries) {
@@ -137,10 +138,6 @@ async function main() {
       )
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const address = entry.address!
-
-      const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
-
-      logger.check(chain !== undefined, `Chain ${devId} not found`)
 
       logger.notify(
         'Fetching... ',
