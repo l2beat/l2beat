@@ -664,7 +664,7 @@ export function getScalingFinalityColumnsConfig() {
     {
       name: 'State update delay',
       tooltip:
-        'Time interval between transaction data submission and state root submission.',
+        'Time interval between time to finality and state root submission.',
       getValue: () => (
         <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
           Coming soon
