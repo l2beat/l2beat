@@ -266,7 +266,7 @@ export const parallel: Layer2 = {
       'Multisig that can execute upgrades via the UpgradeExecutor.',
     ),
     {
-      name: 'OwnerEOA',
+      name: 'RollupOwner',
       accounts: [EOAExecutor],
       description: 'EOA that can execute upgrades via the UpgradeExecutor.',
     },
@@ -277,7 +277,7 @@ export const parallel: Layer2 = {
         'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     },
     {
-      name: 'Sequencer',
+      name: 'Sequencers',
       accounts: discovery.getPermissionedAccounts(
         'SequencerInbox',
         'batchPosters',
@@ -328,6 +328,13 @@ export const parallel: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  milestones: [],
+  milestones: [
+    {
+      name: 'Parallel Mainnet closed launch',
+      link: 'https://twitter.com/ParallelFi/status/1743048283684237574',
+      date: '2024-01-05T00:00:00Z',
+      description: 'Parallel Mainnet is open for developers.',
+    },
+  ],
   knowledgeNuggets: [],
 }
