@@ -2,6 +2,7 @@ import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
 import {
   assertUnreachable,
   FinalityDataPoint,
+  formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
 
@@ -48,8 +49,11 @@ export function getScalingFinalityViewEntry(
     stage: project.stage,
     timeToFinalize: {
       ...finalityDataPoint,
-      warning: project.display.finalityWarning,
+      warning: project.display.finality?.warning,
     },
+    finalizationPeriod: project.display.finality?.finalizationPeriod
+      ? formatSeconds(project.display.finality.finalizationPeriod)
+      : undefined,
   }
 }
 

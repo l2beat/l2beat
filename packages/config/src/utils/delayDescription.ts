@@ -1,4 +1,4 @@
-import { formatSeconds } from './formatSeconds'
+import { formatSeconds } from '@l2beat/shared-pure'
 
 export function delayDescriptionFromSeconds(delay: number): string {
   const delayString = formatSeconds(delay)

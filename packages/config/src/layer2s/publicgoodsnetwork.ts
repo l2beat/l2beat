@@ -1,9 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -55,6 +54,9 @@ export const publicgoodsnetwork: Layer2 = opStack({
       )} or until it gets published. The state root gets finalized ${formatSeconds(
         FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
+    },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
   upgradeability,

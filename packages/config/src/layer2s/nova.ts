@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -14,7 +19,6 @@ import {
 import { subtractOne } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')

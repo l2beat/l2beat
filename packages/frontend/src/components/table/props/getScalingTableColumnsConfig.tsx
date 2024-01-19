@@ -650,7 +650,7 @@ export function getScalingFinalityColumnsConfig() {
       },
     },
     {
-      name: '30-day avg. time to finality',
+      name: 'Time to finality\n30-day avg.',
       getValue: (project) => (
         <FinalityDurationCell data={project.timeToFinalize} />
       ),
@@ -660,6 +660,12 @@ export function getScalingFinalityColumnsConfig() {
         rule: 'numeric',
         getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
       },
+    },
+    {
+      name: 'Execution delay',
+      tooltip:
+        'Time interval between state root submission and state root finalization. For Optimistic Rollups, this usually corresponds to the challenge period, whereas for ZK Rollups, it might be added as a safety precaution.',
+      getValue: (project) => <span>{project.finalizationPeriod}</span>,
     },
   ]
   return columns

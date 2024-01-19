@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, ProjectId } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -20,7 +20,6 @@ import {
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('reddioex')

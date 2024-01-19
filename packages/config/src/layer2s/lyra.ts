@@ -18,6 +18,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
     id: AssetId.USDC_ON_LYRA,
@@ -59,6 +64,9 @@ export const lyra: Layer2 = opStack({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
