@@ -76,7 +76,7 @@ describe(formatSeconds.name, () => {
       expect(formatSeconds(90061, { fullUnit: true })).toEqual('1 day 1 hour')
     })
 
-    it.only('does not round up', () => {
+    it('does not round up', () => {
       expect(
         formatSeconds(1, { preventRoundingUp: true, fullUnit: true }),
       ).toEqual('1 second')
@@ -94,7 +94,7 @@ describe(formatSeconds.name, () => {
       ).toEqual('1 hour')
       expect(
         formatSeconds(7202, { preventRoundingUp: true, fullUnit: true }),
-      ).toEqual('2 hours 1 seconds')
+      ).toEqual('2 hours 2 seconds')
       expect(
         formatSeconds(3660, { preventRoundingUp: true, fullUnit: true }),
       ).toEqual('1 hour 1 minute')
@@ -107,7 +107,7 @@ describe(formatSeconds.name, () => {
       ).toEqual('1 day')
       expect(
         formatSeconds(86402, { preventRoundingUp: true, fullUnit: true }),
-      ).toEqual('1 day 1 seconds')
+      ).toEqual('1 day 2 seconds')
       expect(
         formatSeconds(86460, { preventRoundingUp: true, fullUnit: true }),
       ).toEqual('1 day 1 minute')
