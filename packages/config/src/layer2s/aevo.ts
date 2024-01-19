@@ -87,12 +87,6 @@ export const aevo: Layer2 = opStack({
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1StandardBridge', {
-      description:
-        'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
-  ],
+  nonTemplateContracts: [],
   nonTemplateEscrows: [],
 })

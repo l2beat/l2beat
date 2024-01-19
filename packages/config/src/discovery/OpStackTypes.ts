@@ -49,7 +49,7 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
   },
   {
     name: 'L1StandardBridge',
-    coreDescription: "The {0} contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It's a proxy contract that forwards calls to the OptimismPortal.",
+    coreDescription: "The {0} contract is the main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.",
   },
 ]
 
