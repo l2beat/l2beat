@@ -18,10 +18,6 @@ export async function getTokenInfo(
   devId: string,
   _coingeckoId: CoingeckoId | undefined,
 ) {
-  if (!address) {
-    throw new Error('Native asset detected, configure manually')
-  }
-
   console.log(chalk.yellow('Loading... ') + 'environment variables')
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')

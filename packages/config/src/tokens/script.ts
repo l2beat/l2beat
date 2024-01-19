@@ -84,6 +84,13 @@ async function main() {
     console.log(chalk.yellow('Processing... ') + `chain ${devId}`)
 
     for (const entry of entries) {
+      if (!entry.address) {
+        console.log(
+          chalk.red('Error ') +
+            `native asset detected ${entry.symbol}. Configure manually\n`,
+        )
+      }
+
       const type = devId === 'ethereum' ? 'CBV' : entry.type
       if (type === undefined) {
         console.log(
