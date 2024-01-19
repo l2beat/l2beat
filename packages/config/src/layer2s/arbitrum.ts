@@ -460,7 +460,7 @@ export const arbitrum: Layer2 = {
         selfSequencingDelay,
       )} to force a tx, users have only ${formatSeconds(
         l2TimelockDelay - selfSequencingDelay,
-      )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
         validatorAfkTime,
       )} delay and then wait for the ${formatSeconds(
         challengeWindowSeconds,
