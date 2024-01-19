@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  events: CollectionEntry<'events'>[]
+}
+---
+
+<div>
+  {
+    Astro.props.events.map((event) => (
+      <div>
+        {event.data.title} - {event.data.startDate.toLocaleTimeString()}
+      </div>
+    ))
+  }
+</div>

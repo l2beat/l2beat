@@ -1,5 +1,5 @@
 ---
-title: 'Weekly Governance Review #03'
+title: 'Weekly Governance Review #04'
 description: '19/12/2023 - 31/12/2023'
 author: krzysztof-urbanski
 ---

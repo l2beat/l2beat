@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+
+const postEntries = await getCollection('posts')
+---
+
+<Layout title="All posts">
+  {
+    postEntries.map((post) => (
+      <article>
+        <h2>{post.data.title}</h2>
+        <p>{post.data.description}</p>
+      </article>
+    ))
+  }
+</Layout>

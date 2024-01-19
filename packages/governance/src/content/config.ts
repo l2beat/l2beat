@@ -13,6 +13,7 @@ const posts = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
+    description: z.string(),
     author: reference('authors'),
   }),
 })
@@ -26,8 +27,20 @@ const authors = defineCollection({
   }),
 })
 
+const events = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    startDate: z.coerce.date(),
+    endDate: z.coerce.date(),
+    location: z.string(),
+    link: z.string().url(),
+  }),
+})
+
 export const collections = {
-  delegatedProjects: delegatedProjects,
-  posts: posts,
-  authors: authors,
+  delegatedProjects,
+  posts,
+  authors,
+  events,
 }

@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  posts: CollectionEntry<'posts'>[]
+  maxCount?: number
+}
+
+const maxCount = Astro.props.maxCount ?? 3
+const postsToShow = Astro.props.posts.slice(0, maxCount)
+const showSeeAll = Astro.props.posts.length > maxCount
+---
+
+<div>
+  {
+    postsToShow.map((post) => (
+      <a
+        class="mt-2 px-7 block py-5 rounded-lg border border-zinc-700"
+        href={`/posts/${post.slug}`}
+      >
+        <p class="font-bold">{post.data.title}</p>
+        <span class="text-sm">{post.data.description}</span>
+      </a>
+    ))
+  }
+  {
+    showSeeAll && (
+      <a href="/posts" class="mt-4 block">
+        See all
+      </a>
+    )
+  }
+</div>
