@@ -17,7 +17,7 @@ export const zkcandy: Layer2 = upcoming({
       documentation: [],
       explorers: [],
       repositories: [],
-      socialMedia: ['https://twitter.com/zkCandyHQ'],
+      socialMedia: ['https://twitter.com/zkCandyHQ','https://discord.gg/zkcandy','https://t.me/zkcandy'],
     },
   },
 })
