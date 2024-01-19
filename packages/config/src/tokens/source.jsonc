@@ -930,7 +930,7 @@
   "arbitrum": [
     {
       "symbol": "ARB",
-      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -942,7 +942,8 @@
       "bridgedUsing": {
         "bridge": "Multichain",
         "slug": "multichain"
-      }
+      },
+      "coingeckoId": "beefy-finance"
     },
     {
       "symbol": "BTC.b",
@@ -981,7 +982,7 @@
     },
     {
       "symbol": "JOE",
-      "address": "0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
+      "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -1074,7 +1075,8 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket"
-      }
+      },
+      "coingeckoId": "usd-coin"
     }
   ],
   "manta-pacific": [
@@ -1095,7 +1097,8 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Hyperlane Nexus"
-      }
+      },
+      "coingeckoId": "celestia"
     }
   ]
 }

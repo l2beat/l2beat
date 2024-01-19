@@ -1,15 +1,14 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
   AssetId,
   ChainId,
+  CoingeckoId,
   EthereumAddress,
   stringAs,
   Token,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
@@ -23,6 +22,7 @@ const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
 const SourceEntry = z.object({
   symbol: z.string(),
   address: stringAs(EthereumAddress).optional(),
+  coingeckoId: stringAs((s) => CoingeckoId(s)).optional(),
   category: z
     .union([z.literal('ether'), z.literal('stablecoin'), z.literal('other')])
     .optional(),
@@ -52,6 +52,14 @@ const Output = z.object({
 })
 
 async function main() {
+  const env = getEnv()
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
+  if (coingeckoApiKey) {
+    console.log(chalk.green('Detected ') + 'COINGECKO_API_KEY\n')
+  } else {
+    console.log(chalk.red('Missing ') + 'COINGECKO_API_KEY\n')
+  }
+
   console.log(chalk.yellow('Loading... ') + 'source file')
   const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
   const errors: ParseError[] = []
@@ -70,18 +78,6 @@ async function main() {
   console.log(chalk.green('Loaded ') + 'output file\n')
 
   const result: Token[] = []
-
-  console.log(chalk.yellow('Loading... ') + 'environment variables')
-  const env = getEnv()
-  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  if (coingeckoApiKey) {
-    console.log(chalk.green('Detected ') + 'COINGECKO_API_KEY')
-  } else {
-    console.log(chalk.red('Missing ') + 'COINGECKO_API_KEY')
-  }
-  const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
-  console.log(chalk.green('Loaded ') + 'environment variables\n')
 
   for (const [devId, entries] of Object.entries(source)) {
     // TODO: check chainId is valid
@@ -130,18 +126,7 @@ async function main() {
         continue
       }
 
-      // TODO: this should be automatically loaded using new dynamic envs
-      const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
-      if (!rpcUrl) {
-        console.log(
-          chalk.red('Missing environmental variable ') +
-            `${devId.toUpperCase()}_RPC_URL`,
-        )
-        process.exit(1)
-      }
-      const provider = new providers.JsonRpcProvider(rpcUrl)
-
-      const chain = chains.find((c) => c.devId === devId)
+      const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
 
       assert(chain, `Chain ${devId} not found`)
 
@@ -151,10 +136,11 @@ async function main() {
       )
 
       const tokenInfo = await getTokenInfo(
-        provider,
-        coingeckoClient,
+        entry.symbol,
         entry.address,
         ChainId(chain.chainId),
+        devId,
+        entry.coingeckoId,
       )
 
       console.log(

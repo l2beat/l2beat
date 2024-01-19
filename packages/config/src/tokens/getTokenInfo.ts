@@ -1,30 +1,65 @@
-import { CoingeckoClient } from '@l2beat/shared'
+import { getEnv } from '@l2beat/backend-tools'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
-  AssetId,
-  AssetType,
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { providers, utils } from 'ethers'
 
+import { ethereum } from '../chains/ethereum'
+
+const PLATFORMS = {
+  1: 'ethereum',
+  10: 'optimistic-ethereum',
+  169: 'manta-pacific',
+  8453: 'base',
+  42161: 'arbitrum-one',
+  // 957: '', Lyra is not supported by coingecko
+}
+
+const PlatformsMap = new Map<string, string>(Object.entries(PLATFORMS))
+
 export async function getTokenInfo(
-  provider: providers.JsonRpcProvider,
-  coingeckoClient: CoingeckoClient,
+  _symbol: string,
   address: EthereumAddress | undefined,
   chainId: ChainId,
-  type: AssetType,
-  formula: 'totalSupply' | 'locked' | 'circulatingSupply',
-  category: 'ether' | 'stablecoin' | 'other',
-): Promise<Token> {
+  devId: string,
+  _coingeckoId: CoingeckoId | undefined,
+) {
   if (!address) {
     throw new Error('Native asset detected, configure manually')
   }
 
-  const coingeckoId = await getCoingeckoId(coingeckoClient, address)
+  console.log(chalk.yellow('Loading... ') + 'environment variables')
+  const env = getEnv()
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
+  const http = new HttpClient()
+  const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
+  console.log(chalk.green('Loaded ') + 'environment variables\n')
+
+  const coingeckoId =
+    _coingeckoId ??
+    (await getCoingeckoId(
+      _symbol,
+      coingeckoClient,
+      address,
+      PlatformsMap.get(chainId.toString()),
+    ))
+
+  // TODO: this should be automatically loaded using new dynamic envs
+  const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
+  if (!rpcUrl) {
+    console.log(
+      chalk.red('Missing environmental variable ') +
+        `${devId.toUpperCase()}_RPC_URL`,
+    )
+    process.exit(1)
+  }
+  const provider = new providers.JsonRpcProvider(rpcUrl)
 
   const [name, symbol, decimals, iconUrl, sinceTimestamp] = await Promise.all([
     getName(provider, address),
@@ -34,22 +69,21 @@ export async function getTokenInfo(
     getSinceTimestamp(provider, coingeckoClient, address, coingeckoId),
   ])
 
-  const tokenInfo: Token = {
-    id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
-    name,
-    coingeckoId,
-    address,
-    symbol,
-    decimals,
-    sinceTimestamp,
-    category,
-    chainId,
-    iconUrl,
-    type,
-    formula,
+  if (symbol !== _symbol) {
+    console.log(
+      chalk.red('Misconfiguration') +
+        ` symbol mismatch  ${symbol} !== ${_symbol}`,
+    )
   }
 
-  return tokenInfo
+  return {
+    name,
+    symbol,
+    decimals,
+    iconUrl,
+    sinceTimestamp,
+    coingeckoId,
+  }
 }
 
 const ABI = [
@@ -107,22 +141,32 @@ async function getDecimals(
 }
 
 async function getCoingeckoId(
+  symbol: string,
   coingeckoClient: CoingeckoClient,
   address: EthereumAddress,
+  platform: string | undefined,
 ) {
+  assert(platform, `Platform not found for token: ${address.toString()}`)
+
   const coinList = await coingeckoClient.getCoinList({
     includePlatform: true,
   })
 
   const coin = coinList.find((coin) => {
     return (
-      coin.platforms.ethereum?.toLowerCase() ===
+      coin.platforms[platform]?.toLowerCase() ===
       address.toString().toLowerCase()
     )
   })
 
   if (!coin?.id) {
-    throw new Error('Could not find coingeckoId for token')
+    console.log(
+      chalk.red('Error ') +
+        'could not find coingeckoId for token ' +
+        symbol +
+        '. Please add it manually to source.jsonc',
+    )
+    process.exit(1)
   }
 
   return coin.id
@@ -143,7 +187,7 @@ async function getSinceTimestamp(
     await coingeckoClient.getCoinMarketChartRange(
       coingeckoId,
       'usd',
-      new UnixTime(0),
+      ethereum.minTimestampForTvl ?? new UnixTime(0),
       UnixTime.now(),
     )
   assert(
