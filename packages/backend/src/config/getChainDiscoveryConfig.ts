@@ -33,7 +33,7 @@ export function getChainDiscoveryConfig(
     chainId: ChainId(chain.chainId),
     rpcUrl: env.string(`DISCOVERY_${ENV_NAME}_RPC_URL`),
     rpcGetLogsMaxRange: env.optionalInteger(
-      `DISCOVERY_${ENV_NAME}_GETLOGS_MAX_RANGE`,
+      `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
     ),
     multicall: getMulticall3Config(
       multicallV3.sinceBlock,
