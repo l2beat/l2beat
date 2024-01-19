@@ -120,13 +120,13 @@ export function MediumRosette({ risks, isUnderReview }: RosetteProps) {
       <span className="absolute bottom-[18px] left-[22px] w-[10ch] rotate-[36deg] text-center text-[10px] font-medium uppercase leading-tight">
         Sequencer failure
       </span>
-      <span className="absolute top-[59px] -left-2 w-[10ch] -rotate-[68deg] text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="absolute -left-2 top-[59px] w-[10ch] -rotate-[68deg] text-center text-[10px] font-medium uppercase leading-tight">
         State validation
       </span>
-      <span className="absolute top-0.5 left-1/2 w-[10ch] -translate-x-1/2 text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="absolute left-1/2 top-0.5 w-[10ch] -translate-x-1/2 text-center text-[10px] font-medium uppercase leading-tight">
         Data availability
       </span>
-      <span className="absolute top-[58px] left-[160px] rotate-[68deg] text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="absolute left-[160px] top-[58px] rotate-[68deg] text-center text-[10px] font-medium uppercase leading-tight">
         Exit window
       </span>
       <span className="absolute bottom-[20px] right-[19px] w-[10ch] -rotate-[36deg] text-center text-[10px] font-medium uppercase leading-tight">
@@ -156,7 +156,7 @@ export function BigRosette({
 
   return (
     <div
-      className={cx('Rosette relative w-[272px] py-12 px-12', className)}
+      className={cx('Rosette relative w-[272px] px-12 py-12', className)}
       data-rosette-hover-disabled={isUnderReview || (isUpcoming ?? false)}
     >
       <BigRosetteIcon
@@ -171,19 +171,19 @@ export function BigRosette({
         Sequencer failure
       </span>
       <span
-        className="Rosette-Text absolute top-[77px] -left-1 w-[10ch] -rotate-[64deg] text-center text-xs font-medium uppercase leading-tight"
+        className="Rosette-Text absolute -left-1 top-[77px] w-[10ch] -rotate-[64deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="state-validation"
       >
         State validation
       </span>
       <span
-        className="Rosette-Text absolute top-[10px] left-1/2 w-[10ch] -translate-x-1/2 text-center text-xs font-medium uppercase leading-tight"
+        className="Rosette-Text absolute left-1/2 top-[10px] w-[10ch] -translate-x-1/2 text-center text-xs font-medium uppercase leading-tight"
         data-rosette="data-availability"
       >
         Data availability
       </span>
       <span
-        className="Rosette-Text absolute top-[72px] left-[207px] rotate-[64deg] text-center text-xs font-medium uppercase leading-tight"
+        className="Rosette-Text absolute left-[207px] top-[72px] rotate-[64deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="exit-window"
       >
         Exit window
@@ -205,17 +205,17 @@ export function BigRosette({
         risk={risks.proposerFailure}
       />
       <OverlayBox
-        className="absolute top-44 left-0"
+        className="absolute left-0 top-44"
         data-rosette="state-validation"
         risk={risks.stateValidation}
       />
       <OverlayBox
-        className="absolute top-44 left-0"
+        className="absolute left-0 top-44"
         data-rosette="exit-window"
         risk={risks.exitWindow}
       />
       <OverlayBox
-        className="absolute top-44 left-0"
+        className="absolute left-0 top-44"
         data-rosette="data-availability"
         risk={risks.dataAvailability}
       />
@@ -367,7 +367,7 @@ function BigRosetteIcon({
         }
       </Icon>
       {isUpcoming && (
-        <UpcomingBadge className="absolute top-[130px] left-[90px]" />
+        <UpcomingBadge className="absolute left-[90px] top-[130px]" />
       )}
     </>
   )

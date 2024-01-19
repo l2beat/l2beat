@@ -90,7 +90,7 @@ export function DetailsHeader(props: HeaderProps) {
                 }
                 color="yellow"
                 isCritical={false}
-                className="w-full items-center justify-center py-2.5 px-2.5 text-xs md:text-base"
+                className="w-full items-center justify-center px-2.5 py-2.5 text-xs md:text-base"
               />
             )}
           </div>

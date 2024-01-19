@@ -118,7 +118,7 @@ export function TableView<T>({
           {groupedColumns && <EmptyRow groupedColumns={groupedColumns} />}
         </tbody>
       </table>
-      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
+      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pb-10 pt-10 group-data-[state=empty]/tableview:flex">
         <span className="mb-4 text-2xl font-semibold">No results</span>
         <span className="mb-6">There are no results meeting the criteria</span>
         <Link className="ProjectFilters-ResetButton cursor-pointer">

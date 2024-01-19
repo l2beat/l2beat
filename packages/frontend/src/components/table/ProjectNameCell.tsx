@@ -28,7 +28,7 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
         <span className="pl-1.5">
           <Tooltip className="inline-block">
             <TooltipTrigger>
-              <UnverifiedIcon className="size-4 relative top-px fill-red-300" />
+              <UnverifiedIcon className="relative top-px size-4 fill-red-300" />
             </TooltipTrigger>
             <TooltipContent>
               This project contains unverified contracts.
@@ -40,7 +40,7 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
         <span className="pl-1.5">
           <Tooltip className="inline-block">
             <TooltipTrigger>
-              <ShieldIcon className="size-4 relative top-px fill-red-300" />
+              <ShieldIcon className="relative top-px size-4 fill-red-300" />
             </TooltipTrigger>
             <TooltipContent>{project.redWarning}</TooltipContent>
           </Tooltip>
@@ -50,7 +50,7 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
         <span className="pl-1.5">
           <Tooltip className="inline-block">
             <TooltipTrigger>
-              <UnderReviewIcon className="size-4 relative top-px" />
+              <UnderReviewIcon className="relative top-px size-4" />
             </TooltipTrigger>
             <TooltipContent>This project is under review.</TooltipContent>
           </Tooltip>

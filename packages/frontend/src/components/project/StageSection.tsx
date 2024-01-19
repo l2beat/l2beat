@@ -35,7 +35,7 @@ export function StageSection(props: StageSectionProps) {
           <img
             src={props.icon}
             alt={props.name}
-            className="size-6 relative -top-0.5 mr-2 inline-block"
+            className="relative -top-0.5 mr-2 inline-block size-6"
           />
           {props.name} is currently
           <StageBadge
@@ -61,7 +61,7 @@ export function StageSection(props: StageSectionProps) {
         <img
           src={props.icon}
           alt={props.name}
-          className="size-6 relative -top-0.5 mr-2 inline-block"
+          className="relative -top-0.5 mr-2 inline-block size-6"
         />
         {props.name} is a{' '}
         <StageBadge

@@ -13,7 +13,7 @@ export function Banner() {
       Gitcoin Grants 19!
       <span className="ml-2 group-hover:underline">
         Donate here
-        <ArrowRightIcon className="size-3 relative -top-px ml-1 inline-block" />
+        <ArrowRightIcon className="relative -top-px ml-1 inline-block size-3" />
       </span>
     </a>
   )

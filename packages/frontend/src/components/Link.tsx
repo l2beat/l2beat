@@ -36,7 +36,7 @@ export function Link({
       className={classNames(
         'group data-[state=highlighted]:relative',
         'data-[state=highlighted]:before:absolute data-[state=highlighted]:before:-left-1 data-[state=highlighted]:before:-top-0.5',
-        'data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:rounded',
+        'data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:rounded',
         'data-[state=highlighted]:before:-z-10 data-[state=highlighted]:before:border',
         'data-[state=highlighted]:before:border-dashed data-[state=highlighted]:before:border-yellow-700 data-[state=highlighted]:before:bg-yellow-250 data-[state=highlighted]:before:bg-opacity-50 data-[state=highlighted]:before:content-[""]',
         'data-[state=highlighted]:before:dark:border-yellow-250 data-[state=highlighted]:before:dark:bg-opacity-10',

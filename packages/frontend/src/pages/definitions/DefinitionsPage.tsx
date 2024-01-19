@@ -15,7 +15,7 @@ export function DefinitionsPage(props: DefinitionsPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent className="max-w-[840px] pt-16 pb-24 leading-loose">
+      <PageContent className="max-w-[840px] pb-24 pt-16 leading-loose">
         <h1 className="mt- mb-6 text-center text-4xl font-bold">
           L2BEAT definitions
         </h1>
