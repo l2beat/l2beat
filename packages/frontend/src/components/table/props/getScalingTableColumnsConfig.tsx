@@ -603,9 +603,7 @@ export function getScalingLivenessColumnsConfig() {
       getValue: (project) => (
         <AnomalyIndicator
           anomalyEntries={project.anomalyEntries}
-          showComingSoon={
-            project.slug === 'starknet' || project.slug === 'linea'
-          }
+          showComingSoon={project.slug === 'linea'}
         />
       ),
     },
