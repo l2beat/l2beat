@@ -16,7 +16,8 @@
     "get-lz-data": "node -r esbuild-register scripts/omnichain",
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
-    "tokens": "node -r esbuild-register src/tokens/script.ts"
+    "tokens": "node -r esbuild-register src/tokens/script.ts",
+    "tokens:check-holes": "node -r esbuild-register scripts/detectCoingeckoPriceHoles.ts 4"
   },
   "dependencies": {
     "@l2beat/backend-tools": "^0.5.0",
