@@ -1,4 +1,3 @@
-import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient } from '@l2beat/shared'
 import {
   assert,
@@ -12,30 +11,18 @@ import { providers, utils } from 'ethers'
 import { ethereum } from '../chains/ethereum'
 
 export async function getTokenInfo(
+  provider: providers.JsonRpcProvider,
   coingeckoClient: CoingeckoClient,
   _symbol: string,
   coingeckoId: CoingeckoId,
   address: EthereumAddress,
-  devId: string,
   _coingeckoId: CoingeckoId | undefined,
 ) {
-  // TODO: this should be automatically loaded using new dynamic envs
-  const env = getEnv()
-  const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
-  if (!rpcUrl) {
-    console.log(
-      chalk.red('Missing environmental variable ') +
-        `${devId.toUpperCase()}_RPC_URL\n`,
-    )
-    process.exit(1)
-  }
-  const provider = new providers.JsonRpcProvider(rpcUrl)
-
   const [name, symbol, decimals, iconUrl, sinceTimestamp] = await Promise.all([
     getName(provider, address),
     getSymbol(provider, address),
     getDecimals(provider, address),
-    coingeckoClient.getImageUrl(coingeckoId),
+    getImageUrl(coingeckoClient, coingeckoId),
     getSinceTimestamp(provider, coingeckoClient, address, coingeckoId),
   ])
 
@@ -64,10 +51,20 @@ const ABI = [
 ]
 const CODER = new utils.Interface(ABI)
 
+function getImageUrl(
+  coingeckoClient: CoingeckoClient,
+  coingeckoId: CoingeckoId,
+): Promise<string> {
+  console.log(chalk.yellow('\tFetching... ') + `image url`)
+  return coingeckoClient.getImageUrl(coingeckoId)
+}
+
 async function getName(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
 ) {
+  console.log(chalk.yellow('\tFetching... ') + `name()`)
+
   const nameResult = await provider.call({
     to: address.toString(),
     data: '0x06fdde03', // name()
@@ -83,6 +80,8 @@ async function getSymbol(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
 ) {
+  console.log(chalk.yellow('\tFetching... ') + `symbol()`)
+
   const symbolResult = await provider.call({
     to: address.toString(),
     data: '0x95d89b41', // symbol()
@@ -98,6 +97,8 @@ async function getDecimals(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
 ) {
+  console.log(chalk.yellow('\tFetching... ') + `decimals()`)
+
   const decimalsResult = await provider.call({
     to: address.toString(),
     data: '0x313ce567', // decimals()
@@ -116,6 +117,8 @@ async function getSinceTimestamp(
   address: EthereumAddress,
   coingeckoId: CoingeckoId,
 ) {
+  console.log(chalk.yellow('\tFetching... ') + `sinceTimestamp`)
+
   const contractCreationTimestamp = await getContractCreationTimestamp(
     provider,
     address,

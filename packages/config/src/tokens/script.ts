@@ -10,6 +10,7 @@ import {
   Token,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
@@ -84,19 +85,11 @@ async function main() {
     console.log(chalk.yellow('Processing... ') + `chain ${devId}`)
 
     for (const entry of entries) {
-      if (!entry.address) {
-        console.log(
-          chalk.red('Error ') +
-            `native asset detected ${entry.symbol}. Configure manually\n`,
-        )
-        process.exit(1)
-      }
-
       const type = devId === 'ethereum' ? 'CBV' : entry.type
       if (type === undefined) {
         console.log(
           chalk.red('Missing type for ') +
-            `${devId} ${entry.symbol} ${entry.address.toString()}\n`,
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
         )
         process.exit(1)
       }
@@ -104,7 +97,7 @@ async function main() {
       if (formula === undefined) {
         console.log(
           chalk.red('Missing formula for ') +
-            `${devId} ${entry.symbol} ${entry.address.toString()}\n`,
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}\n`,
         )
         process.exit(1)
       }
@@ -123,7 +116,7 @@ async function main() {
       if (present) {
         console.log(
           chalk.gray('Skipping ') +
-            `${devId} ${entry.symbol} ${entry.address.toString()}`,
+            `${devId} ${entry.symbol} ${entry.address?.toString() ?? ''}`,
         )
         result.push({
           ...present,
@@ -132,6 +125,14 @@ async function main() {
           formula,
         })
         continue
+      }
+
+      if (!entry.address) {
+        console.log(
+          chalk.red('Error ') +
+            `native asset detected ${entry.symbol}. Configure manually\n`,
+        )
+        process.exit(1)
       }
 
       const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
@@ -152,12 +153,24 @@ async function main() {
           chain.coingeckoPlatform,
         ))
 
+      // TODO: this should be automatically loaded using new dynamic envs
+      const env = getEnv()
+      const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
+      if (!rpcUrl) {
+        console.log(
+          chalk.red('Missing environmental variable ') +
+            `${devId.toUpperCase()}_RPC_URL\n`,
+        )
+        process.exit(1)
+      }
+      const provider = new providers.JsonRpcProvider(rpcUrl)
+
       const tokenInfo = await getTokenInfo(
+        provider,
         coingeckoClient,
         entry.symbol,
         coingeckoId,
         entry.address,
-        devId,
         entry.coingeckoId,
       )
 
