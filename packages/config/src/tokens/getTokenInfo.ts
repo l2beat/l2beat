@@ -1,4 +1,4 @@
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
+import { CoingeckoClient } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -72,7 +72,7 @@ async function getName(
     throw new Error('Could not find name for token')
   }
   const name = CODER.decodeFunctionResult('name', nameResult)[0] as string
-  return name.replaceAll(' ', '-')
+  return name
 }
 
 async function getSymbol(
@@ -87,7 +87,7 @@ async function getSymbol(
     throw new Error('Could not find symbol for token')
   }
   const symbol = CODER.decodeFunctionResult('symbol', symbolResult)[0] as string
-  return symbol.replaceAll(' ', '-')
+  return symbol
 }
 
 async function getDecimals(
@@ -153,14 +153,6 @@ async function getSinceTimestamp(
   const firstCoingeckoPriceTimestamp = new UnixTime(
     coingeckoPriceHistoryData.prices[0].date.getTime() / 1000,
   )
-  //We call it to check if there is a gap in price history
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-  await coingeckoQueryService.getUsdPriceHistory(
-    coingeckoId,
-    firstCoingeckoPriceTimestamp,
-    UnixTime.now(),
-  )
-  // If code reaches here, then the price data is okay
 
   const timestamp = Math.max(
     contractCreationTimestamp.toNumber(),
