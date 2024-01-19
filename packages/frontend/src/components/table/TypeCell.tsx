@@ -97,8 +97,8 @@ interface TypeTooltipProps {
 function TypeTooltip({ Icon, text }: TypeTooltipProps) {
   return (
     <Tooltip className="inline">
-      <TooltipTrigger className="relative ml-1 inline-block h-4 w-4">
-        <Icon className="absolute -top-0.5 left-0 h-4 w-4" />
+      <TooltipTrigger className="size-4 relative ml-1 inline-block">
+        <Icon className="size-4 absolute -top-0.5 left-0" />
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>
     </Tooltip>

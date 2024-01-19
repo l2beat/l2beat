@@ -18,7 +18,7 @@ export function StageDisclaimer({
       color="blue"
       icon={
         <InfoIcon
-          className={cx(' fill-blue-500', small ? 'h-4 w-4' : 'h-5 w-5')}
+          className={cx(' fill-blue-500', small ? 'size-4' : 'size-5')}
         />
       }
       body={text}

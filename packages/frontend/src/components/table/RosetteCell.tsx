@@ -17,7 +17,7 @@ export function RosetteCell({ riskValues, isUpcoming }: RosetteCellProps) {
       <TooltipTrigger>
         <SmallRosette
           risks={riskSentiments}
-          className="h-6 w-6 md:h-8 md:w-8"
+          className="size-6 md:h-8 md:w-8"
           isUpcoming={isUpcoming}
         />
       </TooltipTrigger>

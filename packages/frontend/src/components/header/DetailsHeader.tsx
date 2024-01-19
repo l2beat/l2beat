@@ -61,7 +61,7 @@ export function DetailsHeader(props: HeaderProps) {
             >
               {props.icon && (
                 <img
-                  className="h-8 w-8 md:h-10 md:w-10"
+                  className="size-8 md:h-10 md:w-10"
                   src={props.icon}
                   alt={`${props.title} logo`}
                 />
