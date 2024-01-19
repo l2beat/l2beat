@@ -75,6 +75,20 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       slug: 'omnichain',
     },
   },
+  {
+    id: AssetId('mantapacific:manta-manta'),
+    name: 'Manta',
+    symbol: 'MANTA',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/34289/large/manta.jpg?1704468717',
+    address: EthereumAddress('0x95CeF13441Be50d20cA4558CC0a27B601aC544E5'),
+    coingeckoId: CoingeckoId('manta-network'),
+    sinceTimestamp: new UnixTime(1705575682),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
+  },
 ]
 
 export const mantapacific: Layer2 = {
