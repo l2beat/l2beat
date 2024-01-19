@@ -662,6 +662,14 @@ export function getScalingFinalityColumnsConfig() {
       },
     },
     {
+      name: 'State update delay',
+      getValue: () => (
+        <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+          Coming soon
+        </span>
+      ),
+    },
+    {
       name: 'Execution delay',
       tooltip:
         'Time interval between state root submission and state root finalization. For Optimistic Rollups, this usually corresponds to the challenge period, whereas for ZK Rollups, it might be added as a safety precaution.',
