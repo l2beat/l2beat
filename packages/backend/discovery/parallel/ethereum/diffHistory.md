@@ -1,8 +1,8 @@
-# Diff at Thu, 18 Jan 2024 15:20:49 GMT:
+# Diff at Fri, 19 Jan 2024 07:42:24 GMT:
 
-- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@a71a2707b2bfc311414db33e095b8672ca13b5d4 block: 19032900
-- current block number: 19034601
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@66d81d543e5774973a4ef4bf257f67dd0862a255 block: 18962479
+- current block number: 19039481
 
 ## Description
 
@@ -11,8 +11,8 @@ Added discovery of rollup validators.
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 19032900 (main branch discovery), not current.
+or/and contracts becoming verified, not from differences found during 
+discovery. Values are for block 18962479 (main branch discovery), not current.
 
 ```diff
     contract  (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
@@ -21,6 +21,18 @@ discovery. Values are for block 19032900 (main branch discovery), not current.
 +        "OneStepProverMemory"
       derivedName:
 +        ""
+    }
+```
+
+```diff
+    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+      name:
+-        "GnosisSafe"
++        "OwnerMultisig"
+      values.nonce:
+-        9
+      derivedName:
++        "GnosisSafe"
     }
 ```
 
@@ -72,34 +84,6 @@ discovery. Values are for block 19032900 (main branch discovery), not current.
 +        "OneStepProver0"
       derivedName:
 +        ""
-    }
-```
-
-# Diff at Thu, 18 Jan 2024 09:37:21 GMT:
-
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18962479
-- current block number: 19032900
-
-## Description
-
-Ignore nonce of GnosisSafe multisig
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 18962479 (main branch discovery), not current.
-
-```diff
-    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
-      name:
--        "GnosisSafe"
-+        "OwnerMultisig"
-      values.nonce:
--        9
-      derivedName:
-+        "GnosisSafe"
     }
 ```
 

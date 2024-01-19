@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import {
+  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -269,7 +270,21 @@ export const parallel: Layer2 = {
       accounts: [EOAExecutor],
       description: 'EOA that can execute upgrades via the UpgradeExecutor.',
     },
-    // TODO: add Sequencers and Proposers
+    {
+      name: 'Validators/Proposers',
+      accounts: discovery.getPermissionedAccounts('RollupProxy', 'validators'),
+      description:
+        'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
+    },
+    {
+      name: 'Sequencer',
+      accounts: discovery.getPermissionedAccounts(
+        'SequencerInbox',
+        'batchPosters',
+      ),
+      description:
+        'Central actors allowed to submit transaction batches to L1.',
+    },
   ],
   contracts: {
     addresses: [
@@ -311,7 +326,7 @@ export const parallel: Layer2 = {
       discovery.getContractDetails('OneStepProverHostIo'),
       discovery.getContractDetails('OneStepProver0'),
     ],
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [],
   knowledgeNuggets: [],
