@@ -85,6 +85,7 @@ describe('icons', () => {
     'taiko',
     'x1',
     'xchain',
+    'zkcandy',
     'zkfair',
     'zkspace',
     'zksync2',
