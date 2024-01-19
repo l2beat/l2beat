@@ -52,7 +52,9 @@ export function getScalingFinalityViewEntry(
       warning: project.display.finality?.warning,
     },
     finalizationPeriod: project.display.finality?.finalizationPeriod
-      ? formatSeconds(project.display.finality.finalizationPeriod)
+      ? formatSeconds(project.display.finality.finalizationPeriod, {
+          fullUnit: true,
+        })
       : undefined,
   }
 }
