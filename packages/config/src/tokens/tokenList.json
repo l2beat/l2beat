@@ -3322,7 +3322,7 @@
       "id": "arb-arbitrum",
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
-      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
       "symbol": "ARB",
       "decimals": 18,
       "sinceTimestamp": 1630233600,
