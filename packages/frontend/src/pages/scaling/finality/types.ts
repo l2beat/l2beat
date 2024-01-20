@@ -27,4 +27,5 @@ export interface ScalingFinalityViewEntry {
     maximumInSeconds: number
     warning?: string
   }
+  finalizationPeriod?: string
 }

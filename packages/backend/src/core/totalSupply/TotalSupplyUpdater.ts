@@ -47,7 +47,6 @@ export class TotalSupplyUpdater {
       'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
     )
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.configHash = getTotalSupplyConfigHash(tokens)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),

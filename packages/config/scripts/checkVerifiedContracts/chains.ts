@@ -1,12 +1,12 @@
-import { Bridge, Layer2 } from '../../src'
+import { Project } from './types'
 
-export function getChainDevIds(projects: (Layer2 | Bridge)[]): string[] {
+export function getChainDevIds(projects: Project[]): string[] {
   return projects
     .flatMap(getProjectDevIds)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-function getProjectDevIds(project: Layer2 | Bridge): string[] {
+function getProjectDevIds(project: Project): string[] {
   const devIds =
     project.contracts?.addresses.map(
       (contract) => contract.devId ?? 'ethereum',

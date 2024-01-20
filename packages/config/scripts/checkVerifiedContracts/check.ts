@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { bridges, layer2s } from '../../src'
+import { bridges, layer2s, layer3s } from '../../src'
 import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
 import {
   areAllProjectContractsVerified,
@@ -19,7 +19,7 @@ import {
 import { verifyContracts } from './tasks'
 
 export async function check(workersCount: number, logger: Logger) {
-  const projects = [...layer2s, ...bridges]
+  const projects = [...layer2s, ...bridges, ...layer3s]
   const devIds = getChainDevIds(projects)
 
   const addressVerificationMapPerChain: VerificationMapPerChain = {}

@@ -1,4 +1,5 @@
-import { formatSeconds } from '../utils/formatSeconds'
+import { formatSeconds } from '@l2beat/shared-pure'
+
 import { CONTRACTS } from './contracts'
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 

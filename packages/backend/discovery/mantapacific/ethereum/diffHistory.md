@@ -1,3 +1,23 @@
+# Diff at Fri, 19 Jan 2024 12:03:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@a25b693cc3754074753705b502d4656fdd29ecbb block: 18927709
+- current block number: 19040782
+
+## Description
+
+L2 Block gas limit increased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.gasLimit:
+-        30000000
++        100000000
+    }
+```
+
 # Diff at Wed, 03 Jan 2024 15:26:09 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

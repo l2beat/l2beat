@@ -603,9 +603,7 @@ export function getScalingLivenessColumnsConfig() {
       getValue: (project) => (
         <AnomalyIndicator
           anomalyEntries={project.anomalyEntries}
-          showComingSoon={
-            project.slug === 'starknet' || project.slug === 'linea'
-          }
+          showComingSoon={project.slug === 'linea'}
         />
       ),
     },
@@ -652,7 +650,7 @@ export function getScalingFinalityColumnsConfig() {
       },
     },
     {
-      name: '30-day avg. time to finality',
+      name: 'Time to finality\n30-day avg.',
       getValue: (project) => (
         <FinalityDurationCell data={project.timeToFinalize} />
       ),
@@ -662,6 +660,22 @@ export function getScalingFinalityColumnsConfig() {
         rule: 'numeric',
         getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
       },
+    },
+    {
+      name: 'State update delay',
+      tooltip:
+        'Time interval between time to finality and state root submission.',
+      getValue: () => (
+        <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+          Coming soon
+        </span>
+      ),
+    },
+    {
+      name: 'Execution delay',
+      tooltip:
+        'Time interval between state root submission and state root finalization. For Optimistic Rollups, this usually corresponds to the challenge period, whereas for ZK Rollups, it might be added as a safety precaution.',
+      getValue: (project) => <span>{project.finalizationPeriod}</span>,
     },
   ]
   return columns

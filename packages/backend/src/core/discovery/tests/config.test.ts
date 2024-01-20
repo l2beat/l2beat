@@ -16,9 +16,9 @@ describe('discovery config.jsonc', () => {
 
   before(async () => {
     chainConfigs = await Promise.all(
-      ChainId.getAll().map(
-        async (chainId) => await configReader.readAllConfigsForChain(chainId),
-      ),
+      configReader
+        .readAllChains()
+        .map((chain) => configReader.readAllConfigsForChain(chain)),
     )
   })
 

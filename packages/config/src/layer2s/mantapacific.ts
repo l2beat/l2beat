@@ -3,6 +3,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   Token,
   UnixTime,
@@ -21,7 +22,6 @@ import {
 import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { Layer2 } from './types'
 
@@ -74,6 +74,20 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
       bridge: 'Layer Zero',
       slug: 'omnichain',
     },
+  },
+  {
+    id: AssetId('mantapacific:manta-manta'),
+    name: 'Manta',
+    symbol: 'MANTA',
+    decimals: 18,
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/34289/large/manta.jpg?1704468717',
+    address: EthereumAddress('0x95CeF13441Be50d20cA4558CC0a27B601aC544E5'),
+    coingeckoId: CoingeckoId('manta-network'),
+    sinceTimestamp: new UnixTime(1705575682),
+    category: 'other',
+    type: 'NMV',
+    formula: 'circulatingSupply',
   },
 ]
 

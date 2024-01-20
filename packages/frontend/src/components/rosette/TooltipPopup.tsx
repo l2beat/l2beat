@@ -4,6 +4,7 @@ import React from 'react'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
+import { RoundedWarningIcon } from '../icons'
 import { MediumRosette } from './Rosette'
 
 export interface RosetteTooltipProps {
@@ -85,8 +86,16 @@ function RiskValueComponent({ title, risk }: RiskValueProps) {
       {risk.sentiment === 'UnderReview' ? (
         <UnderReviewBadge />
       ) : (
-        <span className={cx(sentimentToTextColor(risk.sentiment), 'text-base')}>
+        <span
+          className={cx(
+            sentimentToTextColor(risk.sentiment),
+            'flex items-center gap-1 text-base',
+          )}
+        >
           {risk.value}
+          {risk.warning && (
+            <RoundedWarningIcon className="h-4 w-4 fill-current" />
+          )}
         </span>
       )}
     </div>

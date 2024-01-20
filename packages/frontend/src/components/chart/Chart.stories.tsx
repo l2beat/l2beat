@@ -269,6 +269,7 @@ export const TvlWithTokens: Story = {
 
 export const TvlWithActivity: Story = {
   args: {
+    hasTvl: true,
     hasActivity: true,
     header: 'project',
   },
@@ -277,6 +278,7 @@ export const TvlWithActivity: Story = {
 export const DetailedTvlWithActivity: Story = {
   args: {
     initialType: { type: 'storybook-fake-detailed-tvl' },
+    hasTvl: true,
     hasActivity: true,
     header: 'project',
   },

@@ -109,6 +109,8 @@ export function DetailsHeader(props: HeaderProps) {
                 stats={props.stats.l2Tvl}
                 tvlBreakdownHref={props.tvlBreakdownHref}
                 showTvlBreakdown={props.showTvlBreakdown}
+                isArchived={props.isArchived}
+                type={props.type}
               />
             )}
             <ProjectSummary
