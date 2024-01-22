@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   DATA_AVAILABILITY,
@@ -36,7 +36,26 @@ export const layer2aWithDups: Layer2 = {
     stage: 'NotApplicable',
   },
   config: {
-    escrows: [],
+    escrows: [
+      {
+        // this is an old version, so it is not visible on frontend
+        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
+        contract: {
+          name: 'SynthetixBridgeEscrow',
+        },
+        sinceTimestamp: new UnixTime(1609459200),
+        tokens: ['SNX'],
+      },
+      {
+        // this is a new version, so it is visible on frontend and should be included in verification script output
+        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+        contract: {
+          name: 'L1Escrow',
+        },
+        sinceTimestamp: new UnixTime(1609459200),
+        tokens: ['SNX'],
+      },
+    ],
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,
@@ -254,10 +273,6 @@ export const layer2aWithDups: Layer2 = {
       {
         name: 'SynthetixBridgeToLayer2a',
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
-      },
-      {
-        name: 'SynthetixBridgeEscrow',
-        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
       },
       {
         name: 'L1DaiGateway',
