@@ -2,7 +2,7 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 18768542,
-  "configHash": "0x087b9989306e11a8d2db2c0ced551a809b035a18b56eeb2752b5d5589cea5ee1",
+  "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
   "version": 3,
   "contracts": [
     {

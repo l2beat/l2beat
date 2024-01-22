@@ -2,7 +2,7 @@
   "name": "eigenlayer",
   "chain": "ethereum",
   "blockNumber": 19033739,
-  "configHash": "0x35dbb41b366aedf3caa2a69d2c67967811cd166cd7917029f24b0e19764fa8c8",
+  "configHash": "0x5950844eac2ee51d4cd8993b6e3af7a5642365a128e69d84db25e10893fad00c",
   "version": 3,
   "contracts": [
     {
