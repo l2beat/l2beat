@@ -2,11 +2,11 @@ import chalk from 'chalk'
 
 export class ScriptLogger {
   notify(notification: string, message: string) {
-    console.log(chalk.yellow(notification) + message)
+    console.log(chalk.yellow(notification) + ' ' + message)
   }
 
   success(notification: string, message: string) {
-    console.log(chalk.green(notification) + message + '\n')
+    console.log(chalk.green(notification) + ' ' + message + '\n')
   }
 
   check(condition: boolean, message: string) {
