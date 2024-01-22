@@ -4,7 +4,8 @@ import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesSummaryPage } from './bridges/summary'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
-import { getGovernancePage } from './governance'
+import { getGovernancePage } from './governance/index'
+import { getGovernancePostPages } from './governance/posts'
 import { getL2DaysPage } from './l2days'
 import { getL3sProjectPages } from './layer3s'
 import { getMetaImagePages } from './meta-images'
@@ -93,5 +94,6 @@ export async function renderPages(config: Config, pagesData: PagesData) {
 
   pages.push(getGovernancePage(config))
 
+  pages.push(...getGovernancePostPages(config))
   outputPages(pages)
 }

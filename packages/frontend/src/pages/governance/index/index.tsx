@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Config } from '../../build/config'
-import { PageWrapper } from '../../components'
+import { Config } from '../../../build/config'
+import { PageWrapper } from '../../../components'
 import { getProps } from './props/getProps'
 import { GovernancePage } from './view/GovernancePage'
 
@@ -11,7 +11,7 @@ export function getGovernancePage(config: Config) {
     slug: '/governance',
     page: (
       <PageWrapper {...wrapper}>
-        <GovernancePage {...props}/>
+        <GovernancePage {...props} />
       </PageWrapper>
     ),
   }
