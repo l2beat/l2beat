@@ -1,4 +1,38 @@
-# Diff at Wed, 20 Dec 2023 13:59:50 GMT:
+# Diff at Mon, 22 Jan 2024 18:16:15 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: master@f58cc44bf923844f52038487bcd5a563329f4b43 block: 18827571
+- current block number: 19063980
+
+## Description
+
+MetaRouter has been verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18827571 (main branch discovery), not current.
+
+```diff
+    contract MetaRouter (0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F) {
+      unverified:
+-        true
+      derivedName:
+-        ""
++        "MetaRouter"
+      values:
++        {"metaRouterGateway":"0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MetaRouterGateway (0xfCEF2Fe72413b65d3F393d278A714caD87512bcd) {
+    }
+```
+
+# Diff at Wed, 20 Dec 2023 13:59:50 GMT
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@fea77c90d7ee6217f84ee87d58e123b42f0b5273
@@ -61,7 +95,7 @@ Added a `_crossChainID` param. Basically not used anywhere except in events.
  14 files changed, 30 insertions(+), 731 deletions(-)
 ```
 
-# Diff at Thu, 21 Sep 2023 12:32:23 GMT:
+# Diff at Thu, 21 Sep 2023 12:32:23 GMT
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@36d4050a6ee5a543b2163fe6e44153b540b87c16
