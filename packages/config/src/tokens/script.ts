@@ -1,6 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
+  AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
@@ -127,6 +128,21 @@ async function main() {
       const id = `${chain.devId}:${entry.symbol
         .replaceAll(' ', '-')
         .toLowerCase()}-${info.name.replaceAll(' ', '-').toLowerCase()}`
+
+      result.push({
+        id: AssetId(id),
+        chainId,
+        address: entry.address,
+        symbol: entry.symbol,
+        name: info.name,
+        decimals: info.decimals,
+        coingeckoId: info.coingeckoId,
+        sinceTimestamp: info.sinceTimestamp,
+        iconUrl: info.iconUrl,
+        category,
+        type,
+        formula,
+      })
 
       logger.processed()
     }
