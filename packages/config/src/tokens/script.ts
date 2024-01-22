@@ -81,7 +81,7 @@ async function main() {
     chainLogger.processed()
   }
 
-  const sorted = sortByChainAndSymbol(result)
+  const sorted = sortByChainAndName(result)
   logger.success('\nSorted ', 'tokens by chain and name')
 
   saveResults(sorted)
@@ -163,7 +163,7 @@ function getAssetId(chain: ChainConfig, token: SourceEntry, name: string) {
   )
 }
 
-function sortByChainAndSymbol(result: Token[]) {
+function sortByChainAndName(result: Token[]) {
   return result.sort((a, b) => {
     if (a.chainId !== b.chainId) {
       return Number(a.chainId) - Number(b.chainId)
