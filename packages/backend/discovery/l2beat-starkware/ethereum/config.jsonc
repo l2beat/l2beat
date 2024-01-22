@@ -115,6 +115,9 @@
           "type": "constructorArgs"
         }
       }
+    },
+    "SHARPVerifierGovernorMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
