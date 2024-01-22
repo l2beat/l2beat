@@ -1,7 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
-  AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
@@ -17,10 +16,6 @@ import { chains } from '../chains'
 import { ChainConfig } from '../common'
 import { getTokenInfo } from './utils/getTokenInfo'
 import { ScriptLogger } from './utils/ScriptLogger'
-
-main().catch((e: unknown) => {
-  console.error(e)
-})
 
 const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
@@ -57,6 +52,7 @@ const Output = z.object({
   comment: z.string().optional(),
   tokens: z.array(Token),
 })
+export type Output = z.infer<typeof Output>
 
 async function main() {
   let logger: ScriptLogger = new ScriptLogger({})
@@ -111,32 +107,18 @@ async function main() {
 
       const category = entry.category ?? 'other'
 
-      const present = output.tokens.find((e) => {
-        if (chainId !== e.chainId) {
-          return false
-        }
-        if (!e.address) {
-          return e.symbol === entry.symbol
-        }
-        return e.address === entry.address
-      })
+      const generated = getFromGenerated(output, chainId, entry)
 
-      if (present) {
+      if (generated) {
         logger.skipping()
         result.push({
-          ...present,
+          ...generated,
           category,
           type,
           formula,
         })
         continue
       }
-
-      logger.assert(
-        entry.address !== undefined,
-        `Native asset detected - configure manually`,
-      )
-      const address = entry.address
 
       logger.processing()
 
@@ -172,13 +154,32 @@ async function main() {
   logger.success('\nSaved ', 'output file')
 }
 
+function getFromGenerated(
+  output: Output,
+  chainId: ChainId | undefined,
+  entry: SourceEntry,
+) {
+  return output.tokens.find((e) => {
+    if (chainId !== e.chainId) {
+      return false
+    }
+    if (!e.address) {
+      return e.symbol === entry.symbol
+    }
+    return e.address === entry.address
+  })
+}
+
 async function fetchTokenInfo(
   logger: ScriptLogger,
   coingeckoClient: CoingeckoClient,
   chain: ChainConfig,
   entry: SourceEntry,
 ) {
-  logger.assert(entry.address !== undefined, 'Missing address')
+  logger.assert(
+    entry.address !== undefined,
+    `Native asset detected - configure manually`,
+  )
 
   const coingeckoId =
     entry.coingeckoId ??
@@ -244,3 +245,7 @@ async function getCoingeckoId(
 
   return coin.id
 }
+
+main().catch((e: unknown) => {
+  console.error(e)
+})
