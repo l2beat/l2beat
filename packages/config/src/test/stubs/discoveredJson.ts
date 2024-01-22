@@ -119,6 +119,16 @@ export const discoveredOpStackJsonStub = {
         admin: '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
       },
     },
+    {
+      name: 'L1StandardBridge',
+      address: '0xeBec795c9c8bBD61FFc14A6662944748F299cAcf',
+      code: 'https://etherscan.deth.net/address/0xeBec795c9c8bBD61FFc14A6662944748F299cAcf',
+      upgradeability: {
+        type: 'EIP1967 proxy',
+        implementation: '0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f',
+        admin: '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
+      },
+    },
   ],
   eoas: [],
 }

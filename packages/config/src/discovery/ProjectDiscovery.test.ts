@@ -208,6 +208,26 @@ describe(ProjectDiscovery.name, () => {
             type: 'resolved delegate proxy',
           },
         },
+        {
+          address: EthereumAddress(
+            '0xeBec795c9c8bBD61FFc14A6662944748F299cAcf',
+          ),
+          description:
+            'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
+          name: 'L1StandardBridge',
+          devId: 'ethereum',
+          upgradableBy: ['MockAdmin'],
+          upgradeDelay: 'No delay',
+          upgradeability: {
+            type: 'EIP1967 proxy',
+            implementation: EthereumAddress(
+              '0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f',
+            ),
+            admin: EthereumAddress(
+              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
+            ),
+          },
+        },
       ])
     })
   })
@@ -231,7 +251,8 @@ describe(ProjectDiscovery.name, () => {
               type: 'Contract',
             },
           ],
-          description: 'Admin of SystemConfig, L2OutputOracle.',
+          description:
+            'Admin of SystemConfig, L2OutputOracle, L1StandardBridge.',
           name: 'ProxyAdmin',
           devId: 'ethereum',
         },
