@@ -16,6 +16,19 @@ export class ScriptLogger {
     }
   }
 
+  fetching(...messages: string[]) {
+    this.notify('Fetching...', ...messages)
+  }
+
+  processing(...messages: string[]) {
+    if (this.options.enabled) console.log('\n')
+    this.notify('Processing...', ...messages)
+  }
+
+  processed(...messages: string[]) {
+    this.success('Processed', ...messages)
+  }
+
   notify(notification: string, ...messages: string[]) {
     this.log(this.formatNotification(notification, 'yellow') + ' ', ...messages)
   }
@@ -26,18 +39,6 @@ export class ScriptLogger {
 
   skipping(...messages: string[]) {
     this.log(this.formatNotification('Skipping', 'gray'), ...messages)
-  }
-
-  fetching(...messages: string[]) {
-    this.log(this.formatNotification('Fetching...', 'yellow'), ...messages)
-  }
-
-  processing(...messages: string[]) {
-    this.log(this.formatNotification('Processing...', 'yellow'), ...messages)
-  }
-
-  processed(...messages: string[]) {
-    this.log(this.formatNotification('Processed', 'green'), ...messages)
   }
 
   assert(condition: boolean, ...messages: string[]): asserts condition {
@@ -70,7 +71,7 @@ export class ScriptLogger {
     return logger
   }
 
-  prefix(prefix: string): ScriptLogger {
+  prefix(prefix: string | undefined): ScriptLogger {
     return this.configure({ prefix })
   }
 

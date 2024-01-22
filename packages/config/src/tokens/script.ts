@@ -15,6 +15,7 @@ import { z } from 'zod'
 
 import { chains } from '../chains'
 import { ChainConfig } from '../common'
+import { getCoingeckoId } from './utils/getCoingeckoId'
 import { getTokenInfo } from './utils/getTokenInfo'
 import { ScriptLogger } from './utils/ScriptLogger'
 
@@ -56,62 +57,34 @@ const Output = z.object({
 export type Output = z.infer<typeof Output>
 
 async function main() {
-  let logger: ScriptLogger = new ScriptLogger({})
+  const logger = new ScriptLogger({})
 
-  logger.notify('Loading... ', 'environment variables')
-  const env = getEnv()
-  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
-  logger.success('Loaded ', 'environment variables')
-
-  logger.notify('Loading... ', 'source file')
-  const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
-  const errors: ParseError[] = []
-  const parsed = parse(sourceFile, errors, {
-    allowTrailingComma: true,
-  }) as Record<string, string>
-  logger.assert(errors.length === 0, 'Cannot parse source.jsonc')
-  const source = Source.parse(parsed)
-  logger.success('Loaded ', 'source file')
-
-  logger.notify('Loading... ', 'output file')
-  const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
-  const output = Output.parse(JSON.parse(outputFile))
-  logger.success('Loaded ', 'output file')
+  const coingeckoClient = getCoingeckoClient()
+  const source = getSourceFile(logger)
+  const output = getOutputFile(logger)
 
   const result: Token[] = []
 
   for (const [devId, entries] of Object.entries(source)) {
-    const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
-    logger.assert(
-      chain !== undefined,
-      `Configuration not found, TODO add readme`,
-    )
-    logger.processing(`chain ${devId}`)
-
-    let chainId: ChainId | undefined = undefined
-    try {
-      chainId = ChainId(chain.chainId)
-    } catch (e) {
-      logger.assert(false, `ChainId not found for`)
-    }
+    const chainLogger = logger.prefix(devId)
+    const chain = getChainConfiguration(chainLogger, devId)
+    const chainId = getChainId(chainLogger, chain)
+    chainLogger.processing()
 
     for (const entry of entries) {
-      logger = logger.addMetadata(entry.symbol)
-
+      const tokenLogger: ScriptLogger = chainLogger.addMetadata(entry.symbol)
       const type = devId === 'ethereum' ? 'CBV' : entry.type
-      logger.assert(type !== undefined, `Missing type`)
+      tokenLogger.assert(type !== undefined, `Missing type`)
 
       const formula = devId === 'ethereum' ? 'locked' : entry.formula
-      logger.assert(formula !== undefined, `Missing formula`)
+      tokenLogger.assert(formula !== undefined, `Missing formula`)
 
       const category = entry.category ?? 'other'
 
       const generated = getFromGenerated(output, chainId, entry)
 
       if (generated) {
-        logger.skipping()
+        tokenLogger.skipping()
         result.push({
           ...generated,
           category,
@@ -121,9 +94,14 @@ async function main() {
         continue
       }
 
-      logger.processing()
+      tokenLogger.processing()
 
-      const info = await fetchTokenInfo(logger, coingeckoClient, chain, entry)
+      const info = await fetchTokenInfo(
+        tokenLogger,
+        coingeckoClient,
+        chain,
+        entry,
+      )
 
       const id = `${chain.devId}:${entry.symbol
         .replaceAll(' ', '-')
@@ -144,30 +122,90 @@ async function main() {
         formula,
       })
 
-      logger.processed()
+      tokenLogger.processed()
     }
 
-    logger.processed()
+    chainLogger.processed()
   }
 
-  result.sort((a, b) => {
-    if (a.chainId !== b.chainId) {
-      return Number(a.chainId) - Number(b.chainId)
-    }
-    return a.name.localeCompare(b.name)
-  })
+  const sorted = sortByChainAndSymbol(result)
   logger.success('\nSorted ', 'tokens by chain and name')
 
+  saveResults(sorted)
+  logger.success('\nSaved ', 'output file')
+}
+
+function getChainId(logger: ScriptLogger, chain: ChainConfig) {
+  let chainId: ChainId | undefined = undefined
+  try {
+    chainId = ChainId(chain.chainId)
+  } catch (e) {
+    logger.assert(false, `ChainId not found for`)
+  }
+  return chainId
+}
+
+function getChainConfiguration(logger: ScriptLogger, devId: string) {
+  const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
+  logger.assert(chain !== undefined, `Configuration not found, TODO add readme`)
+  return chain
+}
+
+function getOutputFile(logger: ScriptLogger) {
+  logger.notify('Loading... ', 'output file')
+
+  const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
+  const output = Output.parse(JSON.parse(outputFile))
+
+  logger.success('Loaded ', 'output file')
+
+  return output
+}
+
+function getSourceFile(logger: ScriptLogger) {
+  logger.notify('Loading... ', 'source file')
+
+  const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
+  const errors: ParseError[] = []
+  const parsed = parse(sourceFile, errors, {
+    allowTrailingComma: true,
+  }) as Record<string, string>
+  logger.assert(errors.length === 0, 'Cannot parse source.jsonc')
+  const source = Source.parse(parsed)
+
+  logger.success('Loaded ', 'source file')
+
+  return source
+}
+
+function getCoingeckoClient() {
+  const env = getEnv()
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
+  const http = new HttpClient()
+  const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
+  return coingeckoClient
+}
+
+function saveResults(result: Token[]) {
+  const comment = 'This file was autogenerated. Please do not edit it manually.'
   const outputJson = JSON.stringify(
     {
-      comment: output.comment,
+      comment: comment,
       tokens: result,
     },
     null,
     2,
   )
   writeFileSync(OUTPUT_FILE_PATH, outputJson + '\n')
-  logger.success('\nSaved ', 'output file')
+}
+
+function sortByChainAndSymbol(result: Token[]) {
+  return result.sort((a, b) => {
+    if (a.chainId !== b.chainId) {
+      return Number(a.chainId) - Number(b.chainId)
+    }
+    return a.name.localeCompare(b.name)
+  })
 }
 
 function getFromGenerated(
@@ -230,36 +268,6 @@ async function fetchTokenInfo(
     sinceTimestamp: tokenInfo.sinceTimestamp,
     iconUrl: tokenInfo.iconUrl,
   }
-}
-
-async function getCoingeckoId(
-  coingeckoClient: CoingeckoClient,
-  logger: ScriptLogger,
-  address: EthereumAddress,
-  platform: string | undefined,
-) {
-  logger.assert(
-    platform !== undefined,
-    'Could not find coingecko platform identifier. Please add it chain config of the project',
-  )
-
-  const coinList = await coingeckoClient.getCoinList({
-    includePlatform: true,
-  })
-
-  const coin = coinList.find((coin) => {
-    return (
-      coin.platforms[platform]?.toLowerCase() ===
-      address.toString().toLowerCase()
-    )
-  })
-
-  logger.assert(
-    coin?.id !== undefined,
-    'Could not find coingeckoId for token. Please add it manually to source.jsonc',
-  )
-
-  return coin.id
 }
 
 main().catch((e: unknown) => {
