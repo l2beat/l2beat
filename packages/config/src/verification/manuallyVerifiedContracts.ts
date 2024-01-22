@@ -20,11 +20,11 @@ export function parseManuallyVerifiedContracts(
 }
 
 export function getManuallyVerifiedContracts(
-  devId: string,
+  chain: string,
 ): ManuallyVerifiedContractsPerChain {
   const jsonFilePath = path.resolve(
     __dirname,
-    `${devId}/manuallyVerified.jsonc`,
+    `${chain}/manuallyVerified.jsonc`,
   )
 
   if (!existsSync(jsonFilePath)) {

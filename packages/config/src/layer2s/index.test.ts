@@ -84,12 +84,12 @@ describe('layer2s', () => {
     })
   })
 
-  describe('devId equals project id', () => {
+  describe('chain name equals project id', () => {
     for (const layer2 of layer2s) {
-      const devId = layer2.chainConfig?.devId
-      if (devId !== undefined) {
+      const name = layer2.chainConfig?.name
+      if (name !== undefined) {
         it(layer2.id.toString(), () => {
-          expect(devId).toEqual(layer2.id.toString())
+          expect(name).toEqual(layer2.id.toString())
         })
       }
     }
