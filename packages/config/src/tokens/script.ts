@@ -14,8 +14,13 @@ import { parse, ParseError } from 'jsonc-parser'
 import { z } from 'zod'
 
 import { chains } from '../chains'
+import { ChainConfig } from '../common'
 import { getTokenInfo } from './utils/getTokenInfo'
 import { ScriptLogger } from './utils/ScriptLogger'
+
+main().catch((e: unknown) => {
+  console.error(e)
+})
 
 const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
@@ -45,6 +50,7 @@ const SourceEntry = z.object({
     }),
   ),
 })
+export type SourceEntry = z.infer<typeof SourceEntry>
 
 const Source = z.record(z.array(SourceEntry))
 const Output = z.object({
@@ -80,7 +86,6 @@ async function main() {
   const result: Token[] = []
 
   for (const [devId, entries] of Object.entries(source)) {
-    logger = logger.prefix(devId)
     const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
     logger.assert(
       chain !== undefined,
@@ -88,15 +93,15 @@ async function main() {
     )
     logger.processing(`chain ${devId}`)
 
+    let chainId: ChainId | undefined = undefined
+    try {
+      chainId = ChainId(chain.chainId)
+    } catch (e) {
+      logger.assert(false, `ChainId not found for`)
+    }
+
     for (const entry of entries) {
       logger = logger.addMetadata(entry.symbol)
-
-      let chainId: ChainId | undefined = undefined
-      try {
-        chainId = ChainId(chain.chainId)
-      } catch (e) {
-        logger.assert(false, `ChainId not found for`)
-      }
 
       const type = devId === 'ethereum' ? 'CBV' : entry.type
       logger.assert(type !== undefined, `Missing type`)
@@ -135,52 +140,11 @@ async function main() {
 
       logger.processing()
 
-      const coingeckoId =
-        entry.coingeckoId ??
-        (await getCoingeckoId(
-          coingeckoClient,
-          logger,
-          address,
-          chain.coingeckoPlatform,
-        ))
+      const info = await fetchTokenInfo(logger, coingeckoClient, chain, entry)
 
-      const env = getEnv()
-      const rpcUrl = env.optionalString(`${devId.toUpperCase()}_RPC_URL`)
-      logger.assert(
-        rpcUrl !== undefined,
-        `Missing environmental variable: ${devId.toUpperCase()}_RPC_URL`,
-      )
-      const provider = new providers.JsonRpcProvider(rpcUrl)
-
-      const tokenInfo = await getTokenInfo(
-        logger,
-        provider,
-        coingeckoClient,
-        address,
-        entry.symbol,
-        coingeckoId,
-      )
-
-      const id = `${devId}:${tokenInfo.symbol
+      const id = `${chain.devId}:${entry.symbol
         .replaceAll(' ', '-')
-        .toLowerCase()}-${tokenInfo.name.replaceAll(' ', '-').toLowerCase()}`
-
-      result.push({
-        id: AssetId(id),
-        name: tokenInfo.name,
-        coingeckoId: tokenInfo.coingeckoId,
-        address,
-        symbol: tokenInfo.symbol,
-        decimals: tokenInfo.decimals,
-        sinceTimestamp: tokenInfo.sinceTimestamp,
-        category,
-        iconUrl: tokenInfo.iconUrl,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        chainId: chainId,
-        type,
-        formula,
-        bridgedUsing: entry.bridgedUsing,
-      })
+        .toLowerCase()}-${info.name.replaceAll(' ', '-').toLowerCase()}`
 
       logger.processed()
     }
@@ -208,9 +172,48 @@ async function main() {
   logger.success('\nSaved ', 'output file')
 }
 
-main().catch((e: unknown) => {
-  console.error(e)
-})
+async function fetchTokenInfo(
+  logger: ScriptLogger,
+  coingeckoClient: CoingeckoClient,
+  chain: ChainConfig,
+  entry: SourceEntry,
+) {
+  logger.assert(entry.address !== undefined, 'Missing address')
+
+  const coingeckoId =
+    entry.coingeckoId ??
+    (await getCoingeckoId(
+      coingeckoClient,
+      logger,
+      entry.address,
+      chain.coingeckoPlatform,
+    ))
+
+  const env = getEnv()
+  const rpcUrl = env.optionalString(`${chain.devId.toUpperCase()}_RPC_URL`)
+  logger.assert(
+    rpcUrl !== undefined,
+    `Missing environmental variable: ${chain.devId.toUpperCase()}_RPC_URL`,
+  )
+  const provider = new providers.JsonRpcProvider(rpcUrl)
+
+  const tokenInfo = await getTokenInfo(
+    logger,
+    provider,
+    coingeckoClient,
+    entry.address,
+    entry.symbol,
+    coingeckoId,
+  )
+
+  return {
+    name: tokenInfo.name,
+    coingeckoId: tokenInfo.coingeckoId,
+    decimals: tokenInfo.decimals,
+    sinceTimestamp: tokenInfo.sinceTimestamp,
+    iconUrl: tokenInfo.iconUrl,
+  }
+}
 
 async function getCoingeckoId(
   coingeckoClient: CoingeckoClient,
