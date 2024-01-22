@@ -16,8 +16,10 @@ import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
-import { getManuallyVerifiedContracts } from './api/getManuallyVerifiedLinks'
-import { getVerificationStatus } from './api/getVerificationStatus'
+import {
+  getManuallyVerifiedContracts,
+  getVerificationStatus,
+} from './api/getVerificationStatus'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
