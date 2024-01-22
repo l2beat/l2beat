@@ -49,7 +49,7 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
   },
   {
     name: 'L1StandardBridge',
-    coreDescription: "The {0} contract is the main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.",
+    coreDescription: "The {0} contract is the main entry point to deposit ERC20 tokens from L1 to L2.",
   },
 ]
 
