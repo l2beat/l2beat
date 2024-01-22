@@ -66,8 +66,9 @@ export class UpdateMonitor {
 
     for (const runner of this.discoveryRunners) {
       const chainId = runner.getChainId()
+      const chain = ChainId.getName(chainId)
       const projectConfigs = await this.configReader.readAllConfigsForChain(
-        chainId,
+        chain,
       )
 
       for (const projectConfig of projectConfigs) {
@@ -81,7 +82,7 @@ export class UpdateMonitor {
 
         const committed = await this.configReader.readDiscovery(
           projectConfig.name,
-          chainId,
+          chain,
         )
 
         const diff = diffDiscovery(
@@ -104,15 +105,14 @@ export class UpdateMonitor {
     // TODO: get block number based on clock time
     const blockNumber = await runner.getBlockNumber()
     const chainId = runner.getChainId()
+    const chain = ChainId.getName(chainId)
 
     const metricsDone = this.initMetrics(blockNumber)
 
-    const projectConfigs = await this.configReader.readAllConfigsForChain(
-      chainId,
-    )
+    const projectConfigs = await this.configReader.readAllConfigsForChain(chain)
 
     this.logger.info('Update started', {
-      chain: ChainId.getName(chainId),
+      chain,
       projects: projectConfigs.length,
       blockNumber,
       timestamp: timestamp.toNumber(),
@@ -121,11 +121,11 @@ export class UpdateMonitor {
 
     for (const projectConfig of projectConfigs) {
       assert(
-        projectConfig.chainId === chainId,
-        `Discovery runner and project config chain id mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
+        projectConfig.chain === chain,
+        `Discovery runner and project config chain mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
       )
       this.logger.info('Project update started', {
-        chain: ChainId.getName(chainId),
+        chain,
         project: projectConfig.name,
       })
 
@@ -133,9 +133,7 @@ export class UpdateMonitor {
         await this.updateProject(runner, projectConfig, blockNumber, timestamp)
       } catch (error) {
         this.logger.error(
-          `[chain: ${ChainId.getName(chainId)}] Failed to update project [${
-            projectConfig.name
-          }]`,
+          `[chain: ${chain}] Failed to update project [${projectConfig.name}]`,
           error,
         )
         errorsCount.inc()
@@ -179,7 +177,7 @@ export class UpdateMonitor {
 
     const deployedDiscovered = await this.configReader.readDiscovery(
       projectConfig.name,
-      projectConfig.chainId,
+      projectConfig.chain,
     )
     const unverifiedContracts = deployedDiscovered.contracts
       .filter((c) => c.unverified)
@@ -233,7 +231,7 @@ export class UpdateMonitor {
       })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
-        runner.getChainId(),
+        ChainId.getName(runner.getChainId()),
       )
     }
 
@@ -264,14 +262,14 @@ export class UpdateMonitor {
     if (diff.length > 0) {
       const dependents = await findDependents(
         projectConfig.name,
-        chainId,
+        ChainId.getName(chainId),
         this.configReader,
       )
       const unknownContracts = await findUnknownContracts(
         discovery.name,
         discovery.contracts,
         this.configReader,
-        chainId,
+        ChainId.getName(chainId),
       )
       await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,

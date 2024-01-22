@@ -84,7 +84,7 @@ export class DiscoveryRunner {
 
     return toDiscoveryOutput(
       config.name,
-      config.chainId,
+      config.chain,
       config.hash,
       blockNumber,
       result,
@@ -115,9 +115,7 @@ export class DiscoveryRunner {
         2,
       )
       logger.warn(
-        `DiscoveryRunner: Retrying ${config.name} (chain: ${ChainId.getName(
-          config.chainId,
-        )}) | attempt:${i} | error:${errorString}`,
+        `DiscoveryRunner: Retrying ${config.name} (chain: ${config.chain}) | attempt:${i} | error:${errorString}`,
       )
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }

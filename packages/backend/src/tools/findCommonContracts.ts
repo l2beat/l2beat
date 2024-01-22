@@ -22,10 +22,11 @@ async function main() {
 
 async function findCommon(config: Config): Promise<void> {
   const configReader = new ConfigReader()
-  const configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
+  // TODO: Why only ethereum?
+  const configs = await configReader.readAllConfigsForChain('ethereum')
 
   const discoveriesFull = await Promise.all(
-    configs.map((c) => configReader.readDiscovery(c.name, c.chainId)),
+    configs.map((c) => configReader.readDiscovery(c.name, c.chain)),
   )
   const discoveries = getFilteredDiscoveries(config, discoveriesFull)
 

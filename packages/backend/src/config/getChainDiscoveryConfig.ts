@@ -1,7 +1,6 @@
 import { Env } from '@l2beat/backend-tools'
 import { chainsByDevId } from '@l2beat/config'
 import { getMulticall3Config } from '@l2beat/discovery'
-import { ChainId } from '@l2beat/shared-pure'
 
 import { UpdateMonitorChainConfig } from './Config'
 
@@ -30,7 +29,7 @@ export function getChainDiscoveryConfig(
   const ENV_NAME = devId.toUpperCase()
 
   return {
-    chainId: ChainId(chain.chainId),
+    chain: chain.devId,
     rpcUrl: env.string(`DISCOVERY_${ENV_NAME}_RPC_URL`),
     rpcGetLogsMaxRange: env.optionalInteger(
       `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,

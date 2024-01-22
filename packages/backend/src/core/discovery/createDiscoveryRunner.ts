@@ -39,7 +39,7 @@ export function createDiscoveryRunner(
     provider,
     etherscanLikeClient,
     discoveryLogger,
-    chainConfig.chainId,
+    chainConfig.chain,
     discoveryCache,
     chainConfig.rpcGetLogsMaxRange,
     chainConfig.reorgSafeDepth,
