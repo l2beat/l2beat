@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 18685523,
-  "configHash": "0x0d3e86b7502d0c3d45b9d17b7acfc99b7fcec53a8f5c4121175149b491cfb667",
+  "configHash": "0xec6f6508bb2633eef9f46a9c0ae8b68122f7f151d72c13df718ff6080e7049f0",
   "version": 3,
   "contracts": [
     {

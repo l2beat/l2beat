@@ -2,7 +2,7 @@
   "name": "polygon-plasma",
   "chain": "ethereum",
   "blockNumber": 19062081,
-  "configHash": "0xa6a26ac439c39e55635de77dc8b7d61f6879f86db46a10d9a9931ac93a2b3111",
+  "configHash": "0x2be707f1fd285dfd5a8ea952e3fa4142b52d37ee866602afdf577c362b731e48",
   "version": 3,
   "contracts": [
     {

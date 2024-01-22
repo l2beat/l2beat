@@ -1,7 +1,7 @@
 import { bridges, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 
 void main().catch((e) => {
@@ -22,10 +22,11 @@ async function main() {
 
 async function findCommon(config: Config): Promise<void> {
   const configReader = new ConfigReader()
-  const configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
+  // TODO: Why only ethereum?
+  const configs = await configReader.readAllConfigsForChain('ethereum')
 
   const discoveriesFull = await Promise.all(
-    configs.map((c) => configReader.readDiscovery(c.name, c.chainId)),
+    configs.map((c) => configReader.readDiscovery(c.name, c.chain)),
   )
   const discoveries = getFilteredDiscoveries(config, discoveriesFull)
 

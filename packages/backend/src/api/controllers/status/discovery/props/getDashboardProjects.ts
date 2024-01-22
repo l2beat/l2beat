@@ -25,12 +25,17 @@ export async function getDashboardProjects(
   updateMonitorRepository: UpdateMonitorRepository,
   chainId: ChainId,
 ): Promise<DashboardProject[]> {
-  const configs = await configReader.readAllConfigsForChain(chainId)
+  const configs = await configReader.readAllConfigsForChain(
+    ChainId.getName(chainId),
+  )
 
   const configuredProjects: DashboardProject[] = []
 
   for (const config of configs) {
-    const discovery = await configReader.readDiscovery(config.name, chainId)
+    const discovery = await configReader.readDiscovery(
+      config.name,
+      ChainId.getName(chainId),
+    )
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
       discovery,

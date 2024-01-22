@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "optimism",
   "blockNumber": 114609805,
-  "configHash": "0xdd0d3ab1a1c832aada3af5064f465ab8e8ba9a571e478fcf7043606319f78b9f",
+  "configHash": "0xa8f686361ee8e8c728e230c02b54dd92327df396d95339429826b82b9ff685d2",
   "version": 3,
   "contracts": [
     {
