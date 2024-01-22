@@ -1,20 +1,13 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  stringAs,
-  Token,
-} from '@l2beat/shared-pure'
+import { AssetId, ChainId, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
-import { z } from 'zod'
 
 import { chains } from '../chains'
 import { ChainConfig } from '../common'
+import { Output, Source, SourceEntry } from './types'
 import { getCoingeckoId } from './utils/getCoingeckoId'
 import { getTokenInfo } from './utils/getTokenInfo'
 import { ScriptLogger } from './utils/ScriptLogger'
@@ -22,71 +15,33 @@ import { ScriptLogger } from './utils/ScriptLogger'
 const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
 
-const SourceEntry = z.object({
-  symbol: z.string(),
-  address: stringAs(EthereumAddress).optional(),
-  coingeckoId: stringAs((s) => CoingeckoId(s)).optional(),
-  category: z
-    .union([z.literal('ether'), z.literal('stablecoin'), z.literal('other')])
-    .optional(),
-  type: z
-    .union([z.literal('CBV'), z.literal('EBV'), z.literal('NMV')])
-    .optional(),
-  formula: z
-    .union([
-      z.literal('totalSupply'),
-      z.literal('locked'),
-      z.literal('circulatingSupply'),
-    ])
-    .optional(),
-
-  bridgedUsing: z.optional(
-    z.object({
-      bridge: z.string(),
-      slug: z.string().optional(),
-    }),
-  ),
-})
-export type SourceEntry = z.infer<typeof SourceEntry>
-
-const Source = z.record(z.array(SourceEntry))
-const Output = z.object({
-  comment: z.string().optional(),
-  tokens: z.array(Token),
-})
-export type Output = z.infer<typeof Output>
-
 async function main() {
   const logger = new ScriptLogger({})
-
   const coingeckoClient = getCoingeckoClient()
   const source = getSourceFile(logger)
   const output = getOutputFile(logger)
-
   const result: Token[] = []
 
-  for (const [devId, entries] of Object.entries(source)) {
+  for (const [devId, tokens] of Object.entries(source)) {
     const chainLogger = logger.prefix(devId)
     const chain = getChainConfiguration(chainLogger, devId)
     const chainId = getChainId(chainLogger, chain)
+
     chainLogger.processing()
 
-    for (const entry of entries) {
-      const tokenLogger: ScriptLogger = chainLogger.addMetadata(entry.symbol)
-      const type = devId === 'ethereum' ? 'CBV' : entry.type
-      tokenLogger.assert(type !== undefined, `Missing type`)
+    for (const token of tokens) {
+      const tokenLogger: ScriptLogger = chainLogger.addMetadata(token.symbol)
 
-      const formula = devId === 'ethereum' ? 'locked' : entry.formula
-      tokenLogger.assert(formula !== undefined, `Missing formula`)
+      const type = getType(tokenLogger, devId, token)
+      const formula = getFormula(tokenLogger, devId, token)
+      const category = token.category ?? 'other'
 
-      const category = entry.category ?? 'other'
+      const existingToken = findTokenInOutput(output, chainId, token)
 
-      const generated = getFromGenerated(output, chainId, entry)
-
-      if (generated) {
+      if (existingToken) {
         tokenLogger.skipping()
         result.push({
-          ...generated,
+          ...existingToken,
           category,
           type,
           formula,
@@ -100,18 +55,16 @@ async function main() {
         tokenLogger,
         coingeckoClient,
         chain,
-        entry,
+        token,
       )
 
-      const id = `${chain.devId}:${entry.symbol
-        .replaceAll(' ', '-')
-        .toLowerCase()}-${info.name.replaceAll(' ', '-').toLowerCase()}`
+      const assetId = getAssetId(chain, token, info.name)
 
       result.push({
-        id: AssetId(id),
+        id: assetId,
         chainId,
-        address: entry.address,
-        symbol: entry.symbol,
+        address: token.address,
+        symbol: token.symbol,
         name: info.name,
         decimals: info.decimals,
         coingeckoId: info.coingeckoId,
@@ -135,33 +88,6 @@ async function main() {
   logger.success('\nSaved ', 'output file')
 }
 
-function getChainId(logger: ScriptLogger, chain: ChainConfig) {
-  let chainId: ChainId | undefined = undefined
-  try {
-    chainId = ChainId(chain.chainId)
-  } catch (e) {
-    logger.assert(false, `ChainId not found for`)
-  }
-  return chainId
-}
-
-function getChainConfiguration(logger: ScriptLogger, devId: string) {
-  const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
-  logger.assert(chain !== undefined, `Configuration not found, TODO add readme`)
-  return chain
-}
-
-function getOutputFile(logger: ScriptLogger) {
-  logger.notify('Loading... ', 'output file')
-
-  const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
-  const output = Output.parse(JSON.parse(outputFile))
-
-  logger.success('Loaded ', 'output file')
-
-  return output
-}
-
 function getSourceFile(logger: ScriptLogger) {
   logger.notify('Loading... ', 'source file')
 
@@ -178,12 +104,72 @@ function getSourceFile(logger: ScriptLogger) {
   return source
 }
 
+function getOutputFile(logger: ScriptLogger) {
+  logger.notify('Loading... ', 'output file')
+
+  const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
+  const output = Output.parse(JSON.parse(outputFile))
+
+  logger.success('Loaded ', 'output file')
+
+  return output
+}
+
 function getCoingeckoClient() {
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
   const http = new HttpClient()
   const coingeckoClient = new CoingeckoClient(http, coingeckoApiKey)
   return coingeckoClient
+}
+
+function getChainConfiguration(logger: ScriptLogger, devId: string) {
+  const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
+  logger.assert(chain !== undefined, `Configuration not found, TODO add readme`)
+  return chain
+}
+
+function getChainId(logger: ScriptLogger, chain: ChainConfig) {
+  let chainId: ChainId | undefined = undefined
+  try {
+    chainId = ChainId(chain.chainId)
+  } catch (e) {
+    logger.assert(false, `ChainId not found for`)
+  }
+  return chainId
+}
+
+function getType(tokenLogger: ScriptLogger, devId: string, entry: SourceEntry) {
+  const type = devId === 'ethereum' ? 'CBV' : entry.type
+  tokenLogger.assert(type !== undefined, `Missing type`)
+  return type
+}
+
+function getFormula(
+  tokenLogger: ScriptLogger,
+  devId: string,
+  entry: SourceEntry,
+) {
+  const formula = devId === 'ethereum' ? 'locked' : entry.formula
+  tokenLogger.assert(formula !== undefined, `Missing formula`)
+  return formula
+}
+
+function getAssetId(chain: ChainConfig, token: SourceEntry, name: string) {
+  return AssetId(
+    `${chain.devId}:${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
+      .replaceAll(' ', '-')
+      .toLowerCase()}`,
+  )
+}
+
+function sortByChainAndSymbol(result: Token[]) {
+  return result.sort((a, b) => {
+    if (a.chainId !== b.chainId) {
+      return Number(a.chainId) - Number(b.chainId)
+    }
+    return a.name.localeCompare(b.name)
+  })
 }
 
 function saveResults(result: Token[]) {
@@ -199,16 +185,7 @@ function saveResults(result: Token[]) {
   writeFileSync(OUTPUT_FILE_PATH, outputJson + '\n')
 }
 
-function sortByChainAndSymbol(result: Token[]) {
-  return result.sort((a, b) => {
-    if (a.chainId !== b.chainId) {
-      return Number(a.chainId) - Number(b.chainId)
-    }
-    return a.name.localeCompare(b.name)
-  })
-}
-
-function getFromGenerated(
+function findTokenInOutput(
   output: Output,
   chainId: ChainId | undefined,
   entry: SourceEntry,
