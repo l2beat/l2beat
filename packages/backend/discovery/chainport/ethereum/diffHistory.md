@@ -1,3 +1,45 @@
+# Diff at Mon, 22 Jan 2024 12:14:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@7755f153438c1f16773ba6733cfa3a8c8bc0a394 block: 18932447
+- current block number: 19062209
+
+## Description
+
+Executed two proposalas 46 and 47.
+The first one according to the description submitted by the Chainport Congress aims to: "Deploy Arbitrage, Upgrade Main and Side Bridge and add new Maintainer".
+While the second one wants to: "Refund HODL tokens".
+
+In the process the implementation of the Vault changed, since this contract is unverfied it's impossible to analyze what has really happened.
+
+## Watched changes
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+      upgradeability.implementation:
+-        "0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568"
++        "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
+      implementations.0:
+-        "0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568"
++        "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
+    }
+```
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+      values.proposalCount:
+-        45
++        47
+    }
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.code@18932447 => .code}/Vault6/implementation/meta.txt   | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 # Diff at Thu, 04 Jan 2024 07:22:14 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
