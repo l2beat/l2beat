@@ -12,8 +12,8 @@ import { getCoingeckoId } from './utils/getCoingeckoId'
 import { getTokenInfo } from './utils/getTokenInfo'
 import { ScriptLogger } from './utils/ScriptLogger'
 
-const SOURCE_FILE_PATH = './src/tokens/source.jsonc'
-const OUTPUT_FILE_PATH = './src/tokens/tokenList.json'
+const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
+const OUTPUT_FILE_PATH = './src/tokens/generated.json'
 
 async function main() {
   const logger = new ScriptLogger({})

@@ -38,7 +38,7 @@ you are out of luck. We will fix this in the future.
 
 import { AssetId, Token } from '@l2beat/shared-pure'
 
-import { tokens } from './tokenList.json'
+import { tokens } from './generated.json'
 
 export const tokenList: Token[] = tokens.map((t) => Token.parse(t))
 
