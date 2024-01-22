@@ -5,3 +5,4 @@ export type NavbarPage =
   | 'faq'
   | 'definitions'
   | 'multisig-report'
+  | 'governance'
