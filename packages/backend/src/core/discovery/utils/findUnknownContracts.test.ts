@@ -1,6 +1,6 @@
 import { ConfigReader } from '@l2beat/discovery'
 import type { ContractParameters } from '@l2beat/discovery-types'
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { findUnknownContracts } from './findUnknownContracts'
@@ -23,7 +23,7 @@ describe(findUnknownContracts.name, () => {
       '',
       contracts,
       configReader,
-      ChainId.ETHEREUM,
+      'ethereum',
     )
 
     expect(result).toEqual([C.address])
@@ -42,7 +42,7 @@ describe(findUnknownContracts.name, () => {
       '',
       contracts,
       configReader,
-      ChainId.ETHEREUM,
+      'ethereum',
     )
 
     expect(result).toEqual([])

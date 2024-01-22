@@ -65,15 +65,13 @@ export class UpdateMonitor {
     const result: Record<string, ChainId[]> = {}
 
     for (const runner of this.discoveryRunners) {
-      const chainId = runner.getChainId()
-      const chain = ChainId.getName(chainId)
       const projectConfigs = await this.configReader.readAllConfigsForChain(
-        chain,
+        runner.chain,
       )
 
       for (const projectConfig of projectConfigs) {
         const discovery = this.cachedDiscovery.get(
-          this.getCacheKey(projectConfig.name, chainId),
+          this.getCacheKey(projectConfig.name, runner.chain),
         )
 
         if (!discovery) {
@@ -82,7 +80,7 @@ export class UpdateMonitor {
 
         const committed = await this.configReader.readDiscovery(
           projectConfig.name,
-          chain,
+          runner.chain,
         )
 
         const diff = diffDiscovery(
@@ -93,7 +91,7 @@ export class UpdateMonitor {
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
-          result[projectConfig.name].push(chainId)
+          result[projectConfig.name].push(ChainId.fromName(runner.chain))
         }
       }
     }
@@ -104,15 +102,15 @@ export class UpdateMonitor {
   async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
     // TODO: get block number based on clock time
     const blockNumber = await runner.getBlockNumber()
-    const chainId = runner.getChainId()
-    const chain = ChainId.getName(chainId)
 
     const metricsDone = this.initMetrics(blockNumber)
 
-    const projectConfigs = await this.configReader.readAllConfigsForChain(chain)
+    const projectConfigs = await this.configReader.readAllConfigsForChain(
+      runner.chain,
+    )
 
     this.logger.info('Update started', {
-      chain,
+      chain: runner.chain,
       projects: projectConfigs.length,
       blockNumber,
       timestamp: timestamp.toNumber(),
@@ -121,11 +119,11 @@ export class UpdateMonitor {
 
     for (const projectConfig of projectConfigs) {
       assert(
-        projectConfig.chain === chain,
+        projectConfig.chain === runner.chain,
         `Discovery runner and project config chain mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
       )
       this.logger.info('Project update started', {
-        chain,
+        chain: runner.chain,
         project: projectConfig.name,
       })
 
@@ -133,21 +131,21 @@ export class UpdateMonitor {
         await this.updateProject(runner, projectConfig, blockNumber, timestamp)
       } catch (error) {
         this.logger.error(
-          `[chain: ${chain}] Failed to update project [${projectConfig.name}]`,
+          `[chain: ${runner.chain}] Failed to update project [${projectConfig.name}]`,
           error,
         )
         errorsCount.inc()
       }
 
       this.logger.info('Project update finished', {
-        chain: ChainId.getName(chainId),
+        chain: runner.chain,
         project: projectConfig.name,
       })
     }
 
     metricsDone()
     this.logger.info('Update finished', {
-      chain: ChainId.getName(chainId),
+      chain: runner.chain,
       blockNumber,
       timestamp: timestamp.toNumber(),
       date: timestamp.toDate().toISOString(),
@@ -171,7 +169,7 @@ export class UpdateMonitor {
       injectInitialAddresses: true,
     })
     this.cachedDiscovery.set(
-      this.getCacheKey(projectConfig.name, runner.getChainId()),
+      this.getCacheKey(projectConfig.name, runner.chain),
       discovery,
     )
 
@@ -195,12 +193,12 @@ export class UpdateMonitor {
       discovery,
       projectConfig,
       blockNumber,
-      runner.getChainId(),
+      runner.chain,
     )
 
     await this.repository.addOrUpdate({
       projectName: projectConfig.name,
-      chainId: runner.getChainId(),
+      chainId: ChainId.fromName(runner.chain),
       timestamp,
       blockNumber,
       discovery,
@@ -215,23 +213,23 @@ export class UpdateMonitor {
   ): Promise<DiscoveryOutput> {
     const databaseEntry = await this.repository.findLatest(
       projectConfig.name,
-      runner.getChainId(),
+      ChainId.fromName(runner.chain),
     )
     let previousDiscovery: DiscoveryOutput
     if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
       this.logger.info('Using database record', {
-        chain: ChainId.getName(runner.getChainId()),
+        chain: runner.chain,
         project: projectConfig.name,
       })
       previousDiscovery = databaseEntry.discovery
     } else {
       this.logger.info('Using committed file', {
-        chain: ChainId.getName(runner.getChainId()),
+        chain: runner.chain,
         project: projectConfig.name,
       })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
-        ChainId.getName(runner.getChainId()),
+        runner.chain,
       )
     }
 
@@ -241,7 +239,7 @@ export class UpdateMonitor {
     this.logger.info(
       'Discovery logic version changed, discovering with new logic',
       {
-        chain: ChainId.getName(runner.getChainId()),
+        chain: runner.chain,
         project: projectConfig.name,
       },
     )
@@ -257,23 +255,23 @@ export class UpdateMonitor {
     discovery: DiscoveryOutput,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
-    chainId: ChainId,
+    chain: string,
   ) {
     if (diff.length > 0) {
       const dependents = await findDependents(
         projectConfig.name,
-        ChainId.getName(chainId),
+        chain,
         this.configReader,
       )
       const unknownContracts = await findUnknownContracts(
         discovery.name,
         discovery.contracts,
         this.configReader,
-        ChainId.getName(chainId),
+        chain,
       )
       await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,
-        chainId,
+        chainId: ChainId.fromName(chain),
         blockNumber,
         unknownContracts,
       })
@@ -292,8 +290,8 @@ export class UpdateMonitor {
     }
   }
 
-  private getCacheKey(projectName: string, chainId: ChainId): string {
-    return `${ChainId.getName(chainId)}:${projectName}`
+  private getCacheKey(projectName: string, chain: string): string {
+    return `${chain}:${projectName}`
   }
 }
 

@@ -68,7 +68,7 @@ export function createDiscoveryRunner(
     discoveryProvider,
     discoveryEngine,
     configReader,
-    chainConfig.chainId,
+    chainConfig.chain,
   )
 
   return discoveryRunner
