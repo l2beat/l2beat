@@ -53,7 +53,7 @@ const Output = z.object({
 })
 
 async function main() {
-  const logger: ScriptLogger = new ScriptLogger()
+  let logger: ScriptLogger = new ScriptLogger({})
 
   logger.notify('Loading... ', 'environment variables')
   const env = getEnv()
@@ -80,48 +80,29 @@ async function main() {
   const result: Token[] = []
 
   for (const [devId, entries] of Object.entries(source)) {
+    logger = logger.prefix(devId)
     const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
     logger.assert(
       chain !== undefined,
-      `Chain ${devId} not found in configuration, TODO add readme`,
+      `Configuration not found, TODO add readme`,
     )
     logger.processing(`chain ${devId}`)
 
     for (const entry of entries) {
+      logger = logger.addMetadata(entry.symbol)
+
       let chainId: ChainId | undefined = undefined
       try {
         chainId = ChainId(chain.chainId)
       } catch (e) {
-        logger.assert(
-          false,
-          `ChainId not found for`,
-          devId,
-          entry.symbol,
-          entry.address?.toString() ?? '',
-        )
+        logger.assert(false, `ChainId not found for`)
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const type = devId === 'ethereum' ? 'CBV' : entry.type!
-      logger.assert(
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        type !== undefined,
-        `Missing type for ${devId} ${entry.symbol} ${
-          entry.address?.toString() ?? ''
-        }`,
-        devId,
-        entry.symbol,
-        entry.address?.toString() ?? '',
-      )
+      const type = devId === 'ethereum' ? 'CBV' : entry.type
+      logger.assert(type !== undefined, `Missing type`)
 
       const formula = devId === 'ethereum' ? 'locked' : entry.formula
-      logger.assert(
-        formula !== undefined,
-        `Missing formula for `,
-        devId,
-        entry.symbol,
-        entry.address?.toString() ?? '',
-      )
+      logger.assert(formula !== undefined, `Missing formula`)
 
       const category = entry.category ?? 'other'
 
@@ -136,7 +117,7 @@ async function main() {
       })
 
       if (present) {
-        logger.skipping(devId, entry.symbol)
+        logger.skipping()
         result.push({
           ...present,
           category,
@@ -148,11 +129,11 @@ async function main() {
 
       logger.assert(
         entry.address !== undefined,
-        `native asset detected ${entry.symbol}. Configure manually`,
+        `Native asset detected - configure manually`,
       )
       const address = entry.address
 
-      logger.processing(`${devId} ${entry.symbol} ${address.toString()}`)
+      logger.processing()
 
       const coingeckoId =
         entry.coingeckoId ??
@@ -161,7 +142,6 @@ async function main() {
           logger,
           address,
           chain.coingeckoPlatform,
-          entry.symbol,
         ))
 
       const env = getEnv()
@@ -202,10 +182,10 @@ async function main() {
         bridgedUsing: entry.bridgedUsing,
       })
 
-      logger.processed(`${devId} ${entry.symbol} ${address.toString()}`)
+      logger.processed()
     }
 
-    logger.processed(`chain ${devId}`)
+    logger.processed()
   }
 
   result.sort((a, b) => {
@@ -237,13 +217,10 @@ async function getCoingeckoId(
   logger: ScriptLogger,
   address: EthereumAddress,
   platform: string | undefined,
-  symbol: string,
 ) {
   logger.assert(
     platform !== undefined,
-    'could not find coingecko platform identifier for token ' +
-      symbol +
-      '. Please add it chain config of the project',
+    'Could not find coingecko platform identifier. Please add it chain config of the project',
   )
 
   const coinList = await coingeckoClient.getCoinList({
@@ -259,9 +236,7 @@ async function getCoingeckoId(
 
   logger.assert(
     coin?.id !== undefined,
-    'could not find coingeckoId for token ' +
-      symbol +
-      '. Please add it manually to source.jsonc',
+    'Could not find coingeckoId for token. Please add it manually to source.jsonc',
   )
 
   return coin.id
