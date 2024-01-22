@@ -49,6 +49,7 @@ export const layer2aWithDups: Layer2 = {
       {
         // this is a new version, so it is visible on frontend and should be included in verification script output
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+        newVersion: true,
         contract: {
           name: 'L1Escrow',
         },
@@ -277,10 +278,6 @@ export const layer2aWithDups: Layer2 = {
       {
         name: 'L1DaiGateway',
         address: EthereumAddress('0x10E6593CDda8c58a1d0f14C5164B376352a55f2F'),
-      },
-      {
-        name: 'L1Escrow',
-        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
       },
     ],
     risks: [],
