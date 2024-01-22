@@ -107,6 +107,8 @@ export const kroma: Layer2 = {
       )} after it has been posted.`,
     },
     finality: {
+      warning:
+        "It's assumed that transaction data batches are submitted sequentially.",
       finalizationPeriod,
     },
   },

@@ -1,11 +1,11 @@
-import { ManuallyVerifiedContracts } from '@l2beat/shared-pure'
+import { ManuallyVerifiedContractsPerChain } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 import path from 'path'
 
 export function parseManuallyVerifiedContracts(
   content: string,
-): ManuallyVerifiedContracts {
+): ManuallyVerifiedContractsPerChain {
   const errors: ParseError[] = []
   const parsed = parse(content, errors, {
     allowTrailingComma: true,
@@ -16,19 +16,19 @@ export function parseManuallyVerifiedContracts(
 
   delete parsed.$schema
 
-  return ManuallyVerifiedContracts.parse(parsed)
+  return ManuallyVerifiedContractsPerChain.parse(parsed)
 }
 
 export function getManuallyVerifiedContracts(
   devId: string,
-): ManuallyVerifiedContracts {
+): ManuallyVerifiedContractsPerChain {
   const jsonFilePath = path.resolve(
     __dirname,
-    `/${devId}/manuallyVerified.jsonc`,
+    `${devId}/manuallyVerified.jsonc`,
   )
 
   if (!existsSync(jsonFilePath)) {
-    return ManuallyVerifiedContracts.parse({})
+    return ManuallyVerifiedContractsPerChain.parse({})
   }
 
   const content = readFileSync(jsonFilePath, 'utf-8')
