@@ -9,39 +9,56 @@ import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
 } from './addresses'
-import { loadVerifiedJson } from './output'
+import { getChainDevIds } from './chains'
+import {
+  getOutputPath as getVerificationFilePath,
+  loadVerifiedJson,
+} from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
-  it('all current contracts are included in verified.json', async () => {
-    const verifiedJson = await loadVerifiedJson('src/verified.json')
-    const allContracts = getUniqueContractsForAllProjects([
-      ...bridges,
-      ...layer2s,
-    ])
-
-    for (const contract of allContracts) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (verifiedJson.contracts[contract.toString()] === undefined) {
-        throw new Error(
-          `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()}`,
+  const projects = [...bridges, ...layer2s]
+  const devIds = getChainDevIds(projects)
+  describe('all current contracts are included in verified.json', () => {
+    for (const devId of devIds) {
+      it(`for ${devId}`, async () => {
+        const filePath = getVerificationFilePath(devId)
+        const verifiedJson = await loadVerifiedJson(filePath)
+        const allContracts = getUniqueContractsForAllProjects(
+          [...bridges, ...layer2s],
+          devId,
         )
-      }
+
+        for (const contract of allContracts) {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (verifiedJson[contract.toString()] === undefined) {
+            throw new Error(
+              `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${devId}`,
+            )
+          }
+        }
+      })
     }
   })
 
   describe('getUniqueContractsForAllProjects()', () => {
-    it('can parse all current layer2s and bridges', () => {
-      expect(() =>
-        getUniqueContractsForAllProjects([...bridges, ...layer2s]),
-      ).not.toThrow()
+    describe('can parse all current layer2s and bridges', () => {
+      for (const devId of devIds) {
+        it(`for ${devId}`, async () => {
+          expect(() =>
+            getUniqueContractsForAllProjects(
+              [...bridges, ...layer2s],
+              'ethereum',
+            ),
+          ).not.toThrow()
+        })
+      }
     })
 
     it('correctly finds unique addresses for all stub projects with duplicates', () => {
-      const addresses = getUniqueContractsForAllProjects([
-        layer2aWithDups,
-        bridge1WithDups,
-        bridge2WithDups,
-      ])
+      const addresses = getUniqueContractsForAllProjects(
+        [layer2aWithDups, bridge1WithDups, bridge2WithDups],
+        'ethereum',
+      )
       addresses.sort()
       expect(addresses).toEqual(
         [
@@ -55,7 +72,6 @@ describe('checkVerifiedContracts:addresses', () => {
           '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e',
           '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
           '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
-          '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
           '0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54',
           '0x81910675DbaF69deE0fD77570BFD07f8E436386A',
           '0x82B67a43b69914E611710C62e629dAbB2f7AC6AB',
@@ -80,7 +96,10 @@ describe('checkVerifiedContracts:addresses', () => {
 
   describe('getUniqueContractsForProject', () => {
     it('correctly finds unique addresses for a single stub project with duplicates', () => {
-      const addresses = getUniqueContractsForProject(layer2aWithDups)
+      const addresses = getUniqueContractsForProject(
+        layer2aWithDups,
+        'ethereum',
+      )
       addresses.sort()
       expect(addresses.sort()).toEqual(
         [
@@ -90,7 +109,6 @@ describe('checkVerifiedContracts:addresses', () => {
           '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
           '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e',
           '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
-          '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
           '0x82B67a43b69914E611710C62e629dAbB2f7AC6AB',
           '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
           '0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19',

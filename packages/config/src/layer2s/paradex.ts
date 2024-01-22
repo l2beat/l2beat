@@ -1,6 +1,7 @@
 import {
   EthereumAddress,
   formatLargeNumberShared,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -24,7 +25,6 @@ import {
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 

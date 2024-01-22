@@ -57,8 +57,9 @@ export interface Layer2 {
 export interface Layer2Display extends ScalingProjectDisplay {
   /** Technology provider */
   provider?: Layer2Provider
-  /** Explanation on how liveness data is gathered for given project */
+  /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
+  finality?: Layer2FinalityDisplay
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
@@ -67,6 +68,13 @@ export interface Layer2LivenessDisplay {
     batchSubmissions?: string
     proofSubmissions?: string
   }
+}
+
+export interface Layer2FinalityDisplay {
+  /** Warning tooltip content for finality tab for given project */
+  warning?: string
+  /** Finalization period displayed in table for given project (time in seconds) */
+  finalizationPeriod?: number
 }
 
 export interface Layer2Config extends ScalingProjectConfig {

@@ -15,12 +15,13 @@ export function createApi(
   activityApiResponse: ActivityApiResponse | undefined,
 ) {
   const urlCharts = new Map<string, TvlApiCharts | ActivityApiCharts>()
+  const { layer2s, layer3s, bridges } = config
 
   urlCharts.set('tvl/scaling', tvlApiResponse.layers2s)
   urlCharts.set('tvl/bridges', tvlApiResponse.bridges)
   urlCharts.set('tvl/combined', tvlApiResponse.combined)
 
-  for (const project of [...config.layer2s, ...config.bridges]) {
+  for (const project of [...layer2s, ...bridges, ...layer3s]) {
     const projectTvlData = tvlApiResponse.projects[project.id.toString()]
     if (projectTvlData) {
       urlCharts.set(`tvl/${project.display.slug}`, projectTvlData.charts)
@@ -33,8 +34,9 @@ export function createApi(
     for (const [projectId, chart] of Object.entries(
       activityApiResponse.projects,
     )) {
-      const slug = config.layer2s.find((x) => x.id.toString() === projectId)
-        ?.display.slug
+      const slug = [...layer2s, ...layer3s].find(
+        (x) => x.id.toString() === projectId,
+      )?.display.slug
       if (chart && slug) {
         urlCharts.set(`activity/${slug}`, chart)
       }

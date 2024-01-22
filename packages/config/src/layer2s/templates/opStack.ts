@@ -70,6 +70,11 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
+      finality: {
+        warning:
+          "It's assumed that transaction data batches are submitted sequentially.",
+        finalizationPeriod: templateVars.display.finality?.finalizationPeriod,
+      },
     },
     config: {
       associatedTokens: templateVars.associatedTokens,

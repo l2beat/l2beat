@@ -267,30 +267,11 @@ describe(generateAggregatedTvlApiResponse.name, () => {
   ]
 
   it('aggregates projects values together', () => {
-    const firstArbitrumTvl = 10
-    const secondArbitrumTvl = 100
-    const thirdArbitrumTvl = 1000
-    const firstOptimismTvl = 20
-    const secondOptimismTvl = 200
-    const thirdOptimismTvl = 2000
-    const firstMainnetTvl = 30
-    const secondMainnetTvl = 300
-    const thirdMainnetTvl = 3000
-
     const mock: AggregatedReportRecord[] = (
       [
-        [
-          ProjectId.ARBITRUM,
-          [firstArbitrumTvl, secondArbitrumTvl, thirdArbitrumTvl],
-        ],
-        [
-          ProjectId.OPTIMISM,
-          [firstOptimismTvl, secondOptimismTvl, thirdOptimismTvl],
-        ],
-        [
-          ProjectId.ETHEREUM,
-          [firstMainnetTvl, secondMainnetTvl, thirdMainnetTvl],
-        ],
+        [ProjectId('aaa'), [10, 100, 1000]],
+        [ProjectId('bbb'), [20, 200, 2000]],
+        [ProjectId('ccc'), [40, 400, 4000]],
       ] as [ProjectId, number[]][]
     )
       .map(([projectId, tvls]) =>
@@ -302,23 +283,17 @@ describe(generateAggregatedTvlApiResponse.name, () => {
       )
       .flat()
 
-    const selectedProjectIds = ['arbitrum', 'optimism']
-
     const result = generateAggregatedTvlApiResponse(
       groupByProjectIdAndTimestamp(mock),
       groupByProjectIdAndTimestamp(mock),
       groupByProjectIdAndTimestamp(mock),
-      selectedProjectIds.map((_projectId) => ProjectId(_projectId)),
+      [ProjectId('aaa'), ProjectId('bbb')],
     )
 
-    const firstAggregatedTvl = firstArbitrumTvl + firstOptimismTvl
-    const secondAggregatedTvl = secondArbitrumTvl + secondOptimismTvl
-    const thirdAggregatedTvl = thirdArbitrumTvl + thirdOptimismTvl
-
     const [zeroTime, sixHour, oneDay] = getData([
-      firstAggregatedTvl,
-      secondAggregatedTvl,
-      thirdAggregatedTvl,
+      10 + 20,
+      100 + 200,
+      1000 + 2000,
     ])
 
     const setPointTimeMapper = (interval: number) => {

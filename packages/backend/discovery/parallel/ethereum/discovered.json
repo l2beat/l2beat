@@ -2,7 +2,7 @@
   "name": "parallel",
   "chain": "ethereum",
   "blockNumber": 19032900,
-  "configHash": "0x077c45bc40b72dc5ea6a928106475a2b4866e2143428afa40d49bf70f49af1b3",
+  "configHash": "0x3b117d6e217057236d56c9ae4264474256ee64d151ebdf670e80a292841d51ec",
   "version": 3,
   "contracts": [
     {

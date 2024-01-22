@@ -2,7 +2,7 @@
   "name": "aptos",
   "chain": "ethereum",
   "blockNumber": 18591456,
-  "configHash": "0x104180f3dced624bb12aa1397e7b7822d5cf318496198ea7eaa0e107ed95cd08",
+  "configHash": "0x6d3ba500f9e18492dde71766f7b8c6d0490b243723f0b0fc9f69d49a1ec55561",
   "version": 3,
   "contracts": [
     {

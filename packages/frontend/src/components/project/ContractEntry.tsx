@@ -16,6 +16,7 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 export interface TechnologyContract {
   name: string
   addresses: string[]
+  devId: string
   etherscanUrl: string
   description?: string
   links: TechnologyContractLinks[]
@@ -44,16 +45,21 @@ export function ContractEntry({
   manuallyVerifiedContracts,
   className,
 }: ContractEntryProps) {
+  const verificationStatusForChain =
+    verificationStatus.contracts[contract.devId] ?? {}
+  const manuallyVerifiedContractsForChain =
+    manuallyVerifiedContracts[contract.devId] ?? {}
+
   const areLinksUnverified = contract.links
     .filter((c) => !c.isAdmin)
-    .map((c) => verificationStatus.contracts[c.address])
+    .map((c) => verificationStatusForChain[c.address])
     .some((c) => c === false)
 
   const addresses = contract.addresses
   const references = contract.references ?? []
 
   const areAddressesUnverified = addresses
-    .map((c) => verificationStatus.contracts[c])
+    .map((c) => verificationStatusForChain[c])
     .some((c) => c === false)
 
   const color = areAddressesUnverified || areLinksUnverified ? 'red' : undefined
@@ -68,10 +74,11 @@ export function ContractEntry({
     )
 
   addresses.forEach((address) => {
-    if (manuallyVerifiedContracts[address]) {
+    const manuallyVerified = manuallyVerifiedContractsForChain[address]
+    if (manuallyVerified) {
       references.push({
         text: 'Source code',
-        href: manuallyVerifiedContracts[address],
+        href: manuallyVerified,
       })
     }
   })
@@ -91,7 +98,7 @@ export function ContractEntry({
                 etherscanUrl={contract.etherscanUrl}
                 key={i}
                 className={cx(
-                  verificationStatus.contracts[address] === false
+                  verificationStatusForChain[address] === false
                     ? 'text-red-300'
                     : '',
                 )}
@@ -102,7 +109,7 @@ export function ContractEntry({
                 data-role="etherscan-link"
                 key={i}
                 className={cx(
-                  verificationStatus.contracts[x.address] === false &&
+                  verificationStatusForChain[x.address] === false &&
                     !x.isAdmin &&
                     'text-red-300',
                 )}

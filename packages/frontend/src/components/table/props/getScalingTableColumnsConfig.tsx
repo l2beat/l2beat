@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
+import { ScalingFinalityViewEntry } from '../../../pages/scaling/finality/types'
 import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
 import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
 import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
@@ -19,6 +20,7 @@ import { Badge } from '../../badge/Badge'
 import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
+import { FinalityDurationCell } from '../FinalityDurationCell'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
@@ -601,9 +603,7 @@ export function getScalingLivenessColumnsConfig() {
       getValue: (project) => (
         <AnomalyIndicator
           anomalyEntries={project.anomalyEntries}
-          showComingSoon={
-            project.slug === 'starknet' || project.slug === 'linea'
-          }
+          showComingSoon={project.slug === 'linea'}
         />
       ),
     },
@@ -618,6 +618,64 @@ export function getScalingLivenessColumnsConfig() {
             <TooltipContent>{project.explanation}</TooltipContent>
           </Tooltip>
         ) : null,
+    },
+  ]
+  return columns
+}
+
+export function getScalingFinalityColumnsConfig() {
+  const columns: ColumnConfig<ScalingFinalityViewEntry>[] = [
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    {
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
+      ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
+    },
+    {
+      name: 'DA MODE',
+      getValue: (project) =>
+        project.dataAvailabilityMode ?? <span>&mdash;</span>,
+      tooltip:
+        'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
+      sorting: {
+        getOrderValue: (project) => project.dataAvailabilityMode,
+        rule: 'alphabetical',
+      },
+    },
+    {
+      name: 'Time to finality\n30-day avg.',
+      getValue: (project) => (
+        <FinalityDurationCell data={project.timeToFinalize} />
+      ),
+      tooltip:
+        'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this is an approximate estimation. For simplicity values ignore the overhead time to reach L1 finality after L1 inclusion, which is shared among all projects.',
+      sorting: {
+        rule: 'numeric',
+        getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
+      },
+    },
+    {
+      name: 'State update delay',
+      tooltip:
+        'Time interval between time to finality and state root submission.',
+      getValue: () => (
+        <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+          Coming soon
+        </span>
+      ),
+    },
+    {
+      name: 'Execution delay',
+      tooltip:
+        'Time interval between state root submission and state root finalization. For Optimistic Rollups, this usually corresponds to the challenge period, whereas for ZK Rollups, it might be added as a safety precaution.',
+      getValue: (project) => <span>{project.finalizationPeriod}</span>,
     },
   ]
   return columns

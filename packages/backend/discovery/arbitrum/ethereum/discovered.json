@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 18691623,
-  "configHash": "0x53010612f9b92eb4439bf77543a627568d15aae65fa3553f9853f079250a2c75",
+  "configHash": "0x6f732725e973390c930d56a22d446d791fea892518efa4060b3dde9dedbca411",
   "version": 3,
   "contracts": [
     {

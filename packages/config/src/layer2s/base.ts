@@ -1,9 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -15,7 +14,7 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const challengePeriod: number = discovery.getContractValue<number>(
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
@@ -56,8 +55,11 @@ export const base: Layer2 = opStack({
       explanation: `Base is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets finalized ${formatSeconds(
-        challengePeriod,
+        FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
+    },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
   upgradeability,

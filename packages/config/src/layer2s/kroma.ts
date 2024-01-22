@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +18,6 @@ import { subtractOne } from '../common/assessCount'
 import { RISK_VIEW } from '../common/riskView'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -102,6 +106,11 @@ export const kroma: Layer2 = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
+    finality: {
+      warning:
+        "It's assumed that transaction data batches are submitted sequentially.",
+      finalizationPeriod,
+    },
   },
   config: {
     escrows: [
@@ -148,6 +157,10 @@ export const kroma: Layer2 = {
           sinceTimestamp: new UnixTime(1693880579),
         },
       ],
+    },
+    finality: {
+      type: 'OPStack',
+      lag: 0,
     },
   },
   riskView: makeBridgeCompatible({

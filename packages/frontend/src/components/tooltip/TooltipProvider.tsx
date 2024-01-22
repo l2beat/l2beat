@@ -17,7 +17,7 @@ export function TooltipProvider({
       data-role="tooltip-popup"
       data-testid="tooltip"
     >
-      <span />
+      <span className="whitespace-pre-line" />
       <svg
         width="16"
         height="8"

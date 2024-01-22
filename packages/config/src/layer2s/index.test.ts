@@ -135,6 +135,17 @@ describe('layer2s', () => {
     })
   })
 
+  describe('finality', () => {
+    describe('every project with finality enabled has finalizationPeriod property', () => {
+      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
+      for (const project of projectsWithFinality) {
+        it(project.id.toString(), () => {
+          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
+        })
+      }
+    })
+  })
+
   describe('activity', () => {
     describe('custom URL starts with https', () => {
       const layers2WithUrls = layer2s.flatMap((layer2) => {

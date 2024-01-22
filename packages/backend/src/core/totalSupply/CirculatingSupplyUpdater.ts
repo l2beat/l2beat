@@ -34,7 +34,6 @@ export class CirculatingSupplyUpdater {
     private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),

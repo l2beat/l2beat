@@ -2,6 +2,7 @@ import Bugsnag from '@bugsnag/js'
 import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
+  FinalityApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -11,11 +12,14 @@ import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'
+import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
-import { getManuallyVerifiedContracts } from './api/getManuallyVerifiedLinks'
-import { getVerificationStatus } from './api/getVerificationStatus'
+import {
+  getManuallyVerifiedContracts,
+  getVerificationStatus,
+} from './api/getVerificationStatus'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
@@ -76,6 +80,12 @@ async function main() {
       livenessApiResponse = await fetchLivenessApi(config.backend, http)
       console.timeEnd('[LIVENESS]')
     }
+    let finalityApiResponse: FinalityApiResponse | undefined = undefined
+    if (config.features.finality) {
+      console.time('[FINALITY]')
+      finalityApiResponse = await fetchFinalityApi(config.backend, http)
+      console.timeEnd('[FINALITY]')
+    }
 
     let diffHistory: DiffHistoryApiResponse | undefined = undefined
     if (config.features.diffHistory) {
@@ -83,7 +93,6 @@ async function main() {
       diffHistory = await fetchDiffHistory(config.backend, http)
       console.timeEnd('[DIFF HISTORY]')
     }
-    console.log('\n')
 
     createApi(config, tvlApiResponse, activityApiResponse)
 
@@ -97,6 +106,7 @@ async function main() {
       manuallyVerifiedContracts,
       tvlBreakdownApiResponse,
       livenessApiResponse,
+      finalityApiResponse,
       diffHistory,
     }
 

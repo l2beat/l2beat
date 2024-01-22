@@ -15,7 +15,6 @@ import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -279,7 +278,7 @@ export const arbitrum: Layer2 = {
         selfSequencingDelay,
       )} to force a tx, users have only ${formatSeconds(
         l2TimelockDelay - selfSequencingDelay,
-      )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
         validatorAfkTime,
       )} delay and then wait for the ${formatSeconds(
         challengeWindowSeconds,
@@ -288,7 +287,10 @@ export const arbitrum: Layer2 = {
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
       )} L1 timelock.`,
-      warning: 'The Security Council can upgrade with no delay.',
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
       sources: [
         {
           contract: 'OutboxV2',

@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  ChainId,
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
   DiscoveryLogger,
@@ -47,7 +46,8 @@ export function createDiffHistoryModule(
   const discoveryHttpClient = new DiscoveryHttpClient()
 
   const discoverers = config.diffHistory.chains
-    .filter((chainConfig) => chainConfig.chainId === ChainId.ETHEREUM) // TODO(radomski): In the initial versioon we only care about ethereum
+    // TODO(radomski): In the initial version we only care about ethereum
+    .filter((chainConfig) => chainConfig.chain === 'ethereum')
     .flatMap((chainConfig) => {
       const runner = createDiscoveryRunner(
         discoveryHttpClient,
@@ -78,7 +78,7 @@ export function createDiffHistoryModule(
           new ProjectDiscoverer(
             runner,
             project.name,
-            ChainId.ETHEREUM,
+            'ethereum',
             configReader,
             discoveryHistoryRepository,
             new Clock(project.minTimestamp, 60 * 60),

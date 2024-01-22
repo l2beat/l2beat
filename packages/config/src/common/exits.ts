@@ -1,4 +1,5 @@
-import { formatSeconds } from '../utils/formatSeconds'
+import { formatSeconds } from '@l2beat/shared-pure'
+
 import { ScalingProjectRisk } from './ScalingProjectRisk'
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
@@ -37,7 +38,7 @@ function FORCED(
         break
       case 'all-withdrawals':
         orHaltString =
-          ' or halt all withdrawals, including forced withdrawals from L1 and regular withdrawals initated on L2'
+          ' or halt all withdrawals, including forced withdrawals from L1 and regular withdrawals initiated on L2'
         break
     }
   }

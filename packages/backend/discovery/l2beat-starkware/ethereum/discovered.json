@@ -2,7 +2,7 @@
   "name": "l2beat-starkware",
   "chain": "ethereum",
   "blockNumber": 17031968,
-  "configHash": "0x80112d572c320dae60a1cc29c37f837881984f02c13575f623751c96992ac434",
+  "configHash": "0x841171a25aa3d93c10dce84168e9eb68731c390d8e3315dc3b7e52ea82d36db0",
   "version": 3,
   "contracts": [
     {
