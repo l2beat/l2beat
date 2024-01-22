@@ -4,6 +4,12 @@ import { expect } from 'earl'
 import { chains } from './index'
 
 describe('chains', () => {
+  it('every devId is lowercase a-z0-9 <20 characters', () => {
+    for (const chain of chains) {
+      expect(chain.devId).toMatchRegex(/^[a-z0-9]{1,20}$/)
+    }
+  })
+
   it('every devId is unique', () => {
     const encountered = new Set()
     for (const chain of chains) {
