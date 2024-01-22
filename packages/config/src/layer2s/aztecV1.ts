@@ -51,7 +51,7 @@ export const aztecV1: Layer2 = {
     name: 'Zk.Money v1 (Aztec v1)',
     slug: 'aztecv1',
     warning:
-      'EOL: Aztec team announced the intent to shut down the infrastructure for this rollup on Mar 13, 2023. The rollup is still active due to funds locked in, but is not accepting deposits.',
+      'EOL: Aztec team announced the intent to shut down the infrastructure for this rollup on Mar 13, 2023. On Jan 14, 2024 TurboVerifier contract has been replaced with AlwaysReverting contract effectively halting verification process.',
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['Private payments'],
@@ -288,6 +288,14 @@ export const aztecV1: Layer2 = {
       ),
       discovery.getContractDetails('TurboVerifier', {
         description: 'Turbo Plonk zkSNARK Verifier.',
+        upgradableBy: ['Aztec Multisig'],
+        upgradeDelay: 'No delay',
+        upgradeConsiderations:
+          'Verifier field in RollupProcessor can be changed with no delay.',
+      }),
+      discovery.getContractDetails('AlwaysReverting', {
+        description:
+          'Contract has replaced original TurboVerifier actively halting verification process.',
         upgradableBy: ['Aztec Multisig'],
         upgradeDelay: 'No delay',
         upgradeConsiderations:

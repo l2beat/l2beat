@@ -1,5 +1,5 @@
-import { chainsByDevId } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { chainsByChainId, chainsByDevId } from '@l2beat/config'
+import { assert, ChainId } from '@l2beat/shared-pure'
 
 export function getExplorerUrl(devId: string) {
   const chain = chainsByDevId.get(devId)
@@ -10,4 +10,8 @@ export function getExplorerUrl(devId: string) {
   )
 
   return chain.explorerUrl
+}
+
+export function getExplorerUrlByChainId(chainId: ChainId): string | undefined {
+  return chainsByChainId.get(chainId.valueOf())?.explorerUrl
 }

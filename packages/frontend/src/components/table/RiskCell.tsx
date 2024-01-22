@@ -38,7 +38,7 @@ export function RiskCell({ item }: Props) {
         >
           {item.value}
           {item.warning && (
-            <RoundedWarningIcon className="h-4 w-4 fill-current" />
+            <RoundedWarningIcon className="h-5 w-5 fill-red-550 dark:fill-orange-600" />
           )}
         </span>
         {item.secondLine && (
@@ -58,8 +58,9 @@ export function RiskCell({ item }: Props) {
         {item.warning && (
           <WarningBar
             className="mb-2"
-            text={item.warning}
-            color={item.sentiment === 'bad' ? 'red' : 'yellow'}
+            text={item.warning.text}
+            icon={RoundedWarningIcon}
+            color={item.warning.sentiment === 'bad' ? 'red' : 'yellow'}
           />
         )}
         {item.description !== '' ? item.description : null}

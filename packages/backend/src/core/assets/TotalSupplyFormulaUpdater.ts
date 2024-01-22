@@ -49,7 +49,6 @@ export class TotalSupplyFormulaUpdater implements ReportUpdater {
       'Programmer error: all tokens must be using totalSupply formula have the same chainId',
     )
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(chainId))
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(

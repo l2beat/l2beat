@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -12,7 +17,6 @@ import {
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -53,8 +57,11 @@ const exitWindowRisk = {
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
-  warning: 'The ZkFair Owner can upgrade with no delay.',
-}
+  warning: {
+    text: 'The ZkFair Owner can upgrade with no delay.',
+    sentiment: 'bad',
+  },
+} as const
 
 const timelockUpgrades = {
   upgradableBy: ['ZkFairAdmin'],

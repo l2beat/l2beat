@@ -5,6 +5,7 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
+import { ChartProps } from '../../../components'
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import {
@@ -13,6 +14,7 @@ import {
 } from '../../../utils/project/links'
 import { getRiskValues } from '../../../utils/risks/values'
 import {
+  ProjectDetailsChartSection,
   ProjectDetailsContractsSection,
   ProjectDetailsDetailedDescriptionSection,
   ProjectDetailsKnowledgeNuggetsSection,
@@ -32,6 +34,7 @@ export function getProjectDetails(
   project: Layer3,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
+  chart: ChartProps,
 ) {
   const isUpcoming = project.isUpcoming
 
@@ -43,6 +46,11 @@ export function getProjectDetails(
     manuallyVerifiedContracts,
   )
   const items: ScalingDetailsItem[] = []
+
+  items.push({
+    type: 'ChartSection',
+    props: { ...chart, id: 'chart', title: 'Chart' },
+  })
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
@@ -188,6 +196,7 @@ type ProjectDetailsNonSectionElement =
   | ProjectDetailsUpcomingDisclaimer
 
 export type ScalingDetailsSection =
+  | ProjectDetailsChartSection
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection

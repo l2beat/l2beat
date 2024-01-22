@@ -14,7 +14,10 @@ export function FinalityDurationCell(props: Props) {
   return (
     <Tooltip data-testid="finality-duration-cell">
       <TooltipTrigger className="flex items-center gap-1">
-        <DurationCell durationInSeconds={props.data.averageInSeconds} />
+        <div>
+          <DurationCell durationInSeconds={props.data.averageInSeconds} /> + L1
+          Finality
+        </div>
         {props.data.warning && (
           <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
         )}
@@ -25,11 +28,17 @@ export function FinalityDurationCell(props: Props) {
           <ul className="mt-1 list-inside list-disc">
             <li className="flex justify-between gap-4">
               Average:
-              <DurationCell durationInSeconds={props.data.averageInSeconds} />
+              <div>
+                <DurationCell durationInSeconds={props.data.averageInSeconds} />{' '}
+                + L1 Finality
+              </div>
             </li>
             <li className="flex justify-between gap-4">
               Maximum:
-              <DurationCell durationInSeconds={props.data.maximumInSeconds} />
+              <div>
+                <DurationCell durationInSeconds={props.data.maximumInSeconds} />{' '}
+                + L1 Finality
+              </div>
             </li>
           </ul>
         </div>
