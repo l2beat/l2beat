@@ -4,7 +4,7 @@ import { providers } from 'ethers'
 import path from 'path'
 import { rimraf } from 'rimraf'
 
-import { DiscoveryCliConfig } from '../config/config.discovery'
+import { DiscoveryCliConfig } from '../config/types'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
@@ -13,27 +13,26 @@ import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { HttpClient } from '../utils/HttpClient'
 
 export async function singleDiscoveryCommand(
-  config: DiscoveryCliConfig,
+  { singleDiscovery, chain }: DiscoveryCliConfig,
   logger: Logger,
 ): Promise<void> {
-  if (!config.singleDiscovery) {
+  if (!singleDiscovery) {
     return
   }
 
   const projectConfig = new DiscoveryConfig({
-    name: config.singleDiscovery.address.toString(),
-    chain: config.chain.chainId,
-    initialAddresses: [config.singleDiscovery.address],
+    name: singleDiscovery.address.toString(),
+    chain: chain.chain,
+    initialAddresses: [singleDiscovery.address],
   })
-  const chainConfig = config.chain
 
   const http = new HttpClient()
-  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const provider = new providers.StaticJsonRpcProvider(chain.rpcUrl)
   const etherscanClient = EtherscanLikeClient.createForDiscovery(
     http,
-    chainConfig.etherscanUrl,
-    chainConfig.etherscanApiKey,
-    chainConfig.etherscanUnsupported,
+    chain.etherscanUrl,
+    chain.etherscanApiKey,
+    chain.etherscanUnsupported,
   )
   const blockNumber = await provider.getBlockNumber()
 
@@ -43,11 +42,11 @@ export async function singleDiscoveryCommand(
   const results = await discovery(
     provider,
     etherscanClient,
-    chainConfig.multicall,
+    chain.multicall,
     projectConfig,
     DiscoveryLogger.CLI,
     blockNumber,
-    chainConfig.rpcGetLogsMaxRange,
+    chain.rpcGetLogsMaxRange,
   )
 
   const rootFolder = `./cache/single-discovery`

@@ -1,7 +1,7 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { providers } from 'ethers'
 
-import { DiscoveryModuleConfig } from '../config/config.discovery'
+import { DiscoveryModuleConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { AddressAnalyzer, Analysis } from './analysis/AddressAnalyzer'
 import { ConfigReader } from './config/ConfigReader'
@@ -28,13 +28,13 @@ export async function runDiscovery(
 ): Promise<void> {
   const projectConfig = await configReader.readConfig(
     config.project,
-    config.chainId,
+    config.chain,
   )
 
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project, config.chainId))
+      ? (await configReader.readDiscovery(config.project, config.chain))
           .blockNumber
       : await provider.getBlockNumber())
 
@@ -67,7 +67,7 @@ export async function dryRunDiscovery(
 
   const projectConfig = await configReader.readConfig(
     config.project,
-    config.chainId,
+    config.chain,
   )
 
   const [discovered, discoveredYesterday] = await Promise.all([
@@ -126,13 +126,7 @@ export async function justDiscover(
     throw new Error('name is required')
   }
 
-  return toDiscoveryOutput(
-    name,
-    config.chainId,
-    config.hash,
-    blockNumber,
-    result,
-  )
+  return toDiscoveryOutput(name, config.chain, config.hash, blockNumber, result)
 }
 
 export async function discover(
@@ -151,7 +145,7 @@ export async function discover(
     provider,
     etherscanClient,
     logger,
-    config.chainId,
+    config.chain,
     sqliteCache,
     getLogsMaxRange,
   )

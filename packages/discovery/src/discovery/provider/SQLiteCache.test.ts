@@ -10,10 +10,10 @@ describe('SQLiteCache', () => {
     withTemporaryFile(async (sqlCache, rqe) => {
       const key = 'key'
       const value = 'value'
-      const chainId = 1
+      const chain = 'ethereum'
       const blockNumber = 1
 
-      await sqlCache.set(key, value, chainId, blockNumber)
+      await sqlCache.set(key, value, chain, blockNumber)
       const queriedValue = await sqlCache.get(key)
 
       const resultRaw = await rqe.query<CacheEntry[]>(
@@ -38,16 +38,16 @@ describe('SQLiteCache', () => {
       const key = 'key'
 
       const value = 'value'
-      const chainId = 1
+      const chain = 'ethereum'
       const blockNumber = 1
 
       const newValue = 'newValue'
-      const newChainId = 2
+      const newChain = 'arbitrum'
       const newBlockNumber = 2
 
-      await sqlCache.set(key, value, chainId, blockNumber)
+      await sqlCache.set(key, value, chain, blockNumber)
 
-      await sqlCache.set(key, newValue, newChainId, newBlockNumber)
+      await sqlCache.set(key, newValue, newChain, newBlockNumber)
 
       const resultRaw = await rqe.query<CacheEntry[]>(
         'SELECT * FROM cache WHERE key=$1',
@@ -62,14 +62,14 @@ describe('SQLiteCache', () => {
       expect(result.key).toEqual(key)
       expect(result.value).toEqual(newValue)
       expect(result.blockNumber).toEqual(newBlockNumber)
-      expect(result.chainId).toEqual(newChainId)
+      expect(result.chain).toEqual(newChain)
     }))
 })
 
 interface CacheEntry {
   key: string
   value: string
-  chainId: number
+  chain: string
   blockNumber: number
 }
 

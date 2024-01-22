@@ -1,6 +1,5 @@
 import { expect } from 'earl'
 
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { hashJson } from '../../utils/HashJson'
 import { DiscoveryConfig } from './DiscoveryConfig'
@@ -20,7 +19,7 @@ const OVERRIDE_B = {
 }
 const CONFIG = new DiscoveryConfig({
   name: 'a',
-  chain: ChainId.ETHEREUM,
+  chain: 'ethereum',
   initialAddresses: [ADDRESS_A],
   maxAddresses: 1,
   maxDepth: 1,
@@ -61,7 +60,7 @@ describe(DiscoveryConfig.name, () => {
     it('does not modify original config object', () => {
       const config: DiscoveryConfig = new DiscoveryConfig({
         name: 'a',
-        chain: ChainId.ETHEREUM,
+        chain: 'ethereum',
         initialAddresses: [
           EthereumAddress('0x0000000000000000000000000000000000000003'),
           EthereumAddress('0x0000000000000000000000000000000000000002'),

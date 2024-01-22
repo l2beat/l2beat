@@ -2,7 +2,6 @@ import { ManualProxyType } from '@l2beat/discovery-types'
 import * as z from 'zod'
 
 import { stringAs } from '../../utils/Branded'
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { UserHandlerDefinition } from '../handlers/user'
 
@@ -24,7 +23,7 @@ export const DiscoveryContract = z.object({
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
 export const RawDiscoveryConfig = z.object({
   name: z.string().min(1),
-  chain: stringAs((s) => ChainId.fromName(s)),
+  chain: z.string().min(1),
   initialAddresses: z.array(stringAs(EthereumAddress)),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number().positive()),

@@ -1,7 +1,6 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import { expect } from 'earl'
 
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { diffDiscovery } from './diffDiscovery'
@@ -115,7 +114,7 @@ describe(diffDiscovery.name, () => {
     ]
     const config = new DiscoveryConfig({
       name: '',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [],
       overrides: {
         [ADDRESS_A.toString()]: {

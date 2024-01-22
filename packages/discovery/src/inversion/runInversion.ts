@@ -7,7 +7,6 @@ import { isObject } from 'lodash'
 
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
-import { ChainId } from '../utils/ChainId'
 import { EthereumAddress } from '../utils/EthereumAddress'
 
 interface AddressDetails {
@@ -28,10 +27,8 @@ export async function runInversion(
   project: string,
   configReader: ConfigReader,
   useMermaidMarkup: boolean,
-  chainId: ChainId,
+  chain: string,
 ): Promise<void> {
-  const chain = ChainId.getName(chainId)
-
   const discovery = await configReader.readDiscovery(project, chain)
   const config = await configReader.readConfig(project, chain)
   const addresses = calculateInversion(discovery, config)

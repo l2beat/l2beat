@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { DiscoveryCliConfig } from '../config/config.discovery'
+import { DiscoveryCliConfig } from '../config/types'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { runInversion } from '../inversion/runInversion'
 
@@ -12,12 +12,12 @@ export async function invertCommand(
     return
   }
 
-  const { project, useMermaidMarkup, chainId } = config.invert
+  const { project, useMermaidMarkup, chain } = config.invert
 
   const configReader = new ConfigReader()
 
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(project, configReader, useMermaidMarkup, chainId)
+  await runInversion(project, configReader, useMermaidMarkup, chain)
 }

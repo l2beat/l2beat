@@ -1,6 +1,5 @@
 import { expect } from 'earl'
 
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { shouldSkip } from './shouldSkip'
@@ -10,7 +9,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [],
       overrides: {
         [address.toString()]: {
@@ -26,7 +25,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [],
       names: {
         [address.toString()]: 'Foo',
@@ -43,7 +42,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [],
       maxDepth: 1,
     })
@@ -55,7 +54,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [],
       maxAddresses: 1,
     })
@@ -67,7 +66,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [],
     })
     const result = shouldSkip({ address, depth: 0, counter: 1 }, config)

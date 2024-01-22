@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.35.0
+
+### Minor Changes
+
+- Remove ChainId entirely
+
 ## 0.34.0
 
 ### Minor Changes

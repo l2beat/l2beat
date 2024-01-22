@@ -3,7 +3,6 @@ import { createHash } from 'crypto'
 import { providers } from 'ethers'
 
 import { Bytes } from '../../utils/Bytes'
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { Hash256 } from '../../utils/Hash256'
@@ -20,7 +19,7 @@ export interface DiscoveryCache {
   set(
     key: string,
     value: string,
-    chainId: number,
+    chain: string,
     blockNumber: number,
   ): Promise<void>
   get(key: string): Promise<string | undefined>
@@ -39,7 +38,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     provider: providers.JsonRpcProvider | RateLimitedProvider,
     etherscanLikeClient: EtherscanLikeClient,
     logger: DiscoveryLogger,
-    private readonly chainId: ChainId,
+    private readonly chain: string,
     private readonly cache: DiscoveryCache,
     getLogsMaxRange?: number,
     readonly reorgSafeDepth?: number,
@@ -64,12 +63,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     const isReorgSafe = await this.isBlockNumberReorgSafe(blockNumber)
 
     if (isReorgSafe) {
-      await this.cache.set(
-        key,
-        toCache(result),
-        this.chainId.valueOf(),
-        blockNumber,
-      )
+      await this.cache.set(key, toCache(result), this.chain, blockNumber)
     }
 
     return result
@@ -104,12 +98,7 @@ export class ProviderWithCache extends DiscoveryProvider {
   }
 
   buildKey(invocation: string, params: { toString: () => string }[]): string {
-    const result = [
-      this.chainId.toString(),
-      invocation,
-      ...params.map((p) => p.toString()),
-    ]
-
+    const result = [this.chain, invocation, ...params.map((p) => p.toString())]
     return result.join('.')
   }
 
@@ -240,12 +229,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     // We don't want to cache nor return non-mined transactions
     assert(result.blockNumber, 'Transaction not mined')
 
-    await this.cache.set(
-      key,
-      toJSON(result),
-      this.chainId.valueOf(),
-      result.blockNumber,
-    )
+    await this.cache.set(key, toJSON(result), this.chain, result.blockNumber)
 
     return result
   }
@@ -279,12 +263,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     if (result.isVerified && result.source.length > 0) {
       const currentBlock = await super.getBlockNumber()
 
-      await this.cache.set(
-        key,
-        toJSON(result),
-        this.chainId.valueOf(),
-        currentBlock,
-      )
+      await this.cache.set(key, toJSON(result), this.chain, currentBlock)
     }
 
     return result
@@ -308,12 +287,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     if (result !== undefined) {
       const currentBlock = await super.getBlockNumber()
 
-      await this.cache.set(
-        key,
-        toJSON(result),
-        this.chainId.valueOf(),
-        currentBlock,
-      )
+      await this.cache.set(key, toJSON(result), this.chain, currentBlock)
     }
     return result
   }
@@ -334,12 +308,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     const blockNumber = result[0]?.blockNumber
 
     if (blockNumber !== undefined) {
-      await this.cache.set(
-        key,
-        toJSON(result),
-        this.chainId.valueOf(),
-        blockNumber,
-      )
+      await this.cache.set(key, toJSON(result), this.chain, blockNumber)
     }
 
     return result

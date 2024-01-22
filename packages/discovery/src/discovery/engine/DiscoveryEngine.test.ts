@@ -1,6 +1,5 @@
 import { expect, mockFn, mockObject } from 'earl'
 
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -17,7 +16,7 @@ describe(DiscoveryEngine.name, () => {
   it('can perform a discovery', async () => {
     const config = new DiscoveryConfig({
       name: 'test',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [A],
       overrides: { [B.toString()]: { ignoreDiscovery: true } },
     })

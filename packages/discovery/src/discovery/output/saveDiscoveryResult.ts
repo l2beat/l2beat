@@ -3,7 +3,6 @@ import { mkdirp } from 'mkdirp'
 import path, { dirname } from 'path'
 import { rimraf } from 'rimraf'
 
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -22,17 +21,15 @@ export async function saveDiscoveryResult(
 ): Promise<void> {
   const project = toDiscoveryOutput(
     config.name,
-    config.chainId,
+    config.chain,
     config.hash,
     blockNumber,
     results,
   )
   const json = await toPrettyJson(project)
 
-  const chainName = ChainId.getName(config.chainId).toString()
-
   const root =
-    options.rootFolder ?? path.join('discovery', config.name, chainName)
+    options.rootFolder ?? path.join('discovery', config.name, config.chain)
   await mkdirp(root)
 
   const discoveryFilename = options.discoveryFilename ?? 'discovered.json'

@@ -1,7 +1,6 @@
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 
-import { ChainId } from '../../utils/ChainId'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
@@ -26,7 +25,7 @@ function setupProviderWithMockCache(values: {
     mockProvider,
     mockObject<EtherscanLikeClient>({}),
     DiscoveryLogger.SILENT,
-    ChainId.ETHEREUM,
+    'ethereum',
     mockCache,
     undefined,
     values.reorgSafeDepth,
@@ -75,7 +74,7 @@ describe(ProviderWithCache.name, () => {
       expect(mockCache.set).toHaveBeenCalledWith(
         'mockNotCachedKey',
         'mockNotCachedValue',
-        1,
+        'ethereum',
         blockNumber,
       )
     })
@@ -100,7 +99,7 @@ describe(ProviderWithCache.name, () => {
       expect(mockCache.set).toHaveBeenCalledWith(
         'mockNotCachedKey',
         'mockNotCachedValue',
-        1,
+        'ethereum',
         blockNumber,
       )
     })

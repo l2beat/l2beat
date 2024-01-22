@@ -1,6 +1,5 @@
 import { expect } from 'earl'
 
-import { ChainId } from '../../utils/ChainId'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
@@ -13,7 +12,7 @@ describe(getDiscoveryConfigEntries.name, () => {
   it('correctly sorts raw config object keys', () => {
     const config: RawDiscoveryConfig = {
       name: 'a',
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [ADDRESS_A],
       maxDepth: 1,
       maxAddresses: 1,
@@ -48,7 +47,7 @@ describe(getDiscoveryConfigEntries.name, () => {
 
     const expected = {
       // correctly sort params (nest level = 0)
-      chain: ChainId.ETHEREUM,
+      chain: 'ethereum',
       initialAddresses: [ADDRESS_A.toString()],
       maxAddresses: 1,
       maxDepth: 1,

@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 
-import { ChainId } from '../utils/ChainId'
+import { chains } from '../config/chains'
 import { EthereumAddress } from '../utils/EthereumAddress'
 
 export type CliParameters =
@@ -17,7 +17,7 @@ export interface ServerCliParameters {
 export interface DiscoverCliParameters {
   mode: 'discover'
   project: string
-  chain: ChainId
+  chain: string
   dryRun: boolean
   dev: boolean
   sourcesFolder?: string
@@ -28,13 +28,13 @@ export interface DiscoverCliParameters {
 export interface InvertCliParameters {
   mode: 'invert'
   project: string
-  chain: ChainId
+  chain: string
   useMermaidMarkup: boolean
 }
 export interface SingleDiscoveryCliParameters {
   mode: 'single-discovery'
   address: EthereumAddress
-  chain: ChainId
+  chain: string
 }
 
 export interface HelpCliParameters {
@@ -110,15 +110,16 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
       return { mode: 'help', error: 'Too many arguments' }
     }
 
-    const [chainName, project] = remaining
-    if (!chainName || !project) {
+    const [chain, project] = remaining
+    if (!chain || !project) {
       return getHelpCliParameter(
         'You need to provide arguments for both the chain name and the project',
       )
     }
 
-    const chain = getChainIdSafe(chainName)
-    if (!chain) return createWrongChainNameHelpCli(chainName)
+    if (!isValidChain(chain)) {
+      return createWrongChainNameHelpCli(chain)
+    }
 
     const result: DiscoverCliParameters = {
       mode: 'discover',
@@ -150,16 +151,16 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
       return { mode: 'help', error: 'Too many arguments' }
     }
 
-    const [chainName, project] = remaining
-    if (!chainName || !project) {
+    const [chain, project] = remaining
+    if (!chain || !project) {
       return getHelpCliParameter(
         'You need to provide arguments for both the chain name and the project',
       )
     }
 
-    const chain = getChainIdSafe(chainName)
-
-    if (!chain) return createWrongChainNameHelpCli(chainName)
+    if (!isValidChain(chain)) {
+      return createWrongChainNameHelpCli(chain)
+    }
 
     const result: InvertCliParameters = {
       mode: 'invert',
@@ -179,15 +180,16 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
     if (remaining.length > 2) {
       return { mode: 'help', error: 'Too many arguments' }
     }
-    const [chainName, address] = remaining
-    if (!chainName || !address) {
+    const [chain, address] = remaining
+    if (!chain || !address) {
       return getHelpCliParameter(
         'You need to provide arguments for both the chain name and the address',
       )
     }
 
-    const chain = getChainIdSafe(chainName)
-    if (!chain) return createWrongChainNameHelpCli(chainName)
+    if (!isValidChain(chain)) {
+      return createWrongChainNameHelpCli(chain)
+    }
 
     const result: SingleDiscoveryCliParameters = {
       mode: 'single-discovery',
@@ -216,12 +218,8 @@ function extractArgWithValue(
   return { found: false }
 }
 
-function getChainIdSafe(name: string): ChainId | undefined {
-  try {
-    return ChainId.fromName(name)
-  } catch (e) {
-    return undefined
-  }
+function isValidChain(chain: string): boolean {
+  return chains.some((c) => c.name === chain)
 }
 
 function getHelpCliParameter(message: string): HelpCliParameters {

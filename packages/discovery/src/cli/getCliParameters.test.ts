@@ -1,6 +1,5 @@
 import { expect } from 'earl'
 
-import { ChainId } from '../utils/ChainId'
 import { getCliParameters } from './getCliParameters'
 
 describe(getCliParameters.name, () => {
@@ -33,7 +32,7 @@ describe(getCliParameters.name, () => {
     const cli = getCliParameters(['discover', 'ethereum', 'foo'])
     expect(cli).toEqual({
       mode: 'discover',
-      chain: ChainId.fromName('ethereum'),
+      chain: 'ethereum',
       project: 'foo',
       dryRun: false,
       dev: false,
@@ -47,7 +46,7 @@ describe(getCliParameters.name, () => {
     const cli = getCliParameters(['discover', 'ethereum', 'foo', '--dry-run'])
     expect(cli).toEqual({
       mode: 'discover',
-      chain: ChainId.fromName('ethereum'),
+      chain: 'ethereum',
       project: 'foo',
       dryRun: true,
       dev: false,
@@ -68,7 +67,7 @@ describe(getCliParameters.name, () => {
     ])
     expect(cli).toEqual({
       mode: 'discover',
-      chain: ChainId.fromName('ethereum'),
+      chain: 'ethereum',
       project: 'foo',
       dryRun: false,
       dev: true,
@@ -98,7 +97,7 @@ describe(getCliParameters.name, () => {
     ])
     expect(cli).toEqual({
       mode: 'discover',
-      chain: ChainId.fromName('ethereum'),
+      chain: 'ethereum',
       project: 'foo',
       dryRun: true,
       dev: false,

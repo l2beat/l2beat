@@ -1,20 +1,19 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 
-import { ChainId } from '../../utils/ChainId'
 import { Hash256 } from '../../utils/Hash256'
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 
 export function toDiscoveryOutput(
-  configName: string,
-  chainId: ChainId,
+  name: string,
+  chain: string,
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
   return {
-    name: configName,
-    chain: ChainId.getName(chainId),
+    name,
+    chain,
     blockNumber,
     configHash,
     version: DISCOVERY_LOGIC_VERSION,

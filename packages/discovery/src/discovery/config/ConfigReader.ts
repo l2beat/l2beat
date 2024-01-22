@@ -4,30 +4,23 @@ import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
 
-import { ChainId } from '../../utils/ChainId'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
-  async readConfig(
-    name: string,
-    chain: string | ChainId,
-  ): Promise<DiscoveryConfig> {
-    const chainName =
-      typeof chain === 'string' ? chain : ChainId.getName(chain).toString()
-
+  async readConfig(name: string, chain: string): Promise<DiscoveryConfig> {
     assert(
       fileExistsCaseSensitive(`discovery/${name}`),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(`discovery/${name}/${chainName}`),
+      fileExistsCaseSensitive(`discovery/${name}/${chain}`),
       'Chain not found in project, check if case matches',
     )
 
     const contents = await readFile(
-      `discovery/${name}/${chainName}/config.jsonc`,
+      `discovery/${name}/${chain}/config.jsonc`,
       'utf-8',
     )
     const errors: ParseError[] = []
@@ -40,41 +33,28 @@ export class ConfigReader {
     const rawConfig = RawDiscoveryConfig.parse(parsed)
     const config = new DiscoveryConfig(rawConfig)
 
-    assert(config.chain === chainName, 'Chain ID mismatch in config.jsonc')
+    assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
   }
 
-  async readDiscovery(
-    name: string,
-    chain: string | ChainId,
-  ): Promise<DiscoveryOutput> {
-    const chainName =
-      typeof chain === 'string' ? chain : ChainId.getName(chain).toString()
-
+  async readDiscovery(name: string, chain: string): Promise<DiscoveryOutput> {
     assert(
       fileExistsCaseSensitive(`discovery/${name}`),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(`discovery/${name}/${chainName}`),
+      fileExistsCaseSensitive(`discovery/${name}/${chain}`),
       'Chain not found in project, check if case matches',
     )
 
     const contents = await readFile(
-      `discovery/${name}/${chainName}/discovered.json`,
+      `discovery/${name}/${chain}/discovered.json`,
       'utf-8',
     )
 
-    const parsed: unknown = JSON.parse(contents)
-
-    const discovery = parsed as DiscoveryOutput
-
-    assert(
-      discovery.chain === chainName,
-      'Chain ID mismatch in discovered.json',
-    )
-
+    const discovery = JSON.parse(contents) as unknown as DiscoveryOutput
+    assert(discovery.chain === chain, 'Chain mismatch in discovered.json')
     return discovery
   }
 
@@ -92,9 +72,7 @@ export class ConfigReader {
     return [...chains]
   }
 
-  async readAllConfigsForChain(
-    chain: string | ChainId,
-  ): Promise<DiscoveryConfig[]> {
+  async readAllConfigsForChain(chain: string): Promise<DiscoveryConfig[]> {
     const result: DiscoveryConfig[] = []
     const projects = this.readAllProjectsForChain(chain)
 
@@ -106,10 +84,7 @@ export class ConfigReader {
     return result
   }
 
-  readAllProjectsForChain(chain: string | ChainId): string[] {
-    const chainName =
-      typeof chain === 'string' ? chain : ChainId.getName(chain).toString()
-
+  readAllProjectsForChain(chain: string): string[] {
     const folders = readdirSync('discovery', { withFileTypes: true }).filter(
       (x) => x.isDirectory(),
     )
@@ -123,11 +98,11 @@ export class ConfigReader {
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
 
-      if (!contents.includes(chainName)) {
+      if (!contents.includes(chain)) {
         continue
       }
 
-      const chainFiles = readdirSync(`discovery/${folder.name}/${chainName}`, {
+      const chainFiles = readdirSync(`discovery/${folder.name}/${chain}`, {
         withFileTypes: true,
       })
         .filter((x) => x.isFile())

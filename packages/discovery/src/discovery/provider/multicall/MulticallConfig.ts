@@ -4,20 +4,6 @@ import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { MulticallConfig, MulticallRequest, MulticallResponse } from './types'
 
-export const multicallConfig = {
-  ethereum: getMulticall3Config(14353601),
-  arbitrum: getMulticall3Config(7654707),
-  optimism: getMulticall3Config(4286263),
-  base: getMulticall3Config(5022),
-  avalanche: getMulticall3Config(11907934),
-  bsc: getMulticall3Config(15921452),
-  celo: getMulticall3Config(13112599),
-  gnosis: getMulticall3Config(21022491),
-  linea: getMulticall3Config(42),
-  polygonpos: getMulticall3Config(25770160),
-  polygonzkevm: getMulticall3Config(57746),
-}
-
 export function getMulticall3Config(
   sinceBlock: number,
   address = EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
