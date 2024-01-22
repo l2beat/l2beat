@@ -22,7 +22,7 @@ export async function getTokenInfo(
     getSinceTimestamp(provider, logger, coingeckoClient, address, coingeckoId),
   ])
 
-  logger.check(
+  logger.assert(
     symbolFromConfig === symbolFromConfig,
     ` symbol mismatch  ${symbolFromConfig} !== ${symbolFromConfig}`,
   )
@@ -50,14 +50,14 @@ async function getName(
   logger: ScriptLogger,
   address: EthereumAddress,
 ) {
-  logger.notify('\tFetching... ', 'name')
+  logger.fetching('name')
 
   const name = await provider.call({
     to: address.toString(),
     data: '0x06fdde03', // name()
   })
 
-  logger.check(name !== '0x', 'Could not find name for token')
+  logger.assert(name !== '0x', 'Could not find name for token')
 
   return CODER.decodeFunctionResult('name', name)[0] as string
 }
@@ -67,14 +67,14 @@ async function getSymbol(
   logger: ScriptLogger,
   address: EthereumAddress,
 ) {
-  logger.notify('\tFetching... ', 'symbol')
+  logger.fetching('symbol')
 
   const symbol = await provider.call({
     to: address.toString(),
     data: '0x95d89b41', // symbol()
   })
 
-  logger.check(symbol !== '0x', 'Could not find symbol for token')
+  logger.assert(symbol !== '0x', 'Could not find symbol for token')
 
   return CODER.decodeFunctionResult('symbol', symbol)[0] as string
 }
@@ -84,14 +84,14 @@ async function getDecimals(
   logger: ScriptLogger,
   address: EthereumAddress,
 ) {
-  logger.notify('\tFetching... ', 'decimals')
+  logger.fetching('decimals')
 
   const decimals = await provider.call({
     to: address.toString(),
     data: '0x313ce567', // decimals()
   })
 
-  logger.check(decimals !== '0x', 'Could not find decimals for token')
+  logger.assert(decimals !== '0x', 'Could not find decimals for token')
 
   return parseInt(CODER.decodeFunctionResult('decimals', decimals)[0] as string)
 }
@@ -101,7 +101,7 @@ function getImageUrl(
   logger: ScriptLogger,
   coingeckoId: CoingeckoId,
 ): Promise<string> {
-  logger.notify('\tFetching... ', 'image url')
+  logger.fetching('image url')
 
   return coingeckoClient.getImageUrl(coingeckoId)
 }
@@ -113,7 +113,7 @@ async function getSinceTimestamp(
   address: EthereumAddress,
   coingeckoId: CoingeckoId,
 ) {
-  logger.notify('\tFetching... ', 'sinceTimestamp')
+  logger.fetching('sinceTimestamp (this will take a while)')
 
   const contractCreationTimestamp = await getContractCreationTimestamp(
     provider,
@@ -128,7 +128,7 @@ async function getSinceTimestamp(
       UnixTime.now(),
     )
 
-  logger.check(
+  logger.assert(
     coingeckoPriceHistoryData.prices.length >= 1,
     `No price history found for token: ${coingeckoId.toString()}`,
   )
