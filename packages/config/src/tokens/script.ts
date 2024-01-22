@@ -124,7 +124,7 @@ function getCoingeckoClient() {
 }
 
 function getChainConfiguration(logger: ScriptLogger, devId: string) {
-  const chain = chains.find((c) => c.devId === devId.replaceAll('-', '')) // handle manta pacific case
+  const chain = chains.find((c) => c.devId === devId) // handle manta pacific case
   logger.assert(chain !== undefined, `Configuration not found, TODO add readme`)
   return chain
 }

@@ -1079,7 +1079,7 @@
       "coingeckoId": "usd-coin"
     }
   ],
-  "manta-pacific": [
+  "mantapacific": [
     {
       "symbol": "STONE",
       "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
@@ -1099,6 +1099,12 @@
         "bridge": "Hyperlane Nexus"
       },
       "coingeckoId": "celestia"
+    },
+    {
+      "symbol": "MANTA",
+      "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ]
 }
