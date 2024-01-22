@@ -24,7 +24,7 @@ const delegatedProjects = {
     communicationThreadUrl: z.string().url(),
     delegateTokensUrl: z.string().url(),
   }),
-}
+} as const
 
 const events = {
   extension: 'json',
@@ -35,7 +35,7 @@ const events = {
     location: z.string(),
     link: z.string().url(),
   }),
-}
+} as const
 
 export const collections = {
   posts,

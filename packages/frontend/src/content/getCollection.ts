@@ -7,17 +7,15 @@ import { z } from 'zod'
 
 import { collections } from './collections'
 
-type CollectionKey = MarkdownCollectionKey | JSONCollectionKey
+type Collection = typeof collections
+type CollectionKey = keyof Collection
+
 type JSONCollectionKey = {
-  [K in keyof typeof collections]: (typeof collections)[K]['extension'] extends 'json'
-    ? K
-    : never
-}[keyof typeof collections]
+  [K in CollectionKey]: Collection[K]['extension'] extends 'json' ? K : never
+}[CollectionKey]
 type MarkdownCollectionKey = {
-  [K in keyof typeof collections]: (typeof collections)[K]['extension'] extends 'md'
-    ? K
-    : never
-}[keyof typeof collections]
+  [K in CollectionKey]: Collection[K]['extension'] extends 'md' ? K : never
+}[keyof Collection]
 
 export type CollectionEntry<T extends CollectionKey> =
   T extends JSONCollectionKey
@@ -26,11 +24,11 @@ export type CollectionEntry<T extends CollectionKey> =
 
 interface JSONCollectionEntry<T extends CollectionKey> {
   id: string
-  data: z.infer<(typeof collections)[T]['schema']>
+  data: z.infer<Collection[T]['schema']>
 }
 interface MarkdownCollectionEntry<T extends CollectionKey> {
   id: string
-  data: z.infer<(typeof collections)[T]['schema']>
+  data: z.infer<Collection[T]['schema']>
   content: string
 }
 
@@ -41,9 +39,11 @@ export function getCollection<T extends CollectionKey>(
 
   switch (collection.extension) {
     case 'json':
-      return getJsonCollection(key as JSONCollectionKey)
+      return getJsonCollection(key as JSONCollectionKey) as CollectionEntry<T>[]
     case 'md':
-      return getMarkdownCollection(key as MarkdownCollectionKey)
+      return getMarkdownCollection(
+        key as MarkdownCollectionKey,
+      ) as CollectionEntry<T>[]
     default:
       assertUnreachable(collection)
   }
@@ -76,19 +76,19 @@ function getMarkdownCollection<T extends MarkdownCollectionKey>(
 ): MarkdownCollectionEntry<T>[] {
   const collection = collections[key]
   const fileNames = readdirSync(path.join(__dirname, key))
-
+  const markdownIt = MarkdownIt()
   const parsedFiles = fileNames
     .filter((fileName) => fileName.endsWith(collection.extension))
     .map((fileName) => {
       const file = readFileSync(path.join(__dirname, key, fileName))
       const parsedFile = matter(file.toString())
-      const md = MarkdownIt().render(parsedFile.content.toString())
+      const markdown = markdownIt.render(parsedFile.content.toString())
       const data = collection.schema.parse(parsedFile.data)
 
       return {
         id: fileName.replace(`.${collection.extension}`, ''),
         data,
-        content: md,
+        content: markdown,
       }
     })
 
