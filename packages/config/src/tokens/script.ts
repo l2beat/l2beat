@@ -18,8 +18,8 @@ const OUTPUT_FILE_PATH = './src/tokens/generated.json'
 async function main() {
   const logger = new ScriptLogger({})
   const coingeckoClient = getCoingeckoClient()
-  const source = getSourceFile(logger)
-  const output = getOutputFile(logger)
+  const source = readTokensFile(logger)
+  const output = readGeneratedFile(logger)
   const result: Token[] = []
 
   for (const [devId, tokens] of Object.entries(source)) {
@@ -88,7 +88,7 @@ async function main() {
   logger.success('\nSaved ', 'output file')
 }
 
-function getSourceFile(logger: ScriptLogger) {
+function readTokensFile(logger: ScriptLogger) {
   logger.notify('Loading... ', 'source file')
 
   const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
@@ -104,7 +104,7 @@ function getSourceFile(logger: ScriptLogger) {
   return source
 }
 
-function getOutputFile(logger: ScriptLogger) {
+function readGeneratedFile(logger: ScriptLogger) {
   logger.notify('Loading... ', 'output file')
 
   const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
@@ -124,7 +124,7 @@ function getCoingeckoClient() {
 }
 
 function getChainConfiguration(logger: ScriptLogger, devId: string) {
-  const chain = chains.find((c) => c.devId === devId) // handle manta pacific case
+  const chain = chains.find((c) => c.devId === devId)
   logger.assert(chain !== undefined, `Configuration not found, TODO add readme`)
   return chain
 }
