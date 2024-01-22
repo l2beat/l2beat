@@ -1,5 +1,5 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, chainsByDevId, layer2s, tokenList } from '@l2beat/config'
+import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -40,8 +40,9 @@ export function getProductionConfig(env: Env): Config {
       throttleTimeMs: 20000,
     },
     clock: {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      minBlockTimestamp: chainsByDevId.get('ethereum')!.minTimestampForTvl!,
+      minBlockTimestamp:
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        chains.find((c) => c.devId === 'ethereum')!.minTimestampForTvl!,
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {

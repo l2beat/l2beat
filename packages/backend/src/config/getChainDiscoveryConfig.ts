@@ -1,5 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import { chainsByDevId } from '@l2beat/config'
+import { chains } from '@l2beat/config'
 import { getMulticall3Config } from '@l2beat/discovery'
 
 import { UpdateMonitorChainConfig } from './Config'
@@ -8,7 +8,7 @@ export function getChainDiscoveryConfig(
   env: Env,
   devId: string,
 ): UpdateMonitorChainConfig {
-  const chain = chainsByDevId.get(devId)
+  const chain = chains.find((c) => c.devId === devId)
   if (!chain) {
     throw new Error('Unknown chain: ' + devId)
   }

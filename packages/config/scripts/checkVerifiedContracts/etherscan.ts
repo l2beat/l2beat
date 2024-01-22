@@ -2,7 +2,7 @@ import { getEnv } from '@l2beat/backend-tools'
 import { EtherscanLikeClient, HttpClient } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { chainsByDevId } from '../../src'
+import { chains } from '../../src'
 
 export async function isContractVerified(
   etherscanClient: EtherscanLikeClient,
@@ -14,7 +14,7 @@ export async function isContractVerified(
 
 export function getEtherscanClient(devId: string): EtherscanLikeClient {
   const env = getEnv()
-  const chainConfig = chainsByDevId.get(devId)
+  const chainConfig = chains.find((c) => c.devId === devId)
   assert(chainConfig, `No chain config for devId: ${devId}`)
   assert(chainConfig.explorerApi?.url, `No explorerUrl for devId: ${devId}`)
   assert(

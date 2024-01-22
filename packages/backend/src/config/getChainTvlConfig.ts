@@ -1,5 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import { chainsByDevId, layer2s } from '@l2beat/config'
+import { chains, layer2s } from '@l2beat/config'
 import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { toMulticallConfigEntry } from '../peripherals/ethereum/multicall/MulticallConfig'
@@ -14,7 +14,7 @@ export function getChainTvlConfig(
     minTimestamp?: UnixTime
   },
 ): ChainTvlConfig {
-  const chain = chainsByDevId.get(devId)
+  const chain = chains.find((c) => c.devId === devId)
   if (!chain) {
     throw new Error('Unknown chain: ' + devId)
   }
