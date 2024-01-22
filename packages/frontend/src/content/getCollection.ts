@@ -1,5 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { readdirSync, readFileSync } from 'fs'
+import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
 import path from 'path'
 import { z } from 'zod'
@@ -74,21 +75,20 @@ function getMarkdownCollection<T extends MarkdownCollectionKey>(
   key: T,
 ): MarkdownCollectionEntry<T>[] {
   const collection = collections[key]
-  const files = readdirSync(path.join(__dirname, key))
+  const fileNames = readdirSync(path.join(__dirname, key))
 
-  const parsedFiles = files
-    .filter((file) => file.endsWith(collection.extension))
-    .map((file) => {
-      const content = readFileSync(path.join(__dirname, key, file))
-      const data = collection.schema.parse({
-        title: 'dupa',
-        description: '',
-      })
+  const parsedFiles = fileNames
+    .filter((fileName) => fileName.endsWith(collection.extension))
+    .map((fileName) => {
+      const file = readFileSync(path.join(__dirname, key, fileName))
+      const parsedFile = matter(file.toString())
+      const md = MarkdownIt().render(parsedFile.content.toString())
+      const data = collection.schema.parse(parsedFile.data)
 
       return {
-        id: file.replace(`.${collection.extension}`, ''),
+        id: fileName.replace(`.${collection.extension}`, ''),
         data,
-        content: MarkdownIt().render(content.toString()),
+        content: md,
       }
     })
 
