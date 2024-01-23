@@ -17,8 +17,8 @@ export function getPermissionsSection(
   project: Layer2 | Layer3 | Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-): PermissionsSectionProps | undefined {
-  const section: PermissionsSectionProps = {
+): Omit<PermissionsSectionProps, 'sectionOrder'> | undefined {
+  const section: Omit<PermissionsSectionProps, 'sectionOrder'> = {
     id: 'permissions',
     title: 'Permissions',
     verificationStatus,

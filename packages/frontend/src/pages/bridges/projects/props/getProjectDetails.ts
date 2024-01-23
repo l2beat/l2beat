@@ -23,7 +23,6 @@ import {
   ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
 } from '../../../types'
-import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -44,7 +43,12 @@ export function getProjectDetails(
   const items: BridgeDetailsItem[] = []
   items.push({
     type: 'ChartSection',
-    props: { ...chart, id: 'chart', title: 'Chart' },
+    props: {
+      ...chart,
+      id: 'chart',
+      title: 'Chart',
+      sectionOrder: items.length + 1,
+    },
   })
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
     items.push({
@@ -53,6 +57,7 @@ export function getProjectDetails(
         milestones: bridge.milestones,
         id: 'milestones',
         title: 'Milestones',
+        sectionOrder: items.length + 1,
       },
     })
   }
@@ -60,7 +65,13 @@ export function getProjectDetails(
   if (bridge.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
-      props: getDetailedDescriptionSection(bridge),
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: bridge.display.description,
+        detailedDescription: bridge.display.detailedDescription,
+        sectionOrder: items.length + 1,
+      },
     })
   }
 
@@ -68,7 +79,7 @@ export function getProjectDetails(
   if (riskSection.riskGroups.length > 0) {
     items.push({
       type: 'RiskSection',
-      props: riskSection,
+      props: { ...riskSection, sectionOrder: items.length + 1 },
     })
   }
 
@@ -87,6 +98,7 @@ export function getProjectDetails(
         items: section.items,
         id: section.id,
         title: section.title,
+        sectionOrder: items.length + 1,
       },
     }),
   )
@@ -98,6 +110,7 @@ export function getProjectDetails(
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
+        sectionOrder: items.length + 1,
       },
     })
   }
@@ -105,11 +118,14 @@ export function getProjectDetails(
   if (bridge.contracts)
     items.push({
       type: 'ContractsSection',
-      props: getContractSection(
-        bridge,
-        verificationStatus,
-        manuallyVerifiedContracts,
-      ),
+      props: {
+        ...getContractSection(
+          bridge,
+          verificationStatus,
+          manuallyVerifiedContracts,
+        ),
+        sectionOrder: items.length + 1,
+      },
     })
 
   if (bridge.knowledgeNuggets && !isEmpty(bridge.knowledgeNuggets)) {
@@ -119,6 +135,7 @@ export function getProjectDetails(
         knowledgeNuggets: bridge.knowledgeNuggets,
         id: 'knowledge-nuggets',
         title: 'Knowledge Nuggets',
+        sectionOrder: items.length + 1,
       },
     })
   }

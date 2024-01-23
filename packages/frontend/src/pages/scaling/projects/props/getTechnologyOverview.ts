@@ -11,12 +11,12 @@ import { makeTechnologyChoice } from '../../../../utils/project/makeTechnologyCh
 
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
-  sections: TechnologySectionProps[]
+  sections: Omit<TechnologySectionProps, 'sectionOrder'>[]
 }
 
 export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   function makeSections() {
-    const technology: TechnologySectionProps = {
+    const technology: Omit<TechnologySectionProps, 'sectionOrder'> = {
       id: 'technology',
       title: 'Technology',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
@@ -37,7 +37,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       ].filter(notUndefined),
     }
 
-    const operator: TechnologySectionProps = {
+    const operator: Omit<TechnologySectionProps, 'sectionOrder'> = {
       id: 'operator',
       title: 'Operator',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
@@ -50,7 +50,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       ],
     }
 
-    const withdrawals: TechnologySectionProps = {
+    const withdrawals: Omit<TechnologySectionProps, 'sectionOrder'> = {
       id: 'withdrawals',
       title: 'Withdrawals',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
@@ -63,7 +63,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       ].filter(notUndefined),
     }
 
-    const other: TechnologySectionProps = {
+    const other: Omit<TechnologySectionProps, 'sectionOrder'> = {
       id: 'other-considerations',
       title: 'Other considerations',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
