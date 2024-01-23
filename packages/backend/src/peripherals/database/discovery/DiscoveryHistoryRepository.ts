@@ -109,7 +109,7 @@ export class DiscoveryHistoryRepository extends BaseRepository {
 }
 
 function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
-  return {
+  const result = {
     projectName: row.project_name,
     chainId: ChainId(row.chain_id),
     blockNumber: row.block_number,
@@ -118,6 +118,13 @@ function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
     configHash: Hash256(row.config_hash),
     version: row.version,
   }
+
+  // NOTE(radomski): This has to be here, otherwise the risk of exposing our
+  // API keys goes way up. Putting this in the database gives us the highest
+  // chance of being secure.
+  result.discovery.contracts.forEach((c) => (c.errors = undefined))
+
+  return result
 }
 
 function toRow(record: DiscoveryHistoryRecord): DiscoveryHistoryRow {

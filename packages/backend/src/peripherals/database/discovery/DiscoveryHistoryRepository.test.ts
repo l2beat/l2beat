@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
@@ -122,5 +127,45 @@ describe(DiscoveryHistoryRepository.name, () => {
     )
 
     expect(timestamps).toEqual([discovery.timestamp, discovery2.timestamp])
+  })
+
+  describe(DiscoveryHistoryRepository.prototype.getProject.name, () => {
+    it('filters out errors', async () => {
+      const projectName = 'project'
+
+      const mockContract: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+        {
+          name: 'MockContract',
+          address: EthereumAddress.random(),
+          upgradeability: { type: 'immutable' },
+          errors: { code: 'UNEXPECTED_ERROR', message: 'Unexpected error' },
+        }
+      const discovery: DiscoveryHistoryRecord = {
+        projectName,
+        chainId: ChainId.ETHEREUM,
+        blockNumber: -1,
+        timestamp: new UnixTime(0),
+        discovery: {
+          name: projectName,
+          chain: ChainId.getName(ChainId.ETHEREUM),
+          blockNumber: -1,
+          configHash: Hash256.random(),
+          contracts: [mockContract],
+          eoas: [],
+          abis: {},
+          version: 0,
+        },
+        configHash: CONFIG_HASH,
+        version: 0,
+      }
+
+      await repository.addOrUpdate(discovery)
+
+      const result = await repository.getProject(projectName, ChainId.ETHEREUM)
+      expect(result.length).toEqual(1)
+      expect(result[0].discovery.contracts).toEqual([
+        { ...mockContract, errors: undefined },
+      ])
+    })
   })
 })
