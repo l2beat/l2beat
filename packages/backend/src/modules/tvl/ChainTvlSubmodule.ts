@@ -159,6 +159,7 @@ export function chainTvlSubmodule(
   }
 
   return {
+    chain,
     reportUpdaters: [
       totalSupplyFormulaUpdater,
       circulatingSupplyFormulaUpdater,

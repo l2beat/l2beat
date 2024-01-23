@@ -112,6 +112,7 @@ export function createEthereumTvlSubmodule(
   }
 
   return {
+    chain: config.tvl.ethereum.chain,
     reportUpdaters: [cbvUpdater],
     dataUpdaters: [ethereumBlockNumberUpdater, balanceUpdater],
     start,
