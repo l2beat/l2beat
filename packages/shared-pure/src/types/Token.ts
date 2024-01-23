@@ -16,22 +16,12 @@ export const Token = z.object({
   symbol: z.string(),
   decimals: z.number(),
   sinceTimestamp: numberAs((n) => new UnixTime(n)),
-
   /** @deprecated */
-  category: z.union([
-    z.literal('ether'),
-    z.literal('stablecoin'),
-    z.literal('other'),
-  ]),
+  category: z.enum(['ether', 'stablecoin', 'other']),
   iconUrl: z.optional(z.string()),
   chainId: numberAs(ChainId),
-  type: z.union([z.literal('CBV'), z.literal('EBV'), z.literal('NMV')]),
-  formula: z.union([
-    z.literal('totalSupply'),
-    z.literal('locked'),
-    z.literal('circulatingSupply'),
-  ]),
-
+  type: z.enum(['CBV', 'EBV', 'NMV']),
+  formula: z.enum(['totalSupply', 'locked', 'circulatingSupply']),
   bridgedUsing: z.optional(
     z.object({
       bridge: z.string(),
