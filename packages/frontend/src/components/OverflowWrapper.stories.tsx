@@ -14,7 +14,7 @@ const meta: Meta<typeof OverflowWrapper> = {
     (Story) => {
       useEffect(() => {
         configureOverflowWrappers()
-      })
+      }, [])
 
       return <Story />
     },
