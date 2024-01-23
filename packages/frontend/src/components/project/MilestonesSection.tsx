@@ -24,7 +24,7 @@ export function MilestonesSection(props: MilestonesSectionProps) {
     >
       <ExpandableContainer
         className="relative"
-        gradientClassName="dark:to-zinc-900"
+        gradientClassName="from-gray-100 dark:from-zinc-900"
       >
         <div className="absolute left-[15.4px] mt-2 h-[100%]">
           <div className="h-[60%] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500 " />
