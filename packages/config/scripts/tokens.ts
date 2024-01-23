@@ -33,16 +33,16 @@ async function main() {
   const output = readGeneratedFile(logger)
   const result: Token[] = []
 
-  for (const [devId, tokens] of Object.entries(source)) {
-    const chainLogger = logger.prefix(devId)
-    const chain = getChainConfiguration(chainLogger, devId)
-    const chainId = getChainId(chainLogger, chain)
+  for (const [chain, tokens] of Object.entries(source)) {
+    const chainLogger = logger.prefix(chain)
+    const chainConfig = getChainConfiguration(chainLogger, chain)
+    const chainId = getChainId(chainLogger, chainConfig)
 
     for (const token of tokens) {
       const tokenLogger: ScriptLogger = chainLogger.addMetadata(token.symbol)
 
-      const type = getType(tokenLogger, devId, token)
-      const formula = getFormula(tokenLogger, devId, token)
+      const type = getType(tokenLogger, chain, token)
+      const formula = getFormula(tokenLogger, chain, token)
       const category = token.category ?? 'other'
 
       const existingToken = findTokenInOutput(output, chainId, token)
@@ -72,18 +72,23 @@ async function main() {
 
       const coingeckoId =
         token.coingeckoId ??
-        getCoingeckoId(logger, coinList, chain.coingeckoPlatform, token.address)
+        getCoingeckoId(
+          logger,
+          coinList,
+          chainConfig.coingeckoPlatform,
+          token.address,
+        )
 
       const info = await fetchTokenInfo(
         tokenLogger,
         coingeckoClient,
         coingeckoId,
-        chain,
+        chainConfig,
         token.address,
         token.symbol,
       )
 
-      const assetId = getAssetId(chain, token, info.name)
+      const assetId = getAssetId(chainConfig, token, info.name)
 
       result.push({
         id: assetId,
@@ -140,13 +145,13 @@ function getCoingeckoClient() {
   return coingeckoClient
 }
 
-function getChainConfiguration(logger: ScriptLogger, devId: string) {
-  const chain = chains.find((c) => c.devId === devId)
+function getChainConfiguration(logger: ScriptLogger, chain: string) {
+  const chainConfig = chains.find((c) => c.name === chain)
   logger.assert(
-    chain !== undefined,
+    chainConfig !== undefined,
     `Configuration not found, add chain configuration to project .ts file`,
   )
-  return chain
+  return chainConfig
 }
 
 function getChainId(logger: ScriptLogger, chain: ChainConfig) {
@@ -159,25 +164,25 @@ function getChainId(logger: ScriptLogger, chain: ChainConfig) {
   return chainId
 }
 
-function getType(tokenLogger: ScriptLogger, devId: string, entry: SourceEntry) {
-  const type = devId === 'ethereum' ? 'CBV' : entry.type
+function getType(tokenLogger: ScriptLogger, chain: string, entry: SourceEntry) {
+  const type = chain === 'ethereum' ? 'CBV' : entry.type
   tokenLogger.assert(type !== undefined, `Missing type`)
   return type
 }
 
 function getFormula(
   tokenLogger: ScriptLogger,
-  devId: string,
+  chain: string,
   entry: SourceEntry,
 ) {
-  const formula = devId === 'ethereum' ? 'locked' : entry.formula
+  const formula = chain === 'ethereum' ? 'locked' : entry.formula
   tokenLogger.assert(formula !== undefined, `Missing formula`)
   return formula
 }
 
 function getAssetId(chain: ChainConfig, token: SourceEntry, name: string) {
   return AssetId(
-    `${chain.devId}:${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
+    `${chain.name}:${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
       .replaceAll(' ', '-')
       .toLowerCase()}`,
   )
@@ -230,10 +235,10 @@ async function fetchTokenInfo(
   symbol: string,
 ) {
   const env = getEnv()
-  const rpcUrl = env.optionalString(`${chain.devId.toUpperCase()}_RPC_URL`)
+  const rpcUrl = env.optionalString(`${chain.name.toUpperCase()}_RPC_URL`)
   logger.assert(
     rpcUrl !== undefined,
-    `Missing environmental variable: ${chain.devId.toUpperCase()}_RPC_URL`,
+    `Missing environmental variable: ${chain.name.toUpperCase()}_RPC_URL`,
   )
   const provider = new providers.JsonRpcProvider(rpcUrl)
 
