@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { userEvent } from '@storybook/testing-library'
+import { userEvent, waitFor } from '@storybook/testing-library'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
@@ -60,7 +60,9 @@ export const ScrolledToCenter: Story = {
   play: async ({ canvasElement }) => {
     const { $ } = makeQuery(canvasElement)
     const arrowRight = $('[data-role=overflow-wrapper-arrow-right]')
-    await userEvent.click(arrowRight)
+    await waitFor(async () => {
+      await userEvent.click(arrowRight)
+    })
   },
 }
 
