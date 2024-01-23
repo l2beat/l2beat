@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "arbitrum",
-  "blockNumber": 168740974,
+  "blockNumber": 173078316,
   "configHash": "0xf37daaaf27ec77fdb946c02ca9019835c772c6e432488b33c3ab795160c6f89d",
   "version": 3,
   "contracts": [
@@ -147,7 +147,8 @@
           "216": 20,
           "217": 20,
           "218": 20,
-          "230": 20
+          "230": 20,
+          "234": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -359,29 +360,33 @@
           "230": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "234": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
         },
         "defaultAppConfig": {
           "101": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 15,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "102": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "106": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 12,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
@@ -395,33 +400,33 @@
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "109": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 512,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "110": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "111": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "112": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
@@ -435,9 +440,9 @@
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "115": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 10,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
@@ -459,9 +464,9 @@
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
           "126": {
-            "inboundProofLib": 1,
+            "inboundProofLib": 2,
             "inboundBlockConfirm": 10,
-            "outboundProofType": 1,
+            "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
@@ -769,6 +774,14 @@
             "outboundBlockConfirm": 20,
             "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
+          },
+          "234": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           }
         },
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62",
@@ -970,6 +983,10 @@
           "230": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
+          ],
+          "234": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
           ]
         },
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
@@ -1027,7 +1044,8 @@
           "216": [1, 2],
           "217": [1, 2],
           "218": [1, 2],
-          "230": 2
+          "230": 2,
+          "234": 2
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1082,7 +1100,8 @@
           "216": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
           "217": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "218": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "230": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+          "230": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
+          "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
         }
       },
       "derivedName": "UltraLightNodeV2"
@@ -1207,7 +1226,7 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
-        "nonce": 58,
+        "nonce": 64,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"

@@ -1,10 +1,8 @@
-import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { ScalingProjectEscrow } from './ScalingProjectEscrow'
 
 export interface ScalingProjectConfig {
-  /** List of native and external tokens */
-  tokenList?: Token[]
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
   associatedTokens?: string[]
   /** Native tokens should be also marked as associated tokens, however often associated tokens are not native tokens. This has to be kept manually in sync with code executed in CBVUpdater.update.  */
