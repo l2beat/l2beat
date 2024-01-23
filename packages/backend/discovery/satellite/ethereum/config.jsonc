@@ -8,7 +8,10 @@
     "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0": "AxelarAuthWeighted"
   },
   "overrides": {
-    "Gateway": { "proxyType": "Axelar proxy" },
+    "Gateway": {
+      "proxyType": "Axelar proxy",
+      "ignoreInWatchMode": ["currentEpoch"]
+    },
     "AxelarAuthWeighted": { "ignoreMethods": ["hashForEpoch"] }
   }
 }
