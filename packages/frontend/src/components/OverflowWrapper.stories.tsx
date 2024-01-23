@@ -22,6 +22,7 @@ const meta: Meta<typeof OverflowWrapper> = {
   parameters: {
     chromatic: {
       modes: onlyMobileModes,
+      delay: 300,
     },
   },
 }
