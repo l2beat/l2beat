@@ -12,7 +12,7 @@ export interface ChainConfig {
    * A lowercase a-z0-9 name of the chain. Used for uniquely identifying the
    * chain in configuration.
    */
-  devId: string
+  name: string
   chainId: number
   explorerUrl?: string
   explorerApi?: {

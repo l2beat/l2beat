@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ChainConfig } from '../common/ChainConfig'
 
 export const avalanche: ChainConfig = {
-  devId: 'avalanche',
+  name: 'avalanche',
   chainId: 43114,
   explorerUrl: 'https://snowtrace.io',
   explorerApi: {

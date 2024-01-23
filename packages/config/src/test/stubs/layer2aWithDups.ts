@@ -208,7 +208,7 @@ export const layer2aWithDups: Layer2 = {
       {
         address: EthereumAddress('0xB37D31b2A74029B5951a2778F959282E2D518595'),
         name: 'L2 Contract',
-        devId: 'optimism',
+        chain: 'optimism',
       },
       {
         address: EthereumAddress('0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'),

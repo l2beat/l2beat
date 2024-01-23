@@ -133,7 +133,7 @@ export const base: Layer2 = opStack({
     }),
   ],
   chainConfig: {
-    devId: 'base',
+    name: 'base',
     chainId: 8453,
     explorerUrl: 'https://basescan.org',
     explorerApi: {

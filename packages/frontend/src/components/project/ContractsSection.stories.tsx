@@ -15,7 +15,7 @@ const props: ContractsSectionProps = {
     {
       name: 'CanonicalTransactionChain',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: [
         '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
         '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
@@ -28,7 +28,7 @@ const props: ContractsSectionProps = {
     {
       name: 'L1CrossDomainMessenger',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: ['0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1'],
       description:
         "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
@@ -50,7 +50,7 @@ const props: ContractsSectionProps = {
     {
       name: 'L1Escrow',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: ['0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'],
       description:
         'DAI Vault for custom DAI Gateway managed by MakerDAO. This contract stores the following tokens: DAI.',
@@ -61,7 +61,7 @@ const props: ContractsSectionProps = {
     {
       name: 'L1Escrow',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: ['0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'],
       description:
         'DAI Vault for custom DAI Gateway managed by MakerDAO. This contract stores the following tokens: DAI.',
@@ -72,14 +72,14 @@ const props: ContractsSectionProps = {
     {
       name: 'Generic escrow',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: ['0x5E4e65926BA27467555EB562121fac00D24E9dD2'],
       links: [],
     },
     {
       name: 'L2Escrow',
       etherscanUrl: 'arbiscan.io',
-      devId: 'arbitrum',
+      chain: 'arbitrum',
       addresses: ['0x99932133f54e0E8A33A975908C5BA1c14e5BbbDf'],
       description: 'L2 Escrow',
       links: [],

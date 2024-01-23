@@ -98,7 +98,7 @@ export const mantapacific: Layer2 = {
     },
   },
   chainConfig: {
-    devId: 'mantapacific',
+    name: 'mantapacific',
     chainId: 169,
     explorerUrl: 'https://pacific-explorer.manta.network',
     explorerApi: {

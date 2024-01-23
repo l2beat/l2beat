@@ -1,16 +1,11 @@
 import { Project } from './types'
 
-export function getChainDevIds(projects: Project[]): string[] {
+export function getChainNames(projects: Project[]): string[] {
   return projects
-    .flatMap(getProjectDevIds)
+    .flatMap(getProjectChainNames)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-function getProjectDevIds(project: Project): string[] {
-  const devIds =
-    project.contracts?.addresses.map(
-      (contract) => contract.devId ?? 'ethereum',
-    ) ?? []
-
-  return devIds
+function getProjectChainNames(project: Project): string[] {
+  return project.contracts?.addresses.map((c) => c.chain ?? 'ethereum') ?? []
 }

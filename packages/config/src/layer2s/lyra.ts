@@ -92,7 +92,7 @@ export const lyra: Layer2 = opStack({
   ],
   nonTemplateEscrows: [],
   chainConfig: {
-    devId: 'lyra',
+    name: 'lyra',
     chainId: 957,
     explorerUrl: 'https://explorer.lyra.finance',
     explorerApi: {
