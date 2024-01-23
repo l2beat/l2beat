@@ -16,12 +16,6 @@ interface LzTokenEscrow {
 
 const escrows: LzTokenEscrow[] = [
   {
-    address: EthereumAddress('0x92cc36d66e9d739d50673d1f27929a371fb83a67'),
-    sinceTimestamp: new UnixTime(1695376800),
-    tokens: ['WAGMI'],
-    type: 'oft',
-  },
-  {
     address: EthereumAddress('0x7122985656e38BDC0302Db86685bb972b145bD3C'),
     sinceTimestamp: new UnixTime(1700658000),
     tokens: ['STONE'],
@@ -34,9 +28,27 @@ const escrows: LzTokenEscrow[] = [
     type: 'oft',
   },
   {
+    address: EthereumAddress('0x92cc36d66e9d739d50673d1f27929a371fb83a67'),
+    sinceTimestamp: new UnixTime(1695376800),
+    tokens: ['WAGMI'],
+    type: 'oft',
+  },
+  {
     address: EthereumAddress('0x4fa745fccc04555f2afa8874cd23961636cdf982'),
     sinceTimestamp: new UnixTime(1657699079),
     tokens: ['agEUR'],
+    type: 'wrapped oft',
+  },
+  {
+    address: EthereumAddress('0xee381e476b4335b8584a2026f3e845edac2c69de'),
+    sinceTimestamp: new UnixTime(1663802015),
+    tokens: ['LINK'],
+    type: 'wrapped oft',
+  },
+  {
+    address: EthereumAddress('0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E'),
+    sinceTimestamp: new UnixTime(1665428735),
+    tokens: ['USDC'],
     type: 'wrapped oft',
   },
   {
@@ -55,18 +67,6 @@ const escrows: LzTokenEscrow[] = [
     address: EthereumAddress('0x6f537839714761388b6d7ed61bc09579d5da2f41'),
     sinceTimestamp: new UnixTime(1660932033),
     tokens: ['BOBA'],
-    type: 'wrapped oft',
-  },
-  {
-    address: EthereumAddress('0xee381e476b4335b8584a2026f3e845edac2c69de'),
-    sinceTimestamp: new UnixTime(1663802015),
-    tokens: ['LINK'],
-    type: 'wrapped oft',
-  },
-  {
-    address: EthereumAddress('0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E'),
-    sinceTimestamp: new UnixTime(1665428735),
-    tokens: ['USDC'],
     type: 'wrapped oft',
   },
 ]
