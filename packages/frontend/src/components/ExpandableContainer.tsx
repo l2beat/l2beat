@@ -22,7 +22,7 @@ export function ExpandableContainer(props: ExpandableContainerProps) {
         <div>{props.children}</div>
         <div
           className={cn(
-            'ExpandableContainerContentGradient bg-grwadient-to-t pointer-events-none absolute inset-x-0 bottom-0 h-8 from-white to-transparent dark:from-neutral-900',
+            'ExpandableContainerContentGradient pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white dark:from-neutral-900',
             props.gradientClassName,
           )}
         />
