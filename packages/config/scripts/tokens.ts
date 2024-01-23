@@ -5,12 +5,12 @@ import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
 
-import { chains } from '../chains'
-import { ChainConfig } from '../common'
-import { Output, Source, SourceEntry } from './types'
-import { getCoingeckoId } from './utils/getCoingeckoId'
-import { getTokenInfo } from './utils/getTokenInfo'
-import { ScriptLogger } from './utils/ScriptLogger'
+import { chains } from '../src/chains'
+import { ChainConfig } from '../src/common'
+import { Output, Source, SourceEntry } from '../src/tokens/types'
+import { getCoingeckoId } from '../src/tokens/utils/getCoingeckoId'
+import { getTokenInfo } from '../src/tokens/utils/getTokenInfo'
+import { ScriptLogger } from '../src/tokens/utils/ScriptLogger'
 
 const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/generated.json'
@@ -124,7 +124,7 @@ function getCoingeckoClient() {
 }
 
 function getChainConfiguration(logger: ScriptLogger, devId: string) {
-  const chain = chains.find((c) => c.devId === devId)
+  const chain = chains.find((c) => c.devId === devId) // handle manta pacific case
   logger.assert(chain !== undefined, `Configuration not found, TODO add readme`)
   return chain
 }
