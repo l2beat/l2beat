@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../utils/cn'
 import { ArrowDownIcon, ArrowUpIcon } from './icons/Arrows'
 
 interface Props {
@@ -19,7 +19,7 @@ export function PercentChange({ value, className, role }: Props) {
 
   return (
     <span
-      className={cx(
+      className={cn(
         isMore && 'text-green-300 dark:text-green-450',
         isLess && 'text-red-300',
         'relative',

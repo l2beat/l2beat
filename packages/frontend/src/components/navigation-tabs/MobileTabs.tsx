@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../../utils/cn'
 import { NewItemBadge } from '../badge/NewItemBadge'
 import { OverflowWrapper } from '../OverflowWrapper'
 
@@ -26,7 +26,7 @@ export function MobileTabs({ pages }: MobileTabsProps) {
             >
               <a
                 href={page.link}
-                className={cx(
+                className={cn(
                   'block w-full rounded px-3 py-1 text-center font-bold',
                   page.selected &&
                     'bg-gradient-to-r from-purple-100 to-pink-100 text-white',
@@ -34,7 +34,7 @@ export function MobileTabs({ pages }: MobileTabsProps) {
                 )}
               >
                 <span
-                  className={cx(page.new && 'inline-flex items-center gap-1')}
+                  className={cn(page.new && 'inline-flex items-center gap-1')}
                 >
                   {page.shortTitle} {page.new && <NewItemBadge />}
                 </span>

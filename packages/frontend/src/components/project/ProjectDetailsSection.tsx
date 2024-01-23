@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../../utils/cn'
 import { ProjectSectionId } from './sectionId'
 import { UnderReviewCallout } from './UnderReviewCallout'
 
@@ -17,7 +17,7 @@ export function ProjectDetailsSection(props: Props) {
   return (
     <section
       id={props.id}
-      className={cx(props.className, 'rounded-lg bg-zinc-900 p-8 md:mt-10')}
+      className={cn(props.className, 'rounded-lg bg-zinc-900 p-8 md:mt-10')}
     >
       <a
         href={`#${props.id}`}

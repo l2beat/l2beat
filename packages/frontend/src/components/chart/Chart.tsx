@@ -1,8 +1,8 @@
 import { Milestone } from '@l2beat/config'
-import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
 import { ChartType } from '../../scripts/charts/types'
+import { cn } from '../../utils/cn'
 import { ActivityHeader } from '../header/ActivityHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
@@ -60,7 +60,7 @@ export function Chart(props: ChartProps) {
         data-interactivity-disabled={props.showComingSoon}
         data-initial-type={JSON.stringify(props.initialType)}
         data-milestones={JSON.stringify(props.milestones)}
-        className={cx(
+        className={cn(
           'group/chart',
           props.mobileFull
             ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
@@ -81,7 +81,7 @@ export function Chart(props: ChartProps) {
 
         <div className="flex flex-col gap-4">
           <div
-            className={cx(
+            className={cn(
               'flex justify-between',
               props.metaChart && 'absolute left-0 bottom-0 w-full',
             )}
@@ -111,7 +111,7 @@ export function Chart(props: ChartProps) {
               className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
             <ChartLabels
-              className={classNames(
+              className={cn(
                 props.showComingSoon && 'blur-sm',
                 props.metaChart ? 'hidden' : undefined,
               )}

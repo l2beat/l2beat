@@ -1,7 +1,10 @@
-import cx from 'classnames'
 import React from 'react'
 
-import { sentimentToTextColor } from '../../utils/risks/color'
+import { cn } from '../../utils/cn'
+import {
+  sentimentToFillColor,
+  sentimentToTextColor,
+} from '../../utils/risks/color'
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { RoundedWarningIcon } from '../icons'
@@ -87,14 +90,19 @@ function RiskValueComponent({ title, risk }: RiskValueProps) {
         <UnderReviewBadge />
       ) : (
         <span
-          className={cx(
+          className={cn(
             sentimentToTextColor(risk.sentiment),
             'flex items-center gap-1 text-base',
           )}
         >
           {risk.value}
-          {risk.warning && (
-            <RoundedWarningIcon className="h-4 w-4 fill-current" />
+          {risk.warning?.sentiment && (
+            <RoundedWarningIcon
+              className={cn(
+                'h-5 w-5',
+                sentimentToFillColor(risk.warning.sentiment),
+              )}
+            />
           )}
         </span>
       )}

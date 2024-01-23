@@ -1,5 +1,6 @@
-import cx from 'classnames'
 import React from 'react'
+
+import { cn } from '../../utils/cn'
 
 interface IndexCellProps {
   index: number
@@ -11,7 +12,7 @@ interface IndexCellProps {
 export function IndexCell({ index, className }: IndexCellProps) {
   return (
     <span
-      className={cx(
+      className={cn(
         'text-xs font-medium text-gray-50 dark:font-normal dark:text-gray-600',
         className,
       )}

@@ -29,4 +29,5 @@ export interface ChainConfig {
    */
   minTimestampForTvl?: UnixTime
   multicallContracts?: MulticallContractConfig[]
+  coingeckoPlatform?: string
 }

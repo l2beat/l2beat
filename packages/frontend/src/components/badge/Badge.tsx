@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../../utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 type BadgeType = 'error' | 'warning' | 'brightYellow' | 'gray' | 'purple'
@@ -22,7 +22,7 @@ const badgeClassnames: Record<BadgeType, string> = {
 }
 
 export function Badge(props: BadgeProps) {
-  const className = cx(
+  const className = cn(
     'rounded px-1.5 py-px font-medium',
     props.oneSize ? 'text-sm' : 'text-2xs md:text-sm',
     props.type && badgeClassnames[props.type],

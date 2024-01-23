@@ -1,7 +1,7 @@
 import { Layer2Provider, Layer3Provider } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import {
   ArbitrumIcon,
   LoopringIcon,
@@ -26,7 +26,7 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
 
   return (
     <span
-      className={cx(
+      className={cn(
         isRollup && !disableColors && 'text-green-300 dark:text-green-450',
       )}
     >
