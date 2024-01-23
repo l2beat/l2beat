@@ -21,7 +21,7 @@ export class ScriptLogger {
   }
 
   processing(...messages: string[]) {
-    this.notify('\nProcessing...', ...messages)
+    this.notify('Processing...', ...messages)
   }
 
   processed(...messages: string[]) {

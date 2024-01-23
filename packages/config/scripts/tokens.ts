@@ -23,6 +23,7 @@ const OUTPUT_FILE_PATH = './src/tokens/generated.json'
 
 async function main() {
   const logger = new ScriptLogger({})
+  logger.notify('Running tokens script...\n')
   const coingeckoClient = getCoingeckoClient()
   logger.fetching('coin list from Coingecko')
   const coinList = await coingeckoClient.getCoinList({
@@ -36,8 +37,6 @@ async function main() {
     const chainLogger = logger.prefix(devId)
     const chain = getChainConfiguration(chainLogger, devId)
     const chainId = getChainId(chainLogger, chain)
-
-    chainLogger.processing()
 
     for (const token of tokens) {
       const tokenLogger: ScriptLogger = chainLogger.addMetadata(token.symbol)
@@ -68,6 +67,7 @@ async function main() {
         token.address !== undefined,
         `Native asset detected - configure manually`,
       )
+      console.log()
       tokenLogger.processing()
 
       const coingeckoId =
@@ -102,42 +102,34 @@ async function main() {
 
       tokenLogger.processed()
     }
-
-    chainLogger.processed()
   }
 
   const sorted = sortByChainAndName(result)
-  logger.success('\nSorted ', 'tokens by chain and name')
-
   saveResults(sorted)
-  logger.success('\nSaved ', 'output file')
 }
 
 function readTokensFile(logger: ScriptLogger) {
-  logger.notify('Loading... ', 'source file')
-
   const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
   const errors: ParseError[] = []
   const parsed = parse(sourceFile, errors, {
     allowTrailingComma: true,
   }) as Record<string, string>
+  if (errors.length > 0) console.error(errors)
   logger.assert(errors.length === 0, 'Cannot parse source.jsonc')
   const source = Source.parse(parsed)
-
-  logger.success('Loaded ', 'source file')
 
   return source
 }
 
 function readGeneratedFile(logger: ScriptLogger) {
-  logger.notify('Loading... ', 'output file')
-
   const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
-  const output = Output.parse(JSON.parse(outputFile))
-
-  logger.success('Loaded ', 'output file')
-
-  return output
+  try {
+    const output = Output.parse(JSON.parse(outputFile))
+    return output
+  } catch (e) {
+    console.error(e)
+    logger.assert(false, 'Cannot parse generated.json')
+  }
 }
 
 function getCoingeckoClient() {
