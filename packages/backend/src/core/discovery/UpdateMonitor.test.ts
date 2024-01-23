@@ -16,6 +16,7 @@ import {
   UpdateMonitorRecord,
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
+import { ChainConverter } from '../ChainConverter'
 import { Clock } from '../Clock'
 import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
@@ -92,6 +93,10 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
+  const chainConverter = new ChainConverter([
+    { name: 'ethereum', chainId: ChainId.ETHEREUM },
+    { name: 'arbitrum', chainId: ChainId.ARBITRUM },
+  ])
 
   beforeEach(() => {
     updateNotifier = mockObject<UpdateNotifier>({
@@ -139,6 +144,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -201,6 +207,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -269,6 +276,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -318,6 +326,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -376,6 +385,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         1,
@@ -425,6 +435,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -465,6 +476,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -502,6 +514,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<ConfigReader>(),
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -545,6 +558,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -591,6 +605,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<ConfigReader>(),
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         1,
@@ -655,6 +670,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -701,6 +717,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,
@@ -739,6 +756,7 @@ describe(UpdateMonitor.name, () => {
         configReader,
         repository,
         mockObject<Clock>(),
+        chainConverter,
         Logger.SILENT,
         false,
         0,

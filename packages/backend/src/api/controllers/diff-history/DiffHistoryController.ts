@@ -1,22 +1,20 @@
 import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
-import {
-  ChainId,
-  DiffHistoryApiResponse,
-  DiscoveryHistory,
-} from '@l2beat/shared-pure'
+import { DiffHistoryApiResponse, DiscoveryHistory } from '@l2beat/shared-pure'
 
+import { ChainConverter } from '../../../core/ChainConverter'
 import { DiscoveryHistoryRepository } from '../../../peripherals/database/discovery/DiscoveryHistoryRepository'
 
 export class DiffHistoryController {
   constructor(
     private readonly discoveryHistoryRepository: DiscoveryHistoryRepository,
     private readonly configReader: ConfigReader,
+    private readonly chainConverter: ChainConverter,
   ) {}
 
   async getRaw(chain: string, project: string): Promise<DiscoveryHistory> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
-      ChainId.fromName(chain),
+      this.chainConverter.toChainId(chain),
     )
     return {
       project: project,
@@ -34,7 +32,7 @@ export class DiffHistoryController {
   ): Promise<DiffHistoryApiResponse> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
-      ChainId.fromName(chain),
+      this.chainConverter.toChainId(chain),
     )
 
     const diffs: Record<number, DiscoveryDiff[]> = {}
@@ -69,7 +67,7 @@ export class DiffHistoryController {
     const discoveries = await Promise.all(
       projects.map(async (p) => {
         return await this.getDiffHistoryPerProject(
-          ChainId.getName(p.chainId),
+          this.chainConverter.toName(p.chainId),
           p.projectName,
         )
       }),

@@ -4,6 +4,7 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { ChainConverter } from '../ChainConverter'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
@@ -23,6 +24,7 @@ export class UpdateNotifier {
   constructor(
     private readonly updateNotifierRepository: UpdateNotifierRepository,
     private readonly discordClient: DiscordClient | undefined,
+    private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -71,7 +73,7 @@ export class UpdateNotifier {
     const messages = diffToMessages(name, throttled, {
       dependents: metadata.dependents,
       blockNumber: metadata.blockNumber,
-      chain: ChainId.getName(metadata.chainId),
+      chain: this.chainConverter.toName(metadata.chainId),
       nonce,
     })
     await this.notify(messages, 'INTERNAL')
@@ -88,7 +90,7 @@ export class UpdateNotifier {
     const filteredMessages = diffToMessages(name, filteredDiff, {
       dependents: metadata.dependents,
       blockNumber: metadata.blockNumber,
-      chain: ChainId.getName(metadata.chainId),
+      chain: this.chainConverter.toName(metadata.chainId),
     })
     await this.notify(filteredMessages, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {

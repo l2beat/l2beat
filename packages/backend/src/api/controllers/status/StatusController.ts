@@ -10,6 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
+import { ChainConverter } from '../../../core/ChainConverter'
 import { Clock } from '../../../core/Clock'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
@@ -60,6 +61,7 @@ export class StatusController {
     private readonly configReader: ConfigReader,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
+    private readonly chainConverter: ChainConverter,
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {
@@ -72,7 +74,7 @@ export class StatusController {
         this.configReader,
         this.updateMonitorRepository,
         chain,
-        ChainId.fromName(chain),
+        this.chainConverter.toChainId(chain),
       )
     }
 
@@ -91,7 +93,7 @@ export class StatusController {
       this.updateMonitorRepository,
       discovery,
       config,
-      ChainId.fromName(chain),
+      this.chainConverter.toChainId(chain),
     )
 
     return renderDashboardProjectPage({

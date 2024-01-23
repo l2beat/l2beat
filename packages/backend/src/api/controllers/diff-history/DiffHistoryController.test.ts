@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { ChainConverter } from '../../../core/ChainConverter'
 import {
   DiscoveryHistoryRecord,
   DiscoveryHistoryRepository,
@@ -15,6 +16,10 @@ import {
 import { DiffHistoryController } from './DiffHistoryController'
 
 describe(DiffHistoryController.name, () => {
+  const chainConverter = new ChainConverter([
+    { name: 'ethereum', chainId: ChainId(1) },
+  ])
+
   describe(
     DiffHistoryController.prototype.getDiffHistoryPerProject.name,
     () => {
@@ -51,9 +56,13 @@ describe(DiffHistoryController.name, () => {
           readConfig: mockFn(mockConfig),
         })
 
-        const controller = new DiffHistoryController(repository, configReader)
+        const controller = new DiffHistoryController(
+          repository,
+          configReader,
+          chainConverter,
+        )
         const result = await controller.getDiffHistoryPerProject(
-          ChainId.ETHEREUM,
+          'ethereum',
           'test',
         )
 
@@ -89,9 +98,13 @@ describe(DiffHistoryController.name, () => {
           readConfig: mockFn(mockConfig),
         })
 
-        const controller = new DiffHistoryController(repository, configReader)
+        const controller = new DiffHistoryController(
+          repository,
+          configReader,
+          chainConverter,
+        )
         const result = await controller.getDiffHistoryPerProject(
-          ChainId.ETHEREUM,
+          'ethereum',
           'test',
         )
 
@@ -112,9 +125,13 @@ describe(DiffHistoryController.name, () => {
           readConfig: mockFn(mockConfig),
         })
 
-        const controller = new DiffHistoryController(repository, configReader)
+        const controller = new DiffHistoryController(
+          repository,
+          configReader,
+          chainConverter,
+        )
         const result = await controller.getDiffHistoryPerProject(
-          ChainId.ETHEREUM,
+          'ethereum',
           'test',
         )
 

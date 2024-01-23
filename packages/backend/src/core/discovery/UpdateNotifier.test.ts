@@ -8,11 +8,17 @@ import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
+import { ChainConverter } from '../ChainConverter'
 import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
 
 describe(UpdateNotifier.name, () => {
+  const chainConverter = new ChainConverter([
+    { name: 'ethereum', chainId: ChainId.ETHEREUM },
+    { name: 'arbitrum', chainId: ChainId.ARBITRUM },
+  ])
+
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
@@ -30,6 +36,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -91,6 +98,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -164,6 +172,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -216,6 +225,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -246,6 +256,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 

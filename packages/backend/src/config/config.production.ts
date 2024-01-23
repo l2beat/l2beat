@@ -1,6 +1,6 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
@@ -178,5 +178,6 @@ export function getProductionConfig(env: Env): Config {
     diffHistory: diffHistoryEnabled && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
+    chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   }
 }
