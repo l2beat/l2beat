@@ -42,12 +42,7 @@ export function RiskSection({
     return null
   }
   return (
-    <ProjectDetailsSection
-      title={title}
-      id={id}
-      sectionOrder={sectionOrder}
-      className="mt-4"
-    >
+    <ProjectDetailsSection title={title} id={id} sectionOrder={sectionOrder}>
       {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."

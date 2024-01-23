@@ -43,7 +43,6 @@ export function RiskAnalysis({
       title={title}
       id={id}
       sectionOrder={sectionOrder}
-      className="mt-4"
       isUnderReview={isUnderReview}
     >
       {isVerified === false && (

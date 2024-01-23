@@ -35,7 +35,6 @@ export function StageSection(props: StageSectionProps) {
         title={props.title}
         id={props.id}
         sectionOrder={props.sectionOrder}
-        className="mt-4"
       >
         <div className="mb-6 font-medium">
           <img
@@ -66,7 +65,6 @@ export function StageSection(props: StageSectionProps) {
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
-      className="mt-4"
     >
       <div className="mb-6 font-medium">
         <img

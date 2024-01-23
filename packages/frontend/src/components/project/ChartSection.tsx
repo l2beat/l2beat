@@ -14,7 +14,7 @@ export function ChartSection(props: ChartSectionProps) {
       {...props}
       mobileFull
       withoutSeparator
-      sectionClassName="-mx-4 md:mx-0 md:mt-16 !p-10 !bg-zinc-900 rounded-lg"
+      sectionClassName="-mx-4 md:mx-0 md:mt-16 md:p-10 md:bg-zinc-900 md:rounded-lg"
       header="project"
     />
   )
