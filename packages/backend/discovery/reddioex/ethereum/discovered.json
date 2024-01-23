@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 18939696,
-  "configHash": "0x64fe7d2d45d42978ef4b3d22e4f1c55c664e11a4bbd46be2bb685ab66fcf976f",
+  "configHash": "0xe9cc3152dc870560e0eddbca578d6d4a651d6a40d103138370832d2227c2b227",
   "version": 3,
   "contracts": [
     {

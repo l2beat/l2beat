@@ -35,13 +35,27 @@ export function getUniqueContractsForProject(
 }
 
 function getProjectContractsForChain(project: Project, devId: string) {
-  return (project.contracts?.addresses ?? []).filter((contract) => {
-    // For backwards compatibility, we assume that contracts without devId are for ethereum
-    if (contract.devId === undefined && devId === 'ethereum') {
-      return true
-    }
-    return contract.devId === devId
-  })
+  const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
+    isContractOnChain(contract, devId),
+  )
+  const escrows = project.config.escrows
+    .flatMap((escrow) => {
+      if (!escrow.newVersion) {
+        return []
+      }
+      return { address: escrow.address, ...escrow.contract }
+    })
+    .filter((escrowContract) => isContractOnChain(escrowContract, devId))
+
+  return [...contracts, ...escrows]
+}
+
+function isContractOnChain(contract: ScalingProjectContract, devId: string) {
+  // For backwards compatibility, we assume that contracts without devId are for ethereum
+  if (contract.devId === undefined && devId === 'ethereum') {
+    return true
+  }
+  return contract.devId === devId
 }
 
 function gatherAddressesFromUpgradeability(

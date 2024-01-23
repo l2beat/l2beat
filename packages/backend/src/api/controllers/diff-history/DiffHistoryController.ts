@@ -38,7 +38,10 @@ export class DiffHistoryController {
     )
 
     const diffs: Record<number, DiscoveryDiff[]> = {}
-    const config = await this.configReader.readConfig(project, chainId)
+    const config = await this.configReader.readConfig(
+      project,
+      ChainId.getName(chainId),
+    )
     for (let i = 0; i < discoveries.length - 1; i++) {
       diffs[discoveries[i + 1].timestamp.toNumber()] = diffDiscovery(
         discoveries[i].discovery.contracts,

@@ -106,6 +106,11 @@ export const kroma: Layer2 = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
+    finality: {
+      warning:
+        "It's assumed that transaction data batches are submitted sequentially.",
+      finalizationPeriod,
+    },
   },
   config: {
     escrows: [
@@ -152,6 +157,10 @@ export const kroma: Layer2 = {
           sinceTimestamp: new UnixTime(1693880579),
         },
       ],
+    },
+    finality: {
+      type: 'OPStack',
+      lag: 0,
     },
   },
   riskView: makeBridgeCompatible({

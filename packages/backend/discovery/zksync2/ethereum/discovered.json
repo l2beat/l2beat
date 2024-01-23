@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 18968886,
-  "configHash": "0x8b06d114a346b6a1894b2f71543a23be1cbe549c14d391e670865208a01697b9",
+  "configHash": "0xf55a4a9089c4f6627e27e0ede81dd1613289c7a040e0f67065b52d600ce6e559",
   "version": 3,
   "contracts": [
     {

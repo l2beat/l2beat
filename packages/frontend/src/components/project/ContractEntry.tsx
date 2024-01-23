@@ -47,6 +47,8 @@ export function ContractEntry({
 }: ContractEntryProps) {
   const verificationStatusForChain =
     verificationStatus.contracts[contract.devId] ?? {}
+  const manuallyVerifiedContractsForChain =
+    manuallyVerifiedContracts[contract.devId] ?? {}
 
   const areLinksUnverified = contract.links
     .filter((c) => !c.isAdmin)
@@ -72,10 +74,11 @@ export function ContractEntry({
     )
 
   addresses.forEach((address) => {
-    if (manuallyVerifiedContracts[address]) {
+    const manuallyVerified = manuallyVerifiedContractsForChain[address]
+    if (manuallyVerified) {
       references.push({
         text: 'Source code',
-        href: manuallyVerifiedContracts[address],
+        href: manuallyVerified,
       })
     }
   })

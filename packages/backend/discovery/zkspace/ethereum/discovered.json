@@ -2,7 +2,7 @@
   "name": "zkspace",
   "chain": "ethereum",
   "blockNumber": 19019529,
-  "configHash": "0xbf28aa706d15f5e4af5cf8a6feee6a5bc14007975a520fb5de892e8a7a1b87fc",
+  "configHash": "0xeb80b0c20104824cf61df9675318bff0905823757e93721b9574fb48ae3f3060",
   "version": 3,
   "contracts": [
     {
