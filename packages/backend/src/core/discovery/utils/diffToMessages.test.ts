@@ -51,7 +51,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessages(name, diff, {
         dependents,
         blockNumber: BLOCK_NUMBER,
-        chainId: ChainId.ETHEREUM,
+        chain: 'ethereum',
       })
 
       const expected = [
@@ -96,7 +96,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessages(name, diff, {
         dependents,
         blockNumber: BLOCK_NUMBER,
-        chainId: ChainId.ETHEREUM,
+        chain: 'ethereum',
       })
 
       const expected = [
@@ -134,7 +134,7 @@ describe('Discord message formatting', () => {
         dependents,
         blockNumber: BLOCK_NUMBER,
         nonce,
-        chainId: ChainId.ETHEREUM,
+        chain: 'ethereum',
       })
 
       const firstPart = [
@@ -204,7 +204,7 @@ describe('Discord message formatting', () => {
         dependents: [],
         blockNumber: BLOCK_NUMBER,
         nonce,
-        chainId: ChainId.ETHEREUM,
+        chain: 'ethereum',
       })
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
@@ -246,7 +246,7 @@ describe('Discord message formatting', () => {
         dependents: [],
         blockNumber: BLOCK_NUMBER,
         nonce,
-        chainId: ChainId.ETHEREUM,
+        chain: 'ethereum',
       })
 
       expect(result).toEqual([part.join('')])

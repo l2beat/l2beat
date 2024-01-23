@@ -28,7 +28,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(1),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -47,7 +47,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -66,7 +66,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -99,7 +99,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],

@@ -169,7 +169,7 @@ describe(UpdateMonitor.name, () => {
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
         {
-          ['project-a']: [ChainId.ETHEREUM, ChainId.ARBITRUM],
+          ['project-a']: ['ethereum', 'arbitrum'],
         },
         timestamp,
       )
@@ -665,8 +665,8 @@ describe(UpdateMonitor.name, () => {
 
       expect(Object.entries(result).length).toEqual(runners.length)
       expect(result).toEqual({
-        [PROJECT_A]: [ChainId.ETHEREUM],
-        [PROJECT_B]: [ChainId.ARBITRUM],
+        [PROJECT_A]: ['ethereum'],
+        [PROJECT_B]: ['arbitrum'],
       })
     })
 
@@ -712,7 +712,7 @@ describe(UpdateMonitor.name, () => {
       expect(Object.entries(result).length).toEqual(1)
       expect(result[PROJECT_A].length).toEqual(2)
       expect(result).toEqual({
-        [PROJECT_A]: [ChainId.ETHEREUM, ChainId.ARBITRUM],
+        [PROJECT_A]: ['ethereum', 'arbitrum'],
       })
     })
 

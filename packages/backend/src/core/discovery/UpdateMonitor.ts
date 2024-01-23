@@ -61,8 +61,8 @@ export class UpdateMonitor {
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
   }
 
-  async generateDailyReminder(): Promise<Record<string, ChainId[]>> {
-    const result: Record<string, ChainId[]> = {}
+  async generateDailyReminder(): Promise<Record<string, string[]>> {
+    const result: Record<string, string[]> = {}
 
     for (const runner of this.discoveryRunners) {
       const projectConfigs = await this.configReader.readAllConfigsForChain(
@@ -91,7 +91,7 @@ export class UpdateMonitor {
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
-          result[projectConfig.name].push(ChainId.fromName(runner.chain))
+          result[projectConfig.name].push(runner.chain)
         }
       }
     }

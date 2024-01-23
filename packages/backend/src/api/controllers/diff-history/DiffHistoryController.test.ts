@@ -166,7 +166,7 @@ function mockRecord(
     timestamp: timestamp,
     discovery: {
       name: PROJECT_A,
-      chain: ChainId.getName(ChainId.ETHEREUM),
+      chain: 'ethereum',
       blockNumber: 123,
       configHash: Hash256.random(),
       contracts,

@@ -220,8 +220,8 @@ describe(UpdateNotifier.name, () => {
       )
 
       const reminders = {
-        ['project-a']: [ChainId.ETHEREUM, ChainId.ARBITRUM],
-        ['project-b']: [ChainId.ETHEREUM, ChainId.OPTIMISM],
+        ['project-a']: ['ethereum', 'arbitrum'],
+        ['project-b']: ['ethereum', 'optimism'],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
@@ -250,8 +250,8 @@ describe(UpdateNotifier.name, () => {
       )
 
       const reminders = {
-        ['project-a']: [ChainId.ETHEREUM],
-        ['project-b']: [ChainId.ETHEREUM],
+        ['project-a']: ['ethereum'],
+        ['project-b']: ['ethereum'],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 

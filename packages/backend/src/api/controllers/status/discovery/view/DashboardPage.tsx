@@ -14,7 +14,7 @@ interface DashboardPageProps {
 export function DashboardPage(props: DashboardPageProps) {
   const hardcoded = getHardcoded()
 
-  const ethereumProjects = props.projects[ChainId.getName(ChainId.ETHEREUM)]
+  const ethereumProjects = props.projects['ethereum']
   const configuredEthereumProjects = ethereumProjects.filter(
     (p) => p.configured,
   )
