@@ -18,7 +18,7 @@ export function ProjectDetailsSection(props: Props) {
     <section
       id={props.id}
       className={cn(
-        'mt-10 md:rounded-lg md:bg-zinc-900 md:p-8',
+        'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
         props.className,
       )}
     >
@@ -26,7 +26,7 @@ export function ProjectDetailsSection(props: Props) {
         href={`#${props.id}`}
         className="mb-6 flex items-center gap-4 md:leading-normal"
       >
-        <div className="hidden h-10 w-10 items-center justify-center rounded bg-zinc-800 text-2xl tabular-nums text-gray-600 md:flex">
+        <div className="hidden h-10 w-10 items-center justify-center rounded bg-gray-200 text-2xl tabular-nums text-gray-700 dark:bg-gray-800 dark:text-gray-300 md:flex">
           {props.sectionOrder}
         </div>
         <span className="text-2xl font-bold md:text-4xl">{props.title}</span>

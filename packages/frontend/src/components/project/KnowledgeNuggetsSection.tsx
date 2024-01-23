@@ -23,7 +23,7 @@ export function KnowledgeNuggetsSection({
       title={title}
       id={id}
       sectionOrder={sectionOrder}
-      className="-m-4 mt-10 bg-gray-100 p-4 dark:bg-neutral-700 md:m-0 md:mt-16 md:bg-white md:p-8 md:dark:bg-zinc-900"
+      className="-m-4 mt-10 bg-gray-100 p-4 dark:bg-neutral-700 md:m-0 md:mt-16 md:bg-gray-100 md:p-8 md:dark:bg-zinc-900"
     >
       <div className="flex flex-col gap-4">
         {knowledgeNuggets.map((nugget) => (

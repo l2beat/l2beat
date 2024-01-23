@@ -176,7 +176,7 @@ function ChartHeader(props: {
         className="flex items-center gap-4 md:leading-normal"
       >
         {props.sectionOrder && (
-          <div className="hidden h-10 w-10 items-center justify-center rounded bg-zinc-800 text-2xl tabular-nums text-gray-600 md:flex">
+          <div className="hidden h-10 w-10 items-center justify-center rounded bg-gray-200 text-2xl tabular-nums text-gray-700 dark:bg-gray-800 dark:text-gray-300 md:flex">
             {props.sectionOrder}
           </div>
         )}
