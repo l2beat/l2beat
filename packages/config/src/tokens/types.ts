@@ -6,7 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-const SourceEntry = z.object({
+export type SourceEntry = z.infer<typeof SourceEntry>
+export const SourceEntry = z.object({
   symbol: z.string(),
   address: stringAs(EthereumAddress).optional(),
   coingeckoId: stringAs((s) => CoingeckoId(s)).optional(),
@@ -31,10 +32,12 @@ const SourceEntry = z.object({
     }),
   ),
 })
-export type SourceEntry = z.infer<typeof SourceEntry>
+
+export type Source = z.infer<typeof Source>
 export const Source = z.record(z.array(SourceEntry))
+
+export type Output = z.infer<typeof Output>
 export const Output = z.object({
   comment: z.string().optional(),
   tokens: z.array(Token),
 })
-export type Output = z.infer<typeof Output>
