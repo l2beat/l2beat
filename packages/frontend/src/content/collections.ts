@@ -5,6 +5,7 @@ const posts = {
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    authorId: z.string(),
   }),
 } as const
 

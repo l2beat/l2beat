@@ -49,24 +49,38 @@ export function getCollection<T extends CollectionKey>(
   }
 }
 
+export function getCollectionEntry<T extends CollectionKey>(
+  key: T,
+  id: string,
+): CollectionEntry<T> {
+  const collection = collections[key]
+
+  switch (collection.extension) {
+    case 'json':
+      return getJsonCollectionEntry(
+        key as JSONCollectionKey,
+        id,
+      ) as CollectionEntry<T>
+    case 'md':
+      return getMarkdownCollectionEntry(
+        key as MarkdownCollectionKey,
+        id,
+      ) as CollectionEntry<T>
+    default:
+      assertUnreachable(collection)
+  }
+}
+
 function getJsonCollection<T extends JSONCollectionKey>(
   key: T,
 ): JSONCollectionEntry<T>[] {
   const collection = collections[key]
-  const files = readdirSync(`./${key}`)
+  const fileNames = readdirSync(`./${key}`)
 
-  const parsedFiles = files
-    .filter((file) => file.endsWith(collection.extension))
-    .map((file) => {
-      const content = readFileSync(`./${key}/${file}`)
-      const json: unknown = JSON.parse(content.toString())
-      const data = collection.schema.parse(json)
-
-      return {
-        id: file.replace(`.${collection.extension}`, ''),
-        data,
-      }
-    })
+  const parsedFiles = fileNames
+    .filter((fileName) => fileName.endsWith(collection.extension))
+    .map((fileName) => fileName.replace(`.${collection.extension}`, ''))
+    .map((fileName) => getJsonCollectionEntry(key, fileName))
 
   return parsedFiles
 }
@@ -76,21 +90,47 @@ function getMarkdownCollection<T extends MarkdownCollectionKey>(
 ): MarkdownCollectionEntry<T>[] {
   const collection = collections[key]
   const fileNames = readdirSync(path.join(__dirname, key))
-  const markdownIt = MarkdownIt()
   const parsedFiles = fileNames
     .filter((fileName) => fileName.endsWith(collection.extension))
-    .map((fileName) => {
-      const file = readFileSync(path.join(__dirname, key, fileName))
-      const parsedFile = matter(file.toString())
-      const markdown = markdownIt.render(parsedFile.content.toString())
-      const data = collection.schema.parse(parsedFile.data)
-
-      return {
-        id: fileName.replace(`.${collection.extension}`, ''),
-        data,
-        content: markdown,
-      }
-    })
+    .map((fileName) => fileName.replace(`.${collection.extension}`, ''))
+    .map((fileName) => getMarkdownCollectionEntry(key, fileName))
 
   return parsedFiles
+}
+
+function getJsonCollectionEntry<T extends JSONCollectionKey>(
+  key: T,
+  id: string,
+): JSONCollectionEntry<T> {
+  const collection = collections[key]
+  const file = readFileSync(
+    path.join(__dirname, key, `${id}.${collection.extension}`),
+  )
+
+  const json: unknown = JSON.parse(file.toString())
+  const data = collection.schema.parse(json)
+
+  return {
+    id,
+    data,
+  }
+}
+
+function getMarkdownCollectionEntry<T extends MarkdownCollectionKey>(
+  key: T,
+  id: string,
+): MarkdownCollectionEntry<T> {
+  const collection = collections[key]
+  const file = readFileSync(
+    path.join(__dirname, key, `${id}.${collection.extension}`),
+  )
+  const parsedFile = matter(file.toString())
+  const markdown = MarkdownIt().render(parsedFile.content.toString())
+  const data = collection.schema.parse(parsedFile.data)
+
+  return {
+    id,
+    data,
+    content: markdown,
+  }
 }

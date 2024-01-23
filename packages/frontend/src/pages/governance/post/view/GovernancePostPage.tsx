@@ -8,17 +8,12 @@ import {
 } from '../../../../components'
 import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
+import { GovernancePostEntry } from '../../getGovernancePostEntry'
 
 export interface GovernancePostPageProps {
-  post: GovernancePost
+  post: GovernancePostEntry
   navbar: NavbarProps
   footer: FooterProps
-}
-
-export interface GovernancePost {
-  title: string
-  slug: string
-  content: string
 }
 
 export function GovernancePostPage(props: GovernancePostPageProps) {
@@ -26,6 +21,7 @@ export function GovernancePostPage(props: GovernancePostPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent>
+        {props.post.author.data.firstName} {props.post.author.data.lastName}
         <Markdown>{props.post.content}</Markdown>
       </PageContent>
       <Footer {...props.footer} />

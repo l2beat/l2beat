@@ -4,21 +4,19 @@ import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
 import { getCollection } from '../../../content/getCollection'
 import { getProps } from './props/getProps'
-import { GovernancePostPage } from './view/GovernancePostPage'
+import { GovernanceAllPostsPage } from './view/GovernanceAllPostsPage'
 
-export function getGovernancePostPages(config: Config) {
+export function getGovernanceAllPostsPage(config: Config) {
   const posts = getCollection('posts')
 
-  return posts.map((post) => {
-    const { wrapper, props } = getProps(config, post)
+  const { wrapper, props } = getProps(config, posts)
 
-    return {
-      slug: `/governance/posts/${post.id}`,
-      page: (
-        <PageWrapper {...wrapper}>
-          <GovernancePostPage {...props} />
-        </PageWrapper>
-      ),
-    }
-  })
+  return {
+    slug: '/governance/posts',
+    page: (
+      <PageWrapper {...wrapper}>
+        <GovernanceAllPostsPage {...props} />
+      </PageWrapper>
+    ),
+  }
 }
