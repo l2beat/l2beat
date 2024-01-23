@@ -3504,17 +3504,21 @@
     },
     {
       "id": "linea:stone-stakestone-ether",
-      "chainId": 59144,
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
       "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
       "symbol": "STONE",
-      "name": "StakeStone Ether",
       "decimals": 18,
-      "coingeckoId": "stakestone-ether",
       "sinceTimestamp": 1700611200,
-      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 59144,
       "type": "EBV",
-      "formula": "totalSupply"
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     }
   ]
 }
