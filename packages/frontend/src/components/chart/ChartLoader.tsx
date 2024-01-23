@@ -12,7 +12,7 @@ export function ChartLoader() {
     >
       <circle cx="30" cy="50" fill="var(--second-gradient-1)" r="20">
         <animate
-          attributeName="cn"
+          attributeName="cx"
           repeatCount="indefinite"
           dur="1s"
           keyTimes="0;0.5;1"
@@ -22,7 +22,7 @@ export function ChartLoader() {
       </circle>
       <circle cx="70" cy="50" fill="var(--gradient-3)" r="20">
         <animate
-          attributeName="cn"
+          attributeName="cx"
           repeatCount="indefinite"
           dur="1s"
           keyTimes="0;0.5;1"
@@ -32,7 +32,7 @@ export function ChartLoader() {
       </circle>
       <circle cx="30" cy="50" fill="var(--second-gradient-1)" r="20">
         <animate
-          attributeName="cn"
+          attributeName="cx"
           repeatCount="indefinite"
           dur="1s"
           keyTimes="0;0.5;1"
