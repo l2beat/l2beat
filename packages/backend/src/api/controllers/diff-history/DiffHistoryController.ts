@@ -13,10 +13,10 @@ export class DiffHistoryController {
     private readonly configReader: ConfigReader,
   ) {}
 
-  async getRaw(chainId: ChainId, project: string): Promise<DiscoveryHistory> {
+  async getRaw(chain: string, project: string): Promise<DiscoveryHistory> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
-      chainId,
+      ChainId.fromName(chain),
     )
     return {
       project: project,
@@ -29,19 +29,16 @@ export class DiffHistoryController {
   }
 
   async getDiffHistoryPerProject(
-    chainId: ChainId,
+    chain: string,
     project: string,
   ): Promise<DiffHistoryApiResponse> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
-      chainId,
+      ChainId.fromName(chain),
     )
 
     const diffs: Record<number, DiscoveryDiff[]> = {}
-    const config = await this.configReader.readConfig(
-      project,
-      ChainId.getName(chainId),
-    )
+    const config = await this.configReader.readConfig(project, chain)
     for (let i = 0; i < discoveries.length - 1; i++) {
       diffs[discoveries[i + 1].timestamp.toNumber()] = diffDiscovery(
         discoveries[i].discovery.contracts,
@@ -71,7 +68,10 @@ export class DiffHistoryController {
 
     const discoveries = await Promise.all(
       projects.map(async (p) => {
-        return await this.getDiffHistoryPerProject(p.chainId, p.projectName)
+        return await this.getDiffHistoryPerProject(
+          ChainId.getName(p.chainId),
+          p.projectName,
+        )
       }),
     )
 

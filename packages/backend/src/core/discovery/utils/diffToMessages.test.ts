@@ -1,5 +1,5 @@
 import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { sum } from 'lodash'
 
