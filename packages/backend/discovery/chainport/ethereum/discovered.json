@@ -2,7 +2,7 @@
   "name": "chainport",
   "chain": "ethereum",
   "blockNumber": 19062209,
-  "configHash": "0xf39cb47c575b306d683e2827dd8b2a3be925c549a0c75882bdc0a2bc470ecd7c",
+  "configHash": "0x0ab956d72177a32407a07a09748a05327ed5ec567942679c19812ae0733ce023",
   "version": 3,
   "contracts": [
     {
