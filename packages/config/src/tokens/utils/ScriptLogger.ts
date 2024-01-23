@@ -44,8 +44,6 @@ export class ScriptLogger {
     if (condition) return
 
     this.log(this.formatNotification('Error', 'red'), ...messages)
-
-    this.log('\n')
     process.exit(1)
   }
 
