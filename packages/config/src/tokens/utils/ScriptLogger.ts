@@ -40,6 +40,10 @@ export class ScriptLogger {
     this.log(this.formatNotification('Skipping', 'gray'), ...messages)
   }
 
+  overriding(...messages: string[]) {
+    this.log(this.formatNotification('Overriding', 'yellow'), ...messages)
+  }
+
   assert(condition: boolean, ...messages: string[]): asserts condition {
     if (condition) return
 

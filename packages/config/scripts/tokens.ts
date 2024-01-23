@@ -48,18 +48,39 @@ async function main() {
       const existingToken = findTokenInOutput(output, chainId, token)
 
       if (existingToken) {
-        const bridgedUsing = token.bridgedUsing ?? existingToken.bridgedUsing
-        const coingeckoId = token.coingeckoId ?? existingToken.coingeckoId
-        // If token is already in output, use the existing data and override
-        // the category, type, formula and bridgedUsing fields.
-        result.push({
-          ...existingToken,
+        const overrides = {
+          coingeckoId: token.coingeckoId ?? existingToken.coingeckoId,
           category,
           type,
           formula,
-          coingeckoId,
-          bridgedUsing,
-        })
+        }
+        for (const [key, value] of Object.entries(overrides)) {
+          const existing = existingToken[key as keyof typeof existingToken]
+          if (value !== existing) {
+            tokenLogger.overriding(
+              key,
+              'from',
+              existing?.toString() ?? 'undefined',
+              'to',
+              value.toString(),
+            )
+          }
+        }
+        const bridgedUsing = token.bridgedUsing ?? existingToken.bridgedUsing
+        if (
+          existingToken.bridgedUsing?.bridge !== bridgedUsing?.bridge ||
+          existingToken.bridgedUsing?.slug !== bridgedUsing?.slug
+        ) {
+          tokenLogger.overriding(
+            'bridgedUsing',
+            'from',
+            JSON.stringify(existingToken.bridgedUsing ?? 'undefined'),
+            'to',
+            JSON.stringify(bridgedUsing ?? 'undefined'),
+          )
+        }
+
+        result.push({ ...existingToken, ...overrides, bridgedUsing })
         continue
       }
 
@@ -214,7 +235,7 @@ function findTokenInOutput(
   output: Output,
   chainId: ChainId | undefined,
   entry: SourceEntry,
-) {
+): Token | undefined {
   return output.tokens.find((e) => {
     if (chainId !== e.chainId) {
       return false
