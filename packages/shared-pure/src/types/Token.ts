@@ -7,6 +7,7 @@ import { CoingeckoId } from './CoingeckoId'
 import { EthereumAddress } from './EthereumAddress'
 import { UnixTime } from './UnixTime'
 
+export type Token = z.infer<typeof Token>
 export const Token = z.object({
   id: stringAs((s) => AssetId(s)),
   name: z.string(),
@@ -38,5 +39,3 @@ export const Token = z.object({
     }),
   ),
 })
-
-export type Token = z.infer<typeof Token>
