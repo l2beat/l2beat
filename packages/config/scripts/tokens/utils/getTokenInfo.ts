@@ -2,7 +2,7 @@ import { CoingeckoClient } from '@l2beat/shared'
 import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
-import { ethereum } from '../../chains/ethereum'
+import { ethereum } from '../../../src/chains/ethereum'
 import { getContractCreationTimestamp } from './getContractCreationTimestamp'
 import { ScriptLogger } from './ScriptLogger'
 
