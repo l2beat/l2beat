@@ -11,7 +11,7 @@ Added discovery of rollup validators.
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during 
+or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 19032900 (main branch discovery), not current.
 
 ```diff
