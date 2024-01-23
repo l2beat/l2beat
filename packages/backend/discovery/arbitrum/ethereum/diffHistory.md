@@ -1,23 +1,14 @@
-# Diff at Tue, 23 Jan 2024 13:45:02 GMT:
+# Diff at Tue, 23 Jan 2024 13:46:20 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18691623
-- current block number: 19069742
+- current block number: 19069754
 
 ## Description
 
 Provide description of changes. This section will be preserved.
 
 ## Watched changes
-
-```diff
-    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
-      values.batchPosters:
--        ["0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D","0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
-      errors:
-+        {"batchPosters":"missing response (requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0x8f9885966ad4db41df3fb10dcfa619ca16203bd4ab2782821e1aeaffa94b61af\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":577,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", serverError={\"code\":\"ECONNRESET\"}, url=\"https://eth-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)"}
-    }
-```
 
 ```diff
     contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {

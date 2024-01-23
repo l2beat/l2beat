@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 19069742,
+  "blockNumber": 19069754,
   "configHash": "0xf0ebb18a156090f81984b9c14304510123dfbc44e00a90ac4ea35a66cd4d14f1",
   "version": 3,
   "contracts": [
@@ -121,6 +121,10 @@
       "sinceTimestamp": 1661457944,
       "values": {
         "batchCount": 511207,
+        "batchPosters": [
+          "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+          "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
+        ],
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -129,9 +133,6 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
         "totalDelayedMessagesRead": 1343469
-      },
-      "errors": {
-        "batchPosters": "missing response (requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0x8f9885966ad4db41df3fb10dcfa619ca16203bd4ab2782821e1aeaffa94b61af\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":577,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", serverError={\"code\":\"ECONNRESET\"}, url=\"https://eth-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)"
       },
       "derivedName": "SequencerInbox"
     },
@@ -968,6 +969,7 @@
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
     "0x07D4692291B9E30E326fd31706f686f83f331B82",
+    "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
     "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
     "0x194DAFaB3B9B24B181a63F81eE42b322Cd0Db6E5",
     "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
@@ -992,6 +994,7 @@
     "0xb07dc9103328A51128bC6Cc1049d1137035f5E28",
     "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
     "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
+    "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
     "0xcd6BeDC12de2bF49afDE86cc91031d207318F207",
     "0xd3132d052C9045D7cB0236586C9E2276e654343D",
     "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
