@@ -221,7 +221,21 @@ export const deri: Layer3 = {
       accounts: [EOAExecutor],
       description: 'EOA that can execute upgrade via the UpgradeExecutor.',
     },
-    // TODO: add Sequencers and Proposers
+    {
+      name: 'Validators/Proposers',
+      accounts: discovery.getPermissionedAccounts('RollupProxy', 'validators'),
+      description:
+        'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
+    },
+    {
+      name: 'Sequencers',
+      accounts: discovery.getPermissionedAccounts(
+        'SequencerInbox',
+        'batchPosters',
+      ),
+      description:
+        'Central actors allowed to submit transaction batches to L1.',
+    },
   ],
   contracts: {
     addresses: [

@@ -1,22 +1,12 @@
-# Diff at Fri, 19 Jan 2024 08:46:17 GMT:
+# Diff at Tue, 23 Jan 2024 13:55:47 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@66d81d543e5774973a4ef4bf257f67dd0862a255 block: 168378561
-- current block number: 171955070
+- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 168378561
+- current block number: 173375251
 
 ## Description
 
 Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
-      errors.validators:
--        "bad response (status=400, headers={\"date\":\"Fri, 19 Jan 2024 08:46:16 GMT\",\"content-type\":\"application/json\",\"content-length\":\"106\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"fb48a423e35361c9b6e3e1fb860bbbdd\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=A4M72OvjaAiNltwZ8U50UZXiDDRQqYyVd__oUIhqpZE-1705653976632-0-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"847dce690d060de8-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":43,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"Unsupported method: trace_transaction on arb\\\"}}\", requestBody=\"{\\\"method\\\":\\\"trace_transaction\\\",\\\"params\\\":[\\\"0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095\\\"],\\\"id\\\":43,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/vDE81dGkASEBA0Fiwu7bhA31ucQRe3ka\", code=SERVER_ERROR, version=web/5.7.1)"
-+        "bad response (status=400, headers={\"date\":\"Fri, 19 Jan 2024 08:46:12 GMT\",\"content-type\":\"application/json\",\"content-length\":\"107\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"0bc963f917a94c767d7536e8a7a278d6\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=a8vAQtRpynNTWnLiF3acVaxa3aoNANrPLtEV3tMy6JU-1705653972184-0-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"847dce4d7d814c63-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":132,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"Unsupported method: trace_transaction on arb\\\"}}\", requestBody=\"{\\\"method\\\":\\\"trace_transaction\\\",\\\"params\\\":[\\\"0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095\\\"],\\\"id\\\":132,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/vDE81dGkASEBA0Fiwu7bhA31ucQRe3ka\", code=SERVER_ERROR, version=web/5.7.1)"
-    }
-```
 
 ## Config/verification related changes
 
@@ -26,8 +16,15 @@ discovery. Values are for block 168378561 (main branch discovery), not current.
 
 ```diff
     contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
-      errors:
-+        {"validators":"bad response (status=400, headers={\"date\":\"Fri, 19 Jan 2024 08:46:16 GMT\",\"content-type\":\"application/json\",\"content-length\":\"106\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"fb48a423e35361c9b6e3e1fb860bbbdd\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=A4M72OvjaAiNltwZ8U50UZXiDDRQqYyVd__oUIhqpZE-1705653976632-0-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"847dce690d060de8-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":43,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"Unsupported method: trace_transaction on arb\\\"}}\", requestBody=\"{\\\"method\\\":\\\"trace_transaction\\\",\\\"params\\\":[\\\"0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095\\\"],\\\"id\\\":43,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/vDE81dGkASEBA0Fiwu7bhA31ucQRe3ka\", code=SERVER_ERROR, version=web/5.7.1)"}
+      values.validators:
++        ["0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0"]
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+      values.batchPosters:
++        ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
     }
 ```
 
