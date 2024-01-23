@@ -1,23 +1,16 @@
-import classNames from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../utils/cn'
 import { Icon } from './Icon'
 
 export function ChevronRightIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
-  return (
-    <ChevronDownIcon
-      className={classNames('-rotate-90', className)}
-      {...rest}
-    />
-  )
+  return <ChevronDownIcon className={cn('-rotate-90', className)} {...rest} />
 }
 
 export function ChevronLeftIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
-  return (
-    <ChevronDownIcon className={classNames('rotate-90', className)} {...rest} />
-  )
+  return <ChevronDownIcon className={cn('rotate-90', className)} {...rest} />
 }
 
 export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
@@ -28,7 +21,7 @@ export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
       height="16"
       viewBox="0 0 16 16"
       aria-label="Dropdown arrow icon"
-      className={classNames('my-auto', className)}
+      className={cn('my-auto', className)}
       {...rest}
     >
       <path

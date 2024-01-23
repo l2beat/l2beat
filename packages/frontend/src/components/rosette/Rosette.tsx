@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import {
   sentimentToFillColor,
   sentimentToTextColor,
@@ -158,7 +158,7 @@ export function BigRosette({
 
   return (
     <div
-      className={cx('Rosette relative w-[272px] py-12 px-12', className)}
+      className={cn('Rosette relative w-[272px] py-12 px-12', className)}
       data-rosette-hover-disabled={isUnderReview || (isUpcoming ?? false)}
     >
       <BigRosetteIcon
@@ -237,7 +237,7 @@ function BigRosetteIcon({
         width="181"
         height="180"
         viewBox="0 0 181 180"
-        className={cx(className, isUpcoming && 'opacity-30')}
+        className={cn(className, isUpcoming && 'opacity-30')}
         alt-text="Rosette showing risk summary"
       >
         <circle
@@ -248,7 +248,7 @@ function BigRosetteIcon({
         />
         <path
           d="M80.8589 98.2024C83.4853 97.3765 86.1548 99.3485 86.1374 102.102L85.7291 166.681C85.7139 169.077 83.649 170.912 81.288 170.504C73.3126 169.126 56.0884 165.178 42.7447 155.321C28.2279 144.597 19.9876 129.784 16.6906 122.825C15.6954 120.724 16.8492 118.33 19.0669 117.632L80.8589 98.2024Z"
-          className={cx(
+          className={cn(
             sentimentToFillColor(risks.sequencerFailure),
             'Rosette-Slice focus:outline-none',
           )}
@@ -256,7 +256,7 @@ function BigRosetteIcon({
         />
         <path
           d="M80.4851 82.9885C82.0593 85.2473 80.9768 88.3846 78.3447 89.1921L16.604 108.133C14.3134 108.836 11.9444 107.415 11.6271 105.04C10.555 97.018 9.16596 79.4018 14.5768 63.7194C20.4634 46.6582 32.1303 34.3618 37.7841 29.1327C39.4908 27.5543 42.1203 27.9386 43.4495 29.8458L80.4851 82.9885Z"
-          className={cx(
+          className={cn(
             sentimentToFillColor(risks.stateValidation),
             'Rosette-Slice focus:outline-none',
           )}
@@ -264,7 +264,7 @@ function BigRosetteIcon({
         />
         <path
           d="M94.4599 77.5583C92.8302 79.7773 89.5113 79.7654 87.8975 77.5349L50.0417 25.2126C48.6372 23.2713 49.2175 20.5705 51.3629 19.5036C58.6097 15.8996 74.8347 8.89881 91.4242 8.95819C109.472 9.02278 124.876 16.0963 131.65 19.7596C133.695 20.8655 134.18 23.4783 132.804 25.352L94.4599 77.5583Z"
-          className={cx(
+          className={cn(
             sentimentToFillColor(risks.dataAvailability),
             'Rosette-Slice focus:outline-none',
           )}
@@ -272,7 +272,7 @@ function BigRosetteIcon({
         />
         <path
           d="M103.756 89.1339C101.153 88.2379 100.177 85.0657 101.827 82.8615L140.521 31.1566C141.957 29.2382 144.708 28.9889 146.365 30.7199C151.961 36.5668 163.471 49.9752 168.349 65.8316C173.655 83.082 171.483 99.8928 170.001 107.45C169.553 109.731 167.203 110.971 165.005 110.215L103.756 89.1339Z"
-          className={cx(
+          className={cn(
             sentimentToFillColor(risks.exitWindow),
             'Rosette-Slice focus:outline-none',
           )}
@@ -280,7 +280,7 @@ function BigRosetteIcon({
         />
         <path
           d="M95.5409 102.181C95.5486 99.428 98.2361 97.4805 100.855 98.3304L162.282 118.265C164.561 119.005 165.685 121.528 164.581 123.655C160.854 130.839 151.878 146.061 138.445 155.795C123.83 166.385 107.218 169.756 99.5872 170.792C97.2836 171.105 95.3511 169.28 95.3577 166.956L95.5409 102.181Z"
-          className={cx(
+          className={cn(
             sentimentToFillColor(risks.proposerFailure),
             'Rosette-Slice focus:outline-none',
           )}
@@ -387,13 +387,13 @@ function OverlayBox({
   return (
     <div
       {...props}
-      className={cx(
+      className={cn(
         'Rosette-Description z-110 hidden animate-quick-fade-in rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
         className,
       )}
     >
       <span
-        className={cx(
+        className={cn(
           'mb-2 flex items-center gap-1 font-medium',
           sentimentToTextColor(risk.sentiment),
         )}

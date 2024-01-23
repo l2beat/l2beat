@@ -1,5 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
+
+import { cn } from '../../utils/cn'
 
 interface Props {
   className?: string
@@ -8,7 +9,7 @@ interface Props {
 export function ChartLabels(props: Props) {
   return (
     <div
-      className={classNames(
+      className={cn(
         'pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px]',
         props.className,
       )}
