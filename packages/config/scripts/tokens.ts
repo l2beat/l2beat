@@ -1,9 +1,5 @@
 import { getEnv } from '@l2beat/backend-tools'
-import {
-  CoingeckoClient,
-  CoinListPlatformEntry,
-  HttpClient,
-} from '@l2beat/shared'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
@@ -53,12 +49,17 @@ async function main() {
       const existingToken = findTokenInOutput(output, chainId, token)
 
       if (existingToken) {
-        tokenLogger.skipping()
+        const bridgedUsing = token.bridgedUsing ?? existingToken.bridgedUsing
+        const coingeckoId = token.coingeckoId ?? existingToken.coingeckoId
+        // If token is already in output, use the existing data and override
+        // the category, type, formula and bridgedUsing fields.
         result.push({
           ...existingToken,
           category,
           type,
           formula,
+          coingeckoId,
+          bridgedUsing,
         })
         continue
       }
