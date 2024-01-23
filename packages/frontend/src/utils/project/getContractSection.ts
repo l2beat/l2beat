@@ -95,9 +95,9 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
-  const devId = item.devId ?? 'ethereum'
-  const verificationStatusForChain = verificationStatus.contracts[devId] ?? {}
-  const etherscanUrl = getExplorerUrl(devId)
+  const chain = item.chain ?? 'ethereum'
+  const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
+  const etherscanUrl = getExplorerUrl(chain)
 
   if (isSingleAddress(item)) {
     if (item.upgradeability?.type) {
@@ -363,7 +363,7 @@ function makeTechnologyContract(
     description,
     links,
     etherscanUrl,
-    devId,
+    chain,
   }
 
   if (isSingleAddress(item)) {
@@ -380,17 +380,17 @@ function isContractUnverified(
   contract: ScalingProjectContract,
   verificationStatus: VerificationStatus,
 ): boolean {
-  const devId = contract.devId ?? 'ethereum'
+  const chain = contract.chain ?? 'ethereum'
   if (isSingleAddress(contract)) {
     return (
-      verificationStatus.contracts[devId]?.[contract.address.toString()] ===
+      verificationStatus.contracts[chain]?.[contract.address.toString()] ===
       false
     )
   }
 
   return contract.multipleAddresses.some(
     (address) =>
-      verificationStatus.contracts[devId]?.[address.toString()] === false,
+      verificationStatus.contracts[chain]?.[address.toString()] === false,
   )
 }
 
@@ -398,11 +398,11 @@ function isEscrowUnverified(
   escrow: ScalingProjectEscrow,
   verificationStatus: VerificationStatus,
 ): boolean {
-  const devId = escrow.newVersion
-    ? escrow.contract.devId ?? 'ethereum'
+  const chain = escrow.newVersion
+    ? escrow.contract.chain ?? 'ethereum'
     : 'ethereum'
   return (
-    verificationStatus.contracts[devId]?.[escrow.address.toString()] === false
+    verificationStatus.contracts[chain]?.[escrow.address.toString()] === false
   )
 }
 

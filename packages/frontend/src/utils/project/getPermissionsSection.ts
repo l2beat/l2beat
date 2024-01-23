@@ -44,8 +44,8 @@ export function getPermissionsSection(
 function toTechnologyContract(
   permission: ScalingProjectPermission,
 ): TechnologyContract {
-  const devId = permission.devId ?? 'ethereum'
-  const etherscanUrl = getExplorerUrl(devId)
+  const chain = permission.chain ?? 'ethereum'
+  const etherscanUrl = getExplorerUrl(chain)
   const links = permission.accounts.slice(1).map((account) => {
     return {
       name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
@@ -65,7 +65,7 @@ function toTechnologyContract(
     name: permission.name,
     addresses,
     etherscanUrl,
-    devId,
+    chain,
     description: permission.description,
     links,
     references: permission.references,

@@ -4,11 +4,17 @@ import { expect } from 'earl'
 import { chains } from './index'
 
 describe('chains', () => {
-  it('every devId is unique', () => {
+  it('every name is lowercase a-z0-9 <20 characters', () => {
+    for (const chain of chains) {
+      expect(chain.name).toMatchRegex(/^[a-z0-9]{1,20}$/)
+    }
+  })
+
+  it('every name is unique', () => {
     const encountered = new Set()
     for (const chain of chains) {
-      expect(encountered.has(chain.devId)).toEqual(false)
-      encountered.add(chain.devId)
+      expect(encountered.has(chain.name)).toEqual(false)
+      encountered.add(chain.name)
     }
   })
 
@@ -27,12 +33,12 @@ describe('chains', () => {
 
     const contracts = chains
       .flatMap(
-        (x) => x.multicallContracts?.map((y) => [x.devId, y] as const) ?? [],
+        (x) => x.multicallContracts?.map((y) => [x.name, y] as const) ?? [],
       )
       .filter(([_, y]) => y.version === '3')
 
-    for (const [devId, contract] of contracts) {
-      it(`multicall3 on ${devId}`, () => {
+    for (const [chain, contract] of contracts) {
+      it(`multicall3 on ${chain}`, () => {
         expect(contract.address).toEqual(address)
       })
     }
@@ -44,7 +50,7 @@ describe('chains', () => {
       if (!contracts || contracts.length === 0) {
         continue
       }
-      it(chain.devId, () => {
+      it(chain.name, () => {
         expect(contracts).toEqual(contracts.slice().sort((a, b) => b - a))
       })
     }
