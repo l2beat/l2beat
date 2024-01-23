@@ -1,7 +1,10 @@
-import cx from 'classnames'
+import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
-import { sentimentToTextColor } from '../../utils/risks/color'
+import {
+  sentimentToFillColor,
+  sentimentToTextColor,
+} from '../../utils/risks/color'
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { RoundedWarningIcon } from '../icons'
@@ -93,8 +96,13 @@ function RiskValueComponent({ title, risk }: RiskValueProps) {
           )}
         >
           {risk.value}
-          {risk.warning && (
-            <RoundedWarningIcon className="h-4 w-4 fill-current" />
+          {risk.warning?.sentiment && (
+            <RoundedWarningIcon
+              className={classNames(
+                'h-5 w-5',
+                sentimentToFillColor(risk.warning.sentiment),
+              )}
+            />
           )}
         </span>
       )}
