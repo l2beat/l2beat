@@ -1,35 +1,37 @@
 import { Env } from '@l2beat/backend-tools'
-import { chainsByDevId } from '@l2beat/config'
+import { chains } from '@l2beat/config'
 import { getMulticall3Config } from '@l2beat/discovery'
 
 import { UpdateMonitorChainConfig } from './Config'
 
 export function getChainDiscoveryConfig(
   env: Env,
-  devId: string,
+  chain: string,
 ): UpdateMonitorChainConfig {
-  const chain = chainsByDevId.get(devId)
-  if (!chain) {
-    throw new Error('Unknown chain: ' + devId)
+  const chainConfig = chains.find((c) => c.name === chain)
+  if (!chainConfig) {
+    throw new Error('Unknown chain: ' + chain)
   }
 
-  const multicallV3 = chain.multicallContracts?.find((x) => x.version === '3')
+  const multicallV3 = chainConfig.multicallContracts?.find(
+    (x) => x.version === '3',
+  )
   if (!multicallV3) {
-    throw new Error('Missing multicallV3 for chain: ' + devId)
+    throw new Error('Missing multicallV3 for chain: ' + chain)
   }
 
-  if (!chain.explorerApi) {
-    throw new Error('Missing explorerApi for chain: ' + devId)
+  if (!chainConfig.explorerApi) {
+    throw new Error('Missing explorerApi for chain: ' + chain)
   }
 
-  if (chain.explorerApi.type !== 'etherscan') {
-    throw new Error('Only etherscan explorerApi is supported: ' + devId)
+  if (chainConfig.explorerApi.type !== 'etherscan') {
+    throw new Error('Only etherscan explorerApi is supported: ' + chain)
   }
 
-  const ENV_NAME = devId.toUpperCase()
+  const ENV_NAME = chain.toUpperCase()
 
   return {
-    chain: chain.devId,
+    chain: chainConfig.name,
     rpcUrl: env.string(`DISCOVERY_${ENV_NAME}_RPC_URL`),
     rpcGetLogsMaxRange: env.optionalInteger(
       `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
@@ -40,7 +42,7 @@ export function getChainDiscoveryConfig(
       multicallV3.batchSize,
     ),
     etherscanApiKey: env.string(`DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`),
-    etherscanUrl: chain.explorerApi.url,
-    etherscanUnsupported: chain.explorerApi.missingFeatures,
+    etherscanUrl: chainConfig.explorerApi.url,
+    etherscanUnsupported: chainConfig.explorerApi.missingFeatures,
   }
 }

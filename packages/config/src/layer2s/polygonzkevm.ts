@@ -206,7 +206,7 @@ export const polygonzkevm: Layer2 = {
     },
   },
   chainConfig: {
-    devId: 'polygonzkevm',
+    name: 'polygonzkevm',
     chainId: 1101,
     explorerUrl: 'https://zkevm.polygonscan.com',
     explorerApi: {

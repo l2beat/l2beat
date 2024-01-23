@@ -90,7 +90,7 @@ export interface EtherscanChainConfig {
 }
 
 export interface ChainTvlConfig {
-  readonly devId: string
+  readonly chain: string
   readonly config?: {
     readonly projectId: ProjectId
     readonly chainId: ChainId

@@ -187,7 +187,7 @@ export const linea: Layer2 = {
     },
   },
   chainConfig: {
-    devId: 'linea',
+    name: 'linea',
     chainId: 59144,
     explorerUrl: 'https://lineascan.build',
     explorerApi: {
