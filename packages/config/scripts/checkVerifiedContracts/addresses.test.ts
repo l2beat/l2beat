@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, layer2s } from '../../src/'
+import { bridges, layer2s, layer3s } from '../../src/'
 import { bridge1WithDups } from '../../src/test/stubs/bridge1WithDups'
 import { bridge2WithDups } from '../../src/test/stubs/bridge2WithDups'
 import { layer2aWithDups } from '../../src/test/stubs/layer2aWithDups'
@@ -16,17 +16,14 @@ import {
 } from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
-  const projects = [...bridges, ...layer2s]
+  const projects = [...bridges, ...layer2s, ...layer3s]
   const chains = getChainNames(projects)
   describe('all current contracts are included in verified.json', () => {
     for (const chain of chains) {
       it(`for ${chain}`, async () => {
         const filePath = getVerificationFilePath(chain)
         const verifiedJson = await loadVerifiedJson(filePath)
-        const allContracts = getUniqueContractsForAllProjects(
-          [...bridges, ...layer2s],
-          chain,
-        )
+        const allContracts = getUniqueContractsForAllProjects(projects, chain)
 
         for (const contract of allContracts) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
