@@ -7,7 +7,7 @@ import { UnderReviewCallout } from './UnderReviewCallout'
 interface Props {
   title: string
   id: ProjectSectionId
-  sectionOrder: number
+  sectionOrder: number | undefined
   className?: string
   children: ReactNode
   isUnderReview?: boolean
@@ -22,16 +22,41 @@ export function ProjectDetailsSection(props: Props) {
         props.className,
       )}
     >
-      <a
-        href={`#${props.id}`}
-        className="mb-6 flex items-center gap-4 md:leading-normal"
-      >
-        <div className="hidden h-10 w-10 items-center justify-center rounded bg-gray-200 text-2xl tabular-nums text-gray-700 dark:bg-gray-800 dark:text-gray-300 md:flex">
-          {props.sectionOrder}
-        </div>
-        <span className="text-2xl font-bold md:text-4xl">{props.title}</span>
-      </a>
+      <ProjectDetailsSectionHeader
+        title={props.title}
+        id={props.id}
+        sectionOrder={props.sectionOrder}
+        className="mb-6"
+      />
       {props.isUnderReview ? <UnderReviewCallout /> : props.children}
     </section>
+  )
+}
+
+interface ProjectDetailsSectionHeaderProps {
+  id: string
+  title: string
+  sectionOrder: number | undefined
+  className?: string
+}
+
+export function ProjectDetailsSectionHeader(
+  props: ProjectDetailsSectionHeaderProps,
+) {
+  return (
+    <a
+      href={`#${props.id}`}
+      className={cn(
+        'flex items-center gap-4 md:leading-normal',
+        props.className,
+      )}
+    >
+      {props.sectionOrder && (
+        <div className="hidden h-10 w-10 items-center justify-center rounded bg-gray-200 text-[26px] font-bold tabular-nums text-gray-700 dark:bg-gray-800 dark:text-gray-300 md:flex">
+          {props.sectionOrder}
+        </div>
+      )}
+      <span className="text-2xl font-bold md:text-4xl">{props.title}</span>
+    </a>
   )
 }

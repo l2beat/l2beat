@@ -7,6 +7,7 @@ import { ActivityHeader } from '../header/ActivityHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
+import { ProjectDetailsSectionHeader } from '../project/ProjectDetailsSection'
 import { ChartComingSoonState } from './ChartComingSoonState'
 import { ChartEmptyState } from './ChartEmptyState'
 import { ChartErrorState } from './ChartErrorState'
@@ -171,17 +172,11 @@ function ChartHeader(props: {
 
   return (
     <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
-      <a
-        href={`#${props.id}`}
-        className="flex items-center gap-4 md:leading-normal"
-      >
-        {props.sectionOrder && (
-          <div className="hidden h-10 w-10 items-center justify-center rounded bg-gray-200 text-2xl tabular-nums text-gray-700 dark:bg-gray-800 dark:text-gray-300 md:flex">
-            {props.sectionOrder}
-          </div>
-        )}
-        <span className="text-2xl font-bold md:text-4xl">{props.title}</span>
-      </a>
+      <ProjectDetailsSectionHeader
+        title={props.title}
+        id={props.id}
+        sectionOrder={props.sectionOrder}
+      />
       {(props.hasActivity || props.hasTvl) && (
         <RadioChartTypeControl
           hasActivity={!!props.hasActivity}
