@@ -125,7 +125,9 @@ function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
   // so sanitize it to expose minimal information.
   result.discovery.contracts.forEach((c) => {
     if (c.errors !== undefined) {
-      c.errors = { value: 'Processing error encountered.' }
+      for (const k in c.errors) {
+        c.errors[k] = 'Processing error occurred.'
+      }
     }
   })
 
