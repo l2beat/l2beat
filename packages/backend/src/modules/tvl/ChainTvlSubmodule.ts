@@ -44,10 +44,10 @@ export function chainTvlSubmodule(
   const provider = new providers.JsonRpcProvider(config.providerUrl)
 
   const blockNumberProvider: BlockNumberProvider =
-    config.blockNumberProviderConfig.type === 'RoutescanLike'
+    config.blockNumberProviderConfig.type === 'blockscout'
       ? new UniversalRoutescanClient(
           http,
-          config.blockNumberProviderConfig.routescanApiUrl,
+          config.blockNumberProviderConfig.blockscoutApiUrl,
           config.minBlockTimestamp,
           config.chainId,
           logger,
