@@ -4,6 +4,12 @@ import { RiskAnalysis as RiskAnalysisComponent } from './RiskAnalysis'
 
 const meta: Meta<typeof RiskAnalysisComponent> = {
   component: RiskAnalysisComponent,
+  a,
+  args: {
+    id: 'risk-analysis',
+    title: 'Risk analysis',
+    sectionOrder: 1,
+  },
 }
 export default meta
 type Story = StoryObj<typeof RiskAnalysisComponent>
