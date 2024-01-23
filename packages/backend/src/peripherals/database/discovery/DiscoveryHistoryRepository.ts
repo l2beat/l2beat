@@ -81,6 +81,22 @@ export class DiscoveryHistoryRepository extends BaseRepository {
     }))
   }
 
+  async deleteStaleProjectDiscoveries(
+    projectName: string,
+    chainId: ChainId,
+    configHash: Hash256,
+  ): Promise<number> {
+    const knex = await this.knex()
+
+    return await knex('daily_discovery')
+      .where({
+        project_name: projectName,
+        chain_id: +chainId,
+      })
+      .andWhere('config_hash', '!=', configHash.toString())
+      .delete()
+  }
+
   async getProject(
     projectName: string,
     chainId: ChainId,

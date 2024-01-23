@@ -41,14 +41,20 @@ export class ProjectDiscoverer {
       ChainId.fromName(this.chain),
     )
 
-    for (const timestamp of known) {
-      this.knownSet.add(timestamp.toStartOf('day').toNumber())
-    }
-
     this.projectConfig = await this.configReader.readConfig(
       this.projectName,
       this.chain,
     )
+
+    await this.repository.deleteStaleProjectDiscoveries(
+      this.projectName,
+      ChainId.fromName(this.chain),
+      this.projectConfig.hash,
+    )
+
+    for (const timestamp of known) {
+      this.knownSet.add(timestamp.toStartOf('day').toNumber())
+    }
 
     return this.clock.onEveryDay((timestamp) => {
       if (!this.knownSet.has(timestamp.toStartOf('day').toNumber())) {
