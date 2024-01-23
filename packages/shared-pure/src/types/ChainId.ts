@@ -11,8 +11,3 @@ export function ChainId(value: number): ChainId {
 
 ChainId.ETHEREUM = ChainId(1)
 ChainId.ARBITRUM = ChainId(42161)
-ChainId.OPTIMISM = ChainId(10)
-ChainId.LINEA = ChainId(59144)
-ChainId.LYRA = ChainId(957)
-ChainId.BASE = ChainId(8453)
-ChainId.MANTAPACIFIC = ChainId(169)
