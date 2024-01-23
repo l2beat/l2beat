@@ -3,12 +3,12 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
 import { HttpClient } from '../HttpClient'
-import { RoutescanLikeClient as RoutescanLikeClient } from './RoutescanLikeClient'
+import { BlockscoutLikeClient as BlockscoutLikeClient } from './BlockscoutLikeClient'
 
 const API_URL = 'https://example.com/api'
 
-describe(RoutescanLikeClient.name, () => {
-  describe(RoutescanLikeClient.prototype.call.name, () => {
+describe(BlockscoutLikeClient.name, () => {
+  describe(BlockscoutLikeClient.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetch(url) {
@@ -19,7 +19,7 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const etherscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
@@ -34,7 +34,7 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const etherscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
@@ -51,13 +51,13 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const etherscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
-        `Invalid Routescan response [mytestresp] for request [${API_URL}?module=mod&action=act].`,
+        `Invalid Blockscout response [mytestresp] for request [${API_URL}?module=mod&action=act].`,
       )
     })
 
@@ -68,7 +68,7 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const etherscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
@@ -84,7 +84,7 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const etherscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
@@ -105,7 +105,7 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const etherscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
@@ -116,7 +116,7 @@ describe(RoutescanLikeClient.name, () => {
     })
   })
 
-  describe(RoutescanLikeClient.prototype.getBlockNumberAtOrBefore.name, () => {
+  describe(BlockscoutLikeClient.prototype.getBlockNumberAtOrBefore.name, () => {
     it('constructs a correct url', async () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
@@ -131,7 +131,7 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const arbiscanClient = new RoutescanLikeClient(
+      const arbiscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
@@ -173,7 +173,7 @@ describe(RoutescanLikeClient.name, () => {
           ),
       })
 
-      const arbiscanClient = new RoutescanLikeClient(
+      const arbiscanClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
@@ -222,7 +222,7 @@ describe(RoutescanLikeClient.name, () => {
           .resolvesToOnce(new Response(gatewayErrorJsonString)),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const etherscanLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
@@ -265,7 +265,7 @@ describe(RoutescanLikeClient.name, () => {
           .throwsOnce(errorString),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const etherscanLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
@@ -307,7 +307,7 @@ describe(RoutescanLikeClient.name, () => {
           .throwsOnce(1234),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const etherscanLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
@@ -376,7 +376,7 @@ describe(RoutescanLikeClient.name, () => {
           ),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const etherscanLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-20, 'minutes'),

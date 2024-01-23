@@ -4,7 +4,7 @@ import {
   CoingeckoQueryService,
   HttpClient,
   UniversalEtherscanClient,
-  UniversalRoutescanClient,
+  UniversalBlockscoutClient,
 } from '@l2beat/shared'
 import { capitalizeFirstLetter, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -45,7 +45,7 @@ export function chainTvlSubmodule(
 
   const blockNumberProvider: BlockNumberProvider =
     config.blockNumberProviderConfig.type === 'blockscout'
-      ? new UniversalRoutescanClient(
+      ? new UniversalBlockscoutClient(
           http,
           config.blockNumberProviderConfig.blockscoutApiUrl,
           config.minBlockTimestamp,
