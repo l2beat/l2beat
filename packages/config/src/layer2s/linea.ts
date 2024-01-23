@@ -179,6 +179,7 @@ export const linea: Layer2 = {
         version: '3',
       },
     ],
+    coingeckoPlatform: 'linea',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

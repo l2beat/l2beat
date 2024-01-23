@@ -1106,5 +1106,17 @@
       "type": "NMV",
       "formula": "circulatingSupply"
     }
+  ],
+  "linea": [
+    {
+      "symbol": "STONE",
+      "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    }
   ]
 }
