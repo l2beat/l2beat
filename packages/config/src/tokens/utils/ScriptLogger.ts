@@ -16,38 +16,52 @@ export class ScriptLogger {
     }
   }
 
+  configure(options: Partial<LoggerOptions>): ScriptLogger {
+    return new ScriptLogger({ ...this.options, ...options })
+  }
+
+  prefix(prefix: string | undefined): ScriptLogger {
+    return this.configure({ prefix })
+  }
+
+  addMetadata(...metadata: string[]): ScriptLogger {
+    return this.configure({
+      metadata: [...(this.options.metadata ?? []), ...metadata],
+    })
+  }
+
   fetching(...messages: string[]) {
-    this.notify('Fetching...', ...messages)
+    this.logColored('yellow', 'Fetching...', ...messages)
   }
 
   processing(...messages: string[]) {
-    this.notify('Processing...', ...messages)
+    this.logColored('yellow', 'Processing...', ...messages)
   }
 
   processed(...messages: string[]) {
-    this.success('Processed', ...messages)
+    this.logColored('green', 'Processed', ...messages)
   }
 
   notify(notification: string, ...messages: string[]) {
-    this.log(this.formatNotification(notification, 'yellow') + ' ', ...messages)
+    this.logColored('yellow', notification, ...messages)
   }
 
   success(notification: string, ...messages: string[]) {
-    this.log(this.formatNotification(notification, 'green') + ' ', ...messages)
+    this.logColored('green', notification, ...messages)
   }
 
   skipping(...messages: string[]) {
-    this.log(this.formatNotification('Skipping', 'gray'), ...messages)
+    this.logColored('gray', 'Skipping', ...messages)
   }
 
   overriding(...messages: string[]) {
-    this.log(this.formatNotification('Overriding', 'yellow'), ...messages)
+    this.logColored('yellow', 'Overriding', ...messages)
   }
 
   assert(condition: boolean, ...messages: string[]): asserts condition {
     if (condition) return
 
-    this.log(this.formatNotification('Error', 'red'), ...messages)
+    this.logColored('red', 'Error', ...messages)
     process.exit(1)
   }
 
@@ -56,7 +70,15 @@ export class ScriptLogger {
     console.log(...messages, ...(this.options.metadata ?? []))
   }
 
-  formatNotification(
+  private logColored(
+    color: 'red' | 'green' | 'yellow' | 'blue' | 'gray',
+    notification: string,
+    ...messages: string[]
+  ) {
+    this.log(this.formatNotification(notification, color), ...messages)
+  }
+
+  private formatNotification(
     notification: string,
     color: 'red' | 'green' | 'yellow' | 'blue' | 'gray',
   ) {
@@ -65,18 +87,5 @@ export class ScriptLogger {
     )}`
 
     return this.options.prefix ? withPrefix : chalk[color](notification)
-  }
-
-  configure(options: Partial<LoggerOptions>): ScriptLogger {
-    const logger = new ScriptLogger({ ...this.options, ...options })
-    return logger
-  }
-
-  prefix(prefix: string | undefined): ScriptLogger {
-    return this.configure({ prefix })
-  }
-
-  addMetadata(...metadata: string[]): ScriptLogger {
-    return this.configure({ metadata })
   }
 }
