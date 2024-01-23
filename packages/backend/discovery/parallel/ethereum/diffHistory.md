@@ -1,3 +1,80 @@
+# Diff at Tue, 23 Jan 2024 13:21:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 19032900
+- current block number: 19069632
+
+## Description
+
+Added discovery of rollup validators.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19032900 (main branch discovery), not current.
+
+```diff
+    contract  (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+      name:
+-        ""
++        "OneStepProverMemory"
+      derivedName:
++        ""
+    }
+```
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+      values.validators:
++        ["0x56D33424edb428744597Ec02571f14B50a33b7de"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) {
+      derivedName:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract  (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+      name:
+-        ""
++        "OneStepProverMath"
+      derivedName:
++        ""
+    }
+```
+
+```diff
+    contract  (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+      name:
+-        ""
++        "OneStepProverHostIo"
+      derivedName:
++        ""
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+      values.batchPosters:
++        ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"]
+    }
+```
+
+```diff
+    contract  (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+      name:
+-        ""
++        "OneStepProver0"
+      derivedName:
++        ""
+    }
+```
+
 # Diff at Thu, 18 Jan 2024 09:37:21 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)

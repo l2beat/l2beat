@@ -81,7 +81,7 @@
   "orbiter": true,
   "palm": true,
   "paradex": true,
-  "parallel": true,
+  "parallel": false,
   "pNetwork": true,
   "polygon-miden": true,
   "polygon-plasma": false,

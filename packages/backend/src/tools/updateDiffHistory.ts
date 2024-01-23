@@ -31,7 +31,7 @@ async function updateDiffHistoryFile() {
 
   console.log('Updating diff history file...')
   const params = process.argv.filter((v) => !v.startsWith('-'))
-  const [_, chain, projectName] = params
+  const [_node, _sourcefile, chain, projectName] = params
   if (!chain || !projectName) {
     console.error('Pass parameters: <chainName> <projectName>')
     process.exit(1)
