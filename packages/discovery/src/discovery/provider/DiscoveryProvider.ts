@@ -7,6 +7,7 @@ import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { Hash256 } from '../../utils/Hash256'
 import { UnixTime } from '../../utils/UnixTime'
 import { DiscoveryLogger } from '../DiscoveryLogger'
+import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { TraceTransactionResponse } from './TransactionTrace'
@@ -132,6 +133,16 @@ export class DiscoveryProvider {
       transactionHash.toString(),
     ])) as unknown
     return TraceTransactionResponse.parse(response)
+  }
+
+  async getDebugTransactionTrace(
+    transactionHash: Hash256,
+  ): Promise<DebugTransactionCallResponse> {
+    const response = (await this.provider.send('debug_traceTransaction', [
+      transactionHash.toString(),
+      { tracer: 'callTracer' },
+    ])) as unknown
+    return DebugTransactionCallResponse.parse(response)
   }
 
   async getBlock(blockNumber: number): Promise<providers.Block> {

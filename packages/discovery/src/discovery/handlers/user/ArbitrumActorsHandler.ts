@@ -4,8 +4,8 @@ import * as z from 'zod'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { Hash256 } from '../../../utils/Hash256'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
+import { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { Trace } from '../../provider/TransactionTrace'
 import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type ArbitrumActorsHandlerDefinition = z.infer<
@@ -57,12 +57,10 @@ export class ArbitrumActorsHandler implements ClassicHandler {
     // from transaction traces and process them
     const isActor: Record<string, boolean> = {}
     for (const txHash of txHashes) {
-      const traces = await provider.getTransactionTrace(txHash)
-      traces.forEach((trace) =>
-        this.definition.actorType === 'validator'
-          ? this.processSetValidatorTrace(trace, isActor)
-          : this.processSetIsBatchPosterTrace(trace, isActor),
-      )
+      const trace = await provider.getDebugTransactionTrace(txHash)
+      this.definition.actorType === 'validator'
+        ? this.processSetValidatorCalls(trace.calls, isActor)
+        : this.processSetIsBatchPosterCalls(trace.calls, isActor)
     }
 
     const activeActors = Object.keys(isActor).filter((key) => isActor[key])
@@ -92,50 +90,57 @@ export class ArbitrumActorsHandler implements ClassicHandler {
     return logs
   }
 
-  processSetValidatorTrace(
-    trace: Trace,
+  processSetValidatorCalls(
+    calls: DebugTransactionCall[] | undefined,
     isValidator: Record<string, boolean>,
   ): void {
-    if (trace.type !== 'call') return
-    if (trace.action.callType !== 'delegatecall') return
+    for (const trace of calls ?? []) {
+      const input = trace.input
+      if (
+        trace.type === 'DELEGATECALL' &&
+        input.startsWith(this.setValidatorSighash)
+      ) {
+        const decodedInput = this.interface.decodeFunctionData(
+          this.setValidatorFn,
+          input,
+        )
+        const addresses = decodedInput[0] as string[]
+        const flags = decodedInput[1] as boolean[]
 
-    const input = trace.action.input
-    if (!input.startsWith(this.setValidatorSighash)) return
-
-    const decodedInput = this.interface.decodeFunctionData(
-      this.setValidatorFn,
-      input,
-    )
-    const addresses = decodedInput[0] as string[]
-    const flags = decodedInput[1] as boolean[]
-
-    for (let i = 0; i < addresses.length; i++) {
-      const address = addresses[i]
-      const flag = flags[i]
-      if (address === undefined || flag === undefined) {
-        throw new Error(`Invalid input to ${this.setValidatorFn}`)
+        for (let i = 0; i < addresses.length; i++) {
+          const address = addresses[i]
+          const flag = flags[i]
+          if (address === undefined || flag === undefined) {
+            throw new Error(`Invalid input to ${this.setValidatorFn}`)
+          }
+          isValidator[address] = flag
+        }
       }
-      isValidator[address] = flag
+
+      this.processSetValidatorCalls(trace.calls, isValidator)
     }
   }
 
-  processSetIsBatchPosterTrace(
-    trace: Trace,
+  processSetIsBatchPosterCalls(
+    calls: DebugTransactionCall[] | undefined,
     isBatchPoster: Record<string, boolean>,
   ): void {
-    if (trace.type !== 'call') return
-    if (trace.action.callType !== 'delegatecall') return
+    for (const trace of calls ?? []) {
+      const input = trace.input
+      if (
+        trace.type === 'DELEGATECALL' &&
+        input.startsWith(this.setIsBatchPosterSighash)
+      ) {
+        const decodedInput = this.interface.decodeFunctionData(
+          this.setIsBatchPosterFn,
+          input,
+        )
+        const address = decodedInput[0] as string
+        const flag = decodedInput[1] as boolean
 
-    const input = trace.action.input
-    if (!input.startsWith(this.setIsBatchPosterSighash)) return
-
-    const decodedInput = this.interface.decodeFunctionData(
-      this.setIsBatchPosterFn,
-      input,
-    )
-    const address = decodedInput[0] as string
-    const flag = decodedInput[1] as boolean
-
-    isBatchPoster[address] = flag
+        isBatchPoster[address] = flag
+      }
+      this.processSetIsBatchPosterCalls(trace.calls, isBatchPoster)
+    }
   }
 }

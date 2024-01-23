@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.36.0
+
+### Minor Changes
+
+- Add getDebugTraceTransaction method (debug_traceTransaction RPC call)
+
 ## 0.35.0
 
 ### Minor Changes
