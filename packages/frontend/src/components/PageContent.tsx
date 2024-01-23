@@ -18,7 +18,7 @@ export function PageContent({
   return (
     <div
       className={cn(
-        narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
+        narrow ? 'max-w-[1064px]' : 'max-w-[1256px]',
         'mx-auto h-full leading-[1.15] md:px-12',
         !mobileFull && 'px-4',
         className,
