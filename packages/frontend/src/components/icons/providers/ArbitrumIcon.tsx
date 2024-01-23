@@ -1,11 +1,11 @@
-import cx from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
 export function ArbitrumIcon(props: SVGAttributes<SVGElement>) {
   return (
-    <Icon aria-label="arbitrum logo" className={cx(props.className)} {...props}>
+    <Icon aria-label="arbitrum logo" className={cn(props.className)} {...props}>
       <path
         d="M2.17578 7.29651V16.7037C2.17578 17.3043 2.49657 17.8597 3.01626 18.159L11.1602 22.8636C11.6799 23.1629 12.3197 23.1629 12.8394 22.8636L20.9833 18.159C21.503 17.8597 21.8238 17.3043 21.8238 16.7037V7.29651C21.8238 6.69592 21.503 6.14049 20.9833 5.84118L12.8394 1.13659C12.3197 0.837281 11.6799 0.837281 11.1602 1.13659L3.01429 5.84118C2.49461 6.14049 2.17578 6.69592 2.17578 7.29651Z"
         fill=""

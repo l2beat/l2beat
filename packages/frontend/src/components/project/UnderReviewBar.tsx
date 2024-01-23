@@ -1,12 +1,12 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { UnderReviewIcon } from '../icons'
 
 export function UnderReviewBar({ className }: { className?: string }) {
   return (
     <div
-      className={cx(
+      className={cn(
         'flex justify-center py-2.5 md:px-0',
         'rounded-lg bg-yellow-700/20',
         className,

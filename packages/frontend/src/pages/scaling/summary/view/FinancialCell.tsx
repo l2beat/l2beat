@@ -1,5 +1,5 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
+import { cn } from '../../../../utils/cn'
 
 interface Props {
   children: ReactNode
@@ -7,5 +7,5 @@ interface Props {
 }
 
 export function FinancialCell({ children, className }: Props) {
-  return <span className={cx('FinancialCell', className)}>{children}</span>
+  return <span className={cn('FinancialCell', className)}>{children}</span>
 }

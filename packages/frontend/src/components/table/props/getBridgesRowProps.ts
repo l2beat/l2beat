@@ -1,5 +1,4 @@
-import classNames from 'classnames'
-
+import { cn } from '../../../utils/cn'
 import { getRowType, getRowTypeClassNames } from './getRowType'
 
 interface BridgeTableEntry {
@@ -17,7 +16,7 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
       : `/bridges/projects/${entry.slug}`
   const rowType = getRowType(entry)
   return {
-    className: classNames(
+    className: cn(
       getRowTypeClassNames(rowType),
       entry.type === 'layer2' && 'hidden',
     ),

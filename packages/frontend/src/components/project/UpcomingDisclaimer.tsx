@@ -1,8 +1,8 @@
-import cx from 'classnames'
 import React from 'react'
 
-import { InfoIcon } from '../icons'
+import { cn } from '../../utils/cn'
 import { Link } from '../Link'
+import { InfoIcon } from '../icons'
 import { Callout } from './Callout'
 
 export interface UpcomingDisclaimerProps {
@@ -12,7 +12,7 @@ export interface UpcomingDisclaimerProps {
 export function UpcomingDisclaimer({ className }: UpcomingDisclaimerProps) {
   return (
     <Callout
-      className={cx('bg-blue-600 p-4', className)}
+      className={cn('bg-blue-600 p-4', className)}
       icon={<InfoIcon className="mt-1 fill-blue-500" />}
       body={
         <>

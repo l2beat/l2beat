@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
 let i = 0
@@ -15,7 +15,7 @@ export function OVMIcon(props: SVGAttributes<SVGElement>) {
         aria-label="OVM badge icon"
         {...props}
         style={{ fill: `url(#${gradientId})` }}
-        className={cx(props.className, 'dark:hidden')}
+        className={cn(props.className, 'dark:hidden')}
       >
         <path
           fillRule="evenodd"
@@ -39,7 +39,7 @@ export function OVMIcon(props: SVGAttributes<SVGElement>) {
       <Icon
         aria-label="OVM badge icon"
         {...props}
-        className={cx(props.className, 'hidden dark:inline dark:fill-current')}
+        className={cn(props.className, 'hidden dark:inline dark:fill-current')}
       >
         <path
           fillRule="evenodd"

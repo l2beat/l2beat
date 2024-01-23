@@ -2,12 +2,13 @@ import {
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
-import cx from 'classnames'
+
 import React from 'react'
 
-import { BulletIcon } from '../icons/symbols/BulletIcon'
+import { cn } from '../../utils/cn'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
+import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
@@ -85,7 +86,7 @@ export function ContractEntry({
 
   return (
     <Callout
-      className={cx(color === 'red' ? 'p-4' : 'px-4', className)}
+      className={cn(color === 'red' ? 'p-4' : 'px-4', className)}
       color={color}
       icon={icon}
       body={
@@ -97,7 +98,7 @@ export function ContractEntry({
                 address={address}
                 etherscanUrl={contract.etherscanUrl}
                 key={i}
-                className={cx(
+                className={cn(
                   verificationStatusForChain[address] === false
                     ? 'text-red-300'
                     : '',
@@ -108,7 +109,7 @@ export function ContractEntry({
               <Link
                 data-role="etherscan-link"
                 key={i}
-                className={cx(
+                className={cn(
                   verificationStatusForChain[x.address] === false &&
                     !x.isAdmin &&
                     'text-red-300',

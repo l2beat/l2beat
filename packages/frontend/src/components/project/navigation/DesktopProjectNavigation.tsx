@@ -1,8 +1,8 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { BridgeDetailsSection } from '../../../pages/bridges/projects/props/getProjectDetails'
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
+import { cn } from '../../../utils/cn'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
 import { UnderReviewCallout } from '../UnderReviewCallout'
@@ -35,7 +35,7 @@ export function DesktopProjectNavigation({
     >
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
-        className={cx(
+        className={cn(
           '-z-1 opacity-0 transition-all duration-300',
           translateClassName,
         )}
@@ -56,7 +56,7 @@ export function DesktopProjectNavigation({
         <HorizontalSeparator className="my-4" />
       </div>
       <div
-        className={cx(
+        className={cn(
           'flex flex-col gap-3 transition-transform duration-300',
           translateClassName,
         )}

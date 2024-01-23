@@ -1,16 +1,16 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
+import { Markdown } from '../Markdown'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { RoundedWarningIcon, ShieldIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
-import { Markdown } from '../Markdown'
 import { BigRosette } from '../rosette'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ProjectSectionId } from './sectionId'
 import { WarningBar } from './WarningBar'
+import { ProjectSectionId } from './sectionId'
 
 export interface RiskAnalysisProps {
   id: ProjectSectionId
@@ -107,7 +107,7 @@ function SingleRisk({
       ) : (
         <>
           <span
-            className={cx(
+            className={cn(
               sentimentToTextColor(riskValue.sentiment),
               'mt-2 block text-xl font-bold md:text-2xl',
             )}

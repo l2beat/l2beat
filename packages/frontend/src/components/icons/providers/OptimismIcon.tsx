@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
 let i = 0
@@ -13,7 +13,7 @@ export function OptimismIcon(props: SVGAttributes<SVGElement>) {
     <Icon
       aria-label="Optimism badge icon"
       {...props}
-      className={cx(props.className, 'fill-[#FF0420] dark:fill-current')}
+      className={cn(props.className, 'fill-[#FF0420] dark:fill-current')}
     >
       <mask id={maskId}>
         <rect y="3" width="24" height="18" fill="white" />

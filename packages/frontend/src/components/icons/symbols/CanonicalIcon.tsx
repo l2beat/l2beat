@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
 /*  IMPORTANT
@@ -12,7 +12,7 @@ export function CanonicalIcon(props: SVGAttributes<SVGElement>) {
     <Icon
       aria-label="Bridged asset icon"
       {...props}
-      className={cx(
+      className={cn(
         props.className,
         'h-2.5 w-2.5 stroke-black dark:stroke-white',
       )}

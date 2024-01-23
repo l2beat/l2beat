@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
@@ -14,6 +13,7 @@ import {
 } from '../../../pages/scaling/summary/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
+import { cn } from '../../../utils/cn'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { Badge } from '../../badge/Badge'
@@ -25,8 +25,8 @@ import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
 import { TypeCell, TypeColumnTooltip } from '../TypeCell'
-import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
+import { ColumnConfig } from '../types'
 import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
@@ -459,7 +459,7 @@ export function getScalingActivityColumnsConfig() {
           <span className="flex items-baseline justify-end gap-1.5">
             <NumberCell>{formatTps(project.data.maxTps)}</NumberCell>
             <span
-              className={classNames(
+              className={cn(
                 'text-gray-700 dark:text-gray-300',
                 'block min-w-[115px] text-left',
               )}

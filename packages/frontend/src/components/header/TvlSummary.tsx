@@ -1,12 +1,12 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { unifyPercentagesAsIntegers } from '../../utils'
+import { cn } from '../../utils/cn'
 import { formatUSD } from '../../utils/utils'
-import { UpcomingBadge } from '../badge/UpcomingBadge'
-import { CanonicalIcon, ExternalIcon, NativeIcon } from '../icons'
 import { Link } from '../Link'
 import { PercentChange } from '../PercentChange'
+import { UpcomingBadge } from '../badge/UpcomingBadge'
+import { CanonicalIcon, ExternalIcon, NativeIcon } from '../icons'
 
 export interface TvlStats {
   tvlChange: string
@@ -76,7 +76,7 @@ export function TvlSummary(props: TvlSummaryProps) {
   return (
     <div className="bg-gray-100 p-4 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
       <div
-        className={classNames(
+        className={cn(
           'flex w-full flex-wrap items-baseline justify-between',
           'md:gap-2',
         )}

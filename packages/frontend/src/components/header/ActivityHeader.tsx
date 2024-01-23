@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
@@ -22,7 +22,7 @@ export function ActivityHeader() {
           Transactions per second
         </p>
         <div
-          className={cx(
+          className={cn(
             'w-full text-right text-gray-500 dark:text-gray-600 md:w-auto',
             'flex items-center gap-1.5',
             'group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0',

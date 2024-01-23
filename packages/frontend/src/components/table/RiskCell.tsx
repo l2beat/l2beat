@@ -1,7 +1,7 @@
 import { ScalingProjectRiskViewEntry } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
@@ -31,7 +31,7 @@ export function RiskCell({ item }: Props) {
     <Tooltip>
       <TooltipTrigger>
         <span
-          className={cx(
+          className={cn(
             'flex items-center gap-1 font-medium',
             sentimentToTextColor(item.sentiment),
           )}
@@ -43,7 +43,7 @@ export function RiskCell({ item }: Props) {
         </span>
         {item.secondLine && (
           <span
-            className={cx(
+            className={cn(
               'block text-xs leading-none',
               item.secondSentiment
                 ? sentimentToTextColor(item.secondSentiment)

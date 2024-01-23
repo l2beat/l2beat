@@ -1,9 +1,9 @@
-import cx from 'classnames'
 import React from 'react'
 
-import { OutLinkIcon, ShieldIcon } from '../icons'
+import { cn } from '../../utils/cn'
 import { Markdown } from '../Markdown'
 import { OutLink } from '../OutLink'
+import { OutLinkIcon, ShieldIcon } from '../icons'
 import { Callout } from './Callout'
 
 export interface WarningBarProps {
@@ -39,10 +39,10 @@ export function WarningBar({
     return (
       <OutLink href={href}>
         <Callout
-          className={cx('p-4', className)}
+          className={cn('p-4', className)}
           color={color}
           hoverable
-          icon={<Icon className={cx('h-5 w-5', iconFill)} />}
+          icon={<Icon className={cn('h-5 w-5', iconFill)} />}
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -56,9 +56,9 @@ export function WarningBar({
 
   return (
     <Callout
-      className={cx('p-4', className)}
+      className={cn('p-4', className)}
       color={color}
-      icon={<Icon className={cx('h-5 w-5', iconFill)} />}
+      icon={<Icon className={cn('h-5 w-5', iconFill)} />}
       body={textElement}
     />
   )

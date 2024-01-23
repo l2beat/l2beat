@@ -1,7 +1,8 @@
 import { AssetId } from '@l2beat/shared-pure'
-import cx from 'classnames'
+
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
+import { cn } from '../../../utils/cn'
 import { InfoIcon } from '../../icons'
 import { ProjectSectionId } from '../../project/sectionId'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
@@ -50,7 +51,7 @@ export function TVLBreakdownTableView<
 
   return (
     <div
-      className={cx(
+      className={cn(
         'overflow-x-auto whitespace-pre text-base',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
@@ -63,20 +64,20 @@ export function TVLBreakdownTableView<
               return (
                 <th
                   key={i}
-                  className={cx(
+                  className={cn(
                     'w-[20%] whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
                     column.headClassName,
                     column.highlight && highlightedColumnClassNames,
                   )}
                 >
                   <div
-                    className={cx(
+                    className={cn(
                       'flex flex-row items-center gap-1.5',
                       column.align === 'right' && 'justify-end',
                       column.align === 'center' && 'justify-center',
                     )}
                   >
-                    <span className={cx(column.shortName && 'hidden md:block')}>
+                    <span className={cn(column.shortName && 'hidden md:block')}>
                       {column.name}
                     </span>
                     {column.shortName && (
@@ -105,7 +106,7 @@ export function TVLBreakdownTableView<
               <tr
                 key={i}
                 {...rest}
-                className={cx(
+                className={cn(
                   'group',
                   'border-b border-b-black/10 hover:bg-black/[0.1] hover:shadow-sm dark:border-b-gray-800 dark:hover:bg-white/[0.1] md:border-b-0',
                   rowClassName,
@@ -116,7 +117,7 @@ export function TVLBreakdownTableView<
                 data-token={item.assetId}
               >
                 {columns.map((column, j) => {
-                  const childClassName = cx(
+                  const childClassName = cn(
                     'h-full w-full items-start pt-2 pb-2',
                     column.align === 'right' && 'justify-end',
                     column.align === 'center' && 'justify-center',
@@ -124,12 +125,12 @@ export function TVLBreakdownTableView<
                   return (
                     <td
                       key={j}
-                      className={cx(
+                      className={cn(
                         'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
                         column.highlight && highlightedColumnClassNames,
                       )}
                     >
-                      <div className={cx(childClassName, 'flex')}>
+                      <div className={cn(childClassName, 'flex')}>
                         {column.getValue(item, i)}
                       </div>
                     </td>

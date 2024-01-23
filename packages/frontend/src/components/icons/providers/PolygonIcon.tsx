@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
 let i = 0
@@ -15,7 +15,7 @@ export function PolygonIcon(props: SVGAttributes<SVGElement>) {
         aria-label="polygon logo"
         {...props}
         style={{ fill: `url(#${gradientId})` }}
-        className={cx(props.className, 'dark:hidden')}
+        className={cn(props.className, 'dark:hidden')}
       >
         <g
           transform="matrix(1.5 0 0 1.5 -1.5e-5 -.00025497)"
@@ -44,7 +44,7 @@ export function PolygonIcon(props: SVGAttributes<SVGElement>) {
       <Icon
         aria-label="polygon logo"
         {...props}
-        className={cx(props.className, 'hidden dark:inline dark:fill-current')}
+        className={cn(props.className, 'hidden dark:inline dark:fill-current')}
       >
         <g
           transform="matrix(1.5 0 0 1.5 -1.5e-5 -.00025497)"
