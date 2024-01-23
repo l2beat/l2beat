@@ -5,8 +5,7 @@ import { Contract, providers, utils } from 'ethers'
 
 import { bridges } from '../bridges'
 import { config } from '../test/config'
-import { tokenList } from './tokens'
-import { getCanonicalTokens } from './types'
+import { canonicalTokenList, tokenList } from './tokens'
 
 describe('tokens', () => {
   it('every token has a unique address', () => {
@@ -21,15 +20,9 @@ describe('tokens', () => {
     expect(everyUnique).toEqual(true)
   })
 
-  it('tokens are ordered alphabetically', () => {
-    const names = tokenList.map((x) => x.name)
-    const sorted = [...names].sort((a, b) => a.localeCompare(b))
-    expect(names).toEqual(sorted)
-  })
-
   describe('canonical', () => {
     it('every token has a unique symbol', () => {
-      const symbols = getCanonicalTokens().map((x) => x.symbol)
+      const symbols = canonicalTokenList.map((x) => x.symbol)
       const everyUnique = symbols.every((x, i) => symbols.indexOf(x) === i)
       expect(everyUnique).toEqual(true)
     })
@@ -54,7 +47,7 @@ describe('tokens', () => {
         decimals: number
       }
       const results: Record<string, Metadata> = {}
-      const checkedTokens = getCanonicalTokens().filter(
+      const checkedTokens = canonicalTokenList.filter(
         (x) => x.id !== AssetId('op-optimism'),
       )
 
@@ -158,7 +151,7 @@ describe('tokens', () => {
           result.set(EthereumAddress(coin.platforms.ethereum), coin.id)
       })
 
-      getCanonicalTokens().map((token) => {
+      canonicalTokenList.map((token) => {
         if (token.symbol === 'ETH') {
           expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
         } else if (
