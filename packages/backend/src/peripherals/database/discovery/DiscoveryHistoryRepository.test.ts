@@ -185,4 +185,51 @@ describe(DiscoveryHistoryRepository.name, () => {
       ])
     })
   })
+
+  describe(
+    DiscoveryHistoryRepository.prototype.deleteStaleProjectDiscoveries.name,
+    () => {
+      it('removes stale discoveries', async () => {
+        const projectName = 'project'
+        const hash = Hash256.random()
+
+        const contract: DiscoveryHistoryRecord['discovery']['contracts'][0] = {
+          name: 'MockContract1',
+          address: EthereumAddress.random(),
+          upgradeability: { type: 'immutable' },
+        }
+
+        const discovery: DiscoveryHistoryRecord = {
+          projectName,
+          chainId: ChainId.ETHEREUM,
+          blockNumber: -1,
+          timestamp: new UnixTime(0),
+          discovery: {
+            name: projectName,
+            chain: ChainId.getName(ChainId.ETHEREUM),
+            blockNumber: -1,
+            configHash: hash,
+            contracts: [contract],
+            eoas: [],
+            abis: {},
+            version: 0,
+          },
+          configHash: CONFIG_HASH,
+          version: 0,
+        }
+
+        await repository.addOrUpdate(discovery)
+        const stale = await repository.getProject(projectName, ChainId.ETHEREUM)
+        expect(stale).toEqual([discovery])
+
+        await repository.deleteStaleProjectDiscoveries(
+          projectName,
+          ChainId.ETHEREUM,
+          hash,
+        )
+        const fresh = await repository.getProject(projectName, ChainId.ETHEREUM)
+        expect(fresh).toEqual([])
+      })
+    },
+  )
 })
