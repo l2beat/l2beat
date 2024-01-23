@@ -20,6 +20,7 @@ import { WarningBar } from './WarningBar'
 export interface StageSectionProps {
   title: string
   id: ProjectSectionId
+  sectionOrder: number
   icon: string
   name: string
   type: string
@@ -30,7 +31,12 @@ export interface StageSectionProps {
 export function StageSection(props: StageSectionProps) {
   if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return (
-      <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+      <ProjectDetailsSection
+        title={props.title}
+        id={props.id}
+        sectionOrder={props.sectionOrder}
+        className="mt-4"
+      >
         <div className="mb-6 font-medium">
           <img
             src={props.icon}
@@ -56,7 +62,12 @@ export function StageSection(props: StageSectionProps) {
       : UnderReviewIcon
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+      className="mt-4"
+    >
       <div className="mb-6 font-medium">
         <img
           src={props.icon}

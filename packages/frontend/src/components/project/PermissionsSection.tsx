@@ -12,6 +12,7 @@ import { ProjectSectionId } from './sectionId'
 export interface PermissionsSectionProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   isUnderReview?: boolean
   permissions: TechnologyContract[]
   verificationStatus: VerificationStatus
@@ -22,13 +23,19 @@ export interface PermissionsSectionProps {
 export function PermissionsSection({
   id,
   title,
+  sectionOrder,
   permissions,
   verificationStatus,
   manuallyVerifiedContracts,
   isUnderReview,
 }: PermissionsSectionProps) {
   return (
-    <ProjectDetailsSection title={title} id={id} isUnderReview={isUnderReview}>
+    <ProjectDetailsSection
+      title={title}
+      id={id}
+      isUnderReview={isUnderReview}
+      sectionOrder={sectionOrder}
+    >
       <h3 className="md:text-md mt-4 font-bold">
         The system uses the following set of permissioned addresses:
       </h3>

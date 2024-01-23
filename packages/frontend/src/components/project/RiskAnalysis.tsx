@@ -15,6 +15,7 @@ import { WarningBar } from './WarningBar'
 export interface RiskAnalysisProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   riskValues: RiskValues
   warning: string | undefined
   isVerified: boolean | undefined
@@ -25,6 +26,7 @@ export interface RiskAnalysisProps {
 export function RiskAnalysis({
   id,
   title,
+  sectionOrder,
   riskValues,
   isVerified,
   warning,
@@ -40,6 +42,7 @@ export function RiskAnalysis({
     <ProjectDetailsSection
       title={title}
       id={id}
+      sectionOrder={sectionOrder}
       className="mt-4"
       isUnderReview={isUnderReview}
     >

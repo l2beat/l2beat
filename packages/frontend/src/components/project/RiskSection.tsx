@@ -10,6 +10,7 @@ import { WarningBar } from './WarningBar'
 export interface RiskSectionProps {
   title: string
   id: ProjectSectionId
+  sectionOrder: number
   riskGroups: RiskGroup[]
   warning: string | undefined
   isVerified: boolean | undefined
@@ -31,6 +32,7 @@ export interface RiskItem {
 export function RiskSection({
   title,
   id,
+  sectionOrder,
   riskGroups,
   isVerified,
   redWarning,
@@ -40,7 +42,12 @@ export function RiskSection({
     return null
   }
   return (
-    <ProjectDetailsSection title={title} id={id} className="mt-4">
+    <ProjectDetailsSection
+      title={title}
+      id={id}
+      sectionOrder={sectionOrder}
+      className="mt-4"
+    >
       {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."

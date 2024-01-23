@@ -24,6 +24,7 @@ import { TokenControl, TokenControls } from './TokenControls'
 export interface ChartProps {
   title?: string
   id?: string
+  sectionOrder?: number
   settingsId: string
   tokens?: TokenControl[]
   initialType: ChartType
@@ -36,6 +37,7 @@ export interface ChartProps {
   sectionClassName?: string
   header?: 'tvl' | 'activity' | 'project'
   showComingSoon?: boolean
+  withoutSeparator?: boolean
 }
 
 export function Chart(props: ChartProps) {
@@ -69,6 +71,7 @@ export function Chart(props: ChartProps) {
         <ChartHeader
           title={title}
           id={id}
+          sectionOrder={props.sectionOrder}
           hasActivity={props.hasActivity}
           hasTvl={props.hasTvl}
           metaChart={props.metaChart}
@@ -137,7 +140,9 @@ export function Chart(props: ChartProps) {
           </div>
         </div>
       </section>
-      <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
+      {!props.withoutSeparator && (
+        <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
+      )}
     </>
   )
 }
@@ -145,6 +150,7 @@ export function Chart(props: ChartProps) {
 function ChartHeader(props: {
   id: string
   title: string
+  sectionOrder: number | undefined
   hasActivity: boolean | undefined
   hasTvl: boolean | undefined
   metaChart: boolean | undefined
@@ -165,9 +171,17 @@ function ChartHeader(props: {
 
   return (
     <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
-      <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
-        <a href={`#${props.id}`}>{props.title}</a>
-      </h2>
+      <a
+        href={`#${props.id}`}
+        className="flex items-center gap-4 md:leading-normal"
+      >
+        {props.sectionOrder && (
+          <div className="flex h-10 w-10 items-center justify-center rounded bg-zinc-800 text-2xl tabular-nums text-gray-600">
+            {props.sectionOrder}
+          </div>
+        )}
+        <span className="text-2xl font-bold md:text-4xl">{props.title}</span>
+      </a>
       {(props.hasActivity || props.hasTvl) && (
         <RadioChartTypeControl
           hasActivity={!!props.hasActivity}
