@@ -1,12 +1,4 @@
-import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  formatSeconds,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, MILESTONES, NUGGETS } from '../common'
 import { subtractOneAfterBlockInclusive } from '../common/assessCount'
@@ -26,79 +18,6 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
-
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId('op-optimism'),
-    name: 'Optimism',
-    coingeckoId: CoingeckoId('optimism'),
-    address: EthereumAddress('0x4200000000000000000000000000000000000042'),
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1660904599',
-    symbol: 'OP',
-    decimals: 18,
-    sinceTimestamp: new UnixTime(1654039974),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId.USDC_ON_OPTIMISM,
-    name: 'USD Coin',
-    coingeckoId: CoingeckoId('usd-coin'),
-    address: EthereumAddress('0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85'),
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
-    symbol: 'USDC',
-    decimals: 6,
-    sinceTimestamp: new UnixTime(1668453318),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('optimism:kwenta-kwenta'),
-    name: 'Kwenta',
-    symbol: 'KWENTA',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/27409/large/kwenta.png?1668768595',
-    address: EthereumAddress('0x920cf626a271321c151d027030d5d08af699456b'),
-    coingeckoId: CoingeckoId('kwenta'),
-    sinceTimestamp: new UnixTime(1668733200),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('optimism:velo-velodrome-finance'),
-    name: 'Velodrome Finance',
-    symbol: 'VELO',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/25783/large/velo.png?1653817876',
-    address: EthereumAddress('0x9560e827af36c94d2ac33a39bce1fe78631088db'),
-    coingeckoId: CoingeckoId('velodrome-finance'),
-    sinceTimestamp: new UnixTime(1687392369),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('optimism:exa-exactly-token'),
-    name: 'Exactly Token',
-    symbol: 'EXA',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921',
-    address: EthereumAddress('0x1e925de1c68ef83bd98ee3e130ef14a50309c01b'),
-    coingeckoId: CoingeckoId('exa'),
-    sinceTimestamp: new UnixTime(1691546460),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-]
 
 export const optimism: Layer2 = opStack({
   discovery,
@@ -143,7 +62,6 @@ export const optimism: Layer2 = opStack({
       finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
-  tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
   associatedTokens: ['OP'],
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
@@ -305,5 +223,6 @@ export const optimism: Layer2 = opStack({
         version: 'optimism',
       },
     ],
+    coingeckoPlatform: 'optimistic-ethereum',
   },
 })

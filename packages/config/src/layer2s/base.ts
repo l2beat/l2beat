@@ -1,12 +1,4 @@
-import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  formatSeconds,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -27,44 +19,8 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId.USDC_ON_BASE,
-    name: 'USD Coin',
-    symbol: 'USDC',
-    decimals: 6,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
-    address: EthereumAddress('0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'),
-    coingeckoId: CoingeckoId('usd-coin'),
-    sinceTimestamp: new UnixTime(1692383789),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('base:sdex-smardex'),
-    name: 'SmarDex',
-    symbol: 'SDEX',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/29470/large/SDEX_logo_transparent.png?1690430205',
-    address: EthereumAddress('0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f'),
-    coingeckoId: CoingeckoId('smardex'),
-    sinceTimestamp: new UnixTime(1691501141),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Wormhole',
-      slug: 'portal',
-    },
-  },
-]
-
 export const base: Layer2 = opStack({
   discovery,
-  tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.BASE })),
   display: {
     name: 'Base',
     slug: 'base',
@@ -195,5 +151,6 @@ export const base: Layer2 = opStack({
         version: '3',
       },
     ],
+    coingeckoPlatform: 'base',
   },
 })
