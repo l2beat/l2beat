@@ -71,7 +71,9 @@ const escrows: LzTokenEscrow[] = [
   },
 ]
 
-export const OMNICHAIN_TOKENS = escrows.map((escrow) => getName(escrow))
+export const OMNICHAIN_TOKENS = escrows
+  .map((escrow) => getName(escrow))
+  .filter((x, i, a) => a.indexOf(x) === i)
 
 export const OMNICHAIN_ESCROWS = escrows.map((escrow) => ({
   address: escrow.address,
