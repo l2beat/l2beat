@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import { cn } from '../utils/cn'
 import { ChevronDownIcon } from './icons'
 import { CloseIcon } from './icons/CloseIcon'
 import { ExpandIcon } from './icons/Expand'
@@ -18,7 +18,7 @@ interface Props {
 export function RichSelect(props: Props) {
   return (
     <div
-      className={classNames('RichSelect group', props.className)}
+      className={cn('RichSelect group', props.className)}
       id={props.id}
       data-centered={props.centered}
     >
@@ -38,7 +38,7 @@ export function RichSelect(props: Props) {
       <div className="RichSelect-Dropdown pointer-events-none absolute z-60 mr-8 hidden opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:block">
         <hr className="h-1.5 border-t-0" />
         <div
-          className={classNames(
+          className={cn(
             'select-none rounded-lg bg-gray-200 p-2 text-base font-semibold dark:bg-gray-750',
             props.listClassName,
           )}
@@ -86,7 +86,7 @@ RichSelect.Item = function ({
 }: RichSelectItemProps) {
   return (
     <div
-      className={classNames(
+      className={cn(
         'RichSelect-Item flex cursor-pointer items-center gap-1.5 rounded-lg py-2 px-2.5 transition-colors hover:bg-gray-400 dark:hover:bg-zinc-800',
         className,
       )}

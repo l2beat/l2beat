@@ -1,4 +1,3 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Badge } from './Badge'
@@ -10,7 +9,7 @@ export interface NoDataBadgeProps {
 export function NoDataBadge(props: NoDataBadgeProps) {
   return (
     <Badge
-      className={cx(props.className)}
+      className={props.className}
       type="gray"
       title={"We don't have data for this item"}
       oneSize

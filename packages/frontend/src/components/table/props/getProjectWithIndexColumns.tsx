@@ -1,14 +1,14 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { BridgesEntry } from '../../../pages/bridges/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
+import { cn } from '../../../utils/cn'
 import { IndexCell } from '../IndexCell'
 import { ProjectIconCell } from '../ProjectIconCell'
 import { ProjectNameCell } from '../ProjectNameCell'
 import { ColumnConfig } from '../types'
 
-const stickyColumnBackgroundClasses = classNames(
+const stickyColumnBackgroundClasses = cn(
   'group-data-[row-type=ethereum]/table-row:bg-blue-400 dark:group-data-[row-type=ethereum]/table-row:bg-blue-900',
   'group-data-[row-type=under-review]/table-row:bg-[#FBF5E1] dark:group-data-[row-type=under-review]/table-row:bg-[#2B2414]',
   'group-data-[row-type=upcoming]/table-row:bg-[#F3DDFE] dark:group-data-[row-type=upcoming]/table-row:bg-[#350B46]',
@@ -24,7 +24,7 @@ export function getProjectWithIndexColumns(opts?: {
       align: 'center',
       minimalWidth: true,
       headClassName: 'pl-2 md:pl-4',
-      className: classNames(
+      className: cn(
         'sticky -left-4 md:static z-10 dark:bg-neutral-900 bg-white md:!bg-transparent md:dark:!bg-transparent',
         stickyColumnBackgroundClasses,
       ),
@@ -41,7 +41,7 @@ export function getProjectWithIndexColumns(opts?: {
       name: '',
       align: 'right',
       noPaddingRight: true,
-      className: classNames(
+      className: cn(
         'sticky left-[18px] md:static z-10 dark:bg-neutral-900 bg-white md:!bg-transparent md:dark:!bg-transparent',
         'before:absolute md:before:content-none',
         'before:z-10',

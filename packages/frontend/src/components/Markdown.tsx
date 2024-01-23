@@ -1,7 +1,7 @@
-import cx from 'classnames'
 import MarkdownIt from 'markdown-it'
 import React from 'react'
 
+import { cn } from '../utils/cn'
 import { isOutLink } from './Link'
 
 export interface MarkdownProps {
@@ -37,7 +37,7 @@ export function Markdown(props: MarkdownProps) {
     const rendered = markdown.renderInline(props.children)
     return (
       <span
-        className={cx('mdc mdc-inline', props.className)}
+        className={cn('mdc mdc-inline', props.className)}
         dangerouslySetInnerHTML={{ __html: rendered }}
       />
     )
@@ -45,7 +45,7 @@ export function Markdown(props: MarkdownProps) {
     const rendered = markdown.render(props.children)
     return (
       <div
-        className={cx('mdc mdc-inline', props.className)}
+        className={cn('mdc mdc-inline', props.className)}
         dangerouslySetInnerHTML={{ __html: rendered }}
       />
     )
