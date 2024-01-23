@@ -144,7 +144,10 @@ describe(DiscoveryHistoryRepository.name, () => {
           name: 'MockContract2',
           address: EthereumAddress.random(),
           upgradeability: { type: 'immutable' },
-          errors: { nonce: 'https://endpoint.com/potential-api-key' },
+          errors: {
+            nonce: 'https://endpoint.com/potential-api-key',
+            totalLiquidity: 'https://endpoint.com/potential-api-key2',
+          },
         }
 
       const discovery: DiscoveryHistoryRecord = {
@@ -176,6 +179,7 @@ describe(DiscoveryHistoryRepository.name, () => {
           ...mockContractWithError,
           errors: {
             nonce: 'Processing error occurred.',
+            totalLiquidity: 'Processing error occurred.',
           },
         },
       ])
