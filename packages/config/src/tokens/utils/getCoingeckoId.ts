@@ -11,7 +11,7 @@ export function getCoingeckoId(
 ) {
   logger.assert(
     platform !== undefined,
-    'Could not find coingecko platform identifier. Please add it chain config of the project',
+    'Could not find coingecko platform. Run "yarn coingecko:platforms" and add it to chain config in .ts file.',
   )
 
   const coin = coinList.find((coin) => {
