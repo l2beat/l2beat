@@ -109,7 +109,7 @@ export class DiscoveryHistoryRepository extends BaseRepository {
 }
 
 function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
-  return {
+  const result = {
     projectName: row.project_name,
     chainId: ChainId(row.chain_id),
     blockNumber: row.block_number,
@@ -118,6 +118,20 @@ function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
     configHash: Hash256(row.config_hash),
     version: row.version,
   }
+
+  // NOTE(radomski): This has to be here, otherwise the risk of exposing our
+  // API keys goes way up. Putting this in the database gives us the highest
+  // chance of being secure. We still want to show that there was an error
+  // so sanitize it to expose minimal information.
+  result.discovery.contracts.forEach((c) => {
+    if (c.errors !== undefined) {
+      for (const k in c.errors) {
+        c.errors[k] = 'Processing error occurred.'
+      }
+    }
+  })
+
+  return result
 }
 
 function toRow(record: DiscoveryHistoryRecord): DiscoveryHistoryRow {
