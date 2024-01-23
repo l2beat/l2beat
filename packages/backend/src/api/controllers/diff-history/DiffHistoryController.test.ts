@@ -48,9 +48,7 @@ describe(DiffHistoryController.name, () => {
         })
 
         const configReader = mockObject<ConfigReader>({
-          readConfig: mockFn((name: string, chainId: ChainId) =>
-            mockConfig(name, chainId),
-          ),
+          readConfig: mockFn(mockConfig),
         })
 
         const controller = new DiffHistoryController(repository, configReader)
@@ -88,9 +86,7 @@ describe(DiffHistoryController.name, () => {
         })
 
         const configReader = mockObject<ConfigReader>({
-          readConfig: mockFn((name: string, chainId: ChainId) =>
-            mockConfig(name, chainId),
-          ),
+          readConfig: mockFn(mockConfig),
         })
 
         const controller = new DiffHistoryController(repository, configReader)
@@ -113,9 +109,7 @@ describe(DiffHistoryController.name, () => {
         })
 
         const configReader = mockObject<ConfigReader>({
-          readConfig: mockFn((name: string, chainId: ChainId) =>
-            mockConfig(name, chainId),
-          ),
+          readConfig: mockFn(mockConfig),
         })
 
         const controller = new DiffHistoryController(repository, configReader)
@@ -137,13 +131,9 @@ describe(DiffHistoryController.name, () => {
 
 async function mockConfig(
   name: string,
-  chainId = ChainId.ETHEREUM,
+  chain = 'ethereum',
 ): Promise<DiscoveryConfig> {
-  return new DiscoveryConfig({
-    name,
-    chain: chainId,
-    initialAddresses: [],
-  })
+  return new DiscoveryConfig({ name, chain, initialAddresses: [] })
 }
 
 function mockContract(

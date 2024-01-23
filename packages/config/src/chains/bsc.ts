@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ChainConfig } from '../common/ChainConfig'
 
 export const bsc: ChainConfig = {
-  devId: 'bsc',
+  name: 'bsc',
   chainId: 56,
   explorerUrl: 'https://bscscan.com',
   explorerApi: {

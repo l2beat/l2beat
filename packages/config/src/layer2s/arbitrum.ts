@@ -401,7 +401,7 @@ export const arbitrum: Layer2 = {
     },
   },
   chainConfig: {
-    devId: 'arbitrum',
+    name: 'arbitrum',
     chainId: 42161,
     explorerUrl: 'https://arbiscan.io',
     explorerApi: {

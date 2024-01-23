@@ -1,8 +1,11 @@
 import { ScalingProjectRiskViewEntry } from '@l2beat/config'
-import cx from 'classnames'
+import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
-import { sentimentToTextColor } from '../../utils/risks/color'
+import {
+  sentimentToFillColor,
+  sentimentToTextColor,
+} from '../../utils/risks/color'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
@@ -38,7 +41,12 @@ export function RiskCell({ item }: Props) {
         >
           {item.value}
           {item.warning && (
-            <RoundedWarningIcon className="h-5 w-5 fill-red-550 dark:fill-orange-600" />
+            <RoundedWarningIcon
+              className={classNames(
+                'h-5 w-5',
+                sentimentToFillColor(item.warning.sentiment),
+              )}
+            />
           )}
         </span>
         {item.secondLine && (

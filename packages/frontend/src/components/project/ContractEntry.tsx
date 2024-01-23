@@ -16,7 +16,7 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 export interface TechnologyContract {
   name: string
   addresses: string[]
-  devId: string
+  chain: string
   etherscanUrl: string
   description?: string
   links: TechnologyContractLinks[]
@@ -46,7 +46,9 @@ export function ContractEntry({
   className,
 }: ContractEntryProps) {
   const verificationStatusForChain =
-    verificationStatus.contracts[contract.devId] ?? {}
+    verificationStatus.contracts[contract.chain] ?? {}
+  const manuallyVerifiedContractsForChain =
+    manuallyVerifiedContracts[contract.chain] ?? {}
 
   const areLinksUnverified = contract.links
     .filter((c) => !c.isAdmin)
@@ -72,10 +74,11 @@ export function ContractEntry({
     )
 
   addresses.forEach((address) => {
-    if (manuallyVerifiedContracts[address]) {
+    const manuallyVerified = manuallyVerifiedContractsForChain[address]
+    if (manuallyVerified) {
       references.push({
         text: 'Source code',
-        href: manuallyVerifiedContracts[address],
+        href: manuallyVerified,
       })
     }
   })

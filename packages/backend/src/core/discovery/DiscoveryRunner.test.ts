@@ -5,7 +5,7 @@ import {
   DiscoveryEngine,
   DiscoveryProvider,
 } from '@l2beat/discovery'
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -20,7 +20,7 @@ describe(DiscoveryRunner.name, () => {
         mockObject<DiscoveryProvider>({}),
         engine,
         mockObject<ConfigReader>({}),
-        ChainId.ETHEREUM,
+        'ethereum',
       )
       await runner.run(getMockConfig(), 1, {
         logger: Logger.SILENT,
@@ -42,7 +42,7 @@ describe(DiscoveryRunner.name, () => {
         mockObject<DiscoveryProvider>({}),
         engine,
         mockObject<ConfigReader>({}),
-        ChainId.ETHEREUM,
+        'ethereum',
       )
 
       await expect(() =>
@@ -68,7 +68,7 @@ describe(DiscoveryRunner.name, () => {
         mockObject<DiscoveryProvider>({}),
         engine,
         configReader,
-        ChainId.ETHEREUM,
+        'ethereum',
       )
 
       await runner.run(getMockConfig(), 1, {
@@ -101,7 +101,7 @@ describe(DiscoveryRunner.name, () => {
         mockObject<DiscoveryProvider>({}),
         engine,
         configReader,
-        ChainId.ETHEREUM,
+        'ethereum',
       )
       await runner.run(sourceConfig, 1, {
         logger: Logger.SILENT,
@@ -124,7 +124,7 @@ describe(DiscoveryRunner.name, () => {
           mockObject<DiscoveryProvider>({}),
           engine,
           mockObject<ConfigReader>({}),
-          ChainId.ETHEREUM,
+          'ethereum',
         )
 
         await runner.run(getMockConfig(), 1, {
@@ -149,7 +149,7 @@ describe(DiscoveryRunner.name, () => {
           mockObject<DiscoveryProvider>({}),
           engine,
           mockObject<ConfigReader>({}),
-          ChainId.ETHEREUM,
+          'ethereum',
         )
 
         await expect(
@@ -170,7 +170,7 @@ describe(DiscoveryRunner.name, () => {
 const getMockConfig = () => {
   return new DiscoveryConfig({
     name: 'project-a',
-    chain: ChainId.ETHEREUM,
+    chain: 'ethereum',
     initialAddresses: [],
   })
 }

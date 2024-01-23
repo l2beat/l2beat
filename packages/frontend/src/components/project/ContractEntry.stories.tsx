@@ -37,7 +37,7 @@ export const SingleAddress: Story = {
     contract: {
       name: 'Contract',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: [CONTRACT],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -70,7 +70,7 @@ export const UpgradeDetails: Story = {
     contract: {
       name: 'Contract',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: [CONTRACT],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -106,7 +106,7 @@ export const MultipleAddresses: Story = {
     contract: {
       name: 'Contract',
       etherscanUrl: 'etherscan.io',
-      devId: 'ethereum',
+      chain: 'ethereum',
       addresses: [CONTRACT, ADMIN, IMPLEMENTATION],
       description:
         'This is a smart contract responsible for X in the system Y.',
@@ -125,7 +125,7 @@ export const SingleAddressArbitrum: Story = {
     contract: {
       name: 'Contract',
       etherscanUrl: 'arbiscan.io',
-      devId: 'arbitrum',
+      chain: 'arbitrum',
       addresses: [ARB_CONTRACT],
       description:
         'This is a smart contract responsible for X in the system Y.',

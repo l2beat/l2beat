@@ -280,7 +280,7 @@ export const optimism: Layer2 = opStack({
     ),
   ],
   chainConfig: {
-    devId: 'optimism',
+    name: 'optimism',
     chainId: 10,
     explorerUrl: 'https://optimistic.etherscan.io',
     explorerApi: {
