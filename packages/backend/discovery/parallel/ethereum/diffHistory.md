@@ -1,8 +1,8 @@
-# Diff at Fri, 19 Jan 2024 07:42:24 GMT:
+# Diff at Tue, 23 Jan 2024 13:21:17 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@66d81d543e5774973a4ef4bf257f67dd0862a255 block: 18962479
-- current block number: 19039481
+- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 19032900
+- current block number: 19069632
 
 ## Description
 
@@ -11,8 +11,8 @@ Added discovery of rollup validators.
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 18962479 (main branch discovery), not current.
+or/and contracts becoming verified, not from differences found during 
+discovery. Values are for block 19032900 (main branch discovery), not current.
 
 ```diff
     contract  (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
@@ -21,18 +21,6 @@ discovery. Values are for block 18962479 (main branch discovery), not current.
 +        "OneStepProverMemory"
       derivedName:
 +        ""
-    }
-```
-
-```diff
-    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
-      name:
--        "GnosisSafe"
-+        "OwnerMultisig"
-      values.nonce:
--        9
-      derivedName:
-+        "GnosisSafe"
     }
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 19069609,
+  "blockNumber": 19069632,
   "configHash": "0x5b6b9078f2377f82869b06336600b95f9116dcfc9bb37d02b407da049a9f62d2",
   "version": 3,
   "contracts": [
