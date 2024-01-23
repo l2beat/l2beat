@@ -3,14 +3,14 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
-import { Markdown } from '../Markdown'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { RoundedWarningIcon, ShieldIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
+import { Markdown } from '../Markdown'
 import { BigRosette } from '../rosette'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { WarningBar } from './WarningBar'
 import { ProjectSectionId } from './sectionId'
+import { WarningBar } from './WarningBar'
 
 export interface RiskAnalysisProps {
   id: ProjectSectionId

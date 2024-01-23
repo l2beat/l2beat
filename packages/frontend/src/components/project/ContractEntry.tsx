@@ -2,13 +2,12 @@ import {
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
-
 import React from 'react'
 
 import { cn } from '../../utils/cn'
+import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
-import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'

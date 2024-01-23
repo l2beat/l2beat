@@ -2,8 +2,8 @@ import React from 'react'
 
 import { TvlBreakdownViewProps } from '../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
 import { cn } from '../../utils/cn'
-import { PercentChange } from '../PercentChange'
 import { InfoIcon } from '../icons'
+import { PercentChange } from '../PercentChange'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export function TvlBreakdownSummaryBox(

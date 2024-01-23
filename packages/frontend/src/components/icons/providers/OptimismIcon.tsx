@@ -13,7 +13,7 @@ export function OptimismIcon(props: SVGAttributes<SVGElement>) {
     <Icon
       aria-label="Optimism badge icon"
       {...props}
-      className={cn(props.className, 'fill-[#FF0420] dark:fill-current')}
+      className={cn('fill-[#FF0420] dark:fill-current', props.className)}
     >
       <mask id={maskId}>
         <rect y="3" width="24" height="18" fill="white" />

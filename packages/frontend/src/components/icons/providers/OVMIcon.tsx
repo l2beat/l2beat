@@ -15,7 +15,7 @@ export function OVMIcon(props: SVGAttributes<SVGElement>) {
         aria-label="OVM badge icon"
         {...props}
         style={{ fill: `url(#${gradientId})` }}
-        className={cn(props.className, 'dark:hidden')}
+        className={cn('dark:hidden', props.className)}
       >
         <path
           fillRule="evenodd"
@@ -39,7 +39,7 @@ export function OVMIcon(props: SVGAttributes<SVGElement>) {
       <Icon
         aria-label="OVM badge icon"
         {...props}
-        className={cn(props.className, 'hidden dark:inline dark:fill-current')}
+        className={cn('hidden dark:inline dark:fill-current', props.className)}
       >
         <path
           fillRule="evenodd"

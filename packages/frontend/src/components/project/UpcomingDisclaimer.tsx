@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { cn } from '../../utils/cn'
-import { Link } from '../Link'
 import { InfoIcon } from '../icons'
+import { Link } from '../Link'
 import { Callout } from './Callout'
 
 export interface UpcomingDisclaimerProps {

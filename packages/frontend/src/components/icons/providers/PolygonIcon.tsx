@@ -15,7 +15,7 @@ export function PolygonIcon(props: SVGAttributes<SVGElement>) {
         aria-label="polygon logo"
         {...props}
         style={{ fill: `url(#${gradientId})` }}
-        className={cn(props.className, 'dark:hidden')}
+        className={cn('dark:hidden', props.className)}
       >
         <g
           transform="matrix(1.5 0 0 1.5 -1.5e-5 -.00025497)"
@@ -44,7 +44,7 @@ export function PolygonIcon(props: SVGAttributes<SVGElement>) {
       <Icon
         aria-label="polygon logo"
         {...props}
-        className={cn(props.className, 'hidden dark:inline dark:fill-current')}
+        className={cn('hidden dark:inline dark:fill-current', props.className)}
       >
         <g
           transform="matrix(1.5 0 0 1.5 -1.5e-5 -.00025497)"

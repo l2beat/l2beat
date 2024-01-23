@@ -12,7 +12,7 @@ export function ExternalIcon(props: SVGAttributes<SVGElement>) {
     <Icon
       aria-label="External asset icon"
       {...props}
-      className={cn(props.className, 'h-3 w-3 stroke-black dark:stroke-white')}
+      className={cn('h-3 w-3 stroke-black dark:stroke-white', props.className)}
       height="12"
       width="12"
       viewBox="0 0 12 12"

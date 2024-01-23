@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { cn } from '../../utils/cn'
+import { OutLinkIcon, ShieldIcon } from '../icons'
 import { Markdown } from '../Markdown'
 import { OutLink } from '../OutLink'
-import { OutLinkIcon, ShieldIcon } from '../icons'
 import { Callout } from './Callout'
 
 export interface WarningBarProps {

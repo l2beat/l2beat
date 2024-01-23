@@ -1,5 +1,4 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'

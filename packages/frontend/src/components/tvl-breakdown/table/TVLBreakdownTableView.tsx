@@ -1,5 +1,4 @@
 import { AssetId } from '@l2beat/shared-pure'
-
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { cn } from '../../../utils/cn'
