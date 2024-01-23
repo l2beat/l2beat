@@ -53,7 +53,7 @@ export const parallel: Layer2 = {
     slug: 'parallel',
     headerWarning: '',
     description:
-      'Parallel will launch an Ethereum L2 solution utilizing Arbitrum Nitro technology. More information coming soon.',
+      'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
     purposes: ['Universal', 'DeFi'],
     category: 'Optimistic Rollup',
     dataAvailabilityMode: 'TxData',
@@ -82,7 +82,7 @@ export const parallel: Layer2 = {
     },
     stage1: {
       stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: 'UnderReview',
+      fraudProofSystemAtLeast5Outsiders: false,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: false,
