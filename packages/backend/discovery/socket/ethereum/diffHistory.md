@@ -1,7 +1,7 @@
-# Diff at Fri, 12 Jan 2024 09:50:02 GMT:
+# Diff at Tue, 23 Jan 2024 15:46:45 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- current block number: 18990029
+- current block number: 19070353
 
 ## Description
 
@@ -35,37 +35,7 @@ Several new Switchboards created: PolygonL1Switchboard, OptimismSwitchboard2, Op
 
 ```diff
 +   Status: CREATED
-    contract Plug2 (0x200AF8FCdD5246D70B369A98143Ac8930A077B7A) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract Plug3 (0x22d8360eB04F46195c7B02A66658C375948d8A99) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
-    }
-```
-
-```diff
-+   Status: CREATED
     contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract Vault1 (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract Plug1 (0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D) {
     }
 ```
 

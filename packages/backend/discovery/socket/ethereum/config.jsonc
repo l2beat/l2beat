@@ -5,15 +5,11 @@
   "initialAddresses": ["0x943AC2775928318653e91d350574436A1b9b16f9"],
   "names": {
     "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
-    "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D": "Plug1",
-    "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A": "Plug2",
-    "0x22d8360eB04F46195c7B02A66658C375948d8A99": "Plug3",
     "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287": "OptimismSwitchboard",
     "0x053407DFA30267f6332f3c94a9e9F704A55e62CD": "PolygonL1Switchboard",
     "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": "ArbitrumL1Switchboard",
     "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": "OptimismSwitchboard2",
-    "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard",
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "Vault1"
+    "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard"
   },
   "overrides": {
     "Socket": {
@@ -21,7 +17,8 @@
         "plugs": {
           "type": "arrayFromOneEvent",
           "event": "PlugConnected",
-          "valueKey": "plug"
+          "valueKey": "plug",
+          "ignoreRelative": true
         },
         "inboundSwitchboards": {
           "type": "arrayFromOneEvent",
@@ -34,18 +31,6 @@
           "valueKey": "outboundSwitchboard"
         }
       }
-    },
-    "Plug1": {
-      "ignoreMethods": ["getMinFees"]
-    },
-    "Plug2": {
-      "ignoreMethods": ["getMinFees"]
-    },
-    "Plug3": {
-      "ignoreMethods": ["getMinFees"]
-    },
-    "Vault1": {
-      "ignoreRelatives": ["token__"]
     },
     "OptimismSwitchboard": {
       "ignoreRelatives": [

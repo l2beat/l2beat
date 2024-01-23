@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 18990029,
-  "configHash": "0x74b4d94edb844c497b55f547cc649150ee0de53e996e16a7f3bc68cc4cdafbe4",
+  "blockNumber": 19070353,
+  "configHash": "0xb5eb05b84ce06b5b51fce6d133d719c6a76cbe109e679e83664435f786d3969b",
   "version": 3,
   "contracts": [
     {
@@ -94,61 +94,6 @@
       "derivedName": "OptimismSwitchboard"
     },
     {
-      "name": "Plug2",
-      "address": "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1700227955,
-      "values": {
-        "hub__": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "siblingChainSlug": 957,
-        "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9"
-      },
-      "derivedName": "ConnectorPlug"
-    },
-    {
-      "name": "Plug3",
-      "address": "0x22d8360eB04F46195c7B02A66658C375948d8A99",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1700227967,
-      "values": {
-        "hub__": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "siblingChainSlug": 957,
-        "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9"
-      },
-      "derivedName": "ConnectorPlug"
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1614150116,
-      "values": {
-        "domainSeparator": "0xbc091031d658ae65d24494a54905f6c9faa1998e11931f3174adf784faedfe1b",
-        "getChainId": 1,
-        "getOwners": [
-          "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65",
-          "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52",
-          "0x4cEa25e9c999E69F45765539783D149024f99F12"
-        ],
-        "getThreshold": 2,
-        "nonce": 328,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "name": "Hasher",
       "address": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
       "upgradeability": {
@@ -161,36 +106,6 @@
       }
     },
     {
-      "name": "Vault1",
-      "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1700227943,
-      "values": {
-        "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "token__": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "Vault"
-    },
-    {
-      "name": "Plug1",
-      "address": "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1700129039,
-      "values": {
-        "counter": 100,
-        "OP_ADD": "0xbad314e77c9e165fb6cdad2b69ae15ea10f47a976480a84ea0ef9a8b8817b997",
-        "OP_SUB": "0xde6ce4bedbca0651358aef7b21343405a14691bbef1508653f9f01d390746612",
-        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-        "socket": "0x943AC2775928318653e91d350574436A1b9b16f9"
-      },
-      "derivedName": "Counter"
-    },
-    {
       "name": "Socket",
       "address": "0x943AC2775928318653e91d350574436A1b9b16f9",
       "upgradeability": {
@@ -201,7 +116,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 295,
+        "globalMessageCount": 327,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -222,7 +137,15 @@
         "plugs": [
           "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D",
           "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A",
-          "0x22d8360eB04F46195c7B02A66658C375948d8A99"
+          "0x22d8360eB04F46195c7B02A66658C375948d8A99",
+          "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181",
+          "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
+          "0xCf814e58f1649F94d37E51f730D6bF72409fA09c",
+          "0xf71A92D4bEFc2e18671c3b20377d45729790e880",
+          "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166",
+          "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B",
+          "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3",
+          "0x3553c0102684c20e2f8192d6F013c7242710b4b3"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -321,12 +244,7 @@
       }
     }
   ],
-  "eoas": [
-    "0x4cEa25e9c999E69F45765539783D149024f99F12",
-    "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-    "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52",
-    "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65"
-  ],
+  "eoas": ["0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"],
   "abis": {
     "0x053407DFA30267f6332f3c94a9e9F704A55e62CD": [
       "constructor(uint32 chainSlug_, address checkpointManager_, address fxRoot_, address owner_, address socket_, address signatureVerifier_)",
@@ -546,57 +464,6 @@
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
     ],
-    "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A": [
-      "constructor(address hub_, address socket_, uint32 siblingChainSlug_)",
-      "error InvalidTokenAddress()",
-      "error NotHub()",
-      "error NotSocket()",
-      "error ZeroAddress()",
-      "event ConnectorPlugDisconnected()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function connect(address siblingPlug_, address switchboard_)",
-      "function disconnect()",
-      "function getMinFees(uint256 msgGasLimit_) view returns (uint256 totalFees)",
-      "function hub__() view returns (address)",
-      "function inbound(uint32, bytes payload_) payable",
-      "function outbound(uint256 msgGasLimit_, bytes payload_) payable",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
-      "function siblingChainSlug() view returns (uint32)",
-      "function socket__() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "0x22d8360eB04F46195c7B02A66658C375948d8A99": [
-      "constructor(address hub_, address socket_, uint32 siblingChainSlug_)",
-      "error InvalidTokenAddress()",
-      "error NotHub()",
-      "error NotSocket()",
-      "error ZeroAddress()",
-      "event ConnectorPlugDisconnected()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function connect(address siblingPlug_, address switchboard_)",
-      "function disconnect()",
-      "function getMinFees(uint256 msgGasLimit_) view returns (uint256 totalFees)",
-      "function hub__() view returns (address)",
-      "function inbound(uint32, bytes payload_) payable",
-      "function outbound(uint256 msgGasLimit_, bytes payload_) payable",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
-      "function siblingChainSlug() view returns (uint32)",
-      "function socket__() view returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": [
-      "constructor(address _masterCopy)"
-    ],
     "0x5C71beE4a6b0D617D8c3d107D331292741789E27": [
       "constructor(address owner_)",
       "error InvalidTokenAddress()",
@@ -617,60 +484,6 @@
       "function packMessage(uint32 srcChainSlug_, address srcPlug_, uint32 dstChainSlug_, address dstPlug_, tuple(bytes32 msgId, uint256 executionFee, uint256 minMsgGasLimit, bytes32 executionParams, bytes payload) messageDetails_) pure returns (bytes32)",
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function revokeRole(bytes32 role_, address revokee_)"
-    ],
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": [
-      "constructor(address token_)",
-      "error AmountOutsideLimit()",
-      "error ConnectorUnavailable()",
-      "error InvalidTokenAddress()",
-      "error ZeroAddress()",
-      "error ZeroAmount()",
-      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
-      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
-      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
-      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
-      "function acceptOwnership()",
-      "function connectorPendingUnlocks(address) view returns (uint256)",
-      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
-      "function getCurrentLockLimit(address connector_) view returns (uint256)",
-      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
-      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
-      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
-      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function pendingUnlocks(address, address) view returns (uint256)",
-      "function receiveInbound(bytes payload_)",
-      "function renounceOwnership()",
-      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
-      "function token__() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unlockPendingFor(address receiver_, address connector_)",
-      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
-    ],
-    "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D": [
-      "constructor(address socket_)",
-      "error InvalidAmount()",
-      "error InvalidTokenAddress()",
-      "error OnlyOwner()",
-      "error OnlySocket()",
-      "error ZeroAddress()",
-      "function OP_ADD() view returns (bytes32)",
-      "function OP_SUB() view returns (bytes32)",
-      "function counter() view returns (uint256)",
-      "function inbound(uint32, bytes payload_) payable",
-      "function localAddOperation(uint256 amount_)",
-      "function localSubOperation(uint256 amount_)",
-      "function owner() view returns (address)",
-      "function remoteAddOperation(uint32 chainSlug_, uint256 amount_, uint256 minMsgGasLimit_, bytes32 executionParams_, bytes32 transmissionParams_) payable",
-      "function remoteSubOperation(uint32 chainSlug_, uint256 amount_, uint256 minMsgGasLimit_, bytes32 executionParams_, bytes32 transmissionParams_) payable",
-      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
-      "function setSocketConfig(uint32 remoteChainSlug_, address remotePlug_, address switchboard_)",
-      "function setupComplete()",
-      "function socket() view returns (address)"
     ],
     "0x943AC2775928318653e91d350574436A1b9b16f9": [
       "constructor(uint32 chainSlug_, address hasher_, address capacitorFactory_, address owner_, string version_)",
@@ -818,55 +631,6 @@
       "function unTripPath(uint256 nonce_, uint32 srcChainSlug_, bytes signature_)",
       "function updateSibling(uint32 siblingChainSlug_, address siblingSwitchboard_)",
       "function withdrawFees(address withdrawTo_)"
-    ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": [
       "constructor(uint32 chainSlug_, address inbox_, address owner_, address socket_, address bridge_, address outbox_, address signatureVerifier_)",

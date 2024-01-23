@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit",
     "get-lz-data": "node -r esbuild-register scripts/omnichain",
     "update-multichain": "node -r esbuild-register scripts/multichain",
+    "update-socket": "node -r esbuild-register scripts/socket",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts"
