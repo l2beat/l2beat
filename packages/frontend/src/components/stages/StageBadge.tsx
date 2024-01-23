@@ -1,7 +1,7 @@
 import { Stage } from '@l2beat/config'
-import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { RoundedWarningIcon, UnderReviewIcon } from '../icons'
 
 export interface StageBadgeProps {
@@ -26,9 +26,9 @@ export function StageBadge({
       ? undefined
       : stage
   return (
-    <div className={classNames('inline-flex items-center gap-1.5', className)}>
+    <div className={cn('inline-flex items-center gap-1.5', className)}>
       <span
-        className={cx(
+        className={cn(
           getColorClassName(stage),
           'inline-block h-min rounded px-1.5 text-center font-medium !leading-none',
           oneSize && 'w-20',

@@ -1,5 +1,6 @@
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
+
+import { cn } from '../utils/cn'
 
 export interface PageContentProps {
   children: ReactNode
@@ -16,7 +17,7 @@ export function PageContent({
 }: PageContentProps) {
   return (
     <div
-      className={classNames(
+      className={cn(
         narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
         'mx-auto h-full leading-[1.15] md:px-12',
         !mobileFull && 'px-4',
