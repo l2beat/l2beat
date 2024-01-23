@@ -1,6 +1,6 @@
 import { Env } from '@l2beat/backend-tools'
-import { chainsByDevId } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { chains, layer2s } from '@l2beat/config'
+import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { toMulticallConfigEntry } from '../peripherals/ethereum/multicall/MulticallConfig'
 import { ChainTvlConfig } from './Config'
@@ -9,53 +9,72 @@ const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 
 export function getChainTvlConfig(
   env: Env,
-  devId: string,
+  chain: string,
   options?: {
     minTimestamp?: UnixTime
   },
-): ChainTvlConfig | false {
-  const chain = chainsByDevId.get(devId)
-  if (!chain) {
-    throw new Error('Unknown chain: ' + devId)
+): ChainTvlConfig {
+  const chainConfig = chains.find((c) => c.name === chain)
+  if (!chainConfig) {
+    throw new Error('Unknown chain: ' + chain)
   }
 
-  if (!chain.minTimestampForTvl) {
-    throw new Error('Missing minTimestampForTvl for chain: ' + devId)
+  const projectId =
+    chain === 'ethereum'
+      ? ProjectId.ETHEREUM
+      : layer2s.find((layer2) => layer2.chainConfig?.name === chain)?.id
+  if (!projectId) {
+    throw new Error('Missing project for chain: ' + chain)
   }
 
-  if (!chain.explorerApi) {
-    throw new Error('Missing explorerApi for chain: ' + devId)
+  if (!chainConfig.minTimestampForTvl) {
+    throw new Error('Missing minTimestampForTvl for chain: ' + chain)
   }
 
-  if (!chain.multicallContracts || chain.multicallContracts.length === 0) {
-    throw new Error('Missing multicallContracts for chain: ' + devId)
+  if (!chainConfig.explorerApi) {
+    throw new Error('Missing explorerApi for chain: ' + chain)
   }
 
-  const ENV_NAME = devId.toUpperCase()
+  if (
+    !chainConfig.multicallContracts ||
+    chainConfig.multicallContracts.length === 0
+  ) {
+    throw new Error('Missing multicallContracts for chain: ' + chain)
+  }
+
+  const ENV_NAME = chain.toUpperCase()
 
   const enabled = env.boolean(`TVL_${ENV_NAME}_ENABLED`, false)
   if (!enabled) {
-    return false
+    return { chain }
   }
 
   return {
-    providerUrl: env.string(`TVL_${ENV_NAME}_PROVIDER_URL`),
-    providerCallsPerMinute: env.integer(
-      `TVL_${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
-      DEFAULT_RPC_CALLS_PER_MINUTE,
-    ),
-    blockNumberProviderConfig:
-      chain.explorerApi.type === 'etherscan'
-        ? {
-            type: 'EtherscanLike',
-            etherscanApiKey: env.string(`TVL_${ENV_NAME}_ETHERSCAN_API_KEY`),
-            etherscanApiUrl: chain.explorerApi.url,
-          }
-        : {
-            type: 'RoutescanLike',
-            routescanApiUrl: chain.explorerApi.url,
-          },
-    minBlockTimestamp: options?.minTimestamp ?? chain.minTimestampForTvl,
-    multicallConfig: chain.multicallContracts.map(toMulticallConfigEntry),
+    chain,
+    config: {
+      projectId,
+      chainId: ChainId(chainConfig.chainId),
+      providerUrl: env.string(`TVL_${ENV_NAME}_PROVIDER_URL`),
+      providerCallsPerMinute: env.integer(
+        `TVL_${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+        DEFAULT_RPC_CALLS_PER_MINUTE,
+      ),
+      blockNumberProviderConfig:
+        chainConfig.explorerApi.type === 'etherscan'
+          ? {
+              type: 'EtherscanLike',
+              etherscanApiKey: env.string(`TVL_${ENV_NAME}_ETHERSCAN_API_KEY`),
+              etherscanApiUrl: chainConfig.explorerApi.url,
+            }
+          : {
+              type: 'RoutescanLike',
+              routescanApiUrl: chainConfig.explorerApi.url,
+            },
+      minBlockTimestamp:
+        options?.minTimestamp ?? chainConfig.minTimestampForTvl,
+      multicallConfig: chainConfig.multicallContracts.map(
+        toMulticallConfigEntry,
+      ),
+    },
   }
 }

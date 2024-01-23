@@ -2,7 +2,7 @@
   "name": "nomad",
   "chain": "ethereum",
   "blockNumber": 18340273,
-  "configHash": "0x3c8de204c06277389693a4ba9864893c9150841ca216bc8526f50a9c3d91ae34",
+  "configHash": "0x366595cc57060b807ca1972ff0eb013981860352988544b29377f6bb8e56f0d0",
   "version": 3,
   "contracts": [
     {

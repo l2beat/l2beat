@@ -55,7 +55,7 @@ export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
   constructor(
     public readonly projectName: string,
-    public readonly devId: string = 'ethereum',
+    public readonly chain: string = 'ethereum',
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
@@ -64,7 +64,7 @@ export class ProjectDiscovery {
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(
-        `../backend/discovery/${project}/${this.devId}/discovered.json`,
+        `../backend/discovery/${project}/${this.chain}/discovered.json`,
       ),
     )
 
@@ -96,7 +96,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      devId: this.devId,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
@@ -222,7 +222,7 @@ export class ProjectDiscovery {
           ),
         )
         .join(' '),
-      devId: this.devId,
+      chain: this.chain,
     }))
   }
 
@@ -249,14 +249,14 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
-        devId: this.devId,
+        chain: this.chain,
       },
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
-        devId: this.devId,
+        chain: this.chain,
       },
     ]
   }
@@ -361,7 +361,7 @@ export class ProjectDiscovery {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      devId: this.devId,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
@@ -403,7 +403,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
-      devId: this.devId,
+      chain: this.chain,
       description,
     }
   }

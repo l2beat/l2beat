@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -14,7 +19,6 @@ import {
 import { subtractOne } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
@@ -125,7 +129,7 @@ export const nova: Layer2 = {
         selfSequencingDelay,
       )} to force a tx, users have only ${formatSeconds(
         l2TimelockDelay - selfSequencingDelay,
-      )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
         validatorAfkTime,
       )} delay and then wait for the ${formatSeconds(
         challengeWindowSeconds,
@@ -134,7 +138,10 @@ export const nova: Layer2 = {
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
       )} L1 timelock.`,
-      warning: 'The Security Council can upgrade with no delay.',
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(

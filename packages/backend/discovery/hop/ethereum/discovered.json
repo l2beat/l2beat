@@ -2,7 +2,7 @@
   "name": "hop",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0x0a88b91a8c286dec34e7b69f534199ba36da7672dafdc8ba4a70fe617319dfd6",
+  "configHash": "0xbf31afcbbe4efbebdaec2f4ef0eba1b74088986f609e90c48394f25ad5685404",
   "version": 3,
   "contracts": [
     {

@@ -34,7 +34,6 @@ export class CBVUpdater implements ReportUpdater {
     private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
-    this.logger = this.logger.tag(ChainId.getName(this.getChainId()))
 
     // TODO(radomski): This config hash should be generated from only CBV projects
     this.configHash = getReportConfigHash(projects)

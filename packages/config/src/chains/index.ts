@@ -18,11 +18,3 @@ export const chains: ChainConfig[] = [
   gnosis,
   polygonpos,
 ]
-
-export const chainsByDevId: ReadonlyMap<string, ChainConfig> = new Map(
-  chains.map((chain) => [chain.devId, chain]),
-)
-
-export const chainsByChainId: ReadonlyMap<number, ChainConfig> = new Map(
-  chains.map((chain) => [chain.chainId, chain]),
-)

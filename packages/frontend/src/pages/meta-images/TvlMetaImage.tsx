@@ -1,8 +1,8 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Chart, Header, Logo } from '../../components'
 import { ChartType } from '../../scripts/charts/types'
+import { cn } from '../../utils/cn'
 
 export interface TvlMetaImageProps {
   tvl: string
@@ -21,7 +21,7 @@ export function TvlMetaImage(props: TvlMetaImageProps) {
 
   return (
     <div
-      className={cx(
+      className={cn(
         'MetaImage leading-[1.15]',
         !props.name ? 'overview' : 'project',
       )}

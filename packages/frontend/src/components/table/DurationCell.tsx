@@ -1,11 +1,7 @@
+import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { pluralize } from '../../utils/pluralize'
-
-export function DurationCell(props: {
-  durationInSeconds: number
-  additionalText?: string
-}) {
+export function DurationCell(props: { durationInSeconds: number }) {
   const seconds = props.durationInSeconds
   const minutes = Math.floor(props.durationInSeconds / 60)
   const hours = Math.floor(minutes / 60)
@@ -14,21 +10,19 @@ export function DurationCell(props: {
   const duration =
     days > 0 ? (
       <span className="text-orange-600 dark:text-orange-500">
-        {days} {`${pluralize(days, 'day')} ${props.additionalText ?? ''}`}
+        {days} {pluralize(days, 'day')}
       </span>
     ) : hours > 0 ? (
       <span className="text-yellow-700 dark:text-yellow-100">
-        {hours} {`${pluralize(hours, 'hour')} ${props.additionalText ?? ''}`}
+        {hours} {pluralize(hours, 'hour')}
       </span>
     ) : minutes > 0 ? (
       <span>
-        {minutes}{' '}
-        {`${pluralize(minutes, 'minute')} ${props.additionalText ?? ''}`}
+        {minutes} {pluralize(minutes, 'minute')}
       </span>
     ) : (
       <span className="text-green-300 dark:text-green-450">
-        {seconds}{' '}
-        {`${pluralize(seconds, 'second')} ${props.additionalText ?? ''}`}
+        {seconds} {pluralize(seconds, 'second')}
       </span>
     )
 

@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { InfoIcon } from '../icons'
 import { Callout } from '../project/Callout'
 
@@ -18,11 +18,11 @@ export function StageDisclaimer({
       color="blue"
       icon={
         <InfoIcon
-          className={cx(' fill-blue-500', small ? 'h-4 w-4' : 'h-5 w-5')}
+          className={cn(' fill-blue-500', small ? 'h-4 w-4' : 'h-5 w-5')}
         />
       }
       body={text}
-      className={cx('p-4 font-medium', className)}
+      className={cn('p-4 font-medium', className)}
     />
   )
 }

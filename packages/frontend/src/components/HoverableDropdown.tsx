@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { forwardRef, ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { ChevronDownIcon } from './icons'
 
 interface HoverableDropdownProps {
@@ -15,7 +15,7 @@ export const HoverableDropdown = forwardRef<
 >((props, ref) => {
   return (
     <div
-      className={classNames(
+      className={cn(
         'HoverableDropdown group relative w-min whitespace-pre',
         props.className,
       )}
@@ -55,7 +55,7 @@ function HoverableDropdownMenu(props: HoverableDropdownMenuProps) {
     <div className="HoverableDropdownMenu pointer-events-none absolute z-60 opacity-0 transition-opacity duration-300">
       <hr className="h-1.5 border-t-0" />
       <div
-        className={classNames(
+        className={cn(
           'rounded-lg bg-gray-100 p-1 shadow-[0px_4px_20px_rgba(0,0,0,0.50)] dark:bg-zinc-900',
           props.className,
         )}

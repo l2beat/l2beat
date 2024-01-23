@@ -1,8 +1,8 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 19032900,
-  "configHash": "0x077c45bc40b72dc5ea6a928106475a2b4866e2143428afa40d49bf70f49af1b3",
+  "blockNumber": 19069632,
+  "configHash": "0x5b6b9078f2377f82869b06336600b95f9116dcfc9bb37d02b407da049a9f62d2",
   "version": 3,
   "contracts": [
     {
@@ -108,13 +108,14 @@
       }
     },
     {
-      "name": "",
+      "name": "OneStepProverMemory",
       "address": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1",
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972755
+      "sinceTimestamp": 1701972755,
+      "derivedName": ""
     },
     {
       "name": "OwnerMultisig",
@@ -158,11 +159,11 @@
           "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
         ],
         "allowedOutboxList": ["0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"],
-        "delayedMessageCount": 502,
+        "delayedMessageCount": 522,
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerInbox": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-        "sequencerMessageCount": 133,
-        "sequencerReportedSubMessageCount": 564
+        "sequencerMessageCount": 147,
+        "sequencerReportedSubMessageCount": 600
       },
       "derivedName": "Bridge"
     },
@@ -208,12 +209,12 @@
         "confirmPeriodBlocks": 43200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 40320,
-        "firstUnresolvedNode": 90,
+        "firstUnresolvedNode": 132,
         "inbox": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
         "isERC20Enabled": false,
         "lastStakeBlock": 18914041,
-        "latestConfirmed": 89,
-        "latestNodeCreated": 132,
+        "latestConfirmed": 131,
+        "latestNodeCreated": 146,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
@@ -227,6 +228,7 @@
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
+        "validators": ["0x56D33424edb428744597Ec02571f14B50a33b7de"],
         "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
@@ -246,7 +248,8 @@
       "sinceTimestamp": 1704125939,
       "values": {
         "owner": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1ERC20Gateway",
@@ -269,22 +272,24 @@
       "derivedName": "L1ERC20Gateway"
     },
     {
-      "name": "",
+      "name": "OneStepProverMath",
       "address": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972815
+      "sinceTimestamp": 1701972815,
+      "derivedName": ""
     },
     {
-      "name": "",
+      "name": "OneStepProverHostIo",
       "address": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972863
+      "sinceTimestamp": 1701972863,
+      "derivedName": ""
     },
     {
       "name": "ValidatorWalletCreator",
@@ -328,7 +333,8 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1704125939,
       "values": {
-        "batchCount": 133,
+        "batchCount": 147,
+        "batchPosters": ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"],
         "bridge": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -337,7 +343,7 @@
         "maxTimeVariation": [5760, 48, 86400, 3600],
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 501
+        "totalDelayedMessagesRead": 521
       },
       "derivedName": "SequencerInbox"
     },
@@ -399,13 +405,14 @@
       "derivedName": "UpgradeExecutor"
     },
     {
-      "name": "",
+      "name": "OneStepProver0",
       "address": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972707
+      "sinceTimestamp": 1701972707,
+      "derivedName": ""
     }
   ],
   "eoas": [
@@ -414,6 +421,8 @@
     "0x41db2C19bCaEe5e47aF56B0994D330c8a029F2d2",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
     "0x533Ebf8893c5bB7DDe47938507e239789E299a5f",
+    "0x56D33424edb428744597Ec02571f14B50a33b7de",
+    "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4",
     "0x70Bace2e1cc06E7A96D5d23681A66a9eA6938436",
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",

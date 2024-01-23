@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { ChevronDownIcon } from './icons'
 
 interface ExpandableContainerProps {
@@ -12,7 +12,7 @@ export function ExpandableContainer(props: ExpandableContainerProps) {
   return (
     <div className="ExpandableContainer">
       <div
-        className={classNames(
+        className={cn(
           'ExpandableContainerContent relative overflow-y-hidden transition-max-height duration-300',
           props.className,
           !props.className?.includes('max-h-') && 'max-h-80',

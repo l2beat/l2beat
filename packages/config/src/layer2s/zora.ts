@@ -1,9 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -56,6 +55,9 @@ export const zora: Layer2 = opStack({
         FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
     },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
@@ -104,11 +106,6 @@ export const zora: Layer2 = opStack({
     discovery.getContractDetails('L1ERC721Bridge', {
       description:
         'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('L1StandardBridge', {
-      description:
-        'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
       ...upgradeability,
     }),
   ],

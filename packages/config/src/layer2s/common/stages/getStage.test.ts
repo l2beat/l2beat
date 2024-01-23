@@ -117,7 +117,7 @@ describe(getStage.name, () => {
     })
   })
 
-  it('should throw error if no rollup node link is present and rollupNodeSourceAvailable is satisifed', () => {
+  it('should throw error if no rollup node link is present and rollupNodeSourceAvailable is satisfied', () => {
     expect(() =>
       getStage({
         stage0: {

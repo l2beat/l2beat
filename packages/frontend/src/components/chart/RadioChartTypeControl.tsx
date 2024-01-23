@@ -1,6 +1,7 @@
-import cx from 'classnames'
 import compact from 'lodash/compact'
 import React from 'react'
+
+import { cn } from '../../utils/cn'
 
 interface Tab {
   fullName: string
@@ -33,7 +34,7 @@ export function RadioChartTypeControl({
   return (
     <div
       data-role="radio-chart-type-controls"
-      className={cx(
+      className={cn(
         'relative',
         'before:absolute',
         'before:z-10',
@@ -52,7 +53,7 @@ export function RadioChartTypeControl({
         {tabs.map((tab, i) => (
           <label
             key={i}
-            className={cx(
+            className={cn(
               'flex-1 text-lg font-bold md:flex-auto',
               'block items-center py-[5px] md:py-[7px]',
               'cursor-pointer select-none',
@@ -69,7 +70,7 @@ export function RadioChartTypeControl({
               value={tab.value}
             />
             <div
-              className={cx(
+              className={cn(
                 'flex-1 py-1 md:flex-auto md:px-6 md:py-1.5',
                 'flex justify-center',
                 'rounded md:rounded-md',
