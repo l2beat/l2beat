@@ -1,22 +1,18 @@
-import { CoingeckoClient } from '@l2beat/shared'
+import { CoinListPlatformEntry } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ScriptLogger } from './ScriptLogger'
 
-export async function getCoingeckoId(
-  coingeckoClient: CoingeckoClient,
+export function getCoingeckoId(
   logger: ScriptLogger,
-  address: EthereumAddress,
+  coinList: CoinListPlatformEntry[],
   platform: string | undefined,
+  address: EthereumAddress,
 ) {
   logger.assert(
     platform !== undefined,
     'Could not find coingecko platform identifier. Please add it chain config of the project',
   )
-
-  const coinList = await coingeckoClient.getCoinList({
-    includePlatform: true,
-  })
 
   const coin = coinList.find((coin) => {
     return (

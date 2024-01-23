@@ -1,6 +1,16 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { AssetId, ChainId, Token } from '@l2beat/shared-pure'
+import {
+  CoingeckoClient,
+  CoinListPlatformEntry,
+  HttpClient,
+} from '@l2beat/shared'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  Token,
+} from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse, ParseError } from 'jsonc-parser'
@@ -18,6 +28,10 @@ const OUTPUT_FILE_PATH = './src/tokens/generated.json'
 async function main() {
   const logger = new ScriptLogger({})
   const coingeckoClient = getCoingeckoClient()
+  logger.fetching('coin list from Coingecko')
+  const coinList = await coingeckoClient.getCoinList({
+    includePlatform: true,
+  })
   const source = readTokensFile(logger)
   const output = readGeneratedFile(logger)
   const result: Token[] = []
@@ -49,13 +63,23 @@ async function main() {
         continue
       }
 
+      tokenLogger.assert(
+        token.address !== undefined,
+        `Native asset detected - configure manually`,
+      )
       tokenLogger.processing()
+
+      const coingeckoId =
+        token.coingeckoId ??
+        getCoingeckoId(logger, coinList, chain.coingeckoPlatform, token.address)
 
       const info = await fetchTokenInfo(
         tokenLogger,
         coingeckoClient,
+        coingeckoId,
         chain,
-        token,
+        token.address,
+        token.symbol,
       )
 
       const assetId = getAssetId(chain, token, info.name)
@@ -124,8 +148,11 @@ function getCoingeckoClient() {
 }
 
 function getChainConfiguration(logger: ScriptLogger, devId: string) {
-  const chain = chains.find((c) => c.devId === devId) // handle manta pacific case
-  logger.assert(chain !== undefined, `Configuration not found, TODO add readme`)
+  const chain = chains.find((c) => c.devId === devId)
+  logger.assert(
+    chain !== undefined,
+    `Configuration not found, add chain configuration to project .ts file`,
+  )
   return chain
 }
 
@@ -204,23 +231,11 @@ function findTokenInOutput(
 async function fetchTokenInfo(
   logger: ScriptLogger,
   coingeckoClient: CoingeckoClient,
+  coingeckoId: CoingeckoId,
   chain: ChainConfig,
-  entry: SourceEntry,
+  address: EthereumAddress,
+  symbol: string,
 ) {
-  logger.assert(
-    entry.address !== undefined,
-    `Native asset detected - configure manually`,
-  )
-
-  const coingeckoId =
-    entry.coingeckoId ??
-    (await getCoingeckoId(
-      coingeckoClient,
-      logger,
-      entry.address,
-      chain.coingeckoPlatform,
-    ))
-
   const env = getEnv()
   const rpcUrl = env.optionalString(`${chain.devId.toUpperCase()}_RPC_URL`)
   logger.assert(
@@ -233,8 +248,8 @@ async function fetchTokenInfo(
     logger,
     provider,
     coingeckoClient,
-    entry.address,
-    entry.symbol,
+    address,
+    symbol,
     coingeckoId,
   )
 
