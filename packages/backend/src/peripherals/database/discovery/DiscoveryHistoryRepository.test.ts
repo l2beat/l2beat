@@ -130,16 +130,23 @@ describe(DiscoveryHistoryRepository.name, () => {
   })
 
   describe(DiscoveryHistoryRepository.prototype.getProject.name, () => {
-    it('filters out errors', async () => {
+    it('sanitizes errors', async () => {
       const projectName = 'project'
 
-      const mockContract: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+      const mockContractWithoutError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
         {
-          name: 'MockContract',
+          name: 'MockContract1',
           address: EthereumAddress.random(),
           upgradeability: { type: 'immutable' },
-          errors: { code: 'UNEXPECTED_ERROR', message: 'Unexpected error' },
         }
+      const mockContractWithError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+        {
+          name: 'MockContract2',
+          address: EthereumAddress.random(),
+          upgradeability: { type: 'immutable' },
+          errors: { code: 'https://endpoint.com/potential-api-key' },
+        }
+
       const discovery: DiscoveryHistoryRecord = {
         projectName,
         chainId: ChainId.ETHEREUM,
@@ -150,7 +157,7 @@ describe(DiscoveryHistoryRepository.name, () => {
           chain: ChainId.getName(ChainId.ETHEREUM),
           blockNumber: -1,
           configHash: Hash256.random(),
-          contracts: [mockContract],
+          contracts: [mockContractWithoutError, mockContractWithError],
           eoas: [],
           abis: {},
           version: 0,
@@ -164,7 +171,13 @@ describe(DiscoveryHistoryRepository.name, () => {
       const result = await repository.getProject(projectName, ChainId.ETHEREUM)
       expect(result.length).toEqual(1)
       expect(result[0].discovery.contracts).toEqual([
-        { ...mockContract, errors: undefined },
+        mockContractWithoutError,
+        {
+          ...mockContractWithError,
+          errors: {
+            value: 'Processing error encountered.',
+          },
+        },
       ])
     })
   })

@@ -121,8 +121,13 @@ function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
 
   // NOTE(radomski): This has to be here, otherwise the risk of exposing our
   // API keys goes way up. Putting this in the database gives us the highest
-  // chance of being secure.
-  result.discovery.contracts.forEach((c) => (c.errors = undefined))
+  // chance of being secure. We still want to show that there was an error
+  // so sanitize it to expose minimal information.
+  result.discovery.contracts.forEach((c) => {
+    if (c.errors !== undefined) {
+      c.errors = { value: 'Processing error encountered.' }
+    }
+  })
 
   return result
 }
