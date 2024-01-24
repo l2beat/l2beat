@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { TvlSubmodule } from '../../modules/ApplicationModule'
+import { TvlModule } from '../../modules/ApplicationModule'
 import {
   getSyncStatus,
   renderTvlStatusPage,
@@ -16,7 +16,7 @@ export function createTvlStatusRouter(
   clock: Clock,
   priceUpdater: PriceUpdater,
   aggregatedReportUpdater: AggregatedReportUpdater,
-  submodules: TvlSubmodule[],
+  submodules: TvlModule[],
 ) {
   const router = new Router()
 

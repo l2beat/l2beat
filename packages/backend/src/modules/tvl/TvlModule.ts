@@ -30,9 +30,9 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Database } from '../../peripherals/database/shared/Database'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
-import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
-import { chainTvlSubmodule } from './ChainTvlSubmodule'
-import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
+import { ApplicationModule } from '../ApplicationModule'
+import { chainTvlModule } from './ChainTvlModule'
+import { createEthereumTvlModule } from './EthereumTvlModule'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -94,7 +94,7 @@ export function createTvlModule(
   // #region submodules
 
   const createChainTvlSubmodule = (tvlConfig: ChainTvlConfig) =>
-    chainTvlSubmodule(
+    chainTvlModule(
       tvlConfig,
       config.tokens,
       db,
@@ -105,7 +105,7 @@ export function createTvlModule(
       logger,
     )
 
-  const ethereumSubmodule = createEthereumTvlSubmodule(
+  const ethereumSubmodule = createEthereumTvlModule(
     db,
     priceUpdater,
     config,
