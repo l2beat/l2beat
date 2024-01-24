@@ -10,28 +10,33 @@
   "vaultsData": [
     {
       "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-      "tvl": "7,501,625.82",
-      "ethValue": "0.00"
+      "tvl": "7,493,126.22",
+      "ethValue": "0.00",
+      "token": "USDC"
     },
     {
       "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
       "tvl": "0",
-      "ethValue": "0.00"
+      "ethValue": "0.00",
+      "token": "WBTC"
     },
     {
       "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
       "tvl": "0",
-      "ethValue": "0.00"
+      "ethValue": "0.00",
+      "token": "WETH"
     },
     {
       "address": "0xD3F39174Ee7937381e19d682FfEa40968266FA3E",
       "tvl": "0",
-      "ethValue": "0.00"
+      "ethValue": "0.00",
+      "token": "USDT"
     },
     {
       "address": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
       "tvl": "0",
-      "ethValue": "0.00"
+      "ethValue": "0.00",
+      "token": "USDT"
     }
   ],
   "plugs": [

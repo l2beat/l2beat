@@ -4,11 +4,15 @@ import { providers, utils } from 'ethers'
 import { writeFile } from 'fs/promises'
 import { setTimeout } from 'timers/promises'
 
+import { tokenList } from '../../src'
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
 import { scrapEtherscanForTvl } from '../utils/scrapEtherscanForTvl'
 
 const plugAbi = ['function hub__() view returns (address)']
 const plugInt = new utils.Interface(plugAbi)
+
+const vaultAbi = ['function token__() view returns (address)']
+const vaultInt = new utils.Interface(vaultAbi)
 
 // this is not a plug, but appears in the discovery output
 const EXCLUDED_PLUGS = ['0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D']
@@ -37,6 +41,7 @@ async function main() {
     env.string('ALCHEMY_API_KEY'),
   )
   const blockNumber = await provider.getBlockNumber()
+
   console.log('block number: ', blockNumber)
   console.log('getting vaults from plugs list...')
   const vaultsRaw = await Promise.all(
@@ -66,10 +71,9 @@ async function main() {
   const vaults = vaultsRaw
     .filter(notUndefined)
     .filter((x, i, a) => a.indexOf(x) === i)
-
   const vaultsTvl = []
   console.log(
-    'estimating vaults TVL (this will take around ' +
+    'fetching vaults data (this will take around ' +
       (vaults.length * 2).toString() +
       ' seconds)...',
   )
@@ -78,7 +82,14 @@ async function main() {
     // avoid rate limiting
     await setTimeout(1000)
     const { tvl, ethValue } = await scrapEtherscanForTvl(vault)
-    vaultsTvl.push({ address: vault, tvl, ethValue })
+    const tx = {
+      to: vault,
+      data: vaultInt.encodeFunctionData('token__', []),
+    }
+    const tokenAddressBytes = await provider.call(tx, blockNumber)
+    const tokenAddress = utils.getAddress('0x' + tokenAddressBytes.slice(26))
+    const token = tokenList.find((t) => t.address?.toString() === tokenAddress)
+    vaultsTvl.push({ address: vault, tvl, ethValue, token: token?.symbol })
   }
 
   const comment =
