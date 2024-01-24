@@ -3,8 +3,8 @@ import {
   BlockNumberProvider,
   CoingeckoQueryService,
   HttpClient,
-  UniversalEtherscanClient,
   UniversalBlockscoutClient,
+  UniversalEtherscanClient,
 } from '@l2beat/shared'
 import { capitalizeFirstLetter, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
