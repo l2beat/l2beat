@@ -4,6 +4,10 @@
 
 @import './markdown.css';
 
+body {
+  @apply text-base md:text-lg;
+}
+
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
