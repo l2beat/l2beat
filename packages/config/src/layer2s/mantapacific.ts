@@ -96,6 +96,7 @@ export const mantapacific: Layer2 = {
       callsPerMinute: 1500,
       assessCount: subtractOne,
     },
+    associatedTokens: ['MANTA'],
   },
   chainConfig: {
     name: 'mantapacific',

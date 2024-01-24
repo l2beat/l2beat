@@ -53,6 +53,7 @@ const CHAIN_IDS: Record<number, string> = {
   1101: 'polygonzkevm',
   100: 'gnosis',
   169: 'mantapacific',
+  42766: 'zkfair',
 } as const
 
 ChainId.ETHEREUM = chainIdFromName('ethereum')

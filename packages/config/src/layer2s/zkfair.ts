@@ -116,6 +116,12 @@ export const zkfair: Layer2 = {
         tokens: '*',
       }),
     ],
+    associatedTokens: ['ZKF'],
+  },
+  chainConfig: {
+    name: 'zkfair',
+    chainId: 42766,
+    coingeckoPlatform: 'zkfair',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
