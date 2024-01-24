@@ -124,7 +124,7 @@ export const zkfair: Layer2 = {
     explorerUrl: 'https://scan.zkfair.io/',
     explorerApi: {
       url: 'https://scan.zkfair.io/api/',
-      type: 'routescan',
+      type: 'blockscout',
     },
     // ~ Timestamp of block number 0 on zkFair
     // https://scan.zkfair.io/block/0
