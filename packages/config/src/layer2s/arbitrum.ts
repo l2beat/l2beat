@@ -126,6 +126,7 @@ export const arbitrum: Layer2 = {
     associatedTokens: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
+        // Arbitrum One Bridge
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         tokens: ['ETH'],
         description:
@@ -133,6 +134,7 @@ export const arbitrum: Layer2 = {
         ...upgradesProxyAdmin,
       }),
       discovery.getEscrowDetails({
+        // Custom ERC20 Gateway
         address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         tokens: '*',
         description:
@@ -140,6 +142,7 @@ export const arbitrum: Layer2 = {
         ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
+        // ERC20 Gateway
         address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
         tokens: '*',
         description:

@@ -10,6 +10,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DiffHistoryController } from '../../api/controllers/diff-history/DiffHistoryController'
 import { createDiffHistoryRouter } from '../../api/routers/DiffHistoryRouter'
 import { Config } from '../../config'
+import { ChainConverter } from '../../core/ChainConverter'
 import { Clock } from '../../core/Clock'
 import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { ProjectDiscoverer } from '../../core/discovery/ProjectDiscoverer'
@@ -44,6 +45,8 @@ export function createDiffHistoryModule(
   )
 
   const discoveryHttpClient = new DiscoveryHttpClient()
+
+  const chainConverter = new ChainConverter(config.chains)
 
   const discoverers = config.diffHistory.chains
     // TODO(radomski): In the initial version we only care about ethereum
@@ -82,6 +85,7 @@ export function createDiffHistoryModule(
             configReader,
             discoveryHistoryRepository,
             new Clock(project.minTimestamp, 60 * 60),
+            chainConverter,
             logger,
             DISCOVERY_LOGIC_VERSION,
           ),
@@ -91,6 +95,7 @@ export function createDiffHistoryModule(
   const controller = new DiffHistoryController(
     discoveryHistoryRepository,
     configReader,
+    chainConverter,
   )
   const routers = [createDiffHistoryRouter(controller)]
 

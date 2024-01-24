@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
@@ -107,7 +107,7 @@ function SingleRisk({
       ) : (
         <>
           <span
-            className={cx(
+            className={cn(
               sentimentToTextColor(riskValue.sentiment),
               'mt-2 block text-xl font-bold md:text-2xl',
             )}

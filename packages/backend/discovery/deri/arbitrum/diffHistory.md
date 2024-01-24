@@ -1,3 +1,51 @@
+# Diff at Tue, 23 Jan 2024 13:55:47 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 168378561
+- current block number: 173375251
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 168378561 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+      values.validators:
++        ["0xD217853C6A59e51dC1a48CEF21d9E53FCaA8a3f0"]
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+      values.batchPosters:
++        ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1CustomGateway (0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Gateway (0xB155C77a440DA7c282993a89FeA609598293017A) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0xe507b9EF563DB6CcFDcE270160C50b2005BeED20) {
+    }
+```
+
 # Diff at Mon, 08 Jan 2024 15:22:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

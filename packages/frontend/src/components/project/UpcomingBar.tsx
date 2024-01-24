@@ -1,12 +1,12 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { UpcomingIcon } from '../icons/symbols/UpcomingIcon'
 
 export function UpcomingBar({ className }: { className?: string }) {
   return (
     <div
-      className={cx(
+      className={cn(
         'flex justify-center py-2.5 md:px-0',
         'rounded-lg bg-purple-100 text-white dark:bg-purple-100',
         className,

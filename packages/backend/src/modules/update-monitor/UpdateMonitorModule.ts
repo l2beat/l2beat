@@ -8,6 +8,7 @@ import {
 import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
+import { ChainConverter } from '../../core/ChainConverter'
 import { Clock } from '../../core/Clock'
 import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
@@ -53,9 +54,11 @@ export function createUpdateMonitorModule(
     logger,
   )
 
+  const chainConverter = new ChainConverter(config.chains)
   const updateNotifier = new UpdateNotifier(
     updateNotifierRepository,
     discordClient,
+    chainConverter,
     logger,
   )
 
@@ -78,6 +81,7 @@ export function createUpdateMonitorModule(
     configReader,
     updateMonitorRepository,
     clock,
+    chainConverter,
     logger,
     !!config.updateMonitor.runOnStart,
     DISCOVERY_LOGIC_VERSION,

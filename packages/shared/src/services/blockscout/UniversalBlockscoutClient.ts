@@ -3,10 +3,10 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
 import { BlockNumberProvider } from '../providers/BlockNumberProvider'
-import { RoutescanLikeClient } from '../routescan/RoutescanLikeClient'
+import { BlockscoutLikeClient } from './BlockscoutLikeClient'
 
-export class UniversalRoutescanClient
-  extends RoutescanLikeClient
+export class UniversalBlockscoutClient
+  extends BlockscoutLikeClient
   implements BlockNumberProvider
 {
   constructor(

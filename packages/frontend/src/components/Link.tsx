@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import { cn } from '../utils/cn'
 import { ArrowRightIcon } from './icons'
 
 type LinkProps = React.HTMLProps<HTMLAnchorElement> & {
@@ -33,7 +33,7 @@ export function Link({
   return (
     <a
       href={href}
-      className={classNames(
+      className={cn(
         'group data-[state=highlighted]:relative',
         'data-[state=highlighted]:before:absolute data-[state=highlighted]:before:-left-1 data-[state=highlighted]:before:-top-0.5',
         'data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:rounded',
@@ -47,14 +47,14 @@ export function Link({
       {...rest}
     >
       <span
-        className={classNames(
+        className={cn(
           'inline-flex items-center font-semibold transition-colors',
           textClassesByType[type],
           textClassName,
         )}
       >
         <span
-          className={classNames(
+          className={cn(
             'flex items-center gap-1',
             underline && 'underline',
             showArrow && 'transition-transform group-hover:-translate-x-px',
