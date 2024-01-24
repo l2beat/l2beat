@@ -11,16 +11,16 @@ import { BigNumber, utils } from 'ethers'
 import { partition } from 'lodash'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
+import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import {
   ETHEREUM_MULTICALL_V1_ADDRESS,
   ETHEREUM_MULTICALL_V1_BLOCK,
-} from '../../peripherals/ethereum/multicall/MulticallConfig'
+} from '../../peripherals/multicall/MulticallConfig'
 import {
   MulticallRequest,
   MulticallResponse,
-} from '../../peripherals/ethereum/multicall/types'
+} from '../../peripherals/multicall/types'
+import { RPCClient } from '../../peripherals/rpcclient/RPCClient'
 
 const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
@@ -51,7 +51,7 @@ export const ETHEREUM_BALANCE_ENCODING: NativeBalanceEncoding = {
 
 export class BalanceProvider {
   constructor(
-    private readonly ethereumClient: EthereumClient,
+    private readonly ethereumClient: RPCClient,
     private readonly multicallClient: MulticallClient,
     private readonly chainId: ChainId,
     private readonly nativeBalanceEncoding: NativeBalanceEncoding | undefined,

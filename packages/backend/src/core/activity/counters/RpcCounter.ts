@@ -6,7 +6,7 @@ import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
+import { RPCClient } from '../../../peripherals/rpcclient/RPCClient'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
@@ -31,7 +31,7 @@ export function createRpcCounter(
     url,
     timeout,
   })
-  const client = new EthereumClient(
+  const client = new RPCClient(
     provider,
     logger.for(`RpcProcessor[${projectId.toString()}]`),
     callsPerMinute,

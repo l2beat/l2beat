@@ -1,8 +1,8 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { EthereumClient } from '../EthereumClient'
-import { BlockTag } from '../types'
+import { RPCClient } from '../rpcclient/RPCClient'
+import { BlockTag } from '../rpcclient/types'
 import { MulticallClient } from './MulticallClient'
 import {
   decodeMulticallV1,
@@ -49,7 +49,7 @@ describe(MulticallClient.name, () => {
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<EthereumClient>({
+    const ethereumClient = mockObject<RPCClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return parameters.data ?? Bytes.EMPTY
@@ -84,7 +84,7 @@ describe(MulticallClient.name, () => {
 
   it('uses v1 for blocks without v2', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<EthereumClient>({
+    const ethereumClient = mockObject<RPCClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return Bytes.fromHex(
@@ -131,7 +131,7 @@ describe(MulticallClient.name, () => {
 
   it('uses v2 for new blocks', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<EthereumClient>({
+    const ethereumClient = mockObject<RPCClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return Bytes.fromHex(
@@ -180,7 +180,7 @@ describe(MulticallClient.name, () => {
 
   it(`batches calls`, async () => {
     const calls: number[] = []
-    const ethereumClient = mockObject<EthereumClient>({
+    const ethereumClient = mockObject<RPCClient>({
       async call(parameters) {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
@@ -213,7 +213,7 @@ describe(MulticallClient.name, () => {
   })
 
   it('offers a named interface', async () => {
-    const ethereumClient = mockObject<EthereumClient>({
+    const ethereumClient = mockObject<RPCClient>({
       async call() {
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
