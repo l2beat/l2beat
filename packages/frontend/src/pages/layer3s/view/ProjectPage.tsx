@@ -1,12 +1,6 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  HeaderProps,
-  Navbar,
-  NavbarProps,
-} from '../../../components'
+import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
@@ -16,7 +10,6 @@ import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
-  header: HeaderProps
   projectHeader: ProjectHeaderProps
   projectDetails: ProjectDetailsProps
   footer: FooterProps
