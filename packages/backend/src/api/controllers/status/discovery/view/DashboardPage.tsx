@@ -1,4 +1,3 @@
-import { ChainId } from '@l2beat/shared-pure'
 import React, { ReactNode } from 'react'
 
 import { Page } from '../../view/Page'
@@ -14,7 +13,7 @@ interface DashboardPageProps {
 export function DashboardPage(props: DashboardPageProps) {
   const hardcoded = getHardcoded()
 
-  const ethereumProjects = props.projects[ChainId.getName(ChainId.ETHEREUM)]
+  const ethereumProjects = props.projects.ethereum
   const configuredEthereumProjects = ethereumProjects.filter(
     (p) => p.configured,
   )
@@ -89,7 +88,7 @@ export function DashboardPage(props: DashboardPageProps) {
                   scope="colgroup"
                   style={{ padding: '0px', textAlign: 'left' }}
                 >
-                  {`Chain ${chainName}@${+ChainId.fromName(chainName)}`}
+                  {`Chain ${chainName}`}
                 </th>
               </tr>
               {projects.map((project, index) => (

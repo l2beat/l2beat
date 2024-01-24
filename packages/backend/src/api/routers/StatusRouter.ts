@@ -14,13 +14,6 @@ const queryParser = z.object({
   }),
 })
 
-const paramsParser = z.object({
-  params: z.object({
-    chainId: stringAs((s) => ChainId.fromName(s)),
-    project: z.string(),
-  }),
-})
-
 export function createStatusRouter(statusController: StatusController) {
   const router = new Router()
 
@@ -87,14 +80,21 @@ export function createStatusRouter(statusController: StatusController) {
   })
 
   router.get(
-    '/status/discovery/:chainId/:project',
-    withTypedContext(paramsParser, async (ctx) => {
-      const { chainId, project } = ctx.params
-      ctx.body = await statusController.getDiscoveryDashboardProject(
-        project,
-        chainId,
-      )
-    }),
+    '/status/discovery/:chain/:project',
+    withTypedContext(
+      z.object({
+        params: z.object({
+          chain: z.string(),
+          project: z.string(),
+        }),
+      }),
+      async (ctx) => {
+        ctx.body = await statusController.getDiscoveryDashboardProject(
+          ctx.params.project,
+          ctx.params.chain,
+        )
+      },
+    ),
   )
 
   router.get('/status/liveness', async (ctx) => {

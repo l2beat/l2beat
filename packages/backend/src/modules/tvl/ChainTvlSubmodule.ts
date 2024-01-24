@@ -3,8 +3,8 @@ import {
   BlockNumberProvider,
   CoingeckoQueryService,
   HttpClient,
+  UniversalBlockscoutClient,
   UniversalEtherscanClient,
-  UniversalRoutescanClient,
 } from '@l2beat/shared'
 import { capitalizeFirstLetter, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -44,10 +44,10 @@ export function chainTvlSubmodule(
   const provider = new providers.JsonRpcProvider(config.providerUrl)
 
   const blockNumberProvider: BlockNumberProvider =
-    config.blockNumberProviderConfig.type === 'RoutescanLike'
-      ? new UniversalRoutescanClient(
+    config.blockNumberProviderConfig.type === 'blockscout'
+      ? new UniversalBlockscoutClient(
           http,
-          config.blockNumberProviderConfig.routescanApiUrl,
+          config.blockNumberProviderConfig.blockscoutApiUrl,
           config.minBlockTimestamp,
           config.chainId,
           logger,
@@ -159,6 +159,7 @@ export function chainTvlSubmodule(
   }
 
   return {
+    chain,
     reportUpdaters: [
       totalSupplyFormulaUpdater,
       circulatingSupplyFormulaUpdater,
