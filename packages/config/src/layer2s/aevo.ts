@@ -12,7 +12,7 @@ const upgradeability = {
 }
 
 export const aevo: Layer2 = opStack({
-  isOptimium: 'Celestia',
+  daProvider: 'Celestia',
   discovery,
   display: {
     name: 'Aevo',

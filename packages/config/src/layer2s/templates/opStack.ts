@@ -1,5 +1,10 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -15,7 +20,9 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
+  ScalingProjectTechnologyChoice,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
@@ -29,10 +36,10 @@ import {
   Layer2TransactionApi,
 } from '../types'
 
-type DALayer = 'Celestia'
+type DAProvider = 'Celestia'
 
 export interface OpStackConfig {
-  isOptimium?: DALayer
+  daProvider?: DAProvider
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   upgradeability: {
@@ -61,28 +68,6 @@ export interface OpStackConfig {
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
-  function riskViewDA(DA: DALayer | undefined) {
-    switch (DA) {
-      case 'Celestia':
-        return RISK_VIEW.DATA_CELESTIA(false)
-      case undefined:
-        return RISK_VIEW.DATA_ON_CHAIN
-      default:
-        throw new Error(`Unknown DA layer.`)
-    }
-  }
-
-  function technologyDA(DA: DALayer | undefined) {
-    switch (DA) {
-      case 'Celestia':
-        return DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false)
-      case undefined:
-        return DATA_AVAILABILITY.ON_CHAIN
-      default:
-        throw new Error(`Unknown DA layer.`)
-    }
-  }
-
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -90,11 +75,11 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       ...templateVars.display,
       provider: 'OP Stack',
       category:
-        templateVars.isOptimium !== undefined
+        templateVars.daProvider !== undefined
           ? 'Optimium'
           : 'Optimistic Rollup',
       dataAvailabilityMode:
-        templateVars.isOptimium !== undefined ? 'NotApplicable' : 'TxData',
+        templateVars.daProvider !== undefined ? 'NotApplicable' : 'TxData',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -135,7 +120,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
             }
           : undefined),
       liveness:
-        templateVars.isOptimium !== undefined
+        templateVars.daProvider !== undefined
           ? undefined
           : {
               proofSubmissions: [],
@@ -162,7 +147,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               ],
             },
       finality:
-        templateVars.isOptimium !== undefined
+        templateVars.daProvider !== undefined
           ? undefined
           : templateVars.finality,
     },
@@ -170,7 +155,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
-        ...riskViewDA(templateVars.isOptimium),
+        ...riskViewDA(templateVars.daProvider),
         sources: [
           {
             contract: templateVars.portal.name,
@@ -219,7 +204,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     }),
     stage:
-      templateVars.isOptimium !== undefined
+      templateVars.daProvider !== undefined
         ? {
             stage: 'NotApplicable',
           }
@@ -274,9 +259,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         ],
       },
       dataAvailability: {
-        ...technologyDA(templateVars.isOptimium),
+        ...technologyDA(templateVars.daProvider),
         references: [
-          ...technologyDA(templateVars.isOptimium).references,
+          ...technologyDA(templateVars.daProvider).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
@@ -427,4 +412,28 @@ function safeGetImplementation(contract: ContractParameters): string {
     throw new Error(`No implementation found for ${contract.name}`)
   }
   return implementation.toString()
+}
+
+function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
+  switch (DA) {
+    case 'Celestia':
+      return RISK_VIEW.DATA_CELESTIA(false)
+    case undefined:
+      return RISK_VIEW.DATA_ON_CHAIN
+    default:
+      assertUnreachable(DA)
+  }
+}
+
+function technologyDA(
+  DA: DAProvider | undefined,
+): ScalingProjectTechnologyChoice {
+  switch (DA) {
+    case 'Celestia':
+      return DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false)
+    case undefined:
+      return DATA_AVAILABILITY.ON_CHAIN
+    default:
+      assertUnreachable(DA)
+  }
 }
