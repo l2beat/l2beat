@@ -55,6 +55,8 @@ export interface OpStackConfig {
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
   chainConfig?: ChainConfig
+  disableLiveness?: boolean
+  disableFinality?: boolean
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -105,31 +107,35 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
-      liveness: {
-        proofSubmissions: [],
-        batchSubmissions: [
-          {
-            formula: 'transfer',
-            from: templateVars.sequencerAddress,
-            to: templateVars.inboxAddress,
-            sinceTimestamp: templateVars.genesisTimestamp,
+      liveness: templateVars.disableLiveness
+        ? undefined
+        : {
+            proofSubmissions: [],
+            batchSubmissions: [
+              {
+                formula: 'transfer',
+                from: templateVars.sequencerAddress,
+                to: templateVars.inboxAddress,
+                sinceTimestamp: templateVars.genesisTimestamp,
+              },
+            ],
+            stateUpdates: [
+              {
+                formula: 'functionCall',
+                address: templateVars.l2OutputOracle.address,
+                selector: '0x9aaab648',
+                functionSignature:
+                  'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+                sinceTimestamp: new UnixTime(
+                  templateVars.l2OutputOracle.sinceTimestamp ??
+                    templateVars.genesisTimestamp.toNumber(),
+                ),
+              },
+            ],
           },
-        ],
-        stateUpdates: [
-          {
-            formula: 'functionCall',
-            address: templateVars.l2OutputOracle.address,
-            selector: '0x9aaab648',
-            functionSignature:
-              'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-            sinceTimestamp: new UnixTime(
-              templateVars.l2OutputOracle.sinceTimestamp ??
-                templateVars.genesisTimestamp.toNumber(),
-            ),
-          },
-        ],
-      },
-      finality: templateVars.finality,
+      finality: templateVars.disableFinality
+        ? undefined
+        : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
