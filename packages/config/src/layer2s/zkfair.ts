@@ -133,7 +133,7 @@ export const zkfair: Layer2 = {
       {
         sinceBlock: 6330383,
         batchSize: 150,
-        address: EthereumAddress('0xA2576cBFc6bF07Dd29f2779A67c5680Ea5cc4DCC'),
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         version: '3',
       },
     ],
