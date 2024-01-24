@@ -59,14 +59,14 @@ async function main() {
       (vaults.length * 2).toString() +
       ' seconds)...',
   )
-  const vaultsTvl = []
+  const vaultsData = []
   for (const vault of vaults) {
     // avoid rate limiting
     await setTimeout(1000)
     const { tvl, ethValue } = await scrapEtherscanForTvl(vault)
     const tokenAddress = await getTokenAddress(vault, provider, blockNumber)
     const token = tokenList.find((t) => t.address?.toString() === tokenAddress)
-    vaultsTvl.push({ address: vault, tvl, ethValue, token: token?.symbol })
+    vaultsData.push({ address: vault, tvl, ethValue, token: token?.symbol })
   }
 
   const comment =
@@ -74,7 +74,7 @@ async function main() {
 
   await writeFile(
     'src/bridges/socket-vaults.json',
-    JSON.stringify({ comment, vaults, vaultsData: vaultsTvl, plugs }, null, 2),
+    JSON.stringify({ comment, vaults, vaultsData, plugs }, null, 2),
   )
 }
 
