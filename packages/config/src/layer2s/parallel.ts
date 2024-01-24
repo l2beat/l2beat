@@ -321,10 +321,18 @@ export const parallel: Layer2 = {
       discovery.getContractDetails('OneStepProofEntry', {
         description: 'Contract used to perform the last step of a fraud proof.',
       }),
-      discovery.getContractDetails('OneStepProverMemory'),
-      discovery.getContractDetails('OneStepProverMath'),
-      discovery.getContractDetails('OneStepProverHostIo'),
-      discovery.getContractDetails('OneStepProver0'),
+      discovery.getContractDetails('OneStepProverMemory', {
+        description: 'Contract used to perform the last step of a fraud proof.',
+      }),
+      discovery.getContractDetails('OneStepProverMath', {
+        description: 'Contract used to perform the last step of a fraud proof.',
+      }),
+      discovery.getContractDetails('OneStepProverHostIo', {
+        description: 'Contract used to perform the last step of a fraud proof.',
+      }),
+      discovery.getContractDetails('OneStepProver0', {
+        description: 'Contract used to perform the last step of a fraud proof.',
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

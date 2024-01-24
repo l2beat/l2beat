@@ -1,3 +1,59 @@
+# Diff at Wed, 24 Jan 2024 08:06:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@bef03f2ccf4bccd5d53aa62da5612827a762973f block: 19069632
+- current block number: 19075194
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19069632 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1) {
+      unverified:
+-        true
+      derivedName:
+-        ""
++        "OneStepProverMemory"
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06) {
+      unverified:
+-        true
+      derivedName:
+-        ""
++        "OneStepProverMath"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878) {
+      unverified:
+-        true
+      derivedName:
+-        ""
++        "OneStepProverHostIo"
+    }
+```
+
+```diff
+    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622) {
+      unverified:
+-        true
+      derivedName:
+-        ""
++        "OneStepProver0"
+    }
+```
+
 # Diff at Tue, 23 Jan 2024 13:21:17 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
