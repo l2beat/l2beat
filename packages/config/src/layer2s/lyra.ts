@@ -97,7 +97,7 @@ export const lyra: Layer2 = opStack({
     explorerUrl: 'https://explorer.lyra.finance',
     explorerApi: {
       url: 'https://explorer.lyra.finance/api',
-      type: 'routescan',
+      type: 'blockscout',
     },
     // ~ Timestamp of block number 0 on Lyra
     // https://explorer.lyra.finance/block/0

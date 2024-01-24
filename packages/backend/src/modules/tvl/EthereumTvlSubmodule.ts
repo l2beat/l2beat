@@ -38,7 +38,7 @@ export function createEthereumTvlSubmodule(
 
   const ethereumProvider = new providers.JsonRpcProvider(tvlConfig.providerUrl)
 
-  assert(tvlConfig.blockNumberProviderConfig.type === 'EtherscanLike')
+  assert(tvlConfig.blockNumberProviderConfig.type === 'etherscan')
 
   const etherscanClient = new EtherscanClient(
     http,
