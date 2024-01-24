@@ -50,7 +50,7 @@ export class ProjectDiscoverer {
 
     await this.repository.deleteStaleProjectDiscoveries(
       this.projectName,
-      ChainId.fromName(this.chain),
+      this.chainConverter.toChainId(this.chain),
       this.projectConfig.hash,
     )
 

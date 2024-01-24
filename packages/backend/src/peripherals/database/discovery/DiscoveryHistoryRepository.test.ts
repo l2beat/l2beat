@@ -157,7 +157,7 @@ describe(DiscoveryHistoryRepository.name, () => {
         timestamp: new UnixTime(0),
         discovery: {
           name: projectName,
-          chain: ChainId.getName(ChainId.ETHEREUM),
+          chain: 'ethereum',
           blockNumber: -1,
           configHash: Hash256.random(),
           contracts: [mockContractWithoutError, mockContractWithError],
@@ -206,7 +206,7 @@ describe(DiscoveryHistoryRepository.name, () => {
           timestamp: new UnixTime(0),
           discovery: {
             name: projectName,
-            chain: ChainId.getName(ChainId.ETHEREUM),
+            chain: 'ethereum',
             blockNumber: -1,
             configHash: hash,
             contracts: [contract],
