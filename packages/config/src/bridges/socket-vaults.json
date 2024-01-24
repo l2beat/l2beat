@@ -7,6 +7,33 @@
     "0xD3F39174Ee7937381e19d682FfEa40968266FA3E",
     "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa"
   ],
+  "vaultsData": [
+    {
+      "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+      "tvl": "7,501,625.82",
+      "ethValue": "0.00"
+    },
+    {
+      "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+      "tvl": "0",
+      "ethValue": "0.00"
+    },
+    {
+      "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
+      "tvl": "0",
+      "ethValue": "0.00"
+    },
+    {
+      "address": "0xD3F39174Ee7937381e19d682FfEa40968266FA3E",
+      "tvl": "0",
+      "ethValue": "0.00"
+    },
+    {
+      "address": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+      "tvl": "0",
+      "ethValue": "0.00"
+    }
+  ],
   "plugs": [
     "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D",
     "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A",
