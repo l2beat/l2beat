@@ -308,7 +308,7 @@ function generateDiffHistoryMarkdown(
     result.push('')
     result.push(
       `Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during 
+or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')

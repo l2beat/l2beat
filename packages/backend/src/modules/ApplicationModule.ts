@@ -8,6 +8,7 @@ export interface ApplicationModule {
 }
 
 export interface TvlSubmodule {
+  chain: string
   reportUpdaters?: ReportUpdater[]
   dataUpdaters?: DataUpdater[]
   start?: () => Promise<void> | void

@@ -17,7 +17,7 @@ export interface ChainConfig {
   explorerUrl?: string
   explorerApi?: {
     url: string
-    type: 'etherscan' | 'routescan'
+    type: 'etherscan' | 'blockscout'
     missingFeatures?: {
       getContractCreation?: boolean
     }
