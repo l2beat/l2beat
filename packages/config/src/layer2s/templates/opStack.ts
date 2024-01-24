@@ -29,7 +29,10 @@ import {
   Layer2TransactionApi,
 } from '../types'
 
+type DALayer = 'Celestia'
+
 export interface OpStackConfig {
+  isOptimium?: DALayer
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   upgradeability: {
@@ -55,19 +58,43 @@ export interface OpStackConfig {
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
   chainConfig?: ChainConfig
-  disableLiveness?: boolean
-  disableFinality?: boolean
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
+  function riskViewDA(DA: DALayer | undefined) {
+    switch (DA) {
+      case 'Celestia':
+        return RISK_VIEW.DATA_CELESTIA(false)
+      case undefined:
+        return RISK_VIEW.DATA_ON_CHAIN
+      default:
+        throw new Error(`Unknown DA layer.`)
+    }
+  }
+
+  function technologyDA(DA: DALayer | undefined) {
+    switch (DA) {
+      case 'Celestia':
+        return DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false)
+      case undefined:
+        return DATA_AVAILABILITY.ON_CHAIN
+      default:
+        throw new Error(`Unknown DA layer.`)
+    }
+  }
+
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,
       provider: 'OP Stack',
-      category: 'Optimistic Rollup',
-      dataAvailabilityMode: 'TxData',
+      category:
+        templateVars.isOptimium !== undefined
+          ? 'Optimium'
+          : 'Optimistic Rollup',
+      dataAvailabilityMode:
+        templateVars.isOptimium !== undefined ? 'NotApplicable' : 'TxData',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -107,41 +134,43 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
-      liveness: templateVars.disableLiveness
-        ? undefined
-        : {
-            proofSubmissions: [],
-            batchSubmissions: [
-              {
-                formula: 'transfer',
-                from: templateVars.sequencerAddress,
-                to: templateVars.inboxAddress,
-                sinceTimestamp: templateVars.genesisTimestamp,
-              },
-            ],
-            stateUpdates: [
-              {
-                formula: 'functionCall',
-                address: templateVars.l2OutputOracle.address,
-                selector: '0x9aaab648',
-                functionSignature:
-                  'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-                sinceTimestamp: new UnixTime(
-                  templateVars.l2OutputOracle.sinceTimestamp ??
-                    templateVars.genesisTimestamp.toNumber(),
-                ),
-              },
-            ],
-          },
-      finality: templateVars.disableFinality
-        ? undefined
-        : templateVars.finality,
+      liveness:
+        templateVars.isOptimium !== undefined
+          ? undefined
+          : {
+              proofSubmissions: [],
+              batchSubmissions: [
+                {
+                  formula: 'transfer',
+                  from: templateVars.sequencerAddress,
+                  to: templateVars.inboxAddress,
+                  sinceTimestamp: templateVars.genesisTimestamp,
+                },
+              ],
+              stateUpdates: [
+                {
+                  formula: 'functionCall',
+                  address: templateVars.l2OutputOracle.address,
+                  selector: '0x9aaab648',
+                  functionSignature:
+                    'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+                  sinceTimestamp: new UnixTime(
+                    templateVars.l2OutputOracle.sinceTimestamp ??
+                      templateVars.genesisTimestamp.toNumber(),
+                  ),
+                },
+              ],
+            },
+      finality:
+        templateVars.isOptimium !== undefined
+          ? undefined
+          : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
-        ...RISK_VIEW.DATA_ON_CHAIN,
+        ...riskViewDA(templateVars.isOptimium),
         sources: [
           {
             contract: templateVars.portal.name,
@@ -189,34 +218,39 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     }),
-    stage: getStage(
-      {
-        stage0: {
-          callsItselfRollup: true,
-          stateRootsPostedToL1: true,
-          dataAvailabilityOnL1: true,
-          rollupNodeSourceAvailable: templateVars.isNodeAvailable,
-        },
-        stage1: {
-          stateVerificationOnL1: false,
-          fraudProofSystemAtLeast5Outsiders: null,
-          usersHave7DaysToExit: false,
-          usersCanExitWithoutCooperation: false,
-          securityCouncilProperlySetUp: null,
-        },
-        stage2: {
-          proofSystemOverriddenOnlyInCaseOfABug: null,
-          fraudProofSystemIsPermissionless: null,
-          delayWith30DExitWindow: false,
-        },
-      },
-      {
-        rollupNodeLink:
-          templateVars.isNodeAvailable === true
-            ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
-            : '',
-      },
-    ),
+    stage:
+      templateVars.isOptimium !== undefined
+        ? {
+            stage: 'NotApplicable',
+          }
+        : getStage(
+            {
+              stage0: {
+                callsItselfRollup: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
+                rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+              },
+              stage1: {
+                stateVerificationOnL1: false,
+                fraudProofSystemAtLeast5Outsiders: null,
+                usersHave7DaysToExit: false,
+                usersCanExitWithoutCooperation: false,
+                securityCouncilProperlySetUp: null,
+              },
+              stage2: {
+                proofSystemOverriddenOnlyInCaseOfABug: null,
+                fraudProofSystemIsPermissionless: null,
+                delayWith30DExitWindow: false,
+              },
+            },
+            {
+              rollupNodeLink:
+                templateVars.isNodeAvailable === true
+                  ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+                  : '',
+            },
+          ),
     stateDerivation: templateVars.stateDerivation,
     technology: {
       stateCorrectness: {
@@ -240,8 +274,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         ],
       },
       dataAvailability: {
-        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+        ...technologyDA(templateVars.isOptimium),
         references: [
+          ...technologyDA(templateVars.isOptimium).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',

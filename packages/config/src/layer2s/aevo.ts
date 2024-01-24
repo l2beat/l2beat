@@ -12,6 +12,7 @@ const upgradeability = {
 }
 
 export const aevo: Layer2 = opStack({
+  isOptimium: 'Celestia',
   discovery,
   display: {
     name: 'Aevo',
@@ -19,7 +20,7 @@ export const aevo: Layer2 = opStack({
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'Aevo is a high-performance decentralized options exchange, powered by the OP Stack.',
+      'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and Celestia DA.',
     purposes: ['DEX'],
     links: {
       websites: ['https://aevo.xyz/'],
@@ -39,8 +40,6 @@ export const aevo: Layer2 = opStack({
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
-  disableLiveness: true,
-  disableFinality: true,
   genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
@@ -54,7 +53,7 @@ export const aevo: Layer2 = opStack({
         'Aevo removed the whitelist and opened the mainnet to the public.',
     },
     {
-      name: 'Aevo switched to Celestia',
+      name: 'Aevo switches to Celestia',
       link: 'https://twitter.com/aevoxyz/status/1750013642278633510',
       date: '2024-01-16T00:00:00.00Z',
     },
