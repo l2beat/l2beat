@@ -17,6 +17,7 @@ describe(RPCClient.name, () => {
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
           .returnsOnce([]),
+        getTransaction: mockFn(),
       })
 
       const ethereumClient = new RPCClient(provider, Logger.SILENT)
@@ -56,6 +57,7 @@ describe(RPCClient.name, () => {
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
           .returnsOnce([]),
+        getTransaction: mockFn(),
       })
 
       const ethereumClient = new RPCClient(provider, Logger.SILENT)
@@ -92,6 +94,7 @@ describe(RPCClient.name, () => {
         getBlockNumber: mockFn(),
         getBalance: mockFn(),
         getLogs: mockFn().throwsOnce(new Error('Log response size exceeded')),
+        getTransaction: mockFn(),
       })
 
       const ethereumClient = new RPCClient(provider, Logger.SILENT)
