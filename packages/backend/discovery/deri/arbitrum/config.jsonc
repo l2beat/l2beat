@@ -4,7 +4,9 @@
   "name": "deri",
   "initialAddresses": [
     "0x846387C3D6001F74170455B1074D01f05eB3067a",
-    "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
+    "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
+    "0xB155C77a440DA7c282993a89FeA609598293017A",
+    "0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99"
   ],
   "names": {
     "0x846387C3D6001F74170455B1074D01f05eB3067a": "RollupProxy",
@@ -12,7 +14,9 @@
     "0x383eFE8D410285c5CbE1B4F296022640759aA834": "ChallengeManager",
     "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": "Outbox",
     "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "SequencerInbox",
-    "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "UpgradeExecutor"
+    "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "UpgradeExecutor",
+    "0xB155C77a440DA7c282993a89FeA609598293017A": "L1ERC20Gateway",
+    "0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99": "L1CustomGateway"
   },
   "overrides": {
     "ChallengeManager": {
@@ -48,6 +52,10 @@
             "challenger",
             "challengedNode"
           ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
         }
       }
     },
@@ -83,6 +91,10 @@
             // id == 6 is emitted inside setValidator()
             "0x0000000000000000000000000000000000000000000000000000000000000001"
           ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
         }
       }
     },

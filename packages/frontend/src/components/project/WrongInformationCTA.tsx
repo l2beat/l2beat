@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { Link } from '../Link'
 
 interface WrongInformationCTAProps {
@@ -14,7 +14,7 @@ export function WrongResearchCTA({
 }: WrongInformationCTAProps) {
   return (
     <div
-      className={classNames(
+      className={cn(
         '-mx-4 mt-20 px-4 py-6 text-center md:mx-0 md:rounded-xl md:px-10',
         'bg-gradient-to-r from-purple-100/40 via-pink-100/40 to-red-200/40',
       )}

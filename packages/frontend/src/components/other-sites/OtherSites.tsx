@@ -1,12 +1,12 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { Link } from '../Link'
 
 export function OtherSites() {
   return (
     <div
-      className={cx(
+      className={cn(
         'flex flex-col items-center justify-between gap-4 md:flex-row',
         '-mx-4 my-10 px-4 py-6 md:my-20 md:px-10',
         'md:rounded-xl',

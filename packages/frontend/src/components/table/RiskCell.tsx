@@ -1,7 +1,7 @@
 import { ScalingProjectRiskViewEntry } from '@l2beat/config'
-import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import {
   sentimentToFillColor,
   sentimentToTextColor,
@@ -34,7 +34,7 @@ export function RiskCell({ item }: Props) {
     <Tooltip>
       <TooltipTrigger>
         <span
-          className={cx(
+          className={cn(
             'flex items-center gap-1 font-medium',
             sentimentToTextColor(item.sentiment),
           )}
@@ -42,7 +42,7 @@ export function RiskCell({ item }: Props) {
           {item.value}
           {item.warning && (
             <RoundedWarningIcon
-              className={classNames(
+              className={cn(
                 'h-5 w-5',
                 sentimentToFillColor(item.warning.sentiment),
               )}
@@ -51,7 +51,7 @@ export function RiskCell({ item }: Props) {
         </span>
         {item.secondLine && (
           <span
-            className={cx(
+            className={cn(
               'block text-xs leading-none',
               item.secondSentiment
                 ? sentimentToTextColor(item.secondSentiment)
