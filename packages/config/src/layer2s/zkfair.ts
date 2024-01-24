@@ -128,7 +128,7 @@ export const zkfair: Layer2 = {
     },
     // ~ Timestamp of block number 0 on zkFair
     // https://scan.zkfair.io/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-12-18T06:02:35Z')),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-12-19T20:00:00Z')),
     multicallContracts: [
       {
         sinceBlock: 6330383,
