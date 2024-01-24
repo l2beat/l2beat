@@ -30,7 +30,7 @@ export function RichSelect(props: Props) {
         </div>
         <div className="group hidden w-max items-center gap-1.5 rounded-md bg-white px-2 group-data-[state=selected]:inline-flex dark:bg-black dark:group-data-[state=selected]:group-hover:bg-gray-950">
           <span className="RichSelect-SelectedText" />
-          <div className="size-3 flex items-center justify-center rounded-sm bg-black dark:bg-white">
+          <div className="flex size-3 items-center justify-center rounded-sm bg-black dark:bg-white">
             <CloseIcon className="h-2.5 w-2.5 fill-white dark:fill-black dark:group-data-[state=selected]:group-hover:fill-gray-950" />
           </div>
         </div>
@@ -54,7 +54,7 @@ export function RichSelect(props: Props) {
             <h2 className="text-3xl font-bold leading-normal">
               {props.slideCardTitle ?? props.label}
             </h2>
-            <CloseIcon className="RichSelect-SlideCard-CloseButton size-5 z-[1000] fill-black dark:fill-white" />
+            <CloseIcon className="RichSelect-SlideCard-CloseButton z-[1000] size-5 fill-black dark:fill-white" />
           </div>
           <div className="relative">
             <div className="absolute inset-x-0 -top-1 z-20 h-6 bg-gradient-to-b from-gray-100 via-gray-100 to-transparent dark:from-gray-750 dark:via-gray-750" />
