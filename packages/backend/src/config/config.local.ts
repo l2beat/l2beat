@@ -7,6 +7,7 @@ import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
+import { getModulesFromTokens } from './getModulesFromTokens'
 
 export function getLocalConfig(env: Env): Config {
   const tvlEnabled = env.boolean('TVL_ENABLED', true)
@@ -27,6 +28,8 @@ export function getLocalConfig(env: Env): Config {
 
   // TODO: This should probably be configurable
   const minTimestamp = UnixTime.now().add(-7, 'days').toStartOf('hour')
+
+  const tvlModules = getModulesFromTokens(tokenList, chains)
 
   return {
     name: 'Backend/Local',
@@ -64,13 +67,7 @@ export function getLocalConfig(env: Env): Config {
       errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
       ethereum: getChainTvlConfig(env, 'ethereum', { minTimestamp }),
-      arbitrum: getChainTvlConfig(env, 'arbitrum', { minTimestamp }),
-      optimism: getChainTvlConfig(env, 'optimism', { minTimestamp }),
-      base: getChainTvlConfig(env, 'base', { minTimestamp }),
-      lyra: getChainTvlConfig(env, 'lyra', { minTimestamp }),
-      linea: getChainTvlConfig(env, 'linea', { minTimestamp }),
-      mantapacific: getChainTvlConfig(env, 'mantapacific', { minTimestamp }),
-      zkfair: getChainTvlConfig(env, 'zkfair', { minTimestamp }),
+      modules: tvlModules.map((x) => getChainTvlConfig(env, x)),
     },
     liveness: livenessEnabled && {
       bigQuery: {

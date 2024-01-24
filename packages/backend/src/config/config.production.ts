@@ -7,6 +7,7 @@ import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
+import { getModulesFromTokens } from './getModulesFromTokens'
 
 export function getProductionConfig(env: Env): Config {
   const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
@@ -24,6 +25,8 @@ export function getProductionConfig(env: Env): Config {
   const discordEnabled =
     !!discordToken && !!publicDiscordChannelId && !!internalDiscordChannelId
   const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
+
+  const tvlModules = getModulesFromTokens(tokenList, chains)
 
   return {
     name: 'Backend/Production',
@@ -74,13 +77,7 @@ export function getProductionConfig(env: Env): Config {
       enabled: true,
       coingeckoApiKey: env.string('COINGECKO_API_KEY'),
       ethereum: getChainTvlConfig(env, 'ethereum'),
-      arbitrum: getChainTvlConfig(env, 'arbitrum'),
-      optimism: getChainTvlConfig(env, 'optimism'),
-      base: getChainTvlConfig(env, 'base'),
-      lyra: getChainTvlConfig(env, 'lyra'),
-      linea: getChainTvlConfig(env, 'linea'),
-      mantapacific: getChainTvlConfig(env, 'mantapacific'),
-      zkfair: getChainTvlConfig(env, 'zkfair'),
+      modules: tvlModules.map((x) => getChainTvlConfig(env, x)),
     },
     liveness: livenessEnabled && {
       bigQuery: {

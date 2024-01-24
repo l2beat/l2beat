@@ -60,13 +60,7 @@ export interface TvlConfig {
   readonly errorOnUnsyncedTvl: boolean
   readonly coingeckoApiKey: string | undefined
   readonly ethereum: ChainTvlConfig
-  readonly arbitrum: ChainTvlConfig
-  readonly optimism: ChainTvlConfig
-  readonly base: ChainTvlConfig
-  readonly mantapacific: ChainTvlConfig
-  readonly lyra: ChainTvlConfig
-  readonly linea: ChainTvlConfig
-  readonly zkfair: ChainTvlConfig
+  readonly modules: ChainTvlConfig[]
 }
 
 export interface LivenessConfig {
