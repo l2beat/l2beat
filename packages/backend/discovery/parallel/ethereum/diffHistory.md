@@ -6,7 +6,7 @@
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Contracts have been verified.
 
 ## Config/verification related changes
 
