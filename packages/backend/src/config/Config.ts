@@ -25,6 +25,7 @@ export interface Config {
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
+  readonly chains: { name: string; chainId: ChainId }[]
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &

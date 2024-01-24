@@ -11,15 +11,15 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { AssetId, ChainId } from '@l2beat/shared-pure'
+import { AssetId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex('reports').update({ chain_id: +ChainId.ARBITRUM }).where({
+  await knex('reports').update({ chain_id: 42161 }).where({
     asset_id: AssetId.ARB.toString(),
   })
 
-  await knex('reports').update({ chain_id: +ChainId.OPTIMISM }).where({
+  await knex('reports').update({ chain_id: 10 }).where({
     asset_id: AssetId.OP.toString(),
   })
 }

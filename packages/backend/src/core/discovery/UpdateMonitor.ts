@@ -6,10 +6,11 @@ import {
   DiscoveryDiff,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
+import { ChainConverter } from '../ChainConverter'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -27,6 +28,7 @@ export class UpdateMonitor {
     private readonly configReader: ConfigReader,
     private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,
+    private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
     private readonly version: number,
@@ -61,8 +63,8 @@ export class UpdateMonitor {
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
   }
 
-  async generateDailyReminder(): Promise<Record<string, ChainId[]>> {
-    const result: Record<string, ChainId[]> = {}
+  async generateDailyReminder(): Promise<Record<string, string[]>> {
+    const result: Record<string, string[]> = {}
 
     for (const runner of this.discoveryRunners) {
       const projectConfigs = await this.configReader.readAllConfigsForChain(
@@ -91,7 +93,7 @@ export class UpdateMonitor {
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
-          result[projectConfig.name].push(ChainId.fromName(runner.chain))
+          result[projectConfig.name].push(runner.chain)
         }
       }
     }
@@ -198,7 +200,7 @@ export class UpdateMonitor {
 
     await this.repository.addOrUpdate({
       projectName: projectConfig.name,
-      chainId: ChainId.fromName(runner.chain),
+      chainId: this.chainConverter.toChainId(runner.chain),
       timestamp,
       blockNumber,
       discovery,
@@ -213,7 +215,7 @@ export class UpdateMonitor {
   ): Promise<DiscoveryOutput> {
     const databaseEntry = await this.repository.findLatest(
       projectConfig.name,
-      ChainId.fromName(runner.chain),
+      this.chainConverter.toChainId(runner.chain),
     )
     let previousDiscovery: DiscoveryOutput
     if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
@@ -271,7 +273,7 @@ export class UpdateMonitor {
       )
       await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,
-        chainId: ChainId.fromName(chain),
+        chainId: this.chainConverter.toChainId(chain),
         blockNumber,
         unknownContracts,
       })
