@@ -19,12 +19,12 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
+      await blockscoutClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
 
     it('throws on non-2XX result', async () => {
@@ -34,12 +34,12 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         'Server responded with non-2XX result: 404 Not Found',
       )
     })
@@ -51,12 +51,12 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         `Invalid Blockscout response [mytestresp] for request [${API_URL}?module=mod&action=act].`,
       )
     })
@@ -68,12 +68,12 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejected()
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejected()
     })
 
     it('returns a success response', async () => {
@@ -84,12 +84,12 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      const result = await etherscanClient.call('mod', 'act', {})
+      const result = await blockscoutClient.call('mod', 'act', {})
       expect(result).toEqual(response.result)
     })
 
@@ -105,12 +105,12 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         response.result,
       )
     })
@@ -131,12 +131,12 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const arbiscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
+      const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
         new UnixTime(3141592653),
       )
 
@@ -173,12 +173,12 @@ describe(BlockscoutLikeClient.name, () => {
           ),
       })
 
-      const arbiscanClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
+      const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
         timestamp,
       )
 
@@ -222,14 +222,14 @@ describe(BlockscoutLikeClient.name, () => {
           .resolvesToOnce(new Response(gatewayErrorJsonString)),
       })
 
-      const etherscanLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith(gatewayError.result)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -265,14 +265,14 @@ describe(BlockscoutLikeClient.name, () => {
           .throwsOnce(errorString),
       })
 
-      const etherscanLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith(errorString)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -307,14 +307,14 @@ describe(BlockscoutLikeClient.name, () => {
           .throwsOnce(1234),
       })
 
-      const etherscanLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith('Unknown error type caught')
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -376,14 +376,14 @@ describe(BlockscoutLikeClient.name, () => {
           ),
       })
 
-      const etherscanLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-20, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith('Could not fetch block number')
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
