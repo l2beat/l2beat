@@ -89,6 +89,7 @@ export const socket: Bridge = {
       {
         address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'), // USDC-Lyra Vault
         newVersion: true,
+        useContractName: true,
         contract: {
           name: 'USDC-Lyra Vault',
         },
