@@ -14,6 +14,7 @@ import { bobanetwork } from './bobanetwork'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
+import { chain } from './chain'
 import { cronos } from './cronos'
 import { debank } from './debank'
 import { degate } from './degate'
@@ -101,6 +102,7 @@ export const layer2s: Layer2[] = [
   bobanetwork,
   canto,
   capx,
+  chain,
   canvasconnect,
   cronos,
   debank,
