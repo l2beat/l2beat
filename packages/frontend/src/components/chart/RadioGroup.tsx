@@ -19,7 +19,7 @@ export function RadioGroup(props: RadioGroupProps) {
     <div
       data-role={props.role}
       className={cn(
-        'bg-gray-200 text-base font-medium dark:bg-gray-750',
+        'bg-gray-200 text-base font-medium dark:bg-zinc-700',
         'inline-flex items-center gap-1 rounded-lg p-1',
         props.className,
       )}

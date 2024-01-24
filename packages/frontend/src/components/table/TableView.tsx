@@ -39,7 +39,7 @@ export function TableView<T>({
           {groupedColumns && (
             <GroupedColumnsHeaders groupedColumns={groupedColumns} />
           )}
-          <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
+          <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
             {columnsConfig.map((columnConfig, i) => {
               const isLastColumn = i === columnsConfig.length - 1
               if (columnConfig.type === 'group') {
@@ -78,7 +78,7 @@ export function TableView<T>({
                 key={i}
                 {...rest}
                 className={cn(
-                  'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
+                  'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700',
                   'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
