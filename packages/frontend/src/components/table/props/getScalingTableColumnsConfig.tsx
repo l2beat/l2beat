@@ -1,45 +1,44 @@
-import cx from 'classnames'
 import React from 'react'
 
-import { ActivityViewEntry } from '../../../pages/scaling/activity/view/types'
-import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling/detailed-tvl/types'
-import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/view/types'
+import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
+import { ScalingFinalityViewEntry } from '../../../pages/scaling/finality/types'
+import { ScalingLivenessViewEntry } from '../../../pages/scaling/liveness/types'
+import { LivenessDurationTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessDurationTimeRangeCell'
+import { LivenessTimeRangeCell } from '../../../pages/scaling/liveness/view/LivenessTimeRangeCell'
+import { ScalingRiskViewEntry } from '../../../pages/scaling/risk/types'
+import {
+  ScalingL2SummaryViewEntry,
+  ScalingL3SummaryViewEntry,
+  ScalingSummaryViewEntry,
+} from '../../../pages/scaling/summary/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
+import { cn } from '../../../utils/cn'
 import { formatTps } from '../../../utils/formatTps'
-import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../icons'
+import { AnomalyIndicator } from '../../AnomalyIndicator'
+import { Badge } from '../../badge/Badge'
+import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
-import { ComingSoonCell } from '../ComingSoonCell'
-import { EthereumCell } from '../EthereumCell'
-import { IndexCell } from '../IndexCell'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
+import { FinalityDurationCell } from '../FinalityDurationCell'
 import { NumberCell } from '../NumberCell'
-import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
-import { ColumnConfig } from '../TableView'
-import { TechnologyCell } from '../TechnologyCell'
+import { TypeCell, TypeColumnTooltip } from '../TypeCell'
+import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
+import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
+import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
 
-export function getActiveScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
+export function getActiveScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
+    ...getProjectWithIndexColumns(),
     {
       name: 'Risks',
       tooltip: 'Risks associated with this project.',
       idHref: 'risk-analysis',
       minimalWidth: true,
-      alignCenter: true,
+      align: 'center',
       getValue: (project) => (
         <RosetteCell
           riskValues={project.riskValues}
@@ -48,239 +47,161 @@ export function getActiveScalingTvlColumnsConfig() {
       ),
     },
     {
-      name: 'Technology',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Stage',
       idHref: 'stage' as const,
       tooltip: 'Rollup stage based on its features and maturity.',
-      alignCenter: true as const,
-      getValue: (project: ScalingTvlViewEntry) => (
-        <StageCell item={project.stage} />
-      ),
+      getValue: (project) => <StageCell stageConfig={project.stage} />,
+      sorting: {
+        getOrderValue: (project) => {
+          const stage = project.stage.stage
+          if (stage === 'NotApplicable' || stage === 'UnderReview') {
+            return undefined
+          }
+          if (stage === 'Stage 0') {
+            if (project.stage.message?.type === 'warning') {
+              return 0
+            }
+
+            if (project.stage.message?.type === 'underReview') {
+              return 1
+            }
+
+            return 2
+          }
+          if (stage === 'Stage 1') {
+            return 3
+          }
+          return 4
+        },
+        rule: 'numeric',
+      },
     },
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
+      getValue: (project) => project.purposes.join(', '),
     },
     {
       name: 'Total',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-      alignRight: true,
+      align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <>
           <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-            {project.tvl}
+            {project.tvl?.displayValue}
           </NumberCell>
           <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
             {project.sevenDayChange}
           </NumberCell>
         </>
       ),
+      sorting: {
+        getOrderValue: (project) => project.tvl?.value,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
     },
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
-      alignRight: true,
+      align: 'right',
       minimalWidth: true,
       headClassName: '!pr-4',
       getValue: (project) =>
         project.tvlBreakdown && (
-          <NumberCell className="pr-4">{project.marketShare}</NumberCell>
+          <NumberCell className="pr-4">
+            {project.marketShare?.displayValue}
+          </NumberCell>
         ),
+      sorting: {
+        getOrderValue: (project) => project.marketShare?.value,
+        rule: 'numeric',
+      },
     },
   ]
 
   return columns
 }
 
-export function getScalingDetailedTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
+export function getUpcomingScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingSummaryViewEntry>[] = [
+    ...getProjectWithIndexColumns(),
     {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
-    {
-      type: 'group',
-      columns: [
-        {
-          name: 'Total',
-          tooltip: 'Total = Canonical + External + Native',
-          alignCenter: true,
-          noPaddingRight: true,
-          getValue: (project) => (
-            <ValueWithPercentageCell
-              value={project.tvl}
-              percentChange={project.tvlChange}
-            />
-          ),
-        },
-      ],
-    },
-    {
-      name: (
-        <div className="flex items-center gap-1">
-          <CanonicalIcon />
-          <span>Canonical</span>
-        </div>
-      ),
-      tooltip:
-        'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
-      alignCenter: true,
-      noPaddingRight: true,
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
       getValue: (project) => (
-        <ValueWithPercentageCell
-          value={project.cbv}
-          percentChange={project.cbvChange}
-          tokens={project.tokens.filter((t) => t.info.type === 'CBV')}
-        />
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
-    },
-    {
-      name: (
-        <div className="flex items-center gap-1">
-          <ExternalIcon />
-          <span>External</span>
-        </div>
-      ),
-      tooltip:
-        'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
-      alignCenter: true,
-      noPaddingRight: true,
-      getValue: (project) => (
-        <ValueWithPercentageCell
-          value={project.ebv}
-          percentChange={project.ebvChange}
-          tokens={project.tokens.filter((t) => t.info.type === 'EBV')}
-        />
-      ),
-    },
-    {
-      name: (
-        <div className="flex items-center gap-1">
-          <NativeIcon />
-          <span>Native</span>
-        </div>
-      ),
-      tooltip:
-        'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
-      alignCenter: true,
-      noPaddingRight: true,
-      getValue: (project) => (
-        <ValueWithPercentageCell
-          value={project.nmv}
-          percentChange={project.nmvChange}
-          tokens={project.tokens.filter((t) => t.info.type === 'NMV')}
-        />
-      ),
-    },
-  ]
-
-  return columns
-}
-
-export function getUpcomingScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
-    {
-      name: 'Technology',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
-      getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
-      ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
+      getValue: (project) => project.purposes.join(', '),
     },
   ]
 
   return columns
 }
 
-export function getArchivedScalingTvlColumnsConfig() {
-  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
+export function getArchivedScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
+    ...getProjectWithIndexColumns(),
     {
       name: 'Risks',
       tooltip: 'Risks associated with this project.',
       minimalWidth: true,
-      alignCenter: true,
+      align: 'center',
       getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
     },
     {
-      name: 'Technology',
-      tooltip:
-        'Type of this project. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
-      shortName: 'Tech',
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
       getValue: (project) => (
-        <TechnologyCell provider={project.provider}>
-          {project.category}
-        </TechnologyCell>
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
       ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
     },
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      getValue: (project) => project.purpose,
+      getValue: (project) => project.purposes.join(', '),
     },
     {
       name: 'Total',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-      alignRight: true,
+      align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <>
-          <NumberCell className="font-bold">{project.tvl}</NumberCell>
+          <NumberCell className="font-bold">
+            {project.tvl?.displayValue}
+          </NumberCell>
           {!project.isArchived ? (
             <NumberCell
               signed
@@ -293,6 +214,136 @@ export function getArchivedScalingTvlColumnsConfig() {
           )}
         </>
       ),
+      sorting: {
+        getOrderValue: (project) => project.tvl?.value,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
+    },
+  ]
+
+  return columns
+}
+
+export function getLayer3sScalingSummaryColumnsConfig() {
+  const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = [
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    {
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
+      getValue: (project) => <TypeCell>{project.category}</TypeCell>,
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
+    },
+    {
+      name: 'Technology',
+      tooltip: 'The technology stack used.',
+      shortName: 'Tech',
+      getValue: (project) => project.provider,
+    },
+    {
+      name: 'Host Chain',
+      tooltip: 'The chain, on top of which the L3 is built.',
+      getValue: (project) => project.hostChainName,
+    },
+    {
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this project.',
+      getValue: (project) => project.purposes.join(', '),
+    },
+  ]
+
+  return columns
+}
+
+export function getScalingTvlColumnsConfig() {
+  const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
+    ...getProjectWithIndexColumns(),
+    {
+      type: 'group',
+      columns: [
+        {
+          name: 'Total',
+          tooltip: 'Total = Canonical + External + Native',
+          align: 'center',
+          noPaddingRight: true,
+          getValue: (project) => (
+            <ValueWithPercentageCell
+              value={project.tvl?.displayValue}
+              percentChange={project.tvlChange}
+            />
+          ),
+          sorting: {
+            getOrderValue: (project) =>
+              project.tvl?.value !== 0 ? project.tvl?.value : undefined,
+            rule: 'numeric',
+            defaultState: 'desc',
+          },
+        },
+      ],
+    },
+    {
+      name: 'Canonical',
+      icon: <CanonicalIcon />,
+      tooltip:
+        'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
+      align: 'center',
+      noPaddingRight: true,
+      getValue: (project) => (
+        <ValueWithPercentageCell
+          value={project.cbv?.displayValue}
+          percentChange={project.cbvChange}
+          tokens={project.tokens.filter((t) => t.info.type === 'CBV')}
+        />
+      ),
+      sorting: {
+        getOrderValue: (project) =>
+          project.cbv?.value !== 0 ? project.cbv?.value : undefined,
+        rule: 'numeric',
+      },
+    },
+    {
+      name: 'External',
+      icon: <ExternalIcon />,
+      tooltip:
+        'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
+      align: 'center',
+      noPaddingRight: true,
+      getValue: (project) => (
+        <ValueWithPercentageCell
+          value={project.ebv?.displayValue}
+          percentChange={project.ebvChange}
+          tokens={project.tokens.filter((t) => t.info.type === 'EBV')}
+        />
+      ),
+      sorting: {
+        getOrderValue: (project) =>
+          project.ebv?.value !== 0 ? project.ebv?.value : undefined,
+        rule: 'numeric',
+      },
+    },
+    {
+      name: 'Native',
+      icon: <NativeIcon />,
+      tooltip:
+        'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
+      align: 'center',
+      noPaddingRight: true,
+      getValue: (project) => (
+        <ValueWithPercentageCell
+          value={project.nmv?.displayValue}
+          percentChange={project.nmvChange}
+          tokens={project.tokens.filter((t) => t.info.type === 'NMV')}
+        />
+      ),
+      sorting: {
+        getOrderValue: (project) =>
+          project.nmv?.value !== 0 ? project.nmv?.value : undefined,
+        rule: 'numeric',
+      },
     },
   ]
 
@@ -301,45 +352,60 @@ export function getArchivedScalingTvlColumnsConfig() {
 
 export function getScalingRiskColumnsConfig() {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (project) => <ProjectCell project={project} />,
-    },
-    {
-      name: 'State validation',
+      name: 'State\nvalidation',
       tooltip: 'How is the validity of the system state checked?',
       getValue: (project) => <RiskCell item={project.stateValidation} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.stateValidation),
+        rule: 'numeric',
+      },
     },
     {
-      name: 'Data availability',
+      name: 'Data\navailability',
       tooltip: 'Is the data needed to reconstruct the state available?',
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.dataAvailability),
+        rule: 'numeric',
+      },
     },
     {
-      name: 'Upgradeability',
+      name: 'Exit\nwindow',
       tooltip:
-        'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
-      getValue: (project) => <RiskCell item={project.upgradeability} />,
+        'How much time do users have to exit the system in case of an unwanted upgrade?',
+      getValue: (project) => <RiskCell item={project.exitWindow} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.exitWindow),
+        rule: 'numeric',
+      },
     },
     {
-      name: 'Sequencer failure',
+      name: 'Sequencer\nfailure',
       tooltip:
         "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.sequencerFailure),
+        rule: 'numeric',
+      },
     },
     {
-      name: 'Proposer failure',
+      name: 'Proposer\nfailure',
       tooltip:
         'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.proposerFailure} />,
+      headClassName: '!pr-4',
+      sorting: {
+        getOrderValue: (project) =>
+          getOrderValueBySentiment(project.proposerFailure),
+        rule: 'numeric',
+      },
     },
   ]
   return columns
@@ -347,79 +413,269 @@ export function getScalingRiskColumnsConfig() {
 
 export function getScalingActivityColumnsConfig() {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      minimalWidth: true,
-      getValue: (project) =>
-        project.slug !== 'ethereum' ? (
-          <ProjectCell project={project} />
-        ) : (
-          <EthereumCell project={project} />
-        ),
-    },
+    ...getProjectWithIndexColumns(),
     {
       name: 'Past day TPS',
       tooltip: 'Transactions per second averaged over the past day.',
-      alignRight: true,
+      align: 'right',
+      colSpan: (project) => (project.data === undefined ? 5 : undefined),
       getValue: (project) =>
-        project.tpsDaily !== undefined ? (
-          <NumberCell>{formatTps(project.tpsDaily)}</NumberCell>
+        project.data ? (
+          <NumberCell>{formatTps(project.data.tpsDaily)}</NumberCell>
         ) : (
-          <ComingSoonCell />
+          <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
+            MISSING ACTIVITY DATA
+          </Badge>
         ),
+      removeCellOnFalsyValue: true,
+      sorting: {
+        getOrderValue: (project) => project.data?.tpsDaily,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
     },
     {
       name: '7d Change',
       tooltip:
         'Observed change in average daily transactions per second as compared to a week ago.',
-      alignRight: true,
-      getValue: (project) => (
-        <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
-      ),
+      align: 'right',
+      getValue: (project) =>
+        project.data && (
+          <NumberCell signed>{project.data.tpsWeeklyChange}</NumberCell>
+        ),
+      removeCellOnFalsyValue: true,
+      sorting: {
+        getOrderValue: (project) => project.data?.tpsWeeklyChange,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Max daily TPS',
       tooltip:
         'Highest observed transactions per second averaged over a single day.',
-      alignRight: true,
+      align: 'right',
       getValue: (project) =>
-        project.maxTps !== undefined && (
+        project.data !== undefined && (
           <span className="flex items-baseline justify-end gap-1.5">
-            <NumberCell>{formatTps(project.maxTps)}</NumberCell>
+            <NumberCell>{formatTps(project.data.maxTps)}</NumberCell>
             <span
-              className={cx(
+              className={cn(
                 'text-gray-700 dark:text-gray-300',
                 'block min-w-[115px] text-left',
               )}
             >
-              on {project.maxTpsDate}
+              on {project.data.maxTpsDate}
             </span>
           </span>
         ),
+      removeCellOnFalsyValue: true,
+      sorting: {
+        getOrderValue: (project) => project.data?.maxTps,
+        rule: 'numeric',
+      },
     },
     {
       name: '30D Count',
       tooltip: 'Total number of transactions over the past month.',
-      alignRight: true,
+      align: 'right',
       getValue: (project) =>
-        project.transactionsMonthlyCount ? (
+        project.data && (
           <NumberCell>
-            {formatLargeNumber(project.transactionsMonthlyCount)}
+            {formatLargeNumber(project.data.transactionsMonthlyCount)}
           </NumberCell>
-        ) : undefined,
+        ),
+      removeCellOnFalsyValue: true,
+      sorting: {
+        getOrderValue: (project) => project.data?.transactionsMonthlyCount,
+        rule: 'numeric',
+      },
     },
     {
       name: 'Data source',
       tooltip: 'Where is the transaction data coming from.',
-      getValue: (project) => project.dataSource,
+      getValue: (project) => project.data !== undefined && project.dataSource,
+      removeCellOnFalsyValue: true,
+    },
+  ]
+  return columns
+}
+
+export function getScalingLivenessColumnsConfig() {
+  const columns: ColumnConfig<ScalingLivenessViewEntry>[] = [
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    {
+      type: 'group',
+      title: (
+        <LivenessTimeRangeCell
+          last30Days={'30-day average intervals'}
+          last90Days={'90-day average intervals'}
+          max={'all-time average intervals'}
+        />
+      ),
+      columns: [
+        {
+          name: 'Tx data\nsubmissions',
+          tooltip: 'How often transaction batches are submitted to the L1',
+          getValue: (project) => {
+            return (
+              <LivenessDurationTimeRangeCell
+                data={project.batchSubmissions}
+                project={project}
+                dataType="batchSubmissions"
+              />
+            )
+          },
+          sorting: {
+            getOrderValue: (project) => ({
+              '30D': project.batchSubmissions?.last30Days?.averageInSeconds,
+              '90D': project.batchSubmissions?.last90Days?.averageInSeconds,
+              MAX: project.batchSubmissions?.allTime?.averageInSeconds,
+            }),
+            defaultOrderKey: '30D',
+            rule: 'numeric',
+          },
+        },
+        {
+          name: 'Proof\nsubmissions',
+          tooltip: 'How often validity proofs are submitted to the L1',
+          getValue: (project) => {
+            return (
+              <LivenessDurationTimeRangeCell
+                data={project.proofSubmissions}
+                project={project}
+                dataType="proofSubmissions"
+              />
+            )
+          },
+          sorting: {
+            getOrderValue: (project) => ({
+              '30D': project.proofSubmissions?.last30Days?.averageInSeconds,
+              '90D': project.proofSubmissions?.last90Days?.averageInSeconds,
+              MAX: project.proofSubmissions?.allTime?.averageInSeconds,
+            }),
+            defaultOrderKey: '30D',
+            rule: 'numeric',
+          },
+        },
+        {
+          name: 'State\nupdates',
+          tooltip: 'How often state roots are submitted to the L1',
+          getValue: (project) => {
+            return (
+              <LivenessDurationTimeRangeCell
+                data={project.stateUpdates}
+                project={project}
+                dataType="stateUpdates"
+              />
+            )
+          },
+          sorting: {
+            getOrderValue: (project) => ({
+              '30D': project.stateUpdates?.last30Days?.averageInSeconds,
+              '90D': project.stateUpdates?.last90Days?.averageInSeconds,
+              MAX: project.stateUpdates?.allTime?.averageInSeconds,
+            }),
+            defaultOrderKey: '30D',
+            rule: 'numeric',
+          },
+        },
+      ],
+    },
+    {
+      name: 'Type',
+      tooltip: <TypeColumnTooltip showOnlyRollupsDefinitions />,
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider} disableColors>
+          {project.category}
+        </TypeCell>
+      ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
+    },
+    {
+      name: '30-day\nanomalies',
+      tooltip:
+        'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
+      align: 'center',
+      getValue: (project) => (
+        <AnomalyIndicator
+          anomalyEntries={project.anomalyEntries}
+          showComingSoon={project.slug === 'linea'}
+        />
+      ),
+    },
+    {
+      name: '',
+      getValue: (project) =>
+        project.explanation ? (
+          <Tooltip className="pr-4">
+            <TooltipTrigger>
+              <InfoIcon className="fill-blue-550" />
+            </TooltipTrigger>
+            <TooltipContent>{project.explanation}</TooltipContent>
+          </Tooltip>
+        ) : null,
+    },
+  ]
+  return columns
+}
+
+export function getScalingFinalityColumnsConfig() {
+  const columns: ColumnConfig<ScalingFinalityViewEntry>[] = [
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    {
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
+      ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
+    },
+    {
+      name: 'DA MODE',
+      getValue: (project) =>
+        project.dataAvailabilityMode ?? <span>&mdash;</span>,
+      tooltip:
+        'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
+      sorting: {
+        getOrderValue: (project) => project.dataAvailabilityMode,
+        rule: 'alphabetical',
+      },
+    },
+    {
+      name: 'Time to finality\n30-day avg.',
+      getValue: (project) => (
+        <FinalityDurationCell data={project.timeToFinalize} />
+      ),
+      tooltip:
+        'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this is an approximate estimation. For simplicity values ignore the overhead time to reach L1 finality after L1 inclusion, which is shared among all projects.',
+      sorting: {
+        rule: 'numeric',
+        getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
+      },
+    },
+    {
+      name: 'State update delay',
+      tooltip:
+        'Time interval between time to finality and state root submission.',
+      getValue: () => (
+        <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+          Coming soon
+        </span>
+      ),
+    },
+    {
+      name: 'Execution delay',
+      tooltip:
+        'Time interval between state root submission and state root finalization. For Optimistic Rollups, this usually corresponds to the challenge period, whereas for ZK Rollups, it might be added as a safety precaution.',
+      getValue: (project) => <span>{project.finalizationPeriod}</span>,
     },
   ]
   return columns

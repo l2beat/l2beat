@@ -1,8 +1,11 @@
 import {
   Bridge,
+  DuplicateData,
   getCanonicalTokenBySymbol,
   Layer2,
-  Layer2LivenessConfig,
+  Layer2FinalityConfig,
+  Layer2Liveness,
+  Layer2LivenessConfiguration,
   Layer2TransactionApi,
   tokenList,
 } from '@l2beat/config'
@@ -14,14 +17,29 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { LivenessConfig } from '../core/liveness/types/LivenessConfig'
+import {
+  LivenessConfigEntry,
+  makeLivenessFunctionCall,
+  makeLivenessSharpSubmissions,
+  makeLivenessTransfer,
+} from '../core/liveness/types/LivenessConfig'
+
+interface LivenessConfig {
+  entries: LivenessConfigEntry[]
+  duplicateData?: DuplicateData[]
+}
 
 export interface Project {
   projectId: ProjectId
+  slug: string
+  isArchived?: boolean
   type: 'layer2' | 'bridge'
+  isUpcoming?: boolean
+  isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
   livenessConfig?: LivenessConfig
+  finalityConfig?: Layer2FinalityConfig
 }
 
 export interface ProjectEscrow {
@@ -33,7 +51,10 @@ export interface ProjectEscrow {
 export function layer2ToProject(layer2: Layer2): Project {
   return {
     projectId: layer2.id,
+    slug: layer2.display.slug,
     type: 'layer2',
+    isUpcoming: layer2.isUpcoming,
+    isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map((escrow) => ({
       address: escrow.address,
       sinceTimestamp: escrow.sinceTimestamp,
@@ -44,12 +65,14 @@ export function layer2ToProject(layer2: Layer2): Project {
     })),
     transactionApi: layer2.config.transactionApi,
     livenessConfig: toBackendLivenessConfig(layer2.id, layer2.config.liveness),
+    finalityConfig: layer2.config.finality,
   }
 }
 
 export function bridgeToProject(bridge: Bridge): Project {
   return {
     projectId: bridge.id,
+    slug: bridge.display.slug,
     type: 'bridge',
     escrows: bridge.config.escrows.map((escrow) => ({
       address: escrow.address,
@@ -64,58 +87,34 @@ export function bridgeToProject(bridge: Bridge): Project {
 
 function toBackendLivenessConfig(
   projectId: ProjectId,
-  config: Layer2LivenessConfig | undefined,
+  config: Layer2Liveness | undefined,
 ): LivenessConfig | undefined {
   if (config === undefined) return
 
   const livenessConfig: LivenessConfig = {
-    transfers: [],
-    functionCalls: [],
+    entries: [],
+    duplicateData: config.duplicateData,
   }
 
-  config.stateUpdates.forEach((param) => {
+  function addEntry(param: Layer2LivenessConfiguration, type: LivenessType) {
     if (param.formula === 'functionCall') {
-      livenessConfig.functionCalls.push({
-        address: param.address,
-        projectId,
-        selector: param.selector,
-        type: LivenessType('STATE'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
+      livenessConfig.entries.push(
+        makeLivenessFunctionCall({ projectId, type, ...param }),
+      )
+    } else if (param.formula === 'transfer') {
+      livenessConfig.entries.push(
+        makeLivenessTransfer({ projectId, type, ...param }),
+      )
     } else {
-      livenessConfig.transfers.push({
-        from: param.from,
-        projectId,
-        to: param.to,
-        type: LivenessType('STATE'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
+      livenessConfig.entries.push(
+        makeLivenessSharpSubmissions({ projectId, type, ...param }),
+      )
     }
-  })
+  }
 
-  config.batchSubmissions.forEach((param) => {
-    if (param.formula === 'functionCall') {
-      livenessConfig.functionCalls.push({
-        address: param.address,
-        projectId,
-        selector: param.selector,
-        type: LivenessType('DA'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
-    } else {
-      livenessConfig.transfers.push({
-        from: param.from,
-        projectId,
-        to: param.to,
-        type: LivenessType('DA'),
-        sinceTimestamp: param.sinceTimestamp,
-        untilTimestamp: param.untilTimestamp,
-      })
-    }
-  })
+  config.stateUpdates.forEach((param) => addEntry(param, 'STATE'))
+  config.batchSubmissions.forEach((param) => addEntry(param, 'DA'))
+  config.proofSubmissions.forEach((param) => addEntry(param, 'PROOF'))
 
   return livenessConfig
 }

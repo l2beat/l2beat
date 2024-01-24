@@ -1,9 +1,12 @@
 import { Stage } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
+
+import { cn } from '../../utils/cn'
+import { RoundedWarningIcon, UnderReviewIcon } from '../icons'
 
 export interface StageBadgeProps {
   stage: Stage | 'UnderReview' | 'NotApplicable'
+  icon?: 'warning' | 'underReview'
   oneSize?: boolean
   big?: boolean
   className?: string
@@ -11,6 +14,7 @@ export interface StageBadgeProps {
 
 export function StageBadge({
   stage,
+  icon,
   oneSize,
   big,
   className,
@@ -22,18 +26,23 @@ export function StageBadge({
       ? undefined
       : stage
   return (
-    <span
-      className={cx(
-        getColorClassName(stage),
-        'inline-block rounded px-1.5 text-center font-medium !leading-none',
-        oneSize && 'w-20',
-        big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
-        value && 'uppercase',
-        className,
+    <div className={cn('inline-flex items-center gap-1.5', className)}>
+      <span
+        className={cn(
+          getColorClassName(stage),
+          'inline-block h-min rounded px-1.5 text-center font-medium !leading-none',
+          oneSize && 'w-20',
+          big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
+          value && 'uppercase',
+        )}
+      >
+        <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
+      </span>
+      {icon === 'warning' && (
+        <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
       )}
-    >
-      <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
-    </span>
+      {icon === 'underReview' && <UnderReviewIcon className="h-5 w-5" />}
+    </div>
   )
 }
 

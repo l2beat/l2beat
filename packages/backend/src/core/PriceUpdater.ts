@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -9,7 +10,6 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
-import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   DataBoundary,
   PriceRecord,
@@ -143,18 +143,15 @@ export class PriceUpdater {
     const coingeckoId = this.getCoingeckoId(assetId)
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
       coingeckoId,
-      // Make sure that we have enough old data to fill holes
-      from.add(-7, 'days'),
+      from,
       to,
       address,
     )
-    const priceRecords: PriceRecord[] = prices
-      .filter((x) => x.timestamp.gte(from))
-      .map((price) => ({
-        assetId,
-        timestamp: price.timestamp,
-        priceUsd: price.value,
-      }))
+    const priceRecords: PriceRecord[] = prices.map((price) => ({
+      assetId,
+      timestamp: price.timestamp,
+      priceUsd: price.value,
+    }))
 
     await this.priceRepository.addMany(priceRecords)
   }

@@ -148,6 +148,7 @@ export class TvlController {
     console.time('[Aggregate endpoint]: setup')
 
     const projectIdsFilter = [...layer2s, ...bridges]
+      .filter((project) => !project.isUpcoming)
       .filter((project) => slugs.includes(project.display.slug))
       .map((project) => project.id)
 

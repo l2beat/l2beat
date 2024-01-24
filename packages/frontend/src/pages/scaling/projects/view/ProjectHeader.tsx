@@ -1,6 +1,6 @@
-import { StageConfig } from '@l2beat/config'
+import { ScalingProjectPurpose, StageConfig } from '@l2beat/config'
+import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { UpcomingBadge } from '../../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../../components/header/DetailsHeader'
@@ -10,25 +10,30 @@ import { TvlStats } from '../../../../components/header/TvlSummary'
 import { InfoIcon, ProjectLink } from '../../../../components/icons'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
-import { TechnologyCell } from '../../../../components/table/TechnologyCell'
+import { TypeCell } from '../../../../components/table/TypeCell'
 import {
-  TVLBreakdown,
-  TVLBreakdownProps,
-} from '../../../../components/TVLBreakdown'
+  TokenBreakdown,
+  TokenBreakdownProps,
+} from '../../../../components/TokenBreakdown'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/tooltip/Tooltip'
 import { RiskValues } from '../../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
+  description: string
   icon?: string
   tvlStats: TvlStats
   tpsDaily?: string
   tpsWeeklyChange?: string
   transactionMonthlyCount?: string
-  purpose: string
+  purposes: ScalingProjectPurpose[]
   technology: string
-  tvlBreakdown: TVLBreakdownProps | undefined
+  tvlBreakdown: TokenBreakdownProps | undefined
   showTvlBreakdown: boolean
   tvlBreakdownHref: string
   risks: RiskValues
@@ -36,6 +41,7 @@ export interface ProjectHeaderProps {
   stage: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
+  isLayer3?: boolean
   isUnderReview?: boolean
   showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
@@ -44,10 +50,10 @@ export interface ProjectHeaderProps {
 export function ProjectHeader(props: ProjectHeaderProps) {
   const summary: ProjectSummaryStat[] = [
     {
-      title: 'Breakdown',
+      title: 'Tokens',
       value:
         !props.isUpcoming && props.tvlBreakdown ? (
-          <TVLBreakdown {...props.tvlBreakdown} />
+          <TokenBreakdown {...props.tvlBreakdown} />
         ) : (
           <UpcomingBadge />
         ),
@@ -79,26 +85,26 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                 <a href="#stage">
                   <StageBadge stage={props.stage.stage} big />
                 </a>
-                <span
-                  className="Tooltip inline-block px-2"
-                  title={renderToStaticMarkup(
-                    <StageTooltip item={props.stage} />,
-                  )}
-                >
-                  <InfoIcon />
-                </span>
+                <Tooltip className="inline-block px-2">
+                  <TooltipTrigger>
+                    <InfoIcon />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <StageTooltip stageConfig={props.stage} />
+                  </TooltipContent>
+                </Tooltip>
               </span>
             ),
           },
         ]
       : []),
     {
-      title: 'Technology',
-      value: <TechnologyCell>{props.technology}</TechnologyCell>,
+      title: 'Type',
+      value: <TypeCell>{props.technology}</TypeCell>,
     },
     {
-      title: 'Purpose',
-      value: props.purpose,
+      title: pluralize(props.purposes.length, 'Purpose'),
+      value: props.purposes.join(', '),
     },
   ]
 
@@ -106,6 +112,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     <DetailsHeader
       type="layer2"
       title={props.title}
+      description={props.description}
       icon={props.icon}
       stats={{ summary, l2Tvl: props.tvlStats }}
       risks={props.risks}
@@ -116,7 +123,9 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}
-      showTvlBreakdown={props.isUpcoming ? false : props.showTvlBreakdown}
+      showTvlBreakdown={
+        props.isUpcoming || props.isLayer3 ? false : props.showTvlBreakdown
+      }
     />
   )
 }

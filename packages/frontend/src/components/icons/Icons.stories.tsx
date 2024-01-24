@@ -5,6 +5,8 @@ import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
 import { ActivityIcon } from './pages/ActivityIcon'
+import { FinalityIcon } from './pages/FinalityIcon'
+import { LivenessIcon } from './pages/LivenessIcon'
 import { RiskIcon } from './pages/RiskIcon'
 import { TvlIcon } from './pages/TvlIcon'
 import { DiscordIcon } from './products/DiscordIcon'
@@ -18,7 +20,8 @@ import { TwitterIcon } from './products/TwitterIcon'
 import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
-import { ZkSyncIcon } from './providers/ZkSyncIcon'
+import { ZKStackIcon } from './providers/ZKStackIcon'
+import { ZkSyncLiteIcon } from './providers/ZkSyncLiteIcon'
 import { ActiveIcon } from './symbols/ActiveIcon'
 import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
@@ -74,6 +77,8 @@ export function PageIcons() {
       <TvlIcon />
       <RiskIcon />
       <ActivityIcon />
+      <LivenessIcon />
+      <FinalityIcon />
     </Template>
   )
 }
@@ -99,7 +104,8 @@ export function ProviderIcons() {
     <Template>
       <OptimismIcon />
       <StarkWareIcon />
-      <ZkSyncIcon />
+      <ZKStackIcon />
+      <ZkSyncLiteIcon />
     </Template>
   )
 }

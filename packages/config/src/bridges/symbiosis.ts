@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -24,7 +24,7 @@ export const symbiosis: Bridge = {
       repositories: ['https://github.com/symbiosis-finance'],
       socialMedia: [
         'https://t.me/symbiosis_finance',
-        'https://blog.symbiosis.finance/',
+        'https://medium.com/@symbiosis_fi',
         'https://twitter.com/symbiosis_fi',
       ],
     },
@@ -117,18 +117,10 @@ export const symbiosis: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('MetaRouter').address,
-        name: 'MetaRouter',
-        description:
-          'An upgradeable contract to process funds by provided route.',
-      },
-      {
-        address: discovery.getContract('MetaRouterGateway').address,
-        name: 'MetaRouter Gateway',
-        description:
-          "A detached contract for secure isolation of users' assets.",
-      },
+      discovery.getContractDetails(
+        'MetaRouter',
+        'An upgradeable contract to process funds by provided route.',
+      ),
       {
         address: discovery.getContract('Bridge').address,
         name: 'Bridge',

@@ -40,10 +40,9 @@ export class UpdateMonitorRepository extends BaseRepository {
 
   async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
     const knex = await this.knex()
-    const row = toRow(record)
 
     await knex('update_monitor')
-      .insert(row)
+      .insert(toRow(record))
       .onConflict(['project_name', 'chain_id'])
       .merge()
 

@@ -1,31 +1,45 @@
 import { Bridge } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
-import { ChartSectionProps } from '../../../../components/project/ChartSection'
-import { ContractsSectionProps } from '../../../../components/project/ContractsSection'
-import { DescriptionSectionProps } from '../../../../components/project/DescriptionSection'
-import { KnowledgeNuggetsProps } from '../../../../components/project/KnowledgeNuggetsSection'
-import { MilestonesSectionProps } from '../../../../components/project/MilestonesSection'
-import { PermissionsSectionProps } from '../../../../components/project/PermissionsSection'
-import { RiskSectionProps } from '../../../../components/project/RiskSection'
-import { TechnologyIncompleteProps } from '../../../../components/project/TechnologyIncomplete'
-import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
-import { getDescriptionSection } from './getDescriptionSection'
+import {
+  getProjectEditLink,
+  getProjectIssueLink,
+} from '../../../../utils/project/links'
+import {
+  ProjectDetailsChartSection,
+  ProjectDetailsContractsSection,
+  ProjectDetailsDetailedDescriptionSection,
+  ProjectDetailsKnowledgeNuggetsSection,
+  ProjectDetailsMilestonesSection,
+  ProjectDetailsPermissionsSection,
+  ProjectDetailsRiskSection,
+  ProjectDetailsTechnologyIncompleteNote,
+  ProjectDetailsTechnologySection,
+} from '../../../types'
+import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
   bridge: Bridge,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   chart: ChartProps,
 ) {
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(bridge)
-  const permissionsSection = getPermissionsSection(bridge, verificationStatus)
+  const permissionsSection = getPermissionsSection(
+    bridge,
+    verificationStatus,
+    manuallyVerifiedContracts,
+  )
 
   const items: BridgeDetailsItem[] = []
   items.push({
@@ -43,10 +57,12 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'DescriptionSection',
-    props: getDescriptionSection(bridge, verificationStatus),
-  })
+  if (bridge.display.detailedDescription) {
+    items.push({
+      type: 'DetailedDescriptionSection',
+      props: getDetailedDescriptionSection(bridge),
+    })
+  }
 
   const riskSection = getRiskSection(bridge, verificationStatus)
   if (riskSection.riskGroups.length > 0) {
@@ -89,7 +105,11 @@ export function getProjectDetails(
   if (bridge.contracts)
     items.push({
       type: 'ContractsSection',
-      props: getContractSection(bridge, verificationStatus),
+      props: getContractSection(
+        bridge,
+        verificationStatus,
+        manuallyVerifiedContracts,
+      ),
     })
 
   if (bridge.knowledgeNuggets && !isEmpty(bridge.knowledgeNuggets)) {
@@ -104,8 +124,10 @@ export function getProjectDetails(
   }
 
   return {
-    incomplete,
     items,
+    editLink: getProjectEditLink(bridge),
+    issueLink: getProjectIssueLink(bridge),
+    incomplete,
   }
 }
 
@@ -115,56 +137,13 @@ export type BridgeDetailsItem = { excludeFromNavigation?: boolean } & (
 )
 
 export type BridgeDetailsSection =
-  | ChartSection
-  | DescriptionSection
-  | MilestonesSection
-  | KnowledgeNuggetsSection
-  | RiskSection
-  | TechnologySection
-  | PermissionsSection
-  | ContractsSection
+  | ProjectDetailsChartSection
+  | ProjectDetailsDetailedDescriptionSection
+  | ProjectDetailsMilestonesSection
+  | ProjectDetailsKnowledgeNuggetsSection
+  | ProjectDetailsRiskSection
+  | ProjectDetailsTechnologySection
+  | ProjectDetailsPermissionsSection
+  | ProjectDetailsContractsSection
 
-type NonSectionElement = TechnologyIncompleteNote
-
-interface ChartSection {
-  type: 'ChartSection'
-  props: ChartSectionProps
-}
-interface DescriptionSection {
-  type: 'DescriptionSection'
-  props: DescriptionSectionProps
-}
-
-interface MilestonesSection {
-  type: 'MilestonesSection'
-  props: MilestonesSectionProps
-}
-
-interface KnowledgeNuggetsSection {
-  type: 'KnowledgeNuggetsSection'
-  props: KnowledgeNuggetsProps
-}
-
-interface RiskSection {
-  type: 'RiskSection'
-  props: RiskSectionProps
-}
-
-interface TechnologyIncompleteNote {
-  type: 'TechnologyIncompleteNote'
-  props: TechnologyIncompleteProps
-}
-interface TechnologySection {
-  type: 'TechnologySection'
-  props: TechnologySectionProps
-}
-
-interface PermissionsSection {
-  type: 'PermissionsSection'
-  props: PermissionsSectionProps
-}
-
-interface ContractsSection {
-  type: 'ContractsSection'
-  props: ContractsSectionProps
-}
+type NonSectionElement = ProjectDetailsTechnologyIncompleteNote

@@ -1,8 +1,9 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export function ActivityHeader() {
   return (
@@ -20,27 +21,30 @@ export function ActivityHeader() {
         <p className="hidden text-gray-500 dark:text-gray-600 md:block">
           Transactions per second
         </p>
-        <p
-          className={cx(
+        <div
+          className={cn(
             'w-full text-right text-gray-500 dark:text-gray-600 md:w-auto',
             'flex items-center gap-1.5',
             'group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0',
           )}
         >
           Observed over the last 7 days
-          <span
-            className="Tooltip inline-block"
-            title={
-              'How many more transactions are settled by Ethereum if we take into account projects listed below.' +
-              '\n' +
-              'Exact formula:' +
-              '\n' +
-              '(project txs/7d + ETH txs/7d) / ETH txs/7d'
-            }
-          >
-            <InfoIcon />
-          </span>
-        </p>
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon />
+            </TooltipTrigger>
+            <TooltipContent>
+              <span>
+                How many more transactions are settled by Ethereum if we take
+                into account projects listed below.
+              </span>
+              <br />
+              <span>Exact formula:</span>
+              <br />
+              <span>(project txs/7d + ETH txs/7d) / ETH txs/7d</span>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </div>
       <HorizontalSeparator className="mt-2 md:hidden" />
     </header>

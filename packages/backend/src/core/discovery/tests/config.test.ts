@@ -1,6 +1,6 @@
-import { bridges, layer2s } from '@l2beat/config'
+import { bridges, layer2s, layer3s, onChainProjects } from '@l2beat/config'
 import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
-import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 
@@ -11,16 +11,18 @@ describe('discovery config.jsonc', () => {
   const projectIds = layer2s
     .map((p) => p.id.toString())
     .concat(bridges.map((p) => p.id.toString()))
+    .concat(layer3s.map((p) => p.id.toString()))
+    .concat(onChainProjects)
 
   before(async () => {
     chainConfigs = await Promise.all(
-      ChainId.getAll().map(
-        async (chainId) => await configReader.readAllConfigsForChain(chainId),
-      ),
+      configReader
+        .readAllChains()
+        .map((chain) => configReader.readAllConfigsForChain(chain)),
     )
   })
 
-  it(`every config name corresponds to ProjectId`, () => {
+  it('every config name corresponds to ProjectId', () => {
     const notCorresponding =
       chainConfigs
         ?.flat()
@@ -31,17 +33,18 @@ describe('discovery config.jsonc', () => {
     assert(
       notCorresponding.length === 0,
       'Following projects do not have the same name as ProjectIds: ' +
-        notCorresponding.join(', '),
+        notCorresponding.join(', ') +
+        '. Add them to config/src/[layer2s|bridges|layer3s|onChainProjects]',
     )
   })
 
-  it(`every config name is equal to the name in discovery.json`, async () => {
+  it('every config name is equal to the name in discovery.json', async () => {
     const notEqual = []
 
     for (const configs of chainConfigs ?? []) {
       if (configs.length > 0) {
         for (const c of configs) {
-          const discovery = await configReader.readDiscovery(c.name, c.chainId)
+          const discovery = await configReader.readDiscovery(c.name, c.chain)
           if (discovery.name !== c.name) {
             notEqual.push(c.name)
           }
@@ -58,7 +61,7 @@ describe('discovery config.jsonc', () => {
   it('fields inside ignoreInWatchMode exist in discovery', async () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         for (const override of c.overrides) {
           if (override.ignoreDiscovery === true) {
@@ -73,9 +76,9 @@ describe('discovery config.jsonc', () => {
             (c) => c.address === override.address,
           )
 
-          const errorPrefix = `${c.name} (chain: ${ChainId.getName(
-            c.chainId,
-          )}) - ${override.address.toString()}`
+          const errorPrefix = `${c.name} (chain: ${
+            c.chain
+          }) - ${override.address.toString()}`
 
           assert(
             contract,
@@ -101,12 +104,12 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  it(`every discovery.json has sorted contracts`, async () => {
+  it('every discovery.json has sorted contracts', async () => {
     const notSorted: string[] = []
 
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         if (
           !isEqual(
@@ -132,10 +135,10 @@ describe('discovery config.jsonc', () => {
     const outdatedHashes: string[] = []
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         if (discovery.configHash !== c.hash) {
-          outdatedHashes.push(`${ChainId.getName(c.chainId)}-${c.name}`)
+          outdatedHashes.push(`${c.chain}-${c.name}`)
         }
       }
       assert(
@@ -150,7 +153,7 @@ describe('discovery config.jsonc', () => {
   it('discovery.json does not include errors', async () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         assert(
           discovery.contracts.every((c) => c.errors === undefined),
@@ -214,20 +217,6 @@ describe('discovery config.jsonc', () => {
   })
 
   describe('names', () => {
-    // TODO: L2B-1235
-    // it('every name correspond to existing contract', async () => {
-    //   for (const config of configs ?? []) {
-    //     const discovery = await configReader.readDiscovery(config.name)
-
-    //     assert(
-    //       Object.keys(config.names ?? {}).every((address) =>
-    //         discovery.contracts.some((c) => c.address.toString() === address),
-    //       ),
-    //       `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
-    //     )
-    //   }
-    // })
-
     it('every name is unique', async () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {

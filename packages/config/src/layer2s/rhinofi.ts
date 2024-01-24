@@ -1,14 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
-  getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -20,15 +16,23 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromString } from '../utils/delayDescription'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('deversifi')
-const delaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
 )
-const delay = formatSeconds(delaySeconds)
+const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
   'gpsContract',
@@ -45,11 +49,11 @@ export const rhinofi: Layer2 = {
   display: {
     name: 'rhino.fi',
     slug: 'rhinofi',
-    description:
-      'rhino.fi (formerly DeversiFi) claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
-    purpose: 'Exchange',
+    description: 'rhino.fi is a Validium based on the StarkEx technology.',
+    purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -87,9 +91,25 @@ export const rhinofi: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'deversifi',
+      product: ['rhinofi'],
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
+    },
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+          ),
+          selector: '0x538f9406',
+          functionSignature:
+            'function updateState(uint256[] publicInput, uint256[] applicationData)',
+          sinceTimestamp: new UnixTime(1590491810),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -111,10 +131,7 @@ export const rhinofi: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(
-      delaySeconds,
-      freezeGracePeriod,
-    ),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -137,7 +154,7 @@ export const rhinofi: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
   },
   permissions: [
     {
@@ -145,7 +162,7 @@ export const rhinofi: Layer2 = {
       accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
         'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(delay),
+        delayDescriptionFromString(upgradeDelay),
     },
     getCommittee(discovery),
     ...getSHARPVerifierGovernors(discovery, verifierAddress),

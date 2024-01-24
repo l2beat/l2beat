@@ -1,4 +1,4 @@
-export * from './bigquery'
+export * from './blockscout'
 export * from './coingecko'
 export * from './etherscan'
 export * from './etherscanlike'

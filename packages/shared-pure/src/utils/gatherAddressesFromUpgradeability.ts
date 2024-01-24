@@ -39,6 +39,12 @@ export function gatherAddressesFromUpgradeability(
       result.push(item.masterCopy)
       result.push(...item.modules)
       break
+    case 'gnosis safe zodiac module':
+      result.push(item.guard)
+      result.push(item.avatar)
+      result.push(item.target)
+      result.push(...(item.modules ?? []))
+      break
     case 'EIP2535 diamond proxy':
       result.push(...item.facets)
       break
@@ -64,10 +70,6 @@ export function gatherAddressesFromUpgradeability(
       result.push(item.implementation)
       break
     case 'Axelar proxy':
-      result.push(...item.admins)
-      result.push(...item.owners)
-      result.push(...item.operators)
-      break
     case 'immutable':
       // Ignoring types because no (admin/user)implementation included in them
       break

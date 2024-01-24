@@ -1,8 +1,8 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 18219101,
-  "configHash": "0x40d5fc7f929a6fcdeb710ba9152317ac845206a44c6df1757564e67c02c9cc98",
+  "blockNumber": 18927684,
+  "configHash": "0x916e579d21fe9cd3fff7db736ab00ad61aa6c39b62728755d673d4b36d707da7",
   "version": 3,
   "contracts": [
     {
@@ -58,14 +58,14 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-          "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-          "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+          "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -115,7 +115,7 @@
       "sinceTimestamp": 1689106835,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633947",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639389",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -144,10 +144,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 3304800,
-        "latestOutputIndex": 1835,
-        "nextBlockNumber": 3306600,
-        "nextOutputIndex": 1836,
+        "latestBlockNumber": 7592400,
+        "latestOutputIndex": 4217,
+        "nextBlockNumber": 7594200,
+        "nextOutputIndex": 4218,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -170,7 +170,7 @@
         "GUARDIAN": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "L2_ORACLE": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 18218584],
+        "params": [1000000000, 490798, 18923147],
         "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.6.0"
@@ -221,6 +221,7 @@
     "0x7916D35b57c2E4AffCaB46C3E5C8d76D3b44d1F7",
     "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+    "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xc2E2B715d9e302947Ec7e312fd2384b5a1296099",
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
   ],

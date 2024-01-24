@@ -51,16 +51,13 @@
       "ignoreMethods": [
         "getConfirmationCount",
         "getConfirmations",
+        "confirmations",
         "isConfirmed",
         "outputsDeleteRequested",
         "transactions",
-        "getOwners" // already read from owners array
-      ],
-      "fields": {
-        "owners": {
-          "type": "array"
-        }
-      }
+        "getOwners", // already read from owners array,
+        "clock"
+      ]
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
@@ -101,7 +98,18 @@
     },
     "SecurityCouncilToken": {
       "ignoreMethods": ["getPastTotalSupply", "tokenByIndex"],
-      "ignoreInWatchMode": ["clock"]
+      "ignoreInWatchMode": ["clock", "ownerOf"],
+      "fields": {
+        "tokens": {
+          "type": "array",
+          "method": "tokenByIndex"
+        },
+        "tokenOwners": {
+          "type": "array",
+          "method": "ownerOf",
+          "indices": "{{ tokens }}"
+        }
+      }
     },
     "Timelock": {
       "fields": {

@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   EXITS,
@@ -8,35 +7,37 @@ import {
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metis')
+
+const upgradeDelay = 0
 
 export const metis: Layer2 = {
   type: 'layer2',
   id: ProjectId('metis'),
   display: {
     name: 'Metis Andromeda',
+    shortName: 'Metis',
     slug: 'metis',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \
-      Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system. \
-      The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
     description:
-      'Metis is an EVM-equivalent Scaling Solution originally forked from Optimism. It provides support for multiple, \
-      interconnected chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
-      The risk analysis below relates to the default chain with chainId=1088 called Andromeda. Since April 2022 Andromeda \
-      uses "optimistic data availability" scheme in which transaction data is kept off-chain in MEMO while Validators can \
-      request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
-    purpose: 'Universal',
+      'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+    purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.metis.io'],
+      websites: ['https://metis.io'],
       apps: [],
       documentation: ['https://docs.metis.io'],
-      explorers: ['https://andromeda-explorer.metis.io'],
+      explorers: [
+        'https://andromeda-explorer.metis.io',
+        'https://explorer.metis.io',
+      ],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
         'https://medium.com/@MetisDAO',
@@ -62,14 +63,13 @@ export const metis: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      url: 'https://andromeda.metis.io/',
       startBlock: 1,
     },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
@@ -153,6 +153,7 @@ export const metis: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

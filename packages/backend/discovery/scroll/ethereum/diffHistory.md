@@ -1,3 +1,41 @@
+# Diff at Thu, 21 Dec 2023 07:52:36 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@10c7379d5f3774c9ebd335617097ca68ed267379
+
+## Description
+
+One owner is removed from ExecutorMultisig and another is added.
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+      values.getOwners.4:
+-        "0xd3FfEE6e6312e4303A88BD2fFaFdcA8B09310236"
++        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
+    }
+```
+
+# Diff at Mon, 18 Dec 2023 11:58:46 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@636723aa928b9ac461db31dd0b5005a916961be5
+
+## Description
+
+One owner is removed from EmergencyMultisig and another is added.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+      values.getOwners.4:
+-        "0xd3FfEE6e6312e4303A88BD2fFaFdcA8B09310236"
++        "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
+    }
+```
+
 # Diff at Wed, 08 Nov 2023 15:41:27 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)

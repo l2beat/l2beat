@@ -14,7 +14,7 @@ export function getReportConfigHash(projects: ReportProject[]) {
 
 export function getEntries(projects: ReportProject[]) {
   const entries = []
-  for (const { projectId, escrows, type } of projects) {
+  for (const { projectId, escrows, type, isUpcoming, isLayer3 } of projects) {
     for (const { tokens, address, sinceTimestamp } of escrows) {
       for (const token of tokens) {
         entries.push({
@@ -24,6 +24,8 @@ export function getEntries(projects: ReportProject[]) {
           holderSinceTimestamp: sinceTimestamp.toNumber(),
           assetId: token.id.toString(),
           assetSinceTimestamp: token.sinceTimestamp.toNumber(),
+          isUpcoming: Boolean(isUpcoming),
+          isLayer3: Boolean(isLayer3),
         })
       }
     }

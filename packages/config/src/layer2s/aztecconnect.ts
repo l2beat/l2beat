@@ -1,7 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { assert } from 'console'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,7 +15,8 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -23,7 +27,10 @@ const escapeHatchDelaySeconds = discovery.getContractValue<number>(
   'delayBeforeEscapeHatch',
 )
 
+const upgradeDelay = 0
+
 assert(escapeHatchDelaySeconds === 4294967295) // otherwise change descriptions!!
+const escapeHatchDelayApprox = 4_291_745_472
 const escapeHatchDelayString = '~136 years'
 
 function getAccessControl() {
@@ -78,9 +85,10 @@ export const aztecconnect: Layer2 = {
     slug: 'aztecconnect',
     warning: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024. The escape hatch delay has been recently increased to ${escapeHatchDelayString}, meaning that users will not be able to exit when the operator will be shut down.`,
     description:
-      'Aztec Connect is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs. Additionally it allows to deposit funds into a variety of DeFi Protocols such as LiDo, Element.Fi, etc.',
-    purpose: 'Private DeFi',
+      'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
+    purposes: ['DeFi'],
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
@@ -104,6 +112,21 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
+          ),
+          selector: '0xf81cccbe',
+          functionSignature: 'function processRollup(bytes ,bytes _signatures)',
+          sinceTimestamp: new UnixTime(1654638194),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -138,7 +161,7 @@ export const aztecconnect: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, escapeHatchDelayApprox),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [

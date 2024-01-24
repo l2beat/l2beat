@@ -6,7 +6,8 @@
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
     "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
     "0xcEe284F754E854890e311e3280b767F80797180d",
-    "0xD3B5b60020504bc3489D6949d545893982BA3011"
+    "0xD3B5b60020504bc3489D6949d545893982BA3011",
+    "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a"
   ],
   "names": {
     "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "ArbitrumOneBridge",
@@ -25,7 +26,10 @@
     "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "GatewaysAdmin",
     "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway",
     "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils",
-    "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager"
+    "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager",
+    "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": "wstETHEscrow",
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
+    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig"
   },
   "overrides": {
     "ArbitrumOneBridge": {
@@ -87,6 +91,10 @@
             "challenger",
             "challengedNode"
           ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
         }
       }
     },
@@ -111,6 +119,10 @@
             // id == 6 is emitted inside setValidator()
             "0x0000000000000000000000000000000000000000000000000000000000000001"
           ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
         }
       }
     },
@@ -165,6 +177,20 @@
     // L1GatewayRouter
     "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
       "ignoreRelatives": ["counterpartGateway"]
+    },
+    "wstETHEscrow": {
+      "ignoreRelatives": ["l2Token", "l1Token"],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "wstETHEscrowAdmin": {
+      "ignoreDiscovery": true
+    },
+    "LidoEmergencyBrakeMultisig": {
+      "ignoreDiscovery": true
     }
   }
 }

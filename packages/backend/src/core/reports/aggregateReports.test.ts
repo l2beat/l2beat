@@ -142,6 +142,84 @@ describe(aggregateReports.name, () => {
     ])
   })
 
+  it('filters out upcoming projects', () => {
+    const result = aggregateReports(
+      [
+        report(ARBITRUM, 'eth', 30n, 'CBV'),
+        report(ARBITRUM, 'dai', 5_000n, 'CBV'),
+        report(OPTIMISM, 'dai', 1_000n, 'CBV'),
+        report(ProjectId('other'), 'eth', 40n, 'CBV'),
+      ],
+      [
+        project(ARBITRUM, 'layer2'),
+        project(OPTIMISM, 'layer2'),
+        project(ProjectId('other'), 'layer2', true),
+      ],
+      NOW,
+    )
+    const sum = result
+      .filter(
+        (x) =>
+          (x.projectId === ARBITRUM || x.projectId === OPTIMISM) &&
+          x.reportType === 'TVL',
+      )
+      .reduce(
+        (acc, next) => ({
+          ethValue: acc.ethValue + next.ethValue,
+          usdValue: acc.usdValue + next.usdValue,
+        }),
+        {
+          ethValue: 0n,
+          usdValue: 0n,
+        },
+      )
+    const totalTvl = result.find(
+      (x) => x.projectId === ProjectId.ALL && x.reportType === 'TVL',
+    )
+
+    expect(totalTvl?.ethValue).toEqual(sum.ethValue)
+    expect(totalTvl?.usdValue).toEqual(sum.usdValue)
+  })
+
+  it('filters out layer 3 projects', () => {
+    const result = aggregateReports(
+      [
+        report(ARBITRUM, 'eth', 30n, 'CBV'),
+        report(ARBITRUM, 'dai', 5_000n, 'CBV'),
+        report(OPTIMISM, 'dai', 1_000n, 'CBV'),
+        report(ProjectId('other'), 'eth', 40n, 'CBV'),
+      ],
+      [
+        project(ARBITRUM, 'layer2'),
+        project(OPTIMISM, 'layer2'),
+        project(ProjectId('other'), 'layer2', false, true),
+      ],
+      NOW,
+    )
+    const sum = result
+      .filter(
+        (x) =>
+          (x.projectId === ARBITRUM || x.projectId === OPTIMISM) &&
+          x.reportType === 'TVL',
+      )
+      .reduce(
+        (acc, next) => ({
+          ethValue: acc.ethValue + next.ethValue,
+          usdValue: acc.usdValue + next.usdValue,
+        }),
+        {
+          ethValue: 0n,
+          usdValue: 0n,
+        },
+      )
+    const totalTvl = result.find(
+      (x) => x.projectId === ProjectId.ALL && x.reportType === 'TVL',
+    )
+
+    expect(totalTvl?.ethValue).toEqual(sum.ethValue)
+    expect(totalTvl?.usdValue).toEqual(sum.usdValue)
+  })
+
   function report(
     projectId: ProjectId,
     asset: 'eth' | 'dai',
@@ -164,8 +242,10 @@ describe(aggregateReports.name, () => {
   function project(
     projectId: ProjectId,
     type: ReportProject['type'],
+    isUpcoming = false,
+    isLayer3 = false,
   ): ReportProject {
-    return { projectId, type, escrows: [] }
+    return { projectId, type, escrows: [], isUpcoming, isLayer3 }
   }
 
   function record(

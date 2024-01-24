@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EtherscanClient } from '@l2beat/shared'
+import { EtherscanLikeClient } from '@l2beat/shared'
 import { EthereumAddress, toBatches } from '@l2beat/shared-pure'
 
 import { isContractVerified } from './etherscan'
@@ -8,8 +8,8 @@ import { VerificationMap } from './output'
 export async function verifyContracts(
   addresses: EthereumAddress[],
   previouslyVerified: Set<EthereumAddress>,
-  manuallyVerified: Set<EthereumAddress>,
-  etherscanClient: EtherscanClient,
+  manuallyVerified: Record<string, string>,
+  etherscanClient: EtherscanLikeClient,
   workersCount: number,
   logger: Logger,
 ): Promise<VerificationMap> {
@@ -17,7 +17,10 @@ export async function verifyContracts(
 
   const getVerificationPromises = (addresses: EthereumAddress[]) =>
     addresses.map(async (address): Promise<[string, boolean]> => {
-      if (previouslyVerified.has(address) || manuallyVerified.has(address)) {
+      if (
+        previouslyVerified.has(address) ||
+        manuallyVerified[address.toString()]
+      ) {
         return [address.toString(), true]
       }
 

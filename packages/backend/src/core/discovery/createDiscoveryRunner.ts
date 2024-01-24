@@ -30,6 +30,7 @@ export function createDiscoveryRunner(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
+    chainConfig.etherscanUnsupported,
   )
 
   const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
@@ -38,7 +39,7 @@ export function createDiscoveryRunner(
     provider,
     etherscanLikeClient,
     discoveryLogger,
-    chainConfig.chainId,
+    chainConfig.chain,
     discoveryCache,
     chainConfig.rpcGetLogsMaxRange,
     chainConfig.reorgSafeDepth,
@@ -67,7 +68,7 @@ export function createDiscoveryRunner(
     discoveryProvider,
     discoveryEngine,
     configReader,
-    chainConfig.chainId,
+    chainConfig.chain,
   )
 
   return discoveryRunner

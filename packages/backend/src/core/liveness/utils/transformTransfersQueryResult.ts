@@ -8,20 +8,21 @@ export function transformTransfersQueryResult(
   configs: LivenessTransfer[],
   queryResults: BigQueryTransfersResult,
 ): LivenessRecord[] {
-  const results: LivenessRecord[] = queryResults.map((r) => {
-    const config = configs.find(
+  return queryResults.map((r) => {
+    const matchingConfigs = configs.filter(
       (t) => t.from === r.from_address && t.to === r.to_address,
     )
 
-    assert(config, 'Programmer error: config should not be undefined there')
+    assert(
+      matchingConfigs.length > 0,
+      'There should be at least one matching config',
+    )
 
     return {
-      projectId: config.projectId,
       timestamp: r.block_timestamp,
       blockNumber: r.block_number,
       txHash: r.transaction_hash,
-      type: config.type,
+      livenessId: matchingConfigs[0].id,
     }
   })
-  return results
 }

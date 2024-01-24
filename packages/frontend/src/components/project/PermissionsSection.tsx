@@ -1,18 +1,22 @@
-import { ProjectReference } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared-pure'
+import { ScalingProjectReference } from '@l2beat/config'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 
 export interface PermissionsSectionProps {
-  id: SectionId
+  id: ProjectSectionId
   title: string
   isUnderReview?: boolean
   permissions: TechnologyContract[]
   verificationStatus: VerificationStatus
-  references?: ProjectReference[]
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
+  references?: ScalingProjectReference[]
 }
 
 export function PermissionsSection({
@@ -20,6 +24,7 @@ export function PermissionsSection({
   title,
   permissions,
   verificationStatus,
+  manuallyVerifiedContracts,
   isUnderReview,
 }: PermissionsSectionProps) {
   return (
@@ -33,6 +38,7 @@ export function PermissionsSection({
             key={i}
             contract={permission}
             verificationStatus={verificationStatus}
+            manuallyVerifiedContracts={manuallyVerifiedContracts}
             className="mt-4 mb-4"
           />
         ))}

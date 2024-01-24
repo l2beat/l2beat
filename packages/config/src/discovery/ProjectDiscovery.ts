@@ -6,7 +6,6 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
-  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -17,15 +16,15 @@ import { isArray, isString } from 'lodash'
 import path from 'path'
 
 import {
-  ProjectEscrow,
-  ProjectPermission,
-  ProjectPermissionedAccount,
-  ProjectReference,
+  ScalingProjectEscrow,
+  ScalingProjectPermission,
+  ScalingProjectPermissionedAccount,
+  ScalingProjectReference,
 } from '../common'
 import {
-  ProjectContractSingleAddress,
-  ProjectUpgradeability,
-} from '../common/ProjectContracts'
+  ScalingProjectContractSingleAddress,
+  ScalingProjectUpgradeability,
+} from '../common/ScalingProjectContracts'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
@@ -56,7 +55,7 @@ export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
   constructor(
     public readonly projectName: string,
-    public readonly chainId: ChainId = ChainId.ETHEREUM,
+    public readonly chain: string = 'ethereum',
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
@@ -65,9 +64,7 @@ export class ProjectDiscovery {
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(
-        `../backend/discovery/${project}/${ChainId.getName(
-          this.chainId,
-        )}/discovered.json`,
+        `../backend/discovery/${project}/${this.chain}/discovered.json`,
       ),
     )
 
@@ -76,8 +73,10 @@ export class ProjectDiscovery {
 
   getContractDetails(
     identifier: string,
-    descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
-  ): ProjectContractSingleAddress {
+    descriptionOrOptions?:
+      | string
+      | Partial<ScalingProjectContractSingleAddress>,
+  ): ScalingProjectContractSingleAddress {
     const contract = this.getContract(identifier)
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
@@ -97,6 +96,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
@@ -109,6 +109,8 @@ export class ProjectDiscovery {
     tokens,
     upgradableBy,
     upgradeDelay,
+    isUpcoming,
+    isLayer3,
   }: {
     address: EthereumAddress
     name?: string
@@ -117,26 +119,33 @@ export class ProjectDiscovery {
     tokens: string[] | '*'
     upgradableBy?: string[]
     upgradeDelay?: string
-  }): ProjectEscrow {
-    const contract = this.getContractByAddress(address.toString())
-    const timestamp = sinceTimestamp?.toNumber() ?? contract.sinceTimestamp
+    isUpcoming?: boolean
+    isLayer3?: boolean
+  }): ScalingProjectEscrow {
+    const contractRaw = this.getContractByAddress(address.toString())
+    const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
     assert(
       timestamp,
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
+
+    const options: Partial<ScalingProjectContractSingleAddress> = {
+      name,
+      description,
+      upgradableBy,
+      upgradeDelay,
+    }
+
+    const contract = this.getContractDetails(address.toString(), options)
 
     return {
       address,
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
-      contract: {
-        name: name ?? contract.name,
-        description,
-        upgradeability: contract.upgradeability,
-        upgradableBy,
-        upgradeDelay,
-      },
+      contract,
+      isUpcoming,
+      isLayer3,
     }
   }
 
@@ -147,7 +156,7 @@ export class ProjectDiscovery {
   getOpStackPermissions(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
-  ): ProjectPermission[] {
+  ): ScalingProjectPermission[] {
     const inversion = this.getInversion()
 
     const result: Record<
@@ -213,14 +222,15 @@ export class ProjectDiscovery {
           ),
         )
         .join(' '),
+      chain: this.chain,
     }))
   }
 
   getMultisigPermission(
     identifier: string,
     description: string,
-    references?: ProjectReference[],
-  ): ProjectPermission[] {
+    references?: ScalingProjectReference[],
+  ): ScalingProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
       contract.upgradeability.type === 'gnosis safe',
@@ -239,12 +249,14 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
+        chain: this.chain,
       },
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
+        chain: this.chain,
       },
     ]
   }
@@ -288,7 +300,7 @@ export class ProjectDiscovery {
 
   formatPermissionedAccount(
     account: ContractValue | EthereumAddress,
-  ): ProjectPermissionedAccount {
+  ): ScalingProjectPermissionedAccount {
     assert(
       isString(account) && EthereumAddress.check(account),
       `Values must be Ethereum addresses`,
@@ -308,7 +320,7 @@ export class ProjectDiscovery {
   getPermissionedAccount(
     contractIdentifier: string,
     key: string,
-  ): ProjectPermissionedAccount {
+  ): ScalingProjectPermissionedAccount {
     const value = this.getContractValue(contractIdentifier, key)
     return this.formatPermissionedAccount(value)
   }
@@ -317,7 +329,7 @@ export class ProjectDiscovery {
     contractIdentifier: string,
     key: string,
     index?: number,
-  ): ProjectPermissionedAccount[] {
+  ): ScalingProjectPermissionedAccount[] {
     let value = this.getContractValue(contractIdentifier, key)
     assert(isArray(value), `Value of ${key} must be an array`)
 
@@ -332,8 +344,10 @@ export class ProjectDiscovery {
   getContractFromValue(
     contractIdentifier: string,
     key: string,
-    descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
-  ): ProjectContractSingleAddress {
+    descriptionOrOptions?:
+      | string
+      | Partial<ScalingProjectContractSingleAddress>,
+  ): ScalingProjectContractSingleAddress {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
       isString(address) && EthereumAddress.check(address),
@@ -343,17 +357,17 @@ export class ProjectDiscovery {
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
     }
-
     return {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
 
   getContractFromUpgradeability<
-    K extends keyof MergedUnion<ProjectUpgradeability>,
+    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
   >(contractIdentifier: string, key: K): ContractParameters {
     const address = this.getContractUpgradeabilityParam(contractIdentifier, key)
     assert(
@@ -370,7 +384,7 @@ export class ProjectDiscovery {
   }
 
   getDelayStringFromUpgradeability<
-    K extends keyof MergedUnion<ProjectUpgradeability>,
+    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
   >(contractIdentifier: string, key: K): string {
     const delay = this.getContractUpgradeabilityParam(contractIdentifier, key)
     assert(typeof delay === 'number', `Value of ${key} must be a number`)
@@ -380,7 +394,7 @@ export class ProjectDiscovery {
   contractAsPermissioned(
     contract: ContractParameters,
     description: string,
-  ): ProjectPermission {
+  ): ScalingProjectPermission {
     return {
       name: contract.name,
       accounts: [
@@ -389,6 +403,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
+      chain: this.chain,
       description,
     }
   }
@@ -415,8 +430,8 @@ export class ProjectDiscovery {
   }
 
   getContractUpgradeabilityParam<
-    K extends keyof MergedUnion<ProjectUpgradeability>,
-    T extends MergedUnion<ProjectUpgradeability>[K],
+    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
+    T extends MergedUnion<ScalingProjectUpgradeability>[K],
   >(contractIdentifier: string, key: K): NonNullable<T> {
     const contract = this.getContract(contractIdentifier)
     //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
@@ -430,10 +445,13 @@ export class ProjectDiscovery {
   }
 
   getAllContractAddresses(): EthereumAddress[] {
-    return this.discovery.contracts.flatMap((contract) => [
-      contract.address,
-      ...gatherAddressesFromUpgradeability(contract.upgradeability),
-    ])
+    const addressesWithinUpgradeability = this.discovery.contracts.flatMap(
+      (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
+    )
+
+    return addressesWithinUpgradeability.filter(
+      (addr) => !this.discovery.eoas.includes(addr),
+    )
   }
 
   getContractByAddress(address: string): ContractParameters {
@@ -450,9 +468,9 @@ export class ProjectDiscovery {
   }
 
   getOpStackContractDetails(
-    upgradesProxy: Partial<ProjectContractSingleAddress>,
+    upgradesProxy: Partial<ScalingProjectContractSingleAddress>,
     overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ProjectContractSingleAddress[] {
+  ): ScalingProjectContractSingleAddress[] {
     return OP_STACK_CONTRACT_DESCRIPTION.map((d) =>
       this.getContractDetails(overrides?.[d.name] ?? d.name, {
         description: stringFormat(

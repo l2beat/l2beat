@@ -1,8 +1,8 @@
 {
   "name": "zksync",
   "chain": "ethereum",
-  "blockNumber": 18341468,
-  "configHash": "0x82dc10b38ea04e4b12bfdbc39754fb9e84c7f79a0d87767d30cd3d70f04a1e12",
+  "blockNumber": 18621109,
+  "configHash": "0x611f9d2f2b7db1f5c6bd32aab22e069746c7e6f04f4cdf23979d2ba0841bb141",
   "version": 3,
   "contracts": [
     {
@@ -77,7 +77,7 @@
           "0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
         ],
         "getThreshold": 2,
-        "nonce": 299,
+        "nonce": 328,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -163,7 +163,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 17787
+        "totalSupply": 18108
       },
       "derivedName": "ZkSyncNFTFactory"
     },
@@ -275,12 +275,11 @@
           "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
-          "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
-          "0xa265146cA40F52cfC439888D0b4291b5440e6769"
+          "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
         ],
         "getThreshold": 4,
         "NAME": "Gnosis Safe",
-        "nonce": 113,
+        "nonce": 114,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -311,7 +310,6 @@
     "0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3",
     "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B",
     "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769",
-    "0xa265146cA40F52cfC439888D0b4291b5440e6769",
     "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193",
     "0xB1A308e7F02798377b7acF685E997E3D774c5863",
     "0xCE990b1f86e954746AD3a57F5Aa6CFa9CC0c3348",

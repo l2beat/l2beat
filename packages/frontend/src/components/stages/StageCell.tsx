@@ -1,27 +1,35 @@
 import { StageConfig } from '@l2beat/config'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { StageBadge } from './StageBadge'
 import { StageTooltip } from './StageTooltip'
 
 export interface StageCellProps {
-  item: StageConfig
+  stageConfig: StageConfig
 }
 
-export function StageCell({ item }: StageCellProps) {
-  if (item.stage === 'NotApplicable') {
-    return <StageBadge stage={item.stage} oneSize />
+export function StageCell({ stageConfig }: StageCellProps) {
+  if (stageConfig.stage === 'NotApplicable') {
+    return <StageBadge stage={stageConfig.stage} oneSize />
   }
 
   return (
-    <div
-      className="Tooltip"
-      title={renderToStaticMarkup(<StageTooltip item={item} />)}
-      data-tooltip-big
-      data-tooltip-mobile-disabled
-    >
-      <StageBadge stage={item.stage} oneSize />
-    </div>
+    <Tooltip big disabledOnMobile>
+      <TooltipTrigger>
+        <StageBadge
+          stage={stageConfig.stage}
+          icon={
+            stageConfig.stage !== 'UnderReview'
+              ? stageConfig.message?.type
+              : undefined
+          }
+          oneSize
+        />
+      </TooltipTrigger>
+      <TooltipContent>
+        <StageTooltip stageConfig={stageConfig} />
+      </TooltipContent>
+    </Tooltip>
   )
 }

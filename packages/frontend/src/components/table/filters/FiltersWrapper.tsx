@@ -9,7 +9,7 @@ interface ProjectFilters {
 
 export function FiltersWrapper({ children }: ProjectFilters) {
   return (
-    <div id="project-filters" className="flex flex-wrap gap-4">
+    <div id="project-filters" className="flex gap-4">
       {children}
     </div>
   )

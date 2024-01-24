@@ -1,18 +1,18 @@
 import { Milestone } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
 import { ChartType } from '../../scripts/charts/types'
+import { cn } from '../../utils/cn'
 import { ActivityHeader } from '../header/ActivityHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
+import { ChartComingSoonState } from './ChartComingSoonState'
 import { ChartEmptyState } from './ChartEmptyState'
 import { ChartErrorState } from './ChartErrorState'
 import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
-import { ChartUpcoming } from './ChartUpcoming'
 import { CurrencyControls } from './CurrencyControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
 import { RadioChartTypeControl } from './RadioChartTypeControl'
@@ -29,36 +29,36 @@ export interface ChartProps {
   initialType: ChartType
   tvlBreakdownHref?: string
   hasActivity?: boolean
+  hasTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
-  isUpcoming?: boolean
   sectionClassName?: string
-  withHeader?: boolean
+  header?: 'tvl' | 'activity' | 'project'
+  showComingSoon?: boolean
 }
 
 export function Chart(props: ChartProps) {
-  if (props.isUpcoming) {
-    return <ChartUpcoming mobileFull />
-  }
-
   const isActivity =
     props.initialType.type === 'layer2-activity' ||
     props.initialType.type === 'project-activity' ||
     props.initialType.type === 'storybook-fake-activity'
 
+  const isBridge = props.initialType.type === 'bridges-tvl'
+
   const id = props.id ?? 'chart'
   const title = props.title ?? 'Chart'
-  const header = isActivity ? <ActivityHeader /> : <TvlHeader />
+
   return (
     <>
       <section
         id={id}
         data-settings-id={props.settingsId}
-        data-role="chart"
+        data-role={props.showComingSoon ? 'coming-soon-chart' : 'chart'}
+        data-interactivity-disabled={props.showComingSoon}
         data-initial-type={JSON.stringify(props.initialType)}
         data-milestones={JSON.stringify(props.milestones)}
-        className={cx(
+        className={cn(
           'group/chart',
           props.mobileFull
             ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
@@ -66,19 +66,19 @@ export function Chart(props: ChartProps) {
           props.sectionClassName,
         )}
       >
-        {props.withHeader && !props.metaChart && header}
-        {!props.metaChart && props.hasActivity && (
-          <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
-              <a href={`#${id}`}>{title}</a>
-            </h2>
+        <ChartHeader
+          title={title}
+          id={id}
+          hasActivity={props.hasActivity}
+          hasTvl={props.hasTvl}
+          metaChart={props.metaChart}
+          header={props.header}
+          isBridge={isBridge}
+        />
 
-            <RadioChartTypeControl hasActivity={props.hasActivity} />
-          </div>
-        )}
         <div className="flex flex-col gap-4">
           <div
-            className={cx(
+            className={cn(
               'flex justify-between',
               props.metaChart && 'absolute left-0 bottom-0 w-full',
             )}
@@ -101,13 +101,18 @@ export function Chart(props: ChartProps) {
             />
             <ChartEmptyState />
             <ChartErrorState />
-
+            {props.showComingSoon && <ChartComingSoonState />}
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
               className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
-            <ChartLabels className={props.metaChart ? 'hidden' : undefined} />
+            <ChartLabels
+              className={cn(
+                props.showComingSoon && 'blur-sm',
+                props.metaChart ? 'hidden' : undefined,
+              )}
+            />
             <div
               data-role="chart-milestones"
               className="absolute bottom-0 z-40 w-[100%] group-data-[interactivity-disabled]/chart:hidden"
@@ -134,5 +139,41 @@ export function Chart(props: ChartProps) {
       </section>
       <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
     </>
+  )
+}
+
+function ChartHeader(props: {
+  id: string
+  title: string
+  hasActivity: boolean | undefined
+  hasTvl: boolean | undefined
+  metaChart: boolean | undefined
+  header: ChartProps['header'] | undefined
+  isBridge: boolean
+}) {
+  if (!props.header || props.metaChart) {
+    return null
+  }
+
+  if (props.header === 'tvl') {
+    return <TvlHeader isBridge={props.isBridge} />
+  }
+
+  if (props.header === 'activity') {
+    return <ActivityHeader />
+  }
+
+  return (
+    <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
+      <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
+        <a href={`#${props.id}`}>{props.title}</a>
+      </h2>
+      {(props.hasActivity || props.hasTvl) && (
+        <RadioChartTypeControl
+          hasActivity={!!props.hasActivity}
+          hasTvl={!!props.hasTvl}
+        />
+      )}
+    </div>
   )
 }

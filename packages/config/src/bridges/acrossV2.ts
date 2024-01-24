@@ -1,8 +1,12 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
-import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -33,7 +37,9 @@ export const acrossV2: Bridge = {
       ],
     },
     description:
-      'Across V2 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain. Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
+      'Across V2 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain.',
+    detailedDescription:
+      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
   },
   config: {
     escrows: [
@@ -108,7 +114,7 @@ export const acrossV2: Bridge = {
       references: [
         {
           text: 'Across V2 Optimistic Oracle documentation',
-          href: 'https://docs.across.to/v2/how-does-across-work/optimistic-oracle',
+          href: 'https://docs.across.to/how-across-works/security-model',
         },
       ],
     },

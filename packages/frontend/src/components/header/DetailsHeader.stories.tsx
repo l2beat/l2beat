@@ -3,7 +3,7 @@ import React from 'react'
 
 import { formatLargeNumber } from '../../utils'
 import { ProjectLink } from '../icons'
-import { TechnologyCell } from '../table/TechnologyCell'
+import { TypeCell } from '../table/TypeCell'
 import { DetailsHeader as DetailsHeaderComponent } from './DetailsHeader'
 import { StatWithChange } from './stats/StatWithChange'
 
@@ -15,9 +15,11 @@ type Story = StoryObj<typeof DetailsHeaderComponent>
 
 const project = {
   display: {
-    purpose: 'Universal',
+    purposes: ['Universal'],
     name: 'Arbitrum One',
     slug: 'arbitrum',
+    description:
+      'Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.',
   },
   technology: {
     category: 'Optimistic Rollup',
@@ -41,11 +43,11 @@ const stats = [
   },
   {
     title: 'Purpose',
-    value: project.display.purpose,
+    value: project.display.purposes,
   },
   {
-    title: 'Technology',
-    value: <TechnologyCell>{project.technology.category}</TechnologyCell>,
+    title: 'Type',
+    value: <TypeCell>{project.technology.category}</TypeCell>,
   },
 ]
 
@@ -53,7 +55,7 @@ const links: ProjectLink[] = [
   { name: 'Website', links: ['https://bridge.gnosischain.com/'] },
   { name: 'App', links: ['https://bridge.gnosischain.com/'] },
   {
-    name: 'Documentation',
+    name: 'Docs',
     links: ['https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge'],
   },
   {
@@ -75,6 +77,10 @@ const links: ProjectLink[] = [
       'https://t.me/gnosischain',
     ],
   },
+  {
+    name: 'rollup.codes',
+    links: ['https://rollup.codes/arbitrum-one'],
+  },
 ]
 
 const warning =
@@ -83,41 +89,85 @@ const warning =
 export const DetailsHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     isArchived: false,
     warning,
+    type: 'layer2',
   },
 }
 
 export const ArchivedHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     isArchived: true,
     warning,
+    type: 'layer2',
   },
 }
 
 export const UpcomingHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 0,
+        external: 0,
+        native: 0,
+        tvl: 0,
+        tvlChange: '+0%',
+      },
+    },
     links,
     isUpcoming: true,
+    type: 'layer2',
   },
 }
 
 export const UnderReviewHeader: Story = {
   args: {
     title: project.display.name,
+    description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 1000,
+        external: 2000,
+        native: 3000,
+        tvl: 6000,
+        tvlChange: '+11%',
+      },
+    },
     links,
     showProjectUnderReview: true,
+    type: 'layer2',
   },
 }

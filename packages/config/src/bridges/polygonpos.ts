@@ -1,8 +1,12 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
+import { CONTRACTS, NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, NUGGETS } from '../layer2s/common'
-import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 

@@ -12,10 +12,12 @@ import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
+const ONE_HOUR = 1 * 60 * 60000
 const DEFAULT_RETRY = Retries.exponentialBackOff({
-  stepMs: 1000,
-  maxDistanceMs: 60_000,
-  maxAttempts: 10,
+  stepMs: 1000, // 2s 4s 8s 16s 32s 64s 128s 256s 512s 1024s...
+  maxAttempts: Infinity, // never stop the queue
+  maxDistanceMs: ONE_HOUR,
+  notifyAfterAttempts: 10, // sum = 2046s minutes = 34 minutes
 })
 
 type Task<T> = (task: T) => Promise<void>
@@ -41,11 +43,11 @@ export interface TaskQueueOpts<T> {
   shouldRetry?: ShouldRetry<T>
   eventTracker?: TaskQueueEventTracker
   metricsId: string
-  shouldHaltAfterFailedRetries?: boolean
+  shouldStopAfterFailedRetries?: boolean
 }
 /**
- * Note: by default, queue will retry failing tasks finite number of times using exponential back off strategy and halt if error persists.
- * This can be customized by changing `shouldRetry` function and `shouldHaltAfterFailedRetries` parameter.
+ * Note: by default, queue will retry failing tasks finite number of times using exponential back off strategy and stop if error persists.
+ * This can be customized by changing `shouldRetry` function and `shouldStopAfterFailedRetries` parameter.
  */
 export class TaskQueue<T> {
   private readonly executeTask: Task<T>
@@ -54,8 +56,8 @@ export class TaskQueue<T> {
   private readonly workers: number
   private readonly shouldRetry: ShouldRetry<T>
   private readonly eventTracker?: TaskQueueEventTracker
-  private readonly shouldHaltAfterFailedRetries
-  private halted = false
+  private readonly shouldStopAfterFailedRetries
+  private stopped = false
 
   constructor(
     executeTask: Task<T>,
@@ -71,8 +73,8 @@ export class TaskQueue<T> {
     if (opts.eventTracker) {
       this.eventTracker = opts.eventTracker
     }
-    this.shouldHaltAfterFailedRetries =
-      opts.shouldHaltAfterFailedRetries ?? true
+    this.shouldStopAfterFailedRetries =
+      opts.shouldStopAfterFailedRetries ?? true
 
     this.executeTask = wrapAndMeasure(executeTask, {
       histogram: taskQueueHistogram,
@@ -117,8 +119,8 @@ export class TaskQueue<T> {
     }
   }
 
-  isHalted(): boolean {
-    return this.halted
+  isStopped(): boolean {
+    return this.stopped
   }
 
   isEmpty(): boolean {
@@ -130,8 +132,8 @@ export class TaskQueue<T> {
   }
 
   private execute() {
-    if (this.halted) {
-      this.logger.debug("Queue is halted, won't execute")
+    if (this.stopped) {
+      this.logger.debug("Queue is stopped, won't execute")
       return
     }
 
@@ -148,17 +150,24 @@ export class TaskQueue<T> {
   private handleFailure(job: Job<T>, error: unknown) {
     job.attempts++
     const result = this.shouldRetry(job, error)
-    if (!result.retry) {
+
+    if (result.notify) {
+      this.logger.error(error, { job })
+    }
+
+    if (result.shouldStop) {
       this.eventTracker?.record('error')
-      if (this.shouldHaltAfterFailedRetries) {
-        this.logger.error('Halting queue because of error', {
-          job: JSON.stringify(job),
+      if (this.shouldStopAfterFailedRetries) {
+        // TODO: new logger usage
+        this.logger.error('Stopping queue because of error', {
+          job,
           error,
         })
-        this.halted = true
+        this.stopped = true
       }
       return
     }
+
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
     this.queue.unshift(job)
     this.logger.info({
@@ -202,15 +211,17 @@ export class TaskQueue<T> {
     }
   }
 
-  // WARNING: this method clears the queue, be cautious when using it
-  // some Updaters will not function properly after you unhalt them using this method
-  // because they rely on the start() function which is called only once
-  // so use it only in Updaters with generic (updating all the missing data) update() function
-  // or rewrite the logic of your updater
-  unhaltIfNeeded() {
-    if (this.halted) {
-      this.queue.splice(0, this.queue.length)
-      this.halted = false
-    }
+  /**
+   * WARNING: this method should be used only in tests
+   */
+  _TEST_ONLY_stop() {
+    this.stopped = true
+  }
+
+  /**
+   * WARNING: this method should be used only in tests
+   */
+  _TEST_ONLY_clear() {
+    this.queue.splice(0, this.queue.length)
   }
 }

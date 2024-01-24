@@ -1,14 +1,20 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
-import cx from 'classnames'
+import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { sentimentToTextColor } from '../../utils/risks/color'
+import { cn } from '../../utils/cn'
+import {
+  sentimentToFillColor,
+  sentimentToTextColor,
+} from '../../utils/risks/color'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
+import { RoundedWarningIcon } from '../icons'
+import { WarningBar } from '../project/WarningBar'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
-  item?: ProjectRiskViewEntry
+  item?: ScalingProjectRiskViewEntry
 }
 
 export function RiskCell({ item }: Props) {
@@ -25,25 +31,48 @@ export function RiskCell({ item }: Props) {
   }
 
   return (
-    <div
-      className={cx(item.description !== '' && 'Tooltip')}
-      title={item.description !== '' ? item.description : undefined}
-    >
-      <span className={cx('font-medium', sentimentToTextColor(item.sentiment))}>
-        {item.value}
-      </span>
-      {item.secondLine && (
+    <Tooltip>
+      <TooltipTrigger>
         <span
-          className={cx(
-            'block text-xs leading-none',
-            item.secondSentiment
-              ? sentimentToTextColor(item.secondSentiment)
-              : 'text-gray-550 dark:text-gray-500',
+          className={cn(
+            'flex items-center gap-1 font-medium',
+            sentimentToTextColor(item.sentiment),
           )}
         >
-          {item.secondLine}
+          {item.value}
+          {item.warning && (
+            <RoundedWarningIcon
+              className={cn(
+                'h-5 w-5',
+                sentimentToFillColor(item.warning.sentiment),
+              )}
+            />
+          )}
         </span>
-      )}
-    </div>
+        {item.secondLine && (
+          <span
+            className={cn(
+              'block text-xs leading-none',
+              item.secondSentiment
+                ? sentimentToTextColor(item.secondSentiment)
+                : 'text-gray-550 dark:text-gray-500',
+            )}
+          >
+            {item.secondLine}
+          </span>
+        )}
+      </TooltipTrigger>
+      <TooltipContent>
+        {item.warning && (
+          <WarningBar
+            className="mb-2"
+            text={item.warning.text}
+            icon={RoundedWarningIcon}
+            color={item.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+          />
+        )}
+        {item.description !== '' ? item.description : null}
+      </TooltipContent>
+    </Tooltip>
   )
 }

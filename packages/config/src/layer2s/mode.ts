@@ -1,22 +1,18 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const mode: Layer2 = {
-  isUpcoming: true,
-  type: 'layer2',
-  id: ProjectId('mode'),
+export const mode: Layer2 = upcoming({
+  id: 'mode',
   display: {
     name: 'Mode Network',
     slug: 'mode',
     description:
       'Mode is the Ethereum L2 designed for builders and users to grow as the network grows.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.mode.network/'],
+      websites: ['https://mode.network/'],
       apps: [],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://sepolia.explorer.mode.network/'],
@@ -29,13 +25,4 @@ export const mode: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [],
-  },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
-}
+})

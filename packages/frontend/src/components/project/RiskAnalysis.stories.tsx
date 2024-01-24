@@ -21,10 +21,10 @@ export const Configured: Story = {
         sentiment: 'warning',
         description: 'The data availability risk is warning',
       },
-      upgradeability: {
-        value: 'Upgradeability risk',
+      exitWindow: {
+        value: 'Exit window risk',
         sentiment: 'good',
-        description: 'The upgradeability risk is good',
+        description: 'The exit window risk is good',
       },
       sequencerFailure: {
         value: 'Sequencer failure risk',
@@ -53,10 +53,10 @@ export const UnderReview: Story = {
         sentiment: 'UnderReview',
         description: 'The data availability risk is warning',
       },
-      upgradeability: {
-        value: 'Upgradeability risk',
+      exitWindow: {
+        value: 'Exit window risk',
         sentiment: 'UnderReview',
-        description: 'The upgradeability risk is good',
+        description: 'The exit window risk is good',
       },
       sequencerFailure: {
         value: 'Sequencer failure risk',

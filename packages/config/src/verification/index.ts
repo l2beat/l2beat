@@ -1,0 +1,1 @@
+export { parseManuallyVerifiedContracts } from './manuallyVerifiedContracts'

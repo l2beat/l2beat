@@ -1,4 +1,4 @@
-import { Bridge, ProjectLinks } from '@l2beat/config'
+import { Bridge, ScalingProjectLinks } from '@l2beat/config'
 import { TvlApiResponse } from '@l2beat/shared-pure'
 
 import { ProjectLink } from '../../../../components/icons'
@@ -18,6 +18,7 @@ export function getProjectHeader(
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
+    description: project.display.description,
     tvl: project.config.escrows.length > 0 ? formatUSD(tvl) : undefined,
     tvlWeeklyChange:
       project.config.escrows.length > 0 ? tvlWeeklyChange : undefined,
@@ -33,7 +34,7 @@ export function getProjectHeader(
   }
 }
 
-function getLinks(links: Partial<ProjectLinks>) {
+function getLinks(links: Partial<ScalingProjectLinks>) {
   const projectLinks: ProjectLink[] = []
 
   if (links.websites) {
@@ -52,7 +53,7 @@ function getLinks(links: Partial<ProjectLinks>) {
 
   if (links.documentation) {
     projectLinks.push({
-      name: 'Documentation',
+      name: 'Docs',
       links: links.documentation,
     })
   }

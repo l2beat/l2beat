@@ -44,12 +44,15 @@ export type StarkexProduct =
   | 'sorare'
   | 'immutable'
   | 'myria'
-  | 'deversifi'
-  | 'apex'
+  | 'rhinofi'
+  | 'apex_usdt'
+  | 'apex_usdc'
+  | 'brine'
+  | 'reddio'
 
 export interface StarkexTransactionApi {
   type: 'starkex'
-  product: StarkexProduct
+  product: StarkexProduct[]
   sinceTimestamp: UnixTime
   resyncLastDays: number
 }

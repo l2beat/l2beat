@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
-import { Tooltip as TooltipComponent } from '../Tooltip'
-import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { TooltipProvider as TooltipComponent } from '../tooltip/TooltipProvider'
+import { RosetteTooltipPopup, RosetteTooltipProps } from './RosetteTooltip'
 
 const meta: Meta<typeof TooltipComponent> = {
   component: TooltipComponent,
@@ -17,7 +17,7 @@ const meta: Meta<typeof TooltipComponent> = {
       return (
         <div>
           <Story />
-          <TooltipComponent />
+          <TooltipComponent withAnimation={false} />
         </div>
       )
     },
@@ -29,7 +29,7 @@ type Story = StoryObj<typeof TooltipComponent>
 const project: RosetteTooltipProps = {
   riskSentiments: {
     proposerFailure: 'bad',
-    upgradeability: 'bad',
+    exitWindow: 'bad',
     sequencerFailure: 'good',
     dataAvailability: 'warning',
     stateValidation: 'good',
@@ -43,7 +43,7 @@ const project: RosetteTooltipProps = {
       value: 'No mechanism',
       sentiment: 'bad',
     },
-    upgradeability: {
+    exitWindow: {
       value: 'Yes',
       sentiment: 'bad',
     },
@@ -61,27 +61,23 @@ const project: RosetteTooltipProps = {
 export const RosetteTooltip: Story = {
   render: () => (
     <div className="m-4 ml-32">
-      <span
-        className="Tooltip inline-block"
-        title={renderToStaticMarkup(
+      <Tooltip className="inline-block" big>
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
           <RosetteTooltipPopup
             riskSentiments={project.riskSentiments}
             riskValues={project.riskValues}
-          />,
-        )}
-        data-tooltip-big
-      >
-        <span>Element with tooltip</span>
-      </span>
+          />
+        </TooltipContent>
+      </Tooltip>
     </div>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const tooltip = canvas.getByText('Element with tooltip')
     // Wait for the tooltip to appear
     await new Promise((resolve) => setTimeout(resolve, 200))
     await waitFor(async () => {
-      await userEvent.hover(tooltip)
+      await userEvent.hover(canvas.getByText('Element with tooltip'))
     })
   },
 }

@@ -1,12 +1,13 @@
-import classNames from 'classnames'
 import chunk from 'lodash/chunk'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon } from '../icons'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 interface Props {
-  type: 'bridge' | 'layer2'
+  type: 'bridge' | 'layer2' | 'layer3'
   stats: ProjectSummaryStat[]
   className?: string
 }
@@ -19,12 +20,21 @@ export interface ProjectSummaryStat {
 }
 
 export function ProjectSummary(props: Props) {
-  const cols = props.type === 'bridge' ? 4 : 3
+  let cols
+  switch (props.type) {
+    case 'layer2':
+    case 'layer3':
+      cols = 3
+      break
+    case 'bridge':
+      cols = 4
+      break
+  }
   const groupedStats = chunk(props.stats, cols)
   return (
     <div
-      className={classNames(
-        'row grid h-fit grow gap-3 px-4 md:gap-x-3 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800',
+      className={cn(
+        'row grid h-fit grow gap-3 bg-gray-100 p-4 dark:bg-zinc-900 md:gap-x-3 md:rounded-lg md:px-6 md:py-5',
         cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
         props.className,
       )}
@@ -35,7 +45,7 @@ export function ProjectSummary(props: Props) {
             {groupIndex !== 0 && (
               <HorizontalSeparator
                 key={`horizontal-separator${groupIndex}`}
-                className="col-span-full mt-2 hidden md:my-4 md:block"
+                className="col-span-full mt-2 hidden md:my-0 md:block"
               />
             )}
             {group.map((stat) => {
@@ -58,7 +68,7 @@ export function ProjectSummary(props: Props) {
 function DetailsHeaderStat(props: ProjectSummaryStat) {
   return (
     <li
-      className={classNames(
+      className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,
       )}
@@ -68,12 +78,12 @@ function DetailsHeaderStat(props: ProjectSummaryStat) {
           {props.title}
         </span>
         {props.tooltip && (
-          <span
-            className="Tooltip -translate-y-px md:translate-y-0"
-            title={props.tooltip}
-          >
-            <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:h-3.5 md:w-3.5" />
-          </span>
+          <Tooltip>
+            <TooltipTrigger className="-translate-y-px md:translate-y-0">
+              <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:h-3.5 md:w-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{props.tooltip}</TooltipContent>
+          </Tooltip>
         )}
       </div>
 

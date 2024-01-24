@@ -1,18 +1,11 @@
 import {
   EthereumAddress,
   formatLargeNumberShared,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -24,7 +17,14 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -42,6 +42,12 @@ const ESCROW_USDC_ADDRESS = '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'
 const ESCROW_USDT_ADDRESS = '0xbb3400F107804DFB482565FF1Ec8D8aE66747605'
 const ESCROW_WSTETH_ADDRESS = '0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B'
 const ESCROW_RETH_ADDRESS = '0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2'
+const ESCROW_UNI_ADDRESS = '0xf76e6bF9e2df09D0f854F045A3B724074dA1236B'
+const ESCROW_FRAX_ADDRESS = '0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb'
+const ESCROW_FXS_ADDRESS = '0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
+const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
+const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
+const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -59,14 +65,32 @@ const escrowUSDTDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_USDT_ADDRESS,
   'upgradeDelay',
 )
-
 const escrowWSTETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_WSTETH_ADDRESS,
   'upgradeDelay',
 )
-
 const escrowRETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_RETH_ADDRESS,
+  'upgradeDelay',
+)
+const escrowUNIDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_UNI_ADDRESS,
+  'upgradeDelay',
+)
+const escrowFRAXDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_FRAX_ADDRESS,
+  'upgradeDelay',
+)
+const escrowSFRXETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_SFRXETH_ADDRESS,
+  'upgradeDelay',
+)
+const escrowFXSDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_FXS_ADDRESS,
+  'upgradeDelay',
+)
+const escrowLUSDDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_LUSD_ADDRESS,
   'upgradeDelay',
 )
 
@@ -85,9 +109,16 @@ function formatMaxTotalBalanceString(
   maxTotalBalance: number,
   decimals: number,
 ) {
-  return `The current bridge cap is ${formatLargeNumberShared(
-    maxTotalBalance / 10 ** decimals,
-  )} ${ticker}.`
+  if (
+    maxTotalBalance.toString() ===
+    '115792089237316195423570985008687907853269984665640564039457584007913129639935'
+  ) {
+    return 'There is no bridge cap.'
+  } else {
+    return `The current bridge cap is ${formatLargeNumberShared(
+      maxTotalBalance / 10 ** decimals,
+    )} ${ticker}.`
+  }
 }
 
 const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
@@ -126,6 +157,36 @@ const escrowRETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 
+const escrowUNIMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'UNI',
+  discovery.getContractValue<number>('UNI Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'FRAX',
+  discovery.getContractValue<number>('FRAX Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'FXS',
+  discovery.getContractValue<number>('FXS Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowSFRXETHMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'sfrxETH',
+  discovery.getContractValue<number>('sfrxETH Bridge', 'maxTotalBalance'),
+  18,
+)
+
+const escrowLUSDMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'LUSD',
+  discovery.getContractValue<number>('LUSD Bridge', 'maxTotalBalance'),
+  18,
+)
+
 const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
   'DAI',
   discovery.getContractValue<number>('L1DaiGateway', 'ceiling'),
@@ -140,17 +201,13 @@ export const starknet: Layer2 = {
     slug: 'starknet',
     provider: 'Starknet',
     description:
-      'Starknet is a general purpose ZK Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
-      infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
-      is available and contracts are fully composable. It is currently launched \
-      with a single Sequencer.',
-    purpose: 'Universal',
+      'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
-      apps: [
-        'https://www.dappland.com/',
-        'https://www.starknet-ecosystem.com/',
-      ],
+      apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
@@ -161,7 +218,7 @@ export const starknet: Layer2 = {
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
-        'https://discord.gg/uJ9HZTUk2Y',
+        'https://discord.com/invite/qypnmzkhbc',
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
@@ -169,6 +226,10 @@ export const starknet: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+    },
   },
   config: {
     escrows: [
@@ -236,9 +297,96 @@ export const starknet: Layer2 = {
         upgradableBy: ['StarkGate rETH owner'],
         upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_UNI_ADDRESS),
+        tokens: ['UNI'],
+        description:
+          'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
+        upgradableBy: ['StarkGate UNI owner'],
+        upgradeDelay: formatSeconds(escrowUNIDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_FRAX_ADDRESS),
+        tokens: ['FRAX'],
+        description:
+          'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
+        upgradableBy: ['StarkGate FRAX owner'],
+        upgradeDelay: formatSeconds(escrowFRAXDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_FXS_ADDRESS),
+        tokens: ['FXS'],
+        description:
+          'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
+        upgradableBy: ['StarkGate FXS owner'],
+        upgradeDelay: formatSeconds(escrowFXSDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_SFRXETH_ADDRESS),
+        tokens: ['sfrxETH'],
+        description:
+          'StarkGate bridge for sfrxETH.' +
+          ' ' +
+          escrowSFRXETHMaxTotalBalanceString,
+        upgradableBy: ['StarkGate sfrxETH owner'],
+        upgradeDelay: formatSeconds(escrowSFRXETHDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_LUSD_ADDRESS),
+        tokens: ['LUSD'],
+        description:
+          'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
+        upgradableBy: ['StarkGate LUSD owner'],
+        upgradeDelay: formatSeconds(escrowLUSDDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_LORDS_ADDRESS),
+        tokens: ['LORDS'],
+        description: 'StarkGate bridge for LORDS.',
+      }),
     ],
     transactionApi: {
       type: 'starknet',
+    },
+    liveness: {
+      proofSubmissions: [
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1636978914),
+          untilTimestamp: new UnixTime(1702921247),
+          programHashes: [
+            '1865367024509426979036104162713508294334262484507712987283009063059134893433',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1702921247),
+          untilTimestamp: new UnixTime(1704898931),
+          programHashes: [
+            '54878256403880350656938046611252303365750679698042371543935159963667935317',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1704898931),
+          programHashes: [
+            '2590421891839256512113614983194993186457498815986333310670788206383913888162',
+          ],
+        },
+      ],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0x77552641',
+          functionSignature:
+            'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
+          sinceTimestamp: new UnixTime(1636978914),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -272,7 +420,7 @@ export const starknet: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [
@@ -447,6 +595,41 @@ export const starknet: Layer2 = {
       description:
         'Can upgrade implementation of the rETH escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowRETHDelaySeconds),
+    },
+    {
+      name: 'StarkGate UNI owner',
+      accounts: getProxyGovernance(discovery, ESCROW_UNI_ADDRESS),
+      description:
+        'Can upgrade implementation of the UNI escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowUNIDelaySeconds),
+    },
+    {
+      name: 'StarkGate FRAX owner',
+      accounts: getProxyGovernance(discovery, ESCROW_FRAX_ADDRESS),
+      description:
+        'Can upgrade implementation of the FRAX escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowFRAXDelaySeconds),
+    },
+    {
+      name: 'StarkGate FXS owner',
+      accounts: getProxyGovernance(discovery, ESCROW_FXS_ADDRESS),
+      description:
+        'Can upgrade implementation of the FXS escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowFXSDelaySeconds),
+    },
+    {
+      name: 'StarkGate sfrxETH owner',
+      accounts: getProxyGovernance(discovery, ESCROW_SFRXETH_ADDRESS),
+      description:
+        'Can upgrade implementation of the sfrxETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowSFRXETHDelaySeconds),
+    },
+    {
+      name: 'StarkGate LUSD owner',
+      accounts: getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
+      description:
+        'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',

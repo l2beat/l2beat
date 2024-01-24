@@ -1,8 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -13,15 +15,19 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
 
-const upgradeDelay = formatSeconds(
-  discovery.getContractValue<number>('ZkSync', 'UPGRADE_NOTICE_PERIOD'),
+const upgradeDelay = discovery.getContractValue<number>(
+  'ZkSync',
+  'UPGRADE_NOTICE_PERIOD',
 )
+const upgradeDelayString = formatSeconds(upgradeDelay)
 
 const securityCouncilThreshold = discovery.getContractValue<number>(
   'ZkSync',
@@ -37,7 +43,7 @@ const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers
 
 const upgrades = {
   upgradableBy: ['ZkSync Multisig'],
-  upgradeDelay: `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradeDelay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
   upgradeConsiderations:
     'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
 }
@@ -51,14 +57,16 @@ export const zksynclite: Layer2 = {
     name: 'zkSync Lite',
     slug: 'zksync-lite',
     description:
-      'zkSync Lite (formerly zkSync) is a user-centric ZK Rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
-    purpose: 'Payments, Tokens',
-    provider: 'zkSync',
+      'zkSync Lite (formerly zkSync) is a ZK Rollup platform from Matter Labs. It supports payments, token swaps and NFT minting.',
+    purposes: ['Payments'],
+    provider: 'zkSync Lite',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
-      documentation: ['https://docs.zksync.io/dev/'],
+      documentation: ['https://docs.lite.zksync.io/dev/'],
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
@@ -70,6 +78,10 @@ export const zksynclite: Layer2 = {
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation:
+        'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
+    },
   },
   config: {
     escrows: [
@@ -82,6 +94,33 @@ export const zksynclite: Layer2 = {
     transactionApi: {
       type: 'zksync',
       callsPerMinute: 3_000,
+    },
+    liveness: {
+      proofSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+          ),
+          selector: '0x83981808',
+          functionSignature:
+            'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
+          sinceTimestamp: new UnixTime(1592218707),
+        },
+      ],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+          ),
+          selector: '0xb0705b42',
+          functionSignature:
+            'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
+          sinceTimestamp: new UnixTime(1592218707),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -112,8 +151,18 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_ZKSYNC(upgradeDelay, securityCouncil),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, 0),
+      sentiment: 'warning',
+      description: `Users have ${formatSeconds(
+        upgradeDelay - forcedWithdrawalDelay,
+      )} to exit to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
+        forcedWithdrawalDelay,
+      )} to be processed.`,
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
       sources: [
         {
           contract: 'Governance',
@@ -255,16 +304,16 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
@@ -281,7 +330,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'README.md - zkSync Exit Tool',

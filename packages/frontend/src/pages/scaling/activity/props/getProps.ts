@@ -1,32 +1,24 @@
-import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
-
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { Wrapped } from '../../../Page'
+import { ActivityPagesData } from '../types'
 import { ActivityPageProps } from '../view/ScalingActivityPage'
 import { getPageMetadata } from './getPageMetadata'
 import { getScalingActivityView } from './getScalingActivityView'
 
 export function getProps(
   config: Config,
-  pagesData: {
-    activityApiResponse: ActivityApiResponse
-    verificationStatus: VerificationStatus
-  },
+  pagesData: ActivityPagesData,
 ): Wrapped<ActivityPageProps> {
-  const { activityApiResponse, verificationStatus } = pagesData
-
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      activityView: getScalingActivityView(
-        config.layer2s,
-        activityApiResponse,
-        verificationStatus,
-      ),
+      activityView: getScalingActivityView(config.layer2s, pagesData),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
+      showLiveness: config.features.liveness,
+      showFinality: config.features.finality,
       milestones: config.milestones,
     },
     wrapper: {

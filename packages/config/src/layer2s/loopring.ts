@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,7 +10,8 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -34,6 +34,8 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
 export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
@@ -41,10 +43,12 @@ export const loopring: Layer2 = {
     name: 'Loopring',
     slug: 'loopring',
     description:
-      "Loopring's ZK Rollup L2 solution aims to offer the same security guarantees as Ethereum mainnet, with a big scalability boost: throughput increased by 1000x, and cost reduced to just 0.1% of L1.",
-    purpose: 'Tokens, NFTs, AMM',
+      'Loopring is a ZK Rollup exchange protocol for trading and payments.',
+    purposes: ['NFT', 'AMM'],
     provider: 'Loopring',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://loopring.org'],
       apps: ['https://exchange.loopring.io/'],
@@ -65,6 +69,10 @@ export const loopring: Layer2 = {
       ],
     },
     activityDataSource: 'Explorer API',
+    liveness: {
+      explanation:
+        'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
   },
   config: {
     associatedTokens: ['LRC'],
@@ -93,11 +101,33 @@ export const loopring: Layer2 = {
       type: 'loopring',
       callsPerMinute: 240,
     },
+    liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
+          ),
+          selector: '0xdcb2aa31',
+          functionSignature:
+            'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
+          sinceTimestamp: new UnixTime(1616396742),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,
@@ -140,7 +170,7 @@ export const loopring: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -220,7 +250,7 @@ export const loopring: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Forced Request Handling - Loopring design doc',
@@ -289,6 +319,14 @@ export const loopring: Layer2 = {
       discovery.getContractDetails(
         'LoopringV3',
         'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawal fee and the Verifier address.',
+      ),
+      discovery.getContractDetails(
+        'FastWithdrawalAgent',
+        'Auxiliary contract allowing users to process fast withdrawals.',
+      ),
+      discovery.getContractDetails(
+        'ForcedWithdrawalAgent',
+        'Auxiliary contract allowing users to process fast withdrawals.',
       ),
       discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',

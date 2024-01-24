@@ -22,14 +22,6 @@ describe(Clock.name, () => {
     time.setSystemTime(new Date(`2022-06-29T${hhmmss}.000Z`))
   }
 
-  it('cannot be constructed with minTimestamp in the future', () => {
-    setTime('13:05:48')
-    const minTimestamp = toTimestamp('15:12:34')
-    expect(() => new Clock(minTimestamp, 0)).toThrow(
-      'minTimestamp must be in the past',
-    )
-  })
-
   describe(Clock.prototype.getFirstHour.name, () => {
     it('returns minTimestamp aligned to an hour', () => {
       time.setSystemTime(10_000_000_000_000)
@@ -38,6 +30,35 @@ describe(Clock.name, () => {
 
       const firstHour = clock.getFirstHour()
       expect(firstHour).toEqual(start.toNext('hour'))
+    })
+
+    it('cannot get first hour with minTimestamp in the future', () => {
+      setTime('13:05:48')
+      const minTimestamp = toTimestamp('15:12:34')
+      const clock = new Clock(minTimestamp, 0)
+      expect(() => clock.getFirstHour()).toThrow(
+        'minTimestamp must be in the past',
+      )
+    })
+  })
+
+  describe(Clock.prototype.getFirstDay.name, () => {
+    it('returns minTimestamp aligned to an hour', () => {
+      time.setSystemTime(10_000_000_000_000)
+      const start = new UnixTime(123456789)
+      const clock = new Clock(start, 0)
+
+      const firstHour = clock.getFirstDay()
+      expect(firstHour).toEqual(start.toNext('day'))
+    })
+
+    it('cannot get first day with minTimestamp in the future', () => {
+      setTime('13:05:48')
+      const minTimestamp = toTimestamp('15:12:34')
+      const clock = new Clock(minTimestamp, 0)
+      expect(() => clock.getFirstDay()).toThrow(
+        'minTimestamp must be in the past',
+      )
     })
   })
 

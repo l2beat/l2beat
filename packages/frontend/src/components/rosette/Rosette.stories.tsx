@@ -23,7 +23,7 @@ export default {
       options: ['bad', 'warning', 'good', 'neutral', 'UnderReview'],
       control: { type: 'select' },
     },
-    upgradeability: {
+    exitWindow: {
       options: ['bad', 'warning', 'good', 'neutral', 'UnderReview'],
       control: { type: 'select' },
     },
@@ -38,7 +38,7 @@ const args: RiskSentiments = {
   sequencerFailure: 'bad',
   stateValidation: 'warning',
   dataAvailability: 'good',
-  upgradeability: 'bad',
+  exitWindow: 'bad',
   proposerFailure: 'warning',
 }
 
@@ -76,9 +76,9 @@ function BigTemplate(risks: RiskSentiments) {
       value: 'Data availability',
       description: 'If the sequencer fails, the network will halt.',
     },
-    upgradeability: {
-      sentiment: risks.upgradeability,
-      value: 'Upgradeability',
+    exitWindow: {
+      sentiment: risks.exitWindow,
+      value: 'Exit window',
       description: 'If the sequencer fails, the network will halt.',
     },
     stateValidation: {
@@ -121,7 +121,7 @@ UpcomingRosette.args = {
     value: '',
     sentiment: 'neutral',
   },
-  upgradeability: {
+  exitWindow: {
     value: '',
     sentiment: 'neutral',
   },

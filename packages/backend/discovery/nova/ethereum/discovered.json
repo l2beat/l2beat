@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 18189883,
-  "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",
+  "blockNumber": 18564156,
+  "configHash": "0xb0e0d65b315aa8ebdd587cf3528e36b93ad91fab80adc74c65f67a429d70470c",
   "version": 3,
   "contracts": [
     {
@@ -24,13 +24,13 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1656050353,
       "values": {
-        "batchCount": 20597,
+        "batchCount": 23543,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 251301
+        "totalDelayedMessagesRead": 260397
       }
     },
     {
@@ -283,11 +283,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 251305,
+        "delayedMessageCount": 260398,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 20597,
-        "sequencerReportedSubMessageCount": 21650166
+        "sequencerMessageCount": 23543,
+        "sequencerReportedSubMessageCount": 29275737
       }
     },
     {
@@ -418,12 +418,12 @@
         "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
         "getChainId": 1,
         "getOwners": [
-          "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
+          "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
+          "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
+          "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
+          "0xb07dc9103328A51128bC6Cc1049d1137035f5E28",
+          "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
           "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd",
-          "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-          "0x8688515028955734350067695939423222009623",
-          "0x88910996671162953E89DdcE5C8137f9077da217",
-          "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
           "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
           "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
@@ -458,12 +458,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 10480,
+        "firstUnresolvedNode": 11732,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 10479,
-        "latestNodeCreated": 10633,
+        "latestConfirmed": 11731,
+        "latestNodeCreated": 11882,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -488,16 +488,16 @@
   ],
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-    "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
+    "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
+    "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-    "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
     "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
     "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
-    "0x8688515028955734350067695939423222009623",
-    "0x88910996671162953E89DdcE5C8137f9077da217",
-    "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
+    "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
     "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+    "0xb07dc9103328A51128bC6Cc1049d1137035f5E28",
+    "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
     "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
     "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
     "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"

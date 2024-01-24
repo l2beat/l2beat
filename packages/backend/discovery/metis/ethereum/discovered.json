@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 18340232,
-  "configHash": "0x57741a5b03b4c4f6979a475f03c8d046003af59b7730a391c37b5fedc7dd8026",
+  "blockNumber": 18833503,
+  "configHash": "0xfdd4ca10ee6471a3b53b346aa1d685a50577a0ced80c2b6e2dc95b9c41668bec",
   "version": 3,
   "contracts": [
     {
@@ -31,10 +31,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x0000000000000000000000000000000000006528f4bb0000884234",
-        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006528f4bb0000884234",
-        "length": 18814,
-        "lengthByChainId": 18814,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000658402670000959581",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000658402670000959581",
+        "length": 20441,
+        "lengthByChainId": 20441,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -110,13 +110,13 @@
         "DEFAULT_CHAINID": 1088,
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 18340151,
-        "getLastTimestamp": 1697184290,
-        "getNextQueueIndex": 28922,
+        "getLastBlockNumber": 18833456,
+        "getLastTimestamp": 1703152370,
+        "getNextQueueIndex": 29821,
         "getNumPendingQueueElements": 1,
-        "getQueueLength": 28923,
-        "getTotalBatches": 38514,
-        "getTotalElements": 8930295,
+        "getQueueLength": 29822,
+        "getTotalBatches": 40164,
+        "getTotalElements": 9803906,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -217,7 +217,7 @@
         "name": "Metis Token",
         "owner": "0x0000000000000000000000000000000000000000",
         "symbol": "Metis",
-        "totalSupply": "5410000510000000000000000"
+        "totalSupply": "10000000000000000000000000"
       },
       "derivedName": "MToken"
     },
@@ -273,12 +273,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1697182907,
-        "getLastSequencerTimestampByChainId": 1697182907,
-        "getTotalBatches": 18814,
-        "getTotalBatchesByChainId": 18814,
-        "getTotalElements": 8929844,
-        "getTotalElementsByChainId": 8929844,
+        "getLastSequencerTimestamp": 1703150183,
+        "getLastSequencerTimestampByChainId": 1703150183,
+        "getTotalBatches": 20441,
+        "getTotalBatchesByChainId": 20441,
+        "getTotalElements": 9803137,
+        "getTotalElementsByChainId": 9803137,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },

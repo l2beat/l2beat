@@ -1,4 +1,207 @@
-# Diff at Tue, 07 Nov 2023 10:45:37 GMT:
+# Diff at Mon, 22 Jan 2024 16:58:34 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: master@f58cc44bf923844f52038487bcd5a563329f4b43 block: 18941390
+- current block number: 19063596
+
+## Description
+
+Default lib switched to FPValidator.
+New path-ways added.
+
+## Watched changes
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+      values.chainAddressSizeMap.234:
++        20
+      values.defaultAdapterParams.234:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAppConfig.101.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.101.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.102.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.102.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.106.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.106.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.109.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.109.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.110.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.110.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.111.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.111.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.112.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.112.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.115.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.115.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.116.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.116.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.126.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.126.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.234:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.inboundProofLibrary.234:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.supportedOutboundProof.234:
++        2
+      values.ulnLookup.234:
++        "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+    }
+```
+
+# Diff at Fri, 05 Jan 2024 13:32:55 GMT
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: master@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18671199
+- current block number: 18941390
+
+## Description
+
+Removed the INBOUND_PROOF_LIBRARIES for a more detailed field.
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18671199 (main branch discovery), not current.
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+      values.INBOUND_PROOF_LIBRARIES:
+-        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StargateToken (0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FPValidator (0x07245eEa05826F5984c7c3C8F478b04892e4df89) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859) {
+    }
+```
+
+# Diff at Tue, 28 Nov 2023 16:07:09 GMT
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: master@049dc0679d8762dc52199c99e9e62ba7cb396a7b
+
+## Description
+
+New remote chains added: 217, 218, 230. One of the owners in the Stargate Multisig has changed.
+
+## Watched changes
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+      values.chainAddressSizeMap.217:
++        20
+      values.chainAddressSizeMap.218:
++        20
+      values.chainAddressSizeMap.230:
++        20
+      values.defaultAdapterParams.217:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAdapterParams.218:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAdapterParams.230:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAppConfig.217:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.defaultAppConfig.218:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.defaultAppConfig.230:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":15,"oracle":"0x5a54fe5234E811466D5366846283323c954310B2","relayer":"0x902F09715B6303d4173037652FA7377e5b98089E"}
+      values.inboundProofLibrary.217:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.inboundProofLibrary.218:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.inboundProofLibrary.230:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x07245eEa05826F5984c7c3C8F478b04892e4df89"]
+      values.supportedOutboundProof.217:
++        [1,2]
+      values.supportedOutboundProof.218:
++        [1,2]
+      values.supportedOutboundProof.230:
++        2
+      values.ulnLookup.217:
++        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+      values.ulnLookup.218:
++        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+      values.ulnLookup.230:
++        "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+    }
+```
+
+```diff
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+      values.getOwners.2:
+-        "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1"
++        "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
+      values.getOwners.1:
+-        "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
++        "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
+      values.getOwners.0:
+-        "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
++        "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
+    }
+```
+
+# Diff at Tue, 07 Nov 2023 10:45:37 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
 - comparing to: master@1272f95e37268203d1aa19a319b3dff48af9c73c

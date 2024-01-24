@@ -1,5 +1,9 @@
 import {
   ActivityApiResponse,
+  DiffHistoryApiResponse,
+  FinalityApiResponse,
+  LivenessApiResponse,
+  ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
@@ -18,6 +22,7 @@ export interface Wrapped<Props> {
 
 export interface WrapperProps {
   htmlClassName?: string
+  bodyClassName?: string
   metadata: PageMetadata
   preloadApi?: string
   banner: boolean | undefined
@@ -33,5 +38,9 @@ export interface PagesData {
   tvlApiResponse: TvlApiResponse
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
+  livenessApiResponse: LivenessApiResponse | undefined
+  finalityApiResponse: FinalityApiResponse | undefined
+  diffHistory: DiffHistoryApiResponse | undefined
 }

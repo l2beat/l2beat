@@ -1,7 +1,7 @@
-export type LivenessType = 'DA' | 'STATE'
+export type LivenessType = 'DA' | 'STATE' | 'PROOF'
 
 export function isLivenessType(value: string): value is LivenessType {
-  return value === 'DA' || value === 'STATE'
+  return value === 'DA' || value === 'STATE' || value === 'PROOF'
 }
 
 export function LivenessType(value: string): LivenessType {

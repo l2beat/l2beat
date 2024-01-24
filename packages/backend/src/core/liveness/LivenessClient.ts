@@ -1,11 +1,11 @@
-import { BigQueryClient } from '@l2beat/shared'
-import { EthereumAddress, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
-import { Project } from '../../model'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { LivenessRecord } from '../../peripherals/database/LivenessRepository'
 import {
-  LivenessConfig,
+  LivenessConfigEntry,
   LivenessFunctionCall,
+  LivenessSharpSubmission,
   LivenessTransfer,
 } from './types/LivenessConfig'
 import {
@@ -13,54 +13,41 @@ import {
   BigQueryTransfersResult,
 } from './types/model'
 import {
-  adjustToForBigqueryCall,
   getFunctionCallQuery,
   getTransferQuery,
-  isTimestampInRange,
   transformFunctionCallsQueryResult,
   transformTransfersQueryResult,
 } from './utils'
-
-export interface FunctionCallQueryParams {
-  address: EthereumAddress
-  selector: string
-}
-
-export interface TransferQueryParams {
-  from: EthereumAddress
-  to: EthereumAddress
-}
 
 export class LivenessClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
   async getLivenessData(
-    projects: Project[],
+    configurations: LivenessConfigEntry[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<{ data: LivenessRecord[]; to: UnixTime }> {
-    // TODO: find missing data for this range(from,to)
-
-    const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
-
-    const config: LivenessConfig = mergeConfigs(projects)
-
-    const transfersConfig = config.transfers.filter((c) =>
-      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, adjustedTo),
+  ): Promise<LivenessRecord[]> {
+    const transfersConfig = configurations.filter(
+      (c): c is LivenessTransfer => c.formula === 'transfer',
     )
-    const functionCallsConfig = config.functionCalls.filter((c) =>
-      isTimestampInRange(c.sinceTimestamp, c.untilTimestamp, from, adjustedTo),
+    const functionCallsConfig = configurations.filter(
+      (c): c is LivenessFunctionCall => c.formula === 'functionCall',
+    )
+    const sharpSubmissionsConfig = configurations.filter(
+      (c): c is LivenessSharpSubmission => c.formula === 'sharpSubmission',
     )
 
     const [transfers, functionCalls] = await Promise.all([
-      this.getTransfers(transfersConfig, from, adjustedTo),
-      this.getFunctionCalls(functionCallsConfig, from, adjustedTo),
+      this.getTransfers(transfersConfig, from, to),
+      this.getFunctionCalls(
+        functionCallsConfig,
+        sharpSubmissionsConfig,
+        from,
+        to,
+      ),
     ])
 
-    return {
-      data: [...transfers, ...functionCalls],
-      to: adjustedTo,
-    }
+    return [...transfers, ...functionCalls]
   }
 
   async getTransfers(
@@ -79,26 +66,42 @@ export class LivenessClient {
 
   async getFunctionCalls(
     functionCallsConfig: LivenessFunctionCall[],
+    sharpSubmissionsConfig: LivenessSharpSubmission[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
-    if (functionCallsConfig.length === 0) return Promise.resolve([])
+    if (functionCallsConfig.length === 0 && sharpSubmissionsConfig.length === 0)
+      return Promise.resolve([])
 
-    const query = getFunctionCallQuery(functionCallsConfig, from, to)
+    // function calls and sharp submissions will be batched into one query to save costs
+    const query = getFunctionCallQuery(
+      combineCalls(functionCallsConfig, sharpSubmissionsConfig),
+      from,
+      to,
+    )
 
     const queryResult = await this.bigquery.query(query)
+    // function calls and sharp submissions need the same fields for the later transform logic
+    // this is why we parse all the results with the same parser
     const parsedResult = BigQueryFunctionCallsResult.parse(queryResult)
-    return transformFunctionCallsQueryResult(functionCallsConfig, parsedResult)
+
+    // this will find matching configs based on different criteria for function calls and sharp submissions
+    // hence this is the place where "unbatching" happens
+    return transformFunctionCallsQueryResult(
+      functionCallsConfig,
+      sharpSubmissionsConfig,
+      parsedResult,
+    )
   }
 }
 
-export function mergeConfigs(projects: Project[]): LivenessConfig {
-  return {
-    transfers: projects
-      .flatMap((p) => p.livenessConfig?.transfers)
-      .filter(notUndefined),
-    functionCalls: projects
-      .flatMap((p) => p.livenessConfig?.functionCalls)
-      .filter(notUndefined),
-  }
+function combineCalls(
+  functionCallsConfig: LivenessFunctionCall[],
+  sharpSubmissionsConfig: LivenessSharpSubmission[],
+) {
+  // TODO: unique
+  return [
+    ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
+    ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
+  ]
 }

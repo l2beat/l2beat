@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { CheckIcon } from './icons'
 
 export interface CheckboxProps {
@@ -8,8 +8,6 @@ export interface CheckboxProps {
   checkIconClassName?: string
   label: ReactNode
   role: string
-  slugsWhenChecked?: string[]
-  slugsWhenUnchecked?: string[]
   id: string
   defaultChecked?: boolean
 }
@@ -19,14 +17,13 @@ export function Checkbox({
   checkIconClassName,
   label,
   role,
-  slugsWhenChecked,
-  slugsWhenUnchecked,
   id,
   defaultChecked,
+  ...rest
 }: CheckboxProps) {
   return (
     <label
-      className={classNames(
+      className={cn(
         'bg-gray-200 text-base font-semibold dark:bg-gray-750',
         'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg py-1 pl-2 pr-3',
         className,
@@ -34,16 +31,15 @@ export function Checkbox({
     >
       <input
         data-role={role}
-        data-slugs-when-checked={slugsWhenChecked}
-        data-slugs-when-unchecked={slugsWhenUnchecked}
         id={id}
         type="checkbox"
         autoComplete="off"
         className="peer hidden"
         defaultChecked={defaultChecked}
+        {...rest}
       />
-      <CheckIcon className={classNames('flex-shrink-0', checkIconClassName)} />
-      <span>{label}</span>
+      <CheckIcon className={cn('flex-shrink-0', checkIconClassName)} />
+      <span className="whitespace-pre">{label}</span>
     </label>
   )
 }

@@ -3,7 +3,7 @@ import React from 'react'
 
 import { ChartSection } from '../../../../components/project/ChartSection'
 import { ContractsSection } from '../../../../components/project/ContractsSection'
-import { DescriptionSection } from '../../../../components/project/DescriptionSection'
+import { DetailedDescriptionSection } from '../../../../components/project/DetailedDescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSection } from '../../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../../components/project/PermissionsSection'
@@ -13,10 +13,13 @@ import {
   TechnologyIncompleteProps,
 } from '../../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../../components/project/TechnologySection'
+import { WrongResearchCTA } from '../../../../components/project/WrongInformationCTA'
 import { BridgeDetailsItem } from '../props/getProjectDetails'
 export interface ProjectDetailsProps {
-  incomplete?: TechnologyIncompleteProps
   items: BridgeDetailsItem[]
+  issueLink: string
+  editLink: string
+  incomplete?: TechnologyIncompleteProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -28,8 +31,10 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <ChartSection key={item.props.id} {...item.props} />
           case 'MilestonesSection':
             return <MilestonesSection key={item.props.id} {...item.props} />
-          case 'DescriptionSection':
-            return <DescriptionSection key={item.props.id} {...item.props} />
+          case 'DetailedDescriptionSection':
+            return (
+              <DetailedDescriptionSection key={item.props.id} {...item.props} />
+            )
           case 'RiskSection':
             return <RiskSection key={item.props.id} {...item.props} />
           case 'TechnologyIncompleteNote':
@@ -53,6 +58,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             assertUnreachable(item)
         }
       })}
+      <WrongResearchCTA issueLink={props.issueLink} editLink={props.editLink} />
     </div>
   )
 }

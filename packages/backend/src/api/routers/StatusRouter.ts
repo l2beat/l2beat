@@ -14,14 +14,12 @@ const queryParser = z.object({
   }),
 })
 
-const paramsParser = z.object({
-  params: z.object({
-    project: z.string(),
-  }),
-})
-
 export function createStatusRouter(statusController: StatusController) {
   const router = new Router()
+
+  router.get('/status', (ctx) => {
+    ctx.body = statusController.getStatusPagesLinks()
+  })
 
   router.get(
     '/status/prices',
@@ -78,19 +76,30 @@ export function createStatusRouter(statusController: StatusController) {
   )
 
   router.get('/status/discovery', async (ctx) => {
-    ctx.body = await statusController.getDiscoveryDashboard(ChainId.ETHEREUM)
+    ctx.body = await statusController.getDiscoveryDashboard()
   })
 
   router.get(
-    '/status/discovery/:project',
-    withTypedContext(paramsParser, async (ctx) => {
-      const { project } = ctx.params
-      ctx.body = await statusController.getDiscoveryDashboardProject(
-        project,
-        ChainId.ETHEREUM,
-      )
-    }),
+    '/status/discovery/:chain/:project',
+    withTypedContext(
+      z.object({
+        params: z.object({
+          chain: z.string(),
+          project: z.string(),
+        }),
+      }),
+      async (ctx) => {
+        ctx.body = await statusController.getDiscoveryDashboardProject(
+          ctx.params.project,
+          ctx.params.chain,
+        )
+      },
+    ),
   )
+
+  router.get('/status/liveness', async (ctx) => {
+    ctx.body = await statusController.getLivenessStatus()
+  })
 
   return router
 }

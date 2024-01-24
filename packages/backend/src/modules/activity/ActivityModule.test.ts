@@ -10,6 +10,7 @@ import { createActivityModule, shouldCounterBeIncluded } from './ActivityModule'
 
 const PROJECT: Project = {
   projectId: ProjectId('project'),
+  slug: 'project',
   type: 'layer2',
   escrows: [],
   transactionApi: {

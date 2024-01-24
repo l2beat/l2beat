@@ -2,49 +2,31 @@ import React from 'react'
 
 import { BridgeDetailsSection } from '../../../pages/bridges/projects/props/getProjectDetails'
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
-import { ChevronLeftIcon, ChevronRightIcon } from '../../icons'
-import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
+import { OverflowWrapper } from '../../OverflowWrapper'
 
 interface Props {
   sections: (ScalingDetailsSection | BridgeDetailsSection)[]
 }
 
 export function MobileProjectNavigation({ sections }: Props) {
+  if (sections.length === 0) return null
+
   return (
-    <div
-      id={MOBILE_PROJECT_NAVIGATION_IDS.container}
-      className="relative bg-white dark:bg-gray-950"
+    <OverflowWrapper
+      className="bg-white dark:bg-neutral-900"
+      disableScrollOnLoad
     >
-      <div
-        className="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-white via-white opacity-0 transition-opacity dark:from-gray-950 dark:via-gray-950"
-        id={MOBILE_PROJECT_NAVIGATION_IDS.arrowLeft}
-      >
-        <div className="flex h-full items-center justify-center">
-          <ChevronLeftIcon className="scale-75" />
-        </div>
-      </div>
-      <div
-        className="scrollbar-hide flex flex-row items-center overflow-x-auto"
-        id={MOBILE_PROJECT_NAVIGATION_IDS.list}
-      >
+      <div className="flex items-center">
         <a
           href="#"
-          id={MOBILE_PROJECT_NAVIGATION_IDS.summaryItem}
-          className="whitespace-nowrap p-4 text-xs transition-colors"
+          data-role="mobile-project-navigation-summary-item"
+          className="whitespace-nowrap p-4 text-xs transition-colors data-[selected=true]:border-b-2 data-[selected=true]:border-current data-[selected=true]:text-pink-900 data-[selected=true]:dark:text-pink-200"
         >
           Summary
         </a>
         <ProjectNavigationList sections={sections} />
       </div>
-      <div
-        className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-white via-white opacity-0 transition-opacity dark:from-gray-950 dark:via-gray-950"
-        id={MOBILE_PROJECT_NAVIGATION_IDS.arrowRight}
-      >
-        <div className="flex h-full items-center justify-center">
-          <ChevronRightIcon className="scale-75" />
-        </div>
-      </div>
-    </div>
+    </OverflowWrapper>
   )
 }
 
@@ -56,7 +38,7 @@ function ProjectNavigationList({ sections }: Pick<Props, 'sections'>) {
           <a
             key={section.props.id}
             href={`#${section.props.id}`}
-            className="whitespace-nowrap p-4 text-xs transition-colors"
+            className="whitespace-nowrap p-4 text-xs transition-colors data-[selected=true]:border-b-2 data-[selected=true]:border-current data-[selected=true]:text-pink-900 data-[selected=true]:dark:text-pink-200"
           >
             {section.props.title}
           </a>

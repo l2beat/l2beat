@@ -1,4 +1,3 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Badge } from './Badge'
@@ -11,9 +10,9 @@ export interface UpcomingBadgeProps {
 export function UpcomingBadge(props: UpcomingBadgeProps) {
   return (
     <Badge
-      className={cx(props.className)}
+      className={props.className}
       type="gray"
-      title={'The data for this item is not available yet'}
+      title="The data for this item is not available yet"
       oneSize
     >
       {props.isShort ? '?' : 'Coming soon'}

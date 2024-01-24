@@ -4,6 +4,7 @@ import React from 'react'
 import {
   ChevronDownIcon,
   MissingIcon,
+  RoundedWarningIcon,
   SatisfiedIcon,
   UnderReviewIcon,
 } from '../icons'
@@ -12,21 +13,22 @@ import { Markdown } from '../Markdown'
 import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 import { UnderReviewCallout } from './UnderReviewCallout'
+import { WarningBar } from './WarningBar'
 
 export interface StageSectionProps {
   title: string
-  id: SectionId
+  id: ProjectSectionId
   icon: string
   name: string
   type: string
-  stage: UsableStageConfig
+  stageConfig: UsableStageConfig
   isUnderReview?: boolean
 }
 
 export function StageSection(props: StageSectionProps) {
-  if (props.stage.stage === 'UnderReview' || props.isUnderReview) {
+  if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return (
       <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
         <div className="mb-6 font-medium">
@@ -37,7 +39,7 @@ export function StageSection(props: StageSectionProps) {
           />
           {props.name} is currently
           <StageBadge
-            stage={props.stage.stage}
+            stage={props.stageConfig.stage}
             big
             className="mx-1 md:mx-1.5"
           />
@@ -48,6 +50,11 @@ export function StageSection(props: StageSectionProps) {
     )
   }
 
+  const warningBarIcon =
+    props.stageConfig.message?.type === 'warning'
+      ? RoundedWarningIcon
+      : UnderReviewIcon
+
   return (
     <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
       <div className="mb-6 font-medium">
@@ -57,10 +64,23 @@ export function StageSection(props: StageSectionProps) {
           className="relative -top-0.5 mr-2 inline-block h-6 w-6"
         />
         {props.name} is a{' '}
-        <StageBadge stage={props.stage.stage} big className="mx-1" />
+        <StageBadge
+          stage={props.stageConfig.stage}
+          icon={props.stageConfig.message?.type}
+          big
+          className="mx-1"
+        />
         <span className="lowercase"> {props.type}</span>.
       </div>
-      {props.stage.summary.map((stage) => {
+      {props.stageConfig.message && (
+        <WarningBar
+          color="yellow"
+          className="mb-6"
+          icon={warningBarIcon}
+          text={props.stageConfig.message.text}
+        />
+      )}
+      {props.stageConfig.summary.map((stage) => {
         const satisfied = stage.requirements.filter((r) => r.satisfied === true)
         const missing = stage.requirements.filter((r) => r.satisfied === false)
         const underReview = stage.requirements.filter(
@@ -95,7 +115,11 @@ export function StageSection(props: StageSectionProps) {
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
-                    <MissingIcon className="shrink-0" />
+                    {stage.stage === 'Stage 0' ? (
+                      <RoundedWarningIcon className="h-4 w-4 shrink-0 fill-yellow-300" />
+                    ) : (
+                      <MissingIcon className="shrink-0" />
+                    )}
                     <span>{reqTextMissing(missing.length)}</span>
                   </div>
                 )}
@@ -121,7 +145,11 @@ export function StageSection(props: StageSectionProps) {
               ))}
               {missing.map((req, i) => (
                 <li key={i} className="flex">
-                  <MissingIcon className=" relative top-0.5 shrink-0" />
+                  {stage.stage === 'Stage 0' ? (
+                    <RoundedWarningIcon className="h-4 w-4 shrink-0 fill-yellow-300" />
+                  ) : (
+                    <MissingIcon className="relative top-0.5 shrink-0" />
+                  )}
                   <Markdown className="ml-2" inline>
                     {req.description}
                   </Markdown>

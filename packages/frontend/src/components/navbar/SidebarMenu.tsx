@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { ActivityIcon, RiskIcon, SummaryIcon } from '../icons'
+import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { FinalityIcon } from '../icons/pages/FinalityIcon'
+import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -12,6 +14,8 @@ import { NavbarPage } from './types'
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
   showActivity: boolean
+  showFinality: boolean
+  showLiveness: boolean
   showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -46,9 +50,25 @@ export function SidebarMenu(props: SidebarMenuProps) {
                 <a href="/scaling/summary">Summary</a>
               </li>
               <li className="flex gap-2 font-medium">
+                <TvlIcon className="h-auto w-4" />
+                <a href="/scaling/tvl">Value Locked</a>
+              </li>
+              <li className="flex gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />
                 <a href="/scaling/risk">Risks</a>
               </li>
+              {props.showLiveness && (
+                <li className="flex gap-2 font-medium">
+                  <LivenessIcon className="h-auto w-4" />
+                  <a href="/scaling/liveness">Liveness</a>
+                </li>
+              )}
+              {props.showFinality && (
+                <li className="flex gap-2 font-medium">
+                  <FinalityIcon className="h-auto w-4" />
+                  <a href="/scaling/finality">Finality</a>
+                </li>
+              )}
               {props.showActivity && (
                 <li className="flex items-center gap-2 font-medium">
                   <ActivityIcon className="h-auto w-4" />

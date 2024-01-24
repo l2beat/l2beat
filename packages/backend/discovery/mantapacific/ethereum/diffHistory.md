@@ -1,3 +1,125 @@
+# Diff at Mon, 22 Jan 2024 09:26:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@7755f153438c1f16773ba6733cfa3a8c8bc0a394 block: 19040782
+- current block number: 19061375
+
+## Description
+
+L2 Block gas limit decreased, but still increased from the previous 30000000.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.gasLimit:
+-        100000000
++        50000000
+    }
+```
+
+# Diff at Fri, 19 Jan 2024 12:03:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: master@a25b693cc3754074753705b502d4656fdd29ecbb block: 18927709
+- current block number: 19040782
+
+## Description
+
+L2 Block gas limit increased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.gasLimit:
+-        30000000
++        100000000
+    }
+```
+
+# Diff at Wed, 03 Jan 2024 15:26:09 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@e8eb03b39061a86a8ec01e26d970e40d080ad225
+
+## Description
+
+Scalar - a system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation, has been increased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.scalar:
+-        166667
++        333333
+    }
+```
+
+# Diff at Tue, 19 Dec 2023 14:23:07 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@a5f45641c9d10d62e395e1cd088a79446ab63c09
+
+## Description
+
+Scalar - a system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation, has been decreased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.scalar:
+-        700000
++        166667
+    }
+```
+
+# Diff at Thu, 30 Nov 2023 10:07:56 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: master@d4d01e687218065c65077f4e7616188f47938ed3
+
+## Description
+
+Scalar - a system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation, has been decreased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.scalar:
+-        1000000
++        700000
+    }
+```
+
+# Diff at Fri, 17 Nov 2023 12:11:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: master@8df7aef75226275b8e56ba8d4d76ce64057b0360
+
+## Description
+
+System configuration parameters used for L2 fee calculation have been decreased:
+
+- overhead: 2100 -> 1000
+- scalar: 1300000 -> 1000000
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+      values.overhead:
+-        2100
++        1000
+      values.scalar:
+-        1300000
++        1000000
+    }
+```
+
 # Diff at Mon, 02 Oct 2023 13:46:59 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)

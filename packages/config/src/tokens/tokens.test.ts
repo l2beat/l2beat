@@ -5,8 +5,7 @@ import { Contract, providers, utils } from 'ethers'
 
 import { bridges } from '../bridges'
 import { config } from '../test/config'
-import { tokenList } from './tokens'
-import { getCanonicalTokens } from './types'
+import { canonicalTokenList, tokenList } from './tokens'
 
 describe('tokens', () => {
   it('every token has a unique address', () => {
@@ -21,15 +20,9 @@ describe('tokens', () => {
     expect(everyUnique).toEqual(true)
   })
 
-  it('tokens are ordered alphabetically', () => {
-    const names = tokenList.map((x) => x.name)
-    const sorted = [...names].sort((a, b) => a.localeCompare(b))
-    expect(names).toEqual(sorted)
-  })
-
   describe('canonical', () => {
     it('every token has a unique symbol', () => {
-      const symbols = getCanonicalTokens().map((x) => x.symbol)
+      const symbols = canonicalTokenList.map((x) => x.symbol)
       const everyUnique = symbols.every((x, i) => symbols.indexOf(x) === i)
       expect(everyUnique).toEqual(true)
     })
@@ -54,7 +47,7 @@ describe('tokens', () => {
         decimals: number
       }
       const results: Record<string, Metadata> = {}
-      const checkedTokens = getCanonicalTokens().filter(
+      const checkedTokens = canonicalTokenList.filter(
         (x) => x.id !== AssetId('op-optimism'),
       )
 
@@ -158,9 +151,35 @@ describe('tokens', () => {
           result.set(EthereumAddress(coin.platforms.ethereum), coin.id)
       })
 
-      getCanonicalTokens().map((token) => {
+      canonicalTokenList.map((token) => {
         if (token.symbol === 'ETH') {
           expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
+        } else if (
+          token.id === AssetId('wusdm-wrapped-mountain-protocol-usd')
+        ) {
+          // TODO(radomski): This is a short term solution to the problem of
+          // wrapped token prices. wUSDM is ~15% of Manta Pacific TVL but the
+          // Coingecko price chart for the _WRAPPED_ version of this token is
+          // broken. After an investigation we've decided to temporally
+          // approximate the price of the wUSDM to be the same as the
+          // non-wrapped source (USDM). In reality at the time of writing this
+          // comment it's more like
+          //
+          // 1wUSDM = 1.0118 USDM
+          //
+          // A more generalized solution is required. But since we can't
+          // stall forever until the perfect solution is ready we accept this
+          // approximation. A generalized solution would determine the price
+          // of a token based on the price of a different token times some
+          // multiplier. Where the multiplier can be dynamic, that means it
+          // requires calling a custom typescript function. Further work will
+          // be cooperated by @antooni, refer to him for further questions
+          //
+          // - 3 January 2024
+          //
+          expect(token.coingeckoId).toEqual(
+            CoingeckoId('mountain-protocol-usdm'),
+          )
         } else {
           const expectedId = token.address && result.get(token.address)
           if (expectedId) {

@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 18218644,
-  "configHash": "0xf09231d38def68363076c58ddae0fb5b343cac22e024ecb8cbe417fa851f067c",
+  "blockNumber": 18975204,
+  "configHash": "0xc0be4d5abb16d47c435a1e137986e4e761ac7c1343c0b8448a07573d706f8c54",
   "version": 3,
   "contracts": [
     {
@@ -55,7 +55,7 @@
       "derivedName": "SystemConfig"
     },
     {
-      "name": "L1CrossDomainMessengerProxy",
+      "name": "L1CrossDomainMessenger",
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
       "upgradeability": {
         "type": "resolved delegate proxy",
@@ -67,7 +67,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292675030",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292705294",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -161,6 +161,63 @@
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
       }
+    },
+    {
+      "name": "wstETHEscrow",
+      "address": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x29C5c51A031165CE62F964966A6399b81165EFA4",
+        "admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      },
+      "implementations": ["0x29C5c51A031165CE62F964966A6399b81165EFA4"],
+      "sinceTimestamp": 1659687799,
+      "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "0x73b047fe6337183A454c5217241D780a932777bD"
+            ]
+          },
+          "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "0x73b047fe6337183A454c5217241D780a932777bD"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
+        "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
+        "isDepositsEnabled": true,
+        "isInitialized": true,
+        "isWithdrawalsEnabled": true,
+        "l1Token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "l2Token": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+        "l2TokenBridge": "0x8E01013243a96601a86eb3153F0d9Fa4fbFb6957",
+        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "proxy__getAdmin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "proxy__getImplementation": "0x29C5c51A031165CE62F964966A6399b81165EFA4",
+        "proxy__getIsOssified": false,
+        "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
+        "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
+      },
+      "derivedName": "L1ERC20TokenBridge"
     },
     {
       "name": "SCCStorageContainerBatches_OLD",
@@ -271,7 +328,7 @@
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491822, 18218639],
+        "params": [1000000000, 1301449, 18975059],
         "paused": false,
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.6.0"
@@ -340,10 +397,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 110057263,
-        "latestOutputIndex": 2678,
-        "nextBlockNumber": 110059063,
-        "nextOutputIndex": 2679,
+        "latestBlockNumber": 114636463,
+        "latestOutputIndex": 5222,
+        "nextBlockNumber": 114638263,
+        "nextOutputIndex": 5223,
         "PROPOSER": "0x473300df21D047806A082244b417f96b32f13A33",
         "startingBlockNumber": 105235063,
         "startingTimestamp": 1686068903,
@@ -366,12 +423,10 @@
         "domainSeparator": "0x812bd2187bbdb6f18e0fde445c3e46e10661c15c4af7f51d5795d4dec4fb4caa",
         "getChainId": 1,
         "getOwners": [
-          "0x28Ed18Bd77A061E0A886a2a8FFb91da95FF03E56",
-          "0xd9b891AB93C210eafa46c61fAeb53836F99aa35B",
+          "0x26E10fF641839cA457695CE955Cb90657D6E3F53",
           "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a",
           "0x8909F73188C4fE68B283fCB1E724b2466e0BdfD0",
           "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC",
-          "0x6985b94Db148eDd4df6BD1Ba3F4640da79B44947",
           "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8",
           "0xa2fa6Ef1Fcf740b632a04B3FC56B5d3118Bbd211",
           "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE",
@@ -381,7 +436,7 @@
           "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
         ],
         "getThreshold": 5,
-        "nonce": 3011,
+        "nonce": 3051,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -391,7 +446,7 @@
     "0x000000000000000000000000000000000000dEaD",
     "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a",
     "0x1dd532CF7603a60C3ec91360f273DA3Db38545aB",
-    "0x28Ed18Bd77A061E0A886a2a8FFb91da95FF03E56",
+    "0x26E10fF641839cA457695CE955Cb90657D6E3F53",
     "0x2d8cF727d37e7277D5eeDbAb853a3e8320f767Cd",
     "0x3041BA32f451F5850c147805F5521AC206421623",
     "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE",
@@ -403,15 +458,14 @@
     "0x562948111d50BF039A39Eea48D127f2Ae51ddF02",
     "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8",
     "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
-    "0x6985b94Db148eDd4df6BD1Ba3F4640da79B44947",
     "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
     "0x8909F73188C4fE68B283fCB1E724b2466e0BdfD0",
+    "0x8E01013243a96601a86eb3153F0d9Fa4fbFb6957",
     "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
     "0xa2fa6Ef1Fcf740b632a04B3FC56B5d3118Bbd211",
     "0xAAAA45d9549EDA09E70937013520214382Ffc4A2",
     "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
     "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
-    "0xd9b891AB93C210eafa46c61fAeb53836F99aa35B",
     "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC",
     "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
     "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
@@ -504,6 +558,56 @@
       "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
       "function unpause()",
       "function version() view returns (string)"
+    ],
+    "0x29C5c51A031165CE62F964966A6399b81165EFA4": [
+      "constructor(address messenger_, address l2TokenBridge_, address l1Token_, address l2Token_)",
+      "error ErrorAccountIsZeroAddress()",
+      "error ErrorAlreadyInitialized()",
+      "error ErrorDepositsDisabled()",
+      "error ErrorDepositsEnabled()",
+      "error ErrorSenderNotEOA()",
+      "error ErrorUnauthorizedMessenger()",
+      "error ErrorUnsupportedL1Token()",
+      "error ErrorUnsupportedL2Token()",
+      "error ErrorWithdrawalsDisabled()",
+      "error ErrorWithdrawalsEnabled()",
+      "error ErrorWrongCrossDomainSender()",
+      "event DepositsDisabled(address indexed disabler)",
+      "event DepositsEnabled(address indexed enabler)",
+      "event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event Initialized(address indexed admin)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WithdrawalsDisabled(address indexed disabler)",
+      "event WithdrawalsEnabled(address indexed enabler)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSITS_DISABLER_ROLE() view returns (bytes32)",
+      "function DEPOSITS_ENABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_DISABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_ENABLER_ROLE() view returns (bytes32)",
+      "function depositERC20(address l1Token_, address l2Token_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function depositERC20To(address l1Token_, address l2Token_, address to_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function disableDeposits()",
+      "function disableWithdrawals()",
+      "function enableDeposits()",
+      "function enableWithdrawals()",
+      "function finalizeERC20Withdrawal(address l1Token_, address l2Token_, address from_, address to_, uint256 amount_, bytes data_)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin_)",
+      "function isDepositsEnabled() view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isWithdrawalsEnabled() view returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Token() view returns (address)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
     "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
       "constructor()",
@@ -647,6 +751,22 @@
       "function nominateNewOwner(address _owner)",
       "function nominatedOwner() view returns (address)",
       "function owner() view returns (address)"
+    ],
+    "0x76943C0D61395d8F2edF9060e1533529cAe05dE6": [
+      "constructor(address implementation_, address admin_, bytes data_)",
+      "error ErrorNotAdmin()",
+      "error ErrorProxyIsOssified()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ProxyOssified()",
+      "event Upgraded(address indexed implementation)",
+      "function proxy__changeAdmin(address newAdmin_)",
+      "function proxy__getAdmin() view returns (address)",
+      "function proxy__getImplementation() view returns (address)",
+      "function proxy__getIsOssified() view returns (bool)",
+      "function proxy__ossify()",
+      "function proxy__upgradeTo(address newImplementation_)",
+      "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
     "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572": [
       "constructor(address _libAddressManager, string _owner)",

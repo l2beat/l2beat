@@ -1,11 +1,21 @@
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { FinalityIcon } from '../icons/pages/FinalityIcon'
+import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { NavigationPage, NavigationTabs } from './NavigationTabs'
 
 interface ScalingNavigationTabsProps {
-  selected: 'summary' | 'detailed' | 'risk' | 'activity'
+  selected:
+    | 'summary'
+    | 'detailed'
+    | 'risk'
+    | 'activity'
+    | 'liveness'
+    | 'finality'
   showActivity: boolean
+  showFinality: boolean
+  showLiveness: boolean
 }
 
 export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
@@ -22,7 +32,7 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
     fullTitle: 'Value Locked',
     shortTitle: 'Value',
     icon: <TvlIcon />,
-    link: '/scaling/detailedTvl',
+    link: '/scaling/tvl',
     selected: props.selected === 'detailed',
   })
 
@@ -33,6 +43,24 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
     link: '/scaling/risk',
     selected: props.selected === 'risk',
   })
+  if (props.showLiveness) {
+    pages.push({
+      fullTitle: 'Liveness',
+      shortTitle: 'Liveness',
+      icon: <LivenessIcon />,
+      link: '/scaling/liveness',
+      selected: props.selected === 'liveness',
+    })
+  }
+  if (props.showFinality) {
+    pages.push({
+      fullTitle: 'Finality',
+      shortTitle: 'Finality',
+      icon: <FinalityIcon />,
+      link: '/scaling/finality',
+      selected: props.selected === 'finality',
+    })
+  }
   if (props.showActivity) {
     pages.push({
       fullTitle: 'Activity',

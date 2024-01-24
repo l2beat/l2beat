@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -8,8 +7,9 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   OPERATOR,
-} from './common'
-import { RISK_VIEW } from './common/riskView'
+} from '../common'
+import { RISK_VIEW } from '../common/riskView'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
@@ -26,6 +26,13 @@ const regularUpgrades = {
   upgradeDelay: 'No delay',
 }
 
+const upgradeDelay = 0
+
+const challengePeriod = discovery.getContractValue<number>(
+  'StateCommitmentChain',
+  'FRAUD_PROOF_WINDOW',
+)
+
 const TssThreshold = discovery.getContractValue<
   [number, number, string, string[]]
 >('TssGroupManager', 'getTssGroupInfo')
@@ -37,22 +44,19 @@ export const mantle: Layer2 = {
   display: {
     name: 'Mantle',
     slug: 'mantle',
-    warning:
-      'Fraud proof system is currently disabled. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Mantle is an EVM compatible Optimium that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
-      It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
-      Note that as currently both of these technologies are yet to be fully launched on mainnet, Mantle needs to be considered "under development".\
-      Additionally Mantle uses a set of nodes that are required to co-sign state roots via TSS (Threshold Signature Scheme). This component is\
-      intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
-    purpose: 'Universal',
+      'Mantle is an under development EVM compatible Optimium, based on the Optimism OVM architecture.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+    purposes: ['Universal'],
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',
     links: {
-      websites: ['https://www.mantle.xyz/'],
+      websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs.mantle.xyz/'],
-      explorers: ['https://explorer.mantle.xyz/'],
+      explorers: ['https://explorer.mantle.xyz/', 'https://mantlescan.info'],
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
@@ -78,8 +82,6 @@ export const mantle: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      url: 'https://rpc.mantle.xyz',
-      callsPerMinute: 1500,
     },
   },
   riskView: makeBridgeCompatible({
@@ -93,15 +95,15 @@ export const mantle: Layer2 = {
         {
           contract: 'EigenDataLayerChain',
           references: [
-            // The contract that is supposed to perfrom the signature check is not verified!
+            // The contract that is supposed to perform the signature check is not verified!
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L328',
             'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L395', // dummy proveFraud function
           ],
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'L1CrossDomainMessenger',
@@ -230,6 +232,7 @@ export const mantle: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

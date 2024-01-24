@@ -1,7 +1,10 @@
-import { VerificationStatus } from '@l2beat/shared-pure'
-import cx from 'classnames'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
@@ -12,7 +15,9 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 
 export interface TechnologyContract {
   name: string
-  addresses?: string[]
+  addresses: string[]
+  chain: string
+  etherscanUrl: string
   description?: string
   links: TechnologyContractLinks[]
   upgradeableBy?: string
@@ -30,21 +35,31 @@ export interface TechnologyContractLinks {
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
 }
 
 export function ContractEntry({
   contract,
   verificationStatus,
+  manuallyVerifiedContracts,
   className,
 }: ContractEntryProps) {
+  const verificationStatusForChain =
+    verificationStatus.contracts[contract.chain] ?? {}
+  const manuallyVerifiedContractsForChain =
+    manuallyVerifiedContracts[contract.chain] ?? {}
+
   const areLinksUnverified = contract.links
     .filter((c) => !c.isAdmin)
-    .map((c) => verificationStatus.contracts[c.address])
+    .map((c) => verificationStatusForChain[c.address])
     .some((c) => c === false)
 
-  const areAddressesUnverified = (contract.addresses ?? [])
-    .map((c) => verificationStatus.contracts[c])
+  const addresses = contract.addresses
+  const references = contract.references ?? []
+
+  const areAddressesUnverified = addresses
+    .map((c) => verificationStatusForChain[c])
     .some((c) => c === false)
 
   const color = areAddressesUnverified || areLinksUnverified ? 'red' : undefined
@@ -55,24 +70,35 @@ export function ContractEntry({
         tooltip="Source code is not verified"
       />
     ) : (
-      <BulletIcon className="h-6 md:h-[27px]" />
+      <BulletIcon className="h-[1em]" />
     )
+
+  addresses.forEach((address) => {
+    const manuallyVerified = manuallyVerifiedContractsForChain[address]
+    if (manuallyVerified) {
+      references.push({
+        text: 'Source code',
+        href: manuallyVerified,
+      })
+    }
+  })
 
   return (
     <Callout
-      className={cx(color === 'red' ? 'p-4' : 'px-4', className)}
+      className={cn(color === 'red' ? 'p-4' : 'px-4', className)}
       color={color}
       icon={icon}
       body={
         <>
-          <div className="flex flex-wrap gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2">
             <strong>{contract.name}</strong>{' '}
-            {(contract.addresses ?? []).map((address, i) => (
+            {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
+                etherscanUrl={contract.etherscanUrl}
                 key={i}
-                className={cx(
-                  verificationStatus.contracts[address] === false
+                className={cn(
+                  verificationStatusForChain[address] === false
                     ? 'text-red-300'
                     : '',
                 )}
@@ -80,12 +106,12 @@ export function ContractEntry({
             ))}
             {contract.links.map((x, i) => (
               <Link
+                data-role="etherscan-link"
                 key={i}
-                className={cx(
-                  verificationStatus.contracts[x.address] === false &&
-                    !x.isAdmin
-                    ? 'text-red-300'
-                    : '',
+                className={cn(
+                  verificationStatusForChain[x.address] === false &&
+                    !x.isAdmin &&
+                    'text-red-300',
                 )}
                 href={x.href}
               >
@@ -128,8 +154,8 @@ export function ContractEntry({
               </Markdown>
             </>
           )}
-          {contract.references && (
-            <ReferenceList references={contract.references} tight />
+          {references.length > 0 && (
+            <ReferenceList references={references} tight />
           )}
         </>
       }

@@ -8,11 +8,17 @@ import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
+import { ChainConverter } from '../ChainConverter'
 import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
 
 describe(UpdateNotifier.name, () => {
+  const chainConverter = new ChainConverter([
+    { name: 'ethereum', chainId: ChainId.ETHEREUM },
+    { name: 'arbitrum', chainId: ChainId.ARBITRUM },
+  ])
+
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
@@ -22,6 +28,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
         findLatestId: async () => undefined,
+        getNewerThan: async () => [],
       })
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
@@ -29,6 +36,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -70,6 +78,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
 
@@ -81,6 +90,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
         findLatestId: async () => undefined,
+        getNewerThan: async () => [],
       })
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
@@ -88,6 +98,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -142,6 +153,7 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
 
@@ -153,12 +165,14 @@ describe(UpdateNotifier.name, () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
         findLatestId: async () => 0,
+        getNewerThan: async () => [],
       })
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
 
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -193,11 +207,12 @@ describe(UpdateNotifier.name, () => {
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
       })
     })
   })
 
-  describe(UpdateNotifier.prototype.handleUnresolved.name, () => {
+  describe(UpdateNotifier.prototype.sendDailyReminder.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
@@ -210,20 +225,22 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
-      const notUpdatedProjects = ['project-a', 'project-b']
+      const reminders = {
+        ['project-a']: ['ethereum', 'arbitrum'],
+        ['project-b']: ['ethereum', 'optimism'],
+      }
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
-      await updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
+      await updateNotifier.sendDailyReminder(reminders, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '```Daily bot report @ ' +
-          timestamp.toYYYYMMDD() +
-          '```\n:x: project-a\n\n:x: project-b',
+        `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes :x:\n\`\`\`\n- project-a (ethereum, arbitrum)\n- project-b (ethereum, optimism)\n\`\`\`\n`,
         'INTERNAL',
       )
     })
@@ -239,13 +256,17 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
-      const notUpdatedProjects = ['project-a', 'project-b']
+      const reminders = {
+        ['project-a']: ['ethereum'],
+        ['project-b']: ['ethereum'],
+      }
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
-      await updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
+      await updateNotifier.sendDailyReminder(reminders, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })

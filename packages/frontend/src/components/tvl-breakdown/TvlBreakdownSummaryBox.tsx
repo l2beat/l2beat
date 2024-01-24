@@ -1,9 +1,10 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { TvlBreakdownViewProps } from '../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
+import { cn } from '../../utils/cn'
 import { InfoIcon } from '../icons'
 import { PercentChange } from '../PercentChange'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],
@@ -55,7 +56,7 @@ interface StatsItemProps {
 function StatsItem(props: StatsItemProps) {
   return (
     <div
-      className={classNames(
+      className={cn(
         'flex items-center justify-between md:flex-col md:items-start',
         props.big && 'mb-1',
       )}
@@ -65,7 +66,7 @@ function StatsItem(props: StatsItemProps) {
           {props.title}
         </span>
         <span
-          className={classNames(
+          className={cn(
             'font-medium  md:hidden',
             props.big
               ? 'text-lg text-black dark:text-white'
@@ -75,23 +76,23 @@ function StatsItem(props: StatsItemProps) {
           {props.mobileTitle}
         </span>
 
-        <span
-          className="Tooltip ml-0.5 -translate-y-px md:translate-y-0"
-          title={props.tooltip}
-        >
-          <InfoIcon
-            className={classNames(
-              'md:h-3.5 md:w-3.5',
-              props.big
-                ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
-                : 'fill-gray-500 dark:fill-gray-600',
-            )}
-          />
-        </span>
+        <Tooltip>
+          <TooltipTrigger className="ml-0.5 -translate-y-px md:translate-y-0">
+            <InfoIcon
+              className={cn(
+                'md:h-3.5 md:w-3.5',
+                props.big
+                  ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
+                  : 'fill-gray-500 dark:fill-gray-600',
+              )}
+            />
+          </TooltipTrigger>
+          <TooltipContent>{props.tooltip}</TooltipContent>
+        </Tooltip>
       </div>
       <div className="flex items-center gap-1">
         <span
-          className={classNames(
+          className={cn(
             'font-bold text-black dark:text-white md:text-lg',
             props.big ? 'text-lg' : 'text-base',
           )}

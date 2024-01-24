@@ -1,8 +1,8 @@
-import { bridges, layer2s, milestonesLayer2s } from '@l2beat/config'
+import { bridges, layer2s, layer3s, milestonesLayer2s } from '@l2beat/config'
 
 import { Config } from './Config'
 
-const L2_DAYS_END = new Date('2023-11-15T23:59:59Z')
+const GITCOIN_19_END = new Date('2023-11-29T23:59:59Z')
 
 export const common: Omit<Config, 'backend'> = {
   links: {
@@ -17,14 +17,18 @@ export const common: Omit<Config, 'backend'> = {
       'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   },
   features: {
-    banner: new Date() <= L2_DAYS_END,
+    banner: new Date() <= GITCOIN_19_END,
     gitcoinOption: false,
-    hiringBadge: false,
+    liveness: true,
+    finality: true,
+    hiringBadge: true,
     activity: true,
     tvlBreakdown: true,
+    diffHistory: false,
     buildAllProjectPages: false,
   },
   layer2s,
+  layer3s,
   bridges,
   milestones: milestonesLayer2s,
 }

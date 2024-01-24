@@ -6,10 +6,10 @@ import {
   DiscoveryEngine,
   DiscoveryProvider,
   toDiscoveryOutput,
+  UnixTime as DiscoveryUnixTime,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainId } from '@l2beat/shared-pure'
-import { assert } from 'console'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -30,15 +30,17 @@ export class DiscoveryRunner {
     private readonly discoveryProvider: DiscoveryProvider,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
-    private readonly chainId: ChainId,
+    readonly chain: string,
   ) {}
 
   async getBlockNumber(): Promise<number> {
     return this.discoveryProvider.getBlockNumber()
   }
 
-  getChainId(): ChainId {
-    return this.chainId
+  async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
+    return this.discoveryProvider.getBlockNumberAt(
+      new DiscoveryUnixTime(timestamp.toNumber()),
+    )
   }
 
   async run(
@@ -78,7 +80,7 @@ export class DiscoveryRunner {
 
     return toDiscoveryOutput(
       config.name,
-      config.chainId,
+      config.chain,
       config.hash,
       blockNumber,
       result,
@@ -103,10 +105,13 @@ export class DiscoveryRunner {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
       }
 
+      const errorString = JSON.stringify(
+        err,
+        Object.getOwnPropertyNames(err),
+        2,
+      )
       logger.warn(
-        `DiscoveryRunner: Retrying ${config.name} (chain: ${ChainId.getName(
-          config.chainId,
-        )}) | attempt:${i}`,
+        `DiscoveryRunner: Retrying ${config.name} (chain: ${config.chain}) | attempt:${i} | error:${errorString}`,
       )
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
@@ -161,7 +166,7 @@ export class DiscoveryRunner {
   async updateInitialAddresses(config: DiscoveryConfig) {
     const discovery = await this.configReader.readDiscovery(
       config.name,
-      ChainId.ETHEREUM,
+      this.chain,
     )
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({

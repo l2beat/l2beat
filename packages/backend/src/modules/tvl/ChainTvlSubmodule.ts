@@ -1,11 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient, UniversalEtherscanClient } from '@l2beat/shared'
 import {
-  capitalizeFirstLetter,
-  ChainId,
-  ProjectId,
-  Token,
-} from '@l2beat/shared-pure'
+  BlockNumberProvider,
+  CoingeckoQueryService,
+  HttpClient,
+  UniversalBlockscoutClient,
+  UniversalEtherscanClient,
+} from '@l2beat/shared'
+import { capitalizeFirstLetter, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { ChainTvlConfig } from '../../config/Config'
@@ -17,19 +18,14 @@ import { PriceUpdater } from '../../core/PriceUpdater'
 import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupplyUpdater'
 import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
-import { MulticallConfigEntry } from '../../peripherals/ethereum/multicall/types'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function chainTvlSubmodule(
-  chainId: ChainId,
-  projectId: ProjectId,
-  chainTvlConfig: ChainTvlConfig | false,
+  { chain, config }: ChainTvlConfig,
   tokens: Token[],
-  multicallConfig: MulticallConfigEntry[],
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   coingeckoQueryService: CoingeckoQueryService,
@@ -37,48 +33,64 @@ export function chainTvlSubmodule(
   clock: Clock,
   logger: Logger,
 ): TvlSubmodule | undefined {
-  const name = `${capitalizeFirstLetter(ChainId.getName(chainId))}TvlModule`
-  if (!chainTvlConfig) {
+  const name = `${capitalizeFirstLetter(chain)}TvlModule`
+  if (!config) {
     logger.info(`${name} disabled`)
     return
   }
+  logger = logger.tag(chain)
 
   // #region peripherals
-  const provider = new providers.JsonRpcProvider(chainTvlConfig.providerUrl)
+  const provider = new providers.JsonRpcProvider(config.providerUrl)
 
-  const etherscanClient = new UniversalEtherscanClient(
-    http,
-    chainTvlConfig.etherscanApiUrl,
-    chainTvlConfig.etherscanApiKey,
-    chainTvlConfig.minBlockTimestamp,
-    chainId,
-    logger,
-  )
+  const blockNumberProvider: BlockNumberProvider =
+    config.blockNumberProviderConfig.type === 'blockscout'
+      ? new UniversalBlockscoutClient(
+          http,
+          config.blockNumberProviderConfig.blockscoutApiUrl,
+          config.minBlockTimestamp,
+          config.chainId,
+          logger,
+        )
+      : new UniversalEtherscanClient(
+          http,
+          config.blockNumberProviderConfig.etherscanApiUrl,
+          config.blockNumberProviderConfig.etherscanApiKey,
+          config.minBlockTimestamp,
+          config.chainId,
+          logger,
+        )
 
   const ethereumClient = new EthereumClient(
     provider,
     logger,
-    chainTvlConfig.providerCallsPerMinute,
+    config.providerCallsPerMinute,
   )
 
-  const multicallClient = new MulticallClient(ethereumClient, multicallConfig)
+  const multicallClient = new MulticallClient(
+    ethereumClient,
+    config.multicallConfig,
+  )
 
-  const totalSupplyProvider = new TotalSupplyProvider(multicallClient, chainId)
+  const totalSupplyProvider = new TotalSupplyProvider(
+    multicallClient,
+    config.chainId,
+  )
 
   // #endregion
   // #region updaters
 
   const blockNumberUpdater = new BlockNumberUpdater(
-    etherscanClient,
+    blockNumberProvider,
     db.blockNumberRepository,
     clock,
     logger,
-    chainId,
-    chainTvlConfig.minBlockTimestamp,
+    config.chainId,
+    config.minBlockTimestamp,
   )
 
   const totalSupplyTokens = tokens.filter(
-    (t) => t.chainId === chainId && t.formula === 'totalSupply',
+    (t) => t.chainId === config.chainId && t.formula === 'totalSupply',
   )
   const totalSupplyUpdater = new TotalSupplyUpdater(
     totalSupplyProvider,
@@ -88,8 +100,8 @@ export function chainTvlSubmodule(
     clock,
     totalSupplyTokens,
     logger,
-    chainId,
-    chainTvlConfig.minBlockTimestamp,
+    config.chainId,
+    config.minBlockTimestamp,
   )
 
   const totalSupplyFormulaUpdater = new TotalSupplyFormulaUpdater(
@@ -97,16 +109,16 @@ export function chainTvlSubmodule(
     totalSupplyUpdater,
     db.reportRepository,
     db.reportStatusRepository,
-    projectId,
-    chainId,
+    config.projectId,
+    config.chainId,
     clock,
     totalSupplyTokens,
     logger,
-    chainTvlConfig.minBlockTimestamp,
+    config.minBlockTimestamp,
   )
 
   const circulatingSupplyTokens = tokens.filter(
-    (t) => t.chainId === chainId && t.formula === 'circulatingSupply',
+    (t) => t.chainId === config.chainId && t.formula === 'circulatingSupply',
   )
 
   const circulatingSupplyUpdater = new CirculatingSupplyUpdater(
@@ -114,8 +126,9 @@ export function chainTvlSubmodule(
     db.circulatingSupplyRepository,
     clock,
     circulatingSupplyTokens,
-    chainId,
+    config.chainId,
     logger,
+    config.minBlockTimestamp,
   )
 
   const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(
@@ -123,12 +136,12 @@ export function chainTvlSubmodule(
     circulatingSupplyUpdater,
     db.reportRepository,
     db.reportStatusRepository,
-    projectId,
-    chainId,
+    config.projectId,
+    config.chainId,
     clock,
     circulatingSupplyTokens,
     logger,
-    chainTvlConfig.minBlockTimestamp,
+    config.minBlockTimestamp,
   )
   // #endregion
 
@@ -146,6 +159,7 @@ export function chainTvlSubmodule(
   }
 
   return {
+    chain,
     reportUpdaters: [
       totalSupplyFormulaUpdater,
       circulatingSupplyFormulaUpdater,

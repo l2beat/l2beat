@@ -1,9 +1,11 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ProjectPermissionedAccount } from '../common'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,8 +14,10 @@ import {
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
   RISK_VIEW,
+  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -40,12 +44,19 @@ const roles = discovery.getContractValue<{
   PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
 
-const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
-  (address) => ({
+const zodiacRoles = discovery.getContractValue<{
+  roles: Record<string, Record<string, boolean>>
+}>('Roles', 'roles')
+const zodiacPauserRole = '1'
+const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
+  zodiacRoles.roles[zodiacPauserRole].members,
+).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
+
+const operators: ScalingProjectPermissionedAccount[] =
+  roles.OPERATOR_ROLE.members.map((address) => ({
     address: EthereumAddress(address),
     type: 'EOA',
-  }),
-)
+  }))
 
 const pausers: string[] = roles.PAUSE_MANAGER_ROLE.members
 const isPaused: boolean =
@@ -78,21 +89,27 @@ export const linea: Layer2 = {
     warning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://linea.build/'],
       apps: [],
       documentation: ['https://docs.linea.build/'],
-      explorers: ['https://explorer.linea.build/'],
+      explorers: ['https://explorer.linea.build/', 'https://linea.l2scan.co/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/LineaBuild',
         'https://discord.gg/consensys',
         'https://linea.mirror.xyz/',
       ],
+      rollupCodes: 'https://rollup.codes/linea',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
+    },
   },
   config: {
     escrows: [
@@ -116,6 +133,53 @@ export const linea: Layer2 = {
       type: 'rpc',
       startBlock: 1,
     },
+    liveness: {
+      proofSubmissions: [],
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'batchSubmissions',
+        },
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x4165d6dd',
+          functionSignature:
+            'function finalizeBlocks((bytes32, uint32, bytes[], bytes32[], bytes, uint16[])[] _blocksData,bytes _proof,uint256 _proofType,bytes32 _parentStateRootHash)',
+          sinceTimestamp: new UnixTime(1689159923),
+        },
+      ],
+    },
+  },
+  chainConfig: {
+    name: 'linea',
+    chainId: 59144,
+    explorerUrl: 'https://lineascan.build',
+    explorerApi: {
+      url: 'https://api.lineascan.build/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Linea
+    // https://lineascan.build/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T01:15:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 42,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'linea',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -143,7 +207,7 @@ export const linea: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -154,7 +218,7 @@ export const linea: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -233,11 +297,22 @@ export const linea: Layer2 = {
       'AdminMultisig',
       'Admin of the Linea rollup. It can upgrade core contracts, bridges, change the verifier address, and publish blocks by effectively overriding the proof system.',
     ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('Roles'),
+      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles.`,
+    ),
     {
       accounts: operators,
       name: 'Operators',
       description:
         'The operators are allowed to prove blocks and post the corresponding transaction data.',
+    },
+
+    {
+      accounts: zodiacPausers,
+      name: 'Pauser',
+      description:
+        'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project.',
     },
   ],
   contracts: {

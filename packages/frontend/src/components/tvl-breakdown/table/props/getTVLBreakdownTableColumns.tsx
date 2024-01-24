@@ -1,4 +1,3 @@
-import { ChainId } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
@@ -28,7 +27,7 @@ export function getNativelyMintedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={ChainId.getExplorer(token.chainId)}
+            explorer={token.explorerUrl}
           />
         ),
     },
@@ -39,7 +38,7 @@ export function getNativelyMintedColumns() {
     },
     {
       name: 'AMOUNT',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenAmountCell amount={token.amount} assetId={token.assetId} />
@@ -47,7 +46,7 @@ export function getNativelyMintedColumns() {
     },
     {
       name: 'VALUE',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenValueCell assetId={token.assetId} usdValue={token.usdValue} />
@@ -72,7 +71,7 @@ export function getExternallyBridgedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={ChainId.getExplorer(token.chainId)}
+            explorer={token.explorerUrl}
           />
         ),
     },
@@ -83,7 +82,7 @@ export function getExternallyBridgedColumns() {
     },
     {
       name: 'AMOUNT',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenAmountCell
@@ -95,7 +94,7 @@ export function getExternallyBridgedColumns() {
     },
     {
       name: 'VALUE',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenValueCell
@@ -124,14 +123,14 @@ export function getCanonicallyBridgedColumns() {
         <EscrowsCell
           assetId={token.assetId.toString()}
           escrows={token.escrows}
-          explorer={ChainId.getExplorer(token.chainId)}
+          explorer={token.explorerUrl}
         />
       ),
     },
     {
       name: 'PRICE',
       headClassName: 'md:pl-4',
-      alignRight: true,
+      align: 'right',
       tooltip: 'Prices are fetched from CoinGecko',
       getValue: (token) => (
         <div className="pr-2 text-xs font-medium">
@@ -141,7 +140,7 @@ export function getCanonicallyBridgedColumns() {
     },
     {
       name: 'AMOUNT',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenAmountCell
@@ -154,7 +153,7 @@ export function getCanonicallyBridgedColumns() {
     },
     {
       name: 'VALUE',
-      alignRight: true,
+      align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
         <TokenValueCell

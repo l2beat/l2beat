@@ -1,4 +1,4 @@
-import { Bridge, Layer2, Milestone } from '@l2beat/config'
+import { Bridge, Layer2, Layer3, Milestone } from '@l2beat/config'
 
 export interface Config {
   links: {
@@ -13,8 +13,11 @@ export interface Config {
   }
   features: {
     activity: boolean
+    liveness: boolean
+    finality: boolean
     banner: boolean
     tvlBreakdown: boolean
+    diffHistory: boolean
     gitcoinOption: boolean
     hiringBadge: boolean
     buildAllProjectPages: boolean
@@ -25,6 +28,7 @@ export interface Config {
     skipCache: boolean
   }
   layer2s: Layer2[]
+  layer3s: Layer3[]
   bridges: Bridge[]
   milestones: Milestone[]
 }

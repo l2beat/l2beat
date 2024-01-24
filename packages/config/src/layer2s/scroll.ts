@@ -1,13 +1,22 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
+import {
+  DATA_AVAILABILITY,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+  STATE_ZKP_SN,
+} from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
-import { EXITS, makeBridgeCompatible, OPERATOR } from './common'
-import { DATA_AVAILABILITY } from './common/dataAvailability'
-import { FORCE_TRANSACTIONS } from './common/forceTransactions'
-import { RISK_VIEW, STATE_ZKP_SN } from './common/riskView'
 import { getStage } from './common/stages/getStage'
-import { STATE_CORRECTNESS } from './common/stateCorrectness'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('scroll')
@@ -27,8 +36,10 @@ const timelockFastDelay = discovery.getContractValue<number>(
 
 const upgradesScrollMultisig = {
   upgradableBy: ['ScrollMultisig'],
-  upgradeDelay: 'None',
+  upgradeDelay: 'No delay',
 }
+
+const upgradeDelay = 0
 
 export const scroll: Layer2 = {
   type: 'layer2',
@@ -37,9 +48,10 @@ export const scroll: Layer2 = {
     name: 'Scroll',
     slug: 'scroll',
     description:
-      'Scroll is rollup that extends Ethereum’s capabilities through zero knowledge tech and EVM compatibility.',
-    purpose: 'Universal',
+      'Scroll is ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
+    purposes: ['Universal'],
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://scroll.io'],
       apps: [
@@ -51,7 +63,8 @@ export const scroll: Layer2 = {
         'https://scrollscan.com/',
         'https://blockscout.scroll.io',
         'https://scroll.unifra.xyz/',
-        'https://www.ondora.xyz/network/scroll',
+        'https://ondora.xyz/network/scroll',
+        'https://scroll.l2scan.co/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',
@@ -69,15 +82,24 @@ export const scroll: Layer2 = {
         'https://twitter.com/Scroll_ZKP',
         'https://youtube.com/@Scroll_ZKP',
       ],
+      rollupCodes: 'https://rollup.codes/scroll',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        batchSubmissions:
+          'Transaction data batches that have not yet been proven can be reverted.',
+      },
+      explanation:
+        'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
+    },
   },
   stage: getStage({
     stage0: {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -115,6 +137,39 @@ export const scroll: Layer2 = {
       type: 'rpc',
       startBlock: 1,
     },
+    liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x31fa742d',
+          functionSignature:
+            'function finalizeBatchWithProof(bytes _batchHeader,bytes32 _prevStateRoot,bytes32 _postStateRoot,bytes32 _withdrawRoot,bytes _aggrProof)',
+          sinceTimestamp: new UnixTime(1696782323),
+        },
+      ],
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x1325aca0',
+          functionSignature:
+            'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
+          sinceTimestamp: new UnixTime(1696782323),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -139,8 +194,8 @@ export const scroll: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
       sources: [
         {
           contract: 'ScrollChain',
@@ -294,12 +349,6 @@ export const scroll: Layer2 = {
       }),
       discovery.getContractDetails('PlonkVerifier', {
         description: 'Plonk verifier used to verify the ZK proof.',
-        references: [
-          {
-            text: 'evm_verifier.yul source code',
-            href: 'https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul',
-          },
-        ],
       }),
       discovery.getContractDetails('L1ETHGateway', {
         description: 'Contract used to bridge ETH from L1 to L2.',

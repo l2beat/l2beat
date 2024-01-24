@@ -1,7 +1,7 @@
 import { bridges, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 
 void main().catch((e) => {
@@ -22,10 +22,11 @@ async function main() {
 
 async function findCommon(config: Config): Promise<void> {
   const configReader = new ConfigReader()
-  const configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
+  // TODO: Why only ethereum?
+  const configs = await configReader.readAllConfigsForChain('ethereum')
 
   const discoveriesFull = await Promise.all(
-    configs.map((c) => configReader.readDiscovery(c.name, c.chainId)),
+    configs.map((c) => configReader.readDiscovery(c.name, c.chain)),
   )
   const discoveries = getFilteredDiscoveries(config, discoveriesFull)
 
@@ -60,10 +61,15 @@ async function findCommon(config: Config): Promise<void> {
       .flatMap((p) => p.contracts)
       .map((a) => a.address.toString())
       .includes(address)
+    const isImplementation = linkedProjectes
+      .flatMap((p) => p.contracts)
+      .flatMap((a) => a.implementations ?? [])
+      .map((a) => a.toString())
+      .includes(address)
 
     if (isEOA) {
       commonEOAs.push(address)
-    } else if (isContract) {
+    } else if (isContract || isImplementation) {
       commonContracts.push(address)
     }
   })
@@ -106,7 +112,11 @@ function printRelations(
   function getContract() {
     return linkedProjectes
       .flatMap((p) => p.contracts)
-      .filter((a) => a.address.toString() === address)[0]
+      .filter(
+        (a) =>
+          a.address.toString() === address ||
+          a.implementations?.includes(EthereumAddress(address)),
+      )[0]
   }
   const header = isEOA
     ? chalk.yellow('EOA')
@@ -135,17 +145,22 @@ function getAddressLocations(
   const result: ContractLocation[] = []
 
   project.contracts.forEach((c) => {
-    if (!c.values) {
+    if (!c.values && !c.implementations) {
       return
     }
 
-    const matching: ContractLocation[] = Object.entries(c.values)
+    const matching: ContractLocation[] = Object.entries(c.values ?? {})
       .filter(([_, value]) =>
         getAddresses(value)
           .map((a) => a.toString())
           .includes(address),
       )
       .map(([key, _]) => ({ key, contractName: c.name }))
+      .concat(
+        (c.implementations ?? [])
+          .filter((a) => a.toString() === address)
+          .map((_) => ({ key: 'implementation', contractName: c.name })),
+      )
     result.push(...matching)
   })
 
@@ -169,6 +184,7 @@ function addToOccurrences(
 function getProjectAddresses(project: DiscoveryOutput) {
   const addresses: EthereumAddress[] = []
   addresses.push(...project.eoas)
+  addresses.push(...project.contracts.flatMap((c) => c.implementations ?? []))
   addresses.push(...project.contracts.map((c) => c.address))
   addresses.push(
     ...project.contracts.flatMap((c) => {

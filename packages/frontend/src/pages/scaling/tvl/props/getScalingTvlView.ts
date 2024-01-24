@@ -1,79 +1,72 @@
 import { Layer2 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import { TvlApiResponse } from '@l2beat/shared-pure'
 
-import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
+import { orderByTvl } from '../../../../utils/orderByTvl'
+import { getTokens } from '../../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
-import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
-import { formatPercent, formatUSD } from '../../../../utils/utils'
+import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
+import { formatUSD } from '../../../../utils/utils'
 import { ScalingTvlViewEntry } from '../types'
 import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 
 export function getScalingTvlView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
-  tvl: number,
-  verificationStatus: VerificationStatus,
 ): ScalingTvlViewProps {
+  const orderedProjects = orderByTvl(projects, tvlApiResponse)
+
   return {
-    items: projects.map((project) =>
-      getScalingTvlViewEntry(
-        project,
-        tvlApiResponse,
-        tvl,
-        verificationStatus.projects[project.id.toString()],
-      ),
+    items: orderedProjects.map((project) =>
+      getScalingTvlViewEntry(tvlApiResponse, project),
     ),
   }
 }
 
 function getScalingTvlViewEntry(
-  project: Layer2,
   tvlApiResponse: TvlApiResponse,
-  aggregateTvl: number,
+  project: Layer2,
   isVerified?: boolean,
 ): ScalingTvlViewEntry {
-  const associatedTokens = project.config.associatedTokens ?? []
-  const apiProject = tvlApiResponse.projects[project.id.toString()]
-
-  let stats: TvlStats | undefined
-
-  if (!apiProject) {
-    if (!project.isUpcoming) {
-      throw new Error(`Project ${project.display.name} is missing in api`)
-    }
-  } else {
-    stats = getTvlStats(apiProject, project.display.name, associatedTokens)
-  }
+  const projectData = tvlApiResponse.projects[project.id.toString()]
+  const charts = projectData?.charts
+  const { parts, partsWeeklyChange } = getDetailedTvlWithChange(charts)
 
   return {
     name: project.display.name,
+    shortName: project.display.shortName,
     slug: project.display.slug,
-    provider: project.display.provider,
     category: project.display.category,
+    provider: project.display.provider,
+    purposes: project.display.purposes,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
-    isVerified,
+    redWarning: project.display.redWarning,
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
-    tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
-    tvlTooltip: getProjectTvlTooltipText(project.config),
-    tvlBreakdown:
-      stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
-    oneDayChange:
-      stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
-    sevenDayChange:
-      stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
-    marketShare:
-      stats && escrowsConfigured(project)
-        ? formatPercent(stats.tvl / aggregateTvl)
-        : undefined,
-    purpose: project.display.purpose,
+    isVerified,
+    tvl: {
+      value: parts.tvl,
+      displayValue: formatUSD(parts.tvl),
+    },
+    cbv: {
+      value: parts.canonical,
+      displayValue: formatUSD(parts.canonical),
+    },
+    ebv: {
+      value: parts.external,
+      displayValue: formatUSD(parts.external),
+    },
+    nmv: {
+      value: parts.native,
+      displayValue: formatUSD(parts.native),
+    },
+    tvlChange: partsWeeklyChange.tvl,
+    ebvChange: partsWeeklyChange.external,
+    cbvChange: partsWeeklyChange.canonical,
+    nmvChange: partsWeeklyChange.native,
+    tokens: getTokens(project.id, tvlApiResponse, true),
     stage: project.stage,
   }
-}
-
-export function escrowsConfigured(project: Layer2) {
-  return project.config.escrows.length > 0
 }

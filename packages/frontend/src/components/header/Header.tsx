@@ -1,12 +1,11 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { Logo } from '../Logo'
 import { PercentChange } from '../PercentChange'
 
 export interface HeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
   tvl?: string
@@ -19,9 +18,7 @@ export interface HeaderProps {
 export function Header(props: HeaderProps) {
   return (
     <header className="Header">
-      <h1
-        className={cx('Header-Title', props.titleLength, props.titleClassName)}
-      >
+      <h1 className={cn('Header-Title', props.titleClassName)}>
         {props.icon && (
           <img
             className="Header-Icon"
@@ -45,7 +42,7 @@ export function Header(props: HeaderProps) {
 
       {props.tpsDaily && props.tpsWeeklyChange && (
         <div
-          className={cx('Header-Right', !props.showTps ? 'hidden' : undefined)}
+          className={cn('Header-Right', !props.showTps ? 'hidden' : undefined)}
           id="header-activity"
         >
           <p className="Header-Tvl">

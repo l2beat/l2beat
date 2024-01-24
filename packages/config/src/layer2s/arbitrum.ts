@@ -1,16 +1,10 @@
 import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { VALUES } from '../discovery/values'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -21,10 +15,13 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOneAfterBlockInclusive,
-} from './common'
+} from '../common'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
+import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { VALUES } from '../discovery/values'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
@@ -43,8 +40,10 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
-const totalDelay =
-  l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
+const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
+
+// const totalDelayString = formatSeconds(totalDelay)
 
 const upgradesExecutor = {
   upgradableBy: ['UpgradeExecutorAdmin'],
@@ -79,165 +78,6 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId('arb-arbitrum'),
-    name: 'Arbitrum',
-    symbol: 'ARB',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1680097630',
-    address: EthereumAddress('0xb50721bcf8d664c30412cfbc6cf7a15145234ad1'),
-    coingeckoId: CoingeckoId('arbitrum'),
-    sinceTimestamp: new UnixTime(1630233600),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('arbitrum:usdc-usd-coin'),
-    name: 'USD Coin',
-    symbol: 'USDC',
-    decimals: 6,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
-    address: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
-    coingeckoId: CoingeckoId('usd-coin'),
-    sinceTimestamp: new UnixTime(1667250000),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('gns-gains-network'),
-    name: 'Gains Network',
-    symbol: 'GNS',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203',
-    address: EthereumAddress('0x18c11FD286C5EC11c3b683Caa813B77f5163A122'),
-    coingeckoId: CoingeckoId('gains-network'),
-    sinceTimestamp: new UnixTime(1672175006),
-    category: 'other',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('btc.b-bitcoin'),
-    name: 'Bitcoin',
-    symbol: 'BTC.b',
-    decimals: 8,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/26115/large/btcb.png?1655921693',
-    address: EthereumAddress('0x2297aEbD383787A160DD0d9F71508148769342E3'),
-    coingeckoId: CoingeckoId('bitcoin-avalanche-bridged-btc-b'),
-    sinceTimestamp: new UnixTime(1668644839),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Layer Zero',
-      slug: 'omnichain',
-    },
-  },
-  {
-    id: AssetId('joe-joe-token'),
-    name: 'JoeToken',
-    symbol: 'JOE',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/17569/large/traderjoe.png?1685690062',
-    address: EthereumAddress('0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07'),
-    coingeckoId: CoingeckoId('joe'),
-    sinceTimestamp: new UnixTime(1674495392),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Layer Zero',
-      slug: 'omnichain',
-    },
-  },
-  {
-    id: AssetId('bifi-beefy-finance'),
-    name: 'beefy.finance',
-    symbol: 'BIFI',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/12704/large/token.png?1601876182',
-    address: EthereumAddress('0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE'),
-    coingeckoId: CoingeckoId('beefy-finance'),
-    sinceTimestamp: new UnixTime(1632385561),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Multichain',
-      slug: 'multichain',
-    },
-  },
-  {
-    id: AssetId('arbitrum:sdex-smardex'),
-    name: 'SmarDex',
-    symbol: 'SDEX',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/29470/large/SDEX_logo_transparent.png?1690430205',
-    address: EthereumAddress('0xabD587f2607542723b17f14d00d99b987C29b074'),
-    coingeckoId: CoingeckoId('smardex'),
-    sinceTimestamp: new UnixTime(1688976153),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Wormhole',
-      slug: 'portal',
-    },
-  },
-  {
-    id: AssetId('arbitrum:gmx-gmx'),
-    name: 'GMX',
-    symbol: 'GMX',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/18323/large/arbit.png?1631532468',
-    address: EthereumAddress('0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a'),
-    coingeckoId: CoingeckoId('gmx'),
-    sinceTimestamp: new UnixTime(1626958493),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('arbitrum:dmt-dream-machine-token'),
-    name: 'Dream Machine Token',
-    symbol: 'DMT',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/30505/large/dmt.png?1684821418',
-    address: EthereumAddress('0x8b0e6f19ee57089f7649a455d89d7bc6314d04e8'),
-    coingeckoId: CoingeckoId('dream-machine-token'),
-    sinceTimestamp: new UnixTime(1684901612),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('arbitrum:hdn-hydranet'),
-    name: 'Hydranet',
-    symbol: 'HDN',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/25177/large/HDXdarkblueInv.png?1652694650',
-    address: EthereumAddress('0x3404149e9ee6f17fb41db1ce593ee48fbdcd9506'),
-    coingeckoId: CoingeckoId('hydranet'),
-    sinceTimestamp: new UnixTime(1687566748),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-]
-
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
@@ -246,18 +86,10 @@ export const arbitrum: Layer2 = {
     slug: 'arbitrum',
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-    description: `Arbitrum One is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
-      Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Proposers (currently whitelisted)\
-      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any Validator (currently whitelisted) can challenge the state root within the challenge window (${formatSeconds(
-        challengeWindow * assumedBlockTime,
-      )}). \
-      The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed that\
-      eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Proposer publishes\
-    L2 state root within ${formatSeconds(
-      validatorAfkTime,
-    )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
-    purpose: 'Universal',
+    description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -276,15 +108,25 @@ export const arbitrum: Layer2 = {
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
       ],
+      rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Arbitrum One is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to ${formatSeconds(
+        selfSequencingDelay,
+      )}. The state root gets finalized ${formatSeconds(
+        challengeWindow * assumedBlockTime,
+      )} after it has been posted.`,
+    },
   },
   config: {
-    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
     associatedTokens: ['ARB'],
-    nativeL2TokensIncludedInTVL: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
+        // Arbitrum One Bridge
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         tokens: ['ETH'],
         description:
@@ -292,6 +134,7 @@ export const arbitrum: Layer2 = {
         ...upgradesProxyAdmin,
       }),
       discovery.getEscrowDetails({
+        // Custom ERC20 Gateway
         address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         tokens: '*',
         description:
@@ -299,6 +142,7 @@ export const arbitrum: Layer2 = {
         ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
+        // ERC20 Gateway
         address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
         tokens: '*',
         description:
@@ -310,6 +154,12 @@ export const arbitrum: Layer2 = {
         tokens: ['DAI'],
         description:
           'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a'),
+        tokens: ['wstETH'],
+        description:
+          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
       {
         // This bridge is inactive, but we keep it
@@ -327,6 +177,79 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x8f111f3c',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x6f12b0c9',
+          functionSignature:
+            'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0xe0bc9729',
+          functionSignature:
+            'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestamp: new UnixTime(1661457944),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
+          ),
+          selector: '0xa04cee60',
+          functionSignature:
+            'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+          sinceTimestamp: new UnixTime(1661455766),
+        },
+      ],
+    },
+  },
+  chainConfig: {
+    name: 'arbitrum',
+    chainId: 42161,
+    explorerUrl: 'https://arbiscan.io',
+    explorerApi: {
+      url: 'https://api.arbiscan.io/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Arbitrum
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 7654707,
+        version: '3',
+      },
+      {
+        sinceBlock: 821923,
+        batchSize: 150,
+        address: EthereumAddress('0x842eC2c7D803033Edf55E478F461FC547Bc54EB2'),
+        version: '2',
+      },
+    ],
+    coingeckoPlatform: 'arbitrum-one',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -354,8 +277,28 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
+      sentiment: 'bad',
+      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
+        l2TimelockDelay,
+      )} delay. Since there is a ${formatSeconds(
+        selfSequencingDelay,
+      )} to force a tx, users have only ${formatSeconds(
+        l2TimelockDelay - selfSequencingDelay,
+      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+        validatorAfkTime,
+      )} delay and then wait for the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window and the ${formatSeconds(
+        l1TimelockDelay,
+      )} L1 timelock.`,
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
       sources: [
         {
           contract: 'OutboxV2',
@@ -494,6 +437,7 @@ export const arbitrum: Layer2 = {
           },
         ],
       },
+      EXITS.AUTONOMOUS,
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',

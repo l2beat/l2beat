@@ -10,6 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
+import { ChainConverter } from '../../../core/ChainConverter'
 import { Clock } from '../../../core/Clock'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
@@ -20,6 +21,8 @@ import {
   BalanceStatusRepository,
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
+import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
+import { LivenessConfigurationRepository } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import {
   ReportStatusRecord,
@@ -27,13 +30,21 @@ import {
 } from '../../../peripherals/database/ReportStatusRepository'
 import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
-import { getDashboardProjects } from './discovery/props/getDashboardProjects'
+import {
+  DashboardProject,
+  getDashboardProjects,
+} from './discovery/props/getDashboardProjects'
 import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
 import { renderAggregatedPage } from './view/AggregatedReportsPage'
+import {
+  LivenessStatusPageProps,
+  renderLivenessStatusPage,
+} from './view/LivenessStatusPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderStatusPage } from './view/StatusPage'
+import { renderStatusPagesLinksPage } from './view/StatusPagesLinksPage'
 
 // TODO: make it work correctly after "formula" refactor
 export class StatusController {
@@ -48,35 +59,41 @@ export class StatusController {
     private readonly tokens: Token[],
     private readonly projects: Project[],
     private readonly configReader: ConfigReader,
+    private readonly indexerStateRepository: IndexerStateRepository,
+    private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
+    private readonly chainConverter: ChainConverter,
   ) {}
 
-  async getDiscoveryDashboard(chainId: ChainId): Promise<string> {
-    const projects = await getDashboardProjects(
-      this.configReader,
-      this.updateMonitorRepository,
-      chainId,
-    )
-    const projectsList = this.projects.map((p) => p.projectId.toString())
+  async getDiscoveryDashboard(): Promise<string> {
+    const projects: Record<string, DashboardProject[]> = {}
+    const chains = this.configReader.readAllChains()
+    for (const chain of chains) {
+      const projectsToFill = chain === 'ethereum' ? this.projects : []
+      projects[chain] = await getDashboardProjects(
+        projectsToFill,
+        this.configReader,
+        this.updateMonitorRepository,
+        chain,
+        this.chainConverter.toChainId(chain),
+      )
+    }
 
-    return renderDashboardPage({
-      projects,
-      projectsList,
-    })
+    return renderDashboardPage({ projects })
   }
 
   async getDiscoveryDashboardProject(
     project: string,
-    chainId: ChainId,
+    chain: string,
   ): Promise<string> {
-    const discovery = await this.configReader.readDiscovery(project, chainId)
-    const config = await this.configReader.readConfig(project, chainId)
+    const discovery = await this.configReader.readDiscovery(project, chain)
+    const config = await this.configReader.readConfig(project, chain)
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
       this.updateMonitorRepository,
       discovery,
       config,
-      chainId,
+      this.chainConverter.toChainId(chain),
     )
 
     return renderDashboardProjectPage({
@@ -227,6 +244,29 @@ export class StatusController {
       statuses: reports,
       uniqueHashes: Array.from(uniqueHashes),
     })
+  }
+
+  async getLivenessStatus() {
+    const indexerState = await this.indexerStateRepository.findIndexerState(
+      'liveness_indexer',
+    )
+    const targetTimestamp = this.clock.getLastHour()
+
+    const configurations = await this.livenessConfigurationRepository.getAll()
+    const unusedConfigurationsIds =
+      await this.livenessConfigurationRepository.findUnusedConfigurationsIds()
+
+    const params: LivenessStatusPageProps = {
+      indexerState,
+      targetTimestamp,
+      configurations,
+      unusedConfigurationsIds,
+    }
+    return renderLivenessStatusPage(params)
+  }
+
+  getStatusPagesLinks() {
+    return renderStatusPagesLinksPage()
   }
 
   private getFirstHour(from: UnixTime | undefined) {

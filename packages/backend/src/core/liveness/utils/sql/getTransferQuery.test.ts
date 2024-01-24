@@ -1,61 +1,49 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessTransfer } from '../../types/LivenessConfig'
 import { getTransferQuery } from './getTransferQuery'
 
-describe('getTransferQuery', () => {
+describe(getTransferQuery.name, () => {
   it('should return valid SQL query', () => {
-    const config: LivenessTransfer[] = [
-      {
-        projectId: ProjectId('project-1'), // irrelevant
-        from: EthereumAddress.random(),
-        to: EthereumAddress.random(),
-        type: 'DA', // irrelevant
-        sinceTimestamp: new UnixTime(0), // irrelevant
-      },
-      {
-        projectId: ProjectId('project-2'), // irrelevant
-        from: EthereumAddress.random(),
-        to: EthereumAddress.random(),
-        type: 'DA', // irrelevant
-        sinceTimestamp: new UnixTime(0), // irrelevant
-      },
-    ]
-    const startTimestamp = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
-    const endTimestamp = UnixTime.fromDate(new Date('2022-01-02T00:00:00Z'))
+    const ADDRESS_1 = EthereumAddress.random()
+    const ADDRESS_2 = EthereumAddress.random()
+    const ADDRESS_3 = EthereumAddress.random()
+    const ADDRESS_4 = EthereumAddress.random()
+    const query = getTransferQuery(
+      [
+        { from: ADDRESS_1, to: ADDRESS_2 },
+        { from: ADDRESS_3, to: ADDRESS_4 },
+      ],
+      UnixTime.fromDate(new Date('2021-01-01Z')),
+      UnixTime.fromDate(new Date('2021-01-02Z')),
+    )
 
-    const expectedQuery = [
-      'SELECT',
-      'block_number,',
-      'from_address,',
-      'to_address,',
-      'block_timestamp,',
-      'transaction_hash,',
-      'FROM',
-      'bigquery-public-data.crypto_ethereum.traces',
-      'WHERE',
-      "call_type = 'call'",
-      'AND status = 1',
-      `AND block_timestamp >= TIMESTAMP('${startTimestamp
-        .toDate()
-        .toISOString()}')`,
-      `AND block_timestamp < TIMESTAMP('${endTimestamp
-        .toDate()
-        .toISOString()}')`,
-      'AND ',
-      '(',
-      `(from_address = LOWER('${config[0].from.toLocaleLowerCase()}')`,
-      `AND to_address = LOWER('${config[0].to.toLocaleLowerCase()}'))`,
-      'OR',
-      `(from_address = LOWER('${config[1].from.toLocaleLowerCase()}')`,
-      `AND to_address = LOWER('${config[1].to.toLocaleLowerCase()}'))`,
-      ')',
-      'ORDER BY ',
-      'block_timestamp ASC;',
-    ].join('\n')
-
-    const result = getTransferQuery(config, startTimestamp, endTimestamp)
-    expect(result).toEqual(expectedQuery)
+    expect(query.query).toEqual(`
+    SELECT
+      block_number,
+      from_address,
+      to_address,
+      block_timestamp,
+      transaction_hash
+    FROM
+      bigquery-public-data.crypto_ethereum.traces
+    WHERE call_type = 'call'
+    AND status = 1
+    AND block_timestamp >= TIMESTAMP(?)
+    AND block_timestamp < TIMESTAMP(?)
+    AND (
+      ${Array.from({ length: 2 })
+        .map(() => `(from_address = ? AND to_address = ?)`)
+        .join(' OR ')}
+    )
+  `)
+    expect(query.params).toEqual([
+      new Date('2021-01-01Z').toISOString(),
+      new Date('2021-01-02Z').toISOString(),
+      ADDRESS_1.toLowerCase(),
+      ADDRESS_2.toLowerCase(),
+      ADDRESS_3.toLowerCase(),
+      ADDRESS_4.toLowerCase(),
+    ])
   })
 })

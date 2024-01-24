@@ -1,47 +1,19 @@
-import { default as classNames, default as cx } from 'classnames'
+import isObject from 'lodash/isObject'
 import range from 'lodash/range'
-import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
+import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { InfoIcon } from '../icons'
 import { Link } from '../Link'
-import { SectionId } from '../project/sectionId'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { SortingArrows } from './SortingArrows'
+import { ColumnConfig, RowConfig, SingleColumnConfig } from './types'
 
 interface Props<T> {
   items: T[]
   columnsConfig: ColumnConfig<T>[]
   rows?: RowConfig<T>
   rerenderOnLoad?: boolean
-}
-
-export type ColumnConfig<T> =
-  | (SingleColumnConfig<T> & { type?: never })
-  | GroupedColumnConfig<T>
-
-interface SingleColumnConfig<T> {
-  name: ReactNode
-  shortName?: ReactNode
-  alignRight?: true
-  alignCenter?: true
-  minimalWidth?: true
-  headClassName?: string
-  noPaddingRight?: true
-  idHref?: SectionId
-  getValue: (value: T, index: number) => ReactNode
-  tooltip?: string
-}
-
-export interface GroupedColumnConfig<T> {
-  type: 'group'
-  columns: SingleColumnConfig<T>[]
-  title?: string
-}
-
-export interface RowConfig<T> {
-  getProps: (
-    value: T,
-    index: number,
-  ) => HTMLAttributes<HTMLTableRowElement> &
-    Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
 export function TableView<T>({
@@ -54,8 +26,8 @@ export function TableView<T>({
 
   return (
     <div
-      className={cx(
-        'group/tableview mt-3 overflow-x-auto whitespace-pre text-base md:mt-6',
+      className={cn(
+        'group/tableview mt-3 overflow-x-auto whitespace-pre pb-3 text-base md:mt-6',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
@@ -105,9 +77,9 @@ export function TableView<T>({
               <tr
                 key={i}
                 {...rest}
-                className={cx(
-                  'group cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
-                  'hover:bg-black/[0.1] hover:shadow-sm dark:hover:bg-white/[0.1]',
+                className={cn(
+                  'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
+                  'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
               >
@@ -166,12 +138,24 @@ function ColumnHeader<T>(props: {
     noGroupTitle: boolean
   }
 }) {
+  const title = (
+    <div className="flex items-center gap-1">
+      {props.column.icon}
+      <span className={cn(props.column.shortName && 'hidden md:block')}>
+        {props.column.name}
+      </span>
+      {props.column.shortName && (
+        <span className="md:hidden">{props.column.shortName}</span>
+      )}
+    </div>
+  )
+
   const hasPaddingRight = !props.column.noPaddingRight
   return (
     <>
       <th
-        className={cx(
-          'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
+        className={cn(
+          'whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
           props.column.minimalWidth && 'w-0',
           hasPaddingRight &&
             !props.groupOptions?.isLast &&
@@ -186,28 +170,36 @@ function ColumnHeader<T>(props: {
             'rounded-tr-lg',
           props.groupOptions?.noGroupTitle && 'pt-4',
           props.column.headClassName,
+          props.column.className,
         )}
       >
         <div
-          className={cx(
+          className={cn(
             'flex flex-row items-center gap-1.5',
-            props.column.alignRight && 'justify-end',
-            props.column.alignCenter && 'justify-center',
+            props.column.align === 'right' && 'justify-end',
+            props.column.align === 'center' && 'justify-center',
           )}
         >
-          <span className={cx(props.column.shortName && 'hidden md:block')}>
-            {props.column.name}
-          </span>
-          {props.column.shortName && (
-            <span className="md:hidden">{props.column.shortName}</span>
-          )}
-          {props.column.tooltip && (
-            <span
-              className="Tooltip -translate-y-px md:translate-y-0"
-              title={props.column.tooltip}
+          {props.column.sorting ? (
+            <SortingArrows
+              name={props.column.name}
+              rule={props.column.sorting.rule}
+              defaultState={props.column.sorting.defaultState}
+              orderKey={props.column.sorting.defaultOrderKey}
             >
-              <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
-            </span>
+              {title}
+            </SortingArrows>
+          ) : (
+            title
+          )}
+
+          {props.column.tooltip && (
+            <Tooltip>
+              <TooltipTrigger className="-translate-y-px md:translate-y-0">
+                <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+              </TooltipTrigger>
+              <TooltipContent>{props.column.tooltip}</TooltipContent>
+            </Tooltip>
           )}
         </div>
       </th>
@@ -229,35 +221,48 @@ function DataCell<T>(props: {
     isLast: boolean
   }
 }) {
+  const value = props.columnConfig.getValue(props.item, props.rowIndex)
+  if (!value && props.columnConfig.removeCellOnFalsyValue) {
+    return null
+  }
+
   const hasPaddingRight = !props.columnConfig.noPaddingRight
   const idHref =
     props.columnConfig.idHref && props.href
       ? `${props.href}#${props.columnConfig.idHref}`
       : props.href
+  const orderValue = props.columnConfig.sorting?.getOrderValue(
+    props.item,
+    props.rowIndex,
+  )
 
+  const orderAttributes = getOrderValueAttributes(orderValue)
   return (
     <>
       <td
-        className={cx(
+        className={cn(
           'group/data-cell h-9 md:h-14',
           props.columnConfig.minimalWidth && 'w-0',
           props.groupOptions?.isFirst && '!pl-6',
           props.groupOptions?.isLast && '!pr-6',
+          props.columnConfig.className,
         )}
+        colSpan={props.columnConfig.colSpan?.(props.item)}
+        {...orderAttributes}
       >
         <a
           href={idHref}
-          className={cx(
+          className={cn(
             'h-full w-full items-center',
-            props.columnConfig.alignRight && 'justify-end',
-            props.columnConfig.alignCenter && 'justify-center',
+            props.columnConfig.align === 'right' && 'justify-end',
+            props.columnConfig.align === 'center' && 'justify-center',
             hasPaddingRight &&
               !props.groupOptions?.isLast &&
               'pr-3 group-last/data-cell:last:pr-0 md:pr-4',
             'flex',
           )}
         >
-          {props.columnConfig.getValue(props.item, props.rowIndex)}
+          {value}
         </a>
       </td>
       {props.groupOptions?.isLast && !props.isLastColumn && (
@@ -297,7 +302,7 @@ function GroupedColumnsHeaders(props: { groupedColumns: GroupedColumn[] }) {
     <tr className="uppercase leading-none">
       {props.groupedColumns.map((groupedColumn, i) => {
         if (groupedColumn.type === 'single') {
-          return <th key={i} />
+          return <th key={i} className={groupedColumn.className} />
         }
         if (!groupedColumn.title) {
           return (
@@ -331,11 +336,11 @@ function EmptyRow(props: { groupedColumns: GroupedColumn[] }) {
             <td
               key={`${i}`}
               colSpan={groupedColumn.span}
-              className={classNames('h-4 rounded-b-lg')}
+              className="h-4 rounded-b-lg"
             />
           )
         }
-        return <td className="h-4" key={i} />
+        return <td className={cn('h-4', groupedColumn.className)} key={i} />
       })}
     </tr>
   )
@@ -345,10 +350,11 @@ type GroupedColumn =
   | {
       type: 'group'
       span: number
-      title?: string
+      title?: React.ReactNode
     }
   | {
       type: 'single'
+      className?: string
     }
 
 function getGroupedColumns<T>(
@@ -378,6 +384,35 @@ function getGroupedColumns<T>(
     }
     return {
       type: 'single',
+      className: columnConfig.className,
     } as const
   })
+}
+
+function getOrderValueAttributes(
+  orderValue:
+    | string
+    | number
+    | Record<string, string | number | undefined>
+    | undefined,
+) {
+  if (orderValue === undefined) {
+    return
+  }
+
+  return {
+    ...(isObject(orderValue)
+      ? Object.entries(orderValue).reduce<Record<string, string>>(
+          (acc, [key, value]) => {
+            if (value) {
+              acc[`data-order-value-${key.toLowerCase()}`] = value.toString()
+            }
+            return acc
+          },
+          {},
+        )
+      : {
+          'data-order-value': orderValue.toString(),
+        }),
+  }
 }

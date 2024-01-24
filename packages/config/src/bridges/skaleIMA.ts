@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -21,7 +21,7 @@ export const skaleIMA: Bridge = {
         'https://t.me/skaleofficial',
         'https://youtube.com/channel/UCpUk0eMmD00C7RXLT0g8SuA',
         'https://reddit.com/r/skalenetwork/',
-        'https://www.linkedin.com/company/skale-labs/',
+        'https://linkedin.com/company/skale-labs/',
       ],
       documentation: [
         'https://docs.skale.network/ima/1.4.x/',

@@ -1,6 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,9 +15,10 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOne,
-} from './common'
-import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
+} from '../common'
+import { subtractOne } from '../common/assessCount'
+import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
@@ -22,10 +27,12 @@ const validatorAfkBlocks = discovery.getContractValue<number>(
   'ArbitrumProxy',
   'VALIDATOR_AFK_BLOCKS',
 )
+const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 const challengeWindow = discovery.getContractValue<number>(
   'ArbitrumProxy',
   'confirmPeriodBlocks',
 )
+const challengeWindowSeconds = challengeWindow * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
   'L1ArbitrumTimelock',
   'getMinDelay',
@@ -45,9 +52,10 @@ export const nova: Layer2 = {
     name: 'Arbitrum Nova',
     slug: 'nova',
     description:
-      'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
-    purpose: 'Universal',
+      'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
+    purposes: ['Universal'],
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
     links: {
       websites: [
@@ -112,9 +120,29 @@ export const nova: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(
-      l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
-    ),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
+      sentiment: 'bad',
+      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
+        l2TimelockDelay,
+      )} delay. Since there is a ${formatSeconds(
+        selfSequencingDelay,
+      )} to force a tx, users have only ${formatSeconds(
+        l2TimelockDelay - selfSequencingDelay,
+      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+        validatorAfkTime,
+      )} delay and then wait for the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
+        challengeWindowSeconds,
+      )} challenge window and the ${formatSeconds(
+        l1TimelockDelay,
+      )} L1 timelock.`,
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
+    },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
       validatorAfkBlocks * assumedBlockTime,

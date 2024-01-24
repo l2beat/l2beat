@@ -1,27 +1,44 @@
 import { assert } from '@l2beat/shared-pure'
 
 import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
-import { LivenessFunctionCall } from '../types/LivenessConfig'
+import {
+  LivenessFunctionCall,
+  LivenessSharpSubmission,
+} from '../types/LivenessConfig'
 import { BigQueryFunctionCallsResult } from '../types/model'
+import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
-  configs: LivenessFunctionCall[],
+  functionCalls: LivenessFunctionCall[],
+  sharpSubmissions: LivenessSharpSubmission[],
   queryResults: BigQueryFunctionCallsResult,
 ): LivenessRecord[] {
-  const results: LivenessRecord[] = queryResults.map((r) => {
-    const config = configs.find(
-      (t) => r.input.startsWith(t.selector) && t.address === r.to_address,
+  return queryResults.flatMap((r) => {
+    const selector = r.input.slice(0, 10)
+
+    const matchingCalls = functionCalls.filter(
+      (c) => c.selector === selector && c.address === r.to_address,
+    )
+    const matchingSubmissions = sharpSubmissions.filter(
+      (c) => c.selector === selector && c.address === r.to_address,
     )
 
-    assert(config, 'Programmer error: config should not be undefined there')
+    assert(
+      matchingCalls.length > 0 || matchingSubmissions.length > 0,
+      'There should be at least one matching config',
+    )
 
-    return {
-      projectId: config.projectId,
+    const filteredSubmissions = matchingSubmissions.filter((c) =>
+      isProgramHashProven(r, c.programHashes),
+    )
+
+    const results = [...matchingCalls, ...filteredSubmissions].map((c) => ({
       timestamp: r.block_timestamp,
       blockNumber: r.block_number,
       txHash: r.transaction_hash,
-      type: config.type,
-    }
+      livenessId: c.id,
+    }))
+
+    return results
   })
-  return results
 }

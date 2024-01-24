@@ -27,6 +27,7 @@ export interface ReportRecord {
 }
 
 export const SIX_HOURS = UnixTime.HOUR * 6
+const BATCH_SIZE = 5_000
 
 export class ReportRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
@@ -64,8 +65,6 @@ export class ReportRepository extends BaseRepository {
   }
 
   async addOrUpdateMany(reports: ReportRecord[]) {
-    const rows = reports.map(toRow)
-    const knex = await this.knex()
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
@@ -73,7 +72,23 @@ export class ReportRepository extends BaseRepository {
     assert(timestampsMatch, 'Timestamps must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
-    // Can't be two or more updaters on the chain because it will break the logic
+    await this.runInTransaction(async (trx) => {
+      for (let i = 0; i < reports.length; i += BATCH_SIZE) {
+        // Can't be two or more updaters on the chain because it will break the logic
+        await this._addOrUpdateMany(reports.slice(i, i + BATCH_SIZE), trx)
+      }
+    })
+
+    return reports.length
+  }
+
+  private async _addOrUpdateMany(
+    reports: ReportRecord[],
+    trx: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+    const rows = reports.map(toRow)
+
     await knex('reports')
       .insert(rows)
       .onConflict([
@@ -84,8 +99,6 @@ export class ReportRepository extends BaseRepository {
         'report_type',
       ])
       .merge()
-
-    return rows.length
   }
 
   async deleteAll() {

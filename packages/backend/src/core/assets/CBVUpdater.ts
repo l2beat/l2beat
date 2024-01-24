@@ -3,7 +3,6 @@ import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../../config/chains'
 import {
   ReportRecord,
   ReportRepository,
@@ -34,9 +33,8 @@ export class CBVUpdater implements ReportUpdater {
     private readonly logger: Logger,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(
-      `${this.constructor.name}.${ChainId.getName(this.getChainId())}`,
-    )
+    this.logger = this.logger.for(this)
+
     // TODO(radomski): This config hash should be generated from only CBV projects
     this.configHash = getReportConfigHash(projects)
     this.taskQueue = new TaskQueue(
@@ -47,6 +45,7 @@ export class CBVUpdater implements ReportUpdater {
       },
     )
   }
+
   getChainId() {
     return ChainId.ETHEREUM
   }
@@ -65,7 +64,7 @@ export class CBVUpdater implements ReportUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
-      getChainMinTimestamp(this.getChainId()),
+      this.minTimestamp,
     )
   }
 
