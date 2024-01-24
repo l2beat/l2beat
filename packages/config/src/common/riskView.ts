@@ -1,6 +1,6 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { formatSeconds } from '../utils/formatSeconds'
 import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
 
@@ -80,6 +80,13 @@ export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
+export const DATA_ON_CHAIN_L2: ScalingProjectRiskViewEntry = {
+  value: 'On chain',
+  description:
+    'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
+  sentiment: 'good',
+}
+
 export const DATA_ON_CHAIN_STATE_DIFFS: ScalingProjectRiskViewEntry = {
   value: 'On chain (SD)',
   description:
@@ -137,6 +144,18 @@ export const VALIDATED_BY_ETHEREUM: ScalingProjectRiskViewEntry = {
   value: 'Ethereum',
   description: 'Smart contracts on Ethereum validate all bridge transfers.',
   sentiment: 'good',
+}
+
+type L2sWithL3Support = 'Arbitrum'
+
+export function VALIDATED_BY_L2(
+  chain: L2sWithL3Support,
+): ScalingProjectRiskViewEntry {
+  return {
+    value: chain,
+    description: `Smart contracts on ${chain} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
+    sentiment: 'warning',
+  }
 }
 
 export function NATIVE_AND_CANONICAL(
@@ -427,6 +446,7 @@ export const RISK_VIEW = {
   STATE_EXITS_ONLY,
   DATA_ON_CHAIN,
   DATA_ON_CHAIN_STATE_DIFFS,
+  DATA_ON_CHAIN_L2,
   DATA_MIXED,
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,
@@ -434,6 +454,7 @@ export const RISK_VIEW = {
   DATA_CELESTIA,
   UPGRADABLE_YES,
   VALIDATED_BY_ETHEREUM,
+  VALIDATED_BY_L2,
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_USDC,

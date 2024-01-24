@@ -1,8 +1,8 @@
 {
   "name": "l2beat-starkware",
   "chain": "ethereum",
-  "blockNumber": 17031968,
-  "configHash": "0x80112d572c320dae60a1cc29c37f837881984f02c13575f623751c96992ac434",
+  "blockNumber": 19063965,
+  "configHash": "0x241bdfda840313580acee44fbf45b93f45cefcefc409f5ff924031d57270726a",
   "version": 3,
   "contracts": [
     {
@@ -92,7 +92,7 @@
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
         ],
         "getThreshold": 2,
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

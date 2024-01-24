@@ -1,6 +1,6 @@
-import { default as classNames, default as cx } from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../utils/cn'
 import { Icon } from './Icon'
 
 function ArrowIcon(props: SVGAttributes<SVGElement>) {
@@ -16,7 +16,7 @@ export function ArrowUpIcon(props: SVGAttributes<SVGElement>) {
     <ArrowIcon
       aria-label="Arrow up icon"
       alt-text="+"
-      className={cx(
+      className={cn(
         'inline-block fill-green-300 dark:fill-green-450',
         props.className,
       )}
@@ -29,7 +29,7 @@ export function ArrowDownIcon(props: SVGAttributes<SVGElement>) {
     <ArrowIcon
       aria-label="Arrow down icon"
       alt-text="-"
-      className={cx('inline-block rotate-180 fill-red-300', props.className)}
+      className={cn('inline-block rotate-180 fill-red-300', props.className)}
     />
   )
 }
@@ -65,9 +65,6 @@ export function SortingArrowDownIcon({
   ...rest
 }: SVGAttributes<SVGElement>) {
   return (
-    <SortingArrowUpIcon
-      className={classNames('rotate-180', className)}
-      {...rest}
-    />
+    <SortingArrowUpIcon className={cn('rotate-180', className)} {...rest} />
   )
 }

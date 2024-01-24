@@ -1,8 +1,8 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Chart, Header, Logo } from '../../components'
 import { ChartType } from '../../scripts/charts/types'
+import { cn } from '../../utils/cn'
 
 export interface DetailedTvlMetaImageProps {
   tvl: string
@@ -22,7 +22,7 @@ export function DetailedTvlMetaImage(props: DetailedTvlMetaImageProps) {
   const name = props.name ?? 'Overview'
   return (
     <div
-      className={cx(
+      className={cn(
         'MetaImage leading-[1.15]',
         !props.name ? 'overview' : 'project',
       )}

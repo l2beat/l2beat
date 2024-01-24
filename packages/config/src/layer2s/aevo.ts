@@ -1,8 +1,7 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -48,6 +47,9 @@ export const aevo: Layer2 = opStack({
         FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
     },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
@@ -87,12 +89,6 @@ export const aevo: Layer2 = opStack({
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1StandardBridge', {
-      description:
-        'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
-  ],
+  nonTemplateContracts: [],
   nonTemplateEscrows: [],
 })

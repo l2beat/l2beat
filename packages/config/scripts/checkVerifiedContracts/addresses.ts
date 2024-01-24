@@ -11,19 +11,19 @@ import { withoutDuplicates } from './utils'
 
 export function getUniqueContractsForAllProjects(
   projects: Project[],
-  devId: string,
+  chain: string,
 ): EthereumAddress[] {
   const addresses = projects.flatMap((project) =>
-    getUniqueContractsForProject(project, devId),
+    getUniqueContractsForProject(project, chain),
   )
   return withoutDuplicates(addresses)
 }
 
 export function getUniqueContractsForProject(
   project: Project,
-  devId: string,
+  chain: string,
 ): EthereumAddress[] {
-  const projectContracts = getProjectContractsForChain(project, devId)
+  const projectContracts = getProjectContractsForChain(project, chain)
   const mainAddresses = projectContracts.flatMap((c) => getAddresses(c))
   const upgradeabilityAddresses = projectContracts
     .filter(isSingleAddress)
@@ -34,14 +34,28 @@ export function getUniqueContractsForProject(
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
-function getProjectContractsForChain(project: Project, devId: string) {
-  return (project.contracts?.addresses ?? []).filter((contract) => {
-    // For backwards compatibility, we assume that contracts without devId are for ethereum
-    if (contract.devId === undefined && devId === 'ethereum') {
-      return true
-    }
-    return contract.devId === devId
-  })
+function getProjectContractsForChain(project: Project, chain: string) {
+  const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
+    isContractOnChain(contract, chain),
+  )
+  const escrows = project.config.escrows
+    .flatMap((escrow) => {
+      if (!escrow.newVersion) {
+        return []
+      }
+      return { address: escrow.address, ...escrow.contract }
+    })
+    .filter((escrowContract) => isContractOnChain(escrowContract, chain))
+
+  return [...contracts, ...escrows]
+}
+
+function isContractOnChain(contract: ScalingProjectContract, chain: string) {
+  // For backwards compatibility, we assume that contracts without chain are for ethereum
+  if (contract.chain === undefined && chain === 'ethereum') {
+    return true
+  }
+  return contract.chain === chain
 }
 
 function gatherAddressesFromUpgradeability(
@@ -118,10 +132,10 @@ export function areAllProjectContractsVerified(
   project: Project,
   addressVerificationMapPerChain: VerificationMapPerChain,
 ): boolean {
-  for (const [devId, addressVerificationMap] of Object.entries(
+  for (const [chain, addressVerificationMap] of Object.entries(
     addressVerificationMapPerChain,
   )) {
-    const projectAddresses = getUniqueContractsForProject(project, devId)
+    const projectAddresses = getUniqueContractsForProject(project, chain)
     if (!areAllAddressesVerified(projectAddresses, addressVerificationMap)) {
       return false
     }

@@ -84,12 +84,12 @@ describe('layer2s', () => {
     })
   })
 
-  describe('devId equals project id', () => {
+  describe('chain name equals project id', () => {
     for (const layer2 of layer2s) {
-      const devId = layer2.chainConfig?.devId
-      if (devId !== undefined) {
+      const name = layer2.chainConfig?.name
+      if (name !== undefined) {
         it(layer2.id.toString(), () => {
-          expect(devId).toEqual(layer2.id.toString())
+          expect(name).toEqual(layer2.id.toString())
         })
       }
     }
@@ -131,6 +131,17 @@ describe('layer2s', () => {
             )
           })
         }
+      }
+    })
+  })
+
+  describe('finality', () => {
+    describe('every project with finality enabled has finalizationPeriod property', () => {
+      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
+      for (const project of projectsWithFinality) {
+        it(project.id.toString(), () => {
+          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
+        })
       }
     })
   })

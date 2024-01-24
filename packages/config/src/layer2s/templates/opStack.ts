@@ -1,10 +1,5 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import {
-  EthereumAddress,
-  ProjectId,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -47,7 +42,6 @@ export interface OpStackConfig {
   inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
   sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
-  tokenList?: Token[]
   finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
   portal: ContractParameters
@@ -76,11 +70,13 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
-      finalityWarning:
-        "It's assumed that transaction data batches are submitted sequentially.",
+      finality: {
+        warning:
+          "It's assumed that transaction data batches are submitted sequentially.",
+        finalizationPeriod: templateVars.display.finality?.finalizationPeriod,
+      },
     },
     config: {
-      tokenList: templateVars.tokenList,
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({

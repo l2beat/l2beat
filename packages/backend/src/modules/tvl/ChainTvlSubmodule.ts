@@ -24,7 +24,7 @@ import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function chainTvlSubmodule(
-  { devId, config }: ChainTvlConfig,
+  { chain, config }: ChainTvlConfig,
   tokens: Token[],
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
@@ -33,12 +33,12 @@ export function chainTvlSubmodule(
   clock: Clock,
   logger: Logger,
 ): TvlSubmodule | undefined {
-  const name = `${capitalizeFirstLetter(devId)}TvlModule`
+  const name = `${capitalizeFirstLetter(chain)}TvlModule`
   if (!config) {
     logger.info(`${name} disabled`)
     return
   }
-  logger = logger.tag(devId)
+  logger = logger.tag(chain)
 
   // #region peripherals
   const provider = new providers.JsonRpcProvider(config.providerUrl)

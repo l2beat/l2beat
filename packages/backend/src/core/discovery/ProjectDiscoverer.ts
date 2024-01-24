@@ -16,7 +16,7 @@ export class ProjectDiscoverer {
   constructor(
     private readonly discoveryRunner: DiscoveryRunner,
     private readonly projectName: string,
-    private readonly chainId: ChainId,
+    private readonly chain: string,
     private readonly configReader: ConfigReader,
     private readonly repository: DiscoveryHistoryRepository,
     private readonly clock: Clock,
@@ -38,17 +38,23 @@ export class ProjectDiscoverer {
 
     const known = await this.repository.getTimestamps(
       this.projectName,
-      this.chainId,
+      ChainId.fromName(this.chain),
+    )
+
+    this.projectConfig = await this.configReader.readConfig(
+      this.projectName,
+      this.chain,
+    )
+
+    await this.repository.deleteStaleProjectDiscoveries(
+      this.projectName,
+      ChainId.fromName(this.chain),
+      this.projectConfig.hash,
     )
 
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toStartOf('day').toNumber())
     }
-
-    this.projectConfig = await this.configReader.readConfig(
-      this.projectName,
-      this.chainId,
-    )
 
     return this.clock.onEveryDay((timestamp) => {
       if (!this.knownSet.has(timestamp.toStartOf('day').toNumber())) {
@@ -68,7 +74,7 @@ export class ProjectDiscoverer {
     const blockNumber = await this.discoveryRunner.getBlockNumberAt(timestamp)
 
     this.logger.info('Discovering started', {
-      chain: ChainId.getName(this.chainId),
+      chain: this.chain,
       project: this.projectName,
       blockNumber,
       timestamp: timestamp.toNumber(),
@@ -88,7 +94,7 @@ export class ProjectDiscoverer {
     )
 
     this.logger.info('Discovering finished', {
-      chain: ChainId.getName(this.chainId),
+      chain: this.chain,
       project: this.projectName,
       blockNumber,
       timestamp: timestamp.toNumber(),
@@ -97,7 +103,7 @@ export class ProjectDiscoverer {
 
     await this.repository.addOrUpdate({
       projectName: this.projectName,
-      chainId: this.chainId,
+      chainId: ChainId.fromName(this.chain),
       timestamp,
       blockNumber,
       discovery,

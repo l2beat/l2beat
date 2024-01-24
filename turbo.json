@@ -8,11 +8,11 @@
     },
     "typecheck": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "src/**/*.tsx"]
+      "inputs": ["**/*.ts", "**/*.tsx"]
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.ts", "**/*.test.ts"]
+      "inputs": ["**/*.ts", "**/*.test.ts"]
     },
     "lint": {
       "dependsOn": ["^build"]

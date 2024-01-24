@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { SortingArrowDownIcon, SortingArrowUpIcon } from '../icons'
 import { SortingRule, SortingState } from './types'
 
@@ -32,14 +32,14 @@ export function SortingArrows(props: Props) {
     >
       <div className="flex flex-col gap-[1.5px]">
         <SortingArrowUpIcon
-          className={classNames(
+          className={cn(
             'fill-gray-550 transition-all dark:fill-gray-650',
             'group-data-[state=asc]/sorting-arrows:fill-black dark:group-data-[state=asc]/sorting-arrows:fill-white',
             'group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-black group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-70 dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-white dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
           )}
         />
         <SortingArrowDownIcon
-          className={classNames(
+          className={cn(
             'fill-gray-550 transition-all dark:fill-gray-650',
             'group-data-[state=desc]/sorting-arrows:fill-black dark:group-data-[state=desc]/sorting-arrows:fill-white',
             'group-hover/sorting-arrows:fill-black group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-70 dark:group-hover/sorting-arrows:fill-white dark:group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',

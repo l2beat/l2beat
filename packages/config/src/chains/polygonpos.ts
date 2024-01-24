@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ChainConfig } from '../common/ChainConfig'
 
 export const polygonpos: ChainConfig = {
-  devId: 'polygonpos',
+  name: 'polygonpos',
   chainId: 137,
   explorerUrl: 'https://polygonscan.com',
   explorerApi: {
