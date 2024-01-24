@@ -27,7 +27,7 @@ const EXCLUDED_PLUGS = ['0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D']
  * Note that this script only works with standard plugs. If a plug is not standard,
  * the script will fail, so a non-standard plug needs to be excluded.
  *
- * The output of this script is saved as .jsonc file to allow comments.
+ * The output of this script is saved in src/bridges/socket-vaults.json.
  */
 async function main() {
   const env = getEnv()
@@ -45,49 +45,26 @@ async function main() {
   console.log('block number: ', blockNumber)
   console.log('getting vaults from plugs list...')
   const vaultsRaw = await Promise.all(
-    plugsFiltered.map(async (plugAddress) => {
-      const tx = {
-        to: plugAddress,
-        data: plugInt.encodeFunctionData('hub__', []),
-      }
-      try {
-        const addressBytes = await provider.call(tx, blockNumber)
-        return utils.getAddress('0x' + addressBytes.slice(26))
-      } catch (e) {
-        if (
-          e instanceof Error &&
-          e.message.includes('Transaction reverted without a reason string')
-        ) {
-          console.error(
-            `Plug ${plugAddress} is not a standard plug. It probably needs to be excluded and checked manually.`,
-          )
-          process.exit(1)
-        }
-        throw e
-      }
-    }),
+    plugsFiltered.map((plugAddress) =>
+      getVaultAddress(plugAddress, provider, blockNumber),
+    ),
   )
 
   const vaults = vaultsRaw
     .filter(notUndefined)
     .filter((x, i, a) => a.indexOf(x) === i)
-  const vaultsTvl = []
+
   console.log(
     'fetching vaults data (this will take around ' +
       (vaults.length * 2).toString() +
       ' seconds)...',
   )
-
+  const vaultsTvl = []
   for (const vault of vaults) {
     // avoid rate limiting
     await setTimeout(1000)
     const { tvl, ethValue } = await scrapEtherscanForTvl(vault)
-    const tx = {
-      to: vault,
-      data: vaultInt.encodeFunctionData('token__', []),
-    }
-    const tokenAddressBytes = await provider.call(tx, blockNumber)
-    const tokenAddress = utils.getAddress('0x' + tokenAddressBytes.slice(26))
+    const tokenAddress = await getTokenAddress(vault, provider, blockNumber)
     const token = tokenList.find((t) => t.address?.toString() === tokenAddress)
     vaultsTvl.push({ address: vault, tvl, ethValue, token: token?.symbol })
   }
@@ -105,3 +82,44 @@ main().catch((e) => {
   console.error(e)
   process.exit(1)
 })
+
+async function getTokenAddress(
+  vault: string,
+  provider: providers.AlchemyProvider,
+  blockNumber: number,
+) {
+  const tx = {
+    to: vault,
+    data: vaultInt.encodeFunctionData('token__', []),
+  }
+  const tokenAddressBytes = await provider.call(tx, blockNumber)
+  const tokenAddress = utils.getAddress('0x' + tokenAddressBytes.slice(26))
+  return tokenAddress
+}
+
+async function getVaultAddress(
+  plugAddress: string,
+  provider: providers.AlchemyProvider,
+  blockNumber: number,
+): Promise<string> {
+  const tx = {
+    to: plugAddress,
+    data: plugInt.encodeFunctionData('hub__', []),
+  }
+
+  try {
+    const addressBytes = await provider.call(tx, blockNumber)
+    return utils.getAddress('0x' + addressBytes.slice(26))
+  } catch (e) {
+    if (
+      e instanceof Error &&
+      e.message.includes('Transaction reverted without a reason string')
+    ) {
+      console.error(
+        `Plug ${plugAddress} is not a standard plug. It probably needs to be excluded and checked manually.`,
+      )
+      process.exit(1)
+    }
+    throw e
+  }
+}
