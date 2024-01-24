@@ -2,9 +2,9 @@ import {
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
@@ -16,7 +16,7 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 export interface TechnologyContract {
   name: string
   addresses: string[]
-  devId: string
+  chain: string
   etherscanUrl: string
   description?: string
   links: TechnologyContractLinks[]
@@ -46,7 +46,9 @@ export function ContractEntry({
   className,
 }: ContractEntryProps) {
   const verificationStatusForChain =
-    verificationStatus.contracts[contract.devId] ?? {}
+    verificationStatus.contracts[contract.chain] ?? {}
+  const manuallyVerifiedContractsForChain =
+    manuallyVerifiedContracts[contract.chain] ?? {}
 
   const areLinksUnverified = contract.links
     .filter((c) => !c.isAdmin)
@@ -72,17 +74,18 @@ export function ContractEntry({
     )
 
   addresses.forEach((address) => {
-    if (manuallyVerifiedContracts[address]) {
+    const manuallyVerified = manuallyVerifiedContractsForChain[address]
+    if (manuallyVerified) {
       references.push({
         text: 'Source code',
-        href: manuallyVerifiedContracts[address],
+        href: manuallyVerified,
       })
     }
   })
 
   return (
     <Callout
-      className={cx(color === 'red' ? 'p-4' : 'px-4', className)}
+      className={cn(color === 'red' ? 'p-4' : 'px-4', className)}
       color={color}
       icon={icon}
       body={
@@ -94,7 +97,7 @@ export function ContractEntry({
                 address={address}
                 etherscanUrl={contract.etherscanUrl}
                 key={i}
-                className={cx(
+                className={cn(
                   verificationStatusForChain[address] === false
                     ? 'text-red-300'
                     : '',
@@ -105,7 +108,7 @@ export function ContractEntry({
               <Link
                 data-role="etherscan-link"
                 key={i}
-                className={cx(
+                className={cn(
                   verificationStatusForChain[x.address] === false &&
                     !x.isAdmin &&
                     'text-red-300',

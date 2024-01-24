@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling/activity/types'
@@ -14,6 +13,7 @@ import {
 } from '../../../pages/scaling/summary/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
+import { cn } from '../../../utils/cn'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { Badge } from '../../badge/Badge'
@@ -459,7 +459,7 @@ export function getScalingActivityColumnsConfig() {
           <span className="flex items-baseline justify-end gap-1.5">
             <NumberCell>{formatTps(project.data.maxTps)}</NumberCell>
             <span
-              className={classNames(
+              className={cn(
                 'text-gray-700 dark:text-gray-300',
                 'block min-w-[115px] text-left',
               )}
@@ -650,7 +650,7 @@ export function getScalingFinalityColumnsConfig() {
       },
     },
     {
-      name: '30-day avg. time to finality',
+      name: 'Time to finality\n30-day avg.',
       getValue: (project) => (
         <FinalityDurationCell data={project.timeToFinalize} />
       ),
@@ -660,6 +660,22 @@ export function getScalingFinalityColumnsConfig() {
         rule: 'numeric',
         getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
       },
+    },
+    {
+      name: 'State update delay',
+      tooltip:
+        'Time interval between time to finality and state root submission.',
+      getValue: () => (
+        <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
+          Coming soon
+        </span>
+      ),
+    },
+    {
+      name: 'Execution delay',
+      tooltip:
+        'Time interval between state root submission and state root finalization. For Optimistic Rollups, this usually corresponds to the challenge period, whereas for ZK Rollups, it might be added as a safety precaution.',
+      getValue: (project) => <span>{project.finalizationPeriod}</span>,
     },
   ]
   return columns

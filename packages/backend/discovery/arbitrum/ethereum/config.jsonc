@@ -91,6 +91,10 @@
             "challenger",
             "challengedNode"
           ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
         }
       }
     },
@@ -115,6 +119,10 @@
             // id == 6 is emitted inside setValidator()
             "0x0000000000000000000000000000000000000000000000000000000000000001"
           ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
         }
       }
     },

@@ -1,10 +1,7 @@
 import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -21,7 +18,6 @@ import {
 import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { Layer2 } from './types'
 
@@ -38,44 +34,6 @@ const challengePeriod: number = discovery.getContractValue<number>(
 )
 
 const upgradeDelay = 0
-
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId('mantapacific:tia-celestia'),
-    name: 'Celestia',
-    symbol: 'TIA',
-    decimals: 6,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/31967/large/tia.jpg?1696530772',
-    address: EthereumAddress('0x6Fae4D9935E2fcb11fC79a64e917fb2BF14DaFaa'),
-    coingeckoId: CoingeckoId('celestia'),
-    sinceTimestamp: new UnixTime(1698782429),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Hyperlane Nexus',
-    },
-  },
-  {
-    id: AssetId('mantapacific:stone-stakestone-ether'),
-    name: 'StakeStone Ether',
-    symbol: 'STONE',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672',
-    address: EthereumAddress('0xEc901DA9c68E90798BbBb74c11406A32A70652C3'),
-    coingeckoId: CoingeckoId('stakestone-ether'),
-    sinceTimestamp: new UnixTime(1699781729),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Layer Zero',
-      slug: 'omnichain',
-    },
-  },
-]
 
 export const mantapacific: Layer2 = {
   type: 'layer2',
@@ -116,7 +74,6 @@ export const mantapacific: Layer2 = {
     },
   },
   config: {
-    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.MANTAPACIFIC })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622'),
@@ -141,12 +98,12 @@ export const mantapacific: Layer2 = {
     },
   },
   chainConfig: {
-    devId: 'mantapacific',
+    name: 'mantapacific',
     chainId: 169,
     explorerUrl: 'https://pacific-explorer.manta.network',
     explorerApi: {
       url: 'https://pacific-explorer.manta.network/api',
-      type: 'routescan',
+      type: 'blockscout',
     },
     // ~ Timestamp of block number 0 on MantaPacific
     // https://pacific-explorer.manta.network/block/0
@@ -159,6 +116,7 @@ export const mantapacific: Layer2 = {
         version: '2',
       },
     ],
+    coingeckoPlatform: 'manta-pacific',
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,

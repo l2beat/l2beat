@@ -1,14 +1,21 @@
 import { Layer2 } from '@l2beat/config'
 import {
+  CanonicalAssetBreakdownData,
+  ExternalAssetBreakdownData,
+  NativeAssetBreakdownData,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
+import { getExplorerUrlByChainId } from '../../../../utils/getExplorerUrl'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
 
-export type TVLProjectBreakdown =
-  ProjectAssetsBreakdownApiResponse['breakdowns'][string]
+export interface TVLProjectBreakdown {
+  canonical: (CanonicalAssetBreakdownData & { explorerUrl?: string })[]
+  external: (ExternalAssetBreakdownData & { explorerUrl?: string })[]
+  native: (NativeAssetBreakdownData & { explorerUrl?: string })[]
+}
 export interface TvlBreakdownViewProps {
   tvlBreakdownSummary: {
     tvl: {
@@ -40,6 +47,8 @@ export function getTvlBreakdownView(
   const charts = apiProject?.charts
   const { parts, partsWeeklyChange } = getDetailedTvlWithChange(charts)
 
+  const breakdowns = tvlBreakdownApiResponse.breakdowns[project.id.toString()]
+
   return {
     tvlBreakdownSummary: {
       tvl: {
@@ -59,6 +68,19 @@ export function getTvlBreakdownView(
         change: partsWeeklyChange.native,
       },
     },
-    tvlBreakdowns: tvlBreakdownApiResponse.breakdowns[project.id.toString()],
+    tvlBreakdowns: {
+      canonical: breakdowns.canonical.map((asset) => ({
+        ...asset,
+        explorerUrl: getExplorerUrlByChainId(asset.chainId),
+      })),
+      external: breakdowns.external.map((asset) => ({
+        ...asset,
+        explorerUrl: getExplorerUrlByChainId(asset.chainId),
+      })),
+      native: breakdowns.native.map((asset) => ({
+        ...asset,
+        explorerUrl: getExplorerUrlByChainId(asset.chainId),
+      })),
+    },
   }
 }

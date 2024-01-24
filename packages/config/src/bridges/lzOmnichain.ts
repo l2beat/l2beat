@@ -2,10 +2,12 @@ import { ProjectId } from '@l2beat/shared-pure'
 
 import { CONTRACTS, NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { languageJoin } from '../utils/languageJoin'
 import { RISK_VIEW } from './common'
 import {
   INBOUND_PROOF_LIBRARIES,
-  OMNICHAN_ESCROWS,
+  OMNICHAIN_ESCROWS,
+  OMNICHAIN_TOKENS,
   ORACLES,
   RELAYERS,
 } from './lzOmnichain.contracts'
@@ -35,15 +37,20 @@ export const lzOmnichain: Bridge = {
       socialMedia: ['https://twitter.com/LayerZero_Labs'],
     },
     description:
-      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol',
+      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol that have a market cap over 100k USD.',
     detailedDescription:
-      'Currently they are: STG, Harmony Bridge OFT, BOBA, STONE, WAGMI and agEUR. Risk associated with using any of them varies, depending on the technological decisions made by the developers. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
+      'Currently they are: ' +
+      languageJoin(OMNICHAIN_TOKENS) +
+      '. Risk associated with using any of them varies, depending on the technological decisions made by the developers.\
+       LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings,\
+       however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library.\
+       Default settings are managed by LayerZero team.',
   },
   riskView: {
     validatedBy: {
       value: 'Third Party',
       description:
-        'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',
+        'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing proof of the transfer event.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -59,7 +66,7 @@ export const lzOmnichain: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Omnichain tokens are tokenized Token Bridges. One chain is designated as main and acts as an token escrow. Transfers from the main chain are done using typical lock-mint model. Transfers between\
+        'Omnichain tokens are tokenized Token Bridges. Usually, one chain is designated as main and acts as an token escrow. In this case, transfers from the main chain are done using typical lock-mint model. Transfers between\
         other (non-main) chains are made using burn-mint model. The implementation details may vary between each individual omnichain token and must be individually assessed.',
       risks: [],
       references: [],
@@ -68,7 +75,7 @@ export const lzOmnichain: Bridge = {
       name: 'Oracles and Relayers',
       description:
         'Omnichain tokens are built on top of LayerZero protocol. LayerZero relies on Oracles to periodically submit source chain block hashes to the destination chain.\
-        Once block hash is submitted, Relayers can provide the merkle proof for the transfers. The Oracle and Relayer used can be either default LayerZero contracts, or custom built by the token developers.',
+        Once block hash is submitted, Relayers can provide the proof for the transfers. The Oracle and Relayer used can be either default LayerZero contracts, or custom built by the token developers.',
       references: [
         {
           text: 'LayerZero security model analysis',
@@ -83,7 +90,7 @@ export const lzOmnichain: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'oracles and relayers collude to submit fraudulent block hash and relay fraudulent transfer .',
+          text: 'oracles and relayers collude to submit fraudulent block hash and relay fraudulent transfer.',
           isCritical: true,
         },
         {
@@ -96,16 +103,10 @@ export const lzOmnichain: Bridge = {
     },
   },
   config: {
-    escrows: OMNICHAN_ESCROWS,
+    escrows: OMNICHAIN_ESCROWS,
   },
   contracts: {
     addresses: [
-      {
-        multipleAddresses: OMNICHAN_ESCROWS.map((e) => e.address),
-        name: 'Omnichain Tokens (OFT)',
-        description:
-          'Contracts using LayerZero smart contracts to transfer tokens between chains. The implementation details may vary between each individual omnichain token and must be individually assessed. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
-      },
       discovery.getContractDetails(
         'TSS Oracle',
         'Contract used to submit source chain block hashes. One of the default Oracles.',

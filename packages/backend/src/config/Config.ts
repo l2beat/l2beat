@@ -1,7 +1,7 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { Layer2TransactionApi } from '@l2beat/config'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
-import { Token, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model'
@@ -25,6 +25,7 @@ export interface Config {
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
+  readonly chains: { name: string; chainId: ChainId }[]
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
@@ -58,13 +59,13 @@ export interface TvlConfig {
   readonly enabled: boolean
   readonly errorOnUnsyncedTvl: boolean
   readonly coingeckoApiKey: string | undefined
-  readonly ethereum: ChainTvlConfig | false
-  readonly arbitrum: ChainTvlConfig | false
-  readonly optimism: ChainTvlConfig | false
-  readonly base: ChainTvlConfig | false
-  readonly mantapacific: ChainTvlConfig | false
-  readonly lyra: ChainTvlConfig | false
-  readonly linea: ChainTvlConfig | false
+  readonly ethereum: ChainTvlConfig
+  readonly arbitrum: ChainTvlConfig
+  readonly optimism: ChainTvlConfig
+  readonly base: ChainTvlConfig
+  readonly mantapacific: ChainTvlConfig
+  readonly lyra: ChainTvlConfig
+  readonly linea: ChainTvlConfig
 }
 
 export interface LivenessConfig {
@@ -78,25 +79,30 @@ export interface LivenessConfig {
   readonly minTimestamp: UnixTime
 }
 
-export interface RoutescanChainConfig {
-  readonly type: 'RoutescanLike'
-  readonly routescanApiUrl: string
+export interface BlockscoutChainConfig {
+  readonly type: 'blockscout'
+  readonly blockscoutApiUrl: string
 }
 
 export interface EtherscanChainConfig {
-  readonly type: 'EtherscanLike'
+  readonly type: 'etherscan'
   readonly etherscanApiKey: string
   readonly etherscanApiUrl: string
 }
 
 export interface ChainTvlConfig {
-  readonly providerUrl: string
-  readonly providerCallsPerMinute: number
-  readonly minBlockTimestamp: UnixTime
-  readonly blockNumberProviderConfig:
-    | EtherscanChainConfig
-    | RoutescanChainConfig
-  readonly multicallConfig: MulticallConfigEntry[]
+  readonly chain: string
+  readonly config?: {
+    readonly projectId: ProjectId
+    readonly chainId: ChainId
+    readonly providerUrl: string
+    readonly providerCallsPerMinute: number
+    readonly minBlockTimestamp: UnixTime
+    readonly blockNumberProviderConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+    readonly multicallConfig: MulticallConfigEntry[]
+  }
 }
 
 export interface HealthConfig {

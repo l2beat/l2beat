@@ -3,13 +3,9 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ChainConfig } from '../common/ChainConfig'
 
 export const avalanche: ChainConfig = {
-  devId: 'avalanche',
+  name: 'avalanche',
   chainId: 43114,
   explorerUrl: 'https://snowtrace.io',
-  explorerApi: {
-    url: 'https://api.snowtrace.io/api',
-    type: 'routescan',
-  },
   multicallContracts: [
     {
       address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

@@ -1,4 +1,5 @@
 import { ScalingProjectPurpose, StageConfig } from '@l2beat/config'
+import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { UpcomingBadge } from '../../../../components/badge/UpcomingBadge'
@@ -19,7 +20,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../../../components/tooltip/Tooltip'
-import { pluralize } from '../../../../utils/pluralize'
 import { RiskValues } from '../../../../utils/risks/types'
 
 export interface ProjectHeaderProps {

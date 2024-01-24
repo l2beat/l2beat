@@ -1,8 +1,11 @@
 import { ScalingProjectRiskViewEntry } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
-import { sentimentToTextColor } from '../../utils/risks/color'
+import { cn } from '../../utils/cn'
+import {
+  sentimentToFillColor,
+  sentimentToTextColor,
+} from '../../utils/risks/color'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
@@ -31,19 +34,24 @@ export function RiskCell({ item }: Props) {
     <Tooltip>
       <TooltipTrigger>
         <span
-          className={cx(
+          className={cn(
             'flex items-center gap-1 font-medium',
             sentimentToTextColor(item.sentiment),
           )}
         >
           {item.value}
           {item.warning && (
-            <RoundedWarningIcon className="size-4 fill-current" />
+            <RoundedWarningIcon
+              className={cn(
+                'size-5',
+                sentimentToFillColor(item.warning.sentiment),
+              )}
+            />
           )}
         </span>
         {item.secondLine && (
           <span
-            className={cx(
+            className={cn(
               'block text-xs leading-none',
               item.secondSentiment
                 ? sentimentToTextColor(item.secondSentiment)
@@ -58,8 +66,9 @@ export function RiskCell({ item }: Props) {
         {item.warning && (
           <WarningBar
             className="mb-2"
-            text={item.warning}
-            color={item.sentiment === 'bad' ? 'red' : 'yellow'}
+            text={item.warning.text}
+            icon={RoundedWarningIcon}
+            color={item.warning.sentiment === 'bad' ? 'red' : 'yellow'}
           />
         )}
         {item.description !== '' ? item.description : null}

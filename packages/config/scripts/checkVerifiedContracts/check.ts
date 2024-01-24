@@ -6,7 +6,7 @@ import {
   areAllProjectContractsVerified,
   getUniqueContractsForAllProjects,
 } from './addresses'
-import { getChainDevIds } from './chains'
+import { getChainNames } from './chains'
 import { getEtherscanClient } from './etherscan'
 import {
   getOutputPath,
@@ -20,18 +20,18 @@ import { verifyContracts } from './tasks'
 
 export async function check(workersCount: number, logger: Logger) {
   const projects = [...layer2s, ...bridges, ...layer3s]
-  const devIds = getChainDevIds(projects)
+  const chains = getChainNames(projects)
 
   const addressVerificationMapPerChain: VerificationMapPerChain = {}
 
-  for (const devId of devIds) {
-    console.log(`Checking on chain ${devId}...`)
-    const outputFilePath = getOutputPath(devId)
-    const manuallyVerified = getManuallyVerifiedContracts(devId)
+  for (const chain of chains) {
+    console.log(`Checking on chain ${chain}...`)
+    const outputFilePath = getOutputPath(chain)
+    const manuallyVerified = getManuallyVerifiedContracts(chain)
 
-    const previouslyVerified = await loadPreviouslyVerifiedContracts(devId)
-    const addresses = getUniqueContractsForAllProjects(projects, devId)
-    const etherscanClient = getEtherscanClient(devId)
+    const previouslyVerified = await loadPreviouslyVerifiedContracts(chain)
+    const addresses = getUniqueContractsForAllProjects(projects, chain)
+    const etherscanClient = getEtherscanClient(chain)
     const addressVerificationMap = await verifyContracts(
       addresses,
       previouslyVerified,
@@ -41,7 +41,7 @@ export async function check(workersCount: number, logger: Logger) {
       logger,
     )
     await saveResult(outputFilePath, addressVerificationMap)
-    addressVerificationMapPerChain[devId] = addressVerificationMap
+    addressVerificationMapPerChain[chain] = addressVerificationMap
   }
 
   const projectVerificationMap: VerificationMap = {}

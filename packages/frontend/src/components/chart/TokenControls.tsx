@@ -1,7 +1,7 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { TokenInfo } from '../../scripts/charts/types'
+import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Link } from '../Link'
 import { RichSelect } from '../RichSelect'
@@ -26,7 +26,7 @@ export function TokenControls({
 
   return (
     <div
-      className={classNames('flex h-full')}
+      className={cn('flex h-full')}
       data-role="chart-token-element"
       data-tvl-only
     >

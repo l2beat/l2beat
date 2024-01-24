@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ChainId } from '@l2beat/discovery'
 import type { DiscoveryCacheRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -8,7 +7,7 @@ import { Database } from './shared/Database'
 export interface DiscoveryCacheRecord {
   key: string
   value: string
-  chainId: ChainId
+  chain: string
   blockNumber: number
 }
 
@@ -41,11 +40,11 @@ export class DiscoveryCacheRepository extends BaseRepository {
 
     return rows.map(toRecord)
   }
-  async deleteAfter(blockNumber: number, chainId: ChainId): Promise<number> {
+  async deleteAfter(blockNumber: number, chain: string): Promise<number> {
     const knex = await this.knex()
     return knex('discovery_cache')
       .where('block_number', '>', blockNumber)
-      .andWhere('chain_id', Number(chainId))
+      .andWhere('chain', chain)
       .delete()
   }
 
@@ -59,7 +58,7 @@ function toRow(record: DiscoveryCacheRecord): DiscoveryCacheRow {
   return {
     key: record.key,
     value: record.value,
-    chain_id: Number(record.chainId),
+    chain: record.chain,
     block_number: record.blockNumber,
   }
 }
@@ -68,7 +67,7 @@ function toRecord(row: DiscoveryCacheRow): DiscoveryCacheRecord {
   return {
     key: row.key,
     value: row.value,
-    chainId: ChainId(row.chain_id),
+    chain: row.chain,
     blockNumber: row.block_number,
   }
 }

@@ -1,5 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
+
+import { cn } from '../../utils/cn'
 
 interface TooltipProviderProps {
   withAnimation?: boolean
@@ -10,7 +11,7 @@ export function TooltipProvider({
 }: TooltipProviderProps) {
   return (
     <div
-      className={classNames(
+      className={cn(
         'fixed left-0 top-0 z-110 hidden max-w-[300px] rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
         withAnimation && 'animate-quick-fade-in',
       )}

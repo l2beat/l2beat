@@ -1,6 +1,6 @@
-import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
@@ -53,7 +53,7 @@ export function DetailsHeader(props: HeaderProps) {
         <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
           <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
             <h1
-              className={cx(
+              className={cn(
                 'relative mb-0 flex items-center justify-start gap-3',
                 'whitespace-pre text-3xl font-bold md:text-4xl',
                 props.titleClassName,
@@ -99,7 +99,7 @@ export function DetailsHeader(props: HeaderProps) {
             <DesktopProjectLinks projectLinks={props.links} />
           </div>
           <div
-            className={classNames(
+            className={cn(
               'grid w-full divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0 ',
               isL2orL3 && 'md:grid-cols-3',
             )}

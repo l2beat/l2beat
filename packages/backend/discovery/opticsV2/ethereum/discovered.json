@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 18340280,
-  "configHash": "0x48aa6338e9c24644996168d5847dd89e287395d1b35a9f11a3b4a9809a54e725",
+  "configHash": "0x9b5a2cfbafc1c9b32e96869cdaa812c885c64a0a21765f656f3a70700e1d08cb",
   "version": 3,
   "contracts": [
     {

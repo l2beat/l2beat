@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -20,7 +25,6 @@ import {
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -54,7 +58,7 @@ export const immutablex: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://immutable.com/'],
-      apps: ['https://market.x.immutable.com/'],
+      apps: ['https://market.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
       explorers: ['https://immutascan.io/'],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],

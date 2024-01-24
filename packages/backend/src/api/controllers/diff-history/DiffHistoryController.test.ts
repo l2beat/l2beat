@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { ChainConverter } from '../../../core/ChainConverter'
 import {
   DiscoveryHistoryRecord,
   DiscoveryHistoryRepository,
@@ -15,6 +16,10 @@ import {
 import { DiffHistoryController } from './DiffHistoryController'
 
 describe(DiffHistoryController.name, () => {
+  const chainConverter = new ChainConverter([
+    { name: 'ethereum', chainId: ChainId(1) },
+  ])
+
   describe(
     DiffHistoryController.prototype.getDiffHistoryPerProject.name,
     () => {
@@ -48,14 +53,16 @@ describe(DiffHistoryController.name, () => {
         })
 
         const configReader = mockObject<ConfigReader>({
-          readConfig: mockFn((name: string, chainId: ChainId) =>
-            mockConfig(name, chainId),
-          ),
+          readConfig: mockFn(mockConfig),
         })
 
-        const controller = new DiffHistoryController(repository, configReader)
+        const controller = new DiffHistoryController(
+          repository,
+          configReader,
+          chainConverter,
+        )
         const result = await controller.getDiffHistoryPerProject(
-          ChainId.ETHEREUM,
+          'ethereum',
           'test',
         )
 
@@ -88,14 +95,16 @@ describe(DiffHistoryController.name, () => {
         })
 
         const configReader = mockObject<ConfigReader>({
-          readConfig: mockFn((name: string, chainId: ChainId) =>
-            mockConfig(name, chainId),
-          ),
+          readConfig: mockFn(mockConfig),
         })
 
-        const controller = new DiffHistoryController(repository, configReader)
+        const controller = new DiffHistoryController(
+          repository,
+          configReader,
+          chainConverter,
+        )
         const result = await controller.getDiffHistoryPerProject(
-          ChainId.ETHEREUM,
+          'ethereum',
           'test',
         )
 
@@ -113,14 +122,16 @@ describe(DiffHistoryController.name, () => {
         })
 
         const configReader = mockObject<ConfigReader>({
-          readConfig: mockFn((name: string, chainId: ChainId) =>
-            mockConfig(name, chainId),
-          ),
+          readConfig: mockFn(mockConfig),
         })
 
-        const controller = new DiffHistoryController(repository, configReader)
+        const controller = new DiffHistoryController(
+          repository,
+          configReader,
+          chainConverter,
+        )
         const result = await controller.getDiffHistoryPerProject(
-          ChainId.ETHEREUM,
+          'ethereum',
           'test',
         )
 
@@ -137,13 +148,9 @@ describe(DiffHistoryController.name, () => {
 
 async function mockConfig(
   name: string,
-  chainId = ChainId.ETHEREUM,
+  chain = 'ethereum',
 ): Promise<DiscoveryConfig> {
-  return new DiscoveryConfig({
-    name,
-    chain: chainId,
-    initialAddresses: [],
-  })
+  return new DiscoveryConfig({ name, chain, initialAddresses: [] })
 }
 
 function mockContract(
@@ -176,7 +183,7 @@ function mockRecord(
     timestamp: timestamp,
     discovery: {
       name: PROJECT_A,
-      chain: ChainId.getName(ChainId.ETHEREUM),
+      chain: 'ethereum',
       blockNumber: 123,
       configHash: Hash256.random(),
       contracts,

@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { TooltipProvider as TooltipComponent } from '../tooltip/TooltipProvider'
-import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
+import { RosetteTooltipPopup, RosetteTooltipProps } from './RosetteTooltip'
 
 const meta: Meta<typeof TooltipComponent> = {
   component: TooltipComponent,

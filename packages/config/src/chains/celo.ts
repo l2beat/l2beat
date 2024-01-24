@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ChainConfig } from '../common/ChainConfig'
 
 export const celo: ChainConfig = {
-  devId: 'celo',
+  name: 'celo',
   chainId: 42220,
   explorerUrl: 'https://celoscan.io',
   explorerApi: {

@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, layer2s } from '../../src/'
+import { bridges, layer2s, layer3s } from '../../src/'
 import { bridge1WithDups } from '../../src/test/stubs/bridge1WithDups'
 import { bridge2WithDups } from '../../src/test/stubs/bridge2WithDups'
 import { layer2aWithDups } from '../../src/test/stubs/layer2aWithDups'
@@ -9,30 +9,27 @@ import {
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
 } from './addresses'
-import { getChainDevIds } from './chains'
+import { getChainNames } from './chains'
 import {
   getOutputPath as getVerificationFilePath,
   loadVerifiedJson,
 } from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
-  const projects = [...bridges, ...layer2s]
-  const devIds = getChainDevIds(projects)
+  const projects = [...bridges, ...layer2s, ...layer3s]
+  const chains = getChainNames(projects)
   describe('all current contracts are included in verified.json', () => {
-    for (const devId of devIds) {
-      it(`for ${devId}`, async () => {
-        const filePath = getVerificationFilePath(devId)
+    for (const chain of chains) {
+      it(`for ${chain}`, async () => {
+        const filePath = getVerificationFilePath(chain)
         const verifiedJson = await loadVerifiedJson(filePath)
-        const allContracts = getUniqueContractsForAllProjects(
-          [...bridges, ...layer2s],
-          devId,
-        )
+        const allContracts = getUniqueContractsForAllProjects(projects, chain)
 
         for (const contract of allContracts) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (verifiedJson[contract.toString()] === undefined) {
             throw new Error(
-              `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${devId}`,
+              `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${chain}`,
             )
           }
         }
@@ -42,8 +39,8 @@ describe('checkVerifiedContracts:addresses', () => {
 
   describe('getUniqueContractsForAllProjects()', () => {
     describe('can parse all current layer2s and bridges', () => {
-      for (const devId of devIds) {
-        it(`for ${devId}`, async () => {
+      for (const chain of chains) {
+        it(`for ${chain}`, async () => {
           expect(() =>
             getUniqueContractsForAllProjects(
               [...bridges, ...layer2s],
@@ -72,7 +69,6 @@ describe('checkVerifiedContracts:addresses', () => {
           '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e',
           '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
           '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
-          '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
           '0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54',
           '0x81910675DbaF69deE0fD77570BFD07f8E436386A',
           '0x82B67a43b69914E611710C62e629dAbB2f7AC6AB',
@@ -110,7 +106,6 @@ describe('checkVerifiedContracts:addresses', () => {
           '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
           '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e',
           '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
-          '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
           '0x82B67a43b69914E611710C62e629dAbB2f7AC6AB',
           '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
           '0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19',

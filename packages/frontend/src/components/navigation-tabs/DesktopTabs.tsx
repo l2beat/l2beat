@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../../utils/cn'
 import { NewItemBadge } from '../badge/NewItemBadge'
 
 export interface DesktopTabsProps {
@@ -18,7 +18,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
   if (pages.length >= 6) {
     return (
       <ul
-        className={cx(
+        className={cn(
           'hidden w-full grid-cols-3 md:grid lg:grid-cols-6',
           'rounded-lg border-2 border-gray-200 dark:border-gray-850',
         )}
@@ -26,7 +26,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
         {pages.map((page, i) => (
           <li
             key={i}
-            className={cx(
+            className={cn(
               'relative h-12 w-full text-lg font-bold lg:h-16',
               i < 3 &&
                 'border-b-gray-200 dark:border-b-gray-850 md:border-b-2 lg:border-b-0',
@@ -56,7 +56,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
           >
             <a
               href={page.link}
-              className={cx(
+              className={cn(
                 'relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md',
                 page.selected && 'bg-purple-300 dark:bg-purple-800',
               )}
@@ -73,7 +73,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
   }
   return (
     <ul
-      className={cx(
+      className={cn(
         'hidden w-full items-center justify-around md:flex',
         'rounded-lg border-2 border-gray-200 dark:border-gray-850',
       )}
@@ -81,7 +81,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
       {pages.map((page, i) => (
         <li
           key={i}
-          className={cx(
+          className={cn(
             'relative h-16 w-full text-lg font-bold',
             i !== pages.length - 1 && 'border-r-2 border-r-transparent',
             i !== pages.length - 1 &&
@@ -104,7 +104,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
         >
           <a
             href={page.link}
-            className={cx(
+            className={cn(
               'relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md',
               page.selected && 'bg-purple-300 dark:bg-purple-800',
             )}

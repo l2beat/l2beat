@@ -166,14 +166,7 @@ declare module 'knex/types/tables' {
   interface DiscoveryCacheRow {
     key: string
     value: string
-    chain_id: number
-    block_number: number
-  }
-
-  interface DiscoveryCacheRow {
-    key: string
-    value: string
-    chain_id: number
+    chain: string
     block_number: number
   }
 

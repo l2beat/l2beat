@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { HorizontalSeparator } from './HorizontalSeparator'
 import { OverflowWrapper } from './OverflowWrapper'
 
@@ -48,7 +48,7 @@ export function Tabs({ items }: TabsProps) {
       <HorizontalSeparator className="mb-3 md:mb-6" />
       {items.map((tab, i) => (
         <div
-          className={classNames('TabsContent', i !== 0 && 'hidden')}
+          className={cn('TabsContent', i !== 0 && 'hidden')}
           id={tab.id}
           key={tab.id}
         >

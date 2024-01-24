@@ -12,7 +12,7 @@ import {
 } from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, ChainId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
@@ -31,20 +31,18 @@ async function updateDiffHistoryFile() {
 
   console.log('Updating diff history file...')
   const params = process.argv.filter((v) => !v.startsWith('-'))
-  const chainName = params[2]
-  const projectName = params[3]
-  if (!chainName || !projectName) {
+  const [_node, _sourcefile, chain, projectName] = params
+  if (!chain || !projectName) {
     console.error('Pass parameters: <chainName> <projectName>')
     process.exit(1)
   }
-  const chainId = ChainId.fromName(chainName)
 
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()
-  const curDiscovery = await configReader.readDiscovery(projectName, chainId)
-  const config = await configReader.readConfig(projectName, chainId)
-  const discoveryFolder = `./discovery/${projectName}/${chainName}`
+  const curDiscovery = await configReader.readDiscovery(projectName, chain)
+  const config = await configReader.readConfig(projectName, chain)
+  const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
   const discoveryFromMainBranch =
@@ -55,7 +53,7 @@ async function updateDiffHistoryFile() {
   const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
     discoveryFromMainBranch,
     projectName,
-    chainName,
+    chain,
   )
 
   const diff = diffDiscovery(
@@ -100,13 +98,13 @@ async function updateDiffHistoryFile() {
     console.log('No changes found')
   }
 
-  await updateHashes(projectName, chainName)
+  await updateHashes(projectName, chain)
 }
 
 async function performDiscoveryOnPreviousBlock(
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
-  chainName: string,
+  chain: string,
 ) {
   if (discoveryFromMainBranch === undefined) {
     return { prevDiscovery: undefined, codeDiff: undefined }
@@ -114,7 +112,7 @@ async function performDiscoveryOnPreviousBlock(
 
   // To check for changes to source code,
   // download sources for block number from main branch
-  const root = `discovery/${projectName}/${chainName}`
+  const root = `discovery/${projectName}/${chain}`
   // Remove any old sources we fetched before, so that their count doesn't grow
   await rimraf(`${root}/.code@*`, { glob: true })
 
@@ -122,7 +120,7 @@ async function performDiscoveryOnPreviousBlock(
 
   await discover({
     project: projectName,
-    chainId: ChainId.fromName(chainName),
+    chain,
     blockNumber: blockNumberFromMainBranch,
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
@@ -310,7 +308,7 @@ function generateDiffHistoryMarkdown(
     result.push('')
     result.push(
       `Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during 
+or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
