@@ -113,6 +113,7 @@ export function createTvlModule(
     createChainTvlSubmodule(config.tvl.lyra),
     createChainTvlSubmodule(config.tvl.linea),
     createChainTvlSubmodule(config.tvl.mantapacific),
+    createChainTvlSubmodule(config.tvl.zkfair),
   ].filter(notUndefined)
 
   // #endregion

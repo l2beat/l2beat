@@ -70,6 +70,7 @@ export function getLocalConfig(env: Env): Config {
       lyra: getChainTvlConfig(env, 'lyra', { minTimestamp }),
       linea: getChainTvlConfig(env, 'linea', { minTimestamp }),
       mantapacific: getChainTvlConfig(env, 'mantapacific', { minTimestamp }),
+      zkfair: getChainTvlConfig(env, 'zkfair', { minTimestamp }),
     },
     liveness: livenessEnabled && {
       bigQuery: {
