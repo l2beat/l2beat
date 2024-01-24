@@ -121,6 +121,22 @@ export const zkfair: Layer2 = {
   chainConfig: {
     name: 'zkfair',
     chainId: 42766,
+    explorerUrl: 'https://scan.zkfair.io/',
+    explorerApi: {
+      url: 'https://scan.zkfair.io/api/',
+      type: 'routescan',
+    },
+    // ~ Timestamp of block number 0 on zkFair
+    // https://scan.zkfair.io/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-12-18T06:02:35Z')),
+    multicallContracts: [
+      {
+        sinceBlock: 6330383,
+        batchSize: 150,
+        address: EthereumAddress('0xA2576cBFc6bF07Dd29f2779A67c5680Ea5cc4DCC'),
+        version: '3',
+      },
+    ],
     coingeckoPlatform: 'zkfair',
   },
   riskView: makeBridgeCompatible({

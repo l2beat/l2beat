@@ -80,6 +80,7 @@ export function getProductionConfig(env: Env): Config {
       lyra: getChainTvlConfig(env, 'lyra'),
       linea: getChainTvlConfig(env, 'linea'),
       mantapacific: getChainTvlConfig(env, 'mantapacific'),
+      zkfair: getChainTvlConfig(env, 'zkfair'),
     },
     liveness: livenessEnabled && {
       bigQuery: {
