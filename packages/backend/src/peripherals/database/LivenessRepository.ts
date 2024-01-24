@@ -31,6 +31,10 @@ export interface LivenessRowWithProjectIdAndType {
   type: string
 }
 
+export interface LivenessRowWithTxHash {
+  tx_hash: string
+}
+
 // TODO: add index when we will write controller
 export class LivenessRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
@@ -56,6 +60,41 @@ export class LivenessRepository extends BaseRepository {
       .orderBy('l.timestamp', 'desc')
 
     return rows.map(toRecordWithTimestampAndType)
+  }
+
+  async findTxHashByProjectIdAndTimestamp(
+    projectId: ProjectId,
+    date: UnixTime,
+    type: LivenessType,
+    place: number,
+  ): Promise<string> {
+    const knex = await this.knex()
+    let rows
+    if (place < 0) {
+      rows = await knex('liveness as l')
+        .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
+        .select('l.tx_hash', 'l.timestamp')
+        .where('c.project_id', projectId.toString())
+        .andWhere('c.type', type.toString())
+        .andWhere('l.timestamp', '>=', date.toDate())
+        .orderBy('l.timestamp', 'asc')
+        .distinct('l.tx_hash')
+        .limit(1)
+        .offset(-place)
+    } else {
+      rows = await knex('liveness as l')
+        .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
+        .select('l.tx_hash', 'l.timestamp')
+        .where('c.project_id', projectId.toString())
+        .andWhere('c.type', type.toString())
+        .andWhere('l.timestamp', '<=', date.toDate())
+        .orderBy('l.timestamp', 'desc')
+        .distinct('l.tx_hash')
+        .limit(1)
+        .offset(place)
+    }
+
+    return rows.map(toRecordWithTxHash)[0].txHash
   }
 
   async getByProjectIdAndType(
@@ -116,6 +155,14 @@ function toRecordWithTimestampAndType(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     type: LivenessType(row.type),
+  }
+}
+
+function toRecordWithTxHash(
+  row: LivenessRowWithTxHash,
+): Pick<LivenessRecord, 'txHash'> {
+  return {
+    txHash: row.tx_hash,
   }
 }
 
