@@ -11,9 +11,30 @@ module.exports = {
         '0%': { opacity: '0' },
         '100%': { opacity: '1' },
       },
+      pulse: {
+        '0%': {
+          transform: 'scale(1,1)',
+        },
+        '80%': {
+          transform: 'scale(1, 1)',
+        },
+        '85%': {
+          transform: 'scale(1.05, 1.05)',
+        },
+        '90%': {
+          transform: 'scale(1, 1)',
+        },
+        '95%': {
+          transform: 'scale(1.05, 1.05)',
+        },
+        '100%': {
+          transform: 'scale(1, 1)',
+        },
+      },
     },
     animation: {
       'quick-fade-in': 'fade-in 0.1s ease-in-out',
+      pulse: 'pulse 5s ease-in-out infinite forwards',
     },
     fontSize: {
       '3xs': ['8px', '12px'],
@@ -31,6 +52,11 @@ module.exports = {
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
+      brand: {
+        red: '#F9347B',
+        'red-dark': '#BD114F',
+        black: '#222222',
+      },
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
@@ -158,6 +184,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
+        lora: ['Lora', 'serif'],
       },
       spacing: {
         '2/3': '66.666666%',

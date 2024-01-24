@@ -8,7 +8,7 @@ export function SearchIcon(props: SVGAttributes<SVGElement>) {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      stroke="var(--text)"
+      className="stroke-black dark:stroke-white"
       aria-label="Search icon"
       {...props}
     >
