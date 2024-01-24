@@ -1,6 +1,5 @@
 import { withThemeByDataAttribute } from '@storybook/addon-styling'
 import React from 'react'
-import '../src/styles/main.scss'
 import '../src/styles/style.css'
 import { allModes } from './modes'
 import { viewports } from './viewports'
