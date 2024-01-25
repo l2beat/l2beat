@@ -91,9 +91,9 @@ export function createTvlModule(
   )
 
   // #endregion
-  // #region submodules
+  // #region modules
 
-  const createChainTvlSubmodule = (tvlConfig: ChainTvlConfig) =>
+  const createChainTvlModule = (tvlConfig: ChainTvlConfig) =>
     chainTvlModule(
       tvlConfig,
       config.tokens,
@@ -105,7 +105,7 @@ export function createTvlModule(
       logger,
     )
 
-  const ethereumSubmodule = createEthereumTvlModule(
+  const ethereumModule = createEthereumTvlModule(
     db,
     priceUpdater,
     config,
@@ -114,9 +114,9 @@ export function createTvlModule(
     clock,
   )
 
-  const submodules = config.tvl.modules.map(createChainTvlSubmodule)
+  const chainModules = config.tvl.modules.map(createChainTvlModule)
 
-  const modules = [ethereumSubmodule, ...submodules].filter(notUndefined)
+  const modules = [ethereumModule, ...chainModules].filter(notUndefined)
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
