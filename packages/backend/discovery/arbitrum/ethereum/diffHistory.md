@@ -1,7 +1,9 @@
+Generated with discovered.json: 0xe996eeb6cd08d695db9b13369e8aded556ec9bb2
+
 # Diff at Tue, 23 Jan 2024 13:46:20 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18691623
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18691623
 - current block number: 19069754
 
 ## Description
@@ -135,7 +137,7 @@ discovery. Values are for block 18691623 (main branch discovery), not current.
 # Diff at Fri, 24 Nov 2023 10:04:53 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@34d3533152f3f3d3d80344ca84d4d9a3744c3f17
+- comparing to: main@34d3533152f3f3d3d80344ca84d4d9a3744c3f17
 
 ## Description
 
@@ -153,7 +155,7 @@ New scheduled transaction - there is a DAC update about to be executed by the Up
 # Diff at Mon, 13 Nov 2023 15:23:11 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@a45348c9ae2e765b872be3f217168f73b62d35a6
+- comparing to: main@a45348c9ae2e765b872be3f217168f73b62d35a6
 
 ## Description
 
@@ -219,7 +221,7 @@ Added EOAs:
 # Diff at Tue, 26 Sep 2023 07:54:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 
@@ -240,7 +242,7 @@ Added EOAs:
 # Diff at Fri, 22 Sep 2023 09:02:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@3a33c063dab8666dc32b4ec15a81995020325b49
+- comparing to: main@3a33c063dab8666dc32b4ec15a81995020325b49
 
 ## Watched changes
 
@@ -254,7 +256,7 @@ Added EOAs:
 # Diff at Thu, 21 Sep 2023 14:53:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@7579713bbe334d225f845fec749fd69636fe060a
+- comparing to: main@7579713bbe334d225f845fec749fd69636fe060a
 
 ## Watched changes
 

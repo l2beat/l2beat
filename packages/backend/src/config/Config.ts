@@ -5,7 +5,7 @@ import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model'
-import { MulticallConfigEntry } from '../peripherals/ethereum/multicall/types'
+import { MulticallConfigEntry } from '../peripherals/multicall/types'
 
 export interface Config {
   readonly name: string
@@ -60,13 +60,7 @@ export interface TvlConfig {
   readonly errorOnUnsyncedTvl: boolean
   readonly coingeckoApiKey: string | undefined
   readonly ethereum: ChainTvlConfig
-  readonly arbitrum: ChainTvlConfig
-  readonly optimism: ChainTvlConfig
-  readonly base: ChainTvlConfig
-  readonly mantapacific: ChainTvlConfig
-  readonly lyra: ChainTvlConfig
-  readonly linea: ChainTvlConfig
-  readonly zkfair: ChainTvlConfig
+  readonly modules: ChainTvlConfig[]
 }
 
 export interface LivenessConfig {

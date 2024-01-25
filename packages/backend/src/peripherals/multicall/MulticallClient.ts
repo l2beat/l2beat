@@ -1,4 +1,4 @@
-import { EthereumClient } from '../EthereumClient'
+import { RpcClient } from '../rpcclient/RpcClient'
 import {
   MulticallConfigEntry,
   MulticallRequest,
@@ -7,7 +7,7 @@ import {
 
 export class MulticallClient {
   constructor(
-    private readonly ethereumClient: EthereumClient,
+    private readonly ethereumClient: RpcClient,
     private readonly config: MulticallConfigEntry[],
   ) {}
 

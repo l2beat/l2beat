@@ -6,7 +6,7 @@ import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
 
-export class EthereumClient {
+export class RpcClient {
   private readonly provider: RateLimitedProvider
 
   constructor(
@@ -19,11 +19,13 @@ export class EthereumClient {
   }
 
   async getBlockNumber() {
+    //  eth_blockNumber
     const result = await this.provider.getBlockNumber()
     return result
   }
 
   async getBalance(holder: EthereumAddress, blockTag: BlockTag) {
+    // eth_getBalance
     return await this.provider.getBalance(holder.toString(), blockTag)
   }
 
@@ -39,10 +41,17 @@ export class EthereumClient {
   }
 
   async getBlock(blockNumber: number) {
+    // eth_getBlockByNumber
     return await this.provider.getBlock(blockNumber)
   }
 
+  async getTransaction(txHash: string) {
+    // eth_getTransactionByHash
+    return await this.provider.getTransaction(txHash)
+  }
+
   async call(parameters: CallParameters, blockTag: BlockTag) {
+    // eth_call
     const bytes = await this.provider.call(
       {
         from: parameters.from?.toString(),
@@ -74,6 +83,7 @@ export class EthereumClient {
     })
 
     if (fromBlock === toBlock) {
+      // eth_getLogs
       return await this.provider.getLogs({
         address: address.toString(),
         topics: [topic],

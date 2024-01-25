@@ -13,19 +13,19 @@ import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
-import { TvlSubmodule } from '../ApplicationModule'
+import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { TvlModule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
-export function createEthereumTvlSubmodule(
+export function createEthereumTvlModule(
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   config: Config,
   logger: Logger,
   http: HttpClient,
   clock: Clock,
-): TvlSubmodule | undefined {
+): TvlModule | undefined {
   const tvlConfig = config.tvl.ethereum.config
   if (!tvlConfig) {
     logger.info('EthereumTvlModule disabled')
@@ -46,7 +46,7 @@ export function createEthereumTvlSubmodule(
     tvlConfig.minBlockTimestamp,
     logger,
   )
-  const ethereumClient = new EthereumClient(
+  const ethereumClient = new RpcClient(
     ethereumProvider,
     logger,
     tvlConfig.providerCallsPerMinute,
