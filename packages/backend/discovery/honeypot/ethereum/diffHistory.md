@@ -1,7 +1,7 @@
 # Diff at Wed, 27 Sep 2023 11:44:11 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@dfa2bd4412e533f776bc670a6d67f61293446c02
+- comparing to: main@dfa2bd4412e533f776bc670a6d67f61293446c02
 
 ```diff
     contract CartesiDApp (0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366) {
@@ -44,7 +44,7 @@
 # Diff at Wed, 27 Sep 2023 09:05:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Watched changes
 

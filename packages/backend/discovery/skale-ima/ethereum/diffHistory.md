@@ -1,7 +1,7 @@
 # Diff at Tue, 12 Dec 2023 07:14:10 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@fdc867519c9c4b27d1a45a5037b5ab0509a4a2f8
+- comparing to: main@fdc867519c9c4b27d1a45a5037b5ab0509a4a2f8
 
 ## Description
 

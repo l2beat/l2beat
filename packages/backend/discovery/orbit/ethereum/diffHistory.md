@@ -1,7 +1,7 @@
 # Diff at Mon, 22 Jan 2024 18:20:21 GMT
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@f58cc44bf923844f52038487bcd5a563329f4b43 block: 17913544
+- comparing to: main@f58cc44bf923844f52038487bcd5a563329f4b43 block: 17913544
 - current block number: 19064000
 
 ## Description

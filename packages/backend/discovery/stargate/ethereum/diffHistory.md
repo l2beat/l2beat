@@ -1,7 +1,7 @@
 # Diff at Tue, 19 Dec 2023 13:36:06 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@1e70db199340dc9df7ac0996900e54067b9d4f12
+- comparing to: main@1e70db199340dc9df7ac0996900e54067b9d4f12
 
 ## Description
 
@@ -23,7 +23,7 @@ Added new config values.
 # Diff at Thu, 23 Nov 2023 13:31:10 GMT:
 
 - author: Amin Latifi (<a.latifi.al@gmail.com>)
-- comparing to: master@2ff45714640abe4c50d283967078888d4af81d78
+- comparing to: main@2ff45714640abe4c50d283967078888d4af81d78
 
 ## Description
 
@@ -42,7 +42,7 @@ StarGateFeeLibrary7 owner was replaced: 0x1D7C6783328C145393e84fb47a7f7C548f5Ee2
 # Diff at Fri, 17 Nov 2023 12:24:03 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@8df7aef75226275b8e56ba8d4d76ce64057b0360
+- comparing to: main@8df7aef75226275b8e56ba8d4d76ce64057b0360
 
 ## Description
 

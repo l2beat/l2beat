@@ -8,8 +8,8 @@ import {
 import { expect, mockObject } from 'earl'
 import { BigNumber } from 'ethers'
 
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
+import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { BalanceProvider, ETHEREUM_BALANCE_ENCODING } from './BalanceProvider'
 
 describe(BalanceProvider.name, () => {
@@ -23,7 +23,7 @@ describe(BalanceProvider.name, () => {
       })
 
       const balanceProvider = new BalanceProvider(
-        mockObject<EthereumClient>(),
+        mockObject<RpcClient>(),
         multicallClient,
         ChainId.ETHEREUM,
         undefined,
@@ -67,7 +67,7 @@ describe(BalanceProvider.name, () => {
         ],
       })
 
-      const ethereumClient = mockObject<EthereumClient>()
+      const ethereumClient = mockObject<RpcClient>()
 
       const balanceProvider = new BalanceProvider(
         ethereumClient,
@@ -121,7 +121,7 @@ describe(BalanceProvider.name, () => {
         ],
       })
 
-      const ethereumClient = mockObject<EthereumClient>({
+      const ethereumClient = mockObject<RpcClient>({
         getBalance: async () => BigNumber.from(2),
       })
 

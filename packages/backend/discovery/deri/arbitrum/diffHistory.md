@@ -1,7 +1,7 @@
 # Diff at Tue, 23 Jan 2024 13:55:47 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 168378561
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 168378561
 - current block number: 173375251
 
 ## Description
@@ -49,7 +49,7 @@ discovery. Values are for block 168378561 (main branch discovery), not current.
 # Diff at Mon, 08 Jan 2024 15:22:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@3ee3c075ee99707d8392a73b092ed24eeb24866f block: 159392469
+- comparing to: main@3ee3c075ee99707d8392a73b092ed24eeb24866f block: 159392469
 - current block number: 168378561
 
 ## Description
@@ -91,7 +91,7 @@ for block 159392469 (main branch discovery), not current.
 # Diff at Tue, 12 Dec 2023 13:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

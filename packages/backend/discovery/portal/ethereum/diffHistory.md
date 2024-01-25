@@ -1,7 +1,7 @@
 # Diff at Thu, 02 Nov 2023 08:52:02 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@370ecaf744134c819956061d3c2a56bca3cd1087
+- comparing to: main@370ecaf744134c819956061d3c2a56bca3cd1087
 
 ## Description
 

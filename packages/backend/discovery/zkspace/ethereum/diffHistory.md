@@ -1,7 +1,7 @@
 # Diff at Tue, 16 Jan 2024 12:44:46 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@c032360868b807a04d2314b95327fc167e7f7c31 block: 18220342
+- comparing to: main@c032360868b807a04d2314b95327fc167e7f7c31 block: 18220342
 - current block number: 19019529
 
 ## Description
@@ -47,7 +47,7 @@ discovery. Values are for block 18220342 (main branch discovery), not current.
 # Diff at Tue, 26 Sep 2023 13:47:45 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 
