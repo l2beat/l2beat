@@ -108,7 +108,7 @@ export const socket: Bridge = {
       ),
       discovery.getContractDetails(
         'FastSwitchboard',
-        'Fast Switchboard having set of Watchers authorizing transfers. If the transfer is not explicitly authorized within XXX seconds, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
+        'Fast Switchboard having set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
       ),
       discovery.getContractDetails(
         'PolygonL1Switchboard',
