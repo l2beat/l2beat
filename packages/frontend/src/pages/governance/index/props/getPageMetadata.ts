@@ -6,6 +6,6 @@ export function getPageMetadata(): PageMetadata {
     description: 'Governance - L2BEAT',
     // TODO: (governance) some image?
     image: '',
-    url: 'https://l2beat.com/governance/posts',
+    url: 'https://l2beat.com/governance',
   }
 }

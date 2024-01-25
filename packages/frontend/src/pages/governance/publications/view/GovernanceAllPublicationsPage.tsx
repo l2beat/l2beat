@@ -8,21 +8,23 @@ import {
 } from '../../../../components'
 import { Link } from '../../../../components/Link'
 import { PageContent } from '../../../../components/PageContent'
-import { GovernancePostEntry } from '../../getGovernancePostEntry'
+import { GovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 
-export interface GovernanceAllPostsPageProps {
-  posts: GovernancePostEntry[]
+export interface GovernanceAllPublicationsPageProps {
+  publications: GovernancePublicationEntry[]
   navbar: NavbarProps
   footer: FooterProps
 }
 
-export function GovernanceAllPostsPage(props: GovernanceAllPostsPageProps) {
+export function GovernanceAllPublicationsPage(
+  props: GovernanceAllPublicationsPageProps,
+) {
   return (
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        All posts
-        {props.posts.map((post) => (
+        All Publications
+        {props.publications.map((post) => (
           <div key={post.id}>
             <Link href={`/governance/posts/${post.id}`}>{post.title}</Link>
           </div>

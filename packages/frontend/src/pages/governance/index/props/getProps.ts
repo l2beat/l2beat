@@ -2,16 +2,16 @@ import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getCollection } from '../../../../content/getCollection'
 import { Wrapped } from '../../../Page'
-import { getGovernancePostEntry } from '../../getGovernancePostEntry'
+import { getGovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 import { GovernancePageProps } from '../view/GovernancePage'
 import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(config: Config): Wrapped<GovernancePageProps> {
-  const posts = getCollection('posts')
+  const publications = getCollection('publications')
 
   return {
     props: {
-      posts: posts.map(getGovernancePostEntry).slice(0, 3),
+      publications: publications.map(getGovernancePublicationEntry),
       navbar: getNavbarProps(config, 'governance'),
       footer: getFooterProps(config),
     },

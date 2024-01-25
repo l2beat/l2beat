@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const posts = {
+const publications = {
   extension: 'md',
   schema: z.object({
     title: z.string(),
@@ -39,7 +39,7 @@ const events = {
 } as const
 
 export const collections = {
-  posts,
+  publications,
   authors,
   delegatedProjects,
   events,

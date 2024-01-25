@@ -3,16 +3,16 @@ import {
   getCollectionEntry,
 } from '../../content/getCollection'
 
-export interface GovernancePostEntry {
+export interface GovernancePublicationEntry {
   id: string
   title: string
   content: string
   author: CollectionEntry<'authors'>
 }
 
-export function getGovernancePostEntry(
-  post: CollectionEntry<'posts'>,
-): GovernancePostEntry {
+export function getGovernancePublicationEntry(
+  post: CollectionEntry<'publications'>,
+): GovernancePublicationEntry {
   return {
     id: post.id,
     title: post.data.title,
