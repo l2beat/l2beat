@@ -94,29 +94,23 @@ export function createTvlModule(
   // #region modules
 
   const createChainTvlModule = (tvlConfig: ChainTvlConfig) =>
-    chainTvlModule(
-      tvlConfig,
-      config.tokens,
-      db,
-      priceUpdater,
-      coingeckoQueryService,
-      http,
-      clock,
-      logger,
-    )
+    tvlConfig.chain === 'ethereum'
+      ? createEthereumTvlModule(db, priceUpdater, config, logger, http, clock)
+      : chainTvlModule(
+          tvlConfig,
+          config.tokens,
+          db,
+          priceUpdater,
+          coingeckoQueryService,
+          http,
+          clock,
+          logger,
+        )
 
-  const ethereumModule = createEthereumTvlModule(
-    db,
-    priceUpdater,
-    config,
-    logger,
-    http,
-    clock,
-  )
+  const modules = config.tvl.modules
+    .map(createChainTvlModule)
+    .filter(notUndefined)
 
-  const chainModules = config.tvl.modules.map(createChainTvlModule)
-
-  const modules = [ethereumModule, ...chainModules].filter(notUndefined)
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
