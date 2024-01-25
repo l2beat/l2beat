@@ -26,9 +26,11 @@ export const socket: Bridge = {
       socialMedia: ['https://twitter.com/SocketDotTech'],
     },
     description:
+      'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol.',
+    detailedDescription:
       'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol. Socket is highly flexible and configurable and risks vary depending on the current configuration of the specific route.\
-      Token Vaults are connected via Plugs and Switchboards to their remote counterparts. The central contract on each chain, Socket, stores the configuration of all Plugs and Switchboards.\
-      Some Switchboards may be as secure as "native" (canonical) bridge, some may use simple Relayers/Watchers to move messages across chains.',
+    Token Vaults are connected via Plugs and Switchboards to their remote counterparts. The central contract on each chain, Socket, stores the configuration of all Plugs and Switchboards.\
+    Some Switchboards may be as secure as "native" (canonical) bridge, some may use simple Relayers/Watchers to move messages across chains.',
   },
   riskView: {
     validatedBy: {
@@ -43,7 +45,12 @@ export const socket: Bridge = {
         'Vaults can be individually upgradable and the security assumptions must be individually assessed for each individual vault.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL,
+    destinationToken: {
+      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
+      description:
+        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
+        ' Tokens transferred end up as ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
+    },
   },
   technology: {
     destination: ['Various'],
@@ -107,6 +114,13 @@ export const socket: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },
-  permissions: [],
+  permissions: [
+    {
+      name: 'Socket Owner.',
+      description:
+        'Account priviliged to set up different roles in the main Socket contract.',
+      accounts: [discovery.getPermissionedAccount('socket', 'owner')],
+    },
+  ],
   knowledgeNuggets: [],
 }
