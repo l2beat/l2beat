@@ -64,10 +64,11 @@ export class LivenessRepository extends BaseRepository {
 
   async findTxHashByProjectIdAndTimestamp(
     projectId: ProjectId,
-    date: UnixTime,
+    from: UnixTime,
+    to: UnixTime,
     type: LivenessType,
     place: number,
-  ): Promise<string> {
+  ): Promise<string | undefined> {
     const knex = await this.knex()
     let rows
     if (place < 0) {
@@ -76,7 +77,7 @@ export class LivenessRepository extends BaseRepository {
         .select('l.tx_hash', 'l.timestamp')
         .where('c.project_id', projectId.toString())
         .andWhere('c.type', type.toString())
-        .andWhere('l.timestamp', '>=', date.toDate())
+        .andWhere('l.timestamp', '>=', from.toDate())
         .orderBy('l.timestamp', 'asc')
         .distinct('l.tx_hash')
         .limit(1)
@@ -87,11 +88,15 @@ export class LivenessRepository extends BaseRepository {
         .select('l.tx_hash', 'l.timestamp')
         .where('c.project_id', projectId.toString())
         .andWhere('c.type', type.toString())
-        .andWhere('l.timestamp', '<=', date.toDate())
+        .andWhere('l.timestamp', '<=', from.toDate())
+        .andWhere('l.timestamp', '>', to.toDate())
         .orderBy('l.timestamp', 'desc')
         .distinct('l.tx_hash')
         .limit(1)
         .offset(place)
+    }
+    if (rows.length === 0) {
+      return undefined
     }
 
     return rows.map(toRecordWithTxHash)[0].txHash
