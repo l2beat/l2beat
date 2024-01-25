@@ -1,7 +1,7 @@
 # Diff at Fri, 17 Nov 2023 12:00:13 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@8df7aef75226275b8e56ba8d4d76ce64057b0360
+- comparing to: main@8df7aef75226275b8e56ba8d4d76ce64057b0360
 
 ## Description
 
@@ -31,7 +31,7 @@ The same change was performed on a multisig in the Stargate project.
 # Diff at Mon, 02 Oct 2023 13:23:25 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+- comparing to: main@10dbc30af490bd7af5cfca51b827ce3f10182f4d
 
 ## Watched changes
 

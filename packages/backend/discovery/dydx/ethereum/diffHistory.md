@@ -1,7 +1,7 @@
 # Diff at Wed, 10 Jan 2024 08:28:33 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@47499b2e645343d8fd16b1ecc8f9d4e11fbc57a1 block: 18969236
+- comparing to: main@47499b2e645343d8fd16b1ecc8f9d4e11fbc57a1 block: 18969236
 - current block number: 18975357
 
 ## Description
@@ -24,7 +24,7 @@ for block 18969236 (main branch discovery), not current.
 # Diff at Tue, 09 Jan 2024 11:54:37 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@75d008bcf5c1a0074ab8238c64ea85119a5c1f0e block: 18282753
+- comparing to: main@75d008bcf5c1a0074ab8238c64ea85119a5c1f0e block: 18282753
 - current block number: 18969236
 
 ## Description
@@ -94,7 +94,7 @@ intended to bridge ethDYDX tokens from Treasury on Ethereum to dYdX Chain.
 # Diff at Thu, 05 Oct 2023 07:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@bd8583bb786deb2218b31cd53ffe833ba3b0b72a
+- comparing to: main@bd8583bb786deb2218b31cd53ffe833ba3b0b72a
 
 ## Description
 
@@ -135,7 +135,7 @@ We don't have a specific section on the website to specify this information, but
 # Diff at Tue, 26 Sep 2023 11:49:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

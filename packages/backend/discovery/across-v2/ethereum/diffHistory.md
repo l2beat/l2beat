@@ -1,7 +1,7 @@
 # Diff at Thu, 18 Jan 2024 12:51:26 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@9ea763a3a6145f892624da4ecacd25a080a0d5b0 block: 18519360
+- comparing to: main@9ea763a3a6145f892624da4ecacd25a080a0d5b0 block: 18519360
 - current block number: 19033859
 
 ## Description
@@ -65,7 +65,7 @@ discovery. Values are for block 18519360 (main branch discovery), not current.
 # Diff at Fri, 13 Oct 2023 08:47:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@2aa7c4f2a9e71b0f29f6bdefa9d749d4fbbd7f5f
+- comparing to: main@2aa7c4f2a9e71b0f29f6bdefa9d749d4fbbd7f5f
 
 ## Description
 
@@ -94,7 +94,7 @@ Updated the logic used to take into account the timestamp drift between L1 and L
 # Diff at Thu, 21 Sep 2023 12:05:50 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@36d4050a6ee5a543b2163fe6e44153b540b87c16
+- comparing to: main@36d4050a6ee5a543b2163fe6e44153b540b87c16
 
 ## Watched changes
 

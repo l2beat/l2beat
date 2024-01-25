@@ -1,7 +1,7 @@
 # Diff at Tue, 09 Jan 2024 16:43:38 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 3763915
+- comparing to: main@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 3763915
 - current block number: 9115900
 
 ## Description

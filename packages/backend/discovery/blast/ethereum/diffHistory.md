@@ -1,7 +1,7 @@
 # Diff at Tue, 12 Dec 2023 16:53:48 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@695bd005662e55af5dd20ff984779cea92a8a968
+- comparing to: main@695bd005662e55af5dd20ff984779cea92a8a968
 
 ## Description
 
@@ -46,7 +46,7 @@ Other changes: The \_moveETH and \_moveUSD functions are refactored to return th
 # Diff at Mon, 04 Dec 2023 15:05:33 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@982648829699454aa19300c012f060616045a3f0
+- comparing to: main@982648829699454aa19300c012f060616045a3f0
 
 ## Description
 
@@ -65,7 +65,7 @@ Change in BridgeOwner (multisig) owners.
 # Diff at Tue, 21 Nov 2023 08:08:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

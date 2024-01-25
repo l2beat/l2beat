@@ -1,7 +1,7 @@
 # Diff at Thu, 18 Jan 2024 12:26:52 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@d613299eac1f45b1c81fd947b8300beb800ba170 block: 18992027
+- comparing to: main@d613299eac1f45b1c81fd947b8300beb800ba170 block: 18992027
 - current block number: 19033739
 
 ## Description
@@ -163,7 +163,7 @@ discovery. Values are for block 18992027 (main branch discovery), not current.
 # Diff at Fri, 12 Jan 2024 16:33:06 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@bd17b9c403f8c2dc9783e9604ccb1874d7f77cb5 block: 18940531
+- comparing to: main@bd17b9c403f8c2dc9783e9604ccb1874d7f77cb5 block: 18940531
 - current block number: 18992027
 
 ## Description
@@ -194,7 +194,7 @@ discovery. Values are for block 18940531 (main branch discovery), not current.
 # Diff at Fri, 05 Jan 2024 10:39:06 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

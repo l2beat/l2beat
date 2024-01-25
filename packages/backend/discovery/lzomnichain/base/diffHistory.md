@@ -1,7 +1,7 @@
 # Diff at Mon, 22 Jan 2024 17:18:02 GMT
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@f58cc44bf923844f52038487bcd5a563329f4b43 block: 9014644
+- comparing to: main@f58cc44bf923844f52038487bcd5a563329f4b43 block: 9014644
 - current block number: 9577249
 
 ## Description
@@ -55,7 +55,7 @@ New path-ways added.
 # Diff at Tue, 09 Jan 2024 16:44:11 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 2177243
+- comparing to: main@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 2177243
 - current block number: 9014644
 
 ## Description

@@ -1,7 +1,7 @@
 # Diff at Fri, 05 Jan 2024 10:21:46 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@ea50ecee4d08800c3cff3742fc1c8912fc54c16c
+- comparing to: main@ea50ecee4d08800c3cff3742fc1c8912fc54c16c
 
 ## Description
 
@@ -28,7 +28,7 @@ The Security Council is now a 7/9 multisig, satisfying the requirements to be co
 # Diff at Thu, 23 Nov 2023 10:41:14 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@4c7175133fcba5685ddf8bf8d42acc70413b9b0c
+- comparing to: main@4c7175133fcba5685ddf8bf8d42acc70413b9b0c
 
 ## Description
 
@@ -68,7 +68,7 @@ Not sure what's going on here. Look at the description below this one.
 # Diff at Wed, 22 Nov 2023 09:43:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@265d269ec8f97fee9cd01487403d12ff66e8509f
+- comparing to: main@265d269ec8f97fee9cd01487403d12ff66e8509f
 
 ## Description
 
@@ -251,7 +251,7 @@ Slightly tweaked the logic to select the next proposer, related to some small ch
 # Diff at Fri, 03 Nov 2023 09:59:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@9fa31f2a6274083dfe7f01b69d1220921459db02
+- comparing to: main@9fa31f2a6274083dfe7f01b69d1220921459db02
 
 ## Description
 
@@ -296,7 +296,7 @@ Slightly tweaked the logic to select the next proposer, related to some small ch
 # Diff at Fri, 29 Sep 2023 07:58:06 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@af96105393755c6fead3fa1b6c9845f238580952
+- comparing to: main@af96105393755c6fead3fa1b6c9845f238580952
 
 ## Watched changes
 
