@@ -14,7 +14,7 @@ import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
-import { RPCClient } from '../../peripherals/rpcclient/RPCClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -46,7 +46,7 @@ export function createEthereumTvlSubmodule(
     tvlConfig.minBlockTimestamp,
     logger,
   )
-  const ethereumClient = new RPCClient(
+  const ethereumClient = new RpcClient(
     ethereumProvider,
     logger,
     tvlConfig.providerCallsPerMinute,

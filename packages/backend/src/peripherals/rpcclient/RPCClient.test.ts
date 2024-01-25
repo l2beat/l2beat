@@ -3,10 +3,10 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 
-import { RPCClient } from './RPCClient'
+import { RpcClient } from './RpcClient'
 
-describe(RPCClient.name, () => {
-  describe(RPCClient.prototype.getAllLogs.name, () => {
+describe(RpcClient.name, () => {
+  describe(RpcClient.prototype.getAllLogs.name, () => {
     it('divides on two calls', async () => {
       const provider = mockObject<providers.Provider>({
         call: mockFn(),
@@ -20,7 +20,7 @@ describe(RPCClient.name, () => {
         getTransaction: mockFn(),
       })
 
-      const ethereumClient = new RPCClient(provider, Logger.SILENT)
+      const ethereumClient = new RpcClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'
@@ -60,7 +60,7 @@ describe(RPCClient.name, () => {
         getTransaction: mockFn(),
       })
 
-      const ethereumClient = new RPCClient(provider, Logger.SILENT)
+      const ethereumClient = new RpcClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'
@@ -97,7 +97,7 @@ describe(RPCClient.name, () => {
         getTransaction: mockFn(),
       })
 
-      const ethereumClient = new RPCClient(provider, Logger.SILENT)
+      const ethereumClient = new RpcClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'

@@ -6,7 +6,7 @@ import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { BlockTag, CallParameters } from './types'
 
-export class RPCClient {
+export class RpcClient {
   private readonly provider: RateLimitedProvider
 
   constructor(

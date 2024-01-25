@@ -19,7 +19,7 @@ import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupp
 import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
-import { RPCClient } from '../../peripherals/rpcclient/RPCClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -61,7 +61,7 @@ export function chainTvlSubmodule(
           logger,
         )
 
-  const ethereumClient = new RPCClient(
+  const ethereumClient = new RpcClient(
     provider,
     logger,
     config.providerCallsPerMinute,
