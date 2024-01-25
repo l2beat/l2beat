@@ -1,3 +1,5 @@
+Generated with discovered.json: 0xf25c1536731bdb55d1cbfab87638b709e4c1b961
+
 # Diff at Thu, 18 Jan 2024 09:23:11 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)

@@ -1,3 +1,5 @@
+Generated with discovered.json: 0x98cb3e3594feadbd9145ee754066d371eda0c119
+
 # Diff at Tue, 19 Dec 2023 13:36:06 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)

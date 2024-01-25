@@ -1,3 +1,5 @@
+Generated with discovered.json: 0xb99d6a83690f166d2551d4c4cf9d8dd3b3ba1a3b
+
 # Diff at Tue, 09 Jan 2024 10:44:03 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
