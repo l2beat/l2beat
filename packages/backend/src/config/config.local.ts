@@ -7,7 +7,7 @@ import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
-import { getModulesFromTokens } from './getModulesFromTokens'
+import { getChainModulesFromTokens } from './getModulesFromTokens'
 
 export function getLocalConfig(env: Env): Config {
   const tvlEnabled = env.boolean('TVL_ENABLED', true)
@@ -29,7 +29,7 @@ export function getLocalConfig(env: Env): Config {
   // TODO: This should probably be configurable
   const minTimestamp = UnixTime.now().add(-7, 'days').toStartOf('hour')
 
-  const tvlModules = getModulesFromTokens(tokenList, chains)
+  const tvlChainModules = getChainModulesFromTokens(tokenList, chains)
 
   return {
     name: 'Backend/Local',
@@ -67,7 +67,7 @@ export function getLocalConfig(env: Env): Config {
       errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
       ethereum: getChainTvlConfig(env, 'ethereum', { minTimestamp }),
-      modules: tvlModules.map((x) => getChainTvlConfig(env, x)),
+      modules: tvlChainModules.map((x) => getChainTvlConfig(env, x)),
     },
     liveness: livenessEnabled && {
       bigQuery: {

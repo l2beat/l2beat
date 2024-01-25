@@ -1,7 +1,7 @@
 import { ChainConfig } from '@l2beat/config'
 import { Token } from '@l2beat/shared-pure'
 
-export function getModulesFromTokens(
+export function getChainModulesFromTokens(
   tokenList: Token[],
   chains: ChainConfig[],
 ) {
@@ -10,7 +10,8 @@ export function getModulesFromTokens(
   for (const token of tokenList) {
     const c = token.chainId
     const cc = chains.find((x) => x.chainId === +c)
-    if (cc) modules.add(cc.name)
+
+    if (cc && cc.name !== 'ethereum') modules.add(cc.name)
   }
 
   return Array.from(modules)
