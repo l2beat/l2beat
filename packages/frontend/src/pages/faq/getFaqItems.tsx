@@ -400,7 +400,7 @@ export function getFaqItems(): FaqItem[] {
             <Link href="https://github.com/l2beat/l2beat">open source</Link>{' '}
             &ndash; just create a PR. If you want to add a new project you
             should read our {''}
-            <Link href="https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md">
+            <Link href="https://github.com/l2beat/l2beat/tree/main/CONTRIBUTING.md">
               contributing guidelines
             </Link>
             .

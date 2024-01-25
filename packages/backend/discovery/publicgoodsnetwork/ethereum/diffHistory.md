@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x6aa5358cf6c02ec15a51221026873cf8df87d220
+
 # Diff at Wed, 03 Jan 2024 15:21:30 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@e8eb03b39061a86a8ec01e26d970e40d080ad225
+- comparing to: main@e8eb03b39061a86a8ec01e26d970e40d080ad225
 
 ## Description
 
@@ -32,7 +34,7 @@ One owner is removed and another is added to PGNMultiSig.
 # Diff at Tue, 26 Sep 2023 09:36:43 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

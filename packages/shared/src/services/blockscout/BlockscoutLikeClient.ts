@@ -40,7 +40,7 @@ export class BlockscoutLikeClient {
         }
 
         const errorObject = error as BlockscoutError
-        if (!errorObject.message.includes('No closest block found')) {
+        if (!errorObject.message.includes('Block does not exist')) {
           throw new Error(errorObject.message)
         }
 

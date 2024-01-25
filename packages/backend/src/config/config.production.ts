@@ -5,6 +5,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
+import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -74,13 +75,9 @@ export function getProductionConfig(env: Env): Config {
       enabled: true,
       coingeckoApiKey: env.string('COINGECKO_API_KEY'),
       ethereum: getChainTvlConfig(env, 'ethereum'),
-      arbitrum: getChainTvlConfig(env, 'arbitrum'),
-      optimism: getChainTvlConfig(env, 'optimism'),
-      base: getChainTvlConfig(env, 'base'),
-      lyra: getChainTvlConfig(env, 'lyra'),
-      linea: getChainTvlConfig(env, 'linea'),
-      mantapacific: getChainTvlConfig(env, 'mantapacific'),
-      zkfair: getChainTvlConfig(env, 'zkfair'),
+      modules: getChainsWithTokens(tokenList, chains).map((x) =>
+        getChainTvlConfig(env, x),
+      ),
     },
     liveness: livenessEnabled && {
       bigQuery: {
