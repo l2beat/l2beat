@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.37.0
+
+### Minor Changes
+
+- Add OpStackDAHandler
+
 ## 0.36.0
 
 ### Minor Changes

@@ -222,4 +222,11 @@ export class DiscoveryProvider {
   async getBlockNumberAt(timestampNumber: UnixTime): Promise<number> {
     return this.etherscanLikeClient.getBlockNumberAtOrBefore(timestampNumber)
   }
+
+  async getLast10Txs(
+    address: EthereumAddress,
+    toBlock: number,
+  ): ReturnType<EtherscanLikeClient['getLast10Txs']> {
+    return await this.etherscanLikeClient.getLast10Txs(address, toBlock)
+  }
 }

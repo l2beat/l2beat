@@ -131,10 +131,29 @@ export class EtherscanLikeClient {
       sort: 'asc',
     })
 
-    const resp = TransactionListResult.parse(response)[0]
+    const resp = OneTransactionListResult.parse(response)[0]
     assert(resp)
 
     return new UnixTime(parseInt(resp.timeStamp, 10))
+  }
+
+  async getLast10Txs(
+    address: EthereumAddress,
+    blockNumber: number,
+  ): Promise<{ input: string }[]> {
+    const response = await this.call('account', 'txlist', {
+      address: address.toString(),
+      startblock: '0',
+      endblock: blockNumber.toString(),
+      page: '1',
+      offset: '10',
+      sort: 'desc',
+    })
+
+    const resp = TenTransactionListResult.parse(response)
+    assert(resp)
+
+    return resp.map((r) => ({ input: r.input }))
   }
 
   async call(
@@ -265,4 +284,5 @@ export const TransactionListEntry = z.object({
   functionName: z.string(),
 })
 
-export const TransactionListResult = z.array(TransactionListEntry).length(1)
+const OneTransactionListResult = z.array(TransactionListEntry).length(1)
+const TenTransactionListResult = z.array(TransactionListEntry).length(10)
