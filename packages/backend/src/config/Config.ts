@@ -66,6 +66,7 @@ export interface TvlConfig {
   readonly mantapacific: ChainTvlConfig
   readonly lyra: ChainTvlConfig
   readonly linea: ChainTvlConfig
+  readonly zkfair: ChainTvlConfig
 }
 
 export interface LivenessConfig {
@@ -79,13 +80,13 @@ export interface LivenessConfig {
   readonly minTimestamp: UnixTime
 }
 
-export interface RoutescanChainConfig {
-  readonly type: 'RoutescanLike'
-  readonly routescanApiUrl: string
+export interface BlockscoutChainConfig {
+  readonly type: 'blockscout'
+  readonly blockscoutApiUrl: string
 }
 
 export interface EtherscanChainConfig {
-  readonly type: 'EtherscanLike'
+  readonly type: 'etherscan'
   readonly etherscanApiKey: string
   readonly etherscanApiUrl: string
 }
@@ -100,7 +101,7 @@ export interface ChainTvlConfig {
     readonly minBlockTimestamp: UnixTime
     readonly blockNumberProviderConfig:
       | EtherscanChainConfig
-      | RoutescanChainConfig
+      | BlockscoutChainConfig
     readonly multicallConfig: MulticallConfigEntry[]
   }
 }

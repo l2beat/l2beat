@@ -3503,6 +3503,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "zkfair:zkf-zkf",
+      "chainId": 42766,
+      "address": "0x1cD3E2A23C45A690a18Ed93FD1412543f464158F",
+      "symbol": "ZKF",
+      "name": "ZKF",
+      "decimals": 18,
+      "coingeckoId": "zkfair",
+      "sinceTimestamp": 1704412800,
+      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
+      "category": "other",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "linea:stone-stakestone-ether",
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
