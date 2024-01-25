@@ -1,7 +1,7 @@
 # Diff at Mon, 22 Jan 2024 12:14:45 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@7755f153438c1f16773ba6733cfa3a8c8bc0a394 block: 18932447
+- comparing to: main@7755f153438c1f16773ba6733cfa3a8c8bc0a394 block: 18932447
 - current block number: 19062209
 
 ## Description
@@ -43,7 +43,7 @@ In the process the implementation of the Vault changed, since this contract is u
 # Diff at Thu, 04 Jan 2024 07:22:14 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
+- comparing to: main@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
 
 ## Description
 
@@ -62,7 +62,7 @@ New proposal was created and executed. It changes the fee collector address (to 
 # Diff at Fri, 06 Oct 2023 09:11:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

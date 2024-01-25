@@ -1,7 +1,7 @@
 # Diff at Mon, 15 Jan 2024 14:53:19 GMT
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@51b4576752b780b70ed977cf2d54041a7eb81039 block: 18618865
+- comparing to: main@51b4576752b780b70ed977cf2d54041a7eb81039 block: 18618865
 - current block number: 19012997
 
 ## Description
@@ -31,7 +31,7 @@ Assigned member can now invoke:
 # Diff at Thu, 23 Nov 2023 15:07:23 GMT
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@2ff45714640abe4c50d283967078888d4af81d78
+- comparing to: main@2ff45714640abe4c50d283967078888d4af81d78
 
 ## Description
 
@@ -98,7 +98,7 @@ AccessControl in Scroll.
 # Diff at Mon, 16 Oct 2023 07:14:10 GMT
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@a2d21b0282f36d2369596c2fe3bb3e7746063abe
+- comparing to: main@a2d21b0282f36d2369596c2fe3bb3e7746063abe
 
 ## Description
 

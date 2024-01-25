@@ -1,7 +1,7 @@
 # Diff at Thu, 21 Dec 2023 07:52:36 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@10c7379d5f3774c9ebd335617097ca68ed267379
+- comparing to: main@10c7379d5f3774c9ebd335617097ca68ed267379
 
 ## Description
 
@@ -20,7 +20,7 @@ One owner is removed from ExecutorMultisig and another is added.
 # Diff at Mon, 18 Dec 2023 11:58:46 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@636723aa928b9ac461db31dd0b5005a916961be5
+- comparing to: main@636723aa928b9ac461db31dd0b5005a916961be5
 
 ## Description
 
@@ -39,7 +39,7 @@ One owner is removed from EmergencyMultisig and another is added.
 # Diff at Wed, 08 Nov 2023 15:41:27 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@a406ca5120d2111446400f9fd391e501cbd31e52
+- comparing to: main@a406ca5120d2111446400f9fd391e501cbd31e52
 
 ## Description
 
@@ -58,7 +58,7 @@ One ExecutorMultisig owner has changed.
 # Diff at Tue, 07 Nov 2023 07:33:37 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@6187ae3e2b0d528e37e7073fbd31c8970daac97d
+- comparing to: main@6187ae3e2b0d528e37e7073fbd31c8970daac97d
 
 ## Description
 
@@ -85,7 +85,7 @@ New owner added to FeeVaultMultisig.
 # Diff at Fri, 03 Nov 2023 07:55:41 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@ea6f863a22bc8316d333ca3f270fcd47113758cb
+- comparing to: main@ea6f863a22bc8316d333ca3f270fcd47113758cb
 
 ## Description
 
@@ -107,7 +107,7 @@ Two ScrollMultisig owners are changed.
 # Diff at Tue, 31 Oct 2023 07:30:26 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@553c8048735381be48fc993e73c034e7ed45f44c
+- comparing to: main@553c8048735381be48fc993e73c034e7ed45f44c
 
 ## Description
 
@@ -126,7 +126,7 @@ FeeVaultMultisig owner change.
 # Diff at Mon, 30 Oct 2023 09:59:06 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@571047cc8f858ed595e25bc9512b54414c949c8e
+- comparing to: main@571047cc8f858ed595e25bc9512b54414c949c8e
 
 ## Description
 
@@ -159,7 +159,7 @@ Change of owners of Emergency MultiSig and Scroll MultiSig.
 # Diff at Thu, 19 Oct 2023 08:22:39 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@0beeab609744b4e4247dca817daaa8caed24ab12
+- comparing to: main@0beeab609744b4e4247dca817daaa8caed24ab12
 
 ## Description
 
@@ -380,7 +380,7 @@ Added Scroll. Their AccessControl extension needed a custom handler since it als
 # Diff at Thu, 12 Oct 2023 12:22:29 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

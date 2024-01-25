@@ -1,7 +1,7 @@
 # Diff at Thu, 11 Jan 2024 12:24:29 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@f4fd8a33866a1a7eab89875fb7e0473f7609e88b block: 18941335
+- comparing to: main@f4fd8a33866a1a7eab89875fb7e0473f7609e88b block: 18941335
 - current block number: 18983662
 
 ## Description
@@ -37,7 +37,7 @@ for block 18941335 (main branch discovery), not current.
 # Diff at Fri, 05 Jan 2024 13:21:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@93d6aaf3e23d92ddfefa09b5758d1e10c888e66a block: 18812636
+- comparing to: main@93d6aaf3e23d92ddfefa09b5758d1e10c888e66a block: 18812636
 - current block number: 18941335
 
 ## Description
@@ -86,7 +86,7 @@ A new Starknet governor (2/5 MultiSig) is added to the Paradex contract.
 # Diff at Mon, 18 Dec 2023 11:40:25 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@636723aa928b9ac461db31dd0b5005a916961be5
+- comparing to: main@636723aa928b9ac461db31dd0b5005a916961be5
 
 ## Description
 
@@ -111,7 +111,7 @@ Change in the deposit limits of the USDC Bridge contract:
 # Diff at Tue, 31 Oct 2023 10:57:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

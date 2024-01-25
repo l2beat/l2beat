@@ -1,7 +1,7 @@
 # Diff at Wed, 03 Jan 2024 12:15:23 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@9cd2eb99d34f64eadf915ab21cf5e0819367bbc1
+- comparing to: main@9cd2eb99d34f64eadf915ab21cf5e0819367bbc1
 
 ## Description
 
@@ -20,7 +20,7 @@ Ignored following method.
 # Diff at Mon, 02 Oct 2023 13:27:28 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+- comparing to: main@10dbc30af490bd7af5cfca51b827ce3f10182f4d
 
 ## Watched changes
 
@@ -45,7 +45,7 @@ Ignored following method.
 # Diff at Tue, 26 Sep 2023 12:45:30 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

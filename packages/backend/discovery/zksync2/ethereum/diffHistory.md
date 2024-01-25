@@ -1,7 +1,7 @@
 # Diff at Tue, 09 Jan 2024 10:44:03 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@b01559086d88aef87bd572fd8173d5933affc8d9 block: 18740832
+- comparing to: main@b01559086d88aef87bd572fd8173d5933affc8d9 block: 18740832
 - current block number: 18968886
 
 ## Description
@@ -273,7 +273,7 @@ Only the security council can call `executeInstant()` that performs the upgrade 
 # Diff at Fri, 08 Dec 2023 10:06:01 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@30e367cba0866d89eb0bd930461090359c5d3f4a
+- comparing to: main@30e367cba0866d89eb0bd930461090359c5d3f4a
 
 ## Description
 
@@ -794,7 +794,7 @@ Refactored the way logs from L2 indicate what they are, instead of different sen
 # Diff at Mon, 04 Dec 2023 12:52:34 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@11f81c3217315242a2af781f1c2528aa4938b44c
+- comparing to: main@11f81c3217315242a2af781f1c2528aa4938b44c
 
 ## Description
 
@@ -828,7 +828,7 @@ ExecutorFacet: 0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269
 # Diff at Tue, 21 Nov 2023 15:32:06 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@c91f8874e3c01dd4c477491e11cff7b3c664ef34
+- comparing to: main@c91f8874e3c01dd4c477491e11cff7b3c664ef34
 
 ## Description
 
@@ -847,7 +847,7 @@ Change in the zkSync Era Multisig owners - one address is removed and another is
 # Diff at Thu, 02 Nov 2023 07:24:20 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@9b49ec4aa1d93626f3f30c0e914cb12bb6670dbd
+- comparing to: main@9b49ec4aa1d93626f3f30c0e914cb12bb6670dbd
 
 ## Description
 
@@ -878,7 +878,7 @@ Proposal updates (the upgrade is executed): a verification key has been updated,
 # Diff at Wed, 01 Nov 2023 11:26:01 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@d5598e9a46a99374387c1df455805e40f3d361a7
+- comparing to: main@d5598e9a46a99374387c1df455805e40f3d361a7
 
 ## Description
 
@@ -906,7 +906,7 @@ A new proposal is detected.
 # Diff at Fri, 27 Oct 2023 10:26:34 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@f531a9c18fd564738c9f66b8b1e5c04730dce464
+- comparing to: main@f531a9c18fd564738c9f66b8b1e5c04730dce464
 
 ## Description
 
@@ -928,7 +928,7 @@ A new proposal has been detected.
 # Diff at Tue, 26 Sep 2023 10:27:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 
@@ -962,7 +962,7 @@ A new proposal has been detected.
 # Diff at Thu, 21 Sep 2023 12:39:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@36d4050a6ee5a543b2163fe6e44153b540b87c16
+- comparing to: main@36d4050a6ee5a543b2163fe6e44153b540b87c16
 
 ## Watched changes
 

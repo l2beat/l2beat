@@ -1,7 +1,7 @@
 # Diff at Thu, 18 Jan 2024 09:19:36 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18933723
+- comparing to: main@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18933723
 - current block number: 19032812
 
 ## Description
@@ -25,7 +25,7 @@ Ignoring multisig nonce.
 # Diff at Thu, 04 Jan 2024 11:38:42 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
+- comparing to: main@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
 
 ## Description
 
@@ -59,7 +59,7 @@ One owner is removed and another is added to AevoMultiSig.
 # Diff at Tue, 26 Sep 2023 09:30:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 
