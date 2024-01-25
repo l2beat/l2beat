@@ -8,7 +8,7 @@ export const xchain: Layer2 = upcoming({
     slug: 'xchain',
     description:
       'XCHAIN is an upcoming validium leveraging Polygon zkEVM Supernets.',
-    purposes: ['DEX'],
+    purposes: ['Exchange'],
     category: 'Validium',
     provider: 'Polygon',
     links: {
