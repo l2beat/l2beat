@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -86,16 +86,11 @@ export const socket: Bridge = {
   },
   config: {
     escrows: [
-      {
-        address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'), // USDC-Lyra Vault
-        newVersion: true,
-        useContractName: true,
-        contract: {
-          name: 'USDC-Lyra Vault',
-        },
-        sinceTimestamp: new UnixTime(1700181143),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'),
+        name: 'USDC Vault',
         tokens: ['USDC'],
-      },
+      }),
     ],
   },
   contracts: {
