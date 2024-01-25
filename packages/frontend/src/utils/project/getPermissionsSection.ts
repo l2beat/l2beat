@@ -10,15 +10,15 @@ import {
 } from '@l2beat/shared-pure'
 
 import { TechnologyContract } from '../../components/project/ContractEntry'
-import { PermissionsSectionProps } from '../../components/project/PermissionsSection'
+import { ProjectDetailsPermissionsSection } from '../../pages/types'
 import { getExplorerUrl } from '../getExplorerUrl'
 
 export function getPermissionsSection(
   project: Layer2 | Layer3 | Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-): Omit<PermissionsSectionProps, 'sectionOrder'> | undefined {
-  const section: Omit<PermissionsSectionProps, 'sectionOrder'> = {
+): ProjectDetailsPermissionsSection['props'] | undefined {
+  const section: ProjectDetailsPermissionsSection['props'] = {
     id: 'permissions',
     title: 'Permissions',
     verificationStatus,

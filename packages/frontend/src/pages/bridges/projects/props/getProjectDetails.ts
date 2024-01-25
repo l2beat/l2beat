@@ -47,7 +47,6 @@ export function getProjectDetails(
       ...chart,
       id: 'chart',
       title: 'Chart',
-      sectionOrder: items.length + 1,
     },
   })
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
@@ -57,7 +56,6 @@ export function getProjectDetails(
         milestones: bridge.milestones,
         id: 'milestones',
         title: 'Milestones',
-        sectionOrder: items.length + 1,
       },
     })
   }
@@ -70,7 +68,6 @@ export function getProjectDetails(
         title: 'Detailed description',
         description: bridge.display.description,
         detailedDescription: bridge.display.detailedDescription,
-        sectionOrder: items.length + 1,
       },
     })
   }
@@ -79,7 +76,7 @@ export function getProjectDetails(
   if (riskSection.riskGroups.length > 0) {
     items.push({
       type: 'RiskSection',
-      props: { ...riskSection, sectionOrder: items.length + 1 },
+      props: { ...riskSection },
     })
   }
 
@@ -98,7 +95,6 @@ export function getProjectDetails(
         items: section.items,
         id: section.id,
         title: section.title,
-        sectionOrder: items.length + 1,
       },
     }),
   )
@@ -110,7 +106,6 @@ export function getProjectDetails(
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
-        sectionOrder: items.length + 1,
       },
     })
   }
@@ -124,7 +119,6 @@ export function getProjectDetails(
           verificationStatus,
           manuallyVerifiedContracts,
         ),
-        sectionOrder: items.length + 1,
       },
     })
 
@@ -135,7 +129,6 @@ export function getProjectDetails(
         knowledgeNuggets: bridge.knowledgeNuggets,
         id: 'knowledge-nuggets',
         title: 'Knowledge Nuggets',
-        sectionOrder: items.length + 1,
       },
     })
   }

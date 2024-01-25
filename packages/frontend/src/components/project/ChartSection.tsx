@@ -6,6 +6,7 @@ import { ProjectSectionId } from './sectionId'
 export interface ChartSectionProps extends ChartProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
 }
 
 export function ChartSection(props: ChartSectionProps) {
