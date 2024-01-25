@@ -19,7 +19,7 @@ export function FinalityDurationCell(props: Props) {
           Finality
         </div>
         {props.data.warning && (
-          <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+          <RoundedWarningIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
         )}
       </TooltipTrigger>
       <TooltipContent>

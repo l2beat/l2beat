@@ -1,6 +1,6 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, chainsByDevId, layer2s, tokenList } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
@@ -40,8 +40,9 @@ export function getProductionConfig(env: Env): Config {
       throttleTimeMs: 20000,
     },
     clock: {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      minBlockTimestamp: chainsByDevId.get('ethereum')!.minTimestampForTvl!,
+      minBlockTimestamp:
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        chains.find((c) => c.name === 'ethereum')!.minTimestampForTvl!,
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
@@ -79,6 +80,7 @@ export function getProductionConfig(env: Env): Config {
       lyra: getChainTvlConfig(env, 'lyra'),
       linea: getChainTvlConfig(env, 'linea'),
       mantapacific: getChainTvlConfig(env, 'mantapacific'),
+      zkfair: getChainTvlConfig(env, 'zkfair'),
     },
     liveness: livenessEnabled && {
       bigQuery: {
@@ -177,5 +179,6 @@ export function getProductionConfig(env: Env): Config {
     diffHistory: diffHistoryEnabled && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
+    chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   }
 }

@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ChainId } from '@l2beat/discovery'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -25,12 +24,12 @@ describe(DiscoveryCacheRepository.name, () => {
   it('only allows single record per key and overwrites old record with fresh data', async () => {
     const record1 = mockRecord({
       value: 'value1',
-      chainId: ChainId.OPTIMISM,
+      chain: 'optimism',
       blockNumber: 1_000_000,
     })
     const record2 = mockRecord({
       value: 'value2',
-      chainId: ChainId.OPTIMISM,
+      chain: 'optimism',
       blockNumber: 2_000_000,
     })
 
@@ -54,7 +53,7 @@ describe(DiscoveryCacheRepository.name, () => {
     expect(actual).toEqual({
       key: 'key1',
       value: 'value1',
-      chainId: ChainId.ETHEREUM,
+      chain: 'ethereum',
       blockNumber: 1_000_000,
     })
   })
@@ -72,7 +71,7 @@ function mockRecord(record?: Partial<DiscoveryCacheRecord>) {
   return {
     key: 'key',
     value: 'value',
-    chainId: ChainId.ETHEREUM,
+    chain: 'ethereum',
     blockNumber: 1_000_000,
     ...record,
   }

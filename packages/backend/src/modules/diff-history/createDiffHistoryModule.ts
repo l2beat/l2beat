@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  ChainId,
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
   DiscoveryLogger,
@@ -11,6 +10,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DiffHistoryController } from '../../api/controllers/diff-history/DiffHistoryController'
 import { createDiffHistoryRouter } from '../../api/routers/DiffHistoryRouter'
 import { Config } from '../../config'
+import { ChainConverter } from '../../core/ChainConverter'
 import { Clock } from '../../core/Clock'
 import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { ProjectDiscoverer } from '../../core/discovery/ProjectDiscoverer'
@@ -46,8 +46,11 @@ export function createDiffHistoryModule(
 
   const discoveryHttpClient = new DiscoveryHttpClient()
 
+  const chainConverter = new ChainConverter(config.chains)
+
   const discoverers = config.diffHistory.chains
-    .filter((chainConfig) => chainConfig.chainId === ChainId.ETHEREUM) // TODO(radomski): In the initial versioon we only care about ethereum
+    // TODO(radomski): In the initial version we only care about ethereum
+    .filter((chainConfig) => chainConfig.chain === 'ethereum')
     .flatMap((chainConfig) => {
       const runner = createDiscoveryRunner(
         discoveryHttpClient,
@@ -78,10 +81,11 @@ export function createDiffHistoryModule(
           new ProjectDiscoverer(
             runner,
             project.name,
-            ChainId.ETHEREUM,
+            'ethereum',
             configReader,
             discoveryHistoryRepository,
             new Clock(project.minTimestamp, 60 * 60),
+            chainConverter,
             logger,
             DISCOVERY_LOGIC_VERSION,
           ),
@@ -91,6 +95,7 @@ export function createDiffHistoryModule(
   const controller = new DiffHistoryController(
     discoveryHistoryRepository,
     configReader,
+    chainConverter,
   )
   const routers = [createDiffHistoryRouter(controller)]
 

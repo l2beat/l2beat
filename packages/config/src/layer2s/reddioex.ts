@@ -45,8 +45,9 @@ export const reddioex: Layer2 = {
   display: {
     name: 'ReddioEx',
     slug: 'reddioex',
-    description: 'ReddioEx is a Validium based on the StarkEx technology.',
-    purposes: ['Universal'],
+    description:
+      'ReddioEx is a Validium based on the StarkEx technology. Its goal is to power the next generation of web3 apps and games by providing developers with the ability to create digital assets (NFTs) and easily integrate them in-game.',
+    purposes: ['Exchange', 'NFT', 'Gaming'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',

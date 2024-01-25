@@ -74,7 +74,10 @@ function getScalingL2SummaryEntry(
             displayValue: formatUSD(stats.latestTvl),
           }
         : undefined,
-    tvlTooltip: getProjectTvlTooltipText(project.config),
+    tvlTooltip: getProjectTvlTooltipText(
+      project.config,
+      project.chainConfig?.chainId,
+    ),
     tvlBreakdown:
       stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
     oneDayChange:

@@ -3,7 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ChainConfig } from '../common/ChainConfig'
 
 export const ethereum: ChainConfig = {
-  devId: 'ethereum',
+  name: 'ethereum',
   chainId: 1,
   explorerUrl: 'https://etherscan.io',
   explorerApi: {
@@ -32,4 +32,5 @@ export const ethereum: ChainConfig = {
       version: '1',
     },
   ],
+  coingeckoPlatform: 'ethereum',
 }

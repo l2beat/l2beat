@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { HorizontalSeparator } from './HorizontalSeparator'
 import { OverflowWrapper } from './OverflowWrapper'
 
@@ -23,7 +23,7 @@ export function Tabs({ items }: TabsProps) {
       <OverflowWrapper childrenClassName="TabsItemsContainer relative flex gap-x-2 md:gap-x-8">
         {items.map((tab) => (
           <a
-            className="TabsItem group relative flex items-center justify-center gap-1.5 py-3 px-4 font-semibold outline-none transition-colors"
+            className="TabsItem group relative flex items-center justify-center gap-1.5 px-4 py-3 font-semibold outline-none transition-colors"
             key={tab.id}
             id={tab.id}
             href={`#${tab.id}`}
@@ -48,7 +48,7 @@ export function Tabs({ items }: TabsProps) {
       <HorizontalSeparator className="mb-3 md:mb-6" />
       {items.map((tab, i) => (
         <div
-          className={classNames('TabsContent', i !== 0 && 'hidden')}
+          className={cn('TabsContent', i !== 0 && 'hidden')}
           id={tab.id}
           key={tab.id}
         >

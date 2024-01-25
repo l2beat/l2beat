@@ -1,5 +1,6 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
+
+import { cn } from '../../utils/cn'
 
 export interface CalloutProps {
   color?: 'red' | 'yellow' | 'blue'
@@ -35,7 +36,7 @@ export function Callout({
 
   return (
     <div
-      className={cx(
+      className={cn(
         'flex first:mt-0',
         'rounded-lg bg-opacity-20',
         background,

@@ -1,6 +1,6 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
@@ -70,6 +70,7 @@ export function getLocalConfig(env: Env): Config {
       lyra: getChainTvlConfig(env, 'lyra', { minTimestamp }),
       linea: getChainTvlConfig(env, 'linea', { minTimestamp }),
       mantapacific: getChainTvlConfig(env, 'mantapacific', { minTimestamp }),
+      zkfair: getChainTvlConfig(env, 'zkfair', { minTimestamp }),
     },
     liveness: livenessEnabled && {
       bigQuery: {
@@ -190,5 +191,6 @@ export function getLocalConfig(env: Env): Config {
     diffHistory: diffHistoryEnabled && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
+    chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   }
 }

@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { forwardRef, ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { ChevronDownIcon } from './icons'
 
 interface HoverableDropdownProps {
@@ -15,7 +15,7 @@ export const HoverableDropdown = forwardRef<
 >((props, ref) => {
   return (
     <div
-      className={classNames(
+      className={cn(
         'HoverableDropdown group relative w-min whitespace-pre',
         props.className,
       )}
@@ -37,7 +37,7 @@ function HoverableDropdownToggle(props: HoverableDropdownToggleProps) {
   return (
     <div
       ref={props.toggleRef}
-      className="HoverableDropdownToggle flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-zinc-900 dark:group-hover:bg-zinc-700"
+      className="HoverableDropdownToggle flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-zinc-900 dark:group-hover:bg-zinc-700"
     >
       {props.children}
       <ChevronDownIcon className="HoverableDropdownToggleIcon m-auto scale-75 transition-transform duration-300 group-hover:-rotate-180" />
@@ -55,7 +55,7 @@ function HoverableDropdownMenu(props: HoverableDropdownMenuProps) {
     <div className="HoverableDropdownMenu pointer-events-none absolute z-60 opacity-0 transition-opacity duration-300">
       <hr className="h-1.5 border-t-0" />
       <div
-        className={classNames(
+        className={cn(
           'rounded-lg bg-gray-100 p-1 shadow-[0px_4px_20px_rgba(0,0,0,0.50)] dark:bg-zinc-900',
           props.className,
         )}

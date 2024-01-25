@@ -1,6 +1,6 @@
-import { default as classNames } from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { ChevronDownIcon, ProjectLink } from '../icons'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 
@@ -34,14 +34,14 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
                 key={i}
               >
                 <th
-                  className={classNames(
+                  className={cn(
                     'w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550',
                     i === 0 && 'pt-0',
                   )}
                 >
                   {name}
                 </th>
-                <td className={classNames('py-3', i === 0 && 'pt-0')}>
+                <td className={cn('py-3', i === 0 && 'pt-0')}>
                   {links.map((x, i) => (
                     <LinkSectionLink key={i} href={x} name={name} />
                   ))}

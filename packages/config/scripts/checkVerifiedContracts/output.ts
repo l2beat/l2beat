@@ -11,14 +11,14 @@ export type VerificationMap = Record<string, boolean>
 export type VerificationMapPerChain = Record<string, VerificationMap>
 
 export const PROJECTS_OUTPUT_PATH = 'src/verification/projects.json'
-export function getOutputPath(devId: string) {
-  return `src/verification/${devId}/verified.json`
+export function getOutputPath(chain: string) {
+  return `src/verification/${chain}/verified.json`
 }
 
 export async function loadPreviouslyVerifiedContracts(
-  devId: string,
+  chain: string,
 ): Promise<Set<EthereumAddress>> {
-  const filePath = getOutputPath(devId)
+  const filePath = getOutputPath(chain)
   if (!existsSync(filePath)) {
     mkdirSync(path.dirname(filePath))
     return new Set()

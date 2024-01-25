@@ -9,7 +9,7 @@ import {
   UnixTime as DiscoveryUnixTime,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -30,7 +30,7 @@ export class DiscoveryRunner {
     private readonly discoveryProvider: DiscoveryProvider,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
-    private readonly chainId: ChainId,
+    readonly chain: string,
   ) {}
 
   async getBlockNumber(): Promise<number> {
@@ -41,10 +41,6 @@ export class DiscoveryRunner {
     return this.discoveryProvider.getBlockNumberAt(
       new DiscoveryUnixTime(timestamp.toNumber()),
     )
-  }
-
-  getChainId(): ChainId {
-    return this.chainId
   }
 
   async run(
@@ -84,7 +80,7 @@ export class DiscoveryRunner {
 
     return toDiscoveryOutput(
       config.name,
-      config.chainId,
+      config.chain,
       config.hash,
       blockNumber,
       result,
@@ -115,9 +111,7 @@ export class DiscoveryRunner {
         2,
       )
       logger.warn(
-        `DiscoveryRunner: Retrying ${config.name} (chain: ${ChainId.getName(
-          config.chainId,
-        )}) | attempt:${i} | error:${errorString}`,
+        `DiscoveryRunner: Retrying ${config.name} (chain: ${config.chain}) | attempt:${i} | error:${errorString}`,
       )
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
@@ -172,7 +166,7 @@ export class DiscoveryRunner {
   async updateInitialAddresses(config: DiscoveryConfig) {
     const discovery = await this.configReader.readDiscovery(
       config.name,
-      this.getChainId(),
+      this.chain,
     )
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({

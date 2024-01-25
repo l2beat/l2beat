@@ -1,4 +1,5 @@
 import Bugsnag from '@bugsnag/js'
+import { getChainNames } from '@l2beat/config'
 import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
@@ -16,8 +17,10 @@ import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
-import { getManuallyVerifiedContracts } from './api/getManuallyVerifiedLinks'
-import { getVerificationStatus } from './api/getVerificationStatus'
+import {
+  getManuallyVerifiedContracts,
+  getVerificationStatus,
+} from './api/getVerificationStatus'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
@@ -94,8 +97,10 @@ async function main() {
 
     createApi(config, tvlApiResponse, activityApiResponse)
 
-    const verificationStatus = getVerificationStatus()
-    const manuallyVerifiedContracts = getManuallyVerifiedContracts()
+    const supportedChains = getChainNames(config)
+    const verificationStatus = getVerificationStatus(supportedChains)
+    const manuallyVerifiedContracts =
+      getManuallyVerifiedContracts(supportedChains)
 
     const pagesData = {
       tvlApiResponse,

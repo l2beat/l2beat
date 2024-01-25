@@ -4,6 +4,7 @@ import {
   CoingeckoQueryService,
   HttpClient,
 } from '@l2beat/shared'
+import { notUndefined } from '@l2beat/shared-pure'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
@@ -104,7 +105,7 @@ export function createTvlModule(
       logger,
     )
 
-  const submodules: (TvlSubmodule | undefined)[] = [
+  const submodules: TvlSubmodule[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
     createChainTvlSubmodule(config.tvl.arbitrum),
     createChainTvlSubmodule(config.tvl.optimism),
@@ -112,12 +113,13 @@ export function createTvlModule(
     createChainTvlSubmodule(config.tvl.lyra),
     createChainTvlSubmodule(config.tvl.linea),
     createChainTvlSubmodule(config.tvl.mantapacific),
-  ]
+    createChainTvlSubmodule(config.tvl.zkfair),
+  ].filter(notUndefined)
 
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.reportUpdaters ?? []),
+    submodules.flatMap((x) => x.reportUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -164,7 +166,7 @@ export function createTvlModule(
     logger.info('Starting submodules...')
 
     for (const submodule of submodules) {
-      await submodule?.start?.()
+      await submodule.start?.()
     }
 
     await aggregatedReportUpdater.start()

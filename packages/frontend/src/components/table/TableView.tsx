@@ -1,8 +1,8 @@
-import { default as classNames, default as cx } from 'classnames'
 import isObject from 'lodash/isObject'
 import range from 'lodash/range'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { InfoIcon } from '../icons'
 import { Link } from '../Link'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
@@ -26,7 +26,7 @@ export function TableView<T>({
 
   return (
     <div
-      className={cx(
+      className={cn(
         'group/tableview mt-3 overflow-x-auto whitespace-pre pb-3 text-base md:mt-6',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
@@ -77,7 +77,7 @@ export function TableView<T>({
               <tr
                 key={i}
                 {...rest}
-                className={cx(
+                className={cn(
                   'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
                   'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
@@ -118,7 +118,7 @@ export function TableView<T>({
           {groupedColumns && <EmptyRow groupedColumns={groupedColumns} />}
         </tbody>
       </table>
-      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
+      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pb-10 pt-10 group-data-[state=empty]/tableview:flex">
         <span className="mb-4 text-2xl font-semibold">No results</span>
         <span className="mb-6">There are no results meeting the criteria</span>
         <Link className="ProjectFilters-ResetButton cursor-pointer">
@@ -141,7 +141,7 @@ function ColumnHeader<T>(props: {
   const title = (
     <div className="flex items-center gap-1">
       {props.column.icon}
-      <span className={cx(props.column.shortName && 'hidden md:block')}>
+      <span className={cn(props.column.shortName && 'hidden md:block')}>
         {props.column.name}
       </span>
       {props.column.shortName && (
@@ -154,7 +154,7 @@ function ColumnHeader<T>(props: {
   return (
     <>
       <th
-        className={cx(
+        className={cn(
           'whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
           props.column.minimalWidth && 'w-0',
           hasPaddingRight &&
@@ -174,7 +174,7 @@ function ColumnHeader<T>(props: {
         )}
       >
         <div
-          className={cx(
+          className={cn(
             'flex flex-row items-center gap-1.5',
             props.column.align === 'right' && 'justify-end',
             props.column.align === 'center' && 'justify-center',
@@ -240,7 +240,7 @@ function DataCell<T>(props: {
   return (
     <>
       <td
-        className={cx(
+        className={cn(
           'group/data-cell h-9 md:h-14',
           props.columnConfig.minimalWidth && 'w-0',
           props.groupOptions?.isFirst && '!pl-6',
@@ -252,7 +252,7 @@ function DataCell<T>(props: {
       >
         <a
           href={idHref}
-          className={cx(
+          className={cn(
             'h-full w-full items-center',
             props.columnConfig.align === 'right' && 'justify-end',
             props.columnConfig.align === 'center' && 'justify-center',
@@ -340,9 +340,7 @@ function EmptyRow(props: { groupedColumns: GroupedColumn[] }) {
             />
           )
         }
-        return (
-          <td className={classNames('h-4', groupedColumn.className)} key={i} />
-        )
+        return <td className={cn('h-4', groupedColumn.className)} key={i} />
       })}
     </tr>
   )

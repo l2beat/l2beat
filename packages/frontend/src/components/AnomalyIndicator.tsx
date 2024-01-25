@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import range from 'lodash/range'
 import React from 'react'
 
@@ -8,6 +7,7 @@ import {
   AnomalyIndicatorEntry,
 } from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
+import { cn } from '../utils/cn'
 import { LivenessDurationCell } from './table/LivenessDurationCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
 
@@ -58,7 +58,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
         {anomalyEntries.map((anomaly, i) => (
           <div
             key={i}
-            className={classNames(
+            className={cn(
               'w-0.5 rounded-full',
               anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
             )}
@@ -84,7 +84,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   return (
     <>
       <span>Anomalies from last 30 days:</span>
-      <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
+      <ul className="ml-4 mt-2.5 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {anomalies.slice(0, 4).map((anomaly) => (
           <li key={anomaly.timestamp}>
             <span>

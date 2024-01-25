@@ -1,22 +1,20 @@
 import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
-import {
-  ChainId,
-  DiffHistoryApiResponse,
-  DiscoveryHistory,
-} from '@l2beat/shared-pure'
+import { DiffHistoryApiResponse, DiscoveryHistory } from '@l2beat/shared-pure'
 
+import { ChainConverter } from '../../../core/ChainConverter'
 import { DiscoveryHistoryRepository } from '../../../peripherals/database/discovery/DiscoveryHistoryRepository'
 
 export class DiffHistoryController {
   constructor(
     private readonly discoveryHistoryRepository: DiscoveryHistoryRepository,
     private readonly configReader: ConfigReader,
+    private readonly chainConverter: ChainConverter,
   ) {}
 
-  async getRaw(chainId: ChainId, project: string): Promise<DiscoveryHistory> {
+  async getRaw(chain: string, project: string): Promise<DiscoveryHistory> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
-      chainId,
+      this.chainConverter.toChainId(chain),
     )
     return {
       project: project,
@@ -29,16 +27,16 @@ export class DiffHistoryController {
   }
 
   async getDiffHistoryPerProject(
-    chainId: ChainId,
+    chain: string,
     project: string,
   ): Promise<DiffHistoryApiResponse> {
     const discoveries = await this.discoveryHistoryRepository.getProject(
       project,
-      chainId,
+      this.chainConverter.toChainId(chain),
     )
 
     const diffs: Record<number, DiscoveryDiff[]> = {}
-    const config = await this.configReader.readConfig(project, chainId)
+    const config = await this.configReader.readConfig(project, chain)
     for (let i = 0; i < discoveries.length - 1; i++) {
       diffs[discoveries[i + 1].timestamp.toNumber()] = diffDiscovery(
         discoveries[i].discovery.contracts,
@@ -68,7 +66,10 @@ export class DiffHistoryController {
 
     const discoveries = await Promise.all(
       projects.map(async (p) => {
-        return await this.getDiffHistoryPerProject(p.chainId, p.projectName)
+        return await this.getDiffHistoryPerProject(
+          this.chainConverter.toName(p.chainId),
+          p.projectName,
+        )
       }),
     )
 

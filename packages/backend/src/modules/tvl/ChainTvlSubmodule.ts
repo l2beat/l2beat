@@ -3,8 +3,8 @@ import {
   BlockNumberProvider,
   CoingeckoQueryService,
   HttpClient,
+  UniversalBlockscoutClient,
   UniversalEtherscanClient,
-  UniversalRoutescanClient,
 } from '@l2beat/shared'
 import { capitalizeFirstLetter, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -24,7 +24,7 @@ import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function chainTvlSubmodule(
-  { devId, config }: ChainTvlConfig,
+  { chain, config }: ChainTvlConfig,
   tokens: Token[],
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
@@ -33,21 +33,21 @@ export function chainTvlSubmodule(
   clock: Clock,
   logger: Logger,
 ): TvlSubmodule | undefined {
-  const name = `${capitalizeFirstLetter(devId)}TvlModule`
+  const name = `${capitalizeFirstLetter(chain)}TvlModule`
   if (!config) {
     logger.info(`${name} disabled`)
     return
   }
-  logger = logger.tag(devId)
+  logger = logger.tag(chain)
 
   // #region peripherals
   const provider = new providers.JsonRpcProvider(config.providerUrl)
 
   const blockNumberProvider: BlockNumberProvider =
-    config.blockNumberProviderConfig.type === 'RoutescanLike'
-      ? new UniversalRoutescanClient(
+    config.blockNumberProviderConfig.type === 'blockscout'
+      ? new UniversalBlockscoutClient(
           http,
-          config.blockNumberProviderConfig.routescanApiUrl,
+          config.blockNumberProviderConfig.blockscoutApiUrl,
           config.minBlockTimestamp,
           config.chainId,
           logger,
@@ -159,6 +159,7 @@ export function chainTvlSubmodule(
   }
 
   return {
+    chain,
     reportUpdaters: [
       totalSupplyFormulaUpdater,
       circulatingSupplyFormulaUpdater,
