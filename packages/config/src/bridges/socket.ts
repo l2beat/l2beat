@@ -28,7 +28,7 @@ export const socket: Bridge = {
     description:
       'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol.',
     detailedDescription:
-      'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol. Socket is highly flexible and configurable and risks vary depending on the current configuration of the specific route.\
+      'Socket is highly flexible and configurable and risks vary depending on the current configuration of the specific route. It allows to define custom Token Vaults that communicate using different messaging protocols.\
     Token Vaults are connected via Plugs and Switchboards to their remote counterparts. The central contract on each chain, Socket, stores the configuration of all Plugs and Switchboards.\
     Some Switchboards may be as secure as "native" (canonical) bridge, some may use simple Relayers/Watchers to move messages across chains.',
   },
@@ -108,8 +108,22 @@ export const socket: Bridge = {
       ),
       discovery.getContractDetails(
         'FastSwitchboard',
-        'Fast Switchboard having set of WATCHERS authorizing transfers. If the transfer is not explicitly authorized withing XXX seconds, it is optimistically considered to be valid. WATCHERS can also stop (trip) an invalid transfer.',
+        'Fast Switchboard having set of Watchers authorizing transfers. If the transfer is not explicitly authorized within XXX seconds, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
       ),
+      discovery.getContractDetails(
+        'PolygonL1Switchboard',
+        'Switchboard using native Polygon message passing.',
+      ),
+      discovery.getContractDetails(
+        'OptimismSwitchboard',
+        'Switchboard using native Optimism message passing.',
+      ),
+      discovery.getContractDetails(
+        'ArbitrumL1Switchboard',
+        'Switchboard using native Arbitrum message passing.',
+      ),
+      discovery.getContractDetails('ExecutionManager', ''),
+      discovery.getContractDetails('TransmitManager', ''),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
@@ -119,7 +133,7 @@ export const socket: Bridge = {
       name: 'Socket Owner.',
       description:
         'Account priviliged to set up different roles in the main Socket contract.',
-      accounts: [discovery.getPermissionedAccount('socket', 'owner')],
+      accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
     },
   ],
   knowledgeNuggets: [],
