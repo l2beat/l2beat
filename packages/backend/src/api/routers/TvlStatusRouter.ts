@@ -16,7 +16,7 @@ export function createTvlStatusRouter(
   clock: Clock,
   priceUpdater: PriceUpdater,
   aggregatedReportUpdater: AggregatedReportUpdater,
-  submodules: TvlModule[],
+  modules: TvlModule[],
 ) {
   const router = new Router()
 
@@ -25,7 +25,7 @@ export function createTvlStatusRouter(
       groupName: 'shared',
       updaters: [aggregatedReportUpdater, priceUpdater],
     },
-    ...submodules.map((x) => {
+    ...modules.map((x) => {
       const reports = x.reportUpdaters ?? []
       const data = x.dataUpdaters ?? []
 

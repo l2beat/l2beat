@@ -1,10 +1,7 @@
 import { ChainConfig } from '@l2beat/config'
 import { Token } from '@l2beat/shared-pure'
 
-export function getChainModulesFromTokens(
-  tokenList: Token[],
-  chains: ChainConfig[],
-) {
+export function getChainsWithTokens(tokenList: Token[], chains: ChainConfig[]) {
   const modules = new Set<string>()
 
   for (const token of tokenList) {

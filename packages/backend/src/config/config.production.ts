@@ -5,9 +5,9 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
+import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
-import { getChainModulesFromTokens } from './getModulesFromTokens'
 
 export function getProductionConfig(env: Env): Config {
   const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
@@ -25,8 +25,6 @@ export function getProductionConfig(env: Env): Config {
   const discordEnabled =
     !!discordToken && !!publicDiscordChannelId && !!internalDiscordChannelId
   const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
-
-  const tvlChainModules = getChainModulesFromTokens(tokenList, chains)
 
   return {
     name: 'Backend/Production',
@@ -77,7 +75,9 @@ export function getProductionConfig(env: Env): Config {
       enabled: true,
       coingeckoApiKey: env.string('COINGECKO_API_KEY'),
       ethereum: getChainTvlConfig(env, 'ethereum'),
-      modules: tvlChainModules.map((x) => getChainTvlConfig(env, x)),
+      modules: getChainsWithTokens(tokenList, chains).map((x) =>
+        getChainTvlConfig(env, x),
+      ),
     },
     liveness: livenessEnabled && {
       bigQuery: {

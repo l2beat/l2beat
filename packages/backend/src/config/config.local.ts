@@ -5,9 +5,9 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
+import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
-import { getChainModulesFromTokens } from './getModulesFromTokens'
 
 export function getLocalConfig(env: Env): Config {
   const tvlEnabled = env.boolean('TVL_ENABLED', true)
@@ -28,8 +28,6 @@ export function getLocalConfig(env: Env): Config {
 
   // TODO: This should probably be configurable
   const minTimestamp = UnixTime.now().add(-7, 'days').toStartOf('hour')
-
-  const tvlChainModules = getChainModulesFromTokens(tokenList, chains)
 
   return {
     name: 'Backend/Local',
@@ -67,7 +65,9 @@ export function getLocalConfig(env: Env): Config {
       errorOnUnsyncedTvl,
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
       ethereum: getChainTvlConfig(env, 'ethereum', { minTimestamp }),
-      modules: tvlChainModules.map((x) => getChainTvlConfig(env, x)),
+      modules: getChainsWithTokens(tokenList, chains).map((x) =>
+        getChainTvlConfig(env, x),
+      ),
     },
     liveness: livenessEnabled && {
       bigQuery: {
