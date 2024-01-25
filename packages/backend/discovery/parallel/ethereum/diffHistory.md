@@ -1,3 +1,5 @@
+Generated with discovered.json: 0x616619b46862d7649368c11858319d5e420f5791
+
 # Diff at Wed, 24 Jan 2024 08:06:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
