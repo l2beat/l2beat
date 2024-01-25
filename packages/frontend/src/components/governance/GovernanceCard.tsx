@@ -12,8 +12,8 @@ type GovernanceCardProps<T extends React.ElementType> = {
 type GovernanceCardType = 'primary' | 'purple'
 
 const typeToColor: Record<GovernanceCardType, string> = {
-  primary: 'bg-zinc-800',
-  purple: 'bg-purple-100',
+  primary: 'bg-gray-100 dark:bg-zinc-800',
+  purple: 'bg-purple-300 dark:bg-purple-100',
 }
 
 export function GovernanceCard<T extends React.ElementType>({
