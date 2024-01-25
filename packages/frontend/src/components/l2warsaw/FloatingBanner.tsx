@@ -32,7 +32,7 @@ export function FloatingBanner() {
 
 function Close() {
   return (
-    <div className="FloatingBanner-Close group absolute top-0 right-0 cursor-pointer p-4">
+    <div className="FloatingBanner-Close group absolute right-0 top-0 cursor-pointer p-4">
       <CloseIcon className="fill-gray-550 transition-all group-hover:fill-gray-700 dark:group-hover:fill-gray-400" />
     </div>
   )

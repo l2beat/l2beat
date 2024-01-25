@@ -8,11 +8,17 @@ import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
+import { ChainConverter } from '../ChainConverter'
 import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
 
 describe(UpdateNotifier.name, () => {
+  const chainConverter = new ChainConverter([
+    { name: 'ethereum', chainId: ChainId.ETHEREUM },
+    { name: 'arbitrum', chainId: ChainId.ARBITRUM },
+  ])
+
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
@@ -30,6 +36,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -91,6 +98,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -164,6 +172,7 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
@@ -216,12 +225,13 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
       const reminders = {
-        ['project-a']: [ChainId.ETHEREUM, ChainId.ARBITRUM],
-        ['project-b']: [ChainId.ETHEREUM, ChainId.OPTIMISM],
+        ['project-a']: ['ethereum', 'arbitrum'],
+        ['project-b']: ['ethereum', 'optimism'],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
@@ -246,12 +256,13 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         updateNotifierRepository,
         discordClient,
+        chainConverter,
         Logger.SILENT,
       )
 
       const reminders = {
-        ['project-a']: [ChainId.ETHEREUM],
-        ['project-b']: [ChainId.ETHEREUM],
+        ['project-a']: ['ethereum'],
+        ['project-b']: ['ethereum'],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
