@@ -1118,5 +1118,13 @@
         "slug": "omnichain"
       }
     }
+  ],
+  "zkfair": [
+    {
+      "symbol": "ZKF",
+      "address": "0x1cd3e2a23c45a690a18ed93fd1412543f464158f",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    }
   ]
 }

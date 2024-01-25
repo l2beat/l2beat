@@ -84,7 +84,7 @@ export function Chart(props: ChartProps) {
           <div
             className={cn(
               'flex justify-between',
-              props.metaChart && 'absolute left-0 bottom-0 w-full',
+              props.metaChart && 'absolute bottom-0 left-0 w-full',
             )}
           >
             <TimeRange />
@@ -100,7 +100,7 @@ export function Chart(props: ChartProps) {
             <ChartHover />
             <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
             <div
-              className="absolute -bottom-4 -left-4 top-0 -right-4 z-40 group-data-[interactivity-disabled]/chart:hidden"
+              className="absolute -bottom-4 -left-4 -right-4 top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
             />
             <ChartEmptyState />

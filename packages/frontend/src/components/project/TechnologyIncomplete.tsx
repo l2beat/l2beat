@@ -34,7 +34,7 @@ export function TechnologyIncompleteShort() {
   return (
     <div
       className={cn(
-        'mt-2 mb-2 rounded-lg py-1 px-2 text-xs md:text-base',
+        'mb-2 mt-2 rounded-lg px-2 py-1 text-xs md:text-base',
         'bg-blue-450 bg-opacity-20 text-blue-700 dark:text-blue-300',
       )}
     >

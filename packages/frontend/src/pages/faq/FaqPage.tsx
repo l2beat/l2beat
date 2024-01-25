@@ -25,7 +25,7 @@ export function FaqPage(props: FaqPageProps) {
             Hi! We are glad you've made it here. Below you will find answers to
             most frequently asked questions about L2BEAT.
           </div>
-          <HorizontalSeparator className="mt-12 mb-4" />
+          <HorizontalSeparator className="mb-4 mt-12" />
         </div>
         <div className="flex">
           <div className="mt-12 hidden w-72 flex-shrink-0 flex-col gap-4 lg:flex">

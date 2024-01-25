@@ -39,14 +39,14 @@ export function PermissionsSection({
       <h3 className="md:text-md mt-4 font-bold">
         The system uses the following set of permissioned addresses:
       </h3>
-      <div className="mt-4 mb-4">
+      <div className="mb-4 mt-4">
         {permissions.map((permission, i) => (
           <ContractEntry
             key={i}
             contract={permission}
             verificationStatus={verificationStatus}
             manuallyVerifiedContracts={manuallyVerifiedContracts}
-            className="mt-4 mb-4"
+            className="mb-4 mt-4"
           />
         ))}
       </div>

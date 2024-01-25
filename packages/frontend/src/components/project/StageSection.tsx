@@ -40,7 +40,7 @@ export function StageSection(props: StageSectionProps) {
           <img
             src={props.icon}
             alt={props.name}
-            className="relative -top-0.5 mr-2 inline-block h-6 w-6"
+            className="relative -top-0.5 mr-2 inline-block size-6"
           />
           {props.name} is currently
           <StageBadge
@@ -70,7 +70,7 @@ export function StageSection(props: StageSectionProps) {
         <img
           src={props.icon}
           alt={props.name}
-          className="relative -top-0.5 mr-2 inline-block h-6 w-6"
+          className="relative -top-0.5 mr-2 inline-block size-6"
         />
         {props.name} is a{' '}
         <StageBadge
@@ -125,7 +125,7 @@ export function StageSection(props: StageSectionProps) {
                 ) : (
                   <div className="flex items-center gap-2">
                     {stage.stage === 'Stage 0' ? (
-                      <RoundedWarningIcon className="h-4 w-4 shrink-0 fill-yellow-300" />
+                      <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
                     ) : (
                       <MissingIcon className="shrink-0" />
                     )}
@@ -155,7 +155,7 @@ export function StageSection(props: StageSectionProps) {
               {missing.map((req, i) => (
                 <li key={i} className="flex">
                   {stage.stage === 'Stage 0' ? (
-                    <RoundedWarningIcon className="h-4 w-4 shrink-0 fill-yellow-300" />
+                    <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
                   ) : (
                     <MissingIcon className="relative top-0.5 shrink-0" />
                   )}
