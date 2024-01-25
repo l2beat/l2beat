@@ -1,22 +1,17 @@
-import {
-  CollectionEntry,
-  getCollectionEntry,
-} from '../../content/getCollection'
+import { ContentEntry } from '../../content/getContent'
 
 export interface GovernancePublicationEntry {
   id: string
   title: string
-  content: string
-  author: CollectionEntry<'authors'>
+  link: string
 }
 
 export function getGovernancePublicationEntry(
-  post: CollectionEntry<'publications'>,
+  post: ContentEntry<'publications'>,
 ): GovernancePublicationEntry {
   return {
     id: post.id,
     title: post.data.title,
-    author: getCollectionEntry('authors', post.data.authorId),
-    content: post.content,
+    link: post.data.link,
   }
 }

@@ -1,13 +1,13 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getCollection } from '../../../../content/getCollection'
+import { getContent } from '../../../../content/getContent'
 import { Wrapped } from '../../../Page'
 import { getGovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 import { GovernancePageProps } from '../view/GovernancePage'
 import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(config: Config): Wrapped<GovernancePageProps> {
-  const publications = getCollection('publications')
+  const publications = getContent('publications')
 
   return {
     props: {

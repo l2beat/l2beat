@@ -1,6 +1,6 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { CollectionEntry } from '../../../../content/getCollection'
+import { ContentEntry } from '../../../../content/getContent'
 import { Wrapped } from '../../../Page'
 import { getGovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 import { GovernanceAllPublicationsPageProps } from '../view/GovernanceAllPublicationsPage'
@@ -8,7 +8,7 @@ import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
-  post: CollectionEntry<'publications'>[],
+  post: ContentEntry<'publications'>[],
 ): Wrapped<GovernanceAllPublicationsPageProps> {
   return {
     props: {
