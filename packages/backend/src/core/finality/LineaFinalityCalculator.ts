@@ -9,7 +9,7 @@ import { utils } from 'ethers'
 import { sum } from 'lodash'
 
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
-import { RPCClient } from '../../peripherals/rpcclient/RPCClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 
 type LineaDecoded = [
   [string, number, string, unknown[], string, unknown[]][],
@@ -20,7 +20,7 @@ type LineaDecoded = [
 
 export class LineaFinalityCalculator {
   constructor(
-    private readonly provider: RPCClient,
+    private readonly provider: RpcClient,
     private readonly livenessRepository: LivenessRepository,
   ) {}
 

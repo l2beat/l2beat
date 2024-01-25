@@ -2,13 +2,13 @@ import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
-import { RPCClient } from '../../peripherals/rpcclient/RPCClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { LineaFinalityCalculator } from './LineaFinalityCalculator'
 
 describe(LineaFinalityCalculator.name, () => {
   it('correctly decode and returns correct data', async () => {
     const livenessRepository = getMockLivenessRepository()
-    const provider = getMockRPCClient()
+    const provider = getMockRpcClient()
 
     const calculator = new LineaFinalityCalculator(provider, livenessRepository)
     const results = await calculator.getFinality(
@@ -26,7 +26,7 @@ describe(LineaFinalityCalculator.name, () => {
 
   it('correctly split date for a given granularity', async () => {
     const livenessRepository = getMockLivenessRepository()
-    const provider = getMockRPCClient()
+    const provider = getMockRpcClient()
     const start = UnixTime.now().toStartOf('hour')
     const calculator = new LineaFinalityCalculator(provider, livenessRepository)
     await calculator.getFinality(start, 6)
@@ -67,7 +67,7 @@ describe(LineaFinalityCalculator.name, () => {
         .resolvesToOnce('0x121')
         .resolvesToOnce(undefined),
     })
-    const provider = mockObject<RPCClient>({
+    const provider = mockObject<RpcClient>({
       getBlock: mockFn()
         .resolvesToOnce({ timestamp: 1705407431 })
         .resolvesToOnce({ timestamp: 1706171999 }),
@@ -102,8 +102,8 @@ function getMockLivenessRepository() {
   })
 }
 
-function getMockRPCClient() {
-  return mockObject<RPCClient>({
+function getMockRpcClient() {
+  return mockObject<RpcClient>({
     getBlock: mockFn().resolvesTo({ timestamp: 1705407431 }),
     getTransaction: mockFn().resolvesTo({
       blockNumber: 1,
