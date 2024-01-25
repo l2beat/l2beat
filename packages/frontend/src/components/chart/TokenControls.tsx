@@ -74,7 +74,7 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
                     className="md:!py-1.5"
                     key={j}
                   >
-                    <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
+                    <img src={token.iconUrl} className="size-4 rounded-full" />
                     <span className="text-sm font-bold">{token.name}</span> (
                     {token.info.symbol})
                   </RichSelect.Item>

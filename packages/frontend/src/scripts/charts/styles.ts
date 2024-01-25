@@ -23,15 +23,15 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
   circle: {
     type: 'div',
     className:
-      'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
+      'size-2 rounded-full border-2 border-current bg-white dark:bg-black',
   },
   redCircle: {
     type: 'div',
-    className: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
+    className: 'size-2 rounded-full border-2 border-current bg-red-300',
   },
   blueSquare: {
     type: 'div',
-    className: 'h-2 w-2 border-2 border-current bg-blue-600',
+    className: 'size-2 border-2 border-current bg-blue-600',
   },
   purpleCircle: {
     type: 'svg',
@@ -39,11 +39,11 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
     height: 9,
     width: 9,
     svgViewBox: '0 0 9 9',
-    svgShape: '<circle cn="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
+    svgShape: '<circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
   },
   pinkSquare: {
     type: 'svg',
-    className: 'h-2 w-2 stroke-black dark:stroke-white',
+    className: 'size-2 stroke-black dark:stroke-white',
     height: 9,
     width: 9,
     svgViewBox: '0 0 9 9',
@@ -60,7 +60,7 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
   milestone: {
     type: 'div',
     className:
-      'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
+      'size-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
   },
 }
 

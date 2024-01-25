@@ -29,7 +29,8 @@
       "ignoreMethods": ["getSupportedTokens", "weth"]
     },
     "MiniMeToken": {
-      "ignoreMethods": ["totalSupplyAt"]
+      "ignoreMethods": ["totalSupplyAt"],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "EVMScriptRegistry": {
       "ignoreMethods": ["executors"]

@@ -20,7 +20,7 @@ import {
   MulticallRequest,
   MulticallResponse,
 } from '../../peripherals/multicall/types'
-import { RPCClient } from '../../peripherals/rpcclient/RPCClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 
 const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
@@ -51,7 +51,7 @@ export const ETHEREUM_BALANCE_ENCODING: NativeBalanceEncoding = {
 
 export class BalanceProvider {
   constructor(
-    private readonly ethereumClient: RPCClient,
+    private readonly ethereumClient: RpcClient,
     private readonly multicallClient: MulticallClient,
     private readonly chainId: ChainId,
     private readonly nativeBalanceEncoding: NativeBalanceEncoding | undefined,
