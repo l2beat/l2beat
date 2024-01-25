@@ -13,6 +13,7 @@ describe(FeatureFlags.name, () => {
       ['foo,bar', 'bar.baz', true],
       ['foo,bar', 'bar.baz', true],
       ['*', 'foo', true],
+      ['*,!foo', 'foo', false],
       ['foo,!foo.bar', 'foo', true],
       ['foo,!foo.bar', 'foo.bar', false],
       ['foo,!foo.bar', 'foo.baz', true],
@@ -29,6 +30,12 @@ describe(FeatureFlags.name, () => {
         expect(flags.isEnabled(item)).toEqual(expected)
       })
     }
+
+    it('can be called with multiple arguments', () => {
+      const flags = new FeatureFlags('foo,!foo.baz')
+      expect(flags.isEnabled('foo', 'bar')).toEqual(true)
+      expect(flags.isEnabled('foo', 'baz')).toEqual(false)
+    })
   })
 
   describe(FeatureFlags.prototype.with.name, () => {
@@ -43,19 +50,20 @@ describe(FeatureFlags.name, () => {
 
   describe(FeatureFlags.prototype.getResolved.name, () => {
     it('returns a sorted list of all queries', () => {
-      const flags = new FeatureFlags('foo,!foo.bar,baz')
-      expect(flags.getResolved()).toEqual([])
+      const flags = new FeatureFlags('bbb,!bbb.xxx,aaa,ccc')
 
-      flags.isEnabled('foo')
-      flags.isEnabled('foo.bar')
-      flags.isEnabled('foo.baz')
-      flags.isEnabled('baz')
+      flags.isEnabled('bbb')
+      flags.isEnabled('bbb.xxx')
+      flags.isEnabled('bbb.yyy')
+      flags.isEnabled('ccc.zzz')
 
       expect(flags.getResolved()).toEqual([
-        { feature: 'baz', enabled: true },
-        { feature: 'foo', enabled: true },
-        { feature: 'foo.bar', enabled: false },
-        { feature: 'foo.baz', enabled: true },
+        { feature: 'aaa', enabled: true, used: false },
+        { feature: 'bbb', enabled: true, used: true },
+        { feature: 'bbb.xxx', enabled: false, used: true },
+        { feature: 'bbb.yyy', enabled: true, used: true },
+        { feature: 'ccc', enabled: true, used: false },
+        { feature: 'ccc.zzz', enabled: true, used: true },
       ])
     })
   })

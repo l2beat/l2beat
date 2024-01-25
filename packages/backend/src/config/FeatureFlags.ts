@@ -1,13 +1,22 @@
+export interface ResolvedFeatureFlag {
+  feature: string
+  enabled: boolean
+  used: boolean
+}
+
 export class FeatureFlags {
   private readonly enabled = new Set<string>()
   private readonly disabled = new Set<string>()
   private readonly resolved = new Map<string, boolean>()
+  private readonly input: string
 
-  constructor(private readonly input: string) {
+  constructor(input: string) {
     const items = input
       .split(',')
       .map((item) => item.trim())
       .filter((item) => item.length > 0)
+    this.input = items.join(',')
+
     for (const item of items) {
       if (item.startsWith('!')) {
         this.disabled.add(item.substring(1))
@@ -17,11 +26,12 @@ export class FeatureFlags {
     }
   }
 
-  with(item: string): FeatureFlags {
-    return new FeatureFlags(`${this.input},${item}`)
+  with(input: string): FeatureFlags {
+    return new FeatureFlags(`${this.input},${input}`)
   }
 
-  isEnabled(item: string): boolean {
+  isEnabled(...keys: string[]): boolean {
+    const item = keys.join('.')
     const result = this.resolved.get(item) ?? this.resolve(item)
     this.resolved.set(item, result)
     return result
@@ -43,9 +53,22 @@ export class FeatureFlags {
     return false
   }
 
-  getResolved(): { feature: string; enabled: boolean }[] {
-    return Array.from(this.resolved.entries())
-      .map(([feature, enabled]) => ({ feature, enabled }))
+  getResolved(): ResolvedFeatureFlag[] {
+    const resolved = Array.from(this.resolved.entries()).map(
+      ([feature, enabled]) => ({ feature, enabled, used: true }),
+    )
+
+    const enabled = Array.from(this.enabled)
+      .filter((feature) => feature !== '*' && !this.resolved.has(feature))
+      .map((feature) => ({ feature, enabled: true, used: false }))
+
+    const disabled = Array.from(this.disabled)
+      .filter((feature) => !this.resolved.has(feature))
+      .map((feature) => ({ feature, enabled: false, used: false }))
+
+    return resolved
+      .concat(enabled)
+      .concat(disabled)
       .sort((a, b) => a.feature.localeCompare(b.feature))
   }
 }
