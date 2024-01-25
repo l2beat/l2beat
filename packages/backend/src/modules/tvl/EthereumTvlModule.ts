@@ -15,17 +15,17 @@ import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { TvlSubmodule } from '../ApplicationModule'
+import { TvlModule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
-export function createEthereumTvlSubmodule(
+export function createEthereumTvlModule(
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   config: Config,
   logger: Logger,
   http: HttpClient,
   clock: Clock,
-): TvlSubmodule | undefined {
+): TvlModule | undefined {
   const tvlConfig = config.tvl.ethereum.config
   if (!tvlConfig) {
     logger.info('EthereumTvlModule disabled')

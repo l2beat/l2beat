@@ -1,3 +1,5 @@
+Generated with discovered.json: 0xbf94d7835ddc3daaf6aa320c3e75a3a2c11cc77d
+
 # Diff at Fri, 05 Jan 2024 12:19:14 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)

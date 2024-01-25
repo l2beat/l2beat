@@ -1,3 +1,5 @@
+Generated with discovered.json: 0x0fa337b45cd76773ae656410f777bdb702845b4e
+
 # Diff at Thu, 30 Nov 2023 16:11:29 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)

@@ -30,9 +30,9 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Database } from '../../peripherals/database/shared/Database'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
-import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
-import { chainTvlSubmodule } from './ChainTvlSubmodule'
-import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
+import { ApplicationModule } from '../ApplicationModule'
+import { chainTvlModule } from './ChainTvlModule'
+import { createEthereumTvlModule } from './EthereumTvlModule'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -91,35 +91,30 @@ export function createTvlModule(
   )
 
   // #endregion
-  // #region submodules
+  // #region modules
 
-  const createChainTvlSubmodule = (tvlConfig: ChainTvlConfig) =>
-    chainTvlSubmodule(
-      tvlConfig,
-      config.tokens,
-      db,
-      priceUpdater,
-      coingeckoQueryService,
-      http,
-      clock,
-      logger,
-    )
+  const createChainTvlModule = (tvlConfig: ChainTvlConfig) =>
+    tvlConfig.chain === 'ethereum'
+      ? createEthereumTvlModule(db, priceUpdater, config, logger, http, clock)
+      : chainTvlModule(
+          tvlConfig,
+          config.tokens,
+          db,
+          priceUpdater,
+          coingeckoQueryService,
+          http,
+          clock,
+          logger,
+        )
 
-  const submodules: TvlSubmodule[] = [
-    createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createChainTvlSubmodule(config.tvl.arbitrum),
-    createChainTvlSubmodule(config.tvl.optimism),
-    createChainTvlSubmodule(config.tvl.base),
-    createChainTvlSubmodule(config.tvl.lyra),
-    createChainTvlSubmodule(config.tvl.linea),
-    createChainTvlSubmodule(config.tvl.mantapacific),
-    createChainTvlSubmodule(config.tvl.zkfair),
-  ].filter(notUndefined)
+  const modules = config.tvl.modules
+    .map(createChainTvlModule)
+    .filter(notUndefined)
 
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x.reportUpdaters ?? []),
+    modules.flatMap((x) => x.reportUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -152,7 +147,7 @@ export function createTvlModule(
     clock,
     priceUpdater,
     aggregatedReportUpdater,
-    submodules,
+    modules,
   )
 
   // #endregion
@@ -163,10 +158,10 @@ export function createTvlModule(
 
     priceUpdater.start()
 
-    logger.info('Starting submodules...')
+    logger.info('Starting modules...')
 
-    for (const submodule of submodules) {
-      await submodule.start?.()
+    for (const module of modules) {
+      await module.start?.()
     }
 
     await aggregatedReportUpdater.start()
