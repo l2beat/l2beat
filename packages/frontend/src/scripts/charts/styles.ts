@@ -39,7 +39,7 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
     height: 9,
     width: 9,
     svgViewBox: '0 0 9 9',
-    svgShape: '<circle cn="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
+    svgShape: '<circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
   },
   pinkSquare: {
     type: 'svg',

@@ -1,8 +1,8 @@
 {
   "name": "pNetwork",
   "chain": "ethereum",
-  "blockNumber": 19040706,
-  "configHash": "0x4e4a87b92031f61f62add3dd35c576e17eb0c4b6caf94dc6f4a668df27728398",
+  "blockNumber": 19076850,
+  "configHash": "0xffabb33ca972ea826f838c79eca434157a4901d135e57d239dbd2e890ac7dfa1",
   "version": 3,
   "contracts": [
     {
@@ -289,7 +289,7 @@
         "parentToken": "0x0000000000000000000000000000000000000000",
         "symbol": "daoPNT",
         "tokenFactory": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
-        "totalSupply": "8454910804266401825573160",
+        "totalSupply": "8442070804266401825573160",
         "transfersEnabled": false,
         "version": "MMT_0.1"
       },

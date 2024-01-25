@@ -437,7 +437,7 @@ export const bobanetwork: Layer2 = {
     {
       name: 'Boba launches L2 on Moonbeam and Fantom',
       date: '2022-06-02T00:00:00Z',
-      link: 'https://boba.network/boba-network-multichain-announcement/',
+      link: 'https://boba.network/education/boba-basics/multichain/',
       description: 'Boba launches on Moonbeam and Fantom.',
     },
     {
