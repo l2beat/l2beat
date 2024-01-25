@@ -13,8 +13,8 @@ import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
+import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
@@ -46,7 +46,7 @@ export function createEthereumTvlSubmodule(
     tvlConfig.minBlockTimestamp,
     logger,
   )
-  const ethereumClient = new EthereumClient(
+  const ethereumClient = new RpcClient(
     ethereumProvider,
     logger,
     tvlConfig.providerCallsPerMinute,
