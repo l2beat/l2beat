@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   BlockNumberProvider,
   CoingeckoQueryService,
+  EtherscanClient,
   HttpClient,
   UniversalBlockscoutClient,
-  UniversalEtherscanClient,
 } from '@l2beat/shared'
 import { capitalizeFirstLetter, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -52,7 +52,7 @@ export function chainTvlSubmodule(
           config.chainId,
           logger,
         )
-      : new UniversalEtherscanClient(
+      : new EtherscanClient(
           http,
           config.blockNumberProviderConfig.etherscanApiUrl,
           config.blockNumberProviderConfig.etherscanApiKey,

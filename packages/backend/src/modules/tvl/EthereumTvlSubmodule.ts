@@ -42,8 +42,10 @@ export function createEthereumTvlSubmodule(
 
   const etherscanClient = new EtherscanClient(
     http,
+    tvlConfig.blockNumberProviderConfig.etherscanApiUrl,
     tvlConfig.blockNumberProviderConfig.etherscanApiKey,
     tvlConfig.minBlockTimestamp,
+    ChainId.ETHEREUM,
     logger,
   )
   const ethereumClient = new RpcClient(
