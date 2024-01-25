@@ -25,7 +25,7 @@ export function DesktopProjectNavigation({
   if (sections.length === 0) return null
 
   const translateClassName = project.showProjectUnderReview
-    ? '-translate-y-[180px]'
+    ? '-translate-y-[202px]'
     : '-translate-y-16'
   return (
     <div
@@ -100,7 +100,7 @@ function ProjectNavigationList({
 function NavigationListIndex(props: { index: number }) {
   return (
     <div
-      className="flex size-6 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-center text-xs font-bold dark:bg-neutral-700"
+      className="size-6 flex flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-center text-xs font-bold dark:bg-neutral-700"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.index}
     >
       <span>{props.index}</span>
