@@ -18,12 +18,12 @@ import { PriceUpdater } from '../../core/PriceUpdater'
 import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupplyUpdater'
 import { TotalSupplyProvider } from '../../core/totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
-import { TvlSubmodule } from '../ApplicationModule'
+import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { TvlModule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
-export function chainTvlSubmodule(
+export function chainTvlModule(
   { chain, config }: ChainTvlConfig,
   tokens: Token[],
   db: TvlDatabase,
@@ -32,7 +32,7 @@ export function chainTvlSubmodule(
   http: HttpClient,
   clock: Clock,
   logger: Logger,
-): TvlSubmodule | undefined {
+): TvlModule | undefined {
   const name = `${capitalizeFirstLetter(chain)}TvlModule`
   if (!config) {
     logger.info(`${name} disabled`)
@@ -61,7 +61,7 @@ export function chainTvlSubmodule(
           logger,
         )
 
-  const ethereumClient = new EthereumClient(
+  const ethereumClient = new RpcClient(
     provider,
     logger,
     config.providerCallsPerMinute,

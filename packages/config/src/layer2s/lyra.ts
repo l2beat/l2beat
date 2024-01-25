@@ -17,6 +17,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 )
 
 export const lyra: Layer2 = opStack({
+  daProvider: 'Celestia',
   discovery,
   display: {
     name: 'Lyra',
@@ -64,6 +65,11 @@ export const lyra: Layer2 = opStack({
       link: 'https://x.com/lyrafinance/status/1735516929341980748',
       date: '2023-12-15T00:00:00Z',
       description: 'Lyra V2 launches on Mainnet.',
+    },
+    {
+      name: 'Lyra switches to Celestia',
+      link: 'https://x.com/lyrafinance/status/1750235026136965260',
+      date: '2024-01-16T00:00:00.00Z',
     },
   ],
   knowledgeNuggets: [],

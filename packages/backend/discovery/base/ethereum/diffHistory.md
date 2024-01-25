@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x54cf34180e6362e6e293f64a076bc1ff11895384
+
 # Diff at Thu, 21 Dec 2023 09:37:29 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@c849b812aca217350f93ffb1795822cdf02a8dcb
+- comparing to: main@c849b812aca217350f93ffb1795822cdf02a8dcb
 
 ## Description
 
@@ -39,7 +41,7 @@ Two new owners (EOAs) are added to GuardianMultisig (now 3/8).
 # Diff at Fri, 01 Dec 2023 12:33:59 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@1f8562341e47f5b1eafc343e15aa93bc264ed786
+- comparing to: main@1f8562341e47f5b1eafc343e15aa93bc264ed786
 
 ## Description
 
@@ -88,7 +90,7 @@ Added wstETHEscrow contract.
 # Diff at Tue, 26 Sep 2023 08:12:33 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

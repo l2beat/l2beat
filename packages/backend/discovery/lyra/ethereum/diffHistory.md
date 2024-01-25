@@ -1,7 +1,9 @@
+Generated with discovered.json: 0xf25c1536731bdb55d1cbfab87638b709e4c1b961
+
 # Diff at Thu, 18 Jan 2024 09:23:11 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18927731
+- comparing to: main@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18927731
 - current block number: 19032828
 
 ## Description
@@ -21,7 +23,7 @@ Dynamic fee overhead has been changed.
 # Diff at Wed, 03 Jan 2024 15:30:59 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@e8eb03b39061a86a8ec01e26d970e40d080ad225
+- comparing to: main@e8eb03b39061a86a8ec01e26d970e40d080ad225
 
 ## Description
 
@@ -52,7 +54,7 @@ One owner is removed and another is added to LyraMultisig.
 # Diff at Tue, 19 Dec 2023 08:25:57 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

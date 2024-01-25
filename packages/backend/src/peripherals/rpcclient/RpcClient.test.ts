@@ -3,10 +3,10 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 
-import { EthereumClient } from './EthereumClient'
+import { RpcClient } from './RpcClient'
 
-describe(EthereumClient.name, () => {
-  describe(EthereumClient.prototype.getAllLogs.name, () => {
+describe(RpcClient.name, () => {
+  describe(RpcClient.prototype.getAllLogs.name, () => {
     it('divides on two calls', async () => {
       const provider = mockObject<providers.Provider>({
         call: mockFn(),
@@ -17,9 +17,10 @@ describe(EthereumClient.name, () => {
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
           .returnsOnce([]),
+        getTransaction: mockFn(),
       })
 
-      const ethereumClient = new EthereumClient(provider, Logger.SILENT)
+      const ethereumClient = new RpcClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'
@@ -56,9 +57,10 @@ describe(EthereumClient.name, () => {
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
           .returnsOnce([]),
+        getTransaction: mockFn(),
       })
 
-      const ethereumClient = new EthereumClient(provider, Logger.SILENT)
+      const ethereumClient = new RpcClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'
@@ -92,9 +94,10 @@ describe(EthereumClient.name, () => {
         getBlockNumber: mockFn(),
         getBalance: mockFn(),
         getLogs: mockFn().throwsOnce(new Error('Log response size exceeded')),
+        getTransaction: mockFn(),
       })
 
-      const ethereumClient = new EthereumClient(provider, Logger.SILENT)
+      const ethereumClient = new RpcClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()
       const topic = 'aaaa'
