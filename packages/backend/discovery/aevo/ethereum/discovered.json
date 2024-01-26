@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 19032812,
-  "configHash": "0x7c94a0a9cde88c2d53ccc51041e6ff8ca23d58fb3238dc6601a83fbf70db0d5b",
+  "blockNumber": 19090313,
+  "configHash": "0x18a30e4418ca8474c643d67f158a87ea3acb77a6718310184d8eb6cea8997304",
   "version": 3,
   "contracts": [
     {
@@ -18,7 +18,7 @@
       "sinceTimestamp": 1679193095,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629610",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630398",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -105,7 +105,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 694997, 19032744],
+        "params": [1000000000, 694997, 19090112],
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "1.7.2"
@@ -139,10 +139,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 2637000,
-        "latestOutputIndex": 4394,
-        "nextBlockNumber": 2637600,
-        "nextOutputIndex": 4395,
+        "latestBlockNumber": 2706600,
+        "latestOutputIndex": 4510,
+        "nextBlockNumber": 2707200,
+        "nextOutputIndex": 4511,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -165,6 +165,10 @@
         "batcherHash": "0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
+        "opStackDA": {
+          "isAllTxsLengthEqualToCelestiaDAExample": true,
+          "isSomeTxsLengthEqualToCelestiaDAExample": true
+        },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": [
