@@ -5,15 +5,14 @@ import {
 } from '@l2beat/shared-pure'
 import fs from 'fs'
 
-// TODO(michalsj): This should be read from the config. Skipping now as it's urgent fix
-const supportedDevIds = ['ethereum', 'arbitrum']
-
-export function getVerificationStatus(): VerificationStatus {
+export function getVerificationStatus(
+  supportedChains: string[],
+): VerificationStatus {
   const projects = getProjectVerificationStatus()
   const contracts = Object.fromEntries(
-    supportedDevIds.map((devId) => [
-      devId,
-      getContractVerificationStatus(devId),
+    supportedChains.map((chain) => [
+      chain,
+      getContractVerificationStatus(chain),
     ]),
   )
 
@@ -30,27 +29,29 @@ function getProjectVerificationStatus(): unknown {
   return JSON.parse(projects) as unknown
 }
 
-function getContractVerificationPath(devId: string) {
-  return `../config/src/verification/${devId}/verified.json`
+function getContractVerificationPath(chain: string) {
+  return `../config/src/verification/${chain}/verified.json`
 }
-function getContractVerificationStatus(devId: string): unknown {
-  const path = getContractVerificationPath(devId)
+function getContractVerificationStatus(chain: string): unknown {
+  const path = getContractVerificationPath(chain)
   const contracts = fs.readFileSync(path, 'utf8')
   return JSON.parse(contracts) as unknown
 }
 
-function getManuallyVerifiedContractsPath(devId: string) {
-  return `../config/src/verification/${devId}/manuallyVerified.jsonc`
+function getManuallyVerifiedContractsPath(chain: string) {
+  return `../config/src/verification/${chain}/manuallyVerified.jsonc`
 }
-export function getManuallyVerifiedContracts(): ManuallyVerifiedContracts {
+export function getManuallyVerifiedContracts(
+  supportedChains: string[],
+): ManuallyVerifiedContracts {
   const contracts: ManuallyVerifiedContracts = {}
-  for (const devId of supportedDevIds) {
-    const path = getManuallyVerifiedContractsPath(devId)
+  for (const chain of supportedChains) {
+    const path = getManuallyVerifiedContractsPath(chain)
     if (!fs.existsSync(path)) {
       continue
     }
     const data = fs.readFileSync(path, 'utf8')
-    contracts[devId] = parseManuallyVerifiedContracts(data)
+    contracts[chain] = parseManuallyVerifiedContracts(data)
   }
 
   return contracts

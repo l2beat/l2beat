@@ -7,6 +7,9 @@ import { ZksyncTransactionRepository } from './ZksyncTransactionRepository'
 
 describe(ZksyncTransactionRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new ZksyncTransactionRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

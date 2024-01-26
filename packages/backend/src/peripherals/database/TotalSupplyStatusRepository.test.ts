@@ -7,6 +7,9 @@ import { TotalSupplyStatusRepository } from './TotalSupplyStatusRepository'
 
 describe(TotalSupplyStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new TotalSupplyStatusRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

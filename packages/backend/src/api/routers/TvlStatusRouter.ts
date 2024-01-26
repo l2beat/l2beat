@@ -1,11 +1,10 @@
 import Router from '@koa/router'
-import { ChainId } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { TvlSubmodule } from '../../modules/ApplicationModule'
+import { TvlModule } from '../../modules/ApplicationModule'
 import {
   getSyncStatus,
   renderTvlStatusPage,
@@ -13,18 +12,11 @@ import {
 import { renderTvlStatusPageDetailed } from '../controllers/status/view/TvlStatusPageDetailed'
 import { withTypedContext } from './types'
 
-const paramsParser = z.object({
-  params: z.object({
-    group: z.string(),
-    updater: z.string(),
-  }),
-})
-
 export function createTvlStatusRouter(
   clock: Clock,
   priceUpdater: PriceUpdater,
   aggregatedReportUpdater: AggregatedReportUpdater,
-  submodules: (TvlSubmodule | undefined)[],
+  modules: TvlModule[],
 ) {
   const router = new Router()
 
@@ -33,12 +25,12 @@ export function createTvlStatusRouter(
       groupName: 'shared',
       updaters: [aggregatedReportUpdater, priceUpdater],
     },
-    ...submodules.filter(notUndefined).map((x) => {
+    ...modules.map((x) => {
       const reports = x.reportUpdaters ?? []
       const data = x.dataUpdaters ?? []
 
       return {
-        groupName: ChainId.getName(reports[0].getChainId()),
+        groupName: x.chain,
         updaters: [...reports, ...data],
       }
     }),
@@ -61,24 +53,27 @@ export function createTvlStatusRouter(
 
   router.get(
     '/status/tvl/:group/:updater',
-    // @ts-expect-error inner function doesn't not return Promise
-    withTypedContext(paramsParser, (ctx) => {
-      const { group, updater } = ctx.params
-      ctx.body = renderTvlStatusPageDetailed({
-        latestSafeTimestamp: clock.getLastHour(),
-        status: {
-          groupName: group,
-          updater: statuses
-            .find((x) => x.groupName === group)
-            ?.updaters.find((x) => x.getStatus().updaterName === updater)
-            ?.getStatus(),
-        },
-      })
-    }),
+    withTypedContext(
+      z.object({
+        params: z.object({
+          group: z.string(),
+          updater: z.string(),
+        }),
+      }),
+      (ctx) => {
+        const { group, updater } = ctx.params
+        ctx.body = renderTvlStatusPageDetailed({
+          latestSafeTimestamp: clock.getLastHour(),
+          status: {
+            groupName: group,
+            updater: statuses
+              .find((x) => x.groupName === group)
+              ?.updaters.find((x) => x.getStatus().updaterName === updater)
+              ?.getStatus(),
+          },
+        })
+      },
+    ),
   )
   return router
-}
-
-function notUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
 }

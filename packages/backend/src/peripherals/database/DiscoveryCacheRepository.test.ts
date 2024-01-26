@@ -9,6 +9,9 @@ import {
 
 describe(DiscoveryCacheRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new DiscoveryCacheRepository(database, Logger.SILENT)
 
   before(() => repository.deleteAll())

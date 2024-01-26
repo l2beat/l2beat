@@ -411,12 +411,15 @@ function escrowToProjectContract(
 ): ScalingProjectContract {
   assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
+  const genericName =
+    escrow.tokens === '*'
+      ? 'Generic escrow'
+      : 'Escrow for ' + escrow.tokens.join(', ')
+  const name = escrow.useContractName ? escrow.contract.name : genericName
+
   return {
     ...escrow.contract,
-    name:
-      escrow.tokens === '*'
-        ? 'Generic escrow'
-        : 'Escrow for ' + escrow.tokens.join(', '),
+    name,
     address: escrow.address,
   }
 }

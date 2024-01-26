@@ -43,7 +43,7 @@ export function RiskCell({ item }: Props) {
           {item.warning && (
             <RoundedWarningIcon
               className={cn(
-                'h-5 w-5',
+                'size-5',
                 sentimentToFillColor(item.warning.sentiment),
               )}
             />

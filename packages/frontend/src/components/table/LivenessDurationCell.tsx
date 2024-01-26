@@ -55,7 +55,7 @@ export function LivenessDurationCell(props: {
       <TooltipTrigger className="flex items-center gap-1">
         <DurationCell durationInSeconds={props.durationInSeconds} />
         {props.warning && (
-          <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+          <RoundedWarningIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
         )}
       </TooltipTrigger>
       <TooltipContent>

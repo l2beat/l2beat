@@ -1,5 +1,6 @@
-import { load } from 'cheerio'
 import fetch from 'node-fetch'
+
+import { scrapEtherscanForTvl } from '../utils/scrapEtherscanForTvl'
 
 export interface LZData {
   address: string
@@ -60,7 +61,7 @@ export async function getLZ(
     index++
 
     console.log('scraping Etherscan page for', address, '...')
-    const { tvl, ethValue } = await scrapEtherscan(address)
+    const { tvl, ethValue } = await scrapEtherscanForTvl(address)
 
     console.log('fetching deployer for', address, '...')
     const deployer = await fetchDeployer(address, etherscanApiKey)
@@ -117,34 +118,6 @@ function internalTxsInteractionsCount(internalTxs: { from: string }[]) {
 
 async function avoidRateLimiting() {
   await new Promise((resolve) => setTimeout(resolve, 1000))
-}
-
-async function scrapEtherscan(
-  address: string,
-): Promise<{ tvl: string; ethValue: string }> {
-  const result = { tvl: '0', ethValue: '0' }
-
-  const etherscanPage = await fetch(`https://etherscan.io/address/${address}`)
-
-  const $ = load(await etherscanPage.text())
-
-  const button = $('#dropdownMenuBalance')
-  if (button.text().length > 0) {
-    result.tvl = button.text().slice(2).split('\n')[0]
-  }
-
-  const ethValue = $('div:contains("Eth Value")')
-    .last()
-    .text()
-    .split('$')[1]
-    .trim()
-    .split(' ')[0]
-
-  if (ethValue) {
-    result.ethValue = ethValue
-  }
-
-  return result
 }
 
 async function fetchDeployer(

@@ -7,6 +7,9 @@ import { PriceRecord, PriceRepository } from './PriceRepository'
 
 describe(PriceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new PriceRepository(database, Logger.SILENT)
 
   const START = UnixTime.now()

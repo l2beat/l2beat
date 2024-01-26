@@ -49,7 +49,7 @@ you need to talk to devs to handle this case.
         },
 ```
 
-    After that, remember to add these variables to the Heroku config vars before merging them into the master branch
+    After that, remember to add these variables to the Heroku config vars before merging them into the main branch
 
 ### Starkex type project
 

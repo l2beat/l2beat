@@ -7,6 +7,9 @@ import { IndexerStateRepository } from './IndexerStateRepository'
 
 describe(IndexerStateRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new IndexerStateRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

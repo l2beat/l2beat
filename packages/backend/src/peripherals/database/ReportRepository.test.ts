@@ -7,6 +7,9 @@ import { ReportRecord, ReportRepository } from './ReportRepository'
 
 describe(ReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new ReportRepository(database, Logger.SILENT)
 
   const TIME_0 = UnixTime.now().toStartOf('day')

@@ -2,7 +2,7 @@ import { Env } from '@l2beat/backend-tools'
 import { chains, layer2s } from '@l2beat/config'
 import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { toMulticallConfigEntry } from '../peripherals/ethereum/multicall/MulticallConfig'
+import { toMulticallConfigEntry } from '../peripherals/multicall/MulticallConfig'
 import { ChainTvlConfig } from './Config'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
@@ -62,13 +62,13 @@ export function getChainTvlConfig(
       blockNumberProviderConfig:
         chainConfig.explorerApi.type === 'etherscan'
           ? {
-              type: 'EtherscanLike',
+              type: chainConfig.explorerApi.type,
               etherscanApiKey: env.string(`TVL_${ENV_NAME}_ETHERSCAN_API_KEY`),
               etherscanApiUrl: chainConfig.explorerApi.url,
             }
           : {
-              type: 'RoutescanLike',
-              routescanApiUrl: chainConfig.explorerApi.url,
+              type: chainConfig.explorerApi.type,
+              blockscoutApiUrl: chainConfig.explorerApi.url,
             },
       minBlockTimestamp:
         options?.minTimestamp ?? chainConfig.minTimestampForTvl,

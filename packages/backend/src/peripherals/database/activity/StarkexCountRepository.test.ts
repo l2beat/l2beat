@@ -10,6 +10,9 @@ const PROJECT_B = ProjectId('project-b')
 
 describe(StarkexTransactionCountRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new StarkexTransactionCountRepository(
     database,
     Logger.SILENT,

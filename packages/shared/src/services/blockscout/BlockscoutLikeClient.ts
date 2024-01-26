@@ -2,11 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { getErrorMessage, RateLimiter, UnixTime } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
-import { parseRoutescanResponse, RoutescanGetBlockNoByTime } from './model'
+import { BlockscoutGetBlockNoByTime, parseBlockscoutResponse } from './model'
 
-class RoutescanError extends Error {}
+class BlockscoutError extends Error {}
 
-export class RoutescanLikeClient {
+export class BlockscoutLikeClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -21,15 +21,6 @@ export class RoutescanLikeClient {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
-  // Etherscan API is not stable enough to trust it to return "closest" block.
-  // There is a case when there is not enough activity on a given chain
-  // so that blocks come in a greater than 10 minutes intervals,
-  // e.g block 0 @ 22:45 and block 1 @ 23:15
-  // if you query for 23:00 Routescan API returns "No closes block found".
-  // To mitigate this, we need to go back in time by 10 minutes until we find a block
-  //
-  // Since Etherscan and Routescan have very similar API we don't know if this
-  // issue persists, so to be safe just leave the same logic.
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
@@ -40,7 +31,7 @@ export class RoutescanLikeClient {
           closest: 'before',
         })
 
-        return RoutescanGetBlockNoByTime.parse(result).blockNumber
+        return BlockscoutGetBlockNoByTime.parse(result).blockNumber
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
@@ -48,8 +39,8 @@ export class RoutescanLikeClient {
           throw new Error(errorString)
         }
 
-        const errorObject = error as RoutescanError
-        if (!errorObject.message.includes('No closest block found')) {
+        const errorObject = error as BlockscoutError
+        if (!errorObject.message.includes('Block does not exist')) {
           throw new Error(errorObject.message)
         }
 
@@ -84,7 +75,7 @@ export class RoutescanLikeClient {
     }
 
     const text = await httpResponse.text()
-    const etherscanResponse = tryParseRoutescanResponse(text)
+    const blockscoutResponse = tryParseBlockscoutResponse(text)
 
     if (!httpResponse.ok) {
       this.recordError(module, action, timeMs, text)
@@ -93,19 +84,19 @@ export class RoutescanLikeClient {
       )
     }
 
-    if (!etherscanResponse) {
-      const message = `Invalid Routescan response [${text}] for request [${url}].`
+    if (!blockscoutResponse) {
+      const message = `Invalid Blockscout response [${text}] for request [${url}].`
       this.recordError(module, action, timeMs, message)
       throw new TypeError(message)
     }
 
-    if (etherscanResponse.message !== 'OK') {
-      this.recordError(module, action, timeMs, etherscanResponse.result)
-      throw new RoutescanError(etherscanResponse.result)
+    if (blockscoutResponse.message !== 'OK') {
+      this.recordError(module, action, timeMs, blockscoutResponse.result)
+      throw new BlockscoutError(blockscoutResponse.result)
     }
 
     this.logger.debug({ type: 'success', timeMs, module, action })
-    return etherscanResponse.result
+    return blockscoutResponse.result
   }
 
   private recordError(
@@ -118,9 +109,9 @@ export class RoutescanLikeClient {
   }
 }
 
-function tryParseRoutescanResponse(text: string) {
+function tryParseBlockscoutResponse(text: string) {
   try {
-    return parseRoutescanResponse(text)
+    return parseBlockscoutResponse(text)
   } catch {
     return undefined
   }

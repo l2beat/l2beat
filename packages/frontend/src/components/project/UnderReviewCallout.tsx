@@ -22,7 +22,7 @@ export function UnderReviewCallout({
         <UnderReviewIcon
           className={cn(
             'relative -top-0.5 inline-block',
-            small ? 'h-4 w-4' : ' h-6 w-6',
+            small ? 'size-4' : ' size-6',
           )}
         />
         <span

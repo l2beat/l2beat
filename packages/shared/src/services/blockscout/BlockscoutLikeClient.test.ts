@@ -3,12 +3,12 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
 import { HttpClient } from '../HttpClient'
-import { RoutescanLikeClient as RoutescanLikeClient } from './RoutescanLikeClient'
+import { BlockscoutLikeClient as BlockscoutLikeClient } from './BlockscoutLikeClient'
 
 const API_URL = 'https://example.com/api'
 
-describe(RoutescanLikeClient.name, () => {
-  describe(RoutescanLikeClient.prototype.call.name, () => {
+describe(BlockscoutLikeClient.name, () => {
+  describe(BlockscoutLikeClient.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetch(url) {
@@ -19,12 +19,12 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
+      await blockscoutClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
 
     it('throws on non-2XX result', async () => {
@@ -34,12 +34,12 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         'Server responded with non-2XX result: 404 Not Found',
       )
     })
@@ -51,13 +51,13 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
-        `Invalid Routescan response [mytestresp] for request [${API_URL}?module=mod&action=act].`,
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
+        `Invalid Blockscout response [mytestresp] for request [${API_URL}?module=mod&action=act].`,
       )
     })
 
@@ -68,12 +68,12 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejected()
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejected()
     })
 
     it('returns a success response', async () => {
@@ -84,12 +84,12 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      const result = await etherscanClient.call('mod', 'act', {})
+      const result = await blockscoutClient.call('mod', 'act', {})
       expect(result).toEqual(response.result)
     })
 
@@ -105,18 +105,18 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const etherscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
+      await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         response.result,
       )
     })
   })
 
-  describe(RoutescanLikeClient.prototype.getBlockNumberAtOrBefore.name, () => {
+  describe(BlockscoutLikeClient.prototype.getBlockNumberAtOrBefore.name, () => {
     it('constructs a correct url', async () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
@@ -131,12 +131,12 @@ describe(RoutescanLikeClient.name, () => {
         },
       })
 
-      const arbiscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
+      const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
         new UnixTime(3141592653),
       )
 
@@ -158,7 +158,7 @@ describe(RoutescanLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -173,12 +173,12 @@ describe(RoutescanLikeClient.name, () => {
           ),
       })
 
-      const arbiscanClient = new RoutescanLikeClient(
+      const blockscoutClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         new UnixTime(0),
       )
-      const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
+      const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
         timestamp,
       )
 
@@ -215,21 +215,21 @@ describe(RoutescanLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
           .resolvesToOnce(new Response(gatewayErrorJsonString)),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith(gatewayError.result)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -258,21 +258,21 @@ describe(RoutescanLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
           .throwsOnce(errorString),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith(errorString)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -300,21 +300,21 @@ describe(RoutescanLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
           .throwsOnce(1234),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith('Unknown error type caught')
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -343,7 +343,7 @@ describe(RoutescanLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -352,7 +352,7 @@ describe(RoutescanLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -361,7 +361,7 @@ describe(RoutescanLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -376,14 +376,14 @@ describe(RoutescanLikeClient.name, () => {
           ),
       })
 
-      const etherscanLikeClient = new RoutescanLikeClient(
+      const blockscoutLikeClient = new BlockscoutLikeClient(
         httpClient,
         API_URL,
         timestamp.add(-20, 'minutes'),
       )
 
       await expect(() =>
-        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+        blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejectedWith('Could not fetch block number')
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
