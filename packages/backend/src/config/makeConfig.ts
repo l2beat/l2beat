@@ -4,6 +4,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config, DiscordConfig } from './Config'
+import { FeatureFlags } from './FeatureFlags'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
@@ -19,6 +20,9 @@ export function makeConfig(
   env: Env,
   { name, isLocal, minTimestampOverride }: MakeConfigOptions,
 ): Config {
+  const flags = new FeatureFlags(
+    env.string('FEATURES', isLocal ? '' : '*'),
+  ).with('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
 
   return {
@@ -79,19 +83,19 @@ export function makeConfig(
           pass: env.string('METRICS_AUTH_PASS'),
         },
     tvl: {
-      enabled: env.boolean('TVL_ENABLED', true),
+      enabled: flags.isEnabled('tvl'),
       errorOnUnsyncedTvl: env.boolean('ERROR_ON_UNSYNCED_TVL', false),
       coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
-      ethereum: getChainTvlConfig(env, 'ethereum', {
+      ethereum: getChainTvlConfig(flags, env, 'ethereum', {
         minTimestamp: minBlockTimestamp,
       }),
       modules: getChainsWithTokens(tokenList, chains).map((x) =>
-        getChainTvlConfig(env, x, {
+        getChainTvlConfig(flags, env, x, {
           minTimestamp: minTimestampOverride,
         }),
       ),
     },
-    liveness: env.boolean('LIVENESS_ENABLED', false) && {
+    liveness: flags.isEnabled('liveness') && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
         privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
@@ -105,8 +109,8 @@ export function makeConfig(
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
-    finality: env.boolean('FINALITY_ENABLED', false),
-    activity: (!isLocal || env.boolean('ACTIVITY_ENABLED', false)) && {
+    finality: flags.isEnabled('finality'),
+    activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
       skipExplicitExclusion: !!isLocal,
@@ -224,8 +228,8 @@ export function makeConfig(
         },
       },
     },
-    statusEnabled: env.boolean('STATUS_ENABLED', true),
-    updateMonitor: env.boolean('WATCHMODE_ENABLED', false) && {
+    statusEnabled: flags.isEnabled('status'),
+    updateMonitor: flags.isEnabled('updateMonitor') && {
       runOnStart: isLocal
         ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
         : undefined,
@@ -242,10 +246,11 @@ export function makeConfig(
         getChainDiscoveryConfig(env, 'polygonzkevm'),
       ],
     },
-    diffHistory: env.boolean('DIFF_HISTORY_ENABLED', false) && {
+    diffHistory: flags.isEnabled('diffHistory') && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    flags: flags.getResolved(),
   }
 }
 

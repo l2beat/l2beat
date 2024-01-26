@@ -6,6 +6,7 @@ import { Knex } from 'knex'
 
 import { Project } from '../model'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
+import { ResolvedFeatureFlag } from './FeatureFlags'
 
 export interface Config {
   readonly name: string
@@ -26,6 +27,7 @@ export interface Config {
   readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
+  readonly flags: ResolvedFeatureFlag[]
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
