@@ -10,6 +10,9 @@ import {
 
 describe(AggregatedReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new AggregatedReportRepository(database, Logger.SILENT)
 
   const TIME_0 = UnixTime.now().toStartOf('day')

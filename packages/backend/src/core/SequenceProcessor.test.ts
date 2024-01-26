@@ -13,6 +13,9 @@ import {
 
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor

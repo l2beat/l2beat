@@ -21,6 +21,9 @@ const PROJECT_C = ProjectId('project-c')
 
 describe(DailyTransactionCountViewRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new DailyTransactionCountViewRepository(
     database,
     Logger.SILENT,

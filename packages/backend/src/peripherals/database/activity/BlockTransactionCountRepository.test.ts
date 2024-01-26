@@ -10,6 +10,9 @@ const PROJECT_B = ProjectId('project-b')
 
 describe(BlockTransactionCountRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new BlockTransactionCountRepository(
     database,
     Logger.SILENT,

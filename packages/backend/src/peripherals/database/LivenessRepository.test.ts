@@ -9,6 +9,9 @@ import { LivenessRecord, LivenessRepository } from './LivenessRepository'
 
 describe(LivenessRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new LivenessRepository(database, Logger.SILENT)
   const configRepository = new LivenessConfigurationRepository(
     database,

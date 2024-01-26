@@ -12,6 +12,9 @@ const CONFIG_HASH = Hash256.random()
 
 describe(UpdateMonitorRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new UpdateMonitorRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

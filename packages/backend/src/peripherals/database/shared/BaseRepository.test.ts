@@ -8,6 +8,9 @@ import { Database } from './Database'
 
 describe(BaseRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
 
   describe(BaseRepository.prototype.autoWrap.name, () => {
     it('should wrap all methods', () => {

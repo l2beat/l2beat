@@ -29,6 +29,9 @@ const mockBalance = (
 
 describe(BalanceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new BalanceRepository(database, Logger.SILENT)
 
   const HOLDER_A = EthereumAddress.random()
