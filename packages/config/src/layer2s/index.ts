@@ -14,7 +14,6 @@ import { bobanetwork } from './bobanetwork'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
-import { chain } from './chain'
 import { cronos } from './cronos'
 import { debank } from './debank'
 import { degate } from './degate'
@@ -76,6 +75,7 @@ import { ten } from './ten'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
+import { zentachain } from './zentachain'
 import { zkcandy } from './zkcandy'
 import { zkfair } from './zkfair'
 import { zkspace } from './zkspace'
@@ -102,7 +102,6 @@ export const layer2s: Layer2[] = [
   bobanetwork,
   canto,
   capx,
-  chain,
   canvasconnect,
   cronos,
   debank,
@@ -164,6 +163,7 @@ export const layer2s: Layer2[] = [
   ten,
   x1,
   xchain,
+  zentachain,
   zkcandy,
   zkfair,
   zkspace,

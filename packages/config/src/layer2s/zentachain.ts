@@ -1,11 +1,11 @@
 import { upcoming } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const chain: Layer2 = upcoming({
-  id: 'chain',
+export const zentachain: Layer2 = upcoming({
+  id: 'zentachain',
   display: {
-    name: 'Chain Network',
-    slug: 'chain',
+    name: 'Zentachain',
+    slug: 'zentachain',
     description:
       'Zentachain is a privacy-focused IoT blockchain networking project that is focused on communication and data storage. Innovative and useful solutions are provided for issues of security and data ownership.',
     purposes: ['Universal', 'Privacy'],
@@ -22,7 +22,7 @@ export const chain: Layer2 = upcoming({
         'https://discord.com/invite/TR5bv3e8Ny',
         'https://zentachain.blog/',
         'https://t.me/ZentachainOfficialChat',
-        'https://www.reddit.com/r/Zentachain/',
+        'https://reddit.com/r/Zentachain/',
       ],
     },
   },
