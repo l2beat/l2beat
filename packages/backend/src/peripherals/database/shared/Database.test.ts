@@ -39,21 +39,27 @@ describe(Database.name, () => {
   })
 
   describe(Database.prototype.assertRequiredServerVersion.name, () => {
-    let database: Database
+    let database: Database | undefined
 
     afterEach(async () => {
-      await database.closeConnection()
+      await database?.closeConnection()
     })
 
-    it('throws for mismatching version', async () => {
+    it('throws for mismatching version', async function () {
       database = getTestDatabase({ requiredMajorVersion: 15 }).database
+      if (!database) {
+        this.skip()
+      }
       await expect(database.assertRequiredServerVersion()).toBeRejectedWith(
         'Assertion Error: Postgres server major version 14 different than required 15',
       )
     })
 
-    it('does not throw for matching version', async () => {
+    it('does not throw for matching version', async function () {
       database = getTestDatabase().database
+      if (!database) {
+        this.skip()
+      }
       await expect(database.assertRequiredServerVersion()).not.toBeRejected()
     })
   })

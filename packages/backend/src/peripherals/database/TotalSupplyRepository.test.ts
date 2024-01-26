@@ -25,6 +25,9 @@ const mockTotalSupply = (
 
 describe(TotalSupplyRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new TotalSupplyRepository(database, Logger.SILENT)
 
   const ASSET_1 = AssetId('dai-dai-stablecoin')

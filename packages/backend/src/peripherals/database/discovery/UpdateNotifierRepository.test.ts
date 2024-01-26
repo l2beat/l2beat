@@ -12,6 +12,9 @@ const PROJECT1 = 'project1'
 
 describe(UpdateNotifierRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new UpdateNotifierRepository(database, Logger.SILENT)
   const NOW = UnixTime.now()
 

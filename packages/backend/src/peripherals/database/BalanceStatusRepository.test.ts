@@ -7,6 +7,9 @@ import { BalanceStatusRepository } from './BalanceStatusRepository'
 
 describe(BalanceStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new BalanceStatusRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

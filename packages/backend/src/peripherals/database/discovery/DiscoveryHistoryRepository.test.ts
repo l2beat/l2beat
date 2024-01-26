@@ -17,6 +17,9 @@ const CONFIG_HASH = Hash256.random()
 
 describe(DiscoveryHistoryRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new DiscoveryHistoryRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

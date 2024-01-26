@@ -53,6 +53,9 @@ export const LIVENESS_CONFIGS: LivenessConfigEntry[] = [
 
 describe(LivenessConfigurationRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new LivenessConfigurationRepository(
     database,
     Logger.SILENT,

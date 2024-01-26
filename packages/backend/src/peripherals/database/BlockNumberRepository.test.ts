@@ -7,6 +7,9 @@ import { BlockNumberRepository } from './BlockNumberRepository'
 
 describe(BlockNumberRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new BlockNumberRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

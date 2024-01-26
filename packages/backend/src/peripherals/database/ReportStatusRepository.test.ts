@@ -7,6 +7,9 @@ import { ReportStatusRepository } from './ReportStatusRepository'
 
 describe(ReportStatusRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
+  if (!database) {
+    return
+  }
   const repository = new ReportStatusRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
