@@ -14,6 +14,9 @@ describe(FeatureFlags.name, () => {
       ['foo,bar', 'bar.baz', true],
       ['*', 'foo', true],
       ['*,!foo', 'foo', false],
+      ['foo,!foo.*,foo.bar', 'foo', true],
+      ['foo,!foo.*,foo.bar', 'foo.bar', true],
+      ['foo,!foo.*,foo.bar', 'foo.baz', false],
       ['foo,!foo.bar', 'foo', true],
       ['foo,!foo.bar', 'foo.bar', false],
       ['foo,!foo.bar', 'foo.baz', true],
@@ -65,6 +68,12 @@ describe(FeatureFlags.name, () => {
         { feature: 'ccc', enabled: true, used: false },
         { feature: 'ccc.zzz', enabled: true, used: true },
       ])
+    })
+
+    it('ignores star queries', () => {
+      const flags = new FeatureFlags('*,aaa.*,!bbb.*')
+
+      expect(flags.getResolved()).toEqual([])
     })
   })
 })

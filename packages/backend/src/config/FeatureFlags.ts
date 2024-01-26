@@ -46,9 +46,16 @@ export class FeatureFlags {
       } else if (this.enabled.has(key)) {
         return true
       }
-    }
-    if (this.enabled.has('*')) {
-      return true
+
+      const starKey = terms
+        .slice(0, i - 1)
+        .concat('*')
+        .join('.')
+      if (this.disabled.has(starKey)) {
+        return false
+      } else if (this.enabled.has(starKey)) {
+        return true
+      }
     }
     return false
   }
@@ -59,11 +66,15 @@ export class FeatureFlags {
     )
 
     const enabled = Array.from(this.enabled)
-      .filter((feature) => feature !== '*' && !this.resolved.has(feature))
+      .filter(
+        (feature) => !feature.includes('*') && !this.resolved.has(feature),
+      )
       .map((feature) => ({ feature, enabled: true, used: false }))
 
     const disabled = Array.from(this.disabled)
-      .filter((feature) => !this.resolved.has(feature))
+      .filter(
+        (feature) => !feature.includes('*') && !this.resolved.has(feature),
+      )
       .map((feature) => ({ feature, enabled: false, used: false }))
 
     return resolved
