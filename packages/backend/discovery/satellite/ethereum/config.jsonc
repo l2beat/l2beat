@@ -9,8 +9,7 @@
   },
   "overrides": {
     "Gateway": {
-      "proxyType": "Axelar proxy",
-      "ignoreInWatchMode": ["currentEpoch"]
+      "proxyType": "Axelar proxy"
     },
     "AxelarAuthWeighted": { "ignoreMethods": ["hashForEpoch"] }
   }
