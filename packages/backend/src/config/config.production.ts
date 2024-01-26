@@ -1,16 +1,14 @@
-import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { Env } from '@l2beat/backend-tools'
+import { chains, tokenList } from '@l2beat/config'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
-import { getGitCommitHash } from './getGitCommitHash'
+import { makeConfig } from './makeConfig'
 
 export function getProductionConfig(env: Env): Config {
-  const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
   )
@@ -27,58 +25,9 @@ export function getProductionConfig(env: Env): Config {
   const finalityEnabled = env.boolean('FINALITY_ENABLED', false)
 
   return {
-    name: 'Backend/Production',
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    tokens: tokenList,
-    logger: {
-      logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-      format: 'json',
-      utc: true,
-    },
-    logThrottler: {
-      callsUntilThrottle: 4,
-      clearIntervalMs: 5000,
-      throttleTimeMs: 20000,
-    },
-    clock: {
-      minBlockTimestamp:
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        chains.find((c) => c.name === 'ethereum')!.minTimestampForTvl!,
-      safeTimeOffsetSeconds: 60 * 60,
-    },
-    database: {
-      freshStart: false,
-      connection: {
-        connectionString: env.string('DATABASE_URL'),
-        ssl: { rejectUnauthorized: false },
-      },
-      connectionPoolSize: {
-        // our heroku plan allows us for up to 400 open connections
-        min: 20,
-        max: 200,
-      },
-    },
-    api: {
-      port: env.integer('PORT'),
-    },
-    health: {
-      releasedAt: env.string('HEROKU_RELEASE_CREATED_AT', ''),
-      startedAt: new Date().toISOString(),
-      commitSha: env.string('HEROKU_SLUG_COMMIT', getGitCommitHash()),
-    },
-    metricsAuth: {
-      user: env.string('METRICS_AUTH_USER'),
-      pass: env.string('METRICS_AUTH_PASS'),
-    },
-    tvl: {
-      errorOnUnsyncedTvl,
-      enabled: true,
-      coingeckoApiKey: env.string('COINGECKO_API_KEY'),
-      ethereum: getChainTvlConfig(env, 'ethereum'),
-      modules: getChainsWithTokens(tokenList, chains).map((x) =>
-        getChainTvlConfig(env, x),
-      ),
-    },
+    ...makeConfig(env, {
+      name: 'Backend/Production',
+    }),
     liveness: livenessEnabled && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),

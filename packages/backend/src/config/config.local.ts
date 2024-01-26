@@ -1,17 +1,14 @@
-import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { Env } from '@l2beat/backend-tools'
+import { chains, tokenList } from '@l2beat/config'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
-import { getGitCommitHash } from './getGitCommitHash'
+import { makeConfig } from './makeConfig'
 
 export function getLocalConfig(env: Env): Config {
-  const tvlEnabled = env.boolean('TVL_ENABLED', true)
-  const errorOnUnsyncedTvl = env.boolean('ERROR_ON_UNSYNCED_TVL', false)
   const activityEnabled = env.boolean('ACTIVITY_ENABLED', false)
   const activityProjectsExcludedFromApi = env.optionalString(
     'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
@@ -30,45 +27,11 @@ export function getLocalConfig(env: Env): Config {
   const minTimestamp = UnixTime.now().add(-7, 'days').toStartOf('hour')
 
   return {
-    name: 'Backend/Local',
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    tokens: tokenList,
-    logger: {
-      logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-      format: 'pretty',
-      colors: true,
-    },
-    logThrottler: false,
-    clock: {
-      minBlockTimestamp: minTimestamp,
-      safeTimeOffsetSeconds: 60 * 60,
-    },
-    database: {
-      connection: env.string('LOCAL_DB_URL'),
-      freshStart: env.boolean('FRESH_START', false),
-      connectionPoolSize: {
-        // defaults used by knex
-        min: 2,
-        max: 10,
-      },
-    },
-    api: {
-      port: env.integer('PORT', 3000),
-    },
-    metricsAuth: false,
-    health: {
-      startedAt: new Date().toISOString(),
-      commitSha: getGitCommitHash(),
-    },
-    tvl: {
-      enabled: tvlEnabled,
-      errorOnUnsyncedTvl,
-      coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
-      ethereum: getChainTvlConfig(env, 'ethereum', { minTimestamp }),
-      modules: getChainsWithTokens(tokenList, chains).map((x) =>
-        getChainTvlConfig(env, x),
-      ),
-    },
+    ...makeConfig(env, {
+      name: 'Backend/Local',
+      isLocal: true,
+      minTimestampOverride: minTimestamp,
+    }),
     liveness: livenessEnabled && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
