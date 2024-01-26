@@ -1,11 +1,13 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { Config } from './Config'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
+
 import { bridgeToProject, layer2ToProject } from '../model'
-import { UnixTime } from '@l2beat/shared-pure'
-import { getGitCommitHash } from './getGitCommitHash'
-import { getChainTvlConfig } from './getChainTvlConfig'
+import { Config, DiscordConfig } from './Config'
+import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainsWithTokens } from './getChainsWithTokens'
+import { getChainTvlConfig } from './getChainTvlConfig'
+import { getGitCommitHash } from './getGitCommitHash'
 
 interface Settings {
   name: string
@@ -16,20 +18,7 @@ interface Settings {
 export function makeConfig(
   env: Env,
   settings: Settings,
-): Pick<
-  Config,
-  | 'name'
-  | 'projects'
-  | 'tokens'
-  | 'logger'
-  | 'logThrottler'
-  | 'clock'
-  | 'database'
-  | 'api'
-  | 'health'
-  | 'metricsAuth'
-  | 'tvl'
-> {
+): Omit<Config, 'activity'> {
   const minBlockTimestamp =
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     chains.find((c) => c.name === 'ethereum')!.minTimestampForTvl!
@@ -102,5 +91,64 @@ export function makeConfig(
         getChainTvlConfig(env, x),
       ),
     },
+    liveness: env.boolean('LIVENESS_ENABLED', false) && {
+      bigQuery: {
+        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
+        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('LIVENESS_PROJECT_ID'),
+        queryLimitGb: env.integer('LIVENESS_BIGQUERY_LIMIT_GB', 15),
+        queryWarningLimitGb: env.integer(
+          'LIVENESS_BIGQUERY_WARNING_LIMIT_GB',
+          8,
+        ),
+      },
+      // TODO: figure out how to set it for local development
+      minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+    },
+    finality: env.boolean('FINALITY_ENABLED', false),
+    statusEnabled: env.boolean('STATUS_ENABLED', true),
+    updateMonitor: env.boolean('WATCHMODE_ENABLED', false) && {
+      runOnStart: settings.isLocal
+        ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
+        : undefined,
+      discord: getDiscordConfig(env, settings),
+      chains: [
+        getChainDiscoveryConfig(env, 'ethereum'),
+        getChainDiscoveryConfig(env, 'arbitrum'),
+        getChainDiscoveryConfig(env, 'bsc'),
+        getChainDiscoveryConfig(env, 'celo'),
+        getChainDiscoveryConfig(env, 'gnosis'),
+        getChainDiscoveryConfig(env, 'linea'),
+        getChainDiscoveryConfig(env, 'optimism'),
+        getChainDiscoveryConfig(env, 'polygonpos'),
+        getChainDiscoveryConfig(env, 'polygonzkevm'),
+      ],
+    },
+    diffHistory: env.boolean('DIFF_HISTORY_ENABLED', false) && {
+      chains: [getChainDiscoveryConfig(env, 'ethereum')],
+    },
+    chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   }
+}
+
+function getDiscordConfig(env: Env, settings: Settings): DiscordConfig | false {
+  const discordToken = env.optionalString('DISCORD_TOKEN')
+  const internalDiscordChannelId = env.optionalString(
+    'INTERNAL_DISCORD_CHANNEL_ID',
+  )
+  const publicDiscordChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
+
+  const discordEnabled =
+    !!discordToken &&
+    !!internalDiscordChannelId &&
+    (settings.isLocal || !!publicDiscordChannelId)
+
+  return (
+    discordEnabled && {
+      token: discordToken,
+      publicChannelId: publicDiscordChannelId,
+      internalChannelId: internalDiscordChannelId,
+      callsPerMinute: 3000,
+    }
+  )
 }
