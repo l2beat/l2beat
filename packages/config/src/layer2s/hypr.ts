@@ -60,6 +60,7 @@ export const hypr: Layer2 = opStack({
       description: 'Hypr launches on mainnet.',
     },
   ],
+  rpcUrl: 'https://rpc.hypr.network',
   knowledgeNuggets: [],
   roleOverrides: {
     batcherHash: 'Sequencer',
