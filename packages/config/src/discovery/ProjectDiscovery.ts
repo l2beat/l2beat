@@ -30,9 +30,8 @@ import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
-  OpStackTag,
-  OpStackTagDescription,
 } from './OpStackTypes'
+import { StackPermissionsTag, StackPermissionsTagDescription } from './StackTemplateTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -175,8 +174,8 @@ export class ProjectDiscovery {
           (r) =>
             r.name === template.role.value &&
             r.atName ===
-              (contractOverrides?.[template.role.contract] ??
-                template.role.contract),
+            (contractOverrides?.[template.role.contract] ??
+              template.role.contract),
         )
         if (!role) {
           continue
@@ -216,7 +215,7 @@ export class ProjectDiscovery {
         .concat(
           Object.entries(entry.taggedNames).map(([tag, contracts]) =>
             stringFormat(
-              OpStackTagDescription[tag as OpStackTag],
+              StackPermissionsTagDescription[tag as StackPermissionsTag],
               contracts.join(', '),
             ),
           ),

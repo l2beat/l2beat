@@ -1,3 +1,5 @@
+import { StackPermissionTemplate } from "./StackTemplateTypes";
+
 export type OpStackContractName =
   | 'L2OutputOracle'
   | 'OptimismPortal'
@@ -10,20 +12,6 @@ export type OpStackPermissionName = 'Sequencer' | 'Proposer' | 'ProxyAdmin'
 export interface OPStackContractTemplate {
   name: OpStackContractName
   coreDescription: string
-}
-
-export type OpStackTag = 'admin' | 'owner' | 'owned'
-
-export const OpStackTagDescription: Record<OpStackTag, string> = {
-  admin: 'Admin of {0}.',
-  owner: 'Owner of {0}.',
-  owned: 'Owned by {0}.',
-}
-
-export interface OPStackPermissionTemplate {
-  role: { value: string; contract: string }
-  description?: string
-  tags?: OpStackTag[]
 }
 
 export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
@@ -54,7 +42,7 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
   },
 ]
 
-export const OP_STACK_PERMISSION_TEMPLATES: OPStackPermissionTemplate[] = [
+export const OP_STACK_PERMISSION_TEMPLATES: StackPermissionTemplate[] = [
   {
     role: { value: 'owner', contract: 'AddressManager' },
     tags: ['owner'],
