@@ -13,7 +13,7 @@ export interface ContentEntry<T extends ContentKey> {
 }
 
 export function getContent<T extends ContentKey>(key: T): ContentEntry<T>[] {
-  const fileNames = readdirSync(`./${key}`)
+  const fileNames = readdirSync(path.join(__dirname, key))
 
   const parsedFiles = fileNames
     .filter((fileName) => fileName.endsWith('json'))

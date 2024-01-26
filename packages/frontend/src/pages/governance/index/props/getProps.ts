@@ -11,7 +11,11 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
 
   return {
     props: {
-      publications: publications.map(getGovernancePublicationEntry),
+      publications: publications
+        .sort((a, b) => {
+          return b.data.publishedOn.getTime() - a.data.publishedOn.getTime()
+        })
+        .map(getGovernancePublicationEntry),
       navbar: getNavbarProps(config, 'governance'),
       footer: getFooterProps(config),
     },

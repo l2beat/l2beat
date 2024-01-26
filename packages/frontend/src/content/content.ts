@@ -4,6 +4,7 @@ const publications = {
   schema: z.object({
     title: z.string(),
     link: z.string(),
+    publishedOn: z.coerce.date(),
   }),
 } as const
 

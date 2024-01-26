@@ -6,10 +6,10 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../../components'
-import {
-  GovernanceCard,
-  GovernanceCardHeader,
-} from '../../../../components/governance/GovernanceCard'
+import { GovernanceEventsSection } from '../../../../components/governance/sections/GovernanceEventsSections'
+import { OfficeHoursSection } from '../../../../components/governance/sections/OfficeHoursSection'
+import { OurApproachSection } from '../../../../components/governance/sections/OurApproachSection'
+import { OurMissionSection } from '../../../../components/governance/sections/OurMissionSection'
 import { RecentPublicationsSection } from '../../../../components/governance/sections/RecentPublicationsSection'
 import { PageContent } from '../../../../components/PageContent'
 import { GovernancePublicationEntry } from '../../getGovernancePublicationEntry'
@@ -25,23 +25,15 @@ export function GovernancePage(props: GovernancePageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent className="max-w-[1296px]">
-        <main className="mt-20 grid grid-cols-8 gap-8">
+        <main className="mt-20 grid md:grid-cols-8 md:gap-8">
           <RecentPublicationsSection
             publications={props.publications}
-            className="col-span-5"
+            className="md:col-span-5"
           />
-          <GovernanceCard as="section" className="col-span-3" type="purple">
-            <GovernanceCardHeader title="Office hours" />
-          </GovernanceCard>
-          <GovernanceCard as="section" className="col-span-8">
-            <GovernanceCardHeader title="Governance Events" />
-          </GovernanceCard>
-          <GovernanceCard as="section" className="col-span-4">
-            <GovernanceCardHeader title="Our approach" />
-          </GovernanceCard>
-          <GovernanceCard as="section" className="col-span-4">
-            <GovernanceCardHeader title="Our Mission" />
-          </GovernanceCard>
+          <OfficeHoursSection className="md:col-span-3" />
+          <GovernanceEventsSection className="md:col-span-full" />
+          <OurApproachSection className="md:col-span-4" />
+          <OurMissionSection className="md:col-span-4" />
         </main>
       </PageContent>
       <Footer {...props.footer} />
