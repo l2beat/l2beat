@@ -46,11 +46,11 @@ export const ORBIT_STACK_PERMISSION_TEMPLATES: StackPermissionTemplate[] = [
     description: 'EOA that can execute upgrade via the UpgradeExecutor.',
   },
   {
-    role: { value: 'validators.0', contract: 'RollupProxy' },
+    role: { value: 'validators', contract: 'RollupProxy' },
     description: 'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.'
   },
   {
-    role: { value: 'batchPosters.0', contract: 'SequencerInbox' },
+    role: { value: 'batchPosters', contract: 'SequencerInbox' },
     description: 'Central actors allowed to submit transaction batches to L1.',
   },
 ]

@@ -212,30 +212,11 @@ export const deri: Layer3 = {
     },
   },
   permissions: [
-    discovery.contractAsPermissioned(
-      discovery.getContract('ProxyAdmin'),
-      'Contract owned by the UpgradeExecutor and admin of UpgradeExecutor, L1ERC20Gateway, L1CustomGateway, L1GatewayRouter, ChallengeManager, Outbox, Bridge, SequencerInbox and Inbox proxies.',
-    ),
-    {
-      name: 'OwnerEOA',
-      accounts: [EOAExecutor],
-      description: 'EOA that can execute upgrade via the UpgradeExecutor.',
-    },
-    {
-      name: 'Validators/Proposers',
-      accounts: discovery.getPermissionedAccounts('RollupProxy', 'validators'),
-      description:
-        'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
-    },
-    {
-      name: 'Sequencers',
-      accounts: discovery.getPermissionedAccounts(
-        'SequencerInbox',
-        'batchPosters',
-      ),
-      description:
-        'Central actors allowed to submit transaction batches to L1.',
-    },
+    ...discovery.getOrbitStackPermissions({
+      "EXECUTOR_ROLE": "OwnerEOA",
+      "validators": "Validators/Proposers",
+      "batchPosters": "Sequencers",
+    }),
   ],
   contracts: {
     addresses: [

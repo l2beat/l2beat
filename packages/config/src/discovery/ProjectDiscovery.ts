@@ -4,6 +4,7 @@ import type {
   ContractValue,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
+import { calculateTemplateInversion } from '@l2beat/discovery/dist/inversion/runInversion'
 import {
   assert,
   EthereumAddress,
@@ -150,7 +151,7 @@ export class ProjectDiscovery {
   }
 
   getInversion(): InvertedAddresses {
-    return calculateInversion(this.discovery)
+    return calculateTemplateInversion(this.discovery)
   }
 
   getOpStackPermissions(
@@ -178,17 +179,21 @@ export class ProjectDiscovery {
       string,
       {
         name: string
-        address: EthereumAddress
+        addresses: EthereumAddress[]
         contractDescription: Record<string, string[]>
         taggedNames: Record<string, string[]>
       }
     > = {}
 
+    const roleNameMatches = (templateName:string, roleName: string): boolean => {
+        return templateName === roleName
+    }
+
     for (const template of templates) {
       for (const contract of inversion.values()) {
         const role = contract.roles.find(
           (r) =>
-            r.name === template.role.value &&
+            roleNameMatches(template.role.value, r.name) &&
             r.atName ===
             (contractOverrides?.[template.role.contract] ??
               template.role.contract),
@@ -201,7 +206,7 @@ export class ProjectDiscovery {
 
         result[contractKey] ??= {
           name: contractKey,
-          address: EthereumAddress(contract.address),
+          addresses: [EthereumAddress(contract.address)],
           contractDescription: {},
           taggedNames: {},
         }
@@ -225,7 +230,7 @@ export class ProjectDiscovery {
 
     return Object.values(result).map((entry) => ({
       name: entry.name,
-      accounts: [this.formatPermissionedAccount(entry.address)],
+      accounts: entry.addresses.map(a => this.formatPermissionedAccount(a)),
       description: Object.values(entry.contractDescription)
         .flat()
         .concat(
