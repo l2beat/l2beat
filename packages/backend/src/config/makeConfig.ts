@@ -63,7 +63,7 @@ export function makeConfig(env: Env, settings: Settings): Config {
           },
         },
     api: {
-      port: env.integer('PORT', 3000),
+      port: env.integer('PORT', settings.isLocal ? 3000 : undefined),
     },
     health: {
       releasedAt: env.optionalString('HEROKU_RELEASE_CREATED_AT'),
