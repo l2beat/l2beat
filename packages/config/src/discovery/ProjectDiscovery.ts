@@ -33,7 +33,11 @@ import {
   OpStackContractName,
 } from './OpStackTypes'
 import { ORBIT_STACK_PERMISSION_TEMPLATES } from './OrbitStackTypes'
-import { StackPermissionsTag, StackPermissionsTagDescription, StackPermissionTemplate } from './StackTemplateTypes'
+import {
+  StackPermissionsTag,
+  StackPermissionsTagDescription,
+  StackPermissionTemplate,
+} from './StackTemplateTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -151,21 +155,29 @@ export class ProjectDiscovery {
   }
 
   getInversion(): InvertedAddresses {
-    return calculateTemplateInversion(this.discovery)
+    return calculateInversion(this.discovery)
   }
 
   getOpStackPermissions(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
-    return this.getStackTemplatePermissions(OP_STACK_PERMISSION_TEMPLATES, overrides, contractOverrides)
+    return this.getStackTemplatePermissions(
+      OP_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
   }
 
   getOrbitStackPermissions(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
-    return this.getStackTemplatePermissions(ORBIT_STACK_PERMISSION_TEMPLATES, overrides, contractOverrides)
+    return this.getStackTemplatePermissions(
+      ORBIT_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
   }
 
   getStackTemplatePermissions(
@@ -185,8 +197,23 @@ export class ProjectDiscovery {
       }
     > = {}
 
-    const roleNameMatches = (templateName:string, roleName: string): boolean => {
-        return templateName === roleName
+    const roleNameMatches = (
+      templateName: string,
+      roleName: string,
+    ): boolean => {
+      function isNumeric(str: string): boolean {
+        if (str === '') return false
+        return !isNaN(+str)
+      }
+
+      // I really don't want to use regexes
+      const matchesExact = templateName === roleName
+      if (!matchesExact && roleName.startsWith(templateName)) {
+        const suffix = roleName.slice(templateName.length)
+        return suffix[0] === '.' && isNumeric(suffix.slice(1))
+      }
+
+      return matchesExact
     }
 
     for (const template of templates) {
@@ -195,8 +222,8 @@ export class ProjectDiscovery {
           (r) =>
             roleNameMatches(template.role.value, r.name) &&
             r.atName ===
-            (contractOverrides?.[template.role.contract] ??
-              template.role.contract),
+              (contractOverrides?.[template.role.contract] ??
+                template.role.contract),
         )
         if (!role) {
           continue
@@ -230,7 +257,7 @@ export class ProjectDiscovery {
 
     return Object.values(result).map((entry) => ({
       name: entry.name,
-      accounts: entry.addresses.map(a => this.formatPermissionedAccount(a)),
+      accounts: entry.addresses.map((a) => this.formatPermissionedAccount(a)),
       description: Object.values(entry.contractDescription)
         .flat()
         .concat(
