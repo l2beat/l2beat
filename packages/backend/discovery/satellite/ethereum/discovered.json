@@ -1,7 +1,7 @@
 {
   "name": "satellite",
   "chain": "ethereum",
-  "blockNumber": 19070100,
+  "blockNumber": 19090146,
   "configHash": "0x485a1fee9d61c4221de0fc99172564c4deb4f140036681f5d1662937a8dc7490",
   "version": 3,
   "contracts": [
@@ -62,7 +62,7 @@
       },
       "sinceTimestamp": 1697785871,
       "values": {
-        "currentEpoch": 91,
+        "currentEpoch": 94,
         "owner": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
