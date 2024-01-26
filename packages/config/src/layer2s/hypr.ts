@@ -11,7 +11,6 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-//TODO:  i guess
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
@@ -45,12 +44,11 @@ export const hypr: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x1bBde518ad01BaABFE30020407A7630FB17B545d',
   ),
-  //TODO: I'm not sure what that means. I assume that's the address that sequencer is sending txs to.
   inboxAddress: EthereumAddress('0x0c57b7f3bac278be091431b52470fbadbc4240e6'),
   sequencerAddress: EthereumAddress(
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
-  genesisTimestamp: new UnixTime(1705512383),
+  genesisTimestamp: new UnixTime(1705509623),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: 'UnderReview',
