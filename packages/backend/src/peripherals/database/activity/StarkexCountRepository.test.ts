@@ -2,17 +2,13 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import { StarkexTransactionCountRepository } from './StarkexCountRepository'
 
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 
-describe(StarkexTransactionCountRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-  if (!database) {
-    return
-  }
+describeDatabase(StarkexTransactionCountRepository.name, (database) => {
   const repository = new StarkexTransactionCountRepository(
     database,
     Logger.SILENT,

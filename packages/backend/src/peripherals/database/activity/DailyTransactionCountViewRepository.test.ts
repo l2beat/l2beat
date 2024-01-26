@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { groupBy, mapValues, omit } from 'lodash'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import {
   BlockTransactionCountRecord,
   BlockTransactionCountRepository,
@@ -19,11 +19,7 @@ const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 const PROJECT_C = ProjectId('project-c')
 
-describe(DailyTransactionCountViewRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-  if (!database) {
-    return
-  }
+describeDatabase(DailyTransactionCountViewRepository.name, (database) => {
   const repository = new DailyTransactionCountViewRepository(
     database,
     Logger.SILENT,
