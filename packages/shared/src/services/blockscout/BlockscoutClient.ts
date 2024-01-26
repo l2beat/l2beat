@@ -1,12 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
-import { getErrorMessage, RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  getErrorMessage,
+  RateLimiter,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
 import { BlockscoutGetBlockNoByTime, parseBlockscoutResponse } from './model'
 
 class BlockscoutError extends Error {}
 
-export class BlockscoutLikeClient {
+export class BlockscoutClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -16,9 +21,14 @@ export class BlockscoutLikeClient {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     readonly minTimestamp: UnixTime,
+    private readonly chainId: ChainId,
     private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
+  }
+
+  getChainId(): ChainId {
+    return this.chainId
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {

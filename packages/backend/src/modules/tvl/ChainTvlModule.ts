@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   BlockNumberProvider,
+  BlockscoutClient,
   CoingeckoQueryService,
   EtherscanClient,
   HttpClient,
-  UniversalBlockscoutClient,
 } from '@l2beat/shared'
 import { capitalizeFirstLetter, Token } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -45,7 +45,7 @@ export function chainTvlModule(
 
   const blockNumberProvider: BlockNumberProvider =
     config.blockNumberProviderConfig.type === 'blockscout'
-      ? new UniversalBlockscoutClient(
+      ? new BlockscoutClient(
           http,
           config.blockNumberProviderConfig.blockscoutApiUrl,
           config.minBlockTimestamp,
