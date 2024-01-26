@@ -33,6 +33,9 @@ export function getTestDatabase(opts?: DatabaseOpts): Database | undefined {
   const env = getEnv()
   const connection = env.optionalString('TEST_DB_URL')
   if (!connection) {
+    if (process.env.CI !== undefined) {
+      throw new Error('TEST_DB_URL is required in CI')
+    }
     return
   }
 
