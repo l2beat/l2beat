@@ -9,27 +9,29 @@ import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
 
-interface Settings {
+interface MakeConfigOptions {
   name: string
   isLocal?: boolean
   minTimestampOverride?: UnixTime
 }
 
-export function makeConfig(env: Env, settings: Settings): Config {
-  const minBlockTimestamp =
-    settings.minTimestampOverride ?? getEthereumMinTimestamp()
+export function makeConfig(
+  env: Env,
+  { name, isLocal, minTimestampOverride }: MakeConfigOptions,
+): Config {
+  const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
 
   return {
-    name: settings.name,
+    name,
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-      format: settings.isLocal ? 'pretty' : 'json',
-      utc: settings.isLocal ? false : true,
-      colors: settings.isLocal ? true : false,
+      format: isLocal ? 'pretty' : 'json',
+      utc: isLocal ? false : true,
+      colors: isLocal ? true : false,
     },
-    logThrottler: settings.isLocal
+    logThrottler: isLocal
       ? false
       : {
           callsUntilThrottle: 4,
@@ -40,7 +42,7 @@ export function makeConfig(env: Env, settings: Settings): Config {
       minBlockTimestamp,
       safeTimeOffsetSeconds: 60 * 60,
     },
-    database: settings.isLocal
+    database: isLocal
       ? {
           connection: env.string('LOCAL_DB_URL'),
           freshStart: env.boolean('FRESH_START', false),
@@ -63,14 +65,14 @@ export function makeConfig(env: Env, settings: Settings): Config {
           },
         },
     api: {
-      port: env.integer('PORT', settings.isLocal ? 3000 : undefined),
+      port: env.integer('PORT', isLocal ? 3000 : undefined),
     },
     health: {
       releasedAt: env.optionalString('HEROKU_RELEASE_CREATED_AT'),
       startedAt: new Date().toISOString(),
       commitSha: env.string('HEROKU_SLUG_COMMIT', getGitCommitHash()),
     },
-    metricsAuth: settings.isLocal
+    metricsAuth: isLocal
       ? false
       : {
           user: env.string('METRICS_AUTH_USER'),
@@ -85,7 +87,7 @@ export function makeConfig(env: Env, settings: Settings): Config {
       }),
       modules: getChainsWithTokens(tokenList, chains).map((x) =>
         getChainTvlConfig(env, x, {
-          minTimestamp: settings.minTimestampOverride,
+          minTimestamp: minTimestampOverride,
         }),
       ),
     },
@@ -104,10 +106,10 @@ export function makeConfig(env: Env, settings: Settings): Config {
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
     finality: env.boolean('FINALITY_ENABLED', false),
-    activity: (!settings.isLocal || env.boolean('ACTIVITY_ENABLED', false)) && {
+    activity: (!isLocal || env.boolean('ACTIVITY_ENABLED', false)) && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
-      skipExplicitExclusion: !!settings.isLocal,
+      skipExplicitExclusion: !!isLocal,
       projectsExcludedFromAPI:
         env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
         [],
@@ -116,103 +118,99 @@ export function makeConfig(env: Env, settings: Settings): Config {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_ETHEREUM_CALLS',
-            settings.isLocal ? 60 : undefined,
+            isLocal ? 60 : undefined,
           ),
           url: env.string(
             'ACTIVITY_ETHEREUM_URL',
-            settings.isLocal
-              ? 'https://eth-mainnet.alchemyapi.io/v2/demo'
-              : undefined,
+            isLocal ? 'https://eth-mainnet.alchemyapi.io/v2/demo' : undefined,
           ),
         },
         optimism: {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_OPTIMISM_CALLS',
-            settings.isLocal ? 60 : undefined,
+            isLocal ? 60 : undefined,
           ),
           url: env.string(
             'ACTIVITY_OPTIMISM_URL',
-            settings.isLocal ? 'https://mainnet.optimism.io/' : undefined,
+            isLocal ? 'https://mainnet.optimism.io/' : undefined,
           ),
         },
         arbitrum: {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_ARBITRUM_CALLS',
-            settings.isLocal ? 60 : undefined,
+            isLocal ? 60 : undefined,
           ),
           url: env.string(
             'ACTIVITY_ARBITRUM_URL',
-            settings.isLocal ? 'https://arb1.arbitrum.io/rpc' : undefined,
+            isLocal ? 'https://arb1.arbitrum.io/rpc' : undefined,
           ),
         },
         zksync2: {
           type: 'rpc',
-          callsPerMinute: settings.isLocal ? 60 : 1500,
+          callsPerMinute: isLocal ? 60 : 1500,
         },
         nova: {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_NOVA_CALLS',
-            settings.isLocal ? 60 : undefined,
+            isLocal ? 60 : undefined,
           ),
           url: env.string(
             'ACTIVITY_NOVA_URL',
-            settings.isLocal ? 'https://nova.arbitrum.io/rpc' : undefined,
+            isLocal ? 'https://nova.arbitrum.io/rpc' : undefined,
           ),
         },
         linea: {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_LINEA_CALLS',
-            settings.isLocal ? 60 : undefined,
+            isLocal ? 60 : undefined,
           ),
           url: env.string(
             'ACTIVITY_LINEA_URL',
-            settings.isLocal ? 'https://linea-mainnet.infura.io/v3' : undefined,
+            isLocal ? 'https://linea-mainnet.infura.io/v3' : undefined,
           ),
         },
         polygonzkevm: {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_POLYGONZKEVM_CALLS',
-            settings.isLocal ? 500 : undefined,
+            isLocal ? 500 : undefined,
           ),
           url: env.string(
             'ACTIVITY_POLYGONZKEVM_URL',
-            settings.isLocal ? 'https://polygon-rpc.com/zkevm' : undefined,
+            isLocal ? 'https://polygon-rpc.com/zkevm' : undefined,
           ),
         },
         starknet: {
           type: 'starknet',
           callsPerMinute: env.integer(
             'ACTIVITY_STARKNET_CALLS',
-            settings.isLocal ? 120 : undefined,
+            isLocal ? 120 : undefined,
           ),
           url: env.string(
             'ACTIVITY_STARKNET_URL',
-            settings.isLocal
-              ? 'https://starknet-mainnet.public.blastapi.io'
-              : undefined,
+            isLocal ? 'https://starknet-mainnet.public.blastapi.io' : undefined,
           ),
         },
         scroll: {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_SCROLL_CALLS',
-            settings.isLocal ? 120 : undefined,
+            isLocal ? 120 : undefined,
           ),
           url: env.string(
             'ACTIVITY_SCROLL_URL',
-            settings.isLocal ? 'https://rpc.scroll.io' : undefined,
+            isLocal ? 'https://rpc.scroll.io' : undefined,
           ),
         },
         mantle: {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_MANTLE_CALLS',
-            settings.isLocal ? 60 : 1500,
+            isLocal ? 60 : 1500,
           ),
           url: env.string('ACTIVITY_MANTLE_URL', 'https://rpc.mantle.xyz'),
         },
@@ -220,7 +218,7 @@ export function makeConfig(env: Env, settings: Settings): Config {
           type: 'rpc',
           callsPerMinute: env.integer(
             'ACTIVITY_METIS_CALLS',
-            settings.isLocal ? 120 : 1500,
+            isLocal ? 120 : 1500,
           ),
           url: env.string('ACTIVITY_METIS_URL', 'https://andromeda.metis.io/'),
         },
@@ -228,10 +226,10 @@ export function makeConfig(env: Env, settings: Settings): Config {
     },
     statusEnabled: env.boolean('STATUS_ENABLED', true),
     updateMonitor: env.boolean('WATCHMODE_ENABLED', false) && {
-      runOnStart: settings.isLocal
+      runOnStart: isLocal
         ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
         : undefined,
-      discord: getDiscordConfig(env, settings),
+      discord: getDiscordConfig(env, isLocal),
       chains: [
         getChainDiscoveryConfig(env, 'ethereum'),
         getChainDiscoveryConfig(env, 'arbitrum'),
@@ -261,13 +259,13 @@ function getEthereumMinTimestamp() {
   return minBlockTimestamp
 }
 
-function getDiscordConfig(env: Env, settings: Settings): DiscordConfig | false {
+function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
   const token = env.optionalString('DISCORD_TOKEN')
   const internalChannelId = env.optionalString('INTERNAL_DISCORD_CHANNEL_ID')
   const publicChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
 
   const discordEnabled =
-    !!token && !!internalChannelId && (settings.isLocal || !!publicChannelId)
+    !!token && !!internalChannelId && (isLocal || !!publicChannelId)
 
   return (
     discordEnabled && {
