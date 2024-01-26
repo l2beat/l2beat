@@ -1,7 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 
 import { Database, DatabaseOpts } from '../peripherals/database/shared/Database'
-import { describe } from 'mocha'
 
 export function describeDatabase(
   name: string,
