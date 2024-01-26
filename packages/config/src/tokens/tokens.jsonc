@@ -1074,7 +1074,8 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket"
+        "bridge": "Socket",
+        "slug": "socket"
       },
       "coingeckoId": "usd-coin"
     }
