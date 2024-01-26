@@ -1,8 +1,8 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 19091011,
-  "configHash": "0x4fec40012bd8de0999b17ab1f869ef330504dbc60c40745c6bdb5801e665231f",
+  "blockNumber": 19091597,
+  "configHash": "0x9c7cb21e4ec72fb810d3e73af847c31098d64e8809e14e80b6187eac961c90dc",
   "version": 3,
   "contracts": [
     {
@@ -65,6 +65,24 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "L1ERC721Bridge",
+      "address": "0x2e5687010b5f62Ad0ef84370325bC91DED2724fe",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x384BA1d14cDdE620d309AcA9B154e6CACbF27d11",
+        "admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E"
+      },
+      "implementations": ["0x384BA1d14cDdE620d309AcA9B154e6CACbF27d11"],
+      "sinceTimestamp": 1705512431,
+      "values": {
+        "messenger": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
+        "MESSENGER": "0x9f6F58F07863D72C47D001066C65528C27D3AE19",
+        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
+        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "version": "1.1.2"
+      }
+    },
+    {
       "name": "L2OutputOracle",
       "address": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD",
       "upgradeability": {
@@ -79,10 +97,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 378000,
-        "latestOutputIndex": 209,
-        "nextBlockNumber": 379800,
-        "nextOutputIndex": 210,
+        "latestBlockNumber": 383400,
+        "latestOutputIndex": 212,
+        "nextBlockNumber": 385200,
+        "nextOutputIndex": 213,
         "PROPOSER": "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
         "startingBlockNumber": 0,
         "startingTimestamp": 1705512383,
@@ -116,6 +134,21 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "address": "0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED",
+        "admin": "0x20D697b63d7747cF78C94ad9ee75C1436781E27E"
+      },
+      "implementations": ["0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED"],
+      "sinceTimestamp": 1705512431,
+      "values": {
+        "BRIDGE": "0x1bBde518ad01BaABFE30020407A7630FB17B545d",
+        "version": "1.1.1"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -219,6 +252,7 @@
     "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
+    "0x4200000000000000000000000000000000000014",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
     "0x4deaE37ec8f53E66AA1F55C75Ab0182f984EA68c",
     "0x6D4c6D77a87F5aA89444dcCb37A65AEEb152717F",
@@ -287,6 +321,39 @@
     "0x28fB4D0e436874F4107948E358df3C242De06788": [
       "constructor(address _singleton)"
     ],
+    "0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED": [
+      "constructor(address _bridge)",
+      "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken)",
+      "function BRIDGE() view returns (address)",
+      "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function version() view returns (string)"
+    ],
+    "0x2e5687010b5f62Ad0ef84370325bC91DED2724fe": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x384BA1d14cDdE620d309AcA9B154e6CACbF27d11": [
+      "constructor(address _messenger, address _otherBridge)",
+      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function deposits(address, address, uint256) view returns (bool)",
+      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function version() view returns (string)"
+    ],
     "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -299,6 +366,16 @@
     ],
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
       "constructor(address _singleton)"
+    ],
+    "0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x9f6F58F07863D72C47D001066C65528C27D3AE19": [
       "constructor(address _addressManager, string _implementationName)"

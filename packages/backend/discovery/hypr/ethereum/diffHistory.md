@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xdf8d5fa2ee0e9fde98cacc18a6b8aa9e71d1cbf3
+Generated with discovered.json: 0x8a7c6367f7513d053a63c0ea8d4a59e06b34cdf8
 
-# Diff at Fri, 26 Jan 2024 13:15:54 GMT:
+# Diff at Fri, 26 Jan 2024 15:13:18 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- current block number: 19091011
+- current block number: 19091597
 
 ## Description
 
@@ -31,6 +31,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract L1ERC721Bridge (0x2e5687010b5f62Ad0ef84370325bC91DED2724fe) {
+    }
+```
+
+```diff
++   Status: CREATED
     contract L2OutputOracle (0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD) {
     }
 ```
@@ -38,6 +44,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract LyraMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B) {
     }
 ```
 

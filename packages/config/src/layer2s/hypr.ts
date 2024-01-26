@@ -22,7 +22,7 @@ export const hypr: Layer2 = opStack({
   display: {
     name: 'Hypr',
     slug: 'hypr',
-    description: 'Hypr is a Layer 2 blockchain, focused on scaling ZK gaming.',
+    description: 'Hypr is a blockchain focused on scaling ZK gaming.',
     purposes: ['Universal'],
     links: {
       websites: ['https://hypr.network/'],
