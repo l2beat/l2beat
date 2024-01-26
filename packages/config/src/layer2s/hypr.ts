@@ -1,18 +1,33 @@
-import { upcoming } from './templates/upcoming'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
 
-export const hypr: Layer2 = upcoming({
-  id: 'hypr',
+const discovery = new ProjectDiscovery('hypr')
+
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
+//TODO:  i guess
+const upgradeability = {
+  upgradableBy: ['ProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
+export const hypr: Layer2 = opStack({
+  daProvider: 'Celestia',
+  discovery,
   display: {
     name: 'Hypr',
     slug: 'hypr',
     description: 'Hypr is a Layer 2 blockchain, focused on scaling ZK gaming.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
-    provider: 'OP Stack',
     links: {
       websites: ['https://hypr.network/'],
-      apps: ['https://hypr.network/applications'],
+      apps: ['https://bridge.hypr.network/'],
       documentation: ['https://docs.hypr.network'],
       explorers: ['https://explorer.hypr.network/'],
       repositories: [],
@@ -21,5 +36,38 @@ export const hypr: Layer2 = upcoming({
         'https://t.me/hyprnetwork',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
+  upgradeability,
+  l1StandardBridgeEscrow: EthereumAddress(
+    '0x1bBde518ad01BaABFE30020407A7630FB17B545d',
+  ),
+  //TODO: I'm not sure what that means. I assume that's the address that sequencer is sending txs to.
+  inboxAddress: EthereumAddress('0x0c57b7f3bac278be091431b52470fbadbc4240e6'),
+  sequencerAddress: EthereumAddress(
+    discovery.getContractValue('SystemConfig', 'batcherHash'),
+  ),
+  genesisTimestamp: new UnixTime(1705512383),
+  l2OutputOracle: discovery.getContract('L2OutputOracle'),
+  portal: discovery.getContract('OptimismPortal'),
+  isNodeAvailable: 'UnderReview',
+  milestones: [
+    {
+      name: 'Hypr live on mainnet',
+      link: 'https://x.com/hypr_network/status/1750251802451378528',
+      date: '2024-01-24T00:00:00Z',
+      description: 'Hypr launches on mainnet.',
+    },
+  ],
+  knowledgeNuggets: [],
+  roleOverrides: {
+    batcherHash: 'Sequencer',
+    PROPOSER: 'Proposer',
+    GUARDIAN: 'Guardian',
+    CHALLENGER: 'Challenger',
+  },
+  nonTemplateEscrows: [],
 })
