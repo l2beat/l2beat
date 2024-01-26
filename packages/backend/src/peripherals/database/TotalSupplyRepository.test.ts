@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -23,11 +23,7 @@ const mockTotalSupply = (
   }
 }
 
-describe(TotalSupplyRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-  if (!database) {
-    return
-  }
+describeDatabase(TotalSupplyRepository.name, (database) => {
   const repository = new TotalSupplyRepository(database, Logger.SILENT)
 
   const ASSET_1 = AssetId('dai-dai-stablecoin')

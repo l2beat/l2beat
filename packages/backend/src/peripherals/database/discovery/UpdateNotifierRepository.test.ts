@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import {
   UpdateNotifierRecord,
   UpdateNotifierRepository,
@@ -10,11 +10,7 @@ import {
 
 const PROJECT1 = 'project1'
 
-describe(UpdateNotifierRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-  if (!database) {
-    return
-  }
+describeDatabase(UpdateNotifierRepository.name, (database) => {
   const repository = new UpdateNotifierRepository(database, Logger.SILENT)
   const NOW = UnixTime.now()
 
