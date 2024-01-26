@@ -31,7 +31,8 @@ import {
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
 } from './OpStackTypes'
-import { StackPermissionsTag, StackPermissionsTagDescription } from './StackTemplateTypes'
+import { ORBIT_STACK_PERMISSION_TEMPLATES } from './OrbitStackTypes'
+import { StackPermissionsTag, StackPermissionsTagDescription, StackPermissionTemplate } from './StackTemplateTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -156,6 +157,21 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(OP_STACK_PERMISSION_TEMPLATES, overrides, contractOverrides)
+  }
+
+  getOrbitStackPermissions(
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(ORBIT_STACK_PERMISSION_TEMPLATES, overrides, contractOverrides)
+  }
+
+  getStackTemplatePermissions(
+    templates: StackPermissionTemplate[],
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
     const inversion = this.getInversion()
 
     const result: Record<
@@ -168,7 +184,7 @@ export class ProjectDiscovery {
       }
     > = {}
 
-    for (const template of OP_STACK_PERMISSION_TEMPLATES) {
+    for (const template of templates) {
       for (const contract of inversion.values()) {
         const role = contract.roles.find(
           (r) =>
