@@ -18,7 +18,7 @@ type LineaDecoded = [
   string,
 ]
 
-export class LineaFinalityCalculator {
+export class LineaFinalityAnalyzer {
   constructor(
     private readonly provider: RpcClient,
     private readonly livenessRepository: LivenessRepository,

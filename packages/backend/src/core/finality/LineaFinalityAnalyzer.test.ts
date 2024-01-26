@@ -3,14 +3,14 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { LineaFinalityCalculator } from './LineaFinalityCalculator'
+import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
-describe(LineaFinalityCalculator.name, () => {
+describe(LineaFinalityAnalyzer.name, () => {
   it('correctly decode and returns correct data', async () => {
     const livenessRepository = getMockLivenessRepository()
     const provider = getMockRpcClient()
 
-    const calculator = new LineaFinalityCalculator(provider, livenessRepository)
+    const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
     const results = await calculator.getFinality(
       UnixTime.now().toStartOf('hour'),
       1,
@@ -28,7 +28,7 @@ describe(LineaFinalityCalculator.name, () => {
     const livenessRepository = getMockLivenessRepository()
     const provider = getMockRpcClient()
     const start = UnixTime.now().toStartOf('hour')
-    const calculator = new LineaFinalityCalculator(provider, livenessRepository)
+    const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
     await calculator.getFinality(start, 6)
 
     expect(
@@ -82,7 +82,7 @@ describe(LineaFinalityCalculator.name, () => {
         }),
     })
     const start = UnixTime.now().toStartOf('hour')
-    const calculator = new LineaFinalityCalculator(provider, livenessRepository)
+    const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
     const results = await calculator.getFinality(start, 3)
 
     expect(results?.minimum).toEqual(28810)
