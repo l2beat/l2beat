@@ -17,8 +17,7 @@ interface Settings {
 
 export function makeConfig(env: Env, settings: Settings): Config {
   const minBlockTimestamp =
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    chains.find((c) => c.name === 'ethereum')!.minTimestampForTvl!
+    settings.minTimestampOverride ?? getEthereumMinTimestamp()
 
   return {
     name: settings.name,
@@ -38,7 +37,7 @@ export function makeConfig(env: Env, settings: Settings): Config {
           throttleTimeMs: 20000,
         },
     clock: {
-      minBlockTimestamp: settings.minTimestampOverride ?? minBlockTimestamp,
+      minBlockTimestamp,
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: settings.isLocal
@@ -85,7 +84,9 @@ export function makeConfig(env: Env, settings: Settings): Config {
         minTimestamp: minBlockTimestamp,
       }),
       modules: getChainsWithTokens(tokenList, chains).map((x) =>
-        getChainTvlConfig(env, x),
+        getChainTvlConfig(env, x, {
+          minTimestamp: settings.minTimestampOverride,
+        }),
       ),
     },
     liveness: env.boolean('LIVENESS_ENABLED', false) && {
@@ -248,6 +249,16 @@ export function makeConfig(env: Env, settings: Settings): Config {
     },
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   }
+}
+
+function getEthereumMinTimestamp() {
+  const minBlockTimestamp = chains.find(
+    (c) => c.name === 'ethereum',
+  )?.minTimestampForTvl
+  if (!minBlockTimestamp) {
+    throw new Error('Missing minBlockTimestamp for ethereum')
+  }
+  return minBlockTimestamp
 }
 
 function getDiscordConfig(env: Env, settings: Settings): DiscordConfig | false {
