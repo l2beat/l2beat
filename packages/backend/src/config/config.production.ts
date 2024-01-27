@@ -1,10 +1,11 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
 import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
+import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -74,12 +75,9 @@ export function getProductionConfig(env: Env): Config {
       enabled: true,
       coingeckoApiKey: env.string('COINGECKO_API_KEY'),
       ethereum: getChainTvlConfig(env, 'ethereum'),
-      arbitrum: getChainTvlConfig(env, 'arbitrum'),
-      optimism: getChainTvlConfig(env, 'optimism'),
-      base: getChainTvlConfig(env, 'base'),
-      lyra: getChainTvlConfig(env, 'lyra'),
-      linea: getChainTvlConfig(env, 'linea'),
-      mantapacific: getChainTvlConfig(env, 'mantapacific'),
+      modules: getChainsWithTokens(tokenList, chains).map((x) =>
+        getChainTvlConfig(env, x),
+      ),
     },
     liveness: livenessEnabled && {
       bigQuery: {
@@ -178,5 +176,6 @@ export function getProductionConfig(env: Env): Config {
     diffHistory: diffHistoryEnabled && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
+    chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   }
 }

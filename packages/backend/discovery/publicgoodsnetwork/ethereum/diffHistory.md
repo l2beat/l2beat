@@ -1,7 +1,47 @@
+Generated with discovered.json: 0x2ea26678bb8058c9f76cb5359240833a22025e41
+
+# Diff at Fri, 26 Jan 2024 10:56:51 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@bb037f7100968a00265a4787338e51ca81aafe9b block: 18927684
+- current block number: 19090323
+
+## Description
+
+Added opStackDa handler
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) {
+      values.opStackDA.isAllTxsLengthEqualToCelestiaDAExample:
+-        false
++        true
+      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18927684 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":false,"isSomeTxsLengthEqualToCelestiaDAExample":false}
+    }
+```
+
+Generated with discovered.json: 0x6aa5358cf6c02ec15a51221026873cf8df87d220
+
 # Diff at Wed, 03 Jan 2024 15:21:30 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@e8eb03b39061a86a8ec01e26d970e40d080ad225
+- comparing to: main@e8eb03b39061a86a8ec01e26d970e40d080ad225
 
 ## Description
 
@@ -32,7 +72,7 @@ One owner is removed and another is added to PGNMultiSig.
 # Diff at Tue, 26 Sep 2023 09:36:43 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

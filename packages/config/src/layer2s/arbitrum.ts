@@ -126,6 +126,7 @@ export const arbitrum: Layer2 = {
     associatedTokens: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
+        // Arbitrum One Bridge
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         tokens: ['ETH'],
         description:
@@ -133,6 +134,7 @@ export const arbitrum: Layer2 = {
         ...upgradesProxyAdmin,
       }),
       discovery.getEscrowDetails({
+        // Custom ERC20 Gateway
         address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         tokens: '*',
         description:
@@ -140,6 +142,7 @@ export const arbitrum: Layer2 = {
         ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
+        // ERC20 Gateway
         address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
         tokens: '*',
         description:
@@ -490,16 +493,19 @@ export const arbitrum: Layer2 = {
       'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
     ),
     {
-      name: 'Sequencer',
-      accounts: VALUES.ARBITRUM.SEQUENCER,
-      description:
-        'Central actor allowed to set the order in which L2 transactions are executed.',
-    },
-    {
       name: 'Validators/Proposers',
-      accounts: VALUES.ARBITRUM.VALIDATORS,
+      accounts: discovery.getPermissionedAccounts('RollupProxy', 'validators'),
       description:
         'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
+    },
+    {
+      name: 'Sequencers',
+      accounts: discovery.getPermissionedAccounts(
+        'SequencerInbox',
+        'batchPosters',
+      ),
+      description:
+        'Central actors allowed to submit transaction batches to L1.',
     },
   ],
   contracts: {

@@ -2,11 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import { ZksyncTransactionRepository } from './ZksyncTransactionRepository'
 
-describe(ZksyncTransactionRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(ZksyncTransactionRepository.name, (database) => {
   const repository = new ZksyncTransactionRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

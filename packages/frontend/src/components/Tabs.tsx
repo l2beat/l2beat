@@ -23,7 +23,7 @@ export function Tabs({ items }: TabsProps) {
       <OverflowWrapper childrenClassName="TabsItemsContainer relative flex gap-x-2 md:gap-x-8">
         {items.map((tab) => (
           <a
-            className="TabsItem group relative flex items-center justify-center gap-1.5 py-3 px-4 font-semibold outline-none transition-colors"
+            className="TabsItem group relative flex items-center justify-center gap-1.5 px-4 py-3 font-semibold outline-none transition-colors"
             key={tab.id}
             id={tab.id}
             href={`#${tab.id}`}

@@ -10,6 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
+import { ChainConverter } from '../../../core/ChainConverter'
 import { Clock } from '../../../core/Clock'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
@@ -60,6 +61,7 @@ export class StatusController {
     private readonly configReader: ConfigReader,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
+    private readonly chainConverter: ChainConverter,
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {
@@ -71,7 +73,8 @@ export class StatusController {
         projectsToFill,
         this.configReader,
         this.updateMonitorRepository,
-        ChainId.fromName(chain),
+        chain,
+        this.chainConverter.toChainId(chain),
       )
     }
 
@@ -80,23 +83,17 @@ export class StatusController {
 
   async getDiscoveryDashboardProject(
     project: string,
-    chainId: ChainId,
+    chain: string,
   ): Promise<string> {
-    const discovery = await this.configReader.readDiscovery(
-      project,
-      ChainId.getName(chainId),
-    )
-    const config = await this.configReader.readConfig(
-      project,
-      ChainId.getName(chainId),
-    )
+    const discovery = await this.configReader.readDiscovery(project, chain)
+    const config = await this.configReader.readConfig(project, chain)
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
       this.updateMonitorRepository,
       discovery,
       config,
-      chainId,
+      this.chainConverter.toChainId(chain),
     )
 
     return renderDashboardProjectPage({

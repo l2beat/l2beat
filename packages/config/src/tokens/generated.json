@@ -3297,7 +3297,8 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket"
+        "bridge": "Socket",
+        "slug": "socket"
       }
     },
     {
@@ -3499,6 +3500,20 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/34258/standard/2024-01-09_16.31.28.jpg?1704789138",
       "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "zkfair:zkf-zkf",
+      "name": "ZKF",
+      "coingeckoId": "zkfair",
+      "address": "0x1cD3E2A23C45A690a18Ed93FD1412543f464158F",
+      "symbol": "ZKF",
+      "decimals": 18,
+      "sinceTimestamp": 1704412800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
+      "chainId": 42766,
       "type": "NMV",
       "formula": "circulatingSupply"
     },

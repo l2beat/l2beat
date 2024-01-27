@@ -1,7 +1,9 @@
+Generated with discovered.json: 0xebc82979bda498ab81875303e9baa1a185f9b2db
+
 # Diff at Mon, 22 Jan 2024 16:58:34 GMT
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@f58cc44bf923844f52038487bcd5a563329f4b43 block: 18941390
+- comparing to: main@f58cc44bf923844f52038487bcd5a563329f4b43 block: 18941390
 - current block number: 19063596
 
 ## Description
@@ -91,7 +93,7 @@ New path-ways added.
 # Diff at Fri, 05 Jan 2024 13:32:55 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18671199
+- comparing to: main@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18671199
 - current block number: 18941390
 
 ## Description
@@ -138,7 +140,7 @@ for block 18671199 (main branch discovery), not current.
 # Diff at Tue, 28 Nov 2023 16:07:09 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@049dc0679d8762dc52199c99e9e62ba7cb396a7b
+- comparing to: main@049dc0679d8762dc52199c99e9e62ba7cb396a7b
 
 ## Description
 
@@ -204,7 +206,7 @@ New remote chains added: 217, 218, 230. One of the owners in the Stargate Multis
 # Diff at Tue, 07 Nov 2023 10:45:37 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@1272f95e37268203d1aa19a319b3dff48af9c73c
+- comparing to: main@1272f95e37268203d1aa19a319b3dff48af9c73c
 
 ## Description
 

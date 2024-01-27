@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x2205517d3479bdc0b356b55a229b76d5deb3faea
+
 # Diff at Fri, 12 Jan 2024 10:04:41 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@29bf7dab0273e12e067979db6a3b622e6e34f64f block: 18941290
+- comparing to: main@29bf7dab0273e12e067979db6a3b622e6e34f64f block: 18941290
 - current block number: 18990101
 
 ## Description
@@ -20,7 +22,7 @@ New router, empty at the time of discovering this
 # Diff at Fri, 05 Jan 2024 13:12:40 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18620064
+- comparing to: main@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18620064
 - current block number: 18941290
 
 ## Description
@@ -428,7 +430,7 @@ for block 18620064 (main branch discovery), not current.
 # Diff at Tue, 21 Nov 2023 12:24:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@9f0318505c4ed8d37a7f843ad157191e2e5c6ee2
+- comparing to: main@9f0318505c4ed8d37a7f843ad157191e2e5c6ee2
 
 ## Description
 
@@ -471,7 +473,7 @@ Added connector for Linea.
 # Diff at Tue, 07 Nov 2023 11:21:30 GMT:
 
 - author: Amin Latifi (<a.latifi.al@gmail.com>)
-- comparing to: master@bcbd5d376f2f1df169f0ac5ce430862eef6be17f
+- comparing to: main@bcbd5d376f2f1df169f0ac5ce430862eef6be17f
 
 ## Description
 
@@ -533,7 +535,7 @@ warning: in the working copy of 'packages/backend/discovery/amarok/ethereum/.cod
 # Diff at Mon, 02 Oct 2023 13:31:00 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+- comparing to: main@10dbc30af490bd7af5cfca51b827ce3f10182f4d
 
 ## Watched changes
 

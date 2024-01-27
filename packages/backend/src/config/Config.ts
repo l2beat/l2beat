@@ -5,7 +5,7 @@ import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model'
-import { MulticallConfigEntry } from '../peripherals/ethereum/multicall/types'
+import { MulticallConfigEntry } from '../peripherals/multicall/types'
 
 export interface Config {
   readonly name: string
@@ -25,6 +25,7 @@ export interface Config {
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
+  readonly chains: { name: string; chainId: ChainId }[]
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
@@ -59,12 +60,7 @@ export interface TvlConfig {
   readonly errorOnUnsyncedTvl: boolean
   readonly coingeckoApiKey: string | undefined
   readonly ethereum: ChainTvlConfig
-  readonly arbitrum: ChainTvlConfig
-  readonly optimism: ChainTvlConfig
-  readonly base: ChainTvlConfig
-  readonly mantapacific: ChainTvlConfig
-  readonly lyra: ChainTvlConfig
-  readonly linea: ChainTvlConfig
+  readonly modules: ChainTvlConfig[]
 }
 
 export interface LivenessConfig {
@@ -78,13 +74,13 @@ export interface LivenessConfig {
   readonly minTimestamp: UnixTime
 }
 
-export interface RoutescanChainConfig {
-  readonly type: 'RoutescanLike'
-  readonly routescanApiUrl: string
+export interface BlockscoutChainConfig {
+  readonly type: 'blockscout'
+  readonly blockscoutApiUrl: string
 }
 
 export interface EtherscanChainConfig {
-  readonly type: 'EtherscanLike'
+  readonly type: 'etherscan'
   readonly etherscanApiKey: string
   readonly etherscanApiUrl: string
 }
@@ -99,7 +95,7 @@ export interface ChainTvlConfig {
     readonly minBlockTimestamp: UnixTime
     readonly blockNumberProviderConfig:
       | EtherscanChainConfig
-      | RoutescanChainConfig
+      | BlockscoutChainConfig
     readonly multicallConfig: MulticallConfigEntry[]
   }
 }

@@ -1,7 +1,9 @@
+Generated with discovered.json: 0xc37d63531c34445bc36060119ceefe5063f4d0b7
+
 # Diff at Mon, 13 Nov 2023 16:26:39 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@a45348c9ae2e765b872be3f217168f73b62d35a6
+- comparing to: main@a45348c9ae2e765b872be3f217168f73b62d35a6
 
 ## Description
 
@@ -54,7 +56,7 @@ Added EOAs:
 # Diff at Fri, 22 Sep 2023 07:25:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@3a33c063dab8666dc32b4ec15a81995020325b49
+- comparing to: main@3a33c063dab8666dc32b4ec15a81995020325b49
 
 ## Watched changes
 

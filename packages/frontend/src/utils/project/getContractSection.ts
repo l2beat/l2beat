@@ -283,10 +283,16 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
-
+        case 'Axelar proxy':
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          })
+          break
         // Ignore types
         case 'immutable':
-        case 'Axelar proxy':
         case 'gnosis safe':
         case 'gnosis safe zodiac module':
         case 'EIP2535 diamond proxy':
@@ -411,12 +417,15 @@ function escrowToProjectContract(
 ): ScalingProjectContract {
   assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
+  const genericName =
+    escrow.tokens === '*'
+      ? 'Generic escrow'
+      : 'Escrow for ' + escrow.tokens.join(', ')
+  const name = escrow.useContractName ? escrow.contract.name : genericName
+
   return {
     ...escrow.contract,
-    name:
-      escrow.tokens === '*'
-        ? 'Generic escrow'
-        : 'Escrow for ' + escrow.tokens.join(', '),
+    name,
     address: escrow.address,
   }
 }
