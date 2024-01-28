@@ -40,11 +40,11 @@ export const metis: Layer2 = {
       ],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
-        'https://medium.com/@MetisDAO',
+        'https://metisl2.medium.com/',
         'https://twitter.com/MetisL2',
-        'https://discord.gg/RqfEJZXnxd',
-        'https://youtube.com/c/MetisDAO',
-        'https://t.me/MetisDAO',
+        'https://discord.com/invite/metis',
+        'https://www.youtube.com/@Metis_L2',
+        'https://t.me/MetisL2',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -297,6 +297,13 @@ export const metis: Layer2 = {
       link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
       date: '2022-04-12T00:00:00Z',
       description: 'Update moving data to an off-chain committee.',
+    },    
+    {
+      name: 'Decentralized Sequencers: Community testing goes live',
+      link: 'https://www.metis.io/blog/community-testing-for-the-metis-decentralized-sequencer-official-guide',
+      date: '2024-01-15T00:00:00Z',
+      description:
+        'Community Testing for the first-ever Ethereum Layer 2 rollup featuring a decentralized sequencer',
     },
   ],
 }
