@@ -237,6 +237,7 @@ export function makeConfig(
       discord: getDiscordConfig(env, isLocal),
       chains: new ConfigReader()
         .readAllChains()
+        .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain)),
     },
     diffHistory: flags.isEnabled('diffHistory') && {
