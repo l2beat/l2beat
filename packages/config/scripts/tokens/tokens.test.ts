@@ -1,10 +1,9 @@
 import { assert } from '@l2beat/backend-tools'
 
 import { chains } from '../../src'
-import { readGeneratedFile, readTokensFile } from './tokens'
+import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
 import { ScriptLogger } from './utils/ScriptLogger'
 
-// TODO investigate why tokens script is running
 describe('tokens script', () => {
   it('every source has corresponding output entry', () => {
     const logger = ScriptLogger.SILENT
