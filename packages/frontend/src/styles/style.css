@@ -5,7 +5,7 @@
 @import './markdown.css';
 
 body {
-  @apply bg-white text-base leading-[16px] text-black dark:bg-neutral-900 dark:text-white md:text-lg md:leading-[18px];
+  @apply bg-white text-base text-black dark:bg-neutral-900 dark:text-white md:text-lg;
 }
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */

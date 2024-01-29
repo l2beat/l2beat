@@ -37,7 +37,7 @@ jobs:
           --exit-once-uploaded
           --exit-zero-on-changes
           --externals packages/frontend/tailwind.config.js
-          --externals **/*.css
+          --externals packages/frontend/**/*.css
           --externals packages/frontend/src/static/fonts/**/*
           --untraced packages/backend/package.json
           --untraced packages/shared/package.json
