@@ -4,13 +4,6 @@ import '../src/styles/style.css'
 import { allModes } from './modes'
 import { viewports } from './viewports'
 
-document.body.classList.add(
-  'bg-white',
-  'text-black',
-  'dark:bg-black',
-  'dark:text-white',
-)
-
 export const decorators = [
   withThemeByDataAttribute({
     themes: {
@@ -21,7 +14,7 @@ export const decorators = [
     attributeName: 'class',
   }),
   (Story) => (
-    <div style={{ margin: '1rem' }}>
+    <div className="m-4">
       <Story />
     </div>
   ),
