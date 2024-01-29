@@ -1,4 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
+import { Token } from '@l2beat/shared-pure'
+import { deepStrictEqual } from 'assert'
 
 import { chains } from '../../src'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
@@ -16,8 +18,8 @@ describe('tokens script', () => {
       assert(chainId, `Unknown chain ${chain}`)
 
       for (const source of tokens) {
-        const output = generatedFile.tokens.find(
-          (x) => +x.chainId === chainId && x.address === source.address,
+        const output: Token | undefined = generatedFile.tokens.find(
+          (x: Token) => +x.chainId === chainId && x.address === source.address,
         )
 
         assert(
@@ -25,7 +27,13 @@ describe('tokens script', () => {
           `${chain}:${source.symbol} is missing in generated.json. Please run "yarn tokens"`,
         )
 
-        // TODO check fields
+        for (const [key, value] of Object.entries(source)) {
+          deepStrictEqual(
+            output[key as keyof typeof output],
+            value,
+            `${chain}:${source.symbol} has different ${key} in generated.json. Please run "yarn tokens"`,
+          )
+        }
       }
     }
   })
