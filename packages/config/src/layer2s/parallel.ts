@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
+import { ScalingProjectPermissionedAccount } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
@@ -10,7 +11,7 @@ const roles = discovery.getContractValue<{
   EXECUTOR_ROLE: { members: string[] }
 }>('UpgradeExecutor', 'accessControl')
 
-const EOAExecutor = {
+const EOAExecutor: ScalingProjectPermissionedAccount = {
   address: EthereumAddress(roles.EXECUTOR_ROLE.members[0]),
   type: 'EOA',
 }

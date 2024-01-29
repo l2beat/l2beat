@@ -16,8 +16,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
-import { Layer3, Layer3Display } from '../../layer3s'
-import { layer2s } from '../'
+import { Layer3, Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display } from '../types'
 
@@ -388,29 +387,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 }
 
 function getExplorerLinkFormat(hostChain: ProjectId): string {
-  const hostLayer = layer2s.find((l2) => l2.id === hostChain)
-  assert(
-    hostLayer !== undefined,
-    `Host chain ${hostChain} not found in available layer2s`,
-  )
-  assert(
-    hostLayer.chainConfig !== undefined,
-    `Host chain ${hostChain} does not have an explorer url configured`,
-  )
-  assert(
-    hostLayer.chainConfig.explorerApi !== undefined,
-    `Host chain ${hostChain} does not have an explorer api configured`,
-  )
-  assert(
-    hostLayer.chainConfig.explorerApi.type === 'etherscan',
-    `Unsupported explorer api type ${hostLayer.chainConfig.explorerApi.type} for host chain ${hostChain}`,
-  )
+  if (hostChain === ProjectId('ethereum')) {
+    return ETHEREUM_EXPLORER_URL
+  } else if (hostChain === ProjectId('arbitrum')) {
+    return 'https://arbiscan.io/address/{0}#code'
+  }
 
-  assert(
-    hostLayer.chainConfig.explorerUrl !== undefined,
-    `Host chain ${hostChain} does not have an explorer url configured`,
-  )
-  return `${hostLayer.chainConfig.explorerUrl}/address/{0}#code`
+  assert(false, `Host chain ${hostChain.toString()} is not supported`)
 }
 
 function getCodeLink(

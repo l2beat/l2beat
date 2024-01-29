@@ -153,7 +153,7 @@ export function VALIDATED_BY_L2(
 ): ScalingProjectRiskViewEntry {
   return {
     value: capitilize(chain.toString()),
-    description: `Smart contracts on ${chain} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
+    description: `Smart contracts on ${chain.toString()} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
     sentiment: 'warning',
   }
 }

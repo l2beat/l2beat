@@ -3,7 +3,6 @@ import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ScalingProjectPermissionedAccount } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('deri', 'arbitrum')
 
@@ -16,7 +15,7 @@ const EOAExecutor: ScalingProjectPermissionedAccount = {
   type: 'EOA',
 }
 
-export const deri: Layer3 = orbitStackL3({
+export const deri = orbitStackL3({
   discovery,
   hostChain: ProjectId('arbitrum'),
   display: {
