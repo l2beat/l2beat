@@ -40,7 +40,7 @@ interface HeaderProps {
 
 function Header(props: HeaderProps) {
   return (
-    <div className="overflow-hidden bg-gray-100 pb-10 pt-16 dark:bg-zinc-900 md:py-32">
+    <div className="overflow-hidden bg-[#FFFFFF] pb-10 pt-16 dark:bg-zinc-900 md:py-32">
       <PageContent type="wider">
         <div className="grid md:grid-cols-12">
           <div className="relative leading-normal md:col-span-7">
@@ -69,13 +69,13 @@ function Header(props: HeaderProps) {
 
             <div className="relative z-10 mt-6">
               <span className="text-sm text-purple-100 dark:text-pink-200">
-                DONATE
+                DONATE THROUGH
               </span>
               <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
                 {props.networks.map((network) => (
                   <Link
                     key={network.name}
-                    className="flex justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-200 py-3 dark:border-zinc-500 dark:bg-zinc-800 md:px-3 md:py-1"
+                    className="flex justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
                     textClassName="text-sm font-medium"
                     href={network.linkURL}
                     underline={false}
