@@ -99,6 +99,7 @@ export const loopring: Layer2 = {
     ],
     transactionApi: {
       type: 'loopring',
+      defaultUrl: 'https://api3.loopring.io/api/v3',
       defaultCallsPerMinute: 240,
     },
     liveness: {

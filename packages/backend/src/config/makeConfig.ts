@@ -1,17 +1,18 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
+import {
+  getChainActivityConfig,
+  getProjectsWithActivity,
+} from './features/activity'
+import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
-import { getChainsWithTokens } from './features/tvl'
-import { getChainTvlConfig } from './features/tvl'
 import { getGitCommitHash } from './getGitCommitHash'
-import { ConfigReader } from '@l2beat/discovery'
-import { getChainActivityConfig } from './features/activity'
-import { getProjectsWithActivity } from './features/activity'
 
 interface MakeConfigOptions {
   name: string
@@ -116,7 +117,6 @@ export function makeConfig(
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
-      skipExplicitExclusion: !!isLocal,
       projectsExcludedFromAPI:
         env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
         [],
