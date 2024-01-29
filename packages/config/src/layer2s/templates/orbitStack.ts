@@ -1,5 +1,6 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,13 +12,14 @@ import {
   OPERATOR,
   RISK_VIEW,
   ScalingProjectEscrow,
+  ScalingProjectPermission,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s'
-import { Layer2, Layer2Display } from '../types'
 import { layer2s } from '../'
 import { getStage } from '../common/stages/getStage'
+import { Layer2, Layer2Display } from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 
@@ -29,6 +31,7 @@ export interface OrbitStackConfigCommon {
   bridge: ContractParameters
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
+  nonTemplatePermissions?: ScalingProjectPermission[]
 
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
@@ -241,10 +244,10 @@ export function orbitStackCommon(
     },
     permissions: [
       ...templateVars.discovery.getOrbitStackPermissions({
-        EXECUTOR_ROLE: 'OwnerEOA',
         'validators.0': 'Validators/Proposers',
         'batchPosters.0': 'Sequencers',
       }),
+      ...(templateVars.nonTemplatePermissions ?? []),
     ],
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,

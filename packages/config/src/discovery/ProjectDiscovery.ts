@@ -4,7 +4,6 @@ import type {
   ContractValue,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
-import { calculateTemplateInversion } from '@l2beat/discovery/dist/inversion/runInversion'
 import {
   assert,
   EthereumAddress,
@@ -210,7 +209,7 @@ export class ProjectDiscovery {
       const matchesExact = templateName === roleName
       if (!matchesExact && roleName.startsWith(templateName)) {
         const suffix = roleName.slice(templateName.length)
-        return suffix[0] === '.' && isNumeric(suffix.slice(1))
+        return suffix.startsWith('.') && isNumeric(suffix.slice(1))
       }
 
       return matchesExact

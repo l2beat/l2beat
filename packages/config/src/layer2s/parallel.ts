@@ -1,9 +1,19 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
+
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('parallel')
+
+const roles = discovery.getContractValue<{
+  EXECUTOR_ROLE: { members: string[] }
+}>('UpgradeExecutor', 'accessControl')
+
+const EOAExecutor = {
+  address: EthereumAddress(roles.EXECUTOR_ROLE.members[0]),
+  type: 'EOA',
+}
 
 export const parallel: Layer2 = orbitStackL2({
   discovery,
@@ -52,6 +62,19 @@ export const parallel: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'OwnerMultisig',
+      'Multisig that can execute upgrades via the UpgradeExecutor.',
+    ),
+    {
+      name: 'RollupOwner',
+      accounts: [EOAExecutor],
+      description: 'EOA that can execute upgrades via the UpgradeExecutor.',
+    },
+  ],
+
   milestones: [
     {
       name: 'Parallel Mainnet closed launch',

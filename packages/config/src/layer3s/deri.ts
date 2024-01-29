@@ -1,10 +1,20 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+
+import { ScalingProjectPermissionedAccount } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('deri', 'arbitrum')
-const arbitrumDiscovery = new ProjectDiscovery('arbitrum', 'ethereum')
+
+const roles = discovery.getContractValue<{
+  EXECUTOR_ROLE: { members: string[] }
+}>('UpgradeExecutor', 'accessControl')
+
+const EOAExecutor: ScalingProjectPermissionedAccount = {
+  address: EthereumAddress(roles.EXECUTOR_ROLE.members[0]),
+  type: 'EOA',
+}
 
 export const deri: Layer3 = orbitStackL3({
   discovery,
@@ -32,4 +42,12 @@ export const deri: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+
+  nonTemplatePermissions: [
+    {
+      name: 'OwnerEOA',
+      accounts: [EOAExecutor],
+      description: 'EOA that can execute upgrade via the UpgradeExecutor.',
+    },
+  ],
 })
