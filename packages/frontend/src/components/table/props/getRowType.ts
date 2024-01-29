@@ -8,9 +8,9 @@ interface Entry {
 
 type RowType = ReturnType<typeof getRowType>
 
-/* 
+/*
   We need to use row types to determine the background color of the sticky column data cell.
-  You can check out the code for that in the following file: 
+  You can check out the code for that in the following file:
   - packages/frontend/src/components/table/props/getProjectWithIndexColumns.tsx
 */
 
@@ -32,7 +32,7 @@ export function getRowType(entry: Entry) {
 export function getRowTypeClassNames(rowType: RowType) {
   switch (rowType) {
     case 'ethereum':
-      return 'bg-blue-400 hover:bg-blue-400 border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900'
+      return 'bg-blue-400 hover:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900'
     case 'unverified':
       return 'bg-red-100/70 dark:bg-red-900/70 hover:bg-red-100/90 dark:hover:bg-red-900/90'
     case 'under-review':

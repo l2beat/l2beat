@@ -30,6 +30,7 @@ import { pulseChain } from './pulseChain'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
+import { socket } from './socket'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { symbiosis } from './symbiosis'
@@ -72,6 +73,7 @@ export const bridges: Bridge[] = [
   ronin,
   satellite,
   skaleIMA,
+  socket,
   sollet,
   stargate,
   synapse,

@@ -41,7 +41,7 @@ export const metis: Layer2 = {
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
         'https://medium.com/@MetisDAO',
-        'https://twitter.com/MetisDAO',
+        'https://twitter.com/MetisL2',
         'https://discord.gg/RqfEJZXnxd',
         'https://youtube.com/c/MetisDAO',
         'https://t.me/MetisDAO',

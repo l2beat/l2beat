@@ -158,7 +158,7 @@ describe(BlockscoutLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -215,7 +215,7 @@ describe(BlockscoutLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -258,7 +258,7 @@ describe(BlockscoutLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -300,7 +300,7 @@ describe(BlockscoutLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -343,7 +343,7 @@ describe(BlockscoutLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -352,7 +352,7 @@ describe(BlockscoutLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )
@@ -361,7 +361,7 @@ describe(BlockscoutLikeClient.name, () => {
               JSON.stringify({
                 status: '1',
                 message: 'NOTOK',
-                result: `Error! No closest block found`,
+                result: `Error! Block does not exist`,
               }),
             ),
           )

@@ -134,26 +134,28 @@ describe('icons', () => {
     'zklinknexus',
   ]
 
-  for (const project of projects) {
-    const description = `${project.id.toString()} every icon has proper dimensions and size`
-    if (PROJECTS_TO_SKIP.includes(project.id.toString())) {
-      it.skip(description)
-      continue
+  describe('every icon has proper dimensions and size', () => {
+    for (const project of projects) {
+      const id = project.id.toString()
+      if (PROJECTS_TO_SKIP.includes(id)) {
+        it.skip(id)
+        continue
+      }
+      it(id, () => {
+        const iconPath = path.join(
+          __dirname,
+          `../static/icons/${project.display.slug}.png`,
+        )
+
+        const buffer = readFileSync(iconPath)
+        const width = buffer.readUInt32BE(16)
+        const height = buffer.readUInt32BE(20)
+        const size = buffer.length
+
+        expect(width).toEqual(128)
+        expect(height).toEqual(128)
+        expect(size).toBeLessThanOrEqual(10240)
+      })
     }
-    it(description, () => {
-      const iconPath = path.join(
-        __dirname,
-        `../static/icons/${project.display.slug}.png`,
-      )
-
-      const buffer = readFileSync(iconPath)
-      const width = buffer.readUInt32BE(16)
-      const height = buffer.readUInt32BE(20)
-      const size = buffer.length
-
-      expect(width).toEqual(128)
-      expect(height).toEqual(128)
-      expect(size).toBeLessThanOrEqual(10240)
-    })
-  }
+  })
 })

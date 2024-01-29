@@ -84,7 +84,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   return (
     <>
       <span>Anomalies from last 30 days:</span>
-      <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
+      <ul className="ml-4 mt-2.5 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {anomalies.slice(0, 4).map((anomaly) => (
           <li key={anomaly.timestamp}>
             <span>

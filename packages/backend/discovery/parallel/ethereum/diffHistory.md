@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x616619b46862d7649368c11858319d5e420f5791
+
 # Diff at Wed, 24 Jan 2024 08:06:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@bef03f2ccf4bccd5d53aa62da5612827a762973f block: 19069632
+- comparing to: main@bef03f2ccf4bccd5d53aa62da5612827a762973f block: 19069632
 - current block number: 19075194
 
 ## Description
@@ -57,7 +59,7 @@ discovery. Values are for block 19069632 (main branch discovery), not current.
 # Diff at Tue, 23 Jan 2024 13:21:17 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 19032900
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 19032900
 - current block number: 19069632
 
 ## Description
@@ -134,7 +136,7 @@ discovery. Values are for block 19032900 (main branch discovery), not current.
 # Diff at Thu, 18 Jan 2024 09:37:21 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18962479
+- comparing to: main@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18962479
 - current block number: 19032900
 
 ## Description

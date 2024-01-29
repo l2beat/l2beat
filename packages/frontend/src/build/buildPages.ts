@@ -1,4 +1,5 @@
 import Bugsnag from '@bugsnag/js'
+import { getChainNames } from '@l2beat/config'
 import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
@@ -96,8 +97,10 @@ async function main() {
 
     createApi(config, tvlApiResponse, activityApiResponse)
 
-    const verificationStatus = getVerificationStatus()
-    const manuallyVerifiedContracts = getManuallyVerifiedContracts()
+    const supportedChains = getChainNames(config)
+    const verificationStatus = getVerificationStatus(supportedChains)
+    const manuallyVerifiedContracts =
+      getManuallyVerifiedContracts(supportedChains)
 
     const pagesData = {
       tvlApiResponse,
