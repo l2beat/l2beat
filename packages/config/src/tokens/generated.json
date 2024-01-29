@@ -3284,6 +3284,20 @@
       }
     },
     {
+      "id": "kroma:wemix.e-wemix.e",
+      "chainId": 255,
+      "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",
+      "symbol": "WEMIX.e",
+      "name": "WEMIX.e",
+      "decimals": 18,
+      "coingeckoId": "wemix-token",
+      "sinceTimestamp": 1702444959,
+      "iconUrl": "https://assets.coingecko.com/coins/images/12998/large/wemixcoin_color_200.png?1696512788",
+      "category": "other",
+      "type": "EBV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "lyra:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",

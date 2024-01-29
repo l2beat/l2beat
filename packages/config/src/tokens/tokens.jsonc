@@ -1127,5 +1127,17 @@
       "type": "NMV",
       "formula": "circulatingSupply"
     }
+  ],
+  "kroma": [
+    {
+      "symbol": "WEMIX.e",
+      "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wemix on Kroma"
+      },
+      "coingeckoId": "wemix-token"
+    }
   ]
 }
