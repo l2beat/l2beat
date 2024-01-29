@@ -149,22 +149,14 @@ async function performDiscoveryOnPreviousBlock(
 
 function getMainBranchName(): 'main' | 'master' {
   try {
-    if (
-      execSync('git show-ref --verify refs/heads/master > /dev/null 2>&1')
-        .toString()
-        .trim()
-    ) {
-      return 'master'
-    }
+    execSync('git show-ref --verify refs/heads/master', {
+      stdio: 'ignore',
+    })
+    return 'master'
   } catch (error) {
     // If error, it means 'master' doesn't exist, so we'll stick with 'main'
     return 'main'
   }
-
-  assert(
-    false,
-    "This should never happen, see in git's history how this place looked at the time of writing this comment.",
-  )
 }
 
 function compareFolders(path1: string, path2: string): string {
