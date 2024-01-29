@@ -31,7 +31,11 @@ import {
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
 } from './OpStackTypes'
-import { ORBIT_STACK_PERMISSION_TEMPLATES } from './OrbitStackTypes'
+import {
+  ORBIT_STACK_CONTRACT_DESCRIPTION,
+  ORBIT_STACK_PERMISSION_TEMPLATES,
+  OrbitStackContractName,
+} from './OrbitStackTypes'
 import {
   StackPermissionsTag,
   StackPermissionsTagDescription,
@@ -524,6 +528,19 @@ export class ProjectDiscovery {
           overrides?.[d.name] ?? d.name,
         ),
         ...upgradesProxy,
+      }),
+    )
+  }
+
+  getOrbitStackContractDetails(
+    overrides?: Partial<Record<OrbitStackContractName, string>>,
+  ): ScalingProjectContractSingleAddress[] {
+    return ORBIT_STACK_CONTRACT_DESCRIPTION.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
       }),
     )
   }

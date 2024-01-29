@@ -66,58 +66,7 @@ export function orbitStackCommon(
   return {
     id: ProjectId(templateVars.discovery.projectName),
     contracts: {
-      addresses: [
-        templateVars.discovery.getContractDetails('RollupProxy', {
-          description:
-            'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        }),
-        templateVars.discovery.getContractDetails('Bridge', {
-          description:
-            'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        }),
-        templateVars.discovery.getContractDetails('SequencerInbox', {
-          description:
-            'Main entry point for the Sequencer submitting transaction batches.',
-        }),
-        templateVars.discovery.getContractDetails('Inbox', {
-          description:
-            'Entry point for users depositing ETH and sending L1 -> L2 messages.',
-        }),
-        templateVars.discovery.getContractDetails('Outbox', {
-          description:
-            'Contract that allows L2->L1 calls, i.e. messages initiated on L2 which eventually resolve in execution on L1.',
-        }),
-        templateVars.discovery.getContractDetails('L1GatewayRouter', {
-          description: 'Router managing token <--> gateway mapping.',
-        }),
-        templateVars.discovery.getContractDetails('UpgradeExecutor', {
-          description: 'Contract allowed to upgrade the system.',
-        }),
-        templateVars.discovery.getContractDetails('ChallengeManager', {
-          description:
-            'Contract that allows challenging invalid state roots. Can be called through the RollupProxy.',
-        }),
-        templateVars.discovery.getContractDetails('OneStepProofEntry', {
-          description:
-            'Contract used to perform the last step of a fraud proof.',
-        }),
-        templateVars.discovery.getContractDetails('OneStepProverMemory', {
-          description:
-            'Contract used to perform the last step of a fraud proof.',
-        }),
-        templateVars.discovery.getContractDetails('OneStepProverMath', {
-          description:
-            'Contract used to perform the last step of a fraud proof.',
-        }),
-        templateVars.discovery.getContractDetails('OneStepProverHostIo', {
-          description:
-            'Contract used to perform the last step of a fraud proof.',
-        }),
-        templateVars.discovery.getContractDetails('OneStepProver0', {
-          description:
-            'Contract used to perform the last step of a fraud proof.',
-        }),
-      ],
+      addresses: [...templateVars.discovery.getOrbitStackContractDetails()],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
     technology: {

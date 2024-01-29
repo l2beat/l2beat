@@ -7,8 +7,6 @@ export type OpStackContractName =
   | 'L1CrossDomainMessenger'
   | 'L1StandardBridge'
 
-export type OpStackPermissionName = 'Sequencer' | 'Proposer' | 'ProxyAdmin'
-
 export interface OPStackContractTemplate {
   name: OpStackContractName
   coreDescription: string
