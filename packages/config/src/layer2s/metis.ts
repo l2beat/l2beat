@@ -43,7 +43,7 @@ export const metis: Layer2 = {
         'https://metisl2.medium.com/',
         'https://twitter.com/MetisL2',
         'https://discord.com/invite/metis',
-        'https://www.youtube.com/@Metis_L2',
+        'https://youtube.com/@Metis_L2',
         'https://t.me/MetisL2',
       ],
     },
