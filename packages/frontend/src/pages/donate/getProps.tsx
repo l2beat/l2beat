@@ -1,3 +1,4 @@
+import compact from 'lodash/compact'
 import { toDataURL } from 'qrcode'
 import React from 'react'
 
@@ -15,27 +16,16 @@ export async function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'donate'),
-      title: 'Donate',
-      details: {
+      header: {
         ethereumAddress: address,
-        qrLightURL: await toDataURL(address, {
-          width: 240,
+        qrCodeUrl: await toDataURL(address, {
           color: {
             light: '#fafafa',
           },
           errorCorrectionLevel: 'H',
           margin: 0,
         }),
-        qrDarkURL: await toDataURL(address, {
-          width: 240,
-          color: {
-            light: '#1b1b1b',
-            dark: '#ffffff',
-          },
-          errorCorrectionLevel: 'H',
-          margin: 0,
-        }),
-        networks: [
+        networks: compact([
           {
             name: 'Ethereum mainnet',
             linkURL: `https://etherscan.io/address/${address}`,
@@ -52,16 +42,15 @@ export async function getProps(
             name: 'zkSync 1.0',
             linkURL: `https://zkscan.io/explorer/accounts/${address}`,
           },
-          {
+          config.features.gitcoinOption && {
             name: 'Gitcoin',
             linkURL:
               'https://explorer.gitcoin.co/#/round/424/0x222ea76664ed77d18d4416d2b2e77937b76f0a35/0x222ea76664ed77d18d4416d2b2e77937b76f0a35-27',
           },
-        ],
+        ]),
       },
       fundingSources: getFundingSources(),
       footer: getFooterProps(config),
-      showGitcoinButton: config.features.gitcoinOption,
     },
     wrapper: {
       metadata: {
@@ -84,9 +73,9 @@ function getFundingSources(): DonateFundingSourcesProps {
         description: 'Different grants in years 2021-2023',
       },
       {
-        source: 'Optimism RPGF2',
-        tier: 'Medium',
-        description: 'March 2023',
+        source: 'Optimism RPGF',
+        tier: 'Significant',
+        description: 'March 2023, January 2024',
       },
       {
         source:

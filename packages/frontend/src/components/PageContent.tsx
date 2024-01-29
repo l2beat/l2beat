@@ -4,13 +4,13 @@ import { cn } from '../utils/cn'
 
 export interface PageContentProps {
   children: ReactNode
-  narrow?: boolean
+  type?: 'narrow' | 'wider'
   mobileFull?: boolean
   className?: string
 }
 
 export function PageContent({
-  narrow,
+  type,
   children,
   mobileFull = false,
   className,
@@ -18,7 +18,9 @@ export function PageContent({
   return (
     <div
       className={cn(
-        narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
+        'max-w-[1216px]',
+        type === 'narrow' && 'max-w-[1064px]',
+        type === 'wider' && 'max-w-[1296px]',
         'mx-auto h-full leading-[1.15] md:px-12',
         !mobileFull && 'px-4',
         className,
