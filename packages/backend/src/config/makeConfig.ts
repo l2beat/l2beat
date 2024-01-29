@@ -9,6 +9,7 @@ import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
 import { getChainsWithTokens } from './getChainsWithTokens'
 import { getChainTvlConfig } from './getChainTvlConfig'
 import { getGitCommitHash } from './getGitCommitHash'
+import { ConfigReader } from '@l2beat/discovery'
 
 interface MakeConfigOptions {
   name: string
@@ -234,17 +235,9 @@ export function makeConfig(
         ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
         : undefined,
       discord: getDiscordConfig(env, isLocal),
-      chains: [
-        getChainDiscoveryConfig(env, 'ethereum'),
-        getChainDiscoveryConfig(env, 'arbitrum'),
-        getChainDiscoveryConfig(env, 'bsc'),
-        getChainDiscoveryConfig(env, 'celo'),
-        getChainDiscoveryConfig(env, 'gnosis'),
-        getChainDiscoveryConfig(env, 'linea'),
-        getChainDiscoveryConfig(env, 'optimism'),
-        getChainDiscoveryConfig(env, 'polygonpos'),
-        getChainDiscoveryConfig(env, 'polygonzkevm'),
-      ],
+      chains: new ConfigReader()
+        .readAllChains()
+        .map((chain) => getChainDiscoveryConfig(env, chain)),
     },
     diffHistory: flags.isEnabled('diffHistory') && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
