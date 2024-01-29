@@ -1,2 +1,1 @@
-export * from './BlockscoutLikeClient'
-export * from './UniversalBlockscoutClient'
+export * from './BlockscoutClient'

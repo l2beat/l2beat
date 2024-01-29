@@ -1,23 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  EthereumAddress,
+  ChainId,
   getErrorMessage,
-  Hash256,
   RateLimiter,
-  stringAsInt,
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import {
-  ContractCreatorAndCreationTxHashResult,
-  ContractSourceResult,
-} from '../etherscan/model'
 import { HttpClient } from '../HttpClient'
-import { parseEtherscanResponse } from './model'
+import { BlockscoutGetBlockNoByTime, parseBlockscoutResponse } from './model'
 
-class EtherscanError extends Error {}
+class BlockscoutError extends Error {}
 
-export class EtherscanLikeClient {
+export class BlockscoutClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -26,31 +20,17 @@ export class EtherscanLikeClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly url: string,
-    private readonly apiKey: string,
     readonly minTimestamp: UnixTime,
+    private readonly chainId: ChainId,
     private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
-  /**
-   * Creates a client that can be used for discovery so does not need a minTimestamp.
-   */
-  static createForDiscovery(
-    httpClient: HttpClient,
-    url: string,
-    apiKey: string,
-  ) {
-    return new EtherscanLikeClient(httpClient, url, apiKey, new UnixTime(0))
+  getChainId(): ChainId {
+    return this.chainId
   }
 
-  // Etherscan API is not stable enough to trust it to return "closest" block.
-  // There is a case when there is not enough activity on a given chain
-  // so that blocks come in a greater than 10 minutes intervals,
-  // e.g block 0 @ 22:45 and block 1 @ 23:15
-  // if you query for 23:00 Etherscan API returns "No closes block found".
-  //
-  // To mitigate this, we need to go back in time by 10 minutes until we find a block
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
@@ -61,7 +41,7 @@ export class EtherscanLikeClient {
           closest: 'before',
         })
 
-        return stringAsInt().parse(result)
+        return BlockscoutGetBlockNoByTime.parse(result).blockNumber
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
@@ -69,8 +49,8 @@ export class EtherscanLikeClient {
           throw new Error(errorString)
         }
 
-        const errorObject = error as EtherscanError
-        if (!errorObject.message.includes('No closest block found')) {
+        const errorObject = error as BlockscoutError
+        if (!errorObject.message.includes('Block does not exist')) {
           throw new Error(errorObject.message)
         }
 
@@ -81,27 +61,11 @@ export class EtherscanLikeClient {
     throw new Error('Could not fetch block number')
   }
 
-  async getContractSource(address: EthereumAddress) {
-    const response = await this.call('contract', 'getsourcecode', {
-      address: address.toString(),
-    })
-    return ContractSourceResult.parse(response)[0]
-  }
-
-  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
-    const response = await this.call('contract', 'getcontractcreation', {
-      contractaddresses: address.toString(),
-    })
-
-    return ContractCreatorAndCreationTxHashResult.parse(response)[0].txHash
-  }
-
   async call(module: string, action: string, params: Record<string, string>) {
     const query = new URLSearchParams({
       module,
       action,
       ...params,
-      apikey: this.apiKey,
     })
     const url = `${this.url}?${query.toString()}`
 
@@ -121,7 +85,7 @@ export class EtherscanLikeClient {
     }
 
     const text = await httpResponse.text()
-    const etherscanResponse = tryParseEtherscanResponse(text)
+    const blockscoutResponse = tryParseBlockscoutResponse(text)
 
     if (!httpResponse.ok) {
       this.recordError(module, action, timeMs, text)
@@ -130,19 +94,19 @@ export class EtherscanLikeClient {
       )
     }
 
-    if (!etherscanResponse) {
-      const message = `Invalid Etherscan response [${text}] for request [${url}].`
+    if (!blockscoutResponse) {
+      const message = `Invalid Blockscout response [${text}] for request [${url}].`
       this.recordError(module, action, timeMs, message)
       throw new TypeError(message)
     }
 
-    if (etherscanResponse.message !== 'OK') {
-      this.recordError(module, action, timeMs, etherscanResponse.result)
-      throw new EtherscanError(etherscanResponse.result)
+    if (blockscoutResponse.message !== 'OK') {
+      this.recordError(module, action, timeMs, blockscoutResponse.result)
+      throw new BlockscoutError(blockscoutResponse.result)
     }
 
     this.logger.debug({ type: 'success', timeMs, module, action })
-    return etherscanResponse.result
+    return blockscoutResponse.result
   }
 
   private recordError(
@@ -155,9 +119,9 @@ export class EtherscanLikeClient {
   }
 }
 
-function tryParseEtherscanResponse(text: string) {
+function tryParseBlockscoutResponse(text: string) {
   try {
-    return parseEtherscanResponse(text)
+    return parseBlockscoutResponse(text)
   } catch {
     return undefined
   }
