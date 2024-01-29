@@ -113,13 +113,11 @@ export function getProjectDetails(
   if (bridge.contracts)
     items.push({
       type: 'ContractsSection',
-      props: {
-        ...getContractSection(
+      props: getContractSection(
           bridge,
           verificationStatus,
           manuallyVerifiedContracts,
         ),
-      },
     })
 
   if (bridge.knowledgeNuggets && !isEmpty(bridge.knowledgeNuggets)) {
