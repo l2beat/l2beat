@@ -76,7 +76,7 @@ export function getProjectDetails(
   if (riskSection.riskGroups.length > 0) {
     items.push({
       type: 'RiskSection',
-      props: { ...riskSection },
+      props: riskSection,
     })
   }
 
