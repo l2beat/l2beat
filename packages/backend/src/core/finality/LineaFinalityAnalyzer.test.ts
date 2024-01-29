@@ -6,99 +6,120 @@ import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
 describe(LineaFinalityAnalyzer.name, () => {
-  it('correctly decode and returns correct data', async () => {
-    const livenessRepository = getMockLivenessRepository()
-    const provider = getMockRpcClient()
+  describe(LineaFinalityAnalyzer.prototype.getFinalityForTimestamp.name, () => {
+    it('correctly decode and returns correct data', async () => {
+      const livenessRepository = getMockLivenessRepository()
+      const provider = getMockRpcClient()
 
-    const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
-    const results = await calculator.getFinality(
-      UnixTime.now().toStartOf('hour'),
-      1,
-    )
+      const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
+      const results = await calculator.getFinalityForTimestamp(
+        UnixTime.now().toStartOf('hour'),
+        UnixTime.now().toStartOf('hour'),
+      )
 
-    expect(
-      livenessRepository.findTxHashByProjectIdAndTimestamp,
-    ).toHaveBeenCalledTimes(1)
-    expect(results?.minimum).toEqual(33621)
-    expect(results?.maximum).toEqual(33693)
-    expect(results?.average).toEqual(33657)
-  })
-
-  it('correctly split date for a given granularity', async () => {
-    const livenessRepository = getMockLivenessRepository()
-    const provider = getMockRpcClient()
-    const start = UnixTime.now().toStartOf('hour')
-    const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
-    await calculator.getFinality(start, 6)
-
-    expect(
-      livenessRepository.findTxHashByProjectIdAndTimestamp,
-    ).toHaveBeenNthCalledWith(
-      1,
-      ProjectId('linea'),
-      start,
-      start.add(-600, 'seconds'),
-      LivenessType('STATE'),
-      0,
-    )
-
-    expect(
-      livenessRepository.findTxHashByProjectIdAndTimestamp,
-    ).toHaveBeenNthCalledWith(
-      6,
-      ProjectId('linea'),
-      start.add(-600 * 5, 'seconds'),
-      start.add(-600 * 6, 'seconds'),
-      LivenessType('STATE'),
-      0,
-    )
-
-    expect(
-      livenessRepository.findTxHashByProjectIdAndTimestamp,
-    ).toHaveBeenCalledTimes(6)
-    expect(provider.getBlock).toHaveBeenCalledTimes(6)
-    expect(provider.getTransaction).toHaveBeenCalledTimes(6)
-  })
-
-  it('correctly decode for multiple txs with one not found', async () => {
-    const livenessRepository = mockObject<LivenessRepository>({
-      findTxHashByProjectIdAndTimestamp: mockFn()
-        .resolvesToOnce('0x121')
-        .resolvesToOnce('0x121')
-        .resolvesToOnce(undefined),
+      expect(results?.minimum).toEqual(33621)
+      expect(results?.maximum).toEqual(33693)
+      expect(results?.average).toEqual(33657)
     })
-    const provider = mockObject<RpcClient>({
-      getBlock: mockFn()
-        .resolvesToOnce({ timestamp: 1705407431 })
-        .resolvesToOnce({ timestamp: 1706171999 }),
-      getTransaction: mockFn()
-        .resolvesToOnce({
-          blockNumber: 1,
-          data: DATA,
+  })
+
+  describe(
+    LineaFinalityAnalyzer.prototype.getFinalityWithGranularity.name,
+    () => {
+      it('correctly split date for a given granularity', async () => {
+        const livenessRepository = getMockLivenessRepository()
+        const provider = getMockRpcClient()
+        const start = UnixTime.now().toStartOf('hour')
+        const calculator = new LineaFinalityAnalyzer(
+          provider,
+          livenessRepository,
+        )
+        await calculator.getFinalityWithGranularity(
+          start,
+          start.add(-1, 'hours'),
+          6,
+        )
+
+        expect(
+          livenessRepository.findTxByProjectIdAndTimestamp,
+        ).toHaveBeenNthCalledWith(
+          1,
+          ProjectId('linea'),
+          start,
+          start.add(-600, 'seconds'),
+          LivenessType('STATE'),
+          0,
+        )
+
+        expect(
+          livenessRepository.findTxByProjectIdAndTimestamp,
+        ).toHaveBeenNthCalledWith(
+          6,
+          ProjectId('linea'),
+          start.add(-600 * 5, 'seconds'),
+          start.add(-600 * 6, 'seconds'),
+          LivenessType('STATE'),
+          0,
+        )
+
+        expect(
+          livenessRepository.findTxByProjectIdAndTimestamp,
+        ).toHaveBeenCalledTimes(6)
+        expect(provider.getTransaction).toHaveBeenCalledTimes(6)
+      })
+
+      it('correctly decode for multiple txs with one not found', async () => {
+        const start = UnixTime.now().toStartOf('hour')
+        const livenessRepository = mockObject<LivenessRepository>({
+          findTxByProjectIdAndTimestamp: mockFn()
+            .resolvesToOnce({
+              txHash: '0x121',
+              timestamp: new UnixTime(1705407431),
+            })
+            .resolvesToOnce({
+              txHash: '0x121',
+              timestamp: new UnixTime(1706171999),
+            })
+            .resolvesToOnce(undefined),
         })
-        .resolvesToOnce({
-          blockNumber: 2,
-          data: DATA2,
-        }),
-    })
-    const start = UnixTime.now().toStartOf('hour')
-    const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
-    const results = await calculator.getFinality(start, 3)
+        const provider = mockObject<RpcClient>({
+          getTransaction: mockFn()
+            .resolvesToOnce({
+              data: DATA,
+            })
+            .resolvesToOnce({
+              data: DATA2,
+            }),
+        })
 
-    expect(results?.minimum).toEqual(28810)
-    expect(results?.maximum).toEqual(33693)
-    expect(results?.average).toEqual(30384)
-    expect(
-      livenessRepository.findTxHashByProjectIdAndTimestamp,
-    ).toHaveBeenCalledTimes(3)
-    expect(provider.getBlock).toHaveBeenCalledTimes(2)
-    expect(provider.getTransaction).toHaveBeenCalledTimes(2)
-  })
+        const calculator = new LineaFinalityAnalyzer(
+          provider,
+          livenessRepository,
+        )
+        const results = await calculator.getFinalityWithGranularity(
+          start,
+          start.add(-1, 'hours'),
+          3,
+        )
+
+        expect(results?.minimum).toEqual(28810)
+        expect(results?.maximum).toEqual(33693)
+        expect(results?.average).toEqual(31261)
+        expect(
+          livenessRepository.findTxByProjectIdAndTimestamp,
+        ).toHaveBeenCalledTimes(3)
+        expect(provider.getTransaction).toHaveBeenCalledTimes(2)
+      })
+    },
+  )
 })
 
 function getMockLivenessRepository() {
   return mockObject<LivenessRepository>({
-    findTxHashByProjectIdAndTimestamp: mockFn().resolvesTo('0x121'),
+    findTxByProjectIdAndTimestamp: mockFn().resolvesTo({
+      txHash: '0x121',
+      timestamp: new UnixTime(1705407431),
+    }),
   })
 }
 
