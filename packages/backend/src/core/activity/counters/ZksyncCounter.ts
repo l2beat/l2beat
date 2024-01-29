@@ -23,7 +23,12 @@ export function createZksyncCounter(
   const batchSize = getBatchSizeFromCallsPerMinute(
     transactionApi.callsPerMinute,
   )
-  const client = new ZksyncClient(http, logger, transactionApi.callsPerMinute)
+  const client = new ZksyncClient(
+    http,
+    logger,
+    'https://api.zksync.io/api/v0.2',
+    transactionApi.callsPerMinute,
+  )
 
   const processor = new SequenceProcessor(
     projectId.toString(),

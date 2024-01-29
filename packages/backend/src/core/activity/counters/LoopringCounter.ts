@@ -23,7 +23,12 @@ export function createLoopringCounter(
 ): TransactionCounter {
   const callsPerMinute = transactionApi.callsPerMinute
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new LoopringClient(http, logger, { callsPerMinute })
+  const client = new LoopringClient(
+    http,
+    logger,
+    'https://api3.loopring.io/api/v3',
+    { callsPerMinute },
+  )
 
   const processor = new SequenceProcessor(
     projectId.toString(),

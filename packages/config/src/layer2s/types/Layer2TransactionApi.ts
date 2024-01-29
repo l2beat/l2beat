@@ -2,60 +2,31 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 export type AssessCount = (count: number, blockNumber: number) => number
 
+export interface SimpleTransactionApi<T extends string> {
+  type: T
+  defaultUrl?: string
+  defaultCallsPerMinute?: number
+}
+
 export interface RpcTransactionApi {
   type: 'rpc'
-  url?: string
-  callsPerMinute?: number
+  defaultUrl?: string
+  defaultCallsPerMinute?: number
   assessCount?: AssessCount
   startBlock?: number
-  timeout?: number
 }
-
-export interface StarknetTransactionApi {
-  type: 'starknet'
-  url?: string
-  callsPerMinute?: number
-}
-
-export interface AztecTransactionApi {
-  type: 'aztec'
-  url: string
-  callsPerMinute?: number
-}
-
-export interface ZksyncTransactionApi {
-  type: 'zksync'
-  callsPerMinute: number
-}
-
-export interface LoopringTransactionApi {
-  type: 'loopring'
-  callsPerMinute: number
-}
-
-export type StarkexProduct =
-  | 'dydx'
-  | 'sorare'
-  | 'immutable'
-  | 'myria'
-  | 'rhinofi'
-  | 'apex_usdt'
-  | 'apex_usdc'
-  | 'brine'
-  | 'reddio'
 
 export interface StarkexTransactionApi {
   type: 'starkex'
-  product: StarkexProduct[]
+  product: string[]
   sinceTimestamp: UnixTime
-  resyncLastDays: number
+  resyncLastDays?: number
 }
 
-export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
+export type Layer2TransactionApi =
+  | SimpleTransactionApi<'starknet'>
+  | SimpleTransactionApi<'aztec'>
+  | SimpleTransactionApi<'zksync'>
+  | SimpleTransactionApi<'loopring'>
   | RpcTransactionApi
   | StarkexTransactionApi
-  | AztecTransactionApi
-  | StarknetTransactionApi
-  | ZksyncTransactionApi
-  | LoopringTransactionApi
-)

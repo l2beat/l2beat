@@ -130,9 +130,9 @@ export const kroma: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://api.kroma.network',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://api.kroma.network',
-      callsPerMinute: 1500,
       assessCount: subtractOne,
     },
     liveness: {

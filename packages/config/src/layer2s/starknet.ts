@@ -347,6 +347,8 @@ export const starknet: Layer2 = {
     ],
     transactionApi: {
       type: 'starknet',
+      defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
+      defaultCallsPerMinute: 120,
     },
     liveness: {
       proofSubmissions: [

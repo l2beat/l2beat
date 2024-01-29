@@ -172,6 +172,7 @@ export const arbitrum: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://arb1.arbitrum.io/rpc',
       // We need to subtract the Nitro system transactions
       // after the block of the update
       assessCount: subtractOneAfterBlockInclusive(22207818),

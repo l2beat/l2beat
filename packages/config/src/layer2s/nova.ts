@@ -108,6 +108,7 @@ export const nova: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://nova.arbitrum.io/rpc',
       assessCount: subtractOne,
       startBlock: 1,
     },
