@@ -169,10 +169,10 @@ describe(LivenessRepository.name, () => {
   })
 
   describe(
-    LivenessRepository.prototype.findTxHashByProjectIdAndTimestamp.name,
+    LivenessRepository.prototype.findTxByProjectIdAndTimestamp.name,
     () => {
       it('should return tx hash for given project id and timestamp on place 0', async () => {
-        const result = await repository.findTxHashByProjectIdAndTimestamp(
+        const result = await repository.findTxByProjectIdAndTimestamp(
           LIVENESS_CONFIGS[0].projectId,
           DATA[0].timestamp,
           DATA[1].timestamp,
@@ -180,7 +180,10 @@ describe(LivenessRepository.name, () => {
           0,
         )
 
-        expect(result).toEqual(DATA[0].txHash)
+        expect(result).toEqual({
+          timestamp: DATA[0].timestamp,
+          txHash: DATA[0].txHash,
+        })
       })
       it('should return tx hash for given project id and timestamp on place -1', async () => {
         await repository.addMany([
@@ -191,7 +194,7 @@ describe(LivenessRepository.name, () => {
             livenessId: LIVENESS_CONFIGS[0].id,
           },
         ])
-        const result = await repository.findTxHashByProjectIdAndTimestamp(
+        const result = await repository.findTxByProjectIdAndTimestamp(
           LIVENESS_CONFIGS[0].projectId,
           START.add(-2, 'hours'),
           START.add(-3, 'hours'),
@@ -199,7 +202,10 @@ describe(LivenessRepository.name, () => {
           -1,
         )
 
-        expect(result).toEqual(DATA[0].txHash)
+        expect(result).toEqual({
+          timestamp: DATA[0].timestamp,
+          txHash: DATA[0].txHash,
+        })
       })
       it('should return undefined when no tx hash for given project id', async () => {
         await repository.addMany([
@@ -210,7 +216,7 @@ describe(LivenessRepository.name, () => {
             livenessId: LIVENESS_CONFIGS[0].id,
           },
         ])
-        const result = await repository.findTxHashByProjectIdAndTimestamp(
+        const result = await repository.findTxByProjectIdAndTimestamp(
           LIVENESS_CONFIGS[0].projectId,
           START.add(-8, 'hours'),
           START.add(-9, 'hours'),

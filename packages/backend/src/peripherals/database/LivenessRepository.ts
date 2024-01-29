@@ -33,6 +33,7 @@ export interface LivenessRowWithProjectIdAndType {
 
 export interface LivenessRowWithTxHash {
   tx_hash: string
+  timestamp: Date
 }
 
 // TODO: add index when we will write controller
@@ -62,13 +63,13 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecordWithTimestampAndType)
   }
 
-  async findTxHashByProjectIdAndTimestamp(
+  async findTxByProjectIdAndTimestamp(
     projectId: ProjectId,
     from: UnixTime,
     to: UnixTime,
     type: LivenessType,
     place: number,
-  ): Promise<string | undefined> {
+  ): Promise<{ txHash: string; timestamp: UnixTime } | undefined> {
     const knex = await this.knex()
     let rows
     if (place < 0) {
@@ -99,7 +100,7 @@ export class LivenessRepository extends BaseRepository {
       return undefined
     }
 
-    return rows.map(toRecordWithTxHash)[0].txHash
+    return rows.map(toRecordWithTxHashAndTimestamp)[0]
   }
 
   async getByProjectIdAndType(
@@ -163,11 +164,12 @@ function toRecordWithTimestampAndType(
   }
 }
 
-function toRecordWithTxHash(
+function toRecordWithTxHashAndTimestamp(
   row: LivenessRowWithTxHash,
-): Pick<LivenessRecord, 'txHash'> {
+): Pick<LivenessRecord, 'txHash' | 'timestamp'> {
   return {
     txHash: row.tx_hash,
+    timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
 
