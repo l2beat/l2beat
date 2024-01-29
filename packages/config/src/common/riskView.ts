@@ -1,4 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
@@ -146,16 +146,20 @@ export const VALIDATED_BY_ETHEREUM: ScalingProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
-type L2sWithL3Support = 'Arbitrum'
+type L2sWithL3Support = ProjectId
 
 export function VALIDATED_BY_L2(
   chain: L2sWithL3Support,
 ): ScalingProjectRiskViewEntry {
   return {
-    value: chain,
-    description: `Smart contracts on ${chain} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
+    value: capitilize(chain.toString()),
+    description: `Smart contracts on ${chain.toString()} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
     sentiment: 'warning',
   }
+}
+
+function capitilize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 export function NATIVE_AND_CANONICAL(
