@@ -283,10 +283,16 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
-
+        case 'Axelar proxy':
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          })
+          break
         // Ignore types
         case 'immutable':
-        case 'Axelar proxy':
         case 'gnosis safe':
         case 'gnosis safe zodiac module':
         case 'EIP2535 diamond proxy':

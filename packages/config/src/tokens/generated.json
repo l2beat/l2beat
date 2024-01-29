@@ -2101,6 +2101,20 @@
       "formula": "locked"
     },
     {
+      "id": "ethereum:pol-polygon-ecosystem-token",
+      "chainId": 1,
+      "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+      "symbol": "POL",
+      "name": "Polygon Ecosystem Token",
+      "decimals": 18,
+      "coingeckoId": "polygon-ecosystem-token",
+      "sinceTimestamp": 1698224783,
+      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "category": "other",
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "poly-polymath",
       "name": "Polymath",
       "coingeckoId": "polymath",
@@ -3297,7 +3311,8 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket"
+        "bridge": "Socket",
+        "slug": "socket"
       }
     },
     {
@@ -3504,15 +3519,15 @@
     },
     {
       "id": "zkfair:zkf-zkf",
-      "chainId": 42766,
+      "name": "ZKF",
+      "coingeckoId": "zkfair",
       "address": "0x1cD3E2A23C45A690a18Ed93FD1412543f464158F",
       "symbol": "ZKF",
-      "name": "ZKF",
       "decimals": 18,
-      "coingeckoId": "zkfair",
       "sinceTimestamp": 1704412800,
-      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
       "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
+      "chainId": 42766,
       "type": "NMV",
       "formula": "circulatingSupply"
     },

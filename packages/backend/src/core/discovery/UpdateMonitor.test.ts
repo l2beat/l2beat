@@ -36,7 +36,13 @@ const COMMITTED: ContractParameters[] = [
     ...mockContract(NAME_A, ADDRESS_A),
     values: { a: true },
   },
-  mockContract(NAME_B, ADDRESS_B),
+  {
+    ...mockContract(NAME_B, ADDRESS_B),
+    errors: {
+      nonce: 'https://endpoint.com/potential-api-key',
+      totalLiquidity: 'https://endpoint.com/potential-api-key2',
+    },
+  },
 ]
 
 const DISCOVERY_RESULT: DiscoveryOutput = {
@@ -821,6 +827,17 @@ const mockDiff: DiscoveryDiff[] = [
         key: 'values.a',
         before: 'true',
         after: 'false',
+      },
+    ],
+  },
+  {
+    address: ADDRESS_B,
+    name: NAME_B,
+    diff: [
+      {
+        before:
+          '{"nonce":"Processing error occurred.","totalLiquidity":"Processing error occurred."}',
+        key: 'errors',
       },
     ],
   },

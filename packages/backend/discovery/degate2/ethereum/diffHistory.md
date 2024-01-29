@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x4e7d2fc04dd00f06386ecfbea39ff65a8618b801
+
 # Diff at Sun, 12 Nov 2023 07:41:47 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@eae2f7f70e414ebfe1217a66fea18a1d5483fb5e
+- comparing to: main@eae2f7f70e414ebfe1217a66fea18a1d5483fb5e
 
 ## Description
 
@@ -22,7 +24,7 @@ DeGate (v1) is going through a redeployment, and for this reason the main Exchan
 # Diff at Tue, 26 Sep 2023 12:46:23 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

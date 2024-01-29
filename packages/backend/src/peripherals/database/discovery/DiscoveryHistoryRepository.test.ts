@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import {
   DiscoveryHistoryRecord,
   DiscoveryHistoryRepository,
@@ -15,8 +15,7 @@ import {
 
 const CONFIG_HASH = Hash256.random()
 
-describe(DiscoveryHistoryRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(DiscoveryHistoryRepository.name, (database) => {
   const repository = new DiscoveryHistoryRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

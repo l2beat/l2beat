@@ -82,7 +82,7 @@ export function getFaqItems(): FaqItem[] {
     },
     {
       question:
-        'Why does the main table contain projects than are not trust-minimized L2s yet?',
+        'Why does the main table contain projects that are not trust-minimized L2s yet?',
       answer: (
         <div>
           <p className="mt-4">
@@ -177,7 +177,7 @@ export function getFaqItems(): FaqItem[] {
     },
     {
       question:
-        'What if an L2 proposer submit a fraudulent state commit to L1?',
+        'What if an L2 proposer submits a fraudulent state commit to L1?',
       answer: (
         <>
           A state root from L2 is typically used to check coin ownership on L2
@@ -354,7 +354,7 @@ export function getFaqItems(): FaqItem[] {
     {
       question: 'Apart from TVL, what is L2BEAT aiming to track?',
       answer:
-        "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try highlight main risks related to their implementation that may affect user's funds security.",
+        "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try to highlight the main risks related to their implementation that may affect user's funds security.",
     },
     {
       question: 'Is L2BEAT performing a security audit for each L2?',
@@ -400,7 +400,7 @@ export function getFaqItems(): FaqItem[] {
             <Link href="https://github.com/l2beat/l2beat">open source</Link>{' '}
             &ndash; just create a PR. If you want to add a new project you
             should read our {''}
-            <Link href="https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md">
+            <Link href="https://github.com/l2beat/l2beat/tree/main/CONTRIBUTING.md">
               contributing guidelines
             </Link>
             .

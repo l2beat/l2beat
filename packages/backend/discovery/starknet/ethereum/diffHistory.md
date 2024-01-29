@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x08a0364947864d1363efada15e024f5fb8769f76
+
 # Diff at Wed, 17 Jan 2024 07:18:24 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@e7e7682db5966865697553171159822c2ec0248f block: 19012236
+- comparing to: main@e7e7682db5966865697553171159822c2ec0248f block: 19012236
 - current block number: 19025063
 
 ## Description
@@ -23,7 +25,7 @@ Change in the USDC Bridge proxy governors - a new address is added.
 # Diff at Mon, 15 Jan 2024 12:19:39 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@7146ff49765d6596dfb78aa68e5c4cee6f5f4642 block: 18940875
+- comparing to: main@7146ff49765d6596dfb78aa68e5c4cee6f5f4642 block: 18940875
 - current block number: 19012236
 
 ## Description
@@ -56,7 +58,7 @@ The program hash and config hash are updated (with transactions 0xd15e25aaac8f63
 # Diff at Tue, 19 Dec 2023 15:34:07 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@66449a15ea740d012130a024e5e0daa7f431f04b
+- comparing to: main@66449a15ea740d012130a024e5e0daa7f431f04b
 
 ## Description
 
@@ -76,7 +78,7 @@ The hash can be found by looking at the transactions of one of the Starknet Impl
 # Diff at Mon, 18 Dec 2023 14:44:24 GMT:
 
 - author: maciekzygmunt (<maciekzygmunt@interia.pl>)
-- comparing to: master@4b160bc70449af36363ff58bf34ad3610acc00ff
+- comparing to: main@4b160bc70449af36363ff58bf34ad3610acc00ff
 
 ## Description
 
@@ -198,7 +200,7 @@ New owner (EOA) has been added to Implementation Multisig, now it's 2/5.
 # Diff at Wed, 22 Nov 2023 11:30:11 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@a260f672297f7e3c229fd7a1940da6abc97c3816
+- comparing to: main@a260f672297f7e3c229fd7a1940da6abc97c3816
 
 ## Description
 

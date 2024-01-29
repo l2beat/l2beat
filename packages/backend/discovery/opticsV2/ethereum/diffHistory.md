@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x934ae7e4ca1629bbf8024e8f3b36351bc2edc36a
+
 # Diff at Fri, 13 Oct 2023 07:04:29 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@28e18077472448efd6132e6ee714b582cc1ee80b
+- comparing to: main@28e18077472448efd6132e6ee714b582cc1ee80b
 
 ## Description
 
@@ -36,7 +38,7 @@ Newly created contracts are the result of rediscovering the `upgradeBeacon` addr
 # Diff at Mon, 09 Oct 2023 13:00:07 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

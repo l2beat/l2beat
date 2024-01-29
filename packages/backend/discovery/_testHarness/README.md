@@ -8,5 +8,5 @@
 
 The two files that you have created while flattening (`Test.sol` and
 `Script.sol`) are your updated versions of the ones present in this directory.
-Simply copy them over and commit them to master, and you've successfully
+Simply copy them over and commit them to main, and you've successfully
 upgraded the testing harness!

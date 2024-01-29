@@ -12,7 +12,7 @@ import {
   makeLivenessFunctionCall,
 } from '../../core/liveness/types/LivenessConfig'
 import { LivenessId } from '../../core/liveness/types/LivenessId'
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import {
   LivenessConfigurationRecord,
   LivenessConfigurationRepository,
@@ -51,8 +51,7 @@ export const LIVENESS_CONFIGS: LivenessConfigEntry[] = [
   }),
 ]
 
-describe(LivenessConfigurationRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(LivenessConfigurationRepository.name, (database) => {
   const repository = new LivenessConfigurationRepository(
     database,
     Logger.SILENT,

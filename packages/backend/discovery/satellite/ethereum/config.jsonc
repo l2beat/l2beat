@@ -1,0 +1,16 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "satellite",
+  "initialAddresses": ["0x4F4495243837681061C4743b74B3eEdf548D56A5"],
+  "names": {
+    "0x4F4495243837681061C4743b74B3eEdf548D56A5": "Gateway",
+    "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0": "AxelarAuthWeighted"
+  },
+  "overrides": {
+    "Gateway": {
+      "proxyType": "Axelar proxy"
+    },
+    "AxelarAuthWeighted": { "ignoreMethods": ["hashForEpoch"] }
+  }
+}

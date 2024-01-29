@@ -1,4 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
@@ -105,7 +105,7 @@ export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
   value: 'Optimistic (MEMO)',
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
-    Challenge mechanizm is not yet fully implemented.',
+    Challenge mechanism is not yet fully implemented.',
   sentiment: 'bad',
 }
 
@@ -146,16 +146,20 @@ export const VALIDATED_BY_ETHEREUM: ScalingProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
-type L2sWithL3Support = 'Arbitrum'
+type L2sWithL3Support = ProjectId
 
 export function VALIDATED_BY_L2(
   chain: L2sWithL3Support,
 ): ScalingProjectRiskViewEntry {
   return {
-    value: chain,
-    description: `Smart contracts on ${chain} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
+    value: capitilize(chain.toString()),
+    description: `Smart contracts on ${chain.toString()} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
     sentiment: 'warning',
   }
+}
+
+function capitilize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 export function NATIVE_AND_CANONICAL(
