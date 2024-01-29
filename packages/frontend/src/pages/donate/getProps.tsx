@@ -27,19 +27,19 @@ export async function getProps(
         }),
         networks: compact([
           {
-            name: 'Ethereum mainnet',
+            name: 'Ethereum',
             linkURL: `https://etherscan.io/address/${address}`,
           },
           {
-            name: 'Arbitrum',
+            name: 'Arbitrum One',
             linkURL: `https://arbiscan.io/address/${address}`,
           },
           {
-            name: 'Optimism',
+            name: 'OP Mainnet',
             linkURL: `https://optimistic.etherscan.io/address/${address}`,
           },
           {
-            name: 'zkSync 1.0',
+            name: 'zkSync Lite',
             linkURL: `https://zkscan.io/explorer/accounts/${address}`,
           },
           config.features.gitcoinOption && {
