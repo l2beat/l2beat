@@ -157,11 +157,6 @@ function getMainBranchName(): 'main' | 'master' {
     // If error, it means 'master' doesn't exist, so we'll stick with 'main'
     return 'main'
   }
-
-  assert(
-    false,
-    "This should never happen, see in git's history how this place looked at the time of writing this comment.",
-  )
 }
 
 function compareFolders(path1: string, path2: string): string {
