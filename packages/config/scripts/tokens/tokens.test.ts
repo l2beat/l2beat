@@ -7,12 +7,11 @@ import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
 import { ScriptLogger } from './utils/ScriptLogger'
 
 describe('tokens script', () => {
+  const logger = ScriptLogger.SILENT
+  const tokensFile = readTokensFile(logger)
+  const generatedFile = readGeneratedFile(logger)
+
   it('every source has corresponding output entry', () => {
-    const logger = ScriptLogger.SILENT
-
-    const tokensFile = readTokensFile(logger)
-    const generatedFile = readGeneratedFile(logger)
-
     for (const [chain, tokens] of Object.entries(tokensFile)) {
       const chainId = chains.find((x) => x.name === chain)?.chainId
       assert(chainId, `Unknown chain ${chain}`)
@@ -35,6 +34,22 @@ describe('tokens script', () => {
           )
         }
       }
+    }
+  })
+
+  it('every output entry has corresponding source', () => {
+    for (const output of generatedFile.tokens) {
+      const chainName = chains.find((x) => x.chainId === +output.chainId)?.name
+      assert(chainName, `Unknown chain ${output.chainId.toString()}`)
+
+      const source = tokensFile[chainName].find(
+        (x) => x.address === output.address,
+      )
+
+      assert(
+        source,
+        `${chainName}:${output.symbol} is missing in tokens.json. Please run "yarn tokens"`,
+      )
     }
   })
 })
