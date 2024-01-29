@@ -37,6 +37,4 @@ describe('tokens script', () => {
       }
     }
   })
-
-  it('every output entry has corresponding source', () => {})
 })
