@@ -8,8 +8,8 @@ import { Database } from './Database'
 
 describe(Database.name, () => {
   it('can run and rollback all migrations', async function () {
-    const { database, skip } = getTestDatabase()
-    if (skip) {
+    const database = getTestDatabase()
+    if (!database) {
       this.skip()
     }
 
@@ -46,7 +46,7 @@ describe(Database.name, () => {
     })
 
     it('throws for mismatching version', async function () {
-      database = getTestDatabase({ requiredMajorVersion: 15 }).database
+      database = getTestDatabase({ requiredMajorVersion: 15 })
       if (!database) {
         this.skip()
       }
@@ -56,7 +56,7 @@ describe(Database.name, () => {
     })
 
     it('does not throw for matching version', async function () {
-      database = getTestDatabase().database
+      database = getTestDatabase()
       if (!database) {
         this.skip()
       }

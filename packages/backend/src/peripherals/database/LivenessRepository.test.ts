@@ -2,16 +2,12 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { LivenessConfigurationRepository } from './LivenessConfigurationRepository'
 import { LIVENESS_CONFIGS } from './LivenessConfigurationRepository.test'
 import { LivenessRecord, LivenessRepository } from './LivenessRepository'
 
-describe(LivenessRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-  if (!database) {
-    return
-  }
+describeDatabase(LivenessRepository.name, (database) => {
   const repository = new LivenessRepository(database, Logger.SILENT)
   const configRepository = new LivenessConfigurationRepository(
     database,

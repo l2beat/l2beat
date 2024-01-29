@@ -2,14 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { BalanceStatusRepository } from './BalanceStatusRepository'
 
-describe(BalanceStatusRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-  if (!database) {
-    return
-  }
+describeDatabase(BalanceStatusRepository.name, (database) => {
   const repository = new BalanceStatusRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
