@@ -160,7 +160,6 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
-        lora: ['Lora', 'serif'],
       },
       spacing: {
         '2/3': '66.666666%',
