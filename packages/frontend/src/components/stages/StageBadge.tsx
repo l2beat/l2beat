@@ -57,9 +57,9 @@ function getColorClassName(
     case 'Stage 0':
       return 'bg-orange-400 text-black'
     case 'UnderReview':
-      return 'bg-gray-750 text-yellow-200'
+      return 'bg-zinc-700 text-yellow-200'
     case 'NotApplicable':
-      return 'bg-gray-200 dark:bg-gray-750 text-gray-500 dark:text-gray-400 !font-normal'
+      return 'bg-gray-200 dark:bg-zinc-700 text-gray-500 dark:text-gray-400 !font-normal'
     default:
       return ''
   }

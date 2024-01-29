@@ -23,12 +23,12 @@ export function TvlHeader({ isBridge }: TvlHeaderProps) {
       </div>
       <div className="flex flex-row items-baseline gap-2 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 md:flex-col md:items-end md:gap-1">
         <p
-          className="text-right text-lg font-bold md:text-3xl"
+          className="whitespace-nowrap text-right text-lg font-bold md:text-3xl"
           data-role="chart-header-value"
         >
           ...
         </p>
-        <p className="text-right text-xs font-bold md:text-base">
+        <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
           <span data-role="chart-header-value-change">...</span> / 7 days
         </p>
       </div>

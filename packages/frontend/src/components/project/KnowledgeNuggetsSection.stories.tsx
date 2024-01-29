@@ -7,6 +7,7 @@ const meta: Meta<typeof KnowledgeNuggetsComponent> = {
   args: {
     title: 'Knowledge nuggets',
     id: 'knowledge-nuggets',
+    sectionOrder: 1,
   },
 }
 export default meta

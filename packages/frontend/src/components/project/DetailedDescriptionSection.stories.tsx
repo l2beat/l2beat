@@ -7,6 +7,7 @@ const meta: Meta<typeof DescriptionSectionComponent> = {
   args: {
     id: 'detailed-description',
     title: 'Detailed description',
+    sectionOrder: 1,
   },
 }
 export default meta

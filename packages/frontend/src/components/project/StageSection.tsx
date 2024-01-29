@@ -20,6 +20,7 @@ import { WarningBar } from './WarningBar'
 export interface StageSectionProps {
   title: string
   id: ProjectSectionId
+  sectionOrder: number
   icon: string
   name: string
   type: string
@@ -30,7 +31,11 @@ export interface StageSectionProps {
 export function StageSection(props: StageSectionProps) {
   if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return (
-      <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+      <ProjectDetailsSection
+        title={props.title}
+        id={props.id}
+        sectionOrder={props.sectionOrder}
+      >
         <div className="mb-6 font-medium">
           <img
             src={props.icon}
@@ -56,7 +61,11 @@ export function StageSection(props: StageSectionProps) {
       : UnderReviewIcon
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       <div className="mb-6 font-medium">
         <img
           src={props.icon}
@@ -90,7 +99,7 @@ export function StageSection(props: StageSectionProps) {
         return (
           <div
             key={stage.stage}
-            className="Dropdown mb-4 rounded-lg bg-gray-100 dark:bg-neutral-700"
+            className="Dropdown mb-4 rounded-lg bg-gray-200 dark:bg-zinc-700"
           >
             <label className="flex cursor-pointer items-center justify-between p-4">
               <input
