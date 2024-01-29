@@ -134,7 +134,7 @@ async function main() {
   saveResults(sorted)
 }
 
-function readTokensFile(logger: ScriptLogger) {
+export function readTokensFile(logger: ScriptLogger) {
   const sourceFile = readFileSync(SOURCE_FILE_PATH, 'utf-8')
   const errors: ParseError[] = []
   const parsed = parse(sourceFile, errors, {
@@ -147,7 +147,7 @@ function readTokensFile(logger: ScriptLogger) {
   return source
 }
 
-function readGeneratedFile(logger: ScriptLogger) {
+export function readGeneratedFile(logger: ScriptLogger) {
   const outputFile = readFileSync(OUTPUT_FILE_PATH, 'utf-8')
   try {
     const output = Output.parse(JSON.parse(outputFile))
