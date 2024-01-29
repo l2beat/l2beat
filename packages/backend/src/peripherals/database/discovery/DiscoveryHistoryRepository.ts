@@ -3,6 +3,7 @@ import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { DiscoveryHistoryRow } from 'knex/types/tables'
 
+import { sanitizeDiscoveryOutput } from '../../../core/discovery/sanitizeDiscoveryOutput'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
@@ -139,13 +140,7 @@ function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
   // API keys goes way up. Putting this in the database gives us the highest
   // chance of being secure. We still want to show that there was an error
   // so sanitize it to expose minimal information.
-  result.discovery.contracts.forEach((c) => {
-    if (c.errors !== undefined) {
-      for (const k in c.errors) {
-        c.errors[k] = 'Processing error occurred.'
-      }
-    }
-  })
+  result.discovery = sanitizeDiscoveryOutput(result.discovery)
 
   return result
 }

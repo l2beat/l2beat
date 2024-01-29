@@ -45,7 +45,7 @@ export const lyra: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x61E44dC0dae6888B5a301887732217d5725B0bFf',
   ),
-  apiUrl: 'https://rpc.lyra.finance',
+  rpcUrl: 'https://rpc.lyra.finance',
   sequencerAddress: EthereumAddress(
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),

@@ -4,10 +4,12 @@ import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { toMulticallConfigEntry } from '../peripherals/multicall/MulticallConfig'
 import { ChainTvlConfig } from './Config'
+import { FeatureFlags } from './FeatureFlags'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 
 export function getChainTvlConfig(
+  flags: FeatureFlags,
   env: Env,
   chain: string,
   options?: {
@@ -42,13 +44,12 @@ export function getChainTvlConfig(
     throw new Error('Missing multicallContracts for chain: ' + chain)
   }
 
-  const ENV_NAME = chain.toUpperCase()
-
-  const enabled = env.boolean(`TVL_${ENV_NAME}_ENABLED`, false)
+  const enabled = flags.isEnabled('tvl', chain)
   if (!enabled) {
     return { chain }
   }
 
+  const ENV_NAME = chain.toUpperCase()
   return {
     chain,
     config: {

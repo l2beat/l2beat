@@ -1,14 +1,14 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
 import { HttpClient } from '../HttpClient'
-import { BlockscoutLikeClient as BlockscoutLikeClient } from './BlockscoutLikeClient'
+import { BlockscoutClient as BlockscoutClient } from './BlockscoutClient'
 
 const API_URL = 'https://example.com/api'
 
-describe(BlockscoutLikeClient.name, () => {
-  describe(BlockscoutLikeClient.prototype.call.name, () => {
+describe(BlockscoutClient.name, () => {
+  describe(BlockscoutClient.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetch(url) {
@@ -19,10 +19,11 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       await blockscoutClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
@@ -34,10 +35,11 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         'Server responded with non-2XX result: 404 Not Found',
@@ -51,10 +53,11 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         `Invalid Blockscout response [mytestresp] for request [${API_URL}?module=mod&action=act].`,
@@ -68,10 +71,11 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejected()
     })
@@ -84,10 +88,11 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       const result = await blockscoutClient.call('mod', 'act', {})
       expect(result).toEqual(response.result)
@@ -105,10 +110,11 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
         response.result,
@@ -116,7 +122,7 @@ describe(BlockscoutLikeClient.name, () => {
     })
   })
 
-  describe(BlockscoutLikeClient.prototype.getBlockNumberAtOrBefore.name, () => {
+  describe(BlockscoutClient.prototype.getBlockNumberAtOrBefore.name, () => {
     it('constructs a correct url', async () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
@@ -131,10 +137,11 @@ describe(BlockscoutLikeClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
         new UnixTime(3141592653),
@@ -173,10 +180,11 @@ describe(BlockscoutLikeClient.name, () => {
           ),
       })
 
-      const blockscoutClient = new BlockscoutLikeClient(
+      const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
         new UnixTime(0),
+        ChainId.ETHEREUM,
       )
       const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
         timestamp,
@@ -222,10 +230,11 @@ describe(BlockscoutLikeClient.name, () => {
           .resolvesToOnce(new Response(gatewayErrorJsonString)),
       })
 
-      const blockscoutLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
+        ChainId.ETHEREUM,
       )
 
       await expect(() =>
@@ -265,10 +274,11 @@ describe(BlockscoutLikeClient.name, () => {
           .throwsOnce(errorString),
       })
 
-      const blockscoutLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
+        ChainId.ETHEREUM,
       )
 
       await expect(() =>
@@ -307,10 +317,11 @@ describe(BlockscoutLikeClient.name, () => {
           .throwsOnce(1234),
       })
 
-      const blockscoutLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
         timestamp.add(-40, 'minutes'),
+        ChainId.ETHEREUM,
       )
 
       await expect(() =>
@@ -376,10 +387,11 @@ describe(BlockscoutLikeClient.name, () => {
           ),
       })
 
-      const blockscoutLikeClient = new BlockscoutLikeClient(
+      const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
         timestamp.add(-20, 'minutes'),
+        ChainId.ETHEREUM,
       )
 
       await expect(() =>
