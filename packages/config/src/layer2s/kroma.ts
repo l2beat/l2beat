@@ -113,14 +113,16 @@ export const kroma: Layer2 = {
     },
   },
   chainConfig: {
-    name: "kroma",
+    name: 'kroma',
     chainId: 255,
-    explorerUrl: "https://kromascan.com",
+    explorerUrl: 'https://kromascan.com',
     explorerApi: {
-      url: "https://api.kromascan.com/api",
-      type: 'etherscan'
+      url: 'https://api.kromascan.com/api',
+      type: 'etherscan',
     },
-    multicallContracts: [],
+    multicallContracts: [
+      // TODO: add multicall contracts
+    ],
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
   config: {

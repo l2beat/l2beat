@@ -1,5 +1,9 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  CoinListPlatformEntry,
+  HttpClient,
+} from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
@@ -29,10 +33,7 @@ async function main() {
   const logger = new ScriptLogger({})
   logger.notify('Running tokens script...\n')
   const coingeckoClient = getCoingeckoClient()
-  logger.fetching('coin list from Coingecko')
-  const coinList = await coingeckoClient.getCoinList({
-    includePlatform: true,
-  })
+  let coinList: CoinListPlatformEntry[] | undefined = undefined
   const source = readTokensFile(logger)
   const output = readGeneratedFile(logger)
   const result: Token[] = []
@@ -94,6 +95,12 @@ async function main() {
       )
       console.log()
       tokenLogger.processing()
+
+      if (coinList === undefined) {
+        coinList = await coingeckoClient.getCoinList({
+          includePlatform: true,
+        })
+      }
 
       const coingeckoId =
         token.coingeckoId ??
