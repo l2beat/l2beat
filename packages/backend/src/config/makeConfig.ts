@@ -22,7 +22,7 @@ export function makeConfig(
 ): Config {
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
-  ).with('status')
+  ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
 
   return {

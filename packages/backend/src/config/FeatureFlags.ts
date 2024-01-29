@@ -26,7 +26,7 @@ export class FeatureFlags {
     }
   }
 
-  with(input: string): FeatureFlags {
+  append(input: string): FeatureFlags {
     return new FeatureFlags(`${this.input},${input}`)
   }
 

@@ -41,10 +41,10 @@ describe(FeatureFlags.name, () => {
     })
   })
 
-  describe(FeatureFlags.prototype.with.name, () => {
+  describe(FeatureFlags.prototype.append.name, () => {
     it('returns a new instance with the given item added', () => {
       const flags = new FeatureFlags('foo')
-      const newFlags = flags.with('bar')
+      const newFlags = flags.append('bar')
       expect(newFlags).not.toExactlyEqual(flags)
       expect(newFlags.isEnabled('foo')).toEqual(true)
       expect(newFlags.isEnabled('bar')).toEqual(true)
