@@ -46,12 +46,20 @@ function Header(props: HeaderProps) {
           <div className="relative leading-normal md:col-span-7">
             <h1 className="text-6xl font-bold">Donate</h1>
             <p className="mt-6">
-              Thank you for supporting L2BEAT's mission to educate and enhance
-              transparency in blockchain. Our dedication to providing accurate,
-              unbiased information benefits users and the ecosystem.
+              Thank you for supporting L2BEAT’s mission to bring education and
+              transparency to the blockchain space.
+            </p>
+            <p className="mt-6">
+              We’re committed to delivering accurate and reliable information.
+              We strive to be an impartial and independent watchdog that acts in
+              the best interest of users and the broader ecosystem while always
+              remaining credibly neutral and faithful to reality and facts. We
+              deliver data and tools that allow our community to educate
+              themselves, transact securely, and make well-informed decisions.
             </p>
             <p className="relative z-10 mt-6">
-              As a small, independent team, your contribution is greatly valued.
+              Your support means a lot to our small, independent team. Thank
+              you!
             </p>
             <div className="relative my-12 flex items-center justify-center md:hidden">
               <div className="z-10 flex flex-col items-center justify-center">
