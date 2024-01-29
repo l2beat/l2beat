@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Token } from '@l2beat/shared-pure'
+import { ChainId, Token } from '@l2beat/shared-pure'
 import { deepStrictEqual } from 'assert'
 
 import { chains } from '../../src'
@@ -13,12 +13,13 @@ describe('tokens script', () => {
 
   it('every source has corresponding output entry', () => {
     for (const [chain, tokens] of Object.entries(tokensFile)) {
-      const chainId = chains.find((x) => x.name === chain)?.chainId
-      assert(chainId, `Unknown chain ${chain}`)
+      const chainNumber = chains.find((x) => x.name === chain)?.chainId
+      assert(chainNumber, `Unknown chain ${chain}`)
+      const chainId = ChainId(chainNumber)
 
       for (const source of tokens) {
         const output: Token | undefined = generatedFile.tokens.find(
-          (x: Token) => +x.chainId === chainId && x.address === source.address,
+          (x: Token) => x.chainId === chainId && x.address === source.address,
         )
 
         assert(
