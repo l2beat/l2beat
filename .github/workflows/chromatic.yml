@@ -30,14 +30,14 @@ jobs:
 
       - name: Publish to Chromatic
         run: >
-          npx chromatic 
-          --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} 
-          --storybook-build-dir ./storybook-static 
-          --only-changed 
-          --exit-once-uploaded 
-          --exit-zero-on-changes 
-          --externals packages/frontend/tailwind.config.js 
-          --externals packages/frontend/src/styles 
-          --externals packages/frontend/src/static/fonts 
+          npx chromatic
+          --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          --storybook-build-dir ./storybook-static
+          --only-changed
+          --exit-once-uploaded
+          --exit-zero-on-changes
+          --externals packages/frontend/tailwind.config.js
+          --externals **/*.css
+          --externals packages/frontend/src/static/fonts/**/*
           --untraced packages/backend/package.json
           --untraced packages/shared/package.json
