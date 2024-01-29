@@ -75,7 +75,7 @@ function Header(props: HeaderProps) {
                 {props.networks.map((network) => (
                   <Link
                     key={network.name}
-                    className="flex justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-200 py-3 dark:border-zinc-700 dark:bg-zinc-800 md:px-3 md:py-1"
+                    className="flex justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-200 py-3 dark:border-zinc-500 dark:bg-zinc-800 md:px-3 md:py-1"
                     textClassName="text-sm font-medium"
                     href={network.linkURL}
                     underline={false}
