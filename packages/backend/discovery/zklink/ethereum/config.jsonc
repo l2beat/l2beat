@@ -1,0 +1,7 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "zklink",
+  "initialAddresses": ["0x683669E5B6cDc6636673a5f7ddB68E20812216F5"],
+  "names": {}
+}
