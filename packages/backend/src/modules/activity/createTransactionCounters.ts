@@ -5,7 +5,6 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
-import { createAztecConnectCounter } from '../../core/activity/counters/AztecConnectCounter'
 import { createAztecCounter } from '../../core/activity/counters/AztecCounter'
 import { createLoopringCounter } from '../../core/activity/counters/LoopringCounter'
 import { createRpcCounter } from '../../core/activity/counters/RpcCounter'
@@ -96,15 +95,6 @@ export function createTransactionCounters(
           )
         case 'aztec':
           return createAztecCounter(
-            projectId,
-            blockRepository,
-            http,
-            sequenceProcessorRepository,
-            logger,
-            transactionApi,
-          )
-        case 'aztecconnect':
-          return createAztecConnectCounter(
             projectId,
             blockRepository,
             http,

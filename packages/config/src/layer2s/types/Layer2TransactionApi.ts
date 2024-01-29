@@ -23,12 +23,6 @@ export interface AztecTransactionApi {
   callsPerMinute?: number
 }
 
-export interface AztecConnectTransactionApi {
-  type: 'aztecconnect'
-  url: string
-  callsPerMinute?: number
-}
-
 export interface ZksyncTransactionApi {
   type: 'zksync'
   callsPerMinute: number
@@ -61,7 +55,6 @@ export type Layer2TransactionApi = { excludeFromActivityApi?: boolean } & (
   | RpcTransactionApi
   | StarkexTransactionApi
   | AztecTransactionApi
-  | AztecConnectTransactionApi
   | StarknetTransactionApi
   | ZksyncTransactionApi
   | LoopringTransactionApi
