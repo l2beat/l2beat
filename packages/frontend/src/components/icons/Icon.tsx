@@ -8,7 +8,7 @@ export function Icon({ className, ...rest }: SVGAttributes<SVGElement>) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      className={cn('fill-black dark:fill-white', className)}
+      className={cn(!rest.fill && 'fill-black dark:fill-white', className)}
       role="img"
       {...rest}
     />
