@@ -43,7 +43,7 @@ export const ORBIT_STACK_PERMISSION_TEMPLATES: StackPermissionTemplate[] = [
   },
   {
     role: { value: 'EXECUTOR_ROLE', contract: 'UpgradeExecutor' },
-    description: 'EOA that can execute upgrade via the UpgradeExecutor.',
+    description: 'An actor that can execute upgrade via the UpgradeExecutor.',
   },
   {
     role: { value: 'validators.0', contract: 'RollupProxy' },
