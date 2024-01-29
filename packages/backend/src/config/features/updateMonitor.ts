@@ -2,7 +2,7 @@ import { Env } from '@l2beat/backend-tools'
 import { chains } from '@l2beat/config'
 import { getMulticall3Config } from '@l2beat/discovery'
 
-import { UpdateMonitorChainConfig } from './Config'
+import { UpdateMonitorChainConfig } from '../Config'
 
 export function getChainDiscoveryConfig(
   env: Env,
