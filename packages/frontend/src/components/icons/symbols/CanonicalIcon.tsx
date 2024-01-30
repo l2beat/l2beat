@@ -13,7 +13,7 @@ export function CanonicalIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Bridged asset icon"
       {...props}
       className={cn(
-        'h-2.5 w-2.5 stroke-black dark:stroke-white',
+        'size-2.5 stroke-black dark:stroke-white',
         props.className,
       )}
       height="9"

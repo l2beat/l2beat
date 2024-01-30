@@ -18,24 +18,31 @@ interface Props {
 export function RichSelect(props: Props) {
   return (
     <div
-      className={cn('RichSelect group', props.className)}
+      data-role="rich-select"
+      className={cn('group', props.className)}
       id={props.id}
       data-centered={props.centered}
     >
-      <div className="RichSelect-Toggle cursor-pointer select-none rounded-lg bg-gray-200 p-1 text-base font-semibold transition-colors group-data-[state=selected]:group-hover:bg-gray-400 dark:bg-zinc-700 dark:group-data-[state=selected]:group-hover:bg-slate-600">
+      <div
+        data-role="rich-select-toggle"
+        className="cursor-pointer select-none rounded-lg bg-gray-200 p-1 text-base font-semibold transition-colors group-data-[state=selected]:group-hover:bg-gray-400 dark:bg-zinc-700 dark:group-data-[state=selected]:group-hover:bg-slate-600"
+      >
         <div className="inline-flex items-center gap-1.5 whitespace-pre px-2 group-data-[state=selected]:hidden">
           {props.label}
           <ChevronDownIcon className="hidden transition-transform group-data-[state=opened]:-rotate-180 md:block" />
           <ExpandIcon className="md:hidden" />
         </div>
         <div className="group hidden w-max items-center gap-1.5 rounded-md bg-white px-2 group-data-[state=selected]:inline-flex dark:bg-black dark:group-data-[state=selected]:group-hover:bg-gray-950">
-          <span className="RichSelect-SelectedText" />
+          <span data-role="rich-select-selected-text" />
           <div className="flex size-3 items-center justify-center rounded-sm bg-black dark:bg-white">
-            <CloseIcon className="h-2.5 w-2.5 fill-white dark:fill-black dark:group-data-[state=selected]:group-hover:fill-gray-950" />
+            <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-data-[state=selected]:group-hover:fill-gray-950" />
           </div>
         </div>
       </div>
-      <div className="RichSelect-Dropdown pointer-events-none absolute z-60 mr-8 hidden opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:block">
+      <div
+        data-role="rich-select-dropdown"
+        className="pointer-events-none absolute z-60 mr-8 hidden opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:block"
+      >
         <hr className="h-1.5 border-t-0" />
         <div
           className={cn(
@@ -46,15 +53,27 @@ export function RichSelect(props: Props) {
           {props.children}
         </div>
       </div>
-      <div className="RichSelect-SlideCard">
-        <div className="RichSelect-SlideCard-Background pointer-events-none fixed inset-x-0 bottom-0 z-999 h-full w-full bg-black/50 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:hidden" />
-        <div className="RichSelect-SlideCard-Content fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-100 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-zinc-700 md:hidden">
+      <div data-role="rich-select-slide-card">
+        <div
+          data-role="rich-select-slide-card-background"
+          className="pointer-events-none fixed inset-x-0 bottom-0 z-999 size-full bg-black/50 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:hidden"
+        />
+        <div
+          data-role="rich-select-slide-card-content"
+          className="fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-100 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-zinc-700 md:hidden"
+        >
           <div className="relative flex justify-between">
-            <div className="RichSelect-SlideCard-GestureZone absolute -left-4 -right-4 -top-4 bottom-0" />
+            <div
+              data-role="rich-select-slide-card-gesture-zone"
+              className="absolute -inset-x-4 -top-4 bottom-0"
+            />
             <h2 className="text-3xl font-bold leading-normal">
               {props.slideCardTitle ?? props.label}
             </h2>
-            <CloseIcon className="RichSelect-SlideCard-CloseButton z-[1000] size-5 fill-black dark:fill-white" />
+            <CloseIcon
+              data-role="rich-select-slide-card-close-button"
+              className="z-[1000] size-5 fill-black dark:fill-white"
+            />
           </div>
           <div className="relative">
             <div className="absolute inset-x-0 -top-1 z-20 h-6 bg-gradient-to-b from-gray-100 via-gray-100 to-transparent dark:from-zinc-700 dark:via-zinc-700" />
@@ -86,8 +105,9 @@ RichSelect.Item = function ({
 }: RichSelectItemProps) {
   return (
     <div
+      data-role="rich-select-item"
       className={cn(
-        'RichSelect-Item flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-2 transition-colors hover:bg-gray-400 dark:hover:bg-zinc-800',
+        'flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-2 transition-colors hover:bg-gray-400 dark:hover:bg-zinc-800',
         className,
       )}
       data-value={value}

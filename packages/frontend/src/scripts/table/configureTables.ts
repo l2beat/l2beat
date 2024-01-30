@@ -53,7 +53,7 @@ function manageRowVisibility(row: HTMLElement, slugs?: string[]) {
 
 function rerenderTabCountBadge(tabId: string, visibleRowsLength: number) {
   const tabBadgeCount = document.querySelector(
-    `.TabsItem#${tabId} .TabsItem-CountBadge`,
+    `.[data-role=tabs-item]#${tabId} .[data-role=tabs-item-count-badge]`,
   )
   if (!tabBadgeCount) {
     throw new Error('No tabBadgeCount found')

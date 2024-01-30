@@ -21,7 +21,7 @@ export function MobileTabs({ pages }: MobileTabsProps) {
           {pages.map((page, i) => (
             <li
               key={i}
-              className="flex flex-shrink-0"
+              className="flex shrink-0"
               data-selected={page.selected}
             >
               <a

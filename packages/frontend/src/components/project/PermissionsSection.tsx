@@ -36,17 +36,17 @@ export function PermissionsSection({
       isUnderReview={isUnderReview}
       sectionOrder={sectionOrder}
     >
-      <h3 className="md:text-md mt-4 font-bold">
+      <h3 className="mt-4 font-bold">
         The system uses the following set of permissioned addresses:
       </h3>
-      <div className="mb-4 mt-4">
+      <div className="my-4">
         {permissions.map((permission, i) => (
           <ContractEntry
             key={i}
             contract={permission}
             verificationStatus={verificationStatus}
             manuallyVerifiedContracts={manuallyVerifiedContracts}
-            className="mb-4 mt-4"
+            className="my-4"
           />
         ))}
       </div>

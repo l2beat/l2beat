@@ -6,17 +6,17 @@ const gitcoinEndDate = new Date('2023-08-29T12:00:00.000Z')
 
 export function configureTopBars() {
   const variant = getBannerVariant()
-  const gitcoinBanner = document.querySelector('.TopBar-Gitcoin')
-  const l2warsawBanner = document.querySelector('.TopBar-L2Warsaw')
+  const gitcoinBanner = document.querySelector('[data-role=top-bar-gitcoin]')
+  const l2warsawBanner = document.querySelector('[data-role=top-bar-l2-warsaw]')
 
   if (variant === 'gitcoin') {
     gitcoinBanner?.classList.remove('hidden')
-    l2warsawBanner?.classList.add('hidden')
+    gitcoinBanner?.classList.add('flex')
   }
 
   if (variant === 'l2warsaw') {
-    gitcoinBanner?.classList.add('hidden')
     l2warsawBanner?.classList.remove('hidden')
+    l2warsawBanner?.classList.add('flex')
   }
 }
 

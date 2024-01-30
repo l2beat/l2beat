@@ -4,7 +4,10 @@ import { CloseIcon } from '../icons/CloseIcon'
 
 export function FloatingBanner() {
   return (
-    <div className="FloatingBanner fixed inset-x-0 bottom-0 z-110 m-4 hidden max-h-[178px] overflow-hidden rounded-md bg-gray-200 shadow-lg data-[state=visible]:flex dark:bg-zinc-800 xs:right-[unset] xs:m-6 sm:max-h-[201px]">
+    <div
+      className="fixed inset-x-0 bottom-0 z-110 m-4 hidden max-h-[178px] overflow-hidden rounded-md bg-gray-200 shadow-lg data-[state=visible]:flex dark:bg-zinc-800 xs:right-[unset] xs:m-6 sm:max-h-[201px]"
+      data-role="floating-banner"
+    >
       <Close />
       <img
         src="/images/announcements/gitcoin-19-floating.png"
@@ -19,7 +22,7 @@ export function FloatingBanner() {
         </div>
         <div className="mb-7 text-sm font-extrabold">November 15-29, 2023</div>
         <a
-          className="w-full max-w-[142px] rounded-md bg-[#008B84] py-[8px] text-center text-base font-medium text-white transition-all hover:bg-opacity-60 md:w-40"
+          className="w-full max-w-[142px] rounded-md bg-[#008B84] py-[8px] text-center text-base font-medium text-white transition-all hover:bg-[#008B84]/60  md:w-40"
           href="https://explorer.gitcoin.co/#/round/137/0xa1d52f9b5339792651861329a046dd912761e9a9/0xa1d52f9b5339792651861329a046dd912761e9a9-15"
           target="_blank"
         >
@@ -32,7 +35,10 @@ export function FloatingBanner() {
 
 function Close() {
   return (
-    <div className="FloatingBanner-Close group absolute right-0 top-0 cursor-pointer p-4">
+    <div
+      className="group absolute right-0 top-0 cursor-pointer p-4"
+      data-role="floating-banner-close"
+    >
       <CloseIcon className="fill-gray-550 transition-all group-hover:fill-gray-700 dark:group-hover:fill-gray-400" />
     </div>
   )

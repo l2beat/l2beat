@@ -6,7 +6,7 @@ interface TabWithContent {
 }
 
 export function configureTabs() {
-  const tabs = document.querySelectorAll<HTMLElement>('.Tabs')
+  const tabs = document.querySelectorAll<HTMLElement>('[data-role=tabs]')
 
   tabs.forEach(configureTabsNavigation)
 }
@@ -84,12 +84,16 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
 
 function getElements(tabNavigation: HTMLElement) {
   const tabsContainer = tabNavigation.querySelector<HTMLElement>(
-    '.TabsItemsContainer',
+    '[data-role=tabs-items-container]',
   )
-  const underline = tabNavigation.querySelector<HTMLElement>('.TabsUnderline')
+  const underline = tabNavigation.querySelector<HTMLElement>(
+    '[data-role=tabs-underline]',
+  )
 
   const tabs = Array.from(
-    tabsContainer?.querySelectorAll<HTMLAnchorElement>('.TabsItem') ?? [],
+    tabsContainer?.querySelectorAll<HTMLAnchorElement>(
+      '[data-role=tabs-item]',
+    ) ?? [],
   )
 
   if (!underline || !tabsContainer || tabs.length === 0) {
@@ -99,7 +103,7 @@ function getElements(tabNavigation: HTMLElement) {
 
   tabs.forEach((tab) => {
     const content = tabNavigation.querySelector<HTMLElement>(
-      `#${tab.id}.TabsContent`,
+      `#${tab.id}[data-role=tabs-content]`,
     )
 
     if (!content)

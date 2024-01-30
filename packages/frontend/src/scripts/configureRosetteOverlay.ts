@@ -1,19 +1,19 @@
 export function configureRosetteOverlay() {
   const rosettes = Array.from(
-    document.querySelectorAll<HTMLElement>('.Rosette'),
+    document.querySelectorAll<HTMLElement>('[data-role=rosette]'),
   )
 
   for (const rosette of rosettes) {
     if (rosette.dataset.rosetteHoverDisabled === 'true') return
 
     const texts = Array.from(
-      rosette.querySelectorAll<HTMLElement>('.Rosette-Text'),
+      rosette.querySelectorAll<HTMLElement>('[data-role=rosette-text]'),
     )
     const slices = Array.from(
-      rosette.querySelectorAll<HTMLElement>('.Rosette-Slice'),
+      rosette.querySelectorAll<HTMLElement>('[data-role=rosette-slice]'),
     )
     const descriptions = Array.from(
-      rosette.querySelectorAll<HTMLElement>('.Rosette-Description'),
+      rosette.querySelectorAll<HTMLElement>('[data-role=rosette-description]'),
     )
 
     const show = (slice: HTMLElement) => {

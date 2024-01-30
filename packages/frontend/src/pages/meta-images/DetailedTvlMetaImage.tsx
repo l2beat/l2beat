@@ -23,12 +23,7 @@ export function DetailedTvlMetaImage(props: DetailedTvlMetaImageProps) {
   const isProject = !!props.name
   const name = props.name ?? 'Overview'
   return (
-    <div
-      className={cn(
-        'MetaImage leading-[1.15]',
-        !props.name ? 'overview' : 'project',
-      )}
-    >
+    <div className="leading-[1.15]">
       <MetaImageHeader
         title={name}
         isProject={isProject}
