@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.38.0
+
+### Minor Changes
+
+- Added a ArbitrumSequencerVersion handler
+
 ## 0.37.0
 
 ### Minor Changes

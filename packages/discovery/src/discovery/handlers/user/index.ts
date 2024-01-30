@@ -11,6 +11,10 @@ import {
   ArbitrumActorsHandlerDefinition,
 } from './ArbitrumActorsHandler'
 import {
+  ArbitrumSequencerVersionDefinition,
+  ArbitrumSequencerVersionHandler,
+} from './ArbitrumSequencerVersionHandler'
+import {
   ArrayFromOneEventHandler,
   ArrayFromOneEventHandlerDefinition,
 } from './ArrayFromOneEventHandler'
@@ -86,6 +90,7 @@ export const UserHandlerDefinition = z.union([
   LayerZeroMultisigHandlerDefinition,
   ArbitrumActorsHandlerDefinition,
   OpStackDAHandlerDefinition,
+  ArbitrumSequencerVersionDefinition,
 ])
 
 export function getUserHandler(
@@ -133,5 +138,7 @@ export function getUserHandler(
       return new ArbitrumActorsHandler(field, definition, logger)
     case 'opStackDA':
       return new OpStackDAHandler(field, definition, logger)
+    case 'arbitrumSequencerVersion':
+      return new ArbitrumSequencerVersionHandler(field, definition, logger)
   }
 }
