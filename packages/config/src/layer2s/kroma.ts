@@ -112,6 +112,17 @@ export const kroma: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'kroma',
+    chainId: 255,
+    explorerUrl: 'https://kromascan.com',
+    explorerApi: {
+      url: 'https://api.kromascan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [],
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
