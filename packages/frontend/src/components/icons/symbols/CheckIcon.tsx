@@ -3,8 +3,10 @@ import React from 'react'
 import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
-export function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
-  const { className, ...rest } = props
+export function CheckIcon({
+  className,
+  ...rest
+}: React.SVGProps<SVGSVGElement>) {
   return (
     <Icon
       width="16"

@@ -11,6 +11,7 @@ import { StateDerivationSectionProps } from '../components/project/StateDerivati
 import { StateValidationSectionProps } from '../components/project/StateValidationSection'
 import { TechnologyIncompleteProps } from '../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../components/project/TechnologySection'
+import { UpgradesAndGovernanceSectionProps } from '../components/project/UpgradesAndGovernanceSection'
 
 export interface ValueWithDisplayValue {
   value: number
@@ -70,6 +71,11 @@ export interface ProjectDetailsStateDerivationSection {
 export interface ProjectDetailsStateValidationSection {
   type: 'StateValidationSection'
   props: ProjectDetailsProps<StateValidationSectionProps>
+}
+
+export interface ProjectDetailsUpgradesAndGovernanceSection {
+  type: 'UpgradesAndGovernanceSection'
+  props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
 }
 
 export interface ProjectDetailsPermissionsSection {

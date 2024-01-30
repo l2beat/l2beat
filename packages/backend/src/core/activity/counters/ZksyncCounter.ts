@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ZksyncTransactionApi } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
@@ -9,6 +8,7 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { ZksyncClient } from '../../../peripherals/zksync'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
 import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
@@ -18,12 +18,15 @@ export function createZksyncCounter(
   zksyncRepository: ZksyncTransactionRepository,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  transactionApi: ZksyncTransactionApi,
+  options: SimpleActivityTransactionConfig<'zksync'>,
 ): TransactionCounter {
-  const batchSize = getBatchSizeFromCallsPerMinute(
-    transactionApi.callsPerMinute,
+  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
+  const client = new ZksyncClient(
+    http,
+    logger,
+    options.url,
+    options.callsPerMinute,
   )
-  const client = new ZksyncClient(http, logger, transactionApi.callsPerMinute)
 
   const processor = new SequenceProcessor(
     projectId.toString(),

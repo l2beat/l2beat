@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 18564156,
-  "configHash": "0xb0e0d65b315aa8ebdd587cf3528e36b93ad91fab80adc74c65f67a429d70470c",
+  "blockNumber": 19119504,
+  "configHash": "0x7c09e5992e6255b2cbe890a6bfdf3f40c888131f63feb9c49ec37d6df427981e",
   "version": 3,
   "contracts": [
     {
@@ -24,13 +24,14 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1656050353,
       "values": {
-        "batchCount": 23543,
+        "batchCount": 28091,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 260397
+        "sequencerVersion": "0x88",
+        "totalDelayedMessagesRead": 268908
       }
     },
     {
@@ -283,11 +284,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 260398,
+        "delayedMessageCount": 268909,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 23543,
-        "sequencerReportedSubMessageCount": 29275737
+        "sequencerMessageCount": 28091,
+        "sequencerReportedSubMessageCount": 44034488
       }
     },
     {
@@ -458,12 +459,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 11732,
+        "firstUnresolvedNode": 13585,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 11731,
-        "latestNodeCreated": 11882,
+        "latestConfirmed": 13584,
+        "latestNodeCreated": 13738,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -479,7 +480,7 @@
         "validatorUtils": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
         "validatorWalletCreator": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
+        "wasmModuleRoot": "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []

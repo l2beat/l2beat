@@ -52,7 +52,7 @@ export function ProjectDetailsSectionHeader(
       )}
     >
       {props.sectionOrder && (
-        <div className="hidden h-10 w-10 items-center justify-center rounded bg-gray-200 text-[26px] font-bold tabular-nums text-gray-700 dark:bg-zinc-700 dark:text-zinc-500 md:flex">
+        <div className="hidden size-10 items-center justify-center rounded bg-gray-200 text-[26px] font-bold tabular-nums text-gray-700 dark:bg-zinc-700 dark:text-zinc-500 md:flex">
           {props.sectionOrder}
         </div>
       )}

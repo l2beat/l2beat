@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x64a4811e26385036e4496726627304e6f3ddd353
+
+# Diff at Tue, 30 Jan 2024 13:04:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@ceb6abb9c987b0d53dd547a79c3ebbf3480a024b block: 19069754
+- current block number: 19119504
+
+## Description
+
+Add the SequencerInboxVersion handler.
+ArbOS11 Upgrade.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+      values.wasmModuleRoot:
+-        "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3"
++        "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19069754 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+      values.sequencerVersion:
++        "0x00"
+    }
+```
+
 Generated with discovered.json: 0xe996eeb6cd08d695db9b13369e8aded556ec9bb2
 
 # Diff at Tue, 23 Jan 2024 13:46:20 GMT:

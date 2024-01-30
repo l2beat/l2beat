@@ -1,12 +1,6 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Header,
-  Navbar,
-  NavbarProps,
-} from '../../components'
+import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
 import { PageContent } from '../../components/PageContent'
 import { DonateDetails, DonationDetailsProps } from './DonateDetails'
 import { DonateLetter } from './DonateLetter'
@@ -25,7 +19,11 @@ export function DonatePage(props: DonatePageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent narrow>
-        <Header title={props.title} />
+        <header className="mt-4">
+          <h1 className="whitespace-pre text-[64px] font-bold">
+            {props.title}
+          </h1>
+        </header>
         <DonateLetter />
         {props.showGitcoinButton && <GitcoinButton />}
         <DonateDetails {...props.details} />

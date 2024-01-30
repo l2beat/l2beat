@@ -131,6 +131,7 @@ export const linea: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://linea-mainnet.infura.io/v3',
       startBlock: 1,
     },
     liveness: {

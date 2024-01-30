@@ -1,13 +1,17 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
-import { getChainDiscoveryConfig } from './getChainDiscoveryConfig'
-import { getChainsWithTokens } from './getChainsWithTokens'
-import { getChainTvlConfig } from './getChainTvlConfig'
+import {
+  getChainActivityConfig,
+  getProjectsWithActivity,
+} from './features/activity'
+import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
+import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
@@ -113,120 +117,12 @@ export function makeConfig(
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
-      skipExplicitExclusion: !!isLocal,
       projectsExcludedFromAPI:
         env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
         [],
-      projects: {
-        ethereum: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_ETHEREUM_CALLS',
-            isLocal ? 60 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_ETHEREUM_URL',
-            isLocal ? 'https://eth-mainnet.alchemyapi.io/v2/demo' : undefined,
-          ),
-        },
-        optimism: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_OPTIMISM_CALLS',
-            isLocal ? 60 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_OPTIMISM_URL',
-            isLocal ? 'https://mainnet.optimism.io/' : undefined,
-          ),
-        },
-        arbitrum: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_ARBITRUM_CALLS',
-            isLocal ? 60 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_ARBITRUM_URL',
-            isLocal ? 'https://arb1.arbitrum.io/rpc' : undefined,
-          ),
-        },
-        zksync2: {
-          type: 'rpc',
-          callsPerMinute: isLocal ? 60 : 1500,
-        },
-        nova: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_NOVA_CALLS',
-            isLocal ? 60 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_NOVA_URL',
-            isLocal ? 'https://nova.arbitrum.io/rpc' : undefined,
-          ),
-        },
-        linea: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_LINEA_CALLS',
-            isLocal ? 60 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_LINEA_URL',
-            isLocal ? 'https://linea-mainnet.infura.io/v3' : undefined,
-          ),
-        },
-        polygonzkevm: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_POLYGONZKEVM_CALLS',
-            isLocal ? 500 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_POLYGONZKEVM_URL',
-            isLocal ? 'https://polygon-rpc.com/zkevm' : undefined,
-          ),
-        },
-        starknet: {
-          type: 'starknet',
-          callsPerMinute: env.integer(
-            'ACTIVITY_STARKNET_CALLS',
-            isLocal ? 120 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_STARKNET_URL',
-            isLocal ? 'https://starknet-mainnet.public.blastapi.io' : undefined,
-          ),
-        },
-        scroll: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_SCROLL_CALLS',
-            isLocal ? 120 : undefined,
-          ),
-          url: env.string(
-            'ACTIVITY_SCROLL_URL',
-            isLocal ? 'https://rpc.scroll.io' : undefined,
-          ),
-        },
-        mantle: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_MANTLE_CALLS',
-            isLocal ? 60 : 1500,
-          ),
-          url: env.string('ACTIVITY_MANTLE_URL', 'https://rpc.mantle.xyz'),
-        },
-        metis: {
-          type: 'rpc',
-          callsPerMinute: env.integer(
-            'ACTIVITY_METIS_CALLS',
-            isLocal ? 120 : 1500,
-          ),
-          url: env.string('ACTIVITY_METIS_URL', 'https://andromeda.metis.io/'),
-        },
-      },
+      projects: getProjectsWithActivity()
+        .filter((x) => flags.isEnabled('activity', x.id.toString()))
+        .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
     },
     statusEnabled: flags.isEnabled('status'),
     updateMonitor: flags.isEnabled('updateMonitor') && {
@@ -234,17 +130,10 @@ export function makeConfig(
         ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
         : undefined,
       discord: getDiscordConfig(env, isLocal),
-      chains: [
-        getChainDiscoveryConfig(env, 'ethereum'),
-        getChainDiscoveryConfig(env, 'arbitrum'),
-        getChainDiscoveryConfig(env, 'bsc'),
-        getChainDiscoveryConfig(env, 'celo'),
-        getChainDiscoveryConfig(env, 'gnosis'),
-        getChainDiscoveryConfig(env, 'linea'),
-        getChainDiscoveryConfig(env, 'optimism'),
-        getChainDiscoveryConfig(env, 'polygonpos'),
-        getChainDiscoveryConfig(env, 'polygonzkevm'),
-      ],
+      chains: new ConfigReader()
+        .readAllChains()
+        .filter((chain) => flags.isEnabled('updateMonitor', chain))
+        .map((chain) => getChainDiscoveryConfig(env, chain)),
     },
     diffHistory: flags.isEnabled('diffHistory') && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],

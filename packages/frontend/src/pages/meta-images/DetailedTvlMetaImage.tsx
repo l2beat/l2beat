@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { Chart, Header, Logo } from '../../components'
+import { Chart, Logo } from '../../components'
 import { ChartType } from '../../scripts/charts/types'
 import { cn } from '../../utils/cn'
+import { MetaImageHeader } from './MetaImageHeader'
 
 export interface DetailedTvlMetaImageProps {
   tvl: string
@@ -19,17 +20,13 @@ export interface DetailedTvlMetaImageProps {
 }
 
 export function DetailedTvlMetaImage(props: DetailedTvlMetaImageProps) {
+  const isProject = !!props.name
   const name = props.name ?? 'Overview'
   return (
-    <div
-      className={cn(
-        'MetaImage leading-[1.15]',
-        !props.name ? 'overview' : 'project',
-      )}
-    >
-      <Header
+    <div className="leading-[1.15]">
+      <MetaImageHeader
         title={name}
-        titleClassName={name.length > 12 ? '!text-5xl' : undefined}
+        isProject={isProject}
         icon={props.icon}
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
@@ -41,7 +38,14 @@ export function DetailedTvlMetaImage(props: DetailedTvlMetaImageProps) {
         }
         metaChart
       />
-      <Logo />
+      <Logo
+        className={cn(
+          isProject && 'absolute left-4 top-6',
+          !isProject &&
+            'absolute left-1/2 top-1/2 z-100 h-auto w-[250px] -translate-x-1/2 -translate-y-1/2',
+        )}
+        animated={false}
+      />
     </div>
   )
 }

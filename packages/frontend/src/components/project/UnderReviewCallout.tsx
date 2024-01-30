@@ -26,10 +26,7 @@ export function UnderReviewCallout({
           )}
         />
         <span
-          className={cn(
-            'ml-2 inline-block font-medium',
-            small ? 'text-md' : 'text-2xl',
-          )}
+          className={cn('ml-2 inline-block font-medium', !small && 'text-2xl')}
         >
           Project Under Review
         </span>

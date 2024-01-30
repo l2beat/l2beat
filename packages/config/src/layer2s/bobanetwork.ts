@@ -95,8 +95,8 @@ export const bobanetwork: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      url: 'https://mainnet.boba.network/',
-      callsPerMinute: 200,
+      defaultUrl: 'https://mainnet.boba.network/',
+      defaultCallsPerMinute: 200,
       startBlock: 1,
     },
     liveness: {

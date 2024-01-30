@@ -16,6 +16,8 @@ export class ScriptLogger {
     }
   }
 
+  static SILENT = new ScriptLogger({ enabled: false })
+
   configure(options: Partial<LoggerOptions>): ScriptLogger {
     return new ScriptLogger({ ...this.options, ...options })
   }

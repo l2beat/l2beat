@@ -21,11 +21,11 @@ export function LinkSectionLink({ href, name }: Props) {
       <Link className="mt-1 block first:mt-0" href={href}>
         {parsed.platform ? (
           <ProductIcon
-            className="h-[1em] w-[1em] shrink-0 fill-current"
+            className="size-[1em] shrink-0 fill-current"
             product={parsed.platform}
           />
         ) : (
-          <GlobeIcon className="h-[1em] w-[1em] shrink-0 fill-current" />
+          <GlobeIcon className="size-[1em] shrink-0 fill-current" />
         )}
         <span className="truncate">{parsed.text}</span>
       </Link>

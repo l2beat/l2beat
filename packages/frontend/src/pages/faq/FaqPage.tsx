@@ -28,7 +28,7 @@ export function FaqPage(props: FaqPageProps) {
           <HorizontalSeparator className="mb-4 mt-12" />
         </div>
         <div className="flex">
-          <div className="mt-12 hidden w-72 flex-shrink-0 flex-col gap-4 lg:flex">
+          <div className="mt-12 hidden w-72 shrink-0 flex-col gap-4 lg:flex">
             {props.items.map((item) => (
               <a
                 key={questionToId(item.question)}

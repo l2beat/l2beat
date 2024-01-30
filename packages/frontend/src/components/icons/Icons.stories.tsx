@@ -117,7 +117,10 @@ export function SymbolIcons() {
       <AppsIcon />
       <ArchivedIcon />
       <BulletIcon />
+      {/* Unchecked */}
       <CheckIcon />
+      {/* Checked */}
+      <CheckIcon className="stroke-black dark:stroke-white" />
       <CodeIcon />
       <DocumentIcon />
       <FinanceIcon />
