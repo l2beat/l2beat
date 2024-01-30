@@ -69,7 +69,7 @@ export function DetailsHeader(props: HeaderProps) {
               {props.title}
             </h1>
             {props.description && (
-              <div className="mt-4 text-sm opacity-80">{props.description}</div>
+              <div className="mt-4 text-base">{props.description}</div>
             )}
             {props.isArchived && <ArchivedBar className="w-full" />}
             {props.isUpcoming && <UpcomingBar className="w-full" />}
