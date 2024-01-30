@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x392d3c438876c610d41c75925b270c06e44cbd15
+
+# Diff at Tue, 30 Jan 2024 13:04:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@ceb6abb9c987b0d53dd547a79c3ebbf3480a024b block: 18564156
+- current block number: 19119504
+
+## Description
+
+Add the SequencerInboxVersion handler.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18564156 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+      values.sequencerVersion:
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0xc37d63531c34445bc36060119ceefe5063f4d0b7
 
 # Diff at Mon, 13 Nov 2023 16:26:39 GMT:

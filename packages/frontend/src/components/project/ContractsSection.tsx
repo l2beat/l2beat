@@ -59,17 +59,17 @@ export function ContractsSection(props: ContractsSectionProps) {
       )}
       {props.contracts.length > 0 && (
         <>
-          <h3 className="md:text-md font-bold">
+          <h3 className="font-bold">
             The system consists of the following smart contracts:
           </h3>
-          <div className="mb-4 mt-4">
+          <div className="my-4">
             {props.contracts.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                  className="mb-4 mt-4"
+                  className="my-4"
                 />
               </React.Fragment>
             ))}
@@ -79,18 +79,18 @@ export function ContractsSection(props: ContractsSectionProps) {
       {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
       {props.escrows.length > 0 && (
         <>
-          <h3 className="md:text-md font-bold">
+          <h3 className="font-bold">
             Value Locked is calculated based on these smart contracts and
             tokens:
           </h3>
-          <div className="mb-4 mt-4">
+          <div className="my-4">
             {props.escrows.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                  className="mb-4 mt-4"
+                  className="my-4"
                 />
               </React.Fragment>
             ))}

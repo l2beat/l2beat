@@ -20,12 +20,7 @@ export function PageWrapper(props: PageWrapperProps) {
       )}
     >
       <Head {...props.metadata} preloadApi={props.preloadApi} />
-      <body
-        className={cn(
-          'bg-white text-black dark:bg-neutral-900 dark:text-white',
-          props.bodyClassName,
-        )}
-      >
+      <body className={props.bodyClassName}>
         <script src="/scripts/prerender.js" />
         {props.children}
         <TooltipProvider />

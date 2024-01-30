@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x860ce22e6e5ca8d7087c013b808735c88781475f
+
+# Diff at Tue, 30 Jan 2024 09:20:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8166c01da21cd9a7fadf2664669d7d2675512e02 block: 19062209
+- current block number: 19118389
+
+## Description
+
+New proposal created with the description "Add 4 new maintainers".
+The new maintainers are:
+
+- 0x6d26b9efb640bf40cca1fb70b00b0fcec732ce00
+- 0x097bdc9e913539b6aa0a79389ccc084b9502846a
+- 0xa829446eec801483b32f5d5486374672aad7e028
+- 0xdcc781ebeb5b6aa4648703202a34c46959302ed6
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+      values.proposalCount:
+-        47
++        48
+    }
+```
+
 Generated with discovered.json: 0x972c0ec8ccdd85cd61bd3520dbb2f78b1cab4165
 
 # Diff at Mon, 22 Jan 2024 12:14:45 GMT:

@@ -1,9 +1,9 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
-import { Layer2TransactionApi } from '@l2beat/config'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
 import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
+import { ActivityTransactionConfig } from '../core/activity/ActivityTransactionConfig'
 import { Project } from '../model'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
@@ -110,10 +110,9 @@ export interface HealthConfig {
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
-  readonly skipExplicitExclusion: boolean
   readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
-  readonly projects: Record<string, Layer2TransactionApi | undefined>
+  readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[]
 }
 
 export interface MetricsAuthConfig {

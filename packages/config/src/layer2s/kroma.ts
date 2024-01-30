@@ -112,6 +112,17 @@ export const kroma: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'kroma',
+    chainId: 255,
+    explorerUrl: 'https://kromascan.com',
+    explorerApi: {
+      url: 'https://api.kromascan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [],
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -130,9 +141,9 @@ export const kroma: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://api.kroma.network',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://api.kroma.network',
-      callsPerMinute: 1500,
       assessCount: subtractOne,
     },
     liveness: {

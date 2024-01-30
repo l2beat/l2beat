@@ -26,6 +26,7 @@ export class ZksyncClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
+    private readonly url: string,
     callsPerMinute = CALLS_PER_MINUTE,
   ) {
     this.logger = logger.for(this)
@@ -97,7 +98,7 @@ export class ZksyncClient {
 
   async call(path: string, params?: Record<string, string>) {
     const query = new URLSearchParams(params)
-    const url = `https://api.zksync.io/api/v0.2/${path}?${query.toString()}`
+    const url = `${this.url}/${path}?${query.toString()}`
 
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient
