@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 
-describe('icons', () => {
+describe.only('icons', () => {
   const projects = [...layer2s, ...bridges, ...layer3s]
   for (const project of projects) {
     it(`${project.display.name} has an associated icon`, () => {
@@ -15,132 +15,10 @@ describe('icons', () => {
     })
   }
 
-  const PROJECTS_TO_SKIP = [
-    'aevo',
-    'ancient',
-    'apex',
-    'arbitrum',
-    'astarzkevm',
-    'aztec-v2',
-    'base',
-    'blast',
-    'bob',
-    'bobanetwork',
-    'brine',
-    'canto',
-    'canvasconnect',
-    'capx',
-    'cronos',
-    'debank',
-    'degate',
-    'degate2',
-    'honeypot',
-    'degate3',
-    'dydx',
-    'eclipse',
-    'frame',
-    'fuel',
-    'fuelv1',
-    'gluon',
-    'grvt',
-    'hermez',
-    'hypr',
-    'immutablex',
-    'immutablezkevm',
-    'kinto',
-    'kroma',
-    'linea',
-    'lisk',
-    'loopring',
-    'lyra',
-    'mantapacific',
-    'mantle',
-    'metal',
-    'metis',
-    'mint',
-    'mode',
-    'molten',
-    'morph',
-    'myria',
-    'nova',
-    'ten',
-    'omgnetwork',
-    'optimism',
-    'orb3',
-    'palm',
-    'paradex',
-    'parallel',
-    'polygon-miden',
-    'polygonzkevm',
-    'polygon-pos-2',
-    'publicgoodsnetwork',
-    'reddioex',
-    'reddiozkvm',
-    'deversifi',
-    'scroll',
-    'sorare',
-    'specular',
-    'starknet',
-    'stealthchain',
-    'taiko',
-    'x1',
-    'xchain',
-    'zkcandy',
-    'zkfair',
-    'zkspace',
-    'zksync2',
-    'zksync',
-    'zora',
-    'across-v2',
-    'allbridge',
-    'amarok',
-    'avalanche',
-    'aptos',
-    'beamer-bridge-v2',
-    'cbridge',
-    'connext',
-    'debridge',
-    'gravity',
-    'harmony',
-    'chainport',
-    'hop',
-    'hyphen',
-    'lzomnichain',
-    'multichain',
-    'near',
-    'nomad',
-    'omni',
-    'opticsV1',
-    'opticsV2',
-    'orbit',
-    'orbiter',
-    'polygon-plasma',
-    'polygon-pos',
-    'polynetwork',
-    'pNetwork',
-    'pulseChain',
-    'ronin',
-    'satellite',
-    'skale-ima',
-    'sollet',
-    'stargate',
-    'synapse',
-    'portal',
-    'wormholeV1',
-    'xdai',
-    'symbiosis',
-    'deri',
-    'xai',
-    'zklinknexus',
-  ]
-
   describe('every icon has proper dimensions and size', () => {
     for (const project of projects) {
       const id = project.id.toString()
-      if (PROJECTS_TO_SKIP.includes(id)) {
-        it.skip(id)
-        continue
-      }
+
       it(id, () => {
         const iconPath = path.join(
           __dirname,
@@ -158,4 +36,30 @@ describe('icons', () => {
       })
     }
   })
+
+  describe('every icon has been tinified', () => {
+    const tinifiedLogos = getTinifiedLogos()
+    for (const project of projects) {
+      const id = project.id.toString()
+
+      it(id, () => {
+        expect(tinifiedLogos.includes(`${project.display.slug}.png`)).toEqual(
+          true,
+        )
+      })
+    }
+  })
 })
+
+function getTinifiedLogos() {
+  const tinifiedLogosFile = path.join(
+    __dirname,
+    '..',
+    '..',
+    'cli',
+    'tinifiedLogos.json',
+  )
+
+  const tinifiedLogos = readFileSync(tinifiedLogosFile, 'utf-8')
+  return JSON.parse(tinifiedLogos) as string[]
+}
