@@ -9,7 +9,7 @@ export function GlobeIcon(props: SVGAttributes<SVGElement>) {
       height="16"
       viewBox="0 0 16 16"
       fill="none"
-      stroke="var(--text)"
+      className="stroke-black dark:stroke-white"
       aria-label="Globe icon"
       {...props}
     >

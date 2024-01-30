@@ -66,6 +66,7 @@ export function Chart(props: ChartProps) {
           props.mobileFull
             ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
             : 'mt-4',
+          props.metaChart && 'mt-0',
           props.sectionClassName,
         )}
       >
@@ -87,18 +88,29 @@ export function Chart(props: ChartProps) {
               props.metaChart && 'absolute bottom-0 left-0 w-full',
             )}
           >
-            <TimeRange />
-            <RangeControls isActivity={isActivity} />
+            <TimeRange isMetaChart={!!props.metaChart} />
+            <RangeControls
+              isActivity={isActivity}
+              isMetaChart={!!props.metaChart}
+            />
           </div>
           <div
             data-role="chart-view"
-            className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
+            className={cn(
+              'relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]',
+              props.metaChart && 'relative h-[262px]',
+            )}
             role="img"
             aria-label="chart"
           >
             <ChartLoader />
             <ChartHover />
-            <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
+            <Logo
+              className={cn(
+                'absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20',
+                props.metaChart && 'hidden',
+              )}
+            />
             <div
               className="absolute -bottom-4 -left-4 -right-4 top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
@@ -109,7 +121,10 @@ export function Chart(props: ChartProps) {
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
-              className="absolute bottom-0 left-0 z-20 block h-full w-full"
+              className={cn(
+                'absolute bottom-0 left-0 z-20 block h-full w-full',
+                props.metaChart && 'bottom-[unset] top-0 h-[242px]',
+              )}
             />
             <ChartLabels
               className={cn(

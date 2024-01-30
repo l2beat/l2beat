@@ -253,12 +253,11 @@ function renderIcon(icon?: PointStyle | 'gap') {
   if (point.type === 'svg') {
     return `
     <div class="flex h-2.5 w-2.5 items-center justify-center">
-      <svg 
+      <svg
         viewBox="${point.svgViewBox}"
-        fill="var(--text)"
         role="img"
         aria-label="External asset icon"
-        class="inline-block ${point.className}"
+        class="inline-block stroke-black dark:stroke-white ${point.className}"
         height="${point.height}"
         width="${point.width}"
         >
