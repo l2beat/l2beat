@@ -3,7 +3,10 @@
 @import 'tailwindcss/utilities';
 
 @import './markdown.css';
-@import '../pages/definitions/style.css';
+
+body {
+  @apply bg-white text-base text-black dark:bg-neutral-900 dark:text-white md:text-lg;
+}
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {

@@ -1,29 +1,29 @@
 export function configureRosetteOverlay() {
   const rosettes = Array.from(
-    document.querySelectorAll<HTMLElement>('.Rosette'),
+    document.querySelectorAll<HTMLElement>('[data-role=rosette]'),
   )
 
   for (const rosette of rosettes) {
     if (rosette.dataset.rosetteHoverDisabled === 'true') return
 
     const texts = Array.from(
-      rosette.querySelectorAll<HTMLElement>('.Rosette-Text'),
+      rosette.querySelectorAll<HTMLElement>('[data-role=rosette-text]'),
     )
     const slices = Array.from(
-      rosette.querySelectorAll<HTMLElement>('.Rosette-Slice'),
+      rosette.querySelectorAll<HTMLElement>('[data-role=rosette-slice]'),
     )
     const descriptions = Array.from(
-      rosette.querySelectorAll<HTMLElement>('.Rosette-Description'),
+      rosette.querySelectorAll<HTMLElement>('[data-role=rosette-description]'),
     )
 
     const show = (slice: HTMLElement) => {
       const type = slice.dataset.rosette
       texts.forEach((text) =>
-        text.classList.add('text-gray-300', 'dark:text-gray-800'),
+        text.classList.add('text-gray-300', 'dark:text-zinc-700'),
       )
       texts
         .find((text) => text.dataset.rosette === type)
-        ?.classList.remove('text-gray-300', 'dark:text-gray-800')
+        ?.classList.remove('text-gray-300', 'dark:text-zinc-700')
       slices.forEach((slice) => slice.classList.add('opacity-20'))
       slice.classList.remove('opacity-20')
       descriptions.forEach((description) => description.classList.add('hidden'))
@@ -34,7 +34,7 @@ export function configureRosetteOverlay() {
 
     const hide = () => {
       texts.forEach((text) =>
-        text.classList.remove('text-gray-300', 'dark:text-gray-800'),
+        text.classList.remove('text-gray-300', 'dark:text-zinc-700'),
       )
       descriptions.forEach((description) => description.classList.add('hidden'))
       slices.forEach((slice) => slice.classList.remove('opacity-20'))

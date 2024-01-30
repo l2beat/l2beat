@@ -70,7 +70,7 @@ function Header(props: HeaderProps) {
                   {props.ethereumAddress}
                 </p>
               </div>
-              <div className="absolute flex h-full w-full items-center justify-center">
+              <div className="absolute flex size-full items-center justify-center">
                 <div className="size-[356px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
               </div>
             </div>
@@ -104,7 +104,7 @@ function Header(props: HeaderProps) {
                 {props.ethereumAddress}
               </p>
             </div>
-            <div className="absolute flex h-full w-full items-center justify-center">
+            <div className="absolute flex size-full items-center justify-center">
               <div className="size-[400px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
             </div>
           </div>

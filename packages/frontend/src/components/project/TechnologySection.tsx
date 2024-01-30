@@ -11,6 +11,7 @@ import { UnderReviewCallout } from './UnderReviewCallout'
 export interface TechnologySectionProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   items: TechnologyChoice[]
   isUnderReview?: boolean
 }
@@ -28,11 +29,17 @@ export interface TechnologyChoice {
 export function TechnologySection({
   id,
   title,
+  sectionOrder,
   items,
   isUnderReview,
 }: TechnologySectionProps) {
   return (
-    <ProjectDetailsSection title={title} id={id} isUnderReview={isUnderReview}>
+    <ProjectDetailsSection
+      title={title}
+      id={id}
+      sectionOrder={sectionOrder}
+      isUnderReview={isUnderReview}
+    >
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
           <h3 id={item.id} className="text-xl font-bold">

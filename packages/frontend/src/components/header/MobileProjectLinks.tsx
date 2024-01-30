@@ -10,12 +10,13 @@ interface MobileProjectLinksProps {
 
 export function MobileProjectLinks(props: MobileProjectLinksProps) {
   return (
-    <div className="Dropdown">
+    <div data-role="dropdown">
       <label className="flex items-center justify-between py-4">
         <input
           type="checkbox"
           autoComplete="off"
-          className="Dropdown-Button peer hidden"
+          className="peer hidden"
+          data-role="dropdown-button"
         />
         <div>
           <span className="font-bold">Links:</span>
@@ -25,7 +26,7 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
         </div>
         <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
       </label>
-      <div className="Dropdown-Item hidden">
+      <div className="hidden" data-role="dropdown-item">
         <table className="w-full table-fixed border-collapse text-left text-xs">
           <tbody>
             {props.projectLinks.map(({ name, links }, i) => (

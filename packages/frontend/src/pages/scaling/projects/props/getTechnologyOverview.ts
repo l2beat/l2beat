@@ -2,21 +2,21 @@ import { Layer2 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { TechnologyIncompleteProps } from '../../../../components/project/TechnologyIncomplete'
-import { TechnologySectionProps } from '../../../../components/project/TechnologySection'
 import {
   getProjectEditLink,
   getTwitterLink,
 } from '../../../../utils/project/links'
 import { makeTechnologyChoice } from '../../../../utils/project/makeTechnologyChoice'
+import { ProjectDetailsTechnologySection } from '../../../types'
 
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
-  sections: TechnologySectionProps[]
+  sections: ProjectDetailsTechnologySection['props'][]
 }
 
 export function getTechnologyOverview(project: Layer2): TechnologyOverview {
   function makeSections() {
-    const technology: TechnologySectionProps = {
+    const technology: ProjectDetailsTechnologySection['props'] = {
       id: 'technology',
       title: 'Technology',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
@@ -37,7 +37,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       ].filter(notUndefined),
     }
 
-    const operator: TechnologySectionProps = {
+    const operator: ProjectDetailsTechnologySection['props'] = {
       id: 'operator',
       title: 'Operator',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
@@ -50,7 +50,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       ],
     }
 
-    const withdrawals: TechnologySectionProps = {
+    const withdrawals: ProjectDetailsTechnologySection['props'] = {
       id: 'withdrawals',
       title: 'Withdrawals',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
@@ -63,7 +63,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       ].filter(notUndefined),
     }
 
-    const other: TechnologySectionProps = {
+    const other: ProjectDetailsTechnologySection['props'] = {
       id: 'other-considerations',
       title: 'Other considerations',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,

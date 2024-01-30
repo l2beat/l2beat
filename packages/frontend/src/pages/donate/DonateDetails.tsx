@@ -15,7 +15,7 @@ export function DonateDetails(props: DonationDetailsProps) {
   return (
     <div className="mt-8 text-center md:flex md:items-center md:justify-center md:text-left">
       <div>
-        <img src={props.qrCodeUrl} className="dark:hidden" />
+        <img src={props.qrCodeUrl} />
       </div>
       <div className="md:ml-8">
         <p className="my-4 inline-block w-[21ch] max-w-[21ch] break-all font-mono">

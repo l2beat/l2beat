@@ -28,7 +28,6 @@ import {
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
 } from '../../../types'
-import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -49,16 +48,20 @@ export function getProjectDetails(
 
   items.push({
     type: 'ChartSection',
-    props: { ...chart, id: 'chart', title: 'Chart' },
+    props: {
+      ...chart,
+      id: 'chart',
+      title: 'Chart',
+    },
   })
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
       type: 'MilestonesSection',
       props: {
-        milestones: project.milestones,
         id: 'milestones',
         title: 'Milestones',
+        milestones: project.milestones,
       },
     })
   }
@@ -66,7 +69,12 @@ export function getProjectDetails(
   if (project.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
-      props: getDetailedDescriptionSection(project),
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: project.display.description,
+        detailedDescription: project.display.detailedDescription,
+      },
     })
   }
 

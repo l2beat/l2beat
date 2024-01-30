@@ -8,7 +8,6 @@ export function OutLinkIcon(props: SVGAttributes<SVGElement>) {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      className="fill-link"
       aria-label="Outgoing link icon"
       {...props}
     >

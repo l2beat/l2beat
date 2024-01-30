@@ -26,10 +26,7 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
                 <NumberCell className="inline font-bold">
                   {props.value}
                 </NumberCell>
-                <NumberCell
-                  signed
-                  className="w-18 ml-1 !text-base font-medium "
-                >
+                <NumberCell signed className="ml-1 !text-base font-medium ">
                   {props.percentChange}
                 </NumberCell>
               </TooltipTrigger>
@@ -42,7 +39,7 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
               <NumberCell className="inline font-bold">
                 {props.value}
               </NumberCell>
-              <NumberCell signed className="w-18 ml-1 !text-base font-medium ">
+              <NumberCell signed className="ml-1 !text-base font-medium ">
                 {props.percentChange}
               </NumberCell>
             </div>

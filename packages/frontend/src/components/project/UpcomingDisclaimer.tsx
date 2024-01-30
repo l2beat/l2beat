@@ -12,7 +12,7 @@ export interface UpcomingDisclaimerProps {
 export function UpcomingDisclaimer({ className }: UpcomingDisclaimerProps) {
   return (
     <Callout
-      className={cn('bg-blue-600 p-4', className)}
+      className={cn('bg-blue-600/20 p-4', className)}
       icon={<InfoIcon className="mt-1 fill-blue-500" />}
       body={
         <>
