@@ -17,9 +17,7 @@ export const tradable: Layer2 = upcoming({
       documentation: [],
       explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://twitter.com/tradable_xyz',
-      ],
+      socialMedia: ['https://twitter.com/tradable_xyz'],
     },
   },
 })
