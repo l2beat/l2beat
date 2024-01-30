@@ -91,9 +91,9 @@ export const mantapacific: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://pacific-rpc.manta.network/http',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://pacific-rpc.manta.network/http',
-      callsPerMinute: 1500,
       assessCount: subtractOne,
     },
     associatedTokens: ['MANTA'],

@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { AztecTransactionApi } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
@@ -9,6 +8,7 @@ import { BlockTransactionCountRepository } from '../../../peripherals/database/a
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
 import { TransactionCounter } from '../TransactionCounter'
 import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
@@ -19,11 +19,10 @@ export function createAztecCounter(
   http: HttpClient,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  options: AztecTransactionApi,
+  options: SimpleActivityTransactionConfig<'aztec'>,
 ): TransactionCounter {
-  const callsPerMinute = options.callsPerMinute ?? 60
-  const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new AztecClient(http, options.url, callsPerMinute)
+  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
+  const client = new AztecClient(http, options.url, options.callsPerMinute)
 
   const processor = new SequenceProcessor(
     projectId.toString(),

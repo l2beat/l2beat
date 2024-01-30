@@ -97,9 +97,9 @@ export const zksyncera: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://mainnet.era.zksync.io',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://mainnet.era.zksync.io',
-      callsPerMinute: 1500,
     },
     liveness: {
       proofSubmissions: [

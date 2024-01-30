@@ -21,7 +21,11 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
       const expected = transactions.map((tx) => ({
         ...tx,
         createdAt: UnixTime.fromDate(tx.createdAt),
@@ -41,7 +45,11 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
 
       await expect(zksyncClient.getTransactionsInBlock(42)).toBeRejectedWith(
         TypeError,
@@ -78,7 +86,11 @@ describe(ZksyncClient.name, () => {
           ),
       })
 
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
 
       const result = await zksyncClient.getTransactionsInBlock(42)
       const expected = transactions1
@@ -117,7 +129,11 @@ describe(ZksyncClient.name, () => {
           ),
       })
 
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
 
       await expect(zksyncClient.getTransactionsInBlock(42)).toBeRejectedWith(
         Error,
@@ -138,7 +154,11 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
 
       const result = await zksyncClient.getLatestBlock()
       expect(result).toEqual(42)
@@ -155,7 +175,11 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
 
       await expect(zksyncClient.getLatestBlock()).toBeRejectedWith(
         TypeError,
@@ -177,7 +201,11 @@ describe(ZksyncClient.name, () => {
           )
         },
       })
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
       await expect(zksyncClient.call('foo', { bar: '1234' })).toBeRejectedWith(
         Error,
         'Oops!',
@@ -190,7 +218,11 @@ describe(ZksyncClient.name, () => {
           return new Response(JSON.stringify({ status: '', foo: 'bar' }))
         },
       })
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
       await expect(zksyncClient.call('foo', { bar: '1234' })).toBeRejectedWith(
         TypeError,
         'Invalid Zksync response.',
@@ -203,7 +235,11 @@ describe(ZksyncClient.name, () => {
           return new Response('foo', { status: 400 })
         },
       })
-      const zksyncClient = new ZksyncClient(httpClient, Logger.SILENT)
+      const zksyncClient = new ZksyncClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
       await expect(zksyncClient.call('foo', { bar: '1234' })).toBeRejectedWith(
         Error,
         'Http error 400: foo',

@@ -159,6 +159,8 @@ export const polygonzkevm: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://polygon-rpc.com/zkevm',
+      defaultCallsPerMinute: 500,
       startBlock: 1,
     },
     liveness: {
