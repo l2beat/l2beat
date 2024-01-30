@@ -23,7 +23,6 @@ import {
   ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
 } from '../../../types'
-import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -44,7 +43,11 @@ export function getProjectDetails(
   const items: BridgeDetailsItem[] = []
   items.push({
     type: 'ChartSection',
-    props: { ...chart, id: 'chart', title: 'Chart' },
+    props: {
+      ...chart,
+      id: 'chart',
+      title: 'Chart',
+    },
   })
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
     items.push({
@@ -60,7 +63,12 @@ export function getProjectDetails(
   if (bridge.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
-      props: getDetailedDescriptionSection(bridge),
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: bridge.display.description,
+        detailedDescription: bridge.display.detailedDescription,
+      },
     })
   }
 

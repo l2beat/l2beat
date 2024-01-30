@@ -14,6 +14,7 @@ import { ChainConverter } from '../ChainConverter'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
@@ -183,9 +184,12 @@ export class UpdateMonitor {
       .filter((c) => c.unverified)
       .map((c) => c.name)
 
+    const prevSanitizedDiscovery = sanitizeDiscoveryOutput(previousDiscovery)
+    const sanitizedDiscovery = sanitizeDiscoveryOutput(discovery)
+
     const diff = diffDiscovery(
-      previousDiscovery.contracts,
-      discovery.contracts,
+      prevSanitizedDiscovery.contracts,
+      sanitizedDiscovery.contracts,
       projectConfig,
       unverifiedContracts,
     )

@@ -30,9 +30,17 @@ import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
-  OpStackTag,
-  OpStackTagDescription,
 } from './OpStackTypes'
+import {
+  ORBIT_STACK_CONTRACT_DESCRIPTION,
+  ORBIT_STACK_PERMISSION_TEMPLATES,
+  OrbitStackContractName,
+} from './OrbitStackTypes'
+import {
+  StackPermissionsTag,
+  StackPermissionsTagDescription,
+  StackPermissionTemplate,
+} from './StackTemplateTypes'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -157,23 +165,65 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(
+      OP_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
+  }
+
+  getOrbitStackPermissions(
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(
+      ORBIT_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
+  }
+
+  getStackTemplatePermissions(
+    templates: StackPermissionTemplate[],
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
     const inversion = this.getInversion()
 
     const result: Record<
       string,
       {
         name: string
-        address: EthereumAddress
+        addresses: EthereumAddress[]
         contractDescription: Record<string, string[]>
         taggedNames: Record<string, string[]>
       }
     > = {}
 
-    for (const template of OP_STACK_PERMISSION_TEMPLATES) {
+    const roleNameMatches = (
+      templateName: string,
+      roleName: string,
+    ): boolean => {
+      function isNumeric(str: string): boolean {
+        if (str === '') return false
+        return !isNaN(+str)
+      }
+
+      // I really don't want to use regexes
+      const matchesExact = templateName === roleName
+      if (!matchesExact && roleName.startsWith(templateName)) {
+        const suffix = roleName.slice(templateName.length)
+        return suffix.startsWith('.') && isNumeric(suffix.slice(1))
+      }
+
+      return matchesExact
+    }
+
+    for (const template of templates) {
       for (const contract of inversion.values()) {
         const role = contract.roles.find(
           (r) =>
-            r.name === template.role.value &&
+            roleNameMatches(template.role.value, r.name) &&
             r.atName ===
               (contractOverrides?.[template.role.contract] ??
                 template.role.contract),
@@ -186,7 +236,7 @@ export class ProjectDiscovery {
 
         result[contractKey] ??= {
           name: contractKey,
-          address: EthereumAddress(contract.address),
+          addresses: [EthereumAddress(contract.address)],
           contractDescription: {},
           taggedNames: {},
         }
@@ -210,13 +260,13 @@ export class ProjectDiscovery {
 
     return Object.values(result).map((entry) => ({
       name: entry.name,
-      accounts: [this.formatPermissionedAccount(entry.address)],
+      accounts: entry.addresses.map((a) => this.formatPermissionedAccount(a)),
       description: Object.values(entry.contractDescription)
         .flat()
         .concat(
           Object.entries(entry.taggedNames).map(([tag, contracts]) =>
             stringFormat(
-              OpStackTagDescription[tag as OpStackTag],
+              StackPermissionsTagDescription[tag as StackPermissionsTag],
               contracts.join(', '),
             ),
           ),
@@ -478,6 +528,19 @@ export class ProjectDiscovery {
           overrides?.[d.name] ?? d.name,
         ),
         ...upgradesProxy,
+      }),
+    )
+  }
+
+  getOrbitStackContractDetails(
+    overrides?: Partial<Record<OrbitStackContractName, string>>,
+  ): ScalingProjectContractSingleAddress[] {
+    return ORBIT_STACK_CONTRACT_DESCRIPTION.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
       }),
     )
   }

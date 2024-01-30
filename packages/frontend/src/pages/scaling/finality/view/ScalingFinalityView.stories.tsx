@@ -24,7 +24,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
         redWarning: undefined,
-        purposes: ['DEX'],
+        purposes: ['Exchange'],
         stage: {
           stage: 'Stage 0',
           missing: {

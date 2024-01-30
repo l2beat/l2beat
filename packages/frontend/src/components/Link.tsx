@@ -34,7 +34,7 @@ export function Link({
     <a
       href={href}
       className={cn(
-        'group data-[state=highlighted]:relative',
+        'group data-[state=highlighted]:relative data-[state=highlighted]:z-10',
         'data-[state=highlighted]:before:absolute data-[state=highlighted]:before:-left-1 data-[state=highlighted]:before:-top-0.5',
         'data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:rounded',
         'data-[state=highlighted]:before:-z-10 data-[state=highlighted]:before:border',

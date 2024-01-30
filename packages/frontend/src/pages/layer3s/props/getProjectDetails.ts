@@ -27,7 +27,6 @@ import {
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
 } from '../../types'
-import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -49,7 +48,11 @@ export function getProjectDetails(
 
   items.push({
     type: 'ChartSection',
-    props: { ...chart, id: 'chart', title: 'Chart' },
+    props: {
+      ...chart,
+      id: 'chart',
+      title: 'Chart',
+    },
   })
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
@@ -66,7 +69,12 @@ export function getProjectDetails(
   if (project.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
-      props: getDetailedDescriptionSection(project),
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: project.display.description,
+        detailedDescription: project.display.detailedDescription,
+      },
     })
   }
 
@@ -76,6 +84,7 @@ export function getProjectDetails(
       props: {
         id: 'risk-analysis',
         title: 'Risk analysis',
+
         riskValues: getRiskValues(project.riskView),
         isUnderReview: project.isUnderReview,
         warning: project.display.warning,
@@ -102,6 +111,7 @@ export function getProjectDetails(
         items: technologySection.items,
         id: technologySection.id,
         title: technologySection.title,
+
         isUnderReview: technologySection.isUnderReview,
       },
     })
@@ -112,6 +122,7 @@ export function getProjectDetails(
         props: {
           id: 'state-derivation',
           title: 'State derivation',
+
           ...project.stateDerivation,
         },
       })
@@ -123,6 +134,7 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
+
           stateValidation: project.stateValidation,
         },
       })
@@ -135,6 +147,7 @@ export function getProjectDetails(
           items: section.items,
           id: section.id,
           title: section.title,
+
           isUnderReview: section.isUnderReview,
         },
       }),
@@ -153,11 +166,13 @@ export function getProjectDetails(
 
     items.push({
       type: 'ContractsSection',
-      props: getContractSection(
-        project,
-        verificationStatus,
-        manuallyVerifiedContracts,
-      ),
+      props: {
+        ...getContractSection(
+          project,
+          verificationStatus,
+          manuallyVerifiedContracts,
+        ),
+      },
     })
 
     if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {

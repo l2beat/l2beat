@@ -7,6 +7,7 @@ const meta: Meta<typeof TechnologySectionComponent> = {
   args: {
     id: 'technology',
     title: 'Technology',
+    sectionOrder: 1,
   },
 }
 export default meta

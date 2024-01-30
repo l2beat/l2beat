@@ -2,14 +2,13 @@ import { Logger } from '@l2beat/backend-tools'
 import { AggregatedReportType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import {
   AggregatedReportRecord,
   AggregatedReportRepository,
 } from './AggregatedReportRepository'
 
-describe(AggregatedReportRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(AggregatedReportRepository.name, (database) => {
   const repository = new AggregatedReportRepository(database, Logger.SILENT)
 
   const TIME_0 = UnixTime.now().toStartOf('day')

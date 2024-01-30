@@ -15,6 +15,7 @@ import { UnderReviewCallout } from './UnderReviewCallout'
 export interface ContractsSectionProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   contracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
@@ -37,7 +38,11 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id}>
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       {props.isUnderReview ? <UnderReviewCallout className="mb-4" /> : null}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
