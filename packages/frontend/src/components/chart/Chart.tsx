@@ -112,7 +112,7 @@ export function Chart(props: ChartProps) {
               )}
             />
             <div
-              className="absolute -bottom-4 -left-4 -right-4 top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
+              className="absolute -inset-x-4 -bottom-4 top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
             />
             <ChartEmptyState />
@@ -122,7 +122,7 @@ export function Chart(props: ChartProps) {
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
               className={cn(
-                'absolute bottom-0 left-0 z-20 block h-full w-full',
+                'absolute bottom-0 left-0 z-20 block size-full',
                 props.metaChart && 'bottom-[unset] top-0 h-[242px]',
               )}
             />

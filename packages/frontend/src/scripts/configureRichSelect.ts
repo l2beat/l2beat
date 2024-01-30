@@ -9,17 +9,17 @@ type State = 'opened' | 'selected' | null
 
 export function configureRichSelects() {
   document
-    .querySelectorAll<HTMLElement>('.RichSelect')
+    .querySelectorAll<HTMLElement>('[data-role=rich-select]')
     .forEach(configureRichSelect)
 }
 
 function configureRichSelect(richSelect: HTMLElement) {
   const { $, $$ } = makeQuery(richSelect)
-  const dropdown = $('.RichSelect-Dropdown')
-  const slideCard = $('.RichSelect-SlideCard')
-  const items = $$('.RichSelect-Item')
-  const selectedText = $('.RichSelect-SelectedText')
-  const toggle = $('.RichSelect-Toggle')
+  const dropdown = $('[data-role=rich-select-dropdown]')
+  const slideCard = $('[data-role=rich-select-slide-card]')
+  const items = $$('[data-role=rich-select-item]')
+  const selectedText = $('[data-role=rich-select-selected-text]')
+  const toggle = $('[data-role=rich-select-toggle]')
 
   function setState(state: State) {
     if (isMobile()) {
@@ -105,10 +105,10 @@ function configureSlideCard(
   setState: (state: State) => void,
 ) {
   const { $ } = makeQuery(slideCard)
-  const content = $('.RichSelect-SlideCard-Content')
-  const gestureZone = $('.RichSelect-SlideCard-GestureZone')
-  const closeButton = $('.RichSelect-SlideCard-CloseButton')
-  const background = $('.RichSelect-SlideCard-Background')
+  const content = $('[data-role=rich-select-slide-card-content]')
+  const gestureZone = $('[data-role=rich-select-slide-card-gesture-zone]')
+  const closeButton = $('[data-role=rich-select-slide-card-close-button]')
+  const background = $('[data-role=rich-select-slide-card-background]')
   let touchStartY = 0
 
   function onTouchStart(e: TouchEvent) {

@@ -22,7 +22,7 @@ export function TvlMetaImage(props: TvlMetaImageProps) {
   const name = props.name ?? 'Overview'
 
   return (
-    <div className={cn('MetaImage', !props.name ? 'overview' : 'project')}>
+    <div>
       <MetaImageHeader
         title={name}
         isProject={isProject}

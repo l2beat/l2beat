@@ -15,7 +15,7 @@ const meta: Meta<typeof TvlMetaImage> = {
         configureCharts()
       })
       return (
-        <div className="meta flex items-center justify-center">
+        <div className="flex items-center justify-center">
           <div className="relative h-[314px] w-[600px] overflow-hidden rounded-lg">
             <Story />
           </div>

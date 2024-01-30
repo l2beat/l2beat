@@ -11,7 +11,7 @@ export interface ActivityMetaImageProps {
 
 export function ActivityMetaImage(props: ActivityMetaImageProps) {
   return (
-    <div className={'MetaImage overview leading-[1.15]'}>
+    <div className="leading-[1.15]">
       <MetaImageHeader
         title="Activity"
         isProject={false}
