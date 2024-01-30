@@ -84,7 +84,7 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
 
 function getElements(tabNavigation: HTMLElement) {
   const tabsContainer = tabNavigation.querySelector<HTMLElement>(
-    '[data-role=tabs-items-container]',
+    '[data-tabs-role=tabs-items-container]',
   )
   const underline = tabNavigation.querySelector<HTMLElement>(
     '[data-role=tabs-underline]',
@@ -97,6 +97,7 @@ function getElements(tabNavigation: HTMLElement) {
   )
 
   if (!underline || !tabsContainer || tabs.length === 0) {
+    console.log(underline, tabsContainer, tabs.length)
     return
   }
   const tabsWithContent: Record<string, TabWithContent> = {}

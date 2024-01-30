@@ -22,7 +22,7 @@ export function Tabs({ items }: TabsProps) {
     <div data-role="tabs">
       <OverflowWrapper
         childrenClassName="relative flex gap-x-2 md:gap-x-8"
-        data-role="tabs-items-container"
+        data-tabs-role="tabs-items-container"
       >
         {items.map((tab) => (
           <a
