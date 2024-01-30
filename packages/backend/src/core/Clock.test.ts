@@ -131,8 +131,12 @@ describe(Clock.name, () => {
     it('ticks six hourly after 7D and daily after 90D', () => {
       setTime('00:00:00')
       const now = UnixTime.now()
-      const start = now.add(-180, 'days')
 
+      const TOTAL_DAYS = 183
+      const DAILY_TICK_START_DAY = 93
+      const SIX_HOURLY_TICK_START_DAY = 10
+
+      const start = now.add(-TOTAL_DAYS, 'days')
       const clock = new Clock(start, 0)
 
       const calls: UnixTime[] = []
@@ -141,18 +145,23 @@ describe(Clock.name, () => {
       )
       stop()
 
-      const DAILY = 90
-      const SIX_HOURLY = 83 * 4
-
-      // timestamps older than 90D should be ticked daily
-      const dailyCalls = calls.slice(0, DAILY)
+      const DAILY_TICKS = TOTAL_DAYS - DAILY_TICK_START_DAY
+      const dailyCalls = calls.slice(0, DAILY_TICKS)
+      expect(dailyCalls.length).toEqual(DAILY_TICKS)
       expect(dailyCalls.every((x) => x.isFull('day'))).toEqual(true)
 
-      // timestamps older than 7D & earlier than 90D should be ticked six hourly
-      const sixHourly = calls.slice(DAILY, DAILY + SIX_HOURLY)
-      expect(sixHourly.every((x) => x.isFull('six hours'))).toEqual(true)
+      const SIX_HOURLY_TICKS =
+        (DAILY_TICK_START_DAY - SIX_HOURLY_TICK_START_DAY) * 4
+      const sixHourlyCalls = calls.slice(
+        DAILY_TICKS,
+        DAILY_TICKS + SIX_HOURLY_TICKS,
+      )
+      expect(sixHourlyCalls.length).toEqual(SIX_HOURLY_TICKS)
+      expect(sixHourlyCalls.every((x) => x.isFull('six hours'))).toEqual(true)
 
-      const hourlyCalls = calls.slice(DAILY + SIX_HOURLY)
+      const HOURLY_TICKS = 10 * 24 + 1
+      const hourlyCalls = calls.slice(DAILY_TICKS + SIX_HOURLY_TICKS)
+      expect(hourlyCalls.length).toEqual(HOURLY_TICKS)
       for (let i = 0; i < hourlyCalls.length - 1; i++) {
         const call = hourlyCalls[i]
         const nextCall = hourlyCalls[i + 1]

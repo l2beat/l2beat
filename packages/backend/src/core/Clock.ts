@@ -1,5 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+const SAFETY_OFFSET = 3
+const REMOVE_HOURLY_AFTER_DAYS = 7 + SAFETY_OFFSET
+const REMOVE_SIX_HOURLY_AFTER_DAYS = 90 + SAFETY_OFFSET
 export class Clock {
   constructor(
     private readonly minTimestamp: UnixTime,
@@ -49,9 +52,9 @@ export class Clock {
     const onNewTimestamps = () => {
       const last = this.getLastHour()
       while (next.lte(last)) {
-        if (next.add(7, 'days').gte(last)) {
+        if (next.add(REMOVE_HOURLY_AFTER_DAYS, 'days').gte(last)) {
           callback(next)
-        } else if (next.add(90, 'days').gte(last)) {
+        } else if (next.add(REMOVE_SIX_HOURLY_AFTER_DAYS, 'days').gte(last)) {
           if (next.isFull('six hours')) {
             callback(next)
           }
