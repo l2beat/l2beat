@@ -100,6 +100,60 @@ describeDatabase(ReportRepository.name, (database) => {
       expect(results).toEqual([])
     })
   })
+
+  describe(ReportRepository.prototype.deleteHourlyUntil.name, () => {
+    it('deletes hourly reports', async () => {
+      const start = UnixTime.now().toStartOf('day')
+
+      const reports = []
+
+      const end = 25
+
+      for (let i = 0; i <= end; i++) {
+        reports.push(fakeReport({ timestamp: start.add(i, 'hours') }))
+      }
+
+      await Promise.all(reports.map((r) => repository.addOrUpdateMany([r])))
+      await repository.deleteHourlyUntil(start.add(end, 'hours'))
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        fakeReport({ timestamp: start }),
+        fakeReport({ timestamp: start.add(6, 'hours') }),
+        fakeReport({ timestamp: start.add(12, 'hours') }),
+        fakeReport({ timestamp: start.add(18, 'hours') }),
+        fakeReport({ timestamp: start.add(24, 'hours') }),
+        fakeReport({ timestamp: start.add(25, 'hours') }),
+      ])
+    })
+  })
+
+  describe(ReportRepository.prototype.deleteSixHourlyUntil.name, () => {
+    it('deletes six hourly reports', async () => {
+      const start = UnixTime.now().toStartOf('day')
+      const end = 25
+
+      const reports = [
+        fakeReport({ timestamp: start }),
+        fakeReport({ timestamp: start.add(1, 'hours') }),
+        fakeReport({ timestamp: start.add(6, 'hours') }),
+        fakeReport({ timestamp: start.add(12, 'hours') }),
+        fakeReport({ timestamp: start.add(18, 'hours') }),
+        fakeReport({ timestamp: start.add(24, 'hours') }),
+        fakeReport({ timestamp: start.add(25, 'hours') }),
+      ]
+
+      await Promise.all(reports.map((r) => repository.addOrUpdateMany([r])))
+      await repository.deleteSixHourlyUntil(start.add(end, 'hours'))
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        fakeReport({ timestamp: start }),
+        // keeps hourly
+        fakeReport({ timestamp: start.add(1, 'hours') }),
+        fakeReport({ timestamp: start.add(24, 'hours') }),
+        fakeReport({ timestamp: start.add(25, 'hours') }),
+      ])
+    })
+  })
 })
 
 function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
