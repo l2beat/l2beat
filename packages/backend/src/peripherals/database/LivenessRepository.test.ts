@@ -177,7 +177,6 @@ describe(LivenessRepository.name, () => {
           DATA[0].timestamp,
           DATA[1].timestamp,
           LIVENESS_CONFIGS[0].type,
-          0,
         )
 
         expect(result).toEqual({
@@ -221,7 +220,6 @@ describe(LivenessRepository.name, () => {
           START.add(-8, 'hours'),
           START.add(-9, 'hours'),
           LIVENESS_CONFIGS[0].type,
-          0,
         )
 
         expect(result).toEqual(undefined)

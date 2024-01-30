@@ -30,7 +30,6 @@ export class LineaFinalityAnalyzer {
       to,
       // Linea posts everything in the same tx, but we store it only once in STATE type txs
       LivenessType('STATE'),
-      0,
     )
     if (!result) {
       return

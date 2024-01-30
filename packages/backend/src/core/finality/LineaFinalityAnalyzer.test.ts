@@ -49,7 +49,6 @@ describe(LineaFinalityAnalyzer.name, () => {
           start,
           start.add(-600, 'seconds'),
           LivenessType('STATE'),
-          0,
         )
 
         expect(
@@ -60,7 +59,6 @@ describe(LineaFinalityAnalyzer.name, () => {
           start.add(-600 * 5, 'seconds'),
           start.add(-600 * 6, 'seconds'),
           LivenessType('STATE'),
-          0,
         )
 
         expect(
