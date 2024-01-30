@@ -118,10 +118,10 @@ export function TableView<T>({
           {groupedColumns && <EmptyRow groupedColumns={groupedColumns} />}
         </tbody>
       </table>
-      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pb-10 pt-10 group-data-[state=empty]/tableview:flex">
+      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700/15 py-10 group-data-[state=empty]/tableview:flex">
         <span className="mb-4 text-2xl font-semibold">No results</span>
         <span className="mb-6">There are no results meeting the criteria</span>
-        <Link className="ProjectFilters-ResetButton cursor-pointer">
+        <Link className="cursor-pointer" data-role="project-filters-reset">
           Reset all filters
         </Link>
       </div>
@@ -196,7 +196,7 @@ function ColumnHeader<T>(props: {
           {props.column.tooltip && (
             <Tooltip>
               <TooltipTrigger className="-translate-y-px md:translate-y-0">
-                <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                <InfoIcon className="fill-current md:size-3.5" />
               </TooltipTrigger>
               <TooltipContent>{props.column.tooltip}</TooltipContent>
             </Tooltip>
@@ -253,7 +253,7 @@ function DataCell<T>(props: {
         <a
           href={idHref}
           className={cn(
-            'h-full w-full items-center',
+            'size-full items-center',
             props.columnConfig.align === 'right' && 'justify-end',
             props.columnConfig.align === 'center' && 'justify-center',
             hasPaddingRight &&

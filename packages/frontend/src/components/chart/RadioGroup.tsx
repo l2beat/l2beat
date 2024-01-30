@@ -34,7 +34,7 @@ export function RadioGroup(props: RadioGroupProps) {
           )}
         >
           <input
-            className="peer absolute left-0 top-0 block h-full w-full cursor-pointer opacity-0"
+            className="peer absolute left-0 top-0 block size-full cursor-pointer opacity-0"
             defaultChecked={option.checked}
             autoComplete="off"
             type="radio"

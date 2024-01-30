@@ -34,7 +34,7 @@ export function ProjectSummary(props: Props) {
   return (
     <div
       className={cn(
-        'row grid h-fit grow gap-3 bg-gray-100 p-4 dark:bg-zinc-900 md:gap-x-3 md:rounded-lg md:px-6 md:py-5',
+        'grid h-fit grow gap-3 bg-gray-100 p-4 dark:bg-zinc-900 md:gap-x-3 md:rounded-lg md:px-6 md:py-5',
         cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
         props.className,
       )}
@@ -80,7 +80,7 @@ function DetailsHeaderStat(props: ProjectSummaryStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:h-3.5 md:w-3.5" />
+              <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:size-3.5" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

@@ -11,28 +11,39 @@ interface ExpandableContainerProps {
 
 export function ExpandableContainer(props: ExpandableContainerProps) {
   return (
-    <div className="ExpandableContainer">
+    <div data-role="expandable-container">
       <div
+        data-role="expandable-container-content"
         className={cn(
-          'ExpandableContainerContent relative overflow-y-hidden transition-max-height duration-300',
+          'relative overflow-y-hidden transition-max-height duration-300',
           props.className,
           !props.className?.includes('max-h-') && 'max-h-80',
         )}
       >
         <div>{props.children}</div>
         <div
+          data-role="expandable-container-content-gradient"
           className={cn(
-            'ExpandableContainerContentGradient pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white dark:from-neutral-900',
+            'pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white dark:from-neutral-900',
             props.gradientClassName,
           )}
         />
       </div>
-      <div className="ExpandableContainerButton mx-auto mt-1 flex w-min cursor-pointer items-center justify-center rounded-md border border-pink-900 px-8 py-2 transition hover:bg-pink-900 hover:bg-opacity-25">
+      <div
+        data-role="expandable-container-button"
+        className="mx-auto mt-1 flex w-min cursor-pointer items-center justify-center rounded-md border border-pink-900 px-8 py-2 transition hover:bg-pink-900/25"
+      >
         <div className="flex gap-2.5">
-          <span className="ExpandableContainerButtonText whitespace-pre text-sm font-bold">
+          <span
+            data-role="expandable-container-button-text"
+            className="whitespace-pre text-sm font-bold"
+          >
             Show more
           </span>
-          <ChevronDownIcon className="ExpandableContainerButtonArrow transition-transform duration-300" />
+          <ChevronDownIcon
+            data-role="expandable-container-button-arrow"
+            className="transition-transform duration-300"
+          />
         </div>
       </div>
     </div>

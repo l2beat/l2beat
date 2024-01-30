@@ -114,8 +114,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ? {
               type: 'rpc',
               startBlock: 1,
-              url: templateVars.rpcUrl,
-              callsPerMinute: 1500,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
               assessCount: subtractOne,
             }
           : undefined),

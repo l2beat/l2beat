@@ -93,7 +93,8 @@ export const zksynclite: Layer2 = {
     ],
     transactionApi: {
       type: 'zksync',
-      callsPerMinute: 3_000,
+      defaultUrl: 'https://api.zksync.io/api/v0.2',
+      defaultCallsPerMinute: 3_000,
     },
     liveness: {
       proofSubmissions: [

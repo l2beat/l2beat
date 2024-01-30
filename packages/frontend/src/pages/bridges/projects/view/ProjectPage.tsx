@@ -3,7 +3,6 @@ import React from 'react'
 import {
   Footer,
   FooterProps,
-  HeaderProps,
   Navbar,
   NavbarProps,
 } from '../../../../components'
@@ -17,7 +16,6 @@ import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
-  header: HeaderProps
   projectHeader: ProjectHeaderProps
   projectDetails: ProjectDetailsProps
   footer: FooterProps

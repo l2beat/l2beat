@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { StarkexProduct } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
@@ -51,7 +50,7 @@ describe(getStarkexLastDay.name, () => {
     const clock = mockObject<Clock>({
       getLastHour: () => DAY,
     })
-    const product: StarkexProduct[] = ['apex_usdt', 'apex_usdc']
+    const product = ['apex_usdt', 'apex_usdc']
     const options: StarkexProcessorOptions = {
       type: 'starkex',
       product,
