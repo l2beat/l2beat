@@ -20,7 +20,7 @@ yarn build:frontend
 - `yarn format:fix` - run prettier automatic formatter
 - `yarn lint` - check if the code satisfies the eslint configuration
 - `yarn lint:fix` - run eslint automatic fixer
-- `yarn tinify-logo <slug>` - resizes and optimizes logo for given project
+- `yarn tinify-logos` - resizes and optimizes logos
 - `yarn typecheck` - check if the code satisfies the typescript compiler
 
 ### Environment variables
